@@ -36,11 +36,11 @@ trait TemplatePostType
 
 		if ( $wp_query->is_404() ) {
 
-			// if new posttype disabled
+			// if new post-type disabled
 			if ( FALSE === $empty_callback )
 				return $template;
 
-			// helps with 404 redirections
+			// helps with 404 redirection
 			if ( ! is_user_logged_in() )
 				return $template;
 
@@ -68,7 +68,7 @@ trait TemplatePostType
 
 		} else if ( isset( $_GET['newpost'] ) ) {
 
-			// if new posttype disabled
+			// if new post-type disabled
 			if ( FALSE === $newpost_callback )
 				return $template;
 
@@ -111,7 +111,7 @@ trait TemplatePostType
 
 		} else {
 
-			// if new posttype disabled
+			// if new post-type disabled
 			if ( FALSE === $archive_callback )
 				return $template;
 
@@ -145,7 +145,7 @@ trait TemplatePostType
 		return $template;
 	}
 
-	// DEFAULT METHOD: title for overrided empty page
+	// DEFAULT METHOD: title for overridden empty page
 	public function templateposttype_get_empty_title( $posttype, $fallback = NULL )
 	{
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
@@ -157,7 +157,7 @@ trait TemplatePostType
 		return $fallback;
 	}
 
-	// DEFAULT METHOD: content for overrided empty page
+	// DEFAULT METHOD: content for overridden empty page
 	public function templateposttype_get_empty_content( $posttype, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'empty_content' ) )
@@ -166,7 +166,7 @@ trait TemplatePostType
 		return '';
 	}
 
-	// DEFAULT METHOD: title for overrided archive page
+	// DEFAULT METHOD: title for overridden archive page
 	public function templateposttype_get_archive_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title',
@@ -183,20 +183,20 @@ trait TemplatePostType
 		return $this->get_setting_fallback( 'newpost_title', $crumb );
 	}
 
-	// no need to check for posttype
+	// no need to check for post-type
 	public function post_type_archive_title( $name, $posttype )
 	{
 		return $this->get_setting_fallback( 'archive_title', $name );
 	}
 
-	// no need to check for posttype
+	// no need to check for post-type
 	public function post_type_archive_title_templateposttype_newpost( $name, $posttype )
 	{
 		return $this->get_setting_fallback( 'newpost_title',
 			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $name ) );
 	}
 
-	// DEFAULT METHOD: content for overrided archive page
+	// DEFAULT METHOD: content for overridden archive page
 	public function templateposttype_get_archive_content( $posttype )
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL );
@@ -212,7 +212,7 @@ trait TemplatePostType
 
 		if ( is_post_type_archive() )
 			return ShortCode::listPosts( 'assigned',
-				$posttype, // WordPress\PostType::current(),
+				$posttype,
 				'',
 				[
 					'context' => 'template_posttype',
@@ -232,7 +232,7 @@ trait TemplatePostType
 		return '';
 	}
 
-	// DEFAULT METHOD: button for overrided empty/archive page
+	// DEFAULT METHOD: button for overridden empty/archive page
 	public function templateposttype_get_add_new( $posttype, $title = FALSE, $label = NULL )
 	{
 		$object = WordPress\PostType::object( $posttype );
@@ -446,7 +446,7 @@ trait TemplatePostType
 		return ob_get_clean();
 	}
 
-	// DEFAULT METHOD: title for overrided newpost page
+	// DEFAULT METHOD: title for overridden newpost page
 	public function templateposttype_get_newpost_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'newpost_title',

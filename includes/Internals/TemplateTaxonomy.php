@@ -54,6 +54,7 @@ trait TemplateTaxonomy
 				'post_type'  => 'page',
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
+				'taxonomy'   => $taxonomy,
 			], $empty_callback );
 
 			$this->filter_append( 'post_class', [ 'empty-term', 'empty-term-'.$taxonomy ] );
@@ -76,6 +77,7 @@ trait TemplateTaxonomy
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
 				'is_tax'     => TRUE,
+				'taxonomy'   => $taxonomy,
 			], $archive_callback );
 
 			$this->filter_append( 'post_class', [ 'archive-term', 'archive-term-'.$taxonomy ] );
@@ -99,7 +101,7 @@ trait TemplateTaxonomy
 		return $template;
 	}
 
-	// title for overrided empty page
+	// title for overridden empty page
 	public function templatetaxonomy_get_empty_title( $taxonomy, $fallback = NULL )
 	{
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'term' ) ) )
@@ -111,7 +113,7 @@ trait TemplateTaxonomy
 		return $fallback;
 	}
 
-	// DEFAULT METHOD: content for overrided empty page
+	// DEFAULT METHOD: content for overridden empty page
 	public function templatetaxonomy_get_empty_content( $taxonomy, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'empty_content' ) )
@@ -120,7 +122,7 @@ trait TemplateTaxonomy
 		return '';
 	}
 
-	// DEFAULT METHOD: title for overrided archive page
+	// DEFAULT METHOD: title for overridden archive page
 	public function templatetaxonomy_get_archive_title( $taxonomy )
 	{
 		// return $this->get_setting_fallback( 'archive_title',
@@ -150,7 +152,7 @@ trait TemplateTaxonomy
 			WordPress\Term::title( $this->current_queried ) );
 	}
 
-	// DEFAULT METHOD: content for overrided archive page
+	// DEFAULT METHOD: content for overridden archive page
 	public function templatetaxonomy_get_archive_content( $taxonomy )
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL );
@@ -194,7 +196,7 @@ trait TemplateTaxonomy
 		return '';
 	}
 
-	// DEFAULT METHOD: button for overrided empty/archive page
+	// DEFAULT METHOD: button for overridden empty/archive page
 	public function templatetaxonomy_get_add_new( $taxonomy, $title = FALSE, $label = NULL )
 	{
 		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy, [ 'name' => $title ] ) )

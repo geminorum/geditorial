@@ -206,7 +206,7 @@ class Entry extends gEditorial\Module
 				'id'     => $this->classs( 'section', $term->term_id ),
 				'parent' => $this->classs(),
 				'title'  => WordPress\Term::title( $term ),
-				'href'   => WordPress\Term::link( $term ), // FIXME: link to the admin list of other posts in this posttype
+				'href'   => WordPress\Term::link( $term ), // FIXME: link to the admin list of other posts in this post-type
 			];
 	}
 
@@ -308,7 +308,8 @@ class Entry extends gEditorial\Module
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'main_posttype' )
+				'posttype'  => $posttype,
+				'list_mode' => 'ul',
 			] );
 
 		else

@@ -66,6 +66,7 @@ class Jobbed extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'archive_override',
 			],
 			'_constants' => [
 				'main_taxonomy_constant' => [ NULL, 'job_title' ],

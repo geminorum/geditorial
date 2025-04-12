@@ -1530,14 +1530,13 @@ class ShortCode extends WordPress\Main
 
 		$class = new \WP_Term_Query( $query );
 		$items = $class->terms;
-		$count = count( $items );
 
-		if ( ! $count )
+		if ( ! $items || ! count( $items ) )
 			return $content;
 
 		if ( FALSE === $args['title'] ) {
 
-			// do nothing, title is disabled by the args
+			// DO NOTHING, title is disabled by the `args`
 
 		} else if ( 'taxonomy' === $args['title'] ) {
 

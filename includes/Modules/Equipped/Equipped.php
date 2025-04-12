@@ -21,8 +21,6 @@ class Equipped extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
-	// FIXME: proper way of report on tabloid/edit-posts
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -68,6 +66,7 @@ class Equipped extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'archive_override',
 			],
 			'_units' => [
 				'units_posttypes' => [ NULL, $this->get_settings_posttypes_parents() ],

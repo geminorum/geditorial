@@ -17,10 +17,6 @@ class Assigned extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	// protected $caps = [
-	// 	'default' => 'edit_others_posts',
-	// ];
-
 	public static function module()
 	{
 		return [

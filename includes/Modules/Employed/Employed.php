@@ -21,8 +21,6 @@ class Employed extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: subcontents api for employment records: title/place/city/employer/start/end
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -67,6 +65,7 @@ class Employed extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'archive_override',
 			],
 			'_constants' => [
 				'main_taxonomy_constant' => [ NULL, 'employment' ],

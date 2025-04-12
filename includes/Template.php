@@ -1102,6 +1102,8 @@ class Template extends WordPress\Main
 		return $args['wrap'] ? Core\HTML::wrap( $html, static::BASE.'-span-tiles' ) : $html;
 	}
 
+	// TODO: link back to taxonomy archive via `Archives` Module
+	// `WordPress\Taxonomy::link( $term->taxonomy )`
 	public static function renderTermIntro( $term, $atts = [], $module = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -1117,7 +1119,6 @@ class Template extends WordPress\Main
 			'image_field' => NULL,
 			'before'      => '',
 			'after'       => '',
-			'wrap'        => TRUE,
 		], $atts );
 
 		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction">';

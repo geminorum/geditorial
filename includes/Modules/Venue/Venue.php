@@ -375,7 +375,8 @@ class Venue extends gEditorial\Module
 
 		if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype, // $this->constant( 'primary_posttype' ),
+				'posttype'  => $posttype,
+				'list_mode' => 'ul',
 			] );
 
 		else

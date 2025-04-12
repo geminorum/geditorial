@@ -68,6 +68,8 @@ class Subjects extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'archive_override',
+				'archive_empty_items',
 			],
 			'_supports' => [
 				'shortcode_support',

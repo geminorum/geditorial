@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class Headings extends gEditorial\Module
 {
@@ -16,19 +17,24 @@ class Headings extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'headings',
-			'title'  => _x( 'Headings', 'Modules: Headings', 'geditorial-admin' ),
-			'desc'   => _x( 'Table of Contents', 'Modules: Headings', 'geditorial-admin' ),
-			'icon'   => 'tablet',
-			'i18n'   => 'adminonly',
-			'access' => 'stable',
+			'name'     => 'headings',
+			'title'    => _x( 'Headings', 'Modules: Headings', 'geditorial-admin' ),
+			'desc'     => _x( 'Table of Contents', 'Modules: Headings', 'geditorial-admin' ),
+			'icon'     => 'tablet',
+			'i18n'     => 'adminonly',
+			'access'   => 'stable',
+			'keywords' => [
+				'toc',
+				'table',
+			],
 		];
 	}
 
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
+			'posttypes_option' => 'posttypes_option',
+			'_general'         => [
 				[
 					'field'       => 'toc_title',
 					'type'        => 'text',
@@ -53,7 +59,6 @@ class Headings extends gEditorial\Module
 				'insert_content',
 				'insert_priority',
 			],
-			'posttypes_option' => 'posttypes_option',
 		];
 	}
 

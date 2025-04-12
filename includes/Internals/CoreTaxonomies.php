@@ -91,6 +91,8 @@ trait CoreTaxonomies
 			'reverse_ordered' => NULL,     // the value used on `orderby`: `name`/`id`
 			'auto_assigned'   => NULL,
 			'terms_related'   => NULL,
+			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
+			'meta_tagline'    => NULL,     // FALSE, meta-key or `TRUE` for default `tagline` // TODO
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';

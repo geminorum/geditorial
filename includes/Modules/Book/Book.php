@@ -713,7 +713,8 @@ class Book extends gEditorial\Module
 
 		else if ( gEditorial()->enabled( 'alphabet' ) )
 			$html.= gEditorial()->module( 'alphabet' )->shortcode_posts( [
-				'post_type' => $posttype,
+				'posttype'  => $posttype,
+				'list_mode' => 'ul',
 			] );
 
 		else

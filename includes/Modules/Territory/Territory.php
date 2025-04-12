@@ -66,6 +66,7 @@ class Territory extends gEditorial\Module
 			'_frontend' => [
 				'contents_viewable',
 				'show_in_navmenus',
+				'archive_override',
 			],
 		];
 	}

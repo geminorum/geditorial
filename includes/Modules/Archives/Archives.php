@@ -208,7 +208,7 @@ class Archives extends gEditorial\Module
 	{
 		$default = '';
 
-		if ( shortcode_exists( 'alphabet-posts' ) )
+		if ( WordPress\ShortCode::exists( 'alphabet-posts' ) )
 			$default = '[alphabet-posts post_type="%s" /]';
 
 		return $this->filters( 'default_posttype_content', $default, $posttype );
@@ -218,10 +218,10 @@ class Archives extends gEditorial\Module
 	{
 		$default = '';
 
-		if ( shortcode_exists( 'alphabet-terms' ) )
-			$default = '[alphabet-terms taxonomy="%s" /]';
+		if ( WordPress\ShortCode::exists( 'alphabet-terms' ) )
+			$default = '[alphabet-terms taxonomy="%s" list_mode="ul" /]';
 
-		else if ( shortcode_exists( 'display-terms' ) )
+		else if ( WordPress\ShortCode::exists( 'display-terms' ) )
 			$default = '[display-terms taxonomy="%s" /]';
 
 		return $this->filters( 'default_taxonomy_content', $default, $taxonomy );

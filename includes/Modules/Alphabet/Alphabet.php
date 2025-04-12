@@ -97,7 +97,7 @@ class Alphabet extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'locale'            => Core\L10n::locale( TRUE ),
-			'alternative'       => 'en_US', // FALSE to disable
+			'alternative'       => 'en_US',                     // FALSE to disable
 			'posttype'          => $this->posttypes(),
 			'excerpt'           => FALSE,
 			'comments'          => FALSE,
@@ -172,7 +172,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $posts as $post ) {
 
-				$letter = Core\L10n::firstLetter( $post->post_title, $alphabet, $alt );
+				$letter = Core\L10n::firstLetter( Core\Text::trim( $post->post_title ), $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
@@ -193,8 +193,8 @@ class Alphabet extends gEditorial\Module
 
 						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
-						$html.= '<'.$mode['tag'].( $args['excerpt'] ? ' class="dl-horizontal"' : '' ).'>';
 						$html.= '<li id="'.$id.'"><'.$mode['head'].' class="-heading">'.$letter.'</'.$mode['head'].'>';
+						$html.= '<'.$mode['tag'].' class="-terms'.( $args['excerpt'] ? ' -with-desc' : ' -without-desc' ).'">';
 					}
 
 					$actives[] = $current = $letter;
@@ -202,7 +202,7 @@ class Alphabet extends gEditorial\Module
 
 				if ( $args['item_cb'] ) {
 
-					$html.= call_user_func_array( $args['item_cb'], [ $post, $args ] );
+					$html.= call_user_func_array( $args['item_cb'], [ $post, $args, $mode ] );
 
 				} else {
 
@@ -253,7 +253,7 @@ class Alphabet extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'locale'         => Core\L10n::locale( TRUE ),
-			'alternative'    => 'en_US', // FALSE to disable
+			'alternative'    => 'en_US',                     // FALSE to disable
 			'taxonomy'       => $this->taxonomies(),
 			'description'    => FALSE,
 			'count'          => FALSE,
@@ -323,7 +323,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $terms as $term ) {
 
-				$letter = Core\L10n::firstLetter( $term->name, $alphabet, $alt );
+				$letter = Core\L10n::firstLetter( Core\Text::trim( $term->name ), $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
@@ -344,8 +344,8 @@ class Alphabet extends gEditorial\Module
 
 						$html.= ( count( $actives ) ? '</'.$mode['tag'].'><div class="clearfix"></div></li>' : '' );
 
-						$html.= '<'.$mode['tag'].' class="-terms'.( $args['description'] ? ' -has-desc' : '' ).'">';
 						$html.= '<li id="'.$id.'"><'.$mode['head'].' class="-heading">'.$letter.'</'.$mode['head'].'>';
+						$html.= '<'.$mode['tag'].' class="-terms'.( $args['description'] ? ' -with-desc' : ' -without-desc' ).'">';
 					}
 
 					$actives[] = $current = $letter;
@@ -353,7 +353,7 @@ class Alphabet extends gEditorial\Module
 
 				if ( $args['item_cb'] ) {
 
-					$html.= call_user_func_array( $args['item_cb'], [ $term, $args ] );
+					$html.= call_user_func_array( $args['item_cb'], [ $term, $args, $mode ] );
 
 				} else {
 
