@@ -332,6 +332,7 @@ class Terms extends gEditorial\Module
 		if ( $this->get_setting( 'auto_term_overwrite' ) )
 			$this->_hook_overwrite_titles( $this->get_setting( 'term_overwrite', [] ) );
 
+		$this->filter_module( 'alphabet', 'term_title_metakeys', 2, 8 );
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
 		$this->action( 'term_intro_description_before', 5, 2, FALSE, $this->base );
@@ -2350,6 +2351,32 @@ class Terms extends gEditorial\Module
 		$meta    = get_term_meta( $term->term_id, $metakey, TRUE );
 
 		return $meta ?: $name; // TODO: pass through filters
+	}
+
+	/**
+	 * Filters proper field as title for terms on the `alphabet` short-code.
+	 *
+	 * @param array $meta-keys
+	 * @param array $taxonomies
+	 * @return false|string
+	 */
+	public function alphabet_term_title_metakeys( $metakeys, $taxonomies )
+	{
+		foreach ( $taxonomies as $taxonomy ) {
+
+			if ( ! empty( $metakeys[$taxonomy] ) )
+				continue;
+
+			$supported = $this->get_supported( $taxonomy );
+
+			if ( in_array( 'tagline', $supported, TRUE ) )
+				$metakeys[$taxonomy] = $this->get_supported_metakey( 'tagline', $taxonomy );
+
+			else if ( in_array( 'subtitle', $supported, TRUE ) )
+				$metakeys[$taxonomy] = $this->get_supported_metakey( 'subtitle', $taxonomy );
+		}
+
+		return $metakeys;
 	}
 
 	public function searchselect_result_image_for_term( $data, $term, $queried )
