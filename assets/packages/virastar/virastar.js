@@ -1,5 +1,6 @@
+/* eslint no-var: off */
 /*!
-* Virastar - v0.21.0 - 2020-05-14
+* Virastar - v0.22.1 - 2025-04-13
 * https://github.com/brothersincode/virastar
 * Licensed: MIT
 */
@@ -107,6 +108,7 @@
     markdown_normalize_lists: true,
     normalize_dates: true,
     normalize_ellipsis: true,
+    remove_spaces_before_ellipsis: true,
     normalize_eol: true,
     preserve_braces: false,
     preserve_brackets: false,
@@ -141,6 +143,7 @@
     'zwj;': '\u200d',
     'ZWNJ;': '\u200c',
     'zwnj;': '\u200c',
+    'not;': '\u00ac', // wrongly used as zwnj
     'shy;': '\u00ad' // wrongly used as zwnj
   };
 
@@ -190,7 +193,8 @@
     'لا': 'ﻼ',
     'ﻹ': 'ﻺ',
     'ﻷ': 'ﻸ',
-    'ﻵ': 'ﻶ'
+    'ﻵ': 'ﻶ',
+    '!': 'ǃ', // U+01C3
   };
   /* eslint-enable */
 
@@ -307,6 +311,10 @@
       text = fixPersianGlyphs(text);
     }
 
+    if (opts.fix_misc_non_persian_chars) {
+      text = fixMiscNonPersianChars(text);
+    }
+
     if (opts.fix_dashes) {
       text = fixDashes(text);
     }
@@ -317,6 +325,10 @@
 
     if (opts.normalize_ellipsis) {
       text = normalizeEllipsis(text);
+    }
+
+    if (opts.remove_spaces_before_ellipsis) {
+      text = removeSpaceBeforeEllipsis(text);
     }
 
     if (opts.fix_english_quotes_pairs) {
@@ -372,6 +384,7 @@
           return matched;
         }
 
+        // FIXME: is `matched` correct or maybe `word` is!?
         // skips converting english numbers of ordered lists in markdown
         if (opts.skip_markdown_ordered_lists_numbers_conversion && (matched + trailings + after).match(/(?:(?:\r?\n)|(?:\r\n?)|(?:^|\n))\d+\.\s/)) {
           return matched;
@@ -387,10 +400,6 @@
 
         if (opts.fix_punctuations) {
           matched = fixPunctuations(matched);
-        }
-
-        if (opts.fix_misc_non_persian_chars) {
-          matched = fixMiscNonPersianChars(matched);
         }
 
         if (opts.fix_question_mark) {
@@ -550,6 +559,9 @@
       // converts all soft hyphens (&shy;) into zwnj
       .replace(/\u00ad/g, '\u200c')
 
+      // converts all angled dash (&not;) into zwnj
+      .replace(/\u00ac/g, '\u200c')
+
       // removes more than one zwnj
       .replace(/\u200c{2,}/g, '\u200c')
 
@@ -622,7 +634,7 @@
       .replace(/\.([ ]+)(?=[.])/g, '.')
 
       // replaces three dots with ellipsis character
-      .replace(/[ \t]*\.{3,}/g, '…')
+      .replace(/\.{3,}/g, '…')
     ;
   }
 
@@ -632,9 +644,19 @@
       // replaces more than one ellipsis with one
       .replace(/(…){2,}/g, '…')
 
+      // replaces more than one space before ellipsis with one space
+      .replace(/[ ]{2,}…/, ' …')
+
       // replaces (space|tab|zwnj) after ellipsis with one space
-      // NOTE: allows for space before ellipsis
-      .replace(/([ ]{1,})*…[ \t\u200c]*/g, '$1… ')
+      .replace(/…[ \t\u200c]*/, '… ')
+    ;
+  }
+
+  function removeSpaceBeforeEllipsis (text) {
+    return text
+
+      // removes spaces before ellipsis
+      .replace(/[ \t]*…/g, '…')
     ;
   }
 
@@ -699,11 +721,12 @@
 
   // props @ebraminio/persiantools
   function fixMiscNonPersianChars (text) {
-    return charReplace(text, 'كڪيىۍېہە', 'ککییییههه');
+    return charReplace(text, 'كڪيےىۍېہە', 'ککیییییههه');
     // return text
     //   .replace(/ك/g, 'ک') // arabic kaf
     //   .replace(/ڪ/g, 'ک') // arabic letter swash kaf
     //   .replace(/ي/g, 'ی') // arabic
+    //   .replace(/ے/g, 'ی') // arabic letter yeh barree
     //   .replace(/ى/g, 'ی') // urdu
     //   .replace(/ۍ/g, 'ی') // pushtu
     //   .replace(/ې/g, 'ی') // uyghur
@@ -958,9 +981,9 @@
       // cleans zwnj before diacritic characters
       .replace(newRegExp('\u200c([' + charsDiacritic + '])'), '$1')
 
-      // cleans more than one diacritic characters
-      // props @languagetool-org
-      .replace(newRegExp('(.*)([' + charsDiacritic + ']){2,}(.*)'), '$1$2$3')
+      // cleans more than one of each diacritic characters
+      // props @Amm1rr
+      .replace(newRegExp('([' + charsDiacritic + '])\\1+'), '$1')
 
       // cleans spaces before diacritic characters
       .replace(newRegExp('(\\S)[ ]+([' + charsDiacritic + '])'), '$1$2')
@@ -983,14 +1006,17 @@
       // .replace(/(?<![_]{2})([ ]{2,})(?![_]{2}|\n)/g, ' ') // WORKS: using lookbehind
       .replace(/([^_])([ ]{2,})(?![_]{2}|\n)/g, '$1 ')
 
-      // cleans whitespace/zwnj between new-lines
-      // @REF: https://stackoverflow.com/a/10965543/
-      .replace(/\n[\s\u200c]*\n/g, '\n\n')
+      // cleans tab/space/zwnj/zwj/nbsp between new-lines // props @zoghal
+      .replace(/^\n([\t\u0020\u200c\u200d\u00a0]*)\n$/gm, '\n\n') // eslint-disable-line no-misleading-character-class
     ;
   }
 
   function cleanupLineBreaks (text) {
     return text
+
+      // cleans whitespace/zwnj between new-lines
+      // @REF: https://stackoverflow.com/a/10965543/
+      .replace(/\n[\s\u200c]*\n/g, '\n\n')
 
       // cleans more than two contiguous line-breaks
       .replace(/\n{2,}/g, '\n\n')
@@ -1045,6 +1071,12 @@
     }
 
     return normalizeEllipsis(text);
+  }
+
+  // reverse a string with recursion
+  // @source: https://www.freecodecamp.org/news/how-to-reverse-a-string-in-javascript-in-3-different-ways-75e4763c68cb/
+  function reverseString (text) {
+    return (text === '') ? '' : reverseString(text.substr(1)) + text.charAt(0);
   }
 
   // swap incorrect quotes pairs `»«` to `«»` and `”“` to `“”`
@@ -1102,6 +1134,7 @@
     // extra methods
     convertPersianNumbers: convertPersianNumbers,
     flipPunctuations: flipPunctuations,
+    reverseString: reverseString,
     swapQuotes: swapQuotes
   };
 

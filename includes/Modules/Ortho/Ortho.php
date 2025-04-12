@@ -79,6 +79,7 @@ class Ortho extends gEditorial\Module
 			// 'markdown_normalize_lists'                       => TRUE,
 			'normalize_dates'                                => TRUE,
 			'normalize_ellipsis'                             => TRUE,
+			'remove_spaces_before_ellipsis'                  => TRUE,
 			// 'normalize_eol'                                  => TRUE,
 			// 'preserve_braces'                                => FALSE,
 			// 'preserve_brackets'                              => FALSE,

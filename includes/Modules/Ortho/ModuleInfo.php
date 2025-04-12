@@ -9,7 +9,7 @@ class ModuleInfo extends gEditorial\Info
 {
 	const MODULE = 'ortho';
 
-	const VIRASTAR_VERSION     = '0.21.0';
+	const VIRASTAR_VERSION     = '0.22.1';
 	const PERSIANTOOLS_VERSION = '0.1.0';
 
 	public static function getHelpTabs( $context = NULL )
