@@ -102,6 +102,7 @@ class Alphabet extends gEditorial\Module
 			'excerpt'           => FALSE,
 			'comments'          => FALSE,
 			'comments_template' => '&nbsp;(%s)',
+			'meta_title'        => NULL,
 			'list_mode'         => 'dl',                        // `dl`/`ul`/`ol`
 			'list_tag'          => NULL,
 			'term_tag'          => NULL,
@@ -158,6 +159,15 @@ class Alphabet extends gEditorial\Module
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
+			if ( is_null( $args['meta_title'] ) )
+				$args['meta_title'] = $this->filters( 'post_title_metakeys', [], (array) $args['posttype'] );
+
+			else if ( $args['meta_title'] && ! is_array( $args['meta_title'] ) )
+				$args['meta_title'] = array_fill_keys( (array) $args['posttype'], $args['meta_title'] );
+
+			else if ( ! $args['meta_title'] )
+				$args['meta_title'] = [];
+
 			$mode = $this->_get_alphabet_list_mode( $args['list_mode'], $args );
 
 			foreach ( $posts as $post ) {
@@ -196,10 +206,13 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = WordPress\Post::title( $post );
+					$name  = WordPress\Post::title( $post );
 					$link  = Core\WordPress::getPostShortLink( $post->ID );
+					$title = empty( $args['meta_title'][$post->post_type] )
+						? FALSE
+						: get_post_meta( $post->ID, $args['meta_title'][$post->post_type], TRUE );
 
-					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::tag( 'a', [ 'href' => $link, 'title' => $title ], $name ).'</span>';
 
 					if ( $args['comments'] && $post->comment_count )
 						$html.= '<span class="-comments-count">'.WordPress\Strings::getCounted( $post->comment_count, $args['comments_template'] ).'</span>';
@@ -245,6 +258,7 @@ class Alphabet extends gEditorial\Module
 			'description'    => FALSE,
 			'count'          => FALSE,
 			'count_template' => '&nbsp;(%s)',
+			'meta_title'     => NULL,
 			'list_mode'      => 'dl',                        // `dl`/`ul`/`ol`
 			'list_tag'       => NULL,
 			'term_tag'       => NULL,
@@ -296,6 +310,15 @@ class Alphabet extends gEditorial\Module
 			if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 				$args['item_cb'] = FALSE;
 
+			if ( is_null( $args['meta_title'] ) )
+				$args['meta_title'] = $this->filters( 'term_title_metakeys', [], (array) $args['taxonomy'] );
+
+			else if ( $args['meta_title'] && ! is_array( $args['meta_title'] ) )
+				$args['meta_title'] = array_fill_keys( (array) $args['taxonomy'], $args['meta_title'] );
+
+			else if ( ! $args['meta_title'] )
+				$args['meta_title'] = [];
+
 			$mode = $this->_get_alphabet_list_mode( $args['list_mode'], $args );
 
 			foreach ( $terms as $term ) {
@@ -334,11 +357,13 @@ class Alphabet extends gEditorial\Module
 
 				} else {
 
-					$title = WordPress\Term::title( $term );
-					// $title = Core\Text::nameFamilyLast( $title ); // no need on front
+					$name  = WordPress\Term::title( $term );
 					$link  = WordPress\Term::link( $term );
+					$title = empty( $args['meta_title'][$term->taxonomy] )
+						? FALSE
+						: get_term_meta( $term->term_id, $args['meta_title'][$term->taxonomy], TRUE );
 
-					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::link( $title, $link ).'</span>';
+					$html.= '<'.$mode['term'].'><span class="-title">'.Core\HTML::tag( 'a', [ 'href' => $link, 'title' => $title ], $name ).'</span>';
 
 					if ( $args['count'] && $term->count )
 						$html.= '<span class="-term-count">'.WordPress\Strings::getCounted( $term->count, $args['count_template'] ).'</span>';
