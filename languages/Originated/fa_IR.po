@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Originated\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-13 16:44+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/Originated\n"
+"X-Domain: geditorial-originated\n"
+
+#: Originated.php:95
+msgid "Origin"
+msgid_plural "Origins"
+msgstr[0] "خواستگاه‌ها"
+msgstr[1] "خواستگاه"
+
+#: Originated.php:99
+msgctxt "Label: `extended_label`"
+msgid "Content Origins"
+msgstr "خواستگاه‌های محتوا"
+
+#: Originated.php:100
+msgctxt "Label: `menu_name`"
+msgid "Content Origins"
+msgstr "خواستگاه‌های محتوا"
+
+#: Originated.php:101
+msgctxt "Label: `show_option_all`"
+msgid "Origins"
+msgstr "خواستگاه"
+
+#: Originated.php:102
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unoriginated)"
+msgstr "(بدون خواستگاه)"
+
+#: Originated.php:125
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr "40"
