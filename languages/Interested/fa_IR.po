@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Interested\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-13 16:48+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/Interested\n"
+"X-Domain: geditorial-interested\n"
+
+#: Interested.php:95
+msgid "Interest"
+msgid_plural "Interests"
+msgstr[0] "علاقمندی‌ها"
+msgstr[1] "علاقمندی"
+
+#: Interested.php:99
+msgctxt "Label: `extended_label`"
+msgid "Content Interests"
+msgstr "علاقمندی‌های محتوا"
+
+#: Interested.php:100
+msgctxt "Label: `menu_name`"
+msgid "Content Interests"
+msgstr "علاقمندی‌های محتوا"
+
+#: Interested.php:101
+msgctxt "Label: `show_option_all`"
+msgid "Interests"
+msgstr "علاقمندی‌ها"
+
+#: Interested.php:102
+msgctxt "Label: `show_option_no_items`"
+msgid "(Uninterested)"
+msgstr "(بی‌علاقه)"
+
+#: Interested.php:120
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr "20"
+
+#, fuzzy
+#~ msgctxt "Label: `extended_label`"
+#~ msgid "Content Definitions"
+#~ msgstr "تعریف رتبه"
+
+#, fuzzy
+#~ msgctxt "Label: `menu_name`"
+#~ msgid "Content Definitions"
+#~ msgstr "تعریف رتبه"
+
+#, fuzzy
+#~ msgctxt "Label: `show_option_all`"
+#~ msgid "Definitions"
+#~ msgstr "سطوح تحصیلی در دسترس نیست!"
+
+#~ msgctxt "Label: `show_option_no_items`"
+#~ msgid "(Undefined)"
+#~ msgstr "(تعریف‌نشده)"

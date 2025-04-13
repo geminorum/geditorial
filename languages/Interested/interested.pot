@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Interested\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Interested\n"
+"X-Domain: geditorial-interested\n"
+
+#: Interested.php:95
+msgid "Interest"
+msgid_plural "Interests"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Interested.php:99
+msgctxt "Label: `extended_label`"
+msgid "Content Interests"
+msgstr ""
+
+#: Interested.php:100
+msgctxt "Label: `menu_name`"
+msgid "Content Interests"
+msgstr ""
+
+#: Interested.php:101
+msgctxt "Label: `show_option_all`"
+msgid "Interests"
+msgstr ""
+
+#: Interested.php:102
+msgctxt "Label: `show_option_no_items`"
+msgid "(Uninterested)"
+msgstr ""
+
+#: Interested.php:120
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
