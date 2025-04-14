@@ -229,8 +229,34 @@ class ModuleHelper extends gEditorial\Helper
 
 				case 'شابک':
 
-					$data['isbn'] = Core\Number::translate( str_ireplace( '-', '', $text ) );
-					// $data['isbn'] = Core\ISBN::sanitize( $text );
+					if ( Core\Text::has( $text, ':' ) ) {
+
+						$isbn = WordPress\Strings::getSeparated( $text, ':', 2 );
+
+						if ( isset( $isbn[1] ) )
+							$data['isbn'] = Core\ISBN::sanitize( $isbn[1] );
+
+						if ( isset( $isbn[0] ) )
+							$data['price'] = Core\Number::translate( $isbn[0] );
+
+					} else if ( Core\Text::has( $text, [ 'ریال', '﷼' ] ) ) {
+
+						$parts = WordPress\Strings::getSeparated( str_ireplace( [ 'ریال', '﷼' ], '|', $text ) );
+
+						if ( $isbn = array_pop( $parts ) )
+							$data['isbn'] = Core\ISBN::sanitize( $isbn );
+
+						if ( count( $parts ) > 1 )
+							$data['price'] = Core\Arraay::mergeConsecutive( $parts, 2, ' ' );
+
+						else
+							$data['price'] = Core\Number::translate( $parts[0] );
+
+					} else {
+
+						$data['isbn'] = Core\Number::translate( str_ireplace( '-', '', $text ) );
+					}
+
 					break;
 
 				case 'شماره کتابشناسی ملی':
