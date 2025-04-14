@@ -98,7 +98,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $base.$brief;
 	}
 
-	public static function scrapeFipaFromURL( $url )
+	public static function scrapeFipaFromURL( $url, $biblio = NULL, $isbn = NULL )
 	{
 		if ( ! $url )
 			return FALSE;
@@ -106,8 +106,15 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $body = self::getRemoteBody( $url ) )
 			return FALSE;
 
-		$data = [];
 		$dom  = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
+		$data = [
+			'rows'   => [],
+			'title'  => '',
+			'link'   => '',
+			// 'search' => $url ?? '',
+			'biblio' => $biblio ?? '',
+			'isbn'   => $isbn ? Core\ISBN::sanitize( $isbn ) : '',
+		];
 
 		foreach ( $dom->find( '.formcontent table table table' )->children('tr') as $tr ) {
 
@@ -136,18 +143,27 @@ class ModuleHelper extends gEditorial\Helper
 				}
 			}
 
-			$data[] = $row;
+			$data['rows'][] = $row;
 		}
+
+		if ( $title = $dom->find( '.formcontent table td [href^="http://opac.nlai.ir/opac-prod/bibliographic"]' )->text() )
+			$data['title'] = Core\Text::normalizeWhitespace( Core\Text::correctMixedEncoding( $title ) );
+
+		if ( $link = $dom->find( '.formcontent table td [href^="http://opac.nlai.ir/opac-prod/bibliographic"]' )->attr( 'href' ) )
+			$data['link'] = $link;
+
+		if ( $data['link'] && empty( $data['biblio'] ) )
+			$data['biblio'] = Core\Text::stripPrefix( $data['link'], 'http://opac.nlai.ir/opac-prod/bibliographic/' );
 
 		return $data;
 	}
 
-	public static function getFibaByBib( $bib )
+	public static function getFibaByBib( $bib, $isbn = NULL )
 	{
 		if ( WordPress\Strings::isEmpty( $bib ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( self::linkBib( $bib, FALSE ) );
+		return self::scrapeFipaFromURL( self::linkBib( $bib, FALSE ), $bib, $isbn );
 	}
 
 	public static function getFibaByISBN( $isbn )
@@ -155,7 +171,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $isbn ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( $isbn ) );
+		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( $isbn ), NULL, $isbn );
 	}
 
 	public static function getTitle( $raw, $fallback = FALSE )
@@ -177,7 +193,7 @@ class ModuleHelper extends gEditorial\Helper
 			'people'  => [],
 		];
 
-		foreach ( $raw as $row ) {
+		foreach ( $raw['rows'] as $row ) {
 
 			if ( empty( $row[1] ) )
 				continue;

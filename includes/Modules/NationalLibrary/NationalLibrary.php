@@ -284,7 +284,7 @@ class NationalLibrary extends gEditorial\Module
 			return $data ?: $fallback;
 
 		return $data
-			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
+			? Core\HTML::tableSimple( $data['rows'], [], FALSE, 'table' )
 			: $fallback;
 	}
 
@@ -427,7 +427,7 @@ class NationalLibrary extends gEditorial\Module
 			return $data ?: $fallback;
 
 		return $data
-			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
+			? Core\HTML::tableSimple( $data['rows'], [], FALSE, 'table' )
 			: $fallback;
 	}
 
@@ -526,7 +526,7 @@ class NationalLibrary extends gEditorial\Module
 			return $data ?: $fallback;
 
 		return $data
-			? Core\HTML::tableSimple( $data, [], FALSE, 'table' )
+			? Core\HTML::tableSimple( $data['rows'], [], FALSE, 'table' )
 			: $fallback;
 	}
 
@@ -600,7 +600,7 @@ class NationalLibrary extends gEditorial\Module
 	private function _render_fipa_data( $data )
 	{
 		echo $this->wrap(
-			Core\HTML::tableSimple( $data, [], FALSE, 'base-table-double table table-bordered' ),
+			Core\HTML::tableSimple( $data['rows'], [], FALSE, 'base-table-double table table-bordered' ),
 			'-fipa-summary'
 		);
 	}
@@ -734,10 +734,10 @@ class NationalLibrary extends gEditorial\Module
 		$html = '';
 
 		if ( $args['bib'] && $data = ModuleHelper::getFibaByBib( $args['bib'] ) )
-			$html = Core\HTML::tableSimple( $data, [], FALSE, 'table' ); // not cached!
+			$html = Core\HTML::tableSimple( $data['rows'], [], FALSE, 'table' ); // not cached!
 
 		else if ( $args['isbn'] && $data = ModuleHelper::getFibaByISBN( $args['isbn'] ) )
-			$html = Core\HTML::tableSimple( $data, [], FALSE, 'table' ); // not cached!
+			$html = Core\HTML::tableSimple( $data['rows'], [], FALSE, 'table' ); // not cached!
 
 		else if ( $post = WordPress\Post::get( $args['id'] ) )
 			$html = $this->get_fipa_by_post( $post ); // cached
