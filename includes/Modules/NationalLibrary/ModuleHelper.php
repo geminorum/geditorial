@@ -158,6 +158,16 @@ class ModuleHelper extends gEditorial\Helper
 		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( $isbn ) );
 	}
 
+	public static function getTitle( $raw, $fallback = FALSE )
+	{
+		if ( ! $parsed = self::parseFipa( $raw ) )
+			return $fallback;
+
+		return isset( $parsed['title'] )
+			? $parsed['title']
+			: $fallback;
+	}
+
 	public static function parseFipa( $raw )
 	{
 		$data = [
