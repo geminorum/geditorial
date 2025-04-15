@@ -111,7 +111,7 @@ class File extends Base
 	}
 
 	/**
-	 * Retrieves file-name from given path or URL.
+	 * Retrieves filename from given path or URL.
 	 *
 	 * @param string $path
 	 * @param null|array $mimes
@@ -225,7 +225,7 @@ class File extends Base
 		$path = str_replace( [ ' ', '&', '\r\n', '\n', '+', ',' ], '-', $path );
 
 		// delete and replace rest of special chars
-		$path = preg_replace( [ '/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/' ] , [ '', '-', '' ], $path );
+		$path = preg_replace( [ '/[^a-z0-9\-<>]/', '/[\-]+/', '/<[^>]*>/' ], [ '', '-', '' ], $path );
 
 		return $path;
 	}

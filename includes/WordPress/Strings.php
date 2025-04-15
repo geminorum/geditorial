@@ -134,7 +134,7 @@ class Strings extends Core\Base
 			return [];
 
 		if ( is_array( $string ) )
-			return $string;
+			return Core\Arraay::prepString( $string );
 
 		if ( is_null( $delimiters ) )
 			$delimiters = [

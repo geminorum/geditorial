@@ -8,9 +8,16 @@ class Text extends Base
 	/**
 	 * Advanced version of `trim()`.
 	 *
-	 * - \u202b is the Right-To-Left Embedding character.
-	 * - \u202e is the RIGHT-TO-LEFT OVERRIDE (RLO) character.
-	 * - \u202c is the POP DIRECTIONAL FORMATTING (PDF) character.
+	 * - `\u200a`: `HAIR SPACE` (U+200A)
+	 * - `\u200b`: `ZERO WIDTH SPACE` (U+200B)
+	 * - `\u200c`: `ZERO WIDTH NON-JOINER` (U+200C)
+	 * - `\u200e`: `LEFT-TO-RIGHT MARK` (U+200E)
+	 * - `\u200f`: `RIGHT-TO-LEFT MARK` (U+200F)
+	 * - `\u202a`: `LEFT-TO-RIGHT EMBEDDING` (U+202A)
+	 * - `\u202b`: `RIGHT-TO-LEFT EMBEDDING` (U+202B)
+	 * - `\u202c`: `POP DIRECTIONAL FORMATTING` (U+202C)
+	 * - `\u202d`: `LEFT-TO-RIGHT OVERRIDE` (U+202D)
+	 * - `\u202e`: `RIGHT-TO-LEFT OVERRIDE` (RLO)
 	 *
 	 * @param string $text
 	 * @return string $text
@@ -19,8 +26,8 @@ class Text extends Base
 	{
 		$text = (string) $text;
 		// $text = trim( $text, " \n\t\r\0\x0B," );
-		$text = preg_replace( '/^[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}\x{202B}]/u', '', $text );
-		$text = preg_replace( '/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}\x{202B}]$/u', '', $text );
+		$text = preg_replace( '/^[\s\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+/u', '', $text );
+		$text = preg_replace( '/[\s\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+$/u', '', $text );
 		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
