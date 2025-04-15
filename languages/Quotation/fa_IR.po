@@ -149,7 +149,7 @@ msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr "ترتیب فهرست"
 
-#. translators: %1$s: post parent, %2$s: menu order
+#. translators: %1$s: post parent, `%2$s`: menu order
 #: Quotation.php:267
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"

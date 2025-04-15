@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Housed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:22+0330\n"
+"PO-Revision-Date: 2025-04-03 12:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,170 +11,175 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Housed\n"
 "X-Domain: geditorial-housed\n"
 
-#: Housed.php:114
+#: Housed.php:109
 msgid "Housing Condition"
 msgid_plural "Housing Conditions"
 msgstr[0] "وضعیت‌های مسکن"
 msgstr[1] "وضعیت مسکن"
 
-#: Housed.php:118
+#: Housed.php:113
 msgctxt "Label: `menu_name`"
 msgid "Housing Conditions"
 msgstr "وضعیت‌های مسکن"
 
-#: Housed.php:119
+#: Housed.php:114
 msgctxt "Label: `extended_label`"
 msgid "Housing Conditions"
 msgstr "وضعیت‌های مسکن"
 
-#: Housed.php:120
+#: Housed.php:115
 msgctxt "Label: `show_option_all`"
 msgid "Housings"
 msgstr "مسکن"
 
-#: Housed.php:121
+#: Housed.php:116
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Housed.php:126
+#: Housed.php:121
 msgctxt "Field Label: `label`"
 msgid "Event"
 msgstr "رویداد"
 
-#: Housed.php:127
+#: Housed.php:122
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Housed.php:128
+#: Housed.php:123
 msgctxt "Field Label: `location`"
 msgid "Attendees"
 msgstr "حاضرین"
 
-#: Housed.php:129
+#: Housed.php:124
 msgctxt "Field Label: `address`"
 msgid "Address"
 msgstr "نشانی"
 
-#: Housed.php:130
+#: Housed.php:125
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr "مکان"
 
-#: Housed.php:131
+#: Housed.php:126
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Housed.php:137
+#: Housed.php:132
+msgctxt "Tab Title"
+msgid "Visiting"
+msgstr "بازدید"
+
+#: Housed.php:136
 msgctxt "Notice"
 msgid "There is no visiting information available!"
 msgstr "هیچ اطلاعات بازدیدی در دسترس نیست!"
 
-#: Housed.php:138
+#: Housed.php:137
 msgctxt "Notice"
-msgid "You have not necessary permission to manage this visiting data."
+msgid "You do not have the necessary permission to manage this visiting data."
 msgstr "شما مجوز لازم برای دسترسی به مدیریت اطلاعات بازدید را ندارید."
 
-#: Housed.php:145
-msgctxt "Settings Description"
+#: Housed.php:144
+msgctxt "Setting Description"
 msgid "Supports &ldquo;Housing Conditions&rdquo; for the selected post-types."
 msgstr ""
 
-#: Housed.php:149
+#: Housed.php:148
 msgctxt "MetaBox Title"
 msgid "Visiting"
 msgstr "بازدید"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:153
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Housed.php:152
 msgctxt "Button Title"
 msgid "Visiting of %1$s"
 msgstr "بازدیدها از %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:155
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Housed.php:154
 msgctxt "Button Text"
 msgid "%1$s Manage the Visiting of %2$s"
 msgstr "%1$s مدیریت بازدیدهای %2$s"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:158
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Housed.php:157
 msgctxt "Action Title"
 msgid "Visiting of %1$s"
 msgstr "بازدیدها از %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:160
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Housed.php:159
 msgctxt "Action Text"
 msgid "Visiting"
 msgstr "بازدید"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Housed.php:163
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Housed.php:162
 msgctxt "Row Title"
 msgid "Visiting of %1$s"
 msgstr "بازدیدها از %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Housed.php:165
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Housed.php:164
 msgctxt "Row Text"
 msgid "Visiting"
 msgstr "بازدید"
 
-#: Housed.php:177
+#: Housed.php:176
 msgctxt "Field Title"
 msgid "Housing Area"
 msgstr "متراژ مسکن"
 
-#: Housed.php:178
+#: Housed.php:177
 msgctxt "Field Description"
 msgid "Housing area in meter squared"
 msgstr "محیط مسکونی به متر مربع"
 
-#: Housed.php:192
+#: Housed.php:191
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ownership"
 msgstr "صاحب‌خانه"
 
-#: Housed.php:193
+#: Housed.php:192
 msgctxt "Main Taxonomy: Default Term"
 msgid "Rental"
 msgstr "مستأجر"
 
-#: Housed.php:194
+#: Housed.php:193
 msgctxt "Main Taxonomy: Default Term"
 msgid "Parental"
 msgstr "والدین"
 
-#: Housed.php:195
+#: Housed.php:194
 msgctxt "Main Taxonomy: Default Term"
 msgid "Dormitory"
 msgstr "خواب‌گاهی"
 
-#: Housed.php:196
+#: Housed.php:195
 msgctxt "Main Taxonomy: Default Term"
 msgid "Homeless"
 msgstr "بی‌خانه"
 
-#. translators: %s: post title
-#: Housed.php:349
+#. translators: `%s`: post title
+#: Housed.php:353
 msgctxt "Page Title"
 msgid "Visiting Grid for %s"
 msgstr "جدول بازدیدها از %s"
 
-#. translators: %s: post title
-#: Housed.php:351
+#. translators: `%s`: post title
+#: Housed.php:355
 msgctxt "Page Title"
 msgid "Visiting Overview for %s"
 msgstr "جدول بازدیدها از %s"
 
-#: Housed.php:385
+#: Housed.php:389
 msgctxt "Default Term: Audit"
 msgid "Empty Visiting Data"
 msgstr "اطلاعات بازدید خالی"

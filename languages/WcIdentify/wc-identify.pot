@@ -13,86 +13,92 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcIdentify\n"
 "X-Domain: geditorial-wc-identify\n"
 
-#: ModuleSettings.php:20
+#: ModuleSettings.php:19
 msgctxt "Card Title"
 msgid "Attribute to GTIN"
 msgstr ""
 
-#: ModuleSettings.php:24
+#: ModuleSettings.php:23
 msgctxt "Button"
 msgid "Migrate Data"
 msgstr ""
 
-#: ModuleSettings.php:26
+#: ModuleSettings.php:25
 msgctxt "Message"
 msgid "Imports GTIN product attributes into built-in global unique ID fields."
 msgstr ""
 
-#. translators: %1$s: gtin placeholder, %2$s: product title
-#: ModuleSettings.php:65
+#. translators: `%1$s`: gtin placeholder, `%2$s`: product title
+#: ModuleSettings.php:64
 msgctxt "Notice"
 msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
 msgstr ""
 
-#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
-#: ModuleSettings.php:83
+#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:82
 msgctxt "Notice"
 msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
 msgstr ""
 
-#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
-#: ModuleSettings.php:97
+#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:96
 msgctxt "Notice"
 msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
 msgstr ""
 
-#. translators: %s: product title
-#: ModuleSettings.php:106
+#. translators: `%s`: product title
+#: ModuleSettings.php:105
 msgctxt "Notice"
 msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
 msgstr ""
 
-#: WcIdentify.php:36
+#: WcIdentify.php:50
 msgctxt "Setting Title"
 msgid "Display GTIN"
 msgstr ""
 
-#: WcIdentify.php:37
+#: WcIdentify.php:51
 msgctxt "Setting Description"
 msgid "Prepends the global unique id on product attributes table."
 msgstr ""
 
-#: WcIdentify.php:41
+#: WcIdentify.php:55
 msgctxt "Setting Title"
 msgid "GTIN lookup"
 msgstr ""
 
-#: WcIdentify.php:42
+#: WcIdentify.php:56
 msgctxt "Setting Description"
 msgid "Makes the value for the global unique id clickable on product attributes table."
 msgstr ""
 
-#: WcIdentify.php:47
+#: WcIdentify.php:61
 msgctxt "Setting Title"
 msgid "GTIN Label"
 msgstr ""
 
-#: WcIdentify.php:48
+#: WcIdentify.php:62
 msgctxt "Setting Description"
 msgid "Overrides the default label for the global unique id on product attributes table."
 msgstr ""
 
-#: WcIdentify.php:49
-msgctxt "Field Title"
-msgid "GTIN"
-msgstr ""
-
-#: WcIdentify.php:70
+#: WcIdentify.php:63
+#: WcIdentify.php:94
 msgctxt "Attribute Label"
 msgid "GTIN"
 msgstr ""
 
-#: WcIdentify.php:85
+#: WcIdentify.php:68
+msgctxt "Setting Title"
+msgid "GTIN Exemptions"
+msgstr ""
+
+#: WcIdentify.php:69
+msgctxt "Setting Description"
+msgid "Instructs output structured data that a valid identifier for the product doesn't exist."
+msgstr ""
+
+#: WcIdentify.php:125
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr ""

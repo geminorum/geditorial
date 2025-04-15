@@ -1,0 +1,43 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Alphabet\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-04-07 05:08+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/Alphabet\n"
+"X-Domain: geditorial-alphabet\n"
+
+#: Alphabet.php:38
+msgctxt "Setting: Setting Title"
+msgid "Posts Shortcode Tag"
+msgstr "کلید شورت‌کد فرسته‌ها"
+
+#: Alphabet.php:39
+msgctxt "Setting: Setting Description"
+msgid ""
+"Customizes the alphabet list of posts short-code tag. Leave blank for "
+"default."
+msgstr ""
+"کلید شورت‌کد فهرست الفبایی فرسته‌ها را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی "
+"بگذارید."
+
+#: Alphabet.php:48
+msgctxt "Setting: Setting Title"
+msgid "Terms Shortcode Tag"
+msgstr "کلید شورت‌کد رده‌ها"
+
+#: Alphabet.php:49
+msgctxt "Setting: Setting Description"
+msgid ""
+"Customizes the alphabet list of terms short-code tag. Leave blank for "
+"default."
+msgstr ""
+"کلید شورت‌کد فهرست الفبایی رده‌ها را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی "
+"بگذارید."

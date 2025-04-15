@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WasBorn\n"
 "X-Domain: geditorial-was-born\n"
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: WasBorn.php:57
 msgctxt "Setting Title"
 msgid "Date of Birth Meta-key for %s"
@@ -147,75 +147,75 @@ msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "6"
 msgstr ""
 
-#: WasBorn.php:450
+#: WasBorn.php:453
 msgctxt "Summary"
 msgid "Under-Aged"
 msgstr ""
 
-#: WasBorn.php:545
+#: WasBorn.php:548
 msgctxt "Summary"
 msgid "Invalid Birthday"
 msgstr ""
 
-#: WasBorn.php:614
+#: WasBorn.php:617
 msgctxt "Summary"
 msgid "Mean-Age"
 msgstr ""
 
-#: WasBorn.php:695
+#: WasBorn.php:698
 msgctxt "Summary"
 msgid "No Birthday"
 msgstr ""
 
-#. translators: %1$s: date start, %2$s: date end
-#: WasBorn.php:782
+#. translators: `%1$s`: date start, `%2$s`: date end
+#: WasBorn.php:785
 msgctxt "Age Span Exact Dates"
 msgid "From %1$s till %2$s"
 msgstr ""
 
-#: WasBorn.php:783
+#: WasBorn.php:786
 msgctxt "Age Span Exact Dates"
 msgid "Begin"
 msgstr ""
 
-#: WasBorn.php:784
+#: WasBorn.php:787
 msgctxt "Age Span Exact Dates"
 msgid "Now"
 msgstr ""
 
-#: WasBorn.php:964
+#: WasBorn.php:967
 msgctxt "Pointer Notice"
 msgid "Under-Aged!"
 msgstr ""
 
-#: WasBorn.php:974
+#: WasBorn.php:977
 msgctxt "Default Term: Audit"
 msgid "Empty Date-of-Birth"
 msgstr ""
 
-#: WasBorn.php:975
+#: WasBorn.php:978
 msgctxt "Default Term: Audit"
 msgid "Is Under-Aged"
 msgstr ""
 
-#: WasBorn.php:1047
+#: WasBorn.php:1050
 msgctxt "Header"
 msgid "Birthday Imports"
 msgstr ""
 
-#: WasBorn.php:1059
+#: WasBorn.php:1062
 msgctxt "Card Title"
 msgid "Post-Date by Birthday"
 msgstr ""
 
-#. translators: %1$s: year taxonomy, %2$s: post title
-#: WasBorn.php:1098
+#. translators: `%1$s`: year taxonomy, `%2$s`: post title
+#: WasBorn.php:1101
 msgctxt "Notice"
-msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;"
+msgid "There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;."
 msgstr ""
 
-#. translators: %1$s: date-time, %2$s: year taxonomy, %3$s: post title
-#: WasBorn.php:1104
+#. translators: `%1$s`: date-time, `%2$s`: year taxonomy, `%3$s`: post title
+#: WasBorn.php:1108
 msgctxt "Notice"
-msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;"
+msgid "&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;."
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Happening\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:18+0330\n"
+"PO-Revision-Date: 2025-02-12 17:16+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,134 +15,134 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Happening\n"
 "X-Domain: geditorial-happening\n"
 
-#: Happening.php:57
-msgctxt "Fields"
-msgid "Event Start"
-msgstr "شروع رویداد"
-
-#: Happening.php:58
-msgctxt "Fields"
-msgid "Determines the date and time in which the Event is scheduled to commence."
-msgstr ""
-
-#: Happening.php:63
-msgctxt "Fields"
-msgid "Event End"
-msgstr "پایان رویداد"
-
-#: Happening.php:64
-msgctxt "Fields"
-msgid "Determines the date and time in which the Event is scheduled to conclude."
-msgstr ""
-
-#: Happening.php:70
-msgctxt "Fields"
-msgid "Event All-Day"
-msgstr "رویداد روز"
-
-#: Happening.php:71
-msgctxt "Fields"
-msgid "Determines that is an all-day event."
-msgstr ""
-
-#: Happening.php:77 Happening.php:78
-msgctxt "Fields"
-msgid "Event Repeat"
-msgstr "تکرار رویداد"
-
-#: Happening.php:82
-msgctxt "Fields"
-msgid "Never"
-msgstr "هرگز"
-
-#: Happening.php:83
-msgctxt "Fields"
-msgid "Weekly"
-msgstr "هفتگی"
-
-#: Happening.php:84
-msgctxt "Fields"
-msgid "Monthly"
-msgstr "ماهیانه"
-
-#: Happening.php:85
-msgctxt "Fields"
-msgid "Yearly"
-msgstr "سالیانه"
-
-#: Happening.php:89 Happening.php:90
-msgctxt "Fields"
-msgid "Event Expire"
-msgstr "سرآمد رویداد"
-
-#: Happening.php:124
+#: Happening.php:80
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] "رویدادها"
 msgstr[1] "رویداد"
 
-#: Happening.php:125
+#: Happening.php:81
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] "دسته‌های رویداد"
 msgstr[1] "دسته رویداد"
 
-#: Happening.php:126
+#: Happening.php:82
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] "انواع رویداد"
 msgstr[1] "نوع رویداد"
 
-#: Happening.php:127
+#: Happening.php:83
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] "تقویم‌های رویداد"
 msgstr[1] "تقویم رویداد"
 
-#: Happening.php:131
+#: Happening.php:87
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Happening.php:132
+#: Happening.php:88
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Happening.php:135
+#: Happening.php:91
 msgctxt "Menu Title"
 msgid "Types"
 msgstr "انواع"
 
-#: Happening.php:138
+#: Happening.php:94
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr "تقویم‌ها"
 
-#: Happening.php:153
+#: Happening.php:109
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr "تعطیلات"
 
-#: Happening.php:154
+#: Happening.php:110
 msgctxt "Default Term"
 msgid "Birth"
 msgstr "زادروز"
 
-#: Happening.php:155
+#: Happening.php:111
 msgctxt "Default Term"
 msgid "Death"
 msgstr "درگذشت"
 
-#: Happening.php:156
+#: Happening.php:112
 msgctxt "Default Term"
 msgid "Start"
 msgstr "شروع"
 
-#: Happening.php:157
+#: Happening.php:113
 msgctxt "Default Term"
 msgid "End"
 msgstr "پایان"
+
+#: Happening.php:124
+msgctxt "Fields"
+msgid "Event Start"
+msgstr "شروع رویداد"
+
+#: Happening.php:125
+msgctxt "Fields"
+msgid "Determines the date and time in which the Event is scheduled to commence."
+msgstr ""
+
+#: Happening.php:130
+msgctxt "Fields"
+msgid "Event End"
+msgstr "پایان رویداد"
+
+#: Happening.php:131
+msgctxt "Fields"
+msgid "Determines the date and time in which the Event is scheduled to conclude."
+msgstr ""
+
+#: Happening.php:137
+msgctxt "Fields"
+msgid "Event All-Day"
+msgstr "رویداد روز"
+
+#: Happening.php:138
+msgctxt "Fields"
+msgid "Determines that is an all-day event."
+msgstr ""
+
+#: Happening.php:144 Happening.php:145
+msgctxt "Fields"
+msgid "Event Repeat"
+msgstr "تکرار رویداد"
+
+#: Happening.php:149
+msgctxt "Fields"
+msgid "Never"
+msgstr "هرگز"
+
+#: Happening.php:150
+msgctxt "Fields"
+msgid "Weekly"
+msgstr "هفتگی"
+
+#: Happening.php:151
+msgctxt "Fields"
+msgid "Monthly"
+msgstr "ماهیانه"
+
+#: Happening.php:152
+msgctxt "Fields"
+msgid "Yearly"
+msgstr "سالیانه"
+
+#: Happening.php:156 Happening.php:157
+msgctxt "Fields"
+msgid "Event Expire"
+msgstr "سرآمد رویداد"
 
 #: Widgets/EventPoster.php:18
 msgctxt "Widget Title"

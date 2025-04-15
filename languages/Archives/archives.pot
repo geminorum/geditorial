@@ -13,106 +13,106 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Archives\n"
 "X-Domain: geditorial-archives\n"
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: Archives.php:45
-#: Archives.php:79
+#: Archives.php:88
 msgctxt "Setting Title"
 msgid "Archives Title for %s"
 msgstr ""
 
-#: Archives.php:46
+#: Archives.php:48
 msgctxt "Setting Description"
 msgid "Used as title on the posttype archive pages."
 msgstr ""
 
-#: Archives.php:49
-#: Archives.php:100
-#: Archives.php:468
+#: Archives.php:51
+#: Archives.php:117
+#: Archives.php:490
 msgctxt "Icon Title"
 msgid "View Archives Page"
 msgstr ""
 
-#. translators: %s: supported object label
-#: Archives.php:56
-#: Archives.php:88
+#. translators: `%s`: supported object label
+#: Archives.php:59
+#: Archives.php:100
 msgctxt "Setting Title"
 msgid "Archives Content for %s"
 msgstr ""
 
-#: Archives.php:57
+#: Archives.php:62
 msgctxt "Setting Description"
 msgid "Used as content on the posttype archive pages."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Archives.php:65
-#: Archives.php:109
+#. translators: `%s`: supported object label
+#: Archives.php:71
+#: Archives.php:127
 msgctxt "Setting Title"
 msgid "Archives Template for %s"
 msgstr ""
 
-#: Archives.php:66
+#: Archives.php:74
 msgctxt "Setting Description"
 msgid "Used as page template on the posttype archive pages."
 msgstr ""
 
-#: Archives.php:80
+#: Archives.php:91
 msgctxt "Setting Description"
 msgid "Used as title on the taxonomy archive pages."
 msgstr ""
 
-#: Archives.php:89
+#: Archives.php:103
 msgctxt "Setting Description"
 msgid "Used as content on the taxonomy archive pages."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Archives.php:97
+#. translators: `%s`: supported object label
+#: Archives.php:112
 msgctxt "Setting Title"
 msgid "Archives Slug for %s"
 msgstr ""
 
-#: Archives.php:98
+#: Archives.php:115
 msgctxt "Setting Description"
 msgid "Used as slug on the taxonomy archive pages."
 msgstr ""
 
-#: Archives.php:110
+#: Archives.php:130
 msgctxt "Setting Description"
 msgid "Used as page template on the taxonomy archive pages."
 msgstr ""
 
-#: Archives.php:115
+#: Archives.php:135
 msgctxt "Setting Description"
 msgid "Prepends a search form to the posttype archive pages."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Archives.php:164
-#: Archives.php:178
+#. translators: `%s`: supported object label
+#: Archives.php:186
+#: Archives.php:201
 msgctxt "Help Sidebar"
 msgid "%s Archives"
 msgstr ""
 
-#. translators: %s: supported object label
-#: Archives.php:443
-#: Archives.php:452
+#. translators: `%s`: supported object label
+#: Archives.php:465
+#: Archives.php:474
 msgctxt "Navigation MetaBox"
 msgid "%s Archives"
 msgstr ""
 
-#. translators: %s: taxonomy object label
-#: Archives.php:471
+#. translators: `%s`: taxonomy object label
+#: Archives.php:494
 msgctxt "Card Title"
 msgid "Custom Archives Page for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Archives.php:483
+#: Archives.php:508
 msgctxt "Description"
 msgid "Link to the custom archives page generated for terms in this taxonomy."
 msgstr ""
 
-#: Archives.php:487
+#: Archives.php:512
 msgctxt "Message"
 msgid "There are no no custom archives pages available!"
 msgstr ""

@@ -13,30 +13,30 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
 "X-Domain: geditorial-gallery\n"
 
-#: Gallery.php:64
+#: Gallery.php:54
 msgid "Photo Album"
 msgid_plural "Photo Albums"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:65
+#: Gallery.php:55
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:66
+#: Gallery.php:56
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Gallery.php:70
+#: Gallery.php:60
 msgctxt "Label: Menu Name"
 msgid "Gallery"
 msgstr ""
 
-#: Gallery.php:71
+#: Gallery.php:61
 msgctxt "Label: Featured Image"
 msgid "Featured Photo"
 msgstr ""

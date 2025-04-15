@@ -13,68 +13,68 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Ranked\n"
 "X-Domain: geditorial-ranked\n"
 
-#: Ranked.php:93
+#: Ranked.php:85
 msgid "Ranking Definition"
 msgid_plural "Ranking Definitions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Ranked.php:97
+#: Ranked.php:89
 msgctxt "Label: Menu Name"
 msgid "Content Rankings"
 msgstr ""
 
-#: Ranked.php:98
+#: Ranked.php:90
 msgctxt "Label: Show Option All"
 msgid "Rankings"
 msgstr ""
 
-#: Ranked.php:99
+#: Ranked.php:91
 msgctxt "Label: Show Option No Terms"
 msgid "(Unranked)"
 msgstr ""
 
-#: Ranked.php:111
+#: Ranked.php:103
 msgctxt "Default Term"
 msgid "Publisher"
 msgstr ""
 
-#: Ranked.php:112
+#: Ranked.php:104
 msgctxt "Default Term"
 msgid "Editor in Chief"
 msgstr ""
 
-#: Ranked.php:113
+#: Ranked.php:105
 msgctxt "Default Term"
 msgid "Editorial Director"
 msgstr ""
 
-#: Ranked.php:114
+#: Ranked.php:106
 msgctxt "Default Term"
 msgid "Managing Editor"
 msgstr ""
 
-#: Ranked.php:115
+#: Ranked.php:107
 msgctxt "Default Term"
 msgid "Senior Editor"
 msgstr ""
 
-#: Ranked.php:116
+#: Ranked.php:108
 msgctxt "Default Term"
 msgid "Digital Producer"
 msgstr ""
 
-#: Ranked.php:117
+#: Ranked.php:109
 msgctxt "Default Term"
 msgid "Copy Editor"
 msgstr ""
 
-#: Ranked.php:118
+#: Ranked.php:110
 msgctxt "Default Term"
 msgid "Proofreader"
 msgstr ""
 
-#: Ranked.php:119
+#: Ranked.php:111
 msgctxt "Default Term"
 msgid "Executive"
 msgstr ""

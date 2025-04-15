@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NextOfKin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-15 00:18+0330\n"
+"PO-Revision-Date: 2025-04-03 12:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,180 +11,185 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
-#: NextOfKin.php:104
+#: NextOfKin.php:98
 msgid "Marital Status"
 msgid_plural "Marital Statuses"
 msgstr[0] "وضعیت‌های تأهل"
 msgstr[1] "وضعیت تأهل"
 
-#: NextOfKin.php:108
+#: NextOfKin.php:102
 msgctxt "Label: Menu Name"
 msgid "Marital"
 msgstr "تأهل"
 
-#: NextOfKin.php:109
+#: NextOfKin.php:103
 msgctxt "Label: Show Option All"
 msgid "Marital Status"
 msgstr "تأهل"
 
-#: NextOfKin.php:110
+#: NextOfKin.php:104
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: NextOfKin.php:115
+#: NextOfKin.php:109
 msgctxt "Field Label: `fullname`"
 msgid "Fullname"
 msgstr "نام کامل"
 
-#: NextOfKin.php:116
+#: NextOfKin.php:110
 msgctxt "Field Label: `fathername`"
 msgid "Father Name"
 msgstr "نام پدر"
 
-#: NextOfKin.php:117
+#: NextOfKin.php:111
 msgctxt "Field Label: `label`"
 msgid "Relation"
 msgstr "نسبت"
 
-#: NextOfKin.php:118
+#: NextOfKin.php:112
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: NextOfKin.php:119
+#: NextOfKin.php:113
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr "تماس"
 
-#: NextOfKin.php:120
+#: NextOfKin.php:114
 msgctxt "Field Label: `dob`"
 msgid "Date of Birth"
 msgstr "تاریخ تولد"
 
-#: NextOfKin.php:121
+#: NextOfKin.php:115
 msgctxt "Field Label: `education`"
 msgid "Education"
 msgstr "تحصیلات"
 
-#: NextOfKin.php:122
+#: NextOfKin.php:116
 msgctxt "Field Label: `occupation`"
 msgid "Occupation"
 msgstr "اشتغال"
 
-#: NextOfKin.php:123
+#: NextOfKin.php:117
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: NextOfKin.php:129
+#: NextOfKin.php:123
+msgctxt "Tab Title"
+msgid "Family"
+msgstr "خانواده"
+
+#: NextOfKin.php:127
 msgctxt "Notice"
 msgid "There is no family information available!"
 msgstr "هیچ اطلاعات خانوادگی در دسترس نیست!"
 
-#: NextOfKin.php:130
+#: NextOfKin.php:128
 msgctxt "Notice"
-msgid "You have not necessary permission to manage this family data."
+msgid "You do not have the necessary permission to manage this family data."
 msgstr "شما مجوز لازم برای مدیریت داده‌های این خانواده را ندارید."
 
-#: NextOfKin.php:137
+#: NextOfKin.php:135
 msgctxt "Setting Description"
 msgid "Supports marital statuses for the selected post-types."
 msgstr "وضعیت تأهل را برای نوع‌فرسته‌های انتخاب‌شده، پشتیبانی می‌کند."
 
-#: NextOfKin.php:141
+#: NextOfKin.php:139
 msgctxt "MetaBox Title"
 msgid "Family"
 msgstr "خانواده"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:145
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: NextOfKin.php:143
 msgctxt "Button Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:147
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: NextOfKin.php:145
 msgctxt "Button Text"
 msgid "%1$s Manage the Family of %2$s"
 msgstr "%1$s مدیریت خانواده %2$s"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:150
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: NextOfKin.php:148
 msgctxt "Action Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:152
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: NextOfKin.php:150
 msgctxt "Action Text"
 msgid "Family"
 msgstr "خانواده"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: NextOfKin.php:155
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: NextOfKin.php:153
 msgctxt "Row Title"
 msgid "Family of %1$s"
 msgstr "خانواده %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: NextOfKin.php:157
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: NextOfKin.php:155
 msgctxt "Row Text"
 msgid "Family"
 msgstr "خانواده"
 
-#: NextOfKin.php:167
+#: NextOfKin.php:165
 msgctxt "Default Term: Marital Status"
 msgid "Single"
 msgstr "مجرد"
 
-#: NextOfKin.php:168
+#: NextOfKin.php:166
 msgctxt "Default Term: Marital Status"
 msgid "Married"
 msgstr "متأهل"
 
-#: NextOfKin.php:169
+#: NextOfKin.php:167
 msgctxt "Default Term: Marital Status"
 msgid "Divorced"
 msgstr "مطلقه"
 
-#: NextOfKin.php:170
+#: NextOfKin.php:168
 msgctxt "Default Term: Marital Status"
 msgid "Widowed"
 msgstr "بیوه"
 
-#: NextOfKin.php:171
+#: NextOfKin.php:169
 msgctxt "Default Term: Marital Status"
 msgid "Separated"
 msgstr "جداشده"
 
-#: NextOfKin.php:172
+#: NextOfKin.php:170
 msgctxt "Default Term: Marital Status"
 msgid "Registered"
 msgstr "عقد"
 
-#: NextOfKin.php:237
+#: NextOfKin.php:235
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "10"
 msgstr "5"
 
-#. translators: %s: post title
-#: NextOfKin.php:338
+#. translators: `%s`: post title
+#: NextOfKin.php:337
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr "شبکه خانوادگی برای %s"
 
-#. translators: %s: post title
-#: NextOfKin.php:340
+#. translators: `%s`: post title
+#: NextOfKin.php:339
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr "بررسی خانواده %s"
 
-#: NextOfKin.php:364
+#: NextOfKin.php:363
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr "داده‌های خانواده خالی"
@@ -319,7 +324,7 @@ msgstr "داده‌های خانواده خالی"
 #~ msgstr "نشانوند id باید یک فرسته باشد."
 
 #~ msgctxt "Message"
-#~ msgid "You have not necessary permission to manage this family data."
+#~ msgid "You do not have the necessary permission to manage this family data."
 #~ msgstr "شما مجوز لازم برای مدیریت داده‌های این خانواده را ندارید."
 
 #~ msgctxt "Setting Title"

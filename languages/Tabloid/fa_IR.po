@@ -35,13 +35,13 @@ msgctxt "Action"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
+#. translators: %1$s: current post title, `%2$s`: posttype singular name
 #: Tabloid.php:144
 msgctxt "Post Row Action Title Attr"
 msgid "Overview of this %2$s"
 msgstr "نمای‌کلی برای %s"
 
-#. translators: %1$s: current term name, %2$s: taxonomy singular name
+#. translators: %1$s: current term name, `%2$s`: taxonomy singular name
 #: Tabloid.php:170
 msgctxt "Term Row Action Title Attr"
 msgid "Overview of this %2$s"

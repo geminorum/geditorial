@@ -13,200 +13,300 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
 "X-Domain: geditorial-bookmarked\n"
 
-#: Bookmarked.php:81
+#: Bookmarked.php:87
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Bookmarked.php:82
+#: Bookmarked.php:88
 msgctxt "Field Label: `link`"
 msgid "Bookmark"
 msgstr ""
 
-#: Bookmarked.php:83
+#: Bookmarked.php:89
 msgctxt "Field Label: `type`"
 msgid "Type"
 msgstr ""
 
-#: Bookmarked.php:84
+#: Bookmarked.php:90
 msgctxt "Field Label: `code`"
 msgid "Code"
 msgstr ""
 
-#: Bookmarked.php:87
+#: Bookmarked.php:93
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Bookmarked.php:93
+#: Bookmarked.php:99
 msgctxt "Tab Title"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:97
+#: Bookmarked.php:103
 msgctxt "Notice"
 msgid "There is no bookmarks information available!"
 msgstr ""
 
-#: Bookmarked.php:98
+#: Bookmarked.php:104
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the bookmarks data."
+msgid "You do not have the necessary permission to manage the bookmarks data."
 msgstr ""
 
-#: Bookmarked.php:105
+#: Bookmarked.php:111
 msgctxt "MetaBox Title"
 msgid "Bookmarks"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:109
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Bookmarked.php:115
 msgctxt "Button Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:111
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Bookmarked.php:117
 msgctxt "Button Text"
 msgid "%1$s Manage the Bookmarks of %2$s"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:114
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Bookmarked.php:120
 msgctxt "Action Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:116
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Bookmarked.php:122
 msgctxt "Action Text"
 msgid "Bookmarks"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Bookmarked.php:119
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Bookmarked.php:125
 msgctxt "Row Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Bookmarked.php:121
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Bookmarked.php:127
 msgctxt "Row Text"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:133
+#: Bookmarked.php:139
 msgctxt "Field Title"
 msgid "Bookmarks Title"
 msgstr ""
 
-#: Bookmarked.php:134
+#: Bookmarked.php:140
 msgctxt "Field Description"
 msgid "The Bookmarks Table Caption"
 msgstr ""
 
-#: Bookmarked.php:185
-msgctxt "Type Option"
-msgid "Custom Link"
-msgstr ""
-
-#: Bookmarked.php:193
-msgctxt "Type Option"
-msgid "Site Post"
-msgstr ""
-
-#: Bookmarked.php:201
-msgctxt "Type Option"
-msgid "Site Attachment"
-msgstr ""
-
-#: Bookmarked.php:209
-msgctxt "Type Option"
-msgid "Site Term"
-msgstr ""
-
-#: Bookmarked.php:218
-msgctxt "Type Option"
-msgid "National Library"
-msgstr ""
-
-#: Bookmarked.php:226
-msgctxt "Type Option"
-msgid "Goodreads Book"
-msgstr ""
-
-#: Bookmarked.php:234
-msgctxt "Type Option"
-msgid "Fidibo Book"
-msgstr ""
-
-#: Bookmarked.php:242
-msgctxt "Type Option"
-msgid "Taaghche Book"
-msgstr ""
-
-#: Bookmarked.php:250
-msgctxt "Type Option"
-msgid "Behkhaan Profile"
-msgstr ""
-
-#: Bookmarked.php:258
-msgctxt "Type Option"
-msgid "Neshan Map"
-msgstr ""
-
-#: Bookmarked.php:266
-msgctxt "Type Option"
-msgid "Balad Map"
-msgstr ""
-
+#. translators: `%s`: post title
 #: Bookmarked.php:274
-msgctxt "Type Option"
-msgid "Aparat Video"
-msgstr ""
-
-#: Bookmarked.php:282
-msgctxt "Type Option"
-msgid "Youtube Video"
-msgstr ""
-
-#: Bookmarked.php:290
-msgctxt "Type Option"
-msgid "Email Address"
-msgstr ""
-
-#: Bookmarked.php:298
-msgctxt "Type Option"
-msgid "Phone Number"
-msgstr ""
-
-#: Bookmarked.php:306
-msgctxt "Type Option"
-msgid "Mobile Number"
-msgstr ""
-
-#: Bookmarked.php:314
-msgctxt "Type Option"
-msgid "SMS Number"
-msgstr ""
-
-#: Bookmarked.php:322
-msgctxt "Type Option"
-msgid "PDF Document"
-msgstr ""
-
-#. translators: %s: post title
-#: Bookmarked.php:404
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr ""
 
-#. translators: %s: post title
-#: Bookmarked.php:406
+#. translators: `%s`: post title
+#: Bookmarked.php:276
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr ""
 
-#: Bookmarked.php:442
+#: Bookmarked.php:324
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
+msgstr ""
+
+#: ModuleHelper.php:79
+msgctxt "Type Option"
+msgid "Custom Link"
+msgstr ""
+
+#: ModuleHelper.php:87
+msgctxt "Type Option"
+msgid "Site Post"
+msgstr ""
+
+#: ModuleHelper.php:95
+msgctxt "Type Option"
+msgid "Site Attachment"
+msgstr ""
+
+#: ModuleHelper.php:103
+msgctxt "Type Option"
+msgid "Site Term"
+msgstr ""
+
+#: ModuleHelper.php:111
+msgctxt "Type Option"
+msgid "National Library"
+msgstr ""
+
+#: ModuleHelper.php:116
+msgctxt "Type Description"
+msgid "See the page about this on National Library website."
+msgstr ""
+
+#: ModuleHelper.php:121
+msgctxt "Type Option"
+msgid "Goodreads Book"
+msgstr ""
+
+#: ModuleHelper.php:126
+msgctxt "Type Description"
+msgid "More about this on Goodreads network."
+msgstr ""
+
+#: ModuleHelper.php:131
+msgctxt "Type Option"
+msgid "Fidibo Book"
+msgstr ""
+
+#: ModuleHelper.php:136
+msgctxt "Type Description"
+msgid "Read this on Fidibo e-book platform."
+msgstr ""
+
+#: ModuleHelper.php:141
+msgctxt "Type Option"
+msgid "Taaghche Book"
+msgstr ""
+
+#: ModuleHelper.php:146
+msgctxt "Type Description"
+msgid "Read this on Taaghche e-book platform."
+msgstr ""
+
+#: ModuleHelper.php:151
+msgctxt "Type Option"
+msgid "Behkhaan Profile"
+msgstr ""
+
+#: ModuleHelper.php:156
+msgctxt "Type Description"
+msgid "More about this on Behkhaan network."
+msgstr ""
+
+#: ModuleHelper.php:160
+msgctxt "Type Option"
+msgid "Neshan Map"
+msgstr ""
+
+#: ModuleHelper.php:165
+msgctxt "Type Description"
+msgid "More about this on Neshan maps."
+msgstr ""
+
+#: ModuleHelper.php:169
+msgctxt "Type Option"
+msgid "Balad Map"
+msgstr ""
+
+#: ModuleHelper.php:174
+msgctxt "Type Description"
+msgid "More about this on Balad maps."
+msgstr ""
+
+#: ModuleHelper.php:178
+msgctxt "Type Option"
+msgid "Aparat Video"
+msgstr ""
+
+#: ModuleHelper.php:183
+msgctxt "Type Description"
+msgid "More about this on Aparat video platform."
+msgstr ""
+
+#: ModuleHelper.php:187
+msgctxt "Type Option"
+msgid "Youtube Video"
+msgstr ""
+
+#: ModuleHelper.php:192
+msgctxt "Type Description"
+msgid "More about this on Youtube video platform."
+msgstr ""
+
+#: ModuleHelper.php:196
+msgctxt "Type Option"
+msgid "Wikipedia Page"
+msgstr ""
+
+#: ModuleHelper.php:201
+msgctxt "Type Description"
+msgid "More about this on an Wikipedia page."
+msgstr ""
+
+#: ModuleHelper.php:205
+msgctxt "Type Option"
+msgid "Navaar Audio"
+msgstr ""
+
+#: ModuleHelper.php:210
+msgctxt "Type Description"
+msgid "More about this on an Navaar audio."
+msgstr ""
+
+#: ModuleHelper.php:215
+msgctxt "Type Option"
+msgid "Email Address"
+msgstr ""
+
+#: ModuleHelper.php:220
+msgctxt "Type Description"
+msgid "Contact someone about this via email."
+msgstr ""
+
+#: ModuleHelper.php:224
+msgctxt "Type Option"
+msgid "Phone Number"
+msgstr ""
+
+#: ModuleHelper.php:229
+msgctxt "Type Description"
+msgid "Contact someone about this via phone."
+msgstr ""
+
+#: ModuleHelper.php:233
+msgctxt "Type Option"
+msgid "Mobile Number"
+msgstr ""
+
+#: ModuleHelper.php:238
+msgctxt "Type Description"
+msgid "Contact someone about this via mobile phone."
+msgstr ""
+
+#: ModuleHelper.php:242
+msgctxt "Type Option"
+msgid "SMS Number"
+msgstr ""
+
+#: ModuleHelper.php:247
+msgctxt "Type Description"
+msgid "Contact someone about this via short message."
+msgstr ""
+
+#: ModuleHelper.php:251
+msgctxt "Type Option"
+msgid "PDF Document"
+msgstr ""
+
+#: ModuleHelper.php:256
+msgctxt "Type Description"
+msgid "Read more about this as PDF format."
+msgstr ""
+
+#: ModuleHelper.php:260
+msgctxt "Type Option"
+msgid "ePub Book"
+msgstr ""
+
+#: ModuleHelper.php:265
+msgctxt "Type Description"
+msgid "Read more about this as ePub book."
 msgstr ""

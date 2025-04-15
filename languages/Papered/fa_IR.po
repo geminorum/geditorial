@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Papered\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-24 12:22+0330\n"
+"PO-Revision-Date: 2025-03-14 22:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,228 +15,233 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Papered\n"
 "X-Domain: geditorial-papered\n"
 
-#: Papered.php:54
+#: Papered.php:55
 msgctxt "Setting Title"
 msgid "Direct Post-types"
 msgstr "فرسته‌های مستقیم"
 
-#: Papered.php:55
+#: Papered.php:56
 msgctxt "Setting Description"
 msgid "Supported post-types to use profiles directly."
 msgstr ""
 
-#: Papered.php:56
+#: Papered.php:57
 msgctxt "Setting Empty"
 msgid "There are no directed post-types available!"
 msgstr "هیچ نوع‌فرسته مستقیمی در دسترس نیست!"
 
-#: Papered.php:94 Papered.php:95
+#: Papered.php:95 Papered.php:96
 msgid "Print Profile"
 msgid_plural "Print Profiles"
 msgstr[0] "نمایه‌های چاپ"
 msgstr[1] "نمایه چاپ"
 
-#: Papered.php:96
+#: Papered.php:97
 msgid "Print Profile Type"
 msgid_plural "Print Profile Types"
 msgstr[0] "انواع نمایه چاپ"
 msgstr[1] "نوع نمایه چاپ"
 
-#: Papered.php:97
+#: Papered.php:98
 msgid "Print Profile Category"
 msgid_plural "Print Profile Categories"
 msgstr[0] "دسته‌های نمایه چاپ"
 msgstr[1] "دسته نمایه چاپ"
 
-#: Papered.php:98
+#: Papered.php:99
 msgid "Print Profile Flag"
 msgid_plural "Print Profile Flags"
 msgstr[0] "نشان‌های نمایه چاپ"
 msgstr[1] "نشان نمایه چاپ"
 
-#: Papered.php:102
+#: Papered.php:103
 msgctxt "Menu Title"
 msgid "Flags"
 msgstr "نشان‌ها"
 
-#: Papered.php:107
+#: Papered.php:108
 msgctxt "PaperSize"
 msgid "A3 Portrait (297&times;420)"
 msgstr "A3 ایستاده (۲۹۷&times;۴۲۰)"
 
-#: Papered.php:108
+#: Papered.php:109
 msgctxt "PaperSize"
 msgid "A3 Landscape (420&times;297)"
 msgstr "A3 نشسته (۴۲۰&times;۲۹۷)"
 
-#: Papered.php:109
+#: Papered.php:110
 msgctxt "PaperSize"
 msgid "A4 Portrait (210&times;297)"
 msgstr "A4 ایستاده (۲۱۰&times;۲۹۷)"
 
-#: Papered.php:110
+#: Papered.php:111
 msgctxt "PaperSize"
 msgid "A4 Landscape (297&times;210)"
 msgstr "A4 نشسته (۲۹۷&times;۲۱۰)"
 
-#: Papered.php:111
+#: Papered.php:112
 msgctxt "PaperSize"
 msgid "A5 Portrait (148&times;210)"
 msgstr "A5 ایستاده (۱۴۸&times;۲۱۰)"
 
-#: Papered.php:112
+#: Papered.php:113
 msgctxt "PaperSize"
 msgid "A5 Landscape (210&times;148)"
 msgstr "A5 نشسته (۲۱۰&times;۱۴۸)"
 
-#: Papered.php:113
+#: Papered.php:114
 msgctxt "PaperSize"
 msgid "Letter Portrait (216&times;280)"
 msgstr "نامه ایستاده (۲۱۶&times;۲۸۰)"
 
-#: Papered.php:114
+#: Papered.php:115
 msgctxt "PaperSize"
 msgid "Letter Landscape (280&times;216)"
 msgstr "نامه نشسته (۲۸۰&times;۲۱۶)"
 
-#: Papered.php:115
+#: Papered.php:116
 msgctxt "PaperSize"
 msgid "Legal Portrait (216&times;357)"
 msgstr "حقوقی ایستاده (۲۱۶&times;۳۵۷)"
 
-#: Papered.php:116
+#: Papered.php:117
 msgctxt "PaperSize"
 msgid "Legal Landscape (357&times;216)"
 msgstr "حقوقی نشسته (۳۵۷&times;۲۱۶)"
 
-#: Papered.php:119
+#: Papered.php:120
 msgctxt "Sheet Padding"
 msgid "5mm Sheet Padding"
 msgstr "حاشیه ۵ م‌م برگه"
 
-#: Papered.php:120
+#: Papered.php:121
 msgctxt "Sheet Padding"
 msgid "10mm Sheet Padding"
 msgstr "حاشیه ۱۰ م‌م برگه"
 
-#: Papered.php:121
+#: Papered.php:122
 msgctxt "Sheet Padding"
 msgid "15mm Sheet Padding"
 msgstr "حاشیه ۱۵ م‌م برگه"
 
-#: Papered.php:122
+#: Papered.php:123
 msgctxt "Sheet Padding"
 msgid "20mm Sheet Padding"
 msgstr "حاشیه ۲۰ م‌م برگه"
 
-#: Papered.php:123
+#: Papered.php:124
 msgctxt "Sheet Padding"
 msgid "25mm Sheet Padding"
 msgstr "حاشیه ۲۵ م‌م برگه"
 
-#: Papered.php:167
+#: Papered.php:168
 msgctxt "Primary Taxonomy: Default Term"
 msgid "Featured"
 msgstr "برگزیده"
 
-#: Papered.php:168
+#: Papered.php:169
 msgctxt "Primary Taxonomy: Default Term"
 msgid "Deprecated"
 msgstr "منسوخ"
 
-#: Papered.php:171
+#: Papered.php:172
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Libre Fonts"
 msgstr "نیازمند قلم‌های لیبره"
 
-#: Papered.php:172
+#: Papered.php:173
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Vazir Fonts"
 msgstr "نیازمند قلم‌های وزیر"
 
-#: Papered.php:173
+#: Papered.php:174
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Nastaliq Fonts"
 msgstr "نیازمند قلم‌های نستعلیق"
 
-#: Papered.php:174
+#: Papered.php:175
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Bootstrap 5"
 msgstr "نیازمند بوتس‌ترپ ۵"
 
-#: Papered.php:175
+#: Papered.php:176
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Titr Fonts"
 msgstr "نیازمند قلم‌های تیتر"
 
-#: Papered.php:176
+#: Papered.php:177
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Barcode"
 msgstr "نیازمند بارکد"
 
-#: Papered.php:177
+#: Papered.php:178
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs QR-Code"
 msgstr "نیازمند کیوآر-کد"
 
-#: Papered.php:178
+#: Papered.php:179
 msgctxt "Flag Taxonomy: Default Term"
 msgid "Needs Global Summary"
 msgstr "نیاز به خلاصه‌وضعیت کلی"
 
-#: Papered.php:543
+#: Papered.php:180
+msgctxt "Flag Taxonomy: Default Term"
+msgid "Needs Security Token"
+msgstr "نیازمند ژتون امنیتی"
+
+#: Papered.php:546
 msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr "هیچ نمایه چاپی در دسترسی نیست!"
 
-#: Papered.php:725
+#: Papered.php:729
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr "&ndash; انتخاب اندازه کاغذ &ndash;"
 
-#: Papered.php:736
+#: Papered.php:740
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr "&ndash; انتخاب حاشیه برگه &ndash;"
 
-#: Papered.php:747
+#: Papered.php:751
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr "ردیف در برگه"
 
-#: Papered.php:765
+#: Papered.php:769
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr "&ndash; انتخاب نوع‌فرسته مستقیم &ndash;"
 
-#: Papered.php:823
+#: Papered.php:827
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr "الگو برای ردیف"
 
-#: Papered.php:824
+#: Papered.php:828
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr "الگوی پیشینی"
 
-#: Papered.php:825
+#: Papered.php:829
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr "الگوی پسینی"
 
-#: Papered.php:826
+#: Papered.php:830
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr "شیوه‌نامه‌های الگو"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:898 Papered.php:955
+#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
+#: Papered.php:902 Papered.php:959
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr "%1$s پیش‌نمایش نمایه"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Papered.php:911 Papered.php:977
+#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
+#: Papered.php:915 Papered.php:981
 msgctxt "Button"
 msgid "%1$s Print Profile"
 msgstr "%1$s چاپ نمایه"

@@ -13,53 +13,63 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Honored\n"
 "X-Domain: geditorial-honored\n"
 
-#: Honored.php:93
+#: Honored.php:85
 msgid "Honorific"
 msgid_plural "Honorifics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Honored.php:97
+#: Honored.php:89
 msgctxt "Label: Show Option All"
 msgid "Honors"
 msgstr ""
 
-#: Honored.php:98
+#: Honored.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Honored.php:115
+#: Honored.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Clergy"
 msgstr ""
 
-#: Honored.php:116
+#: Honored.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Doctor"
 msgstr ""
 
-#: Honored.php:117
+#: Honored.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sadat"
 msgstr ""
 
-#: Honored.php:118
+#: Honored.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sayyid"
 msgstr ""
 
-#: Honored.php:119
+#: Honored.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sayyidah"
 msgstr ""
 
-#: Honored.php:120
+#: Honored.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Engineer"
 msgstr ""
 
-#: Honored.php:121
+#: Honored.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Lawyer"
+msgstr ""
+
+#: Honored.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Professor"
+msgstr ""
+
+#: Honored.php:118
+msgctxt "Main Taxonomy: Default Term"
+msgid "Ayatollah"
 msgstr ""

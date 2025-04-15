@@ -20,7 +20,7 @@ msgstr ""
 
 #: Markdown.php:39
 msgctxt "Setting Description"
-msgid "Converts wiki like markup to internal links."
+msgid "Converts wiki like markup into internal links."
 msgstr ""
 
 #: Markdown.php:89
@@ -30,42 +30,42 @@ msgstr ""
 
 #: Markdown.php:98
 msgctxt "Adminbar"
-msgid "Markdown Convert"
+msgid "Markdown: Convert"
 msgstr ""
 
 #: Markdown.php:108
 msgctxt "Adminbar"
-msgid "Markdown Process"
+msgid "Markdown: Process"
 msgstr ""
 
 #: Markdown.php:116
 msgctxt "Adminbar"
-msgid "Markdown Cleanup"
+msgid "Markdown: Cleanup"
 msgstr ""
 
 #: Markdown.php:124
 msgctxt "Adminbar"
-msgid "Markdown Discard"
+msgid "Markdown: Discard"
 msgstr ""
 
 #: Markdown.php:154
 msgctxt "Message"
-msgid "Unable process Makrdown content into HTML. Please try again."
+msgid "Unable to process Markdown content into HTML. Please try again."
 msgstr ""
 
 #: Markdown.php:162
 msgctxt "Message"
-msgid "Unable convert content into Makrdown. Please try again."
+msgid "Unable to convert content into Markdown. Please try again."
 msgstr ""
 
 #: Markdown.php:171
 msgctxt "Message"
-msgid "Unable cleanup Makrdown content. Please try again."
+msgid "Unable to cleanup Markdown content. Please try again."
 msgstr ""
 
 #: Markdown.php:179
 msgctxt "Message"
-msgid "Unable discard Makrdown content back into HTML. Please try again."
+msgid "Unable to discard Markdown content back into HTML. Please try again."
 msgstr ""
 
 #: Markdown.php:469

@@ -13,70 +13,70 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
 
-#. translators: %s: primary taxonomy name
-#: Entry.php:45
+#. translators: `%s`: category taxonomy name
+#: Entry.php:51
 msgctxt "Settings"
 msgid "Makes <strong>%s</strong> available for selection in navigation menus."
 msgstr ""
 
-#: Entry.php:51
+#: Entry.php:57
 msgctxt "Settings"
 msgid "Auto-link Sections"
 msgstr ""
 
-#: Entry.php:52
+#: Entry.php:58
 msgctxt "Settings"
 msgid "Tries to linkify the section titles in the entry content."
 msgstr ""
 
-#: Entry.php:87
+#: Entry.php:98
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:88
+#: Entry.php:99
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Entry.php:92
+#: Entry.php:103
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Entry.php:93
+#: Entry.php:104
 msgctxt "Label: Column Title"
 msgid "Section"
 msgstr ""
 
-#: Entry.php:94
+#: Entry.php:105
 msgctxt "Label: Uncategorized"
 msgid "Unsectioned"
 msgstr ""
 
-#: Entry.php:99
+#: Entry.php:110
 msgctxt "Default Term: Name"
 msgid "[Unsectioned]"
 msgstr ""
 
-#: Entry.php:100
+#: Entry.php:111
 msgctxt "Default Term: Description"
 msgid "Unsectioned Entries"
 msgstr ""
 
-#: Entry.php:190
+#: Entry.php:199
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr ""
 
-#: Entry.php:207
+#: Entry.php:216
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr ""
 
-#: Entry.php:211
+#: Entry.php:220
 msgctxt "UI: Label"
 msgid "Section"
 msgstr ""

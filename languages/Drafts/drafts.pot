@@ -43,7 +43,7 @@ msgctxt "Setting Description"
 msgid "Maximum number of posts for each post-type."
 msgstr ""
 
-#. translators: %s: count
+#. translators: `%s`: count
 #: Drafts.php:77
 msgid "Public Preview <span class=\"count -counted\">(%s)</span>"
 msgid_plural "Public Previews <span class=\"count -counted\">(%s)</span>"
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Unable to make preview public. Please try again."
 msgstr ""
 
-#. translators: %s: drafts count
+#. translators: `%s`: drafts count
 #: Drafts.php:230
 msgctxt "Header"
 msgid "View all %s drafts"
@@ -89,7 +89,7 @@ msgctxt "State"
 msgid "Public Preview"
 msgstr ""
 
-#. translators: %s: post title
+#. translators: `%s`: post title
 #: Drafts.php:411
 msgctxt "State Title"
 msgid "Open public preview of &#8220;%s&#8221;"

@@ -13,18 +13,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Regioned\n"
 "X-Domain: geditorial-regioned\n"
 
-#: Regioned.php:95
+#: Regioned.php:87
 msgid "Regionality Definition"
 msgid_plural "Regionality Definitions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Regioned.php:99
+#: Regioned.php:91
 msgctxt "Label: Show Option All"
 msgid "Regionalities"
 msgstr ""
 
-#: Regioned.php:100
+#: Regioned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""

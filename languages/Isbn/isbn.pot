@@ -127,12 +127,23 @@ msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:399
-msgctxt "Field Title"
-msgid "GTIN"
-msgstr ""
-
-#: Isbn.php:443
+#: Isbn.php:452
 msgctxt "Header"
 msgid "ISBN Imports"
+msgstr ""
+
+#: ModuleSettings.php:27
+msgctxt "Card Title"
+msgid "From Book Module"
+msgstr ""
+
+#: ModuleSettings.php:30
+msgctxt "Button"
+msgid "Migrate Data"
+msgstr ""
+
+#. translators: `%s`: number of rows found
+#: ModuleSettings.php:34
+msgctxt "Message"
+msgid "Converts meta-keys of found %s rows into current module keys."
 msgstr ""

@@ -13,128 +13,128 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Revisions\n"
 "X-Domain: geditorial-revisions\n"
 
-#: Revisions.php:54
+#: Revisions.php:52
 msgctxt "Setting Title"
 msgid "Revision Count"
 msgstr ""
 
-#: Revisions.php:55
+#: Revisions.php:53
 msgctxt "Setting Description"
 msgid "Displays revision summary of the post on the attributes column"
 msgstr ""
 
-#: Revisions.php:59
+#: Revisions.php:57
 msgctxt "Setting Title"
 msgid "Revision Word Count"
 msgstr ""
 
-#: Revisions.php:60
+#: Revisions.php:58
 msgctxt "Setting Description"
 msgid "Displays revision word count of the post title, content and excerpt"
 msgstr ""
 
-#: Revisions.php:65
+#: Revisions.php:63
 msgctxt "Setting Title"
 msgid "Revision Max Count"
 msgstr ""
 
-#. translators: %s: code placeholder
-#: Revisions.php:67
+#. translators: `%s`: code placeholder
+#: Revisions.php:65
 msgctxt "Setting Description"
 msgid "The maximum number of revisions to save for each post. %s for every revision."
 msgstr ""
 
-#: Revisions.php:119
+#: Revisions.php:117
 msgctxt "Bulk Action"
 msgid "Purge Revisions"
 msgstr ""
 
-#. translators: %s: revisions count
-#: Revisions.php:147
+#. translators: `%s`: revisions count
+#: Revisions.php:145
 msgctxt "Message"
 msgid "%s items(s) revisions purged!"
 msgstr ""
 
-#: Revisions.php:164
+#: Revisions.php:162
 msgctxt "Row Icon Title"
 msgid "Revisions"
 msgstr ""
 
-#. translators: %s: revisions count
-#: Revisions.php:167
+#. translators: `%s`: revisions count
+#: Revisions.php:165
 msgctxt "Row"
 msgid "%s Revision"
 msgid_plural "%s Revisions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Revisions.php:172
+#: Revisions.php:170
 msgctxt "Title Attr"
 msgid "View the last revision"
 msgstr ""
 
-#: Revisions.php:207
+#: Revisions.php:208
 msgctxt "Title Attr"
 msgid "Title/Content/Excerpt Word Count"
 msgstr ""
 
-#: Revisions.php:230
+#: Revisions.php:231
 msgctxt "Indicator"
 msgid "[Current]"
 msgstr ""
 
-#: Revisions.php:237
+#: Revisions.php:238
 msgctxt "Title Attr"
 msgid "Browse"
 msgstr ""
 
-#: Revisions.php:238
+#: Revisions.php:239
 msgctxt "Title Attr"
 msgid "Delete"
 msgstr ""
 
-#: Revisions.php:244
+#: Revisions.php:245
 msgctxt "Indicator"
 msgid "[Autosave]"
 msgstr ""
 
-#: Revisions.php:270
+#: Revisions.php:271
 msgctxt "Title Attr"
 msgid "Purge all revisions"
 msgstr ""
 
-#: Revisions.php:276
+#: Revisions.php:277
 msgctxt "Button"
 msgid "Purge Revisions"
 msgstr ""
 
-#: Revisions.php:283
+#: Revisions.php:284
 msgctxt "Title Attr"
 msgid "Browse all revisions"
 msgstr ""
 
-#. translators: %s: revisions count
-#: Revisions.php:286
+#. translators: `%s`: revisions count
+#: Revisions.php:287
 msgctxt "Button"
 msgid "Browse %s Revisions"
 msgstr ""
 
-#: Revisions.php:403
+#: Revisions.php:404
 msgctxt "Table Action"
 msgid "Cleanup Revisions"
 msgstr ""
 
-#: Revisions.php:414
+#: Revisions.php:415
 msgctxt "Table Column"
 msgid "Revisions"
 msgstr ""
 
-#: Revisions.php:439
+#: Revisions.php:440
 msgctxt "Header"
 msgid "Overview of Post Revisions"
 msgstr ""
 
-#: Revisions.php:440
+#: Revisions.php:441
 msgctxt "Message"
 msgid "No post revisions found."
 msgstr ""

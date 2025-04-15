@@ -43,32 +43,32 @@ msgctxt "Setting Description"
 msgid "Strips unregistered shortcode tags from post content."
 msgstr ""
 
-#: Shortcodes.php:61
+#: Shortcodes.php:59
 msgctxt "Shortcode Name"
 msgid "Display Terms"
 msgstr ""
 
-#: Shortcodes.php:62
+#: Shortcodes.php:60
 msgctxt "Shortcode Name"
 msgid "Term Tiles"
 msgstr ""
 
-#: Shortcodes.php:109
+#: Shortcodes.php:107
 msgctxt "Title Attr"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:147
+#: Shortcodes.php:145
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:161
+#: Shortcodes.php:159
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:179
+#: Shortcodes.php:177
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr ""

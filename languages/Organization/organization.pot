@@ -13,160 +13,160 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:72
+#: Organization.php:68
 msgctxt "Settings"
 msgid "Sub-department Support"
 msgstr ""
 
-#: Organization.php:73
+#: Organization.php:69
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 
-#: Organization.php:98
+#: Organization.php:94
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Organization.php:99
+#: Organization.php:95
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Organization.php:157
-#: Organization.php:158
+#: Organization.php:143
+#: Organization.php:144
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:159
+#: Organization.php:145
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:160
+#: Organization.php:146
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:161
+#: Organization.php:147
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:162
+#: Organization.php:148
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %s: paired item title
-#: Organization.php:167
+#. translators: `%s`: paired item title
+#: Organization.php:153
 msgctxt "Label: `paired_connected_to`"
 msgid "Member of %s Department"
 msgstr ""
 
-#: Organization.php:168
+#: Organization.php:154
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr ""
 
-#: Organization.php:169
+#: Organization.php:155
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr ""
 
-#: Organization.php:172
+#: Organization.php:158
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr ""
 
-#: Organization.php:175
+#: Organization.php:161
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Organization.php:178
+#: Organization.php:164
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Organization.php:181
+#: Organization.php:167
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Organization.php:190
+#: Organization.php:176
 msgctxt "Misc: `column_icon_title`"
 msgid "Department"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Organization.php:195
+#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#: Organization.php:181
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Organization.php:205
+#: Organization.php:191
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Organization.php:206
+#: Organization.php:192
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Organization.php:207
+#: Organization.php:193
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Organization.php:208
+#: Organization.php:194
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Organization.php:209
+#: Organization.php:195
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Organization.php:235
+#: Organization.php:221
 msgctxt "Field Title"
 msgid "Administrators"
 msgstr ""
 
-#: Organization.php:236
+#: Organization.php:222
 msgctxt "Field Description"
 msgid "People Who Participate as Administrators in This Organization"
 msgstr ""
 
-#: Organization.php:244
+#: Organization.php:230
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr ""
 
-#: Organization.php:245
+#: Organization.php:231
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:255
+#: Organization.php:241
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:256
+#: Organization.php:242
 msgctxt "Field Description"
 msgid "Unique Organization Membership Number"
 msgstr ""
 
-#: Organization.php:722
+#: Organization.php:713
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr ""

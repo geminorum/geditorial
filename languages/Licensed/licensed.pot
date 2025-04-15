@@ -13,53 +13,53 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Licensed\n"
 "X-Domain: geditorial-licensed\n"
 
-#: Licensed.php:93
+#: Licensed.php:85
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Licensed.php:97
+#: Licensed.php:89
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr ""
 
-#: Licensed.php:98
+#: Licensed.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr ""
 
-#: Licensed.php:110
+#: Licensed.php:102
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr ""
 
-#: Licensed.php:111
+#: Licensed.php:103
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr ""
 
-#: Licensed.php:112
+#: Licensed.php:104
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr ""
 
-#: Licensed.php:113
+#: Licensed.php:105
 msgctxt "Default Term"
 msgid "Category One"
 msgstr ""
 
-#: Licensed.php:114
+#: Licensed.php:106
 msgctxt "Default Term"
 msgid "Loader"
 msgstr ""
 
-#: Licensed.php:115
+#: Licensed.php:107
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr ""
 
-#: Licensed.php:116
+#: Licensed.php:108
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr ""

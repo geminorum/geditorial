@@ -13,33 +13,21 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:74
+#: Symposium.php:76
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:75
+#: Symposium.php:77
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Symposium.php:76
+#: Symposium.php:78
 msgid "Session Type"
 msgid_plural "Session Types"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Symposium.php:77
-msgid "Session Audience"
-msgid_plural "Session Audiences"
-msgstr[0] ""
-msgstr[1] ""
-
-#: Symposium.php:78
-msgid "Session Subject"
-msgid_plural "Session Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
@@ -68,12 +56,12 @@ msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr ""
 
-#: Symposium.php:115
+#: Symposium.php:116
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr ""
 
-#: Symposium.php:116
+#: Symposium.php:117
 msgctxt "Field Description"
 msgid "People Who Featured in This Session"
 msgstr ""

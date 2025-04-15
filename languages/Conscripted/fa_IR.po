@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Conscripted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-26 00:22+0330\n"
+"PO-Revision-Date: 2025-02-12 01:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,78 +15,78 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Conscripted\n"
 "X-Domain: geditorial-conscripted\n"
 
-#: Conscripted.php:89
+#: Conscripted.php:96
 msgid "Conscription"
 msgid_plural "Conscriptions"
 msgstr[0] "نظام‌وظیفه"
 msgstr[1] "نظام‌وظیفه"
 
-#: Conscripted.php:93
+#: Conscripted.php:100
 msgctxt "Label: `extended_label`"
 msgid "Conscription"
 msgstr "نظام‌وظیفه"
 
-#: Conscripted.php:94
+#: Conscripted.php:101
 msgctxt "Label: Show Option All"
 msgid "Conscription"
 msgstr "نظام‌وظیفه"
 
-#: Conscripted.php:95
+#: Conscripted.php:102
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: Conscripted.php:107
+#: Conscripted.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Underage for Service"
 msgstr "زیر سن قانونی"
 
-#: Conscripted.php:108
+#: Conscripted.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject to Service"
 msgstr "مشمول خدمت"
 
-#: Conscripted.php:109
+#: Conscripted.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Currently in Service"
 msgstr "در حال خدمت"
 
-#: Conscripted.php:110
+#: Conscripted.php:117
 msgctxt "Main Taxonomy: Default Term"
 msgid "End of Service"
 msgstr "پایان خدمت"
 
-#: Conscripted.php:111
+#: Conscripted.php:118
 msgctxt "Main Taxonomy: Default Term"
 msgid "Medical Exemption"
 msgstr "معافیت پزشکی"
 
-#: Conscripted.php:112
+#: Conscripted.php:119
 msgctxt "Main Taxonomy: Default Term"
 msgid "Education Exemption"
 msgstr "معافیت تحصیلی"
 
-#: Conscripted.php:113
+#: Conscripted.php:120
 msgctxt "Main Taxonomy: Default Term"
 msgid "Veteran Exemption"
 msgstr "معافیت ایثارگری"
 
-#: Conscripted.php:114
+#: Conscripted.php:121
 msgctxt "Main Taxonomy: Default Term"
 msgid "Permanent Exemption"
 msgstr "معافیت دائم"
 
-#: Conscripted.php:115
+#: Conscripted.php:122
 msgctxt "Main Taxonomy: Default Term"
 msgid "Sponsor Exemption"
 msgstr "معافیت کفالت"
 
-#: Conscripted.php:116
+#: Conscripted.php:123
 msgctxt "Main Taxonomy: Default Term"
 msgid "Paid Exemption"
 msgstr "خرید خدمت"
 
-#: Conscripted.php:130
+#: Conscripted.php:137
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr ""

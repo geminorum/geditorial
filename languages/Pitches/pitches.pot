@@ -13,19 +13,19 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Pitches\n"
 "X-Domain: geditorial-pitches\n"
 
-#: Pitches.php:71
+#: Pitches.php:61
 msgid "Idea"
 msgid_plural "Ideas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Pitches.php:72
+#: Pitches.php:62
 msgid "Idea Category"
 msgid_plural "Idea Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Pitches.php:73
+#: Pitches.php:63
 msgid "Idea Pool"
 msgid_plural "Idea Pools"
 msgstr[0] ""

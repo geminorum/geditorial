@@ -43,121 +43,121 @@ msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Course.php:149
-#: Course.php:150
+#: Course.php:136
+#: Course.php:137
 msgid "Course"
 msgid_plural "Courses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:151
+#: Course.php:138
 msgid "Course Category"
 msgid_plural "Course Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:152
+#: Course.php:139
 msgid "Course Span"
 msgid_plural "Course Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:153
+#: Course.php:140
 msgid "Course Topic"
 msgid_plural "Course Topics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:154
+#: Course.php:141
 msgid "Lesson"
 msgid_plural "Lessons"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:155
+#: Course.php:142
 msgid "Lesson Format"
 msgid_plural "Lesson Formats"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:156
+#: Course.php:143
 msgid "Lesson Status"
 msgid_plural "Lesson Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Course.php:160
+#: Course.php:147
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Course.php:170
+#: Course.php:157
 msgctxt "MetaBox Title"
 msgid "The Course"
 msgstr ""
 
-#: Course.php:171
+#: Course.php:158
 msgctxt "MetaBox Title"
 msgid "In This Course"
 msgstr ""
 
-#: Course.php:174
+#: Course.php:161
 msgctxt "MetaBox Title"
 msgid "Course"
 msgstr ""
 
-#: Course.php:180
+#: Course.php:167
 msgctxt "Column Title"
 msgid "Lessons"
 msgstr ""
 
-#: Course.php:183
+#: Course.php:170
 msgctxt "Misc: `column_icon_title`"
 msgid "Course"
 msgstr ""
 
-#: Course.php:194
+#: Course.php:181
 msgctxt "Default Term"
 msgid "Ongoing"
 msgstr ""
 
-#: Course.php:195
+#: Course.php:182
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Course.php:196
+#: Course.php:183
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Course.php:197
+#: Course.php:184
 msgctxt "Default Term"
 msgid "Cancelled"
 msgstr ""
 
-#: Course.php:207
-#: Course.php:222
+#: Course.php:195
+#: Course.php:210
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: Course.php:208
+#: Course.php:196
 msgctxt "Field Description"
 msgid "Subtitle of the Course"
 msgstr ""
 
-#: Course.php:223
+#: Course.php:211
 msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:509
+#: Course.php:506
 msgctxt "Header"
 msgid "Course Tools"
 msgstr ""
 
-#: Course.php:572
+#: Course.php:569
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr ""

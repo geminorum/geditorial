@@ -13,12 +13,34 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcAttributes\n"
 "X-Domain: geditorial-wc-attributes\n"
 
-#: WcAttributes.php:37
+#: WcAttributes.php:34
+msgctxt "Setting Title"
+msgid "Linkable Attributes"
+msgstr ""
+
+#: WcAttributes.php:35
+msgctxt "Setting Description"
+msgid "Makes the product attributes clickable with pre-defined URL."
+msgstr ""
+
+#: WcAttributes.php:39
 msgctxt "Setting Title"
 msgid "Localize Join"
 msgstr ""
 
-#: WcAttributes.php:38
+#: WcAttributes.php:40
 msgctxt "Setting Description"
-msgid "Tries to join attributes with a localized separator."
+msgid "Tries to join attribute values with a localized separator."
+msgstr ""
+
+#: WcAttributes.php:112
+#: WcAttributes.php:146
+msgctxt "Field Label"
+msgid "URL"
+msgstr ""
+
+#: WcAttributes.php:125
+#: WcAttributes.php:159
+msgctxt "Field Description"
+msgid "External link for this attribute."
 msgstr ""

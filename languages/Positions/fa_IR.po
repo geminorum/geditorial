@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Positions\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:18+0330\n"
+"PO-Revision-Date: 2025-04-03 12:44+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,175 +11,175 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Positions\n"
 "X-Domain: geditorial-positions\n"
 
-#: Positions.php:57
+#: Positions.php:58
 msgctxt "Setting Description"
 msgid "Roles that can manage position information."
 msgstr ""
 
-#: Positions.php:58
+#: Positions.php:59
 msgctxt "Setting Description"
 msgid "Roles that can view position information."
 msgstr ""
 
-#: Positions.php:59
+#: Positions.php:60
 msgctxt "Setting Description"
 msgid "Roles that can assign position information."
 msgstr ""
 
-#: Positions.php:106 Positions.php:107
+#: Positions.php:107 Positions.php:108
 msgid "Position Profile"
 msgid_plural "Position Profiles"
 msgstr[0] "نمایه‌های جایگاهی"
 msgstr[1] "نمایه جایگاهی"
 
-#: Positions.php:108
+#: Positions.php:109
 msgid "Position Profile Type"
 msgid_plural "Position Profile Types"
 msgstr[0] "انواع نمایه جایگاهی"
 msgstr[1] "نوع نمایه جایگاهی"
 
-#: Positions.php:109
+#: Positions.php:110
 msgid "Position Profile Category"
 msgid_plural "Position Profile Categories"
 msgstr[0] "دسته‌های نمایه جایگاهی"
 msgstr[1] "دسته نمایه جایگاهی"
 
-#: Positions.php:110
+#: Positions.php:111
 msgid "Position Profile Flag"
 msgid_plural "Position Profile Flags"
 msgstr[0] "نشان‌های نمایه جایگاهی"
 msgstr[1] "نشان نمایه جایگاهی"
 
-#: Positions.php:119
+#: Positions.php:120
 msgctxt "Field Label: `label`"
 msgid "Position Title"
 msgstr "عنوان جایگاه"
 
-#: Positions.php:120
+#: Positions.php:121
 msgctxt "Field Label: `fullname`"
 msgid "Incumbent"
 msgstr "متصدی"
 
-#: Positions.php:121
+#: Positions.php:122
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: Positions.php:122
+#: Positions.php:123
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr "تماس"
 
-#: Positions.php:123
+#: Positions.php:124
 msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Positions.php:124
+#: Positions.php:125
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Positions.php:130
+#: Positions.php:131
 msgctxt "Notice"
 msgid "There is no position information available!"
 msgstr "هیچ اطلاعات جایگاهی در دستری نیست!"
 
-#: Positions.php:131
+#: Positions.php:132
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the position data."
+msgid "You do not have the necessary permission to manage the position data."
 msgstr "شما دسترسی لازم برای مدیریت داده‌های جایگاهی را ندارید."
 
-#: Positions.php:138
+#: Positions.php:139
 msgctxt "MetaBox Title"
 msgid "Positions"
 msgstr "جایگاه‌ها"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:142
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:143
 msgctxt "Button Title"
 msgid "Positions of %1$s"
 msgstr "جایگاه‌های %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:144
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:145
 msgctxt "Button Text"
 msgid "%1$s Manage the Positions of %2$s"
 msgstr "%1$s مدیریت جایگاه‌های %2$s"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:147
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:148
 msgctxt "Action Title"
 msgid "Positions of %1$s"
 msgstr "جایگاه‌های %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:149
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:150
 msgctxt "Action Text"
 msgid "Positions"
 msgstr "جایگاه‌ها"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:152
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:153
 msgctxt "Row Title"
 msgid "Positions of %1$s"
 msgstr "جایگاه‌های %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:154
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:155
 msgctxt "Row Text"
 msgid "Positions"
 msgstr "جایگاه‌ها"
 
-#. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:391
+#. translators: `%1$s`: icon markup, `%2$s`: profile post title
+#: Positions.php:392
 msgctxt "Button Label"
 msgid "%1$s Mount: %2$s"
 msgstr "%1$s نصب: %2$s"
 
-#: Positions.php:399
+#: Positions.php:400
 msgctxt "Button Title"
 msgid "Click to Mount the Position Profile"
 msgstr "برای نصب نمایه جایگاهی کلیک کنید"
 
-#. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:407
+#. translators: `%1$s`: icon markup, `%2$s`: profile post title
+#: Positions.php:408
 msgctxt "Button Label"
 msgid "%1$s Clear: %2$s"
 msgstr "%1$s پاک‌سازی: %2$s"
 
-#: Positions.php:415
+#: Positions.php:416
 msgctxt "Button Title"
 msgid "Click to Clear the Position Profile"
 msgstr "برای پاک‌سازی نمایه جایگاهی کلیک کنید"
 
-#: Positions.php:423
+#: Positions.php:424
 msgctxt "Notice"
 msgid "No Position Profile assigned to this content."
 msgstr "هیچ نمایه جایگاهی برای این محتوا تنظیم نشده است."
 
-#: Positions.php:520
+#: Positions.php:521
 msgctxt "Javascript String"
 msgid "Here you can define the position profile by titles with custom ordering."
 msgstr "در اینجا می‌توانید نمایه جایگاهی را با عناوین و چینش سفارش تعریف کنید."
 
-#. translators: %s: post title
-#: Positions.php:541
+#. translators: `%s`: post title
+#: Positions.php:542
 msgctxt "Page Title"
 msgid "Position Grid for %s"
 msgstr "جدول جایگاهی برای %s"
 
-#. translators: %s: post title
-#: Positions.php:543
+#. translators: `%s`: post title
+#: Positions.php:544
 msgctxt "Page Title"
 msgid "Positions Overview for %s"
 msgstr "مروری بر جایگاه‌های %s"
 
-#: Positions.php:560
+#: Positions.php:561
 msgctxt "Default Term: Audit"
 msgid "Empty Position Data"
 msgstr "نمایه جایگاهی خالی"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Abo\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-04 21:07+0330\n"
+"PO-Revision-Date: 2025-02-12 16:30+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,68 +15,68 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Abo\n"
 "X-Domain: geditorial-abo\n"
 
-#: Abo.php:85
+#: Abo.php:88
 msgid "Blood Type"
 msgid_plural "Blood Types"
 msgstr[0] "گروه‌های خونی"
 msgstr[1] "گروه خونی"
 
-#: Abo.php:89
+#: Abo.php:92
 msgctxt "Label: Extended Label"
 msgid "Blood-Type"
 msgstr "گروه خونی"
 
-#: Abo.php:90
+#: Abo.php:93
 msgctxt "Label: Show Option All"
 msgid "Blood-Type"
 msgstr "گروه خونی"
 
-#: Abo.php:91
+#: Abo.php:94
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr "(نامعلوم)"
 
-#: Abo.php:104
+#: Abo.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "A&plus;"
 msgstr ""
 
-#: Abo.php:105
+#: Abo.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "A&minus;"
 msgstr ""
 
-#: Abo.php:106
+#: Abo.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "B&plus;"
 msgstr ""
 
-#: Abo.php:107
+#: Abo.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "B&minus;"
 msgstr ""
 
-#: Abo.php:108
+#: Abo.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "O&plus;"
 msgstr ""
 
-#: Abo.php:109
+#: Abo.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "O&minus;"
 msgstr ""
 
-#: Abo.php:110
+#: Abo.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "AB&plus;"
 msgstr ""
 
-#: Abo.php:111
+#: Abo.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "AB&minus;"
 msgstr ""
 
-#: Abo.php:125
+#: Abo.php:128
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "3"
 msgstr ""

@@ -13,83 +13,88 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Genres\n"
 "X-Domain: geditorial-genres\n"
 
-#: Genres.php:87
+#: Genres.php:86
 msgid "Genre"
 msgid_plural "Genres"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Genres.php:91
+#: Genres.php:90
 msgctxt "Label: `extended_label`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:92
+#: Genres.php:91
 msgctxt "Label: `menu_name`"
 msgid "Content Genres"
 msgstr ""
 
-#: Genres.php:93
+#: Genres.php:92
 msgctxt "Label: `show_option_all`"
 msgid "Genres"
 msgstr ""
 
-#: Genres.php:94
+#: Genres.php:93
 msgctxt "Label: `show_option_no_items`"
 msgid "(UnGenred)"
 msgstr ""
 
-#: Genres.php:107
+#: Genres.php:106
 msgctxt "Main Taxonomy: Default Term"
 msgid "Children"
 msgstr ""
 
-#: Genres.php:108
+#: Genres.php:107
 msgctxt "Main Taxonomy: Default Term"
 msgid "Classic"
 msgstr ""
 
-#: Genres.php:109
+#: Genres.php:108
 msgctxt "Main Taxonomy: Default Term"
 msgid "Comedy"
 msgstr ""
 
-#: Genres.php:110
+#: Genres.php:109
 msgctxt "Main Taxonomy: Default Term"
 msgid "Crime"
 msgstr ""
 
-#: Genres.php:111
+#: Genres.php:110
 msgctxt "Main Taxonomy: Default Term"
 msgid "Fantasy"
 msgstr ""
 
-#: Genres.php:112
+#: Genres.php:111
 msgctxt "Main Taxonomy: Default Term"
 msgid "Historical"
 msgstr ""
 
-#: Genres.php:113
+#: Genres.php:112
 msgctxt "Main Taxonomy: Default Term"
 msgid "Horror"
 msgstr ""
 
-#: Genres.php:114
+#: Genres.php:113
 msgctxt "Main Taxonomy: Default Term"
 msgid "Mystery"
 msgstr ""
 
-#: Genres.php:115
+#: Genres.php:114
 msgctxt "Main Taxonomy: Default Term"
 msgid "Romance"
 msgstr ""
 
-#: Genres.php:116
+#: Genres.php:115
 msgctxt "Main Taxonomy: Default Term"
 msgid "Science Fiction"
 msgstr ""
 
-#: Genres.php:117
+#: Genres.php:116
 msgctxt "Main Taxonomy: Default Term"
 msgid "Thriller"
+msgstr ""
+
+#: Genres.php:129
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
 msgstr ""

@@ -23,162 +23,162 @@ msgctxt "Setting Description"
 msgid "Roles that can assign bank accounts."
 msgstr ""
 
-#: Banking.php:87
+#: Banking.php:90
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Banking.php:88
+#: Banking.php:91
 msgctxt "Field Label: `fullname`"
 msgid "Account Owner"
 msgstr ""
 
-#: Banking.php:89
+#: Banking.php:92
 msgctxt "Field Label: `card`"
 msgid "Card Number"
 msgstr ""
 
-#: Banking.php:90
+#: Banking.php:93
 msgctxt "Field Label: `iban`"
 msgid "IBAN"
 msgstr ""
 
-#: Banking.php:91
+#: Banking.php:94
 msgctxt "Field Label: `account`"
 msgid "Account Number"
 msgstr ""
 
-#: Banking.php:92
+#: Banking.php:95
 msgctxt "Field Label: `bankname`"
 msgid "Bank Name"
 msgstr ""
 
-#: Banking.php:93
+#: Banking.php:96
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Banking.php:99
+#: Banking.php:102
 msgctxt "Tab Title"
 msgid "Banking"
 msgstr ""
 
-#: Banking.php:103
+#: Banking.php:106
 msgctxt "Notice"
 msgid "There is no account information available!"
 msgstr ""
 
-#: Banking.php:104
+#: Banking.php:107
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the bank accounts."
+msgid "You do not have the necessary permission to manage the bank accounts."
 msgstr ""
 
-#: Banking.php:111
+#: Banking.php:114
 msgctxt "MetaBox Title"
 msgid "Banking"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:115
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:118
 msgctxt "Button Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:117
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:120
 msgctxt "Button Text"
 msgid "%1$s Manage the Accounts of %2$s"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:120
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:123
 msgctxt "Action Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:122
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:125
 msgctxt "Action Text"
 msgid "Bank Accounts"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:125
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:128
 msgctxt "Row Title"
 msgid "Bank Accounts of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:127
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:130
 msgctxt "Row Text"
 msgid "Bank Accounts"
 msgstr ""
 
-#: Banking.php:138
+#: Banking.php:142
 msgctxt "Field Title"
 msgid "IBAN"
 msgstr ""
 
-#: Banking.php:139
+#: Banking.php:143
 msgctxt "Field Description"
 msgid "International Bank Account Number"
 msgstr ""
 
-#: Banking.php:144
+#: Banking.php:148
 msgctxt "Field Title"
 msgid "Card Number"
 msgstr ""
 
-#: Banking.php:145
+#: Banking.php:149
 msgctxt "Field Description"
 msgid "Bank Card Number"
 msgstr ""
 
-#. translators: %s: post title
-#: Banking.php:283
+#. translators: `%s`: post title
+#: Banking.php:287
 msgctxt "Page Title"
 msgid "Bank Grid for %s"
 msgstr ""
 
-#. translators: %s: post title
-#: Banking.php:285
+#. translators: `%s`: post title
+#: Banking.php:289
 msgctxt "Page Title"
 msgid "Bank Overview for %s"
 msgstr ""
 
-#: Banking.php:302
+#: Banking.php:306
 msgctxt "Default Term: Audit"
 msgid "Empty Banking Data"
 msgstr ""
 
-#: Banking.php:304
+#: Banking.php:308
 msgctxt "Default Term: Audit"
 msgid "Empty IBAN"
 msgstr ""
 
-#: Banking.php:305
+#: Banking.php:309
 msgctxt "Default Term: Audit"
 msgid "Invalid IBAN"
 msgstr ""
 
-#: Banking.php:306
+#: Banking.php:310
 msgctxt "Default Term: Audit"
 msgid "Duplicate IBAN"
 msgstr ""
 
-#. translators: %s: account
+#. translators: `%s`: account
 #: ModuleHelper.php:26
 msgctxt "Helper"
 msgid "Number: %s"
 msgstr ""
 
-#. translators: %s: bank-name
+#. translators: `%s`: bank-name
 #: ModuleHelper.php:33
 msgctxt "Helper"
 msgid "Account with %s"
 msgstr ""
 
-#. translators: %s: country
+#. translators: `%s`: country
 #: ModuleHelper.php:40
 msgctxt "Helper"
 msgid "From %s"

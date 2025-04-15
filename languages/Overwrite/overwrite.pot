@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Overwrite\n"
 "X-Domain: geditorial-overwrite\n"
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: Overwrite.php:41
 #: Overwrite.php:84
 msgctxt "Setting Title"
@@ -25,7 +25,7 @@ msgctxt "Setting Description"
 msgid "Used as plural name on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: Overwrite.php:50
 #: Overwrite.php:93
 msgctxt "Setting Title"
@@ -37,7 +37,7 @@ msgctxt "Setting Description"
 msgid "Used as singular name on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: Overwrite.php:59
 msgctxt "Setting Title"
 msgid "Featured Image Title for %s"
@@ -48,7 +48,7 @@ msgctxt "Setting Description"
 msgid "Used as featured image title on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
+#. translators: `%s`: supported object label
 #: Overwrite.php:68
 #: Overwrite.php:102
 msgctxt "Setting Title"

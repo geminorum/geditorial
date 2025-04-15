@@ -63,7 +63,7 @@ msgctxt "Setting Description"
 msgid "Stores raw source data and attchment reference as meta for each imported item."
 msgstr ""
 
-#. translators: %s: audit attribute placeholder
+#. translators: `%s`: audit attribute placeholder
 #: Importer.php:71
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
@@ -94,7 +94,7 @@ msgctxt "Menu"
 msgid "Import"
 msgstr ""
 
-#. translators: %s: joined duplicate keys
+#. translators: `%s`: joined duplicate keys
 #: Importer.php:252
 #: Importer.php:1701
 msgctxt "Message"
@@ -129,7 +129,7 @@ msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
-#. translators: %s: count placeholder
+#. translators: `%s`: count placeholder
 #: Importer.php:406
 msgctxt "Header"
 msgid "%s Records Found"
@@ -141,20 +141,20 @@ msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
-#. translators: %s: custom metakey
+#. translators: `%s`: custom metakey
 #: Importer.php:455
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
-#. translators: %1$s: count placeholder, %2$s: attachment title
+#. translators: `%1$s`: count placeholder, `%2$s`: attachment title
 #: Importer.php:466
 #: Importer.php:1777
 msgctxt "Header"
 msgid "%1$s Records Found for &ldquo;%2$s&rdquo;"
 msgstr ""
 
-#. translators: %s: source id
+#. translators: `%s`: source id
 #: Importer.php:491
 msgctxt "Checks"
 msgid "SourceID: %s"
@@ -170,7 +170,7 @@ msgctxt "Checks"
 msgid "Skipped: No SourceID"
 msgstr ""
 
-#. translators: %s: post title
+#. translators: `%s`: post title
 #: Importer.php:501
 msgctxt "Checks"
 msgid "Matched: %s"
@@ -241,7 +241,7 @@ msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#. translators: %s: attachment title
+#. translators: `%s`: attachment title
 #: Importer.php:1121
 #: Importer.php:1225
 msgctxt "Header"
@@ -266,7 +266,7 @@ msgctxt "Message"
 msgid "Select a term from each post-type supported taxonomy to append all imported posts."
 msgstr ""
 
-#. translators: %s: attachment title
+#. translators: `%s`: attachment title
 #: Importer.php:1149
 #: Importer.php:1252
 msgctxt "Header"
@@ -371,7 +371,7 @@ msgctxt "Post Field"
 msgid "Comment Content"
 msgstr ""
 
-#. translators: %s: taxonomy name placeholder
+#. translators: `%s`: taxonomy name placeholder
 #: Importer.php:1411
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
@@ -387,7 +387,7 @@ msgctxt "Card Title"
 msgid "Clean-up Raw Data"
 msgstr ""
 
-#. translators: %s: posttype label
+#. translators: `%s`: post-type label
 #: ModuleSettings.php:26
 msgctxt "Button"
 msgid "On %s"
@@ -398,14 +398,14 @@ msgctxt "Button Description"
 msgid "Tries to clean imported raw meta-data."
 msgstr ""
 
-#. translators: %1$s: post title, %2$s: post id
+#. translators: `%1$s`: post title, `%2$s`: post id
 #: ModuleSettings.php:61
 msgctxt "Notice"
-msgid "No meta-data available on &ldquo;%1$s&rdquo; (%2$s)"
+msgid "No meta-data available on &ldquo;%1$s&rdquo; (%2$s)."
 msgstr ""
 
-#. translators: %1$s: post title, %2$s: post id
-#: ModuleSettings.php:80
+#. translators: `%1$s`: post title, `%2$s`: post id
+#: ModuleSettings.php:79
 msgctxt "Notice"
-msgid "Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)"
+msgid "Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)."
 msgstr ""

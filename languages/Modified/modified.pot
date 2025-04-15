@@ -13,52 +13,72 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:46
+#: Modified.php:50
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr ""
 
-#: Modified.php:47
+#: Modified.php:51
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr ""
 
-#: Modified.php:53
+#: Modified.php:57
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Modified.php:54
+#: Modified.php:58
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr ""
 
-#: Modified.php:55
+#: Modified.php:59
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr ""
 
-#: Modified.php:60
+#: Modified.php:64
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr ""
 
-#: Modified.php:61
+#: Modified.php:65
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:68
+#: Modified.php:72
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr ""
 
-#: Modified.php:69
+#: Modified.php:73
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
-#: Modified.php:114
+#: Modified.php:85
+msgctxt "Setting: Setting Title"
+msgid "Post Shortcode Tag"
+msgstr ""
+
+#: Modified.php:86
+msgctxt "Setting: Setting Description"
+msgid "Customizes the post modified short-code tag. Leave blank for default."
+msgstr ""
+
+#: Modified.php:95
+msgctxt "Setting: Setting Title"
+msgid "Site Shortcode Tag"
+msgstr ""
+
+#: Modified.php:96
+msgctxt "Setting: Setting Description"
+msgid "Customizes the site modified short-code tag. Leave blank for default."
+msgstr ""
+
+#: Modified.php:140
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
 msgstr ""

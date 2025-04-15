@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcAttributes\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-09 23:51+0330\n"
+"PO-Revision-Date: 2025-02-12 00:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,12 +15,96 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcAttributes\n"
 "X-Domain: geditorial-wc-attributes\n"
 
-#: WcAttributes.php:37
+#: WcAttributes.php:34
+msgctxt "Setting Title"
+msgid "Linkable Attributes"
+msgstr "ویژگی‌های قابل کلیک"
+
+#: WcAttributes.php:35
+msgctxt "Setting Description"
+msgid "Makes the product attributes clickable with pre-defined URL."
+msgstr "ویژگی‌های کالا را با استفاده از نشانی اینترنتی از پیش‌تعریف شده، قابل کلیک می‌کند."
+
+#: WcAttributes.php:39
 msgctxt "Setting Title"
 msgid "Localize Join"
 msgstr "اتصال بومی"
 
-#: WcAttributes.php:38
+#: WcAttributes.php:40
 msgctxt "Setting Description"
-msgid "Tries to join attributes with a localized separator."
-msgstr "تلاش می‌کند با یک جداکننده بومی ویژگی‌ها را به هم متصل کند."
+msgid "Tries to join attribute values with a localized separator."
+msgstr "تلاش می‌کند با یک جداکننده بومی مقدار ویژگی‌ها را به هم متصل کند."
+
+#: WcAttributes.php:112 WcAttributes.php:146
+msgctxt "Field Label"
+msgid "URL"
+msgstr "نشانی اینترنتی"
+
+#: WcAttributes.php:125 WcAttributes.php:159
+msgctxt "Field Description"
+msgid "External link for this attribute."
+msgstr "پیوند بیرونی برای این ویژگی."
+
+#~ msgctxt "Card Title"
+#~ msgid "Attribute to GTIN"
+#~ msgstr "ویژگی به GTIN"
+
+#~ msgctxt "Button"
+#~ msgid "Migrate Data"
+#~ msgstr "انتقال داده‌ها"
+
+#~ msgctxt "Message"
+#~ msgid "Imports GTIN product attributes into built-in global unique ID fields."
+#~ msgstr "ویژگی‌های کالای GTIN را در زمینه‌های شناسه یکتای جهانی درون‌ریزی می‌کند."
+
+#~ msgctxt "Notice"
+#~ msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
+#~ msgstr "شناسه %1$s پیش از این &rdquo;%2$s&ldquo; برای ذخیره شده است."
+
+#~ msgctxt "Notice"
+#~ msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
+#~ msgstr "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این ویژگی شامل بیش از یک گزینه است!"
+
+#~ msgctxt "Notice"
+#~ msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
+#~ msgstr "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این ویژگی با موفقیت حذف شد!"
+
+#~ msgctxt "Notice"
+#~ msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
+#~ msgstr "هیچ ویژگی GTIN مناسبی برای &rdquo;%s&ldquo; پیدا نشد."
+
+#~ msgctxt "Setting Title"
+#~ msgid "Display GTIN"
+#~ msgstr "نمایش GTIN"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Prepends the global unique id on product attributes table."
+#~ msgstr "شناسه یکتای جهانی را به ابتدای جدول ویژگی‌های کالا اضافه می‌کند."
+
+#~ msgctxt "Setting Title"
+#~ msgid "GTIN lookup"
+#~ msgstr "پیوند GTIN"
+
+#~ msgctxt "Setting Description"
+#~ msgid "Links the default label for the global unique id on product attributes table."
+#~ msgstr "پیوندی برای شاخص پیش‌فرض"
+
+#~ msgctxt "Setting Title"
+#~ msgid "GTIN Label"
+#~ msgstr "شاخص GTIN"
+
+#~ msgctxt "Field Title"
+#~ msgid "GTIN"
+#~ msgstr "شناسه"
+
+#~ msgctxt "Setting Section Title"
+#~ msgid "Global Unique ID"
+#~ msgstr "شناسه یکتای جهانی"
+
+#~ msgctxt "Setting Section Description"
+#~ msgid "Preferences about the Global Trade Item Number."
+#~ msgstr "تنظیمات مربوط به شماره شناسایی تجارت جهانی را اعمال کنید."
+
+#~ msgctxt "Header"
+#~ msgid "Product Attribute Tools"
+#~ msgstr "ابزارهای ویژگی‌های کالا"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Assigned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-04 21:03+0330\n"
+"PO-Revision-Date: 2025-02-14 21:18+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -56,27 +56,27 @@ msgctxt "Default Term"
 msgid "Reporting"
 msgstr "گزارش‌گیری"
 
-#: Assigned.php:119 Assigned.php:124
+#: Assigned.php:120 Assigned.php:125
 msgctxt "Field Title"
 msgid "Assigned To"
 msgstr "واگذارشده به"
 
-#: Assigned.php:120
+#: Assigned.php:121
 msgctxt "Field Description"
 msgid "Determines the user responsible for this assignment."
 msgstr "کاربر مسؤول این تکلیف را مشخص می‌کند."
 
-#: Assigned.php:125
+#: Assigned.php:126
 msgctxt "Field Description"
 msgid "Determines the individual responsible for this assignment."
 msgstr "فرد مسؤول این تکلیف را مشخص می‌کند."
 
-#: Assigned.php:130
+#: Assigned.php:131
 msgctxt "Field Title"
 msgid "Due Date"
 msgstr "تاریخ نهایی"
 
-#: Assigned.php:131
+#: Assigned.php:132
 msgctxt "Field Description"
 msgid "Determines the planned date that this assignment is required to be completed."
 msgstr ""

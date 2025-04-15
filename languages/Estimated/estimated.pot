@@ -79,7 +79,7 @@ msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
-#. translators: %s: words count
+#. translators: `%s`: words count
 #: Estimated.php:149
 #: Estimated.php:233
 msgctxt "Title Attr"
@@ -90,7 +90,7 @@ msgstr ""
 msgid "less than 1 minute"
 msgstr ""
 
-#. translators: %s: number of minutes
+#. translators: `%s`: number of minutes
 #: Estimated.php:226
 msgid "%s minute"
 msgid_plural "%s minutes"

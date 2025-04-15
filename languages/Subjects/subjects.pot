@@ -13,33 +13,133 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Subjects\n"
 "X-Domain: geditorial-subjects\n"
 
-#: Subjects.php:94
+#: ModuleInfo.php:35
+msgctxt "Literary Subject: Name"
+msgid "Love and Relationships"
+msgstr ""
+
+#: ModuleInfo.php:40
+msgctxt "Literary Subject: Name"
+msgid "Identity and Self-Discovery"
+msgstr ""
+
+#: ModuleInfo.php:45
+msgctxt "Literary Subject: Name"
+msgid "Social and Political Commentary"
+msgstr ""
+
+#: ModuleInfo.php:50
+msgctxt "Literary Subject: Name"
+msgid "Nature and the Environment"
+msgstr ""
+
+#: ModuleInfo.php:55
+msgctxt "Literary Subject: Name"
+msgid "Mortality and Existentialism"
+msgstr ""
+
+#: ModuleInfo.php:60
+msgctxt "Literary Subject: Name"
+msgid "Conflict and Resilience"
+msgstr ""
+
+#: ModuleInfo.php:65
+msgctxt "Literary Subject: Name"
+msgid "History and Memory"
+msgstr ""
+
+#: ModuleInfo.php:70
+msgctxt "Literary Subject: Name"
+msgid "Culture and Tradition"
+msgstr ""
+
+#: ModuleInfo.php:75
+msgctxt "Literary Subject: Name"
+msgid "Power and Authority"
+msgstr ""
+
+#: ModuleInfo.php:80
+msgctxt "Literary Subject: Name"
+msgid "Technology and Society"
+msgstr ""
+
+#: ModuleInfo.php:85
+msgctxt "Literary Subject: Name"
+msgid "Art and Creativity"
+msgstr ""
+
+#: ModuleInfo.php:90
+msgctxt "Literary Subject: Name"
+msgid "Freedom and Oppression"
+msgstr ""
+
+#: ModuleInfo.php:95
+msgctxt "Literary Subject: Name"
+msgid "Faith and Religion"
+msgstr ""
+
+#: ModuleInfo.php:100
+msgctxt "Literary Subject: Name"
+msgid "Justice and Injustice"
+msgstr ""
+
+#: ModuleInfo.php:105
+msgctxt "Literary Subject: Name"
+msgid "Education and Knowledge"
+msgstr ""
+
+#: ModuleInfo.php:110
+msgctxt "Literary Subject: Name"
+msgid "Wealth and Poverty"
+msgstr ""
+
+#: ModuleInfo.php:115
+msgctxt "Literary Subject: Name"
+msgid "Friendship and Loyalty"
+msgstr ""
+
+#: ModuleInfo.php:120
+msgctxt "Literary Subject: Name"
+msgid "Dreams and Ambitions"
+msgstr ""
+
+#: ModuleInfo.php:125
+msgctxt "Literary Subject: Name"
+msgid "Mental Health and Well-being"
+msgstr ""
+
+#: ModuleInfo.php:130
+msgctxt "Literary Subject: Name"
+msgid "Diversity and Inclusion"
+msgstr ""
+
+#: Subjects.php:96
 msgid "Subject"
 msgid_plural "Subjects"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Subjects.php:98
+#: Subjects.php:100
 msgctxt "Label: `extended_label`"
 msgid "Content Subjects"
 msgstr ""
 
-#: Subjects.php:99
+#: Subjects.php:101
 msgctxt "Label: `menu_name`"
 msgid "Content Subjects"
 msgstr ""
 
-#: Subjects.php:100
+#: Subjects.php:102
 msgctxt "Label: `show_option_all`"
 msgid "Subjects"
 msgstr ""
 
-#: Subjects.php:101
+#: Subjects.php:103
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unsubjected)"
 msgstr ""
 
-#: Subjects.php:119
+#: Subjects.php:128
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr ""

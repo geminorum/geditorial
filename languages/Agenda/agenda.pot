@@ -13,135 +13,135 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Agenda\n"
 "X-Domain: geditorial-agenda\n"
 
-#: Agenda.php:83
+#: Agenda.php:86
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Agenda.php:84
+#: Agenda.php:87
 msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr ""
 
-#: Agenda.php:85
+#: Agenda.php:88
 msgctxt "Field Label: `timestart`"
 msgid "Time Start"
 msgstr ""
 
-#: Agenda.php:86
+#: Agenda.php:89
 msgctxt "Field Label: `timeend`"
 msgid "Time End"
 msgstr ""
 
-#: Agenda.php:87
+#: Agenda.php:90
 msgctxt "Field Label: `people`"
 msgid "Coordinator"
 msgstr ""
 
-#: Agenda.php:88
+#: Agenda.php:91
 msgctxt "Field Label: `topic`"
 msgid "Topic"
 msgstr ""
 
-#: Agenda.php:89
+#: Agenda.php:92
 msgctxt "Field Label: `count`"
 msgid "Participants"
 msgstr ""
 
-#: Agenda.php:90
+#: Agenda.php:93
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr ""
 
-#: Agenda.php:91
+#: Agenda.php:94
 msgctxt "Field Label: `duration`"
 msgid "Duration"
 msgstr ""
 
-#: Agenda.php:92
+#: Agenda.php:95
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Agenda.php:98
+#: Agenda.php:101
 msgctxt "Tab Title"
 msgid "Itineraries"
 msgstr ""
 
-#: Agenda.php:102
+#: Agenda.php:105
 msgctxt "Notice"
 msgid "There is no itinerary information available!"
 msgstr ""
 
-#: Agenda.php:103
+#: Agenda.php:106
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the itinerary data."
+msgid "You do not have the necessary permission to manage the itinerary data."
 msgstr ""
 
-#: Agenda.php:110
+#: Agenda.php:113
 msgctxt "MetaBox Title"
 msgid "Itineraries"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:114
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:117
 msgctxt "Button Title"
 msgid "Itineraries of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:116
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:119
 msgctxt "Button Text"
 msgid "%1$s Manage the Itineraries of %2$s"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:119
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:122
 msgctxt "Action Title"
 msgid "Itineraries of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:121
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:124
 msgctxt "Action Text"
 msgid "Itineraries"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:124
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:127
 msgctxt "Row Title"
 msgid "Itineraries of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:126
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:129
 msgctxt "Row Text"
 msgid "Itineraries"
 msgstr ""
 
-#: Agenda.php:139
+#: Agenda.php:142
 msgctxt "Field Title"
 msgid "Agenda Title"
 msgstr ""
 
-#: Agenda.php:140
+#: Agenda.php:143
 msgctxt "Field Description"
 msgid "The Itinerary Table Caption"
 msgstr ""
 
-#. translators: %s: post title
-#: Agenda.php:267
+#. translators: `%s`: post title
+#: Agenda.php:269
 msgctxt "Page Title"
 msgid "Itinerary Grid for %s"
 msgstr ""
 
-#. translators: %s: post title
-#: Agenda.php:269
+#. translators: `%s`: post title
+#: Agenda.php:271
 msgctxt "Page Title"
 msgid "Itinerary Overview for %s"
 msgstr ""
 
-#: Agenda.php:286
+#: Agenda.php:288
 msgctxt "Default Term: Audit"
 msgid "Empty Itinerary Data"
 msgstr ""

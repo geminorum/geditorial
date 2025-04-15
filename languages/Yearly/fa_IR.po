@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Yearly\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-13 17:54+0330\n"
+"PO-Revision-Date: 2025-03-25 05:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,23 +15,23 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
-#: Yearly.php:91
+#: Yearly.php:95
 msgid "Year Span"
 msgid_plural "Year Spans"
 msgstr[0] "دوره‌های سالیانه"
 msgstr[1] "دوره سالیانه"
 
-#: Yearly.php:95
+#: Yearly.php:99
 msgctxt "Label: Show Option All"
 msgid "Years"
 msgstr "سال‌ها"
 
-#: Yearly.php:96
+#: Yearly.php:100
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Yearly.php:121
+#: Yearly.php:125
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
 msgstr ""

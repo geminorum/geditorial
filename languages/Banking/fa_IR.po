@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Banking\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:13+0330\n"
+"PO-Revision-Date: 2025-04-03 12:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Banking\n"
 "X-Domain: geditorial-banking\n"
 
@@ -25,157 +25,162 @@ msgctxt "Setting Description"
 msgid "Roles that can assign bank accounts."
 msgstr "نقش‌هایی که می‌توانند حساب‌های بانکی را تخصیص دهند."
 
-#: Banking.php:84
+#: Banking.php:90
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Banking.php:85
+#: Banking.php:91
 msgctxt "Field Label: `fullname`"
 msgid "Account Owner"
 msgstr "مالک حساب"
 
-#: Banking.php:86
+#: Banking.php:92
 msgctxt "Field Label: `card`"
 msgid "Card Number"
 msgstr "شماره کارت"
 
-#: Banking.php:87
+#: Banking.php:93
 msgctxt "Field Label: `iban`"
 msgid "IBAN"
 msgstr "شبا"
 
-#: Banking.php:88
+#: Banking.php:94
 msgctxt "Field Label: `account`"
 msgid "Account Number"
 msgstr "شماره حساب"
 
-#: Banking.php:89
+#: Banking.php:95
 msgctxt "Field Label: `bankname`"
 msgid "Bank Name"
 msgstr "نام بانک"
 
-#: Banking.php:90
+#: Banking.php:96
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Banking.php:96
+#: Banking.php:102
+msgctxt "Tab Title"
+msgid "Banking"
+msgstr "بانک‌داری"
+
+#: Banking.php:106
 msgctxt "Notice"
 msgid "There is no account information available!"
 msgstr "هیچ اطلاعات بانکی در دسترس نیست!"
 
-#: Banking.php:97
+#: Banking.php:107
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the bank accounts."
+msgid "You do not have the necessary permission to manage the bank accounts."
 msgstr "شما مجوز لازم برای مدیریت حساب‌های بانکی را ندارید."
 
-#: Banking.php:104
+#: Banking.php:114
 msgctxt "MetaBox Title"
 msgid "Banking"
 msgstr "بانک‌داری"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:108
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:118
 msgctxt "Button Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:110
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:120
 msgctxt "Button Text"
 msgid "%1$s Manage the Accounts of %2$s"
 msgstr "%1$s مدیریت حساب‌های %2$s"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:113
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:123
 msgctxt "Action Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:115
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:125
 msgctxt "Action Text"
 msgid "Bank Accounts"
 msgstr "حساب‌های بانکی"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Banking.php:118
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Banking.php:128
 msgctxt "Row Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Banking.php:120
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Banking.php:130
 msgctxt "Row Text"
 msgid "Bank Accounts"
 msgstr "حساب‌های بانکی"
 
-#: Banking.php:131
+#: Banking.php:142
 msgctxt "Field Title"
 msgid "IBAN"
 msgstr "شبا"
 
-#: Banking.php:132
+#: Banking.php:143
 msgctxt "Field Description"
 msgid "International Bank Account Number"
 msgstr "شماره حساب بانکی بین‌المللی"
 
-#: Banking.php:137
+#: Banking.php:148
 msgctxt "Field Title"
 msgid "Card Number"
 msgstr "شماره کارت"
 
-#: Banking.php:138
+#: Banking.php:149
 msgctxt "Field Description"
 msgid "Bank Card Number"
 msgstr "شماره کارت بانکی"
 
-#. translators: %s: post title
-#: Banking.php:275
+#. translators: `%s`: post title
+#: Banking.php:287
 msgctxt "Page Title"
 msgid "Bank Grid for %s"
 msgstr "شبکه بانکی برای %s"
 
-#. translators: %s: post title
-#: Banking.php:277
+#. translators: `%s`: post title
+#: Banking.php:289
 msgctxt "Page Title"
 msgid "Bank Overview for %s"
 msgstr "بررسی بانک %s"
 
-#: Banking.php:294
+#: Banking.php:306
 msgctxt "Default Term: Audit"
 msgid "Empty Banking Data"
 msgstr "داده‌های بانک خالی"
 
-#: Banking.php:296
+#: Banking.php:308
 msgctxt "Default Term: Audit"
 msgid "Empty IBAN"
 msgstr "شبا خالی"
 
-#: Banking.php:297
+#: Banking.php:309
 msgctxt "Default Term: Audit"
 msgid "Invalid IBAN"
 msgstr "شبا نامعتبر"
 
-#: Banking.php:298
+#: Banking.php:310
 msgctxt "Default Term: Audit"
 msgid "Duplicate IBAN"
 msgstr "شبا تکراری"
 
-#. translators: %s: account
+#. translators: `%s`: account
 #: ModuleHelper.php:26
 msgctxt "Helper"
 msgid "Number: %s"
 msgstr "شماره: %s"
 
-#. translators: %s: bank-name
+#. translators: `%s`: bank-name
 #: ModuleHelper.php:33
 msgctxt "Helper"
 msgid "Account with %s"
 msgstr "حساب در %s"
 
-#. translators: %s: country
+#. translators: `%s`: country
 #: ModuleHelper.php:40
 msgctxt "Helper"
 msgid "From %s"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Subjects\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 06:32+0330\n"
+"PO-Revision-Date: 2025-04-04 07:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -14,6 +14,106 @@ msgstr ""
 "X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Subjects\n"
 "X-Domain: geditorial-subjects\n"
+
+#: ModuleInfo.php:35
+msgctxt "Literary Subject: Name"
+msgid "Love and Relationships"
+msgstr "عشق و روابط انسانی"
+
+#: ModuleInfo.php:40
+msgctxt "Literary Subject: Name"
+msgid "Identity and Self-Discovery"
+msgstr "هویت و خودشناسی"
+
+#: ModuleInfo.php:45
+msgctxt "Literary Subject: Name"
+msgid "Social and Political Commentary"
+msgstr "تفسیر اجتماعی و سیاسی"
+
+#: ModuleInfo.php:50
+msgctxt "Literary Subject: Name"
+msgid "Nature and the Environment"
+msgstr "طبیعت و محیط زیست"
+
+#: ModuleInfo.php:55
+msgctxt "Literary Subject: Name"
+msgid "Mortality and Existentialism"
+msgstr "فناپذیری و اگزیستانسیالیسم"
+
+#: ModuleInfo.php:60
+msgctxt "Literary Subject: Name"
+msgid "Conflict and Resilience"
+msgstr "تعارض و تاب‌آوری"
+
+#: ModuleInfo.php:65
+msgctxt "Literary Subject: Name"
+msgid "History and Memory"
+msgstr "تاریخ و حافظه"
+
+#: ModuleInfo.php:70
+msgctxt "Literary Subject: Name"
+msgid "Culture and Tradition"
+msgstr "فرهنگ و سنت"
+
+#: ModuleInfo.php:75
+msgctxt "Literary Subject: Name"
+msgid "Power and Authority"
+msgstr "قدرت و اختیار"
+
+#: ModuleInfo.php:80
+msgctxt "Literary Subject: Name"
+msgid "Technology and Society"
+msgstr "فناوری و جامعه"
+
+#: ModuleInfo.php:85
+msgctxt "Literary Subject: Name"
+msgid "Art and Creativity"
+msgstr "هنر و خلاقیت"
+
+#: ModuleInfo.php:90
+msgctxt "Literary Subject: Name"
+msgid "Freedom and Oppression"
+msgstr "آزادی و ظلم"
+
+#: ModuleInfo.php:95
+msgctxt "Literary Subject: Name"
+msgid "Faith and Religion"
+msgstr "ایمان و دین"
+
+#: ModuleInfo.php:100
+msgctxt "Literary Subject: Name"
+msgid "Justice and Injustice"
+msgstr "عدالت و بی‌عدالتی"
+
+#: ModuleInfo.php:105
+msgctxt "Literary Subject: Name"
+msgid "Education and Knowledge"
+msgstr "آموزش و دانش"
+
+#: ModuleInfo.php:110
+msgctxt "Literary Subject: Name"
+msgid "Wealth and Poverty"
+msgstr "ثروت و فقر"
+
+#: ModuleInfo.php:115
+msgctxt "Literary Subject: Name"
+msgid "Friendship and Loyalty"
+msgstr "دوستی و وفاداری"
+
+#: ModuleInfo.php:120
+msgctxt "Literary Subject: Name"
+msgid "Dreams and Ambitions"
+msgstr "رؤیاها و آرزوها"
+
+#: ModuleInfo.php:125
+msgctxt "Literary Subject: Name"
+msgid "Mental Health and Well-being"
+msgstr "سلامت روان و خوشی"
+
+#: ModuleInfo.php:130
+msgctxt "Literary Subject: Name"
+msgid "Diversity and Inclusion"
+msgstr "تنوع و شمول"
 
 #: Subjects.php:94
 msgid "Subject"
@@ -41,7 +141,7 @@ msgctxt "Label: `show_option_no_items`"
 msgid "(Unsubjected)"
 msgstr "(بدون موضوع)"
 
-#: Subjects.php:119
+#: Subjects.php:126
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr "20"

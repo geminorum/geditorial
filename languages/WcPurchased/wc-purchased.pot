@@ -13,58 +13,58 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcPurchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WcPurchased.php:41
+#: WcPurchased.php:42
 msgctxt "Setting Title"
 msgid "Order Statuses"
 msgstr ""
 
-#: WcPurchased.php:42
+#: WcPurchased.php:43
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:91
+#: WcPurchased.php:92
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WcPurchased.php:94
+#: WcPurchased.php:95
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WcPurchased.php:103
-#: WcPurchased.php:106
+#: WcPurchased.php:104
+#: WcPurchased.php:107
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WcPurchased.php:109
+#: WcPurchased.php:110
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WcPurchased.php:119
+#: WcPurchased.php:120
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WcPurchased.php:130
+#: WcPurchased.php:131
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:136
+#: WcPurchased.php:137
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WcPurchased.php:143
+#: WcPurchased.php:144
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WcPurchased.php:149
+#: WcPurchased.php:150
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

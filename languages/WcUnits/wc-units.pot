@@ -84,7 +84,7 @@ msgctxt "Setting Description"
 msgid "Used as not available string upon display of weights. Leave empty to disable."
 msgstr ""
 
-#. translators: %s: unit name
+#. translators: `%s`: unit name
 #: WcUnits.php:78
 #: WcUnits.php:88
 #: WcUnits.php:98
@@ -100,10 +100,10 @@ msgstr ""
 
 #: WcUnits.php:79
 msgctxt "Setting Description"
-msgid "Used as template upon display of weights in “Kilogram”."
+msgid "Used as template upon display of weights in “Kilograms”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:81
 msgctxt "Setting Default"
 msgid "%s kg"
@@ -111,10 +111,10 @@ msgstr ""
 
 #: WcUnits.php:89
 msgctxt "Setting Description"
-msgid "Used as template upon display of weight in “Gram”."
+msgid "Used as template upon display of weight in “Grams”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:91
 msgctxt "Setting Default"
 msgid "%s g"
@@ -122,10 +122,10 @@ msgstr ""
 
 #: WcUnits.php:99
 msgctxt "Setting Description"
-msgid "Used as template upon display of weights in “Pound”."
+msgid "Used as template upon display of weights in “Pounds”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:101
 msgctxt "Setting Default"
 msgid "%s lbs"
@@ -133,10 +133,10 @@ msgstr ""
 
 #: WcUnits.php:109
 msgctxt "Setting Description"
-msgid "Used as template upon display of weight in “Ounce”."
+msgid "Used as template upon display of weight in “Ounces”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:111
 msgctxt "Setting Default"
 msgid "%s oz"
@@ -189,10 +189,10 @@ msgstr ""
 
 #: WcUnits.php:152
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Meter”."
+msgid "Used as template upon display of dimensions in “Metres”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:154
 msgctxt "Setting Default"
 msgid "%s m"
@@ -200,10 +200,10 @@ msgstr ""
 
 #: WcUnits.php:162
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Centimetre”."
+msgid "Used as template upon display of dimensions in “Centimetres”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:164
 msgctxt "Setting Default"
 msgid "%s cm"
@@ -211,10 +211,10 @@ msgstr ""
 
 #: WcUnits.php:172
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Millimetre”."
+msgid "Used as template upon display of dimensions in “Millimetres”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:174
 msgctxt "Setting Default"
 msgid "%s mm"
@@ -222,10 +222,10 @@ msgstr ""
 
 #: WcUnits.php:182
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Inch”."
+msgid "Used as template upon display of dimensions in “Inchs”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:184
 msgctxt "Setting Default"
 msgid "%s in"
@@ -233,31 +233,31 @@ msgstr ""
 
 #: WcUnits.php:192
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Yard”."
+msgid "Used as template upon display of dimensions in “Yards”."
 msgstr ""
 
-#. translators: %s: unit amount
+#. translators: `%s`: unit amount
 #: WcUnits.php:194
 msgctxt "Setting Default"
 msgid "%s yd"
 msgstr ""
 
-#: WcUnits.php:204
+#: WcUnits.php:205
 msgctxt "Setting Section Title"
 msgid "Weight"
 msgstr ""
 
-#: WcUnits.php:205
+#: WcUnits.php:206
 msgctxt "Setting Section Description"
 msgid "Format a weight for display."
 msgstr ""
 
-#: WcUnits.php:212
+#: WcUnits.php:208
 msgctxt "Setting Section Title"
 msgid "Dimensions"
 msgstr ""
 
-#: WcUnits.php:213
+#: WcUnits.php:209
 msgctxt "Setting Section Description"
 msgid "Format dimensions for display."
 msgstr ""

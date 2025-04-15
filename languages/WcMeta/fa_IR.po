@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Meta\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-25 19:52+0330\n"
+"PO-Revision-Date: 2025-03-25 05:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -57,7 +57,7 @@ msgstr "کالا بخشی از یک مجموعه است"
 #: WcMeta.php:62
 msgctxt "Field Title"
 msgid "By-Line"
-msgstr "خط تألیف"
+msgstr "خط‌تألیف"
 
 #: WcMeta.php:63
 msgctxt "Field Description"

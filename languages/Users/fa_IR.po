@@ -274,7 +274,7 @@ msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr "بارگیری و بازنقش"
 
-#. translators:  %1$s: file ext-type, %2$s: file size
+#. translators: %1$s: file ext-type, `%2$s`: file size
 #: Users.php:827
 msgctxt "Message"
 msgid ""

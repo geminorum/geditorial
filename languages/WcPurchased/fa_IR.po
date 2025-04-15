@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC-Purchased\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:06+0330\n"
+"PO-Revision-Date: 2025-02-26 20:08+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -25,47 +25,47 @@ msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:92
+#: WcPurchased.php:91
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr "گزارش خرید کالا"
 
-#: WcPurchased.php:95
+#: WcPurchased.php:94
 msgctxt "Action"
 msgid "Purchases"
 msgstr "خریدها"
 
-#: WcPurchased.php:104 WcPurchased.php:107
+#: WcPurchased.php:103 WcPurchased.php:106
 msgctxt "Message"
 msgid "No Product!"
 msgstr "بدون کالا!"
 
-#: WcPurchased.php:110
+#: WcPurchased.php:109
 msgctxt "Message"
 msgid "No Orders!"
 msgstr "بدون سفارش!"
 
-#: WcPurchased.php:123
+#: WcPurchased.php:119
 msgctxt "Button"
 msgid "Export CSV"
 msgstr "برون‌بری CSV"
 
-#: WcPurchased.php:134
+#: WcPurchased.php:130
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:140
+#: WcPurchased.php:136
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr "پرداخت"
 
-#: WcPurchased.php:147
+#: WcPurchased.php:143
 msgctxt "Column Title"
 msgid "Address"
 msgstr "نشانی"
 
-#: WcPurchased.php:153
+#: WcPurchased.php:149
 msgctxt "Column Title"
 msgid "Total"
 msgstr "مبلغ"

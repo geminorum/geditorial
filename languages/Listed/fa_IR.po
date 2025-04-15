@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Listed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:18+0330\n"
+"PO-Revision-Date: 2025-04-03 12:40+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Listed\n"
 "X-Domain: geditorial-listed\n"
 
@@ -25,182 +25,182 @@ msgctxt "Settings"
 msgid "Substitute taxonomy for the listings and supported post-types."
 msgstr ""
 
-#: Listed.php:149 Listed.php:150
+#: Listed.php:133 Listed.php:134
 msgid "Listing"
 msgid_plural "Listings"
 msgstr[0] "فهرست‌ها"
 msgstr[1] "فهرست"
 
-#: Listed.php:151
+#: Listed.php:135
 msgid "Listing Category"
 msgid_plural "Listing Categories"
 msgstr[0] "دسته‌های فهرست"
 msgstr[1] "دسته فهرست"
 
-#: Listed.php:152
+#: Listed.php:136
 msgid "Listing Level"
 msgid_plural "Listing Levels"
 msgstr[0] "سطوح فهرست"
 msgstr[1] "سطح فهرست"
 
-#: Listed.php:153
+#: Listed.php:137
 msgid "Listing Program"
 msgid_plural "Listing Programs"
 msgstr[0] "برنامه‌های فهرست"
 msgstr[1] "برنامه فهرست"
 
-#: Listed.php:154
+#: Listed.php:138
 msgid "Listing Span"
 msgid_plural "Listing Spans"
 msgstr[0] "دوره‌های فهرست"
 msgstr[1] "دوره فهرست"
 
-#: Listed.php:155
+#: Listed.php:139
 msgid "Listing Type"
 msgid_plural "Listing Types"
 msgstr[0] "انواع فهرست"
 msgstr[1] "نوع فهرست"
 
-#: Listed.php:156
+#: Listed.php:140
 msgid "Listing Status"
 msgid_plural "Listing Statuses"
 msgstr[0] "وضعیت‌های فهرست"
 msgstr[1] "وضعیت فهرست"
 
-#: Listed.php:160
+#: Listed.php:144
 msgctxt "Label: `menu_name`"
 msgid "Listings"
 msgstr "فهرست‌ها"
 
-#: Listed.php:161
+#: Listed.php:145
 msgctxt "Label: Featured Image"
 msgid "Listing Poster"
 msgstr "نشان فهرست"
 
-#: Listed.php:162
+#: Listed.php:146
 msgctxt "Label: MetaBox Title"
 msgid "The Listings"
 msgstr "فهرست"
 
-#: Listed.php:165
+#: Listed.php:149
 msgctxt "Label: MetaBox Title"
 msgid "In This Listing"
 msgstr "در این فهرست"
 
-#: Listed.php:168
+#: Listed.php:152
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Listed.php:171
+#: Listed.php:155
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr "برنامه"
 
-#: Listed.php:174
+#: Listed.php:158
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره"
 
-#: Listed.php:177
+#: Listed.php:161
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Listed.php:180
+#: Listed.php:164
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت"
 
-#: Listed.php:189
+#: Listed.php:173
 msgctxt "Notice"
 msgid "There is no listing information available!"
 msgstr "هیچ اطلاعات فهرستی در دسترس نیست!"
 
-#: Listed.php:190
+#: Listed.php:174
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the listing information."
+msgid "You do not have the necessary permission to manage the listing information."
 msgstr "شما دسترسی لازم برای مدیریت اطلاعات فهرستی را ندارید."
 
-#. translators: %s: item count
-#: Listed.php:195
+#. translators: `%s`: item count
+#: Listed.php:179
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr "حاضرین فهرست (%s)"
 
-#. translators: %s: item count
-#: Listed.php:197
+#. translators: `%s`: item count
+#: Listed.php:181
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr "فهرست (%s)"
 
-#: Listed.php:198
+#: Listed.php:182
 msgctxt "Misc: `column_icon_title`"
 msgid "Listings"
 msgstr "فهرست‌ها"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Listed.php:203
+#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#: Listed.php:187
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr "حاضرین در &rdquo;%1$s&ldquo;"
 
-#: Listed.php:213
+#: Listed.php:197
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr "مقدماتی"
 
-#: Listed.php:214
+#: Listed.php:198
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr "متوسطه"
 
-#: Listed.php:215
+#: Listed.php:199
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr "پیشرفته"
 
-#: Listed.php:216
+#: Listed.php:200
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr "ویژه"
 
-#: Listed.php:220
+#: Listed.php:204
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Listed.php:221
+#: Listed.php:205
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Listed.php:263
+#: Listed.php:247
 msgctxt "Field Title"
 msgid "Notaries"
 msgstr "ثبت‌کننده‌ها"
 
-#: Listed.php:264
+#: Listed.php:248
 msgctxt "Field Description"
 msgid "People Who is the Notary of This Listing"
 msgstr "افرادی که ثبت‌کننده این فهرست بوده‌اند"
 
-#: Listed.php:271
+#: Listed.php:255
 msgctxt "Field Title"
 msgid "Listing Code"
 msgstr "کد فهرست"
 
-#: Listed.php:272
+#: Listed.php:256
 msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr "کد یکتای فهرست"
 
-#: Listed.php:620
+#: Listed.php:614
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr "ابزارهای فهرست"
 
-#: Listed.php:629
+#: Listed.php:623
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""

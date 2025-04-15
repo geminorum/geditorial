@@ -74,7 +74,7 @@ msgctxt "MetaBox Save On"
 msgid "Save as %s on:"
 msgstr "%s در:"
 
-#. translators: %1$s: status name, %2$s: time placeholder
+#. translators: %1$s: status name, `%2$s`: time placeholder
 #: Statuses.php:153
 msgctxt "MetaBox Save Date"
 msgid "Save as %1$s on: %2$s"
@@ -86,7 +86,7 @@ msgctxt "MetaBox Saved On"
 msgid "Saved as %s on:"
 msgstr "%s در:"
 
-#. translators: %1$s: status name, %2$s: time placeholder
+#. translators: %1$s: status name, `%2$s`: time placeholder
 #: Statuses.php:157
 msgctxt "MetaBox Saved Date"
 msgid "Saved as %1$s on: %2$s"

@@ -70,7 +70,7 @@ msgstr ""
 
 #: Driving.php:100
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the vehicles data."
+msgid "You do not have the necessary permission to manage the vehicles data."
 msgstr ""
 
 #: Driving.php:107
@@ -78,37 +78,37 @@ msgctxt "MetaBox Title"
 msgid "Vehicles"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Driving.php:111
 msgctxt "Button Title"
 msgid "Vehicles of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Driving.php:113
 msgctxt "Button Text"
 msgid "%1$s Manage the Vehicles of %2$s"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Driving.php:116
 msgctxt "Action Title"
 msgid "Vehicles of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Driving.php:118
 msgctxt "Action Text"
 msgid "Vehicles"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Driving.php:121
 msgctxt "Row Title"
 msgid "Vehicles of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Driving.php:123
 msgctxt "Row Text"
 msgid "Vehicles"
@@ -164,19 +164,19 @@ msgctxt "Field Description"
 msgid "Vehicle Identification Number"
 msgstr ""
 
-#. translators: %s: post title
-#: Driving.php:286
+#. translators: `%s`: post title
+#: Driving.php:285
 msgctxt "Page Title"
 msgid "Vehicle Grid for %s"
 msgstr ""
 
-#. translators: %s: post title
-#: Driving.php:288
+#. translators: `%s`: post title
+#: Driving.php:287
 msgctxt "Page Title"
 msgid "Vehicle Overview for %s"
 msgstr ""
 
-#: Driving.php:305
+#: Driving.php:304
 msgctxt "Default Term: Audit"
 msgid "Empty Vehicle Data"
 msgstr ""

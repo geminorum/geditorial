@@ -73,13 +73,13 @@ msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
-#. translators: %s: widget area name
+#. translators: `%s`: widget area name
 #: WcWidgets.php:159
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
-#. translators: %s: widget action hook
+#. translators: `%s`: widget action hook
 #: WcWidgets.php:161
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."

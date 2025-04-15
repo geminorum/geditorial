@@ -29,18 +29,18 @@ msgctxt "Message"
 msgid "Scan this with your phone and open it to upload files anonymously."
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: DeadDrops.php:73
-msgctxt "Label: Extended Label"
+msgctxt "Button Title"
 msgid "Dead Drop for %1$s"
 msgstr ""
 
-#: DeadDrops.php:247
+#: DeadDrops.php:245
 msgctxt "Header Button"
 msgid "Dead Drop"
 msgstr ""
 
-#: DeadDrops.php:415
+#: DeadDrops.php:413
 msgctxt "Button"
 msgid "Discard"
 msgstr ""

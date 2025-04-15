@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Educated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-13 17:49+0330\n"
+"PO-Revision-Date: 2025-02-12 01:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,18 +15,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Educated\n"
 "X-Domain: geditorial-educated\n"
 
-#: Educated.php:87
+#: Educated.php:96
 msgid "Education Definition"
 msgid_plural "Education Definitions"
 msgstr[0] "سطوح تحصیلی"
 msgstr[1] "سطح تحصیلی"
 
-#: Educated.php:91
+#: Educated.php:100
 msgctxt "Label: Show Option All"
 msgid "Educations"
 msgstr "تحصیلات"
 
-#: Educated.php:92
+#: Educated.php:101
 msgctxt "Label: Show Option No Terms"
 msgid "(Uneducated)"
 msgstr "(تحصیلات نامعلوم)"

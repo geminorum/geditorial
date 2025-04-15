@@ -13,172 +13,172 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Positions\n"
 "X-Domain: geditorial-positions\n"
 
-#: Positions.php:57
+#: Positions.php:58
 msgctxt "Setting Description"
 msgid "Roles that can manage position information."
 msgstr ""
 
-#: Positions.php:58
+#: Positions.php:59
 msgctxt "Setting Description"
 msgid "Roles that can view position information."
 msgstr ""
 
-#: Positions.php:59
+#: Positions.php:60
 msgctxt "Setting Description"
 msgid "Roles that can assign position information."
 msgstr ""
 
-#: Positions.php:106
 #: Positions.php:107
+#: Positions.php:108
 msgid "Position Profile"
 msgid_plural "Position Profiles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Positions.php:108
+#: Positions.php:109
 msgid "Position Profile Type"
 msgid_plural "Position Profile Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Positions.php:109
+#: Positions.php:110
 msgid "Position Profile Category"
 msgid_plural "Position Profile Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Positions.php:110
+#: Positions.php:111
 msgid "Position Profile Flag"
 msgid_plural "Position Profile Flags"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Positions.php:119
+#: Positions.php:120
 msgctxt "Field Label: `label`"
 msgid "Position Title"
 msgstr ""
 
-#: Positions.php:120
+#: Positions.php:121
 msgctxt "Field Label: `fullname`"
 msgid "Incumbent"
 msgstr ""
 
-#: Positions.php:121
+#: Positions.php:122
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr ""
 
-#: Positions.php:122
+#: Positions.php:123
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr ""
 
-#: Positions.php:123
+#: Positions.php:124
 msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr ""
 
-#: Positions.php:124
+#: Positions.php:125
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Positions.php:130
+#: Positions.php:131
 msgctxt "Notice"
 msgid "There is no position information available!"
 msgstr ""
 
-#: Positions.php:131
+#: Positions.php:132
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the position data."
+msgid "You do not have the necessary permission to manage the position data."
 msgstr ""
 
-#: Positions.php:138
+#: Positions.php:139
 msgctxt "MetaBox Title"
 msgid "Positions"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:142
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:143
 msgctxt "Button Title"
 msgid "Positions of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:144
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:145
 msgctxt "Button Text"
 msgid "%1$s Manage the Positions of %2$s"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:147
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:148
 msgctxt "Action Title"
 msgid "Positions of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:149
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:150
 msgctxt "Action Text"
 msgid "Positions"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Positions.php:152
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Positions.php:153
 msgctxt "Row Title"
 msgid "Positions of %1$s"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Positions.php:154
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Positions.php:155
 msgctxt "Row Text"
 msgid "Positions"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:391
+#. translators: `%1$s`: icon markup, `%2$s`: profile post title
+#: Positions.php:392
 msgctxt "Button Label"
 msgid "%1$s Mount: %2$s"
 msgstr ""
 
-#: Positions.php:399
+#: Positions.php:400
 msgctxt "Button Title"
 msgid "Click to Mount the Position Profile"
 msgstr ""
 
-#. translators: %1$s: icon markup, %2$s: profile post title
-#: Positions.php:407
+#. translators: `%1$s`: icon markup, `%2$s`: profile post title
+#: Positions.php:408
 msgctxt "Button Label"
 msgid "%1$s Clear: %2$s"
 msgstr ""
 
-#: Positions.php:415
+#: Positions.php:416
 msgctxt "Button Title"
 msgid "Click to Clear the Position Profile"
 msgstr ""
 
-#: Positions.php:423
+#: Positions.php:424
 msgctxt "Notice"
 msgid "No Position Profile assigned to this content."
 msgstr ""
 
-#: Positions.php:520
+#: Positions.php:521
 msgctxt "Javascript String"
 msgid "Here you can define the position profile by titles with custom ordering."
 msgstr ""
 
-#. translators: %s: post title
-#: Positions.php:541
+#. translators: `%s`: post title
+#: Positions.php:542
 msgctxt "Page Title"
 msgid "Position Grid for %s"
 msgstr ""
 
-#. translators: %s: post title
-#: Positions.php:543
+#. translators: `%s`: post title
+#: Positions.php:544
 msgctxt "Page Title"
 msgid "Positions Overview for %s"
 msgstr ""
 
-#: Positions.php:560
+#: Positions.php:561
 msgctxt "Default Term: Audit"
 msgid "Empty Position Data"
 msgstr ""

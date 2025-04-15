@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Markdown\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:09+0330\n"
+"PO-Revision-Date: 2025-04-01 18:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
 
@@ -22,7 +22,7 @@ msgstr "پیونددهی ویکی"
 
 #: Markdown.php:39
 msgctxt "Setting Description"
-msgid "Converts wiki like markup to internal links."
+msgid "Converts wiki like markup into internal links."
 msgstr ""
 
 #: Markdown.php:89
@@ -32,42 +32,42 @@ msgstr "مارک‌داون"
 
 #: Markdown.php:98
 msgctxt "Adminbar"
-msgid "Markdown Convert"
+msgid "Markdown: Convert"
 msgstr "تبدیل به مارک‌داون"
 
 #: Markdown.php:108
 msgctxt "Adminbar"
-msgid "Markdown Process"
+msgid "Markdown: Process"
 msgstr "پردازش مارک‌داون"
 
 #: Markdown.php:116
 msgctxt "Adminbar"
-msgid "Markdown Cleanup"
+msgid "Markdown: Cleanup"
 msgstr "پالایش مارک‌داون"
 
 #: Markdown.php:124
 msgctxt "Adminbar"
-msgid "Markdown Discard"
+msgid "Markdown: Discard"
 msgstr "برگشت از مارک‌داون"
 
 #: Markdown.php:154
 msgctxt "Message"
-msgid "Unable process Makrdown content into HTML. Please try again."
+msgid "Unable to process Markdown content into HTML. Please try again."
 msgstr ""
 
 #: Markdown.php:162
 msgctxt "Message"
-msgid "Unable convert content into Makrdown. Please try again."
+msgid "Unable to convert content into Markdown. Please try again."
 msgstr ""
 
 #: Markdown.php:171
 msgctxt "Message"
-msgid "Unable cleanup Makrdown content. Please try again."
+msgid "Unable to cleanup Markdown content. Please try again."
 msgstr ""
 
 #: Markdown.php:179
 msgctxt "Message"
-msgid "Unable discard Makrdown content back into HTML. Please try again."
+msgid "Unable to discard Markdown content back into HTML. Please try again."
 msgstr ""
 
 #: Markdown.php:469

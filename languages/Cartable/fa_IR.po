@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Cartable\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-24 12:27+0330\n"
+"PO-Revision-Date: 2025-04-01 18:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Domain: geditorial-cartable\n"
 "X-Poedit-Basepath: ../../includes/Modules/Cartable\n"
 
@@ -211,7 +211,7 @@ msgctxt "Dashboard Widget Title Action"
 msgid "All Items"
 msgstr "همه موارد"
 
-#. translators: %s: term name placeholder
+#. translators: `%s`: term name placeholder
 #: Cartable.php:609 Cartable.php:631
 msgctxt "Dashboard Widget Title"
 msgid "Cartable: %s"
@@ -242,7 +242,7 @@ msgctxt "Page Title"
 msgid "Your Cartable"
 msgstr "کارپوشه شما"
 
-#. translators: %s: term name placeholder
+#. translators: `%s`: term name placeholder
 #: Cartable.php:888
 msgctxt "Menu Title"
 msgid "Cartable: %s"

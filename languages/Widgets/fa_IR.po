@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Widgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:25+0330\n"
+"PO-Revision-Date: 2025-03-25 05:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -110,7 +110,7 @@ msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr "(بی‌نام)"
 
-#. translators: %s: widget area name
+#. translators: `%s`: widget area name
 #: Widgets.php:172
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
@@ -176,7 +176,7 @@ msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr "کلید API شما:"
 
-#. translators: %s: documents url
+#. translators: `%s`: documents url
 #: Widgets/GCalEvents.php:85
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."

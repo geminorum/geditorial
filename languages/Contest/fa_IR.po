@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Contest\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:18+0330\n"
+"PO-Revision-Date: 2025-02-12 01:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -143,12 +143,12 @@ msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr "تاریخ صحت‌سنجی‌شده برای ارسال این درخواست."
 
-#: Contest.php:439
+#: Contest.php:442
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr "ابزارهای فراخوان"
 
-#: Contest.php:502
+#: Contest.php:505
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr "درخواست رهاشده"

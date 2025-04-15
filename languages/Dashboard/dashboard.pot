@@ -33,13 +33,13 @@ msgctxt "Setting Description"
 msgid "Displays the selected nav-menu as dashboard navigation."
 msgstr ""
 
-#. translators: %s: HTML word
+#. translators: `%s`: HTML word
 #: Dashboard.php:48
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
-#. translators: %s: HTML word
+#. translators: `%s`: HTML word
 #: Dashboard.php:50
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after contents on dashboard homepage."

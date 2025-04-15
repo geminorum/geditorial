@@ -97,7 +97,7 @@ msgstr "الگو برای %s"
 
 #: WcUnits.php:79
 msgctxt "Setting Description"
-msgid "Used as template upon display of weights in “Kilogram”."
+msgid "Used as template upon display of weights in “Kilograms”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -108,7 +108,7 @@ msgstr "%s کیلوگرم"
 
 #: WcUnits.php:89
 msgctxt "Setting Description"
-msgid "Used as template upon display of weight in “Gram”."
+msgid "Used as template upon display of weight in “Grams”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -119,7 +119,7 @@ msgstr "%s گرم"
 
 #: WcUnits.php:99
 msgctxt "Setting Description"
-msgid "Used as template upon display of weights in “Pound”."
+msgid "Used as template upon display of weights in “Pounds”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -130,7 +130,7 @@ msgstr "%s پوند"
 
 #: WcUnits.php:109
 msgctxt "Setting Description"
-msgid "Used as template upon display of weight in “Ounce”."
+msgid "Used as template upon display of weight in “Ounces”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -194,7 +194,7 @@ msgstr ""
 
 #: WcUnits.php:152
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Meter”."
+msgid "Used as template upon display of dimensions in “Metres”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -205,7 +205,7 @@ msgstr "%s متر"
 
 #: WcUnits.php:162
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Centimetre”."
+msgid "Used as template upon display of dimensions in “Centimetres”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -216,7 +216,7 @@ msgstr "%s سانتی‌متر"
 
 #: WcUnits.php:172
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Millimetre”."
+msgid "Used as template upon display of dimensions in “Millimetres”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -227,7 +227,7 @@ msgstr "%s میلی‌متر"
 
 #: WcUnits.php:182
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Inch”."
+msgid "Used as template upon display of dimensions in “Inchs”."
 msgstr ""
 
 #. translators: %s: unit amount
@@ -238,7 +238,7 @@ msgstr "%s اینچ"
 
 #: WcUnits.php:192
 msgctxt "Setting Description"
-msgid "Used as template upon display of dimensions in “Yard”."
+msgid "Used as template upon display of dimensions in “Yards”."
 msgstr ""
 
 #. translators: %s: unit amount

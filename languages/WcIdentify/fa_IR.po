@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Identify\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-10 04:28+0330\n"
+"PO-Revision-Date: 2025-02-14 21:29+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -30,28 +30,28 @@ msgctxt "Message"
 msgid "Imports GTIN product attributes into built-in global unique ID fields."
 msgstr "ویژگی‌های کالای GTIN را در زمینه‌های شناسه یکتای جهانی درون‌ریزی می‌کند."
 
-#. translators: %1$s: gtin placeholder, %2$s: product title
+#. translators: %1$s: gtin placeholder, `%2$s`: product title
 #: ModuleSettings.php:65
 msgctxt "Notice"
 msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
 msgstr "شناسه %1$s پیش از این &rdquo;%2$s&ldquo; برای ذخیره شده است."
 
-#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
+#. translators: %1$s: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
 #: ModuleSettings.php:83
 msgctxt "Notice"
 msgid ""
-"%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The "
-"attribute has more than one option!"
+"%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. "
+"The attribute has more than one option!"
 msgstr ""
 "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این "
 "ویژگی شامل بیش از یک گزینه است!"
 
-#. translators: %1$s: gtin placeholder, %2$s: attribute name, %3$s: product title
+#. translators: %1$s: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
 #: ModuleSettings.php:97
 msgctxt "Notice"
 msgid ""
-"%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The "
-"attribute successfully deleted!"
+"%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. "
+"The attribute successfully deleted!"
 msgstr ""
 "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این "
 "ویژگی با موفقیت حذف شد!"
@@ -62,44 +62,58 @@ msgctxt "Notice"
 msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
 msgstr "هیچ ویژگی GTIN مناسبی برای &rdquo;%s&ldquo; پیدا نشد."
 
-#: WcIdentify.php:36
+#: WcIdentify.php:50
 msgctxt "Setting Title"
 msgid "Display GTIN"
 msgstr "نمایش GTIN"
 
-#: WcIdentify.php:37
+#: WcIdentify.php:51
 msgctxt "Setting Description"
 msgid "Prepends the global unique id on product attributes table."
 msgstr "شناسه یکتای جهانی را به ابتدای جدول ویژگی‌های کالا اضافه می‌کند."
 
-#: WcIdentify.php:41
+#: WcIdentify.php:55
 msgctxt "Setting Title"
 msgid "GTIN lookup"
 msgstr "پیوند GTIN"
 
-#: WcIdentify.php:42
+#: WcIdentify.php:56
 msgctxt "Setting Description"
 msgid ""
 "Makes the value for the global unique id clickable on product attributes table."
 msgstr "امکان کلیک مقدار شناسه یکتای جهانی را در جدول ویژگی‌های کالا اضافه می‌کند."
 
-#: WcIdentify.php:47
+#: WcIdentify.php:61
 msgctxt "Setting Title"
 msgid "GTIN Label"
 msgstr "شاخص GTIN"
 
-#: WcIdentify.php:48
+#: WcIdentify.php:62
 msgctxt "Setting Description"
 msgid ""
-"Overrides the default label for the global unique id on product attributes table."
+"Overrides the default label for the global unique id on product attributes "
+"table."
 msgstr "شاخص پیش‌فرض شناسه یکتای جهانی را در جدول ویژگی‌های کالا رونویسی می‌کند."
 
-#: WcIdentify.php:49 WcIdentify.php:70
+#: WcIdentify.php:63 WcIdentify.php:94
 msgctxt "Attribute Label"
 msgid "GTIN"
 msgstr "شناسه"
 
-#: WcIdentify.php:85
+#: WcIdentify.php:68
+msgctxt "Setting Title"
+msgid "GTIN Exemptions"
+msgstr "معافیت‌های GTIN"
+
+#: WcIdentify.php:69
+msgctxt "Setting Description"
+msgid ""
+"Instructs output structured data that a valid identifier for the product "
+"doesn't exist."
+msgstr ""
+"داده‌های ساختاریافته خروجی را برای عدم وجود شناسه معتبر کالا، راهنمایی می‌کند."
+
+#: WcIdentify.php:125
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr "ابزارهای شناسایی کالا"

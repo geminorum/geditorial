@@ -13,23 +13,23 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Jobbed\n"
 "X-Domain: geditorial-jobbed\n"
 
-#: Jobbed.php:93
+#: Jobbed.php:88
 msgid "Job Title"
 msgid_plural "Job Titles"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Jobbed.php:97
+#: Jobbed.php:92
 msgctxt "Label: Menu Name"
 msgid "Job Titles"
 msgstr ""
 
-#: Jobbed.php:98
+#: Jobbed.php:93
 msgctxt "Label: Show Option All"
 msgid "Job Titles"
 msgstr ""
 
-#: Jobbed.php:99
+#: Jobbed.php:94
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""

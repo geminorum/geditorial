@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Badges\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-04 20:49+0330\n"
+"PO-Revision-Date: 2025-04-03 12:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,32 +11,32 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Badges\n"
 "X-Domain: geditorial-badges\n"
 
-#: Badges.php:86
+#: Badges.php:77
 msgid "Badge"
 msgid_plural "Badges"
 msgstr[0] "نشان‌ها"
 msgstr[1] "نشان"
 
-#: Badges.php:90
+#: Badges.php:81
 msgctxt "Label: Menu Name"
 msgid "Content Badges"
 msgstr "نشان‌های محتوا"
 
-#: Badges.php:91
+#: Badges.php:82
 msgctxt "Label: Show Option All"
 msgid "Badges"
 msgstr "نشان‌ها"
 
-#: Badges.php:92
+#: Badges.php:83
 msgctxt "Label: Show Option No Terms"
 msgid "(Unbadged)"
 msgstr "(بی‌نشان)"
 
-#: Badges.php:252
+#: Badges.php:245
 msgctxt "Header"
 msgid "Badge Reports"
 msgstr "گزارش نشان‌ها"

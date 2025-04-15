@@ -131,154 +131,154 @@ msgctxt "Label: Not Found"
 msgid "There are no types available."
 msgstr ""
 
-#: Users.php:339
+#: Users.php:345
 msgctxt "Row Icon Title"
 msgid "Group"
 msgstr ""
 
-#: Users.php:353
+#: Users.php:359
 msgctxt "Row Icon Title"
 msgid "Type"
 msgstr ""
 
-#: Users.php:420
+#: Users.php:426
 msgctxt "Header"
 msgid "Site Categories"
 msgstr ""
 
-#: Users.php:421
+#: Users.php:427
 msgctxt "Message"
 msgid "Restrict non editor users to post in selected categories only."
 msgstr ""
 
-#: Users.php:424
+#: Users.php:430
 msgctxt "Header"
 msgid "User Categories"
 msgstr ""
 
-#: Users.php:452
+#: Users.php:458
 msgctxt "Message"
 msgid "There are no categories available."
 msgstr ""
 
-#: Users.php:560
+#: Users.php:566
 msgctxt "Row Icon Title"
 msgid "Name"
 msgstr ""
 
-#: Users.php:567
+#: Users.php:573
 msgctxt "Row Icon Title"
 msgid "Email"
 msgstr ""
 
-#: Users.php:574
+#: Users.php:580
 msgctxt "Row Icon Title"
 msgid "URL"
 msgstr ""
 
-#: Users.php:592
+#: Users.php:598
 msgctxt "Row Icon Title"
 msgid "Registered"
 msgstr ""
 
-#. translators: %s: date
-#: Users.php:594
+#. translators: `%s`: date
+#: Users.php:600
 msgctxt "Row"
 msgid "Registered on %s"
 msgstr ""
 
-#: Users.php:599
+#: Users.php:605
 msgctxt "Row Icon Title"
 msgid "Roles"
 msgstr ""
 
-#: Users.php:621
+#: Users.php:627
 msgctxt "Header"
 msgid "User Reports"
 msgstr ""
 
-#: Users.php:625
+#: Users.php:631
 msgctxt "Header"
 msgid "By PostType"
 msgstr ""
 
-#: Users.php:640
+#: Users.php:646
 msgctxt "None Title"
 msgid "All Users"
 msgstr ""
 
-#: Users.php:650
+#: Users.php:656
 msgctxt "None Title"
 msgid "All Months"
 msgstr ""
 
-#: Users.php:658
+#: Users.php:664
 msgctxt "Button"
 msgid "Query Stats"
 msgstr ""
 
-#: Users.php:764
+#: Users.php:770
 msgctxt "Header"
 msgid "Duplicate Current Roles"
 msgstr ""
 
-#: Users.php:782
+#: Users.php:788
 msgctxt "TitleAttr"
 msgid "The new role name in lowercase alphanumeric with underlines."
 msgstr ""
 
-#: Users.php:794
+#: Users.php:800
 msgctxt "PlaceHolder"
 msgid "Role Title"
 msgstr ""
 
-#: Users.php:795
+#: Users.php:801
 msgctxt "TitleAttr"
 msgid "The new role title in the localized term."
 msgstr ""
 
-#: Users.php:799
+#: Users.php:805
 msgctxt "Button"
 msgid "Duplicate Role"
 msgstr ""
 
-#: Users.php:800
+#: Users.php:806
 msgctxt "Message"
 msgid "Tries to make a duplicate from existing roles with given name and title."
 msgstr ""
 
-#: Users.php:803
+#: Users.php:809
 msgctxt "Header"
 msgid "Delete Current Roles"
 msgstr ""
 
-#: Users.php:815
+#: Users.php:821
 msgctxt "Button"
 msgid "Delete Role"
 msgstr ""
 
-#: Users.php:816
+#: Users.php:822
 msgctxt "Message"
 msgid "Tries to wipe the selected existing role."
 msgstr ""
 
-#: Users.php:819
+#: Users.php:825
 msgctxt "Header"
 msgid "Re-Map Authors"
 msgstr ""
 
-#: Users.php:823
+#: Users.php:829
 msgctxt "Button"
 msgid "Upload and Re-Map"
 msgstr ""
 
-#. translators:  %1$s: file ext-type, %2$s: file size
-#: Users.php:827
+#. translators: `%1$s`: file ext-type, `%2$s`: file size
+#: Users.php:833
 msgctxt "Message"
 msgid "Checks for post authors via a %1$s file and re-map them with current registered users. Maximum upload size: %2$s"
 msgstr ""
 
-#: Users.php:844
+#: Users.php:850
 msgctxt "Caption"
 msgid "Available Roles"
 msgstr ""

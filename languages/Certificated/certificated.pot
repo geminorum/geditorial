@@ -13,18 +13,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Certificated\n"
 "X-Domain: geditorial-certificated\n"
 
-#: Certificated.php:93
+#: Certificated.php:88
 msgid "Certification"
 msgid_plural "Certifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Certificated.php:97
+#: Certificated.php:92
 msgctxt "Label: Show Option All"
 msgid "Certifications"
 msgstr ""
 
-#: Certificated.php:98
+#: Certificated.php:93
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-certificated)"
 msgstr ""

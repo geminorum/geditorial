@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Modified\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:19+0330\n"
+"PO-Revision-Date: 2025-02-12 00:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,52 +15,72 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:46
+#: Modified.php:50
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr "آخرین انتشار"
 
-#: Modified.php:47
+#: Modified.php:51
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr "آخرین تاریخ انتشار را به جای آخرین تاریخ تغییرات نمایش می‌دهد."
 
-#: Modified.php:53
+#: Modified.php:57
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr "پیشوند محتوا"
 
-#: Modified.php:54
+#: Modified.php:58
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr "رشته سفارشی که قبل از زمان تغییرات نمایش داده خواهد شد."
 
-#: Modified.php:55
+#: Modified.php:59
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr "آخرین تغییر در"
 
-#: Modified.php:60
+#: Modified.php:64
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr "قالب جای‌گذاری"
 
-#: Modified.php:61
+#: Modified.php:65
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
-msgstr ""
+msgstr "تاریخ را به این قالب در محتوا نمایش می‌دهد."
 
-#: Modified.php:68
+#: Modified.php:72
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr "نمایش بعد از"
 
-#: Modified.php:69
+#: Modified.php:73
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
-#: Modified.php:114
+#: Modified.php:85
+msgctxt "Setting: Setting Title"
+msgid "Post Shortcode Tag"
+msgstr "کلید شورت‌کد فرسته"
+
+#: Modified.php:86
+msgctxt "Setting: Setting Description"
+msgid "Customizes the post modified short-code tag. Leave blank for default."
+msgstr "کلید شورت‌کد تغییر فرسته را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."
+
+#: Modified.php:95
+msgctxt "Setting: Setting Title"
+msgid "Site Shortcode Tag"
+msgstr "کلید شورت‌کد سایت"
+
+#: Modified.php:96
+msgctxt "Setting: Setting Description"
+msgid "Customizes the site modified short-code tag. Leave blank for default."
+msgstr "کلید شورت‌کد تغییر سایت را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."
+
+#: Modified.php:140
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
 msgstr "آخرین تغییرات"

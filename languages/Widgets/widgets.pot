@@ -108,7 +108,7 @@ msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr ""
 
-#. translators: %s: widget area name
+#. translators: `%s`: widget area name
 #: Widgets.php:172
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
@@ -174,7 +174,7 @@ msgctxt "Widget: Google Calendar"
 msgid "Your API key:"
 msgstr ""
 
-#. translators: %s: documents url
+#. translators: `%s`: documents url
 #: Widgets/GCalEvents.php:85
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."

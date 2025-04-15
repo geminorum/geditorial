@@ -13,57 +13,132 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
 "X-Domain: geditorial-wc-terms\n"
 
-#: WcTerms.php:37
+#: WcTerms.php:38
+msgctxt "Setting Title"
+msgid "Tab from Taxonomy"
+msgstr ""
+
+#: WcTerms.php:43
+msgctxt "Setting Title"
+msgid "Taxonomy"
+msgstr ""
+
+#: WcTerms.php:44
+msgctxt "Setting Description"
+msgid "Target taxonomy for term introduction on product tabs."
+msgstr ""
+
+#: WcTerms.php:50
+msgctxt "Setting Title"
+msgid "Heading"
+msgstr ""
+
+#: WcTerms.php:51
+msgctxt "Setting Description"
+msgid "Template for term introduction product tab heading."
+msgstr ""
+
+#: WcTerms.php:56
+msgctxt "Setting Title"
+msgid "Excludes Terms"
+msgstr ""
+
+#: WcTerms.php:57
+msgctxt "Setting Description"
+msgid "Strips terms form list of targeted terms. Leave empty to disable."
+msgstr ""
+
+#: WcTerms.php:63
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr ""
+
+#: WcTerms.php:64
+msgctxt "Setting Description"
+msgid "Tab priority where the term introduction appears on the tabs."
+msgstr ""
+
+#: WcTerms.php:73
+msgctxt "Setting Title"
+msgid "Exclude Default Terms"
+msgstr ""
+
+#: WcTerms.php:74
+msgctxt "Setting Description"
+msgid "Strips default term form list of displayed terms."
+msgstr ""
+
+#: WcTerms.php:79
+msgctxt "Setting Title"
+msgid "Combined Terms"
+msgstr ""
+
+#: WcTerms.php:80
+msgctxt "Setting Description"
+msgid "Displays all assigned terms on single product tab."
+msgstr ""
+
+#: WcTerms.php:85
+msgctxt "Setting Title"
+msgid "Singular Term"
+msgstr ""
+
+#: WcTerms.php:86
+msgctxt "Setting Description"
+msgid "Displays only the first term introduction."
+msgstr ""
+
+#: WcTerms.php:93
 msgctxt "Setting Title"
 msgid "Archive Title"
 msgstr ""
 
-#: WcTerms.php:38
+#: WcTerms.php:94
 msgctxt "Setting Description"
 msgid "Enhance the term archive titles."
 msgstr ""
 
-#: WcTerms.php:41
+#: WcTerms.php:98
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr ""
 
-#: WcTerms.php:42
+#: WcTerms.php:99
 msgctxt "Setting Option"
 msgid "Heading Level 1"
 msgstr ""
 
-#: WcTerms.php:43
+#: WcTerms.php:100
 msgctxt "Setting Option"
 msgid "Heading Level 2"
 msgstr ""
 
-#: WcTerms.php:44
+#: WcTerms.php:101
 msgctxt "Setting Option"
 msgid "Heading Level 3"
 msgstr ""
 
-#: WcTerms.php:45
+#: WcTerms.php:102
 msgctxt "Setting Option"
 msgid "Heading Level 4"
 msgstr ""
 
-#: WcTerms.php:46
+#: WcTerms.php:103
 msgctxt "Setting Option"
 msgid "Heading Level 5"
 msgstr ""
 
-#: WcTerms.php:47
+#: WcTerms.php:104
 msgctxt "Setting Option"
 msgid "Heading Level 6"
 msgstr ""
 
-#: WcTerms.php:52
+#: WcTerms.php:109
 msgctxt "Setting Title"
 msgid "Archive Descriptions"
 msgstr ""
 
-#: WcTerms.php:53
+#: WcTerms.php:110
 msgctxt "Setting Description"
 msgid "Enhance the term archive descriptions with assigned image."
 msgstr ""

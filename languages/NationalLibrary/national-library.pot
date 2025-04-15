@@ -13,75 +13,85 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/NationalLibrary\n"
 "X-Domain: geditorial-national-library\n"
 
-#: ModuleHelper.php:24
+#: ModuleHelper.php:33
 msgctxt "Helper: Title Attr"
 msgid "Book Page on Nali.ir"
 msgstr ""
 
-#: ModuleHelper.php:54
+#: ModuleHelper.php:63
 msgctxt "Helper: Title Attr"
 msgid "Search ISBN on Nali.ir"
 msgstr ""
 
-#. translators: %s: supported object label
-#: NationalLibrary.php:53
+#: ModuleHelper.php:373
+msgctxt "Helper: Title Attr"
+msgid "Search People on Nali.ir"
+msgstr ""
+
+#. translators: `%s`: supported object label
+#: NationalLibrary.php:56
 msgctxt "Setting Title"
 msgid "Bib Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:56
+#: NationalLibrary.php:59
 msgctxt "Setting Description"
 msgid "Defines Bib meta-key for the post-type."
 msgstr ""
 
-#. translators: %s: supported object label
-#: NationalLibrary.php:68
+#. translators: `%s`: supported object label
+#: NationalLibrary.php:71
 msgctxt "Setting Title"
 msgid "ISBN Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:71
+#: NationalLibrary.php:74
 msgctxt "Setting Description"
 msgid "Defines ISBN meta-key for the post-type."
 msgstr ""
 
-#: NationalLibrary.php:85
+#: NationalLibrary.php:89
 msgctxt "Setting Description"
 msgid "Select to display data as tab for the products."
 msgstr ""
 
-#: NationalLibrary.php:91
+#: NationalLibrary.php:95
 msgctxt "Setting Title"
 msgid "New-Post Hints"
 msgstr ""
 
-#: NationalLibrary.php:92
+#: NationalLibrary.php:96
 msgctxt "Setting Description"
 msgid "Displays Bibliographic information on new post edit screen."
 msgstr ""
 
-#: NationalLibrary.php:98
+#: NationalLibrary.php:102
 msgctxt "Setting Description"
 msgid "Adds results by Bibliographic information on front-end search."
 msgstr ""
 
-#: NationalLibrary.php:101
+#: NationalLibrary.php:105
 msgctxt "Setting Title"
 msgid "Custom Queries"
 msgstr ""
 
-#: NationalLibrary.php:102
+#: NationalLibrary.php:106
 msgctxt "Setting Description"
 msgid "Appends end-points for Bib/Fipa numbers on front-end."
 msgstr ""
 
-#: NationalLibrary.php:379
-#: NationalLibrary.php:457
+#: NationalLibrary.php:195
+msgctxt "RestAPI: Arg Description"
+msgid "The ISBN or Biblio Code to process."
+msgstr ""
+
+#: NationalLibrary.php:492
+#: NationalLibrary.php:570
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr ""
 
-#: NationalLibrary.php:458
+#: NationalLibrary.php:571
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
 msgstr ""

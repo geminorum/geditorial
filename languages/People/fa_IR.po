@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial People\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 02:17+0330\n"
+"PO-Revision-Date: 2025-04-09 08:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,57 +15,98 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/People\n"
 "X-Domain: geditorial-people\n"
 
-#: People.php:43
+#: People.php:45
 msgctxt "Setting Description"
 msgid "Whether to assign multiple affiliations in edit panel."
 msgstr "اختصاص بیش از یک وابستگی، در پنل ویرایش امکان‌پذیر باشد."
 
-#: People.php:70
+#: People.php:72
 msgid "Person"
 msgid_plural "People"
 msgstr[0] "افراد"
 msgstr[1] "فرد"
 
-#: People.php:71
+#: People.php:73
 msgid "Affiliation"
 msgid_plural "Affiliations"
 msgstr[0] "وابستگی‌ها"
 msgstr[1] "وابستگی"
 
-#: People.php:75
+#: People.php:74
+msgid "Honorific"
+msgid_plural "Honorifics"
+msgstr[0] "عناوین"
+msgstr[1] "عنوان"
+
+#: People.php:78
 msgctxt "Label: `name_field_description`"
 msgid "What is the full-name of the person."
 msgstr "نام کامل فرد را تعریف کنید."
 
-#: People.php:76
+#: People.php:79
 msgctxt "Label: `slug_field_description`"
 msgid "Define the URL-friendly version of the name of the person."
 msgstr "نسخه مناسب URL نام فرد را تعریف کنید."
 
-#: People.php:77
+#: People.php:80
 msgctxt "Label: `desc_field_description`"
 msgid "Describe the person in more words."
 msgstr "این فرد را با کلمات بیشتری توصیف کنید."
 
-#: People.php:80
+#: People.php:81
+msgctxt "Label: `manage_description`"
+msgid "Define the individuals affiliated with this site."
+msgstr "افراد مرتبط با این سایت را تعریف می‌کند."
+
+#: People.php:84
 msgctxt "Label: `extended_label`"
 msgid "People Affiliations"
 msgstr "وابستگی‌های فردی"
 
-#: People.php:81
+#: People.php:85
+msgctxt "Label: `column_title`"
+msgid "Affiliations"
+msgstr "وابستگی"
+
+#: People.php:86
 msgctxt "Label: `show_option_all`"
 msgid "People Affiliations"
 msgstr "وابستگی‌های فردی"
 
-#: People.php:82
+#: People.php:87
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unaffiliated)"
 msgstr "(بدون وابستگی)"
 
-#: People.php:83
+#: People.php:88
 msgctxt "Label: `assign_description`"
 msgid "Defines the affiliation of the person."
 msgstr "وابستگی فرد را تعریف کنید."
+
+#: People.php:91
+msgctxt "Label: `extended_label`"
+msgid "People Honorifics"
+msgstr "عناوین فردی"
+
+#: People.php:92
+msgctxt "Label: `column_title`"
+msgid "Honorifics"
+msgstr "عنوان"
+
+#: People.php:93
+msgctxt "Label: `show_option_all`"
+msgid "People Honorifics"
+msgstr "عناوین فردی"
+
+#: People.php:94
+msgctxt "Label: `show_option_no_items`"
+msgid "(Undefined)"
+msgstr "(تعریف‌نشده)"
+
+#: People.php:95
+msgctxt "Label: `assign_description`"
+msgid "Defines the honorifics of the person."
+msgstr "عناوین فرد را تعریف کنید."
 
 #~ msgctxt "Javascript String"
 #~ msgid "Search"
@@ -87,11 +128,6 @@ msgstr "وابستگی فرد را تعریف کنید."
 #~ msgid_plural "Relations"
 #~ msgstr[0] "ارتباط‌ها"
 #~ msgstr[1] "ارتباط"
-
-#~ msgid "Honorific"
-#~ msgid_plural "Honorifics"
-#~ msgstr[0] "تجلیلی‌ها"
-#~ msgstr[1] "تجلیلی"
 
 #~ msgctxt "Label: Menu Name"
 #~ msgid "People"
@@ -232,10 +268,6 @@ msgstr "وابستگی فرد را تعریف کنید."
 #~ msgctxt "Import Field"
 #~ msgid "People: %s"
 #~ msgstr "فرد: %s"
-
-#~ msgctxt "Import Field"
-#~ msgid "Undefined"
-#~ msgstr "تعریف‌نشده"
 
 #~ msgctxt "App Template"
 #~ msgid "Search here …"

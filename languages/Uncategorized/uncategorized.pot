@@ -41,13 +41,13 @@ msgctxt "Action"
 msgid "Clean Unattached"
 msgstr ""
 
-#. translators: %s: count
+#. translators: `%s`: count
 #: Uncategorized.php:159
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
-#. translators: %s: posts count
+#. translators: `%s`: posts count
 #: Uncategorized.php:170
 msgctxt "Noop"
 msgid "%s Uncategorized Post"

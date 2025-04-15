@@ -43,13 +43,13 @@ msgctxt "Setting Description"
 msgid "Select post-types to be targeted for the switch."
 msgstr ""
 
-#. translators: %1$s: module title, %2$s: posttype label
+#. translators: `%1$s`: module title, `%2$s`: posttype label
 #: Switcher.php:86
 msgctxt "Bulk Action"
 msgid "[%1$s] Switch to %2$s"
 msgstr ""
 
-#. translators: %1$s: count, %2$s: posttype
+#. translators: `%1$s`: count, `%2$s`: posttype
 #: Switcher.php:138
 msgctxt "Message"
 msgid "%1$s items(s) switched to %2$s!"

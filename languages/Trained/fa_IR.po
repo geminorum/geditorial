@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Trained\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:24+0330\n"
+"PO-Revision-Date: 2025-04-07 05:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Trained\n"
 "X-Domain: geditorial-trained\n"
 
@@ -27,187 +27,188 @@ msgstr ""
 "رده‌بندی زیرمجموعه را برای دوره‌های آموزشی و نوع‌نوشته‌های پشتیبانی‌شده اضافه "
 "می‌کند."
 
-#: Trained.php:149 Trained.php:150
+#: Trained.php:133 Trained.php:134
 msgid "Training Course"
 msgid_plural "Training Courses"
 msgstr[0] "دوره‌های آموزشی"
 msgstr[1] "دوره آموزشی"
 
-#: Trained.php:151
+#: Trained.php:135
 msgid "Training Category"
 msgid_plural "Training Categories"
 msgstr[0] "دسته‌های آموزشی"
 msgstr[1] "دسته آموزشی"
 
-#: Trained.php:152
+#: Trained.php:136
 msgid "Training Level"
 msgid_plural "Training Levels"
 msgstr[0] "سطوح آموزشی"
 msgstr[1] "سطح آموزشی"
 
-#: Trained.php:153
+#: Trained.php:137
 msgid "Training Program"
 msgid_plural "Training Programs"
 msgstr[0] "برنامه‌های آموزشی"
 msgstr[1] "برنامه آموزشی"
 
-#: Trained.php:154
+#: Trained.php:138
 msgid "Training Span"
 msgid_plural "Training Spans"
 msgstr[0] "دوره‌های آموزشی"
 msgstr[1] "دوره آموزشی"
 
-#: Trained.php:155
+#: Trained.php:139
 msgid "Training Type"
 msgid_plural "Training Types"
 msgstr[0] "انواع آموزشی"
 msgstr[1] "نوع آموزشی"
 
-#: Trained.php:156
+#: Trained.php:140
 msgid "Training Status"
 msgid_plural "Training Statuses"
 msgstr[0] "وضعیت‌های آموزشی"
 msgstr[1] "وضعیت آموزشی"
 
-#: Trained.php:160
+#: Trained.php:144
 msgctxt "Label: `menu_name`"
 msgid "Trainings"
 msgstr "آموزش"
 
-#: Trained.php:161
+#: Trained.php:145
 msgctxt "Label: Featured Image"
 msgid "Training Poster"
 msgstr "اعلان آموزش"
 
-#: Trained.php:162
+#: Trained.php:146
 msgctxt "Label: MetaBox Title"
-msgid "The Trainings"
+msgid "The Training"
 msgstr "آموزش"
 
-#: Trained.php:165
+#: Trained.php:149
 msgctxt "Label: MetaBox Title"
 msgid "In This Training"
 msgstr "در این آموزش"
 
-#: Trained.php:168
+#: Trained.php:152
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Trained.php:171
+#: Trained.php:155
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr "برنامه‌ها"
 
-#: Trained.php:174
+#: Trained.php:158
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره"
 
-#: Trained.php:177
+#: Trained.php:161
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Trained.php:180
+#: Trained.php:164
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Trained.php:189
+#: Trained.php:173
 msgctxt "Notice"
 msgid "There is no training information available!"
 msgstr "هیچ اطلاعات آموزشی در دسترس نیست!"
 
-#: Trained.php:190
+#: Trained.php:174
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the training information."
+msgid ""
+"You do not have the necessary permission to manage the training information."
 msgstr "شما دسترسی لازم برای مدیریت اطلاعات آموزشی را ندارید."
 
-#. translators: %s: item count
-#: Trained.php:195
+#. translators: `%s`: item count
+#: Trained.php:179
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Training Attendees (%s)"
 msgstr "شرکت‌کنندگان در آموزش (%s)"
 
-#. translators: %s: item count
-#: Trained.php:197
+#. translators: `%s`: item count
+#: Trained.php:181
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Training Courses (%s)"
 msgstr "دوره‌های آموزشی (%s)"
 
-#: Trained.php:198
+#: Trained.php:182
 msgctxt "Misc: `column_icon_title`"
 msgid "Training Courses"
 msgstr "دوره آموزشی"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Trained.php:203
+#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#: Trained.php:187
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr "شرکت‌کنندگان در &ldquo;%1$s&rdquo;"
 
-#: Trained.php:213
+#: Trained.php:197
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Preliminary"
 msgstr "مقدماتی"
 
-#: Trained.php:214
+#: Trained.php:198
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Intermediate"
 msgstr "متوسط"
 
-#: Trained.php:215
+#: Trained.php:199
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Advanced"
 msgstr "پیشرفته"
 
-#: Trained.php:216
+#: Trained.php:200
 msgctxt "Subterm Taxonomy: Default Term"
 msgid "Special"
 msgstr "ویژه"
 
-#: Trained.php:220
+#: Trained.php:204
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Trained.php:221
+#: Trained.php:205
 msgctxt "Status Taxonomy: Default Term"
 msgid "Canceled"
 msgstr "لغوشده"
 
-#: Trained.php:222
+#: Trained.php:206
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Trained.php:264
+#: Trained.php:248
 msgctxt "Field Title"
 msgid "Instructors"
 msgstr "مربیان"
 
-#: Trained.php:265
+#: Trained.php:249
 msgctxt "Field Description"
 msgid "People Who Participate as Instructors in This Training Course"
 msgstr "افرادی که به عنوان مربی در این دوره آموزشی شرکت کرده‌اند"
 
-#: Trained.php:272
+#: Trained.php:256
 msgctxt "Field Title"
 msgid "Training Code"
 msgstr "کد آموزشی"
 
-#: Trained.php:273
+#: Trained.php:257
 msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr "کد آموزشی یکتا"
 
-#: Trained.php:621
+#: Trained.php:615
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr "ابزارهایی برای دوره‌های آموزشی"
 
-#: Trained.php:630
+#: Trained.php:624
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr "تاریخ دوره‌های آموزشی بر اساس داده‌های متا"

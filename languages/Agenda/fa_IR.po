@@ -3,141 +3,146 @@ msgstr ""
 "Project-Id-Version: gEditorial Agenda\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-04 21:02+0330\n"
+"PO-Revision-Date: 2025-04-07 05:07+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Agenda\n"
 "X-Domain: geditorial-agenda\n"
 
-#: Agenda.php:80
+#: Agenda.php:86
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Agenda.php:81
+#: Agenda.php:87
 msgctxt "Field Label: `datestring`"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Agenda.php:82
+#: Agenda.php:88
 msgctxt "Field Label: `timestart`"
 msgid "Time Start"
 msgstr "پایان"
 
-#: Agenda.php:83
+#: Agenda.php:89
 msgctxt "Field Label: `timeend`"
 msgid "Time End"
 msgstr "شروع"
 
-#: Agenda.php:84
+#: Agenda.php:90
 msgctxt "Field Label: `people`"
 msgid "Coordinator"
 msgstr "مسئول"
 
-#: Agenda.php:85
+#: Agenda.php:91
 msgctxt "Field Label: `topic`"
 msgid "Topic"
 msgstr "موضوع"
 
-#: Agenda.php:86
+#: Agenda.php:92
 msgctxt "Field Label: `count`"
 msgid "Participants"
 msgstr "مشارکت‌کنندگان"
 
-#: Agenda.php:87
+#: Agenda.php:93
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr "محل برگزاری"
 
-#: Agenda.php:88
+#: Agenda.php:94
 msgctxt "Field Label: `duration`"
 msgid "Duration"
 msgstr "مدت"
 
-#: Agenda.php:89
+#: Agenda.php:95
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Agenda.php:95
+#: Agenda.php:101
+msgctxt "Tab Title"
+msgid "Itineraries"
+msgstr "گشت‏نامه"
+
+#: Agenda.php:105
 msgctxt "Notice"
 msgid "There is no itinerary information available!"
 msgstr "هیچ اطلاعات گشت‌نامه‌ای در دسترس نیست!"
 
-#: Agenda.php:96
+#: Agenda.php:106
 msgctxt "Notice"
-msgid "You have not necessary permission to manage the itinerary data."
+msgid "You do not have the necessary permission to manage the itinerary data."
 msgstr "شما دسترسی لازم برای مدیریت گشت‌نامه را ندارید."
 
-#: Agenda.php:103
+#: Agenda.php:113
 msgctxt "MetaBox Title"
 msgid "Itineraries"
 msgstr "گشت‏نامه"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:107
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:117
 msgctxt "Button Title"
 msgid "Itineraries of %1$s"
 msgstr "گشت‌نامه %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:109
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:119
 msgctxt "Button Text"
 msgid "%1$s Manage the Itineraries of %2$s"
 msgstr "%1$s مدیریت گشت‌نامه برای %2$s"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:112
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:122
 msgctxt "Action Title"
 msgid "Itineraries of %1$s"
 msgstr "گشت‌نامه برای %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:114
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:124
 msgctxt "Action Text"
 msgid "Itineraries"
 msgstr "گشت‏نامه"
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Agenda.php:117
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Agenda.php:127
 msgctxt "Row Title"
 msgid "Itineraries of %1$s"
 msgstr "گشت‌نامه %1$s"
 
-#. translators: %1$s: icon markup, %2$s: posttype singular name
-#: Agenda.php:119
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Agenda.php:129
 msgctxt "Row Text"
 msgid "Itineraries"
 msgstr "گشت‏نامه"
 
-#: Agenda.php:132
+#: Agenda.php:142
 msgctxt "Field Title"
 msgid "Agenda Title"
 msgstr "عنوان دستورجلسه"
 
-#: Agenda.php:133
+#: Agenda.php:143
 msgctxt "Field Description"
 msgid "The Itinerary Table Caption"
 msgstr "برنگاشت جدول گشت‌نامه"
 
-#. translators: %s: post title
-#: Agenda.php:259
+#. translators: `%s`: post title
+#: Agenda.php:269
 msgctxt "Page Title"
 msgid "Itinerary Grid for %s"
 msgstr "جدول گشت‌نامه برای %s"
 
-#. translators: %s: post title
-#: Agenda.php:261
+#. translators: `%s`: post title
+#: Agenda.php:271
 msgctxt "Page Title"
 msgid "Itinerary Overview for %s"
 msgstr "نمای‌کلی گشت‌نامه برای %s"
 
-#: Agenda.php:278
+#: Agenda.php:288
 msgctxt "Default Term: Audit"
 msgid "Empty Itinerary Data"
 msgstr "داده‌های گشت‌نامه خالی"

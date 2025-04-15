@@ -13,21 +13,6 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Socialite\n"
 "X-Domain: geditorial-socialite\n"
 
-#: Socialite.php:42
-msgctxt "Setting Title"
-msgid "Supported Fields"
-msgstr ""
-
-#: Socialite.php:43
-msgctxt "Setting Description"
-msgid "Appends custom meta fields for social services to taxonomies. Terms module needs to be enabled."
-msgstr ""
-
-#: Socialite.php:44
-msgctxt "Setting String Empty"
-msgid "The Terms module is not available!"
-msgstr ""
-
 #: Socialite.php:52
 msgctxt "Setting Title"
 msgid "Social Icons"
@@ -113,87 +98,147 @@ msgctxt "Setting Description"
 msgid "HTML closing after each social icon image."
 msgstr ""
 
-#: Socialite.php:128
+#: Socialite.php:123
+msgctxt "Setting Title"
+msgid "Supported Fields"
+msgstr ""
+
+#: Socialite.php:124
+msgctxt "Setting Description"
+msgid "Appends custom meta fields for social services to taxonomies. <em>Terms</em> module needs to be enabled."
+msgstr ""
+
+#: Socialite.php:125
+msgctxt "Setting String Empty"
+msgid "The Terms module is not available!"
+msgstr ""
+
+#: Socialite.php:142
 msgctxt "Title"
 msgid "Twitter"
 msgstr ""
 
-#: Socialite.php:129
+#: Socialite.php:143
+msgctxt "Title"
+msgid "TikTok"
+msgstr ""
+
+#: Socialite.php:144
 msgctxt "Title"
 msgid "Instagram"
 msgstr ""
 
-#: Socialite.php:130
+#: Socialite.php:145
 msgctxt "Title"
 msgid "Telegram"
 msgstr ""
 
-#: Socialite.php:131
+#: Socialite.php:146
 msgctxt "Title"
 msgid "Facebook"
 msgstr ""
 
-#: Socialite.php:132
+#: Socialite.php:147
 msgctxt "Title"
 msgid "YouTube"
 msgstr ""
 
-#: Socialite.php:133
+#: Socialite.php:148
 msgctxt "Title"
 msgid "Aparat"
 msgstr ""
 
-#: Socialite.php:134
+#: Socialite.php:149
 msgctxt "Title"
 msgid "Behkhaan"
 msgstr ""
 
-#: Socialite.php:135
+#: Socialite.php:150
+msgctxt "Title"
+msgid "Fidibo"
+msgstr ""
+
+#: Socialite.php:151
+msgctxt "Title"
+msgid "Goodreads"
+msgstr ""
+
+#: Socialite.php:152
 msgctxt "Title"
 msgid "Eitaa"
 msgstr ""
 
-#: Socialite.php:138
-msgctxt "Description"
-msgid "Handle or URL to an Twitter account."
+#: Socialite.php:153
+msgctxt "Title"
+msgid "Wikipedia"
 msgstr ""
 
-#: Socialite.php:139
+#: Socialite.php:156
+msgctxt "Description"
+msgid "Handle or URL to a Twitter account."
+msgstr ""
+
+#: Socialite.php:157
+msgctxt "Description"
+msgid "Handle or URL to a TikTok account."
+msgstr ""
+
+#: Socialite.php:158
 msgctxt "Description"
 msgid "Handle or URL to an Instagram account."
 msgstr ""
 
-#: Socialite.php:140
+#: Socialite.php:159
 msgctxt "Description"
 msgid "Handle or URL to a Telegram user or channel."
 msgstr ""
 
-#: Socialite.php:141
+#: Socialite.php:160
 msgctxt "Description"
 msgid "Handle or URL to a Facebook profile or page."
 msgstr ""
 
-#: Socialite.php:142
+#: Socialite.php:161
 msgctxt "Description"
 msgid "Handle or URL to a YouTube channel."
 msgstr ""
 
-#: Socialite.php:143
+#: Socialite.php:162
 msgctxt "Description"
 msgid "Handle or URL to an Aparat channel."
 msgstr ""
 
-#: Socialite.php:144
+#: Socialite.php:163
 msgctxt "Description"
-msgid "Handle or URL to an Behkhaan profile."
+msgid "Handle or URL to a Behkhaan profile page."
 msgstr ""
 
-#: Socialite.php:145
+#: Socialite.php:164
 msgctxt "Description"
-msgid "Handle or URL to a Eitaa user or channel."
+msgid "ID or URL to a Fidibo profile page."
 msgstr ""
 
-#: Socialite.php:148
+#: Socialite.php:165
+msgctxt "Description"
+msgid "URL to a Goodreads profile page."
+msgstr ""
+
+#: Socialite.php:166
+msgctxt "Description"
+msgid "Handle or URL to an Eitaa user or channel."
+msgstr ""
+
+#: Socialite.php:167
+msgctxt "Description"
+msgid "Handle or URL to a Wikipedia page."
+msgstr ""
+
+#: Socialite.php:170
+msgctxt "Setting Description"
+msgid "Appends custom meta fields for social services to post-types. <em>Meta</em> module needs to be enabled."
+msgstr ""
+
+#: Socialite.php:173
 msgctxt "Column Title"
 msgid "Social"
 msgstr ""

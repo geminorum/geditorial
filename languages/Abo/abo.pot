@@ -13,68 +13,68 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Abo\n"
 "X-Domain: geditorial-abo\n"
 
-#: Abo.php:85
+#: Abo.php:78
 msgid "Blood Type"
 msgid_plural "Blood Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Abo.php:89
+#: Abo.php:82
 msgctxt "Label: Extended Label"
 msgid "Blood-Type"
 msgstr ""
 
-#: Abo.php:90
+#: Abo.php:83
 msgctxt "Label: Show Option All"
 msgid "Blood-Type"
 msgstr ""
 
-#: Abo.php:91
+#: Abo.php:84
 msgctxt "Label: Show Option No Terms"
 msgid "(Unknown)"
 msgstr ""
 
-#: Abo.php:104
+#: Abo.php:97
 msgctxt "Main Taxonomy: Default Term"
 msgid "A&plus;"
 msgstr ""
 
-#: Abo.php:105
+#: Abo.php:98
 msgctxt "Main Taxonomy: Default Term"
 msgid "A&minus;"
 msgstr ""
 
-#: Abo.php:106
+#: Abo.php:99
 msgctxt "Main Taxonomy: Default Term"
 msgid "B&plus;"
 msgstr ""
 
-#: Abo.php:107
+#: Abo.php:100
 msgctxt "Main Taxonomy: Default Term"
 msgid "B&minus;"
 msgstr ""
 
-#: Abo.php:108
+#: Abo.php:101
 msgctxt "Main Taxonomy: Default Term"
 msgid "O&plus;"
 msgstr ""
 
-#: Abo.php:109
+#: Abo.php:102
 msgctxt "Main Taxonomy: Default Term"
 msgid "O&minus;"
 msgstr ""
 
-#: Abo.php:110
+#: Abo.php:103
 msgctxt "Main Taxonomy: Default Term"
 msgid "AB&plus;"
 msgstr ""
 
-#: Abo.php:111
+#: Abo.php:104
 msgctxt "Main Taxonomy: Default Term"
 msgid "AB&minus;"
 msgstr ""
 
-#: Abo.php:125
+#: Abo.php:118
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "3"
 msgstr ""

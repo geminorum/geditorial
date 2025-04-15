@@ -13,133 +13,133 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Lingo\n"
 "X-Domain: geditorial-lingo\n"
 
-#. translators: %s: iso code
-#: Lingo.php:74
+#. translators: `%s`: iso code
+#: Lingo.php:61
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr ""
 
-#: Lingo.php:81
+#: Lingo.php:68
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Lingo.php:85
+#: Lingo.php:72
 msgctxt "Label: `extended_label`"
 msgid "Language Identifiers"
 msgstr ""
 
-#: Lingo.php:86
+#: Lingo.php:73
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr ""
 
-#: Lingo.php:87
+#: Lingo.php:74
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr ""
 
-#: Lingo.php:88
+#: Lingo.php:75
 msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr ""
 
-#: Lingo.php:93
+#: Lingo.php:80
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr ""
 
-#: Lingo.php:94
+#: Lingo.php:81
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr ""
 
-#: Lingo.php:105
+#: Lingo.php:92
 msgctxt "Importer: Title"
 msgid "Import Language Identifiers"
 msgstr ""
 
-#. translators: %s: iso code
-#: Lingo.php:107
+#. translators: `%s`: ISO code
+#: Lingo.php:94
 msgctxt "Importer: Description"
 msgid "Language Identifiers from %s into WordPress"
 msgstr ""
 
-#. translators: %s: redirect url
-#: Lingo.php:109
+#. translators: `%s`: redirect URL
+#: Lingo.php:96
 msgctxt "Importer: Redirect"
 msgid "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click here</a>."
 msgstr ""
 
-#: Lingo.php:122
+#: Lingo.php:109
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr ""
 
-#: Lingo.php:123
+#: Lingo.php:110
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr ""
 
-#: Lingo.php:124
+#: Lingo.php:111
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr ""
 
-#: Lingo.php:125
+#: Lingo.php:112
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr ""
 
-#: Lingo.php:278
+#: Lingo.php:267
 msgctxt "Header"
 msgid "Import Language Identifiers"
 msgstr ""
 
-#: Lingo.php:281
+#: Lingo.php:270
 msgctxt "Imports"
 msgid "ISO 639-1 Alpha-2"
 msgstr ""
 
-#: Lingo.php:288
+#: Lingo.php:277
 msgctxt "Table Column"
 msgid "Code"
 msgstr ""
 
-#: Lingo.php:292
+#: Lingo.php:281
 msgctxt "Table Column"
 msgid "Term"
 msgstr ""
 
-#: Lingo.php:304
+#: Lingo.php:293
 msgctxt "Table Column"
 msgid "English Name"
 msgstr ""
 
-#: Lingo.php:308
-#: Lingo.php:346
-#: Lingo.php:356
+#: Lingo.php:297
+#: Lingo.php:335
+#: Lingo.php:345
 msgctxt "Table Column"
 msgid "Native Name"
 msgstr ""
 
-#: Lingo.php:313
+#: Lingo.php:302
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr ""
 
-#: Lingo.php:326
+#: Lingo.php:315
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr ""
 
-#: Lingo.php:329
+#: Lingo.php:318
 msgctxt "Button"
 msgid "Update Existing Terms"
 msgstr ""
 
-#: Lingo.php:333
+#: Lingo.php:322
 msgctxt "Message"
 msgid "Check for available language identifiers and create corresponding terms."
 msgstr ""

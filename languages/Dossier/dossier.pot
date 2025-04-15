@@ -13,97 +13,102 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Dossier\n"
 "X-Domain: geditorial-dossier\n"
 
-#: Dossier.php:60
+#: Dossier.php:59
 msgctxt "Settings"
 msgid "Dossier Sections"
 msgstr ""
 
-#: Dossier.php:61
+#: Dossier.php:60
 msgctxt "Settings"
 msgid "Section taxonomy for the dossiers and supported post-types."
 msgstr ""
 
-#: Dossier.php:77
+#: Dossier.php:76
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Dossier.php:78
+#: Dossier.php:77
 msgctxt "Settings"
 msgid "Redirects dossier archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Dossier.php:84
+#: Dossier.php:83
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Dossier.php:85
+#: Dossier.php:84
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Dossier.php:138
-#: Dossier.php:139
+#: Dossier.php:131
+#: Dossier.php:132
 msgid "Dossier"
 msgid_plural "Dossiers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:140
+#: Dossier.php:133
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:141
+#: Dossier.php:134
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Dossier.php:145
+#: Dossier.php:138
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Dossier.php:154
+#: Dossier.php:147
 msgctxt "Misc: `column_icon_title`"
 msgid "Dossier"
 msgstr ""
 
-#: Dossier.php:159
+#: Dossier.php:152
 msgctxt "MetaBox Title"
 msgid "The Dossier"
 msgstr ""
 
-#: Dossier.php:182
+#: Dossier.php:153
+msgctxt "Label: MetaBox Title"
+msgid "In This Dossier"
+msgstr ""
+
+#: Dossier.php:177
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Dossier.php:183
+#: Dossier.php:178
 msgctxt "Field Description"
 msgid "The dossier number line"
 msgstr ""
 
-#: Dossier.php:201
+#: Dossier.php:196
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Dossier.php:202
+#: Dossier.php:197
 msgctxt "Field Description"
 msgid "Post order in dossier list"
 msgstr ""
 
-#. translators: %s: order
-#: Dossier.php:399
+#. translators: `%s`: order
+#: Dossier.php:401
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr ""
 
-#: Dossier.php:422
+#: Dossier.php:480
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr ""

@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcCheckout\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcCheckout\n"
+"X-Domain: geditorial-wc-checkout\n"
+
+#: WcCheckout.php:36
+msgctxt "Setting Title"
+msgid "Simplify Freebies"
+msgstr ""
+
+#: WcCheckout.php:37
+msgctxt "Setting Description"
+msgid "Removes unnecessary checkout fields for free checkouts."
+msgstr ""
+
+#: WcCheckout.php:41
+msgctxt "Setting Title"
+msgid "Inside Labels"
+msgstr ""
+
+#: WcCheckout.php:42
+msgctxt "Setting Description"
+msgid "Moves labels inside the checkout fields."
+msgstr ""
+
+#: WcCheckout.php:48
+msgctxt "Setting Title"
+msgid "Remove Order Notes"
+msgstr ""
+
+#: WcCheckout.php:49
+msgctxt "Setting Description"
+msgid "Removes default `Order notes` from checkout form."
+msgstr ""
+
+#: WcCheckout.php:54
+msgctxt "Setting Title"
+msgid "Order Notes Label"
+msgstr ""
+
+#: WcCheckout.php:55
+msgctxt "Setting Description"
+msgid "Changes default `Order notes` label for customers. Leave empty to use defaults."
+msgstr ""
+
+#: WcCheckout.php:61
+msgctxt "Setting Title"
+msgid "Order Notes Placeholder"
+msgstr ""
+
+#: WcCheckout.php:62
+msgctxt "Setting Description"
+msgid "Changes default `Order notes` placeholder for customers. Leave empty to use defaults."
+msgstr ""
+
+#: WcCheckout.php:73
+msgctxt "Setting Section Title"
+msgid "Checkout Form"
+msgstr ""
+
+#: WcCheckout.php:74
+msgctxt "Setting Section Title"
+msgid "Order Notes"
+msgstr ""

@@ -53,7 +53,7 @@ msgctxt "Setting Description"
 msgid "Removes access to the builtin post post-type and category taxonomy on the admin."
 msgstr ""
 
-#. translators: %s: role name
+#. translators: `%s`: role name
 #: Roled.php:75
 msgctxt "Setting Title"
 msgid "Role Name for %s"
@@ -64,7 +64,7 @@ msgctxt "Setting Description"
 msgid "Custom name for the duplicated role."
 msgstr ""
 
-#. translators: %s: role name
+#. translators: `%s`: role name
 #: Roled.php:78
 #: Roled.php:333
 msgctxt "Setting Default"

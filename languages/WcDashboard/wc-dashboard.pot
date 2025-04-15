@@ -13,80 +13,80 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcDashboard\n"
 "X-Domain: geditorial-wc-dashboard\n"
 
-#: WcDashboard.php:36
+#: WcDashboard.php:40
 msgctxt "Setting Title"
 msgid "Main Message"
 msgstr ""
 
-#: WcDashboard.php:37
+#: WcDashboard.php:41
 msgctxt "Setting Description"
 msgid "Displays as main dashboard message on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:45
+#: WcDashboard.php:49
 msgctxt "Setting Title"
 msgid "Downloads on Dashboard"
 msgstr ""
 
-#: WcDashboard.php:46
+#: WcDashboard.php:50
 msgctxt "Setting Description"
 msgid "Displays purchased download products on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:50
+#: WcDashboard.php:54
 msgctxt "Setting Title"
 msgid "Purchased on Dashboard"
 msgstr ""
 
-#: WcDashboard.php:51
+#: WcDashboard.php:55
 msgctxt "Setting Description"
 msgid "Displays recently purchased products on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:56
+#: WcDashboard.php:60
 msgctxt "Setting Title"
 msgid "Dashboard Purchased Title"
 msgstr ""
 
-#: WcDashboard.php:57
+#: WcDashboard.php:61
 msgctxt "Setting Description"
 msgid "Appears as title of the purchased products menu on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:58
-#: WcDashboard.php:123
+#: WcDashboard.php:62
+#: WcDashboard.php:131
 msgctxt "Default"
 msgid "Purchased"
 msgstr ""
 
-#: WcDashboard.php:63
+#: WcDashboard.php:67
 msgctxt "Setting Title"
 msgid "Dashboard Purchased Empty"
 msgstr ""
 
-#: WcDashboard.php:64
+#: WcDashboard.php:68
 msgctxt "Setting Description"
 msgid "Appears as message for empty purchased products on front-end account page."
 msgstr ""
 
-#: WcDashboard.php:65
-#: WcDashboard.php:195
+#: WcDashboard.php:69
+#: WcDashboard.php:204
 msgctxt "Default"
 msgid "Nothing purchased yet."
 msgstr ""
 
-#: WcDashboard.php:70
+#: WcDashboard.php:74
 msgctxt "Setting Title"
 msgid "Overwrite Menu Titles"
 msgstr ""
 
-#: WcDashboard.php:71
+#: WcDashboard.php:75
 msgctxt "Setting Description"
 msgid "Changes default dashboard menu titles on front-end account page. Leave empty for default."
 msgstr ""
 
-#. translators: %1$s: user display name, %2$s: logout url
-#: WcDashboard.php:97
+#. translators: `%1$s`: user display name, `%2$s`: logout url
+#: WcDashboard.php:102
 msgctxt "Setting Default"
 msgid "Hello %1$s (not %1$s? <a href=\"%2$s\">Log out</a>)"
 msgstr ""

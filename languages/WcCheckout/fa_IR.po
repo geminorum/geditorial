@@ -1,0 +1,83 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcCheckout\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-02-15 02:16+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcCheckout\n"
+"X-Domain: geditorial-wc-checkout\n"
+
+#: WcCheckout.php:36
+msgctxt "Setting Title"
+msgid "Simplify Freebies"
+msgstr "ساده‌سازی رایگان"
+
+#: WcCheckout.php:37
+msgctxt "Setting Description"
+msgid "Removes unnecessary checkout fields for free checkouts."
+msgstr "فیلدهای تسویه‌حساب نالازم را از فرم تسویه رایگان حذف می‌کند."
+
+#: WcCheckout.php:41
+msgctxt "Setting Title"
+msgid "Inside Labels"
+msgstr "شاخص‌های درونی"
+
+#: WcCheckout.php:42
+msgctxt "Setting Description"
+msgid "Moves labels inside the checkout fields."
+msgstr "شاخص‌ها را به درون فیلدهای تسویه‌حساب منتقل می‌کند."
+
+#: WcCheckout.php:48
+msgctxt "Setting Title"
+msgid "Remove Order Notes"
+msgstr "حذف توضیحات سفارش"
+
+#: WcCheckout.php:49
+msgctxt "Setting Description"
+msgid "Removes default `Order notes` from checkout form."
+msgstr "«توضیحات سفارش» پیش‌فرض را از فرم تسویه حساب حذف می‌کند."
+
+#: WcCheckout.php:54
+msgctxt "Setting Title"
+msgid "Order Notes Label"
+msgstr "شاخص توضیحات سفارش"
+
+#: WcCheckout.php:55
+msgctxt "Setting Description"
+msgid ""
+"Changes default `Order notes` label for customers. Leave empty to use defaults."
+msgstr ""
+"شاخص پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی "
+"بگذارید."
+
+#: WcCheckout.php:61
+msgctxt "Setting Title"
+msgid "Order Notes Placeholder"
+msgstr "جای‌نمای توضیحات سفارش"
+
+#: WcCheckout.php:62
+msgctxt "Setting Description"
+msgid ""
+"Changes default `Order notes` placeholder for customers. Leave empty to use "
+"defaults."
+msgstr ""
+"جای‌نمای پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی "
+"بگذارید."
+
+#: WcCheckout.php:73
+msgctxt "Setting Section Title"
+msgid "Checkout Form"
+msgstr "فرم تسویه حساب"
+
+#: WcCheckout.php:74
+msgctxt "Setting Section Title"
+msgid "Order Notes"
+msgstr "توضیحات سفارش"

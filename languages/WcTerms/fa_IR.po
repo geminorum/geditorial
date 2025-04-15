@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-25 17:19+0330\n"
+"PO-Revision-Date: 2025-03-25 05:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -14,57 +14,132 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
 "X-Domain: geditorial-wc-terms\n"
 
-#: WcTerms.php:36
+#: WcTerms.php:38
+msgctxt "Setting Title"
+msgid "Tab from Taxonomy"
+msgstr "زبانه از رده‌بندی"
+
+#: WcTerms.php:43
+msgctxt "Setting Title"
+msgid "Taxonomy"
+msgstr "رده‌بندی"
+
+#: WcTerms.php:44
+msgctxt "Setting Description"
+msgid "Target taxonomy for term introduction on product tabs."
+msgstr ""
+
+#: WcTerms.php:50
+msgctxt "Setting Title"
+msgid "Heading"
+msgstr "سربرگ"
+
+#: WcTerms.php:51
+msgctxt "Setting Description"
+msgid "Template for term introduction product tab heading."
+msgstr ""
+
+#: WcTerms.php:56
+msgctxt "Setting Title"
+msgid "Excludes Terms"
+msgstr "استثنای رده‌ها"
+
+#: WcTerms.php:57
+msgctxt "Setting Description"
+msgid "Strips terms form list of targeted terms. Leave empty to disable."
+msgstr ""
+
+#: WcTerms.php:63
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr "اولویت"
+
+#: WcTerms.php:64
+msgctxt "Setting Description"
+msgid "Tab priority where the term introduction appears on the tabs."
+msgstr ""
+
+#: WcTerms.php:72
+msgctxt "Setting Title"
+msgid "Exclude Default Terms"
+msgstr "استنثنای رده‌های پیش‌فرض"
+
+#: WcTerms.php:73
+msgctxt "Setting Description"
+msgid "Strips default term form list of displayed terms."
+msgstr ""
+
+#: WcTerms.php:78
+msgctxt "Setting Title"
+msgid "Combined Terms"
+msgstr "ترکیب رده‌ها"
+
+#: WcTerms.php:79
+msgctxt "Setting Description"
+msgid "Displays all assigned terms on single product tab."
+msgstr ""
+
+#: WcTerms.php:84
+msgctxt "Setting Title"
+msgid "Singular Term"
+msgstr "تک رده"
+
+#: WcTerms.php:85
+msgctxt "Setting Description"
+msgid "Displays only the first term introduction."
+msgstr ""
+
+#: WcTerms.php:92
 msgctxt "Setting Title"
 msgid "Archive Title"
 msgstr "عنوان بایگانی"
 
-#: WcTerms.php:37
+#: WcTerms.php:93
 msgctxt "Setting Description"
 msgid "Enhance the term archive titles."
 msgstr ""
 
-#: WcTerms.php:40
+#: WcTerms.php:96
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: WcTerms.php:41
+#: WcTerms.php:97
 msgctxt "Setting Option"
 msgid "Heading Level 1"
 msgstr "سربرگ سطح ۱"
 
-#: WcTerms.php:42
+#: WcTerms.php:98
 msgctxt "Setting Option"
 msgid "Heading Level 2"
 msgstr "سربرگ سطح ۲"
 
-#: WcTerms.php:43
+#: WcTerms.php:99
 msgctxt "Setting Option"
 msgid "Heading Level 3"
 msgstr "سربرگ سطح ۳"
 
-#: WcTerms.php:44
+#: WcTerms.php:100
 msgctxt "Setting Option"
 msgid "Heading Level 4"
 msgstr "سربرگ سطح ۴"
 
-#: WcTerms.php:45
+#: WcTerms.php:101
 msgctxt "Setting Option"
 msgid "Heading Level 5"
 msgstr "سربرگ سطح ۵"
 
-#: WcTerms.php:46
+#: WcTerms.php:102
 msgctxt "Setting Option"
 msgid "Heading Level 6"
 msgstr "سربرگ سطح ۶"
 
-#: WcTerms.php:51
+#: WcTerms.php:107
 msgctxt "Setting Title"
 msgid "Archive Descriptions"
 msgstr "توضیحات بایگانی"
 
-#: WcTerms.php:52
+#: WcTerms.php:108
 msgctxt "Setting Description"
 msgid "Enhance the term archive descriptions with assigned image."
 msgstr ""

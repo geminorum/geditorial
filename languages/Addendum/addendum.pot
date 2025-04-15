@@ -33,94 +33,94 @@ msgctxt "Settings"
 msgid "Redirects appendage archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Addendum.php:130
-#: Addendum.php:131
+#: Addendum.php:133
+#: Addendum.php:134
 msgid "Appendage"
 msgid_plural "Appendages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:132
+#: Addendum.php:135
 msgid "Appendage Category"
 msgid_plural "Appendage Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:133
+#: Addendum.php:136
 msgid "Appendage Necessity"
 msgid_plural "Appendage Necessities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:134
+#: Addendum.php:137
 msgid "Appendage Type"
 msgid_plural "Appendage Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:135
+#: Addendum.php:138
 msgid "Appendage Status"
 msgid_plural "Appendage Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Addendum.php:139
+#: Addendum.php:142
 msgctxt "Label: Featured Image"
 msgid "Appendage Cover"
 msgstr ""
 
-#: Addendum.php:140
+#: Addendum.php:143
 msgctxt "Label: MetaBox Title"
 msgid "The Appendage"
 msgstr ""
 
-#: Addendum.php:143
+#: Addendum.php:146
 msgctxt "Label: MetaBox Title"
 msgid "To This Appendage"
 msgstr ""
 
-#: Addendum.php:146
+#: Addendum.php:149
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Addendum.php:149
+#: Addendum.php:152
 msgctxt "Label: Menu Name"
 msgid "Necessities"
 msgstr ""
 
-#: Addendum.php:152
+#: Addendum.php:155
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Addendum.php:155
+#: Addendum.php:158
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Addendum.php:164
+#: Addendum.php:167
 msgctxt "Misc: `column_icon_title`"
 msgid "Appendage"
 msgstr ""
 
-#. translators: %1$s: current post title, %2$s: posttype singular name
-#: Addendum.php:169
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Addendum.php:172
 msgctxt "MetaBox: `listbox_title`"
 msgid "Posts with &ldquo;%1$s&rdquo; %2$s"
 msgstr ""
 
-#: Addendum.php:179
+#: Addendum.php:182
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Required"
 msgstr ""
 
-#: Addendum.php:180
+#: Addendum.php:183
 msgctxt "Necessity Taxonomy: Default Term"
 msgid "Mandatory"
 msgstr ""
 
-#: Addendum.php:488
+#: Addendum.php:499
 msgctxt "Header"
 msgid "Appendage Tools"
 msgstr ""
