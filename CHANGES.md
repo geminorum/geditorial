@@ -1,3 +1,91 @@
+### 3.32.0
+* app/assignment-dock: 🆕 app
+* internal/core-admin: support for ajax on multiple column
+* internal/core-admin: tidy up using post-type icons
+* internal/core-constants: customize constants via options
+* internal/core-includes: access filtered module path
+* internal/core-post-types: header button to manage
+* internal/core-post-types: support for `custom_icon` setting
+* internal/core-roles: also check for edit-post cap
+* internal/core-taxonomies: content rich support
+* internal/core-taxonomies: quick access as admin-bar node
+* internal/core-taxonomies: support for `custom_icon` setting
+* internal/core-taxonomy: define target objects
+* internal/core-taxonomy: integrated settings
+* internal/core-thumbnails: side cover for tabloid overview
+* internal/frame-page: main-link url helper
+* internal/post-type-fields: support for auto-complete
+* internal/rest-api: setting for default permission
+* internal/sub-content: support for colors as css variables
+* internal/sub-contents: data summary via view engines
+* internal/template-taxonomy: custom empty items message
+* internal/template-taxonomy: render term intro before archives
+* internal/view-engines: revised to support override by theme
+* main/datetime: support for year only on date fields
+* main/helper: contact icons from bootstrap
+* main/helper: support for none/raw-url icons
+* main/plugin: proper die message wrapper
+* main/plugin: support for woo-commerce styles
+* main/settings: setting sections revised
+* main/settings: support for fields on quick-edit
+* main/table-list: support for custom object as posts
+* main/template: callback args revised for meta summary
+* main/template: term introduction
+* main/template: title swap on meta links
+* main/visual: icon helper
+* main/visual: passing icon on the original format
+* module/achieved: 🆕 module
+* module/alphabet: check for empty post-type/taxonomy
+* module/alphabet: custom head tag
+* module/alphabet: support for list mode
+* module/alphabet: support for meta as link title
+* module/attachments: optional caption/description on short-code
+* module/audit: migrate to module-settings
+* module/bookmarked: custom desc for attachment by caption
+* module/bookmarked: custom icon for attachment by mime
+* module/bookmarked: fidibo re-brand
+* module/bookmarked: support data summary and woo-commerce
+* module/bookmarked: support for e-pub/navaar/wikipedia option types
+* module/byline: 🆕 module
+* module/identified: redirect to not found
+* module/identified: support for email type
+* module/interested: 🆕 module
+* module/isbn: migrate data from book module
+* module/meta: support for `reference` field
+* module/national-library: custom user agent
+* module/national-library: handling isbn on parsing
+* module/national-library: public api
+* module/originated: 🆕 module
+* module/ortho: 🆙 virastar v0.22.1
+* module/people: 🆕 module
+* module/socialite: better support for icon rendering
+* module/socialite: support fields on post-types
+* module/socialite: support for fidibo/goodreads/tiktok/wikipedia fields
+* module/subjects: 🆕 module
+* module/terms: support for born/dead/source/embed/url/subtitle fields
+* module/terms: term introduction template
+* module/tweaks: exclude product post-type
+* module/units: support for legacy meta-keys
+* module/wc-attributes: 🆕 module
+* module/wc-identify: 🆕 module
+* module/wc-identity: 🆕 module
+* module/wc-meta: 🆕 module
+* module/wc-postal: support for tracking url token
+* module/wc-terms: 🆕 module
+* service/admin-screen: 🆕 service
+* service/admin-screen: quick edit support
+* service/custom-post-types: 🆕 service
+* service/custom-taxonomy: 🆕 service
+* service/individuals: apply name parser on people format
+* service/individuals: make full-name api
+* service/locations: 🆕 service
+* service/object-hints: 🆕 service
+* service/post-type-fields: refined search for dates
+* service/taxonomy-taxonomy: 🆕 service
+* service/term-hierarchy: avoid double id on quick/bulk edit
+* service/term-hierarchy: is single term check
+* service/term-relations: 🆕 service
+
 ### 3.31.0
 * internal/bulk-exports: avoid column header duplicates
 * internal/bulk-exports: column width for post props
