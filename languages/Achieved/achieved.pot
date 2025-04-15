@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Achieved\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Achieved\n"
+"X-Domain: geditorial-achieved\n"
+
+#: Achieved.php:95
+msgid "Achievement"
+msgid_plural "Achievements"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Achieved.php:99
+msgctxt "Label: `extended_label`"
+msgid "Content Achievements"
+msgstr ""
+
+#: Achieved.php:100
+msgctxt "Label: `menu_name`"
+msgid "Content Achievements"
+msgstr ""
+
+#: Achieved.php:101
+msgctxt "Label: `show_option_all`"
+msgid "Achievements"
+msgstr ""
+
+#: Achieved.php:102
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unachieved)"
+msgstr ""
+
+#: Achieved.php:125
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "120"
+msgstr ""
