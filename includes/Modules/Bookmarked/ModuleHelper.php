@@ -79,7 +79,7 @@ class ModuleHelper extends gEditorial\Helper
 				'title'    => _x( 'Custom Link', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => '{{link}}',
 				'cssclass' => '-custom-link',
-				'icon'     => 'external',
+				'icon'     => [ 'misc-16', 'box-arrow-up-right' ],
 				'logo'     => '',
 			],
 			[
@@ -251,7 +251,7 @@ class ModuleHelper extends gEditorial\Helper
 				'title'    => _x( 'PDF Document', 'Type Option', 'geditorial-bookmarked' ),
 				'template' => '{{link}}',
 				'cssclass' => '-pdf-document',
-				'icon'     => 'pdf',
+				'icon'     => [ 'misc-16', 'filetype-pdf' ],
 				'logo'     => '',
 				'desc'     => _x( 'Read more about this as PDF format.', 'Type Description', 'geditorial-bookmarked' ),
 			],

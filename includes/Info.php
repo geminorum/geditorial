@@ -11,6 +11,7 @@ class Info extends WordPress\Main
 		return gEditorial();
 	}
 
+	// `https://db-ip.com/xxx.xxx.xx.xxx`
 	public static function lookupIP( $ip )
 	{
 		if ( function_exists( 'gnetwork_ip_lookup' ) )

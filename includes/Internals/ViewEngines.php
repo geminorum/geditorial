@@ -91,7 +91,7 @@ trait ViewEngines
 
 		if ( $path ) {
 			$args['loader']          = new \Mustache_Loader_FilesystemLoader( $path );
-			$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'/partials' );
+			$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'/partials' ); // TODO: check if partials path exists
 		}
 
 		return @new \Mustache_Engine( $args );

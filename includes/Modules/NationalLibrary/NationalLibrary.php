@@ -238,7 +238,7 @@ class NationalLibrary extends gEditorial\Module
 				if ( ! $data = $this->get_fipa_by_code( $code, FALSE, TRUE ) )
 					return Services\RestAPI::getErrorInvalidData();
 
-				return [ 'date' => ModuleHelper::parseFipa( $data ) ];
+				return [ 'data' => ModuleHelper::parseFipa( $data ) ];
 
 			case 'title':
 

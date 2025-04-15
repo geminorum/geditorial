@@ -556,7 +556,7 @@ class Module extends WordPress\Module
 		if ( $constant_or_hidden && ! is_array( $constant_or_hidden ) )
 			$constant_or_hidden = [ 'post_type[]' => $this->constant( $constant_or_hidden ) ];
 
-		if ( ! count( $constant_or_hidden ) )
+		if ( ! $constant_or_hidden || ! count( $constant_or_hidden ) )
 			return $form;
 
 		$form = str_replace( '</form>', '', $form );

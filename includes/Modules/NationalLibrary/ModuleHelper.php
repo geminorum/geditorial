@@ -133,14 +133,13 @@ class ModuleHelper extends gEditorial\Helper
 				if ( ':' == $text )
 					continue;
 
-				$text = trim( $text, '.;:' );
+				$text = Core\Text::trim( trim( $text, '.;:,' ) );
 
-				if ( Core\Text::has( $text, "\n" ) ) {
-					// $row = array_merge( $row, explode( "\n", $text ) );
+				if ( Core\Text::has( $text, "\n" ) )
 					$row[] = nl2br( Core\Text::normalizeWhitespace( $text, TRUE ) );
-				} else {
+
+				else
 					$row[] = Core\Text::normalizeWhitespace( $text );
-				}
 			}
 
 			$data['rows'][] = $row;
@@ -208,11 +207,8 @@ class ModuleHelper extends gEditorial\Helper
 					$data['notes'][] = $text;
 					break;
 
+				// case 'عنوان قراردادی':
 				case 'عنوان و نام پديدآور':
-					$data['title'][] = $text;
-					break;
-
-				case 'عنوان قراردادی':
 
 					$data['title'][] = $text;
 					break;
@@ -273,7 +269,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				case 'فروست':
 
-					$data['serie'] = $text;
+					$data['serie'] = Core\Text::normalizeWhitespace( $text );
 					break;
 
 				case 'سرشناسه':
@@ -340,7 +336,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				if ( $count > 2 ) {
 
-					if ( Core\Text::has( $parts[2], [ 'فروردین' ] ) )
+					if ( Core\Text::has( $parts[2], [ 'فروردین', 'شهریور' ] ) )
 						$data['calendar'] = 'persian';
 
 					else if ( Core\Text::has( $parts[2], 'م.' ) )
@@ -355,6 +351,7 @@ class ModuleHelper extends gEditorial\Helper
 						'?',
 						'؟',
 						'فروردین',
+						'شهریور',
 					], '', $parts[2] ), '-', 2 );
 
 					if ( count( $dates ) )

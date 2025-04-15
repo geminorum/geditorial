@@ -772,6 +772,8 @@ class Today extends gEditorial\Module
 
 		if ( ! is_admin() ) {
 
+			$hiddens = [];
+
 			foreach ( $posttypes as $posttype )
 				$hiddens['post_type[]'] = $posttype;
 
