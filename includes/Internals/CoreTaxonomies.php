@@ -235,6 +235,9 @@ trait CoreTaxonomies
 
 				case 'custom_captype':
 
+					if ( array_key_exists( 'capabilities', $args ) )
+						break;
+
 					if ( TRUE === $value ) {
 
 						$captype = $this->constant_plural( $constant );
@@ -248,9 +251,9 @@ trait CoreTaxonomies
 
 					} else if ( self::bool( $value ) ) {
 
-						$captype = empty( $value )
+						$captype = ( empty( $value ) || is_numeric( $value ) )
 							? $this->constant_plural( $constant )
-							: $value; // FIXME: WTF: what if passed `1`?!
+							: $value;
 
 						if ( $settings['admin_managed'] )
 							$args['capabilities'] = [
@@ -281,8 +284,6 @@ trait CoreTaxonomies
 						// FIXME: `edit_users` is not working!
 						// maybe map meta cap
 
-						// FIXME: WTF: maybe merge the capabilities
-						// if ( ! array_key_exists( 'capabilities', $args ) )
 						$args['capabilities'] = [
 							'manage_terms' => 'edit_users',
 							'edit_terms'   => 'list_users',
@@ -306,25 +307,21 @@ trait CoreTaxonomies
 
 					} else if ( $settings['admin_managed'] ) {
 
-						// TODO: support custom cap instead of `manage_options`
-
-						if ( ! array_key_exists( 'capabilities', $args ) )
-							$args['capabilities'] = [
-								'manage_terms' => 'manage_options',
-								'edit_terms'   => 'manage_options',
-								'delete_terms' => 'manage_options',
-								'assign_terms' => 'edit_posts',
-							];
+						$args['capabilities'] = [
+							'manage_terms' => 'manage_options',
+							'edit_terms'   => 'manage_options',
+							'delete_terms' => 'manage_options',
+							'assign_terms' => 'edit_posts',
+						];
 
 					} else {
 
-						if ( ! array_key_exists( 'capabilities', $args ) )
-							$args['capabilities'] = [
-								'manage_terms' => 'edit_others_posts',
-								'edit_terms'   => 'edit_others_posts',
-								'delete_terms' => 'edit_others_posts',
-								'assign_terms' => 'edit_posts',
-							];
+						$args['capabilities'] = [
+							'manage_terms' => 'edit_others_posts',
+							'edit_terms'   => 'edit_others_posts',
+							'delete_terms' => 'edit_others_posts',
+							'assign_terms' => 'edit_posts',
+						];
 					}
 
 					break;
