@@ -77,12 +77,8 @@ trait PairedCore
 				'public'       => ! $paired[5],
 				'rewrite'      => $paired[5] ? FALSE : NULL,
 				'show_ui'      => $this->is_debug_mode(),
-				'show_in_rest' => FALSE,
 				'hierarchical' => $paired[4],
 
-				// the paired taxonomies are often in plural
-				// FIXME: WTF: conflict on the post-type rest base!
-				// 'rest_base' => $this->constant( $paired[1].'_slug', str_replace( '_', '-', $this->constant( $paired[1] ) ) ),
 
 			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $settings );
 

@@ -38,9 +38,9 @@ trait CoreTaxonomies
 			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
 			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
 
-			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
-			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
+			'show_in_rest'   => TRUE,
+			'rest_base'      => NULL,
+			// 'rest_namespace' => 'wp/v2',   // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// `gEditorial` Props
 			Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,  // @SEE: `Paired::isTaxonomy()`
@@ -63,6 +63,21 @@ trait CoreTaxonomies
 
 		else if ( is_array( $args['rewrite'] ) )
 			$args['rewrite'] = array_merge( $rewrite, $args['rewrite'] );
+
+		if ( is_null( $args['rest_base'] ) ) {
+
+			if ( $rest_base = $this->constant( $constant.'_rest' ) )
+				$args['rest_base'] = $rest_base;
+
+			else if ( $rest_base = $this->constant( $constant.'_archive' ) )
+				$args['rest_base'] = $rest_base;
+
+			else if ( ! empty( $args[Services\Paired::PAIRED_POSTTYPE_PROP] ) )
+				$args['rest_base'] = sprintf( Services\Paired::PAIRED_TAXONOMY_REST, $plural );
+
+			else
+				$args['rest_base'] = $plural;
+		}
 
 		$args['meta_box_cb'] = $this->determine_taxonomy_meta_box_cb( $constant, $args['meta_box_cb'], $args['hierarchical'] );
 

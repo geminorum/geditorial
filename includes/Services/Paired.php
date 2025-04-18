@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Paired extends gEditorial\Service
 {
+	const PAIRED_TAXONOMY_REST  = 'paired-%s';
 	const PAIRED_TAXONOMY_PROP  = 'paired_taxonomy';
 	const PAIRED_POSTTYPE_PROP  = 'paired_posttype';
 	const PAIRED_SUPPORTED_PROP = 'paired_supported';
