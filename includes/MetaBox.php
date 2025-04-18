@@ -96,9 +96,9 @@ class MetaBox extends WordPress\Main
 	}
 
 	// TODO: radio list box using custom walker
-	// CAUTION: tax must be cat (hierarchical)
-	// hierarchical taxonomies save by IDs,
-	// whereas non-hierarchical save by slugs
+	// CAUTION: tax must be hierarchical.
+	// Hierarchical taxonomies save by IDs,
+	// whereas non-hierarchical save by slugs.
 	// WTF: because the core's not passing args into the walker!
 	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
 	public static function checklistTerms( $object_id = 0, $atts = [], $terms = NULL )
@@ -468,7 +468,7 @@ class MetaBox extends WordPress\Main
 				'target' => '_blank',
 			], $object->labels->not_found );
 		else
-			$html = gEditorial\Plugin::noinfo();
+			$html = Plugin::noinfo();
 
 		$html = Core\HTML::wrap( $html, 'field-wrap -empty' );
 

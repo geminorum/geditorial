@@ -38,6 +38,8 @@ trait CorePostTypes
 			'show_ui'      => TRUE,
 			'map_meta_cap' => TRUE,
 
+			// 'embeddable' => NULL, // `is_post_embeddable()`
+
 			'register_meta_box_cb' => method_exists( $this, 'add_meta_box_cb_'.$constant )
 				? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 

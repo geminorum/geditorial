@@ -41,12 +41,17 @@ class People extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_general'         => [
+				'contents_viewable',
 				'metabox_advanced', // NOTE: by default no meta-box for this taxonomy
 				'selectmultiple_term' => [ _x( 'Whether to assign multiple affiliations in edit panel.', 'Setting Description', 'geditorial-people' ), TRUE ],
 			],
-			'_frontend' => [
-				'contents_viewable',
+			'_content' => [
 				'archive_override',
+				'display_searchform',
+				'empty_content',
+				'archive_title' => [ NULL, $this->get_taxonomy_label( 'main_taxonomy', 'all_items' ) ],
+				'archive_content',
+				'archive_template',
 			],
 			'_constants' => [
 				'main_taxonomy_constant' => [ NULL, 'people' ],

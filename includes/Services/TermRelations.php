@@ -93,13 +93,16 @@ class TermRelations extends gEditorial\Service
 	public static function updatePostData( $post, $data )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return [];
+			return FALSE;
 
 		$supported = [];
 
 		foreach ( $data as $raw ) {
 
 			if ( empty( $raw['id'] ) || ! $term = WordPress\Term::get( (int) $raw['id'] ) )
+				continue;
+
+			if ( ! current_user_can( 'assign_term', $term->term_id ) )
 				continue;
 
 			if ( ! empty( $raw['__delete'] ) ) {
@@ -244,7 +247,7 @@ class TermRelations extends gEditorial\Service
 	public static function getTaxonomies()
 	{
 		return WordPress\Taxonomy::get( 7, [
-			'show_ui'      => TRUE,
+			// 'show_ui'      => TRUE,
 			'show_in_rest' => TRUE,
 			'_builtin'     => FALSE,
 

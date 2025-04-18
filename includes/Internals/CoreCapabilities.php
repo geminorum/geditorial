@@ -124,7 +124,7 @@ trait CoreCapabilities
 	 * Hooks corresponding filter for `map_meta_cap` of WordPress.
 	 * @REF: https://make.wordpress.org/core/?p=20496
 	 *
-	 * @param  string $constant
+	 * @param string $constant
 	 * @return bool $hooked
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_forced( $constant )
@@ -176,10 +176,10 @@ trait CoreCapabilities
 	/**
 	 * Retrieves setting arguments for given taxonomy constant roles.
 	 *
-	 * @param  string $constant
-	 * @param  bool $locking
-	 * @param  null|array $terms
-	 * @param  null|string $empty
+	 * @param string $constant
+	 * @param bool $locking
+	 * @param null|array $terms
+	 * @param null|string $empty
 	 * @return array $settings
 	 */
 	protected function corecaps_taxonomy_get_roles_settings( $constant, $restricted = FALSE, $locking = FALSE, $terms = NULL, $empty = NULL )

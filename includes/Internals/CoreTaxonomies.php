@@ -28,7 +28,7 @@ trait CoreTaxonomies
 			'public'               => TRUE,
 			'show_ui'              => TRUE,
 			'show_admin_column'    => FALSE,
-			'show_in_quick_edit'   => FALSE, // TODO: support single select on quick/bulk edit
+			'show_in_quick_edit'   => FALSE,
 			'show_in_nav_menus'    => FALSE,
 			'show_tagcloud'        => FALSE,
 			'default_term'         => FALSE,

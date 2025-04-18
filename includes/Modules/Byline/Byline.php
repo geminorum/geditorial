@@ -314,6 +314,7 @@ class Byline extends gEditorial\Module
 			'can'     => 'assign',
 			'linked'  => NULL,
 			'targets' => $this->list_taxonomies(),
+			'summary' => $this->constant( 'restapi_attribute' ),
 			'context' => 'edit',
 			'strings' => [],
 		], $atts );
@@ -354,7 +355,7 @@ class Byline extends gEditorial\Module
 				'searchselect' => Services\SearchSelect::namespace(),
 				// 'discovery'    => Services\LineDiscovery::namespace(), // NOT USED YET
 				'hints'        => Services\ObjectHints::namespace(),
-				'attribute'    => $this->constant( 'restapi_attribute' ),
+				'summary'      => $args['summary'],
 				'perpage'      => 5,
 			],
 		];

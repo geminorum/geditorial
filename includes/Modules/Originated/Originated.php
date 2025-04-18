@@ -129,6 +129,11 @@ class Originated extends gEditorial\Module
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
+			'suitable_metas'  => [
+				'url'      => NULL,
+				'tagline'  => NULL,
+				'fullname' => NULL,
+			],
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

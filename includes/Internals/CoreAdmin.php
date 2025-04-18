@@ -219,7 +219,7 @@ trait CoreAdmin
 					if ( ! array_key_exists( $posttype, $this->cache['core_admin_posttypes'] ) )
 						continue; // no cap
 
-					$edit = WordPress\PostType::edit( $posttype, [ $object->query_var => $term->slug ] );
+					$edit = WordPress\PostType::edit( $posttype, [ $object->query_var => rawurlencode( $term->slug ) ] );
 
 					$list[] = Core\HTML::tag( $edit ? 'a' : 'span', [
 						'href'   => $edit,

@@ -84,7 +84,7 @@ SQL;
 		return $pieces;
 	}
 
-	// TODO: our own `wp_dropdown_categories()` using cutom walker
+	// TODO: our own `wp_dropdown_categories()` using custom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
 	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE, $extra = [] )
@@ -95,7 +95,7 @@ SQL;
 		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
 		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
 
-		// if selected is term_id instead of term slug
+		// selected is `term_id` instead of term `slug`
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
 
 			if ( $term = get_term_by( 'id', $selected, $taxonomy->name ) )
@@ -125,6 +125,7 @@ SQL;
 			'show_count'    => FALSE,
 			'hide_empty'    => TRUE,
 			'hide_if_empty' => TRUE,
+			// 'walker'        => new Misc\WalkerCategoryDropdown(),
 		];
 
 		if ( $posttype = WordPress\PostType::object( $paired_posttype ) ) {

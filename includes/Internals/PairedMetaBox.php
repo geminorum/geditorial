@@ -13,7 +13,7 @@ trait PairedMetaBox
 {
 	/**
 	 * Returns post ids with selected terms from settings.
-	 * results will be excluded form dropdown on supported post-types.
+	 * The results will be excluded form drop-down on supported post-types.
 	 *
 	 * @return array
 	 */
@@ -44,13 +44,13 @@ trait PairedMetaBox
 		return $query->query( $args );
 	}
 
-	// NOTE: subterms must be hierarchical
+	// NOTE: sub-terms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
 	// FIXME: rewrite to accept `$constants`
 	protected function paired_do_render_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE, $display_empty = FALSE )
 	{
 		$subterm   = FALSE;
-		$dropdowns = $displayed = $parents = [];
+		$dropdowns = $displayed = $parents = $subterms = [];
 		$excludes  = $this->paired_get_dropdown_excludes();
 		$multiple  = $this->get_setting( 'multiple_instances', FALSE );
 		$forced    = $this->get_setting( 'paired_force_parents', FALSE );
@@ -388,7 +388,7 @@ trait PairedMetaBox
 			Scripts::enqueueThickBox();
 	}
 
-	// NOTE: logic separeted for the use on edit screen
+	// NOTE: logic separated for the use on edit screen
 	protected function _hook_paired_store_metabox( $posttype )
 	{
 		if ( ! $this->_paired )
@@ -413,7 +413,7 @@ trait PairedMetaBox
 	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
 	{
 		$posttype = $this->constant( $posttype_constant );
-		$paired   = self::req( $this->classs().'-'.$posttype, FALSE ); // NOTE: posttype may contain undeline
+		$paired   = self::req( $this->classs().'-'.$posttype, FALSE ); // NOTE: post-type may contain underline
 
 		if ( FALSE === $paired )
 			return;
@@ -428,7 +428,7 @@ trait PairedMetaBox
 
 		$subterm = $this->constant( $subterm_constant );
 
-		// no post, no subterm
+		// no post, no sub-term
 		if ( ! count( $terms ) )
 			return wp_set_object_terms( $post->ID, [], $subterm, FALSE );
 
@@ -566,7 +566,7 @@ trait PairedMetaBox
 		$post_title    = WordPress\Post::title(); // NOTE: gets post from query-args in admin
 		$singular_name = Services\CustomPostType::getLabel( $screen->post_type, 'singular_name' );
 
-		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`', 'geditorial' );
 		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
 		$noitems = sprintf( $empty, $post_title, $singular_name );
@@ -605,7 +605,7 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: PairedMetaBox: MetaBox Title: `megabox_title`', 'geditorial' );
 		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
 		$metabox = $this->classs( $context );

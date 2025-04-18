@@ -82,6 +82,8 @@ class Config extends gEditorial\Module
 
 				$context = Core\Text::stripPrefix( $cap, 'editorial_' );
 
+				// Checks if a primitive cap wit plugin prefix is registered for the user.
+				// e.g. `geditorial_reports`
 				if ( user_can( $user_id, $this->hook_base( $context ) ) )
 					return [ 'exist' ];
 

@@ -12,6 +12,8 @@ use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
+// @SEE: `Evaluation` Module
+
 class Athlete extends gEditorial\Module
 {
 	use Internals\AdminPage;

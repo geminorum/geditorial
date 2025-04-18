@@ -509,7 +509,7 @@ class Template extends WordPress\Main
 	public static function metaFieldHTML( $field, $atts = [] )
 	{
 		if ( ! array_key_exists( 'filter', $atts ) )
-			$atts['filter'] = [ 'geminorum\\gEditorial\\Helper', 'prepDescription' ];
+			$atts['filter'] = [ __NAMESPACE__.'\\WordPress\\Strings', 'prepDescription' ];
 
 		return self::metaField( $field, $atts );
 	}
