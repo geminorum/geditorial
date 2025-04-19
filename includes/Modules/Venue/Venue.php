@@ -195,19 +195,8 @@ class Venue extends gEditorial\Module
 						'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-venue' ),
 						'type'        => 'embed',
 					],
-					// FIXME: see `Geo` Module
-					'geo_latitude' => [
-						'title'       => _x( 'Latitude', 'Field Title', 'geditorial-venue' ),
-						'description' => _x( 'The latitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
-						'type'        => 'code',
-						'icon'        => 'location',
-					],
-					'geo_longitude' => [
-						'title'       => _x( 'Longitude', 'Field Title', 'geditorial-venue' ),
-						'description' => _x( 'The longitude (in decimal notation) for this location.', 'Field Description', 'geditorial-venue' ),
-						'type'        => 'code',
-						'icon'        => 'location',
-					],
+
+					'latlng' => [ 'type' => 'latlng' ],
 				],
 			],
 		];

@@ -1150,6 +1150,16 @@ class MetaBox extends WordPress\Main
 				$wrap[] = '-inputcontact';
 				break;
 
+			case 'latlng':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'latlng';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputlatlng';
+
+				break;
+
 			case 'code':
 
 				$atts['dir'] = 'ltr';

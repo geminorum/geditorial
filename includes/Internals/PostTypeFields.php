@@ -507,6 +507,11 @@ trait PostTypeFields
 				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, FALSE );
 				break;
 
+			case 'latlng':
+
+				$sanitized = Core\Geography::sanitizeLatLng( $data );
+				break;
+
 			case 'distance':
 
 				$sanitized = Core\Distance::sanitize( $data, '', $field );
@@ -698,6 +703,7 @@ trait PostTypeFields
 				case 'image_source':
 				case 'downloadable':
 				case 'link':
+				case 'latlng':
 
 					MetaBox::renderFieldInput( $args, $post, $this->module->name );
 					break;

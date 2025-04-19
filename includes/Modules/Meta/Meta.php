@@ -146,6 +146,8 @@ class Meta extends gEditorial\Module
 				'reference'   => _x( 'Reference', 'Titles', 'geditorial-meta' ),
 				'itineraries' => _x( 'Itineraries', 'Titles', 'geditorial-meta' ),
 
+				'latlng' => _x( 'Lat/Lng', 'Titles', 'geditorial-meta' ),
+
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
 				'action' => _x( 'Action', 'Titles', 'geditorial-meta' ),
@@ -206,6 +208,8 @@ class Meta extends gEditorial\Module
 				'notes'       => _x( 'General Notes about the Content', 'Descriptions: `notes`', 'geditorial-meta' ),
 				'reference'   => _x( 'Full Reference to the Content', 'Descriptions: `reference`', 'geditorial-meta' ),
 				'itineraries' => _x( 'Brief Itineraries of the Content', 'Descriptions: `itineraries`', 'geditorial-meta' ),
+
+				'latlng' => _x( 'Latitude and Longitude', 'Descriptions: `latlng`', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -290,6 +294,8 @@ class Meta extends gEditorial\Module
 					'notes'       => [ 'type' => 'note' ],
 					'reference'   => [ 'type' => 'note' ],
 					'itineraries' => [ 'type' => 'note' ],
+
+					'latlng' => [ 'type' => 'latlng' ],
 				],
 				'page' => [
 					'over_title' => [ 'type' => 'title_before' ],
@@ -910,6 +916,13 @@ class Meta extends gEditorial\Module
 					return Core\URL::prepTitle( trim( $raw ) );
 
 				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
+
+			case 'latlng':
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return Core\Geography::prepLatLng( trim( $raw ) );
 		}
 
 		return $meta;
