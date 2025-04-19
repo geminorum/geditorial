@@ -10,6 +10,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
@@ -162,6 +163,7 @@ class Book extends gEditorial\Module
 			'size_taxonomy'     => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
 
 			'main_shortcode'  => 'publication',
+			'p2p_shortcode'   => 'publication-p2p',
 			'serie_shortcode' => 'publication-serie',   // TODO: move to new Tax-Module: فروست
 			'cover_shortcode' => 'publication-cover',
 
@@ -520,6 +522,7 @@ class Book extends gEditorial\Module
 		$this->corethumbnails__hook_tabloid_side_image( 'main_posttype' );
 
 		$this->register_shortcode( 'main_shortcode' );
+		$this->register_shortcode( 'p2p_shortcode' );
 		$this->register_shortcode( 'serie_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
 	}
@@ -732,6 +735,22 @@ class Book extends gEditorial\Module
 		return $html;
 	}
 
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'paired',
+			$this->constant( 'main_posttype' ),
+			$this->constant( 'main_paired' ),
+			array_merge( [
+				'post_id'   => NULL,
+				'posttypes' => $this->posttypes(),
+				'orderby'   => 'menu_order',
+			], (array) $atts ),
+			$content,
+			$this->constant( 'main_shortcode', $tag ),
+			$this->key
+		);
+	}
+
 	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
@@ -746,7 +765,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function p2p_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		if ( ! $this->_p2p )
 			return $content;
@@ -764,7 +783,7 @@ class Book extends gEditorial\Module
 				'title_link'    => FALSE,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'main_shortcode', $tag ),
+			$this->constant( 'p2p_shortcode', $tag ),
 			$this->key
 		);
 	}
