@@ -145,6 +145,10 @@ class Isbn extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported();
+
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+
 		$this->filter_module( 'book', 'editform_meta_summary', 2, 20 );
 
 		$this->filter_module( 'national_library', 'default_posttype_bib_metakey', 2 );
@@ -459,5 +463,36 @@ class Isbn extends gEditorial\Module
 			Info::renderNoImportsAvailable();
 
 		echo '</div>';
+	}
+
+	// NOTE: `isbn` field type will be handled by the service.
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		switch ( $field_key ) {
+
+			case 'bibliographic':
+
+				if ( ! Core\Validation::isBibliographic( $raw ?: $value ) )
+					return sprintf( '<span class="-biblio %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
+						'-not-valid',
+						$raw ?: $value,
+						$raw ?: $value
+					);
+
+				return Core\HTML::tag( 'a', [
+					'href'   => sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%s', $raw ?: $value ),
+					'title'  => _x( 'See the page about this on National Library website.', 'Field Title Attr', 'geditorial-isbn' ),
+					'class'  => '-is-valid',
+					'target' => '_blank',
+				], Core\Number::localize( $raw ?: $value ) );
+		}
+
+		return $value;
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}
 }
