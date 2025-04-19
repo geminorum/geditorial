@@ -240,6 +240,9 @@ class Socialite extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields_supported();
+
+		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
 	private function _prep_fields_for_settings()
@@ -405,6 +408,42 @@ class Socialite extends gEditorial\Module
 					]
 				);
 		}
+	}
+
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	{
+		switch ( $field_key ) {
+
+			case 'twitter'  :
+			case 'tiktok'   :
+			case 'facebook' :
+			case 'instagram':
+			case 'telegram' :
+			case 'youtube'  :
+			case 'aparat'   :
+			case 'behkhaan' :
+			case 'fidibo'   :
+			case 'goodreads':
+			case 'eitaa'    :
+			case 'wikipedia':
+
+				$url = Core\Third::getHandleURL( $raw ?: $value, $field_key );
+
+				return Core\HTML::tag( 'a', [
+					'href'   => $url,
+					'title'  => Core\URL::getDomain( $url ),
+					'class'  => Core\URL::isValid( $url ) ? '-is-valid' : '-not-valid',
+					'target' => '_blank',
+				], Core\File::basename( $url ) );
+		}
+
+		return $value;
+	}
+
+	// @REF: `Template::getMetaField()`
+	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	{
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
