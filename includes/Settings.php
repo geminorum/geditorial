@@ -873,6 +873,19 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_paired_roles( $description = NULL, $roles = NULL, $excludes = NULL )
+	{
+		return [
+			'field'       => 'paired_roles',
+			'type'        => 'checkboxes',
+			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => [],
+			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
+			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+		];
+	}
+
 	public static function getSetting_paired_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
 	{
 		return [

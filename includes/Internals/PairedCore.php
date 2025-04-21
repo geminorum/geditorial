@@ -71,7 +71,12 @@ trait PairedCore
 					'show_in_nav_menus' => TRUE,
 				], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $subterm_settings );
 
-			$this->register_taxonomy( $paired[1], [
+			$captype = ( ! empty( $settings['custom_captype'] )
+					&& ! self::bool( $settings['custom_captype'] ) )
+				? $settings['custom_captype']
+				: $this->constant_plural( $paired[0] ); // NOTE: post-type constant
+
+			$taxonomy = [
 				Services\Paired::PAIRED_POSTTYPE_PROP => $this->constant( $paired[0] ),
 
 				'public'       => ! $paired[5],
@@ -79,10 +84,22 @@ trait PairedCore
 				'show_ui'      => $this->is_debug_mode(),
 				'hierarchical' => $paired[4],
 
+				'capabilities' => [
+					'manage_terms' => sprintf( 'manage_paired_%s', $captype[1] ),
+					'edit_terms'   => sprintf( 'edit_paired_%s', $captype[1] ),
+					'delete_terms' => sprintf( 'delete_paired_%s', $captype[1] ),
+					'assign_terms' => sprintf( 'assign_paired_%s', $captype[1] ),
+				],
+			];
 
-			], array_merge( $supported, [ $this->constant( $paired[0] ) ] ), $settings );
+			$this->register_taxonomy( $paired[1],
+				$taxonomy,
+				array_merge( $supported, [ $this->constant( $paired[0] ) ] ),
+				array_merge( [ 'terms_related' => TRUE ], $settings )
+			);
 
 			$this->_paired = $this->constant( $paired[1] );
+			$this->paired_handle_paired_metacaps_roles( $paired, $captype );
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
 		}
 
@@ -142,6 +159,70 @@ trait PairedCore
 		);
 
 		return $object;
+	}
+
+	protected function paired_handle_paired_metacaps_roles( $paired, $captype )
+	{
+		add_filter( 'map_meta_cap',
+			function ( $caps, $cap, $user_id, $args ) use ( $paired, $captype ) {
+
+				switch ( $cap ) {
+
+					case 'manage_paired_'.$captype[1]:
+
+						// fallback to paired post-type cap
+						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
+							return [ $object->cap->create_posts ];
+
+						break;
+
+					case 'edit_paired_'.$captype[1]:
+
+						// fallback to paired post-type cap
+						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
+							return [ $object->cap->edit_posts ];
+
+						break;
+
+					case 'delete_paired_'.$captype[1]:
+
+						// fallback to paired post-type cap
+						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
+							return [ $object->cap->delete_posts ];
+
+						break;
+
+					case 'assign_paired_'.$captype[0]:  // NOTE: DEPRECATED
+					case 'assign_paired_'.$captype[1]:
+
+						return $this->role_can( 'paired', $user_id )
+							? [ 'exist' ]
+							: [ 'do_not_allow' ];
+
+						break;
+
+					case 'assign_term':
+
+						$term = get_term( (int) $args[0] );
+
+						if ( ! $term || is_wp_error( $term ) )
+							return $caps;
+
+						if ( $this->constant( $paired[1] ) != $term->taxonomy )
+							return $caps;
+
+						if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+							return $caps;
+
+						// NOTE: Applies the customized roles stored as term meta-data via `Terms` module
+						if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+							return [ 'do_not_allow' ];
+				}
+
+				return $caps;
+			}, 10, 4 );
+
+		return TRUE;
 	}
 
 	// FIXME: DEPRECATED
