@@ -328,11 +328,16 @@ class Byline extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $linked ) )
 			return;
 
-		$routes = [];
+		$targets = $routes = [];
 
-		foreach ( $args['targets'] as $target => $label )
+		foreach ( $args['targets'] as $target => $label ) {
+
 			if ( WordPress\Taxonomy::can( $target, 'manage_terms' ) )
 				$routes[$target] = WordPress\Taxonomy::getRestRoute( $target );
+
+			if ( WordPress\Taxonomy::can( $target, 'assign_terms' ) )
+				$targets[$target] = $label;
+		}
 
 		$asset = [
 			'strings' => $this->get_strings( $args['asset'], 'js', $args['strings'] ),
@@ -349,8 +354,8 @@ class Byline extends gEditorial\Module
 			'config' => [
 				'linked'       => $linked,
 				'context'      => $args['context'],
-				'targets'      => array_keys( $args['targets'] ),
-				'labels'       => $args['targets'],
+				'targets'      => array_keys( $targets ),
+				'labels'       => $targets,
 				'routes'       => $routes,
 				'searchselect' => Services\SearchSelect::namespace(),
 				// 'discovery'    => Services\LineDiscovery::namespace(), // NOT USED YET
