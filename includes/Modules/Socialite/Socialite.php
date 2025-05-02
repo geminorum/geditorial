@@ -194,7 +194,7 @@ class Socialite extends gEditorial\Module
 				'description' => isset( $strings['descriptions'][$field] ) ? $strings['descriptions'][$field] : '',
 				'icon'        => $this->_get_field_icon( $field, '_supported' ),
 				'type'        => 'code',
-				'order'       => 800,
+				'order'       => 1800,
 			];
 
 		return [
@@ -239,6 +239,9 @@ class Socialite extends gEditorial\Module
 
 	public function meta_init()
 	{
+		if ( empty( $this->posttypes() ) )
+			return;
+
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );

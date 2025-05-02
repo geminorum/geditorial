@@ -31,7 +31,7 @@ class Datetime extends WordPress\Main
 		// FIXME: WTF: messes with the dates!
 		// $string = str_replace( '/', self::dateSeparator(), $string );
 
-		return trim( $string );
+		return Core\Text::trim( $string );
 	}
 
 	public static function isDateOnly( $date_string )
@@ -543,17 +543,13 @@ class Datetime extends WordPress\Main
 			'post_modified_gmt' => current_time( 'mysql', 1 ),
 		];
 
-		// - by default, changing a post on the calendar won't set the timestamp
-		// - if the user desires that to be the behaviour, they can set the result
-		// of this filter to 'true'
-		// - with how WordPress works internally, setting 'post_date_gmt'
-		// will set the timestamp
+		/**
+		 * - By default, changing a post on the calendar won't set the timestamp.
+		 * - If the user desires that to be the behavior, they can set the result of this filter to `TRUE`.
+		 * - With how WordPress works internally, setting `post_date_gmt` will set the timestamp.
+		 */
 		if ( apply_filters( static::BASE.'_reschedule_set_timestamp', $set_timestamp ) )
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp ).' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
-
-		// self::_log( [ $month, $day, $year, $cal, $time ] );
-		// self::_log( [ $post->post_date, $post->post_date_gmt, $post->post_modified, $post->post_modified_gmt ] );
-		// self::_log( [ $data['post_date'], $data['post_date_gmt'], $data['post_modified'], $data['post_modified_gmt'] ] );
 
 		// @SEE http://core.trac.wordpress.org/ticket/18362
 		if ( ! $wpdb->update( $wpdb->posts, $data, [ 'ID' => $post->ID ] ) )

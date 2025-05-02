@@ -563,14 +563,14 @@ class Meta extends gEditorial\Module
 			// book currents
 			'publication_edition'   => [ 'publication_edition', 'edition' ],
 			'publication_print'     => [ 'publication_print', 'print' ],
-			'publication_reference' => [ 'publication_reference', 'reference' ],
+			// 'publication_reference' => [ 'publication_reference', 'reference' ],
 			'total_volumes'         => [ 'total_volumes', 'volumes' ],
 			'publication_size'      => [ 'publication_size', 'size' ],             // term type
 
 			// book oldies
 			'edition'          => [ 'publication_edition', 'edition' ],
 			'print'            => [ 'publication_print', 'print' ],
-			'reference'        => [ 'publication_reference', 'reference' ],
+			// 'reference'        => [ 'publication_reference', 'reference' ],
 			'volumes'          => [ 'total_volumes', 'volumes' ],
 			'size'             => [ 'publication_size', 'size' ],             // term type
 			'publication_isbn' => [ 'isbn' ],

@@ -1141,6 +1141,10 @@ class MetaBox extends WordPress\Main
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputpostcode';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\PostCode::getHTMLPattern();
+
 				break;
 
 			case 'contact':

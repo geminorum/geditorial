@@ -422,7 +422,7 @@ trait PostTypeFields
 
 			case 'postcode':
 
-				$sanitized = Core\Validation::sanitizePostCode( $data );
+				$sanitized = Core\PostCode::sanitize( $data );
 				break;
 
 			case 'code':

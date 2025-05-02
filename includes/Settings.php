@@ -233,6 +233,7 @@ class Settings extends WordPress\Main
 			'team_member',
 			'department',
 			'publication',
+			'entry',
 		];
 
 		return Core\Arraay::prepString( apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context ) );
@@ -878,8 +879,8 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'paired_roles',
 			'type'        => 'checkboxes',
-			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
+			'title'       => _x( 'Paired Roles', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Roles that can assign paired defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
 			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,

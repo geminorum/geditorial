@@ -224,6 +224,10 @@ class TermRelations extends gEditorial\Service
 
 						else if ( in_array( $args['type'], [ 'integer', 'number' ], TRUE ) )
 							$data[$field] = (int) $data[$field];
+
+					} else if ( static::FIELD_ORDER === $field ) {
+
+						$data[$field] = (int) $data[$field];
 					}
 				}
 

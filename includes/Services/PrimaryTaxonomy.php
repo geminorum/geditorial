@@ -12,11 +12,11 @@ class PrimaryTaxonomy extends gEditorial\Service
 	const STATUS_TAX_PROP = 'status_taxonomy';
 
 	/**
-	 * Retrieves the primary taxonomy for given posttype.
+	 * Retrieves the primary taxonomy for given post-type.
 	 * @OLD: `WordPress\PostType::getPrimaryTaxonomy()`
 	 *
-	 * @param  string $posttype
-	 * @param  mixed  $fallback
+	 * @param string $posttype
+	 * @param mixed $fallback
 	 * @return string $taxonomy
 	 */
 	public static function get( $posttype, $fallback = FALSE )

@@ -177,11 +177,11 @@ trait SettingsPostTypes
 	}
 
 	/**
-	 * Gets posttype parents for use in settings.
+	 * Gets post-type parents for use in settings.
 	 *
-	 * @param  array        $extra
-	 * @param  null|string  $capability
-	 * @return array        $posttypes
+	 * @param array $extra
+	 * @param string $capability
+	 * @return array
 	 */
 	protected function get_settings_posttypes_parents( $extra = [], $capability = NULL )
 	{

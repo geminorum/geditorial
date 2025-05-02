@@ -1271,8 +1271,8 @@ trait SubContents
 	{
 		return Core\Arraay::stripByKeys( $data, [
 			'_id',
-			'_parent',
-			'_object',
+			// '_parent',  // parent comment
+			'_object',  // parent post
 			'_status',
 			'_date',
 			'_date_gmt',

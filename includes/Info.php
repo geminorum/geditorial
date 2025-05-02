@@ -144,7 +144,7 @@ class Info extends WordPress\Main
 	{
 		$info = $pre;
 
-		if ( $raw = Core\Validation::sanitizePostCode( $input ) ) {
+		if ( $raw = Core\PostCode::sanitize( $input ) ) {
 
 			/**
 			 * @package `brick/postcode`
