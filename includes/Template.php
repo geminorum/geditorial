@@ -1117,6 +1117,7 @@ class Template extends WordPress\Main
 			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
 			'image_field' => NULL,
+			'name_only'   => FALSE,   // Avoids the name-only data (no description/image)
 			'before'      => '',
 			'after'       => '',
 		], $atts );
@@ -1134,7 +1135,7 @@ class Template extends WordPress\Main
 			'after'    => '</div>',
 		], $module );
 
-		if ( ! $image && ! $desc && ! $args['heading'] )
+		if ( ! $image && ! $desc && ( ! $args['heading'] || ! $args['name_only'] ) )
 			return;
 
 		if ( ! $image )
