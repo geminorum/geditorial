@@ -82,7 +82,7 @@
   function doFootnotes (content) {
     const footnotes = {};
     content = content.replace(/<a[^h]*(?=href="[^"]*#_(?:ftn|edn|etc)ref([0-9]+)")[^>]*>\[([0-9]+)\]<\/a>(.*)/g, function (m, p1, p2, p3) {
-      footnotes[p1] = p3.replace(/^\s*./, '').trim();
+      footnotes[p1] = p3.replace(/^\s*|\s*$/gm, '').trim();
       return '';
     });
 
