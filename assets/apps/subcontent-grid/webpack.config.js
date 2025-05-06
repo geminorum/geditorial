@@ -3,7 +3,7 @@ const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // https://webpack.js.org/plugins/mini-css-extract-plugin/
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin'); // https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
-const WebpackRTLPlugin = require('webpack-rtl-plugin');
+const WebpackRTLPlugin = require('@automattic/webpack-rtl-plugin');
 
 module.exports = (env, argv) => {
   const config = {
@@ -45,7 +45,24 @@ module.exports = (env, argv) => {
                 importLoaders: 1
               }
             },
-            'sass-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: argv.mode === 'development',
+                sassOptions: {
+                  silenceDeprecations: [
+                    'import',
+                    'legacy-js-api'
+                  ],
+                  // includePaths: [
+                  //   './../../gnetwork/assets/sass',
+                  //   './../gnetwork/assets/sass'
+                  // ]
+                  sourceComments: true,
+                  errLogToConsole: true
+                }
+              }
+            },
             {
               loader: 'postcss-loader',
               options: {

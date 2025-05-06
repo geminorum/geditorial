@@ -3,8 +3,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-
-////////////////////////////////////////////////////////////////////////////////
 $brand-success: #5cb85c !default;
 $brand-info:    #5bc0de !default;
 $brand-warning: #f0ad4e !default;
@@ -30,7 +28,7 @@ $brand-danger:  #d9534f !default;
     margin-left: .25rem;
 
     &.initial {
-      color: gray;
+      color: #555;
     }
     &.saved {
       color: $brand-success;
@@ -51,6 +49,18 @@ $brand-danger:  #d9534f !default;
   border-collapse: collapse;
   margin-bottom: .5rem;
   padding: 1em;
+
+  // highlight the row being edited and blur out the distractions
+  // @ref https://x.com/jh3yy/status/1918510262140752021
+  // WORKING: but must only enabled on edit-mode
+  // &:focus-within {
+  //   tbody {
+  //     tr:not(:focus-within) {
+  //       filter: blur(4px) saturate(0.2);
+  //       opacity: 0.5;
+  //     }
+  //   }
+  // }
 
   tr {
     &.is-editing {
