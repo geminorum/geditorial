@@ -121,6 +121,22 @@
     return input.startsWith(prefix) ? input.slice(prefix.length) : input;
   }
 
+  function sanitizeDashes (input) {
+    return input
+      // Converts `kashida` between numbers to dash
+      // .replace(/([0-9۰-۹]+)ـ+([0-9۰-۹]+)/g, '$1-$2')
+      .replace(/[\u0640—–]+/g, '-')
+    ;
+  }
+
+  function flipByDash (input) {
+    return input
+      .split('-')
+      .reverse()
+      .join('-')
+    ;
+  }
+
   // function toPersian (n) {
   //   const p = '۰'.charCodeAt(0);
   //   return n.toString().replace(/\d+/g, function (m) {
@@ -313,7 +329,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.-]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.-]/g, '').trim());
       });
     },
 
@@ -323,7 +339,7 @@
         $el.prop('type', 'text');
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^a-zA-Z]/gi, '').trim().toUpperCase());
+        $el.val($el.val().replace(/[^a-zA-Z]/gi, '').trim().toUpperCase());
       });
     },
 
@@ -333,7 +349,7 @@
         $el.prop('type', 'text');
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        const val = toEnglish(sanitizeDashes($el.val())).replace(/[^\d.-]/g, '').trim();
         $el.val(val);
         if (identityNumber(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
@@ -349,7 +365,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `tel`
       } catch (e) {}
       $el.on('change', function () {
-        const val = removePrefix(toEnglish($el.val()), 'tel:').replace(/[^\d+]/g, '').trim();
+        const val = removePrefix(toEnglish(sanitizeDashes($el.val())), 'tel:').replace(/[^\d+]/g, '').trim();
         $el.val(val);
         if (validatePhone(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
@@ -365,9 +381,13 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        const val = toEnglish(sanitizeDashes($el.val())).replace(/[^\d.-]/g, '').trim();
         $el.val(val);
+        console.log(flipByDash(val));
         if (validateISBN(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else if (validateISBN(flipByDash(val))) {
+          $el.val(flipByDash(val));
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
         } else {
           $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
@@ -381,7 +401,7 @@
         $el.prop('type', 'text');
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).toUpperCase().replace(/[^A-Z\d.-]/g, '').trim();
+        const val = toEnglish(sanitizeDashes($el.val())).toUpperCase().replace(/[^A-Z\d.-]/g, '').trim();
         $el.val(val);
         if (validateVIN(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
@@ -397,7 +417,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).replace(/IR[^\d.-]/g, '').trim();
+        const val = toEnglish(sanitizeDashes($el.val())).replace(/IR[^\d.-]/g, '').trim();
         $el.val(val);
         if (validateIBAN(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
@@ -413,7 +433,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        const val = toEnglish($el.val()).replace(/[^\d.-]/g, '').trim();
+        const val = toEnglish(sanitizeDashes($el.val())).replace(/[^\d.-]/g, '').trim();
         $el.val(val);
         if (validateCard(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
@@ -429,7 +449,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `year`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\]/g, '').trim());
         // TODO: check for pattern/validate year in persian
       });
     },
@@ -440,7 +460,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `date`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\]/g, '').trim());
         // TODO: check for pattern/validate date in persian
       });
     },
@@ -451,7 +471,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `date`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\: ]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\: ]/g, '').trim());
         // TODO: check for pattern/validate datetime in persian
       });
     },
@@ -465,7 +485,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\ ]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\ ]/g, '').trim());
         // TODO: check for pattern/validate distance in persian
       });
     },
@@ -476,7 +496,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\: ]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\: ]/g, '').trim());
         // TODO: check for pattern/validate duration in persian
       });
     },
@@ -487,7 +507,7 @@
         $el.prop('type', 'text'); // NOTE: possible type: `number`
       } catch (e) {}
       $el.on('change', function () {
-        $el.val(toEnglish($el.val()).replace(/[^\d.\-/\\ ]/g, '').trim());
+        $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\ ]/g, '').trim());
         // TODO: check for pattern/validate duration in persian
       });
     }
