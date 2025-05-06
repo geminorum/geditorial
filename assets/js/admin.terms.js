@@ -136,35 +136,45 @@
       const tag = $(this).parents('tr').attr('id');
       const event = e;
 
-      app.inlineImage(tag, event);
-      app.inlineColor(tag, event);
+      app.inlineNumber('parent', tag, event);
       app.inlineOrder(tag, event);
+      app.inlineText('plural', tag, event);
+      // app.inlineText('singular', tag, event); // TODO
       app.inlineText('overwrite', tag, event);
+      app.inlineText('fullname', tag, event);
       app.inlineText('tagline', tag, event);
-      app.inlineText('contact', tag, event);
+      app.inlineText('subtitle', tag, event);
+      app.inlineText('contact', tag, event); // TODO convert to code
       app.inlineText('venue', tag, event);
-      app.inlineText('period', tag, event);
+      app.inlineImage(tag, event);
       app.inlineSelect('author', tag, event);
+      app.inlineColor(tag, event);
       app.inlineSelect('role', tag, event);
+      // TODO: multi-select: `roles`
       app.inlineSelect('posttype', tag, event);
+      // TODO: multi-select: `posttypes`
       app.inlineSelect('arrow', tag, event);
-      app.inlineSelect('viewable', tag, event);
       app.inlineText('label', tag, event);
-      app.inlineText('latlng', tag, event);
       app.inlineCode('code', tag, event);
       app.inlineText('barcode', tag, event);
+      app.inlineCode('latlng', tag, event);
       app.inlineDate('date', tag, event);
-      app.inlineDate('born', tag, event);
-      app.inlineDate('dead', tag, event);
       app.inlineDate('datetime', tag, event);
       app.inlineDate('datestart', tag, event);
       app.inlineDate('dateend', tag, event);
-      app.inlineNumber('parent', tag, event);
+      app.inlineDate('born', tag, event);
+      app.inlineDate('dead', tag, event);
+      // 'distance', // TODO
+      // 'duration', // TODO
+      // 'area',     // TODO
       app.inlineNumber('days', tag, event);
       app.inlineNumber('hours', tag, event);
+      app.inlineText('period', tag, event);
+      app.inlineNumber('amount', tag, event);
       app.inlineNumber('unit', tag, event);
       app.inlineNumber('min', tag, event);
       app.inlineNumber('max', tag, event);
+      app.inlineSelect('viewable', tag, event);
       app.inlineURL('source', tag, event);
       app.inlineURL('embed', tag, event);
       app.inlineURL('url', tag, event);
