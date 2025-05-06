@@ -30,6 +30,7 @@
     distance: '[data-' + module + '=\'distance\']',
     duration: '[data-' + module + '=\'duration\']',
     area: '[data-' + module + '=\'area\']'
+    // latlng: '[data-' + module + '=\'latlng\']',
     // code: '[data-' + module + '=\'code\']',
     // color: '[data-' + module + '=\'color\']',
     // currency: '[data-' + module + '=\'currency\']'

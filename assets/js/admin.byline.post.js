@@ -4,7 +4,7 @@
   const s = {
     // action: plugin._base + '_' + module,
     // classs: plugin._base + '-' + module,
-    target: '#' + plugin._base + '-' + module + '-rendered'
+    pot: '#' + plugin._base + '-' + module + '-rendered'
   };
 
   const u = {
@@ -37,8 +37,8 @@
     },
 
     requestDone: function (data) {
-      // $(s.target).html(data[plugin[module].attr]);
-      u.inOut(s.target, data[plugin[module].attr]);
+      // $(s.pot).html(data[plugin[module].attr]);
+      u.inOut(s.pot, data[plugin[module].attr]);
     },
 
     requestFailed: function (data) {
