@@ -43,6 +43,20 @@ class TermRelations extends gEditorial\Service
 			},
 		] );
 
+		register_rest_field( array_keys( $taxonomies ), self::TAXONOMY_ATTR, [
+			'schema' => NULL,
+
+			'get_callback' => static function ( $object, $attr, $request, $object_type ) {
+				return empty( $request['post'] )
+					? FALSE
+					: self::getTermData(
+						(int) $request['post'],
+						(int) $object['id'],
+						$request['context']
+					);
+			},
+		] );
+
 		// whitelist our custom order
 		// @SEE: https://iamshishir.com/sorting-orderby-for-custom-meta-fields-in-wordpress/
 		foreach ( $taxonomies as $taxonomy => $objects )
@@ -175,6 +189,7 @@ class TermRelations extends gEditorial\Service
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return [];
 
+		$data       = [];
 		$supported  = get_object_taxonomies( $post );
 		$taxonomies = array_keys( self::getTaxonomies() );
 
@@ -189,53 +204,74 @@ class TermRelations extends gEditorial\Service
 			if ( ! $terms || is_wp_error( $terms ) )
 				return [];
 
-			$supported = self::get_supported( $taxonomy, $context, $post->post_type );
-			$list      = [];
+			$data = array_merge(
+				$data,
+				self::getData( $post, $taxonomy, $terms, $context )
+			);
+		}
 
-			foreach ( $terms as $term ) {
+		return $data;
+	}
 
-				$meta = get_term_meta( $term->term_id );
-				$data = [ 'id' => $term->term_id, 'taxonomy' => $term->taxonomy ];
+	public static function getData( $post, $taxonomy, $terms, $context )
+	{
+		$list   = [];
+		$fields = self::get_supported( $taxonomy, $context, $post->post_type );
 
-				if ( 'edit' === $context ) {
-					// NOTE: must comp with `SearchSelect`
-					$data['text']  = WordPress\Term::title( $term );
-					$data['extra'] = SearchSelect::getExtraForTerm( $term, [ 'context' => static::GLOBAL_CONTEXT ] );
-					$data['image'] = SearchSelect::getImageForTerm( $term, [ 'context' => static::GLOBAL_CONTEXT ] );
-				}
+		foreach ( $terms as $term ) {
 
-				foreach ( $supported as $field => $args ) {
+			$meta = get_term_meta( $term->term_id );
+			$data = [ 'id' => $term->term_id, 'taxonomy' => $term->taxonomy ];
 
-					$metakey = self::getMetakey( $field, $post->ID );
-
-					if ( array_key_exists( $metakey, $meta ) )
-						$data[$field] = $meta[$metakey][0];
-
-					else if ( is_array( $args ) && array_key_exists( 'default', $args ) )
-						$data[$field] = $args['default'];
-
-					else if ( static::FIELD_ORDER == $field )
-						$data[$field] = 0;
-
-					if ( ! empty( $args['type'] ) )  {
-
-						if ( 'boolean' === $args['type'] )
-							$data[$field] = (bool) $data[$field];
-
-						else if ( in_array( $args['type'], [ 'integer', 'number' ], TRUE ) )
-							$data[$field] = (int) $data[$field];
-
-					} else if ( static::FIELD_ORDER === $field ) {
-
-						$data[$field] = (int) $data[$field];
-					}
-				}
-
-				$list[] = $data;
+			if ( 'edit' === $context ) {
+				// NOTE: must comp with `SearchSelect`
+				$data['text']  = WordPress\Term::title( $term );
+				$data['extra'] = SearchSelect::getExtraForTerm( $term, [ 'context' => static::GLOBAL_CONTEXT ] );
+				$data['image'] = SearchSelect::getImageForTerm( $term, [ 'context' => static::GLOBAL_CONTEXT ] );
 			}
+
+			foreach ( $fields as $field => $args ) {
+
+				$metakey = self::getMetakey( $field, $post->ID );
+
+				if ( array_key_exists( $metakey, $meta ) )
+					$data[$field] = $meta[$metakey][0];
+
+				else if ( is_array( $args ) && array_key_exists( 'default', $args ) )
+					$data[$field] = $args['default'];
+
+				else if ( static::FIELD_ORDER == $field )
+					$data[$field] = 0;
+
+				if ( ! empty( $args['type'] ) )  {
+
+					if ( 'boolean' === $args['type'] )
+						$data[$field] = (bool) $data[$field];
+
+					else if ( in_array( $args['type'], [ 'integer', 'number' ], TRUE ) )
+						$data[$field] = (int) $data[$field];
+
+				} else if ( static::FIELD_ORDER === $field ) {
+
+					$data[$field] = (int) $data[$field];
+				}
+			}
+
+			$list[] = $data;
 		}
 
 		return $list;
+	}
+
+	public static function getTermData( $post, $term, $context = 'view' )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		return reset( self::getData( $post, $term->taxonomy, [ $term ], $context ) );
 	}
 
 	public static function getPostTypes( $taxonomies = NULL )
