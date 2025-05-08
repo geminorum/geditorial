@@ -198,23 +198,23 @@ class TermRelations extends gEditorial\Service
 			if ( ! in_array( $taxonomy, $supported, TRUE ) )
 				continue;
 
-			// hits the cache
-			$terms = get_the_terms( $post, $taxonomy );
-
-			if ( ! $terms || is_wp_error( $terms ) )
-				return [];
-
 			$data = array_merge(
 				$data,
-				self::getData( $post, $taxonomy, $terms, $context )
+				self::_getData( $post, $taxonomy, NULL, $context )
 			);
 		}
 
 		return $data;
 	}
 
-	public static function getData( $post, $taxonomy, $terms, $context )
+	private static function _getData( $post, $taxonomy, $terms = NULL, $context = 'view' )
 	{
+		if ( is_null( $terms ) )
+			$terms = get_the_terms( $post, $taxonomy ); // hits the cache
+
+		if ( ! $terms || is_wp_error( $terms ) )
+			return [];
+
 		$list   = [];
 		$fields = self::get_supported( $taxonomy, $context, $post->post_type );
 
@@ -271,7 +271,10 @@ class TermRelations extends gEditorial\Service
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		return reset( self::getData( $post, $term->taxonomy, [ $term ], $context ) );
+		if ( in_array( $term->taxonomy, get_object_taxonomies( $post ), TRUE ) )
+			return reset( self::_getData( $post, $term->taxonomy, [ $term ], $context ) );
+
+		return FALSE;
 	}
 
 	public static function getPostTypes( $taxonomies = NULL )
