@@ -1,0 +1,39 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Statistical\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Statistical\n"
+"X-Domain: geditorial-statistical\n"
+
+#: Statistical.php:66
+msgctxt "Header"
+msgid "Statistical Reports"
+msgstr ""
+
+#: Statistical.php:70
+msgctxt "Header"
+msgid "By PostType"
+msgstr ""
+
+#: Statistical.php:85
+msgctxt "None Title"
+msgid "All Users"
+msgstr ""
+
+#: Statistical.php:95
+msgctxt "None Title"
+msgid "All Months"
+msgstr ""
+
+#: Statistical.php:103
+msgctxt "Button"
+msgid "Query Stats"
+msgstr ""
