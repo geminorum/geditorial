@@ -70,6 +70,18 @@ class Module extends Core\Base
 		return $this->base.$suffix;
 	}
 
+	// NOTE: same as `hook()` without the `$base`
+	protected function hook_key()
+	{
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			if ( $arg )
+				$suffix.= '_'.strtolower( self::sanitize_hook( $arg ) );
+
+		return $this->key.$suffix;
+	}
+
 	protected function classs()
 	{
 		$suffix = '';

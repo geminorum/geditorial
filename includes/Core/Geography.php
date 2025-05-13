@@ -52,22 +52,85 @@ class Geography extends Base
 			: self::sanitizeLatLng( $input );
 	}
 
+	// @SEE: https://github.com/jakubvalenta/geoshare
 	public static function sanitizeLatLng( $input )
 	{
-		$sanitized = Number::translate( Text::trim( $input ) );
+		$sanitized = Number::translate( Text::trim( htmlspecialchars_decode( $input ) ) );
 
-		// extracts latlng from google map url
+		if ( Text::starts( $sanitized, 'geo:' ) )
+			return Text::stripPrefix( $sanitized, 'geo:' );
+
+		// Extracts `lat/lng` from URLs
 		if ( URL::isValid( $sanitized ) ) {
 
 			$url = URL::parseDeep( $sanitized );
 
-			if ( isset( $url['query']['q'] ) )
-				return $url['query']['q'];
+			switch ( URL::untrail( $url['base'] ) ) {
 
-			if ( isset( $url['query']['ll'] ) )
-				return $url['query']['ll'];
+				case 'maps.google.com':
+				case 'maps.google.com/maps':
+				case 'maps.apple.com':
+
+					if ( isset( $url['query']['ll'] ) )
+						return $url['query']['ll'];
+
+					if ( isset( $url['query']['q'] ) )
+						return $url['query']['q'];
+
+					break;
+
+				case 'openstreetmap.org':
+				case 'www.openstreetmap.org':
+
+					if ( isset( $url['query']['mlat'] ) && isset( $url['query']['mlon'] ) )
+						return sprintf( '%s,%s', $url['query']['mlat'], $url['query']['mlon'] );
+
+					break;
+
+
+				case 'bing.com':
+				case 'www.bing.com':
+				case 'www.bing.com/maps':
+
+					if ( isset( $url['query']['cp'] ) && Text::has( $url['query']['cp'], '~' ) )
+						return vsprintf( '%s,%s', explode( '~', $url['query']['cp'], 2 ) );
+
+					break;
+
+				case 'balad.ir':
+				case 'balad.ir/location':
+
+					if ( isset( $url['query']['latitude'] ) && isset( $url['query']['longitude'] ) )
+						return sprintf( '%s,%s', $url['query']['latitude'], $url['query']['longitude'] );
+
+					break;
+
+				case 'map.parsijoo.ir':
+
+					if ( isset( $url['query']['lat'] ) && isset( $url['query']['lon'] ) )
+						return sprintf( '%s,%s', $url['query']['lat'], $url['query']['lon'] );
+			}
 
 			return '';
+		}
+
+		// Extracts `lat/lng` from https://plus.codes
+		if ( class_exists( '\YOCLIB\\OpenLocationCode\\OpenLocationCode' ) ) {
+
+			/**
+			 * @package `yocto/yoclib-openlocationcode`
+			 * @link https://github.com/yocto/yoclib-openlocationcode-php
+			 */
+			if ( \YOCLIB\OpenLocationCode\OpenLocationCode::isValidCode( $sanitized ) ) {
+
+				$code = new \YOCLIB\OpenLocationCode\OpenLocationCode( $sanitized );
+				$data = $code->decode();
+
+				return sprintf( '%s,%s',
+					$data->getCenterLatitude(),
+					$data->getCenterLongitude()
+				);
+			}
 		}
 
 		return Text::trim( str_ireplace( [ '-', ':', ' ' ], '', $sanitized ) );
@@ -87,14 +150,15 @@ class Geography extends Base
 	 * @source `JeroenDesloovere\Distance::between()`
 	 * @link https://github.com/jeroendesloovere/distance
 	 * @author Jeroen Desloovere <info@jeroendesloovere.be>
+	 * @source https://www.geodatasource.com/developers/php
      *
-     * @return float
-     * @param  float   $latitude1
-     * @param  float   $longitude1
-     * @param  float   $latitude2
-     * @param  float   $longitude2
-     * @param  int     $decimals[optional] The amount of decimals
-     * @param  string  $unit[optional]
+     * @param float $latitude1
+     * @param float $longitude1
+     * @param float $latitude2
+     * @param float $longitude2
+     * @param int $decimals: The amount of decimals
+     * @param string $unit: `km`, `n`, `m`
+	 * @return float
      */
     public static function distanceBetween( $latitude1, $longitude1, $latitude2, $longitude2, $decimals = 1, $unit = 'km' )
 	{
@@ -106,9 +170,15 @@ class Geography extends Base
         $distance = rad2deg( $distance );
         $distance = $distance * 60 * 1.1515;
 
+		// Kilometers
         if ( 'km' === $unit )
             $distance = $distance * 1.609344; // redefine distance
 
+		// Nautical Miles
+		else if ( 'n' === $unit )
+			return $distance * 0.8684;
+
+		// Miles
         return round( $distance, $decimals ); // return with one decimal
     }
 
@@ -146,11 +216,11 @@ class Geography extends Base
 
             $distances[$distance] = $key;
 
-            // add rounded distance to array
+            // adds rounded distance to array
             $items[$key]['distance'] = round( $distance, $decimals );
         }
 
-        // return the item with the closest distance
+        // Returns the item with the closest distance
         return $items[$distances[min( array_keys( $distances ) )]];
     }
 
