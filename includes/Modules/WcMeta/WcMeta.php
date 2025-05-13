@@ -79,6 +79,10 @@ class WcMeta extends gEditorial\Module
 						'quickedit'   => TRUE,
 					],
 
+					'lead'        => [ 'type' => 'postbox_html' ],
+					'highlight'   => [ 'type' => 'note' ],
+					'cover_blurb' => [ 'type' => 'note' ],
+
 					'venue_string'   => [ 'type' => 'venue' ],
 					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 					'website_url'    => [ 'type' => 'link' ],

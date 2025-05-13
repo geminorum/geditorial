@@ -129,6 +129,7 @@ class Phonebook extends gEditorial\Module
 		return $strings;
 	}
 
+	// @SEE: [213 Secondary Address Unit Designators | Postal Explorer](https://pe.usps.com/text/pub28/28c2_003.htm)
 	protected function get_global_fields()
 	{
 		return [
@@ -171,6 +172,28 @@ class Phonebook extends gEditorial\Module
 						'description' => _x( 'Parent Phone Contact Number of the Person', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'phone',
 						'order'       => 500,
+					],
+					/**
+					 * In a standard address format, the building name, if applicable,
+					 * is typically included on Address Line 1 or Address Line 2,
+					 * depending on the specific location and format. It often appears
+					 * after the street address and number, and before any apartment
+					 * or unit information.
+					 *
+					 * Placement: The building name usually follows the street
+					 * address and house number. For example, an address
+					 * might look like this: "123 Main St, Building B, Apt 4"
+					 * or "Building X, 45 Elm Ave".
+					 */
+					'building_name' => [
+						'title'       => _x( 'Building Name', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Address Unit for the Building', 'Field Description', 'geditorial-phonebook' ),
+						'order'       => 550,
+					],
+					'room_number' => [
+						'title'       => _x( 'Room Number', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Address Unit for the Room', 'Field Description', 'geditorial-phonebook' ),
+						'order'       => 550,
 					],
 					'postal_address' => [
 						'title'       => _x( 'Postal Address', 'Field Title', 'geditorial-phonebook' ),

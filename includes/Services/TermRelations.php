@@ -122,7 +122,7 @@ class TermRelations extends gEditorial\Service
 			if ( ! empty( $raw['__delete'] ) ) {
 				wp_remove_object_terms( $post->ID, $term->term_id, $term->taxonomy );
 				// MAYBE: delete all meta related!
-				// TODO: cleanup process for residual data
+				// TODO: clean-up process for residual data
 				continue;
 			}
 

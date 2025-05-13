@@ -130,6 +130,20 @@ class Trained extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
+
+				/**
+				 * `Training` is both countable and uncountable. Usually,
+				 * referring to a process, it is uncountable and has no plural.
+				 *
+				 * It is sometimes used to mean "a specific training event",
+				 * and is then countable, and has the plural `trainings`.
+				 * The OED has examples of this use going back to 1578,
+				 * with the plural recorded from 1598.
+				 *
+				 * @source https://english.stackexchange.com/a/354633
+				 * @link https://englishbusiness.de/en/blog/training-or-trainings-what-is-the-correct-plural-form/
+				 */
+
 				'primary_posttype' => _n_noop( 'Training Course', 'Training Courses', 'geditorial-trained' ),
 				'primary_paired'   => _n_noop( 'Training Course', 'Training Courses', 'geditorial-trained' ),
 				'primary_taxonomy' => _n_noop( 'Training Category', 'Training Categories', 'geditorial-trained' ),
