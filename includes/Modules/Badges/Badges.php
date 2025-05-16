@@ -4,17 +4,19 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Badges extends gEditorial\Module
 {
+	use Internals\BulkExports;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 	use Internals\DashboardSummary;
+	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
 	protected $disable_no_posttypes = TRUE;
@@ -237,21 +239,12 @@ class Badges extends gEditorial\Module
 
 	public function reports_settings( $sub )
 	{
-		$this->check_settings( $sub, 'reports' );
+		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Badge Reports', 'Header', 'geditorial-badges' ) );
-
-		$taxonomy = $this->constant( 'main_taxonomy' );
-
-		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return Core\HTML::desc( $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' ), TRUE, '-empty' );
-
-		echo Template::getSpanTiles( [
-			'taxonomy' => $taxonomy,
-			'posttype' => $this->posttypes(),
-		], $this->key );
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return Info::renderNoReportsAvailable();
 	}
 }
