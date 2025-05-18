@@ -259,6 +259,17 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
+	public static function renderNoCustomsAvailable( $before = '', $after = '' )
+	{
+		Core\HTML::desc(
+			$before._x( 'There are no customs available!', 'Info: Message', 'geditorial-admin' ).$after,
+			FALSE,
+			'-empty -no-customs'
+		);
+
+		return FALSE;
+	}
+
 	public static function renderNoToolsAvailable( $before = '', $after = '' )
 	{
 		Core\HTML::desc(

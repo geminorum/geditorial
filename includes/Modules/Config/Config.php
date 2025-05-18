@@ -30,6 +30,7 @@ class Config extends gEditorial\Module
 		'roles'    => 'edit_users',
 		'tests'    => 'manage_options', // TODO: add test pages
 		'imports'  => 'import',
+		'customs'  => 'edit_theme_options',
 	];
 
 	protected $positions = [
@@ -76,6 +77,7 @@ class Config extends gEditorial\Module
 			case 'editorial_roles':
 			case 'editorial_tests':
 			case 'editorial_imports':
+			case 'editorial_customs':
 
 				if ( WordPress\User::isSuperAdmin() )
 					return [ 'exist' ];
@@ -139,6 +141,10 @@ class Config extends gEditorial\Module
 			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_imports' );
 
+		$this->_hook_wp_submenu_page( 'customs', 'themes.php',
+			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
+			NULL, 'editorial_customs' );
+
 		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
 		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
 		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
@@ -148,7 +154,7 @@ class Config extends gEditorial\Module
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
-			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports', 'imports' ], TRUE ) )
+			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports', 'imports', 'customs' ], TRUE ) )
 				continue;
 
 			if ( $module->name == $this->module->name )
@@ -770,6 +776,66 @@ class Config extends gEditorial\Module
 
 		else
 			Info::renderNoImportsAvailable();
+	}
+
+	public function admin_customs_load()
+	{
+		$sub = Settings::sub();
+
+		if ( 'general' == $sub ) {
+
+			add_action( $this->hook_base( 'customs', 'sub', 'general' ), [ $this, 'customs_sub' ], 10, 2 );
+
+			$this->register_help_tabs( NULL, 'customs' );
+		}
+
+		do_action( $this->hook_base( 'customs', 'settings' ), $sub );
+	}
+
+	public function admin_customs_page()
+	{
+		$can = $this->cuc( 'customs' );
+		$uri = Settings::customsURL( FALSE );
+		$sub = Settings::sub( $can ? 'general' : 'overview' );
+
+		$subs = [ 'overview' => _x( 'Overview', 'Customs Sub', 'geditorial-admin' ) ];
+
+		if ( $can )
+			$subs['general'] = _x( 'General', 'Customs Sub', 'geditorial-admin' );
+
+		$subs     = apply_filters( $this->hook_base( 'customs', 'subs' ), $subs, 'customs', $can );
+		$messages = apply_filters( $this->hook_base( 'customs', 'messages' ), Settings::messages(), $sub, $can );
+
+		if ( WordPress\User::isSuperAdmin() ) {
+			$subs['console'] = _x( 'Console', 'Customs Sub', 'geditorial-admin' );
+		}
+
+		Settings::wrapOpen( $sub, 'customs' );
+
+			Settings::sideOpen( _x( 'Customs', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
+			Settings::message( $messages );
+
+			if ( 'overview' == $sub )
+				$this->customs_overview( $uri );
+
+			else if ( 'console' == $sub )
+				gEditorial()->files( 'Layouts/console.customs' );
+
+			else if ( has_action( $this->hook_base( 'customs', 'sub', $sub ) ) )
+				do_action( $this->hook_base( 'customs', 'sub', $sub ), $uri, $sub );
+
+			else
+				Settings::cheatin();
+
+			$this->settings_signature( 'customs' );
+
+			Settings::sideClose();
+		Settings::wrapClose();
+	}
+
+	protected function customs_overview( $uri )
+	{
+		do_action( $this->hook_base( 'customs', 'overview' ), $uri );
 	}
 
 	public function settings_sidebox( $sub, $uri )

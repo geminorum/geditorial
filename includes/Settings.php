@@ -11,6 +11,7 @@ class Settings extends WordPress\Main
 	const TOOLS    = 'geditorial-tools';
 	const ROLES    = 'geditorial-roles';
 	const IMPORTS  = 'geditorial-imports';
+	const CUSTOMS  = 'geditorial-customs';
 
 	public static function factory()
 	{
@@ -26,6 +27,7 @@ class Settings extends WordPress\Main
 			case 'tools'   : $url = self::toolsURL();    break;
 			case 'roles'   : $url = self::rolesURL();    break;
 			case 'imports' : $url = self::importsURL();  break;
+			case 'customs' : $url = self::customsURL();  break;
 			default        : $url = Core\URL::current();
 		}
 
@@ -94,6 +96,17 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
+	// TODO: MUST DEPRECATE
+	public static function customsURL( $full = TRUE )
+	{
+		$relative = 'themes.php?page='.self::CUSTOMS;
+
+		if ( $full )
+			return get_admin_url( NULL, $relative );
+
+		return $relative;
+	}
+
 	public static function isReports( $screen = NULL )
 	{
 		if ( is_null( $screen ) )
@@ -144,6 +157,17 @@ class Settings extends WordPress\Main
 			$screen = get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::IMPORTS ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
+	public static function isCustoms( $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::CUSTOMS ) )
 			return TRUE;
 
 		return FALSE;

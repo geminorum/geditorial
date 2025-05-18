@@ -69,6 +69,7 @@ class Module extends WordPress\Module
 		'settings'  => 'manage_options',
 		'imports'   => 'import',
 		'reports'   => 'edit_others_posts', // also used for `exports`
+		'customs'   => 'edit_theme_options',
 		'tools'     => 'edit_others_posts',
 		'roles'     => 'edit_users',
 		'adminbar'  => 'edit_others_posts',
@@ -236,6 +237,9 @@ class Module extends WordPress\Module
 
 			if ( $ui && method_exists( $this, 'imports_settings' ) )
 				add_action( $this->hook_base( 'imports_settings' ), [ $this, 'imports_settings' ] );
+
+			if ( $ui && method_exists( $this, 'customs_settings' ) )
+				add_action( $this->hook_base( 'customs_settings' ), [ $this, 'customs_settings' ] );
 
 			if ( $ui && method_exists( $this, 'tool_box_content' ) )
 				$this->action( 'tool_box' );

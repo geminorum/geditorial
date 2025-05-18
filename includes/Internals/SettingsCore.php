@@ -36,7 +36,7 @@ trait SettingsCore
 			$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial-admin' ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
-			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'listtable' ] ) )
+			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'customs', 'listtable' ] ) )
 				$this->register_button( $link['url'], $link['title'], 'link' );
 	}
 
@@ -85,7 +85,7 @@ trait SettingsCore
 
 		echo '<form enctype="multipart/form-data" class="'.Core\HTML::prepClass( $class ).'" method="post" action="">';
 
-			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports' ] ) )
+			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports', 'customs' ] ) )
 				$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {
@@ -183,6 +183,27 @@ trait SettingsCore
 	protected function render_imports_html( $uri, $sub ) {}
 	protected function render_imports_html_before( $uri, $sub ) {}
 	protected function render_imports_html_after( $uri, $sub ) {}
+
+	// DEFAULT METHOD: customs sub html
+	public function customs_sub( $uri, $sub )
+	{
+		$this->render_form_start( $uri, $sub, 'bulk', 'customs', TRUE );
+
+			if ( FALSE === $this->render_customs_html_before( $uri, $sub ) )
+				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+
+			if ( $this->render_customs_html( $uri, $sub ) )
+				$this->render_form_buttons();
+
+			$this->render_customs_html_after( $uri, $sub );
+
+		$this->render_form_end( $uri, $sub );
+	}
+
+	// DEFAULT METHOD: used for customs default sub html
+	protected function render_customs_html( $uri, $sub ) {}
+	protected function render_customs_html_before( $uri, $sub ) {}
+	protected function render_customs_html_after( $uri, $sub ) {}
 
 	protected function get_current_form( $defaults, $context = 'settings' )
 	{

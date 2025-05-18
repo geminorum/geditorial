@@ -187,7 +187,7 @@ class Plugin
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
 			'icon'       => 'screenoptions', // `dashicons` class / SVG icon array
 			'textdomain' => sprintf( '%s-%s', static::BASE, Core\Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
-			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `FALSE` to disable
+			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
 			'i18n'       => TRUE,  // or `FALSE`, `adminonly`, `frontonly`, `restonly`
 			'frontend'   => TRUE,  // Whether or not the module should be loaded on the frontend
 			'autoload'   => FALSE, // Auto-loading a module will remove the ability to enable/disable it
@@ -542,6 +542,9 @@ class Plugin
 
 		else if ( Settings::isImports( $screen ) )
 			Helper::linkStyleSheetAdmin( 'imports' );
+
+		else if ( Settings::isCustoms( $screen ) )
+			Helper::linkStyleSheetAdmin( 'customs' );
 
 		else if ( Settings::isSettings( $screen ) )
 			Helper::linkStyleSheetAdmin( 'settings' );
