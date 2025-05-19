@@ -955,9 +955,9 @@ class Config extends gEditorial\Module
 
 		$module = self::req( 'module', FALSE );
 
-		$this->settings_disable( $module );
-		$this->settings_reset( $module );
-		$this->settings_save( $module );
+		$this->_handle_settings_disable( $module );
+		$this->_handle_settings_reset( $module );
+		$this->_handle_settings_save( $module );
 
 		if ( $module )
 			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
@@ -977,15 +977,15 @@ class Config extends gEditorial\Module
 		$this->register_help_tabs();
 	}
 
-	public function settings_disable( $module = FALSE )
+	private function _handle_settings_disable( $module = FALSE, $context = 'settings' )
 	{
 		if ( ! isset( $_POST['disable'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
 			return FALSE;
 
-		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
+		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
 			self::cheatin();
 
 		if ( gEditorial()->update_module_option( $module->name, 'enabled', FALSE ) )
@@ -995,15 +995,15 @@ class Config extends gEditorial\Module
 			Core\WordPress::redirectReferer( 'error' );
 	}
 
-	public function settings_reset( $module = FALSE )
+	private function _handle_settings_reset( $module = FALSE, $context = 'settings' )
 	{
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
 			return FALSE;
 
-		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
+		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
 			self::cheatin();
 
 		gEditorial()->update_all_module_options( $module->name, [ 'enabled' => TRUE ] );
@@ -1011,7 +1011,7 @@ class Config extends gEditorial\Module
 		Core\WordPress::redirectReferer( 'resetting' );
 	}
 
-	public function settings_save( $module = FALSE )
+	private function _handle_settings_save( $module = FALSE, $context = 'settings' )
 	{
 		if ( ! isset( $_POST['submit'], $_POST['action'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
@@ -1019,15 +1019,15 @@ class Config extends gEditorial\Module
 		if ( 'update' != $_POST['action'] )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['geditorial_module_name'] ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
 			return FALSE;
 
-		if ( ! $this->nonce_verify( 'settings', NULL, $module->name ) )
+		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
 			self::cheatin();
 
 		$option  = $this->hook_base( $module->name );
 		$posted  = empty( $_POST[$option] ) ? [] : $_POST[$option];
-		$options = gEditorial()->module( $module->name )->settings_validate( $posted );
+		$options = gEditorial()->module( $module->name )->settings_validate( $posted, $context );
 
 		$options['enabled'] = TRUE;
 

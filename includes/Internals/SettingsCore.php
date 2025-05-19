@@ -247,74 +247,77 @@ trait SettingsCore
 		return array_merge( $subs, [ $this->module->name => $this->module->title ], $extra );
 	}
 
-	public function settings_validate( $options )
+	public function settings_validate( $options, $context = 'settings' )
 	{
-		$this->init_settings();
+		if ( 'settings' === $context ) {
 
-		if ( isset( $this->settings['posttypes_option'] ) ) {
+			$this->init_settings();
 
-			if ( ! isset( $options['post_types'] ) )
-				$options['post_types'] = [];
+			if ( isset( $this->settings['posttypes_option'] ) ) {
 
-			foreach ( $this->all_posttypes() as $posttype => $posttype_label )
-				if ( ! isset( $options['post_types'][$posttype] )
-					|| $options['post_types'][$posttype] != 'enabled' )
-						unset( $options['post_types'][$posttype] );
-				else
-					$options['post_types'][$posttype] = TRUE;
+				if ( ! isset( $options['post_types'] ) )
+					$options['post_types'] = [];
 
-			if ( ! count( $options['post_types'] ) )
-				unset( $options['post_types'] );
-		}
-
-		if ( isset( $this->settings['taxonomies_option'] ) ) {
-
-			if ( ! isset( $options['taxonomies'] ) )
-				$options['taxonomies'] = [];
-
-			foreach ( $this->all_taxonomies() as $taxonomy => $label )
-				if ( ! isset( $options['taxonomies'][$taxonomy] )
-					|| $options['taxonomies'][$taxonomy] != 'enabled' )
-						unset( $options['taxonomies'][$taxonomy] );
-				else
-					$options['taxonomies'][$taxonomy] = TRUE;
-
-			if ( ! count( $options['taxonomies'] ) )
-				unset( $options['taxonomies'] );
-		}
-
-		if ( isset( $this->settings['fields_option'] ) ) {
-
-			if ( ! isset( $options['fields'] ) )
-				$options['fields'] = [];
-
-			foreach ( $this->posttypes() as $posttype ) {
-
-				if ( ! isset( $options['fields'][$posttype] ) )
-					$options['fields'][$posttype] = [];
-
-				foreach ( $this->posttype_fields_all( $posttype ) as $field => $args ) {
-
-					if ( ! isset( $options['fields'][$posttype][$field] )
-						|| $options['fields'][$posttype][$field] != 'enabled' )
-							unset( $options['fields'][$posttype][$field] );
+				foreach ( $this->all_posttypes() as $posttype => $posttype_label )
+					if ( ! isset( $options['post_types'][$posttype] )
+						|| $options['post_types'][$posttype] != 'enabled' )
+							unset( $options['post_types'][$posttype] );
 					else
-						$options['fields'][$posttype][$field] = TRUE;
-				}
+						$options['post_types'][$posttype] = TRUE;
 
-				if ( ! count( $options['fields'][$posttype] ) )
-					unset( $options['fields'][$posttype] );
+				if ( ! count( $options['post_types'] ) )
+					unset( $options['post_types'] );
 			}
 
-			if ( ! count( $options['fields'] ) )
-				unset( $options['fields'] );
+			if ( isset( $this->settings['taxonomies_option'] ) ) {
+
+				if ( ! isset( $options['taxonomies'] ) )
+					$options['taxonomies'] = [];
+
+				foreach ( $this->all_taxonomies() as $taxonomy => $label )
+					if ( ! isset( $options['taxonomies'][$taxonomy] )
+						|| $options['taxonomies'][$taxonomy] != 'enabled' )
+							unset( $options['taxonomies'][$taxonomy] );
+					else
+						$options['taxonomies'][$taxonomy] = TRUE;
+
+				if ( ! count( $options['taxonomies'] ) )
+					unset( $options['taxonomies'] );
+			}
+
+			if ( isset( $this->settings['fields_option'] ) ) {
+
+				if ( ! isset( $options['fields'] ) )
+					$options['fields'] = [];
+
+				foreach ( $this->posttypes() as $posttype ) {
+
+					if ( ! isset( $options['fields'][$posttype] ) )
+						$options['fields'][$posttype] = [];
+
+					foreach ( $this->posttype_fields_all( $posttype ) as $field => $args ) {
+
+						if ( ! isset( $options['fields'][$posttype][$field] )
+							|| $options['fields'][$posttype][$field] != 'enabled' )
+								unset( $options['fields'][$posttype][$field] );
+						else
+							$options['fields'][$posttype][$field] = TRUE;
+					}
+
+					if ( ! count( $options['fields'][$posttype] ) )
+						unset( $options['fields'][$posttype] );
+				}
+
+				if ( ! count( $options['fields'] ) )
+					unset( $options['fields'] );
+			}
 		}
 
-		if ( isset( $options['settings'] ) ) {
+		if ( isset( $options[$context] ) ) {
 
-			foreach ( (array) $options['settings'] as $setting => $option ) {
+			foreach ( (array) $options[$context] as $setting => $option ) {
 
-				if ( FALSE === ( $args = $this->get_settings_field( $setting ) ) )
+				if ( FALSE === ( $args = $this->get_settings_field( $setting, $context ) ) )
 					continue; // bailing!
 
 				// skip disabled settings
@@ -323,13 +326,13 @@ trait SettingsCore
 
 				if ( ! array_key_exists( 'type', $args ) || 'enabled' == $args['type'] ) {
 
-					$options['settings'][$setting] = (bool) $option;
+					$options[$context][$setting] = (bool) $option;
 
 				} else if ( 'object' == $args['type'] ) {
 
 					if ( empty( $option ) || ! is_array( $option ) || empty( $args['values'] ) ) {
 
-						unset( $options['settings'][$setting] );
+						unset( $options[$context][$setting] );
 
 					} else {
 
@@ -369,10 +372,10 @@ trait SettingsCore
 						}
 
 						if ( count( $sanitized ) )
-							$options['settings'][$setting] = $sanitized;
+							$options[$context][$setting] = $sanitized;
 
 						else
-							unset( $options['settings'][$setting] );
+							unset( $options[$context][$setting] );
 					}
 
 				} else if ( is_array( $option ) ) {
@@ -380,34 +383,34 @@ trait SettingsCore
 					if ( 'text' == $args['type'] ) {
 
 						// multiple texts
-						$options['settings'][$setting] = [];
+						$options[$context][$setting] = [];
 
 						foreach ( $option as $key => $value )
 							if ( $string = trim( self::unslash( $value ) ) )
-								$options['settings'][$setting][sanitize_key( $key )] = $string;
+								$options[$context][$setting][sanitize_key( $key )] = $string;
 
 					} else {
 
 						// multiple checkboxes
-						$options['settings'][$setting] = array_keys( $option );
+						$options[$context][$setting] = array_keys( $option );
 					}
 
 				} else {
 
-					$options['settings'][$setting] = trim( self::unslash( $option ) );
+					$options[$context][$setting] = trim( self::unslash( $option ) );
 				}
 			}
 
-			if ( ! count( $options['settings'] ) )
-				unset( $options['settings'] );
+			if ( ! count( $options[$context] ) )
+				unset( $options[$context] );
 		}
 
 		return $options;
 	}
 
-	protected function get_settings_field( $setting )
+	protected function get_settings_field( $setting, $context = 'settings' )
 	{
-		foreach ( $this->settings as $section ) {
+		foreach ( $this->{$context} as $section ) {
 
 			if ( is_array( $section ) ) {
 
