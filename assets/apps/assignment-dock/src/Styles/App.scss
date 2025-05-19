@@ -182,6 +182,10 @@ $brand-danger:  #d9534f !default;
         display: block;
         margin: 0;
         padding: 0;
+
+        &[src$=".svg"] {
+          min-width: 70px;
+        }
       }
     }
 

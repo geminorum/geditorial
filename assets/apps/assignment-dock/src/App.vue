@@ -20,7 +20,7 @@
 
             <IconButton :dashicon="(rtl?'controls-forward':'controls-back')" @click="previousPage()" :disabled="searchPage===1" />
             <IconButton :dashicon="(rtl?'controls-back':'controls-forward')" @click="nextPage()" :disabled="!searchPageMore" />
-            <IconButton :dashicon="(newitem?'no':'plus-alt')" @click="showNewItem()" />
+            <IconButton :dashicon="(newitem?'no':'plus-alt')" @click="showNewItem()" :disabled="disableNewItem()" />
 
           </div>
         </div>
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { debounce } from 'lodash-es';
+import { debounce, filter, isEmpty } from 'lodash-es';
 import { omitDeep } from '../../js-utils/object.v1';
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
 import { addQueryArgs } from '@wordpress/url'; // https://github.com/WordPress/gutenberg/tree/trunk/packages/url
@@ -146,6 +146,14 @@ export default {
       this.searchState = this.onLine ? 'initial' : 'wrong';
     },
 
+    // @REF: https://stackoverflow.com/a/54216208
+    checkSelection (e) {
+      const selection = window.getSelection().toString().trim();
+      if(!this.newname&&selection) {
+        this.newname = selection;
+      }
+    },
+
     focusSearch () {
       this.$refs.searchBox.focus();
     },
@@ -166,6 +174,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+
+    disableNewItem () {
+      return isEmpty(this.config.routes);
     },
 
     showNewItem () {
@@ -292,13 +304,18 @@ export default {
           context: 'edit'
         })
         }).then((data) => {
-          // console.log(data);
           this.summarySpinner = false;
           this.summaryState = 'initial';
-          // this.summaryMessage = data[this.config.attribute].rendered;
-          // this.items = data[this.config.attribute].terms;
-          this.summaryMessage = data[this.config.attribute];
-          if (!lite) this.items = data[this.linked.related];
+
+          if (this.config.summary) {
+            this.summaryMessage = data[this.config.summary];
+          }
+
+          if (!lite) {
+            // this.items = data[this.linked.related];
+            this.items = filter(data[this.linked.related],
+              term => this.config.targets.includes(term.taxonomy));
+          }
         }).catch((error) => {
           this.summarySpinner = false;
           this.summaryState = 'wrong';
@@ -337,7 +354,7 @@ export default {
         path: addQueryArgs( this.config.hints + '/tips', {
           id: this.linked.id,
           target: 'post',
-          extend: this.config.attribute,
+          extend: this.config.summary,
           context: 'edit', // this.config.context, // this.plugin.appname,
         } )
       }).then((data) => {
@@ -362,8 +379,8 @@ export default {
             search: this.queried,
             target: 'term',
             // context: ,
-            // context: this.plugin.appname ? this.plugin.appname : 'assignment-dock',
-            context: this.plugin.appname,
+            context: this.plugin.appname ? this.plugin.appname : 'assignment-dock',
+            // context: this.plugin.appname,
             taxonomy: this.config.targets.join(','),
             page: this.searchPage,
             per: this.config.perpage || 5,
@@ -439,6 +456,7 @@ export default {
 
     window.addEventListener('online', this.updateOnlineStatus);
     window.addEventListener('offline', this.updateOnlineStatus);
+    document.addEventListener('mouseup', this.checkSelection);
   },
   unmounted () {
     this.doQuery.cancel();

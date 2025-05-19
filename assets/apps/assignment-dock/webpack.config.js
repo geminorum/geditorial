@@ -2,8 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // https://webpack.js.org/plugins/mini-css-extract-plugin/
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin'); // https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const RtlCssPluginWebpack = require('rtl-css-plugin-webpack');
 
 module.exports = (env, argv) => {
