@@ -1,18 +1,10 @@
+const webpack = require('webpack');
 const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // https://webpack.js.org/plugins/mini-css-extract-plugin/
 const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin'); // https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
-const WebpackRTLPlugin = require('webpack-rtl-plugin');
-
-// Handle imports like `import myModule from 'my-module'`
-// Expect to find `my-module` as myModule in the global scope:
-// @REF: https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
-function requestToExternal (request) {
-  if (request === 'xlsx') {
-    return 'XLSX';
-  }
-}
+const RtlCssPluginWebpack = require('rtl-css-plugin-webpack');
 
 module.exports = (env, argv) => {
   const config = {
@@ -53,7 +45,24 @@ module.exports = (env, argv) => {
                 importLoaders: 1
               }
             },
-            'sass-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: argv.mode === 'development',
+                sassOptions: {
+                  silenceDeprecations: [
+                    'import',
+                    'legacy-js-api'
+                  ],
+                  // includePaths: [
+                  //   './../../gnetwork/assets/sass',
+                  //   './../gnetwork/assets/sass'
+                  // ]
+                  sourceComments: true,
+                  errLogToConsole: true
+                }
+              }
+            },
             {
               loader: 'postcss-loader',
               options: {
@@ -74,14 +83,33 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
-      new DependencyExtractionWebpackPlugin({ requestToExternal }),
-      // new DependencyExtractionWebpackPlugin(),
+      new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: 'true',
+        __VUE_PROD_DEVTOOLS__: argv.mode === 'development' ? 'true' : 'false',
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
+      }),
+
+      new DependencyExtractionWebpackPlugin({
+
+        // Handle imports like `import myModule from 'my-module'`
+        // Expect to find `my-module` as myModule in the global scope:
+        // With modules, use `requestToExternalModule`
+        // @REF: https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
+        // @REF: https://github.com/WordPress/gutenberg/tree/trunk/packages/dependency-extraction-webpack-plugin
+        requestToExternal: function (request) {
+          if (request === 'xlsx') {
+            return 'XLSX';
+          }
+        }
+      }),
+
       new VueLoaderPlugin(),
+
       new MiniCssExtractPlugin({
         filename: '[name].css'
       }),
-      // @REF: https://www.npmjs.com/package/webpack-rtl-plugin
-      new WebpackRTLPlugin({
+
+      new RtlCssPluginWebpack({
         filename: '[name]-rtl.css'
       })
     ],
