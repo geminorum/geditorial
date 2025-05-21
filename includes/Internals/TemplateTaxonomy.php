@@ -32,6 +32,10 @@ trait TemplateTaxonomy
 		if ( ! $wp_query->is_404() && ! $wp_query->is_tax( $taxonomy ) )
 			return $template;
 
+		// avoid on WooCommerce products
+		if ( function_exists( 'is_product_taxonomy' ) && is_product_taxonomy() )
+			return $template;
+
 		if ( $wp_query->is_404() ) {
 
 			// if new term disabled
