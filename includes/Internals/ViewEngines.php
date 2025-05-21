@@ -91,8 +91,11 @@ trait ViewEngines
 		];
 
 		if ( $path ) {
-			$args['loader']          = new \Mustache_Loader_FilesystemLoader( $path );
-			$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'/partials' ); // TODO: check if partials path exists
+
+			$args['loader'] = new \Mustache_Loader_FilesystemLoader( $path );
+
+			if ( is_dir( $path.'partials' ) )
+				$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'partials' );
 		}
 
 		return @new \Mustache_Engine( $args );
