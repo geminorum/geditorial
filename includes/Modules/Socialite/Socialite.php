@@ -450,7 +450,6 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
-	// TODO: migrate to `ViewEngines` templates
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [

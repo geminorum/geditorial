@@ -701,6 +701,10 @@ class Config extends gEditorial\Module
 		if ( $can )
 			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-admin' );
 
+		if ( WordPress\User::isSuperAdmin() ) {
+			$subs['console'] = _x( 'Console', 'Imports Sub', 'geditorial-admin' );
+		}
+
 		Settings::wrapOpen( $sub, 'imports' );
 
 			// Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-admin' ) );

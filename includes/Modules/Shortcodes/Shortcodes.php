@@ -15,11 +15,14 @@ class Shortcodes extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'shortcodes',
-			'title'  => _x( 'Shortcodes', 'Modules: Shortcodes', 'geditorial-admin' ),
-			'desc'   => _x( 'Shortcode Tools', 'Modules: Shortcodes', 'geditorial-admin' ),
-			'icon'   => 'media-code',
-			'access' => 'stable',
+			'name'     => 'shortcodes',
+			'title'    => _x( 'Shortcodes', 'Modules: Shortcodes', 'geditorial-admin' ),
+			'desc'     => _x( 'Shortcode Enhancements', 'Modules: Shortcodes', 'geditorial-admin' ),
+			'icon'     => 'media-code',
+			'access'   => 'stable',
+			'keywords' => [
+				'shortcode',
+			],
 		];
 	}
 

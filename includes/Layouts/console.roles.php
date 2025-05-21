@@ -3,5 +3,3 @@
 use geminorum\gEditorial\WordPress\User;
 
 User::superAdminOnly();
-
-

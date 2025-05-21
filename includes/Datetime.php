@@ -351,8 +351,8 @@ class Datetime extends WordPress\Main
 			return '';
 
 		$template = Core\HTML::rtl()
-			? '(<span class="-birth" title="%4$s">%2$s</span><span class="-sep">%5$s</span><span class="-birth" title="%3$s">%1$s</span>)'
-			: '(<span class="-birth" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-birth" title="%4$s">%2$s</span>)';
+			? '(<span class="-dead" title="%4$s">%2$s</span><span class="-sep">%5$s</span><span class="-born" title="%3$s">%1$s</span>)'
+			: '(<span class="-born" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-dead" title="%4$s">%2$s</span>)';
 
 		return Core\Text::trim( vsprintf( $template, [
 			self::prepForDisplay( $born, self::dateFormats( $context ), $calendar_type, $timezone ),

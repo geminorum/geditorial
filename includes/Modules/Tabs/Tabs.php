@@ -87,10 +87,6 @@ class Tabs extends gEditorial\Module
 		return $strings;
 	}
 
-	// TODO: tab: post content
-	// TODO: tab: post excerpt
-	// TODO: tab: post terms
-	// FIXME: override registered tab titles
 	private function _get_builtins_tabs( $posttype = NULL )
 	{
 		$tabs = [];

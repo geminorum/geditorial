@@ -267,18 +267,19 @@ class Book extends gEditorial\Module
 	{
 		return [
 			'type_taxonomy' => [
-				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ),   // shomiz
-				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ),   // gallingor
+				'paperback' => _x( 'Paperback', 'Publication Type: Default Term', 'geditorial-book' ),         // `shomiz`
+				'hardcover' => _x( 'Hardcover', 'Publication Type: Default Term', 'geditorial-book' ),         // `gallingor`
 				'ebook'     => _x( 'E-Book', 'Publication Type: Default Term', 'geditorial-book' ),
+				'pod'       => _x( 'Print on Demand', 'Publication Type: Default Term', 'geditorial-book' ),
 				'disc'      => _x( 'Disc', 'Publication Type: Default Term', 'geditorial-book' ),
 			],
 			'size_taxonomy' => [
-				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ),          // vaziri
-				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ),           // soltani
-				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ),   // roghee
-				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ),          // rahli
-				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ),       // paltoyee
-				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ),     // jibi
+				'octavo'      => _x( 'Octavo', 'Publication Size: Default Term', 'geditorial-book' ),          // `vaziri`
+				'folio'       => _x( 'Folio', 'Publication Size: Default Term', 'geditorial-book' ),           // `soltani`
+				'medium'      => _x( 'Medium Octavo', 'Publication Size: Default Term', 'geditorial-book' ),   // `roghee`
+				'quatro'      => _x( 'Quatro', 'Publication Size: Default Term', 'geditorial-book' ),          // `rahli`
+				'duodecimo'   => _x( 'Duodecimo', 'Publication Size: Default Term', 'geditorial-book' ),       // `paltoyee`
+				'sextodecimo' => _x( 'Sextodecimo', 'Publication Size: Default Term', 'geditorial-book' ),     // `jibi`
 			],
 			'status_taxonomy' => [
 				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
@@ -286,6 +287,15 @@ class Book extends gEditorial\Module
 				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
 				'repeat-print'           => _x( 'Repeat Print', 'Publication Status: Default Term', 'geditorial-book' ),
 				'first-print'            => _x( 'First Print', 'Publication Status: Default Term', 'geditorial-book' ),
+			],
+			// @source https://www.biblio.com/booksearch
+			// TODO: add the taxonomy
+			'attribute_taxonomy' => [
+				'first-editions'  => _x( 'First Editions', 'Publication Attribute: Default Term', 'geditorial-book' ),
+				'signed-books'    => _x( 'Signed Books', 'Publication Attribute: Default Term', 'geditorial-book' ),
+				'dust-jacket'     => _x( 'Dust Jacket', 'Publication Attribute: Default Term', 'geditorial-book' ),
+				'supplied-photos' => _x( 'with Bookseller-supplied Photos', 'Publication Attribute: Default Term', 'geditorial-book' ),
+				'large-print'     => _x( 'Large Print', 'Publication Attribute: Default Term', 'geditorial-book' ),
 			],
 		];
 	}

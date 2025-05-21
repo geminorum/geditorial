@@ -15,8 +15,6 @@ class WcPurchased extends gEditorial\Module
 {
 	use Internals\AdminPage;
 
-	// TODO: export limit to: time after
-
 	public static function module()
 	{
 		return [

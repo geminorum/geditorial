@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
@@ -22,7 +22,11 @@ class WcImages extends gEditorial\Module
 			'configure' => 'tools',
 			'access'    => 'beta',
 			'frontend'  => FALSE,
-			'disabled'  => Helper::moduleCheckWooCommerce(),
+			'disabled'  => gEditorial\Helper::moduleCheckWooCommerce(),
+			'keywords'  => [
+				'image',
+				'woocommerce',
+			],
 		];
 	}
 
@@ -79,7 +83,7 @@ class WcImages extends gEditorial\Module
 				Core\WordPress::redirectReferer( 'huh' );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
@@ -119,7 +123,7 @@ class WcImages extends gEditorial\Module
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
 					$attachment_id = get_post_meta( $row->ID, $this->constant( 'metakey_thumbnail_id' ), TRUE );
 					$html = WordPress\Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 
@@ -133,7 +137,7 @@ class WcImages extends gEditorial\Module
 						foreach ( explode( ',', $gallery ) as $attachment_id )
 							$html.= WordPress\Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
 
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 		], $posts, [

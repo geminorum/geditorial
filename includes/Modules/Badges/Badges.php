@@ -27,7 +27,7 @@ class Badges extends gEditorial\Module
 			'name'   => 'badges',
 			'title'  => _x( 'Badges', 'Modules: Badges', 'geditorial-admin' ),
 			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial-admin' ),
-			'icon'   => 'superhero',
+			'icon'   => [ 'misc-16', 'patch-question' ],
 			'access' => 'beta',
 			'keywords' => [
 				'taxmodule',

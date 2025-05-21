@@ -42,7 +42,7 @@ trait TemplateTaxonomy
 			if ( FALSE === $empty_callback )
 				return $template;
 
-			// helps with 404 redirections
+			// helps with 404 redirection
 			if ( ! is_user_logged_in() )
 				return $template;
 

@@ -10,9 +10,6 @@ use geminorum\gEditorial\WordPress;
 
 class WcDashboard extends gEditorial\Module
 {
-
-	// TODO: override tab titles: https://woocommerce.com/document/editing-product-data-tabs/
-
 	public static function module()
 	{
 		return [
