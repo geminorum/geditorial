@@ -95,6 +95,16 @@ class Tabs extends gEditorial\Module
 	{
 		$tabs = [];
 
+		if ( $posttype && post_type_supports( $posttype, 'comments' ) )
+			$tabs[] = [
+				'name'        => 'comments',
+				'title'       => _x( 'Comments', 'Tab Title', 'geditorial-tabs' ),
+				'description' => _x( 'Comments of the post.', 'Tab Description', 'geditorial-tabs' ),
+				'callback'    => [ $this, 'callback_post_comments' ],
+				'viewable'    => [ $this, 'viewable_post_comments' ],
+				'priority'    => 8,
+			];
+
 		if ( $posttype && post_type_supports( $posttype, 'meta_fields' ) )
 			$tabs[] = [
 				'name'        => 'meta_summary',
@@ -215,13 +225,29 @@ class Tabs extends gEditorial\Module
 		return Core\Arraay::sortByPriority( $this->filters( 'post_tabs', $tabs, $post ), 'priority' );
 	}
 
-	public function viewable_post_meta_summary( $post = NULL, $item_name = '', $item_args = [] )
+	public function viewable_post_comments( $post = NULL, $item_name = '', $item_args = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		// if ( ! post_type_supports( $post->post_type, 'meta_fields' ) )
-		// 	return FALSE;
+		// Check for open comments only if has no count
+		return get_comments_number( $post )
+			? TRUE
+			: comments_open( $post );
+	}
+
+	public function callback_post_comments( $post = NULL, $item_name = '', $item_args = [] )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		comments_template( '', FALSE );
+	}
+
+	public function viewable_post_meta_summary( $post = NULL, $item_name = '', $item_args = [] )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
 
 		$fields = Services\PostTypeFields::getEnabled( $post->post_type, 'meta' );
 
