@@ -71,7 +71,15 @@ class ModuleTemplate extends gEditorial\Template
 		$html = '<div class="clearfix"></div>'.Core\HTML::tag( 'nav', $html );
 		$html.= '<div class="tab-content">';
 
+		$before_hook = sprintf( '%s_%s_render_content_before', static::BASE, static::MODULE );
+		$after_hook  = sprintf( '%s_%s_render_content_after',  static::BASE, static::MODULE );
+
+		if ( ! has_action( $before_hook ) ) $before_hook = FALSE;
+		if ( ! has_action( $after_hook ) )  $after_hook  = FALSE;
+
 		foreach ( $items as $item_name => $item_args ) {
+
+			$before = $after = '';
 
 			if ( ! empty( $item_args['content'] ) )
 				$content = $item_args['content'];
@@ -82,6 +90,18 @@ class ModuleTemplate extends gEditorial\Template
 
 			else
 				$content = '';
+
+			if ( $before_hook ) {
+				ob_start();
+					do_action( $before_hook, $post, $item_name, $item_args, (array) $callback_args, $content );
+				$before = ob_get_clean();
+			}
+
+			if ( $after_hook ) {
+				ob_start();
+					do_action( $after_hook, $post, $item_name, $item_args, (array) $callback_args, $content );
+				$after = ob_get_clean();
+			}
 
 			$html.= Core\HTML::tag( 'div', [
 				'id'    => $item_name.'-tab-pane',
@@ -94,7 +114,7 @@ class ModuleTemplate extends gEditorial\Template
 				],
 				'tabindex'        => '0',
 				'aria-labelledby' => $item_name,
-			], $content );
+			], $before.$content.$after );
 		}
 
 		$html.= '</div>';
