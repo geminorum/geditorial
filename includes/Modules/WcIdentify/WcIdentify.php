@@ -78,9 +78,34 @@ class WcIdentify extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+		$this->action_self( 'render_product_gtin', 4 );
 
 		if ( $this->get_setting( 'gtin_exemptions' ) )
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
+	}
+
+	public function render_product_gtin( $product, $before = '', $after = '', $template = NULL )
+	{
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return;
+
+		if ( ! $raw = $product->get_global_unique_id() )
+			return;
+
+		$gtin = Core\ISBN::sanitize( $raw );
+
+		$tokens = [
+			'raw'    => $raw,
+			'gtin'   => $gtin,
+			'prep'   => Core\ISBN::prep( $raw, TRUE ),
+			'link'   => Info::lookupISBN( $gtin ),
+			'label'  => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
+			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
+		];
+
+		echo $before.Core\Text::replaceTokens(
+			$template ?? '<span class="gtin_wrapper do-clicktoclip span-copy-link" data-clipboard-text="{{gtin}}" data-value="{{gtin}}" title="{{notice}}">{{label}}&nbsp;<span class="gtin" data-gtin="{{gtin}}">{{{link}}}</span></span>',
+			$tokens ).$after;
 	}
 
 	public function display_product_attributes( $attributes, $product )
