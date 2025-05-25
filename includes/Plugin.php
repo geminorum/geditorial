@@ -534,6 +534,9 @@ class Plugin
 		] ) )
 			Helper::linkStyleSheetAdmin( $screen->base );
 
+		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
+			Helper::linkStyleSheetAdmin( 'woocommerce' );
+
 		else if ( Settings::isReports( $screen ) )
 			Helper::linkStyleSheetAdmin( 'reports' );
 
