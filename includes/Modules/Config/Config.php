@@ -401,6 +401,16 @@ class Config extends gEditorial\Module
 
 					Core\WordPress::redirectReferer( 'updated' );
 
+				} else if ( Tablelist::isAction( 'download_active_options' ) ) {
+
+					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
+						Core\Text::download(
+							wp_json_encode( Core\Arraay::filter( $data, [ 'enabled' => TRUE ] ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
+							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
+						);
+
+					Core\WordPress::redirectReferer( 'wrong' );
+
 				} else if ( Tablelist::isAction( 'download_all_options' ) ) {
 
 					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
@@ -548,6 +558,17 @@ class Config extends gEditorial\Module
 
 				echo '</p>';
 			}
+
+			echo $this->wrap_open_buttons( '-download-active-options' );
+				Settings::submitButton( 'download_active_options',
+					_x( 'Download Active Module Options', 'Button', 'geditorial-admin' ) );
+
+				Core\HTML::desc( sprintf(
+					/*translators: `%s`: file ext-type */
+					_x( 'Exports active editorial module option data as %s file for you to download.', 'Message', 'geditorial-admin' ),
+					Core\HTML::code( 'json' )
+				), FALSE );
+			echo '</p>';
 
 			echo $this->wrap_open_buttons( '-download-all-options' );
 				Settings::submitButton( 'download_all_options',
