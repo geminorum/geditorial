@@ -610,7 +610,7 @@ trait SubContents
 			'status'    => 'any', // $this->subcontent_get_comment_status(),
 			'type'      => $this->subcontent_get_comment_type(),
 			'fields'    => '', // 'ids', // empty for all
-			'number'    => '', // empty for all
+			'number'    => '', // empty for all comments
 			'order'     => 'ASC',
 			'orderby'   => 'comment_karma', // orders stored as karma!
 
@@ -624,6 +624,7 @@ trait SubContents
 		return $map ? $this->subcontent_get_data_mapped( $items, $context, $post ) : $items;
 	}
 
+	// NOTE: wrapper method in case we had to override the count
 	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
 	{
 		return $this->subcontent_query_data_count( $parent, $extra );
@@ -739,6 +740,7 @@ trait SubContents
 		return $this->filters( 'prepped_data', $data, $context, $post, $raw, $types );
 	}
 
+	// NOTE: use on `importer_init()`
 	protected function subcontent__hook_importer_init()
 	{
 		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );

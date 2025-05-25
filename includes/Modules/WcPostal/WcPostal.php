@@ -108,7 +108,7 @@ class WcPostal extends gEditorial\Module
 			'tracking_id' => _x( 'Tracking', 'Export Column', 'geditorial-wc-postal' ),
 		] );
 
-		$this->action( 'order_details_before_order_table', 1, 8, FALSE, 'woocommerce' );
+		$this->action( 'order_details_after_order_table', 1, 20, FALSE, 'woocommerce' );
 
 		$this->filter( 'pwoosms_shortcodes_list' );
 		$this->filter( 'pwoosms_order_sms_body_before_replace', 7, 9 );
@@ -137,7 +137,7 @@ class WcPostal extends gEditorial\Module
 	}
 
 	// TODO: read-only input with copy button of tracking id
-	public function order_details_before_order_table( $order )
+	public function order_details_after_order_table( $order )
 	{
 		$this->email_after_order_table( $order, '', '', '' );
 	}
@@ -150,12 +150,12 @@ class WcPostal extends gEditorial\Module
 		if ( ! $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			return;
 
-		echo '<div style="margin-bottom:40px;"><p>';
+		echo '<div style="margin-bottom:1rem;"><p>';
 
 			echo $this->get_setting_fallback( 'email_before_text',
 				_x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-postal' ) );
 
-			vprintf( ' <a class="button tracking" href="%s">%s (<small>%s</small>)</a>', [
+			vprintf( ' <a class="button alt -tracking" href="%s">%s (<small>%s</small>)</a>', [
 				$this->_service_url( $tracking ),
 				$this->get_setting_fallback( 'email_button_text', _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-postal' ) ),
 				$tracking,
@@ -168,7 +168,7 @@ class WcPostal extends gEditorial\Module
 		$base = get_option( 'woocommerce_email_base_color' );
 		$text = wc_light_or_dark( $base, '#202020', '#ffffff' );
 
-		$styles.= 'a.button.tracking {
+		$styles.= 'a.button.alt.-tracking {
 			background-color: '.esc_attr( $base ).';
 			border: 0;
 			color: '.esc_attr( $text ).';
@@ -214,7 +214,7 @@ class WcPostal extends gEditorial\Module
 			echo Core\HTML::tag( 'a', [
 				'href'   => $this->_service_url( $tracking ),
 				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-postal' ) ),
-				'class'  => [ 'button', $this->classs( 'tracking' ) ],
+				'class'  => [ 'button', 'alt', $this->classs( 'tracking' ) ],
 				'target' => '_blank',
 			], Core\HTML::img( $this->_service_icon() ) );
 	}

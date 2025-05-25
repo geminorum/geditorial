@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 class Actions extends gEditorial\Module
 {
 
-	// TODO: Migrate into Services since it has no settings
+	// TODO: Migrate into Services\PublicInterface since it has no settings
 
 	public static function module()
 	{
@@ -125,6 +125,7 @@ class Actions extends gEditorial\Module
 		echo '</div>';
 	}
 
+	// TODO: move to `Services\PublicInterface`
 	public function the_content( $content )
 	{
 		if ( defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )

@@ -339,4 +339,28 @@ class Parser extends WordPress\Main
 
 		return $writer->writeToString();
 	}
+
+	/**
+	 * Check if a CSV file is valid.
+	 * @source `wc_is_file_valid_csv()`
+	 *
+	 * @param string $file
+	 * @param bool $check_path
+	 * @return bool
+	 */
+	public static function fileIsValid_CSV( $file, $check_path = TRUE )
+	{
+		if ( $check_path && ! Core\Text::has( $file, '://' ) )
+			return FALSE;
+
+		$mimetypes = apply_filters( sprintf( '%s_%s_csv_valid_filetypes', static::BASE, 'parser' ), [
+			'csv' => 'text/csv',
+			'txt' => 'text/plain',
+		] );
+
+		$filetype = wp_check_filetype( $file, $mimetypes );
+
+		return in_array( $filetype['type'], $mimetypes, TRUE );
+	}
+
 }

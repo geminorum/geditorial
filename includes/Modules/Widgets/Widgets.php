@@ -13,12 +13,15 @@ class Widgets extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'widgets',
-			'title'  => _x( 'Widgets', 'Modules: Widgets', 'geditorial-admin' ),
-			'desc'   => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial-admin' ),
-			'icon'   => 'welcome-widgets-menus',
-			'i18n'   => 'adminonly',
-			'access' => 'stable',
+			'name'     => 'widgets',
+			'title'    => _x( 'Widgets', 'Modules: Widgets', 'geditorial-admin' ),
+			'desc'     => _x( 'Carefully Customized Widgets', 'Modules: Widgets', 'geditorial-admin' ),
+			'icon'     => 'welcome-widgets-menus',
+			'i18n'     => 'adminonly',
+			'access'   => 'stable',
+			'keywords' => [
+				'widget',
+			],
 		];
 	}
 
@@ -168,8 +171,11 @@ class Widgets extends gEditorial\Module
 
 			register_sidebar( array_merge( Core\Arraay::stripByKeys( $area, [ 'action', 'priority', 'name' ] ), [
 				'id'   => $id,
-				/* translators: `%s`: widget area name */
-				'name' => sprintf( _x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ), $name ),
+				'name' => sprintf(
+					/* translators: `%s`: widget area name */
+					_x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ),
+					$name
+				),
 			] ) );
 		}
 	}

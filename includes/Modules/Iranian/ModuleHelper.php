@@ -239,14 +239,14 @@ class ModuleHelper extends gEditorial\Helper
 	}
 
 	/**
-	 * Tries to extract information based on given bank card number.
+	 * Tries to extract information based on given bank-card number.
 	 * @source https://github.com/BaseMax/DetectIranianBankJS
 	 * @source https://github.com/AmirhBeigi/persian-data
 	 *
-	 * @param  string $card
-	 * @param  array  $fallback
-	 * @param  bool   $check
-	 * @return array  $info
+	 * @param string $card
+	 * @param array $fallback
+	 * @param bool $check
+	 * @return array $info
 	 */
 	public static function infoFromCardNumber( $card, $fallback = [], $check = FALSE, $context = NULL, $path = NULL )
 	{

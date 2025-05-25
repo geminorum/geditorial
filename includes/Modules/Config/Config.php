@@ -554,7 +554,7 @@ class Config extends gEditorial\Module
 					_x( 'Download All Options', 'Button', 'geditorial-admin' ) );
 
 				Core\HTML::desc( sprintf(
-					/*translators: %s: file ext-type */
+					/*translators: `%s`: file ext-type */
 					_x( 'Exports all editorial option data as %s file for you to download.', 'Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );

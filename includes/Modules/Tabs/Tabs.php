@@ -101,6 +101,7 @@ class Tabs extends gEditorial\Module
 				'priority'    => 8,
 			];
 
+		// TODO: move to `Meta` Module
 		if ( $posttype && post_type_supports( $posttype, 'meta_fields' ) )
 			$tabs[] = [
 				'name'        => 'meta_summary',

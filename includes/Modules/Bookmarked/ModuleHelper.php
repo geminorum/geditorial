@@ -238,7 +238,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-32', 'tmdb' ],
 				'logo'     => self::getLinkLogo( 'tmdb', NULL, $context, $path ),
 				'desc'     => _x( 'More about this film on The Movie Database.', 'Type Description', 'geditorial-bookmarked' ),
-				'color'    => '#01B4E4',
+				'color'    => '#01b4e4',
 			],
 			[
 				'name'     => 'tmdb_person',
@@ -248,7 +248,7 @@ class ModuleHelper extends gEditorial\Helper
 				'icon'     => [ 'misc-32', 'tmdb' ],
 				'logo'     => self::getLinkLogo( 'tmdb', NULL, $context, $path ),
 				'desc'     => _x( 'More about this person on The Movie Database.', 'Type Description', 'geditorial-bookmarked' ),
-				'color'    => '#01B4E4',
+				'color'    => '#01b4e4',
 			],
 			[
 				'name'     => 'navaar',

@@ -395,7 +395,7 @@ class Info extends WordPress\Main
 	{
 		echo $before.sprintf(
 			/* translators: `%s`: date-time string */
-			_x( 'Registered on %s', 'Info: Message', 'geditorial-admin' ),
+			_x( 'Registered on %s', 'Info: Message', 'geditorial' ),
 			Helper::getDateEditRow( $datetime_string, '-registered' )
 		).$after;
 	}

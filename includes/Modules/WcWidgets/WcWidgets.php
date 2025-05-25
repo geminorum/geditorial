@@ -21,6 +21,10 @@ class WcWidgets extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
+			'keywords' => [
+				'widget',
+				'woocommerce',
+			],
 		];
 	}
 

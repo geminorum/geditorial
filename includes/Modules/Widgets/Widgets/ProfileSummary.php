@@ -38,6 +38,7 @@ class ProfileSummary extends gEditorial\Widget
 			if ( $user->first_name || $user->last_name ) {
 				echo '<li class="-row -name list-group-item">';
 					Info::renderIcon( 'fullname' );
+					echo ' ';
 					echo "$user->first_name $user->last_name";
 				echo '</li>';
 			}
@@ -45,6 +46,7 @@ class ProfileSummary extends gEditorial\Widget
 			if ( $user->user_email ) {
 				echo '<li class="-row -email list-group-item">';
 					Info::renderIcon( 'email' );
+					echo ' ';
 					echo Core\HTML::mailto( $user->user_email );
 				echo '</li>';
 			}
@@ -52,6 +54,7 @@ class ProfileSummary extends gEditorial\Widget
 			if ( $user->user_url ) {
 				echo '<li class="-row -url list-group-item">';
 					Info::renderIcon( 'url' );
+					echo ' ';
 					echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
 				echo '</li>';
 			}
@@ -64,6 +67,7 @@ class ProfileSummary extends gEditorial\Widget
 
 				echo '<li class="-row -contact -contact-'.$method.' list-group-item">';
 					Info::renderIcon( $method, $title );
+					echo ' ';
 					echo Services\PostTypeFields::prepFieldRow( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 				echo '</li>';
 			}
@@ -71,6 +75,7 @@ class ProfileSummary extends gEditorial\Widget
 			if ( $user->user_registered ) {
 				echo '<li class="-row -registered list-group-item">';
 					Info::renderIcon( 'registered' );
+					echo ' ';
 					Info::renderRegistered( $user->user_registered );
 				echo '</li>';
 			}

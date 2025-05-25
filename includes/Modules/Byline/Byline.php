@@ -153,6 +153,7 @@ class Byline extends gEditorial\Module
 				'co_author'    => _x( 'Co-Author', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'editor'       => _x( 'Editor', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'prefacer'     => _x( 'Prefacer', 'Main Taxonomy: Default Term', 'geditorial-byline' ),       // @REF: https://abadis.ir/entofa/prefacer/
+				'subject'      => _x( 'Subject', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'photographer' => _x( 'Photographer', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'translator'   => _x( 'Translator', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'reporter'     => _x( 'Reporter', 'Main Taxonomy: Default Term', 'geditorial-byline' ),

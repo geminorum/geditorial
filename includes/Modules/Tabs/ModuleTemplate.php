@@ -14,11 +14,12 @@ class ModuleTemplate extends gEditorial\Template
 	/**
 	 * Renders a Bootstrap 5 tabbed interface.
 	 *
-	 * TODO: version for wp-admin
+	 * TODO: alt version for WordPress admin
+	 * TODO: move-up to `Template`
 	 *
-	 * @param  array $items
-	 * @param  bool   $verbose
-	 * @return string|true $html
+	 * @param array $items
+	 * @param bool $verbose
+	 * @return string|true
 	 */
 	public static function bootstrap5Tabs( $items, $post = NULL, $callback_args = [], $verbose = TRUE )
 	{
@@ -68,7 +69,7 @@ class ModuleTemplate extends gEditorial\Template
 			'role'  => 'tablist',
 		], $html );
 
-		$html = '<div class="clearfix"></div>'.Core\HTML::tag( 'nav', $html );
+		$html = Core\HTML::tag( 'nav', $html );
 		$html.= '<div class="tab-content">';
 
 		$before_hook = sprintf( '%s_%s_render_content_before', static::BASE, static::MODULE );
