@@ -396,7 +396,13 @@ class Config extends gEditorial\Module
 					if ( ! $data = Parser::fromJSON_Legacy( Core\File::normalize( $file['file'] ) ) )
 						Core\WordPress::redirectReferer( 'wrong' );
 
-					if ( ! update_option( 'geditorial_options', $data, TRUE ) )
+					$options = get_option( 'geditorial_options' );
+
+					// NOTE: Only overrides the options of imported modules
+					foreach ( $data as $module => $new_options )
+						$options[$module] = (object) $new_options;
+
+					if ( ! update_option( 'geditorial_options', $options, TRUE ) )
 						Core\WordPress::redirectReferer( 'wrong' );
 
 					Core\WordPress::redirectReferer( 'updated' );
