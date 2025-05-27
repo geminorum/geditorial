@@ -220,9 +220,9 @@ class Alphabet extends gEditorial\Module
 					$html.= '<span class="-dummy"></span></'.$mode['term'].'>';
 
 					if ( $args['excerpt'] && $post->post_excerpt )
-						$html.= '<'.$mode['desc'].' class="-excerpt">'
+						$html.= '<'.$mode['desc'].' class="-excerpt"><div class="-wrap">'
 							.wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE )
-							.'</'.$mode['desc'].'>';
+							.'</div></'.$mode['desc'].'>';
 
 					else if ( 'dd' === $mode['desc'] && $args['excerpt'] )
 						$html.= '<'.$mode['desc'].' class="-empty"></'.$mode['desc'].'>';
@@ -371,9 +371,9 @@ class Alphabet extends gEditorial\Module
 					$html.= '<span class="-dummy"></span></'.$mode['term'].'>';
 
 					if ( $args['description'] && $term->description )
-						$html.= '<'.$mode['desc'].' class="-description">'
+						$html.= '<'.$mode['desc'].' class="-description"><div class="-wrap">'
 							.wpautop( WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ), FALSE )
-							.'</'.$mode['desc'].'>';
+							.'</div></'.$mode['desc'].'>';
 
 					else if ( 'dd' === $mode['desc'] && $args['description'] )
 						$html.= '<'.$mode['desc'].' class="-empty"></'.$mode['desc'].'>';
