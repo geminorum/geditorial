@@ -145,7 +145,15 @@ class WcWidgets extends gEditorial\Module
 			if ( in_array( $key, $widgets, TRUE ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 
-		$areas = Core\Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
+		$areas  = Core\Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
+		$extras = [
+			'before_widget',
+			'after_widget',
+			'before_title',
+			'after_title',
+			'before_sidebar',
+			'after_sidebar',
+		];
 
 		foreach ( $this->get_setting( 'custom_areas', [] ) as $index => $hook ) {
 
@@ -157,17 +165,27 @@ class WcWidgets extends gEditorial\Module
 				dynamic_sidebar( $sidebar );
 			}, $priority, 0 );
 
-			register_sidebar( [
-				'id'            => $sidebar,
-				/* translators: `%s`: widget area name */
-				'name'          => sprintf( _x( 'WooCommerce: %s', 'Widget Area Prefix', 'geditorial-wc-widgets' ), $name ),
-				/* translators: `%s`: widget action hook */
-				'description'   => sprintf( _x( 'Widgets in this area will appear on %s action hook.', 'Widget Area Description', 'geditorial-wc-widgets' ), Core\HTML::code( $hook ) ),
-				'before_widget' => array_key_exists( 'before_widget', $areas[$hook] ) ? $areas[$hook]['before_widget'] : '', // empty to overrride defaults
-				'after_widget'  => array_key_exists( 'after_widget', $areas[$hook] )  ? $areas[$hook]['after_widget']  : '', // empty to overrride defaults
-				'before_title'  => array_key_exists( 'before_title', $areas[$hook] )  ? $areas[$hook]['before_title']  : '<h2 class="widgettitle">',
-				'after_title'   => array_key_exists( 'after_title', $areas[$hook] )   ? $areas[$hook]['after_title']   : '</h2>',
-			] );
+			$args = [
+				'id'   => $sidebar,
+				'name' => sprintf(
+					/* translators: `%s`: widget area name */
+					_x( 'WooCommerce: %s', 'Widget Area Prefix', 'geditorial-wc-widgets' ),
+					$name
+				),
+				'description' => sprintf(
+					/* translators: `%s`: widget action hook */
+					_x( 'Widgets in this area will appear on %s action hook.', 'Widget Area Description', 'geditorial-wc-widgets' ),
+					Core\HTML::code( $hook )
+				),
+				'before_sidebar' => '<div id="%1$s" class="-wrap '.$this->classs( 'sidebar' ).' -hook-'.$hook.' %2$s">',
+				'after_sidebar'  => '</div>',
+			];
+
+			foreach ( $extras as $extra )
+				if ( array_key_exists( $extra, $areas[$hook] ) )
+					$args[$extra] = $areas[$hook][$extra];
+
+			register_sidebar( $args );
 		}
 	}
 }
