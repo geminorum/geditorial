@@ -248,7 +248,11 @@ class Byline extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( 'users' == $screen->base ) {
+
+			$this->filter( 'pre_count_many_users_posts', 2 );
+
+		} else if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'users.php' );
 			$this->modulelinks__register_headerbuttons();
@@ -420,6 +424,21 @@ class Byline extends gEditorial\Module
 	public function admin_print_styles_summaryreport()
 	{
 		Scripts::linkBootstrap5();
+	}
+
+	/**
+	 * Return empty counts for `count_users_many_posts()`, to bypass the heavy
+	 * and unused query results.
+	 * @source https://github.com/Automattic/Co-Authors-Plus/pull/1098/files
+	 * @ticket https://core.trac.wordpress.org/ticket/63004
+	 *
+	 * @param array $counts
+	 * @param array $user_ids
+	 * @return array
+	 */
+	public function pre_count_many_users_posts( $counts, $user_ids )
+	{
+		return array_fill_keys( array_map( 'absint', $user_ids ), 0 );
 	}
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
