@@ -174,7 +174,7 @@ class WcIdentify extends gEditorial\Module
 		$this->raise_resources();
 
 		return ModuleSettings::handleTool_migrate_gtin(
-			WordPress\WooCommerce::getProductPosttype(),
+			WordPress\WooCommerce::PRODUCT_POSTTYPE,
 			$this->get_sub_limit_option( $sub )
 		);
 	}

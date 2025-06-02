@@ -833,8 +833,8 @@ class PostType extends Core\Base
 		else if ( 'page' === $posttype )
 			$taxonomy = $fallback;
 
-		else if ( $posttype == WooCommerce::getProductPosttype() && WooCommerce::isActive() )
-			$taxonomy = WooCommerce::getProductCategoryTaxonomy();
+		else if ( $posttype === WooCommerce::PRODUCT_POSTTYPE && WooCommerce::isActive() )
+			$taxonomy = WooCommerce::PROCUCT_CATEGORY;
 
 		if ( ! $taxonomy && ( $object = self::object( $posttype ) ) ) {
 

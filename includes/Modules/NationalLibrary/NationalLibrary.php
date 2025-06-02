@@ -507,12 +507,10 @@ class NationalLibrary extends gEditorial\Module
 
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
 
-			$type = WordPress\WooCommerce::getProductPosttype();
-
-			if ( $bib = $this->get_product_bib( $product, $type ) )
+			if ( $bib = $this->get_product_bib( $product ) )
 				$data = ModuleHelper::getFibaByBib( $bib );
 
-			else if ( $isbn = $this->get_product_isbn( $product, $type ) )
+			else if ( $isbn = $this->get_product_isbn( $product ) )
 				$data = ModuleHelper::getFibaByISBN( $isbn );
 
 			else
@@ -535,7 +533,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $product = wc_get_product( $product ) )
 			return FALSE;
 
-		if ( ! $metakey = $this->_get_posttype_bib_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() ) )
+		if ( ! $metakey = $this->_get_posttype_bib_metakey( $type ?? WordPress\WooCommerce::PRODUCT_POSTTYPE ) )
 			return FALSE;
 
 		if ( ! $bib = $product->get_meta( $metakey, TRUE, 'edit' ) )
@@ -550,10 +548,10 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $product = wc_get_product( $product ) )
 			return FALSE;
 
-		$metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::getProductPosttype() );
+		$metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::PRODUCT_POSTTYPE );
 
 		// Woo-Commerce nags about direct use of it's internal meta-keys
-		if ( $metakey && $metakey === WordPress\WooCommerce::getGTINMetakey() )
+		if ( $metakey && $metakey === WordPress\WooCommerce::GTIN_METAKEY )
 			return $product->get_global_unique_id( 'edit' ) ?: FALSE;
 
 		if ( $metakey && ( $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) ) )

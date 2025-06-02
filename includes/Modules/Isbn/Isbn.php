@@ -139,7 +139,7 @@ class Isbn extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded',
-			Settings::posttypesExcluded( $extra + (array) WordPress\WooCommerce::getProductPosttype() ) );
+			Settings::posttypesExcluded( $extra + [ WordPress\WooCommerce::PRODUCT_POSTTYPE ] ) );
 	}
 
 	public function meta_init()
@@ -182,8 +182,7 @@ class Isbn extends gEditorial\Module
 		$fields = $this->fields['meta']['_supported'];
 		unset( $fields['isbn'] ); // default on wc is `_global_unique_id`
 
-		foreach ( (array) WordPress\WooCommerce::getProductPosttype() as $posttype )
-			$this->add_posttype_fields( $posttype, $fields );
+		$this->add_posttype_fields( WordPress\WooCommerce::PRODUCT_POSTTYPE, $fields );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -221,7 +220,7 @@ class Isbn extends gEditorial\Module
 	private function _get_main_isbn_metakey( $posttype, $fallback = FALSE )
 	{
 		if ( $this->posttype_woocommerce( $posttype ) )
-			return WordPress\WooCommerce::getGTINMetakey();
+			return WordPress\WooCommerce::GTIN_METAKEY;
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fallback;

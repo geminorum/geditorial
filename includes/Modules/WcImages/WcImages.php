@@ -104,7 +104,7 @@ class WcImages extends gEditorial\Module
 
 		$extra = [];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::getProductPosttype(), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::PRODUCT_POSTTYPE, $this->get_sub_limit_option( $sub ) );
 
 		$pagination['actions'] = [
 			'shift_thumb_from_gallery' => _x( 'Shift Thumbnail from Gallery', 'Table Action', 'geditorial-wc-images' ),

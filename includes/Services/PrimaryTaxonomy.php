@@ -29,8 +29,8 @@ class PrimaryTaxonomy extends gEditorial\Service
 		else if ( 'page' === $posttype )
 			$taxonomy = $fallback;
 
-		else if ( $posttype == WordPress\WooCommerce::getProductPosttype() && WordPress\WooCommerce::isActive() )
-			$taxonomy = WordPress\WooCommerce::getProductCategoryTaxonomy();
+		else if ( $posttype === WordPress\WooCommerce::PRODUCT_POSTTYPE && WordPress\WooCommerce::isActive() )
+			$taxonomy = WordPress\WooCommerce::PROCUCT_CATEGORY;
 
 		if ( ! $taxonomy && ( $object = WordPress\PostType::object( $posttype ) ) ) {
 
