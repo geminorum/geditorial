@@ -3,12 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\WordPress\Theme;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class WPRestPosts extends gEditorial\Widget
 {
@@ -38,7 +34,7 @@ class WPRestPosts extends gEditorial\Widget
 		$empty      = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
 
 		// @REF: https://developer.wordpress.org/rest-api/reference/posts/
-		$resource = URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/'.$endpoint.'/?per_page='.$number;
+		$resource = Core\URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/'.$endpoint.'/?per_page='.$number;
 
 		if ( $tags )
 			$resource.= '&tags='.$tags;
@@ -49,7 +45,7 @@ class WPRestPosts extends gEditorial\Widget
 		if ( $extra )
 			$resource.= '&'.$extra;
 
-		$data = HTTP::getJSON( $resource, [], FALSE );
+		$data = Core\HTTP::getJSON( $resource, [], FALSE );
 
 		if ( empty( $data ) && ! $empty )
 			return TRUE;
@@ -59,19 +55,19 @@ class WPRestPosts extends gEditorial\Widget
 
 		if ( empty( $data ) ) {
 
-			HTML::desc( $empty, TRUE, '-empty' );
+			Core\HTML::desc( $empty, TRUE, '-empty' );
 
 		} else {
 
-			$template = locate_template( Theme::getPart( 'row', $context, FALSE ) );
+			$template = locate_template( WordPress\Theme::getPart( 'row', $context, FALSE ) );
 
 			echo '<div class="-list-wrap wprest-posts"><ul class="-items">';
 
-			Theme::restLoopBefore();
+			WordPress\Theme::restLoopBefore();
 
 			foreach ( $data as $item ) {
 
-				$post = Theme::restPost( $item, TRUE );
+				$post = WordPress\Theme::restPost( $item, TRUE );
 
 				if ( $template ) {
 
@@ -81,14 +77,14 @@ class WPRestPosts extends gEditorial\Widget
 
 				} else {
 
-					echo ShortCode::postItem( $post, [
+					echo gEditorial\ShortCode::postItem( $post, [
 						'item_anchor' => '',
 						'trim_chars'  => empty( $instance['trim_chars'] ) ? FALSE : $instance['trim_chars'],
 					] );
 				}
 			}
 
-			Theme::restLoopAfter();
+			WordPress\Theme::restLoopAfter();
 
 			wp_reset_postdata();
 

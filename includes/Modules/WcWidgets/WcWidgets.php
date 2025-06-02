@@ -86,7 +86,7 @@ class WcWidgets extends gEditorial\Module
 			[
 				'action'   => 'woocommerce_before_checkout_form',
 				'title'    => _x( 'Before Checkout Form', 'Action Hook', 'geditorial-wc-widgets' ),
-				'priority' => 8,
+				'priority' => 120,
 			],
 			[
 				'action'   => 'woocommerce_after_checkout_form',

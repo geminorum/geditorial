@@ -77,6 +77,7 @@ class Info extends WordPress\Main
 	// https://fa.wikipedia.org/wiki/%D9%88%DB%8C%DA%98%D9%87:%D9%85%D9%86%D8%A7%D8%A8%D8%B9_%DA%A9%D8%AA%D8%A7%D8%A8?isbn=0-13-981176-1
 	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=9786227260267
 	// https://en.wikipedia.org/wiki/Special:BookSources/978-0-618-05676-7
+	// https://en.wikipedia.org/wiki/Special:BookSources/978-1-55783-528-4
 	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=122334
 	// https://www.goodreads.com/search?q=MAGICNUMBER
 	// https://www.goodreads.com/search?utf8=%E2%9C%93&q=0-13-981176-1&search_type=books

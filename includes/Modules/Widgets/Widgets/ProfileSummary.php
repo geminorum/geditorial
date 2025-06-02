@@ -31,9 +31,9 @@ class ProfileSummary extends gEditorial\Widget
 		$this->widget_title( $args, $instance );
 
 			// TODO: add option for display/size
-			echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar float-end' );
+			echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar float-start me-3 mt-2' );
 
-			echo '<ul class="-rows w-100 list-group list-group-flush">';
+			echo '<ul class="-rows w-auto list-group list-group-flush">';
 
 			if ( $user->first_name || $user->last_name ) {
 				echo '<li class="-row -name list-group-item">';

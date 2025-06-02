@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
+use geminorum\gEditorial\WordPress;
 
 class GCalEvents extends gEditorial\Widget
 {
@@ -39,7 +39,7 @@ class GCalEvents extends gEditorial\Widget
 
 		} else {
 
-			$formats = Datetime::dateFormats( FALSE );
+			$formats = gEditorial\Datetime::dateFormats( FALSE );
 
 			echo '<div class="-list-wrap gcal-events"><ul class="-items">';
 

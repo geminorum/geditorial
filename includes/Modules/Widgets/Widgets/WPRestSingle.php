@@ -3,12 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\Core\HTTP;
-use geminorum\gEditorial\Core\URL;
-use geminorum\gEditorial\WordPress\Theme;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class WPRestSingle extends gEditorial\Widget
 {
@@ -35,12 +31,12 @@ class WPRestSingle extends gEditorial\Widget
 		$empty    = empty( $instance['empty'] ) ? FALSE : $instance['empty'];
 
 		// @REF: https://developer.wordpress.org/rest-api/reference/posts/
-		$resource = URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/'.$endpoint.'/'.$instance['post_id'];
+		$resource = Core\URL::untrail( $instance['resource'] ).'/wp-json/wp/v2/'.$endpoint.'/'.$instance['post_id'];
 
 		if ( $extra )
 			$resource.= '?'.$extra;
 
-		$data = HTTP::getJSON( $resource, [], FALSE );
+		$data = Core\HTTP::getJSON( $resource, [], FALSE );
 
 		if ( empty( $data ) && ! $empty )
 			return TRUE;
@@ -50,26 +46,26 @@ class WPRestSingle extends gEditorial\Widget
 
 		if ( empty( $data ) ) {
 
-			HTML::desc( $empty, TRUE, '-empty' );
+			Core\HTML::desc( $empty, TRUE, '-empty' );
 
 		} else {
 
 			echo '<div class="-post-wrap wprest-single">';
-			Theme::restLoopBefore();
+			WordPress\Theme::restLoopBefore();
 
-			$template = locate_template( Theme::getPart( 'row', $context, FALSE ), FALSE );
-			$post     = Theme::restPost( $data, TRUE );
+			$template = locate_template( WordPress\Theme::getPart( 'row', $context, FALSE ), FALSE );
+			$post     = WordPress\Theme::restPost( $data, TRUE );
 
 			if ( $template )
 				load_template( $template, FALSE, [ 'widget_instance' => $instance ] );
 
 			else
-				echo ShortCode::postItem( $post, [
+				echo gEditorial\ShortCode::postItem( $post, [
 					'item_tag'    => '',
 					'item_anchor' => '',
 				] );
 
-			Theme::restLoopAfter();
+			WordPress\Theme::restLoopAfter();
 			wp_reset_postdata();
 			echo '</div>';
 		}
