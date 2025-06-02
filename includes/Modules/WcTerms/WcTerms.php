@@ -109,6 +109,11 @@ class WcTerms extends gEditorial\Module
 					'title'       => _x( 'Archive Descriptions', 'Setting Title', 'geditorial-wc-terms' ),
 					'description' => _x( 'Enhance the term archive descriptions with assigned image.', 'Setting Description', 'geditorial-wc-terms' ),
 				],
+				[
+					'field'       => 'term_archive_subterms',
+					'title'       => _x( 'Archive Sub-terms', 'Setting Title', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the term archive with list of sub-terms.', 'Setting Description', 'geditorial-wc-terms' ),
+				],
 			],
 		];
 	}
@@ -127,6 +132,9 @@ class WcTerms extends gEditorial\Module
 			remove_action( 'woocommerce_archive_description', 'storefront_woocommerce_brands_archive', 5 );
 			$this->action( 'archive_description', 10, 0, FALSE, 'woocommerce' );
 		}
+
+		if ( $this->get_setting( 'term_archive_subterms' ) )
+			$this->action( 'archive_description', 12, 0, 'subterms', 'woocommerce' );
 
 		$this->_init_tab_from_taxonomy();
 	}
@@ -160,6 +168,18 @@ class WcTerms extends gEditorial\Module
 				'heading'     => $this->get_setting( 'term_archive_title' ),
 				'image_field' => $this->_get_term_image_field( $term ),
 			], $this->module->name );
+	}
+
+	public function archive_description_subterms()
+	{
+		if ( ! is_product_taxonomy() )
+			return;
+
+		if ( absint( get_query_var( 'paged' ) ) )
+			return;
+
+		if ( $term = get_queried_object() )
+			gEditorial\Template::renderTermSubTerms( $term, [], $this->module->name );
 	}
 
 	private function _init_tab_from_taxonomy()

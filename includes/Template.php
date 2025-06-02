@@ -1161,4 +1161,40 @@ class Template extends WordPress\Main
 		echo '</div>'; // `.row`
 		echo $args['after'];
 	}
+
+	public static function renderTermSubTerms( $term, $atts = [], $module = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return;
+
+		if ( ! WordPress\Taxonomy::hierarchical( $term->taxonomy ) )
+			return;
+
+		if ( is_null( $module ) && static::MODULE )
+			$module = static::MODULE;
+
+		$args = self::atts( [
+			'hide_empty' => TRUE,
+			'before'     => '',
+			'after'      => '',
+		], $atts );
+
+		$extra   = [
+			'parent'     => $term->term_id,
+			'hide_empty' => $args['hide_empty'],
+		];
+
+		$terms = WordPress\Taxonomy::getTerms( $term->taxonomy, FALSE, TRUE, 'term_id', $extra );
+
+		if ( empty( $terms ) )
+			return;
+
+		$wrap = '<div class="-wrap '.static::BASE.'-wrap -term-listsubterms">';
+		$list = [];
+
+		foreach ( $terms as $term )
+			$list[] = WordPress\Term::htmlLink( $term );
+
+		echo $args['before'].$wrap.Core\HTML::rows( $list ).'</div>'.$args['after'];
+	}
 }
