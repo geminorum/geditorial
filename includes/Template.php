@@ -580,11 +580,80 @@ class Template extends WordPress\Main
 
 			case 'text':
 
-				$html = Core\HTML::tag( 'a', [
-					'href'   => $meta,
-					'class'  => '-media-text-link',
-					'target' => '_blank',
-				], _x( 'Text', 'Template: Text file label', 'geditorial' ) );
+				$file = Core\File::type( $html );
+
+				if ( 'text/plain' === $file['type'] )
+					$html = WordPress\ShortCode::tag( 'raw', [
+						'context' => $context,
+						'url'     => $meta,
+					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+
+				else if ( 'text/csv' === $file['type'] )
+					$html = WordPress\ShortCode::tag( 'csv', [
+						'context' => $context,
+						'url'     => $meta,
+					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+
+				else if ( 'application/pdf' === $file['type'] )
+					$html = WordPress\ShortCode::tag( 'pdf', [
+						'context' => $context,
+						'url'     => $meta,
+					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+
+				else if ( 'text/markdown' === $file['type'] )
+					$html = WordPress\ShortCode::tag( 'markdown', [
+						'context' => $context,
+						'url'     => $meta,
+					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+
+				else
+					$html = Core\HTML::tag( 'a', [
+						'href'   => $meta,
+						'class'  => '-media-text-link',
+						'target' => '_blank',
+					], _x( 'Text', 'Template: File Label', 'geditorial' ) );
+
+				break;
+
+			case 'text/plain':
+			case 'txt':
+			case 'raw':
+
+				$html = WordPress\ShortCode::tag( 'raw', [
+					'context' => $context,
+					'url'     => $meta,
+				], Core\HTML::link( _x( 'Plain Text', 'Template: File Label', 'geditorial' ), $meta ) );
+
+				break;
+
+			case 'text/csv':
+			case 'csv':
+
+				$html = WordPress\ShortCode::tag( 'csv', [
+					'context' => $context,
+					'url'     => $meta,
+				], Core\HTML::link( _x( 'CSV Data', 'Template: File Label', 'geditorial' ), $meta ) );
+
+				break;
+
+			case 'application/pdf':
+			case 'pdf':
+
+				$html = WordPress\ShortCode::tag( 'pdf', [
+					'context' => $context,
+					'url'     => $meta,
+				], Core\HTML::link( _x( 'PDF Document', 'Template: File Label', 'geditorial' ), $meta ) );
+
+				break;
+
+			case 'text/markdown':
+			case 'markdown':
+
+				$html = WordPress\ShortCode::tag( 'markdown', [
+					'context' => $context,
+					'url'     => $meta,
+				], Core\HTML::link( _x( 'Markdown Text', 'Template: File Label', 'geditorial' ), $meta ) );
+
 				break;
 
 			case 'audio':
