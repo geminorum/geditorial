@@ -244,8 +244,6 @@ class Byline extends gEditorial\Module
 		$priority = $this->get_setting( 'tab_priority', 12 );
 
 		$this->filter( 'product_tabs', 1, $priority, FALSE, 'woocommerce' );
-		$this->filter( 'shortcode_products_query', 3, 12, FALSE, 'woocommerce' );
-		$this->filter( 'shortcode_atts_products', 4, 12, 'woocommerce' );
 	}
 
 	public function current_screen( $screen )
@@ -703,45 +701,6 @@ class Byline extends gEditorial\Module
 				},
 			],
 		] );
-	}
-
-	public function shortcode_products_query( $query_args, $shortcode_atts, $shortcode_type )
-	{
-		foreach ( $this->taxonomies() as $supported ) {
-
-			if ( ! $query = WordPress\Taxonomy::queryVar( $supported ) )
-				continue;
-
-			if ( empty( $shortcode_atts[$query] ) )
-				continue;
-
-			$query_args['tax_query'][] = [
-				'taxonomy' => $supported,
-				'terms'    => Core\Arraay::prepNumeral( $shortcode_atts[$query] ),
-			];
-		}
-
-		return $query_args;
-	}
-
-	public function shortcode_atts_products_woocommerce( $out, $pairs, $atts, $shortcode )
-	{
-		foreach ( $this->taxonomies() as $supported ) {
-
-			if ( ! $taxonomy = WordPress\Taxonomy::object( $supported ) )
-				continue;
-
-			if ( ! $query = WordPress\Taxonomy::queryVar( $taxonomy ) )
-				continue;
-
-			if ( ! in_array( WordPress\WooCommerce::PRODUCT_POSTTYPE, WordPress\Taxonomy::types( $taxonomy ), TRUE ) )
-				continue;
-
-			if ( ! empty( $atts[$query] ) )
-				$out[$supported] = $atts[$query];
-		}
-
-		return $out;
 	}
 
 	// NOTE: check for access before

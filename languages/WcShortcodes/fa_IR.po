@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcShortcodes\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2025-06-02 12:14+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcShortcodes\n"
+"X-Domain: geditorial-wc-shortcodes\n"
+
+#: WcShortcodes.php:36
+msgctxt "Setting Title"
+msgid "Shortcodes"
+msgstr "شورت‌کد‌ها"
+
+#: WcShortcodes.php:37
+msgctxt "Setting Description"
+msgid "Enables the use of the selected short-codes."
+msgstr "امکان استفاده از شورت‌کدهای انتخاب‌شده را فعال می‌کند."
+
+#: WcShortcodes.php:49
+msgctxt "Shortcode Name"
+msgid "Stock Status"
+msgstr "وضعیت موجودی"
