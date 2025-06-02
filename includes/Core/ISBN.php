@@ -21,9 +21,11 @@ class ISBN extends Base
 				? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-not-valid' ] ], HTML::wrapLTR( $input ) )
 				: $input;
 
+		$string = Text::dashify( self::sanitize( $input ), 3, '&ndash;' );
+
 		return $wrap
-			? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-valid' ] ], HTML::wrapLTR( self::sanitize( $input ) ) )
-			: self::sanitize( $input );
+			? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-valid' ] ], HTML::wrapLTR( $string ) )
+			: $string;
 	}
 
 	// NOTE: avoids validation to support fake isbn numbers
@@ -45,7 +47,7 @@ class ISBN extends Base
 
 	public static function sanitize( $input )
 	{
-		$sanitized = Number::translate( Text::stripAllSpaces( $input ) );
+		$sanitized = Number::translate( Text::stripAllSpaces( Text::trim( $input ) ) );
 
 		return Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $sanitized ) );
 	}
@@ -65,7 +67,7 @@ class ISBN extends Base
 	*/
 	public static function validate( $input )
 	{
-		$data    = Number::translate( $input );
+		$data    = Text::trim( Number::translate( $input ) );
 		$pattern = '/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i';
 
 		if ( preg_match( $pattern, str_replace( '-', '', $data ), $matches ) )

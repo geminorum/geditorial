@@ -112,14 +112,13 @@ class Term extends Core\Base
 	}
 
 	/**
-	 * Retrieves term title given a post ID or post object.
-	 *
+	 * Retrieves term title given a term ID or term object.
 	 * @old `Taxonomy::getTermTitle()`
 	 *
-	 * @param  null|int|object $term
-	 * @param  null|string $fallback
-	 * @param  bool   $filter
-	 * @return string $title
+	 * @param null|int|object $term
+	 * @param null|string $fallback
+	 * @param bool $filter
+	 * @return string
 	 */
 	public static function title( $term, $fallback = NULL, $filter = TRUE )
 	{
@@ -144,13 +143,13 @@ class Term extends Core\Base
 
 	/**
 	 * Retrieves term parent titles given a term ID or term object.
-	 * NOTE: parent post type can be diffrenet
+	 * NOTE: parent post type can be different
 	 *
-	 * @param  null|int|object $term
-	 * @param  string          $suffix
-	 * @param  string|bool     $linked
-	 * @param  null|string     $separator
-	 * @return string          $titles
+	 * @param null|int|object $term
+	 * @param string $suffix
+	 * @param string|bool $linked
+	 * @param null|string $separator
+	 * @return string
 	 */
 	public static function getParentTitles( $term, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
@@ -208,9 +207,9 @@ class Term extends Core\Base
 	/**
 	 * Retrieves term link given a term ID or term object.
 	 *
-	 * @param  null|int|string|object $term
-	 * @param  null|string $fallback
-	 * @return string $link
+	 * @param null|int|string|object $term
+	 * @param null|string $fallback
+	 * @return string
 	 */
 	public static function link( $term, $fallback = NULL )
 	{
@@ -477,7 +476,7 @@ class Term extends Core\Base
 	/**
 	 * Retrieves a term object default properties.
 	 *
-	 * @return array $props
+	 * @return array
 	 */
 	public static function props()
 	{
@@ -498,9 +497,9 @@ class Term extends Core\Base
 	/**
 	 * Retrieves term rest route given a term ID or term object.
 	 *
-	 * @param  int|object   $term_or_id
-	 * @param  string       $taxonomy
-	 * @return false|string $route
+	 * @param int|object $term_or_id
+	 * @param string $taxonomy
+	 * @return false|string
 	 */
 	public static function getRestRoute( $term_or_id, $taxonomy = '' )
 	{
@@ -551,9 +550,9 @@ class Term extends Core\Base
 	/**
 	 * Performs term count update immediately.
 	 *
-	 * @param  int|string $term_or_id
-	 * @param  string     $taxonomy
-	 * @return bool       $updated
+	 * @param int|string $term_or_id
+	 * @param string $taxonomy
+	 * @return bool
 	 */
 	public static function updateCount( $term_or_id, $taxonomy )
 	{

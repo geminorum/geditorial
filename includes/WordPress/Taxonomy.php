@@ -149,32 +149,32 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves the list of taxonomies.
 	 *
-	 * Parameter $args is an array of key -> value arguments to match against
+	 * Parameter `$args` is an array of key -> value arguments to match against
 	 * the taxonomies. Only taxonomies having attributes that match all
 	 * arguments are returned:
-	 * name
-	 * object_type (array)
-	 * label
-	 * singular_label
-	 * show_ui
-	 * show_tagcloud
-	 * show_in_rest
-	 * public
-	 * update_count_callback
-	 * rewrite
-	 * query_var
-	 * manage_cap
-	 * edit_cap
-	 * delete_cap
-	 * assign_cap
-	 * _builtin
+	 * `name`
+	 * `object_type` (array)
+	 * `label`
+	 * `singular_label`
+	 * `show_ui`
+	 * `show_tagcloud`
+	 * `show_in_rest`
+	 * `public`
+	 * `update_count_callback`
+	 * `rewrite`
+	 * `query_var`
+	 * `manage_cap`
+	 * `edit_cap`
+	 * `delete_cap`
+	 * `assign_cap`
+	 * `_builtin`
 	 *
-	 * @param  int    $mod
-	 * @param  array  $args
-	 * @param  bool   $object
-	 * @param  null|string $capability
-	 * @param  null|int $user_id
-	 * @return array $list
+	 * @param int $mod
+	 * @param array $args
+	 * @param bool $object
+	 * @param null|string $capability
+	 * @param null|int $user_id
+	 * @return array
 	 */
 	public static function get( $mod = 0, $args = [], $object = FALSE, $capability = NULL, $user_id = NULL )
 	{
@@ -284,23 +284,23 @@ class Taxonomy extends Core\Base
 		if ( 'category' == $taxonomy )
 			return 'default_category'; // WordPress
 
-		if ( $taxonomy == WooCommerce::getProductCategoryTaxonomy() && WooCommerce::isActive() )
+		if ( $taxonomy == WooCommerce::PROCUCT_CATEGORY && WooCommerce::isActive() )
 			return 'default_product_cat'; // WooCommerce
 
 		return 'default_term_'.$taxonomy;
 	}
 
 	/**
-	 * Counts posts with no terms assigned given taxonomy and posttypes.
+	 * Counts posts with no terms assigned given taxonomy and post-types.
 	 *
 	 * @also: `Database::countPostsByNotTaxonomy()`
 	 * @ref: `https://core.trac.wordpress.org/ticket/29181`
 	 *
-	 * @param  string           $taxonomy
-	 * @param  string|array     $posttypes
-	 * @param  string|object    $extra_term
-	 * @param  null|false|array $exclude_statuses
-	 * @return int              $count
+	 * @param string $taxonomy
+	 * @param string|array $posttypes
+	 * @param string|object $extra_term
+	 * @param null|false|array $exclude_statuses
+	 * @return int
 	 */
 	public static function countPostsWithoutTerms( $taxonomy, $posttypes, $extra_term = FALSE, $exclude_statuses = FALSE )
 	{
@@ -471,12 +471,12 @@ class Taxonomy extends Core\Base
 	 * Retrieves the terms of the taxonomy that are attached to the post.
 	 * NOTE: hits cached terms for the post
 	 *
-	 * @param  string $taxonomy
-	 * @param  object $post
-	 * @param  bool   $object
-	 * @param  bool   $key
-	 * @param  string $index_key
-	 * @return array  $terms
+	 * @param string $taxonomy
+	 * @param object $post
+	 * @param bool $object
+	 * @param bool $key
+	 * @param string $index_key
+	 * @return array
 	 */
 	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE, $index_key = NULL )
 	{
@@ -494,7 +494,7 @@ class Taxonomy extends Core\Base
 		return $terms;
 	}
 
-	// DEPRECATED: use `Term::getMeta()`
+	// NOTE: DEPRECATED: use `Term::getMeta()`
 	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
 	{
 		return Term::getMeta( $term, $keys, $single );
@@ -1170,13 +1170,13 @@ class Taxonomy extends Core\Base
 	}
 
 	/**
-	 * Retrieves children of taxonomy as term IDs.
+	 * Retrieves children of taxonomy as term IDs,
 	 * without option save and accepts taxonomy object.
 	 *
 	 * @source `_get_term_hierarchy()`
 	 *
-	 * @param  string|object $taxonomy
-	 * @return array $children
+	 * @param string|object $taxonomy
+	 * @return array
 	 */
 	public static function getHierarchy( $taxonomy )
 	{

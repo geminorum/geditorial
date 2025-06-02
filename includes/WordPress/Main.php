@@ -57,6 +57,15 @@ class Main extends Core\Base
 		return static::factory()->constant( $module, $key, $default );
 	}
 
+	protected static function actions( $hook, ...$args )
+	{
+		return do_action( sprintf( '%s_%s_%s',
+			static::BASE,
+			static::MODULE,
+			$hook
+		), ...$args );
+	}
+
 	protected static function filters( $hook, ...$args )
 	{
 		return apply_filters( sprintf( '%s_%s_%s',

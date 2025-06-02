@@ -8,6 +8,7 @@ class Text extends Base
 	/**
 	 * Advanced version of `trim()`.
 	 *
+	 * - `\u0001`: `Start Of Heading` (U+0001)
 	 * - `\u200a`: `HAIR SPACE` (U+200A)
 	 * - `\u200b`: `ZERO WIDTH SPACE` (U+200B)
 	 * - `\u200c`: `ZERO WIDTH NON-JOINER` (U+200C)
@@ -26,8 +27,8 @@ class Text extends Base
 	{
 		$text = (string) $text;
 		// $text = trim( $text, " \n\t\r\0\x0B," );
-		$text = preg_replace( '/^[\s\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+/u', '', $text );
-		$text = preg_replace( '/[\s\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+$/u', '', $text );
+		$text = preg_replace( '/^[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+/u', '', $text );
+		$text = preg_replace( '/[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}]+$/u', '', $text );
 		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
@@ -1066,7 +1067,7 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
-	// USAGE: echo Text::replaceWords( $words, $text, static function ( $matched ) { return "<strong>{$matched}</strong>"; } );
+	// USAGE: `Text::replaceWords( $words, $text, static function ( $matched ) { return "<strong>{$matched}</strong>"; } );`
 	// FIXME: maybe space before/after the words
 	public static function replaceWords( $words, $text, $callback, $skip_links = TRUE )
 	{
@@ -1080,7 +1081,7 @@ class Text extends Base
 		}, $text );
 	}
 
-	// USAGE: echo Text::replaceSymbols( [ '#', '$' ], $text, static function ( $matched, $text ) { return "<strong>{$matched}</strong>"; });
+	// USAGE: `Text::replaceSymbols( [ '#', '$' ], $text, static function ( $matched, $text ) { return "<strong>{$matched}</strong>"; });`
 	public static function replaceSymbols( $symbols, $text, $callback, $skip_links = TRUE )
 	{
 		return preg_replace_callback( self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ),
@@ -1091,12 +1092,18 @@ class Text extends Base
 
 	// @REF: https://stackoverflow.com/a/381001/
 	// @REF: https://stackoverflow.com/a/311904/
+	// @REF: not in html tag: https://stackoverflow.com/a/16679278/
 	public static function replaceSymbolsPattern( $symbols, $skip_links = TRUE )
 	{
 		return $skip_links
 			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
-			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}{$symbols}]+)\b/u"
-			: "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";
+			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}{$symbols}]+)\b/u"
+			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
+			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|<svg[^>]*>.*?<\/svg\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
+			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|<svg[^>]*>.*?<\/svg\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|(?![^<]*>)[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
+			// : "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";
+			// : "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u";
+			: "/(?![^<]*>)[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u";
 	}
 
 	// @REF: https://regex101.com/r/5K24IU/1
@@ -1382,6 +1389,11 @@ class Text extends Base
 	{
 		// return preg_replace( '/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $text );
 		return preg_replace( '/<a.*?>(.*?)</a>/i', '\1', $text );
+	}
+
+	public static function dashify( $string, $chunk, $separator = NULL )
+	{
+		return implode( $separator ?? '-', str_split( $string, $chunk ) );
 	}
 
 	// case insensitive version of strtr

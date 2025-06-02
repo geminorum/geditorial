@@ -29,8 +29,8 @@ class PostType extends Core\Base
 	 * Determines whether a post-type is registered.
 	 * @source `post_type_exists()`
 	 *
-	 * @param  string|object $posttype_or_post
-	 * @return bool          $exists
+	 * @param string|object $posttype_or_post
+	 * @return bool
 	 */
 	public static function exists( $posttype_or_post )
 	{
@@ -46,10 +46,26 @@ class PostType extends Core\Base
 	}
 
 	/**
-	 * Checks for posttype capability.
+	 * Returns the names or objects of the taxonomies which are
+	 * registered for the requested object or object type.
+	 *
+	 * @param string|object $posttype_or_post
+	 * @param string $output
+	 * @return array
+	 */
+	public static function taxonomies( $posttype_or_post, $output = 'names' )
+	{
+		if ( ! $posttype_or_post )
+			return [];
+
+		return get_object_taxonomies( $posttype_or_post, $output );
+	}
+
+	/**
+	 * Checks for post-type capability.
 	 * NOTE: caches the result
 	 *
-	 * If assigned posttype `capability_type` arg:
+	 * If assigned post-type `capability_type` arg:
 	 *
 	 * /// Meta capabilities
 	 * 	[edit_post]   => "edit_{$capability_type}"
@@ -120,12 +136,12 @@ class PostType extends Core\Base
 	}
 
 	/**
-	 * Retrieves the capability assigned to the posttype.
+	 * Retrieves the capability assigned to the post-type.
 	 *
-	 * @param  string|object $posttype
-	 * @param  string        $capability
-	 * @param  string        $fallback
-	 * @return string        $cap
+	 * @param string|object $posttype
+	 * @param string $capability
+	 * @param string $fallback
+	 * @return string
 	 */
 	public static function cap( $posttype, $capability = 'edit_posts', $fallback = NULL )
 	{
@@ -149,7 +165,7 @@ class PostType extends Core\Base
 	}
 
 	/**
-	 * Retrieves the list of posttypes.
+	 * Retrieves the list of post-types.
 	 *
 	 * Argument values for `$args` include:
 	 * 	`public` Boolean: If true, only public post types will be returned.

@@ -189,8 +189,8 @@ class User extends Core\Base
 	 * Retrieves roles for given user.
 	 * FIXME: move to `WordPress\Role`
 	 *
-	 * @param  null|int $user_id
-	 * @return array    $roles
+	 * @param null|int $user_id
+	 * @return array
 	 */
 	public static function getRoles( $user_id = NULL )
 	{
@@ -202,9 +202,9 @@ class User extends Core\Base
 	 * Checks if the user has given role.
 	 * FIXME: move to `WordPress\Role`
 	 *
-	 * @param  string|array $role
-	 * @param  null|int     $user_id
-	 * @return bool         $has
+	 * @param string|array $role
+	 * @param null|int $user_id
+	 * @return bool
 	 */
 	public static function hasRole( $role, $user_id = NULL )
 	{

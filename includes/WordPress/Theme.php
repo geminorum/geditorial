@@ -12,11 +12,11 @@ class Theme extends Core\Base
 	 * Core's duplicate with extra action hooks.
 	 * @source `get_template_part()`
 	 *
-	 * @param  string      $slug
-	 * @param  string|null $name
-	 * @param  bool        $locate
-	 * @param  array       $args
-	 * @return void|array  $templates
+	 * @param string $slug
+	 * @param string|null $name
+	 * @param bool $locate
+	 * @param array $args
+	 * @return void|array
 	 */
 	public static function getPart( $slug, $name = NULL, $locate = TRUE, $args = [] )
 	{
@@ -40,7 +40,7 @@ class Theme extends Core\Base
 	}
 
 	// @REF: `get_page_template()`
-	// TODO: must given type and posttype/taxonomy
+	// TODO: must given type and post-type/taxonomy
 	public static function getTemplate( $custom = NULL, $hierarchy = 'page' )
 	{
 		$templates = [];
@@ -194,7 +194,7 @@ class Theme extends Core\Base
 	{
 		global $wp_query, $post;
 
-		// switch defaults if post is set.
+		// Switch defaults if post is set.
 		if ( isset( $wp_query->post ) ) {
 
 			$dummy = self::atts( [
@@ -279,17 +279,17 @@ class Theme extends Core\Base
 			], $args );
 		}
 
-		// set the $post global.
+		// Set the `$post` global.
 		$post = new \WP_Post( (object) $dummy );
 
-		// copy the new post global into the main `$wp_query`.
+		// Copy the new post global into the main `$wp_query`.
 		$wp_query->post  = $post;
 		$wp_query->posts = [ $post ];
 
 		$wp_query->queried_object    = $post;
 		$wp_query->queried_object_id = $post->ID;
 
-		// prevent comments form from appearing.
+		// Prevent comments form from appearing.
 		$wp_query->post_count    = 1;
 		$wp_query->is_404        = $dummy['is_404'];
 		$wp_query->is_page       = $dummy['is_page'];
@@ -301,21 +301,22 @@ class Theme extends Core\Base
 
 		unset( $dummy );
 
-		// force the header back to 200 status if not a deliberate 404.
+		// Force the header back to 200 status if not a deliberate 404.
 		// @REF: https://bbpress.trac.wordpress.org/ticket/1973
 		if ( ! $wp_query->is_404() )
 			status_header( 200 );
 
-		// if we are resetting a post, we are in theme compat.
+		// If we are resetting a post, we are in theme compat.
 		self::compatActive( TRUE );
 
 		if ( $content_callback && is_callable( $content_callback ) )
 			add_filter( 'the_content', $content_callback );
 
-		// if we are in theme-compat, we don't need the 'Edit' post link.
-		add_filter( 'get_edit_post_link', static function ( $edit_link = '', $post_id = 0 ) {
-			return 0 === $post_id ? FALSE : $edit_link;
-		}, 10, 2 );
+		// If we are in theme-compat, we don't need the `Edit` post link.
+		add_filter( 'get_edit_post_link',
+			static function ( $edit_link = '', $post_id = 0 ) {
+				return 0 === $post_id ? FALSE : $edit_link;
+			}, 10, 2 );
 	}
 
 	public static function set404()
@@ -339,6 +340,6 @@ class Theme extends Core\Base
 
 		load_template( $template, FALSE, $args );
 
-		wp_reset_postdata(); // since callback used setup post data
+		wp_reset_postdata(); // Since call-back used setup post data
 	}
 }
