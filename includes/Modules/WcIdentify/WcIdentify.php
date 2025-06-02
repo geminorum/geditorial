@@ -78,6 +78,7 @@ class WcIdentify extends gEditorial\Module
 		parent::init();
 
 		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+		$this->filter( 'search_results_products_ids', 3, 12, FALSE, 'aws' );
 		$this->action_self( 'render_product_gtin', 4 );
 
 		if ( $this->get_setting( 'gtin_exemptions' ) )
@@ -122,6 +123,23 @@ class WcIdentify extends gEditorial\Module
 		}
 
 		return $before + $attributes + $after;
+	}
+
+	// @FILTER: `aws_search_results_products_ids`
+	public function search_results_products_ids( $posts_ids, $s, $data )
+	{
+		global $wpdb;
+
+		if ( ! $discovery = Core\ISBN::discovery( $s ) )
+			return $posts_ids; // criteria is not GTIN
+
+		$posts = $wpdb->get_col( $wpdb->prepare(
+			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '%s' AND meta_value = '%s'",
+			WordPress\WooCommerce::GTIN_METAKEY,
+			$discovery
+		) );
+
+		return Core\Arraay::prepNumeral( $posts_ids, $posts );
 	}
 
 	// @REF: https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/
