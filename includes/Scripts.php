@@ -705,7 +705,7 @@ JS;
 			: self::registerPackage( 'select2', 'select2/select2', [ 'jquery' ], $ver );
 	}
 
-	public static function linkBootstrap5( $ver = '5.3.5', $screen = 'all' )
+	public static function linkBootstrap5( $ver = '5.3.6', $screen = 'all' )
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 		$dir = Core\HTML::rtl() ? '.rtl' : '';
