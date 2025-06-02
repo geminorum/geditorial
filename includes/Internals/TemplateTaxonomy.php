@@ -10,6 +10,40 @@ use geminorum\gEditorial\WordPress;
 trait TemplateTaxonomy
 {
 
+	/**
+	 * Hooks override mechanism for custom *main* archives page of
+	 * given taxonomy.
+	 *
+	 * @param string $constant
+	 * @param string $option
+	 * @return false|string
+	 */
+	protected function templatetaxonomy__hook_custom_archives( $constant, $option = 'custom_archives' )
+	{
+		if ( ! $custom = $this->get_setting( $option ) )
+			return FALSE;
+
+		if ( ! $taxonomy = $this->constant( $constant ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'taxonomy_archive_link' ),
+			function ( $false, $tax ) use ( $taxonomy, $custom ) {
+				return $tax === $taxonomy ? $custom : $false;
+			}, 10, 2 );
+
+		add_filter( 'gnetwork_taxonomy_archive_link',
+			function ( $false, $tax ) use ( $taxonomy, $custom ) {
+				return $tax === $taxonomy ? $custom : $false;
+			}, 10, 2 );
+
+		add_filter( 'gtheme_navigation_taxonomy_archive_link',
+			function ( $false, $tax ) use ( $taxonomy, $custom ) {
+				return $tax === $taxonomy ? $custom : $false;
+			}, 9, 2 );
+
+		return $custom;
+	}
+
 	protected function templatetaxonomy__include( $template, $taxonomies, $empty_callback = NULL, $archive_callback = NULL )
 	{
 		global $wp_query;

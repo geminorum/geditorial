@@ -41,9 +41,12 @@ class People extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
 			'_general'         => [
-				'contents_viewable',
 				'metabox_advanced', // NOTE: by default no meta-box for this taxonomy
 				'selectmultiple_term' => [ _x( 'Whether to assign multiple affiliations in edit panel.', 'Setting Description', 'geditorial-people' ), TRUE ],
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'custom_archives',
 			],
 			'_content' => [
 				'archive_override',
@@ -146,6 +149,7 @@ class People extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'type_taxonomy' );
 

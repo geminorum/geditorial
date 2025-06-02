@@ -1225,6 +1225,18 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_custom_archives( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'custom_archives',
+			'type'        => 'text',
+			'title'       => _x( 'Custom Archives', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the main archives page for the content.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'field_class' => [ 'regular-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
 	public static function getSetting_empty_content( $description = NULL )
 	{
 		return [

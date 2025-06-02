@@ -69,6 +69,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'contents_viewable',
 				'show_in_navmenus',
 				'archive_override',
+				'custom_archives',
 			],
 			'_supports' => [
 				'shortcode_support',
@@ -142,6 +143,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
