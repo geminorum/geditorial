@@ -99,29 +99,7 @@ class Plugin
 		$this->load_modules();
 		$this->load_options();
 		$this->init_modules();
-
-		Services\AdminScreen::setup();
-		Services\AdvancedQueries::setup();
-		Services\Barcodes::setup();
-		// Services\Calendars::setup();
-		Services\CustomPostType::setup();
-		Services\CustomTaxonomy::setup();
-		Services\HeaderButtons::setup();
-		Services\Individuals::setup();
-		Services\LateChores::setup();
-		Services\LineDiscovery::setup();
-		Services\Locations::setup();
-		Services\ObjectHints::setup();
-		Services\ObjectToObject::setup();
-		Services\Paired::setup();
-		Services\PostTypeFields::setup();
-		Services\PrimaryTaxonomy::setup();
-		Services\RestAPI::setup();
-		Services\SearchSelect::setup();
-		Services\Sitemaps::setup();
-		Services\TaxonomyTaxonomy::setup();
-		Services\TermHierarchy::setup();
-		Services\TermRelations::setup();
+		$this->setup_services();
 
 		// \TenUp\ContentConnect\Plugin::instance();
 	}
@@ -244,6 +222,41 @@ class Plugin
 
 		if ( ! is_admin() )
 			$this->_modules = FALSE;
+	}
+
+	private function setup_services()
+	{
+		$available = [
+			'AdminScreen',
+			'AdvancedQueries',
+			'Barcodes',
+			// 'BinaryPond',
+			// 'Calendars',
+			'CustomPostType',
+			'CustomTaxonomy',
+			'HeaderButtons',
+			'Individuals',
+			'LateChores',
+			'LineDiscovery',
+			'Locations',
+			'ObjectHints',
+			'ObjectToObject',
+			'Paired',
+			'PostTypeFields',
+			'PrimaryTaxonomy',
+			// 'PublicInterface',
+			'RestAPI',
+			'SearchSelect',
+			// 'ShortMessages',
+			'Sitemaps',
+			'TaxonomyTaxonomy',
+			'TermHierarchy',
+			'TermRelations',
+		];
+
+		foreach ( $available as $service )
+			if ( is_callable( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] ) )
+				call_user_func( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] );
 	}
 
 	public function init_late()
