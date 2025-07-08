@@ -12,8 +12,10 @@ class Validation extends Base
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			return '[0-9۰-۹]{10}';
+			// return '^([0-9۰-۹]{10})$';
 
 		return '[0-9]{10}';
+		// return '^([0-9]{10})$';
 	}
 
 	// TODO: must rename to `NIN`: National identification number

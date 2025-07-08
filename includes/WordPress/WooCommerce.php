@@ -13,6 +13,7 @@ class WooCommerce extends Core\Base
 	const PRODUCT_POSTTYPE   = 'product';
 	const PROCUCT_CATEGORY   = 'product_cat';
 	const PRODUCT_TAXONOMIES = [
+		'product_type',
 		'product_cat',
 		'product_tag',
 		'product_brand',
