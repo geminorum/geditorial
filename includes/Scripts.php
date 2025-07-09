@@ -401,41 +401,42 @@ JS;
 	}
 
 	/**
-	 * Registers or Enqueues the JsBarcode package.
-	 * @ref https://github.com/lindell/JsBarcode
+	 * Registers or Enqueues the `JsBarcode` package.
+	 * @package https://github.com/lindell/JsBarcode
+	 * TODO: move to `Services\Barcodes`
 	 *
-	 * @param  bool   $enqueue
-	 * @param  string $barcode
-	 * @param  string $ver
-	 * @return string $key
+	 * @param bool $enqueue
+	 * @param string $barcode
+	 * @param string $version
+	 * @return string
 	 */
-	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $ver = '3.11.6' )
+	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $version = '3.12.1' )
 	{
 		switch ( strtolower( $barcode ) ) {
 			case    'all':        $filepath = 'all';        break;  // All the barcodes!
-			case    'code128':    $filepath = 'code128';    break;  // CODE128 (auto and force mode)
-			case    'code39' :    $filepath = 'code39';     break;  // CODE39
-			case    'ean/upc':    $filepath = 'ean-upc';    break;  // EAN-13, EAN-8, EAN-5, EAN-2, UPC (A)
-			case    'itf':        $filepath = 'itf';        break;  // ITF, ITF-14
-			case    'msi':        $filepath = 'msi';        break;  // MSI, MSI10, MSI11, MSI1010, MSI1110
-			case    'pharmacode': $filepath = 'pharmacode'; break;  // Pharmacode
-			case    'codabar':    $filepath = 'codabar';    break;  // Codabar
+			case    'code128':    $filepath = 'code128';    break;  // `CODE128` (auto and force mode)
+			case    'code39' :    $filepath = 'code39';     break;  // `CODE39`
+			case    'ean/upc':    $filepath = 'ean-upc';    break;  // `EAN-13`, `EAN-8`, `EAN-5`, `EAN-2`, `UPC (A)`
+			case    'itf':        $filepath = 'itf';        break;  // `ITF`, `ITF-14`
+			case    'msi':        $filepath = 'msi';        break;  // `MSI`, `MSI10`, `MSI11`, `MSI1010`, `MSI1110`
+			case    'pharmacode': $filepath = 'pharmacode'; break;  // `Pharmacode`
+			case    'codabar':    $filepath = 'codabar';    break;  // `Codabar`
 			default:              $filepath = 'code128';    break;  // DEFAULT is `CODE128`
 		}
 
 		return $enqueue
-			? self::enqueuePackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver )
-			: self::registerPackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $ver );
+			? self::enqueuePackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $version )
+			: self::registerPackage( 'jsbarcode', 'jsbarcode/JsBarcode.'.$filepath, [], $version );
 	}
 
 	/**
-	 * Generates markup to use with QRcodeSVG script.
-	 * @source https://github.com/papnkukn/qrcode-svg
+	 * Generates mark-up to use with `QRcodeSVG` script.
+	 * @package https://github.com/papnkukn/qrcode-svg
 	 * TODO: move to `Services\Barcodes`
 	 *
-	 * @param  string $data
-	 * @param  array  $atts
-	 * @return string $markup
+	 * @param string $data
+	 * @param array $atts
+	 * @return string
 	 */
 	public static function markupQRCodeSVG( $data, $atts = [] )
 	{
@@ -492,18 +493,18 @@ JS;
 	}
 
 	/**
-	 * Registers or Enqueues the QRCodeSVG package.
+	 * Registers or Enqueues the `QRCodeSVG` package.
 	 * @ref https://github.com/papnkukn/qrcode-svg
 	 *
-	 * @param  bool   $enqueue
-	 * @param  string $ver
-	 * @return string $key
+	 * @param bool $enqueue
+	 * @param string $version
+	 * @return string
 	 */
-	public static function pkgQRCodeSVG( $enqueue = FALSE, $ver = '1.1.0' )
+	public static function pkgQRCodeSVG( $enqueue = FALSE, $version = '1.1.0' )
 	{
 		return $enqueue
-			? self::enqueuePackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $ver )
-			: self::registerPackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $ver );
+			? self::enqueuePackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $version )
+			: self::registerPackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $version );
 	}
 
 	public static function pkgPrintThis( $enqueue = FALSE, $ver = '2.0.0' )
@@ -539,27 +540,27 @@ JS;
 	 * Provides `Dropzone` package for register or enqueue.
 	 *
 	 * @homepage https://www.dropzone.dev/
-	 * @github   https://github.com/dropzone/dropzone
+	 * @github https://github.com/dropzone/dropzone
 	 *
-	 * @param  bool   $enqueue
-	 * @param  string $ver
-	 * @return string $handle
+	 * @param bool $enqueue
+	 * @param string $version
+	 * @return string
 	 */
-	public static function pkgDropzone( $enqueue = FALSE, $ver = '6.0.0-beta.2' )
+	public static function pkgDropzone( $enqueue = FALSE, $version = '6.0.0-beta.2' )
 	{
 		$handle = 'dropzone';
 
 		if ( $enqueue ) {
 
-			// wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $ver, 'screen' );
-			wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $ver, 'screen' );
-			wp_enqueue_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $ver, TRUE );
+			// wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );
+			wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $version, 'screen' );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $version, TRUE );
 
 		} else {
 
-			// wp_register_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $ver, 'screen' );
-			wp_register_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $ver, 'screen' );
-			wp_register_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $ver, TRUE );
+			// wp_register_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );
+			wp_register_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $version, 'screen' );
+			wp_register_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $version, TRUE );
 		}
 
 		// wp_script_add_data( $handle, 'strategy', 'defer' );
@@ -612,7 +613,7 @@ JS;
 
 	// @REF: https://github.com/chartjs/Chart.js
 	// @REF: https://www.chartjs.org/
-	public static function pkgChartJS( $enqueue = FALSE, $ver = '4.4.9' )
+	public static function pkgChartJS( $enqueue = FALSE, $ver = '4.5.0' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'chartjs', 'chart.js/chart.umd', [], $ver )
@@ -705,7 +706,7 @@ JS;
 			: self::registerPackage( 'select2', 'select2/select2', [ 'jquery' ], $ver );
 	}
 
-	public static function linkBootstrap5( $ver = '5.3.6', $screen = 'all' )
+	public static function linkBootstrap5( $ver = '5.3.7', $screen = 'all' )
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 		$dir = Core\HTML::rtl() ? '.rtl' : '';

@@ -15,7 +15,7 @@ trait TemplatePostType
 	{
 		global $wp_query;
 
-		if ( ! isset( $wp_query ) )
+		if ( empty( $wp_query ) )
 			return $template;
 
 		if ( ! $this->get_setting( 'archive_override', TRUE ) )

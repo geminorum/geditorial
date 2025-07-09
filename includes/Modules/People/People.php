@@ -66,6 +66,7 @@ class People extends gEditorial\Module
 	{
 		return [
 			'main_taxonomy'         => 'people',
+			'main_taxonomy_slug'    => 'person', // NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
 			'main_taxonomy_archive' => 'people',
 			'category_taxonomy'     => 'people_affiliation',
 			'type_taxonomy'         => 'people_honorific',

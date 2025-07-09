@@ -21,7 +21,7 @@ trait PostTypeFields
 	 *
 	 * @param string $field_key
 	 * @param string $posttype
-	 * @return array $field
+	 * @return array
 	 */
 	public function get_posttype_field_args( $field_key, $posttype )
 	{
@@ -39,8 +39,8 @@ trait PostTypeFields
 	/**
 	 * Retrieves the export title for given field key.
 	 *
-	 * @param  string $field_key
-	 * @return string $export_title
+	 * @param string $field_key
+	 * @return string
 	 */
 	public function get_posttype_field_export_title( $field_key, $posttype )
 	{
@@ -71,8 +71,8 @@ trait PostTypeFields
 	/**
 	 * Retrieves the supported post-types for given field key.
 	 *
-	 * @param  string $field_key
-	 * @return array  $supported
+	 * @param string $field_key
+	 * @return array
 	 */
 	public function get_posttype_field_supported( $field_key )
 	{
@@ -91,10 +91,10 @@ trait PostTypeFields
 	/**
 	 * Retrieves the registered fields for a post-type.
 	 *
-	 * @param  string $posttype
-	 * @param  array  $filter
-	 * @param  string $operator
-	 * @return array  $fields
+	 * @param string $posttype
+	 * @param array $filter
+	 * @param string $operator
+	 * @return array
 	 */
 	public function get_posttype_fields( $posttype, $filter = [], $operator = 'AND' )
 	{
@@ -123,10 +123,10 @@ trait PostTypeFields
 	 * NOTE: static contexts: `nobox`, `lonebox`, `mainbox`
 	 * NOTE: dynamic contexts: `listbox_{$posttype}`, `pairedbox_{$posttype}`, `pairedbox_{$module}`
 	 *
-	 * @param  string $posttype
-	 * @param  array  $all
-	 * @param  array  $enabled
-	 * @return array  $fields
+	 * @param string $posttype
+	 * @param array $all
+	 * @param array $enabled
+	 * @return array
 	 */
 	public function posttypefields_init_for_posttype( $posttype, $all, $enabled )
 	{
@@ -227,8 +227,8 @@ trait PostTypeFields
 				'import'         => TRUE,    // FALSE to hide on imports
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will ignored on import
 				'export_title'   => NULL,    // the export column title
-				'data_unit'      => NULL,    // the unit which in the data is stored
-				'data_length'    => NULL,    // typical length of the data // FIXME: implement this!
+				'data_unit'      => NULL,    // The unit which in the data is stored
+				'data_length'    => NULL,    // Typical length of the data // FIXME: implement this!
 				'autocomplete'   => 'off',   // NULL to drop the attribute // FIXME: implement this!
 				// 'discovery'      => FALSE,   // REGEX string or callback array
 
@@ -257,15 +257,15 @@ trait PostTypeFields
 	/**
 	 * Checks for accessing a post-type field.
 	 *
-	 * $arg `TRUE`/`FALSE` for public/private
-	 * $arg `NULL` for post-type `read`/`edit_post` capability check
-	 * $arg String for strait capability check
+	 * `$arg` `TRUE`/`FALSE` for public/private
+	 * `$arg` `NULL` for post-type `read`/`edit_post` capability check
+	 * `$arg` String for strait capability check
 	 *
 	 * @param array $field
 	 * @param mixed $post
 	 * @param string $context
 	 * @param null|int $user_id
-	 * @return bool $access
+	 * @return bool
 	 */
 	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
 	{
@@ -583,7 +583,7 @@ trait PostTypeFields
 		if ( is_null( $context ) )
 			$fields = $this->get_posttype_fields( $screen->post_type );
 
-		// bail if no fields enabled for this posttype
+		// Bail if no fields enabled for this post-type
 		if ( ! count( $fields ) )
 			return FALSE;
 
@@ -1192,7 +1192,7 @@ trait PostTypeFields
 
 	public function wp_loaded_posttypefields()
 	{
-		// initiate the posttype fields for each posttype
+		// Initiate the post-type fields for each post-type
 		foreach ( $this->posttypes() as $posttype )
 			$this->get_posttype_fields( $posttype );
 
@@ -1211,7 +1211,7 @@ trait PostTypeFields
 		foreach ( $this->posttypes() as $posttype ) {
 
 			/**
-			 * registering general field for all meta data
+			 * Registering general field for all meta-data
 			 * mainly for display purposes
 			 */
 			register_rest_field( $posttype, $attribute, [
@@ -1219,7 +1219,7 @@ trait PostTypeFields
 			] );
 
 			/**
-			 * the posttype must have `custom-fields` support
+			 * The post-type must have `custom-fields` support
 			 * otherwise the meta fields will not appear in the REST API
 			 */
 			if ( ! post_type_supports( $posttype, 'custom-fields' ) )
@@ -1262,7 +1262,7 @@ trait PostTypeFields
 				$register_args = array_merge( $defaults, [
 
 					/**
-					 * accepts `post`, `comment`, `term`, `user`
+					 * Accepts `post`, `comment`, `term`, `user`
 					 * or any other object type with an associated meta table
 					 */
 					'object_subtype' => $posttype,
@@ -1277,7 +1277,7 @@ trait PostTypeFields
 					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback_posttypefields' ] ],
 				] );
 
-				if ( $is_rest ) // WTF: double sanitizes along with store metabox default sanitize
+				if ( $is_rest ) // WTF: double sanitizes along with store meta-box default sanitize
 					$register_args['sanitize_callback'] = [ $this, 'register_sanitize_callback_posttypefields' ];
 
 				if ( FALSE === $args['access_view'] )
@@ -1322,17 +1322,17 @@ trait PostTypeFields
 		return $types;
 	}
 
-	public function attribute_get_callback_posttypefields( $post, $attr, $request, $object_type )
+	public function attribute_get_callback_posttypefields( $params, $attr, $request, $object_type )
 	{
-		return $this->get_posttype_fields_data( (int) $post['id'], FALSE, 'rest' );
+		return $this->get_posttype_fields_data( (int) $params['id'], FALSE, 'rest' );
 	}
 
 	/**
 	 * NOTE: DEPRECATED FILTER: `geditorial_meta_disable_field_edit`
 	 *
-	 * - upon no `auth_callback`, wordpress checks for `is_protected_meta()` aka underline prefix
-	 * - this filter is to call when performing `edit_post_meta`, `add_post_meta`, and `delete_post_meta` capability checks
-	 * - return `true` to have the mapped meta caps from `edit_{$object_type}` apply
+	 * - Upon no `auth_callback`, WordPress checks for `is_protected_meta()` aka underline prefix
+	 * - This filter is to call when performing `edit_post_meta`, `add_post_meta`, and `delete_post_meta` capability checks
+	 * - Returns `true` to have the mapped meta caps from `edit_{$object_type}` apply
 	*/
 	public function register_auth_callback_posttypefields( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
 	{

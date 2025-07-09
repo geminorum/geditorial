@@ -48,7 +48,7 @@ trait CoreTaxonomies
 
 		$rewrite = [
 
-			// NOTE: we can use `example.com/cpt/tax` if cpt registered after the tax
+			// NOTE: we can use `example.com/cpt/tax` if custom-post-type registered after the taxonomy
 			// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/#comment-2274
 
 			// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`

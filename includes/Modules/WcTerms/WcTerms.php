@@ -141,7 +141,7 @@ class WcTerms extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_embed() )
+		if ( is_embed() || is_search() )
 			return;
 
 		$this->enqueue_styles();

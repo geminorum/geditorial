@@ -71,6 +71,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 				'wrap'         => $wrap,
 				'data'         => $data,
 				'class'        => 'form-field',
+				'cap'          => TRUE, // already checked
 				'field'        => $field,
 				'label_for'    => $html_id,
 				'id_attr'      => $html_id,
@@ -89,6 +90,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 				'wrap'         => $wrap,
 				'data'         => $data,
 				'class'        => 'form-field',
+				'cap'          => TRUE, // already checked
 				'field'        => $field,
 				'label_for'    => $html_id,
 				'id_attr'      => $html_id,

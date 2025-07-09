@@ -559,8 +559,8 @@ class Byline extends gEditorial\Module
 			$this->posttypes(),
 			$this->constant( 'restapi_attribute' ),
 			[
-				'get_callback' => function ( $post, $attr, $request, $object_type ) {
-					return $this->get_byline_for_post( (int) $post['id'] );
+				'get_callback' => function ( $params, $attr, $request, $object_type ) {
+					return $this->get_byline_for_post( (int) $params['id'] );
 				}
 			]
 		);

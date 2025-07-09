@@ -139,7 +139,7 @@ class Tabloid extends gEditorial\Module
 
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'title' => sprintf(
-				/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+				/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 				_x( 'Overview of this %2$s', 'Post Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Post::title( $post ),
 				Services\CustomPostType::getLabel( $post, 'singular_name' )
@@ -372,7 +372,7 @@ class Tabloid extends gEditorial\Module
 		if ( $comments = Services\RestAPI::getCommentsResponse( $post, 'view' ) )
 			$data['comments_rendered'] = ModuleHelper::prepCommentsforPost( $comments );
 
-		// fallback if `title` is not supported by the posttype
+		// Fallback if `title` is not supported by the post-type
 		if ( empty( $data['title'] ) )
 			$data['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
 
@@ -437,9 +437,6 @@ class Tabloid extends gEditorial\Module
 
 		if ( $response = Services\RestAPI::getTermResponse( $term, 'view' ) )
 			$data = $response;
-
-		// TODO: count by post-type: see `coreadmin__hook_taxonomy_multiple_supported_column()`
-		// TODO: list assigned posts: see `tabloid_post_summaries_paired_posttype()`
 
 		$data = ModuleHelper::stripByProp( $data, 'meta_rendered', Core\Arraay::prepString( $this->filters( 'term_meta_exclude_rendered', [], $term, $context ) ) );
 		$data = ModuleHelper::stripByProp( $data, 'terms_rendered', Core\Arraay::prepString( $this->filters( 'term_terms_exclude_rendered', [], $term, $context ) ) );

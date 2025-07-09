@@ -154,7 +154,7 @@ class Tabs extends gEditorial\Module
 		if ( ! $this->get_setting( 'insert_content' ) )
 			return;
 
-		if ( is_embed() )
+		if ( is_embed() || is_search() )
 			return;
 
 		if ( ! is_singular( $this->posttypes() ) )

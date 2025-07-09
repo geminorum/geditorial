@@ -34,8 +34,8 @@ class TermRelations extends gEditorial\Service
 		register_rest_field( self::getPostTypes( $taxonomies ), self::POSTTYPE_ATTR, [
 			'schema' => NULL,
 
-			'get_callback' => static function ( $object, $attr, $request, $object_type ) {
-				return self::getPostData( (int) $object['id'], $request['context'] );
+			'get_callback' => static function ( $params, $attr, $request, $object_type ) {
+				return self::getPostData( (int) $params['id'], $request['context'] );
 			},
 
 			'update_callback' => static function ( $data, $object ) {
@@ -46,12 +46,12 @@ class TermRelations extends gEditorial\Service
 		register_rest_field( array_keys( $taxonomies ), self::TAXONOMY_ATTR, [
 			'schema' => NULL,
 
-			'get_callback' => static function ( $object, $attr, $request, $object_type ) {
+			'get_callback' => static function ( $params, $attr, $request, $object_type ) {
 				return empty( $request['post'] )
 					? FALSE
 					: self::getTermData(
 						(int) $request['post'],
-						(int) $object['id'],
+						(int) $params['id'],
 						$request['context']
 					);
 			},
@@ -271,10 +271,12 @@ class TermRelations extends gEditorial\Service
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		if ( in_array( $term->taxonomy, get_object_taxonomies( $post ), TRUE ) )
-			return reset( self::_getData( $post, $term->taxonomy, [ $term ], $context ) );
+		if ( ! in_array( $term->taxonomy, get_object_taxonomies( $post ), TRUE ) )
+			return FALSE;
 
-		return FALSE;
+		$data = self::_getData( $post, $term->taxonomy, [ $term ], $context );
+
+		return empty( $data ) ? FALSE : reset( $data );
 	}
 
 	public static function getPostTypes( $taxonomies = NULL )

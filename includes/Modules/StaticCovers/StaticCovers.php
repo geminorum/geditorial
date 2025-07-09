@@ -779,12 +779,12 @@ class StaticCovers extends gEditorial\Module
 		];
 	}
 
-	public function rest_field_callback( $post_array, $attr, $request, $object_type )
+	public function rest_field_callback( $params, $attr, $request, $object_type )
 	{
-		if ( ! $url = $this->_get_posttype_image( $post_array['id'] ) )
+		if ( ! $url = $this->_get_posttype_image( $params['id'] ) )
 			return [];
 
-		return $this->_prep_attachment_data( $url, $post_array['id'] );
+		return $this->_prep_attachment_data( $url, $params['id'] );
 	}
 
 	public function rest_thumbnail_data( $data, $thumbnail_id, $post_id, $post_array )

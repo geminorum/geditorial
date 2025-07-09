@@ -17,16 +17,16 @@ class CustomTaxonomy extends gEditorial\Service
 	 * @REF: `WP_Taxonomy::get_default_labels()`
 	 * NOTE: OLD: `Helper::generateTaxonomyLabels()`
 	 *
-	 * %1$s => Camel Case / Plural  : `Tags`
-	 * %2$s => Camel Case / Singular: `Tag`
-	 * %3$s => Lower Case / Plural  : `tags`
-	 * %4$s => Lower Case / Singular: `tag`
-	 * %5$s => %s
+	 * `%1$s` => Camel Case / Plural  : `Tags`
+	 * `%2$s` => Camel Case / Singular: `Tag`
+	 * `%3$s` => Lower Case / Plural  : `tags`
+	 * `%4$s` => Lower Case / Singular: `tag`
+	 * `%5$s` => ~
 	 *
-	 * @param  mixed $name
-	 * @param  array $pre
-	 * @param  string $taxonomy
-	 * @return array $labels
+	 * @param mixed $name
+	 * @param array $pre
+	 * @param string $taxonomy
+	 * @return array
 	 */
 	public static function generateLabels( $name, $pre = [], $taxonomy = NULL )
 	{

@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -56,7 +55,7 @@ class ModuleHelper extends gEditorial\Helper
 
 			$comment['content_rendered'] = $comment['content']['rendered'];
 			$comment['author_rendered']  = Core\Text::trim( $avatar.' '.$author );
-			$comment['date_rendered']    = Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
+			$comment['date_rendered']    = Editorial\Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
 
 			unset( $comment['author_avatar_urls'] );
 			unset( $comment['date_gmt'] );

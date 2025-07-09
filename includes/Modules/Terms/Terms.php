@@ -635,13 +635,15 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function attribute_get_callback( $term, $attr, $request, $object_type )
+	public function attribute_get_callback( $params, $attr, $request, $object_type )
 	{
 		switch ( $attr ) {
 
 			case 'image':
+
 				$metakey = $this->get_supported_metakey( 'image', $object_type );
-				return WordPress\Media::prepAttachmentData( get_term_meta( $term['id'], $metakey, TRUE ) );
+
+				return WordPress\Media::prepAttachmentData( get_term_meta( (int) $params['id'], $metakey, TRUE ) );
 
 				break;
 		}
