@@ -46,14 +46,16 @@ class WcShortcodes extends gEditorial\Module
 	private function _list_shortcodes()
 	{
 		return [
-			'wc-stock-status' => _x( 'Stock Status', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
+			'wc-stock-status'       => _x( 'Stock Status', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
+			'wc-scheduled-on-sales' => _x( 'Scheduled On-sales', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'wc_stock_status_shortcode' => 'wc-stock-status',
+			'wc_stock_status_shortcode'       => 'wc-stock-status',
+			'wc_scheduled_on_sales_shortcode' => 'wc-scheduled-on-sales',
 		];
 	}
 
@@ -128,5 +130,89 @@ class WcShortcodes extends gEditorial\Module
 		$html = wc_get_stock_html( $product );
 
 		return gEditorial\ShortCode::wrap( $html, $this->constant( 'wc_stock_status_shortcode' ), $args );
+	}
+
+	/**
+	 * WooCommerce scheduled on-sale products list short-code.
+	 *
+	 * @author Hamid Reza Yazdani (yazdaniwp)
+	 * @source https://github.com/hamidrezayazdani/wc-scheduled-onsales-shortcode
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	public function wc_scheduled_on_sales_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'limit'   => 12,      // TODO: get default from WC
+			'columns' => 3,       // TODO: get default from WC
+			'empty'   => FALSE,   // `NULL` for default text
+			'paged'   => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'wc_scheduled_on_sales_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( is_null( $args['paged'] ) )
+			$args['paged'] = get_query_var( 'paged' ) ?: 1;
+
+		$time  = time();
+		$query = [
+			'post_type'      => [ 'product', 'product_variation' ],
+			'post__in'       => array_merge( [ 0 ], wc_get_product_ids_on_sale() ),
+			'paged'          => $args['paged'],
+			'posts_per_page' => $args['limit'],
+			'meta_query'     => [
+
+				// // If you set on sale start date uncomment this section
+				// 'relation' => 'AND',
+				// [
+				// 	'key'     => '_sale_price_dates_from',
+				// 	'value'   => $time,
+				// 	'compare' => '<',
+				// ],
+
+				[
+					'key'     => '_sale_price_dates_to',
+					'value'   => $time,
+					'compare' => '>',
+				],
+			],
+		];
+
+		$loop = new \WP_Query( $query );
+		$html = '';
+
+		if ( $loop->have_posts() ) {
+
+			$html.= '<ul class ="products columns-'.$args['columns'].'">';
+
+			while ( $loop->have_posts() ) {
+
+				$loop->the_post();
+
+				$html.= self::buffer( 'wc_get_template_part', [ 'content', 'product' ] );
+			}
+
+			$html.= '</ul>';
+
+			if ( function_exists( 'pagination' ) )
+				$html.= self::buffer( 'pagination', [ $loop->max_num_pages ] );
+
+			wp_reset_postdata();
+
+		} else {
+
+			$html = $args['empty'] ?? _x( 'There are no products available!', 'Message', 'geditorial-wc-shortcodes' );
+		}
+
+		return gEditorial\ShortCode::wrap( $html ?: NULL, $this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
 	}
 }
