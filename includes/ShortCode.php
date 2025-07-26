@@ -1042,6 +1042,24 @@ class ShortCode extends WordPress\Main
 			$query['post__in']            = $paired_posts;
 			$query['ignore_sticky_posts'] = TRUE;
 
+		} else if ( 'assigned' === $list && $args['term_id'] ) {
+
+			// Gets the list of posts by the term
+
+			if ( ! $term = WordPress\Term::get( $args['term_id'] ) )
+				return $content;
+
+			$query['tax_query'] = [ [
+				'taxonomy' => $taxonomy ?: $term->taxonomy,
+				'terms'    => [ $term->ID ],
+			] ];
+
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					WordPress\Taxonomy::types( $term ),
+					(array) $args['exclude_posttypes']
+				);
+
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
 
 			// Gets the list of posts by the taxonomy
