@@ -26,7 +26,7 @@ class Media extends Core\Base
 	 * Retrieves available mime types for given post-type in media library.
 	 * @ref `wp_count_attachments()`
 	 *
-	 * @return array $mime_types
+	 * @return array
 	 */
 	public static function availableMIMETypes( $posttype = 'attachment', $excludes = NULL )
 	{
@@ -46,9 +46,9 @@ class Media extends Core\Base
 	/**
 	 * Retrieves file extension given a mime-type.
 	 *
-	 * @param  string     $mime_type
-	 * @param  null|array $extensions
-	 * @return string      $extension
+	 * @param string $mime_type
+	 * @param null|array $extensions
+	 * @return string
 	 */
 	public static function getExtension( $mime_type, $extensions = NULL, $uppercase = TRUE )
 	{

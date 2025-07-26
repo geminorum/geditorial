@@ -435,6 +435,22 @@ class Taxonomy extends Core\Base
 		return Term::get( $term_or_id, $taxonomy );
 	}
 
+	public static function getTheTermRows( $taxonomy, $post = NULL )
+	{
+		if ( ! $terms = self::getPostTerms( $taxonomy, $post ) )
+			return '';
+
+		$rows = [];
+
+		foreach ( $terms as $term )
+			$rows[] = Core\HTML::row( Core\HTML::tag( 'a', [
+				'href'  => get_term_link( $term, $taxonomy ),
+				'class' => '-term',
+			], sanitize_term_field( 'name', $term->name, $term->term_id, $taxonomy, 'display' ) ) );
+
+		return Core\HTML::rows( $rows, '-rows-'.$taxonomy, [ 'taxonomy' => $taxonomy ] );
+	}
+
 	// @REF: `get_the_term_list()`
 	public static function getTheTermList( $taxonomy, $post = NULL, $before = '', $after = '' )
 	{

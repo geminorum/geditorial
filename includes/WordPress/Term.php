@@ -12,9 +12,9 @@ class Term extends Core\Base
 	/**
 	 * Gets all term data.
 	 *
-	 * @param  int|object $term_or_id
-	 * @param  string $taxonomy
-	 * @return false|object $term
+	 * @param int|object $term_or_id
+	 * @param string $taxonomy
+	 * @return false|object
 	 */
 	public static function get( $term_or_id = NULL, $taxonomy = '' )
 	{
@@ -68,11 +68,11 @@ class Term extends Core\Base
 	 * Retrieves the user capability for a given term.
 	 * NOTE: caches the results
 	 *
-	 * @param  int|object      $term
-	 * @param  null|string     $capability
-	 * @param  null|int|object $user_id
-	 * @param  bool            $fallback
-	 * @return bool            $can
+	 * @param int|object $term
+	 * @param null|string $capability
+	 * @param null|int|object $user_id
+	 * @param bool $fallback
+	 * @return bool
 	 */
 	public static function can( $term, $capability, $user_id = NULL, $fallback = FALSE )
 	{
@@ -143,7 +143,7 @@ class Term extends Core\Base
 
 	/**
 	 * Retrieves term parent titles given a term ID or term object.
-	 * NOTE: parent post type can be different
+	 * NOTE: parent post-type can be different
 	 *
 	 * @param null|int|object $term
 	 * @param string $suffix
@@ -193,8 +193,8 @@ class Term extends Core\Base
 	/**
 	 * Retrieves term taxonomy given a term ID or term object.
 	 *
-	 * @param  null|int|string|object $term
-	 * @return string $taxonomy
+	 * @param null|int|string|object $term
+	 * @return string
 	 */
 	public static function taxonomy( $term )
 	{
@@ -227,10 +227,10 @@ class Term extends Core\Base
 	 * @ref `get_edit_term_link()`
 	 * @old `WordPress::getEditTaxLink()`
 	 *
-	 * @param  int|object $term
-	 * @param  array      $extra
-	 * @param  mixed      $fallback
-	 * @return string     $link
+	 * @param int|object $term
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string
 	 */
 	public static function edit( $term, $extra = [], $fallback = FALSE )
 	{
@@ -251,9 +251,9 @@ class Term extends Core\Base
 	/**
 	 * Retrieves a contextual link given a term id or term object.
 	 *
-	 * @param  null|int|object $term
-	 * @param  null|string     $context
-	 * @return false|string    $link
+	 * @param null|int|object $term
+	 * @param null|string $context
+	 * @return false|string
 	 */
 	public static function overview( $term, $context = NULL )
 	{
@@ -280,7 +280,7 @@ class Term extends Core\Base
 	 * @param null|int|string|object $term
 	 * @param null|false|string $title
 	 * @param bool|string $fallback
-	 * @return string|false $html
+	 * @return false|string
 	 */
 	public static function htmlLink( $term, $title = NULL, $fallback = FALSE )
 	{
@@ -312,9 +312,9 @@ class Term extends Core\Base
 	/**
 	 * Retrieves a contextual summary given a term ID or term object.
 	 *
-	 * @param  null|int|object $term
-	 * @param  null|string     $context
-	 * @return false|array     $summary
+	 * @param null|int|object $term
+	 * @param null|string $context
+	 * @return false|array
 	 */
 	public static function summary( $term, $context = NULL )
 	{
@@ -346,13 +346,12 @@ class Term extends Core\Base
 
 	/**
 	 * Checks if a term exists and return term id only.
-	 *
 	 * @source `term_exists()`
 	 *
-	 * @param  int|string $term
-	 * @param  string $taxonomy
-	 * @param  int $parent
-	 * @return false|int $term_id
+	 * @param int|string $term
+	 * @param string $taxonomy
+	 * @param int $parent
+	 * @return false|int
 	 */
 	public static function exists( $term, $taxonomy = '', $parent = NULL )
 	{
@@ -367,12 +366,11 @@ class Term extends Core\Base
 
 	/**
 	 * Checks if a term is publicly viewable.
-	 *
 	 * @source: `is_term_publicly_viewable()`
-	 * @since WP6.1.0
+	 * @since WP 6.1.0
 	 *
-	 * @param  int|string|object $term
-	 * @return bool $viewable
+	 * @param int|string|object $term
+	 * @return bool
 	 */
 	public static function viewable( $term )
 	{
@@ -385,13 +383,13 @@ class Term extends Core\Base
 	/**
 	 * Updates the taxonomy for the term.
 	 *
-	 * also accepts term and taxonomy objects
-	 * and checks if its a different taxonomy
+	 * Also accepts term and taxonomy objects
+	 * and checks if it's a different taxonomy.
 	 *
-	 * @param  int|object $term
-	 * @param  string|object $taxonomy
-	 * @param  bool $clean_taxonomy
-	 * @return bool $success
+	 * @param int|object $term
+	 * @param string|object $taxonomy
+	 * @param bool $clean_taxonomy
+	 * @return bool
 	 */
 	public static function setTaxonomy( $term, $taxonomy, $clean_taxonomy = TRUE )
 	{
@@ -423,7 +421,7 @@ class Term extends Core\Base
 	 * @param object|int $term
 	 * @param bool|array $keys `false` for all meta
 	 * @param bool $single
-	 * @return array $metadata
+	 * @return array
 	 */
 	public static function getMeta( $term, $keys = FALSE, $single = TRUE )
 	{
