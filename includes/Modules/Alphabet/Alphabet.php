@@ -99,6 +99,7 @@ class Alphabet extends gEditorial\Module
 			'locale'            => Core\L10n::locale( TRUE ),
 			'alternative'       => 'en_US',                     // FALSE to disable
 			'posttype'          => $this->posttypes(),
+			'term'              => FALSE,
 			'excerpt'           => FALSE,
 			'comments'          => FALSE,
 			'comments_template' => '&nbsp;(%s)',
@@ -138,6 +139,12 @@ class Alphabet extends gEditorial\Module
 				'posts_per_page'   => -1,
 				'suppress_filters' => TRUE,
 			];
+
+			if ( $term = WordPress\Term::get( $args['term'] ) )
+				$query_args['tax_query'] = [ [
+					'taxonomy' => $term->taxonomy,
+					'terms'    => [ $term->ID ],
+				] ];
 
 			$query = new \WP_Query();
 			$posts = $query->query( $query_args );
