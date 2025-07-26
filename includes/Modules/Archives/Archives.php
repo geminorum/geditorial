@@ -222,7 +222,7 @@ class Archives extends gEditorial\Module
 			$default = '[alphabet-terms taxonomy="%s" list_mode="ul" /]';
 
 		else if ( WordPress\ShortCode::exists( 'display-terms' ) )
-			$default = '[display-terms taxonomy="%s" /]';
+			$default = '[display-terms taxonomy="%s" hide_empty="0" /]';
 
 		return $this->filters( 'default_taxonomy_content', $default, $taxonomy );
 	}
@@ -272,8 +272,9 @@ class Archives extends gEditorial\Module
 		if ( ! empty( $object->rest_base ) )
 			return $object->rest_base;
 
+		// NOTE: taxonomy prefix slugs are singular: `/category/`, `/tag/`
 		if ( ! empty( $object->rewrite['slug'] ) )
-			return $object->rewrite['slug'];
+			return Core\L10n::pluralize( $object->rewrite['slug'] );
 
 		return $taxonomy;
 	}
@@ -293,7 +294,7 @@ class Archives extends gEditorial\Module
 				'is_archive' => TRUE,
 			], [ $this, 'template_taxonomy_archives' ] );
 
-			$this->template_include_extra( [ 'taxonomy-archives', 'taxonomy-archives-'.$taxonomy ] );
+			$this->_template_include_extra( [ 'taxonomy-archives', 'taxonomy-archives-'.$taxonomy ] );
 
 			$this->filter( 'get_the_archive_title', 1, 12, 'taxonomy' );
 			$this->filter( 'document_title_parts', 1, 12, 'taxonomy' );
@@ -318,7 +319,7 @@ class Archives extends gEditorial\Module
 				'is_archive' => TRUE,
 			], [ $this, 'templateposttype_archive_content' ] );
 
-			$this->template_include_extra( 'archive-entry' );
+			$this->_template_include_extra( 'archive-entry' );
 
 			$this->filter( 'get_the_archive_title', 1, 12, 'posttype' );
 			$this->filter( 'document_title_parts', 1, 12, 'posttype' );
@@ -330,7 +331,7 @@ class Archives extends gEditorial\Module
 		return $template;
 	}
 
-	private function template_include_extra( $classes )
+	private function _template_include_extra( $classes )
 	{
 		$this->filter_append( 'post_class', $classes );
 

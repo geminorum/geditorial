@@ -55,7 +55,7 @@ class ModuleHelper extends gEditorial\Helper
 
 			$comment['content_rendered'] = $comment['content']['rendered'];
 			$comment['author_rendered']  = Core\Text::trim( $avatar.' '.$author );
-			$comment['date_rendered']    = Editorial\Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
+			$comment['date_rendered']    = gEditorial\Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
 
 			unset( $comment['author_avatar_urls'] );
 			unset( $comment['date_gmt'] );

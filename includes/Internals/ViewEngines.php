@@ -92,13 +92,13 @@ trait ViewEngines
 
 		if ( $path ) {
 
-			$args['loader'] = new \Mustache_Loader_FilesystemLoader( $path );
+			$args['loader'] = new \Mustache\Loader\FilesystemLoader( $path );
 
 			if ( is_dir( $path.'partials' ) )
-				$args['partials_loader'] = new \Mustache_Loader_FilesystemLoader( $path.'partials' );
+				$args['partials_loader'] = new \Mustache\Loader\FilesystemLoader( $path.'partials' );
 		}
 
-		return @new \Mustache_Engine( $args );
+		return new \Mustache\Engine( $args );
 	}
 
 	public function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )

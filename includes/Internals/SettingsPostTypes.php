@@ -87,7 +87,7 @@ trait SettingsPostTypes
 			Core\HTML::desc( $after );
 	}
 
-	// enabled post types for this module
+	// Enabled post-types for this module
 	public function posttypes( $posttypes = NULL )
 	{
 		if ( is_null( $posttypes ) )
@@ -151,7 +151,12 @@ trait SettingsPostTypes
 
 	public function all_posttypes( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		return Core\Arraay::stripByKeys( WordPress\PostType::get( 0, $args ), Core\Arraay::prepString( $this->posttypes_excluded( $exclude_extra ) ) );
+		return Core\Arraay::stripByKeys(
+			WordPress\PostType::get( 0, $args ),
+			Core\Arraay::prepString(
+				$this->posttypes_excluded( $exclude_extra )
+			)
+		);
 	}
 
 	// DEFAULT METHOD

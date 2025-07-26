@@ -779,67 +779,78 @@ class ShortCode extends WordPress\Main
 	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [], $taxonomies = [], $module = NULL )
 	{
 		return [
-			'taxonomy'            => $taxonomy,
-			'taxonomies'          => $taxonomies,
-			'posttype'            => $posttype,
-			'posttypes'           => $posttypes,
-			'post_id'             => '',
-			'term_id'             => '',
-			'id'                  => '', // DEPRECATED
-			'slug'                => '',
-			'title'               => NULL,                                                            // FALSE to disable
-			'title_cb'            => FALSE,
-			'title_link'          => NULL,                                                            // `anchor` for slug anchor, FALSE to disable
-			'title_title'         => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
-			'title_title_cb'      => FALSE,                                                           // callback for title attr
-			'title_tag'           => 'h3',
-			'title_anchor'        => $taxonomy.'-%2$s',
-			'title_class'         => '-title',
-			'title_dummy'         => '<span class="-dummy"></span>',
-			'title_after'         => '',
-			'title_label'         => 'all_items',                                                     // label key for posttype/taxonomy object
-			'item_cb'             => FALSE,
-			'item_link'           => TRUE,
-			'item_text'           => NULL,                                                            // callback or use %s for post title
-			'item_wrap'           => '',                                                              // use %s for item title / or html tag
-			'item_title'          => '',                                                              // use %s for post title
-			'item_title_cb'       => FALSE,
-			'item_tag'            => 'li',
-			'item_anchor'         => FALSE,                                                           // $posttype.'-%2$s',
-			'item_class'          => '-item do-sincethen',
-			'item_dummy'          => '<span class="-dummy"></span>',
-			'item_after'          => '',
-			'item_after_cb'       => FALSE,
-			'item_download'       => TRUE,                                                            // only for attachments
-			'item_filesize'       => TRUE,                                                            // only for attachments // OLD: `item_size`
+			'taxonomy'           => $taxonomy,
+			'taxonomies'         => $taxonomies,
+			'posttype'           => $posttype,
+			'posttypes'          => $posttypes,
+			'exclude_posttypes'  => [],
+			'exclude_taxonomies' => [],
+
+			'post_id' => '',
+			'term_id' => '',
+			'id'      => '',   // DEPRECATED
+			'slug'    => '',
+
+			'title'          => NULL,                                                            // FALSE to disable
+			'title_cb'       => FALSE,
+			'title_link'     => NULL,                                                            // `anchor` for slug anchor, FALSE to disable
+			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
+			'title_title_cb' => FALSE,                                                           // callback for title attr
+			'title_tag'      => 'h3',
+			'title_anchor'   => $taxonomy.'-%2$s',
+			'title_class'    => '-title',
+			'title_dummy'    => '<span class="-dummy"></span>',
+			'title_after'    => '',
+			'title_label'    => 'all_items',                                                     // label key for posttype/taxonomy object
+
+			'item_cb'       => FALSE,
+			'item_link'     => TRUE,
+			'item_text'     => NULL,                             // callback or use %s for post title
+			'item_wrap'     => '',                               // use %s for item title / or html tag
+			'item_title'    => '',                               // use %s for post title
+			'item_title_cb' => FALSE,
+			'item_tag'      => 'li',
+			'item_anchor'   => FALSE,                            // $posttype.'-%2$s',
+			'item_class'    => '-item do-sincethen',
+			'item_dummy'    => '<span class="-dummy"></span>',
+			'item_after'    => '',
+			'item_after_cb' => FALSE,
+			'item_download' => TRUE,                             // only for attachments
+			'item_filesize' => TRUE,                             // only for attachments // OLD: `item_size`
+
 			'item_image_tile'     => NULL,
 			'item_image_metakey'  => empty( $posttype ) ? 'image' : '_thumbnail_id',
 			'item_image_size'     => NULL,
-			'item_image_loading'  => 'lazy',                                                          // FALSE to disable
-			'item_image_decoding' => 'async',                                                         // FALSE to disable
+			'item_image_loading'  => 'lazy',                                           // FALSE to disable
+			'item_image_decoding' => 'async',                                          // FALSE to disable
 			'item_image_empty'    => FALSE,
-			'order_before'        => FALSE,
-			'order_zeroise'       => FALSE,
-			'order_sep'           => ' &ndash; ',
-			'list_tag'            => 'ul',
-			'list_class'          => '-list',
-			'cover'               => FALSE,                                                           // must have thumbnail
-			'future'              => 'on',
-			'mime_type'           => '',                                                              // only for attachments / like: `image`
-			'connection'          => '',                                                              // only for o2o
-			'orderby'             => '',                                                              // empty for default
-			'order'               => 'ASC',
-			'order_cb'            => FALSE,                                                           // NULL for default order by paired meta
-			'order_start'         => 'start',                                                         // meta field for ordering
-			'order_order'         => 'order',                                                         // meta field for ordering
-			'limit'               => -1,
-			'module'              => $module,                                                         // main caller module
-			'field_module'        => 'meta',                                                          // getting meta field from
-			'context'             => NULL,
-			'wrap'                => TRUE,
-			'before'              => '',                                                              // html after wrap
-			'after'               => '',                                                              // html before wrap
-			'class'               => '',                                                              // wrap css class
+
+			'list_tag'   => 'ul',
+			'list_class' => '-list',
+
+			'limit'         => -1,
+			'order'         => 'ASC',
+			'orderby'       => '',            // empty for default
+			'order_cb'      => FALSE,         // NULL for default order by paired meta
+			'order_start'   => 'start',       // meta field for ordering
+			'order_order'   => 'order',       // meta field for ordering
+			'order_before'  => FALSE,
+			'order_zeroise' => FALSE,
+			'order_sep'     => ' &ndash; ',
+
+			'cover'      => FALSE,   // must have thumbnail
+			'future'     => 'on',
+			'mime_type'  => '',      // only for attachments / like: `image`
+			'connection' => '',      // only for o2o
+
+			'module'       => $module,   // main caller module
+			'field_module' => 'meta',    // getting meta field from
+
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'before'  => '',     // html after wrap
+			'after'   => '',     // html before wrap
+			'class'   => '',     // wrap css class
 		];
 	}
 
@@ -935,10 +946,7 @@ class ShortCode extends WordPress\Main
 			if ( $posttype && empty( $query['post_type'] ) )
 				$query['post_type'] = $posttype;
 
-		} else if ( $args['id'] || $args['term_id'] ) {
-
-			if ( ! $taxonomy )
-				return $content;
+		} else if ( $taxonomy && ( $args['id'] || $args['term_id'] ) ) {
 
 			if ( ! $term = get_term_by( 'id', $args['term_id'] ?: $args['id'], $taxonomy ) )
 				return $content;
@@ -1012,13 +1020,13 @@ class ShortCode extends WordPress\Main
 			$query['ignore_sticky_posts'] = TRUE;
 			$query['post__not_in'] = [ $post->ID ]; // exclude current
 
-			// exclude paired posttype
+			// exclude paired post-type
 			if ( empty( $args['posttypes'] ) )
 				$query['post_type'] = Core\Arraay::stripByValue( WordPress\Taxonomy::object( $taxonomy )->object_type, $posttype );
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
 
-			// gets the list of main posts paired to this supported post
+			// Gets the list of main posts paired to this supported post
 
 			if ( ! $args['module'] ) {
 
@@ -1030,13 +1038,13 @@ class ShortCode extends WordPress\Main
 			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->paired_all_connected_from( $args['post_id'] ?: NULL, 'query', 'ids' ) )
 				return $content;
 
-			$query['post_type']           = $posttype;      // override with main posttype
+			$query['post_type']           = $posttype;      // override with main post-type
 			$query['post__in']            = $paired_posts;
 			$query['ignore_sticky_posts'] = TRUE;
 
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
 
-			// gets the list of posts by the taxonomy
+			// Gets the list of posts by the taxonomy
 
 			if ( ! $post = WordPress\Post::get( $args['post_id'] ?: NULL ) )
 				return $content;
@@ -1099,7 +1107,7 @@ class ShortCode extends WordPress\Main
 
 		if ( $args['orderby'] == 'order' ) {
 
-			// calback may change items, so even if one item
+			// The callback may change items, so applies even if only one item exists.
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 

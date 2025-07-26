@@ -54,7 +54,7 @@ class ModuleSettings extends gEditorial\Settings
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_DELETION_BY_MIME,
 					'mime'   => $mimetype,
-				] ), WordPress\Media::getExtension( $mimetype, $extensions ), 'link-small', TRUE );
+				] ), WordPress\Media::getExtension( $mimetype, $extensions ) ?: $mimetype, 'link-small', TRUE );
 
 			Core\HTML::desc( _x( 'Tries to delete attachemnts by MIME types.', 'Button Description', 'geditorial-attachments' ) );
 		echo '</div></div>';
