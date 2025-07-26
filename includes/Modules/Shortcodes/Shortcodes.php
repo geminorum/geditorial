@@ -59,16 +59,18 @@ class Shortcodes extends gEditorial\Module
 	private function _list_shortcodes()
 	{
 		return [
-			'display-terms' => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
-			'term-tiles'    => _x( 'Term Tiles', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'display-terms'  => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'term-tiles'     => _x( 'Term Tiles', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'posts-assigned' => _x( 'Posts Assigned', 'Shortcode Name', 'geditorial-shortcodes' ),
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'display_terms_shortcode' => 'display-terms',
-			'term_tiles_shortcode'    => 'term-tiles',
+			'display_terms_shortcode'  => 'display-terms',
+			'term_tiles_shortcode'     => 'term-tiles',
+			'posts_assigned_shortcode' => 'posts-assigned',
 		];
 	}
 
@@ -288,6 +290,18 @@ class Shortcodes extends gEditorial\Module
 			], (array) $atts ),
 			$content,
 			$this->constant( 'term_tiles_shortcode', $tag ),
+			$this->key
+		);
+	}
+
+	public function posts_assigned_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'assigned',
+			'',
+			'',
+			$atts,
+			$content,
+			$this->constant( 'posts_assigned_shortcode', $tag ),
 			$this->key
 		);
 	}
