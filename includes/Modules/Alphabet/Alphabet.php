@@ -263,6 +263,7 @@ class Alphabet extends gEditorial\Module
 			'alternative'    => 'en_US',                     // FALSE to disable
 			'taxonomy'       => $this->taxonomies(),
 			'description'    => FALSE,
+			'hide_empty'     => TRUE,
 			'count'          => FALSE,
 			'count_template' => '&nbsp;(%s)',
 			'meta_title'     => NULL,
@@ -294,9 +295,10 @@ class Alphabet extends gEditorial\Module
 				$args['alternative'] = FALSE;
 
 			$query_args = [
-				'taxonomy' => $args['taxonomy'],
-				'orderby'  => 'name',
-				'order'    => 'ASC',
+				'hide_empty' => $args['hide_empty'],
+				'taxonomy'   => $args['taxonomy'],
+				'orderby'    => 'name',
+				'order'      => 'ASC',
 			];
 
 			$query = new \WP_Term_Query();
