@@ -14,7 +14,17 @@ class AdminScreen extends gEditorial\Service
 		if ( ! is_admin() )
 			return;
 
+		add_action( 'init', [ __CLASS__, 'init_late_admin' ], 999 );
 		add_action( 'current_screen', [ __CLASS__, 'current_screen' ], 1, 1 );
+	}
+
+	public static function init_late_admin()
+	{
+		add_filter( 'screen_settings', [ __CLASS__, 'screen_settings' ], 12, 2 );
+		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen_option' ], 12, 3 );
+
+		if ( $posttype = self::req( 'post_type', 'post' ) )
+			self::_handle_set_screen_options( $posttype );
 	}
 
 	public static function current_screen( $screen )
@@ -112,5 +122,58 @@ class AdminScreen extends gEditorial\Service
 			unset( $actions['edit'] );
 			return $actions;
 		} );
+	}
+
+	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
+	public static function screen_settings( $settings, $screen )
+	{
+		$taxonomies = apply_filters( static::BASE.'_screen_restrict_taxonomies', [], $screen );
+
+		if ( empty( $taxonomies ) )
+			return $settings;
+
+		$selected = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
+		$name     = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
+
+		$html = '<fieldset><legend>'._x( 'Restrictions', 'Service: AdminScreen: Screen Settings Title', 'geditorial-admin' ).'</legend>';
+
+		$html.= Core\HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
+			'item_tag' => FALSE, // 'span',
+			'prop'     => 'label',
+			'value'    => 'name',
+			'id'       => static::BASE.'-tax-restrictions',
+			'name'     => $name,
+			'selected' => FALSE === $selected ? $taxonomies : $selected,
+		] );
+
+		// hidden to clear the settings
+		$html.= '<input type="hidden" name="'.$name.'[0]" value="1" /></fieldset>';
+
+		return $settings.$html;
+	}
+
+	// Lets our screen options passing through
+	// @since WP 5.4.2 Only applied to options ending with '_page',
+	// or the 'layout_columns' option
+	// @REF: https://core.trac.wordpress.org/changeset/47951
+	public static function set_screen_option( $false, $option, $value )
+	{
+		return Core\Text::starts( $option, static::BASE ) ? $value : $false;
+	}
+
+	private static function _handle_set_screen_options( $posttype )
+	{
+		$name = sprintf( '%s-restrict-%s', static::BASE, $posttype );
+
+		if ( ! isset( $_POST[$name] ) )
+			return FALSE;
+
+		check_admin_referer( 'screen-options-nonce', 'screenoptionnonce' );
+
+		return update_user_option(
+			get_current_user_id(),
+			sprintf( '%s_restrict_%s', static::BASE, $posttype ),
+			Core\Arraay::prepString( array_keys( $_POST[$name] ) )
+		);
 	}
 }

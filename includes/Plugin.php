@@ -267,11 +267,6 @@ class Plugin
 			add_filter( 'mce_external_plugins', [ $this, 'mce_external_plugins' ] );
 			add_filter( 'mce_buttons', [ $this, 'mce_buttons' ] );
 		}
-
-		if ( ! is_admin() )
-			return;
-
-		$this->_handle_set_screen_options();
 	}
 
 	public function mce_buttons( $buttons )
@@ -291,62 +286,6 @@ class Plugin
 				$plugin_array[$plugin] = $filepath;
 
 		return $plugin_array;
-	}
-
-	// TODO: move this to `AdminScreen` Service
-	private function _handle_set_screen_options()
-	{
-		add_filter( 'screen_settings', [ $this, 'screen_settings' ], 12, 2 );
-		add_filter( 'set-screen-option', [ $this, 'set_screen_option' ], 12, 3 );
-
-		if ( ! $posttype = Core\Base::req( 'post_type', 'post' ) )
-			return FALSE;
-
-		$name = sprintf( '%s-restrict-%s', static::BASE, $posttype );
-
-		if ( ! isset( $_POST[$name] ) )
-			return FALSE;
-
-		check_admin_referer( 'screen-options-nonce', 'screenoptionnonce' );
-
-		return update_user_option( get_current_user_id(), sprintf( '%s_restrict_%s', static::BASE, $posttype ), array_filter( array_keys( $_POST[$name] ) ) );
-	}
-
-	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
-	public function screen_settings( $settings, $screen )
-	{
-		$taxonomies = apply_filters( static::BASE.'_screen_restrict_taxonomies', [], $screen );
-
-		if ( empty( $taxonomies ) )
-			return $settings;
-
-		$selected = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
-		$name     = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
-
-		$html = '<fieldset><legend>'._x( 'Restrictions', 'Plugin: Main: Screen Settings Title', 'geditorial-admin' ).'</legend>';
-
-		$html.= Core\HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
-			'item_tag' => FALSE, // 'span',
-			'prop'     => 'label',
-			'value'    => 'name',
-			'id'       => static::BASE.'-tax-restrictions',
-			'name'     => $name,
-			'selected' => FALSE === $selected ? $taxonomies : $selected,
-		] );
-
-		// hidden to clear the settings
-		$html.= '<input type="hidden" name="'.$name.'[0]" value="1" /></fieldset>';
-
-		return $settings.$html;
-	}
-
-	// lets our screen options passing through
-	// @since WP 5.4.2 Only applied to options ending with '_page',
-	// or the 'layout_columns' option
-	// @REF: https://core.trac.wordpress.org/changeset/47951
-	public function set_screen_option( $false, $option, $value )
-	{
-		return Core\Text::starts( $option, static::BASE ) ? $value : $false;
 	}
 
 	// HELPER
