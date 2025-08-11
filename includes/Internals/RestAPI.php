@@ -16,6 +16,17 @@ trait RestAPI
 		);
 	}
 
+	protected function restapi_get_route()
+	{
+		$route = sprintf( '/%s', $this->restapi_get_namespace() );
+
+		foreach ( func_get_args() as $arg )
+			if ( $arg )
+				$route.= '/'.strtolower( self::sanitize_base( $arg ) );
+
+		return $route;
+	}
+
 	// FIXME: add extra args
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '', $extra = [] )
