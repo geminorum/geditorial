@@ -20,10 +20,6 @@ class ShortCode extends WordPress\Main
 	// term as title of the list
 	public static function termTitle( $term_or_id, $taxonomy = 'category', $atts = [] )
 	{
-		// FIXME: WTF?!
-		if ( is_array( $term_or_id ) )
-			$term_or_id = $term_or_id[0];
-
 		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
@@ -1104,7 +1100,7 @@ class ShortCode extends WordPress\Main
 			if ( is_null( $args['title'] ) )
 				$args['title'] = ( 'all' === $args['id'] || 'all' === $args['term_id'] )
 					? self::posttypeTitle( $posttype, $args )
-					: self::termTitle( $term, $taxonomy, $args );
+					: self::termTitle( is_array( $term ) ? array_values($term)[0] : $term, $taxonomy, $args );
 
 			$ref = $term;
 
@@ -1286,7 +1282,7 @@ class ShortCode extends WordPress\Main
 		if ( 1 == $count && is_singular( $args['posttypes'] ) )
 			return $content;
 
-		$args['title'] = self::termTitle( $term, $taxonomy, $args );
+		$args['title'] = self::termTitle( is_array( $term ) ? array_values($term)[0] : $term, $taxonomy, $args );
 
 		if ( $args['orderby'] == 'order' ) {
 
