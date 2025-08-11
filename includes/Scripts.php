@@ -241,6 +241,9 @@ JS;
 
 	public static function enqueueColorBox()
 	{
+		// NOTE: since we need `gEditorial` object on this script!
+		gEditorial()->enqueue_asset_config();
+
 		return self::enqueue( 'all.colorbox', [ 'jquery', self::pkgColorBox( TRUE ) ] );
 	}
 

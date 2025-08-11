@@ -75,8 +75,7 @@ class Tablelist extends WordPress\Main
 		return [ $terms, $pagination ];
 	}
 
-	// TODO: support the parent post-type
-	// - must alter query to filter the parent post-type
+	// TODO: support the parent post-type: no way but alter the query to filter the parent post-type
 	public static function getAttachments( $atts = [], $extra = [], $posttypes = 'attachment', $perpage = 25 )
 	{
 		return self::getPosts( $atts, $extra, $posttypes, $perpage );

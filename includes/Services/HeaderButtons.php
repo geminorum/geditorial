@@ -18,9 +18,10 @@ class HeaderButtons extends gEditorial\Service
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
 
 		// TODO: move to `Barcodes` Service
-		add_filter( 'kses_allowed_protocols', function ( $protocols ) {
-			return array_merge( $protocols, [ 'binaryeye' ] );
-		} );
+		add_filter( 'kses_allowed_protocols',
+			static function ( $protocols ) {
+				return array_merge( $protocols, [ 'binaryeye' ] );
+			} );
 	}
 
 	public static function register( $name, $atts = [], $override = FALSE )

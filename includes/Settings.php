@@ -416,15 +416,12 @@ class Settings extends WordPress\Main
 		if ( ! $url )
 			return '';
 
-		if ( is_null( $title ) )
-			$title = _x( 'See More Information', 'Settings', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'a', [
 			'href'   => $url,
 			'target' => '_blank',
 			'rel'    => 'noreferrer',
 			'data'   => [
-				'tooltip'     => $title,
+				'tooltip'     => $title ?? _x( 'See More Information', 'Settings', 'geditorial-admin' ),
 				'tooltip-pos' => Core\HTML::rtl() ? 'left' : 'right',
 			],
 		], Core\HTML::getDashicon( $icon ) );
@@ -906,8 +903,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Paired Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can assign paired defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1468,8 +1465,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1481,8 +1478,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1494,8 +1491,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1507,8 +1504,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1520,8 +1517,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1533,8 +1530,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Reports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1546,8 +1543,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Tools Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can access data tools.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1559,8 +1556,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Imports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can access data imports.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1573,8 +1570,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1586,8 +1583,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Prints Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1599,8 +1596,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Uploads Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1612,8 +1609,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Public Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can access the links to public endpoints in the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1625,8 +1622,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Overview Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1638,8 +1635,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Manage Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1651,8 +1648,8 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
-			'exclude'     => is_null( $excludes ) ? ( is_null( $roles ) ? self::rolesExcluded() : '' ) : $excludes,
-			'values'      => is_null( $roles ) ? WordPress\User::getAllRoleList() : $roles,
+			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
+			'values'      => $roles ?? WordPress\User::getAllRoleList(),
 		];
 	}
 
@@ -1974,9 +1971,11 @@ class Settings extends WordPress\Main
 		$extra = [];
 
 		if ( isset( $_REQUEST['count'] ) )
-			/* translators: `%s`: count */
-			$extra[] = sprintf( _x( '%s item(s) counted!', 'Settings: Message', 'geditorial-admin' ),
-				Core\Number::format( $_REQUEST['count'] ) );
+			$extra[] = sprintf(
+				/* translators: `%s`: count */
+				_x( '%s item(s) counted!', 'Settings: Message', 'geditorial-admin' ),
+				Core\Number::format( $_REQUEST['count'] )
+			);
 
 		return count( $extra ) ? ' ('.implode( WordPress\Strings::separator(), $extra ).')' : '';
 	}
@@ -2087,22 +2086,22 @@ class Settings extends WordPress\Main
 			/* translators: `%s`: count */
 			$message = _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' );
 
-		if ( is_null( $count ) )
-			$count = self::req( 'count', 0 );
-
-		return Core\HTML::notice( sprintf( $message, Core\Number::format( $count ) ), $class.' fade' );
+		return Core\HTML::notice( sprintf( $message, Core\Number::format( $count ?? self::req( 'count', 0 ) ) ), $class.' fade' );
 	}
 
 	public static function cheatin( $message = NULL )
 	{
-		echo Core\HTML::error( is_null( $message ) ? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) : $message );
+		echo Core\HTML::error( $message ?? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) );
 	}
 
 	public static function huh( $message = NULL )
 	{
 		if ( $message )
-			/* translators: `%s`: message */
-			return sprintf( _x( 'huh? %s', 'Settings: Message', 'geditorial-admin' ), $message );
+			return sprintf(
+				/* translators: `%s`: message */
+				_x( 'huh? %s', 'Settings: Message', 'geditorial-admin' ),
+				$message
+			);
 
 		return _x( 'huh?', 'Settings: Message', 'geditorial-admin' );
 	}
@@ -2223,7 +2222,7 @@ class Settings extends WordPress\Main
 		echo '</div>';
 	}
 
-	// FIXME: DROP THIS
+	// NOTE: THE OLD CLASSIC WAY!
 	public static function moduleSections_OLD( $page )
 	{
 		global $wp_settings_sections, $wp_settings_fields;
@@ -2518,51 +2517,57 @@ class Settings extends WordPress\Main
 			return;
 
 		$args = self::atts( [
-			'title'        => '&nbsp;',
-			'label_for'    => '',
-			'type'         => 'enabled',
-			'field'        => FALSE,
-			'values'       => [],
-			'exclude'      => '',
-			'none_title'   => NULL, // select option none title
-			'none_value'   => NULL, // select option none value
-			'filter'       => FALSE, // will use via sanitize
-			'callback'     => FALSE, // callable for `callback` type
-			'dir'          => FALSE,
-			'disabled'     => FALSE,
-			'readonly'     => FALSE,
-			'default'      => '',
-			'defaults'     => [], // default value to ignore && override the saved
-			'description'  => isset( $atts['desc'] ) ? $atts['desc'] : '',
-			'before'       => '', // html to print before field
-			'after'        => '', // html to print after field
-			'field_class'  => '', // formally just class!
-			'class'        => '', // now used on wrapper
+			'title'       => '&nbsp;',
+			'description' => isset( $atts['desc'] ) ? $atts['desc'] : '',
+			'label_for'   => '',
+			'type'        => 'enabled',
+			'field'       => FALSE,
+			'values'      => [],
+			'exclude'     => '',
+
+			'none_title'     => NULL,    // select option none title
+			'none_value'     => NULL,    // select option none value
+			'template_value' => '%s',    // used on display value output
+			'filter'         => FALSE,   // will use via sanitize
+			'callback'       => FALSE,   // callable for `callback` type
+			'dir'            => FALSE,
+			'disabled'       => FALSE,
+			'readonly'       => FALSE,
+
+			'default'  => '',
+			'defaults' => [],   // default value to ignore && override the saved
+
 			'option_group' => 'settings',
 			'option_base'  => 'geditorial',
-			'options'      => [], // saved options
-			'id_name_cb'   => FALSE, // id/name generator callback
-			'id_attr'      => FALSE, // override
-			'name_attr'    => FALSE, // override
-			'step_attr'    => '1', // for number type
-			'min_attr'     => '0', // for number type
-			'rows_attr'    => '5', // for textarea type
-			'cols_attr'    => '45', // for textarea type
+			'options'      => [],             // saved options
+
+			'id_name_cb' => FALSE,   // id/name generator callback
+			'id_attr'    => FALSE,   // override
+			'name_attr'  => FALSE,   // override
+			'step_attr'  => '1',     // for number type
+			'min_attr'   => '0',     // for number type
+			'rows_attr'  => '5',     // for textarea type
+			'cols_attr'  => '45',    // for textarea type
+
 			'placeholder'  => FALSE,
 			'constant'     => FALSE, // override value if constant defined & disabling
-			'data'         => [], // data attr
-			'extra'        => [], // extra args to pass to deeper generator
-			'hidden'       => [], // extra hidden values
-			'wrap'         => FALSE,
-			'cap'          => NULL,
 
+			'data'   => [],     // data attr
+			'extra'  => [],     // extra args to pass to deeper generator
+			'hidden' => [],     // extra hidden values
+			'cap'    => NULL,
+
+			'wrap'        => FALSE,
+			'class'       => '',      // now used on wrapper
+			'field_class' => '',      // formally just class!
+			'before'      => '',      // html to print before field
+			'after'       => '',      // html to print after field
+
+			'string_select'   => self::showOptionNone(),
 			'string_disabled' => _x( 'Disabled', 'Settings', 'geditorial-admin' ),
 			'string_enabled'  => _x( 'Enabled', 'Settings', 'geditorial-admin' ),
-			'string_select'   => self::showOptionNone(),
 			'string_empty'    => _x( 'No options!', 'Settings', 'geditorial-admin' ),
 			'string_noaccess' => _x( 'You do not have access to change this option.', 'Settings', 'geditorial-admin' ),
-
-			'template_value' => '%s', // used on display value output
 		], $atts );
 
 		if ( TRUE === $args['wrap'] )
@@ -2603,19 +2608,25 @@ class Settings extends WordPress\Main
 
 		if ( is_array( $args['exclude'] ) )
 			$exclude = array_filter( $args['exclude'] );
+
 		else if ( $args['exclude'] )
 			$exclude = array_filter( explode( ',', $args['exclude'] ) );
+
 		else
 			$exclude = [];
 
 		if ( $args['id_name_cb'] ) {
+
 			list( $id, $name ) = call_user_func( $args['id_name_cb'], $args );
+
 		} else {
+
 			$id   = $args['id_attr'] ? $args['id_attr'] : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.Core\HTML::escape( $args['field'] );
 			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.Core\HTML::escape( $args['field'] ).']';
 		}
 
 		if ( isset( $args['options'][$args['field']] ) ) {
+
 			$value = $args['options'][$args['field']];
 
 			// override: using settings default instead of module's option
@@ -2625,6 +2636,7 @@ class Settings extends WordPress\Main
 		}
 
 		if ( $args['constant'] && defined( $args['constant'] ) ) {
+
 			$value = constant( $args['constant'] );
 
 			$args['disabled'] = TRUE;
@@ -2678,7 +2690,8 @@ class Settings extends WordPress\Main
 
 				$args['description'] = FALSE;
 
-			break;
+				break;
+
 			case 'enabled':
 
 				$html = Core\HTML::tag( 'option', [
@@ -2695,8 +2708,7 @@ class Settings extends WordPress\Main
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => Core\HTML::attrClass( $args['field_class'], '-type-enabled' ),
-					// `select` doesn't have a `readonly`, keeping `disabled` with hidden input
-					// @REF: https://stackoverflow.com/a/368834
+					// NOTE: `select` tag doesn't have a `readonly`, keeping `disabled` with hidden input // @REF: https://stackoverflow.com/a/368834
 					'disabled' => $args['disabled'] || $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
@@ -2705,7 +2717,8 @@ class Settings extends WordPress\Main
 				if ( $args['readonly'] )
 					Core\HTML::inputHidden( $name, $value );
 
-			break;
+				break;
+
 			case 'disabled':
 
 				$html = Core\HTML::tag( 'option', [
@@ -2722,8 +2735,7 @@ class Settings extends WordPress\Main
 					'id'       => $id,
 					'name'     => $name,
 					'class'    => Core\HTML::attrClass( $args['field_class'], '-type-disabled' ),
-					// `select` doesn't have a `readonly`, keeping `disabled` with hidden input
-					// @REF: https://stackoverflow.com/a/368834
+					// NOTE: `select` tag doesn't have a `readonly`, keeping `disabled` with hidden input // @REF: https://stackoverflow.com/a/368834
 					'disabled' => $args['disabled'] || $args['readonly'],
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
@@ -2732,7 +2744,8 @@ class Settings extends WordPress\Main
 				if ( $args['readonly'] )
 					Core\HTML::inputHidden( $name, $value );
 
-			break;
+				break;
+
 			case 'text':
 
 				if ( ! $args['field_class'] )
@@ -2783,7 +2796,8 @@ class Settings extends WordPress\Main
 					] );
 				}
 
-			break;
+				break;
+
 			case 'number':
 
 				if ( ! $args['field_class'] )
@@ -2807,7 +2821,8 @@ class Settings extends WordPress\Main
 					'data'        => $args['data'],
 				] );
 
-			break;
+				break;
+
 			case 'url':
 
 				if ( ! $args['field_class'] )
@@ -2829,7 +2844,8 @@ class Settings extends WordPress\Main
 					'data'        => $args['data'],
 				] );
 
-			break;
+				break;
+
 			case 'color':
 
 				if ( ! $args['field_class'] )
@@ -2851,11 +2867,12 @@ class Settings extends WordPress\Main
 					'data'        => $args['data'],
 				] );
 
-				// CAUTION: module must enqueue `wp-color-picker` styles/scripts
+				// NOTE: CAUTION: module must enqueue `wp-color-picker` styles/scripts
 				// @SEE: `Scripts::enqueueColorPicker()`
 				$scripts[] = '$("#'.$id.'").wpColorPicker();';
 
-			break;
+				break;
+
 			case 'email':
 
 				if ( ! $args['field_class'] )
@@ -2877,7 +2894,8 @@ class Settings extends WordPress\Main
 					'data'        => $args['data'],
 				] );
 
-			break;
+				break;
+
 			case 'checkbox':
 
 				$html = Core\HTML::tag( 'input', [
@@ -2897,7 +2915,8 @@ class Settings extends WordPress\Main
 
 				$args['description'] = FALSE;
 
-			break;
+				break;
+
 			case 'checkboxes':
 			case 'checkboxes-values':
 
@@ -2912,7 +2931,7 @@ class Settings extends WordPress\Main
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
-							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
+							'value'    => $args['none_value'] ?? '1',
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
 							'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
@@ -2959,7 +2978,8 @@ class Settings extends WordPress\Main
 					Core\HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
-			break;
+				break;
+
 			case 'checkbox-panel':
 			case 'checkboxs-panel':
 
@@ -2974,7 +2994,7 @@ class Settings extends WordPress\Main
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
-							'value'    => is_null( $args['none_value'] ) ? '1' : $args['none_value'],
+							'value'    => $args['none_value'] ?? '1',
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox', '-option-none' ),
 							'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
@@ -3016,7 +3036,8 @@ class Settings extends WordPress\Main
 					Core\HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
-			break;
+				break;
+
 			case 'radio':
 
 				if ( $args['values'] && count( $args['values'] ) ) {
@@ -3027,7 +3048,7 @@ class Settings extends WordPress\Main
 							'type'     => 'radio',
 							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
 							'name'     => $name,
-							'value'    => is_null( $args['none_value'] ) ? FALSE : $args['none_value'],
+							'value'    => $args['none_value'] ?? FALSE,
 							'checked'  => in_array( $args['none_value'], (array) $value ),
 							'class'    => Core\HTML::attrClass( $args['field_class'], '-type-radio', '-option-none' ),
 							'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
@@ -3061,7 +3082,8 @@ class Settings extends WordPress\Main
 					}
 				}
 
-			break;
+				break;
+
 			case 'select':
 
 				if ( FALSE !== $args['values'] ) {
@@ -3110,7 +3132,8 @@ class Settings extends WordPress\Main
 					Core\HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
-			break;
+				break;
+
 			case 'textarea':
 			case 'textarea-quicktags':
 			case 'textarea-quicktags-tokens':
@@ -3174,7 +3197,7 @@ class Settings extends WordPress\Main
 							'mode'         => 'htmlmixed',
 						];
 
-					// CAUTION: module must enqueue `code-editor` styles/scripts
+					// NOTE: CAUTION: module must enqueue `code-editor` styles/scripts
 					// @SEE: `Scripts::enqueueCodeEditor()`
 					$scripts[] = sprintf( 'wp.CodeMirror.fromTextArea(document.getElementById("%s"), %s);',
 						$id, wp_json_encode( $args['values'] ) );
@@ -3193,7 +3216,8 @@ class Settings extends WordPress\Main
 					'data'        => $args['data'],
 				], esc_textarea( $value ) );
 
-			break;
+				break;
+
 			case 'page':
 
 				if ( ! $args['values'] )
@@ -3243,7 +3267,7 @@ class Settings extends WordPress\Main
 					$args['description'] = FALSE;
 				}
 
-			break;
+				break;
 
 			case 'navmenu':
 
@@ -3289,7 +3313,7 @@ class Settings extends WordPress\Main
 					], $html );
 
 					if ( $args['readonly'] )
-					Core\HTML::inputHidden( $name, $value );
+						Core\HTML::inputHidden( $name, $value );
 
 				} else {
 
@@ -3341,9 +3365,10 @@ class Settings extends WordPress\Main
 				], $html );
 
 				if ( $args['readonly'] )
-				Core\HTML::inputHidden( $name, $value );
+					Core\HTML::inputHidden( $name, $value );
 
-			break;
+				break;
+
 			case 'user':
 
 				if ( ! $args['values'] )
@@ -3385,9 +3410,10 @@ class Settings extends WordPress\Main
 				], $html );
 
 				if ( $args['readonly'] )
-				Core\HTML::inputHidden( $name, $value );
+					Core\HTML::inputHidden( $name, $value );
 
-			break;
+				break;
+
 			case 'priority':
 
 				if ( ! $args['values'] )
@@ -3422,7 +3448,8 @@ class Settings extends WordPress\Main
 				if ( $args['readonly'] )
 					Core\HTML::inputHidden( $name, $value );
 
-			break;
+				break;
+
 			case 'button':
 
 				self::submitButton(
@@ -3432,7 +3459,8 @@ class Settings extends WordPress\Main
 					$args['values']
 				);
 
-			break;
+				break;
+
 			case 'file':
 
 				echo Core\HTML::tag( 'input', [
@@ -3446,7 +3474,8 @@ class Settings extends WordPress\Main
 					'accept'   => empty( $args['values'] ) ? FALSE : implode( ',', $args['values'] ),
 				] );
 
-			break;
+				break;
+
 			case 'posttypes':
 
 				// FIXME: false to disable
@@ -3488,7 +3517,8 @@ class Settings extends WordPress\Main
 
 				echo '</ul></div>';
 
-			break;
+				break;
+
 			case 'taxonomies':
 
 				if ( ! $args['values'] )
@@ -3528,7 +3558,8 @@ class Settings extends WordPress\Main
 
 				echo '</ul></div>';
 
-			break;
+				break;
+
 			case 'object':
 
 				if ( $args['values'] ) {
@@ -3565,7 +3596,8 @@ class Settings extends WordPress\Main
 					Core\HTML::desc( $args['string_empty'], TRUE, '-empty' );
 				}
 
-			break;
+				break;
+
 			case 'callback':
 
 				if ( is_callable( $args['callback'] ) ) {
@@ -3575,17 +3607,19 @@ class Settings extends WordPress\Main
 
 				} else if ( Core\WordPress::isDev() ) {
 
-					echo 'Error: Setting Is Not Callable!';
+					echo 'Error: Setting Is NOT Callable!';
 				}
 
-			break;
+				break;
+
 			case 'noaccess':
 
 				echo Core\HTML::tag( 'span', [
 					'class' => '-type-noaccess',
 				], $args['string_noaccess'] );
 
-			break;
+				break;
+
 			case 'custom':
 
 				if ( ! is_array( $args['values'] ) )
@@ -3593,12 +3627,14 @@ class Settings extends WordPress\Main
 				else
 					echo $value;
 
-			break;
+				break;
+
 			case 'debug':
 
 				self::dump( $args['options'] );
 
-			break;
+				break;
+
 			default:
 
 				echo 'Error: setting type not defind!';
@@ -3622,8 +3658,8 @@ class Settings extends WordPress\Main
 			echo '</'.$args['wrap'].'>';
 	}
 
-	// FIXME: support more types!
-	// WTF: not possible to pass fields with arrays (check-boxes/multiple-select)
+	// TODO: support more types!
+	// FIXME: WTF: not possible to pass fields with arrays (check-boxes/multiple-select)
 	private static function fieldType_getObjectForm( $args, $fields, $name_prefix = '', $options = [] )
 	{
 		$group = '';

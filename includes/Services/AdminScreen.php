@@ -98,7 +98,7 @@ class AdminScreen extends gEditorial\Service
 	 * @source https://core.trac.wordpress.org/ticket/19343
 	 * @see: `quick_edit_enabled_for_post_type`
 	 *
-	 * @param  null|object $screen
+	 * @param object $screen
 	 * @return void
 	 */
 	public static function disableQuickEdit( $screen = NULL )

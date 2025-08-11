@@ -17,23 +17,30 @@ class ShortCode extends WordPress\Main
 		return WordPress\ShortCode::wrap( $html, $suffix, $args, $block, $extra, static::BASE );
 	}
 
-	// term as title of the list
+	/**
+	 * Retrieves given term as title of the list.
+	 *
+	 * @param int|object $term_or_id
+	 * @param string $taxonomy
+	 * @param array $atts
+	 * @return string
+	 */
 	public static function termTitle( $term_or_id, $taxonomy = 'category', $atts = [] )
 	{
 		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
 			return '';
 
 		$args = self::atts( [
-			'title'          => NULL, // '<a href="%2$s">%1$s</a>', // FALSE to disable
-			'title_cb'       => FALSE, // callback for title
-			'title_link'     => NULL, // `anchor` for slug anchor, FALSE to disable
+			'title'          => NULL,                             // '<a href="%2$s">%1$s</a>', // `FALSE` to disable
+			'title_cb'       => FALSE,                            // Call-back for title
+			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE, // callback for title attr
+			'title_title_cb' => FALSE,                            // Call-back for title attr
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'term-%2$s',
 			'title_class'    => '-title',
 			'title_dummy'    => '<span class="-dummy"></span>',
-			'title_after'    => '', // '<div class="-desc">%3$s</div>',
+			'title_after'    => '',                               // '<div class="-desc">%3$s</div>',
 		], $atts );
 
 		$text = WordPress\Term::title( $term );
@@ -110,7 +117,16 @@ class ShortCode extends WordPress\Main
 		return $args['title'];
 	}
 
-	// term as an item on the list
+	/**
+	 * Retrieves given term as an item on the list.
+	 *
+	 * @param int|object $term
+	 * @param array $atts
+	 * @param string $before
+	 * @param string $after
+	 * @param string $fallback
+	 * @return string
+	 */
 	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -118,12 +134,12 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'     => TRUE,
-			'item_text'     => NULL, // callback or use %s for post title
-			'item_wrap'     => '', // use %s for item title / or html tag
-			'item_title'    => '', // use %s for post title
+			'item_text'     => NULL,                             // Call-back or use `%s` for post title
+			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
+			'item_title'    => '',                               // Use `%s` for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => FALSE, // $term->taxonomy.'-%2$s',
+			'item_anchor'   => FALSE,                            // $term->taxonomy.'-%2$s',
 			'item_class'    => '-item do-sincethen',
 			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
@@ -193,7 +209,16 @@ class ShortCode extends WordPress\Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
-	// term as an image on the list
+	/**
+	 * Retrieves given term as an image on the list.
+	 *
+	 * @param int|object $term
+	 * @param array $atts
+	 * @param string $before
+	 * @param string $after
+	 * @param string $fallback
+	 * @return string
+	 */
 	public static function termImage( $term, $atts = [], $before = '', $after = '', $fallback = '' )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -201,9 +226,9 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'           => TRUE,
-			'item_text'           => NULL,                             // callback or use %s for term title
-			'item_wrap'           => '',                               // use %s for item title / or html tag
-			'item_title'          => '',                               // use %s for term title
+			'item_text'           => NULL,                             // Call-back or use `%s` for term title
+			'item_wrap'           => '',                               // Use `%s` for item title / or HTML tag
+			'item_title'          => '',                               // Use `%s` for term title
 			'item_title_cb'       => FALSE,
 			'item_tag'            => 'li',
 			'item_anchor'         => FALSE,                            // $term->taxonomy.'-%2$s',
@@ -214,8 +239,8 @@ class ShortCode extends WordPress\Main
 			'item_image_tile'     => NULL,
 			'item_image_metakey'  => NULL,
 			'item_image_size'     => NULL,
-			'item_image_loading'  => 'lazy',                           // FALSE to disable
-			'item_image_decoding' => 'async',                          // FALSE to disable
+			'item_image_loading'  => 'lazy',                           // `FALSE` to disable
+			'item_image_decoding' => 'async',                          // `FALSE` to disable
 			'item_image_empty'    => FALSE,
 		], $atts );
 
@@ -299,7 +324,7 @@ class ShortCode extends WordPress\Main
 	}
 
 	/**
-	 * Retrieves post-type as title of the list
+	 * Retrieves given post-type as title of the list.
 	 *
 	 * @param string|object $posttype
 	 * @param array $atts
@@ -312,10 +337,10 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // callback for title
+			'title_cb'       => FALSE,                            // Call-back for title
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // callback for title attribute
+			'title_title_cb' => FALSE,                            // Call-back for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',
@@ -377,7 +402,13 @@ class ShortCode extends WordPress\Main
 		return $args['title'];
 	}
 
-	// taxonomy as title of the list
+	/**
+	 * Retrieves given taxonomy as title of the list.
+	 *
+	 * @param string|object $taxonomy
+	 * @param array $atts
+	 * @return string
+	 */
 	public static function taxonomyTitle( $taxonomy = NULL, $atts = [] )
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
@@ -385,10 +416,10 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // callback for title
+			'title_cb'       => FALSE,                            // Call-back for title
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // callback for title attribute
+			'title_title_cb' => FALSE,                            // Call-back for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',
@@ -450,14 +481,21 @@ class ShortCode extends WordPress\Main
 		return $args['title'];
 	}
 
+	/**
+	 * Retrieves given post as title of the list.
+	 *
+	 * @param int|object $post
+	 * @param array $atts
+	 * @return string
+	 */
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
 		$args = self::atts( [
 			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // callback for title
+			'title_cb'       => FALSE,                            // Call-back for title
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // callback for title attribute
+			'title_title_cb' => FALSE,                            // Call-back for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'post-%2$s',
 			'title_class'    => '-title',
@@ -516,7 +554,15 @@ class ShortCode extends WordPress\Main
 		return $args['title'];
 	}
 
-	// post as item in the list
+	/**
+	 * Retrieves given post as an item on the list.
+	 *
+	 * @param int|object $post
+	 * @param array $atts
+	 * @param string $before
+	 * @param string $after
+	 * @return string
+	 */
 	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -524,7 +570,7 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'     => TRUE,
-			'item_text'     => NULL,                             // Callback or use `%s` for post title
+			'item_text'     => NULL,                             // Call-back or use `%s` for post title
 			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
 			'item_title'    => '',                               // Use `%s` for post title / or `caption` for attachment caption
 			'item_title_cb' => FALSE,
@@ -585,7 +631,7 @@ class ShortCode extends WordPress\Main
 
 			if ( TRUE === $args['item_link'] ) {
 
-				// avoid linking to the same page
+				// Avoid linking to the same page
 				if ( is_singular() && ( $current = WordPress\Post::get() ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
@@ -624,11 +670,14 @@ class ShortCode extends WordPress\Main
 			}
 		}
 
-		// TODO: use `WordPress\Media::getAttachmentFileSize()`
-		if ( 'attachment' == $post->post_type && $args['item_filesize'] ) {
-			$size = TRUE === $args['item_filesize'] ? '&nbsp;<span class="-filesize">(%s)</span>' : $args['item_filesize'];
-			$item.= sprintf( $size, Core\HTML::wrapLTR( Core\File::formatSize( filesize( get_attached_file( $post->ID ) ), 2 ) ) );
-		}
+		if ( $args['item_filesize'] && 'attachment' === $post->post_type )
+			$item.= WordPress\Media::getAttachmentFileSize(
+				$post->ID,
+				TRUE,
+				TRUE === $args['item_filesize']
+					? '&nbsp;<span class="-filesize">(%s)</span>'
+					: $args['item_filesize']
+			);
 
 		if ( $args['item_after_cb'] && is_callable( $args['item_after_cb'] ) ) {
 			$item.= call_user_func_array( $args['item_after_cb'], [ $post, $args, $item ] );
@@ -659,7 +708,7 @@ class ShortCode extends WordPress\Main
 	}
 
 	/**
-	 * Retrieves post as an image on the list.
+	 * Retrieves given post as an image on the list.
 	 *
 	 * @param object $post
 	 * @param array $atts
@@ -675,7 +724,7 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'item_link'           => TRUE,
-			'item_text'           => NULL,                             // Callback or use `%s` for post title
+			'item_text'           => NULL,                             // Call-back or use `%s` for post title
 			'item_wrap'           => '',                               // Use `%s` for item title / or HTML tag
 			'item_title'          => '',                               // Use `%s` for post title
 			'item_title_cb'       => FALSE,
@@ -772,6 +821,16 @@ class ShortCode extends WordPress\Main
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 
+	/**
+	 * Retrieves default arguments for post/term listing.
+	 *
+	 * @param string $posttype
+	 * @param string $taxonomy
+	 * @param array $posttypes
+	 * @param array $taxonomies
+	 * @param string $module
+	 * @return array
+	 */
 	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [], $taxonomies = [], $module = NULL )
 	{
 		return [
@@ -787,11 +846,11 @@ class ShortCode extends WordPress\Main
 			'id'      => '',   // DEPRECATED
 			'slug'    => '',
 
-			'title'          => NULL,                                                            // FALSE to disable
+			'title'          => NULL,                                                            // `FALSE` to disable
 			'title_cb'       => FALSE,
-			'title_link'     => NULL,                                                            // `anchor` for slug anchor, FALSE to disable
+			'title_link'     => NULL,                                                            // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
-			'title_title_cb' => FALSE,                                                           // callback for title attr
+			'title_title_cb' => FALSE,                                                           // Call-back for title attr
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
 			'title_class'    => '-title',
@@ -801,9 +860,9 @@ class ShortCode extends WordPress\Main
 
 			'item_cb'       => FALSE,
 			'item_link'     => TRUE,
-			'item_text'     => NULL,                             // callback or use %s for post title
-			'item_wrap'     => '',                               // use %s for item title / or html tag
-			'item_title'    => '',                               // use %s for post title
+			'item_text'     => NULL,                             // Call-back or use `%s` for post title
+			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
+			'item_title'    => '',                               // Use `%s` for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
 			'item_anchor'   => FALSE,                            // $posttype.'-%2$s',
@@ -817,8 +876,8 @@ class ShortCode extends WordPress\Main
 			'item_image_tile'     => NULL,
 			'item_image_metakey'  => empty( $posttype ) ? 'image' : '_thumbnail_id',
 			'item_image_size'     => NULL,
-			'item_image_loading'  => 'lazy',                                           // FALSE to disable
-			'item_image_decoding' => 'async',                                          // FALSE to disable
+			'item_image_loading'  => 'lazy',                                           // `FALSE` to disable
+			'item_image_decoding' => 'async',                                          // `FALSE` to disable
 			'item_image_empty'    => FALSE,
 
 			'list_tag'   => 'ul',
@@ -827,7 +886,7 @@ class ShortCode extends WordPress\Main
 			'limit'         => -1,
 			'order'         => 'ASC',
 			'orderby'       => '',            // empty for default
-			'order_cb'      => FALSE,         // NULL for default order by paired meta
+			'order_cb'      => FALSE,         // `NULL` for default order by paired meta
 			'order_start'   => 'start',       // meta field for ordering
 			'order_order'   => 'order',       // meta field for ordering
 			'order_before'  => FALSE,
@@ -844,9 +903,9 @@ class ShortCode extends WordPress\Main
 
 			'context' => NULL,
 			'wrap'    => TRUE,
-			'before'  => '',     // html after wrap
-			'after'   => '',     // html before wrap
-			'class'   => '',     // wrap css class
+			'before'  => '',     // HTML after wrap
+			'after'   => '',     // HTML before wrap
+			'class'   => '',     // wrap CSS class
 		];
 	}
 
@@ -1018,7 +1077,10 @@ class ShortCode extends WordPress\Main
 
 			// exclude paired post-type
 			if ( empty( $args['posttypes'] ) )
-				$query['post_type'] = Core\Arraay::stripByValue( WordPress\Taxonomy::object( $taxonomy )->object_type, $posttype );
+				$query['post_type'] = array_diff(
+					WordPress\Taxonomy::types( $taxonomy ),
+					Core\Arraay::prepString( $posttype, $args['exclude_posttypes'] ),
+				);
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
 
@@ -1047,7 +1109,7 @@ class ShortCode extends WordPress\Main
 
 			$query['tax_query'] = [ [
 				'taxonomy' => $taxonomy ?: $term->taxonomy,
-				'terms'    => [ $term->ID ],
+				'terms'    => [ $term->term_id ],
 			] ];
 
 			if ( $args['exclude_posttypes'] )
@@ -1097,7 +1159,7 @@ class ShortCode extends WordPress\Main
 
 		if ( 'assigned' == $list ) {
 
-			if ( is_null( $args['title'] ) )
+			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = ( 'all' === $args['id'] || 'all' === $args['term_id'] )
 					? self::posttypeTitle( $posttype, $args )
 					: self::termTitle( is_array( $term ) ? array_values($term)[0] : $term, $taxonomy, $args );
@@ -1106,14 +1168,14 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'paired' == $list || 'connected' == $list ) {
 
-			if ( is_null( $args['title'] ) )
+			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $post, $args );
 
 			$ref = $post;
 
 		} else if ( 'attached' == $list ) {
 
-			if ( is_null( $args['title'] ) )
+			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $parent, $args );
 
 			$ref = $parent;
@@ -1165,7 +1227,7 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
+	// NOTE: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		self::_dep( 'ShortCode::listPosts()' );
@@ -1218,7 +1280,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'all' == $args['id'] ) {
 
-			// do nothing, will collect all posttype: e.g. all entries of all sections
+			// DO NOTHING: will collect all posttype: e.g. all entries of all sections.
 
 		} else if ( $args['id'] ) {
 
@@ -1323,7 +1385,7 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// FIXME: DEPRECATED: use `Shortcode::listPosts( 'paired' )`
+	// NOTE: DEPRECATED: use `Shortcode::listPosts( 'paired' )`
 	// OLD: `::getAssocPosts()`
 	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{

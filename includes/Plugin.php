@@ -269,6 +269,7 @@ class Plugin
 		}
 	}
 
+	// TODO: Move to `ClassicEditor` Service
 	public function mce_buttons( $buttons )
 	{
 		array_push( $buttons, '|' );
@@ -279,6 +280,7 @@ class Plugin
 		return $buttons;
 	}
 
+	// TODO: Move to `ClassicEditor` Service
 	public function mce_external_plugins( $plugin_array )
 	{
 		foreach ( $this->editor_buttons as $plugin => $filepath )
@@ -426,7 +428,6 @@ class Plugin
 		return $options;
 	}
 
-	// FIXME: DROP THIS
 	public function upgrade_old_options()
 	{
 		$options  = get_option( 'geditorial_options' );
@@ -638,6 +639,7 @@ class Plugin
 		return FALSE;
 	}
 
+	// TODO: Move to `ClassicEditor` Service
 	public function register_editor_button( $button, $filepath )
 	{
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;

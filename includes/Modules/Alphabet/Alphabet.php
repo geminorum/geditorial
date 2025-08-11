@@ -143,13 +143,14 @@ class Alphabet extends gEditorial\Module
 			if ( $term = WordPress\Term::get( $args['term'] ) )
 				$query_args['tax_query'] = [ [
 					'taxonomy' => $term->taxonomy,
-					'terms'    => [ $term->ID ],
+					'terms'    => [ $term->term_id ],
 				] ];
 
 			$query = new \WP_Query();
 			$posts = $query->query( $query_args );
 
-			// FIXME: check for empty
+			if ( empty( $posts ) )
+				return $content;
 
 			$current = $html = $list = '';
 			$actives = [];
@@ -303,6 +304,9 @@ class Alphabet extends gEditorial\Module
 
 			$query = new \WP_Term_Query();
 			$terms = $query->query( $query_args );
+
+			if ( empty( $terms ) )
+				return $content;
 
 			$current = $html = $list = '';
 			$actives = [];

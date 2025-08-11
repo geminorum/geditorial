@@ -24,6 +24,7 @@ class TermRelations extends gEditorial\Service
 		add_filter( 'get_object_terms', [ __CLASS__, 'get_object_terms' ], 8, 4 );
 	}
 
+	// TODO: register endpoint for rendered: `{prefix}/{post_id}/{taxonomy}`
 	public static function rest_api_init()
 	{
 		$taxonomies = self::getTaxonomies();

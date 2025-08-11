@@ -410,6 +410,9 @@ class Tabloid extends gEditorial\Module
 
 	private function _cleanup_view_data_for_post( $post, $context, $data )
 	{
+		unset( $data['guid'] );
+		unset( $data['class_list'] );
+		unset( $data['thumbnail_data'] );
 		unset( $data['meta_rendered'] );
 		unset( $data['units_rendered'] );
 		unset( $data['terms_rendered'] );

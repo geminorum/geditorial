@@ -47,11 +47,11 @@ class Calendars extends gEditorial\Service
 	/**
 	 * Retrieves the list of supported calendars.
 	 * @SEE `Almanac` Module
-	 * // @OLD: `Datetime::getDefualtCalendars()`
+	 * @OLD: `Datetime::getDefualtCalendars()`
 	 * @source https://unicode-org.github.io/icu/userguide/datetime/calendar/
 	 *
-	 * @param  bool  $filtered
-	 * @return array $defaults
+	 * @param bool $filtered
+	 * @return array
 	 */
 	public static function getDefualts( $filtered = FALSE )
 	{

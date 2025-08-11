@@ -7,10 +7,10 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
+// FIXME: Already included: https://github.com/tecnickcom/tc-lib-barcode
+
 class Barcodes extends gEditorial\Service
 {
-	// FIXME: Already included: https://github.com/tecnickcom/tc-lib-barcode
-
 	// @REF: https://github.com/hbgl/php-code-128-encoder
 	// NOTE: depends on `tecnickcom/tc-lib-barcode`
 	public static function encode( $data, $type )
