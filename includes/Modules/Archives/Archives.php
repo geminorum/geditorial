@@ -141,6 +141,7 @@ class Archives extends gEditorial\Module
 	{
 		return [
 			'taxonomy_query' => 'taxonomy_archives',
+			'term_query'     => 'term_archives',
 		];
 	}
 
@@ -227,16 +228,32 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'default_taxonomy_content', $default, $taxonomy );
 	}
 
+	// TODO: `[posts-assigned exclude_posttypes="product" /]`
+	private function _get_default_term_content( $taxonomy = NULL )
+	{
+		$default = '';
+
+		if ( WordPress\ShortCode::exists( 'posts-assigned' ) )
+			$default = '[posts-assigned term_id="{{_id}}" title="0" /]';
+
+		else if ( WordPress\ShortCode::exists( 'alphabet-posts' ) )
+			$default = '[alphabet-posts term="{{_id}}" list_mode="ul" posttype="any" /]';
+
+		return $this->filters( 'default_term_content', $default, $taxonomy );
+	}
+
 	private function _do_add_custom_queries()
 	{
 		$query = $this->constant( 'taxonomy_query' );
+		$term  = $this->constant( 'term_query' );
 
-		$this->filter_append( 'query_vars', $query );
+		$this->filter_append( 'query_vars', [ $query, $term ] );
 
 		foreach ( $this->taxonomies() as $taxonomy )
 			if ( $slug = $this->_taxonomy_archive_slug( $taxonomy ) )
 				// add_rewrite_rule( $slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
-				add_rewrite_rule( '^'.$slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
+				// add_rewrite_rule( '^'.$slug.'/?$', sprintf( 'index.php?%s=%s', $query, $taxonomy ), 'top' );
+				add_rewrite_rule( '^'.$slug.'/?([^/]*)/?$', sprintf( 'index.php?%s=%s&%s=$matches[1]', $query, $taxonomy, $term ), 'top' );
 	}
 
 	// not used yet!
@@ -283,6 +300,27 @@ class Archives extends gEditorial\Module
 	{
 		// No need to check for supported taxonomies, since we using `query_vars` filter.
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
+
+			if ( $term = get_term_by( 'slug', get_query_var( $this->constant( 'term_query' ) ), $taxonomy ) ) {
+
+				$this->current_queried = $term;
+
+				WordPress\Theme::resetQuery( [
+					// 'ID'         => 0,
+					'post_title' => $this->_get_term_archive_title( $term, $taxonomy ),
+					'post_type'  => 'page',
+					'is_page'    => TRUE,
+					'is_archive' => TRUE,
+				], [ $this, 'template_term_archives' ] );
+
+				$this->_template_include_extra( [ 'term-archives', 'term-archives-'.$taxonomy ] );
+
+				$this->filter( 'get_the_archive_title', 1, 12, 'term' );
+				$this->filter( 'document_title_parts', 1, 12, 'term' );
+				$this->filter_false( 'gtheme_navigation_crumb_archive' );
+
+				return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
+			}
 
 			$this->current_queried = $taxonomy;
 
@@ -380,6 +418,17 @@ class Archives extends gEditorial\Module
 		return Core\HTML::wrap( $form.$html, '-posttype-archives-content' );
 	}
 
+	public function get_the_archive_title_term( $title )
+	{
+		return WordPress\Term::title( $this->current_queried );
+	}
+
+	public function document_title_parts_term( $title )
+	{
+		$title['title'] = WordPress\Term::title( $this->current_queried );
+		return $title;
+	}
+
 	public function get_the_archive_title_taxonomy( $title )
 	{
 		return $this->_get_taxonomy_archive_title( $this->current_queried );
@@ -397,6 +446,36 @@ class Archives extends gEditorial\Module
 		$custom  = $settings ? $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default ) : $default;
 
 		return $this->filters( 'taxonomy_archive_title', $custom ?: $default, $taxonomy );
+	}
+
+	private function _get_term_archive_title( $term, $taxonomy = NULL )
+	{
+		return $this->filters( 'term_archive_title', WordPress\Term::title( $term ), $term, $taxonomy ?? $term->taxonomy );
+	}
+
+	public function template_term_archives( $content )
+	{
+		$html    = '';
+		$setting = $this->get_setting( 'term_'.$this->current_queried->taxonomy.'_content',
+			$this->_get_default_term_content( $this->current_queried->taxonomy ) );
+
+		$html.= self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermIntro' ], [
+			$this->current_queried,
+			[],
+			$this->key,
+		] );
+
+		if ( WordPress\Taxonomy::hierarchical( $this->current_queried->taxonomy ) )
+			$html.= self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermSubTerms' ], [
+				$this->current_queried,
+				[],
+				$this->key,
+			] );
+
+		$html.= Core\Text::replaceTokens( $setting, WordPress\Term::summary( $this->current_queried ) );
+		$html = $this->filters( 'term_archive_content', $html, $this->current_queried );
+
+		return Core\HTML::wrap( $html, '-term-archives-content' );
 	}
 
 	public function template_taxonomy_archives( $content )
