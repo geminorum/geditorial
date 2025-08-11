@@ -86,12 +86,18 @@ class RestAPI extends gEditorial\Service
 			if ( FALSE === $html )
 				continue;
 
-			$rendered[$taxonomy->rest_base] = [
-				'name'     => $taxonomy->name,
-				'title'    => $taxonomy->label,
-				'link'     => WordPress\Taxonomy::link( $taxonomy ),
-				'rendered' => $html,
-			];
+			$rendered[$taxonomy->rest_base] = apply_filters( static::BASE.'_restapi_terms_rendered',
+				[
+					'name'     => $taxonomy->name,
+					'title'    => $taxonomy->label,
+					'link'     => WordPress\Taxonomy::link( $taxonomy ),
+					'rendered' => $html,
+				],
+				$taxonomy,
+				$params,
+				$object_type,
+				$post
+			);
 		}
 
 		return $rendered;
