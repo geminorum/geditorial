@@ -269,14 +269,15 @@ class Byline extends gEditorial\Module
 					$this->_hook_general_supportedbox( $screen );
 
 				if ( $this->role_can( 'assign' ) )
-					$this->enqueue_asset_js( [
-						'route' => WordPress\Post::getRestRoute(),
-						'attr'  => $this->constant( 'restapi_attribute' ),
-					], $screen, [
-						'jquery',
-						'wp-api-request',
-						Scripts::enqueueColorBox(),
-					] );
+					// $this->enqueue_asset_js( [
+					// 	'route' => WordPress\Post::getRestRoute(),
+					// 	'attr'  => $this->constant( 'restapi_attribute' ),
+					// ], $screen, [
+					// 	'jquery',
+					// 	'wp-api-request',
+					// 	Scripts::enqueueColorBox(),
+					// ] );
+					Scripts::enqueueColorBox();
 
 				if ( $this->role_can( 'reports' ) )
 					$this->_register_header_button();
@@ -454,6 +455,7 @@ class Byline extends gEditorial\Module
 				'context'  => 'mainbutton',
 				'target'   => 'mainapp', // OR: `summaryreport`
 				'maxwidth' => '800px',
+				'refresh'  => $this->constant( 'restapi_attribute' ),
 			] ), 'field-wrap -buttons' );
 	}
 
