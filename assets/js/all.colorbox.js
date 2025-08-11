@@ -1,17 +1,47 @@
 (function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-
   const s = {
     overlay: '#cboxOverlay', // colorbox.js selector
     trigger: 'a.do-' + module + '-iframe, .do-' + module + '-iframe-for-child > a',
     parent: 'do-' + module + '-iframe-for-child',
     before: 'do-' + module + '-iframe',
-    after: 'hooked-' + module + '-iframe'
+    after: 'hooked-' + module + '-iframe',
+    pot: '.' + plugin._base + '-' + module + '-pot'
+  };
+
+  const u = {
+    inOut: (s, h) => {
+      $(s).fadeOut('fast', function () {
+        $(this).html(h).fadeIn();
+      });
+    },
+
+    mobile: () => ($(window).width() <= 782), // wp-core media query
+
+    // Access object child properties using a dot notation string
+    // @REF: https://stackoverflow.com/a/33397682
+    prop: (data, key) => key.split('.').reduce((a, b) => a[b], data)
   };
 
   const app = {
-    mobile: function () {
-      return ($(window).width() <= 782); // wp-core media query
+    request: null,
+
+    refresh: function (instance) {
+      const prop = instance.data('refresh'); // `terms_rendered.{$taxonomy}.rendered`
+      const route = instance.data('route');
+      if (!prop || !route) return;
+
+      app.request = wp.apiRequest({
+        url: plugin._restBase + route,
+        type: 'GET',
+        dataType: 'json'
+      })
+        .done((data) => {
+          u.inOut(instance.data('pot') || instance.closest(s.pot), u.prop(data, prop));
+        })
+
+        .fail((data) => {
+          console.log(data);
+        });
     },
 
     hook: function (mobile) {
@@ -35,6 +65,8 @@
             maxWidth: mobile ? '100%' : ($instance.data('max-width') || '980'),
             maxHeight: mobile ? '100%' : ($instance.data('max-height') || '640'),
             onClosed: function () {
+              app.refresh($instance);
+
               // @REF: https://www.sitepoint.com/jquery-custom-events/
               $.event.trigger({
                 type: 'gEditorial:ColorBox:Closed',
@@ -65,7 +97,7 @@
   };
 
   $(window).load(function () {
-    app.hook(app.mobile());
+    app.hook(u.mobile());
 
     $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
     $(document).trigger('gEditorial:Module:Loaded', [module, app]);

@@ -1228,11 +1228,13 @@ trait SubContents
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		$this->enqueue_asset_js( [], $screen, [
-			'jquery',
-			'wp-api-request',
-			Scripts::enqueueColorBox(),
-		] );
+		Scripts::enqueueColorBox();
+
+		// $this->enqueue_asset_js( [], $screen, [
+		// 	'jquery',
+		// 	'wp-api-request',
+		// 	Scripts::enqueueColorBox(),
+		// ] );
 	}
 
 	protected function subcontent_render_metabox_data_grid( $post, $context = NULL )
@@ -1324,6 +1326,9 @@ trait SubContents
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $post, [
 				'context' => 'mainbutton',
 				'target'  => 'grid',
+				'route'   => $this->restapi_get_route( 'markup', $post->ID ),
+				'pot'     => '#'.$this->classs( 'data-grid' ),
+				'refresh' => 'html',
 			] ), 'field-wrap -buttons' );
 
 		else

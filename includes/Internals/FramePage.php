@@ -30,6 +30,9 @@ trait FramePage
 			'refkey'       => 'linked',
 			'posttype'     => $post->post_type,
 			'target'       => 'none',
+			'refresh'      => FALSE,              // refresh data prop
+			'route'        => NULL,               // refresh rest route
+			'pot'          => NULL,               // refresh html target
 			'maxwidth'     => '95%',
 			'maxheight'    => '640',
 			'link'         => NULL,
@@ -70,6 +73,9 @@ trait FramePage
 				'module'        => $this->key,
 				$args['refkey'] => $post->ID,
 				'target'        => $args['target'] ?? 'none',
+				'refresh'       => $args['refresh'] ?: FALSE, // `terms_rendered.{$taxonomy}.rendered`
+				'route'         => $args['route'] ?? WordPress\Post::getRestRoute( $post ),
+				'pot'           => $args['pot'] ?? ( '#'.$this->classs( 'rendered' ) ),
 				'max-width'     => $args['maxwidth'],
 				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
