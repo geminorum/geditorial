@@ -553,7 +553,8 @@ class Byline extends gEditorial\Module
 
 	private function _register_rest_fields()
 	{
-		$this->filter( 'rest_terms_rendered_html', 4, 8, FALSE, 'gnetwork' );
+		$this->filter( 'restapi_terms_rendered_html', 5, 8, FALSE, $this->base );
+		$this->filter( 'rest_terms_rendered_html', 4, 8, FALSE, 'gnetwork' ); // DEPRECATED
 
 		register_rest_field(
 			$this->posttypes(),
@@ -564,6 +565,14 @@ class Byline extends gEditorial\Module
 				}
 			]
 		);
+	}
+
+	// @FILTER: `geditorial_restapi_terms_rendered_html`
+	public function restapi_terms_rendered_html( $rows, $taxonomy, $params, $object_type, $post )
+	{
+		return $this->taxonomy_supported( $taxonomy->name )
+			? $this->get_byline_for_post( $post, [], $rows )
+			: $rows;
 	}
 
 	// @FILTER: `gnetwork_rest_terms_rendered_html`

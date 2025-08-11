@@ -8,6 +8,95 @@ use geminorum\gEditorial\WordPress;
 
 class RestAPI extends gEditorial\Service
 {
+	const REST_FIELD_TERMS = 'terms_rendered';
+
+	public static function setup()
+	{
+		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ], 20 );
+	}
+
+	public static function rest_api_init()
+	{
+		if ( $posttypes = self::getSupportedPosttypes( NULL, 'terms_rendered' ) )
+			register_rest_field( $posttypes, static::REST_FIELD_TERMS, [
+				'get_callback' => [ __CLASS__, 'terms_rendered_get_callback' ],
+			] );
+	}
+
+	public static function getSupportedPosttypes( $posttypes = NULL, $context = NULL )
+	{
+		$excluded = [
+			'attachment',
+			'inbound_message',
+			'amp_validated_url',
+			'guest-author',      // Co-Authors Plus
+			'bp-email',
+			'wp_block',
+			'shop_order',        // WooCommerce
+			'shop_coupon',       // WooCommerce
+		];
+
+		if ( is_null( $posttypes ) )
+			$posttypes = get_post_types( [ 'show_in_rest' => TRUE ] );
+
+		return apply_filters( static::BASE.'_restapi_supported_posttypes',
+			array_diff_key( $posttypes, array_flip( $excluded ) ),
+			$context,
+			$excluded
+		);
+	}
+
+	public static function terms_rendered_get_callback( $params, $attr, $request, $object_type )
+	{
+		if ( empty( $params['id'] ) )
+			return [];
+
+		if ( ! $post = get_post( (int) $params['id'] ) )
+			return [];
+
+		$rendered = [];
+		$user_id  = get_current_user_id();
+		$ignored  = apply_filters( static::BASE.'_restapi_terms_rendered_ignored',
+			[
+				'post_format',
+			],
+			$params,
+			$object_type,
+			$post
+		);
+
+		foreach ( get_object_taxonomies( $object_type, 'objects' ) as $taxonomy ) {
+
+			if ( in_array( $taxonomy->name, $ignored, TRUE ) )
+				continue;
+
+			if ( ! is_taxonomy_viewable( $taxonomy )
+				&& ! WordPress\Taxonomy::can( $taxonomy, 'assign_terms', $user_id ) )
+					continue;
+
+			$rows = WordPress\Taxonomy::getTheTermRows( $taxonomy->name, $post );
+			$html = apply_filters( static::BASE.'_restapi_terms_rendered_html',
+				$rows,
+				$taxonomy,
+				$params,
+				$object_type,
+				$post
+			);
+
+			if ( FALSE === $html )
+				continue;
+
+			$rendered[$taxonomy->rest_base] = [
+				'name'     => $taxonomy->name,
+				'title'    => $taxonomy->label,
+				'link'     => WordPress\Taxonomy::link( $taxonomy ),
+				'rendered' => $html,
+			];
+		}
+
+		return $rendered;
+	}
+
 	public static function getPostResponse( $post, $context = 'view' )
 	{
 		$response = FALSE;
