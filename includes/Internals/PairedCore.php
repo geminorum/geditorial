@@ -602,16 +602,13 @@ trait PairedCore
 
 	public function paired_count_connected_from( $post, $context, $exclude = [] )
 	{
-		if ( ! $posts = $this->paired_all_connected_from( $post, $context, 'ids', $exclude ) )
-			return 0;
-
-		return count( $posts );
+		return $this->paired_all_connected_from( $post, $context, 'ids', $exclude, TRUE );
 	}
 
-	public function paired_all_connected_from( $post, $context, $fields = NULL, $exclude = [] )
+	public function paired_all_connected_from( $post, $context, $fields = NULL, $exclude = [], $count = FALSE )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
-			return FALSE;
+			return $count ? 0 : FALSE;
 
 		$type    = $this->constant( $constants[0] );
 		$paired  = $this->constant( $constants[1] );
@@ -621,7 +618,7 @@ trait PairedCore
 		$parents = WordPress\Taxonomy::getPostTerms( $paired, $post, FALSE, 'parent', 'term_id' );
 
 		if ( empty( $parents ) )
-			return[];
+			return $count ? 0 : FALSE;
 
 		if ( $reports ) {
 
@@ -639,12 +636,12 @@ trait PairedCore
 		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_from', 'args' ), [
 
 			'posts_per_page' => -1,
-			'orderby'        => $dates ? 'date' : [ 'menu_order', 'date' ],
+			'orderby'        => $dates ? 'date' : ( empty( $constants[6] ) ? [ 'menu_order', 'date' ] : 'none' ),
 			'order'          => 'ASC',
 			'post_type'      => $type,
 			'post_status'    => WordPress\Status::acceptable( $type, 'query', is_admin() ? [ 'pending', 'draft' ] : [] ),
 			'post__not_in'   => $exclude,
-			'fields'         => $fields ?? 'all', // or `ids`
+			'fields'         => $count ? 'ids' : ( $fields ?? '' ), // or `ids`/`id=>parent`
 			'tax_query'      => [ [
 				'taxonomy' => $paired,
 				'field'    => 'term_id',
@@ -666,7 +663,42 @@ trait PairedCore
 		$query = new \WP_Query();
 		$posts = $query->query( $args );
 
-		return empty( $posts ) ? [] : $posts;
+		if ( $count )
+			return empty( $posts ) ? 0 : count( $posts );
+
+		if ( $dates )
+			return empty( $posts ) ? [] : $posts;
+
+		return $this->paired_sort_posts_by_term_relation( $constants, $posts, $terms, $post, $context, $fields );
+	}
+
+	protected function paired_sort_posts_by_term_relation( $constants, $posts, $terms, $post, $context, $fields = NULL )
+	{
+		if ( empty( $posts ) )
+			return [];
+
+		if ( empty( $constants[6] ) || count( $terms ) < 2 )
+			return $posts;
+
+		$mapping = [];
+		$linked  = sprintf( '%s_linked', $this->constant( $constants[0] ) );
+		$metakey = Services\TermRelations::getMetakey( Services\TermRelations::FIELD_ORDER, $post->ID );
+
+		foreach ( $terms as $term_id ) {
+
+			if ( ! $post_id = get_term_meta( $term_id, $linked, TRUE ) )
+				continue;
+
+			if ( ! $order = get_term_meta( $term_id, $metakey, TRUE ) )
+				continue;
+
+			$mapping[$post_id] = $order;
+		}
+
+		if ( empty( $mapping ) )
+			return $posts;
+
+		return WordPress\PostType::reorderPostsByMeta( $posts, $mapping, $fields );
 	}
 
 	// `$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );`
