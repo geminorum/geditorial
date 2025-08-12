@@ -21,6 +21,7 @@ trait PairedCore
 	// 		FALSE, // exclude:  `primary_taxonomy`
 	// 		TRUE,  // hierarchical
 	// 		FALSE, // private
+	// 		FALSE, // `terms_related`
 	// 	];
 	// }
 
@@ -47,6 +48,9 @@ trait PairedCore
 
 		if ( empty( $constants[5] ) )
 			$constants[5] = FALSE;
+
+		if ( empty( $constants[6] ) )
+			$constants[6] = FALSE;
 
 		return $constants;
 	}
@@ -95,7 +99,7 @@ trait PairedCore
 			$this->register_taxonomy( $paired[1],
 				$taxonomy,
 				array_merge( $supported, [ $this->constant( $paired[0] ) ] ),
-				array_merge( [ 'terms_related' => TRUE ], $settings )
+				array_merge( [ 'terms_related' => $paired[6] ], $settings )
 			);
 
 			$this->_paired = $this->constant( $paired[1] );
