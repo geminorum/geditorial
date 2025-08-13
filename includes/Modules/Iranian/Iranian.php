@@ -18,6 +18,7 @@ class Iranian extends gEditorial\Module
 
 	protected $imports_datafiles = [
 		'identity-locations' => 'identity-locations.json',   // 2023-10-03 23:32:42
+		'postcode-ranges'    => 'postcode-ranges.json',      // 2025-08-13
 	];
 
 	public static function module()
@@ -130,6 +131,7 @@ class Iranian extends gEditorial\Module
 
 		$this->filter( 'info_from_iban', 4, 8, FALSE, $this->base );
 		$this->filter( 'info_from_card_number', 4, 8, FALSE, $this->base );
+		$this->filter( 'info_from_postcode', 4, 8, FALSE, $this->base );
 		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 5, 8 );
 	}
 
@@ -358,6 +360,40 @@ class Iranian extends gEditorial\Module
 
 		if ( FALSE !== ( $data = ModuleHelper::infoFromCardNumber( $raw, FALSE ) ) )
 			return \array_merge( $info, $data );
+
+		return $info;
+	}
+
+	/**
+	 * Tries to extract information based on given postcode.
+	 * NOTE: On main module because of the data-file.
+	 * @source https://github.com/persian-tools/persian-tools/pull/403/files
+	 *
+	 * @param array $info
+	 * @param string $raw
+	 * @param string $input
+	 * @param array $pre
+	 * @return array
+	 */
+	public function info_from_postcode( $info, $raw, $input, $pre )
+	{
+		if ( empty( $info ) || self::empty( $raw ) )
+			return $info;
+
+		if ( ! $ranges = $this->get_imports_raw_data( 'postcode-ranges', 'json' ) )
+			return $info;
+
+		if ( ! empty( $info['country'] ) && 'IR' !== $info['country'] )
+			return $info;
+
+		$prefix = substr( Core\Text::trim( $raw ), 0, 5 );
+
+		foreach ( $ranges as $range )
+			if ( $prefix >= $range['start'] && $prefix <= $range['end'] )
+				return array_merge( $info, [
+					'state' => $range['state'],
+					'city'  => $range['city'],
+				] );
 
 		return $info;
 	}
