@@ -22,7 +22,9 @@ class Lingo extends gEditorial\Module
 	use Internals\RawImports;
 
 	protected $disable_no_customs = TRUE;
-	protected $imports_datafile   = 'languages-20230325.json';
+	protected $imports_datafiles  = [
+		'default' => 'languages-20230325.json',
+	];
 
 	public static function module()
 	{
@@ -199,7 +201,7 @@ class Lingo extends gEditorial\Module
 	public function imports_data_summary( $data )
 	{
 		$data[] = [
-			'title'       => $this->imports_datafile,
+			'title'       => $this->imports_datafiles['default'],
 			'updated'     => '2023-03-25',
 			'description' => 'List of language identifiers with ISO 639-1 Alpha-2 codes in JSON.',
 			'path'        => $this->get_imports_datafile(),

@@ -9,28 +9,36 @@ use geminorum\gEditorial\Plugin;
 trait RawImports
 {
 
-	// protected $imports_datafile = ''; // NOTE: MUST SET ON MODULE
+	// NOTE: MUST SET ON MODULE
+	// protected $imports_datafiles = [
+	// 	'default' => 'default.json',
+	// ];
 
-	protected function get_imports_datafile()
+	protected function get_imports_datafile( $key = 'default' )
 	{
-		return empty( $this->imports_datafile ) ? FALSE : sprintf( '%sdata/%s', $this->path, $this->imports_datafile );
+		return empty( $this->imports_datafiles[$key] )
+			? FALSE
+			: sprintf( '%sdata/%s',
+				$this->path,
+				$this->imports_datafiles[$key]
+			);
 	}
 
 	// DEFAULT METHOD
-	protected function get_imports_raw_data( $type = NULL )
+	protected function get_imports_raw_data( $key = 'default', $type = NULL )
 	{
-		if ( empty( $this->imports_datafile ) )
+		if ( empty( $this->imports_datafiles[$key] ) )
 			return FALSE;
 
 		$data  = NULL;
-		$group = $this->hook_base( 'rawimports_data' );
+		$group = $this->hook_base( 'rawimports_data', $key );
 
 		if ( FALSE !== ( $cache = wp_cache_get( $this->key, $group ) ) )
 			return $cache;
 
 		if ( is_null( $type ) ) {
 
-			$filetype = Core\File::type( $this->imports_datafile, [
+			$filetype = Core\File::type( $this->imports_datafiles[$key], [
 				'csv'  => 'text/csv',
 				'json' => 'application/json',
 				'xml'  => 'application/xml',
@@ -42,11 +50,11 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'csv' : $data = Parser::fromCSV_Legacy( $this->get_imports_datafile() ); break;
-			case 'json': $data = Parser::fromJSON_Legacy( $this->get_imports_datafile() ); break;
-			case 'xml' : $data = Parser::fromXML_Legacy( $this->get_imports_datafile() ); break;
-			case 'txt' : $data = Parser::fromTXT_Legacy( $this->get_imports_datafile() ); break;
-			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile(), [] ); break;
+			case 'csv' : $data = Parser::fromCSV_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'json': $data = Parser::fromJSON_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'xml' : $data = Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'txt' : $data = Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile( $key ), [] ); break;
 		}
 
 		if ( empty( $data ) )

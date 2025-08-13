@@ -16,7 +16,9 @@ class Iranian extends gEditorial\Module
 	use Internals\RawImports;
 	use Internals\RestAPI;
 
-	protected $imports_datafile = 'identity-locations.json'; // 2023-10-03 23:32:42
+	protected $imports_datafiles = [
+		'identity-locations' => 'identity-locations.json',   // 2023-10-03 23:32:42
+	];
 
 	public static function module()
 	{
@@ -169,7 +171,7 @@ class Iranian extends gEditorial\Module
 	// @REF: `Core\Validation::sanitizeIdentityNumber()`
 	public function get_identity_summary( $identity )
 	{
-		$data      = $this->get_imports_raw_data( 'json' );
+		$data      = $this->get_imports_raw_data( 'identity-locations', 'json' );
 		$queried   = $identity  ? Core\Text::stripNonNumeric( trim( $identity ) ) : $identity;
 		$sanitized = $queried   ? Core\Number::zeroise( Core\Number::translate( $queried ), 10 ) : '';
 		$validated = $sanitized ? Core\Validation::isIdentityNumber( $sanitized ) : FALSE;
@@ -250,7 +252,7 @@ class Iranian extends gEditorial\Module
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
 			return Info::renderNotSupportedPosttype();
 
-		if ( ! $data = $this->get_imports_raw_data( 'json' ) )
+		if ( ! $data = $this->get_imports_raw_data( 'identity-locations', 'json' ) )
 			return Info::renderNoDataAvailable();
 
 		$this->raise_resources();
@@ -419,7 +421,7 @@ class Iranian extends gEditorial\Module
 			$posttype,
 			$this->_get_posttype_identity_metakey( $posttype ),
 			$this->_get_posttype_location_metakey( $posttype ),
-			$this->get_imports_raw_data( 'json' )
+			$this->get_imports_raw_data( 'identity-locations', 'json' )
 		);
 	}
 
@@ -440,7 +442,7 @@ class Iranian extends gEditorial\Module
 			$posttype,
 			$this->_get_posttype_identity_metakey( $posttype ),
 			$this->_get_posttype_location_metakey( $posttype ),
-			$this->get_imports_raw_data( 'json' )
+			$this->get_imports_raw_data( 'identity-locations', 'json' )
 		);
 	}
 }
