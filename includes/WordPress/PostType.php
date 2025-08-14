@@ -866,8 +866,8 @@ class PostType extends Core\Base
 	 * Retrieves post-type rest route given post-type name or object.
 	 * @ref `rest_get_route_for_post_type_items()`
 	 *
-	 * @param  string       $posttype
-	 * @return false|string $route
+	 * @param string $posttype
+	 * @return string
 	 */
 	public static function getRestRoute( $posttype )
 	{
@@ -885,11 +885,11 @@ class PostType extends Core\Base
 
 	/**
 	 * Retrieves post-type count of posts by statuses or given status.
-	 * wrapper for `wp_count_posts()` and returns array.
+	 * NOTE: wrapper for `wp_count_posts()` and returns `array()`.
 	 *
-	 * @param  string      $posttype
-	 * @param  bool|string $status
-	 * @return int|array   $count
+	 * @param string $posttype
+	 * @param bool|string $status
+	 * @return int|array
 	 */
 	public static function countByStatuses( $posttype, $status = FALSE )
 	{
@@ -915,5 +915,86 @@ class PostType extends Core\Base
 		} );
 
 		return $posts;
+	}
+
+	/**
+	 * Tries to re-order list of posts given meta-key or order list.
+	 *
+	 * @param array $posts
+	 * @param string|array $reference
+	 * @param string $fields
+	 * @return array
+	 */
+	public static function reorderPostsByMeta( $posts, $reference = 'order', $fields = 'all' )
+	{
+		if ( empty( $posts ) || count( $posts ) === 1 || 'count' === $fields )
+			return $posts;
+
+		$type = 'object';
+		$prop = '_order';
+		$list = [];
+
+		if ( in_array( $fields, [ 'ids' ], TRUE ) )
+			$type = 'array';
+
+		else if ( Core\Text::starts( $fields, 'id=>' ) )
+			$type = 'assoc';
+
+		foreach ( $posts as $index => $data ) {
+
+			if ( 'array' == $type )
+				$post_id = $data;
+
+			else if ( 'assoc' == $type )
+				$post_id = $index;
+
+			else if ( isset( $data->ID ) )
+				$post_id = $data->ID;
+
+			else
+				continue;
+
+			if ( is_array( $reference ) )
+				$order = isset( $reference[$post_id] ) ? intval( $reference[$post_id] ) : 0;
+
+			else if ( $meta = get_post_meta( $post_id, $reference, TRUE ) )
+				$order = (int) $meta;
+
+			else
+				$order = 0;
+
+			if ( 'array' == $type ) {
+
+				$list[] = [
+					'post_id' => $data,
+					$prop     => $order,
+				];
+
+			} else if ( 'assoc' == $type ) {
+
+				$list[] = [
+					'post_id' => $index,
+					'data'    => $data,
+					$prop     => $order,
+				];
+
+			} else if ( 'object' == $type ) {
+
+				$data->{$prop} = $order;
+				$list[] = $data;
+			}
+		}
+
+		// Bailing if cannot determine the post ids
+		if ( empty( $list ) )
+			return $posts;
+
+		if ( 'array' == $type )
+			return array_column( Core\Arraay::sortByPriority( $list, $prop ), 'post_id' );
+
+		if ( 'assoc' == $type )
+			return array_column( Core\Arraay::sortByPriority( $list, $prop ), 'data', 'post_id' );
+
+		return Core\Arraay::sortObjectByPriority( $list, $prop );
 	}
 }

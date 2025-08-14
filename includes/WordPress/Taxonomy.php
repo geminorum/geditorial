@@ -28,7 +28,7 @@ class Taxonomy extends Core\Base
 	 * @source: `taxonomy_exists()`
 	 *
 	 * @param string|object $taxonomy_or_term
-	 * @return bool $exists
+	 * @return bool
 	 */
 	public static function exists( $taxonomy_or_term )
 	{
@@ -67,8 +67,8 @@ class Taxonomy extends Core\Base
 	 *
 	 * @source `is_taxonomy_hierarchical()`
 	 *
-	 * @param  string|object $taxonomy
-	 * @return bool $hierarchical
+	 * @param string|object $taxonomy
+	 * @return bool
 	 */
 	public static function hierarchical( $taxonomy )
 	{
@@ -82,11 +82,11 @@ class Taxonomy extends Core\Base
 	 * Checks for taxonomy capability.
 	 * NOTE: caches the results
 	 *
-	 * @param  string|object   $taxonomy
-	 * @param  null|string     $capability
-	 * @param  null|int|object $user_id
-	 * @param  bool            $fallback
-	 * @return bool            $can
+	 * @param string|object $taxonomy
+	 * @param null|string $capability
+	 * @param null|int|object $user_id
+	 * @param bool $fallback
+	 * @return bool
 	 */
 	public static function can( $taxonomy, $capability = 'manage_terms', $user_id = NULL, $fallback = FALSE )
 	{
@@ -124,10 +124,10 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves the capability assigned to the taxonomy.
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  string        $capability
-	 * @param  string        $fallback
-	 * @return string        $cap
+	 * @param string|object $taxonomy
+	 * @param string $capability
+	 * @param string $fallback
+	 * @return string
 	 */
 	public static function cap( $taxonomy, $capability = 'manage_terms', $fallback = NULL )
 	{
@@ -242,7 +242,7 @@ class Taxonomy extends Core\Base
 	 *
 	 * @param string|object $taxonomy
 	 * @param mixed $fallback
-	 * @return string $link
+	 * @return string
 	 */
 	public static function link( $taxonomy, $fallback = NULL )
 	{
@@ -259,7 +259,7 @@ class Taxonomy extends Core\Base
 	 * @param string|object $taxonomy
 	 * @param array $extra
 	 * @param mixed $fallback
-	 * @return string $link
+	 * @return string
 	 */
 	public static function edit( $taxonomy, $extra = [], $fallback = FALSE )
 	{
@@ -680,7 +680,15 @@ class Taxonomy extends Core\Base
 		return $new_terms;
 	}
 
-	public static function reorderTermsByMeta( $terms, $meta_key = 'order', $fields = 'all' )
+	/**
+	 * Tries to re-order list of terms given meta-key or order list.
+	 *
+	 * @param array $terms
+	 * @param string|array $reference
+	 * @param string $fields
+	 * @return array
+	 */
+	public static function reorderTermsByMeta( $terms, $reference = 'order', $fields = 'all' )
 	{
 		if ( empty( $terms ) || count( $terms ) === 1 || 'count' === $fields )
 			return $terms;
@@ -709,7 +717,10 @@ class Taxonomy extends Core\Base
 			else
 				continue;
 
-			if ( $meta = get_term_meta( $term_id, $meta_key, TRUE ) )
+			if ( is_array( $reference ) )
+				$order = isset( $reference[$term_id] ) ? intval( $reference[$term_id] ) : 0;
+
+			else if ( $meta = get_term_meta( $term_id, $reference, TRUE ) )
 				$order = (int) $meta;
 
 			else
@@ -737,7 +748,7 @@ class Taxonomy extends Core\Base
 			}
 		}
 
-		// bail if cannot determine the term ids
+		// Bailing if cannot determine the term ids
 		if ( empty( $list ) )
 			return $terms;
 
@@ -1336,7 +1347,7 @@ class Taxonomy extends Core\Base
 		return empty( $query->terms ) ? [] : $query->terms;
 	}
 
-	// must add `add_thickbox()` for thick-box
+	// NOTE: must add `add_thickbox()` for thick-box
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $term_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
@@ -1383,8 +1394,8 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves taxonomy rest route given taxonomy name or object.
 	 *
-	 * @param  string       $taxonomy
-	 * @return false|string $route
+	 * @param string $taxonomy
+	 * @return false|string
 	 */
 	public static function getRestRoute( $taxonomy )
 	{
@@ -1401,7 +1412,7 @@ class Taxonomy extends Core\Base
 	{
 		wp_defer_term_counting( TRUE );
 
-		// also avoids query for post terms
+		// Also avoids query for post terms
 		remove_action( 'transition_post_status', '_update_term_count_on_transition_post_status', 10 );
 
 		// WooCommerce

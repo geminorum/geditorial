@@ -684,10 +684,10 @@ class Media extends Core\Base
 		return $deleted;
 	}
 
-	public static function getAttachmentFileSize( $attachment_id, $format = FALSE, $template = NULL )
+	public static function getAttachmentFileSize( $attachment_id, $format = FALSE, $template = NULL, $fallback = '' )
 	{
-		// $filesize = filesize( get_attached_file( $attachment_id ), 2 );
-		$filesize = Core\File::getSize( get_attached_file( $attachment_id ), FALSE );
+		if ( ! $filesize = Core\File::size( get_attached_file( $attachment_id ) ) )
+			return $fallback;
 
 		return $format
 			? sprintf( $template ?? '<span class="-filesize">%s</span>', Core\HTML::wrapLTR( Core\File::formatSize( $filesize ) ) )

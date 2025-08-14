@@ -13,10 +13,10 @@ class Post extends Core\Base
 	 * simplified `get_post()`
 	 * @old `PostType::getPost()`
 	 *
-	 * @param null|int|object $post
+	 * @param int|object $post
 	 * @param string $output
 	 * @param string $filter
-	 * @return object $post
+	 * @return object
 	 */
 	public static function get( $post = NULL, $output = OBJECT, $filter = 'raw' )
 	{
@@ -44,8 +44,8 @@ class Post extends Core\Base
 	 *
 	 * @source `get_post_type()`
 	 *
-	 * @param null|int|object $post
-	 * @return string $posttype
+	 * @param int|object $post
+	 * @return string
 	 */
 	public static function type( $post = NULL )
 	{
@@ -60,8 +60,8 @@ class Post extends Core\Base
 	 *
 	 * @source `is_post_publicly_viewable()` @since WP5.7.0
 	 *
-	 * @param int|WP_Post|null $post
-	 * @return bool $viewable
+	 * @param int|object $post
+	 * @return bool
 	 */
 	public static function viewable( $post = NULL )
 	{
@@ -77,10 +77,10 @@ class Post extends Core\Base
 	 * NOTE: caches the result
 	 *
 	 * @param int|object $post
-	 * @param null|string $capability
-	 * @param null|int|object $user_id
+	 * @param string $capability
+	 * @param int|object $user_id
 	 * @param bool $fallback
-	 * @return bool $can
+	 * @return bool
 	 */
 	public static function can( $post, $capability, $user_id = NULL, $fallback = FALSE )
 	{
@@ -128,10 +128,10 @@ class Post extends Core\Base
 	 *
 	 * @old `PostType::getPostTitle()`
 	 *
-	 * @param null|int|object $post
-	 * @param null|string $fallback
+	 * @param int|object $post
+	 * @param string $fallback
 	 * @param bool $filter
-	 * @return string $title
+	 * @return string
 	 */
 	public static function title( $post = NULL, $fallback = NULL, $filter = TRUE )
 	{
@@ -157,10 +157,10 @@ class Post extends Core\Base
 	 *
 	 * @old `PostType::getPostLink()`
 	 *
-	 * @param  null|int|object   $post
-	 * @param  null|string       $fallback
-	 * @param  null|string|array $statuses
-	 * @return false|string      $link
+	 * @param int|object $post
+	 * @param string $fallback
+	 * @param string|array $statuses
+	 * @return string
 	 */
 	public static function link( $post, $fallback = NULL, $statuses = NULL )
 	{
@@ -186,7 +186,7 @@ class Post extends Core\Base
 	 * @param int|object $post
 	 * @param array $extra
 	 * @param mixed $fallback
-	 * @return string $link
+	 * @return string
 	 */
 	public static function edit( $post, $extra = [], $fallback = FALSE )
 	{
@@ -216,9 +216,9 @@ class Post extends Core\Base
 	/**
 	 * Retrieves a contextual link given a post ID or post object.
 	 *
-	 * @param  null|int|object $post
-	 * @param  null|string     $context
-	 * @return false|string    $link
+	 * @param int|object $post
+	 * @param string $context
+	 * @return string
 	 */
 	public static function overview( $post, $context = NULL )
 	{
@@ -242,9 +242,9 @@ class Post extends Core\Base
 	/**
 	 * Retrieves a contextual summary given a post ID or post object.
 	 *
-	 * @param  null|int|object $post
-	 * @param  null|string     $context
-	 * @return false|array     $summary
+	 * @param int|object $post
+	 * @param string $context
+	 * @return array
 	 */
 	public static function summary( $post, $context = NULL )
 	{
@@ -278,10 +278,10 @@ class Post extends Core\Base
 	 * @see `get_page_by_title()`
 	 * @source https://make.wordpress.org/core/2023/03/06/get_page_by_title-deprecated/
 	 *
-	 * @param  string       $title
-	 * @param  string|array $posttype
-	 * @param  string|array $status
-	 * @return array        $posts
+	 * @param string $title
+	 * @param string|array $posttype
+	 * @param string|array $status
+	 * @return array
 	 */
 	public static function getByTitle( $title, $posttype = 'any', $fields = 'ids', $status = 'all' )
 	{
@@ -310,13 +310,13 @@ class Post extends Core\Base
 	/**
 	 * Updates the post-type for the given post.
 	 * Also accepts post and post-type objects
-	 * and checks if its a different post-type
+	 * and checks if it's a different post-type
 	 *
 	 * @source `set_post_type()`
 	 *
 	 * @param int|object $post
 	 * @param string|object $posttype
-	 * @return bool $success
+	 * @return bool
 	 */
 	public static function setPostType( $post, $posttype )
 	{
@@ -344,7 +344,7 @@ class Post extends Core\Base
 	/**
 	 * Retrieves a post object default properties.
 	 *
-	 * @return array $props
+	 * @return array
 	 */
 	public static function props()
 	{
@@ -378,8 +378,8 @@ class Post extends Core\Base
 	/**
 	 * Retrieves post rest route given a post ID or post object.
 	 *
-	 * @param null|int|object $post
-	 * @return false|string $route
+	 * @param int|object $post
+	 * @return false|string
 	 */
 	public static function getRestRoute( $post = NULL )
 	{
@@ -402,10 +402,10 @@ class Post extends Core\Base
 	/**
 	 * Retrieves post full title given a post ID or post object.
 	 *
-	 * @param  null|int|object $post
-	 * @param  bool|string     $linked
-	 * @param  null|string     $separator
-	 * @return string          $title
+	 * @param int|object $post
+	 * @param bool|string $linked
+	 * @param string $separator
+	 * @return string
 	 */
 	public static function fullTitle( $post, $linked = FALSE, $separator = NULL )
 	{
@@ -433,11 +433,11 @@ class Post extends Core\Base
 	 * Retrieves post parent titles given a post ID or post object.
 	 * NOTE: parent post type can be different
 	 *
-	 * @param  null|int|object $post
-	 * @param  string          $suffix
-	 * @param  string|bool     $linked
-	 * @param  null|string     $separator
-	 * @return string          $titles
+	 * @param int|object $post
+	 * @param string $suffix
+	 * @param bool|string $linked
+	 * @param string $separator
+	 * @return string
 	 */
 	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
@@ -457,7 +457,15 @@ class Post extends Core\Base
 		while ( $parent ) {
 
 			$object = self::get( (int) $current );
-			$link   = 'edit' === $linked ? get_edit_post_link( $object, 'edit' ) : self::link( $object );
+
+			if ( 'edit' === $linked )
+				$link = get_edit_post_link( $object, 'edit' );
+
+			else if ( 'overview' === $linked )
+				$link = self::overview( $object, 'overview' );
+
+			else
+				$link = self::link( $object );
 
 			if ( $object && $object->post_parent )
 				$parents[] = $linked && $link
@@ -480,10 +488,10 @@ class Post extends Core\Base
 	/**
 	 * Retrieves meta-data for a given post.
 	 *
-	 * @param  object|int $post
-	 * @param  bool|array $keys `false` for all meta
-	 * @param  bool $single
-	 * @return array $metadata
+	 * @param object|int $post
+	 * @param bool|array $keys `false` for all meta
+	 * @param bool $single
+	 * @return array
 	 */
 	public static function getMeta( $post, $keys = FALSE, $single = TRUE )
 	{
@@ -519,10 +527,10 @@ class Post extends Core\Base
 	 * Updates the parent for the given post.
 	 * NOTE: directly updates db to avoid `wp_update_post()`
 	 *
-	 * @param  int  $post_id
-	 * @param  int  $parent_id
-	 * @param  bool $checks
-	 * @return bool $updated
+	 * @param int $post_id
+	 * @param int $parent_id
+	 * @param bool $checks
+	 * @return bool
 	 */
 	public static function setParent( $post_id, $parent_id, $checks = TRUE )
 	{
@@ -580,8 +588,8 @@ class Post extends Core\Base
 	 * Returns default post information to use when populating the “Write Post” form.
 	 * @source `get_default_post_to_edit()`
 	 *
-	 * @param  string $posttype
-	 * @return object $post
+	 * @param string $posttype
+	 * @return object
 	 */
 	public static function defaultToEdit( $posttype )
 	{
