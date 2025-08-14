@@ -353,7 +353,7 @@ class Physical extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports' ) )
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Physical Examinations', 'Header', 'geditorial-physical' ) ) )
 			return Info::renderNoReportsAvailable();
 	}
 }

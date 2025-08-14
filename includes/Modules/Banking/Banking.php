@@ -459,4 +459,15 @@ class Banking extends gEditorial\Module
 
 		return $fields;
 	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Bank Accounts', 'Header', 'geditorial-banking' ) ) )
+			return Info::renderNoReportsAvailable();
+	}
 }

@@ -1405,4 +1405,90 @@ trait SubContents
 		echo $html;
 		return TRUE;
 	}
+
+	// NOTE: mocking the `Tablelist::getPosts()`
+	protected function subcontent_get_data_with_pagination( $atts = [], $extra = [], $parent = FALSE, $context = NULL, $perpage = 25 )
+	{
+		$post  = WordPress\Post::get( $parent );
+		$limit = self::limit( $perpage );
+		$paged = self::paged();
+
+		$args = [
+			'offset'  => ( $paged - 1 ) * $limit,
+			'number'  => $limit,
+			'orderby' => self::orderby( 'comment_date' ),
+			'order'   => self::order( 'DESC' ),
+
+			'post_id'   => $post ? $post->ID : 0,
+			'post_type' => 'any', // $parent->post_type,
+			'status'    => 'any', // $this->subcontent_get_comment_status(),
+			'type'      => $this->subcontent_get_comment_type(),
+			'fields'    => '', // 'ids', // empty for all
+
+			'update_comment_meta_cache' => TRUE,
+			'update_comment_post_cache' => FALSE,
+			'no_found_rows'             => FALSE, // for pagination
+		];
+
+		if ( ! empty( $_REQUEST['s'] ) )
+			$args['search'] = $extra['s'] = $_REQUEST['s'];
+
+		if ( ! empty( $_REQUEST['id'] ) )
+			$args['post__in'] = explode( ',', maybe_unserialize( $_REQUEST['id'] ) );
+
+		if ( ! empty( $_REQUEST['type'] ) )
+			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
+
+		$query = new \WP_Comment_Query;
+		$items = $this->filters( 'pre_data_all', $query->query( array_merge( $args, $atts ) ), $context, $post, $args );
+
+		$pagination             = Core\HTML::tablePagination( $query->found_comments, $query->max_num_pages, $limit, $paged, $extra );
+		$pagination['orderby']  = $args['orderby'];
+		$pagination['order']    = $args['order'];
+
+		return [ $items, $pagination ];
+	}
+
+	protected function subcontent_reports_render_table( $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
+	{
+		if ( ! $this->cuc( $context ) )
+			return FALSE;
+
+		$query = [];
+
+		list( $items, $pagination ) = $this->subcontent_get_data_with_pagination( $query, [], FALSE, $context, $this->get_sub_limit_option( $sub, $context ) );
+
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+
+		$data   = $this->subcontent_get_data_mapped( $items, $context );
+		$data   = $this->subcontent_get_prepped_data( $data, 'display', FALSE );
+		$fields = $this->subcontent_get_fields( $context );
+
+		$columns = [
+			'_cb'     => '_id',
+			'_object' => [
+				'title'    => _x( 'Parent Post', 'Internal: Subcontents: Column', 'geditorial-admin' ),
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+
+					if ( $value && ( $parent = WordPress\Post::title( (int) $value, FALSE ) ) )
+						return $parent;
+
+					return gEditorial\Helper::htmlEmpty();
+				},
+			],
+		];
+
+		return Core\HTML::tableList( array_merge( $columns, $fields ), $data, [
+			'navigation' => 'before',
+			'search'     => 'before',
+			'title'      => Core\HTML::tag( 'h3', $title ?? _x( 'Overview of Sub-contents', 'Internal: Subcontents: Header', 'geditorial-admin' ) ),
+			'empty'      => $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ),
+			'pagination' => $pagination,
+			'extra'      => [
+				'na'      => gEditorial()->na(),
+				'fields'  => $fields,
+				'context' => $context,
+			],
+		] );
+	}
 }

@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
@@ -362,5 +363,16 @@ class NextOfKin extends gEditorial\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Family Data', 'Default Term: Audit', 'geditorial-next-of-kin' ),
 		] ) : $terms;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Families', 'Header', 'geditorial-next-of-kin' ) ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
@@ -317,5 +318,16 @@ class Driving extends gEditorial\Module
 		// $fields['vin']           = NULL;
 
 		return $fields;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Vehicles', 'Header', 'geditorial-driving' ) ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

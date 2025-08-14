@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
@@ -361,5 +362,16 @@ class Bookmarked extends gEditorial\Module
 			Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),
 			$context
 		);
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Bookmarks', 'Header', 'geditorial-bookmarked' ) ) )
+			return Info::renderNoReportsAvailable();
 	}
 }

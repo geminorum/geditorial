@@ -288,4 +288,15 @@ class Agenda extends gEditorial\Module
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Itinerary Data', 'Default Term: Audit', 'geditorial-agenda' ),
 		] ) : $terms;
 	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Itineraries', 'Header', 'geditorial-agenda' ) ) )
+			return Info::renderNoReportsAvailable();
+	}
 }

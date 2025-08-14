@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Helper;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Scripts;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
@@ -254,5 +255,16 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Definition Data', 'Default Term: Audit', '<%= moduleTextdomain %>' ),
 		] ) : $terms;
+	}
+
+	public function reports_settings( $sub )
+	{
+		$this->check_settings( $sub, 'reports', TRUE );
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Definitions', 'Header', '<%= moduleTextdomain %>' ) ) )
+			return Info::renderNoReportsAvailable();
 	}
 }
