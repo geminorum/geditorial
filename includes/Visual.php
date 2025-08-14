@@ -58,12 +58,15 @@ class Visual extends WordPress\Main
 
 	public static function getPostTypeIconMarkup( $posttype, $fallback = NULL, $raw = FALSE )
 	{
-		$object = WordPress\PostType::object( $posttype );
+		if ( ! $object = WordPress\PostType::object( $posttype ) )
+			return $raw
+				? ( $fallback ?? 'admin-post' )
+				: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
 				? $object->{static::MENUICON_PROP}
-				: Core\HTML::getDashicon( $object->{static::MENUICON_PROP} );
+				: self::getIcon( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
@@ -85,17 +88,20 @@ class Visual extends WordPress\Main
 
 		return $raw
 			? ( $fallback ?? 'admin-post' )
-			: Core\HTML::getDashicon( $fallback ?? 'admin-post' );
+			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 	}
 
 	public static function getTaxonomyIconMarkup( $taxonomy, $fallback = NULL, $raw = FALSE )
 	{
-		$object = WordPress\Taxonomy::object( $taxonomy );
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return $raw
+				? ( $fallback ?? 'admin-post' )
+				: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
 				? $object->{static::MENUICON_PROP}
-				: Core\HTML::getDashicon( $object->{static::MENUICON_PROP} );
+				: self::getIcon( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
@@ -117,7 +123,7 @@ class Visual extends WordPress\Main
 
 		return $raw
 			? ( $fallback ?? 'admin-post' )
-			: Core\HTML::getDashicon( $fallback ?? 'admin-post' );
+			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 	}
 
 	public static function getAdminBarIconMarkup( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
