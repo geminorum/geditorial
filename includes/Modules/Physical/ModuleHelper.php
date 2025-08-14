@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Athlete;
+<?php namespace geminorum\gEditorial\Modules\Physical;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 class ModuleHelper extends gEditorial\Helper
 {
 
-	const MODULE = 'athlete';
+	const MODULE = 'physical';
 
 	// @REF: https://medium.com/@hermuwyim/a-simple-bmi-calculator-using-javascript-b2365f3206e8
 	// @REF: https://www.w3schools.in/php/examples/php-program-to-calculate-bmi
@@ -43,43 +43,43 @@ class ModuleHelper extends gEditorial\Helper
 
 			$data['result']  = 'underweight';
 			$data['state']   = 'info';
-			$data['message'] = _x( 'Your BMI falls within the underweight range.', 'BMI: Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person is underweight.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the underweight range.', 'BMI: Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person is underweight.', 'BMI: Report', 'geditorial-physical' );
 
 		} else if ( $bmi <= 24.9 ) {
 
 			$data['result']  = 'healthy';
 			$data['state']   = 'success';
-			$data['message'] = _x( 'Your BMI falls within the normal or healthy weight range.', 'BMI: Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person has healthy weight.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the normal or healthy weight range.', 'BMI: Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person has healthy weight.', 'BMI: Report', 'geditorial-physical' );
 
 		} else if ( $bmi <= 29.9 ) {
 
 			$data['result']  = 'overweight';
 			$data['state']   = 'warning';
-			$data['message'] = _x( 'Your BMI falls within the overweight range.', 'BMI Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person is overweight.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the overweight range.', 'BMI Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person is overweight.', 'BMI: Report', 'geditorial-physical' );
 
 		} else if ( $bmi <= 34.9 ) {
 
 			$data['result']  = 'obese-class-one';
 			$data['state']   = 'danger';
-			$data['message'] = _x( 'Your BMI falls within the obese (class one) range.', 'BMI Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the obese (class one) range.', 'BMI Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-physical' );
 
 		} else if ( $bmi <= 39.9 ) {
 
 			$data['result']  = 'obese-class-two';
 			$data['state']   = 'danger';
-			$data['message'] = _x( 'Your BMI falls within the obese (class two) range.', 'BMI Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the obese (class two) range.', 'BMI Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-physical' );
 
 		} else {
 
 			$data['result']  = 'obese-class-three';
 			$data['state']   = 'danger';
-			$data['message'] = _x( 'Your BMI falls within the obese (class three) range.', 'BMI Message', 'geditorial-athlete' );
-			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-athlete' );
+			$data['message'] = _x( 'Your BMI falls within the obese (class three) range.', 'BMI Message', 'geditorial-physical' );
+			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-physical' );
 		}
 
 		return apply_filters(

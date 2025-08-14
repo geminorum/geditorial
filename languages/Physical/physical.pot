@@ -1,0 +1,210 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Physical\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Physical\n"
+"X-Domain: geditorial-physical\n"
+
+#: ModuleHelper.php:46
+msgctxt "BMI: Message"
+msgid "Your BMI falls within the underweight range."
+msgstr ""
+
+#: ModuleHelper.php:47
+msgctxt "BMI: Report"
+msgid "The Person is underweight."
+msgstr ""
+
+#: ModuleHelper.php:53
+msgctxt "BMI: Message"
+msgid "Your BMI falls within the normal or healthy weight range."
+msgstr ""
+
+#: ModuleHelper.php:54
+msgctxt "BMI: Report"
+msgid "The Person has healthy weight."
+msgstr ""
+
+#: ModuleHelper.php:60
+msgctxt "BMI Message"
+msgid "Your BMI falls within the overweight range."
+msgstr ""
+
+#: ModuleHelper.php:61
+msgctxt "BMI: Report"
+msgid "The Person is overweight."
+msgstr ""
+
+#: ModuleHelper.php:67
+msgctxt "BMI Message"
+msgid "Your BMI falls within the obese (class one) range."
+msgstr ""
+
+#: ModuleHelper.php:68
+#: ModuleHelper.php:75
+#: ModuleHelper.php:82
+msgctxt "BMI: Report"
+msgid "The Person is obese."
+msgstr ""
+
+#: ModuleHelper.php:74
+msgctxt "BMI Message"
+msgid "Your BMI falls within the obese (class two) range."
+msgstr ""
+
+#: ModuleHelper.php:81
+msgctxt "BMI Message"
+msgid "Your BMI falls within the obese (class three) range."
+msgstr ""
+
+#: Physical.php:88
+msgctxt "Field Label: `label`"
+msgid "Event"
+msgstr ""
+
+#: Physical.php:89
+msgctxt "Field Label: `grade`"
+msgid "Grade"
+msgstr ""
+
+#: Physical.php:90
+msgctxt "Field Label: `age`"
+msgid "Age"
+msgstr ""
+
+#: Physical.php:91
+msgctxt "Field Label: `stature`"
+msgid "Stature"
+msgstr ""
+
+#: Physical.php:92
+msgctxt "Field Label: `mass`"
+msgid "Mass"
+msgstr ""
+
+#: Physical.php:93
+msgctxt "Field Label: `date`"
+msgid "Date"
+msgstr ""
+
+#: Physical.php:94
+msgctxt "Field Label: `location`"
+msgid "Venue"
+msgstr ""
+
+#: Physical.php:95
+msgctxt "Field Label: `location`"
+msgid "Instructors"
+msgstr ""
+
+#: Physical.php:96
+msgctxt "Field Label: `desc`"
+msgid "Description"
+msgstr ""
+
+#: Physical.php:102
+msgctxt "Tab Title"
+msgid "Physical Examinations"
+msgstr ""
+
+#: Physical.php:106
+msgctxt "Notice"
+msgid "There is no physical examination available!"
+msgstr ""
+
+#: Physical.php:107
+msgctxt "Notice"
+msgid "You do not have the necessary permission to manage this examination data."
+msgstr ""
+
+#: Physical.php:114
+msgctxt "MetaBox Title"
+msgid "Physicals"
+msgstr ""
+
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Physical.php:118
+#, php-format
+msgctxt "Button Title"
+msgid "Physical Examinations of %1$s"
+msgstr ""
+
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Physical.php:120
+#, php-format
+msgctxt "Button Text"
+msgid "%1$s Manage the Physical Examinations of %2$s"
+msgstr ""
+
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Physical.php:123
+#, php-format
+msgctxt "Action Title"
+msgid "Physical Examinations of %1$s"
+msgstr ""
+
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Physical.php:125
+msgctxt "Action Text"
+msgid "Physicals"
+msgstr ""
+
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Physical.php:128
+#, php-format
+msgctxt "Row Title"
+msgid "Physical Examinations of %1$s"
+msgstr ""
+
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Physical.php:130
+msgctxt "Row Text"
+msgid "Physicals"
+msgstr ""
+
+#: Physical.php:142
+msgctxt "Field Title"
+msgid "Mass"
+msgstr ""
+
+#: Physical.php:143
+msgctxt "Field Description"
+msgid "Body Mass in Kilograms"
+msgstr ""
+
+#: Physical.php:150
+msgctxt "Field Title"
+msgid "Stature"
+msgstr ""
+
+#: Physical.php:151
+msgctxt "Field Description"
+msgid "Body Stature in Centimetres"
+msgstr ""
+
+#. translators: `%s`: post title
+#: Physical.php:286
+#, php-format
+msgctxt "Page Title"
+msgid "Athletics Grid for %s"
+msgstr ""
+
+#. translators: `%s`: post title
+#: Physical.php:288
+#, php-format
+msgctxt "Page Title"
+msgid "Athletics Overview for %s"
+msgstr ""
+
+#: Physical.php:310
+msgctxt "Default Term: Audit"
+msgid "Empty Athletics Data"
+msgstr ""
