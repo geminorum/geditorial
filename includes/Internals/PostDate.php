@@ -16,12 +16,12 @@ trait PostDate
 
 	public static $postdate__action_override_dates = 'postdate_do_override_dates';
 
-	protected function postdate__render_before_override_dates( $supported, $metakeys, $uri = '', $sub = NULL )
+	protected function postdate__render_before_override_dates( $supported, $metakeys, $uri = '', $sub = NULL, $context = 'tools' )
 	{
 		if ( self::do( self::$postdate__action_override_dates )
 			&& $this->get_setting( 'override_dates', TRUE ) ) {
 
-			if ( $this->postdate__do_override_dates( $supported, $metakeys, $this->get_sub_limit_option( $sub ) ) )
+			if ( $this->postdate__do_override_dates( $supported, $metakeys, $this->get_sub_limit_option( $sub, $context ) ) )
 				return FALSE;
 		}
 	}

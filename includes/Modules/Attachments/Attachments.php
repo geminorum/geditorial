@@ -410,7 +410,7 @@ class Attachments extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		// $pagination['before'][] = Tablelist::filterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
 		$pagination['before'][] = Tablelist::filterAuthors( $list );
@@ -585,7 +585,7 @@ class Attachments extends gEditorial\Module
 
 		return ModuleSettings::handleTool_deletion_by_mime(
 			$mimetype,
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 
@@ -604,7 +604,7 @@ class Attachments extends gEditorial\Module
 
 		return ModuleSettings::handleTool_empty_raw_metadata(
 			$posttype,
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 
@@ -623,7 +623,7 @@ class Attachments extends gEditorial\Module
 
 		return ModuleSettings::handleTool_reattach_thumbnails(
 			$posttype,
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 }

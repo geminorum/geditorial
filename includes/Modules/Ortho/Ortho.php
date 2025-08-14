@@ -419,7 +419,7 @@ class Ortho extends gEditorial\Module
 		if ( 'none' != $char )
 			$query['s'] = $extra['char'] = $char;
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Core\HTML::dropdown( [
 			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),

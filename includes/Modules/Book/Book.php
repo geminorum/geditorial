@@ -1033,7 +1033,7 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'tools' ) );
 
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = Tablelist::filterSearch( $list );

@@ -368,7 +368,7 @@ class Importer extends gEditorial\Module
 				'compare' => 'NOT EXISTS',
 			];
 
-		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( $this->key ) );
+		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
@@ -1598,7 +1598,7 @@ class Importer extends gEditorial\Module
 		return ModuleSettings::handleTool_cleanup_raw_data(
 			$posttype,
 			$this->_get_metakeys(),
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 

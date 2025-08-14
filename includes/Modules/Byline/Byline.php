@@ -853,7 +853,7 @@ class Byline extends gEditorial\Module
 
 		return ModuleSettings::handleImport_from_people_plugin(
 			$posttype,
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'imports' )
 		);
 	}
 }

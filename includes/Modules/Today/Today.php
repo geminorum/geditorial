@@ -927,7 +927,7 @@ class Today extends gEditorial\Module
 		$list      = $this->list_posttypes();
 		$query     = $this->build_meta_query( $constants );
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = Tablelist::filterAuthors( $list );

@@ -900,7 +900,7 @@ class Cartable extends gEditorial\Module
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option() );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( NULL, $context ) );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
 		$pagination['before'][] = Tablelist::filterPostTypes( $list );

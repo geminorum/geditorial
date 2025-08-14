@@ -140,7 +140,7 @@ class Shortcodes extends gEditorial\Module
 			$extra['shortcode'] = $shortcode;
 		}
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Core\HTML::dropdown(
 			$this->get_shortcode_list(), [

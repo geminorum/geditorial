@@ -566,7 +566,7 @@ class Audit extends gEditorial\Module
 		return ModuleSettings::handleTool_force_auto_audit(
 			$posttype,
 			$this->constant( 'main_taxonomy' ),
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 

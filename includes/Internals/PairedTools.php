@@ -99,13 +99,13 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		if ( FALSE !== $this->paired_tools_handlemove_from_to( $constants, $this->get_sub_limit_option( $sub ) ) )
+		if ( FALSE !== $this->paired_tools_handlemove_from_to( $constants, $this->get_sub_limit_option( $sub, 'tools' ) ) )
 			return FALSE;
 
 		if ( 'force_assign_parents' === self::req( 'action' )
 			&& $this->get_setting( 'paired_force_parents' ) ) {
 
-			if ( FALSE !== $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub ) ) )
+			if ( FALSE !== $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub, 'tools' ) ) )
 				return FALSE;
 		}
 	}

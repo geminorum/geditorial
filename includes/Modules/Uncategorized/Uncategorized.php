@@ -263,7 +263,7 @@ class Uncategorized extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		// TODO: add screen help tabs explainig the actions
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );

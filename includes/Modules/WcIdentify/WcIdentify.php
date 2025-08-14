@@ -193,7 +193,7 @@ class WcIdentify extends gEditorial\Module
 
 		return ModuleSettings::handleTool_migrate_gtin(
 			WordPress\WooCommerce::PRODUCT_POSTTYPE,
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'tools' )
 		);
 	}
 }

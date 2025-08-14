@@ -1109,7 +1109,7 @@ class Personage extends gEditorial\Module
 			Services\PostTypeFields::isAvailable( 'first_name', $posttype, 'meta' ),
 			Services\PostTypeFields::isAvailable( 'middle_name', $posttype, 'meta' ),
 			Services\PostTypeFields::isAvailable( 'last_name', $posttype, 'meta' ),
-			$this->get_sub_limit_option( $sub )
+			$this->get_sub_limit_option( $sub, 'imports' )
 		);
 	}
 }

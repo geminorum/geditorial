@@ -450,7 +450,7 @@ class Revisions extends gEditorial\Module
 
 		$where  = '';
 		$extra  = [];
-		$limit  = $this->get_sub_limit_option();
+		$limit  = $this->get_sub_limit_option( NULL, 'reports' );
 		$order  = self::order( 'asc' );
 		$paged  = self::paged(); // @SEE: `_do_tool_empty_metadata()` on Attachments Module
 		$offset = ( $paged - 1 ) * $limit; // @SEE: `_do_tool_empty_metadata()` on Attachments Module

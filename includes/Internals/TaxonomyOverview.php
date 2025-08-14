@@ -36,7 +36,7 @@ trait TaxonomyOverview
 		$description = TRUE;
 		$exports     = method_exists( $this, 'exports_get_export_links' );
 
-		list( $terms, $pagination ) = Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub ) );
+		list( $terms, $pagination ) = Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub, $context ) );
 
 		$pagination['before'][] = Tablelist::filterSearch( $list );
 

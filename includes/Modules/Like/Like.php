@@ -550,7 +550,7 @@ class Like extends gEditorial\Module
 			'order'    => 'DESC',
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Table Action', 'geditorial-like' );
 		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Table Action', 'geditorial-like' );

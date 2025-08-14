@@ -412,12 +412,12 @@ class Module extends Core\Base
 		return check_admin_referer( $this->base.'-'.$key.'-'.$context, $name );
 	}
 
-	protected function get_sub_limit_option( $sub = NULL, $default = 25, $key = 'limit', $option = 'per_page' )
+	protected function get_sub_limit_option( $sub = NULL, $context = 'tools', $default = 25, $key = 'limit', $option = 'per_page' )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->key;
 
-		$per_page = (int) get_user_option( $this->hook_base( $sub, $option ) );
+		$per_page = (int) get_user_option( $this->hook_base( $sub, $option, $context ) );
 
 		if ( empty( $per_page ) || $per_page < 1 )
 			$per_page = $default;
@@ -426,13 +426,13 @@ class Module extends Core\Base
 	}
 
 	// NOTE: `add_screen_option()` only accept 2 methods: `per_page` and `layout_columns`
-	protected function add_sub_screen_option( $sub = NULL, $option = 'per_page', $default = NULL, $label = NULL )
+	protected function add_sub_screen_option( $sub = NULL, $context = 'tools', $option = 'per_page', $default = NULL, $label = NULL )
 	{
 		if ( is_null( $sub ) )
 			$sub = $this->key;
 
 		$args = [
-			'option' => $this->hook_base( $sub, $option ),
+			'option' => $this->hook_base( $sub, $option, $context ),
 			'label'  => $label,
 		];
 

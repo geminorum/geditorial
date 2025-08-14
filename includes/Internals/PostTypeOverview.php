@@ -37,7 +37,7 @@ trait PostTypeOverview
 		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub, $context ) );
 
 		// TODO: filter by fields
 		$pagination['before'][] = Tablelist::filterAuthors( $list );

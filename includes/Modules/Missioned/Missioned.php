@@ -626,7 +626,8 @@ class Missioned extends gEditorial\Module
 			$this->constant( 'primary_posttype' ),
 			$this->get_postdate_metakeys(),
 			$uri,
-			$sub
+			$sub,
+			'tools'
 		) )
 			return FALSE;
 

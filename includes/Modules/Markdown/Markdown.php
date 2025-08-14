@@ -464,7 +464,7 @@ class Markdown extends gEditorial\Module
 	{
 		$list = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub ) );
+		list( $posts, $pagination ) = Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Table Action', 'geditorial-markdown' );

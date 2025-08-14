@@ -1074,7 +1074,8 @@ class WasBorn extends gEditorial\Module
 			$this->get_setting( 'parent_posttypes', [] ),
 			$this->_get_posttype_dob_metakey( self::req( 'type' ) ),
 			$uri,
-			$sub
+			$sub,
+			'imports'
 		);
 	}
 
