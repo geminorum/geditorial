@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\WcPostal;
+<?php namespace geminorum\gEditorial\Modules\WcTracking;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -6,16 +6,17 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
-class WcPostal extends gEditorial\Module
+class WcTracking extends gEditorial\Module
 {
 
 	public static function module()
 	{
 		return [
-			'name'     => 'wc_postal',
-			'title'    => _x( 'WC Postal', 'Modules: WC Postal', 'geditorial-admin' ),
-			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Postal', 'geditorial-admin' ),
+			'name'     => 'wc_tracking',
+			'title'    => _x( 'WC Tracking', 'Modules: WC Tracking', 'geditorial-admin' ),
+			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Tracking', 'geditorial-admin' ),
 			'icon'     => [ 'misc-48', 'ir-post' ], // 'buddicons-tracking',
 			'access'   => 'beta',
 			'disabled' => Helper::moduleCheckWooCommerce(),
@@ -31,8 +32,8 @@ class WcPostal extends gEditorial\Module
 				[
 					'field'       => 'tracking_metakey',
 					'type'        => 'text',
-					'title'       => _x( 'Tracking Metakey', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'Defines the meta-key that stored the tracking identifier data. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Tracking Metakey', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'Defines the meta-key that stored the tracking identifier data. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => 'post_barcode',
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'after'       => Settings::fieldAfterIcon( 'https://github.com/MahdiY/Persian-woocommerce-shipping' ),
@@ -40,8 +41,8 @@ class WcPostal extends gEditorial\Module
 				[
 					'field'       => 'service_template',
 					'type'        => 'text',
-					'title'       => _x( 'Service Template', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'Defines the template that used to build the url to the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Service Template', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'Defines the template that used to build the url to the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => 'https://tracking.post.ir/search.aspx?id=%s',
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'after'       => Settings::fieldAfterIcon( 'https://tracking.post.ir' ),
@@ -49,34 +50,34 @@ class WcPostal extends gEditorial\Module
 				[
 					'field'       => 'service_icon',
 					'type'        => 'url',
-					'title'       => _x( 'Service Icon', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'Defines the image that used as visual identifier of the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Service Icon', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'Defines the image that used as visual identifier of the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => $icon,
 					'field_class' => [ 'regular-text', 'url-text' ],
-					'after'       => Settings::fieldAfterIcon( $icon, _x( 'View Default Icon', 'Setting Icon', 'geditorial-wc-postal' ), 'external' ),
+					'after'       => Settings::fieldAfterIcon( $icon, _x( 'View Default Icon', 'Setting Icon', 'geditorial-wc-tracking' ), 'external' ),
 				],
 			],
 			'_defaults' => [
 				[
 					'field'       => 'email_before_text',
 					'type'        => 'textarea',
-					'title'       => _x( 'Email Before Text', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'String to use before tracking info button on email template of the order details. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
-					'placeholder' => _x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Email Before Text', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'String to use before tracking info button on email template of the order details. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
+					'placeholder' => _x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-tracking' ),
 				],
 				[
 					'field'       => 'email_button_text',
 					'type'        => 'text',
-					'title'       => _x( 'Email Button Text', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'String to use as prefix to tracking info button on email template of the order details. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
-					'placeholder' => _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Email Button Text', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'String to use as prefix to tracking info button on email template of the order details. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
+					'placeholder' => _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-tracking' ),
 				],
 				[
 					'field'       => 'admin_button_title',
 					'type'        => 'text',
-					'title'       => _x( 'Admin Button Title', 'Setting Title', 'geditorial-wc-postal' ),
-					'description' => _x( 'String to use as title of order action button on admin area. Leave empty to use default.', 'Setting Description', 'geditorial-wc-postal' ),
-					'placeholder' => _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-postal' ),
+					'title'       => _x( 'Admin Button Title', 'Setting Title', 'geditorial-wc-tracking' ),
+					'description' => _x( 'String to use as title of order action button on admin area. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
+					'placeholder' => _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-tracking' ),
 				],
 			],
 		];
@@ -86,7 +87,7 @@ class WcPostal extends gEditorial\Module
 	{
 		switch ( $suffix ) {
 
-			case '_tracking': return [ _x( 'Tracking', 'Setting Section Title', 'geditorial-wc-postal' ), NULL ];
+			case '_tracking': return [ _x( 'Tracking', 'Setting Section Title', 'geditorial-wc-tracking' ), NULL ];
 		}
 
 		return FALSE;
@@ -105,13 +106,10 @@ class WcPostal extends gEditorial\Module
 
 		$this->filter( 'wc_customer_order_csv_export_order_row', 3 );
 		$this->filter_set( 'wc_customer_order_csv_export_order_headers', [
-			'tracking_id' => _x( 'Tracking', 'Export Column', 'geditorial-wc-postal' ),
+			'tracking_id' => _x( 'Tracking', 'Export Column', 'geditorial-wc-tracking' ),
 		] );
 
 		$this->action( 'order_details_after_order_table', 1, 20, FALSE, 'woocommerce' );
-
-		$this->filter( 'pwoosms_shortcodes_list' );
-		$this->filter( 'pwoosms_order_sms_body_before_replace', 7, 9 );
 
 		if ( is_admin() )
 			return;
@@ -153,11 +151,11 @@ class WcPostal extends gEditorial\Module
 		echo '<div style="margin-bottom:1rem;"><p>';
 
 			echo $this->get_setting_fallback( 'email_before_text',
-				_x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-postal' ) );
+				_x( 'You can view the status of package at any time by visiting this page:', 'Setting Default', 'geditorial-wc-tracking' ) );
 
 			vprintf( ' <a class="button alt -tracking" href="%s">%s (<small>%s</small>)</a>', [
 				$this->_service_url( $tracking ),
-				$this->get_setting_fallback( 'email_button_text', _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-postal' ) ),
+				$this->get_setting_fallback( 'email_button_text', _x( 'Tracking Postal Package', 'Setting Default', 'geditorial-wc-tracking' ) ),
 				$tracking,
 			] );
 		echo '</p></div>';
@@ -192,7 +190,7 @@ class WcPostal extends gEditorial\Module
 
 		echo $this->wrap_open( 'form-field form-field-wide -tracking' );
 			echo Core\HTML::img( $this->_service_icon(), '-before-icon' );
-			echo ' '._x( 'Tracking Package ID:', 'Action Title', 'geditorial-wc-postal' );
+			echo ' '._x( 'Tracking Package ID:', 'Action Title', 'geditorial-wc-tracking' );
 			echo ' '.Core\HTML::link( $tracking, $this->_service_url( $tracking ), TRUE );
 		echo '</div>';
 	}
@@ -202,7 +200,7 @@ class WcPostal extends gEditorial\Module
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			$actions[$this->classs( 'tracking' )] = [
 				'url'  => $this->_service_url( $tracking ),
-				'name' => _x( 'Tracking', 'Action', 'geditorial-wc-postal' ), // NOTE: can not use image tag, the name will be escaped upon rendering
+				'name' => _x( 'Tracking', 'Action', 'geditorial-wc-tracking' ), // NOTE: can not use image tag, the name will be escaped upon rendering
 			];
 
 		return $actions;
@@ -213,7 +211,7 @@ class WcPostal extends gEditorial\Module
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			echo Core\HTML::tag( 'a', [
 				'href'   => $this->_service_url( $tracking ),
-				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-postal' ) ),
+				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-tracking' ) ),
 				'class'  => [ 'button', 'alt', $this->classs( 'tracking' ) ],
 				'target' => '_blank',
 			], Core\HTML::img( $this->_service_icon() ) );
@@ -244,31 +242,5 @@ class WcPostal extends gEditorial\Module
 			$new_data = array_merge( $order_data, $tracking );
 
 		return $new_data;
-	}
-
-	private function _get_tracking_tokens( $order )
-	{
-		$tracking = Core\Number::translate( $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) );
-
-		return [
-			'tracking_id'  => $tracking ?: '',
-			'tracking_url' => $tracking ? $this->_service_url( $tracking ) : '',
-		];
-	}
-
-	public function pwoosms_shortcodes_list( $list )
-	{
-		$html = Core\HTML::tag( 'h4', _x( 'Tracking Information', 'Shortcode List', 'geditorial-wc-postal' ) );
-		$html.= WordPress\Strings::getPiped( [
-			'tracking_id',
-			'tracking_url',
-		], ' <code>{{', '}}</code> ' );
-
-		return $list.Core\HTML::wrap( $html );
-	}
-
-	public function pwoosms_order_sms_body_before_replace( $content, $keys, $values, $order_id, $order, $all_product_ids, $vendor_product_ids )
-	{
-		return Core\Text::replaceTokens( $content, $this->_get_tracking_tokens( $order ) );
 	}
 }
