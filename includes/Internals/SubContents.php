@@ -335,7 +335,6 @@ trait SubContents
 		return count( $raw );
 	}
 
-	// FIXME: always update the `comment_date` to current time/treat comment date as modified
 	protected function subcontent_insert_data_row( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL )
 	{
 		$data = $this->subcontent_sanitize_data( $raw, $context, $post, $mapping );
@@ -350,6 +349,10 @@ trait SubContents
 
 		if ( ! array_key_exists( 'user_id', $data ) )
 			$data['user_id'] = get_current_user_id();
+
+		// NOTE: always update the `comment_date` to current time/treat comment date as modified
+		if ( ! array_key_exists( 'comment_date', $data ) )
+			$data['comment_date'] = current_time( 'mysql' );
 
 		if ( ! array_key_exists( 'comment_type', $data ) && ( $type = $this->subcontent_get_comment_type() ) )
 			$data['comment_type'] = $type;
