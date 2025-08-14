@@ -315,8 +315,10 @@ class Byline extends gEditorial\Module
 	private function _do_enqueue_app( $atts = [] )
 	{
 		$args = self::atts( [
-			'app'     => static::APP_NAME,
-			'asset'   => static::APP_ASSET,
+			// 'app'     => static::APP_NAME,
+			// 'asset'   => static::APP_ASSET,
+			'app'     => defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock',
+			'asset'   => defined( 'self::APP_ASSET' ) ? constant( 'self::APP_ASSET' ) : '_assignment',
 			'can'     => 'assign',
 			'linked'  => NULL,
 			'targets' => $this->list_taxonomies(),

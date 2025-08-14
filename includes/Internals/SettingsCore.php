@@ -668,9 +668,9 @@ trait SettingsCore
 	 * @ref `wp_import_handle_upload()`
 	 * @ref `WordPress\Media::handleImportUpload()`
 	 *
-	 * @param  string|array $mimes
-	 * @param  string       $name
-	 * @return false|int    $filesize
+	 * @param string|array $mimes
+	 * @param string $name
+	 * @return false|int
 	 */
 	protected function settings_render_upload_field( $mimes, $name = 'import' )
 	{

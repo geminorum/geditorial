@@ -13,9 +13,9 @@ trait SettingsPostTypes
 	 * Retrieves settings option for the target posttypes.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
-	 * @param  string $target
-	 * @param  array  $fallback
-	 * @return array  $posttypes
+	 * @param string $target
+	 * @param array $fallback
+	 * @return array
 	 */
 	public function get_setting_posttypes( $target, $fallback = [] )
 	{
@@ -23,13 +23,13 @@ trait SettingsPostTypes
 	}
 
 	/**
-	 * Checks if posttype is in settings option for the target posttypes.
+	 * Checks if post-type is in settings option for the target post-types.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
-	 * @param  string $posttype
-	 * @param  string $target
-	 * @param  array  $fallback
-	 * @return array  $posttypes
+	 * @param string $posttype
+	 * @param string $target
+	 * @param array $fallback
+	 * @return array
 	 */
 	public function in_setting_posttypes( $posttype, $target, $fallback = FALSE )
 	{
@@ -39,7 +39,7 @@ trait SettingsPostTypes
 	public function register_settings_posttypes_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'post_types_title', 'post', 'settings',
+			$title = $this->get_string( 'post_types_title', FALSE, 'settings',
 				_x( 'Supported Post-types', 'Internal: SettingsPostTypes: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
@@ -60,7 +60,7 @@ trait SettingsPostTypes
 
 	public function settings_posttypes_option()
 	{
-		if ( $before = $this->get_string( 'post_types_before', 'post', 'settings', NULL ) )
+		if ( $before = $this->get_string( 'post_types_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
 		echo Settings::tabPanelOpen();
@@ -83,7 +83,7 @@ trait SettingsPostTypes
 
 		echo '</ul></div>';
 
-		if ( $after = $this->get_string( 'post_types_after', 'post', 'settings', NULL ) )
+		if ( $after = $this->get_string( 'post_types_after', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $after );
 	}
 

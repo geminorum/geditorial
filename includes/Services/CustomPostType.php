@@ -118,7 +118,7 @@ class CustomPostType extends gEditorial\Service
 			if ( ! array_key_exists( $key, $pre ) )
 				$pre[$key] = vsprintf( $template, $strings );
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		if ( ! array_key_exists( 'extended_label', $pre ) )
 			$pre['extended_label'] = $pre['name'];
 

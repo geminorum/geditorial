@@ -14,7 +14,7 @@ class Visual extends WordPress\Main
 	}
 
 	/**
-	 * Retrieves markup for given icon.
+	 * Retrieves mark-up for given icon.
 	 * TODO: support for `none`: `div.wp-menu-image`
 	 *
 	 * The URL to the icon to be used for `add_menu_page()`

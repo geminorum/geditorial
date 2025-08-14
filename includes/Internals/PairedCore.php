@@ -85,7 +85,7 @@ trait PairedCore
 
 				'public'       => ! $paired[5],
 				'rewrite'      => $paired[5] ? FALSE : NULL,
-				'show_ui'      => FALSE, // $this->is_debug_mode(),
+				'show_ui'      => $this->is_debug_mode(),
 				'hierarchical' => $paired[4],
 
 				'capabilities' => [
@@ -253,15 +253,15 @@ trait PairedCore
 	}
 
 	/**
-	 * Appends List of supported posts to source paired posttype.
+	 * Appends List of supported posts to source paired post-type.
 	 * @example `$this->filter_module( 'papered', 'view_list', 5, 10, 'paired_posttype' );`
 	 *
-	 * @param  array  $list
-	 * @param  object $source
-	 * @param  object $profile
-	 * @param  string $context
-	 * @param  array  $data
-	 * @return array  $list
+	 * @param array $list
+	 * @param object $source
+	 * @param object $profile
+	 * @param string $context
+	 * @param array $data
+	 * @return array
 	 */
 	public function papered_view_list_paired_posttype( $list, $source, $profile, $context, $data )
 	{
@@ -278,11 +278,11 @@ trait PairedCore
 	 * Renders pointers about given paired posttype.
 	 * @example `$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );`
 	 *
-	 * @param  object      $post
-	 * @param  string      $before
-	 * @param  string      $after
-	 * @param  string      $context
-	 * @param  string|null $screen
+	 * @param object $post
+	 * @param string $before
+	 * @param string $after
+	 * @param string $context
+	 * @param object $screen
 	 * @return void
 	 */
 	public function pointers_post_paired_posttype( $post, $before, $after, $context, $screen )
@@ -329,11 +329,11 @@ trait PairedCore
 	 * Renders pointers about given supported posttype.
 	 * @example `$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );`
 	 *
-	 * @param  object      $post
-	 * @param  string      $before
-	 * @param  string      $after
-	 * @param  string      $context
-	 * @param  string|null $screen
+	 * @param object $post
+	 * @param string $before
+	 * @param string $after
+	 * @param string $context
+	 * @param object $screen
 	 * @return void
 	 */
 	public function pointers_post_paired_supported( $post, $before, $after, $context, $screen )
@@ -367,7 +367,7 @@ trait PairedCore
 	 * @param array $data
 	 * @param object $post
 	 * @param string $context
-	 * @return array $data
+	 * @return array
 	 */
 	public function tabloid_view_data_for_post_paired_supported( $data, $post, $context )
 	{
@@ -402,11 +402,11 @@ trait PairedCore
 	 * Appends the list of main posts for current supported.
 	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_supported' );`
 	 *
-	 * @param  array  $list
-	 * @param  array  $data
-	 * @param  object $post
-	 * @param  string $context
-	 * @return array  $list
+	 * @param array $list
+	 * @param array $data
+	 * @param object $post
+	 * @param string $context
+	 * @return array
 	 */
 	public function tabloid_post_summaries_paired_supported( $list, $data, $post, $context )
 	{
@@ -441,11 +441,11 @@ trait PairedCore
 	 * Appends List of supported posts to current paired
 	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );`
 	 *
-	 * @param  array  $list
-	 * @param  array  $data
-	 * @param  object $post
-	 * @param  string $context
-	 * @return array  $list
+	 * @param array $list
+	 * @param array $data
+	 * @param object $post
+	 * @param string $context
+	 * @return array
 	 */
 	public function tabloid_post_summaries_paired_posttype( $list, $data, $post, $context )
 	{
@@ -483,11 +483,11 @@ trait PairedCore
 	 * Appends the bulk export buttons for current post.
 	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 20, 'paired_exports' );`
 	 *
-	 * @param  array  $list
-	 * @param  array  $data
-	 * @param  object $post
-	 * @param  string $context
-	 * @return array  $list
+	 * @param array $list
+	 * @param array $data
+	 * @param object $post
+	 * @param string $context
+	 * @return array
 	 */
 	public function tabloid_post_summaries_paired_exports( $list, $data, $post, $context )
 	{
@@ -544,40 +544,38 @@ trait PairedCore
 
 	public function paired_count_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
 	{
-		if ( ! $posts = $this->paired_all_connected_to( $post, $context, 'ids', $exclude, $posttypes ) )
-			return 0;
-
-		return count( $posts );
+		return $this->paired_all_connected_to( $post, $context, 'ids', $exclude, $posttypes, TRUE );
 	}
 
-	public function paired_all_connected_to( $post, $context, $fields = NULL, $exclude = [], $posttypes = NULL )
+	public function paired_all_connected_to( $post, $context, $fields = NULL, $exclude = [], $posttypes = NULL, $count = FALSE )
 	{
 		if ( ! $constants = $this->paired_get_constants() )
-			return FALSE;
+			return $count ? 0 : FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return $count ? 0 : FALSE;
 
 		if ( $post->post_type !== $this->constant( $constants[0] ) )
-			return FALSE;
+			return $count ? 0 : FALSE;
 
 		$paired = $this->constant( $constants[1] );
 		$terms  = WordPress\Taxonomy::getPostTerms( $paired, $post );
 
 		if ( empty( $terms ) )
-			return [];
+			return $count ? 0 : FALSE;
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		$args = [
+		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), [
+
 			'posts_per_page' => -1,
 			'orderby'        => [ 'menu_order', 'date' ], // TODO: custom order
 			'order'          => 'ASC',
 			'post_type'      => $posttypes,
 			'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', is_admin() ? [ 'pending', 'draft' ] : [] ),
 			'post__not_in'   => $exclude,
-			'fields'         => $fields ?? 'all', // or `ids`
+			'fields'         => $count ? 'ids' : ( $fields ?? '' ), // or `ids`/`id=>parent`
 			'tax_query'      => [ [
 				'taxonomy' => $paired,
 				'field'    => 'term_id',
@@ -593,9 +591,13 @@ trait PairedCore
 			'update_post_meta_cache' => FALSE,
 			'update_post_term_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
-		];
 
-		$posts = get_posts( apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), $args, $post, (array) $posttypes, $context ) );
+		], $post, (array) $posttypes, $context );
+
+		$posts = get_posts( $args );
+
+		if ( $count )
+			return empty( $posts ) ? 0 : count( $posts );
 
 		return empty( $posts ) ? [] : $posts;
 	}
@@ -723,8 +725,8 @@ trait PairedCore
 	 * Hooks the filter for paired parent terms on imports.
 	 * @SEE: `hook_taxonomy_importer_term_parents()`
 	 *
-	 * @param  bool|string $setting
-	 * @return bool        $hooked
+	 * @param bool|string $setting
+	 * @return bool
 	 */
 	protected function pairedcore__hook_importer_term_parents( $setting = 'paired_force_parents' )
 	{
@@ -757,7 +759,7 @@ trait PairedCore
 	/**
 	 * Hooks the action for sync paired on imports.
 	 *
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function pairedcore__hook_importer_before_import()
 	{
@@ -939,14 +941,14 @@ trait PairedCore
 	 * Tries to store/remove paired connections.
 	 * @OLD: `paired_do_store_connection()`
 	 *
-	 * @param  string    $action
-	 * @param  int|array $post_ids
-	 * @param  int|array $paired_ids
-	 * @param  string    $posttype_constant
-	 * @param  string    $paired_constant
-	 * @param  bool      $keep_olds
-	 * @param  null|bool $forced
-	 * @return bool|int|array $connections
+	 * @param string $action
+	 * @param int|array $post_ids
+	 * @param int|array $paired_ids
+	 * @param string $posttype_constant
+	 * @param string $paired_constant
+	 * @param bool $keep_olds
+	 * @param bool $forced
+	 * @return bool|int|array
 	 */
 	protected function paired_do_connection( $action, $post_ids, $paired_ids, $posttype_constant, $paired_constant, $keep_olds = FALSE, $forced = NULL )
 	{

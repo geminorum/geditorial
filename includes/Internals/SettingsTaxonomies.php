@@ -11,9 +11,9 @@ trait SettingsTaxonomies
 	/**
 	 * Retrieves settings option for the target taxonomies.
 	 *
-	 * @param  string $target
-	 * @param  array  $fallback
-	 * @return array  $posttypes
+	 * @param string $target
+	 * @param array $fallback
+	 * @return array
 	 */
 	public function get_setting_taxonomies( $target, $fallback = [] )
 	{
@@ -23,10 +23,10 @@ trait SettingsTaxonomies
 	/**
 	 * Checks if taxonomy is in settings option for the target taxonomies.
 	 *
-	 * @param  string $taxonomy
-	 * @param  string $target
-	 * @param  array  $fallback
-	 * @return array  $posttypes
+	 * @param string $taxonomy
+	 * @param string $target
+	 * @param array $fallback
+	 * @return array
 	 */
 	public function in_setting_taxonomies( $taxonomy, $target, $fallback = FALSE )
 	{
@@ -36,7 +36,7 @@ trait SettingsTaxonomies
 	public function register_settings_taxonomies_option( $title = NULL )
 	{
 		if ( is_null( $title ) )
-			$title = $this->get_string( 'taxonomies_title', 'post', 'settings',
+			$title = $this->get_string( 'taxonomies_title', FALSE, 'settings',
 				_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
@@ -57,7 +57,7 @@ trait SettingsTaxonomies
 
 	public function settings_taxonomies_option()
 	{
-		if ( $before = $this->get_string( 'taxonomies_before', 'post', 'settings', NULL ) )
+		if ( $before = $this->get_string( 'taxonomies_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
 		echo Settings::tabPanelOpen();
@@ -80,7 +80,7 @@ trait SettingsTaxonomies
 
 		echo '</ul></div>';
 
-		if ( $after = $this->get_string( 'taxonomies_after', 'post', 'settings', NULL ) )
+		if ( $after = $this->get_string( 'taxonomies_after', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $after );
 	}
 

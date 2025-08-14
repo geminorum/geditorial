@@ -106,6 +106,11 @@ class Phonebook extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['settings'] = [
+			'post_types_title' => _x( 'Meta Field Posttypes', 'Setting Info', 'geditorial-phonebook' ),
+			'post_types_after' => _x( 'Applies Post-type fields on selected post-types.', 'Setting Info', 'geditorial-phonebook' ),
+		];
+
 		$strings['metabox'] = [
 			'supportedbox_title'  => _x( 'Contacts', 'MetaBox Title', 'geditorial-phonebook' ),
 			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-phonebook' ),
