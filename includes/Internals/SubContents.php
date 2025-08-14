@@ -171,8 +171,12 @@ trait SubContents
 
 	protected function subcontent_get_searchable_fields( $context = 'display', $posttype = NULL )
 	{
-		return $this->filters( 'searchable_fields',
-			$this->subcontent_define_searchable_fields(), $context, $posttype );
+		$fields = $this->subcontent_define_searchable_fields();
+
+		foreach ( $fields as $field => $targets )
+			$fields[$field] = array_filter( (array) $targets, 'post_type_exists' );
+
+		return $this->filters( 'searchable_fields', $fields, $context, $posttype );
 	}
 
 	protected function subcontent_define_required_fields()
