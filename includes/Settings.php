@@ -570,6 +570,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_assignment_dock( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'assignment_dock',
+			'title'       => _x( 'Assignment Dock', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Select to use advanced assignment UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_metabox_advanced( $description = NULL, $default = NULL )
 	{
 		return [

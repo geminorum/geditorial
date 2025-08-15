@@ -14,13 +14,16 @@ use geminorum\gEditorial\WordPress;
 
 class Venue extends gEditorial\Module
 {
+	use Internals\AdminPage;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\FramePage;
 	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
+	use Internals\PairedAssignment;
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
@@ -53,6 +56,7 @@ class Venue extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				'paired_force_parents',
+				'assignment_dock',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Place Facilities', 'Settings', 'geditorial-venue' ),
@@ -69,6 +73,7 @@ class Venue extends gEditorial\Module
 				'contents_viewable',
 				'paired_manage_restricted',
 				'custom_captype',
+				'paired_roles',
 			],
 			'_editlist' => [
 				'admin_ordering',
@@ -122,7 +127,7 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'primary_posttype' => 'place',
-			'primary_paired'   => 'places',
+			'primary_paired'   => 'place',
 			'primary_taxonomy' => 'place_category',
 			'primary_subterm'  => 'place_facility',
 			'main_shortcode'   => 'place',
@@ -152,6 +157,16 @@ class Venue extends gEditorial\Module
 				'metabox_title' => _x( 'Place Details', 'Label: MetaBox Title', 'geditorial-venue' ),
 				'listbox_title' => _x( 'Connected to this Place', 'Label: MetaBox Title', 'geditorial-venue' ),
 			],
+
+			'supportedbox_title'  => _x( 'Places', 'MetaBox Title', 'geditorial-venue' ),
+
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'mainbutton_title' => _x( 'Locations of %2$s', 'Button Title', 'geditorial-venue' ),
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
+			'mainbutton_text'  => _x( '%1$s Manage %2$s Places', 'Button Text', 'geditorial-venue' ),
+
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'heading_title' => _x( 'Location Report for %1$s', 'Button Title', 'geditorial-venue' ),
 		];
 
 		return $strings;
@@ -243,6 +258,9 @@ class Venue extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
+		if ( $this->get_setting( 'assignment_dock' ) )
+			$this->paired_assignment__init();
+
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( is_admin() )
@@ -329,8 +347,24 @@ class Venue extends gEditorial\Module
 			} else if ( 'post' == $screen->base ) {
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
-				$this->_hook_paired_pairedbox( $screen );
-				$this->_hook_paired_store_metabox( $screen->post_type );
+
+				if ( $this->role_can( 'paired' ) ) {
+
+					if ( $this->get_setting( 'assignment_dock' ) ) {
+
+						$this->_hook_general_supportedbox( $screen );
+						Scripts::enqueueColorBox();
+
+					} else {
+
+						$this->_hook_paired_pairedbox( $screen );
+						$this->_hook_paired_store_metabox( $screen->post_type );
+					}
+
+				} else {
+
+					$this->_hook_paired_overviewbox( $screen );
+				}
 
 			} else if ( 'edit' == $screen->base ) {
 
@@ -354,6 +388,9 @@ class Venue extends gEditorial\Module
 			'primary_paired',
 			'primary_subterm',
 			'primary_taxonomy',
+			TRUE,   // hierarchical
+			FALSE,  // private
+			(bool) $this->get_setting( 'assignment_dock' ),   // `terms_related`
 		];
 	}
 
@@ -361,6 +398,29 @@ class Venue extends gEditorial\Module
 	{
 		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
+	}
+
+	public function admin_menu()
+	{
+		if ( $this->get_setting( 'assignment_dock' ) && $this->role_can( 'paired' ) )
+			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
+	}
+
+	public function load_submenu_adminpage( $context = 'framepage' )
+	{
+		$this->_load_submenu_adminpage( $context );
+		$this->paired_assignment__load_submenu_adminpage( $context );
+	}
+
+	public function render_framepage_adminpage()
+	{
+		$this->paired_assignment__do_render_iframe_content(
+			'framepage',
+			/* translators: `%s`: post title */
+			_x( 'Location Dock for %s', 'Page Title', 'geditorial-venue' ),
+			/* translators: `%s`: post title */
+			_x( 'Location Overview for %s', 'Page Title', 'geditorial-venue' )
+		);
 	}
 
 	public function dashboard_glance_items( $items )
@@ -394,6 +454,11 @@ class Venue extends gEditorial\Module
 			] );
 
 		return $html;
+	}
+
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		$this->pairedmetabox__render_supportedbox_content( $object, $box, $context, $screen );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
