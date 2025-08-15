@@ -53,7 +53,6 @@ class Venue extends gEditorial\Module
 			'_general' => [
 				'multiple_instances',
 				'paired_force_parents',
-				'paired_manage_restricted',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Place Facilities', 'Settings', 'geditorial-venue' ),
@@ -65,6 +64,11 @@ class Venue extends gEditorial\Module
 					$this->constant( 'primary_taxonomy' ),
 					$this->get_taxonomy_label( 'primary_taxonomy', 'no_terms' ),
 				],
+			],
+			'_roles' => [
+				'contents_viewable',
+				'paired_manage_restricted',
+				'custom_captype',
 			],
 			'_editlist' => [
 				'admin_ordering',
@@ -211,6 +215,11 @@ class Venue extends gEditorial\Module
 	{
 		parent::init();
 
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'primary_posttype' )
+			: FALSE;
+
 		$this->register_taxonomy( 'primary_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
@@ -219,18 +228,27 @@ class Venue extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'primary_posttype', [
 			'custom_icon' => 'category',
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->paired_register( [], [
 			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
+			'is_viewable'      => $viewable,
+			'custom_captype'   => $captype,
 		], [
-			'custom_icon' => 'building',
+			'custom_icon'    => 'building',
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( is_admin() )
+			return;
+
+		if ( ! $viewable )
 			return;
 
 		$this->_hook_paired_exclude_from_subterm();
