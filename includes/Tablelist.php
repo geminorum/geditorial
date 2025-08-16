@@ -67,7 +67,8 @@ class Tablelist extends WordPress\Main
 		if ( ! $perpage )
 			return $terms;
 
-		$pagination = Core\HTML::tablePagination( count( $terms ), FALSE, $limit, $paged, $extra );
+		$total      = WordPress\Taxonomy::hasTerms( $taxonomy, FALSE, TRUE, array_merge( $atts, [ 'search' => self::req( 's', '' ) ] ) );
+		$pagination = Core\HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];
