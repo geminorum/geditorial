@@ -43,7 +43,7 @@ trait TaxonomyOverview
 		$columns = [
 			'_cb'  => 'term_id',
 			'name' => [
-				'title' => _x( 'Name', 'Internal: TaxonomyOverview: Column', 'geditorial-admin' ),
+				'title'    => _x( 'Name', 'Internal: TaxonomyOverview: Column', 'geditorial-admin' ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )

@@ -73,7 +73,7 @@ trait SubContents
 		return $this->constant( 'subcontent_status', 'private' );
 	}
 
-	// NOTE: on strings api: `$strings['fields']['subcontent']`
+	// NOTE: on strings API: `$strings['fields']['subcontent']`
 	protected function subcontent_define_fields()
 	{
 		return $this->get_strings( 'subcontent', 'fields' );
@@ -101,7 +101,7 @@ trait SubContents
 	protected function subcontent_define_type_options( $context, $posttype = NULL )
 	{
 		return [
-			// EXAMPLE
+			/// EXAMPLE
 			// [
 			// 	'name'     => 'default',
 			// 	'title'    => _x( 'Default', 'Type Option', 'geditorial-admin' ),
@@ -123,7 +123,7 @@ trait SubContents
 
 	protected function subcontent_available_type_options( $context = 'display', $posttype = NULL )
 	{
-		// trying not to fire the filter hook twice!
+		// Tries not to fire the filter hook twice!
 		$defined = Core\Arraay::pluck( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
 		$enabled = \array_merge( [ 'default' ], $this->get_setting( 'subcontent_types', [] ) );
 
@@ -623,6 +623,7 @@ trait SubContents
 
 			'update_comment_meta_cache' => TRUE,
 			'update_comment_post_cache' => FALSE,
+			'no_found_rows'             => TRUE,
 		], $extra );
 
 		$query = new \WP_Comment_Query;
@@ -1115,14 +1116,14 @@ trait SubContents
 	}
 
 	/**
-	 * Appends the table summary of subcontents for current supported.
+	 * Appends the table summary of sub-contents for current supported.
 	 * @example `$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );`
 	 *
-	 * @param  array  $list
-	 * @param  array  $data
-	 * @param  object $post
-	 * @param  string $context
-	 * @return array  $list
+	 * @param array $list
+	 * @param array $data
+	 * @param object $post
+	 * @param string $context
+	 * @return array
 	 */
 	public function tabloid_post_summaries_subcontent( $list, $data, $post, $context )
 	{

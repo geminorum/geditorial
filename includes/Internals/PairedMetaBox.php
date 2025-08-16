@@ -59,6 +59,7 @@ trait PairedMetaBox
 		$terms     = WordPress\Taxonomy::getPostTerms( $paired, $post );
 		$none_main = Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
+		// $access    = $this->role_can( 'paired' );
 
 		if ( $subterm_constant && $this->get_setting( 'subterms_support' ) ) {
 

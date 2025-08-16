@@ -461,8 +461,8 @@ class Revisions extends gEditorial\Module
 		}
 
 		// $this->posttypes(),
-		// FIXME: must limit to selected posttypes
-		// @SEE `_update_post_term_count()` for parent status/posttype checks
+		// FIXME: must limit to the selected post-types
+		// @SEE `_update_post_term_count()` for parent status/post-type checks
 		// `WHERE post_type IN ( '".implode( "', '", esc_sql( (array) $posttypes ) )."' )`
 		// @SEE: `_do_tool_empty_metadata()` on Attachments Module
 

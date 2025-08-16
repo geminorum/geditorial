@@ -19,6 +19,7 @@ class Iranian extends gEditorial\Module
 	protected $imports_datafiles = [
 		'identity-locations' => 'identity-locations.json',   // 2023-10-03 23:32:42
 		'postcode-ranges'    => 'postcode-ranges.json',      // 2025-08-13
+		'province-phones'    => 'province-phones.json',      // 2025-08-13
 	];
 
 	public static function module()
