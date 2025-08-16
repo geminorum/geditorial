@@ -23,7 +23,7 @@
   "require": {
     "php": ">=7.4",
     "composer/installers": "^1.0 || ^2.0",
-    "mustache/mustache": "^2.14.2",
+    "mustache/mustache": "^3.0",
     "kzykhys/php-csv-parser": "^1.4.1",
     "michelf/php-markdown": "^2.0.0",
     "league/html-to-markdown": "^5.1.1",
@@ -36,7 +36,8 @@
     "maksimovic/php-xlsx-writer": "^1.0",
     "openspout/openspout": "^3.7",
     "brick/postcode": "^0.3.1",
-    "adhocore/jwt": "^1.1"
+    "adhocore/jwt": "^1.1",
+    "yocto/yoclib-openlocationcode": "^1.0"
   },
   "require-dev": {
     "sabre/vobject": "^4.5.5",

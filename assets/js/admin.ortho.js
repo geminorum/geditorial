@@ -13,7 +13,8 @@
     html: 'textarea#excerpt:not(.wp-editor-area), textarea#attachment_caption, textarea#tag-description, #edittag textarea#description, [data-' + module + '=\'html\']'
   };
 
-  // TODO: extract validations into a Service
+  // TODO: extract validations into a Service: `InputValidations`
+  // TODO: insert current datetime into input with format via data attribute
   // TODO: couple with: https://github.com/validatorjs/validator.js
   const inputs = {
     number: '[data-' + module + '=\'number\']',

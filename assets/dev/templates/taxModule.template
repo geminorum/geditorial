@@ -138,6 +138,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'custom_icon'     => $this->module->icon,
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
+			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 		] );
 

@@ -54,6 +54,9 @@ const args=(argList=>{let arg={},a,opt,thisOpt,curOpt;for(a=0;a<argList.length;a
 // @REF: https://stackoverflow.com/a/7224605
 const capitalize = s => s && s[0].toUpperCase() + s.slice(1);
 
+// @REF: https://stackoverflow.com/a/74218453
+const sanitizeModule = s => s && s.trim().replace(/[^A-Za-z0-9-]/g, '');
+
 // @REF: https://stackoverflow.com/a/49968211
 const normalizeEOL = s => s.replace(/^\s*[\r\n]/gm, '\r\n');
 
@@ -93,7 +96,13 @@ task('dev:newmodule', function (done) {
     return done();
   }
 
-  const name = capitalize(args.name); // TODO: sanitize this!
+  const name = capitalize(sanitizeModule(args.name));
+
+  if (!name) {
+    log.error('Error: invalid name for the module: `' + args.name + '`');
+    return done();
+  }
+
   const parts = name.split(/(?=[A-Z])/);
 
   const data = extend(conf.templates[template].defaults, {
@@ -148,7 +157,7 @@ task('i18n:admin', function (cb) {
   const command = 'wp i18n make-pot . ' +
     ' ./languages/admin.pot' +
     ' --domain=' + pkg.name + '-admin' +
-    // ' --subtract=./languages/' + pkg.name + '.pot' + // FIXME: temporary disabled for migration
+    // ' --subtract=./languages/' + pkg.name + '.pot' + // NOTE: The only duplicates are the plugin info strings.
     ' --headers=\'' + template(JSON.stringify(conf.i18n.admin.headers), { variable: 'data' })({ bugs: pkg.bugs.url }) + '\' ' +
     i18nExtra(conf.i18n.admin);
 
