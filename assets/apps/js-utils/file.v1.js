@@ -14,10 +14,8 @@
  * @param {String} input
  * @returns {String}
  */
-const getExt = (input) => {
-  return /(?:\.([^.]+))?$/.exec(input);
-  // return input.split('.').pop();
-};
+const getExt = (input) => /(?:\.([^.]+))?$/.exec(input);
+// const getExt = (input) => input.split('.').pop();
 
 /**
  * Trims the file extension from a String.
@@ -26,9 +24,7 @@ const getExt = (input) => {
  * @param {String} input
  * @returns {String}
  */
-const getName = (input) => {
-  return input.replace(/\.[^/.]+$/, '');
-};
+const getName = (input) => input.replace(/\.[^/.]+$/, '');
 
 export {
   getName,
