@@ -573,7 +573,7 @@ class Tweaks extends gEditorial\Module
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows -flex-rows">';
 
-					// FIXME: DEPRECATED
+					// NOTE: DEPRECATED
 					do_action( $this->hook( 'column_row' ), $post );
 
 					do_action( $this->hook( 'column_row', $post->post_type ),
@@ -594,7 +594,7 @@ class Tweaks extends gEditorial\Module
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul class="-rows">';
 
-					// FIXME: DEPRECATED
+					// NOTE: DEPRECATED
 					do_action( $this->hook( 'column_attr' ), $post );
 
 					do_action( $this->hook( 'column_attr', $post->post_type ),

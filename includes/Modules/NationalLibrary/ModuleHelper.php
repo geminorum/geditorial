@@ -305,7 +305,8 @@ class ModuleHelper extends gEditorial\Helper
 				continue;
 
 			$raw   = Core\Text::normalizeZWNJ( $raw );
-			$raw   = Core\Text::normalizeWhitespaceUTF8( $raw );
+			// $raw   = Core\Text::normalizeWhitespaceUTF8( $raw );
+			$raw   = Core\Text::singleWhitespaceUTF8( $raw );
 			$parts = WordPress\Strings::getSeparated( $raw, '،,' );
 			$count = count( $parts );
 

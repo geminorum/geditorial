@@ -34,7 +34,8 @@ class NamesInPersian extends Core\Base
 		if ( empty( $raw ) )
 			return $fallback;
 
-		$normalized = Core\Text::normalizeWhitespaceUTF8( WordPress\Strings::cleanupChars( $raw ), FALSE );
+		// $normalized = Core\Text::normalizeWhitespaceUTF8( WordPress\Strings::cleanupChars( $raw ), FALSE );
+		$normalized = Core\Text::singleWhitespaceUTF8( WordPress\Strings::cleanupChars( $raw ) );
 
 		if ( ! self::isValidFullname( $normalized ) )
 			return $fallback;
@@ -139,7 +140,8 @@ class NamesInPersian extends Core\Base
 		else if ( Core\Text::starts( $parts, 'سید' ) )
 			$parts = 'سید '.Core\Text::trim( Core\Text::leftTrim( $parts, 'سید', FALSE ) );
 
-		$names['fullname'] = Core\Text::normalizeWhitespaceUTF8( $parts, FALSE );
+		// $names['fullname'] = Core\Text::normalizeWhitespaceUTF8( $parts, FALSE );
+		$names['fullname'] = Core\Text::singleWhitespaceUTF8( $parts );
 		$prefix = '';
 
 		if ( Core\Text::starts( $names['fullname'], 'سیده' ) ) {

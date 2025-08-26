@@ -229,7 +229,7 @@ trait PairedCore
 		return TRUE;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		self::_dep( '$this->paired_register()' );
@@ -1109,7 +1109,7 @@ trait PairedCore
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
-	// FIXME: DEPRECATED: use `paired_all_connected_to()`
+	// NOTE: DEPRECATED: use `paired_all_connected_to()`
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		self::_dep( 'paired_all_connected_to()' );
@@ -1147,7 +1147,7 @@ trait PairedCore
 
 	// NOTE: must be public
 	// NOTE: returns sorted results
-	// FIXME: DEPRECATED: use `paired_all_connected_from()`
+	// NOTE: DEPRECATED: use `paired_all_connected_from()`
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		self::_dep( 'paired_all_connected_from()' );

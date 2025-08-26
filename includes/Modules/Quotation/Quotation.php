@@ -107,7 +107,7 @@ class Quotation extends gEditorial\Module
 						'type'        => 'parent_post',
 						'posttype'    => $this->posttypes(),
 					],
-					// FIXME: DEPRECATED
+					// NOTE: DEPRECATED
 					'quotation_pages' => [
 						'title'       => _x( 'Pages', 'Field Title', 'geditorial-quotation' ),
 						'description' => _x( 'Source Pages of the Quote', 'Field Description', 'geditorial-quotation' ),

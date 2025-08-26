@@ -686,7 +686,7 @@ class Book extends gEditorial\Module
 
 	public function meta_init()
 	{
-		// FIXME: DEPRECATED: use `Units` Module
+		// NOTE: DEPRECATED: use `Units` Module
 		$this->register_taxonomy( 'size_taxonomy', [
 			'meta_box_cb' => FALSE,
 		], 'main_posttype', [
@@ -898,7 +898,7 @@ class Book extends gEditorial\Module
 	}
 
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
-	// FIXME: DEPRECATED: use `main_shortcode()`
+	// NOTE: DEPRECATED: use `main_shortcode()`
 	public function list_p2p( $post = NULL, $class = '' )
 	{
 		if ( ! $this->_p2p )

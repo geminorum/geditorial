@@ -982,7 +982,7 @@ trait PostTypeFields
 
 		echo '<div class="geditorial-admin-wrap-column -'.$this->module->name.'"><ul class="-rows">';
 
-			// FIXME: DEPRECATED
+			// NOTE: DEPRECATED
 			$this->actions( 'column_row', $post, $fields, $excludes );
 
 			do_action( $this->hook( 'column_row', $post->post_type ),
@@ -1092,7 +1092,7 @@ trait PostTypeFields
 		do_action( $this->hook_base( 'posttypefields_import_raw_data' ), $post, $data, $override, $check_access, $module );
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	protected function posttypefields_get_post_by( $field_key, $value, $posttype_constant, $sanitize = FALSE, $module = 'meta' )
 	{
 		self::_dep( 'Services\PostTypeFields::getPostByField()' );
@@ -1151,7 +1151,7 @@ trait PostTypeFields
 		return $list;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public function get_postid_by_field( $value, $field, $prefix = NULL )
 	{
 		self::_dep( 'Services\PostTypeFields::getPostByField()' );

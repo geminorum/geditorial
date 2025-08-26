@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 trait PostTypeOverview
 {
-	// DEPRECATED: use `modulelinks__register_headerbuttons()`
+	// NOTE: DEPRECATED: use `modulelinks__register_headerbuttons()`
 	protected function posttype_overview_register_headerbutton( $context, $link = NULL )
 	{
 		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )

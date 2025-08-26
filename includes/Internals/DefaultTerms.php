@@ -32,7 +32,7 @@ trait DefaultTerms
 
 	protected function get_default_terms( $constant, $terms = NULL )
 	{
-		// constant is not defined (in case custom terms are for another modules)
+		// Constant is not defined (in case custom terms are for another modules)
 		if ( ! $this->constant( $constant ) )
 			return []; // must return empty
 
@@ -46,11 +46,11 @@ trait DefaultTerms
 			if ( $defaults && array_key_exists( $constant, $defaults ) )
 				$terms = $defaults[$constant];
 
-			// DEPRECATED: use `$this->define_default_terms()`
+			// NOTE: DEPRECATED: use `$this->define_default_terms()`
 			else if ( ! empty( $this->strings['default_terms'][$constant] ) )
 				$terms = $this->strings['default_terms'][$constant];
 
-			// DEPRECATED: use `$this->define_default_terms()`
+			// NOTE: DEPRECATED: use `$this->define_default_terms()`
 			else if ( ! empty( $this->strings['terms'][$constant] ) )
 				$terms = $this->strings['terms'][$constant];
 
