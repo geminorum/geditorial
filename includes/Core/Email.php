@@ -11,8 +11,8 @@ class Email extends Base
 	 * Verifies that an email is valid.
 	 * NOTE: wrapper for WordPress core `is_email()`
 	 *
-	 * @param  string $input
-	 * @return bool   $is
+	 * @param string $input
+	 * @return bool
 	 */
 	public static function is( $input )
 	{
@@ -26,8 +26,8 @@ class Email extends Base
 	 * Strips out all characters that are not allowable in an email.
 	 * NOTE: wrapper for WordPress core `sanitize_email()`
 	 *
-	 * @param  string $input
-	 * @return string $sanitized
+	 * @param string $input
+	 * @return string
 	 */
 	public static function sanitize( $input )
 	{
@@ -40,10 +40,10 @@ class Email extends Base
 	/**
 	 * Prepares a value as email address for the given context.
 	 *
-	 * @param  string $value
-	 * @param  array  $field
-	 * @param  string $context
-	 * @return string $prepped
+	 * @param string $value
+	 * @param array $field
+	 * @param string $context
+	 * @return string
 	 */
 	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
 	{
@@ -53,11 +53,19 @@ class Email extends Base
 		$raw   = $value;
 		$title = empty( $field['title'] ) ? NULL : $field['title'];
 
+		// tries to sanitize with fallback
+		if ( ! $value = self::sanitize( $value ) )
+			$value = $raw;
+
 		switch ( $context ) {
-			case 'edit' : return $raw;
-			case 'print': return HTML::wrapLTR( trim( $raw ) );
-			case 'icon' : return HTML::mailto( $raw, $icon ?? HTML::getDashicon( 'email-alt' ), self::is( $value ) ? '-is-valid' : '-is-not-valid' );
-			     default: return HTML::mailto( $raw, NULL, self::is( $value ) ? '-is-valid' : '-is-not-valid' );
+			case 'raw'   : return $raw;
+			case 'edit'  : return $raw;
+			case 'input' : return $value;
+			case 'export': return $value;
+			case 'print' : return HTML::wrapLTR( trim( $raw ) );
+			case 'icon'  : return HTML::mailto( $value, $title, $icon ?? HTML::getDashicon( 'email-alt' ), self::is( $value ) ? '-is-valid' : '-is-not-valid' );
+			case 'admin' :
+			     default : return HTML::mailto( $value, $title, NULL, self::is( $value ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;

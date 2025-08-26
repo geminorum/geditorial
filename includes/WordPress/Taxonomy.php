@@ -403,7 +403,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// @REF: `wp_count_terms()`
-	public static function hasTerms( $taxonomy, $object_id = FALSE, $empty = TRUE )
+	public static function hasTerms( $taxonomy, $object_id = FALSE, $empty = TRUE, $extra = [] )
 	{
 		$args = [
 			'taxonomy'   => $taxonomy,
@@ -420,16 +420,16 @@ class Taxonomy extends Core\Base
 			$args['object_ids'] = (array) $object_id;
 
 		$query = new \WP_Term_Query();
-		return $query->query( $args );
+		return $query->query( array_merge( $args, $extra ) );
 	}
 
-	// DEPRECATED: use `Term::taxonomy()`
+	// NOTE: DEPRECATED: use `Term::taxonomy()`
 	public static function getTermTaxonomy( $term_or_id, $fallback = FALSE )
 	{
 		return Term::taxonomy( $term_or_id ) ?: $fallback;
 	}
 
-	// DEPRECATED: use `Term::get()`
+	// NOTE: DEPRECATED: use `Term::get()`
 	public static function getTerm( $term_or_id, $taxonomy = '' )
 	{
 		return Term::get( $term_or_id, $taxonomy );
@@ -794,7 +794,7 @@ class Taxonomy extends Core\Base
 		return '0';
 	}
 
-	// DEPRECATED: use `Term::add()`
+	// NOTE: DEPRECATED: use `Term::add()`
 	public static function addTerm( $term, $taxonomy, $sanitize = TRUE )
 	{
 		return Term::add( $term, $taxonomy, $sanitize );

@@ -9,10 +9,9 @@ class Mobile extends Base
 
 	/**
 	 * Validates a phone number using a regular expression.
-	 *
 	 * @source `WC_Validation::is_phone()`
 	 *
-	 * @param  string $text Phone number to validate.
+	 * @param string $text Phone number to validate.
 	 * @return bool
 	 */
 	public static function is( $text )
@@ -35,12 +34,13 @@ class Mobile extends Base
 	/**
 	 * Prepares a value as mobile number for the given context.
 	 *
-	 * @param  string $value
-	 * @param  array  $field
-	 * @param  string $context
-	 * @return string $prepped
+	 * @param string $value
+	 * @param array $field
+	 * @param string $context
+	 * @param string $icon
+	 * @return string
 	 */
-	public static function prep( $value, $field = [], $context = 'display' )
+	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
 	{
 		if ( self::empty( $value ) )
 			return '';
@@ -66,7 +66,7 @@ class Mobile extends Base
 			case 'print' : return $value;
 			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
-			case 'icon'  : return HTML::tel( $raw, $title ?: $value, HTML::getDashicon( 'smartphone' ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			case 'icon'  : return HTML::tel( $raw, $title ?: $value, $icon ?? HTML::getDashicon( 'smartphone' ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 			case 'admin' :
 			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}

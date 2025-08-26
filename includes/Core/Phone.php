@@ -13,7 +13,7 @@ class Phone extends Base
 	 *
 	 * @source `WC_Validation::is_phone()`
 	 *
-	 * @param  string $text Phone number to validate.
+	 * @param string $text Phone number to validate.
 	 * @return bool
 	 */
 	public static function is( $text )
@@ -96,10 +96,11 @@ class Phone extends Base
 	/**
 	 * Prepares a value as phone number for the given context.
 	 *
-	 * @param  string $value
-	 * @param  array  $field
-	 * @param  string $context
-	 * @return string $prepped
+	 * @param string $value
+	 * @param array $field
+	 * @param string $context
+	 * @param string $icon
+	 * @return string
 	 */
 	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
 	{
@@ -128,6 +129,7 @@ class Phone extends Base
 			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
 			case 'icon'  : return HTML::tel( $raw, $title ?: $value, $icon ?? HTML::getDashicon( 'phone' ), self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
+			case 'admin' :
 			     default : return HTML::tel( $raw, $title ?: FALSE, $value, self::is( $raw ) ? '-is-valid' : '-is-not-valid' );
 		}
 
@@ -158,7 +160,7 @@ class Phone extends Base
 			return '[0-9۰-۹]{3}-[0-9۰-۹]{3}-[0-9۰-۹]{4}';
 
 		// @REF: https://www.material-tailwind.com/docs/html/input-phone
-		// maxlength="16"
+		// `maxlength="16"`
 		// return '^\+\d{1,3}\s\d{1,4}-\d{1,4}-\d{4}$';
 
 		return '[0-9]{3}-[0-9]{3}-[0-9]{4}';
@@ -167,7 +169,7 @@ class Phone extends Base
 	/**
 	 * Convert plaintext phone number to clickable phone number.
 	 *
-	 * Remove formatting and allow "+".
+	 * Remove formatting and allow `+`.
 	 * Example and specs: https://developer.mozilla.org/en/docs/Web/HTML/Element/a#Creating_a_phone_link
 	 *
 	 * @source `wc_make_phone_clickable()`

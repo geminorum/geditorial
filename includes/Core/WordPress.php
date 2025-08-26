@@ -382,7 +382,7 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return get_search_link( $query );
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	// @REF: `get_edit_term_link()`
 	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = [] )
 	{
@@ -412,7 +412,7 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return FALSE;
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = [] )
 	{
 		self::_dep( 'WordPress\PostType::edit()' );

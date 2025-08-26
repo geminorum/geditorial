@@ -280,7 +280,7 @@ class PostType extends Core\Base
 	// * 'private' - not visible to users who are not logged in
 	// * 'inherit' - a revision. see get_children.
 	// * 'trash' - post is in trashbin. added with Version 2.9.
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function getStatuses()
 	{
 		global $wp_post_statuses;
@@ -500,7 +500,7 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	// DEPRECATED: use `Post::getByTitle()`
+	// NOTE: DEPRECATED: use `Post::getByTitle()`
 	public static function getIDsByTitle( $title, $atts = [] )
 	{
 		$args = array_merge( [
@@ -812,31 +812,31 @@ class PostType extends Core\Base
 		return add_query_arg( $args, ( 'attachment' === $posttype ? 'upload.php' : 'edit.php' ) );
 	}
 
-	// DEPRECATED: use `Post::get()`
+	// NOTE: DEPRECATED: use `Post::get()`
 	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
 	{
 		return Post::get( $post, $output, $filter );
 	}
 
-	// DEPRECATED: use `Post::link()`
+	// NOTE: DEPRECATED: use `Post::link()`
 	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
 	{
 		return Post::link( $post, $fallback, $statuses );
 	}
 
-	// DEPRECATED: use `Post::title()`
+	// NOTE: DEPRECATED: use `Post::title()`
 	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
 	{
 		return Post::title( $post, $fallback, $filter );
 	}
 
-	// DEPRECATED: use `Post::getParentTitles()`
+	// NOTE: DEPRECATED: use `Post::getParentTitles()`
 	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
 	{
 		return Post::getParentTitles( $post, $suffix, $linked, $separator );
 	}
 
-	// FIXME: DEPRECATED: use `Services\PrimaryTaxonomy::get()`
+	// NOTE: DEPRECATED: use `Services\PrimaryTaxonomy::get()`
 	public static function getPrimaryTaxonomy( $posttype, $fallback = FALSE )
 	{
 		self::_dep( 'Services\PrimaryTaxonomy::get()' );

@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class HTML extends Base
 {
 
-	// FIXME: DEPRECATED: use `Core\L10n::rtl()`
+	// NOTE: DEPRECATED: use `Core\L10n::rtl()`
 	public static function rtl()
 	{
 		return L10n::rtl();
@@ -25,23 +25,23 @@ class HTML extends Base
 	}
 
 	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#e-mail-address
-	public static function mailto( $email, $content = NULL, $class = '' )
+	public static function mailto( $email, $title = FALSE, $content = NULL, $class = '' )
 	{
-		$content = $content ?: self::wrapLTR( trim( $email ) );
-		return '<a class="'.self::prepClass( '-mailto', $class )
-			.'" href="mailto:'.trim( $email ).'">'.$content.'</a>';
+		return '<a class="'.self::prepClass( '-mailto', $class ).'"'
+			.' href="mailto:'.trim( $email ).'"'
+			.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+			.'>'.( $content ?? self::wrapLTR( trim( $email ) ) )
+		.'</a>';
 	}
 
 	public static function tel( $number, $title = FALSE, $content = NULL, $class = '' )
 	{
-		if ( is_null( $content ) )
-			$content = Number::localize( $number );
-
-		return '<a class="'.self::prepClass( '-tel', $class )
-				.'" href="'.self::prepURLforTel( $number )
-				.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
-				.' data-tel-number="'.self::escape( $number ).'">'
-				.self::wrapLTR( $content ).'</a>';
+		return '<a class="'.self::prepClass( '-tel', $class ).'"'
+			.' href="'.self::prepURLforTel( $number ).'"'
+			.' data-tel-number="'.self::escape( $number ).'"'
+			.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+			.'>'.( $content ?? self::wrapLTR( Number::localize( $number ) ) )
+		.'</a>';
 	}
 
 	public static function geo( $data, $title = FALSE, $content = NULL, $class = '' )
@@ -123,7 +123,7 @@ class HTML extends Base
 
 		$tag = $block ? 'p' : 'span';
 
-		if ( Text::starts( $string, [ '<ul', '<ol', '<h3', '<h4', '<h5', '<h6' ] ) )
+		if ( Text::starts( $string, [ '<p', '<ul', '<ol', '<h3', '<h4', '<h5', '<h6' ] ) )
 			$tag = 'div';
 
 		echo '<'.$tag.' class="'.self::prepClass( 'description', '-description', $class ).'">'
@@ -443,7 +443,7 @@ class HTML extends Base
 			: '';
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function escapeAttr( $text )
 	{
 		return self::escape( $text );
