@@ -19,6 +19,7 @@ use geminorum\gEditorial\WordPress;
 
 class Directorate extends gEditorial\Module
 {
+	use Internals\AdminEditForm;
 	use Internals\AdminPage;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;

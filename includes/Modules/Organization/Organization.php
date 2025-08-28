@@ -16,6 +16,7 @@ use geminorum\gEditorial\WordPress;
 
 class Organization extends gEditorial\Module
 {
+	use Internals\AdminEditForm;
 	use Internals\AdminPage;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;

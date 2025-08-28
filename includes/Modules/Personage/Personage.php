@@ -15,6 +15,7 @@ use geminorum\gEditorial\WordPress;
 
 class Personage extends gEditorial\Module
 {
+	use Internals\AdminEditForm;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;

@@ -14,6 +14,7 @@ use geminorum\gEditorial\WordPress;
 
 class Venue extends gEditorial\Module
 {
+	use Internals\AdminEditForm;
 	use Internals\AdminPage;
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
