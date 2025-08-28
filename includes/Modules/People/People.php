@@ -156,6 +156,7 @@ class People extends gEditorial\Module
 
 		if ( is_admin() ) {
 
+			$this->filter( 'taxonomy_exclude_empty', 1, 10, FALSE, 'gnetwork' );
 			$this->filter( 'taxonomy_term_rewrite_slug', 3, 8, FALSE, 'gnetwork' );
 			$this->filter_module( 'terms', 'sanitize_name', 3, 12 );
 
@@ -248,6 +249,16 @@ class People extends gEditorial\Module
 		return $taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familyfirst( $field )
 			: $field;
+	}
+
+	// @FILTER: `gnetwork_taxonomy_exclude_empty`
+	public function taxonomy_exclude_empty( $excludes )
+	{
+		return array_merge( $excludes, [
+			$this->constant( 'main_taxonomy' ),
+			$this->constant( 'category_taxonomy' ),
+			$this->constant( 'type_taxonomy' ),
+		] );
 	}
 
 	// @FILTER: `gnetwork_taxonomy_term_rewrite_slug`
