@@ -6,21 +6,79 @@ class Settings extends WordPress\Main
 {
 
 	const BASE     = 'geditorial';
-	const REPORTS  = 'geditorial-reports';
-	const SETTINGS = 'geditorial-settings';
-	const TOOLS    = 'geditorial-tools';
-	const ROLES    = 'geditorial-roles';
-	const IMPORTS  = 'geditorial-imports';
-	const CUSTOMS  = 'geditorial-customs';
+	const REPORTS  = 'geditorial-reports';   // NOTE: DEPRECATED
+	const SETTINGS = 'geditorial-settings';  // NOTE: DEPRECATED
+	const TOOLS    = 'geditorial-tools';     // NOTE: DEPRECATED
+	const ROLES    = 'geditorial-roles';     // NOTE: DEPRECATED
+	const IMPORTS  = 'geditorial-imports';   // NOTE: DEPRECATED
+	const CUSTOMS  = 'geditorial-customs';   // NOTE: DEPRECATED
 
 	public static function factory()
 	{
 		return gEditorial();
 	}
 
+	public static function getURLbyContext( $context, $full = TRUE, $extra = [] )
+	{
+		$url = sprintf( 'admin.php?page=%s', self::classs( $context ) );
+
+		switch ( $context ) {
+
+			case 'roles':
+
+				if ( current_user_can( 'list_users' ) )
+					$url = sprintf( 'users.php?page=%s', self::classs( $context ) );
+
+				break;
+
+			case 'tools':
+			case 'imports':
+
+				if ( current_user_can( 'edit_posts' ) )
+					$url = sprintf( 'tools.php?page=%s', self::classs( $context ) );
+
+				break;
+
+			case 'customs':
+
+				if ( current_user_can( 'edit_theme_options' ) )
+					$url = sprintf( 'themes.php?page=%s', self::classs( $context ) );
+
+				break;
+
+			case 'settings':
+				break;
+
+			default:
+			case 'dashboard':
+			case 'reports':
+
+				$url = sprintf( 'index.php?page=%s', self::classs( $context ) );
+		}
+
+		if ( $full )
+			$url = get_admin_url( NULL, $url );
+
+		return $extra ? add_query_arg( $extra, $url ) : $url;
+	}
+
+	public static function isScreenContext( $context, $screen = NULL )
+	{
+		if ( is_null( $screen ) )
+			$screen = get_current_screen();
+
+		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::classs( $context ) ) )
+			return TRUE;
+
+		return FALSE;
+	}
+
+	// NOTE: DEPRECATED
 	// NOTE: better to use `$this->get_module_url()`
 	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		switch ( $context ) {
 			case 'reports' : $url = self::reportsURL();  break;
 			case 'settings': $url = self::settingsURL(); break;
@@ -36,9 +94,11 @@ class Settings extends WordPress\Main
 		], $extra ), $url );
 	}
 
-	// TODO: MUST DEPRECATE
+	// NOTE: DEPRECATED
 	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		$relative = 'index.php?page='.self::REPORTS;
 
 		if ( $full )
@@ -48,8 +108,11 @@ class Settings extends WordPress\Main
 	}
 
 	// TODO: MUST DEPRECATE
+	// NOTE: DEPRECATED
 	public static function settingsURL( $full = TRUE )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		$relative = 'admin.php?page='.self::SETTINGS;
 
 		if ( $full )
@@ -58,9 +121,11 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// TODO: MUST DEPRECATE: problem with dashboard
+	// NOTE: DEPRECATED: problem with dashboard
 	public static function toolsURL( $full = TRUE, $tools_menu = FALSE )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		$relative = $tools_menu ? 'tools.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
 
 		if ( $full )
@@ -69,10 +134,12 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// TODO: MUST DEPRECATE: problem with dashboard
-	public static function rolesURL( $full = TRUE, $tools_menu = FALSE )
+	// NOTE: DEPRECATED: problem with dashboard
+	public static function rolesURL( $full = TRUE, $users_menu = FALSE )
 	{
-		$relative = $tools_menu ? 'tools.php?page='.self::ROLES : 'admin.php?page='.self::ROLES;
+		self::_dep( 'Settings::getURLbyContext()' );
+
+		$relative = $users_menu ? 'users.php?page='.self::ROLES : 'admin.php?page='.self::ROLES;
 
 		if ( $full )
 			return get_admin_url( NULL, $relative );
@@ -80,9 +147,11 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// TODO: MUST DEPRECATE
+	// NOTE: DEPRECATED
 	public static function importsURL( $full = TRUE )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		// NOTE: `tools.php` hard-coded for users with `edit_posts` cap!
 		if ( current_user_can( 'edit_posts' ) )
 			$relative = 'tools.php?page='.self::IMPORTS;
@@ -96,9 +165,11 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// TODO: MUST DEPRECATE
+	// NOTE: DEPRECATED
 	public static function customsURL( $full = TRUE )
 	{
+		self::_dep( 'Settings::getURLbyContext()' );
+
 		$relative = 'themes.php?page='.self::CUSTOMS;
 
 		if ( $full )
@@ -107,8 +178,11 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isReports( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -118,8 +192,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isSettings( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -129,8 +206,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isTools( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -140,8 +220,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isRoles( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -151,8 +234,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isImports( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -162,8 +248,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isCustoms( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -173,8 +262,11 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// NOTE: DEPRECATED
 	public static function isDashboard( $screen = NULL )
 	{
+		self::_dep( 'Settings::isScreenContext()' );
+
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
@@ -1819,7 +1911,7 @@ class Settings extends WordPress\Main
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
-			$back = self::settingsURL();
+			$back = self::getURLbyContext( 'settings' );
 
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
@@ -2337,7 +2429,6 @@ class Settings extends WordPress\Main
 		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial-admin' ) );
 	}
 
-	// FIXME: use `Settings::subURL()`
 	public static function moduleConfigure( $module, $enabled = FALSE )
 	{
 		if ( ! $module->configure )
@@ -2345,7 +2436,7 @@ class Settings extends WordPress\Main
 
 		if ( 'tools' === $module->configure )
 			echo Core\HTML::tag( 'a', [
-				'href'  => add_query_arg( [ 'page' => static::TOOLS, 'sub' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
+				'href'  => Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
 				'data'  => [
@@ -2357,7 +2448,7 @@ class Settings extends WordPress\Main
 
 		else if ( 'reports' === $module->configure )
 			echo Core\HTML::tag( 'a', [
-				'href'  => add_query_arg( [ 'page' => static::REPORTS, 'sub' => $module->name ], get_admin_url( NULL, 'index.php' ) ),
+				'href'  => Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
 				'data'  => [
@@ -2368,7 +2459,7 @@ class Settings extends WordPress\Main
 
 		else
 			echo Core\HTML::tag( 'a', [
-				'href'  => add_query_arg( [ 'page' => static::SETTINGS, 'module' => $module->name ], get_admin_url( NULL, 'admin.php' ) ),
+				'href'  => Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
 				'data'  => [

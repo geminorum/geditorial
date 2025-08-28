@@ -490,23 +490,19 @@ class Plugin
 		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
 			Helper::linkStyleSheetAdmin( 'woocommerce' );
 
-		else if ( Settings::isReports( $screen ) )
-			Helper::linkStyleSheetAdmin( 'reports' );
+		else {
 
-		else if ( Settings::isTools( $screen ) )
-			Helper::linkStyleSheetAdmin( 'tools' );
-
-		else if ( Settings::isImports( $screen ) )
-			Helper::linkStyleSheetAdmin( 'imports' );
-
-		else if ( Settings::isCustoms( $screen ) )
-			Helper::linkStyleSheetAdmin( 'customs' );
-
-		else if ( Settings::isSettings( $screen ) )
-			Helper::linkStyleSheetAdmin( 'settings' );
-
-		else if ( Settings::isDashboard( $screen ) )
-			Helper::linkStyleSheetAdmin( 'dashboard' );
+			foreach ( [
+				'reports',
+				'tools',
+				'imports',
+				'customs',
+				'settings',
+				'dashboard',
+			] as $context )
+				if ( Settings::isScreenContext( $context, $screen ) )
+					Helper::linkStyleSheetAdmin( $context );
+		}
 
 		if ( $this->asset_darkmode )
 			Helper::linkStyleSheetAdmin( 'darkmode' );
@@ -661,10 +657,10 @@ class Plugin
 				$link = FALSE;
 
 			else if ( WordPress\User::cuc( 'manage_options' ) )
-				$link = Settings::settingsURL();
+				$link = Settings::getURLbyContext( 'settings' );
 
 			else if ( WordPress\User::cuc( 'edit_others_posts' ) )
-				$link = Settings::reportsURL();
+				$link = Settings::getURLbyContext( 'reports' );
 
 			else
 				$link = FALSE;

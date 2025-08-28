@@ -101,14 +101,15 @@ class Config extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$can = $this->cuc( 'settings' );
+		$can  = $this->cuc( 'settings' );
+		$slug = $this->classs_base( 'settings' );
 
 		$hook_reports = add_submenu_page(
 			'index.php',
 			_x( 'Editorial Reports', 'Menu Title', 'geditorial-admin' ),
 			_x( 'My Reports', 'Menu Title', 'geditorial-admin' ),
 			'editorial_reports',
-			$this->base.'-reports',
+			$this->classs_base( 'reports' ),
 			[ $this, 'admin_reports_page' ]
 		);
 
@@ -116,32 +117,35 @@ class Config extends gEditorial\Module
 			$this->module->title,
 			$this->module->title,
 			'editorial_settings',
-			$this->base.'-settings',
+			$slug,
 			[ $this, 'admin_settings_page' ],
 			Visual::getMenuIcon( $this->module->icon ),
 		);
 
 		$hook_tools = add_submenu_page(
-			( $can ? $this->base.'-settings' : 'tools.php' ),
+			current_user_can( 'edit_posts' ) ? 'tools.php' : $slug,
 			_x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' ),
 			( $can
 				? _x( 'Tools', 'Menu Title', 'geditorial-admin' )
 				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
 			),
 			'editorial_tools',
-			$this->base.'-tools',
+			$this->classs_base( 'tools' ),
 			[ $this, 'admin_tools_page' ]
 		);
 
-		$this->_hook_wp_submenu_page( 'roles', 'users.php',
+		$this->_hook_wp_submenu_page( 'roles',
+			current_user_can( 'list_users' ) ? 'users.php' : $slug,
 			_x( 'Editorial Roles', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_roles' );
 
-		$this->_hook_wp_submenu_page( 'imports', 'tools.php',
+		$this->_hook_wp_submenu_page( 'imports',
+			current_user_can( 'edit_posts' ) ? 'tools.php' : $slug,
 			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_imports' );
 
-		$this->_hook_wp_submenu_page( 'customs', 'themes.php',
+		$this->_hook_wp_submenu_page( 'customs',
+			current_user_can( 'edit_theme_options' ) ? 'themes.php' : $slug,
 			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_customs' );
 
@@ -167,11 +171,11 @@ class Config extends gEditorial\Module
 				continue;
 
 			add_submenu_page(
-				$this->base.'-settings',
+				$slug,
 				$module->title,
 				$module->title,
 				'editorial_settings',
-				$this->base.'-settings&module='.$module->name,
+				sprintf( '%s&module=%s', $slug, $module->name ),
 				[ $this, 'admin_settings_page' ]
 			);
 		}
@@ -180,7 +184,7 @@ class Config extends gEditorial\Module
 	public function admin_reports_page()
 	{
 		$can = $this->cuc( 'reports' );
-		$uri = Settings::reportsURL( FALSE, ! $can );
+		$uri = Settings::getURLbyContext( 'reports' );
 		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-admin' ) ];
@@ -225,7 +229,7 @@ class Config extends gEditorial\Module
 	public function admin_tools_page()
 	{
 		$can = $this->cuc( 'tools' );
-		$uri = Settings::toolsURL( FALSE, ! $can );
+		$uri = Settings::getURLbyContext( 'tools' );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Tools Sub', 'geditorial-admin' ) ];
@@ -301,7 +305,7 @@ class Config extends gEditorial\Module
 	public function admin_roles_page()
 	{
 		$can = $this->cuc( 'roles' );
-		$uri = Settings::rolesURL( FALSE, ! $can );
+		$uri = Settings::getURLbyContext( 'roles' );
 		$sub = Settings::sub( ( $can ? 'general' : 'overview' ) );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Roles Sub', 'geditorial-admin' ) ];
@@ -714,7 +718,7 @@ class Config extends gEditorial\Module
 	public function admin_imports_page()
 	{
 		$can = $this->cuc( 'imports' );
-		$uri = Settings::importsURL( FALSE );
+		$uri = Settings::getURLbyContext( 'imports' );
 		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-admin' ) ];
@@ -826,7 +830,7 @@ class Config extends gEditorial\Module
 	public function admin_customs_page()
 	{
 		$can = $this->cuc( 'customs' );
-		$uri = Settings::customsURL( FALSE );
+		$uri = Settings::getURLbyContext( 'customs' );
 		$sub = Settings::sub( $can ? 'general' : 'overview' );
 
 		$subs = [ 'overview' => _x( 'Overview', 'Customs Sub', 'geditorial-admin' ) ];

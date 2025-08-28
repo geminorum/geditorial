@@ -565,7 +565,7 @@ trait SettingsCore
 		} else {
 			/* translators: `%s`: module title */
 			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial-admin' ), $this->module->title );
-			$back  = Settings::settingsURL();
+			$back  = Settings::getURLbyContext( 'settings' );
 		}
 
 		Settings::wrapOpen( $this->module->name );

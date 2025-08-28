@@ -17,7 +17,7 @@ trait ModuleLinks
 		$links  = [];
 		$screen = get_current_screen();
 
-		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
+		if ( method_exists( $this, 'reports_settings' ) && ! Settings::isScreenContext( 'reports', $screen ) )
 			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
 				$links[] = [
 					'context' => 'reports',
@@ -28,7 +28,7 @@ trait ModuleLinks
 					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ), $title ),
 				];
 
-		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
+		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isScreenContext( 'tools', $screen ) )
 			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
 				$links[] = [
 					'context' => 'tools',
@@ -39,7 +39,7 @@ trait ModuleLinks
 					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
-		if ( method_exists( $this, 'roles_settings' ) && ! Settings::isRoles( $screen ) )
+		if ( method_exists( $this, 'roles_settings' ) && ! Settings::isScreenContext( 'roles', $screen ) )
 			foreach ( $this->append_sub( [], 'roles' ) as $sub => $title )
 				$links[] = [
 					'context' => 'roles',
@@ -50,7 +50,7 @@ trait ModuleLinks
 					'title'   => sprintf( _x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ), $title ),
 				];
 
-		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
+		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isScreenContext( 'imports', $screen ) )
 			foreach ( $this->append_sub( [], 'imports' ) as $sub => $title )
 				$links[] = [
 					'context' => 'imports',
@@ -61,7 +61,7 @@ trait ModuleLinks
 					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
 				];
 
-		if ( isset( $this->caps['settings'] ) && ! Settings::isSettings( $screen ) && $this->cuc( 'settings' ) )
+		if ( isset( $this->caps['settings'] ) && ! Settings::isScreenContext( 'settings', $screen ) && $this->cuc( 'settings' ) )
 			$links[] = [
 				'context' => 'settings',
 				'sub'     => $this->key,
@@ -105,15 +105,15 @@ trait ModuleLinks
 			$context = 'reports'; // TODO get from module class static: this is the default module link!
 
 		switch ( $context ) {
-			case 'config'    : $url = Settings::settingsURL(); break;
-			case 'reports'   : $url = Settings::reportsURL(); break;
-			case 'tools'     : $url = Settings::toolsURL(); break;
-			case 'rols'      : $url = Settings::rolesURL(); break;
-			case 'imports'   : $url = Settings::importsURL(); break;
-			case 'docs'      : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
-			case 'settings'  : $url = add_query_arg( 'module', $this->module->name, Settings::settingsURL() ); $sub = FALSE; break;
-			case 'listtable' : $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
-			default          : $url = Core\URL::current();
+			case 'tools'    :
+			case 'rols'     :
+			case 'imports'  :
+			case 'reports'  : $url = Settings::getURLbyContext( $context ); break;
+			case 'config'   : $url = Settings::getURLbyContext( 'settings' ); break;
+			case 'settings' : $url = Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $this->module->name ] ); $sub = FALSE; break;
+			case 'docs'     : $url = Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
+			case 'listtable': $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
+			     default    : $url = Core\URL::current();
 		}
 
 		if ( FALSE === $url )
@@ -124,6 +124,7 @@ trait ModuleLinks
 		], $extra ), $url );
 	}
 
+	// @SEE: `Settings::getURLbyContext()`
 	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
 	{
 		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
@@ -148,19 +149,19 @@ trait ModuleLinks
 			$screen   = get_current_screen();
 			$contexts = [];
 
-			if ( $this->module->configure && ! Settings::isSettings( $screen ) )
+			if ( $this->module->configure && ! Settings::isScreenContext( 'settings', $screen ) )
 				$contexts['settings'] = _x( 'Settings', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 
-			if ( method_exists( $this, 'reports_settings' ) && ! Settings::isReports( $screen ) )
+			if ( method_exists( $this, 'reports_settings' ) && ! Settings::isScreenContext( 'reports', $screen ) )
 				$contexts['reports'] = _x( 'Reports', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 
-			if ( method_exists( $this, 'tools_settings' ) && ! Settings::isTools( $screen ) )
+			if ( method_exists( $this, 'tools_settings' ) && ! Settings::isScreenContext( 'tools', $screen ) )
 				$contexts['tools'] = _x( 'Tools', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 
-			if ( method_exists( $this, 'roles_settings' ) && ! Settings::isRoles( $screen ) )
+			if ( method_exists( $this, 'roles_settings' ) && ! Settings::isScreenContext( 'roles', $screen ) )
 				$contexts['roles'] = _x( 'Roles', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 
-			if ( method_exists( $this, 'imports_settings' ) && ! Settings::isImports( $screen ) )
+			if ( method_exists( $this, 'imports_settings' ) && ! Settings::isScreenContext( 'imports', $screen ) )
 				$contexts['imports'] = _x( 'Imports', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 		}
 

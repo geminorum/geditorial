@@ -349,8 +349,8 @@ class Addendum extends gEditorial\Module
 		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
-		if ( Settings::isDashboard( $screen ) )
-			$this->filter_module( 'calendar', 'post_row_title', 4, 12 );
+		if ( Settings::isScreenContext( 'schedule', $screen ) )
+			$this->filter_module( 'schedule', 'post_row_title', 4, 12 );
 	}
 
 	public function dashboard_glance_items( $items )
