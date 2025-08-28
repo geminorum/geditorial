@@ -316,8 +316,7 @@ class Dossier extends gEditorial\Module
 		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
-		if ( Settings::isScreenContext( 'schedule', $screen ) )
-			$this->filter_module( 'schedule', 'post_row_title', 4, 12 );
+		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
 	public function meta_init()

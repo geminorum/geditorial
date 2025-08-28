@@ -527,18 +527,6 @@ class Module extends WordPress\Module
 		add_filter( $this->hook_base( 'shortcode', $shortcode ), $callback, 10, 3 );
 	}
 
-	// DEFAULT FILTER
-	public function calendar_post_row_title( $title, $post, $the_day, $calendar_args )
-	{
-		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $title;
-
-		if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
-			return $title;
-
-		return $title.' – '.WordPress\Post::title( $linked );
-	}
-
 	// NOTE: better to be on module-core than the internal
 	public function default_calendar( $default = 'gregorian' )
 	{
@@ -725,22 +713,6 @@ class Module extends WordPress\Module
 				return FALSE;
 
 		return $request[$key];
-	}
-
-	// DEFAULT METHOD
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
-	{
-		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
-
-			// if ( $constants = $this->paired_get_constants() )
-			// 	return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
-
-			// NOTE: published only on non-admin
-			if ( $linked = $this->paired_all_connected_from( $post, NULL ) )
-				return $single ? reset( $linked ) : $linked;
-		}
-
-		return FALSE;
 	}
 
 	// TODO: move to `AdminScreen` service

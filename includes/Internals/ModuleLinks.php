@@ -142,6 +142,45 @@ trait ModuleLinks
 		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), $admin_base );
 	}
 
+	// DEFAULT METHOD
+	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	{
+		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
+
+			// if ( $constants = $this->paired_get_constants() )
+			// 	return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+
+			// NOTE: `published` status is the only available on non-admin
+			if ( $linked = $this->paired_all_connected_from( $post, NULL ) )
+				return $single ? reset( $linked ) : $linked;
+		}
+
+		return FALSE;
+	}
+
+	protected function modulelinks__hook_calendar_linked_post( $screen = NULL, $module = NULL )
+	{
+		$module = $module ?? 'schedule';
+
+		if ( ! Settings::isScreenContext( $module, $screen ) )
+			return FALSE;
+
+		add_filter( $this->classs_base( $module, 'post_row_title' ),
+			function ( $title, $post, $the_day, $calendar_args ) use ( $module ) {
+
+				if ( ! $this->posttype_supported( $post->post_type ) )
+					return $title;
+
+				if ( ! $linked = $this->get_linked_to_posts( $post->ID, TRUE ) )
+					return $title;
+
+				return sprintf( '%s – %s', $title, WordPress\Post::title( $linked ) );
+
+			}, 12, 4 );
+
+		return TRUE;
+	}
+
 	protected function modulelinks__register_headerbuttons( $contexts = NULL )
 	{
 		if ( is_null( $contexts ) ) {
