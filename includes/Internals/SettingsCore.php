@@ -549,7 +549,7 @@ trait SettingsCore
 		$this->default_buttons( $module );
 		$this->register_help_tabs();
 
-		// register settings on the settings page only
+		// Registers settings on the settings page only.
 		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
@@ -558,14 +558,20 @@ trait SettingsCore
 		$back = $count = $flush = $filters = FALSE;
 
 		if ( 'config' == $this->module->name ) {
+
 			$title   = NULL;
 			$count   = gEditorial()->count();
 			$flush   = Core\WordPress::maybeFlushRules();
 			$filters = TRUE;
+
 		} else {
-			/* translators: `%s`: module title */
-			$title = sprintf( _x( 'Editorial: %s', 'Module', 'geditorial-admin' ), $this->module->title );
+
 			$back  = Settings::getURLbyContext( 'settings' );
+			$title = sprintf(
+				/* translators: `%s`: module title */
+				_x( 'Editorial: %s', 'Module', 'geditorial-admin' ),
+				$this->module->title
+			);
 		}
 
 		Settings::wrapOpen( $this->module->name );

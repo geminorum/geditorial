@@ -696,7 +696,7 @@ trait SubContents
 	 *
 	 * @param array $raw
 	 * @param string $context
-	 * @return array $data
+	 * @return array
 	 */
 	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL )
 	{
@@ -1462,7 +1462,7 @@ trait SubContents
 		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
 		$data   = $this->subcontent_get_data_mapped( $items, $context );
-		$data   = $this->subcontent_get_prepped_data( $data, 'display', FALSE );
+		$data   = $this->subcontent_get_prepped_data( $data, $context, FALSE );
 		$fields = $this->subcontent_get_fields( $context );
 
 		$columns = [
@@ -1474,7 +1474,7 @@ trait SubContents
 					if ( $value && ( $parent = WordPress\Post::title( (int) $value, FALSE ) ) )
 						return $parent;
 
-					return gEditorial\Helper::htmlEmpty();
+					return $value ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 		];

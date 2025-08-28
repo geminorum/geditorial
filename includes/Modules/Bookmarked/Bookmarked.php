@@ -357,11 +357,14 @@ class Bookmarked extends gEditorial\Module
 
 	public function prepped_data( $data, $context, $post, $raw, $types )
 	{
-		return ModuleHelper::prepDataForSummary(
-			$data,
-			Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),
-			$context
-		);
+		if ( in_array( $context, [ 'display' ] ) )
+			return ModuleHelper::prepDataForSummary(
+				$data,
+				Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),
+				$context
+			);
+
+		return $data;
 	}
 
 	public function reports_settings( $sub )

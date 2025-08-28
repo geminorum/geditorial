@@ -488,8 +488,8 @@ class Attachments extends gEditorial\Module
 					if ( ! empty( $meta['filesize'] ) )
 						$sizes['FILESIZE'] = Core\File::formatSize( $meta['filesize'] );
 
-					if ( wp_attachment_is( 'image', $row->ID ) )
-						$sizes['ORIGINAL'] = sprintf( '<span title="%s">%s&times;%s</span>', $meta['file'], $meta['width'], $meta['height'] );
+					if ( ! empty( $meta['file'] ) && wp_attachment_is( 'image', $row->ID ) )
+						$sizes['ORIGINAL'] = sprintf( '<span title="%s">%s&times;%s</span>', $meta['file'], $meta['width'] ?? '', $meta['height'] ?? '' );
 
 					if ( ! empty( $meta['sizes'] ) )
 						foreach ( $meta['sizes'] as $size_name => $size_args )

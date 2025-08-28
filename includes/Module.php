@@ -402,7 +402,7 @@ class Module extends WordPress\Module
 	 * Checks if this module loaded as remote
 	 * for editorial module on another site.
 	 *
-	 * @return bool $remote
+	 * @return bool
 	 */
 	public function remote()
 	{
@@ -501,9 +501,9 @@ class Module extends WordPress\Module
 	/**
 	 * Updates module options upon out-of-context manipulations.
 	 *
-	 * @param  string $key
-	 * @param  mixed $value
-	 * @return bool $updated
+	 * @param string $key
+	 * @param mixed $value
+	 * @return bool
 	 */
 	public function update_option( $key, $value )
 	{
@@ -584,7 +584,7 @@ class Module extends WordPress\Module
 	}
 
 	// TODO: filter the results
-	// TODO: DEPRECATE
+	// TODO: MUST DEPRECATE
 	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
 	{
 		if ( is_null( $title ) )
@@ -659,7 +659,7 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// NOTE: for Ajax calls on quick edit
+	// NOTE: for Ajax calls on quick-edit
 	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
 	{
 		if ( ! Core\WordPress::isAdminAJAX() )
@@ -687,7 +687,7 @@ class Module extends WordPress\Module
 		return $request[$key];
 	}
 
-	// NOTE: for Ajax calls on quick edit
+	// NOTE: for Ajax calls on quick-edit
 	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
 	{
 		if ( ! Core\WordPress::isAdminAJAX() )
@@ -740,7 +740,7 @@ class Module extends WordPress\Module
 			} );
 	}
 
-	// should we insert content?
+	// Should we insert content?
 	public function is_content_insert( $posttypes = '', $first_page = TRUE, $embed = FALSE )
 	{
 		if ( ! $embed && is_embed() )
@@ -842,7 +842,7 @@ class Module extends WordPress\Module
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
 	}
 
-	// checks to bail early if metabox/widget is hidden
+	// Checks to bail early if meta-box/widget is hidden
 	protected function check_hidden_metabox( $box, $posttype = FALSE, $after = '' )
 	{
 		if ( FALSE === $box )
@@ -941,7 +941,7 @@ class Module extends WordPress\Module
 		wp_defer_comment_counting( TRUE );
 
 		if ( ! Core\WordPress::isDev() )
-			do_action( 'qm/cease' ); // QueryMonitor: Cease data collections
+			do_action( 'qm/cease' ); // Query-Monitor: Cease data collections
 
 		return $this->raise_memory_limit( $count, $per, $context ?? 'import' );
 	}

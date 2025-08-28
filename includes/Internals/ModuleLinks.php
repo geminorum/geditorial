@@ -24,8 +24,11 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
-					/* translators: `%s`: sub title */
-					'title'   => sprintf( _x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ), $title ),
+					'title'   => sprintf(
+						/* translators: `%s`: sub title */
+						_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
+						$title
+					),
 				];
 
 		if ( method_exists( $this, 'tools_settings' ) && ! Settings::isScreenContext( 'tools', $screen ) )
@@ -35,8 +38,11 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
-					/* translators: `%s`: sub title */
-					'title'   => sprintf( _x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
+					'title'   => sprintf(
+						/* translators: `%s`: sub title */
+						_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
+						$title
+					),
 				];
 
 		if ( method_exists( $this, 'roles_settings' ) && ! Settings::isScreenContext( 'roles', $screen ) )
@@ -46,8 +52,11 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'roles', $sub ),
-					/* translators: `%s`: sub title */
-					'title'   => sprintf( _x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ), $title ),
+					'title'   => sprintf(
+						/* translators: `%s`: sub title */
+						_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
+						$title
+					),
 				];
 
 		if ( method_exists( $this, 'imports_settings' ) && ! Settings::isScreenContext( 'imports', $screen ) )
@@ -57,8 +66,11 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'imports', $sub ),
-					/* translators: `%s`: sub title */
-					'title'   => sprintf( _x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ), $title ),
+					'title'   => sprintf(
+						/* translators: `%s`: sub title */
+						_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
+						$title
+					),
 				];
 
 		if ( isset( $this->caps['settings'] ) && ! Settings::isScreenContext( 'settings', $screen ) && $this->cuc( 'settings' ) )
@@ -67,8 +79,11 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $this->get_module_url( 'settings' ),
-				/* translators: `%s`: module title */
-				'title'   => sprintf( _x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ), $this->module->title ),
+				'title'   => sprintf(
+					/* translators: `%s`: module title */
+					_x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ),
+					$this->module->title
+				),
 			];
 
 		if ( GEDITORIAL_DISABLE_HELP_TABS )
@@ -80,8 +95,11 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $docs,
-				/* translators: `%s`: module title */
-				'title'   => sprintf( _x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ), $this->module->title ),
+				'title'   => sprintf(
+					/* translators: `%s`: module title */
+					_x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+					$this->module->title
+				),
 			];
 
 		if ( 'config' != $this->module->name )

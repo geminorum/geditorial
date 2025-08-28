@@ -66,7 +66,7 @@ trait CoreMenuPage
 			$page_title,
 			( is_null( $menu_title ) ? $page_title : $menu_title ),
 			( is_null( $capability ) ? ( isset( $this->caps[$context] ) ? $this->caps[$context] : 'manage_options' ) : $capability ),
-			( empty( $menu_slug ) ? sprintf( '%s-%s', $this->base, $context ) : $menu_slug ),
+			( empty( $menu_slug ) ? $this->classs_base( $context ) : $menu_slug ),
 			( empty( $callback ) ? ( is_callable( $default_callback ) ? $default_callback : '' ) : $callback ),
 			( is_null( $position ) ? ( isset( $this->positions[$context] ) ? $this->positions[$context] : NULL ) : $position )
 		);

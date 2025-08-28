@@ -14,9 +14,6 @@ use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
-// TODO: selected committees as `views` on supported @SEE: `Yearly` Module
-// TODO: dashboard summary for status taxonomy
-
 class Directorate extends gEditorial\Module
 {
 	use Internals\AdminEditForm;

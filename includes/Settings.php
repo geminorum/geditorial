@@ -107,7 +107,6 @@ class Settings extends WordPress\Main
 		return $relative;
 	}
 
-	// TODO: MUST DEPRECATE
 	// NOTE: DEPRECATED
 	public static function settingsURL( $full = TRUE )
 	{
@@ -2480,9 +2479,12 @@ class Settings extends WordPress\Main
 
 		Core\HTML::h3( Core\HTML::tag( 'a', [
 			'href'   => self::getModuleDocsURL( $module ),
-			/* translators: `%s`: module title */
-			'title'  => sprintf( _x( '%s Documentation', 'Settings', 'geditorial-admin' ), $module->title ),
 			'target' => '_blank',
+			'title'  => sprintf(
+				/* translators: `%s`: module title */
+				_x( '%s Documentation', 'Settings', 'geditorial-admin' ),
+				$module->title
+			),
 		], $module->title ).$access, '-title' );
 
 		if ( isset( $module->desc ) )
@@ -2500,7 +2502,7 @@ class Settings extends WordPress\Main
 	 * Returns Documentation URL for the module.
 	 *
 	 * @param boolean|object $module
-	 * @return string $url
+	 * @return string
 	 */
 	public static function getModuleDocsURL( $module = FALSE )
 	{
@@ -2558,7 +2560,7 @@ class Settings extends WordPress\Main
 	 * Returns the help content for given module
 	 *
 	 * @param boolean|object $module
-	 * @return array $wiki_info
+	 * @return array
 	 */
 	public static function helpContent( $module = FALSE )
 	{
