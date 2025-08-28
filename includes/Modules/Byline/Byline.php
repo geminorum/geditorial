@@ -197,6 +197,11 @@ class Byline extends gEditorial\Module
 
 		if ( $this->get_setting( 'woocommerce_support' ) )
 			$this->_init_woocommerce();
+
+		if ( ! is_admin() )
+			return;
+
+		$this->filter( 'taxonomy_exclude_empty', 1, 10, FALSE, 'gnetwork' );
 	}
 
 	private function _init_post_tabs()
@@ -770,6 +775,14 @@ class Byline extends gEditorial\Module
 		Scripts::enqueueColorBox();
 
 		return TRUE;
+	}
+
+	// @FILTER: `gnetwork_taxonomy_exclude_empty`
+	public function taxonomy_exclude_empty( $excludes )
+	{
+		return array_merge( $excludes, [
+			$this->constant( 'main_taxonomy' ),
+		] );
 	}
 
 	public function adminbar_init( &$nodes, $parent )
