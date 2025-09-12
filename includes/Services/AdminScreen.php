@@ -20,6 +20,7 @@ class AdminScreen extends gEditorial\Service
 
 	public static function init_late_admin()
 	{
+		add_filter( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ], 9, 2 );
 		add_filter( 'screen_settings', [ __CLASS__, 'screen_settings' ], 12, 2 );
 		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen_option' ], 12, 3 );
 
@@ -27,11 +28,53 @@ class AdminScreen extends gEditorial\Service
 			self::_handle_set_screen_options( $posttype );
 	}
 
-	public static function current_screen( $screen )
+	// @REF: https://wpartisan.me/?p=434
+	// @REF: https://core.trac.wordpress.org/ticket/45283
+	public static function add_meta_boxes( $posttype, $post )
 	{
-		if ( empty( $screen->post_type ) )
+		if ( WordPress\Post::supportBlocks( $post ) )
 			return;
 
+		add_action( 'edit_form_after_title', [ __CLASS__, 'edit_form_after_title' ] );
+	}
+
+	public static function current_screen( $screen )
+	{
+		if ( 'term' === $screen->base && $screen->taxonomy ) {
+
+			add_action( "{$screen->taxonomy}_term_edit_form_top", [ __CLASS__, 'term_edit_form_open' ], -9999999, 2 );
+			add_action( "{$screen->taxonomy}_edit_form", [ __CLASS__, 'term_edit_form_close' ], 9999999, 2 );
+
+		} else if ( $screen->post_type ) {
+
+			self::_handle_posttype_body_class( $screen );
+		}
+	}
+
+	public static function edit_form_after_title( $post )
+	{
+		echo '<div id="postbox-container-after-title" class="postbox-container">';
+			do_meta_boxes( get_current_screen(), 'after_title', $post );
+		echo '</div>';
+	}
+
+	public static function term_edit_form_open( $term, $taxonomy )
+	{
+		echo '<div id="poststuff">';
+		echo '<div id="post-body" class="metabox-holder columns-2">';
+		echo '<div id="post-body-content">';
+	}
+
+	public static function term_edit_form_close( $term, $taxonomy )
+	{
+		echo '</div><div id="postbox-container-1" class="postbox-container">';
+			// do_accordion_sections( get_current_screen(), 'side', $term );
+			do_meta_boxes( get_current_screen(), 'side', $term );
+		echo '</div><br class="clear" /></div></div>';
+	}
+
+	public static function _handle_posttype_body_class( $screen )
+	{
 		if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 			return;
 
