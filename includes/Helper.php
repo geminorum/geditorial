@@ -611,40 +611,6 @@ class Helper extends WordPress\Main
 		return $gEditorialMarkdownExtra->defaultTransform( $markdown );
 	}
 
-	// TODO: move to services: `FileCache`
-	public static function getCacheDIR( $sub, $base = NULL )
-	{
-		if ( ! GEDITORIAL_CACHE_DIR )
-			return FALSE;
-
-		if ( is_null( $base ) )
-			$base = self::BASE;
-
-		$path = Core\File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
-
-		if ( file_exists( $path ) )
-			return Core\URL::untrail( $path );
-
-		if ( ! wp_mkdir_p( $path ) )
-			return FALSE;
-
-		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
-
-		return Core\URL::untrail( $path );
-	}
-
-	// TODO: move to services: `FileCache`
-	public static function getCacheURL( $sub, $base = NULL )
-	{
-		if ( ! GEDITORIAL_CACHE_DIR ) // correct, we check for path constant
-			return FALSE;
-
-		if ( is_null( $base ) )
-			$base = self::BASE;
-
-		return Core\URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
-	}
-
 	/**
 	 * Separates given string by set of delimiters into an array.
 	 * NOTE: applies the plugin filter on default delimiters

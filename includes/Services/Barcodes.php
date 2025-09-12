@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 // FIXME: Already included: https://github.com/tecnickcom/tc-lib-barcode
@@ -41,8 +40,8 @@ class Barcodes extends gEditorial\Service
 			return $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ) ] ) : $direct;
 
 		$file = sprintf( '%s.png', md5( maybe_serialize( $direct ) ) );
-		$path = Helper::getCacheDIR( $sub, $base ).'/'.$file;
-		$url  = Helper::getCacheURL( $sub, $base ).'/'.$file;
+		$path = FileCache::getDIR( $sub, $base ).'/'.$file;
+		$url  = FileCache::getURL( $sub, $base ).'/'.$file;
 
 		if ( ! file_exists( $path.'/'.$file ) ) {
 
