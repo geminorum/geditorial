@@ -941,7 +941,7 @@ class Config extends gEditorial\Module
 	{
 		$stage = Helper::const( 'WP_STAGE', 'production' );  // 'development'
 
-		echo '<div class="modules -list">';
+		echo '<div class="modules -list" data-empty="'.Core\HTML::escape( _x( 'There are no modules available!', 'Config: Message', 'geditorial-admin' ) ).'">';
 
 		foreach ( gEditorial()->modules( 'title' ) as $module ) {
 
