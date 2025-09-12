@@ -982,11 +982,11 @@ class Taxonomy extends Core\Base
 	 *
 	 * `$update_terms` accepts: `not_name_desc`, `not_name`
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  array $terms
-	 * @param  bool|string $update_terms
-	 * @param  int $force_parent
-	 * @return array $count
+	 * @param string|object $taxonomy
+	 * @param array $terms
+	 * @param bool|string $update_terms
+	 * @param int $force_parent
+	 * @return array
 	 */
 	public static function insertDefaultTerms( $taxonomy, $terms, $update_terms = TRUE, $force_parent = 0 )
 	{
@@ -1179,7 +1179,7 @@ class Taxonomy extends Core\Base
 		return $count;
 	}
 
-	// @REF: `_update_post_term_count()`
+	// @REF: `_update_generic_term_count()`
 	public static function countTermObjects( $term, $taxonomy )
 	{
 		global $wpdb;
@@ -1251,9 +1251,9 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves terms with no children.
 	 *
-	 * @param  string|object $taxonomy
-	 * @param  array $extra
-	 * @return array $list
+	 * @param string|object $taxonomy
+	 * @param array $extra
+	 * @return array
 	 */
 	public static function listChildLessTerms( $taxonomy, $fields = NULL, $extra = [] )
 	{

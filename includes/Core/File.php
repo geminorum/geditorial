@@ -245,6 +245,20 @@ class File extends Base
 	}
 
 	/**
+	 * Puts `.donotbackup` on a given folder.
+	 *
+	 * @param string $path
+	 * @param bool $check_folder
+	 * @return bool
+	 */
+	public static function putDoNotBackup( $path, $check_folder = TRUE )
+	{
+		$content = 'This directory (and its sub-directories) will be excluded from the backup.'.PHP_EOL;
+
+		return self::putContents( '.donotbackup', $content, $path, FALSE, $check_folder );
+	}
+
+	/**
 	 * Puts `.htaccess` deny from all on a given folder.
 	 *
 	 * @param string $path

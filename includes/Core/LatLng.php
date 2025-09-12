@@ -2,58 +2,67 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-class Geography extends Base
+class LatLng extends Base
 {
 	// @SEE: `DataType::LatLng`
-	// @SEE: https://github.com/brick/geo
 
-	// https://www.npmjs.com/package/haversine-distance
+	// $point1 = array('lat' => 41.008610, 'long' => 28.971111); // Istanbul
+	// $point2 = array('lat' => 39.925018, 'long' => 32.836956); // Anitkabir
 
-	// Input:
-	// [[Copy] Distance Calculator - WPAdmin](https://codepen.io/geminorum/pen/mdZKrvv)
-	// https://ux.stackexchange.com/a/107316
-
-	// ---- https://github.com/persian-tools/persian-tools/pull/361
-
-	// @REF: https://snippets.ir/1269/calculate-distance-between-two-points-in-php.html
-	public static function getDistance( $latitude1, $longitude1, $latitude2, $longitude2 )
+	/**
+	 * Verifies that a coordinate is valid.
+	 *
+	 * @param string|array $data
+	 * @return bool
+	 */
+	public static function is( $data )
 	{
-		$theta      = $longitude1 - $longitude2;
-		$miles      = ( sin( deg2rad( $latitude1 ) ) * sin( deg2rad( $latitude2 ) ) ) + ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
-		$miles      = acos( $miles );
-		$miles      = rad2deg( $miles );
-		$miles      = $miles * 60 * 1.1515;
-		$feet       = $miles * 5280;
-		$yards      = $feet / 3;
-		$kilometers = $miles * 1.609344;
-		$meters     = $kilometers * 1000;
+		if ( self::empty( $data ) )
+			return FALSE;
 
-		return compact( 'miles', 'feet', 'yards', 'kilometers', 'meters' );
+		if ( ! is_array( $data ) )
+			$data = self::extract( $data );
+
+		return self::validate( $data[0], $data[1] );
+	}
+
+	/**
+	 * Validates a given coordinate
+	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1?permalink_comment_id=3204977#gistcomment-3204977
+	 *
+	 * @param float|int|string $lat
+	 * @param float|int|string $long
+	 * @return bool
+	 */
+	public static function validate( $lat, $long )
+	{
+		return preg_match( '/\A[+-]?(?:90(?:\.0{1,18})?|\d(?(?<=9)|\d?)\.\d{1,18})\z/x', $lat )
+			&& preg_match( '/\A[+-]?(?:180(?:\.0{1,18})?|(?:1[0-7]\d|\d{1,2})\.\d{1,18})\z/x', $long );
 	}
 
 	// `(42.32783298989135, -70.99989162915041)`
 	// @REF: https://stackoverflow.com/a/68931818
 	// @REF: https://3v4l.org/daAqb
-	public static function extractLatLng( $string )
+	public static function extract( $string )
 	{
 		return sscanf( sprintf( '(%s)', $string ), '(%[^,], %[^)]' );
 	}
 
-	public static function prepLatLng( $input, $wrap = FALSE )
+	public static function prep( $input, $wrap = FALSE )
 	{
 		// NOTE: returns the original if not valid
-		if ( ! self::validateLatLng( $input ) )
+		if ( ! self::is( $input ) )
 			return $wrap
 				? HTML::tag( 'span', [ 'class' => [ 'latlng', '-is-not-valid' ] ], HTML::wrapLTR( $input ) )
 				: $input;
 
 		return $wrap
-			? HTML::tag( 'span', [ 'class' => [ 'latlng', '-is-valid' ] ], HTML::wrapLTR( self::sanitizeLatLng( $input ) ) )
-			: self::sanitizeLatLng( $input );
+			? HTML::tag( 'span', [ 'class' => [ 'latlng', '-is-valid' ] ], HTML::wrapLTR( self::sanitize( $input ) ) )
+			: self::sanitize( $input );
 	}
 
 	// @SEE: https://github.com/jakubvalenta/geoshare
-	public static function sanitizeLatLng( $input )
+	public static function sanitize( $input )
 	{
 		$sanitized = Number::translate( Text::trim( htmlspecialchars_decode( $input ) ) );
 
@@ -136,11 +145,6 @@ class Geography extends Base
 		return Text::trim( str_ireplace( [ '-', ':', ' ' ], '', $sanitized ) );
 	}
 
-	public static function validateLatLng( $string )
-	{
-		return TRUE; // FIXME: WTF?!
-	}
-
     /**
      * Get distance between two coordinates
 	 *
@@ -192,22 +196,22 @@ class Geography extends Base
 	 * @link https://github.com/jeroendesloovere/distance
 	 * @author Jeroen Desloovere <info@jeroendesloovere.be>
      *
-     * @return array   The item which is the closest + 'distance' to it.
-     * @param  float   $latitude1
-     * @param  float   $longitude1
-     * @param  array   $items = array(array( 'latitude' => 'x', 'longitude' => 'x' ), array(xxx))
-     * @param  int     $decimals[optional] The amount of decimals
-     * @param  string  $unit[optional]
+	 * @param float $latitude
+	 * @param float $longitude
+	 * @param array $items = `[ [ 'latitude' => 'x', 'longitude' => 'x' ], [...] ]`
+	 * @param int $decimals The amount of decimals
+	 * @param string $unit
+     * @return array The item which is the closest + 'distance' to it.
      */
-    public static function distanceGetClosest( $latitude1, $longitude1, $items, $decimals = 1, $unit = 'km' )
+    public static function distanceGetClosest( $latitude, $longitude, $items, $decimals = 1, $unit = 'km' )
 	{
         $distances = [];
 
         foreach ( $items as $key => $item ) {
 
             $distance = self::distanceBetween(
-                $latitude1,
-                $longitude1,
+                $latitude,
+                $longitude,
                 $item['latitude'],
                 $item['longitude'],
                 10,
@@ -243,5 +247,58 @@ class Geography extends Base
 		$c   = 2 * asin( sqrt( $a ) );
 
 		return $rad * $c;
+	}
+
+	// @REF: https://snippets.ir/1269/calculate-distance-between-two-points-in-php.html
+	public static function getDistance( $latitude1, $longitude1, $latitude2, $longitude2 )
+	{
+		$theta      = $longitude1 - $longitude2;
+		$miles      = ( sin( deg2rad( $latitude1 ) ) * sin( deg2rad( $latitude2 ) ) ) + ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
+		$miles      = acos( $miles );
+		$miles      = rad2deg( $miles );
+		$miles      = $miles * 60 * 1.1515;
+		$feet       = $miles * 5280;
+		$yards      = $feet / 3;
+		$kilometers = $miles * 1.609344;
+		$meters     = $kilometers * 1000;
+
+		return compact( 'miles', 'feet', 'yards', 'kilometers', 'meters' );
+	}
+
+	/**
+	 * Validates a given latitude $lat
+	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
+	 *
+	 * @param float|int|string $lat Latitude
+	 * @return bool `true` if $lat is valid, `false` if not
+	 */
+	public static function validateLatitude( $lat )
+	{
+		return preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat );
+	}
+
+	/**
+	 * Validates a given longitude $long
+	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
+	 *
+	 * @param float|int|string $long Longitude
+	 * @return bool `true` if $long is valid, `false` if not
+	 */
+	public static function validateLongitude( $long )
+	{
+		return preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long );
+	}
+
+	/**
+	 * Validates a given coordinate
+	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
+	 *
+	 * @param float|int|string $lat Latitude
+	 * @param float|int|string $long Longitude
+	 * @return bool `true` if the coordinate is valid, `false` if not
+	 */
+	public static function validateLatLong( $lat, $long )
+	{
+		return preg_match( '/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?),[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lat.','.$long );
 	}
 }

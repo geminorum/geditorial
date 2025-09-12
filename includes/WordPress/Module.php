@@ -93,6 +93,30 @@ class Module extends Core\Base
 		return $this->base.'-'.self::sanitize_base( $this->key ).$suffix;
 	}
 
+	// NOTE: same as `classs()` without the `$key`
+	protected function classs_base()
+	{
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			if ( $arg )
+				$suffix.= '-'.strtolower( self::sanitize_base( $arg ) );
+
+		return $this->base.$suffix;
+	}
+
+	// NOTE: same as `classs()` without the `$base`
+	protected function classs_key()
+	{
+		$suffix = '';
+
+		foreach ( func_get_args() as $arg )
+			if ( $arg )
+				$suffix.= '-'.strtolower( self::sanitize_base( $arg ) );
+
+		return self::sanitize_base( $this->key ).$suffix;
+	}
+
 	protected function hash()
 	{
 		$string = '';

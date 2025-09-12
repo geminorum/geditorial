@@ -13,16 +13,19 @@ class Phone extends Base
 	 *
 	 * @source `WC_Validation::is_phone()`
 	 *
-	 * @param string $text Phone number to validate.
+	 * @param string $data Phone number to validate.
 	 * @return bool
 	 */
-	public static function is( $text )
+	public static function is( $data )
 	{
-		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $text ) ) ) )
+		if ( self::empty( $data ) )
+			return FALSE;
+
+		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $data ) ) ) )
 			return FALSE;
 
 		// all zeros!
-		if ( ! intval( $text ) )
+		if ( ! intval( $data ) )
 			return FALSE;
 
 		return TRUE;

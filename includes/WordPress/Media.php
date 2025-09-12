@@ -322,7 +322,7 @@ class Media extends Core\Base
 		return $attachment;
 	}
 
-	public static function getUploadDirectory( $sub = '', $create = FALSE, $htaccess = TRUE )
+	public static function getUploadDirectory( $sub = '', $create = FALSE, $htaccess = TRUE, $donotbackup = FALSE )
 	{
 		$upload = wp_upload_dir( NULL, FALSE, FALSE );
 
@@ -333,19 +333,27 @@ class Media extends Core\Base
 
 		if ( $create ) {
 
-			if ( ! is_dir( $folder ) || ! Core\File::writable( $folder ) ) {
+			if ( ! is_dir( $folder ) || ! wp_is_writable( $folder ) ) {
+
+				if ( ! wp_mkdir_p( $folder ) )
+					return FALSE;
 
 				if ( $htaccess )
-					Core\File::putHTAccessDeny( $folder, TRUE );
-				else
-					wp_mkdir_p( $folder );
+					Core\File::putHTAccessDeny( $folder, FALSE );
 
-			} else if ( $htaccess && ! file_exists( $folder.'/.htaccess' ) ) {
+				if ( $donotbackup )
+					Core\File::putDoNotBackup( $folder, FALSE );
 
-				Core\File::putHTAccessDeny( $folder, FALSE );
+			} else {
+
+				if ( $htaccess && ! file_exists( $folder.'/.htaccess' ) )
+					Core\File::putHTAccessDeny( $folder, FALSE );
+
+				if ( $donotbackup && ! file_exists( $folder.'/.donotbackup' ) )
+					Core\File::putDoNotBackup( $folder, FALSE );
 			}
 
-			if ( ! Core\File::writable( $folder ) )
+			if ( ! wp_is_writable( $folder ) )
 				return FALSE;
 		}
 
