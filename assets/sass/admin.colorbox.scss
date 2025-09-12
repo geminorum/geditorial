@@ -23,7 +23,8 @@
 }
 
 #cboxLoadingGraphic {
-  background: url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
+  // background: url(../packages/jquery-colorbox/loading.gif) no-repeat center center;
+  background: url(../../../../wp-admin/images/spinner.gif) no-repeat center center;
 }
 
 #cboxClose {

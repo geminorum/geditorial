@@ -26,10 +26,11 @@
     @content;
   }
 
+  // OBSOLETE
   // Internet Explorer 10-11
-  :-ms-input-placeholder {
-    @content;
-  }
+  // :-ms-input-placeholder {
+  //   @content;
+  // }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,10 +54,11 @@
     @content;
   }
 
+  // OBSOLETE
   // Internet Explorer 10+
-  input:-ms-input-placeholder {
-    @content;
-  }
+  // input:-ms-input-placeholder {
+  //   @content;
+  // }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

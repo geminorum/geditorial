@@ -75,7 +75,24 @@
     box-sizing: border-box;
     margin-top: 20px;
     overflow: hidden;
+    position: relative;
     width: 100%;
+
+    &:empty {
+      min-height: $spacer * 1.75;
+
+      &::after {
+        left: 0;
+        right: 0;
+        top: $spacer * .5;
+        position: absolute;
+        content: attr(data-empty);
+        text-align: center;
+        color: $gray-light;
+        font-size: $spacer;
+        font-weight: 600;
+      }
+    }
 
     .module {
       box-sizing: border-box;
