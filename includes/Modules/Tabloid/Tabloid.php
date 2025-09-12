@@ -330,8 +330,8 @@ class Tabloid extends gEditorial\Module
 	{
 		Core\HTML::wrapScript( sprintf( 'window.%s = %s;',
 			$this->hook( 'data' ),
-			wp_json_encode( $data, JSON_UNESCAPED_UNICODE ) )
-		);
+			wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
+		) );
 
 		$this->enqueue_asset_js( [
 			'config' => [
@@ -348,7 +348,7 @@ class Tabloid extends gEditorial\Module
 	{
 		Core\HTML::wrapScript( sprintf( 'window.%s = %s;',
 			$this->hook( 'data' ),
-			wp_json_encode( $data, JSON_UNESCAPED_UNICODE )
+			wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		) );
 
 		$this->enqueue_asset_js( [

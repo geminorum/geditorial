@@ -148,7 +148,7 @@ class Helper extends WordPress\Main
 	 * @param string $title
 	 * @param string $empty
 	 * @param bool $icon
-	 * @return string $contact
+	 * @return string
 	 */
 	public static function prepContact( $value, $title = NULL, $empty = '', $icon = FALSE )
 	{
@@ -619,7 +619,7 @@ class Helper extends WordPress\Main
 	 * @param null|string|array $delimiters
 	 * @param null|int $limit
 	 * @param string $delimiter
-	 * @return array $separated
+	 * @return array
 	 */
 	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
 	{
@@ -635,7 +635,7 @@ class Helper extends WordPress\Main
 	 * Retrieves the list of string delimiters.
 	 *
 	 * @param string $default
-	 * @return null|array $delimiters
+	 * @return null|array
 	 */
 	public static function getDelimiters( $default = '|' )
 	{
@@ -645,14 +645,14 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Generates a Security Token for authorization.
-	 * TODO move to services
+	 * TODO: move to services
 	 *
 	 * @param string $context
 	 * @param string $subject
 	 * @param string $fullname
 	 * @param int $expires
 	 * @param mixed $fallback
-	 * @return string $token
+	 * @return string
 	 */
 	public static function generateSecurityToken( $context, $subject, $fullname, $expires = NULL, $fallback = FALSE )
 	{

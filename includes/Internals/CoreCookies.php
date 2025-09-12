@@ -11,8 +11,8 @@ trait CoreCookies
 	/**
 	 * Retrieves the cookie name for the module.
 	 *
-	 * @param  string $suffix
-	 * @return string $name
+	 * @param string $suffix
+	 * @return string
 	 */
 	public function corecookies_name( $suffix = '' )
 	{
@@ -23,11 +23,11 @@ trait CoreCookies
 	 * Sends a cookie with given data.
 	 * @OLD: `set_cookie()`
 	 *
-	 * @param  array $data
-	 * @param  bool   $append
-	 * @param  string $expire
-	 * @param  string $suffix
-	 * @return bool $success
+	 * @param array $data
+	 * @param bool $append
+	 * @param string $expire
+	 * @param string $suffix
+	 * @return bool
 	 */
 	public function corecookies_set( $data, $append = TRUE, $expire = '+ 365 day', $suffix = '' )
 	{
@@ -57,8 +57,8 @@ trait CoreCookies
 	 * Retrieves the cookie.
 	 * @OLD: `get_cookie()`
 	 *
-	 * @param  string $suffix
-	 * @return array $data
+	 * @param string $suffix
+	 * @return array
 	 */
 	public function corecookies_get( $suffix = '' )
 	{
@@ -73,8 +73,8 @@ trait CoreCookies
 	 * Clears the cookie.
 	 * @OLD: `delete_cookie()`
 	 *
-	 * @param  string $suffix
-	 * @return bool $success
+	 * @param string $suffix
+	 * @return bool
 	 */
 	public function corecookies_clear( $suffix = '' )
 	{

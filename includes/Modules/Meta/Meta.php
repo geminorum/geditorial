@@ -922,7 +922,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Core\Geography::prepLatLng( trim( $raw ) );
+				return Core\LatLng::prep( trim( $raw ) );
 		}
 
 		return $meta;

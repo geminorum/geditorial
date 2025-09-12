@@ -415,7 +415,7 @@ class Config extends gEditorial\Module
 
 					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
 						Core\Text::download(
-							wp_json_encode( Core\Arraay::filter( $data, [ 'enabled' => TRUE ] ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
+							wp_json_encode( Core\Arraay::filter( $data, [ 'enabled' => TRUE ] ), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
 							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
 						);
 
@@ -425,7 +425,7 @@ class Config extends gEditorial\Module
 
 					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
 						Core\Text::download(
-							wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
+							wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ),
 							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
 						);
 

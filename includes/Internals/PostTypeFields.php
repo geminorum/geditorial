@@ -509,7 +509,7 @@ trait PostTypeFields
 
 			case 'latlng':
 
-				$sanitized = Core\Geography::sanitizeLatLng( $data );
+				$sanitized = Core\LatLng::sanitize( $data );
 				break;
 
 			case 'distance':

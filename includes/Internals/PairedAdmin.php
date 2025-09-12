@@ -82,12 +82,11 @@ trait PairedAdmin
 
 					// NOTE: extensive query only for multiple supported
 
-					$posts = $this->paired_all_connected_to( $post, 'columns' );
-
-					if ( ! $count = count( $posts ) )
+					if ( ! $posts = $this->paired_all_connected_to( $post, 'columns' ) )
 						return;
 
-					$posttypes = array_unique( Core\Arraay::pluck( $posts, 'post_type' ) );
+					$count     = count( $posts );
+					$posttypes = Core\Arraay::prepString( Core\Arraay::pluck( $posts, 'post_type' ) );
 
 				} else {
 

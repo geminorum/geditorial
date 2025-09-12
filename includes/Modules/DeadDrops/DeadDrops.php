@@ -425,7 +425,7 @@ class DeadDrops extends gEditorial\Module
 		// FIXME: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#encoding_for_content-disposition_and_link_headers
 		// TODO: append `content_md5` data: see: `WP_REST_Attachments_Controller::upload_from_data()`
 
-		$encoded = wp_json_encode( $options, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
+		$encoded = wp_json_encode( $options, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT );
 		$script  = <<<JS
 
 			const DDDZ = new Dropzone(

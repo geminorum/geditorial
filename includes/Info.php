@@ -28,7 +28,7 @@ class Info extends WordPress\Main
 			'class'  => '-latlng-lookup',
 			'target' => '_blank',
 			'rel'    => 'noreferrer',
-		], Core\Geography::prepLatLng( $latlng, TRUE ) );
+		], Core\LatLng::prep( $latlng, TRUE ) );
 	}
 
 	// @SEE: https://www.latlong.net/countries.html
@@ -40,7 +40,7 @@ class Info extends WordPress\Main
 			return '#';
 
 		if ( ! is_array( $latlng ) )
-			$latlng = Core\Geography::extractLatLng( $latlng );
+			$latlng = Core\LatLng::extract( $latlng );
 
 		$url = add_query_arg( [
 			'api'   => '1',

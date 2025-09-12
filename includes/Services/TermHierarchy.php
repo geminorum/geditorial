@@ -176,7 +176,7 @@ class TermHierarchy extends gEditorial\Service
 				static::BASE,
 				'singleselect',
 				$bulkedit ? 'bulkedit' : 'quickedit',
-				wp_json_encode( array_keys( Core\Arraay::pluck( $taxonomies, 'name' ) ) ),
+				Core\HTML::encode( array_keys( Core\Arraay::pluck( $taxonomies, 'name' ) ) ),
 			] );
 
 			echo $html.'</div>';

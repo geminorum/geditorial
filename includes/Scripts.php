@@ -651,8 +651,8 @@ JS;
 		], $atts );
 
 		$rtl      = $args['rtl'] ? 'true' : 'false';
-		$labels   = wp_json_encode( $args['labels'] );
-		$values   = wp_json_encode( $args['values'] );
+		$labels   = Core\HTML::encode( $args['labels'] );
+		$values   = Core\HTML::encode( $args['values'] );
 		$selector = sprintf( '%s-chart-%s', static::BASE, $name );
 
 		$script   = <<<JS
@@ -734,7 +734,7 @@ JS;
 	{
 		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
 
-		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.wp_json_encode( $strings ).');'."\n" : '';
+		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.Core\HTML::encode( $strings ).');'."\n" : '';
 	}
 
 	public static function printJSConfig( $args, $object = 'gEditorial' )
@@ -749,7 +749,7 @@ JS;
 
 	?><script type="text/javascript">
 /* <![CDATA[ */
-	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo wp_json_encode( $props ); ?>;
+	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo Core\HTML::encode( $props ); ?>;
 	<?php if ( Core\WordPress::isDev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
