@@ -545,7 +545,7 @@ class Like extends gEditorial\Module
 	{
 		$list  = $this->list_posttypes();
 		$query = [
-			'meta_key' => $this->meta_key.'_total',
+			'meta_key' => $this->constant( 'metakey_liked_total' ),
 			'orderby'  => 'meta_value_num',
 			'order'    => 'DESC',
 		];
