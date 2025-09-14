@@ -12,8 +12,6 @@ class Estimated extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\PostMeta;
 
-	public $meta_key = '_ge_estimated';
-
 	protected $disable_no_posttypes   = TRUE;
 	protected $priority_adminbar_init = 90;
 
@@ -69,6 +67,13 @@ class Estimated extends gEditorial\Module
 				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'metakey_post_wordcount' => '_ge_estimated',
 		];
 	}
 
@@ -192,14 +197,14 @@ class Estimated extends gEditorial\Module
 		$wordcount = Core\Text::wordCountUTF8( $content );
 
 		if ( $update )
-			update_post_meta( $post_id, $this->meta_key, $wordcount );
+			update_post_meta( $post_id, $this->constant( 'metakey_post_wordcount' ), $wordcount );
 
 		return $wordcount;
 	}
 
 	public function get_estimated( $post_id, $prefix = NULL )
 	{
-		if ( ! $wordcount = $this->fetch_postmeta( $post_id ) )
+		if ( ! $wordcount = $this->fetch_postmeta( $post_id, FALSE, constant( 'metakey_post_wordcount' ) ) )
 			$wordcount = $this->get_post_wordcount( $post_id, TRUE );
 
 		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
