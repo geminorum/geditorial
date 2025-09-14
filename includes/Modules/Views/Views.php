@@ -9,11 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 class Views extends gEditorial\Module
 {
-
-	// https://github.com/pronamic/wp-entry-views-updater/blob/develop/entry-views-updater.php
-
-	public $meta_key = '_ge_views'; // FIXME
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -40,6 +35,13 @@ class Views extends gEditorial\Module
 				'excluded_roles' => [ NULL, $this->get_settings_default_roles( [], 'subscriber' ) ],
 				'adminbar_summary',
 			],
+		];
+	}
+
+	protected function get_global_constants()
+	{
+		return [
+			'metakey_post_template' => '_ge_views_%s',
 		];
 	}
 
@@ -132,7 +134,7 @@ class Views extends gEditorial\Module
 		if ( ! $post_id )
 			return FALSE;
 
-		$key = $this->meta_key.'_'.$event;
+		$key = sprintf( $this->constant( 'metakey_post_template' ), $event );
 		$old = get_post_meta( $post_id, $key, TRUE );
 		$new = absint( $old ) + 1;
 
@@ -141,6 +143,6 @@ class Views extends gEditorial\Module
 
 	private function report( $post_id, $event )
 	{
-		return (int) get_post_meta( $post_id, $this->meta_key.'_'.$event, TRUE );
+		return (int) get_post_meta( $post_id, sprintf( $this->constant( 'metakey_post_template' ), $event ), TRUE );
 	}
 }
