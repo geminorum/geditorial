@@ -16,12 +16,6 @@ class HeaderButtons extends gEditorial\Service
 			return;
 
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
-
-		// TODO: move to `Barcodes` Service
-		add_filter( 'kses_allowed_protocols',
-			static function ( $protocols ) {
-				return array_merge( $protocols, [ 'binaryeye' ] );
-			} );
 	}
 
 	public static function register( $name, $atts = [], $override = FALSE )
@@ -102,46 +96,5 @@ class HeaderButtons extends gEditorial\Service
 
 		Scripts::enqueue( 'admin.headerbuttons.all' );
 		gEditorial()->enqueue_asset_config( $args, 'headerbuttons' );
-	}
-
-	// TODO: move to `Barcodes` Service
-	public static function registerSearchWithBarcode()
-	{
-		/**
-		 * You can invoke Binary Eye with a web URI intent from anything
-		 * that can open URIs. There are two options:
-		 *
-		 * - `binaryeye://scan`
-		 * - `http(s)://markusfisch.de/BinaryEye`
-		 *
-		 * If you want to get the scanned contents, you can add a `ret` query
-		 * argument with a (URL encoded) URI template. For example:
-		 *
-		 * `http://markusfisch.de/BinaryEye?ret=http%3A%2F%2Fexample.com%2F%3Fresult%3D{RESULT}`
-		 *
-		 * Supported symbols are:
-		 * `RESULT`: scanned content
-		 * `RESULT_BYTES`: raw result as a hex string
-		 * `FORMAT`: bar-code format
-		 *
-		 * @source https://github.com/markusfisch/BinaryEye
-		 */
-		$url = add_query_arg( [
-			's'      => '{RESULT}',
-			// 'format' => '{FORMAT}',
-		], Core\URL::current() );
-
-		self::register( 'barcodescanner', [
-			'icon'  => [ 'misc-512', 'openlibrary-barcodescanner' ],
-			'text'  => '',
-			'title' => _x( 'Scan to Search using BinaryEye', 'Service: HeaderButtons: Title Attr', 'geditorial-admin' ),
-			'link'  => sprintf( 'binaryeye://scan?ret=%s', rawurlencode( $url ) ),
-			'class' => [
-				'-only-icon',
-				'-mobile-only-inline-block',
-			],
-			'hide_in_search' => FALSE,
-			'priority'       => 9999,
-		] );
 	}
 }

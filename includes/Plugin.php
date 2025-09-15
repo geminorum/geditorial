@@ -532,6 +532,7 @@ class Plugin
 			'tel', // to be safe
 			'sms', // to be safe
 			'geo',
+			'binaryeye', // https://github.com/markusfisch/BinaryEye
 		] );
 	}
 
