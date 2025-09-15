@@ -230,7 +230,7 @@ class Identified extends gEditorial\Module
 			if ( $this->get_setting( 'admin_rowactions' ) )
 				$this->filter( 'post_row_actions', 2 );
 
-			Services\HeaderButtons::registerSearchWithBarcode();
+			Services\Barcodes::binaryEyeHeaderButton();
 		}
 	}
 
