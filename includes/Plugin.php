@@ -61,6 +61,7 @@ class Plugin
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
+		add_filter( 'kses_allowed_protocols', [ $this, 'kses_allowed_protocols' ], 20, 1 );
 
 		add_filter( static::BASE.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
 
@@ -517,6 +518,21 @@ class Plugin
 	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
 	{
 		return $option === static::BASE.'_options' ? TRUE : $autoload;
+	}
+
+	/**
+	 * Filters the list of protocols allowed in HTML attributes.
+	 *
+	 * @param array $protocols
+	 * @return array
+	 */
+	public function kses_allowed_protocols( $protocols )
+	{
+		return array_merge( $protocols, [
+			'tel', // to be safe
+			'sms', // to be safe
+			'geo',
+		] );
 	}
 
 	public function template_include( $template )
