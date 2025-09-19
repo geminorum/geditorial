@@ -204,7 +204,7 @@ class Estimated extends gEditorial\Module
 
 	public function get_estimated( $post_id, $prefix = NULL )
 	{
-		if ( ! $wordcount = $this->fetch_postmeta( $post_id, FALSE, constant( 'metakey_post_wordcount' ) ) )
+		if ( ! $wordcount = $this->fetch_postmeta( $post_id, FALSE, $this->constant( 'metakey_post_wordcount' ) ) )
 			$wordcount = $this->get_post_wordcount( $post_id, TRUE );
 
 		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )

@@ -167,7 +167,7 @@ class Identified extends gEditorial\Module
 					'mobile'   => _x( 'Mobile', 'Identifier Type', 'geditorial-identified' ),
 					'email'    => _x( 'Email', 'Identifier Type', 'geditorial-identified' ),
 					'identity' => _x( 'Identity', 'Identifier Type', 'geditorial-identified' ),
-					'latlng'   => _x( 'Lat/Lng', 'Identifier Type', 'geditorial-identified' ),
+					'latlng'   => _x( 'Coordinates', 'Identifier Type', 'geditorial-identified' ),
 				],
 			],
 			'descriptions' => [

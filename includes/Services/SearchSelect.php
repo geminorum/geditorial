@@ -239,9 +239,10 @@ class SearchSelect extends gEditorial\Service
 
 		if ( is_null( $pre ) ) {
 
-			$query = new \WP_Term_Query();
-			$terms = $query->query( $args );
-			$found = count( $terms );
+			$query   = new \WP_Term_Query();
+			$terms   = $query->query( $args );
+			$found   = count( $terms );
+			$results = [];
 
 			foreach ( $terms as $term )
 				$results[] = (object) [

@@ -58,6 +58,7 @@ class Terms extends gEditorial\Module
 		'source',
 		'embed',
 		'url',
+		// 'identity',  // TODO
 		// 'plate',     // TODO
 	];
 
@@ -173,7 +174,7 @@ class Terms extends gEditorial\Module
 				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
 				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
 				'barcode'   => _x( 'Barcode', 'Titles', 'geditorial-terms' ),
-				'latlng'    => _x( 'Lat/Lng', 'Titles', 'geditorial-terms' ),
+				'latlng'    => _x( 'Coordinates', 'Titles', 'geditorial-terms' ),
 				'date'      => _x( 'Date', 'Titles', 'geditorial-terms' ),
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-terms' ),
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-terms' ),

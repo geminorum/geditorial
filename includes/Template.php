@@ -941,8 +941,8 @@ class Template extends WordPress\Main
 			'image_source_url',
 			'map_embed_url',
 			'parent_complex',
-			'geo_latitude',
-			'geo_longitude',
+			'geo_latitude',   // NOTE: DEPRECATED
+			'geo_longitude',  // NOTE: DEPRECATED
 		] : (array) $args['excludes'];
 
 		foreach ( $list as $key => $title ) {
@@ -952,7 +952,7 @@ class Template extends WordPress\Main
 
 			if ( ! array_key_exists( $key, $fields ) ) {
 
-				// falls back to taxonomy, only on custom set of fields
+				// Falls-back to taxonomy, only on custom set of fields
 				if ( is_null( $args['fields'] ) )
 					continue;
 

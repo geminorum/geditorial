@@ -146,7 +146,7 @@ class Meta extends gEditorial\Module
 				'reference'   => _x( 'Reference', 'Titles', 'geditorial-meta' ),
 				'itineraries' => _x( 'Itineraries', 'Titles', 'geditorial-meta' ),
 
-				'latlng' => _x( 'Lat/Lng', 'Titles', 'geditorial-meta' ),
+				'latlng' => _x( 'Coordinates', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -934,7 +934,8 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Core\LatLng::prep( trim( $raw ) );
+				// return Core\LatLng::prep( trim( $raw ) );
+				return Info::lookupLatLng( trim( $raw ) );
 		}
 
 		return $meta;

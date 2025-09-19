@@ -42,10 +42,12 @@ class Info extends WordPress\Main
 		if ( ! is_array( $latlng ) )
 			$latlng = Core\LatLng::extract( $latlng );
 
-		$url = add_query_arg( [
-			'api'   => '1',
-			'query' => sprintf( '%s,%s', $latlng[0], $latlng[1] ),
-		], 'https://www.google.com/maps/search/' );
+		// $url = add_query_arg( [
+		// 	'api'   => '1',
+		// 	'query' => sprintf( '%s,%s', $latlng[0], $latlng[1] ),
+		// ], 'https://www.google.com/maps/search/' );
+
+		$url = sprintf( 'geo:%s,%s', $latlng[0], $latlng[1] );
 
 		return apply_filters( static::BASE.'_lookup_latlng', $url, $latlng );
 	}
@@ -106,7 +108,6 @@ class Info extends WordPress\Main
 			'rel'    => 'noreferrer',
 		], Core\Validation::sanitizeVIN( $vin ) );
 	}
-
 
 	// `https://en.vindecoder.pl/en/decode/JH2RC3605MM101581`
 	// @SEE: https://vpic.nhtsa.dot.gov/decoder/
