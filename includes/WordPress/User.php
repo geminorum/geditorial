@@ -258,4 +258,52 @@ class User extends Core\Base
 
 		return FALSE;
 	}
+
+	public static function changeUsername( $old, $new )
+	{
+		global $wpdb;
+
+		// do nothing if old username does not exist.
+		if ( ! username_exists( $old ) || username_exists( $new ) )
+			return FALSE;
+
+		// change username
+		$wpdb->query( $wpdb->prepare( "
+			UPDATE $wpdb->users
+			SET user_login = %s
+			WHERE user_login = %s
+		", $new, $old ) );
+
+		// change nicename if needed
+		$wpdb->query( $wpdb->prepare( "
+			UPDATE $wpdb->users
+			SET user_nicename = %s
+			WHERE user_login = %s
+			AND user_nicename = %s
+		", $new, $new, $old ) );
+
+		// change display name if needed
+		$wpdb->query( $wpdb->prepare( "
+			UPDATE $wpdb->users
+			SET display_name = %s
+			WHERE user_login = %s
+			AND display_name = %s
+		", $new, $new, $old ) );
+
+		if ( is_multisite() ) {
+
+			// when on multisite, check if old username is in the `site_admins`
+			// options array. if so, replace with new username to retain
+			// superadmin rights.
+
+			$supers = (array) get_site_option( 'site_admins', [ 'admin' ] );
+
+			if ( $key = array_search( $old, $supers ) )
+				$supers[$key] = $new;
+
+			update_site_option( 'site_admins', $supers );
+		}
+
+		return $new;
+	}
 }

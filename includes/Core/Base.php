@@ -141,6 +141,26 @@ class Base
 		return trim( ob_get_clean() );
 	}
 
+	public static function dumpSuccess()
+	{
+		echo '<div style="color:green;">';
+
+		foreach ( func_get_args() as $arg )
+			self::dump( $arg );
+
+		echo '</div>';
+	}
+
+	public static function dumpError()
+	{
+		echo '<div style="color:red;">';
+
+		foreach ( func_get_args() as $arg )
+			self::dump( $arg );
+
+		echo '</div>';
+	}
+
 	public static function dump( $var, $safe = TRUE, $verbose = TRUE )
 	{
 		$export = var_export( $var, TRUE );

@@ -544,7 +544,7 @@ class Text extends Base
 		if ( ! is_array( $needles ) )
 			return FALSE !== stripos( $haystack, $needles );
 
-		if ( 'OR' == $operator ) {
+		if ( 'OR' === strtoupper( $operator ) ) {
 			foreach ( $needles as $needle )
 				if ( FALSE !== stripos( $haystack, $needle ) )
 					return TRUE;
@@ -552,13 +552,11 @@ class Text extends Base
 			return FALSE;
 		}
 
-		$has = FALSE;
-
 		foreach ( $needles as $needle )
-			if ( FALSE !== stripos( $haystack, $needle ) )
-				$has = TRUE;
+			if ( FALSE === stripos( $haystack, $needle ) )
+				return FALSE;
 
-		return $has;
+		return TRUE;
 	}
 
 	/**
@@ -719,7 +717,7 @@ class Text extends Base
 	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
 	{
 		$length = (int) $length;
-		$text   = trim( strip_tags( $text ) );
+		$text   = self::stripTags( $text );
 
 		if ( strlen( $text ) > $length ) {
 
@@ -1094,10 +1092,17 @@ class Text extends Base
 		return preg_replace( '/(width|height)="\d*"\s/', '', $text );
 	}
 
-	// @SOURCE: `wp_strip_all_tags()`
+	/**
+	 * Properly strips all HTML tags including ‘script’ and ‘style’.
+	 * @source `wp_strip_all_tags()`
+	 * @see https://core.trac.wordpress.org/ticket/57579
+	 *
+	 * @param string $text
+	 * @return string
+	 */
 	public static function stripTags( $text )
 	{
-		return self::trim( strip_tags( preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) );
+		return $text ? self::trim( strip_tags( preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) ) : $text;
 	}
 
 	// @SEE: [wp_strip_all_tags()](https://developer.wordpress.org/reference/functions/wp_strip_all_tags/)

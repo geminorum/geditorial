@@ -333,7 +333,7 @@ class Media extends Core\Base
 
 		if ( $create ) {
 
-			if ( ! is_dir( $folder ) || ! wp_is_writable( $folder ) ) {
+			if ( ! is_dir( $folder ) || ! Core\File::writable( $folder ) ) {
 
 				if ( ! wp_mkdir_p( $folder ) )
 					return FALSE;
@@ -353,7 +353,7 @@ class Media extends Core\Base
 					Core\File::putDoNotBackup( $folder, FALSE );
 			}
 
-			if ( ! wp_is_writable( $folder ) )
+			if ( ! Core\File::writable( $folder ) )
 				return FALSE;
 		}
 

@@ -267,4 +267,50 @@ class Validation extends Base
 
 		return TRUE;
 	}
+
+	public static function sanitizePlateNumber( $input )
+	{
+		$sanitized = Number::translate( Text::trim( $input ) );
+		$sanitized = strtoupper( str_replace( ' ', '', $sanitized ) );
+
+		if ( ! self::isPlateNumber( $sanitized ) )
+			return '';
+
+		return $sanitized;
+	}
+
+	// @SEE https://github.com/persian-tools/persian-tools#-geographic--utilities
+	// type: "Car",
+	// template: `12${"ب"}145${"ایران"}47`,
+	// province: "مرکزی",
+	// category: "شخصی",
+	// details: {
+	// 	firstTwoDigits: "12",
+	// 	nextThreeDigits: "145",
+	// 	provinceCode: "47",
+	// 	plateCharacter: "ب",
+	// },
+
+	// type: "Car",
+	// template: `12${"g"}451${"ایران"}50`, // province 50 does not exist
+	// category: "دولتی",
+	// province: null,
+	// details: {
+	// 	firstTwoDigits: "12",
+	// 	nextThreeDigits: "451",
+	// 	provinceCode: "50",
+	// 	plateCharacter: "الف",
+	// },
+	public static function isPlateNumber( $input )
+	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		return TRUE; // FIXME!
+	}
+
+	public static function getPlateHTMLPattern()
+	{
+		return FALSE; // FIXME!
+	}
 }

@@ -849,16 +849,16 @@ class Arraay extends Base
 	 * @source https://www.php.net/manual/en/function.xml-parse.php#97556
 	 * @example `XML::objectsInto( simplexml_load_string( file_get_contents( 'feed.xml' ) ) );`
 	 *
-	 * This works with not only SimpleXML but any kind of object.
+	 * This works with not only `SimpleXML` but any kind of object.
 	 * The input can be either array or object. This function also
 	 * takes an options parameter as array of indices to be excluded
 	 * in the return array. And keep in mind, this returns only the
 	 * array of non-static and accessible variables of the object
 	 * since using the function `get_object_vars()`.
 	 *
-	 * @param  object $object
-	 * @param  array  $arrSkipIndices
-	 * @return array  $array
+	 * @param object $object
+	 * @param array $arrSkipIndices
+	 * @return array
 	 */
 	public static function objectsInto( $object, $arrSkipIndices = [] )
 	{
@@ -890,8 +890,8 @@ class Arraay extends Base
 	 *
 	 * @source https://stackoverflow.com/a/16111687
 	 *
-	 * @param  object $object
-	 * @return array $array
+	 * @param object $object
+	 * @return array
 	 */
 	public static function fromObject_ALT( $object )
 	{
@@ -902,8 +902,8 @@ class Arraay extends Base
 	 * Flips an array and group the elements by value.
 	 * @source https://www.php.net/manual/en/function.array-combine.php#116714
 	 *
-	 * @param  array $array
-	 * @return array $grouped
+	 * @param array $array
+	 * @return array
 	 */
 	public static function flipAndGroup( $array )
 	{

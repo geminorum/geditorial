@@ -383,4 +383,118 @@ class NamesInPersian extends Core\Base
 			'حسام',
 		];
 	}
+
+	// OLD: `gPeopleImporter::meta_pre()`
+	public static function parseByline( $raw )
+	{
+		$same = [
+			':'       => '',
+			// '/' => '| برگردان ', this is norm on firooze.net
+			'/'   => '|',
+			'،'   => '|',
+			'؛'   => '|',
+			';'   => '|',
+			','   => '|',
+			' و ' => '|',
+		];
+
+		$map = [
+			'تالیف'           => 'author',
+			'مترجم'           => 'translator',
+			'گفت‌وگو و ترجمه' => 'translator',
+			'ترجمه و تالیف'   => 'translator',
+			'ترجمهٔ'          => 'translator',
+			'ترجمه از'        => 'translator',
+			'ترجمه'           => 'translator',
+			'برگردان از'      => 'translator',
+			'برگردان'         => 'translator',
+			'گفت‌و‌گو'        => 'interviewer',
+			'انتخاب'          => 'selector',
+			'طرح‌ها'          => 'illustrator',
+			'طرح'             => 'illustrator',
+			'عکس‌ها'          => 'photographer',
+			'عکس'             => 'photographer',
+			'متن‌ها'          => 'commentator',
+			'متن'             => 'commentator',
+		];
+
+		$people = [];
+
+		foreach ( (array) $raw as $string ) {
+
+			$string = apply_filters( 'string_format_i18n', $string );
+
+			foreach ( $same as $old => $new )
+				$string = str_ireplace( $old, $new, $string );
+
+			if ( FALSE !== strpos( $string, '|' ) )
+				$parts = explode( '|', $string );
+			else
+				$parts = array( $string );
+
+			foreach ( $parts as $part ) {
+
+				$passed = FALSE;
+
+				if ( $person = trim( $part ) ) {
+
+					foreach ( $map as $look => $into ) {
+
+						if ( FALSE !== strpos( $person, $look ) ) {
+
+							if ( $name = trim( str_ireplace( $look, '', $person ) ) ) {
+
+								$people[] = [
+									'name'   => apply_filters( 'string_format_i18n', $name ),
+									'rel'    => $into,
+									'filter' => self::getRelationFilter( $into, $name ),
+								];
+							}
+
+							$passed = TRUE;
+							break;
+						}
+					}
+
+					if ( ! $passed && $person ) {
+
+						$people[] = [
+							'name'   => apply_filters( 'string_format_i18n', $person ),
+							'rel'    => 'author',
+							'filter' => self::getRelationFilter( 'author', $person ),
+						];
+					}
+				}
+			}
+		}
+
+		return $people;
+	}
+
+	// OLD: `gPeopleImporter::getFilterFromRel()`
+	protected static function getRelationFilter( $rel, $name )
+	{
+		if ( 'author' == $rel )
+			return FALSE;
+
+		if ( 'translator' == $rel )
+			return 'ترجمه:';
+
+		if ( 'illustrator' == $rel )
+			return 'طرح‌ها:';
+
+		if ( 'selector' == $rel )
+			return 'انتخاب:';
+
+		if ( 'interviewer' == $rel )
+			return 'گفت‌وگو:';
+
+		if ( 'photographer' == $rel )
+			return 'عکس‌ها:';
+
+		if ( 'commentator' == $rel )
+			return 'متن:';
+
+		return FALSE;
+	}
 }

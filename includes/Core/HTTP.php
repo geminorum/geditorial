@@ -751,9 +751,9 @@ class HTTP extends Base
 	 * Returns the size of a file without downloading.
 	 * @source https://stackoverflow.com/a/2602624
 	 *
-	 * @param  string   $url
-	 * @param  bool     $verify_ssl
-	 * @return int|bool $size
+	 * @param string $url
+	 * @param bool $verify_ssl
+	 * @return int|bool
 	 */
 	public static function getSize( $url, $verify_ssl = TRUE )
 	{
