@@ -58,6 +58,7 @@ class Terms extends gEditorial\Module
 		'source',
 		'embed',
 		'url',
+		// 'plate',     // TODO
 	];
 
 	public static function module()

@@ -23,6 +23,7 @@
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
     vin: '[data-' + module + '=\'vin\']',
+    plate: '[data-' + module + '=\'plate\']',
     iban: '[data-' + module + '=\'iban\']',
     bankcard: '[data-' + module + '=\'bankcard\']',
     year: '[data-' + module + '=\'year\']',
@@ -228,6 +229,12 @@
     return true;
   }
 
+  function validatePlate (input) {
+    if (!input) return false;
+    // input = toEnglish(input.toUpperCase());
+    return true;
+  }
+
   // @REF: https://www.oreilly.com/library/view/regular-expressions-cookbook/9781449327453/ch04s13.html
   function validateISBN (value) {
     if (typeof value === 'undefined' || !value) {
@@ -406,6 +413,22 @@
         const val = toEnglish(sanitizeDashes($el.val())).toUpperCase().replace(/[^A-Z\d.-]/g, '').trim();
         $el.val(val);
         if (validateVIN(val)) {
+          $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
+        } else {
+          $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');
+        }
+      });
+    },
+
+    plate: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        const val = toEnglish(sanitizeDashes($el.val())).toUpperCase().replace(/[^A-Z\d.-]/g, '').trim();
+        $el.val(val);
+        if (validatePlate(val)) {
           $el.addClass('ortho-is-valid').removeClass('ortho-not-valid');
         } else {
           $el.addClass('ortho-not-valid').removeClass('ortho-is-valid');

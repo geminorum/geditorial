@@ -535,6 +535,7 @@ trait SubContents
 				case 'mobile':   $data[$raw_key] = Core\Phone::Mobile( $raw_value ); break;
 				case 'country':  $data[$raw_key] = Core\Validation::sanitizeCountry( $raw_value, TRUE ); break;   // NOTE: skips the base country
 				case 'vin':      $data[$raw_key] = Core\Validation::sanitizeVIN( $raw_value ); break;
+				case 'plate':    $data[$raw_key] = Core\Validation::sanitizePlateNumber( $raw_value ); break;
 				case 'iban':     $data[$raw_key] = Core\Validation::sanitizeIBAN( $raw_value ); break;
 				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
 				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;

@@ -79,15 +79,15 @@ class Driving extends gEditorial\Module
 		$strings = [
 			'fields' => [
 				'subcontent' => [
-					'label'       => _x( 'Model & Color', 'Field Label: `label`', 'geditorial-driving' ),
-					'platenumber' => _x( 'Plate Number', 'Field Label: `platenumber`', 'geditorial-driving' ),
-					'fullname'    => _x( 'Owner', 'Field Label: `fullname`', 'geditorial-driving' ),
-					'identity'    => _x( 'Identity', 'Field Label: `identity`', 'geditorial-driving' ),
-					'relation'    => _x( 'Relation', 'Field Label: `relation`', 'geditorial-driving' ),
-					'phone'       => _x( 'Contact', 'Field Label: `phone`', 'geditorial-driving' ),
-					'year'        => _x( 'Year', 'Field Label: `year`', 'geditorial-driving' ),
-					'vin'         => _x( 'VIN', 'Field Label: `vin`', 'geditorial-driving' ),
-					'desc'        => _x( 'Description', 'Field Label: `desc`', 'geditorial-driving' ),
+					'label'    => _x( 'Model & Color', 'Field Label: `label`', 'geditorial-driving' ),
+					'plate'    => _x( 'Plate Number', 'Field Label: `plate`', 'geditorial-driving' ),
+					'fullname' => _x( 'Owner', 'Field Label: `fullname`', 'geditorial-driving' ),
+					'identity' => _x( 'Identity', 'Field Label: `identity`', 'geditorial-driving' ),
+					'relation' => _x( 'Relation', 'Field Label: `relation`', 'geditorial-driving' ),
+					'phone'    => _x( 'Contact', 'Field Label: `phone`', 'geditorial-driving' ),
+					'year'     => _x( 'Year', 'Field Label: `year`', 'geditorial-driving' ),
+					'vin'      => _x( 'VIN', 'Field Label: `vin`', 'geditorial-driving' ),
+					'desc'     => _x( 'Description', 'Field Label: `desc`', 'geditorial-driving' ),
 				],
 			],
 		];
@@ -151,7 +151,7 @@ class Driving extends gEditorial\Module
 					'vehicle_plate' => [
 						'title'       => _x( 'Vehicle Plate', 'Field Title', 'geditorial-driving' ),
 						'description' => _x( 'Registered Vehicle Plate', 'Field Description', 'geditorial-driving' ),
-						'type'        => 'code',
+						'type'        => 'plate',
 						'order'       => 300,
 					],
 					'vin' => [
@@ -172,10 +172,10 @@ class Driving extends gEditorial\Module
 			'comment_agent'   => 'label',   // `varchar(255)`
 			'comment_karma'   => 'order',   // `int(11)`
 
-			'comment_author'       => 'fullname',      // `tinytext`
-			'comment_author_url'   => 'phone',         // `varchar(200)`
-			'comment_author_email' => 'identity',      // `varchar(100)`
-			'comment_author_IP'    => 'platenumber',   // `varchar(100)`
+			'comment_author'       => 'fullname',   // `tinytext`
+			'comment_author_url'   => 'phone',      // `varchar(200)`
+			'comment_author_email' => 'identity',   // `varchar(100)`
+			'comment_author_IP'    => 'plate',      // `varchar(100)`
 		] );
 	}
 

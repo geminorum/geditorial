@@ -814,7 +814,19 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return Info::lookupVIN( trim( $raw ) );
+				return Info::lookupPlate( trim( $raw ) );
+
+			case 'plate':
+
+				if ( 'print' === $context )
+					return Core\Number::localize( $raw ?: $meta );
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $meta );
+
+				return sprintf( '<span class="-plate %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
+					Core\Validation::isPlateNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
+					$meta, $meta );
 
 			case 'address':
 

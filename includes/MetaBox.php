@@ -1230,6 +1230,19 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'plate':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['ortho'] = 'plate';
+
+				$wrap[] = '-inputcode';
+				$wrap[] = '-inputplate';
+
+				if ( is_null( $atts['pattern'] ) )
+					$atts['pattern'] = Core\Validation::getPlateHTMLPattern();
+
+				break;
+
 			case 'iban':
 
 				$atts['dir'] = 'ltr';

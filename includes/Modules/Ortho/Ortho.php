@@ -377,6 +377,21 @@ class Ortho extends gEditorial\Module
 				'ortho' => 'vin',
 			],
 		] );
+
+		echo '<br />';
+		echo '<br />';
+
+		$this->do_settings_field( [
+			'type'         => 'text',
+			'field'        => 'sandbox-plate',
+			'dir'          => 'rtl',
+			'field_class'  => [ 'large-text', 'code' ],
+			'option_group' => 'tools',
+			// 'placeholder' => '',
+			'data' => [
+				'ortho' => 'plate',
+			],
+		] );
 	}
 
 	public function reports_settings( $sub )

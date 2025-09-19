@@ -496,6 +496,11 @@ class PostTypeFields extends gEditorial\Service
 				case 'vin':
 					return Info::lookupVIN( $raw ?: $value );
 
+				case 'plate':
+					return sprintf( '<span class="-plate %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
+						Core\Validation::isPlateNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
+						$raw ?: $value, $raw ?: $value );
+
 				case 'address':
 					return WordPress\Strings::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
 
