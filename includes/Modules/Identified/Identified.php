@@ -466,8 +466,13 @@ class Identified extends gEditorial\Module
 		switch ( $type ) {
 
 			case 'isbn':
+
+				$sanitized = Core\ISBN::convertToISBN13( Core\ISBN::sanitize( $value ) );
+				break;
+
 			case 'gtin':
-				$sanitized = Core\ISBN::sanitize( $value, TRUE );
+
+				$sanitized = Core\ISBN::sanitize( $value );
 				break;
 
 			case 'identity':
