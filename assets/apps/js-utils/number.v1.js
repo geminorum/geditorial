@@ -24,6 +24,16 @@ const toDecimal = (input) => {
 };
 
 /**
+ * Rounding Decimals
+ * @source https://www.jacklmoore.com/notes/rounding-in-javascript/
+ *
+ * @param {Float} number
+ * @param {Int} decimals
+ * @returns {Float}
+ */
+const round = (number, decimals) => Number(Math.round(number + 'e' + decimals) + 'e-' + decimals);
+
+/**
  * Determine whether the given `input` is a number.
  * @source https://futurestud.io/tutorials/javascript-check-if-a-string-is-a-number
  * @SEE https://bobbyhadz.com/blog/javascript-check-if-character-in-string-is-number
@@ -98,9 +108,7 @@ const toEnglishALT = (input) => input.replace(/[٠-٩۰-۹]/g, a => a.charCodeAt
  * @param {String} input
  * @returns {Bool}
  */
-const isArabic = (input) => {
-  return /[\u0600-\u06FF\u0750-\u077F]/.test(input);
-};
+const isArabic = (input) => /[\u0600-\u06FF\u0750-\u077F]/.test(input);
 
 /**
  * @source https://www.npmjs.com/package/iran-basic
@@ -121,7 +129,7 @@ const parseArabic = (input) => {
  * @source https://github.com/fabiankaegy/practice-recursive-functions/blob/master/factorial.js
  *
  * @param {Int} number
- * @returns {Int} factorial
+ * @returns {Int}
  */
 const factorial = (number) => {
   if (typeof number !== 'number') throw new TypeError('Input must be a number');
@@ -147,6 +155,7 @@ const factorial = (number) => {
 export {
   toInt,
   toDecimal,
+  round,
   isArabic,
   parseArabic,
   formatNumber,

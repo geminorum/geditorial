@@ -26,6 +26,8 @@ const isValidField = (value, field, locale) => {
       return verifyVinNumber(value);
       // return validateVin(value);
 
+    // case 'plate':
+
     case 'year':
       return verifyYearString(value);
 
