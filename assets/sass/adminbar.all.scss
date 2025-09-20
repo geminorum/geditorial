@@ -58,6 +58,7 @@
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
 #wpadminbar {
   .geditorial-adminbar-node {
     > a.ab-item {
@@ -127,6 +128,16 @@
     img {
       max-width: 100%;
       height: auto;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+@media screen and (max-width: 782px) {
+  #wpadminbar {
+    li.geditorial-adminbar-node.-identified {
+      display: block !important;
+      position: static;
     }
   }
 }
