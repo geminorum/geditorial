@@ -335,7 +335,7 @@ class Identified extends gEditorial\Module
 			$params['posttype'] = Core\Arraay::keepByValue( $params['posttype'], $this->posttypes() );
 		}
 
-		if ( ! $queried = $this->get_identified( $code, $type, $params['posttype'] ?: NULL ) )
+		if ( ! $post = $this->get_identified( $code, $type, $params['posttype'] ?: NULL ) )
 			return Services\RestAPI::getErrorNotFound( NULL, NULL, [ 'code' => $code, 'type' => $type ] );
 
 		$response = NULL;
@@ -344,21 +344,16 @@ class Identified extends gEditorial\Module
 
 			case 'raw':
 
-				$response = $queried;
+				$response = $post->ID;
 				break;
 
 			case 'id':
 
-				if ( $post = WordPress\Post::get( $queried ) )
-					$response = [ 'id' => $post->ID ];
-
+				$response = [ 'id' => $post->ID ];
 				break;
 
-			default:
 			case 'post':
-
-				if ( ! $post = WordPress\Post::get( $queried ) )
-					break;
+			default:
 
 				if ( ! WordPress\Post::can( $post, 'read_post' ) )
 					$response = Services\RestAPI::getErrorForbidden();
@@ -696,10 +691,28 @@ class Identified extends gEditorial\Module
 
 			$metakey = $this->_get_posttype_identifier_metakey( $posttype );
 
-			if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $sanitized, FALSE ) )
-				foreach ( $matches as $match )
-					if ( $posttype === get_post_type( intval( $match ) ) )
-						return intval( $match );
+			if ( $matched = $this->_get_post_identified( $sanitized, $metakey, $posttype ) )
+				return $matched;
+		}
+
+		return FALSE;
+	}
+
+	private function _get_post_identified( $code, $metakey, $posttype = NULL )
+	{
+		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $code, FALSE ) )
+			return FALSE;
+
+		foreach ( $matches as $match ) {
+
+			if ( ! $post = WordPress\Post::get( intval( $match ) ) )
+				continue;
+
+			if ( is_null( $posttype ) )
+				return $post;
+
+			if ( $posttype === WordPress\Post::type( $post ) )
+				return $post;
 		}
 
 		return FALSE;
