@@ -73,6 +73,15 @@ class Identified extends gEditorial\Module
 		}
 
 		$settings['_frontend'] = [
+			[
+				'field'       => 'adminbar_summary',
+				'title'       => _x( 'Barcode Scanner', 'Setting Title', 'geditorial-identified' ),
+				'description' => sprintf(
+					/* translators: `%s`: application name */
+					_x( 'Provides a link to %s mobile app for barcode scan of the queryable identifiers.', 'Setting Description', 'geditorial-identified' ),
+					Core\HTML::code( 'BinaryEye' )
+				),
+			],
 			'frontend_search' => [ _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ) ],
 			[
 				'field'       => 'queryable_types',
@@ -231,6 +240,37 @@ class Identified extends gEditorial\Module
 				$this->filter( 'post_row_actions', 2 );
 
 			Services\Barcodes::binaryEyeHeaderButton();
+		}
+	}
+
+	public function adminbar_init( &$nodes, $parent )
+	{
+		if ( is_admin() )
+			return;
+
+		$types = $this->get_strings( 'types', 'fields' );
+
+		foreach ( $this->get_setting( 'queryable_types', [] ) as $type ) {
+
+			$supported = $this->_get_supported_by_identifier_type( $type );
+
+			// TODO: check for reading cap!
+			if ( ! count( $supported ) )
+				continue;
+
+			$nodes[] = [
+				'id'    => $this->classs( $type ),
+				'href'  => Services\Barcodes::binaryEyeLink( $type, Core\URL::home() ),
+				'title' => '<span class="ab-icon dashicons dashicons-camera" style="margin:2px 0 0 0;"></span>',
+				'meta'  => [
+					'class' => sprintf( 'geditorial-adminbar-node -%s', $this->key ),
+					'title' => sprintf(
+						/* translators: `%s`: identifier type */
+						_x( 'Scan %s', 'Node Title', 'geditorial-identified' ),
+						$types[$type]
+					),
+				],
+			];
 		}
 	}
 

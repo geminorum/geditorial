@@ -10,37 +10,43 @@ use geminorum\gEditorial\WordPress;
 
 class Barcodes extends gEditorial\Service
 {
+
+	/**
+	 * You can invoke Binary Eye with a web URI intent from anything
+	 * that can open URIs. There are two options:
+	 *
+	 * - `binaryeye://scan`
+	 * - `http(s)://markusfisch.de/BinaryEye`
+	 *
+	 * If you want to get the scanned contents, you can add a `ret` query
+	 * argument with a (URL encoded) URI template. For example:
+	 *
+	 * `http://markusfisch.de/BinaryEye?ret=http%3A%2F%2Fexample.com%2F%3Fresult%3D{RESULT}`
+	 *
+	 * Supported symbols are:
+	 * `RESULT`: scanned content
+	 * `RESULT_BYTES`: raw result as a hex string
+	 * `FORMAT`: bar-code format
+	 *
+	 * @source https://github.com/markusfisch/BinaryEye
+	 */
+	public static function binaryEyeLink( $query_var = 's', $url = NULL )
+	{
+		$ret = add_query_arg( [
+			$query_var => '{RESULT}',
+			'barcode'  => '{FORMAT}',
+		], $url ?? Core\URL::current() );
+
+		return sprintf( 'binaryeye://scan?ret=%s', rawurlencode( $ret ) );
+	}
+
 	public static function binaryEyeHeaderButton()
 	{
-		/**
-		 * You can invoke Binary Eye with a web URI intent from anything
-		 * that can open URIs. There are two options:
-		 *
-		 * - `binaryeye://scan`
-		 * - `http(s)://markusfisch.de/BinaryEye`
-		 *
-		 * If you want to get the scanned contents, you can add a `ret` query
-		 * argument with a (URL encoded) URI template. For example:
-		 *
-		 * `http://markusfisch.de/BinaryEye?ret=http%3A%2F%2Fexample.com%2F%3Fresult%3D{RESULT}`
-		 *
-		 * Supported symbols are:
-		 * `RESULT`: scanned content
-		 * `RESULT_BYTES`: raw result as a hex string
-		 * `FORMAT`: bar-code format
-		 *
-		 * @source https://github.com/markusfisch/BinaryEye
-		 */
-		$url = add_query_arg( [
-			's'      => '{RESULT}',
-			// 'format' => '{FORMAT}',
-		], Core\URL::current() );
-
 		HeaderButtons::register( 'barcodescanner', [
 			'icon'  => [ 'misc-512', 'openlibrary-barcodescanner' ],
 			'text'  => '',
 			'title' => _x( 'Scan to Search using BinaryEye', 'Service: Barcodes: Title Attr', 'geditorial-admin' ),
-			'link'  => sprintf( 'binaryeye://scan?ret=%s', rawurlencode( $url ) ),
+			'link'  => self::binaryEyeLink(),
 			'class' => [
 				'-only-icon',
 				'-mobile-only-inline-block',
