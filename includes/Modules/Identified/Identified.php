@@ -506,11 +506,13 @@ class Identified extends gEditorial\Module
 				break;
 
 			case 'identity':
+
 				$sanitized = Core\Validation::sanitizeIdentityNumber( $value );
 				break;
 
 			case 'code':
 			default:
+
 				$sanitized = Core\Number::translate( trim( $value ) );
 		}
 

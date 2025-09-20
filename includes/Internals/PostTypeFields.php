@@ -448,6 +448,7 @@ trait PostTypeFields
 			case 'isbn':
 
 				$sanitized = Core\ISBN::sanitize( $data );
+				$sanitized = Core\ISBN::convertToISBN13( $sanitized );
 				break;
 
 			case 'vin':

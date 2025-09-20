@@ -80,6 +80,8 @@ trait TemplateTaxonomy
 			if ( ! is_user_logged_in() )
 				return $template;
 
+			do_action( $this->hook_base( 'template', 'taxonomy', '404', 'init' ), $taxonomy );
+
 			if ( is_null( $empty_callback ) )
 				$empty_callback = [ $this, 'templatetaxonomy_empty_content' ];
 
@@ -101,6 +103,8 @@ trait TemplateTaxonomy
 			$template = get_single_template();
 
 		} else {
+
+			do_action( $this->hook_base( 'template', 'taxonomy', 'archive', 'init' ), $taxonomy );
 
 			if ( is_null( $archive_callback ) )
 				$archive_callback = [ $this, 'templatetaxonomy_archive_content' ];

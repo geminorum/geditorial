@@ -44,6 +44,8 @@ trait TemplatePostType
 			if ( ! is_user_logged_in() )
 				return $template;
 
+			do_action( $this->hook_base( 'template', 'posttype', '404', 'init' ), $posttype );
+
 			if ( is_null( $empty_callback ) )
 				$empty_callback = [ $this, 'templateposttype_empty_content' ];
 
@@ -71,6 +73,8 @@ trait TemplatePostType
 			// if new post-type disabled
 			if ( FALSE === $newpost_callback )
 				return $template;
+
+			do_action( $this->hook_base( 'template', 'newpost', 'init' ), $posttype );
 
 			if ( is_null( $newpost_callback ) )
 				$newpost_callback = [ $this, 'templateposttype_newpost_content' ];
@@ -114,6 +118,8 @@ trait TemplatePostType
 			// if new post-type disabled
 			if ( FALSE === $archive_callback )
 				return $template;
+
+			do_action( $this->hook_base( 'template', 'posttype', 'archive', 'init' ), $posttype );
 
 			if ( is_null( $archive_callback ) )
 				$archive_callback = [ $this, 'templateposttype_archive_content' ];
@@ -310,7 +316,7 @@ trait TemplatePostType
 
 		ob_start();
 
-		$meta = $this->filters( $this->hook_base( 'template', 'newpost', 'meta' ),
+		$meta = apply_filters( $this->hook_base( 'template', 'newpost', 'meta' ),
 			$meta,
 			$posttype,
 			$target,
