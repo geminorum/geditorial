@@ -221,6 +221,7 @@ class Identified extends gEditorial\Module
 		if ( $this->get_setting( 'frontend_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
+		$this->action( 'template_newpost_beforetitle', 6, 8, FALSE, $this->base );
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 5, 8, FALSE, $this->base );
@@ -398,6 +399,35 @@ class Identified extends gEditorial\Module
 			return $default;
 
 		return $this->constant( 'metakey_identifier_posttype' );
+	}
+
+	public function template_newpost_beforetitle( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		$already = FALSE;
+		$type    = $this->_get_posttype_identifier_type( $posttype );
+		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
+
+		if ( $sanitized = $this->sanitize_identifier( self::req( $type ) ) )
+			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
+
+		else if ( $sanitized = $this->sanitize_identifier( self::req( $metakey ) ) )
+			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
+
+		if ( ! $already )
+			return;
+
+		echo $this->wrap_open( '-already-identified' );
+
+			Core\HTML::desc( sprintf(
+				/* translators: `%s`: supported object label */
+				_x( 'Warning: Already an entry identified: %s', 'Message', 'geditorial-identified' ),
+				WordPress\Post::fullTitle( $already, 'edit' )
+			), TRUE, '-already alert alert-warning' );
+
+		echo '</div>';
 	}
 
 	public function pairedrest_prepped_post( $prepped, $post, $parent )
