@@ -270,27 +270,20 @@ class Byline extends gEditorial\Module
 
 			if ( 'post' === $screen->base ) {
 
-				if ( $this->role_can( [ 'reports', 'assign' ] ) )
+				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 					$this->_hook_general_supportedbox( $screen );
-
-				if ( $this->role_can( 'assign' ) )
-					// $this->enqueue_asset_js( [
-					// 	'route' => WordPress\Post::getRestRoute(),
-					// 	'attr'  => $this->constant( 'restapi_attribute' ),
-					// ], $screen, [
-					// 	'jquery',
-					// 	'wp-api-request',
-					// 	Scripts::enqueueColorBox(),
-					// ] );
 					Scripts::enqueueColorBox();
+				}
 
 				if ( $this->role_can( 'reports' ) )
 					$this->_register_header_button();
 
 			} else if ( 'edit' == $screen->base ) {
 
-				if ( $this->role_can( [ 'reports', 'assign' ] ) )
+				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 					$this->_hook_tweaks_column( $screen );
+					Scripts::enqueueColorBox();
+				}
 			}
 		}
 	}

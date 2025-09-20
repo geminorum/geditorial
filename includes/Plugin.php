@@ -234,6 +234,7 @@ class Plugin
 			// 'BinaryPond',
 			// 'Calendars',
 			'ContentActions',
+			// 'Coordinates',
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',

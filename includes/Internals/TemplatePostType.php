@@ -98,8 +98,8 @@ trait TemplatePostType
 
 			$this->enqueue_asset_js( [
 				'strings' => $this->get_strings( 'newpost_template', 'js_strings', [
-					'notarget' => _x( 'Cannot handle the target window!', 'Internal: Template Post-Type', 'geditorial-admin' ),
-					'willgo'   => _x( 'Your Draft save successfully. will redirect you in moments &hellip;', 'Internal: Template Post-Type', 'geditorial-admin' ),
+					'notarget' => _x( 'Cannot handle the target window!', 'Internal: Template Post-Type', 'geditorial' ),
+					'willgo'   => _x( 'Your Draft save successfully. will redirect you in moments &hellip;', 'Internal: Template Post-Type', 'geditorial' ),
 				] ),
 				'config' => [
 					'posttype' => $posttype,
@@ -428,7 +428,7 @@ trait TemplatePostType
 				'linked'   => $linked,
 				'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
 			],
-		], _x( 'Save Draft', 'Internal: Template Post-Type', 'geditorial-admin' ) );
+		], _x( 'Save Draft', 'Internal: Template Post-Type', 'geditorial' ) );
 
 		echo '</p></form></div><div class="col-6">';
 

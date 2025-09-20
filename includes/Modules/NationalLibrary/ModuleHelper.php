@@ -170,7 +170,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $isbn ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( $isbn ), NULL, $isbn );
+		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( Core\ISBN::convertToISBN13( $isbn ) ), NULL, $isbn );
 	}
 
 	public static function getTitle( $raw, $fallback = FALSE )
@@ -204,7 +204,12 @@ class ModuleHelper extends gEditorial\Helper
 
 				case 'يادداشت':
 
-					$data['notes'][] = $text;
+					if ( Core\Text::starts( $text, 'عنوان اصلی:' ) )
+						$data['title'][] = trim( Core\Text::trim( Core\Text::stripPrefix( $text, 'عنوان اصلی:' ) ), '.;:' );
+
+					else
+						$data['notes'][] = $text;
+
 					break;
 
 				// case 'عنوان قراردادی':

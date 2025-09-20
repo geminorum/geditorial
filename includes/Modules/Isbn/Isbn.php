@@ -345,7 +345,7 @@ class Isbn extends gEditorial\Module
 			return $meta;
 
 		if ( ! $discovery = Core\ISBN::discovery( $search ) )
-			return $meta; // criteria is not ISBN
+			return $meta; // criteria is not an ISBN
 
 		if ( 'any' === $posttypes )
 			$posttypes = $this->posttypes();
