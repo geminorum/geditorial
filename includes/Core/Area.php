@@ -5,7 +5,12 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Area extends Base
 {
 
-	// TODO: must convert to `DataType`
+	// TODO: convert to `DataType`
+
+
+	// like `latlng`
+	// keeping data: `{$width},{$height}`
+	// display data: `{$width}&times;{$height} ({$square})`
 
 	/**
 	 * `MeasurementUnitArea`
@@ -14,14 +19,14 @@ class Area extends Base
 	 *
 	 * | Name | Description |
 	 * |  --- | --- |
-	 * | `IMPERIAL_ACRE` | The area is measured in acres. |
-	 * | `IMPERIAL_SQUARE_INCH` | The area is measured in square inches. |
-	 * | `IMPERIAL_SQUARE_FOOT` | The area is measured in square feet. |
-	 * | `IMPERIAL_SQUARE_YARD` | The area is measured in square yards. |
-	 * | `IMPERIAL_SQUARE_MILE` | The area is measured in square miles. |
+	 * | `IMPERIAL_ACRE`            | The area is measured in acres.              |
+	 * | `IMPERIAL_SQUARE_INCH`     | The area is measured in square inches.      |
+	 * | `IMPERIAL_SQUARE_FOOT`     | The area is measured in square feet.        |
+	 * | `IMPERIAL_SQUARE_YARD`     | The area is measured in square yards.       |
+	 * | `IMPERIAL_SQUARE_MILE`     | The area is measured in square miles.       |
 	 * | `METRIC_SQUARE_CENTIMETER` | The area is measured in square centimeters. |
-	 * | `METRIC_SQUARE_METER` | The area is measured in square meters. |
-	 * | `METRIC_SQUARE_KILOMETER` | The area is measured in square kilometers. |
+	 * | `METRIC_SQUARE_METER`      | The area is measured in square meters.      |
+	 * | `METRIC_SQUARE_KILOMETER`  | The area is measured in square kilometers.  |
 	 */
 
 	public static function is( $data )

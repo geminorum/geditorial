@@ -7,6 +7,12 @@ class ISBN extends Base
 
 	// TODO: must convert to `DataType`
 
+	// Matches an uppercase, unformatted ISBN-10.
+	public const ISBN10 = '/^[0-9]{9}[0-9X]$/';
+
+	// Matches an uppercase, unformatted ISBN-13.
+	public const ISBN13 = '/^97[89][0-9]{10}$/';
+
 	public static function getHTMLPattern()
 	{
 		// @source https://input-pattern.com/en/training.php#isbn
@@ -28,7 +34,13 @@ class ISBN extends Base
 			: $string;
 	}
 
-	// NOTE: avoids validation to support fake isbn numbers
+	/**
+	 * Tries to discover if given criteria is supported.
+	 * NOTE: avoids validation to support fake ISBN numbers.
+	 *
+	 * @param string $criteria
+	 * @return string|false
+	 */
 	public static function discovery( $criteria )
 	{
 		if ( ! $sanitized = self::sanitize( $criteria ) )
@@ -52,19 +64,23 @@ class ISBN extends Base
 		return Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $sanitized ) );
 	}
 
-	// Finding ISBNs
-	// @REF: http://stackoverflow.com/a/14096142
-	/*
-		ISBN::validate( 'ISBN:0-306-40615-2' ) );     // return 1
-		ISBN::validate( '0-306-40615-2' ) );          // return 1
-		ISBN::validate( 'ISBN:0306406152' ) );        // return 1
-		ISBN::validate( '0306406152' ) );             // return 1
-		ISBN::validate( 'ISBN:979-1-090-63607-1' ) ); // return 2
-		ISBN::validate( '979-1-090-63607-1' ) );      // return 2
-		ISBN::validate( 'ISBN:9791090636071' ) );     // return 2
-		ISBN::validate( '9791090636071' ) );          // return 2
-		ISBN::validate( 'ISBN:97811' ) );             // return FALSE
-	*/
+	/**
+	 * Validates given ISBN.
+	 * @source http://stackoverflow.com/a/14096142
+	 *
+	 * `ISBN:0-306-40615-2`     // return `1`
+	 * `0-306-40615-2`          // return `1`
+	 * `ISBN:0306406152`        // return `1`
+	 * `0306406152`             // return `1`
+	 * `ISBN:979-1-090-63607-1` // return `2`
+	 * `979-1-090-63607-1`      // return `2`
+	 * `ISBN:9791090636071`     // return `2`
+	 * `9791090636071`          // return `2`
+	 * `ISBN:97811`             // return `FALSE`
+	 *
+	 * @param string $input
+	 * @return bool|int
+	 */
 	public static function validate( $input )
 	{
 		$data    = Text::trim( Number::translate( $input ) );
@@ -78,17 +94,29 @@ class ISBN extends Base
 		return FALSE;
 	}
 
-	// Validate ISBN-10
-	// @REF: http://stackoverflow.com/a/14096142
-	public static function isValidISBN10( $string )
+	/**
+	 * Validates given ISBN-10.
+	 * @source http://stackoverflow.com/a/14096142
+	 *
+	 * @param string $input
+	 * @return bool
+	 */
+	public static function isValidISBN10( $input )
 	{
+		if ( ! preg_match( static::ISBN10, $input, $matches ) )
+			return FALSE;
+
+		$input = (string) $input;
 		$check = 0;
 
 		for ( $i = 0; $i < 10; $i++ ) {
-			if ( 'x' === strtolower( $string[$i] ) )
+
+			if ( 'x' === strtolower( $input[$i] ) )
 				$check += 10 * ( 10 - $i );
-			else if ( is_numeric( $string[$i] ) )
-				$check += (int) $string[$i] * ( 10 - $i );
+
+			else if ( is_numeric( $input[$i] ) )
+				$check += (int) $input[$i] * ( 10 - $i );
+
 			else
 				return FALSE;
 		}
@@ -96,18 +124,60 @@ class ISBN extends Base
 		return ( 0 === ( $check % 11 ) ) ? 1 : FALSE;
 	}
 
-	// Validate ISBN-13
-	// @REF: http://stackoverflow.com/a/14096142
-	public static function isValidISBN13( $string )
+	/**
+	 * Validates given ISBN-13.
+	 * @source http://stackoverflow.com/a/14096142
+	 *
+	 * @param string $input
+	 * @return bool
+	 */
+	public static function isValidISBN13( $input )
 	{
+		if ( ! preg_match( static::ISBN13, $input, $matches ) )
+			return FALSE;
+
+		$input = (string) $input;
 		$check = 0;
 
 		for ( $i = 0; $i < 13; $i += 2 )
-			$check += (int) $string[$i];
+			$check += (int) $input[$i];
 
 		for ( $i = 1; $i < 12; $i += 2 )
-			$check += 3 * $string[$i];
+			$check += 3 * (int) $input[$i];
 
 		return ( 0 === ( $check % 10 ) ) ? 2 : FALSE;
+	}
+
+	/**
+	 * Converts given ISBN-10 to ISBN-13.
+	 * @source https://github.com/nicebooks-com/isbn
+	 *
+	 * @param string $input
+	 * @return string
+	 */
+	public static function convertToISBN13( $input )
+	{
+		if ( preg_match( static::ISBN13, $input, $matches ) )
+			return $input;
+
+		$code = sprintf( '978%s', substr( $input, 0, 9 ) );
+
+        return sprintf( '%s%d', $code, self::checksumForISBN13( $code ) );
+	}
+
+	/**
+	 * Calculates ISBN-13 checksum for given string.
+	 *
+	 * @param string $input
+	 * @return int
+	 */
+	public static function checksumForISBN13( $input )
+	{
+		for ($sum = 0, $i = 0; $i < 12; $i++) {
+            $digit = (int) $input[$i];
+            $sum += $digit * (1 + 2 * ($i % 2));
+        }
+
+		return ((10 - ($sum % 10)) % 10);
 	}
 }

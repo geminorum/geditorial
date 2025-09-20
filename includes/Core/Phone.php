@@ -139,6 +139,12 @@ class Phone extends Base
 		return $value;
 	}
 
+	/**
+	 * Tries to discover if given criteria is supported.
+	 *
+	 * @param string $criteria
+	 * @return string|false
+	 */
 	public static function discovery( $criteria )
 	{
 		if ( ! $sanitized = self::sanitize( $criteria ) )

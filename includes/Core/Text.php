@@ -12,6 +12,7 @@ class Text extends Base
 	 * - `\u200a`: `HAIR SPACE` (U+200A)
 	 * - `\u200b`: `ZERO WIDTH SPACE` (U+200B)
 	 * - `\u200c`: `ZERO WIDTH NON-JOINER` (U+200C)
+	 * - `\u200d`: `ZERO WIDTH JOINER` (U+200D)
 	 * - `\u200e`: `LEFT-TO-RIGHT MARK` (U+200E)
 	 * - `\u200f`: `RIGHT-TO-LEFT MARK` (U+200F)
 	 * - `\u202a`: `LEFT-TO-RIGHT EMBEDDING` (U+202A)
@@ -21,6 +22,8 @@ class Text extends Base
 	 * - `\u202e`: `RIGHT-TO-LEFT OVERRIDE` (RLO)
 	 * - `\u202f`: `NARROW NO-BREAK SPACE` (U+202F)
 	 *
+	 * TODO: Support custom chars
+	 *
 	 * @param string $text
 	 * @return string $text
 	 */
@@ -28,8 +31,8 @@ class Text extends Base
 	{
 		$text = (string) $text;
 		// $text = trim( $text, " \n\t\r\0\x0B," );
-		$text = preg_replace( '/^[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+/u', '', $text );
-		$text = preg_replace( '/[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+$/u', '', $text );
+		$text = preg_replace( '/^[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200D}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+/u', '', $text );
+		$text = preg_replace( '/[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200D}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+$/u', '', $text );
 		$text = trim( $text ); // OCD Only
 
 		if ( 0 === strlen( $text ) )
@@ -445,6 +448,9 @@ class Text extends Base
 
 		if ( 0 === strlen( $text ) )
 			return '';
+
+		// removes all zwj
+		$text = preg_replace( '/\x{200D}/u', '', $text );
 
 		// converts all soft hyphens (&shy;) into zwnj
 		$text = preg_replace( '/\x{00AD}/u', '‌', $text );
