@@ -448,4 +448,36 @@ class ModuleHelper extends gEditorial\Helper
 
 		return $hints;
 	}
+
+	public static function getFipaRow( $isbn )
+	{
+		if ( ! $sanitized = Core\ISBN::sanitize( $isbn ) )
+			return [];
+
+		if ( ! $raw = self::getFibaByISBN( $sanitized ) )
+			return [];
+
+		$parsed = self::parseFipa( $raw );
+		$people = [];
+
+		foreach ( $parsed['people'] as $person )
+			if ( ! empty( $person['parsed'][0]['data']['fullname'] ) )
+				$people[] = $person['parsed'][0]['data']['fullname'];
+
+		$data = [
+			'raw'      => $isbn,
+			'title'    => isset( $parsed['title'][0] ) ? $parsed['title'][0] : '',
+			'alttitle' => isset( $parsed['title'][1] ) ? $parsed['title'][1] : '',
+			'people'   => $people,
+			'serie'    => isset( $parsed['serie'] ) ? $parsed['serie'] : '',
+			'isbn'     => isset( $parsed['isbn'] ) ? sprintf( 'ISBN:%s', $parsed['isbn'] ) : '',
+			'biblio'   => isset( $parsed['biblio'] ) ? $parsed['biblio'] : '',
+			'subject'  => $parsed['subject'],
+			// 'price'    => isset( $parsed['price'] ) ? $parsed['price'] : '',
+			// 'llc'      => isset( $parsed['llc'] ) ? $parsed['llc'] : '',
+			// 'ddc'      => isset( $parsed['ddc'] ) ? $parsed['ddc'] : '',
+		];
+
+		return $data;
+	}
 }

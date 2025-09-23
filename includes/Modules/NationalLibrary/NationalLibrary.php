@@ -756,4 +756,34 @@ class NationalLibrary extends gEditorial\Module
 
 		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
+
+					if ( ! ModuleSettings::handleTool_scrape_pool() )
+						Core\WordPress::redirectReferer( 'huh' );
+
+				} else {
+
+					Core\WordPress::redirectReferer( 'huh' );
+				}
+			}
+		}
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		echo ModuleSettings::toolboxColumnOpen( _x( 'National Library Tools', 'Header', 'geditorial-national-library' ) );
+
+			ModuleSettings::renderCard_scrape_pool();
+
+		echo '</div>';
+	}
 }
