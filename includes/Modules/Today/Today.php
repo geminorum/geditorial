@@ -251,7 +251,7 @@ class Today extends gEditorial\Module
 	{
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Today', 'Page Title', 'geditorial-today' ), FALSE );
+			Settings::headerTitle( 'listtable', _x( 'Editorial Today', 'Page Title', 'geditorial-today' ), FALSE );
 
 			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
 				echo '<div id="postbox-container-2" class="postbox-container">';

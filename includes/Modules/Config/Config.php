@@ -197,7 +197,7 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'reports' );
 
-			// Settings::headerTitle( _x( 'Editorial Reports', 'Page Title', 'geditorial-admin' ) );
+			// Settings::headerTitle( 'reports', _x( 'Editorial Reports', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::sideOpen( _x( 'Reports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
@@ -247,7 +247,7 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'tools' );
 
-			// Settings::headerTitle( _x( 'Editorial Tools', 'Page Title', 'geditorial-admin' ) );
+			// Settings::headerTitle( 'tools', _x( 'Editorial Tools', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::sideOpen( _x( 'Tools', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
@@ -322,7 +322,7 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'roles' );
 
-			// Settings::headerTitle( _x( 'Editorial Roles', 'Page Title', 'geditorial-admin' ) );
+			// Settings::headerTitle( 'roles', _x( 'Editorial Roles', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::sideOpen( _x( 'Roles', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );
@@ -738,7 +738,7 @@ class Config extends gEditorial\Module
 
 		Settings::wrapOpen( $sub, 'imports' );
 
-			// Settings::headerTitle( _x( 'Editorial Imports', 'Page Title', 'geditorial-admin' ) );
+			// Settings::headerTitle( 'imports', _x( 'Editorial Imports', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
 			Settings::sideOpen( _x( 'Imports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
 			Settings::message( $messages );

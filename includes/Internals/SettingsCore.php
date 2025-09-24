@@ -576,7 +576,7 @@ trait SettingsCore
 
 		Settings::wrapOpen( $this->module->name );
 
-			Settings::headerTitle( $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
+			Settings::headerTitle( 'settings', $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
 			Settings::message();
 
 			if ( $flush )

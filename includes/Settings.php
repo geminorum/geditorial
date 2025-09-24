@@ -1895,13 +1895,13 @@ class Settings extends WordPress\Main
 	public static function wrapError( $message, $title = NULL )
 	{
 		self::wrapOpen( 'error' );
-			self::headerTitle( $title );
+			self::headerTitle( 'error', $title );
 			echo $message;
 		self::wrapClose();
 	}
 
 	// @REF: `get_admin_page_title()`
-	public static function headerTitle( $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
+	public static function headerTitle( $context = NULL, $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
 	{
 		$before = $class = '';
 
@@ -1910,7 +1910,7 @@ class Settings extends WordPress\Main
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
-			$back = self::getURLbyContext( 'settings' );
+			$back = self::getURLbyContext( $context ?? 'settings' );
 
 		if ( is_null( $to ) )
 			$to = _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );

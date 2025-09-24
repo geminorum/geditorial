@@ -209,7 +209,7 @@ class Schedule extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
+			Settings::headerTitle( 'listtable', _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
 
 			$html = Core\HTML::wrap( '', '-messages' );
 			$html.= Datetime::getCalendar( $cal, $args );

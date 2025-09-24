@@ -188,7 +188,7 @@ trait AdminPage
 			$icon = $this->module->icon;
 
 		if ( $title )
-			Settings::headerTitle( $title, $links, NULL, $icon );
+			Settings::headerTitle( 'adminpage', $title, $links, NULL, $icon );
 	}
 
 	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )

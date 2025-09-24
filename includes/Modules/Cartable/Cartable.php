@@ -483,7 +483,7 @@ class Cartable extends gEditorial\Module
 
 		Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
+			Settings::headerTitle( 'listtable', _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
 
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
