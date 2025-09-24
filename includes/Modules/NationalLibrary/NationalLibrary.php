@@ -9,6 +9,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class NationalLibrary extends gEditorial\Module
@@ -54,7 +55,7 @@ class NationalLibrary extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Bib Meta-key for %s', 'Setting Title', 'geditorial-national-library' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Defines Bib meta-key for the post-type.', 'Setting Description', 'geditorial-national-library' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -69,7 +70,7 @@ class NationalLibrary extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'ISBN Meta-key for %s', 'Setting Title', 'geditorial-national-library' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Defines ISBN meta-key for the post-type.', 'Setting Description', 'geditorial-national-library' ),
 				'field_class' => [ 'regular-text', 'code-text' ],

@@ -48,7 +48,7 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Identifier Meta-key for %s', 'Setting Title', 'geditorial-identified' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Defines identifier meta-key for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -63,7 +63,7 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Identifier Type for %s', 'Setting Title', 'geditorial-identified' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description'  => _x( 'Defines available identifier type for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'string_empty' => _x( 'There are no identifier types available!', 'Setting', 'geditorial-identified' ),
@@ -102,7 +102,7 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported type label */
 					_x( 'URL Template for %s', 'Setting Title', 'geditorial-identified' ),
-					'<i>'.$types[$queryable].'</i>'
+					Core\HTML::tag( 'i', $types[$queryable] )
 				),
 				'description' => sprintf(
 					/* translators: `%s`: token list placeholder */
@@ -410,10 +410,10 @@ class Identified extends gEditorial\Module
 		$type    = $this->_get_posttype_identifier_type( $posttype );
 		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
 
-		if ( $sanitized = $this->sanitize_identifier( self::req( $type ) ) )
+		if ( $sanitized = $this->sanitize_identifier( self::req( $type ), $type ) )
 			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
 
-		else if ( $sanitized = $this->sanitize_identifier( self::req( $metakey ) ) )
+		else if ( $sanitized = $this->sanitize_identifier( self::req( $metakey ), $type ) )
 			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
 
 		if ( ! $already )

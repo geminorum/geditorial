@@ -53,10 +53,13 @@ class Iranian extends gEditorial\Module
 			$default_location_metakey = $this->filters( 'default_posttype_location_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field'       => $posttype_name.'_posttype_identity_metakey',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Identity Meta-key for %s', 'Setting Title', 'geditorial-iranian' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
+				'field' => $posttype_name.'_posttype_identity_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Identity Meta-key for %s', 'Setting Title', 'geditorial-iranian' ),
+					Core\HTML::tag( 'i', $posttypes[$posttype_name] )
+				),
 				'description' => _x( 'Defines identity meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_identity_metakey, 'code' ),
@@ -65,10 +68,13 @@ class Iranian extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => $posttype_name.'_posttype_location_metakey',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Location Meta-key for %s', 'Setting Title', 'geditorial-iranian' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
+				'field' => $posttype_name.'_posttype_location_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Location Meta-key for %s', 'Setting Title', 'geditorial-iranian' ),
+					Core\HTML::tag( 'i', $posttypes[$posttype_name] )
+				),
 				'description' => _x( 'Defines location meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_location_metakey, 'code' ),

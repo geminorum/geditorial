@@ -43,10 +43,13 @@ class StaticCovers extends gEditorial\Module
 			$default_metakey = $this->filters( 'default_posttype_reference_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field'       => $posttype_name.'_posttype_reference_metakey',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Reference Meta-key for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => $posttype_name.'_posttype_reference_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Reference Meta-key for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
 				'description' => _x( 'Defines reference meta-key for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
@@ -55,23 +58,35 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field'        => $posttype_name.'_posttype_url_template',
-				'type'         => 'text',
-				/* translators: `%s`: supported object label */
-				'title'        => sprintf( _x( 'URL Template for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$posttype_label.'</i>' ),
-				/* translators: `%s`: supported object tokens */
-				'description'  => sprintf( _x( 'Defines default URL template for the post-type. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ), $posttype_tokens ),
-				'field_class'  => [ 'semi-large-text', 'code-text' ],
+				'field' => $posttype_name.'_posttype_url_template',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'URL Template for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
+				'description'  => sprintf(
+					/* translators: `%s`: supported object tokens */
+					_x( 'Defines default URL template for the post-type. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ),
+					$posttype_tokens
+				),
+				'field_class' => [ 'semi-large-text', 'code-text' ],
 			];
 
 			$settings['_posttypes'][] = [
-				'field'        => $posttype_name.'_posttype_path_template',
-				'type'         => 'text',
-				/* translators: `%s`: supported object label */
-				'title'        => sprintf( _x( 'Path Template for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$posttype_label.'</i>' ),
-				/* translators: `%s`: supported object tokens */
-				'description'  => sprintf( _x( 'Defines default path template for the post-type. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ), $posttype_tokens ),
-				'field_class'  => [ 'semi-large-text', 'code-text' ],
+				'field' => $posttype_name.'_posttype_path_template',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Path Template for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
+				'description'  => sprintf(
+					/* translators: `%s`: supported object tokens */
+					_x( 'Defines default path template for the post-type. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ),
+					$posttype_tokens
+				),
+				'field_class' => [ 'semi-large-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
 			];
 
@@ -80,7 +95,7 @@ class StaticCovers extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Supports number counter token for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
 			];
@@ -91,7 +106,7 @@ class StaticCovers extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Max Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Defines maximum number of the counter for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
 				'default'     => '10',
@@ -105,10 +120,13 @@ class StaticCovers extends gEditorial\Module
 			$default_metakey = $this->filters( 'default_taxonomy_reference_metakey', '', $taxonomy_name );
 
 			$settings['_taxonomies'][] = [
-				'field'       => $taxonomy_name.'_taxonomy_reference_metakey',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Reference Meta-key for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => $taxonomy_name.'_taxonomy_reference_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Reference Meta-key for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
 				'description' => _x( 'Defines reference meta-key for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
@@ -117,23 +135,35 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'        => $taxonomy_name.'_taxonomy_url_template',
-				'type'         => 'text',
-				/* translators: `%s`: supported object label */
-				'title'        => sprintf( _x( 'URL Template for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$taxonomy_label.'</i>' ),
-				/* translators: `%s`: supported object tokens */
-				'description'  => sprintf( _x( 'Defines default URL template for the taxonomy. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ), $taxonomy_tokens ),
-				'field_class'  => [ 'semi-large-text', 'code-text' ],
+				'field' => $taxonomy_name.'_taxonomy_url_template',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'URL Template for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
+				'description' => sprintf(
+					/* translators: `%s`: supported object tokens */
+					_x( 'Defines default URL template for the taxonomy. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ),
+					$taxonomy_tokens
+				),
+				'field_class' => [ 'semi-large-text', 'code-text' ],
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'        => $taxonomy_name.'_taxonomy_path_template',
-				'type'         => 'text',
-				/* translators: `%s`: supported object label */
-				'title'        => sprintf( _x( 'Path Template for %s', 'Setting Title', 'geditorial-static-covers' ), '<i>'.$taxonomy_label.'</i>' ),
-				/* translators: `%s`: supported object tokens */
-				'description'  => sprintf( _x( 'Defines default path template for the taxonomy. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ), $taxonomy_tokens ),
-				'field_class'  => [ 'semi-large-text', 'code-text' ],
+				'field' => $taxonomy_name.'_taxonomy_path_template',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Path Template for %s', 'Setting Title', 'geditorial-static-covers' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
+				'description' => sprintf(
+					/* translators: `%s`: supported object tokens */
+					_x( 'Defines default path template for the taxonomy. Available tokens are %s.', 'Setting Description', 'geditorial-static-covers' ),
+					$taxonomy_tokens
+				),
+				'field_class' => [ 'semi-large-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
 			];
 
@@ -142,7 +172,7 @@ class StaticCovers extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Supports number counter token for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
 			];
@@ -153,7 +183,7 @@ class StaticCovers extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Max Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Defines maximum number of the counter for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
 				'default'     => '10',

@@ -156,9 +156,6 @@ class Headings extends gEditorial\Module
 		if ( count( $toc ) < $this->get_setting( 'min_headings', '2' ) )
 			return;
 
-		if ( is_null( $title ) )
-			$title = $this->get_setting( 'toc_title', '' );
-
 		$tree = [];
 		$last = FALSE;
 
@@ -186,7 +183,7 @@ class Headings extends gEditorial\Module
 
 		echo $this->wrap_open( '-toc-box '.$class );
 
-			Core\HTML::h3( $title, '-toc-title' );
+			Core\HTML::h3( $title ?? $this->get_setting( 'toc_title', '' ), '-toc-title' );
 
 			Core\HTML::menu( $tree, static function ( $item ) {
 

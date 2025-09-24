@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
@@ -35,28 +34,37 @@ class Overwrite extends gEditorial\Module
 			$posttype_object = WordPress\PostType::object( $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_plural',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_plural',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
 				'description' => _x( 'Used as plural name on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->name,
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_singular',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_singular',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
 				'description' => _x( 'Used as singular name on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->singular_name,
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_featured',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Featured Image Title for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
+				'field' => 'posttype_'.$posttype_name.'_featured',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Featured Image Title for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
 				'description' => _x( 'Used as featured image title on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->featured_image,
 			];
@@ -64,8 +72,11 @@ class Overwrite extends gEditorial\Module
 			$settings['_posttypes'][] = [
 				'field'       => 'posttype_'.$posttype_name.'_menuname',
 				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$posttype_label.'</i>' ),
+				'title'       => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $posttype_label )
+				),
 				'description' => _x( 'Used as menu name title on the posttype labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $posttype_object->labels->menu_name,
 			];
@@ -78,28 +89,37 @@ class Overwrite extends gEditorial\Module
 			$taxonomy_object = WordPress\Taxonomy::object( $taxonomy_name );
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_plural',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_plural',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Plural Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
 				'description' => _x( 'Used as plural name on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->name,
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_singular',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_singular',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Singular Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
 				'description' => _x( 'Used as singular name on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->singular_name,
 			];
 
 			$settings['_taxonomies'][] = [
-				'field'       => 'taxonomy_'.$taxonomy_name.'_menuname',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ), '<i>'.$taxonomy_label.'</i>' ),
+				'field' => 'taxonomy_'.$taxonomy_name.'_menuname',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Menu Name for %s', 'Setting Title', 'geditorial-overwrite' ),
+					Core\HTML::tag( 'i', $taxonomy_label )
+				),
 				'description' => _x( 'Used as menu name title on the taxonomy labels. Must be in title case.', 'Setting Description', 'geditorial-overwrite' ),
 				'placeholder' => $taxonomy_object->labels->menu_name,
 			];

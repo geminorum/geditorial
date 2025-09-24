@@ -101,8 +101,9 @@ class Config extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		$can  = $this->cuc( 'settings' );
+		// $can  = $this->cuc( 'settings' );
 		$slug = $this->classs_base( 'settings' );
+		$edit = current_user_can( 'edit_posts' );
 
 		$hook_reports = add_submenu_page(
 			'index.php',
@@ -123,11 +124,11 @@ class Config extends gEditorial\Module
 		);
 
 		$hook_tools = add_submenu_page(
-			current_user_can( 'edit_posts' ) ? 'tools.php' : $slug,
+			$edit ? 'tools.php' : $slug,
 			_x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' ),
-			( $can
-				? _x( 'Tools', 'Menu Title', 'geditorial-admin' )
-				: _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
+			( $edit
+				? _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
+				: _x( 'Tools', 'Menu Title', 'geditorial-admin' )
 			),
 			'editorial_tools',
 			$this->classs_base( 'tools' ),
@@ -140,7 +141,7 @@ class Config extends gEditorial\Module
 			NULL, 'editorial_roles' );
 
 		$this->_hook_wp_submenu_page( 'imports',
-			current_user_can( 'edit_posts' ) ? 'tools.php' : $slug,
+			$edit ? 'tools.php' : $slug,
 			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_imports' );
 

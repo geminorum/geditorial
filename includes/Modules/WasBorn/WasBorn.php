@@ -51,10 +51,13 @@ class WasBorn extends gEditorial\Module
 			$default_dob_metakey = $this->filters( 'default_posttype_dob_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field'       => $posttype_name.'_posttype_dob_metakey',
-				'type'        => 'text',
-				/* translators: `%s`: supported object label */
-				'title'       => sprintf( _x( 'Date of Birth Meta-key for %s', 'Setting Title', 'geditorial-was-born' ), '<i>'.$posttypes[$posttype_name].'</i>' ),
+				'field' => $posttype_name.'_posttype_dob_metakey',
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( 'Date of Birth Meta-key for %s', 'Setting Title', 'geditorial-was-born' ),
+					Core\HTML::tag( 'i', $posttypes[$posttype_name] )
+				),
 				'description' => _x( 'Defines date-of-birth meta-key for the post-type.', 'Setting Description', 'geditorial-was-born' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => Settings::fieldAfterText( $default_dob_metakey, 'code' ),

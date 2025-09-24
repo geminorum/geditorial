@@ -714,12 +714,9 @@ class MetaBox extends WordPress\Main
 			'quicktags'     => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
 		] );
 
-		if ( is_null( $title ) )
-			$title = __( 'Excerpt' );
-
 		echo '<div class="-wordcount-wrap">';
 
-			echo '<label class="screen-reader-text" for="'.$id.'">'.$title.'</label>';
+			echo '<label class="screen-reader-text" for="'.$id.'">'.( $title ?? __( 'Excerpt' ) ).'</label>';
 
 			wp_editor( html_entity_decode( $content ), $id, $args );
 

@@ -197,7 +197,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( empty( $row[1] ) )
 				continue;
 
-			$text     = Core\Text::normalizeZWNJ( trim( $row[1], '.;:' ) );
+			$text     = Core\Text::normalizeZWNJ( Core\Text::trim( $row[1], '.;:' ) );
 			$featured = FALSE;
 
 			switch ( $row[0] ) {
@@ -205,7 +205,7 @@ class ModuleHelper extends gEditorial\Helper
 				case 'يادداشت':
 
 					if ( Core\Text::starts( $text, 'عنوان اصلی:' ) )
-						$data['title'][] = trim( Core\Text::trim( Core\Text::stripPrefix( $text, 'عنوان اصلی:' ) ), '.;:' );
+						$data['title'][] = Core\Text::trim( Core\Text::stripPrefix( $text, 'عنوان اصلی:' ), '.;:' );
 
 					else
 						$data['notes'][] = $text;
@@ -310,7 +310,6 @@ class ModuleHelper extends gEditorial\Helper
 				continue;
 
 			$raw   = Core\Text::normalizeZWNJ( $raw );
-			// $raw   = Core\Text::normalizeWhitespaceUTF8( $raw );
 			$raw   = Core\Text::singleWhitespaceUTF8( $raw );
 			$parts = WordPress\Strings::getSeparated( $raw, '،,' );
 			$count = count( $parts );

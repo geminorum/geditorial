@@ -44,7 +44,7 @@ class Tabs extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Built-in Tabs for %s', 'Setting Title', 'geditorial-tabs' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Select to add pre-configured tabs for posts.', 'Setting Description', 'geditorial-tabs' ),
 				'values'      => Core\Arraay::pluck( $this->_get_builtins_tabs( $posttype_name ), 'title', 'name' ),

@@ -43,7 +43,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_posttype_archive_title( $posttype_name, FALSE ),
@@ -57,7 +57,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Used as content on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'default'     => $this->_get_default_posttype_content( $posttype_name ),
@@ -69,7 +69,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$posttype_label.'</i>'
+					Core\HTML::tag( 'i', $posttype_label )
 				),
 				'description' => _x( 'Used as page template on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
@@ -86,7 +86,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Title for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Used as title on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_taxonomy_archive_title( $taxonomy_name, FALSE ),
@@ -98,7 +98,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Content for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Used as content on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'default'     => $this->_get_default_taxonomy_content( $taxonomy_name ),
@@ -110,7 +110,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Slug for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ),
@@ -125,7 +125,7 @@ class Archives extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Archives Template for %s', 'Setting Title', 'geditorial-archives' ),
-					'<i>'.$taxonomy_label.'</i>'
+					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Used as page template on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
