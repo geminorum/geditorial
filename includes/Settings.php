@@ -2654,8 +2654,9 @@ class Settings extends WordPress\Main
 			'rows_attr'  => '5',     // for textarea type
 			'cols_attr'  => '45',    // for textarea type
 
-			'placeholder'  => FALSE,
-			'constant'     => FALSE, // override value if constant defined & disabling
+			'placeholder' => FALSE,
+			'constant'    => FALSE,   // override value if constant defined & disabling
+			'ortho'       => FALSE,
 
 			'data'   => [],     // data attr
 			'extra'  => [],     // extra args to pass to deeper generator
@@ -2878,6 +2879,7 @@ class Settings extends WordPress\Main
 							'readonly'    => Core\HTML::attrBoolean( $args['readonly'], $value_name ),
 							'dir'         => $args['dir'],
 							'data'        => $args['data'],
+							'data-ortho'  => $args['ortho'],
 						] );
 
 						$html.= '&nbsp;<span class="-field-after">'.$value_title.'</span>';
@@ -2898,6 +2900,7 @@ class Settings extends WordPress\Main
 						'readonly'    => $args['readonly'],
 						'dir'         => $args['dir'],
 						'data'        => $args['data'],
+						'data-ortho'  => $args['ortho'],
 					] );
 				}
 
@@ -2924,6 +2927,7 @@ class Settings extends WordPress\Main
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
+					'data-ortho'  => $args['ortho'],
 				] );
 
 				break;
@@ -2947,6 +2951,7 @@ class Settings extends WordPress\Main
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
+					'data-ortho'  => $args['ortho'],
 				] );
 
 				break;
@@ -2970,6 +2975,7 @@ class Settings extends WordPress\Main
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
+					'data-ortho'  => $args['ortho'],
 				] );
 
 				// NOTE: CAUTION: module must enqueue `wp-color-picker` styles/scripts
@@ -2997,6 +3003,7 @@ class Settings extends WordPress\Main
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
+					'data-ortho'  => $args['ortho'],
 				] );
 
 				break;
@@ -3319,6 +3326,7 @@ class Settings extends WordPress\Main
 					'readonly'    => $args['readonly'],
 					'dir'         => $args['dir'],
 					'data'        => $args['data'],
+					'data-ortho'  => $args['ortho'],
 				], esc_textarea( $value ) );
 
 				break;
@@ -3778,6 +3786,7 @@ class Settings extends WordPress\Main
 			$value       = array_key_exists( $field['field'], $options ) ? $options[$field['field']] : $default;
 			$placeholder = array_key_exists( 'placeholder', $field ) ? $field['placeholder'] : FALSE;
 			$description = array_key_exists( 'description', $field ) ? $field['description'] : FALSE;
+			$ortho       = array_key_exists( 'ortho', $field ) ? $field['ortho'] : FALSE;
 			$values      = array_key_exists( 'values', $field ) ? $field['values'] : [];
 
 			switch ( $field['type'] ) {
@@ -3827,6 +3836,7 @@ class Settings extends WordPress\Main
 						'value'       => $value,
 						'class'       => Core\HTML::attrClass( $field['field_class'], '-type-number' ),
 						'dir'         => $field['dir'],
+						'data-ortho'  => $ortho,
 					] );
 
 					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
@@ -3847,6 +3857,7 @@ class Settings extends WordPress\Main
 						'value'       => $value,
 						'class'       => Core\HTML::attrClass( $field['field_class'], '-type-text' ),
 						'dir'         => empty( $field['dir'] ) ? FALSE : $field['dir'],
+						'data-ortho'  => $ortho,
 					] );
 
 					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';

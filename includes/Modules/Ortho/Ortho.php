@@ -211,10 +211,10 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	private function enqueueVirastar()
+	public function enqueueVirastar()
 	{
 		if ( $this->virastar_enqueued )
-			return;
+			return TRUE;
 
 		$virastar = Scripts::registerPackage( 'virastar',
 			NULL, [], ModuleInfo::VIRASTAR_VERSION );
@@ -229,20 +229,20 @@ class Ortho extends gEditorial\Module
 			'virastar' => $this->prepare_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
 
-		$this->virastar_enqueued = TRUE;
+		return $this->virastar_enqueued = TRUE;
 	}
 
-	private function enqueuePersianTools()
+	public function enqueuePersianTools()
 	{
 		if ( $this->persiantools_enqueued )
-			return;
+			return TRUE;
 
 		$persiantools = Scripts::registerPackage( 'persiantools',
 			NULL, [], ModuleInfo::PERSIANTOOLS_VERSION );
 
 		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
 
-		$this->persiantools_enqueued = TRUE;
+		return $this->persiantools_enqueued = TRUE;
 	}
 
 	private function prepare_virastar_options()

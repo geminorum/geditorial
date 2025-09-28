@@ -86,6 +86,14 @@ class Helper extends WordPress\Main
 		return $message ?? _x( 'Not Available on Current Locale', 'Helper', 'geditorial-admin' );
 	}
 
+	public static function enqueueVirastar()
+	{
+		if ( ! gEditorial()->enabled( 'ortho' ) )
+			return FALSE;
+
+		return gEditorial()->module( 'ortho' )->enqueueVirastar();
+	}
+
 	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )
 	{
 		return $taxonomy === gEditorial()->constant( 'genres', 'main_taxonomy', $fallback );
