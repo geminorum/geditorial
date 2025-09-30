@@ -232,15 +232,22 @@ class Identified extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
-			&& $this->posttype_supported( $screen->post_type ) ) {
+		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			$this->_hook_not_found_posts( $screen->post_type );
+			if ( 'edit' === $screen->base ) {
 
-			if ( $this->get_setting( 'admin_rowactions' ) )
-				$this->filter( 'post_row_actions', 2 );
+				$this->_hook_not_found_posts( $screen->post_type );
 
-			Services\Barcodes::binaryEyeHeaderButton();
+				if ( $this->get_setting( 'admin_rowactions' ) )
+					$this->filter( 'post_row_actions', 2 );
+
+				Services\Barcodes::binaryEyeHeaderButton();
+
+			} else if ( 'post' === $screen->base
+				&& 'add' === $screen->action ) {
+
+				$this->action( 'edit_form_after_title', 1, 1 );
+			}
 		}
 	}
 
@@ -399,6 +406,11 @@ class Identified extends gEditorial\Module
 			return $default;
 
 		return $this->constant( 'metakey_identifier_posttype' );
+	}
+
+	public function edit_form_after_title( $post )
+	{
+		$this->template_newpost_beforetitle( $post->post_type, $post, NULL, FALSE, NULL, [] );
 	}
 
 	public function template_newpost_beforetitle( $posttype, $post, $target, $linked, $status, $meta )
