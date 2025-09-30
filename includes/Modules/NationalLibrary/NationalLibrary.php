@@ -304,6 +304,35 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->get_setting( 'newpost_hints' ) )
 			return FALSE;
 
+		add_filter( 'default_title',
+			function ( $title, $post ) use ( $posttype ) {
+
+				if ( $title )
+					return $title;
+
+				if ( ! $this->_prime_current_request( $posttype ) )
+					return;
+
+				if ( ! empty( $this->cache[$posttype]['parsed']['title'][0] ) )
+					return $this->cache[$posttype]['parsed']['title'][0];
+
+				return $title;
+
+			}, 2, 8 );
+
+		add_filter( 'enter_title_here',
+			function ( $title, $post ) use ( $posttype ) {
+
+				if ( ! $this->_prime_current_request( $posttype ) )
+					return;
+
+				if ( ! empty( $this->cache[$posttype]['parsed']['title'][0] ) )
+					return $this->cache[$posttype]['parsed']['title'][0];
+
+				return $title;
+
+			}, 2, 8 );
+
 		add_action( 'edit_form_after_title', function ( $post ) use ( $posttype ) {
 
 			if ( ! $this->_prime_current_request( $posttype ) )
