@@ -1657,9 +1657,6 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_template_newpost()
 	{
-		if ( is_admin() )
-			return;
-
 		$this->action( 'template_newpost_beforetitle', 6, 20, 'posttypefields_title_before', $this->base );
 		$this->action( 'template_newpost_aftertitle', 6, 1, 'posttypefields_title_after', $this->base );
 		$this->action( 'template_newpost_aftertitle', 6, 20, 'posttypefields_quickedit', $this->base );

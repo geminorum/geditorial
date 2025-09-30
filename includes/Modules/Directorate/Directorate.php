@@ -455,7 +455,7 @@ class Directorate extends gEditorial\Module
 
 		if ( $this->get_setting( 'quick_newpost' ) ) {
 			$this->_hook_submenu_adminpage( 'newpost' );
-			$this->action_self( 'newpost_content', 4, 10, 'menu_order' );
+			$this->action_self( 'newpost_aftercontent', 4, 10, 'menu_order' );
 		}
 	}
 

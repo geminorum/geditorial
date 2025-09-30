@@ -340,12 +340,21 @@ trait TemplatePostType
 
 			$field = $this->classs( $posttype, 'title' );
 			$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'title' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'input', [
 				'type'        => 'text',
 				'class'       => [ 'large-text', 'form-control' ],
 				'id'          => $field,
 				'name'        => 'title',
+				'value'       => $value,
 				'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
 			] );
 
@@ -367,6 +376,14 @@ trait TemplatePostType
 
 			$field = $this->classs( $posttype, 'excerpt' );
 			$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'excerpt' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'textarea', [
 				'id'           => $field,
@@ -376,7 +393,7 @@ trait TemplatePostType
 				'rows'         => 2,
 				// 'cols'         => 15,
 				'autocomplete' => 'off',
-			], '' );
+			], Core\HTML::escapeTextarea( $value ) );
 
 			echo '<div class="-form-group">';
 				Core\HTML::label( $html, $field, FALSE );
@@ -387,6 +404,14 @@ trait TemplatePostType
 
 			$field = $this->classs( $posttype, 'content' );
 			$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'Content' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'content' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'textarea', [
 				'id'           => $field,
@@ -396,7 +421,7 @@ trait TemplatePostType
 				'rows'         => 6,
 				// 'cols'         => 15,
 				'autocomplete' => 'off',
-			], '' );
+			], Core\HTML::escapeTextarea( $value ) );
 
 			echo '<div class="-form-group">';
 				Core\HTML::label( $html, $field, FALSE );
@@ -406,7 +431,7 @@ trait TemplatePostType
 		if ( $object->hierarchical )
 			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
 
-		do_action( $this->hook_base( 'template', 'newpost', 'content' ),
+		do_action( $this->hook_base( 'template', 'newpost', 'aftercontent' ),
 			$posttype,
 			$post,
 			$target,
@@ -424,6 +449,15 @@ trait TemplatePostType
 
 		echo '<span class="-message"></span>';
 		echo gEditorial\Ajax::spinner();
+
+			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),
+				$posttype,
+				$post,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',

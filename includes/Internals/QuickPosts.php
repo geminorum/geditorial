@@ -25,6 +25,7 @@ trait QuickPosts
 		$status   = self::req( 'status', 'draft' );
 		$target   = self::req( 'target', 'none' );
 		$linked   = self::req( 'linked', FALSE );
+		$recents  = self::req( 'recents', TRUE );
 		$meta     = self::req( 'meta', [] );
 		$object   = get_post_type_object( $posttype );
 		$post     = get_default_post_to_edit( $posttype );
@@ -32,35 +33,75 @@ trait QuickPosts
 		if ( ! current_user_can( $object->cap->create_posts ) )
 			return Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 
-		$meta = $this->filters( 'newpost_content_meta', $meta, $posttype, $target, $linked, $status );
+		// OLD HOOK: `{$base}_{$module}_newpost_content_meta`
+		$meta = apply_filters( $this->hook_base( 'template', 'newpost', 'meta' ),
+			$meta,
+			$posttype,
+			$target,
+			$linked,
+			$status
+		);
 
-		echo $this->wrap_open( '-newpost-layout' );
+		echo $this->wrap_open( '-newpost-layout'.( $recents ? ' -has-recents' : '' ) );
 		echo '<div class="-main">';
 
-		$this->actions( 'newpost_content_before_title', $posttype, $post, $target, $linked, $status, $meta );
+		// OLD HOOK: `{$base}_{$module}_newpost_content_before_title`
+		do_action( $this->hook_base( 'template', 'newpost', 'beforetitle' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
 
 		if ( $this->is_posttype_support( $posttype, 'title' ) ) {
 
 			$field = $this->classs( $posttype, 'title' );
 			$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'title' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'input', [
 				'type'        => 'text',
 				'class'       => 'large-text',
 				'id'          => $field,
 				'name'        => 'title',
+				'value'       => $value,
 				'placeholder' => apply_filters( 'enter_title_here', $label, $post ),
 			] );
 
 			Core\HTML::label( $html, $field );
 		}
 
-		$this->actions( 'newpost_content_after_title', $posttype, $post, $target, $linked, $status, $meta );
+		// OLD HOOK: `{$base}_{$module}_newpost_content_after_title`
+		do_action( $this->hook_base( 'template', 'newpost', 'aftertitle' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
 
 		if ( $this->is_posttype_support( $posttype, 'excerpt' ) ) {
 
 			$field = $this->classs( $posttype, 'excerpt' );
 			$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'excerpt' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'textarea', [
 				'id'           => $field,
@@ -70,7 +111,7 @@ trait QuickPosts
 				'rows'         => 2,
 				'cols'         => 15,
 				'autocomplete' => 'off',
-			], '' );
+			], Core\HTML::escapeTextarea( $value ) );
 
 			Core\HTML::label( $html, $field );
 		}
@@ -79,6 +120,14 @@ trait QuickPosts
 
 			$field = $this->classs( $posttype, 'content' );
 			$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'What&#8217;s on your mind?' ) );
+			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'content' ),
+				'',
+				$posttype,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
 			$html = Core\HTML::tag( 'textarea', [
 				'id'           => $field,
@@ -88,7 +137,7 @@ trait QuickPosts
 				'rows'         => 6,
 				'cols'         => 15,
 				'autocomplete' => 'off',
-			], '' );
+			], Core\HTML::escapeTextarea( $value ) );
 
 			Core\HTML::label( $html, $field );
 		}
@@ -96,7 +145,15 @@ trait QuickPosts
 		if ( $object->hierarchical )
 			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
 
-		$this->actions( 'newpost_content', $posttype, $post, $target, $linked, $status, $meta );
+		// OLD HOOK: `{$base}_{$module}_newpost_content`
+		do_action( $this->hook_base( 'template', 'newpost', 'aftercontent' ),
+			$posttype,
+			$post,
+			$target,
+			$linked,
+			$status,
+			$meta
+		);
 
 		Core\HTML::inputHidden( 'type', $posttype );
 		Core\HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
@@ -104,41 +161,70 @@ trait QuickPosts
 
 		echo $this->wrap_open_buttons();
 
-		echo '<span class="-message"></span>';
-		echo Ajax::spinner();
+			echo '<span class="-message"></span>';
+			echo Ajax::spinner();
 
-		echo Core\HTML::tag( 'a', [
-			'href'  => '#',
-			'class' => [ 'button', '-save-draft', 'disabled' ],
-			'data'  => [
-				'target'   => $target,
-				'type'     => $posttype,
-				'linked'   => $linked,
-				'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
-			],
-		], _x( 'Save Draft & Close', 'Module', 'geditorial-admin' ) );
+			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),
+				$posttype,
+				$post,
+				$target,
+				$linked,
+				$status,
+				$meta
+			);
 
-		echo '</p></div><div class="-side">';
-		echo '<div class="-recents">';
+			echo Core\HTML::tag( 'a', [
+				'href'  => '#',
+				'class' => [ 'button', '-save-draft', 'disabled' ],
+				'data'  => [
+					'target'   => $target,
+					'type'     => $posttype,
+					'linked'   => $linked,
+					'endpoint' => rest_url( WordPress\PostType::getRestRoute( $object ) ),
+				],
+			], _x( 'Save Draft & Close', 'Module', 'geditorial-admin' ) );
 
-			// FIXME: do actions here
-			// FIXME: move `recents` to pre-configured action
-			// FIXME: correct the selectors
-			// TODO: hook action from Book module: suggested the book by passed meta
+		echo '</p></div>';
 
-			/* translators: `%s`: post-type singular name */
-			$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
+		if ( $recents || has_action( $this->hook_base( 'template', 'newpost', 'side' ) ) ) {
 
-			Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
-				'post_status' => WordPress\Status::acceptable( $posttype, 'recent', [ 'pending' ] ),
-			] );
+			echo '<div class="-side">';
+
+				if ( $recents ) {
+					echo '<div class="-recents">';
+
+						// FIXME: move `recents` to pre-configured action
+						// FIXME: correct the selectors
+
+						/* translators: `%s`: post-type singular name */
+						$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
+
+						Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
+							'post_status' => WordPress\Status::acceptable( $posttype, 'recent', [ 'pending' ] ),
+						] );
+
+					echo '</div>';
+
+					Core\HTML::desc( sprintf(
+						/* translators: `%s`: post-type name */
+						_x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial-admin' ),
+						$object->labels->name
+					) );
+				}
+
+				do_action( $this->hook_base( 'template', 'newpost', 'side' ),
+					$posttype,
+					$post,
+					$target,
+					$linked,
+					$status,
+					$meta
+				);
+
+			echo '</div>';
+		}
 
 		echo '</div>';
-
-			/* translators: `%s`: post-type name */
-			Core\HTML::desc( sprintf( _x( 'Or select one from Recent %s.', 'Module: Recents', 'geditorial-admin' ), $object->labels->name ) );
-
-		echo '</div></div>';
 
 		$this->enqueue_asset_js( [
 			'strings' => [
@@ -153,8 +239,8 @@ trait QuickPosts
 	}
 
 	// DEFAULT FILTER
-	// USAGE: `$this->action_self( 'newpost_content', 4, 99, 'menu_order' );`
-	public function newpost_content_menu_order( $posttype, $post, $target, $linked )
+	// USAGE: `$this->action_self( 'newpost_aftercontent', 4, 99, 'menu_order' );`
+	public function newpost_aftercontent_menu_order( $posttype, $post, $target, $linked )
 	{
 		Core\HTML::inputHidden( 'menu_order', WordPress\PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
