@@ -162,8 +162,18 @@ class NationalLibrary extends gEditorial\Module
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
 			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
 
+		if ( $this->get_setting( 'newpost_hints' ) ) {
+
+			$this->filter( 'template_newpost_title', 6, 8, FALSE, $this->base );
+			$this->action( 'template_newpost_buttons', 6, 12, FALSE, $this->base );
+
+			if ( is_admin() )
+				$this->action( 'template_newpost_aftercontent', 6, 12, FALSE, $this->base );
+			else
+				$this->action( 'template_newpost_side', 6, 8, FALSE, $this->base );
+		}
+
 		$this->filter( 'objecthints_tips_for_post', 5, 12, FALSE, $this->base );
-		$this->action( 'template_newpost_side', 6, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_bibliographic', 4, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_isbn', 4, 8, FALSE, $this->base );
 		$this->filter( 'lookup_isbn', 2, 20, FALSE, $this->base );
@@ -296,21 +306,11 @@ class NationalLibrary extends gEditorial\Module
 
 		add_action( 'edit_form_after_title', function ( $post ) use ( $posttype ) {
 
-			$data = FALSE;
+			if ( ! $this->_prime_current_request( $posttype ) )
+				return;
 
-			if ( $bib = self::req( 'bib' ) )
-				$data = ModuleHelper::getFibaByBib( $bib );
-
-			else if ( $bib = self::req( $this->_get_posttype_bib_metakey( $posttype ) ) )
-				$data = ModuleHelper::getFibaByBib( $bib );
-
-			else if ( $isbn = self::req( 'isbn' ) )
-				$data = ModuleHelper::getFibaByISBN( $isbn );
-
-			else if ( $isbn = self::req( $this->_get_posttype_isbn_metakey( $posttype ) ) )
-				$data = ModuleHelper::getFibaByISBN( $isbn );
-
-			$this->_render_fipa_data( $data, 'hints' );
+			if ( ! empty( $this->cache[$posttype]['raw'] ) )
+				$this->_render_fipa_data( $this->cache[$posttype]['raw'], 'hints' );
 
 		}, 1, 9 );
 	}
@@ -615,41 +615,45 @@ class NationalLibrary extends gEditorial\Module
 		);
 	}
 
-	private function _render_primed_cache( $posttype, $context = NULL )
-	{
-		if ( ! $this->_prime_current_request( $posttype ) )
-			return;
-
-		if ( ! empty( $this->cache[$posttype]['raw'] ) )
-			$this->_render_fipa_data( $this->cache[$posttype]['raw'], $context );
-
-		if ( ! Core\WordPress::isDev() )
-			return;
-
-		if ( empty( $this->cache[$posttype]['parsed'] ) )
-			return;
-
-		if ( Core\WordPress::isDev() )
-			self::dump( $this->cache[$posttype]['parsed'] );
-
-		if ( ! empty( $this->cache[$posttype]['parsed']['biblio'] ) )
-			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['biblio'] );
-
-		echo '<br />';
-
-		if ( ! empty( $this->cache[$posttype]['parsed']['isbn'] ) )
-			echo ModuleHelper::linkISBN( $this->cache[$posttype]['parsed']['isbn'] );
-	}
-
+	// NOTE: supports for:
+	// - `{$isbn_metakey}={$data}`
+	// - `meta[{$isbn_metakey}]={$data}`
+	// - `isbn={$data}`
+	// - `barcode={$data}`
+	// - `{$bib_metakey}={$data}`
+	// - `meta[{$bib_metakey}]={$data}`
+	// - `bib={$data}`
+	// - `biblio={$data}`
 	private function _prime_current_request( $posttype )
 	{
 		if ( ! empty( $this->cache[$posttype]['raw'] ) )
 			return TRUE;
 
-		if ( $data = ModuleHelper::getFibaByBib( self::req( $this->_get_posttype_bib_metakey( $posttype ) ) ) )
+		$bib_metakey  = $this->_get_posttype_bib_metakey( $posttype );
+		$isbn_metakey = $this->_get_posttype_isbn_metakey( $posttype );
+
+		if ( $data = ModuleHelper::getFibaByBib( self::req( $bib_metakey ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByISBN( self::req( $this->_get_posttype_isbn_metakey( $posttype ) ) ) )
+		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'meta', FALSE, $bib_metakey ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'biblio' ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'bib' ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByISBN( self::req( $isbn_metakey ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'meta', FALSE, $isbn_metakey ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'isbn' ) ) )
+			$this->cache[$posttype]['raw'] = $data;
+
+		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'barcode' ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
 		else
@@ -660,12 +664,59 @@ class NationalLibrary extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function template_newpost_side( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_title( $title, $posttype, $target, $linked, $status, $meta )
+	{
+		if ( $title )
+			return $title; // already generated!
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $title;
+
+		if ( ! $this->_prime_current_request( $posttype ) )
+			return $title;
+
+		if ( ! empty( $this->cache[$posttype]['parsed']['title'][0] ) )
+			return $this->cache[$posttype]['parsed']['title'][0];
+
+		return $title;
+	}
+
+	public function template_newpost_buttons( $posttype, $post, $target, $linked, $status, $meta )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 
-		$this->_render_primed_cache( $posttype, 'newpost' );
+		if ( ! $this->_prime_current_request( $posttype ) )
+			return;
+
+		if ( ! empty( $this->cache[$posttype]['parsed']['biblio'] ) )
+			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['biblio'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
+
+		if ( ! empty( $this->cache[$posttype]['parsed']['isbn'] ) )
+			echo ModuleHelper::linkISBN( $this->cache[$posttype]['parsed']['isbn'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
+	}
+
+	public function template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( ! $this->_prime_current_request( $posttype ) )
+			return;
+
+		if ( ! empty( $this->cache[$posttype]['raw'] ) )
+			$this->_render_fipa_data( $this->cache[$posttype]['raw'], 'newpost' );
+
+		if ( ! Core\WordPress::isDev() )
+			return;
+
+		if ( ! empty( $this->cache[$posttype]['parsed'] ) && ! is_admin() )
+			self::dump( $this->cache[$posttype]['parsed'] );
+	}
+
+	public function template_newpost_side( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		$this->template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta );
 	}
 
 	public function meta_initial_bibliographic( $meta, $field, $post, $module )

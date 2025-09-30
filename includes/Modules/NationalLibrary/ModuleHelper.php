@@ -20,7 +20,7 @@ class ModuleHelper extends gEditorial\Helper
 		] );
 	}
 
-	public static function linkBib( $bib, $link = TRUE, $html = NULL )
+	public static function linkBib( $bib, $link = TRUE, $html = NULL, $class = FALSE )
 	{
 		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
 
@@ -29,6 +29,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		return Core\HTML::tag( 'a', [
 			'href'     => $url,
+			'class'    => $class,
 			'data-bib' => $bib,
 			'title'    => _x( 'Book Page on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'      => 'noreferrer',
@@ -36,7 +37,7 @@ class ModuleHelper extends gEditorial\Helper
 		], $html ?? $bib );
 	}
 
-	public static function linkISBN( $isbn, $link = TRUE, $html = NULL )
+	public static function linkISBN( $isbn, $link = TRUE, $html = NULL, $class = FALSE )
 	{
 		$base = 'https://opac.nlai.ir';
 		$url  = add_query_arg( [
@@ -59,6 +60,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		return Core\HTML::tag( 'a', [
 			'href'      => $url,
+			'class'     => $class,
 			'data-isbn' => $isbn,
 			'title'     => _x( 'Search ISBN on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'       => 'noreferrer',
