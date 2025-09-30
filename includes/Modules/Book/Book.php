@@ -34,6 +34,7 @@ class Book extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostsToPosts;
 	use Internals\PostTypeOverview;
+	use Internals\QuickPosts;
 	use Internals\TemplatePostType;
 
 	protected $deafults = [ 'multiple_instances' => TRUE ];
@@ -68,6 +69,7 @@ class Book extends gEditorial\Module
 				'paired_force_parents',
 				'paired_manage_restricted',
 				'comment_status',
+				'quick_newpost',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'category_taxonomy' ),
@@ -641,6 +643,14 @@ class Book extends gEditorial\Module
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
 
 			$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_from' );
+		}
+	}
+
+	public function admin_menu()
+	{
+		if ( $this->get_setting( 'quick_newpost' ) ) {
+			$this->_hook_submenu_adminpage( 'newpost' );
+			$this->action_self( 'newpost_aftercontent', 4, 10, 'menu_order' );
 		}
 	}
 
