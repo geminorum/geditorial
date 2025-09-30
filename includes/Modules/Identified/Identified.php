@@ -428,6 +428,9 @@ class Identified extends gEditorial\Module
 		else if ( $sanitized = $this->sanitize_identifier( self::req( $metakey ), $type ) )
 			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
 
+		else if ( $sanitized = $this->sanitize_identifier( self::req( 'meta', FALSE, $metakey ), $type ) )
+			$already = $this->_get_post_identified( $sanitized, $metakey, $posttype );
+
 		if ( ! $already )
 			return;
 
