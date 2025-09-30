@@ -315,6 +315,16 @@ trait PostTypeFields
 						// @SEE: https://core.trac.wordpress.org/ticket/50123
 						// : WordPress\PostType::can( 'post', 'read', $user_id );
 
+				} else if ( 0 == $post->ID && 'draft' === $post->post_status ) {
+
+					/**
+					 * `$post` is an empty `WP_Post` object.
+					 */
+
+					$access = in_array( $context, [ 'edit' ], TRUE )
+						? WordPress\PostType::can( $post->post_type, 'create_posts', $user_id )
+						: WordPress\PostType::viewable( $post->post_type );
+
 				} else {
 
 					/**
