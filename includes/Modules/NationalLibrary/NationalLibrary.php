@@ -96,6 +96,7 @@ class NationalLibrary extends gEditorial\Module
 				'title'       => _x( 'New-Post Hints', 'Setting Title', 'geditorial-national-library' ),
 				'description' => _x( 'Displays Bibliographic information on new post edit screen.', 'Setting Description', 'geditorial-national-library' ),
 			],
+			'metabox_advanced',
 		];
 
 		$settings['_frontend'] = [
@@ -186,10 +187,14 @@ class NationalLibrary extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base && 'add' === $screen->action
+		if ( 'post' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
-			$this->_hook_newpost_hints( $screen->post_type );
+			if ( 'add' === $screen->action )
+				$this->_hook_newpost_hints( $screen->post_type );
+
+			else
+				$this->_hook_savedpost_hints( $screen->post_type );
 		}
 	}
 
@@ -297,6 +302,59 @@ class NationalLibrary extends gEditorial\Module
 		return $data
 			? Core\HTML::tableSimple( $data['rows'], [], FALSE, $this->_get_table_css_class( $context ) )
 			: $fallback;
+	}
+
+	private function _hook_savedpost_hints( $screen )
+	{
+		add_filter( 'enter_title_here',
+			function ( $title, $post ) {
+
+				if ( ! $data = $this->get_fipa_by_post( $post, FALSE, TRUE ) )
+					return $title;
+
+				if ( ! empty( $data['title'] ) )
+					return $data['title'];
+
+				return $title;
+
+			}, 2, 8 );
+
+		if ( $this->get_setting( 'metabox_advanced' ) )
+			add_meta_box(
+				$this->classs(),
+				// $this->strings_metabox_title_via_posttype( $screen->post_type, 'mainbox' ),
+				_x( 'Fipa', 'Meta-Box Title', 'geditorial-national-library' ),
+				[ $this, 'render_metabox_fipa' ],
+				$screen,
+				'advanced',
+				'low'
+			);
+
+		add_action( 'admin_enqueue_scripts',
+			function ( $hook_suffix ) {
+
+				if ( ! $data = $this->get_fipa_by_post( WordPress\Post::get(), FALSE, TRUE ) )
+					return;
+
+				if ( ! empty( $data['biblio'] ) )
+					Services\HeaderButtons::register( $this->hook_key( 'biblio' ), [
+						'text'     => _x( 'National Library', 'Button Text', 'geditorial-national-library' ),
+						'title'    => _x( 'Book Page on Opac.Nali.ir', 'Button Title Attr', 'geditorial-national-library' ),
+						'link'     => ModuleHelper::linkBib( $data['biblio'], FALSE ),
+						'newtab'   => TRUE,
+						'priority' => 80,
+					] );
+
+				else if ( ! empty( $data['isbn'] ) )
+					Services\HeaderButtons::register( $this->hook_key( 'isbn' ), [
+						'text'     => _x( 'National Library', 'Button Text', 'geditorial-national-library' ),
+						'title'    => _x( 'Book Page on Opac.Nali.ir', 'Button Title Attr', 'geditorial-national-library' ),
+						'link'     => ModuleHelper::linkISBN( $data['isbn'], FALSE ),
+						'newtab'   => TRUE,
+						'priority' => 85,
+					] );
+
+			}, 4, 1 );
 	}
 
 	private function _hook_newpost_hints( $posttype )
@@ -803,6 +861,15 @@ class NationalLibrary extends gEditorial\Module
 
 		return array_merge( $tips,
 			ModuleHelper::generateHints( $fipa, $post, $context, $queried ) );
+	}
+
+	public function render_metabox_fipa( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		if ( $html = $this->get_fipa_by_post( $post ) )
+			echo $this->wrap( $html, '-fipa-summary' );
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
