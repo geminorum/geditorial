@@ -25,6 +25,8 @@ class ModuleInfo extends gEditorial\Info
 	}
 
 	// @REF: https://papersizes.io/books/
+	// @SEE: https://en.wikipedia.org/wiki/Book_size
+	// @SEE: https://www.blurb.com/book-dimensions
 	public static function getBookCovers( $context = NULL )
 	{
 		return [

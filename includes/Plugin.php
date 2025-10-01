@@ -232,6 +232,7 @@ class Plugin
 			'AdvancedQueries',
 			'Barcodes',
 			// 'BinaryPond',
+			// 'BookCovers',
 			// 'Calendars',
 			'ContentActions',
 			// 'Coordinates',

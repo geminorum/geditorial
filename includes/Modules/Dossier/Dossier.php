@@ -329,12 +329,12 @@ class Dossier extends gEditorial\Module
 
 	public function admin_menu()
 	{
+		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
+
 		if ( $this->get_setting( 'quick_newpost' ) ) {
 			$this->_hook_submenu_adminpage( 'newpost' );
 			$this->action_self( 'newpost_aftercontent', 4, 10, 'menu_order' );
 		}
-
-		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
 	}
 
 	public function template_redirect()

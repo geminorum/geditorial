@@ -369,7 +369,7 @@ class NationalLibrary extends gEditorial\Module
 					return $title;
 
 				if ( ! $this->_prime_current_request( $posttype ) )
-					return;
+					return $title;
 
 				if ( ! empty( $this->cache[$posttype]['parsed']['title'][0] ) )
 					return $this->cache[$posttype]['parsed']['title'][0];
@@ -382,7 +382,7 @@ class NationalLibrary extends gEditorial\Module
 			function ( $title, $post ) use ( $posttype ) {
 
 				if ( ! $this->_prime_current_request( $posttype ) )
-					return;
+					return $title;
 
 				if ( ! empty( $this->cache[$posttype]['parsed']['title'][0] ) )
 					return $this->cache[$posttype]['parsed']['title'][0];
@@ -802,11 +802,11 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->_prime_current_request( $posttype ) )
 			return;
 
-		if ( ! empty( $this->cache[$posttype]['parsed']['biblio'] ) )
-			echo ModuleHelper::linkBib( $this->cache[$posttype]['parsed']['biblio'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
+		if ( ! empty( $this->cache[$posttype]['raw']['biblio'] ) )
+			echo ModuleHelper::linkBib( $this->cache[$posttype]['raw']['biblio'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
 
-		if ( ! empty( $this->cache[$posttype]['parsed']['isbn'] ) )
-			echo ModuleHelper::linkISBN( $this->cache[$posttype]['parsed']['isbn'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
+		if ( ! empty( $this->cache[$posttype]['raw']['isbn'] ) )
+			echo ModuleHelper::linkISBN( $this->cache[$posttype]['raw']['isbn'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
 	}
 
 	public function template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta )
@@ -843,8 +843,8 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->_prime_current_request( $post->post_type ) )
 			return $meta;
 
-		if ( ! empty( $this->cache[$post->post_type]['parsed']['biblio'] ) )
-			return $this->cache[$post->post_type]['parsed']['biblio'];
+		if ( ! empty( $this->cache[$post->post_type]['raw']['biblio'] ) )
+			return $this->cache[$post->post_type]['raw']['biblio'];
 
 		return $meta;
 	}
@@ -860,8 +860,8 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $this->_prime_current_request( $post->post_type ) )
 			return $meta;
 
-		if ( ! empty( $this->cache[$post->post_type]['parsed']['isbn'] ) )
-			return $this->cache[$post->post_type]['parsed']['isbn'];
+		if ( ! empty( $this->cache[$post->post_type]['raw']['isbn'] ) )
+			return Core\ISBN::convertToISBN13( $this->cache[$post->post_type]['raw']['isbn'] );
 
 		return $meta;
 	}

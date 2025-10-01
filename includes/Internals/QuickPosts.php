@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 trait QuickPosts
 {
+	use AdminPage;
 
 	public function render_newpost_adminpage()
 	{

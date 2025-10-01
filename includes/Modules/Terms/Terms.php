@@ -296,13 +296,14 @@ class Terms extends gEditorial\Module
 			case 'fullname' : $excluded[] = 'post_tag'; break;
 			case 'tagline'  : $excluded[] = 'post_tag'; break;
 			case 'subtitle' : $excluded[] = 'post_tag'; break;
+			case 'barcode'  : $excluded[] = 'warehouse_placement'; break;
 			case 'image'    : $excluded = array_merge( $excluded, [ 'post_tag', 'product_brand', 'product_cat', 'product_tag' ] ); break;
-			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );  // override!
-			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
-			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // override!
+			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );  // NOTE: override!
+			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // NOTE: override!
+			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );               // NOTE: override!
 		}
 
-		return array_diff_key( $supported, array_flip( $excluded ) );
+		return array_unique( array_diff_key( $supported, array_flip( $excluded ) ) );
 	}
 
 	public function init()

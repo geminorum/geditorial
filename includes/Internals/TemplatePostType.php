@@ -224,7 +224,7 @@ trait TemplatePostType
 					'context' => 'template_posttype',
 					'orderby' => 'menu_order',          // WTF: must apply to `assigned`
 					'term_id' => 'all',
-					'future'  => 'off',
+					// 'future'  => WordPress\PostType::can( $posttype, 'publish_posts' ) ? 'on' : 'off',
 					'title'   => FALSE,
 					'wrap'    => FALSE,
 				]
@@ -291,7 +291,7 @@ trait TemplatePostType
 		);
 	}
 
-	// will hook to `the_content` filter on newpost
+	// will hook to `the_content` filter on new-post
 	public function templateposttype_newpost_content( $content )
 	{
 		if ( ! $post = WordPress\Post::get() )
@@ -486,7 +486,7 @@ trait TemplatePostType
 		return ob_get_clean();
 	}
 
-	// DEFAULT METHOD: title for overridden newpost page
+	// DEFAULT METHOD: title for overridden new-post page
 	public function templateposttype_get_newpost_title( $posttype )
 	{
 		return $this->get_setting_fallback( 'newpost_title',

@@ -747,7 +747,7 @@ class Book extends gEditorial\Module
 				$this->constant( 'category_taxonomy' ),
 				[
 					'id'     => 'all',
-					'future' => 'off',
+					// 'future' => WordPress\PostType::can( $posttype, 'publish_posts' ) ? 'on' : 'off',
 					'title'  => FALSE,
 					'wrap'   => FALSE,
 				]

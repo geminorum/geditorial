@@ -44,7 +44,7 @@ class ModuleHelper extends gEditorial\Helper
 			'simpleSearch.value'                           => $isbn,
 			'bibliographicLimitQueryBuilder.biblioDocType' => 'BF',
 			'simpleSearch.indexFieldId'                    => '221091',
-			'nliHolding'                                   => 'nli',
+			'nliHolding'                                   => '', // 'nli',
 			'command'                                      => 'I',
 			'simpleSearch.tokenized'                       => 'true',
 			'classType'                                    => '0',
@@ -78,7 +78,7 @@ class ModuleHelper extends gEditorial\Helper
 			'simpleSearch.value'                           => $isbn,
 			'bibliographicLimitQueryBuilder.biblioDocType' => 'BF',
 			'simpleSearch.indexFieldId'                    => '221091',
-			'nliHolding'                                   => 'nli',
+			'nliHolding'                                   => '', // 'nli',
 			'command'                                      => 'I',
 			'simpleSearch.tokenized'                       => 'true',
 			'classType'                                    => '0',
@@ -193,8 +193,8 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $parsed = self::parseFipa( $raw ) )
 			return $fallback;
 
-		return isset( $parsed['title'] )
-			? $parsed['title']
+		return isset( $parsed['title'][0] )
+			? $parsed['title'][0]
 			: $fallback;
 	}
 
@@ -265,7 +265,7 @@ class ModuleHelper extends gEditorial\Helper
 						if ( count( $parts ) > 1 )
 							$data['price'] = Core\Arraay::mergeConsecutive( $parts, 2, ' ' );
 
-						else
+						else if ( count( $parts ) )
 							$data['price'] = Core\Number::translate( $parts[0] );
 
 					} else {
@@ -463,6 +463,12 @@ class ModuleHelper extends gEditorial\Helper
 		return $hints;
 	}
 
+	/**
+	 * Generates data for a CSV row.
+	 *
+	 * @param string $isbn
+	 * @return array
+	 */
 	public static function getFipaRow( $isbn )
 	{
 		if ( ! $sanitized = Core\ISBN::sanitize( $isbn ) )

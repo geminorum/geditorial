@@ -895,14 +895,14 @@ class MetaBox extends WordPress\Main
 	}
 
 	/**
-	 * renders an general textarea tag for forms in a metabox.
+	 * Renders a general text-area tag for forms in a meta-box.
 	 *
 	 * NOTE: HTML5 <textarea> element does not support the pattern attribute.
 	 *
-	 * @param  array $field
-	 * @param  null|int|object $post
-	 * @param  string $module
-	 * @return bool $success
+	 * @param array $field
+	 * @param null|int|object $post
+	 * @param string $module
+	 * @return bool
 	 */
 	public static function renderFieldTextarea( $field, $post = NULL, $module = NULL )
 	{
@@ -967,12 +967,12 @@ class MetaBox extends WordPress\Main
 	}
 
 	/**
-	 * renders an general input tag for forms in a metabox
+	 * Renders a general input tag for forms in a meta-box.
 	 *
-	 * @param  array $field
-	 * @param  null|int|object $post
-	 * @param  string $module
-	 * @return bool $success
+	 * @param array $field
+	 * @param null|int|object $post
+	 * @param string $module
+	 * @return bool
 	 */
 	public static function renderFieldInput( $field, $post = NULL, $module = NULL )
 	{
@@ -1298,12 +1298,12 @@ class MetaBox extends WordPress\Main
 	}
 
 	/**
-	 * renders an number input tag for forms in a metabox.
+	 * Renders a number input tag for forms in a meta-box.
 	 *
-	 * @param  array $field
-	 * @param  null|int|object $post
-	 * @param  string $module
-	 * @return bool $success
+	 * @param array $field
+	 * @param null|int|object $post
+	 * @param string $module
+	 * @return bool
 	 */
 	public static function renderFieldNumber( $field, $post = NULL, $module = NULL )
 	{
