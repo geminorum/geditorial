@@ -400,6 +400,32 @@ class NationalLibrary extends gEditorial\Module
 				$this->_render_fipa_data( $this->cache[$posttype]['raw'], 'hints' );
 
 		}, 1, 9 );
+
+		add_action( 'admin_enqueue_scripts',
+			function ( $hook_suffix ) use ( $posttype ) {
+
+				if ( ! $this->_prime_current_request( $posttype ) )
+					return;
+
+				if ( ! empty( $this->cache[$posttype]['raw']['biblio'] ) )
+					Services\HeaderButtons::register( $this->hook_key( 'biblio' ), [
+						'text'     => _x( 'National Library', 'Button Text', 'geditorial-national-library' ),
+						'title'    => _x( 'Book Page on Opac.Nali.ir', 'Button Title Attr', 'geditorial-national-library' ),
+						'link'     => ModuleHelper::linkBib( $this->cache[$posttype]['raw']['biblio'], FALSE ),
+						'newtab'   => TRUE,
+						'priority' => 80,
+					] );
+
+				else if ( ! empty( $this->cache[$posttype]['raw']['isbn'] ) )
+					Services\HeaderButtons::register( $this->hook_key( 'isbn' ), [
+						'text'     => _x( 'National Library', 'Button Text', 'geditorial-national-library' ),
+						'title'    => _x( 'Book Page on Opac.Nali.ir', 'Button Title Attr', 'geditorial-national-library' ),
+						'link'     => ModuleHelper::linkISBN( $this->cache[$posttype]['raw']['isbn'], FALSE ),
+						'newtab'   => TRUE,
+						'priority' => 85,
+					] );
+
+			}, 4, 1 );
 	}
 
 	private function _init_custom_queries()
