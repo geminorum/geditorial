@@ -888,6 +888,9 @@ class MetaBox extends WordPress\Main
 			'role'         => FALSE,
 			'group'        => 'general',
 			'order'        => 1000,
+
+			/// render settings
+			'name_for_rest' => ! is_admin(), // Determines the `name` format of the tag
 		];
 	}
 
@@ -1702,8 +1705,11 @@ class MetaBox extends WordPress\Main
 
 	private static function _getNameAttr( $field, $module )
 	{
-		$template = is_admin() ? '%1$s-%2$s-%3$s' : 'meta[_%2$s_%3$s]';
-		return sprintf( $template, static::BASE, $module, $field['name'] );
+		return vsprintf( $field['name_for_rest'] ? 'meta[_%2$s_%3$s]' : '%1$s-%2$s-%3$s', [
+			static::BASE,
+			$module,
+			$field['name'],
+		] );
 	}
 
 	// OLD: `check_draft_metabox()`

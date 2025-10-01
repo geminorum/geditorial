@@ -656,7 +656,7 @@ trait PostTypeFields
 		echo '</div>';
 	}
 
-	public function render_posttype_fields( $post, $box = FALSE, $fields = NULL, $context = NULL, $before = '', $after = '' )
+	public function render_posttype_fields( $post, $box = FALSE, $fields = NULL, $context = NULL, $extra = [] )
 	{
 		$user_id = get_current_user_id();
 
@@ -666,18 +666,23 @@ trait PostTypeFields
 		if ( is_null( $fields ) )
 			$fields = $this->get_posttype_fields( $post->post_type );
 
-		foreach ( $fields as $field => $args ) {
+		foreach ( $fields as $field ) {
 
-			if ( $context != $args['context'] )
+			if ( $context != $field['context'] )
 				continue;
+
+			// Passing extra for rendering on each field
+			if ( isset( $extra['rest'] ) )
+				$field['name_for_rest'] = $extra['rest'];
 
 			// TODO: maybe display disabled input
-			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
+			if ( ! $this->access_posttype_field( $field, $post, 'edit', $user_id ) )
 				continue;
 
-			echo $before;
+			if ( ! empty( $extra['before'] ) )
+				echo $extra['before'];
 
-			switch ( $args['type'] ) {
+			switch ( $field['type'] ) {
 
 				case 'european_shoe':
 				case 'international_shirt':
@@ -686,7 +691,7 @@ trait PostTypeFields
 				case 'papersize':
 				case 'select':
 
-					MetaBox::renderFieldSelect( $args, $post, $this->module->name );
+					MetaBox::renderFieldSelect( $field, $post, $this->module->name );
 					break;
 
 				case 'title_before':
@@ -722,7 +727,7 @@ trait PostTypeFields
 				case 'link':
 				case 'latlng':
 
-					MetaBox::renderFieldInput( $args, $post, $this->module->name );
+					MetaBox::renderFieldInput( $field, $post, $this->module->name );
 					break;
 
 				case 'float':
@@ -740,7 +745,7 @@ trait PostTypeFields
 				case 'metre':
 				case 'kilometre':
 
-					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
+					MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
 
 				case 'widget': // WTF?!
@@ -748,49 +753,50 @@ trait PostTypeFields
 				case 'note':
 				case 'textarea':
 
-					MetaBox::renderFieldTextarea( $args, $post, $this->module->name );
+					MetaBox::renderFieldTextarea( $field, $post, $this->module->name );
 					break;
 
 				case 'parent_post':
 
-					MetaBox::renderFieldPostParent( $args, $post, $this->module->name );
+					MetaBox::renderFieldPostParent( $field, $post, $this->module->name );
 					break;
 
 				case 'user':
 
-					MetaBox::renderFieldUser( $args, $post, $this->module->name );
+					MetaBox::renderFieldUser( $field, $post, $this->module->name );
 					break;
 
 				case 'attachment':
 
-					// MetaBox::renderFieldAttachment( $args, $post, $this->module->name ); // FIXME
-					MetaBox::renderFieldNumber( $args, $post, $this->module->name );
+					// MetaBox::renderFieldAttachment( $field, $post, $this->module->name ); // FIXME
+					MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
 
 				case 'post':
 
-					MetaBox::renderFieldPost( $args, $post, $this->module->name );
+					MetaBox::renderFieldPost( $field, $post, $this->module->name );
 					break;
 
 				case 'term':
 
-					if ( ! $args['taxonomy'] )
+					if ( ! $field['taxonomy'] )
 						break;
 
-					if ( ! WordPress\Taxonomy::can( $args['taxonomy'], 'assign_terms' ) )
+					if ( ! WordPress\Taxonomy::can( $field['taxonomy'], 'assign_terms' ) )
 						break;
 
-					if ( ! $count = WordPress\Taxonomy::hasTerms( $args['taxonomy'] ) )
+					if ( ! $count = WordPress\Taxonomy::hasTerms( $field['taxonomy'] ) )
 						break;
 
 					if ( $count > 15 ) // WTF: customize this!
-						MetaBox::renderFieldTerm( $args, $post, $this->module->name );
+						MetaBox::renderFieldTerm( $field, $post, $this->module->name );
 
 					else
-						MetaBox::renderFieldSelect( $args, $post, $this->module->name );
+						MetaBox::renderFieldSelect( $field, $post, $this->module->name );
 			}
 
-			echo $after;
+			if ( ! empty( $extra['after'] ) )
+				echo $extra['after'];
 		}
 
 		if ( 'mainbox' !== $context )
@@ -1680,7 +1686,11 @@ trait PostTypeFields
 		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_before' ] ) )
 			return;
 
-		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', '<div class="-form-group">', '</div>' );
+		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', [
+			'before' => '<div class="-form-group">',
+			'after'  => '</div>',
+			'rest'   => TRUE,
+		] );
 	}
 
 	public function template_newpost_aftertitle_posttypefields_title_after( $posttype, $post, $target, $linked, $status, $meta )
@@ -1691,7 +1701,11 @@ trait PostTypeFields
 		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_after' ] ) )
 			return;
 
-		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', '<div class="-form-group">', '</div>' );
+		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', [
+			'before' => '<div class="-form-group">',
+			'after'  => '</div>',
+			'rest'   => TRUE,
+		] );
 	}
 
 	public function template_newpost_aftertitle_posttypefields_quickedit( $posttype, $post, $target, $linked, $status, $meta )
@@ -1702,7 +1716,11 @@ trait PostTypeFields
 		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'quickedit' => TRUE ] ) )
 			return;
 
-		$this->render_posttype_fields( $post, FALSE, $fields, NULL, '<div class="-form-group">', '</div>' );
+		$this->render_posttype_fields( $post, FALSE, $fields, NULL, [
+			'before' => '<div class="-form-group">',
+			'after'  => '</div>',
+			'rest'   => TRUE,
+		] );
 	}
 
 	// `$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );`
