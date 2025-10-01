@@ -172,7 +172,20 @@ class ModuleHelper extends gEditorial\Helper
 		if ( WordPress\Strings::isEmpty( $isbn ) )
 			return FALSE;
 
-		return self::scrapeFipaFromURL( self::scrapeURLFromISBN( Core\ISBN::convertToISBN13( $isbn ) ), NULL, $isbn );
+		if ( ! $type = Core\ISBN::validate( $isbn ) )
+			return FALSE;
+
+		if ( $url = self::scrapeURLFromISBN( $isbn ) )
+			return self::scrapeFipaFromURL( $url, NULL, $isbn );
+
+		$converted = $type === 2
+			? Core\ISBN::convertToISBN10( $isbn )
+			: Core\ISBN::convertToISBN13( $isbn );
+
+		if ( $url = self::scrapeURLFromISBN( $converted ) )
+			return self::scrapeFipaFromURL( $url, NULL, $isbn );
+
+		return FALSE;
 	}
 
 	public static function getTitle( $raw, $fallback = FALSE )
