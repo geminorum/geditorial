@@ -148,6 +148,7 @@ class Isbn extends gEditorial\Module
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+		$this->filter( 'meta_initial_isbn', 4, 2, FALSE, $this->base );
 
 		$this->filter_module( 'book', 'editform_meta_summary', 2, 20 );
 
@@ -493,5 +494,11 @@ class Isbn extends gEditorial\Module
 	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
 	{
 		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
+	}
+
+	// Makes sure all ISBN initiated on ISBN-13 format.
+	public function meta_initial_isbn( $meta, $field, $post, $module )
+	{
+		return $meta ? Core\ISBN::convertToISBN13( $meta ) : $meta;
 	}
 }
