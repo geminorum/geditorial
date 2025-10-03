@@ -67,10 +67,10 @@ class LatLng extends Base
 	}
 
 	// @SEE: https://github.com/jakubvalenta/geoshare
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
 		if ( self::empty( $input ) )
-			return '';
+			return $default;
 
 		if ( is_array( $input ) && $array = self::extractFromArray( $input ) )
 			return $array;
@@ -187,14 +187,31 @@ class LatLng extends Base
 
 		$sanitized = Text::normalizeWhitespace( $data );
 
-		if ( Text::has( $sanitized, ',' ) )
+		if ( Text::has( $sanitized, ',' ) ) {
+
 			$dms = explode( ',', $sanitized, 2 );
 
-		else if ( 1 === substr_count( $sanitized, ' ' ) )
+		} else if ( 1 === substr_count( $sanitized, ' ' ) ) {
+
 			$dms = explode( ' ', $sanitized, 2 );
 
-		else
+		} else if ( preg_match( '/\s([nsewNSEW])\s/', $sanitized, $matches ) ) {
+
+			// EXAMPLE: `34.500741° N 50.314809° E`
+			$parts = preg_split( '/\s([nsewNSEW])\s/', $sanitized.' ', 3, PREG_SPLIT_DELIM_CAPTURE );
+
+			if ( 4 > count( $parts ) )
+				return $fallback;
+
+			$dms = [
+				$parts[0].$parts[1],
+				$parts[2].$parts[3],
+			];
+
+		} else {
+
 			return $fallback; // no way to split!
+		}
 
 		if ( ! $lat = self::convertDMSToDecimal( $dms[0] ) )
 			return $fallback;
@@ -254,6 +271,9 @@ class LatLng extends Base
 
 				if ( isset( $url['query']['q'] ) && Text::starts( $url['query']['q'], 'loc:' ) )
 					return Text::stripPrefix( $url['query']['q'], 'loc:' );
+
+				if ( isset( $url['query']['q'] ) )
+					return $url['query']['q'];
 
 				break;
 

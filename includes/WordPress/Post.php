@@ -524,6 +524,49 @@ class Post extends Core\Base
 	}
 
 	/**
+	 * Retrieves post meta field for a post, by Regular Expression match on the key.
+	 * @source https://gist.github.com/rmpel/8b103a5dd360a5000e4d4f9aa22e2787
+	 *
+	 * @param int $post_id
+	 * @param string $regexp The regexp to match the meta key against. One capture-group allowed for key-ing the results. Full meta_key is used if no capture-groups in the expression.
+	 * @param bool $single Optional. Whether to return an array of single values. Default false.
+	 * @return WP_Error|array Will be an array with either scalars or arrays based on `$single`. Contains the individual meta_value results of get_post_meta. Will be WP_Error in case the regular expression fails to validate.
+	 */
+	public static function getMetaByRegexp( $post_id, $regexp, $single = FALSE )
+	{
+		global $wpdb;
+
+		if ( FALSE === preg_match( $regexp, '' ) )
+			return new \WP_Error( 'regexp_invalid', 'Please supply a valid regexp, the current expression is missing boundaries', [ $regexp ] );
+
+		$start   = substr( $regexp, 0, 1 );
+		$end     = strrpos( $regexp, $start );      // position of closing boundary
+		$options = substr( $regexp, $end + 1 );     // the part between the boundaries
+		$trimmed = substr( $regexp, 1, $end - 1 );  // the part between the boundaries
+
+		// MY-SQL regexp is always case insensitive, so in case of no `/i` flag, MY-SQL might report too many rows, these are then filtered by PHP,
+		// Flags `m` and `s` are for multi-line matching. `meta_keys` are never multiline, do, we can ignore those.
+		// Flag `x` modified the way whitespace is handled, single `meta_keys` cannot have whitespace, we ignore those too.
+		// Flag `e` (eval) makes no sense whatsoever in this context, do we ignore that as well.
+		$options = FALSE !== strpos( $options, 'i' ) ? 'i' : '';
+		$regexp  = $start.$trimmed.$start.$options;
+
+		$meta = [];
+		$keys = $wpdb->get_col( $wpdb->prepare( "
+			SELECT meta_key
+			FROM {$wpdb->postmeta}
+			WHERE meta_key REGEXP %s
+			AND post_id = %d
+		", $trimmed, $post_id ) );
+
+		foreach ( $keys as $key )
+			if ( preg_match( $regexp, $key, $m ) )
+				$meta[isset( $m[1] ) ? $m[1] : $m[0]] = get_post_meta( $post_id, $m[0], $single );
+
+		return $meta;
+	}
+
+	/**
 	 * Updates the parent for the given post.
 	 * NOTE: directly updates db to avoid `wp_update_post()`
 	 *

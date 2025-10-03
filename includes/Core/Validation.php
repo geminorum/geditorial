@@ -268,6 +268,9 @@ class Validation extends Base
 		return TRUE;
 	}
 
+	// @SEE: https://en.wikipedia.org/wiki/Vehicle_registration_plate
+	// @SEE: https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Iran
+	// @SEE: https://en.wikipedia.org/wiki/European_vehicle_registration_plate
 	public static function sanitizePlateNumber( $input )
 	{
 		$sanitized = Number::translate( Text::trim( $input ) );

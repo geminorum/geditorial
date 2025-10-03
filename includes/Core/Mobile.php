@@ -26,9 +26,9 @@ class Mobile extends Base
 		return TRUE;
 	}
 
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
-		return Phone::sanitize( $input );
+		return Phone::sanitize( $input, $default, $field, $context );
 	}
 
 	/**

@@ -6,6 +6,7 @@ class Duration extends Base
 {
 
 	// TODO: must convert to `DataType`
+	// @SEE: `Timespan` DataType
 
 	public static function is( $text )
 	{
@@ -16,12 +17,15 @@ class Duration extends Base
 	}
 
 	// NOTE: returns in seconds
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
+		if ( self::empty( $input ) )
+			return $default;
+
 		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( ! self::is( $sanitized ) )
-			return '';
+			return $default;
 
 		$sanitized = trim( str_ireplace( [
 			' ',
@@ -33,7 +37,7 @@ class Duration extends Base
 		], ':', $sanitized ) );
 
 		if ( in_array( $sanitized, [ '00', '00:00', '00:00:00' ], TRUE ) )
-			return '';
+			return $default;
 
 		$parts = explode( ':', $sanitized );
 		$count = count( $parts );
@@ -46,12 +50,12 @@ class Duration extends Base
 			// $sanitized.= ':00';             // in `hh:mm`
 
 		else if ( $count > 3 )
-			return '';
+			return $default;
 
 		return self::timeToSeconds( $sanitized );
 	}
 
-	public static function prep( $value, $field = [], $context = 'display' )
+	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
 	{
 		if ( self::empty( $value ) )
 			return '';
@@ -85,14 +89,14 @@ class Duration extends Base
 		return FALSE; // FIXME!
 	}
 
-	// converts a time string ('hh:mm:ss') to an integer for the total seconds
+	// Converts a time string (`hh:mm:ss`) to an integer for the total seconds
 	public static function timeToSeconds( $time )
 	{
 		list( $hours, $minutes, $seconds ) = explode( ':', $time );
 		return ( $hours * 3600 ) + ( $minutes * 60 ) + $seconds;
 	}
 
-	// converts an integer of seconds to time format
+	// Converts an integer of seconds to time format
 	// @SEE: `Misc\MP3File::formatTime()`
 	// FIXME: WTF: test this
 	public static function secondsToTime( $secondsInt )
@@ -114,7 +118,7 @@ class Duration extends Base
 			self::timeToSeconds( '06:15:05' );
 
 		// convert the total seconds back to a time format
-		$formatted = secondsToTime( $total );
+		$formatted = self::secondsToTime( $total );
 
 		echo "Total seconds: {$total}";    // `96655`
 		echo "Time format: {$formatted}";  // `26:50:55`

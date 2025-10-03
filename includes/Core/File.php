@@ -589,6 +589,61 @@ class File extends Base
 		return $csv;
 	}
 
+	// The most perfect or least imperfect CSV file parsing, taking in account line-endings in cells
+	// @source https://gist.github.com/rmpel/ce4892bb180b7bae6ce73717f2f76fc2
+	public static function fromCSV( $file, $separator = ',', $encapsulation = '"', $replace_encapsed_le_with = NULL )
+	{
+		$virtual_lines = [];
+		$encapsulated  = FALSE;
+		$virtual_line  = '';
+
+		foreach ( file( $file ) as $line ) {
+
+			$chars = str_split( trim( $line ) );
+			$chars[] = "\n"; // certain line ending
+
+			foreach ( $chars as $i => $char ) {
+
+				if ( $char === $encapsulation ) {
+
+					if ( $chars[$i-1] === "\\" && ( $chars[$i-2] !== "\\" || $chars[$i-3] === "\\" ) && $chars[$i+1] !== $encapsulation ) {
+
+						// not an escaped quote
+						// here for clarification
+
+					} else {
+
+						$encapsulated = ! $encapsulated;
+					}
+				}
+
+				if ( "\n" === $char ) {
+
+					if ( ! $encapsulated ) {
+
+						$virtual_lines[] = $virtual_line;
+						$virtual_line = '';
+
+						continue;
+
+					} else {
+
+						$char = $replace_encapsed_le_with ?? "\n";
+					}
+				}
+
+				$virtual_line .= $char;
+			}
+		}
+
+		$virtual_lines = array_map( 'str_getcsv', $virtual_lines );
+
+		while ( ( $end = end( $virtual_lines ) ) && ! array_filter( $end ) )
+			array_pop( $virtual_lines );
+
+		return $virtual_lines;
+	}
+
 	// @REF: https://www.hashbangcode.com/article/remove-last-line-file-php
 	public static function processCSVbyLine( $file, $callback, $args = [] )
 	{
@@ -636,9 +691,9 @@ class File extends Base
 		$size   = filesize( $file );
 		$break  = FALSE;
 		$start  = FALSE;
-		$bite   = 50; // number of bytes to look at
+		$bite   = 50; // the number of bytes to look at
 
-		// put pointer to the end of the file
+		// Puts pointer to the end of the file
 		fseek( $handle, 0, SEEK_END );
 
 		while ( FALSE === $break && FALSE === $start ) {

@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 
-class FieldType extends Core\Base
+abstract class FieldType extends Core\Base
 {
 
 	const BASE = 'geditorial';

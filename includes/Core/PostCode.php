@@ -8,13 +8,16 @@ class PostCode extends Base
 	// @SEE: https://github.com/persian-tools/persian-tools/pull/403/files
 
 	// OLD: `Core\Validation::sanitizePostCode()`
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
+		if ( self::empty( $input ) )
+			return $default;
+
 		$sanitized = str_ireplace( [ '-', ' ' ], '', $input );
 		$sanitized = Number::translate( Text::trim( $sanitized ) );
 
 		if ( ! self::is( $sanitized ) )
-			return '';
+			return $default;
 
 		return $sanitized;
 	}

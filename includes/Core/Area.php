@@ -41,6 +41,9 @@ class Area extends Base
 	// -- convert to the target unit: @SEE https://github.com/lvivier/meters/blob/master/index.js
 	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
+		if ( self::empty( $input ) )
+			return $default;
+
 		$sanitized = Number::translate( Text::trim( $input ) );
 
 		if ( ! self::is( $sanitized ) )
@@ -60,7 +63,7 @@ class Area extends Base
 		return $sanitized;
 	}
 
-	public static function prep( $value, $field = [], $context = 'display' )
+	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
 	{
 		if ( self::empty( $value ) )
 			return '';

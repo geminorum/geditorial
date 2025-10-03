@@ -31,13 +31,16 @@ class Phone extends Base
 		return TRUE;
 	}
 
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
+		if ( self::empty( $input ) )
+			return $default;
+
 		$sanitized = Number::translate( Text::trim( $input ) );
 		$sanitized = preg_replace( '/^tel\:([\+\d]+)$/i', '$1', $sanitized );
 
 		if ( ! self::is( $sanitized ) )
-			return '';
+			return $default;
 
 		$sanitized = trim( str_ireplace( [
 			' ',
@@ -50,19 +53,19 @@ class Phone extends Base
 		], '', $sanitized ) );
 
 		if ( Number::repeated( $input, 11 ) )
-			return '';
+			return $default;
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) ) {
 
 			if ( strlen( $sanitized ) > 13 )
-				return '';
+				return $default;
 
 			$province_prefix = self::const( 'GCORE_DEFAULT_PROVINCE_PHONE', '21' );
 			$province_length = strlen( $province_prefix );
 
 			// under 10 digits and starts with `9`
 			if ( preg_match( '/^9\d{0,8}$/', $sanitized ) )
-				return '';
+				return $default;
 
 			// 10 digits and starts with `9`
 			if ( preg_match( '/^9\d{9}$/', $sanitized ) )
@@ -90,7 +93,7 @@ class Phone extends Base
 
 			// NOTE: invalidate likes of `+989120000000`/`+981111111111`
 			if ( 13 === strlen( $sanitized ) && Number::repeated( substr( $sanitized, -7 ), 7 ) )
-				return '';
+				return $default;
 		}
 
 		return $sanitized;

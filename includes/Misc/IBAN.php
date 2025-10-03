@@ -13,9 +13,9 @@ class IBAN extends Core\Base
 	 * @author Esser Jan
 	 * @license MIT
 	 *
-	 * @example IBAN::createFromString( $someString )
-	 * @example IBAN::createFromString( $someString )->toFormattedString() // space separated
-	 * @example IBAN::createFromString( $someString )->toFormattedString( '-', 4, TRUE ) // IBAN prefixed - separated
+	 * @example `IBAN::createFromString( $data )`
+	 * @example `IBAN::createFromString( $data )->toFormattedString()`: space separated
+	 * @example `IBAN::createFromString( $data )->toFormattedString( '-', 4, TRUE )`: IBAN prefixed - separated
 	 *
 	 * @source https://gist.github.com/esserj/a54ffd11182417cf920d
 	 */
@@ -72,10 +72,9 @@ class IBAN extends Core\Base
 	}
 
 	/**
-	 * removes common used white spacing and hyphenation from the account number
+	 * Removes common used white spacing and hyphenation from the account number.
 	 *
 	 * @param string $accountNumber
-	 *
 	 * @return string
 	 */
 	public static function sanitize( $accountNumber )
@@ -85,22 +84,22 @@ class IBAN extends Core\Base
 
 	/**
 	 * Generating IBAN check digits
-	 * According to the ECBS "generation of the IBAN shall be the exclusive responsibility of the bank/branch servicing
-	 * the account".[8] The ECBS document replicates part of the ISO/IEC 7064:2003 standard as a method for generating
+	 * According to the `ECBS` "generation of the IBAN shall be the exclusive responsibility of the bank/branch servicing
+	 * the account".[8] The `ECBS` document replicates part of the `ISO/IEC 7064:2003` standard as a method for generating
 	 * check digits in the range 02 to 98. Check digits in the ranges 00 to 96, 01 to 97, and 03 to 99 will also
 	 * provide validation of an IBAN, but the standard is silent as to whether or not these ranges may be used.
 	 *
 	 * The preferred algorithm is:
 	 *
 	 * 1. Check that the total IBAN length is correct as per the country. If not, the IBAN is invalid
-	 * 2. Replace the two check digits by 00 (e.g. GB00 for the UK)
+	 * 2. Replace the two check digits by 00 (e.g. `GB00` for the UK)
 	 * 3. Move the four initial characters to the end of the string
 	 * 4. Replace the letters in the string with digits, expanding the string as necessary, such that A or a = 10,
 	 *    B or b = 11, and Z or z = 35. Each alphabetic character is therefore replaced by 2 digits
 	 * 5. Convert the string to an integer (i.e. ignore leading zeroes)
 	 * 6. Calculate mod-97 of the new number, which results in the remainder
 	 * 7. Subtract the remainder from 98, and use the result for the two check digits. If the result is a single digit
-	 *   number, pad it with a leading 0 to make a two-digit number
+	 *   number, pad it with leading `0` to make a two-digit number
 	 */
 	protected function validateSelf()
 	{
@@ -111,8 +110,8 @@ class IBAN extends Core\Base
 		if ( strlen( $this->countryCode.$this->check.$this->bban ) !== static::$IBANLengths[$this->countryCode] )
 			throw new \Exception( 'IBAN not long enough: '.$this->toFormattedString() );
 
-		// 2. + 3. + 4. + 5. only checking upper case characters cause we strtoupper 'd it in constructor
-		// and 0 cause then we can strip it in one go, we cant cast to int here due to 64bit limitation
+		// 2. + 3. + 4. + 5. Only checking uppercase characters cause we `strtoupper`'d it in constructor
+		// And `0` cause then we can strip it in one go, we can't cast to int here due to 64bit limitation
 		$checkString = preg_replace_callback( ['/[A-Z]/', '/^[0]+/'], static function ( $matches ) {
 			if ( substr( $matches[0], 0, 1 ) !== '0' ) // may be multiple leading 0's
 				return base_convert( $matches[0], 36, 10 );

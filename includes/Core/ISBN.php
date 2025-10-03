@@ -7,10 +7,10 @@ class ISBN extends Base
 
 	// TODO: must convert to `DataType`
 
-	// Matches an uppercase, unformatted ISBN-10.
-	public const ISBN10 = '/^[0-9]{9}[0-9X]$/';
+	// Matches an un-formatted `ISBN-10`.
+	public const ISBN10 = '/^[0-9]{9}[0-9Xx]$/';
 
-	// Matches an uppercase, unformatted ISBN-13.
+	// Matches an un-formatted `ISBN-13`.
 	public const ISBN13 = '/^97[89][0-9]{10}$/';
 
 	public static function getHTMLPattern()
@@ -36,6 +36,7 @@ class ISBN extends Base
 
 	/**
 	 * Tries to discover if given criteria is supported.
+	 * NOTE: converts ISBN-10 to ISBN-13.
 	 * NOTE: avoids validation to support fake ISBN numbers.
 	 *
 	 * @param string $criteria
@@ -50,18 +51,25 @@ class ISBN extends Base
 		if ( ! Number::is( $sanitized ) )
 			return FALSE;
 
-		// only between 10-13 digits
-		if ( ! preg_match( '/^\d{10,13}$/', $sanitized ) )
+		// only between 10-13 digits/`x`
+		if ( ! preg_match( '/^[\dx]{10,13}$/i', $sanitized ) )
 			return FALSE;
 
-		return $sanitized;
+		return self::convertToISBN13( $sanitized );
 	}
 
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
-		$sanitized = Number::translate( Text::stripAllSpaces( Text::trim( $input ) ) );
+		if ( self::empty( $input ) )
+			return $default;
 
-		return Text::trim( str_ireplace( [ 'isbn', '-', ':', ' ' ], '', $sanitized ) );
+		$sanitized = Text::trim( $input );
+		$sanitized = Text::stripAllSpaces( $sanitized );
+		$sanitized = Number::translate( $sanitized );
+		$sanitized = str_ireplace( [ 'isbn', '-', ':' ], '', $sanitized );
+		$sanitized = Text::trim( $sanitized );
+
+		return $sanitized;
 	}
 
 	/**
@@ -149,6 +157,44 @@ class ISBN extends Base
 	}
 
 	/**
+	 * Converts given ISBN-13 to ISBN-10.
+	 * @source https://github.com/nicebooks-com/isbn
+	 *
+	 * @param string $input
+	 * @return string
+	 */
+	public static function convertToISBN10( $input )
+	{
+		if ( ! preg_match( static::ISBN13, $input, $matches ) )
+			return $input;
+
+		if ( '978' !== substr( $input, 0, 3 ) )
+			return $input;
+
+		$code = substr( $input, 3, 9 );
+
+        return sprintf( '%s%d', $code, self::checksumForISBN10( $code ) );
+	}
+
+	/**
+	 * Calculates ISBN-10 checksum for given string.
+	 *
+	 * @param string $input
+	 * @return string
+	 */
+	public static function checksumForISBN10( $input )
+	{
+		for ( $sum = 0, $i = 0; $i < 9; $i++ ) {
+            $digit = (int) $input[$i];
+            $sum += $digit * (1 + $i);
+        }
+
+        $sum %= 11;
+
+        return $sum === 10 ? 'X' : (string) $sum;
+	}
+
+	/**
 	 * Converts given ISBN-10 to ISBN-13.
 	 * @source https://github.com/nicebooks-com/isbn
 	 *
@@ -157,7 +203,7 @@ class ISBN extends Base
 	 */
 	public static function convertToISBN13( $input )
 	{
-		if ( preg_match( static::ISBN13, $input, $matches ) )
+		if ( ! preg_match( static::ISBN10, $input, $matches ) )
 			return $input;
 
 		$code = sprintf( '978%s', substr( $input, 0, 9 ) );
@@ -173,11 +219,11 @@ class ISBN extends Base
 	 */
 	public static function checksumForISBN13( $input )
 	{
-		for ($sum = 0, $i = 0; $i < 12; $i++) {
+		for ( $sum = 0, $i = 0; $i < 12; $i++ ) {
             $digit = (int) $input[$i];
-            $sum += $digit * (1 + 2 * ($i % 2));
+            $sum += $digit * ( 1 + 2 * ( $i % 2 ) );
         }
 
-		return ((10 - ($sum % 10)) % 10);
+		return ( ( 10 - ( $sum % 10 ) ) % 10 );
 	}
 }

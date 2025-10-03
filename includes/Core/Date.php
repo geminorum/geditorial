@@ -26,10 +26,10 @@ class Date extends Base
 	 *
 	 * NOTE: wrapper for `date_i18n()`
 	 *
-	 * @param  string   $format
-	 * @param  int|bool $timestamp_with_offset
-	 * @param  bool     $gmt
-	 * @return string   $date
+	 * @param string $format
+	 * @param int|bool $timestamp_with_offset
+	 * @param bool $gmt
+	 * @return string
 	 */
 	public static function get( $format, $timestamp_with_offset = FALSE, $gmt = FALSE )
 	{
@@ -40,10 +40,10 @@ class Date extends Base
 	 * Parses a time string according to a specified format.
 	 * @ref https://www.php.net/manual/en/datetimeimmutable.createfromformat.php
 	 *
-	 * @param  string       $datetime
-	 * @param  null|string  $format
-	 * @param  null|object  $timezone
-	 * @return false|object $object
+	 * @param string $datetime
+	 * @param string $format
+	 * @param object $timezone
+	 * @return false|object
 	 */
 	public static function getObject( $datetime, $format = NULL, $timezone = NULL )
 	{
@@ -71,8 +71,8 @@ class Date extends Base
 	 * Retrieves the timezone from offset as a string.
 	 * @source `wp_timezone_string()`
 	 *
-	 * @param  float $offset
-	 * @return string $timezone_string
+	 * @param float $offset
+	 * @return string
 	 */
 	public static function fromOffset( $offset )
 	{
@@ -117,6 +117,33 @@ class Date extends Base
 		$to   = new \DateTime( "@$seconds" );
 
 		return $from->diff( $to )->format( '%a days, %h hours, %i minutes and %s seconds' );
+	}
+
+	/**
+	 * Calculates date Frequency.
+	 * @source https://github.com/tkav/php-date-frequency/
+	 * @example `Date::nextOccurrence( '08-05-2018', '3', 'months' )`
+	 * @example `Date::nextOccurrence( '08-05-2018', '3', 'months', 'third wednesday' )`
+	 *
+	 * @param mixed $date
+	 * @param int $x
+	 * @param string $interval
+	 * @param string $preference
+	 * @param string $format
+	 * @return string
+	 */
+	public static function nextOccurrence( $date, $x, $interval, $preference = 'none', $format = 'Y-m-d' )
+	{
+		$date = new \DateTime( $date );
+		$date->modify( '+ '.$x.' '.$interval );
+
+		if ( $preference <> 'none' ) {
+			$date->format( 'm' );
+			// $date->modify( $preference.' of this month' )->format( $format );
+			$date->modify( $preference.' of this month' );
+		}
+
+		return $date->format( $format );
 	}
 
 	public static function monthFirstAndLast( $year, $month, $format = NULL, $calendar_type = 'gregorian' )
@@ -195,11 +222,11 @@ class Date extends Base
 	 * FIXME: avoid using `wp_date()`
 	 * @ref: https://stackoverflow.com/questions/15877971/calculating-the-end-of-a-decade
 	 *
-	 * @param  int|string   $timestamp
-	 * @param  string       $calendar
-	 * @param  null|string  $timezone
-	 * @param  bool         $extended
-	 * @return string|array $decade
+	 * @param int|string $timestamp
+	 * @param string $calendar
+	 * @param string $timezone
+	 * @param bool $extended
+	 * @return string|array
 	 */
 	public static function calculateDecade( $timestamp, $calendar = 'gregorian', $timezone = NULL, $extended = FALSE )
 	{
@@ -288,9 +315,9 @@ class Date extends Base
 	 * @source `bp_core_get_iso8601_date()`
 	 * @example `2004-02-12T15:19:21+00:00`
 	 *
-	 * @param  null|int|string $timestamp
-	 * @param  string $fallback
-	 * @return string $formatted
+	 * @param null|int|string $timestamp
+	 * @param string $fallback
+	 * @return string
 	 */
 	public static function getISO8601( $date = NULL, $fallback = '' )
 	{
@@ -685,12 +712,12 @@ class Date extends Base
 	}
 
 	/**
-	 * Retrieves today's mid-night local time
+	 * Retrieves today's mid-night local time in time-stamp.
 	 *
 	 * @example `wp_schedule_event( Date::midnight() + 5 * MINUTES_IN_SECONDS, 'daily', $callback );`
 	 * @source https://www.plumislandmedia.net/programming/php/midnight-local-time-in-wordpress-friendly-php/
 	 *
-	 * @return int $timestamp
+	 * @return int
 	 */
 	public static function midnight()
 	{
@@ -720,9 +747,9 @@ class Date extends Base
 	 * @source http://stackoverflow.com/q/33543003/2908724
 	 * @source https://3v4l.org/vrhsa
 	 *
-	 * @param  \DateTime $begin
-	 * @param  \DateTime $end
-	 * @return array     $workdays
+	 * @param \DateTime $begin
+	 * @param \DateTime $end
+	 * @return array
 	 */
 	public static function workDays(\DateTime $begin, \DateTime $end)
 	{

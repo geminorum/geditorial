@@ -70,6 +70,7 @@ class L10n extends Base
 
 	/**
 	 * Retrieves current locale base in `ISO-639`.
+	 * @SEE: https://www.iso.org/iso-3166-country-codes.html
 	 *
 	 * @REF: https://en.wikipedia.org/wiki/ISO_639
 	 * @REF: http://stackoverflow.com/a/16838443

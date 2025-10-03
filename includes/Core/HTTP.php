@@ -676,7 +676,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( empty( $urls ) )
+		if ( self::empty( $urls ) )
 			return [];
 
 		$ch = $results = [];
@@ -722,7 +722,7 @@ class HTTP extends Base
 	// @REF: https://stackoverflow.com/a/12629254
 	public static function getStatus( $url, $verify_ssl = TRUE )
 	{
-		if ( empty( $url ) || ! extension_loaded( 'curl' ) )
+		if ( self::empty( $url ) || ! extension_loaded( 'curl' ) )
 			return FALSE;
 
 		$ch = curl_init( $url );
@@ -745,6 +745,40 @@ class HTTP extends Base
 			curl_close( $ch );
 
 		return $status;
+	}
+
+	/**
+	 * Finds where the URL will redirected using cURL.
+	 * @source https://www.geeksforgeeks.org/php/how-to-find-where-the-url-will-redirected-using-curl/
+	 *
+	 * @param string $url
+	 * @param bool $verify_ssl
+	 * @return false|string
+	 */
+	public static function getRedirect( $url, $verify_ssl = TRUE )
+	{
+		if ( self::empty( $url ) || ! extension_loaded( 'curl' ) )
+			return FALSE;
+
+		$ch = curl_init();
+
+		curl_setopt( $ch, CURLOPT_URL, $url );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, TRUE ); // Return follow location true
+
+		if ( ! $verify_ssl ) {
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+			curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+		}
+
+		$output   = curl_exec( $ch );
+		$redirect = curl_getinfo( $ch, CURLINFO_EFFECTIVE_URL );
+
+		// `curl_close()` has no effect as of PHP 8.0.0
+		if ( PHP_VERSION_ID < 80000 )
+			curl_close( $ch );
+
+		return ( $url === $redirect ) ? FALSE : $redirect;
 	}
 
 	/**

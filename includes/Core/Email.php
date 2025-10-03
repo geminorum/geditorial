@@ -29,10 +29,10 @@ class Email extends Base
 	 * @param string $input
 	 * @return string
 	 */
-	public static function sanitize( $input )
+	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
 	{
 		if ( self::empty( $input ) )
-			return '';
+			return $default;
 
 		return sanitize_email( Text::trim( $input ) );
 	}
@@ -43,6 +43,7 @@ class Email extends Base
 	 * @param string $value
 	 * @param array $field
 	 * @param string $context
+	 * @param string $icon
 	 * @return string
 	 */
 	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
