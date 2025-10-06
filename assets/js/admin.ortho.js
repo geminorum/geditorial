@@ -18,7 +18,8 @@
   // TODO: couple with: https://github.com/validatorjs/validator.js
   const inputs = {
     number: '[data-' + module + '=\'number\']',
-    alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials
+    alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials values (UpperCase)
+    slug: '[data-' + module + '=\'slug\']', // example: warehouse partials names (LowerCase)
     identity: '[data-' + module + '=\'identity\']',
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
@@ -352,6 +353,16 @@
       });
     },
 
+    slug: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish(sanitizeDashes($el.val().trim().replace(/[\s-_]+/gi, '-'))).replace(/[^a-zA-Z0-9-]/gi, '').trim().toLowerCase());
+      });
+    },
+
     identity: function () {
       const $el = $(this);
       try {
@@ -542,7 +553,7 @@
     // currency: function () {} // @SEE: https://github.com/habibpour/rial.js
   };
 
-  // map quicktag buttons to targeted editor id
+  // Maps `quicktag` buttons to targeted editor id
   const quickButtons = {
     nbsp: '',
     virastar: '',
@@ -647,8 +658,8 @@
       }
     }
 
-    // giving back focus to title input
     try {
+      // Gives back focus to the title input.
       document.post.title.focus();
     } catch (e) {}
 
