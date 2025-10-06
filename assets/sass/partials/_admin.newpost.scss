@@ -17,20 +17,51 @@ $spacer: 1rem !default;
   }
 
   > .-main {
+    padding-top: $spacer * .5;
     padding-right: $spacer * .5;
     flex-grow: 1;
 
-    // > p {}
+    > p {
+      margin-top: 0;
+      margin-bottom: $spacer * .5;
+
+      textarea {
+        margin-bottom: $spacer * -.5;
+      }
+    }
   }
 
   > .-side {
     padding-left: $spacer * .5;
-    width: 30%;
-    max-width: 280px;
+    width: 42%;
+    max-width: 380px;
 
     // p.submit {
     //   margin-top: 1em;
     // }
+  }
+
+  .-wrap.field-wrap {
+    margin-bottom: $spacer * .5;
+
+    &.-inputgeneral {
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+
+    &.-textarea {
+      textarea {
+        display: block;
+        width: 100%;
+        max-width: 100% !important; // avoid affecting by other plugins
+        min-height: 30px; // same as type text
+        margin: 0;
+        padding: 4px 8px;
+        line-height: 1.4;
+        resize: vertical;
+      }
+    }
   }
 
   .-wrap-buttons {
