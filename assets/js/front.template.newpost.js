@@ -94,7 +94,7 @@
               // window.location.href = response.link;
               // $(window).attr('location',response.link)
               window.location.replace(response.link);
-            }, 10000);
+            }, 5000);
           } else {
             $message.html(app.strings.notarget).addClass('-error');
           }

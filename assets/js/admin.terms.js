@@ -178,6 +178,8 @@
       app.inlineURL('source', tag, event);
       app.inlineURL('embed', tag, event);
       app.inlineURL('url', tag, event);
+      // 'identity',  // TODO
+      // 'plate',     // TODO
 
       // FIXME: WTF: data attr cannot contain underscores!
       // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/

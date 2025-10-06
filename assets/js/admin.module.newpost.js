@@ -57,7 +57,7 @@
       const select = $('select.' + plugin._base + '-paired-to-post-dropdown[data-type="' + response.type + '"]', window.parent.document);
 
       select
-        .removeClass('hidden') // maybe it is the first post ever!
+        .removeClass('hidden') // MAYBE: it is the first post ever!
         .append('<option value="' + response.id + '">' + response.title.rendered + '</option>')
         .val(response.id)
         .change();
