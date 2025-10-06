@@ -1,0 +1,105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Uploader\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Uploader\n"
+"X-Domain: geditorial-uploader\n"
+
+#: Uploader.php:40
+msgctxt "Setting Title"
+msgid "Before Form"
+msgstr ""
+
+#: Uploader.php:41
+msgctxt "Setting Description"
+msgid "Message to display before contents on admin dashbaord widget."
+msgstr ""
+
+#: Uploader.php:62
+msgctxt "Widget Title"
+msgid "Large File Uploader"
+msgstr ""
+
+#: Uploader.php:77
+msgctxt "Message"
+msgid "Please select a file and click &#8220;Upload&#8221; to continue."
+msgstr ""
+
+#: Uploader.php:81
+msgctxt "Button"
+msgid "Select File"
+msgstr ""
+
+#: Uploader.php:93
+msgctxt "Button"
+msgid "Upload"
+msgstr ""
+
+#. translators: `%s`: progress percent
+#: Uploader.php:99
+#, php-format
+msgctxt "JS String"
+msgid "Uploading File - %s%"
+msgstr ""
+
+#: Uploader.php:100
+msgctxt "JS String"
+msgid "Upload Complete!"
+msgstr ""
+
+#: Uploader.php:111
+msgctxt "Widget Info"
+msgid "You can access uploaded files via Media Library."
+msgstr ""
+
+#: Uploader.php:167
+msgctxt "Message"
+msgid "The mime-type is not allowed on this site!"
+msgstr ""
+
+#: Uploader.php:172
+#: Uploader.php:230
+msgctxt "Message"
+msgid "Can not access upload folders!"
+msgstr ""
+
+#: Uploader.php:175
+msgctxt "Message"
+msgid "The upload directory is not writable!"
+msgstr ""
+
+#: Uploader.php:180
+#: Uploader.php:235
+msgctxt "Message"
+msgid "The file is already exists in upload folder!"
+msgstr ""
+
+#: Uploader.php:215
+msgctxt "Message"
+msgid "Edit Uploaded Attachment"
+msgstr ""
+
+#: Uploader.php:225
+msgctxt "Message"
+msgid "Something is wrong with data!"
+msgstr ""
+
+#: Uploader.php:238
+msgctxt "Message"
+msgid "Can not put contents into file!"
+msgstr ""
+
+#. translators: `%1$s`: link markup start, `%2$s`: link markup end
+#: Uploader.php:260
+#, php-format
+msgctxt "Message"
+msgid "Alternatively, you can use %1$sLarge File Uploader%2$s widget on the dashoard."
+msgstr ""
