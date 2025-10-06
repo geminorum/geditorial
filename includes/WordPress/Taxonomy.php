@@ -143,7 +143,7 @@ class Taxonomy extends Core\Base
 		if ( isset( $object->cap->{$capability} ) )
 			return $object->cap->{$capability};
 
-		return $object->cap->edit_posts; // WTF?!
+		return $fallback ?? $object->cap->manage_terms; // WTF?!
 	}
 
 	/**

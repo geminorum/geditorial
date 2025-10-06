@@ -613,10 +613,10 @@ class Media extends Core\Base
 	}
 
 	// @SOURCE: `bp_attachments_get_mime_type()`
-	// NOTE: checks against all mimetypes, not just only allowed by WordPress!
+	// NOTE: checks against all mime-types, not just only allowed by WordPress!
 	public static function getMimeType( $path )
 	{
-		$type = Core\File::type( $path, wp_get_mime_types() );
+		$type = Core\File::type( $path );
 		$mime = $type['type'];
 
 		if ( FALSE === $mime && is_dir( $path ) )

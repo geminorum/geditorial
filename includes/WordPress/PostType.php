@@ -65,7 +65,7 @@ class PostType extends Core\Base
 	 * Checks for post-type capability.
 	 * NOTE: caches the result
 	 *
-	 * If assigned post-type `capability_type` arg:
+	 * If assigned post-type `capability_type` argument:
 	 *
 	 * /// Meta capabilities
 	 * 	[edit_post]   => "edit_{$capability_type}"
@@ -88,11 +88,11 @@ class PostType extends Core\Base
 	 * 	[edit_published_posts]   => "edit_published_{$capability_type}s"
 	 * 	[create_posts]           => "edit_{$capability_type}s"
 	 *
-	 * @param  string|object   $posttype
-	 * @param  null|string     $capability
-	 * @param  null|int|object $user_id
-	 * @param  bool            $fallback
-	 * @return bool            $can
+	 * @param string|object $posttype
+	 * @param null|string $capability
+	 * @param null|int|object $user_id
+	 * @param bool $fallback
+	 * @return bool
 	 */
 	public static function can( $posttype, $capability = 'edit_posts', $user_id = NULL, $fallback = FALSE )
 	{
@@ -107,7 +107,7 @@ class PostType extends Core\Base
 		if ( ! $object = self::object( $posttype ) )
 			return $fallback;
 
-		// fallbacks if it was custom cap
+		// Fallbacks if it was a custom capability.
 		if ( ! isset( $object->cap->{$capability} ) && 'import_posts' === $capability )
 			$capability = static::MAP_CAP_IMPORT_POSTS;
 
@@ -154,14 +154,14 @@ class PostType extends Core\Base
 		if ( ! $object = self::object( $posttype ) )
 			return $fallback;
 
-		// fallbacks if it was custom cap
+		// Fallbacks if it was a custom capability.
 		if ( ! isset( $object->cap->{$capability} ) && 'import_posts' === $capability )
 			$capability = static::MAP_CAP_IMPORT_POSTS;
 
 		if ( isset( $object->cap->{$capability} ) )
 			return $object->cap->{$capability};
 
-		return $object->cap->edit_posts; // WTF?!
+		return $fallback ?? $object->cap->edit_posts; // WTF?!
 	}
 
 	/**
