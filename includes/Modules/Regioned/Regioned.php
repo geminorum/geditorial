@@ -34,8 +34,8 @@ class Regioned extends gEditorial\Module
 			'icon'     => 'admin-site-alt3',
 			'access'   => 'beta',
 			'keywords' => [
-				'regional',
 				'taxmodule',
+				'regional',
 			],
 		];
 	}

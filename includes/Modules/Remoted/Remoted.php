@@ -26,6 +26,7 @@ class Remoted extends gEditorial\Module
 			'frontend' => FALSE,
 			'keywords' => [
 				'upload',
+				'adminwidget',
 			],
 		];
 	}
@@ -49,7 +50,7 @@ class Remoted extends gEditorial\Module
 				],
 			],
 			'_roles' => [
-				'uploads_roles'  => [ NULL, $this->get_settings_default_roles() ],
+				'uploads_roles' => [ NULL, $this->get_settings_default_roles() ],
 			],
 		];
 	}

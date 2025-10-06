@@ -304,12 +304,12 @@ trait TemplatePostType
 
 	protected function templateposttype_newpost_form( $posttype )
 	{
-		$status   = $this->get_setting( 'post_status', 'pending' ); // `draft`
-		$target   = 'none'; // self::req( 'target', 'none' );
-		$linked   = NULL; // self::req( 'linked', FALSE );
-		$meta     = []; // self::req( 'meta', [] );
-		$object   = WordPress\PostType::object( $posttype );
-		$post     = WordPress\Post::defaultToEdit( $posttype );
+		$status = $this->get_setting( 'post_status', 'pending' );  // `draft`
+		$target = 'none';                                          // self::req( 'target', 'none' );
+		$linked = NULL;                                            // self::req( 'linked', FALSE );
+		$meta   = [];                                              // self::req( 'meta', [] );
+		$object = WordPress\PostType::object( $posttype );
+		$post   = WordPress\Post::defaultToEdit( $posttype );
 
 		if ( ! current_user_can( $object->cap->create_posts ) )
 			return Core\HTML::dieMessage( $this->get_notice_for_noaccess() );

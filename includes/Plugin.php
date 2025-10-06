@@ -239,6 +239,7 @@ class Plugin
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',
+			// 'GeoTagging',
 			'HeaderButtons',
 			'Individuals',
 			'LateChores',
@@ -488,6 +489,7 @@ class Plugin
 			'edit-tags',
 			'edit-comments',
 			'users',
+			'dashboard',
 		] ) )
 			Helper::linkStyleSheetAdmin( $screen->base );
 

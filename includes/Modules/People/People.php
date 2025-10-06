@@ -307,7 +307,7 @@ class People extends gEditorial\Module
 
 		$slug = Core\Text::formatSlug( Core\Text::nameFamilyLast( $data['name'] ) );
 
-		// avoid db queries if the same
+		// Avoids DB queries if the same
 		if ( $data['slug'] !== $slug )
 			$data['slug'] = wp_unique_term_slug( $slug, (object) $args );
 
