@@ -55,7 +55,8 @@
     "mpdf/mpdf": "^8.2.3",
     "spatie/icalendar-generator": "^2.6.1",
     "php-units-of-measure/php-units-of-measure": "^2.1",
-    "phillipsdata/vin": "^1.0"
+    "phillipsdata/vin": "^1.0",
+    "sibyx/phpgpx": "^1.3"
   },
   "config": {
     "vendor-dir": "assets/vendor",

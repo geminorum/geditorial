@@ -172,23 +172,66 @@ task('i18n:admin', function (cb) {
   });
 });
 
+function i18nModule (file) {
+  const folder = file.path.split(path.sep).pop();
+  const domain = folder.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
+  // const module = folder.toLowerCase();
+  const module = folder.split(/(?=[A-Z])/).join('_').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document_revisions`
+  return { folder, domain, module };
+}
+
+function i18nHeaders (module, tmpl) {
+  return template(
+    JSON.stringify(tmpl), {
+      variable: 'data'
+    })({
+    bugs: pkg.bugs.url,
+    folder: module.folder,
+    domain: module.domain,
+    module: module.module
+  });
+}
+
+task('i18n:module', function (done) {
+  const extra = i18nExtra(conf.i18n.modules);
+
+  if (!('name' in args)) {
+    log.error('Error: missing required name for i18n: `--name ModuleName`');
+    return done();
+  }
+
+  return src(conf.input.modules + args.name)
+    .pipe(gulpexec(function (file) {
+      const module = i18nModule(file);
+      log.info('Make pot for Module: ' + module.folder);
+      return 'wp i18n make-pot ' + file.path +
+        ' ./languages/' + module.folder + '/' + module.domain + '.pot' +
+        ' --domain=' + pkg.name + '-' + module.domain +
+        ' --package-name="' + pkg.productName + ' ' + module.folder + '" ' + // no version for fewer commits!
+        ' --headers=\'' + i18nHeaders(module, conf.i18n.modules.headers) + '\' ' + extra;
+    }), {
+      continueOnError: false,
+      pipeStdout: false
+    })
+    .pipe(gulpexec.reporter({
+      err: true,
+      stderr: true,
+      stdout: true
+    }));
+});
+
 task('i18n:modules', function () {
   const extra = i18nExtra(conf.i18n.modules);
 
-  return src(conf.input.modules)
+  return src(conf.input.modules + '*')
     .pipe(gulpexec(function (file) {
-      const folder = file.path.split(path.sep).pop();
-      const domain = folder.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
-      const module = folder.toLowerCase();
-      log.info('Make pot for Module: ' + folder);
+      const module = i18nModule(file);
+      log.info('Make pot for Module: ' + module.folder);
       return 'wp i18n make-pot ' + file.path +
-        ' ./languages/' + folder + '/' + domain + '.pot' +
-        ' --domain=' + pkg.name + '-' + domain +
-        // ' --subtract=./languages/' + pkg.name + '.pot' + // WTF: the text-domain is diffrent!
-        // ' --package-name="' + pkg.productName + ' ' + folder + ' ' + pkg.version + '" ' +
-        ' --package-name="' + pkg.productName + ' ' + folder + '" ' + // no version for fewer commits!
-        ' --headers=\'' + template(JSON.stringify(conf.i18n.modules.headers), { variable: 'data' })({ bugs: pkg.bugs.url, folder, domain, module }) + '\' ' +
-        extra;
+        ' ./languages/' + module.folder + '/' + module.domain + '.pot' +
+        ' --domain=' + pkg.name + '-' + module.domain +
+        ' --package-name="' + pkg.productName + ' ' + module.folder + '" ' + // no version for fewer commits!
+        ' --headers=\'' + i18nHeaders(module, conf.i18n.modules.headers) + '\' ' + extra;
     }), {
       continueOnError: false,
       pipeStdout: false
