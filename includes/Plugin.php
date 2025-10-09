@@ -10,7 +10,6 @@ class Plugin
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
-	private $asset_darkmode = 0;
 	private $asset_jsargs   = [];
 	private $asset_icons    = [];
 	private $editor_buttons = [];
@@ -88,7 +87,6 @@ class Plugin
 
 	public function admin_init()
 	{
-		add_action( 'doing_dark_mode', [ $this, 'doing_dark_mode' ] );
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
@@ -464,12 +462,6 @@ class Plugin
 		return $upgraded;
 	}
 
-	// @REF: https://github.com/danieltj27/Dark-Mode/wiki/Help:-Plugin-Compatibility-Guide
-	public function doing_dark_mode( $user_id )
-	{
-		$this->asset_darkmode = $user_id;
-	}
-
 	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
@@ -509,9 +501,6 @@ class Plugin
 				if ( Settings::isScreenContext( $context, $screen ) )
 					Helper::linkStyleSheetAdmin( $context );
 		}
-
-		if ( $this->asset_darkmode )
-			Helper::linkStyleSheetAdmin( 'darkmode' );
 	}
 
 	public function mce_external_languages( $languages )
