@@ -347,7 +347,7 @@ class Contest extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'contest_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'contest_posttype' );
 		$this->add_posttype_fields_supported();
 	}
 

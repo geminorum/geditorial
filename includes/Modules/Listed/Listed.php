@@ -289,7 +289,7 @@ class Listed extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
@@ -306,7 +306,7 @@ class Listed extends gEditorial\Module
 
 	public function units_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ), NULL, TRUE, 'units' );
+		$this->add_posttype_fields_for( 'units', 'primary_posttype' );
 	}
 
 	public function init()

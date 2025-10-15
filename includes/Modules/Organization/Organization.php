@@ -266,7 +266,7 @@ class Organization extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		$this->add_posttype_fields_supported();
 
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );

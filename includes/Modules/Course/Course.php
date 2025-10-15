@@ -387,8 +387,8 @@ class Course extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'course_posttype' ) );
-		$this->add_posttype_fields( $this->constant( 'lesson_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'course_posttype' );
+		$this->add_posttype_fields_for( 'meta', 'lesson_posttype' );
 	}
 
 	public function dashboard_glance_items( $items )

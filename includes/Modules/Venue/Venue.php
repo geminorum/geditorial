@@ -396,7 +396,7 @@ class Venue extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 	}
 

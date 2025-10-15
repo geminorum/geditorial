@@ -302,10 +302,10 @@ class Tube extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'primary_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 
 		if ( $this->get_setting( 'video_channels' ) )
-			$this->add_posttype_fields( $this->constant( 'secondary_posttype' ) );
+			$this->add_posttype_fields_for( 'meta', 'secondary_posttype' );
 	}
 
 	public function dashboard_glance_items( $items )

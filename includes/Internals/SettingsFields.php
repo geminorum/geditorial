@@ -199,6 +199,11 @@ trait SettingsFields
 			$this->add_posttype_fields( $posttype, $fields, $append, $type );
 	}
 
+	public function add_posttype_fields_for( $type, $constant, $fields = NULL, $append = TRUE )
+	{
+		return $this->add_posttype_fields( $this->constant( $constant ), $fields, $append, $type ?? 'meta' );
+	}
+
 	public function add_posttype_fields( $posttype, $fields = NULL, $append = TRUE, $type = 'meta' )
 	{
 		if ( is_null( $fields ) ) {
