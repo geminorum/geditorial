@@ -14,6 +14,8 @@ class Happening extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 	use Internals\Deprecated;
+	use Internals\LateChores;
+	use Internals\PostDate;
 	use Internals\PostTypeFields;
 
 	public static function module()
@@ -39,6 +41,7 @@ class Happening extends gEditorial\Module
 				'admin_ordering',
 			],
 			'_supports' => [
+				'override_dates',
 				'assign_default_term',
 				'comment_status',
 				'widget_support',
@@ -108,6 +111,18 @@ class Happening extends gEditorial\Module
 		return [
 			'meta' => [
 				$posttype => [
+					'date' => [
+						'title'       => _x( 'Event Date', 'Fields', 'geditorial-happening' ),
+						'description' => _x( 'Determines the date in which the Event is scheduled.', 'Fields', 'geditorial-happening' ),
+						'type'        => 'date',
+						'quickedit'   => TRUE,
+					],
+					'datetime' => [
+						'title'       => _x( 'Event Date-Time', 'Fields', 'geditorial-happening' ),
+						'description' => _x( 'Determines the date and time in which the Event is scheduled.', 'Fields', 'geditorial-happening' ),
+						'type'        => 'datetime',
+						'quickedit'   => TRUE,
+					],
 					'datestart' => [
 						'title'       => _x( 'Event Start', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to commence.', 'Fields', 'geditorial-happening' ),
@@ -178,6 +193,9 @@ class Happening extends gEditorial\Module
 	public function meta_init()
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( $this->constant( 'main_posttype' ) );
 	}
 
 	public function units_init()
@@ -238,6 +256,7 @@ class Happening extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->modulelinks__register_headerbuttons();
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}
@@ -250,5 +269,61 @@ class Happening extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
+	}
+
+	private function get_postdate_metakeys()
+	{
+		return [
+			Services\PostTypeFields::getPostMetaKey( 'date' ),
+			Services\PostTypeFields::getPostMetaKey( 'datetime' ),
+			Services\PostTypeFields::getPostMetaKey( 'datestart' ),
+			Services\PostTypeFields::getPostMetaKey( 'dateend' ),
+		];
+	}
+
+	protected function latechores_post_aftercare( $post )
+	{
+		return $this->postdate__get_post_data_for_latechores(
+			$post,
+			$this->get_postdate_metakeys()
+		);
+	}
+
+	public function tools_settings( $sub )
+	{
+		$this->check_settings( $sub, 'tools' );
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Happening Tools', 'Header', 'geditorial-happening' ) );
+
+		$available = FALSE;
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$available = $this->postdate__render_card_override_dates(
+				$uri,
+				$sub,
+				$this->constant( 'main_posttype' ),
+				_x( 'Event Date from Meta-data', 'Card', 'geditorial-happening' )
+			);
+
+		if ( ! $available )
+			gEditorial\Info::renderNoToolsAvailable();
+
+		echo '</div>';
+	}
+
+	protected function render_tools_html_before( $uri, $sub )
+	{
+		if ( FALSE === $this->postdate__render_before_override_dates(
+			$this->constant( 'main_posttype' ),
+			$this->get_postdate_metakeys(),
+			$uri,
+			$sub,
+			'tools'
+		) )
+			return FALSE;
 	}
 }
