@@ -127,6 +127,20 @@ class Today extends gEditorial\Module
 		return $strings;
 	}
 
+	public function get_global_fields()
+	{
+		$posttype = $this->constant( 'main_posttype' );
+
+		return [
+			'meta' => [
+				$posttype => [
+					'website_url' => [ 'type' => 'link' ],
+					'wiki_url'    => [ 'type' => 'link' ],
+				],
+			],
+		];
+	}
+
 	protected function get_module_templates()
 	{
 		return [
@@ -158,6 +172,11 @@ class Today extends gEditorial\Module
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
+	}
+
+	public function meta_init()
+	{
+		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 	}
 
 	public function importer_init()
