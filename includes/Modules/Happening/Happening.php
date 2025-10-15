@@ -85,9 +85,6 @@ class Happening extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
 		return $strings;
 	}
 
@@ -106,20 +103,24 @@ class Happening extends gEditorial\Module
 
 	public function get_global_fields()
 	{
+		$posttype = $this->constant( 'main_posttype' );
+
 		return [
 			'meta' => [
-				$this->constant( 'main_posttype' ) => [
+				$posttype => [
 					'datestart' => [
 						'title'       => _x( 'Event Start', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to commence.', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'calendar',
 						'type'        => 'datetime',
+						'quickedit'   => TRUE,
 					],
 					'dateend' => [
 						'title'       => _x( 'Event End', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to conclude.', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'calendar',
 						'type'        => 'datetime',
+						'quickedit'   => TRUE,
 					],
 					// FIXME: rename
 					'event_allday' => [
@@ -127,6 +128,7 @@ class Happening extends gEditorial\Module
 						'description' => _x( 'Determines that is an all-day event.', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'calendar-alt',
 						'type'        => 'checkbox',
+						'quickedit'   => TRUE,
 					],
 					// FIXME: rename
 					'event_repeat' => [
@@ -134,6 +136,7 @@ class Happening extends gEditorial\Module
 						'description' => _x( 'Event Repeat', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'update',
 						'type'        => 'select', // FIXME: support selects!
+						'quickedit'   => TRUE,
 						'values'      => [
 							'0'    => _x( 'Never', 'Fields', 'geditorial-happening' ),
 							'10'   => _x( 'Weekly', 'Fields', 'geditorial-happening' ),
@@ -147,15 +150,19 @@ class Happening extends gEditorial\Module
 						'icon'        => 'thumbs-down',
 						'type'        => 'datetime',
 					],
-				],
-			]
-		];
-	}
 
-	// needed for fields options
-	public function posttypes( $posttypes = NULL )
-	{
-		return [ $this->constant( 'main_posttype' ) ];
+					'website_url' => [ 'type' => 'link' ],
+					'wiki_url'    => [ 'type' => 'link' ],
+				],
+			],
+			'units' => [
+				$posttype => [
+					'total_days'   => [ 'type' => 'day' ,   'data_unit' => 'day'    ],
+					'total_hours'  => [ 'type' => 'hour',   'data_unit' => 'hour'   ],
+					'total_people' => [ 'type' => 'person', 'data_unit' => 'person' ],
+				],
+			],
+		];
 	}
 
 	public function after_setup_theme()
@@ -170,7 +177,12 @@ class Happening extends gEditorial\Module
 
 	public function meta_init()
 	{
-		$this->add_posttype_fields( $this->constant( 'main_posttype' ) );
+		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
+	}
+
+	public function units_init()
+	{
+		$this->add_posttype_fields_for( 'units', 'main_posttype' );
 	}
 
 	public function init()

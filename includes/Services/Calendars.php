@@ -46,8 +46,8 @@ class Calendars extends gEditorial\Service
 
 	/**
 	 * Retrieves the list of supported calendars.
-	 * @SEE `Almanac` Module
-	 * @OLD: `Datetime::getDefualtCalendars()`
+	 * @see `Almanac` Module
+	 * @old: `Datetime::getDefualtCalendars()`
 	 * @source https://unicode-org.github.io/icu/userguide/datetime/calendar/
 	 *
 	 * @param bool $filtered
@@ -72,12 +72,12 @@ class Calendars extends gEditorial\Service
 	}
 
 	/**
-	 * Sanitizes given calendar.
-	 * // OLD: `Datetime::sanitizeCalendar()`
+	 * Sanitizes given calendar type string.
+	 * @old: `Datetime::sanitizeCalendar()`
 	 *
-	 * @param  string $calendar
-	 * @param  string $default
-	 * @return string $sanitized
+	 * @param string $calendar
+	 * @param string $default
+	 * @return string
 	 */
 	public static function sanitize( $calendar, $default = 'gregorian' )
 	{

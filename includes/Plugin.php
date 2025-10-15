@@ -485,6 +485,9 @@ class Plugin
 		] ) )
 			Helper::linkStyleSheetAdmin( $screen->base );
 
+		else if ( Core\Text::starts( $screen->base, 'dashboard_page' ) )
+			Helper::linkStyleSheetAdmin( 'dashboard' );
+
 		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
 			Helper::linkStyleSheetAdmin( 'woocommerce' );
 

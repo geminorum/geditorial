@@ -108,7 +108,7 @@ trait CoreTaxonomies
 			'terms_related'   => NULL,
 			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
 			'meta_tagline'    => NULL,     // FALSE, meta-key or `TRUE` for default `tagline` // TODO
-			'suitable_metas'  => NULL,     // list of meta suggested for this taxonomy: `field` => `title`/NULL // TODO
+			'suitable_metas'  => NULL,     // list of meta suggested for this taxonomy: `field` => `title` / NULL // TODO
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';

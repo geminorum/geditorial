@@ -33,6 +33,7 @@ class Today extends gEditorial\Module
 				'day',
 				'calendar',
 				'history',
+				'cptmodule',
 			],
 		];
 	}
@@ -191,7 +192,8 @@ class Today extends gEditorial\Module
 		parent::init();
 
 		$this->register_posttype( 'main_posttype', [], [
-			'custom_icon' => $this->module->icon,
+			'slug_disabled' => TRUE,
+			'date_disabled' => TRUE,
 		] );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
@@ -312,6 +314,7 @@ class Today extends gEditorial\Module
 
 				$this->action( 'edit_form_after_editor' );
 
+				// TODO: migrate tor `_hook_term_supportedbox()`
 				add_meta_box( $this->classs( 'supportedbox' ),
 					$this->get_meta_box_title( 'main_posttype' ),
 					[ $this, 'render_supportedbox_metabox' ],
@@ -340,6 +343,7 @@ class Today extends gEditorial\Module
 
 				$this->_save_meta_supported( $screen->post_type );
 
+				// TODO: migrate tor `_hook_term_supportedbox()`
 				add_meta_box( $this->classs( 'supportedbox' ),
 					$this->get_meta_box_title(),
 					[ $this, 'render_supportedbox_metabox' ],
@@ -749,12 +753,10 @@ class Today extends gEditorial\Module
 
 	public function the_day_content( $content = '' )
 	{
-		// global $post;
-
 		$posttypes = $this->posttypes();
 
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-			'type'    => get_query_var( 'main_posttype', $posttypes ),
+			'type'    => get_query_var( 'day_posttype', $posttypes ),
 			'the_day' => $this->the_day,
 		], $this->get_the_day_constants() );
 
@@ -769,14 +771,6 @@ class Today extends gEditorial\Module
 			}
 		}
 
-		// TODO: next/prev day buttons
-		// TODO: next/perv month button
-
-		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
-
-		if ( $buttons )
-			echo $buttons.'<br />';
-
 		if ( count( $posts ) ) {
 
 			echo '<ul class="-items">';
@@ -789,6 +783,9 @@ class Today extends gEditorial\Module
 			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
+		// TODO: font-page only: list this week events
+		// TODO: font-page only: list this month events
+
 		if ( ! is_admin() ) {
 
 			$hiddens = [];
@@ -796,7 +793,19 @@ class Today extends gEditorial\Module
 			foreach ( $posttypes as $posttype )
 				$hiddens['post_type[]'] = $posttype;
 
-			echo $this->get_search_form( $hiddens );
+			echo $this->wrap( $this->get_search_form( $hiddens ), '-search-form' );
+		}
+
+		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+
+		if ( $buttons ) {
+
+			// TODO: next/prev day buttons
+			// TODO: next/perv month button
+
+			echo $this->wrap_open_buttons();
+				echo $buttons;
+			echo '</div>';
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
@@ -807,7 +816,7 @@ class Today extends gEditorial\Module
 		return ModuleHelper::titleTheDay( $this->the_day );
 	}
 
-	protected function get_the_day_query_vars()
+	private function _get_the_day_query_vars()
 	{
 		return [
 			'cal'   => 'day_cal',
@@ -820,7 +829,7 @@ class Today extends gEditorial\Module
 
 	public function query_vars( $public_query_vars )
 	{
-		return array_merge( $this->get_the_day_query_vars(), $public_query_vars );
+		return array_merge( $this->_get_the_day_query_vars(), $public_query_vars );
 	}
 
 	// FIXME: ADOPT THIS
@@ -871,18 +880,16 @@ class Today extends gEditorial\Module
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
 	{
-		if ( $this->is_posttype( 'main_posttype', $post ) ) {
+		if ( ! $this->is_posttype( 'main_posttype', $post ) )
+			return $post_link;
 
-			$the_day = ModuleHelper::getTheDayFromPost(
-				$post,
-				$this->default_calendar(),
-				$this->get_the_day_constants()
-			);
+		$the_day = ModuleHelper::getTheDayFromPost(
+			$post,
+			$this->default_calendar(),
+			$this->get_the_day_constants()
+		);
 
-			return ModuleHelper::getTheDayLink( $the_day );
-		}
-
-		return $post_link;
+		return ModuleHelper::getTheDayLink( $the_day );
 	}
 
 	// `/cal/month/day/year/posttype`
@@ -894,36 +901,36 @@ class Today extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'calendar_list', [] ) as $calendar ) {
 
-			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$posttype
+			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]'
 				.'&day_posttype=$matches[4]';
 
-			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
+			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]';
 
-			$list[$calendar.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]';
 
-			$list[$calendar.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+			$list['^'.$calendar.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]';
 
-			$list[$calendar.'/?$'] = 'index.php?post_type='.$posttype
+			$list['^'.$calendar.'/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar;
 		}
 
 		return array_merge( $list, $rules );
 	}
 
-	private function build_meta_query( $constants, $relation = 'OR' )
+	private function _build_meta_query( $constants, $relation = 'OR' )
 	{
 		$query = [ 'meta_query' => [ 'relation' => $relation ] ];
 
@@ -944,7 +951,7 @@ class Today extends gEditorial\Module
 	{
 		$constants = $this->get_the_day_constants();
 		$list      = $this->list_posttypes();
-		$query     = $this->build_meta_query( $constants );
+		$query     = $this->_build_meta_query( $constants );
 
 		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
@@ -993,7 +1000,7 @@ class Today extends gEditorial\Module
 
 					$default   = $this->default_calendar();
 					$constants = $this->get_the_day_constants();
-					$args      = $this->build_meta_query( $constants );
+					$args      = $this->_build_meta_query( $constants );
 
 					$args['posts_per_page']   = -1;
 					$args['post_type']        = self::req( 'posttype', $this->posttypes() );
@@ -1069,7 +1076,7 @@ class Today extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	private function get_importer_fields( $posttype = NULL )
+	private function _get_importer_fields( $posttype = NULL )
 	{
 		return [
 			'today__cal'   => _x( 'Today: Calendar', 'Import Field', 'geditorial-today' ),
@@ -1085,7 +1092,7 @@ class Today extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
 
-		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
+		return array_merge( $fields, $this->_get_importer_fields( $posttype ) );
 	}
 
 	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
@@ -1093,16 +1100,16 @@ class Today extends gEditorial\Module
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
 
-		if ( ! in_array( $field, array_keys( $this->get_importer_fields( $posttype ) ) ) )
+		if ( ! in_array( $field, array_keys( $this->_get_importer_fields( $posttype ) ) ) )
 			return $value;
 
 		switch ( $field ) {
 
-			case 'today__cal': return Services\Calendars::sanitize( trim( $value ), $this->default_calendar() );
-			case 'today__year':
+			case 'today__cal'  : return Services\Calendars::sanitize( trim( $value ), $this->default_calendar() );
+			case 'today__year' :
 			case 'today__month':
-			case 'today__day': return Core\Number::translate( trim( $value ) );
-			case 'today__full': return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
+			case 'today__day'  : return Core\Number::translate( trim( $value ) );
+			case 'today__full' : return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
 		}
 
 		return $value;
@@ -1115,7 +1122,7 @@ class Today extends gEditorial\Module
 			return;
 
 		$default  = $this->default_calendar();
-		$fields   = array_keys( $this->get_importer_fields( $post->post_type ) );
+		$fields   = array_keys( $this->_get_importer_fields( $post->post_type ) );
 		$postmeta = [ 'cal' => $default ]; // `set_today_meta()` needs cal
 
 		foreach ( $atts['map'] as $offset => $field ) {

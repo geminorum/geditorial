@@ -113,7 +113,7 @@ trait CoreAdmin
 			}, $priority, 3 );
 	}
 
-	// NOTE: on target posttype screen only
+	// NOTE: on target post-type screen only
 	protected function coreadmin__hook_taxonomy_display_states( $constants, $setting = 'admin_displaystates', $default_setting = FALSE, $priority = 20 )
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )

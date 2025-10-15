@@ -39,9 +39,6 @@ class Units extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'fields_option'    => 'fields_option',
-			'_general' => [
-				// 'insert_content_enabled', // TODO
-			],
 		];
 	}
 
@@ -101,6 +98,7 @@ class Units extends gEditorial\Module
 				'book_cover' => _x( 'The Book Cover Size', 'Descriptions', 'geditorial-units' ),
 				'paper_size' => _x( 'The Standard Paper Size', 'Descriptions', 'geditorial-units' ),
 			],
+
 			'values' => [
 				'european_shoe'       => ModuleInfo::getEuropeanShoeSizes(),
 				'international_shirt' => ModuleInfo::getInternationalShirtSizes(),
@@ -108,6 +106,7 @@ class Units extends gEditorial\Module
 				'bookcover'           => ModuleInfo::getBookCovers(),
 				'papersize'           => ModuleInfo::getPaperSizes(),
 			],
+
 			'none' => [
 				'european_shoe'       => _x( '&ndash; Select Size &ndash;', 'None', 'geditorial-units' ),
 				'international_shirt' => _x( '&ndash; Select Size &ndash;', 'None', 'geditorial-units' ),
@@ -128,7 +127,7 @@ class Units extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbox_title'  => _x( 'Measurements', 'MetaBox: `mainbox_title`', 'geditorial-units' ),
 			'mainbox_action' => _x( 'Configure', 'MetaBox: `mainbox_action`', 'geditorial-units' ),
 		];
@@ -206,7 +205,7 @@ class Units extends gEditorial\Module
 
 			$fields = $this->get_posttype_fields( $screen->post_type );
 
-			// bail if no fields enabled for this posttype
+			// Bail if no fields enabled for this post-type
 			if ( ! count( $fields ) )
 				return;
 
@@ -289,8 +288,11 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: `%s`: shoe size placeholder */
-					return sprintf( _x( 'Size %s Shoe', 'Display', 'geditorial-units' ), $meta );
+					return sprintf(
+						/* translators: `%s`: shoe size placeholder */
+						_x( 'Size %s Shoe', 'Display', 'geditorial-units' ),
+						$meta
+					);
 
 				case 'international_shirt':
 
@@ -298,8 +300,11 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: `%s`: shirt size placeholder */
-					return sprintf( _x( 'Size %s Shirt', 'Display', 'geditorial-units' ), $meta );
+					return sprintf(
+						/* translators: `%s`: shirt size placeholder */
+						_x( 'Size %s Shirt', 'Display', 'geditorial-units' ),
+						$meta
+					);
 
 				case 'international_pants':
 
@@ -307,8 +312,11 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
 
-					/* translators: `%s`: pants size placeholder */
-					return sprintf( _x( 'Size %s Pants', 'Display', 'geditorial-units' ), $meta );
+					return sprintf(
+						/* translators: `%s`: pants size placeholder */
+						_x( 'Size %s Pants', 'Display', 'geditorial-units' ),
+						$meta
+					);
 
 				case 'bookcover':
 
@@ -316,8 +324,11 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: ( $raw ?: $value );
 
-					/* translators: `%s`: book cover placeholder */
-					return sprintf( _x( '%s Book-Cover', 'Display', 'geditorial-units' ), $meta );
+					return sprintf(
+						/* translators: `%s`: book cover placeholder */
+						_x( '%s Book-Cover', 'Display', 'geditorial-units' ),
+						$meta
+					);
 
 				case 'papersize':
 
@@ -325,8 +336,11 @@ class Units extends gEditorial\Module
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: ( $raw ?: $value );
 
-					/* translators: `%s`: paper size cover placeholder */
-					return sprintf( _x( 'Size %s Paper', 'Display', 'geditorial-units' ), $meta );
+					return sprintf(
+						/* translators: `%s`: paper size cover placeholder */
+						_x( 'Size %s Paper', 'Display', 'geditorial-units' ),
+						$meta
+					);
 			}
 		}
 

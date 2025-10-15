@@ -56,6 +56,7 @@ class Widgets extends gEditorial\Module
 							'description' => _x( 'Action hook where the widget appears on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
 							'dir'         => 'ltr',
+							'ortho'       => 'hook',
 						],
 						[
 							'field'       => 'priority',

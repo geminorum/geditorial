@@ -40,6 +40,7 @@ class Grouping extends gEditorial\Module
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
 							'dir'         => 'ltr',
+							'ortho'       => 'hook',
 						],
 						[
 							'field'       => 'rewrite',
@@ -48,6 +49,7 @@ class Grouping extends gEditorial\Module
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
 							'dir'         => 'ltr',
+							'ortho'       => 'slug',
 						],
 						[
 							'field'       => 'singular',

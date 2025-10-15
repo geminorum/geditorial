@@ -54,8 +54,12 @@ class Entry extends gEditorial\Module
 				'adminbar_summary',
 				[
 					'field'       => 'autolink_terms',
-					'title'       => _x( 'Auto-link Sections', 'Settings', 'geditorial-entry' ),
-					'description' => _x( 'Tries to linkify the section titles in the entry content.', 'Settings', 'geditorial-entry' ),
+					'title'       => _x( 'Auto-link Terms', 'Settings', 'geditorial-entry' ),
+					'description' => sprintf(
+						/* translators: `%s`: category taxonomy name */
+						_x( 'Tries to linkify the string of <strong>%s</strong> in the entry content.', 'Settings', 'geditorial-entry' ),
+						$this->get_taxonomy_label( 'category_taxonomy' )
+					),
 				],
 				'before_content',
 				'after_content',

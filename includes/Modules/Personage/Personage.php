@@ -186,6 +186,8 @@ class Personage extends gEditorial\Module
 				'hushed'      => _x( 'Hushed', 'Default Term: `Status`', 'geditorial-personage' ),
 				'recruit'     => _x( 'Recruit', 'Default Term: `Status`', 'geditorial-personage' ),
 				'concurrency' => _x( 'Concurrency', 'Default Term: `Status`', 'geditorial-personage' ),
+				'transferred' => _x( 'Transferred', 'Default Term: `Status`', 'geditorial-personage' ),
+				'retired'     => _x( 'Retired', 'Default Term: `Status`', 'geditorial-personage' ),
 			],
 		];
 	}

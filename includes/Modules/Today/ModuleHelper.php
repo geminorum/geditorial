@@ -206,8 +206,8 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getTheDayLink( $the_day, $context = 'full' )
 	{
 		switch ( $context ) {
-			case 'cal': unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
-			case 'year': unset( $the_day['month'], $the_day['day'] ); break;
+			case 'cal'  : unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
+			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
 			case 'month': unset( $the_day['day'] ); break;
 		}
 
@@ -535,6 +535,6 @@ class ModuleHelper extends gEditorial\Helper
 			}
 		}
 
-		return Core\HTML::wrap( $html, 'field-wrap -buttons' );
+		return $html;
 	}
 }

@@ -356,7 +356,7 @@ class Lingo extends gEditorial\Module
 	public function terms_disable_field_edit( $disabled, $field, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? current_user_can( 'manage_options' ) // restrict to administrators only!
+			? ( ! current_user_can( 'manage_options' ) ) // restrict to administrators only!
 			: $disabled;
 	}
 
