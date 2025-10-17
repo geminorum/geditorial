@@ -219,6 +219,13 @@ class TermHierarchy extends gEditorial\Service
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return WordPress\Term::get( reset( $terms ) );
 
+		if ( $object->hierarchical ) {
+
+			// prioritize the child terms
+			if ( $parents = array_filter( Core\Arraay::pluck( $terms, 'parent', 'term_id' ) ) )
+				$terms = array_diff( array_keys( $parents ), array_unique( array_values( $parents ) ) );
+		}
+
 		if ( empty( $object->{static::SINGLE_TERM_SELECT} ) )
 			return WordPress\Term::get( reset( $terms ) );
 
