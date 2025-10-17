@@ -188,8 +188,8 @@ class PostTypeFields extends gEditorial\Service
 	 *
 	 * @param string $field_key
 	 * @param array $args
-	 * @param string|null $posttype
-	 * @return string|array $icon
+	 * @param string $posttype
+	 * @return string|array
 	 */
 	public static function getFieldIcon( $field_key, $args = [], $posttype = NULL )
 	{
@@ -197,6 +197,7 @@ class PostTypeFields extends gEditorial\Service
 			return $args['icon'];
 
 		switch ( $field_key ) {
+
 			case 'over_title' : return 'arrow-up-alt2';
 			case 'sub_title'  : return 'arrow-down-alt2';
 			case 'alt_title'  : return 'admin-site-alt';
@@ -212,7 +213,9 @@ class PostTypeFields extends gEditorial\Service
 		}
 
 		if ( ! empty( $args['type'] ) ) {
+
 			switch ( $args['type'] ) {
+
 				case 'email'     : return 'email';
 				case 'phone'     : return 'phone';
 				case 'mobile'    : return 'smartphone';
@@ -243,7 +246,6 @@ class PostTypeFields extends gEditorial\Service
 				case 'post'        : return 'admin-post';
 				case 'attachment'  : return 'admin-media';
 				case 'parent_post' : return 'admin-page';
-
 			}
 		}
 

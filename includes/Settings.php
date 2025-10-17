@@ -418,8 +418,8 @@ class Settings extends WordPress\Main
 			// 'relation'        ,   // Editorial: Byline
 			'user_group'      ,   // Editorial: Users
 			'user_type'       ,   // Editorial: Users
-			'event_calendar'  ,   // Editorial: Happening
-			'event_type'      ,   // Editorial: Happening
+			// 'event_calendar'  ,   // Editorial: Happening
+			// 'event_type'      ,   // Editorial: Happening
 		];
 
 		if ( class_exists( 'bbPress' ) )

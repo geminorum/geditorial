@@ -116,7 +116,7 @@ class TermHierarchy extends gEditorial\Service
 						continue;
 
 					if ( $taxonomies[$taxonomy]->hierarchical )
-						$single = \intval( $single );
+						$single = intval( $single );
 
 					foreach ( $updated as $object_id )
 						wp_set_object_terms( (int) $object_id, $single, $taxonomy, FALSE );
@@ -187,7 +187,7 @@ class TermHierarchy extends gEditorial\Service
 	 * Checks whether the taxonomy is `SingleTerm`
 	 *
 	 * @param string|object $taxonomy
-	 * @return bool $is
+	 * @return bool
 	 */
 	public static function isSingleTerm( $taxonomy )
 	{
@@ -203,12 +203,12 @@ class TermHierarchy extends gEditorial\Service
 	 * @param string|object $taxonomy
 	 * @param array $terms
 	 * @param bool|object $post
-	 * @return false|object $term
+	 * @return false|object
 	 */
 	public static function getSingleSelectTerm( $taxonomy, $terms, $post = FALSE )
 	{
 		// if ( is_null( $terms ) )
-		// 	return NULL; // maybe in the process of clearing!
+		// 	return NULL; // Maybe in the process of clearing!
 
 		if ( ! $taxonomy || empty( $terms ) )
 			return FALSE;
@@ -221,8 +221,8 @@ class TermHierarchy extends gEditorial\Service
 
 		if ( $object->hierarchical ) {
 
-			// prioritize the child terms
-			if ( $parents = array_filter( Core\Arraay::pluck( $terms, 'parent', 'term_id' ) ) )
+			// Prioritizes the child terms by dropping the parents
+			if ( $parents = WordPress\Taxonomy::getParentsList( $terms ) )
 				$terms = array_diff( array_keys( $parents ), array_unique( array_values( $parents ) ) );
 		}
 
@@ -251,12 +251,12 @@ class TermHierarchy extends gEditorial\Service
 	 *
 	 * @source https://gist.github.com/tripflex/65dbffc4342cf7077e49d641462b46ad
 	 *
-	 * @param int    $object_id  Object ID.
-	 * @param array  $terms      An array of object terms.
-	 * @param array  $tt_ids     An array of term taxonomy IDs.
-	 * @param string $taxonomy   Taxonomy slug.
-	 * @param bool   $append     Whether to append new terms to the old terms.
-	 * @param array  $old_tt_ids Old array of term taxonomy IDs.
+	 * @param int $object_id
+	 * @param array $terms
+	 * @param array $tt_ids
+	 * @param string $taxonomy
+	 * @param bool $append
+	 * @param array $old_tt_ids
 	 */
 	public static function set_object_terms_auto_set_parent_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
 	{
@@ -283,12 +283,12 @@ class TermHierarchy extends gEditorial\Service
 	 *
 	 * @source https://gist.github.com/tripflex/33025718246b4ffb0050058dd8a69fe3
 	 *
-	 * @param int $object_id Object ID.
-	 * @param array $terms An array of object terms.
-	 * @param array $tt_ids An array of term taxonomy IDs.
-	 * @param string $taxonomy Taxonomy slug.
-	 * @param bool $append Whether to append new terms to the old terms.
-	 * @param array $old_tt_ids Old array of term taxonomy IDs.
+	 * @param int $object_id
+	 * @param array $terms
+	 * @param array $tt_ids
+	 * @param string $taxonomy
+	 * @param bool $append
+	 * @param array $old_tt_ids
 	 */
 	public static function set_object_terms_auto_set_child_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
 	{
@@ -315,7 +315,7 @@ class TermHierarchy extends gEditorial\Service
 	 *
 	 * @param array $defaults
 	 * @param array $taxonomies
-	 * @return array $defaults
+	 * @return array
 	 */
 	public static function get_terms_defaults( $defaults, $taxonomies )
 	{

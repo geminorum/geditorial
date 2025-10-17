@@ -13,7 +13,6 @@ class Happening extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
-	use Internals\Deprecated;
 	use Internals\LateChores;
 	use Internals\PostDate;
 	use Internals\PostTypeFields;
@@ -39,6 +38,7 @@ class Happening extends gEditorial\Module
 		return [
 			'_editlist' => [
 				'admin_ordering',
+				'admin_bulkactions',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
 			],
 			'_supports' => [
@@ -100,6 +100,7 @@ class Happening extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
+			// TODO: move to `ModuleInfo`
 			'type_taxonomy' => [
 				'holiday' => _x( 'Holiday', 'Default Term', 'geditorial-happening' ),
 				'birth'   => _x( 'Birth', 'Default Term', 'geditorial-happening' ),
@@ -125,7 +126,7 @@ class Happening extends gEditorial\Module
 						'quickedit'   => TRUE,
 					],
 					'datetime' => [
-						'title'       => _x( 'Event Date-Time', 'Fields', 'geditorial-happening' ),
+						'title'       => _x( 'Date-Time', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled.', 'Fields', 'geditorial-happening' ),
 						'type'        => 'datetime',
 						'quickedit'   => TRUE,
@@ -133,14 +134,12 @@ class Happening extends gEditorial\Module
 					'datestart' => [
 						'title'       => _x( 'Event Start', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to commence.', 'Fields', 'geditorial-happening' ),
-						'icon'        => 'calendar',
 						'type'        => 'datetime',
 						'quickedit'   => TRUE,
 					],
 					'dateend' => [
 						'title'       => _x( 'Event End', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date and time in which the Event is scheduled to conclude.', 'Fields', 'geditorial-happening' ),
-						'icon'        => 'calendar',
 						'type'        => 'datetime',
 						'quickedit'   => TRUE,
 					],
@@ -150,7 +149,7 @@ class Happening extends gEditorial\Module
 						'description' => _x( 'Determines that is an all-day event.', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'calendar-alt',
 						'type'        => 'checkbox',
-						'quickedit'   => TRUE,
+						// 'quickedit'   => TRUE, // FIXME: type `checkbox` not supported on quick-edit yet!
 					],
 					// FIXME: rename
 					'event_repeat' => [
@@ -158,7 +157,7 @@ class Happening extends gEditorial\Module
 						'description' => _x( 'Event Repeat', 'Fields', 'geditorial-happening' ),
 						'icon'        => 'update',
 						'type'        => 'select', // FIXME: support selects!
-						'quickedit'   => TRUE,
+						// 'quickedit'   => TRUE, // FIXME: type `select` not supported on quick-edit yet!
 						'values'      => [
 							'0'    => _x( 'Never', 'Fields', 'geditorial-happening' ),
 							'10'   => _x( 'Weekly', 'Fields', 'geditorial-happening' ),
@@ -230,8 +229,10 @@ class Happening extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
-			'custom_icon'  => 'screenoptions',
-			'auto_parents' => TRUE,
+			'custom_icon'     => 'screenoptions',
+			'auto_parents'    => TRUE,
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'calendar_taxonomy', [
@@ -277,6 +278,12 @@ class Happening extends gEditorial\Module
 				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type, 'date' );
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
+				$this->corerestrictposts__hook_screen_taxonomies( [
+					'calendar_taxonomy',
+					'category_taxonomy',
+					'type_taxonomy',
+					'status_taxonomy',
+				] );
 			}
 		}
 	}
