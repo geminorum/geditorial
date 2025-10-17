@@ -39,6 +39,7 @@ class Happening extends gEditorial\Module
 		return [
 			'_editlist' => [
 				'admin_ordering',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
 			],
 			'_supports' => [
 				'override_dates',
@@ -62,6 +63,7 @@ class Happening extends gEditorial\Module
 			'category_taxonomy' => 'event_category',
 			'type_taxonomy'     => 'event_type',
 			'calendar_taxonomy' => 'event_calendar',
+			'status_taxonomy'   => 'event_status',
 		];
 	}
 
@@ -73,6 +75,7 @@ class Happening extends gEditorial\Module
 				'category_taxonomy' => _n_noop( 'Event Category', 'Event Categories', 'geditorial-happening' ),
 				'type_taxonomy'     => _n_noop( 'Event Type', 'Event Types', 'geditorial-happening' ),
 				'calendar_taxonomy' => _n_noop( 'Event Calendar', 'Event Calendars', 'geditorial-happening' ),
+				'status_taxonomy'   => _n_noop( 'Event Status', 'Event Statuses', 'geditorial-happening' ),
 			],
 			'labels' => [
 				'category_taxonomy' => [
@@ -84,6 +87,9 @@ class Happening extends gEditorial\Module
 				],
 				'calendar_taxonomy' => [
 					'menu_name' => _x( 'Calendars', 'Menu Title', 'geditorial-happening' ),
+				],
+				'status_taxonomy' => [
+					'menu_name' => _x( 'Statuses', 'Label: Menu Name', 'geditorial-happening' ),
 				],
 			],
 		];
@@ -101,6 +107,7 @@ class Happening extends gEditorial\Module
 				'start'   => _x( 'Start', 'Default Term', 'geditorial-happening' ),
 				'end'     => _x( 'End', 'Default Term', 'geditorial-happening' ),
 			],
+			'status_taxonomy' => ModuleInfo::getStatuses(),
 		];
 	}
 
@@ -234,10 +241,21 @@ class Happening extends gEditorial\Module
 			'custom_icon' => 'calendar',
 		] );
 
+		$this->register_taxonomy( 'status_taxonomy', [
+			'public'             => FALSE,
+			'hierarchical'       => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
+		], 'primary_posttype', [
+			'custom_icon'     => 'post-status',
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
+		] );
+
 		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => TRUE,
 		], [
 			'category_taxonomy' => TRUE,
+			'status_taxonomy'   => TRUE,
 		] );
 	}
 
