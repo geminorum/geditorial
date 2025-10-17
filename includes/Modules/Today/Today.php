@@ -579,16 +579,17 @@ class Today extends gEditorial\Module
 				'all'     => TRUE,
 			], $constants );
 
-			if ( $buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day ) )
-				echo $buttons.'<br />';
-
 			Core\HTML::tableList( [
 				'_cb'   => 'ID',
 				'title' => Tablelist::columnPostTitle(),
 				'terms' => Tablelist::columnPostTerms(),
 				'type'  => Tablelist::columnPostType(),
 			], $posts, [
-				'empty' => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
+				'empty'  => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
+				'before' => static function ( $columns, $data, $args ) use ( $posttypes, $the_day ) {
+					if ( $buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day ) )
+						echo Core\HTML::wrap( implode( '&nbsp;&nbsp;', $buttons ), '-wrap-buttons' );
+				},
 			] );
 
 		echo '</div>';
@@ -804,8 +805,8 @@ class Today extends gEditorial\Module
 			// TODO: next/perv month button
 
 			echo $this->wrap_open_buttons();
-				echo $buttons;
-			echo '</div>';
+				echo implode( '&nbsp;&nbsp;', $buttons );
+			echo '</p>';
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );

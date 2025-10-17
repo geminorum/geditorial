@@ -473,7 +473,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! is_user_logged_in() )
 			return;
 
-		$html = '';
+		$buttons = [];
 
 		unset( $the_day['year'] );
 
@@ -489,12 +489,12 @@ class ModuleHelper extends gEditorial\Helper
 			if ( is_admin() )
 				$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
-			$html.= Core\HTML::button( $title,
+			$buttons[] = Core\HTML::button( $title,
 				Core\WordPress::getPostNewLink( $object->name, $the_day ),
 				/* translators: `%s`: singular name */
 				sprintf( _x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ), $object->labels->singular_name ),
 				is_admin()
-			).' ';
+			);
 		}
 
 		if ( FALSE !== $the_post ) {
@@ -510,7 +510,7 @@ class ModuleHelper extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
-					$html.= Core\HTML::button( $title,
+					$buttons[] = Core\HTML::button( $title,
 						Core\WordPress::getPostNewLink( $object->name, $the_day ),
 						_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
@@ -526,7 +526,7 @@ class ModuleHelper extends gEditorial\Helper
 					if ( is_admin() )
 						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
-					$html.= Core\HTML::button( $title,
+					$buttons[] = Core\HTML::button( $title,
 						Core\WordPress::getPostEditLink( $the_post ),
 						_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
@@ -535,6 +535,6 @@ class ModuleHelper extends gEditorial\Helper
 			}
 		}
 
-		return $html;
+		return $buttons;
 	}
 }
