@@ -7,27 +7,6 @@ use geminorum\gEditorial\WordPress\PostType;
 class WordPress extends Base
 {
 
-	// @REF: https://wordpress.org/support/topic/how-to-change-plugins-load-order/
-	// @USAGE: `add_action( 'activated_plugin', function () {} );`
-	public static function pluginFirst( $plugin )
-	{
-		if ( empty( $plugin ) )
-			return;
-
-		// Ensure path to this file is via main `wp-plugin` path
-		// `$wp_path_to_this_file = preg_replace( '/(.*)plugins\/(.*)$/', WP_PLUGIN_DIR."/$2", __FILE__ );`
-		// `$plugin = plugin_basename( trim( $wp_path_to_this_file ) );`
-
-		$active = get_option( 'active_plugins' );
-
-		// If it's `0` it's the first plugin already, no need to continue
-		if ( $key = array_search( $plugin, $active ) ) {
-			array_splice( $active, $key, 1 );
-			array_unshift( $active, $plugin );
-			update_option( 'active_plugins', $active );
-		}
-	}
-
 	/**
 	 * Checks compatibility with the current WordPress version.
 	 * @source `is_wp_version_compatible()`
@@ -226,7 +205,7 @@ class WordPress extends Base
 	}
 
 	/**
-	 * Checks whether an REST API endpoint request is currently being handled.
+	 * Checks whether a REST API endpoint request is currently being handled.
 	 *
 	 * This maybe a standalone REST API request, or an internal request
 	 * dispatched from within a regular page load.
@@ -282,75 +261,6 @@ class WordPress extends Base
 		self::define( 'DONOTCACHEPAGE', TRUE );
 	}
 
-	// @REF: `wp_referer_field()`
-	public static function fieldReferer()
-	{
-		HTML::inputHidden( '_wp_http_referer', self::unslash( remove_query_arg( [
-			'_wp_http_referer',
-			'message',
-			'action',
-			'paged',
-			'count',
-		] ) ) );
-	}
-
-	// wrapper for `wp_get_referer()`
-	public static function getReferer()
-	{
-		return remove_query_arg( [
-			'_wp_http_referer',
-			'message',
-			'action',
-			'paged',
-			'count',
-		], wp_get_referer() );
-	}
-
-	public static function redirectJS( $location = NULL, $timeout = 3000 )
-	{
-		?><script type="text/javascript">
-function nextpage() {
-	location.href = "<?php echo ( $location ?? self::getReferer() ); ?>";
-}
-setTimeout( "nextpage()", <?php echo $timeout; ?> );
-</script><?php
-
-		return TRUE; // to help the caller
-	}
-
-	public static function redirect( $location = NULL, $status = 302 )
-	{
-		if ( wp_redirect( $location ?? self::getReferer(), $status ) )
-			exit;
-
-		wp_die(); // something's wrong!
-	}
-
-	public static function redirectReferer( $message = 'updated', $key = 'message' )
-	{
-		if ( is_array( $message ) )
-			$url = add_query_arg( $message, self::getReferer() );
-		else
-			$url = add_query_arg( $key, $message, self::getReferer() );
-
-		self::redirect( $url );
-	}
-
-	public static function redirectURL( $location, $message = 'updated', $key = 'message' )
-	{
-		if ( is_array( $message ) )
-			$url = add_query_arg( $message, $location );
-		else
-			$url = add_query_arg( $key, $message, $location );
-
-		self::redirect( $url );
-	}
-
-	public static function redirectLogin( $location = '', $status = 302 )
-	{
-		self::redirect( wp_login_url( $location, TRUE ), $status );
-	}
-
 	public static function getAdminPostLink( $action, $extra = [] )
 	{
 		return add_query_arg( array_merge( [ 'action' => $action ], $extra ), admin_url( 'admin-post.php' ) );
@@ -382,118 +292,14 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return get_search_link( $query );
 	}
 
-	// NOTE: DEPRECATED
-	// @REF: `get_edit_term_link()`
-	public static function getEditTaxLink( $taxonomy, $term_id = FALSE, $extra = [] )
-	{
-		if ( $term_id ) {
-
-			self::_dep( 'WordPress\Term::edit()' );
-
-			if ( current_user_can( 'edit_term', $term_id ) )
-				return add_query_arg( array_merge( [
-					'taxonomy' => $taxonomy,
-					'tag_ID'   => $term_id,
-				], $extra ), admin_url( 'term.php' ) );
-
-		} else {
-
-			self::_dep( 'WordPress\Taxonomy::edit()' );
-
-			if ( ! $object = get_taxonomy( $taxonomy ) )
-				return FALSE;
-
-			if ( current_user_can( $object->cap->manage_terms ) )
-				return add_query_arg( array_merge( [
-					'taxonomy' => $taxonomy,
-				], $extra ), admin_url( 'edit-tags.php' ) );
-		}
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function getPostTypeEditLink( $posttype, $user_id = 0, $extra = [] )
-	{
-		self::_dep( 'WordPress\PostType::edit()' );
-
-		$query = [ 'post_type' => $posttype ];
-
-		if ( $user_id )
-			$query['author'] = $user_id;
-
-		return add_query_arg( array_merge( $query, $extra ), admin_url( 'edit.php' ) );
-	}
-
-	// FIXME: move to `PostType`
-	// @SEE: `get_edit_post_link()`
-	public static function getPostEditLink( $post_id, $extra = [] )
-	{
-		return add_query_arg( array_merge( [ 'action' => 'edit', 'post' => $post_id ], $extra ), admin_url( 'post.php' ) );
-	}
-
-	public static function getPostShortLink( $post_id, $extra = [] )
-	{
-		return add_query_arg( array_merge( [ 'p' => $post_id ], $extra ), get_bloginfo( 'url' ) );
-	}
-
-	public static function getTermShortLink( $term_id, $extra = [] )
-	{
-		return add_query_arg( array_merge( [ 't' => $term_id ], $extra ), get_bloginfo( 'url' ) );
-	}
-
-	public static function getPostNewLink( $posttype, $extra = [] )
-	{
-		$args = 'post' === $posttype ? [] : [ 'post_type' => $posttype ];
-
-		return add_query_arg( array_merge( $args, $extra ), admin_url( 'post-new.php' ) );
-	}
-
-	public static function getPostAttachmentsLink( $post_id, $extra = [] )
-	{
-		return add_query_arg( array_merge( [ 'post_parent' => $post_id ], $extra ), admin_url( 'upload.php' ) );
-	}
-
-	public static function getAuthorEditHTML( $posttype, $author, $extra = [] )
-	{
-		if ( $author_data = get_user_by( 'id', $author ) )
-			return HTML::tag( 'a', [
-				'href' => add_query_arg( array_merge( [
-					'post_type' => $posttype,
-					'author'    => $author,
-				], $extra ), admin_url( 'edit.php' ) ),
-				'title' => $author_data->user_login,
-				'class' => '-author',
-			], HTML::escape( $author_data->display_name ) );
-
-		return FALSE;
-	}
-
-	public static function getUserEditLink( $user_id, $extra = [], $network = FALSE, $check = TRUE )
-	{
-		if ( ! $user_id )
-			return FALSE;
-
-		if ( $check && ! current_user_can( 'edit_user', $user_id ) )
-			return FALSE;
-
-		return add_query_arg( array_merge( [
-			'user_id' => $user_id,
-		], $extra ), $network
-			? network_admin_url( 'user-edit.php' )
-			: admin_url( 'user-edit.php' ) );
-
-		return FALSE;
-	}
-
 	// @SOURCE: `wp-load.php`
 	public static function getConfigPHP( $path = ABSPATH )
 	{
-		// The config file resides in ABSPATH
+		// The config file resides in `ABSPATH`
 		if ( file_exists( $path.'wp-config.php' ) )
 			return $path.'wp-config.php';
 
-		// The config file resides one level above ABSPATH but is not part of another install
+		// The config file resides one level above `ABSPATH` but is not part of another install
 		if ( @file_exists( dirname( $path ).'/wp-config.php' )
 			&& ! @file_exists( dirname( $path ).'/wp-settings.php' ) )
 				return dirname( $path ).'/wp-config.php';
@@ -516,11 +322,16 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		return FALSE;
 	}
 
-	// flush rewrite rules when it's necessary.
-	// this could be put in an init hook or the like and ensures that
-	// the rewrite rules option is only rewritten when the generated rules
-	// don't match up with the option
-	// @REF: https://gist.github.com/tott/9548734
+	/**
+	 * Flushes rewrite rules when it's necessary.
+	 * This could be put in an init hook or the like and ensures that
+	 * the rewrite rules option is only rewritten when the generated rules
+	 * don't match up with the option.
+	 * @source https://gist.github.com/tott/9548734
+	 *
+	 * @param bool $flush
+	 * @return bool
+	 */
 	public static function maybeFlushRules( $flush = FALSE )
 	{
 		global $wp_rewrite;
@@ -546,27 +357,6 @@ setTimeout( "nextpage()", <?php echo $timeout; ?> );
 		}
 
 		return $missing;
-	}
-
-	// @REF: `is_plugin_active()`
-	public static function isPluginActive( $plugin, $network_check = TRUE )
-	{
-		if ( in_array( $plugin, (array) apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), TRUE ) )
-			return TRUE;
-
-		if ( $network_check && self::isPluginActiveForNetwork( $plugin ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// @REF: `is_plugin_active_for_network()`
-	public static function isPluginActiveForNetwork( $plugin, $network = NULL )
-	{
-		if ( is_multisite() )
-			return (bool) in_array( $plugin, (array) get_network_option( $network, 'active_sitewide_plugins' ), TRUE );
-
-		return FALSE;
 	}
 
 	public static function currentSiteName( $slash = TRUE )

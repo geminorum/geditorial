@@ -11,6 +11,6 @@ class BuddyPress extends Core\Base
 
 	public static function isActive()
 	{
-		return Core\WordPress::isPluginActive( static::PLUGIN );
+		return Extend::isPluginActive( static::PLUGIN );
 	}
 }

@@ -211,7 +211,63 @@ class Post extends Core\Base
 		return apply_filters( 'get_edit_post_link', $link, $post->ID, 'display' );
 	}
 
-	// public static function shortlink( $post ) {}
+	/**
+	 * Retrieves post short-link given a post ID or post object.
+	 * OLD: `Core\WordPress::getPostShortLink()`
+	 *
+	 * @param int|object $post
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string
+	 */
+	public static function shortlink( $post, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return $fallback;
+
+		/*  Filters whether to preempt generating a short-link for the given post. */
+		$filtred = apply_filters( 'pre_get_shortlink', FALSE, $post->ID, 'post', TRUE );
+
+		if ( FALSE !== $filtred )
+			return $extra ? add_query_arg( $extra, $filtred ) : $filtred;
+
+		return add_query_arg( array_merge( [ 'p' => $post->ID ], $extra ), get_bloginfo( 'url' ) );
+	}
+
+	/**
+	 * Retrieves post media-link given a post ID or post object.
+	 * @OLD: `Core\WordPress::getPostAttachmentsLink()`
+	 *
+	 * @param int|object $post
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string
+	 */
+	public static function mediaLink( $post, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return $fallback;
+
+		return add_query_arg( array_merge( [ 'post_parent' => $post->ID ], $extra ), admin_url( 'upload.php' ) );
+	}
+
+	public static function endpointLink( $endpoint, $post, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return $fallback;
+
+		if ( ! $permalink = get_permalink( $post ) )
+			return $fallback;
+
+		if ( $GLOBALS['wp_rewrite']->using_permalinks()
+			&& ! in_array( $post->post_status, [ 'draft', 'pending', 'auto-draft', 'future' ] ) ) {
+
+			$link = Core\URL::trail( $permalink ).$endpoint;
+			return $extra ? add_query_arg( $extra, $link ) : $link;
+		}
+
+		return add_query_arg( array_merge( $extra, [ $endpoint => '' ] ), $permalink );
+	}
 
 	/**
 	 * Retrieves a contextual link given a post ID or post object.

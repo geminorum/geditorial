@@ -78,6 +78,7 @@ class LatLng extends Base
 		if ( is_object( $input ) && $object = self::extractFromObject( $input ) )
 			return $object;
 
+		$original  = $input;
 		$sanitized = Number::translate( Text::trim( htmlspecialchars_decode( $input ) ) );
 
 		if ( Text::starts( $sanitized, 'geo:' ) ) {

@@ -902,16 +902,16 @@ class HTML extends Base
 			'title'      => NULL,
 			'before'     => FALSE,
 			'after'      => FALSE,
-			'row_prep'   => FALSE, // call back to prep each row data
-			'row_class'  => FALSE, // call back to filter each row class
-			'callback'   => FALSE, // for all cells
-			'sanitize'   => TRUE, // using sanitizeDisplay()
-			'search'     => FALSE, // 'before', // 'after', // FIXME: add search box
-			'navigation' => FALSE, // 'before', // 'after',
+			'row_prep'   => FALSE,   // call back to prep each row data
+			'row_class'  => FALSE,   // call back to filter each row class
+			'callback'   => FALSE,   // for all cells
+			'sanitize'   => TRUE,    // using `sanitizeDisplay()`
+			'search'     => FALSE,   // 'before', // 'after', // FIXME: add search box
+			'navigation' => FALSE,   // 'before', // 'after',
 			'direction'  => NULL,
 			'pagination' => [],
 			'map'        => [],
-			'extra'      => [], // just passing around!
+			'extra'      => [],      // just passing around!
 		], $atts );
 
 		echo '<div'.( is_null( $args['direction'] ) ? '' : ' dir="'.$args['direction'].'"' ).' class="base-table-wrap">';

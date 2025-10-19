@@ -499,6 +499,8 @@ class Arraay extends Base
 
 	/**
 	 * Plucks a certain field out of each array or object in an array.
+	 * This has the same functionality and prototype of `array_column()`
+	 * but also supports objects.
 	 * NOTE: wrapper for `wp_list_pluck()`
 	 *
 	 * @param array $input

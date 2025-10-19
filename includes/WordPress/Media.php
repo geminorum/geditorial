@@ -377,7 +377,7 @@ class Media extends Core\Base
 	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{
 		return Core\HTML::tag( 'a', [
-			'href'  => Core\WordPress::getPostShortLink( $id ),
+			'href'  => WordPress\Post::shortlink( $id ),
 			'rel'   => $rel,
 			'class' => Core\HTML::attrClass( $extra, '-attachment' ),
 			'data'  => [ 'id' => $id ],

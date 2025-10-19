@@ -249,6 +249,23 @@ class Term extends Core\Base
 	}
 
 	/**
+	 * Retrieves term short-link given a term ID or term object.
+	 * OLD: `Core\WordPress::getTermShortLink()`
+	 *
+	 * @param int|object $term
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string
+	 */
+	public static function shortlink( $term, $extra = [], $fallback = FALSE )
+	{
+		if ( ! $term = self::get( $term ) )
+			return $fallback;
+
+		return add_query_arg( array_merge( [ 't' => $term->term_id ], $extra ), get_bloginfo( 'url' ) );
+	}
+
+	/**
 	 * Retrieves a contextual link given a term id or term object.
 	 *
 	 * @param null|int|object $term

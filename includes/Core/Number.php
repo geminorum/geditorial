@@ -171,6 +171,12 @@ class Number extends Base
 		return $number.$ends[$number % 10];
 	}
 
+	// @REF: https://stackoverflow.com/a/8346173
+	public static function englishOrdinalSuffix( $n )
+	{
+		return date( 'S', mktime( 1, 1, 1, 1, ( ( ( $n >= 10 ) + ( $n >= 20 ) + ( $n == 0 ) ) * 10 + $n % 10 ) ) );
+	}
+
 	public static function toWords( $number, $locale = NULL )
 	{
 		if ( ! $sanitized = self::intval( $number ) )

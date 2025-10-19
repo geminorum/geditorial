@@ -218,7 +218,7 @@ class File extends Base
 		if ( empty( $path ) )
 			return '';
 
-		// everything to lower and no spaces begin or end
+		// Everything to lower and no spaces begin or end
 		$path = strtolower( trim( $path ) );
 
 		// adding - for spaces and union characters

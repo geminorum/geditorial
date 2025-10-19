@@ -895,6 +895,23 @@ class Taxonomy extends Core\Base
 		return $results[$key][$value] = $term_id;
 	}
 
+	/**
+	 * Retrieves the list of parents by term ID.
+	 *
+	 * @param array $terms
+	 * @return array
+	 */
+	public static function getParentsList( $terms )
+	{
+		$list = [];
+
+		foreach ( (array) $terms as $data )
+			if ( $term = Term::get( $data ) )
+				$list[$term->term_id] = $term->parent;
+
+		return array_filter( $list );
+	}
+
 	public static function appendParentTermIDs( $term_ids, $taxonomy )
 	{
 		if ( ! self::object( $taxonomy )->hierarchical )

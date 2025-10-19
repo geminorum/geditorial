@@ -235,9 +235,9 @@ class PostType extends Core\Base
 	/**
 	 * Retrieves post-type archive link.
 	 *
-	 * @param  string|object $posttype
-	 * @param  mixed         $fallback
-	 * @return string        $link
+	 * @param string|object $posttype
+	 * @param mixed $fallback
+	 * @return string
 	 */
 	public static function link( $posttype, $fallback = NULL )
 	{
@@ -251,13 +251,13 @@ class PostType extends Core\Base
 	}
 
 	/**
-	 * Retrieves the URL for editing a given posttype.
+	 * Retrieves the URL for editing a given post-type.
 	 * @old `WordPress::getPostTypeEditLink()`
 	 *
-	 * @param  string|object $posttype
-	 * @param  array         $extra
-	 * @param  mixed         $fallback
-	 * @return string        $link
+	 * @param string|object $posttype
+	 * @param array $extra
+	 * @param mixed $fallback
+	 * @return string
 	 */
 	public static function edit( $posttype, $extra = [], $fallback = FALSE )
 	{
@@ -270,6 +270,31 @@ class PostType extends Core\Base
 		return add_query_arg( array_merge( [
 			'post_type' => $object->name,
 		], $extra ), admin_url( 'edit.php' ) );
+	}
+
+	public static function newLink( $posttype, $extra = [] )
+	{
+		$args = 'post' === $posttype
+			? []
+			: [ 'post_type' => $posttype ];
+
+		return add_query_arg( array_merge( $args, $extra ), admin_url( 'post-new.php' ) );
+	}
+
+	// OLD: `Core\WordPress::getAuthorEditHTML()`
+	public static function authorLink( $posttype, $author, $extra = [] )
+	{
+		if ( $author_data = get_user_by( 'id', $author ) )
+			return Core\HTML::tag( 'a', [
+				'href' => add_query_arg( array_merge( [
+					'post_type' => $posttype,
+					'author'    => $author,
+				], $extra ), admin_url( 'edit.php' ) ),
+				'title' => $author_data->user_login,
+				'class' => '-author',
+			], Core\HTML::escape( $author_data->display_name ) );
+
+		return FALSE;
 	}
 
 	// * 'publish' - a published post or page
@@ -444,11 +469,11 @@ class PostType extends Core\Base
 	/**
 	 * Retrieves lists of posts that have particular meta-key.
 	 *
-	 * @param  string       $metakey
-	 * @param  string|array $posttype
-	 * @param  array        $extra
-	 * @param  string       $fields
-	 * @return array        $posts
+	 * @param string $metakey
+	 * @param string|array $posttype
+	 * @param array $extra
+	 * @param string $fields
+	 * @return array
 	 */
 	public static function getIDListByMetakey( $metakey, $posttype = 'any', $extra = [], $fields = NULL )
 	{
@@ -697,7 +722,7 @@ class PostType extends Core\Base
 		return $query->have_posts() ? $query->posts : [];
 	}
 
-	// must add `add_thickbox()` for thickbox
+	// Must add `add_thickbox()` for thick-box
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage( $post_id, $size = NULL, $link = TRUE, $metakey = NULL )
 	{
@@ -730,7 +755,8 @@ class PostType extends Core\Base
 	// NOTE: DEPRECATED
 	public static function getArchiveLink( $posttype )
 	{
-		self::_dep();
+		self::_dep( 'WordPress\PostType::link()' );
+
 		return self::link( $posttype );
 	}
 

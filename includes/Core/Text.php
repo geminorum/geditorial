@@ -6,21 +6,7 @@ class Text extends Base
 {
 
 	/**
-	 * Advanced version of `trim()`.
-	 *
-	 * - `\u0001`: `Start Of Heading` (U+0001)
-	 * - `\u200a`: `HAIR SPACE` (U+200A)
-	 * - `\u200b`: `ZERO WIDTH SPACE` (U+200B)
-	 * - `\u200c`: `ZERO WIDTH NON-JOINER` (U+200C)
-	 * - `\u200d`: `ZERO WIDTH JOINER` (U+200D)
-	 * - `\u200e`: `LEFT-TO-RIGHT MARK` (U+200E)
-	 * - `\u200f`: `RIGHT-TO-LEFT MARK` (U+200F)
-	 * - `\u202a`: `LEFT-TO-RIGHT EMBEDDING` (U+202A)
-	 * - `\u202b`: `RIGHT-TO-LEFT EMBEDDING` (U+202B)
-	 * - `\u202c`: `POP DIRECTIONAL FORMATTING` (U+202C)
-	 * - `\u202d`: `LEFT-TO-RIGHT OVERRIDE` (U+202D)
-	 * - `\u202e`: `RIGHT-TO-LEFT OVERRIDE` (RLO)
-	 * - `\u202f`: `NARROW NO-BREAK SPACE` (U+202F)
+	 * Strips whitespace (or other characters) from the beginning and end of a string.
 	 *
 	 * @param string $text
 	 * @return string $additional
@@ -28,10 +14,8 @@ class Text extends Base
 	 */
 	public static function trim( $text, $additional = NULL )
 	{
-		// $text = (string) $text;
-		// $text = trim( $text, " \n\t\r\0\x0B," );
-		// $text = preg_replace( '/^[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200D}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+/u', '', $text );
-		// $text = preg_replace( '/[\s\x{0001}\x{200A}\x{200B}\x{200C}\x{200D}\x{200E}\x{200F}\x{202A}\x{202B}\x{202C}\x{202D}\x{202E}\x{202F}]+$/u', '', $text );
+		if ( empty( $text ) )
+			return $text;
 
 		$chars = [
 			"\s",
@@ -48,14 +32,17 @@ class Text extends Base
 			"\x{202D}", // `LEFT-TO-RIGHT OVERRIDE` (U+202D)
 			"\x{202E}", // `RIGHT-TO-LEFT OVERRIDE` (RLO)
 			"\x{202F}", // `NARROW NO-BREAK SPACE` (U+202F)
-			"\x00-\x1F", // The ASCII control chars (from 0 to 31 inclusive)
 		];
 
 		if ( $additional )
-			$chars = array_merge( $chars, array_map( 'preg_quote', preg_split( '//u', $additional, -1, PREG_SPLIT_NO_EMPTY ) ) );
+			$chars = array_merge( $chars, array_map( 'preg_quote', preg_split( '//u', (string) $additional, -1, PREG_SPLIT_NO_EMPTY ) ) );
 
-		// @REF: https://www.php.net/manual/en/ref.mbstring.php#113569
-		$text = preg_replace( '/^['.implode( '', $chars ).']*(?U)(.*)['.implode( '', $chars ).']*$/u', '\\1', (string) $text );
+		$text = preg_replace(
+			// @REF: https://www.php.net/manual/en/ref.mbstring.php#113569
+			'/^['.implode( '', $chars ).']*(?U)(.*)['.implode( '', $chars ).']*$/u',
+			'\\1',
+			(string) $text
+		);
 
 		if ( 0 === strlen( $text ) )
 			return '';

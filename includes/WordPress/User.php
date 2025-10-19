@@ -67,6 +67,33 @@ class User extends Core\Base
 		return current_user_can( $cap );
 	}
 
+	/**
+	 * Retrieves the URL for editing a given user.
+	 * OLD: `Core\WordPress::getUserEditLink()`
+	 *
+	 * @param int $user_id
+	 * @param array $extra
+	 * @param bool $network
+	 * @param bool $check
+	 * @return false|string
+	 */
+	public static function edit( $user_id, $extra = [], $network = FALSE, $check = TRUE )
+	{
+		if ( ! $user_id )
+			return FALSE;
+
+		if ( $check && ! current_user_can( 'edit_user', $user_id ) )
+			return FALSE;
+
+		return add_query_arg( array_merge( [
+			'user_id' => $user_id,
+		], $extra ), $network
+			? network_admin_url( 'user-edit.php' )
+			: admin_url( 'user-edit.php' ) );
+
+		return FALSE;
+	}
+
 	public static function getTitleRow( $user, $fallback = '', $template = NULL )
 	{
 		if ( ! $object = self::user( $user ) )
