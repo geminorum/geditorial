@@ -115,6 +115,7 @@ trait CorePostTypes
 	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
 	{
 		$settings = self::atts( [
+			'parent_module'     => $this->key,
 			'block_editor'      => FALSE,
 			'quick_edit'        => NULL,
 			'custom_icon'       => TRUE,
@@ -137,6 +138,12 @@ trait CorePostTypes
 				continue;
 
 			switch ( $setting ) {
+
+				case 'parent_module':
+
+					// TODO: use `const`
+					$args[$this->hook_base( 'module' )] = $value;
+					break;
 
 				case 'block_editor':
 
