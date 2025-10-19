@@ -252,6 +252,25 @@ class PostTypeFields extends gEditorial\Service
 		return 'admin-post';
 	}
 
+	public static function getPostDateMetaKeys( $extra = [], $module = 'meta', $check = TRUE )
+	{
+		if ( $check && ! gEditorial()->enabled( $module ) )
+			return [];
+
+		$list   = [];
+		$fields = [
+			'date',
+			'datetime',
+			'datestart',
+			'dateend',
+		];
+
+		foreach ( $fields as $field )
+			$list[$field] = self::getPostMetaKey( $field, $module, FALSE );
+
+		return array_merge( $list, $extra );
+	}
+
 	// OLD: `Template::getMetaField()`
 	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
@@ -353,6 +372,23 @@ class PostTypeFields extends gEditorial\Service
 		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
 
 		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
+	}
+
+	public static function getFieldDate( $field_key, $post_id, $module = 'meta', $check = TRUE, $default = FALSE )
+	{
+		if ( ! $date = self::getFieldRaw( $field_key, $post_id, $module, $check, $default ) )
+			return $default;
+
+		if ( Core\Date::isInFormat( $date, 'Y-m-d' ) )
+			$datetime = sprintf( '%s 23:59:59', $date );
+
+		else if ( Core\Date::isInFormat( $date, Core\Date::MYSQL_FORMAT ) )
+			$datetime = $date;
+
+		else
+			return $default;
+
+		return Core\Date::getObject( $datetime );
 	}
 
 	// OLD: `Helper::prepMetaRow()`
