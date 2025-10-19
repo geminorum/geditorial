@@ -40,4 +40,35 @@ class Locations extends gEditorial\Service
 
 		return $location;
 	}
+
+	public static function getSingularLocation( $post = NULL, $context = NULL )
+	{
+		if ( ! gEditorial()->enabled( 'meta' ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( gEditorial()->enabled( 'venue' ) ) {
+
+			if ( $items = gEditorial()->module( 'venue' )->paired_all_connected_from( $post, $context ) ) {
+				foreach ( $items as $item )
+					return [
+						'title'   => WordPress\Post::fullTitle( $item ),
+						'address' => PostTypeFields::getFieldRaw( 'street_address', $item->ID ) ?: '',
+						'latlng'  => PostTypeFields::getFieldRaw( 'latlng', $item->ID ) ?: '',
+					];
+			}
+
+		} else if ( $address = PostTypeFields::getFieldRaw( 'street_address', $post->ID ) ) {
+
+			return [
+				'address' => $address,
+				'title'   => PostTypeFields::getFieldRaw( 'venue_string', $post->ID ) ?: '',
+				'latlng'  => PostTypeFields::getFieldRaw( 'latlng', $post->ID ) ?: '',
+			];
+		}
+
+		return FALSE;
+	}
 }
