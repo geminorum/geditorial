@@ -128,9 +128,10 @@ class Inquire extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
-			'is_viewable' => $viewable,
-			'custom_icon' => 'post-status',
-			'custom_icon' => 'tag',
+			'is_viewable'     => $viewable,
+			'custom_icon'     => 'post-status',
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->register_taxonomy( 'priority_taxonomy', [

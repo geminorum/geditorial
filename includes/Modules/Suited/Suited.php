@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Shortcode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Suited extends gEditorial\Module
@@ -162,7 +161,7 @@ class Suited extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return Shortcode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
@@ -182,6 +181,6 @@ class Suited extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

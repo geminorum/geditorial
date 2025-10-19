@@ -326,6 +326,7 @@ class Directorate extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'custom_icon'     => 'post-status',
+			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
 

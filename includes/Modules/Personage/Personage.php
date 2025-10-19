@@ -344,7 +344,6 @@ class Personage extends gEditorial\Module
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
-			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'main_posttype', [

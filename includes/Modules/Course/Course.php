@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Course extends gEditorial\Module
@@ -299,7 +295,9 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_posttype', [
-			'custom_icon' => 'post-status',
+			'custom_icon'     => 'post-status',
+			'admin_managed'   => TRUE,
+			'single_selected' => TRUE,
 		] );
 
 		$this->paired_register( [], [
@@ -461,7 +459,7 @@ class Course extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'paired',
+		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'course_posttype' ),
 			$this->constant( 'course_paired' ),
 			array_merge( [
@@ -477,7 +475,7 @@ class Course extends gEditorial\Module
 
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return Shortcode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'course_posttype' ),
 			$this->constant( 'span_taxonomy' ),
 			array_merge( [
@@ -506,27 +504,17 @@ class Course extends gEditorial\Module
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
-		return ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap( $html,
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
-	}
-
-	private function get_postdate_metakeys()
-	{
-		return [
-			Services\PostTypeFields::getPostMetaKey( 'date' ),
-			Services\PostTypeFields::getPostMetaKey( 'datetime' ),
-			Services\PostTypeFields::getPostMetaKey( 'datestart' ),
-			Services\PostTypeFields::getPostMetaKey( 'dateend' ),
-		];
 	}
 
 	protected function latechores_post_aftercare( $post )
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,
-			$this->get_postdate_metakeys()
+			Services\PostTypeFields::getPostDateMetaKeys()
 		);
 	}
 
@@ -540,13 +528,13 @@ class Course extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Course Tools', 'Header', 'geditorial-course' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -572,7 +560,7 @@ class Course extends gEditorial\Module
 				$this->constant( 'course_posttype' ),
 				$this->constant( 'lesson_posttype' ),
 			],
-			$this->get_postdate_metakeys(),
+			Services\PostTypeFields::getPostDateMetaKeys(),
 			$uri,
 			$sub,
 			'tools'
@@ -592,14 +580,14 @@ class Course extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -610,7 +598,7 @@ class Course extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'course_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
@@ -632,7 +620,7 @@ class Course extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_abandoned_lesson' ) => _x( 'Lesson Abandoned', 'Default Term: Audit', 'geditorial-course' ),
 		] ) : $terms;
 	}

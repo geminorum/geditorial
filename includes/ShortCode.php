@@ -1227,7 +1227,7 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// NOTE: DEPRECATED: use `Shortcode::listPosts( 'assigned' )`
+	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		self::_dep( 'ShortCode::listPosts()' );
@@ -1385,7 +1385,7 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// NOTE: DEPRECATED: use `Shortcode::listPosts( 'paired' )`
+	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'paired' )`
 	// OLD: `::getAssocPosts()`
 	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{

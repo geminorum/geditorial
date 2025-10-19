@@ -253,12 +253,12 @@ class Addendum extends gEditorial\Module
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
-			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__singleselect_terms_callback',
 		], 'primary_posttype', [
 			'custom_icon'     => 'post-status',
+			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
 

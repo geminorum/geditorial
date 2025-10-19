@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Series extends gEditorial\Module
@@ -225,7 +223,7 @@ class Series extends gEditorial\Module
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+			return gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$posttypes = $this->posttypes();
 		$terms     = WordPress\Taxonomy::getPostTerms( $taxonomy, $post );
@@ -246,7 +244,7 @@ class Series extends gEditorial\Module
 				'echo'             => 0,
 			] );
 
-			$posts[$i] = MetaBox::getTermPosts( $taxonomy, $term, $posttypes, TRUE, $post->ID );
+			$posts[$i] = gEditorial\MetaBox::getTermPosts( $taxonomy, $term, $posttypes, TRUE, $post->ID );
 			$map[$i]   = $term->term_id;
 			$i++;
 		}
@@ -356,7 +354,7 @@ class Series extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return Shortcode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
@@ -435,6 +433,6 @@ class Series extends gEditorial\Module
 			$args['item_after'] = '';
 		}
 
-		return ShortCode::postItem( $post, $args );
+		return gEditorial\ShortCode::postItem( $post, $args );
 	}
 }

@@ -429,7 +429,6 @@ class Ranged extends gEditorial\Module
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
-			'public'             => FALSE,
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
@@ -633,21 +632,11 @@ class Ranged extends gEditorial\Module
 		$this->posttypefields_connect_paired_by( 'shooting_code', $data['shooting_code'], $post );
 	}
 
-	private function get_postdate_metakeys()
-	{
-		return [
-			Services\PostTypeFields::getPostMetaKey( 'date' ),
-			Services\PostTypeFields::getPostMetaKey( 'datetime' ),
-			Services\PostTypeFields::getPostMetaKey( 'datestart' ),
-			Services\PostTypeFields::getPostMetaKey( 'dateend' ),
-		];
-	}
-
 	protected function latechores_post_aftercare( $post )
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,
-			$this->get_postdate_metakeys()
+			Services\PostTypeFields::getPostDateMetaKeys()
 		);
 	}
 
@@ -696,7 +685,7 @@ class Ranged extends gEditorial\Module
 	{
 		if ( FALSE === $this->postdate__render_before_override_dates(
 			$this->constant( 'primary_posttype' ),
-			$this->get_postdate_metakeys(),
+			Services\PostTypeFields::getPostDateMetaKeys(),
 			$uri,
 			$sub,
 			'tools'

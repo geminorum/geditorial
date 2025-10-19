@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Magazine extends gEditorial\Module
@@ -457,7 +454,7 @@ class Magazine extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'paired',
+		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_paired' ),
 			array_merge( [
@@ -476,7 +473,7 @@ class Magazine extends gEditorial\Module
 
 	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return Shortcode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'span_taxonomy' ),
 			array_merge( [
@@ -505,7 +502,7 @@ class Magazine extends gEditorial\Module
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
-		return ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap( $html,
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
@@ -521,13 +518,13 @@ class Magazine extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Magazine Tools', 'Header', 'geditorial-magazine' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -550,14 +547,14 @@ class Magazine extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -568,6 +565,6 @@ class Magazine extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }
