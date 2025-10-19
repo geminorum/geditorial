@@ -94,6 +94,7 @@ trait CoreTaxonomies
 
 		// NOTE: ordering here is important!
 		$settings = self::atts( [
+			'parent_module'   => $this->key,
 			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`/`none`
 			'custom_icon'     => TRUE,
 			'is_viewable'     => NULL,
@@ -120,6 +121,12 @@ trait CoreTaxonomies
 				continue;
 
 			switch ( $setting ) {
+
+				case 'parent_module':
+
+					// TODO: use `const`
+					$args[$this->hook_base( 'module' )] = $value;
+					break;
 
 				case 'target_object':
 
