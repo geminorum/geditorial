@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 trait MetaBoxCustom
@@ -29,22 +31,46 @@ trait MetaBoxCustom
 		);
 	}
 
-	public function metaboxcustom_add_metabox_excerpt( $constant, $callback = 'post_excerpt_meta_box' )
+	public function metaboxcustom_add_metabox_excerpt( $constant, $metabox_context = NULL, $callback = NULL )
 	{
 		$posttype = $this->constant( $constant );
 
 		if ( WordPress\PostType::supportBlocks( $posttype ) )
-			return;
+			return FALSE;
 
 		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_excerpt' ), TRUE, $posttype ) )
-			return;
+			return FALSE;
+
+		$screen = get_current_screen();
+		$label  = $this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) );
 
 		add_meta_box( 'postexcerpt', // same as core to override
-			$this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) ),
-			$callback,
-			NULL,
-			'normal',
-			'high'
+			$label,
+			$callback ?? [ $this, 'metaboxcustom_do_metabox_excerpt' ],
+			$screen,
+			$metabox_context ?? 'normal', // 'after_title'
+			'high',
+			[
+				'constant' => $constant,
+				'posttype' => $posttype,
+				'label'    => $label,
+			]
+		);
+
+		gEditorial\MetaBox::classEditorBox( $screen, 'postexcerpt' );
+
+		return TRUE;
+	}
+
+	public function metaboxcustom_do_metabox_excerpt( $post, $box )
+	{
+		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
+			return;
+
+		gEditorial\MetaBox::fieldEditorBox(
+			$post->post_excerpt,
+			'excerpt',
+			$box['args']['label']
 		);
 	}
 }

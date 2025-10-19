@@ -17,6 +17,7 @@ use geminorum\gEditorial\WordPress;
 class Today extends gEditorial\Module
 {
 	use Internals\Calendars;
+	use Internals\MetaBoxCustom;
 	use Internals\MetaBoxMain;
 	use Internals\MetaBoxSupported;
 
@@ -323,18 +324,8 @@ class Today extends gEditorial\Module
 
 				$this->action( 'edit_form_after_editor' );
 
-				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
-
-					remove_meta_box( 'postexcerpt', $screen, 'normal' );
-					MetaBox::classEditorBox( $screen, $this->classs( 'excerpt' ) );
-
-					add_meta_box( $this->classs( 'excerpt' ),
-						$this->get_posttype_label( 'main_posttype', 'excerpt_label' ),
-						[ $this, 'do_metabox_excerpt' ],
-						$screen,
-						'after_title'
-					);
-				}
+				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
+					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype', 'after_title' );
 
 				$this->posttype__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
@@ -470,18 +461,6 @@ class Today extends gEditorial\Module
 			$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
 		ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
-	}
-
-	public function do_metabox_excerpt( $post, $box )
-	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
-
-		MetaBox::fieldEditorBox(
-			$post->post_excerpt,
-			'excerpt',
-			$this->get_posttype_label( 'main_posttype', 'excerpt_label' )
-		);
 	}
 
 	public function manage_posts_columns( $columns )
