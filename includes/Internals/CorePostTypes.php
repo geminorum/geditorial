@@ -129,6 +129,7 @@ trait CorePostTypes
 			'date_disabled'     => NULL,
 			'author_disabled'   => NULL,
 			'password_disabled' => TRUE,
+			'ical_source'       => TRUE, // `TRUE`/`FALSE`/`paired`
 		], $atts );
 
 		foreach ( $settings as $setting => $value ) {
@@ -347,6 +348,8 @@ trait CorePostTypes
 
 				case 'primary_taxonomy': $args[Services\PrimaryTaxonomy::POSTTYPE_PROP]   = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
 				case 'status_taxonomy' : $args[Services\PrimaryTaxonomy::STATUS_TAX_PROP] = TRUE === $value ? $this->constant( $setting, $setting ) : $value; break;
+
+				case 'ical_source' : $args[Services\Calendars::POSTTYPE_ICAL_SOURCE] = $value; break;
 
 				case 'readonly_title':
 				case 'tinymce_disabled':

@@ -231,7 +231,7 @@ class Plugin
 			'Barcodes',
 			// 'BinaryPond',
 			// 'BookCovers',
-			// 'Calendars',
+			'Calendars',
 			'ContentActions',
 			// 'Coordinates',
 			'CustomPostType',

@@ -63,6 +63,10 @@ trait PairedCore
 		if ( is_null( $supported ) )
 			$supported = $this->posttypes();
 
+		// NOTE: better to be set per module bases
+		// if ( ! array_key_exists( 'ical_source', $settings ) )
+		// 	$settings['ical_source'] = 'paired';
+
 		if ( count( $supported ) ) {
 
 			if ( $paired[2] && $this->get_setting( 'subterms_support' ) )

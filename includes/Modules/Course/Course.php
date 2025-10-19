@@ -301,7 +301,10 @@ class Course extends gEditorial\Module
 			'custom_icon' => 'post-status',
 		] );
 
-		$this->paired_register();
+		$this->paired_register( [], [
+			'ical_source'      => 'paired',
+		] );
+
 		$this->register_posttype( 'lesson_posttype', [], [
 			'status_taxonomy' => TRUE,
 		] );

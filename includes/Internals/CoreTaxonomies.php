@@ -110,6 +110,7 @@ trait CoreTaxonomies
 			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
 			'meta_tagline'    => NULL,     // FALSE, meta-key or `TRUE` for default `tagline` // TODO
 			'suitable_metas'  => NULL,     // list of meta suggested for this taxonomy: `field` => `title` / NULL // TODO
+			'ical_source'     => TRUE, // `TRUE`/`FALSE`/`paired`
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';
@@ -361,6 +362,7 @@ trait CoreTaxonomies
 				case 'reverse_ordered' : $args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value; break;
 				case 'auto_assigned'   : $args[Services\TermHierarchy::AUTO_ASSIGNED_TERMS]   = $value; break;
 				case 'terms_related'   : $args[Services\TermRelations::TAXONOMY_PROP]         = $value; break;
+				case 'ical_source'     : $args[Services\Calendars::POSTTYPE_ICAL_SOURCE]      = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
