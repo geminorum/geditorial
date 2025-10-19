@@ -4,19 +4,14 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Today extends gEditorial\Module
 {
 	use Internals\Calendars;
+	use Internals\CoreMenuPage;
 	use Internals\MetaBoxCustom;
 	use Internals\MetaBoxMain;
 	use Internals\MetaBoxSupported;
@@ -162,7 +157,7 @@ class Today extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'main_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'main_posttype' ) ] ) );
 	}
 
 	public function setup( $args = [] )
@@ -245,22 +240,18 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	// TODO: use `$this->_hook_wp_submenu_page()`
 	public function admin_menu()
 	{
-		$hook = add_submenu_page(
+		$this->_hook_wp_submenu_page( 'adminmenu',
 			'index.php',
 			_x( 'Editorial Today', 'Page Title', 'geditorial-today' ),
 			_x( 'My Today', 'Menu Title', 'geditorial-today' ),
 			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
-			[ $this, 'admin_today_page' ]
 		);
-
-		add_action( 'load-'.$hook, [ $this, 'admin_today_load' ] );
 	}
 
-	public function admin_today_load()
+	public function admin_adminmenu_load()
 	{
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );
@@ -277,11 +268,11 @@ class Today extends gEditorial\Module
 		// $this->enqueue_asset_js();
 	}
 
-	public function admin_today_page()
+	public function admin_adminmenu_page()
 	{
-		Settings::wrapOpen( $this->key, 'listtable' );
+		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( 'listtable', _x( 'Editorial Today', 'Page Title', 'geditorial-today' ), FALSE );
+			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Today', 'Page Title', 'geditorial-today' ), FALSE );
 
 			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
 				echo '<div id="postbox-container-2" class="postbox-container">';
@@ -308,7 +299,7 @@ class Today extends gEditorial\Module
 
 
 			$this->settings_signature( 'listtable' );
-		Settings::wrapClose();
+		gEditorial\Settings::wrapClose();
 	}
 
 	public function current_screen( $screen )
@@ -316,8 +307,6 @@ class Today extends gEditorial\Module
 		if ( 'post' == $screen->base ) {
 
 			if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
-
-				// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 
 				$this->_hook_general_mainbox( $screen );
 				$this->_save_meta_supported( $screen->post_type );
@@ -401,7 +390,7 @@ class Today extends gEditorial\Module
 			&& $post->post_type != $this->constant( 'main_posttype' ) )
 				return $actions;
 
-		if ( $link = $this->get_today_admin_link( $post ) )
+		if ( $link = $this->_get_today_admin_link( $post ) )
 			return Core\Arraay::insert( $actions, [
 				$this->classs() => Core\HTML::tag( 'a', [
 					'href'   => $link,
@@ -414,7 +403,7 @@ class Today extends gEditorial\Module
 		return $actions;
 	}
 
-	private function get_today_admin_link( $post )
+	private function _get_today_admin_link( $post )
 	{
 		if ( ! $this->role_can( 'adminmenu' ) )
 			return FALSE;
@@ -444,8 +433,8 @@ class Today extends gEditorial\Module
 	}
 
 	// FIXME: must first check query
-	// TODO: conversion buttons
 	// FIXME: must check for duplicate day and gave a green light via js
+	// TODO: conversion buttons
 	private function _render_day_input( $post, $context = NULL )
 	{
 		$display_year = $post->post_type != $this->constant( 'main_posttype' );
@@ -556,9 +545,9 @@ class Today extends gEditorial\Module
 
 			Core\HTML::tableList( [
 				'_cb'   => 'ID',
-				'title' => Tablelist::columnPostTitle(),
-				'terms' => Tablelist::columnPostTerms(),
-				'type'  => Tablelist::columnPostType(),
+				'title' => gEditorial\Tablelist::columnPostTitle(),
+				'terms' => gEditorial\Tablelist::columnPostTerms(),
+				'type'  => gEditorial\Tablelist::columnPostType(),
 			], $posts, [
 				'empty'  => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
 				'before' => static function ( $columns, $data, $args ) use ( $posttypes, $the_day ) {
@@ -750,7 +739,7 @@ class Today extends gEditorial\Module
 
 			echo '<ul class="-items">';
 			foreach ( $posts as $post )
-				echo ShortCode::postTitle( $post, [ 'title_tag' => 'li' ] );
+				echo gEditorial\ShortCode::postTitle( $post, [ 'title_tag' => 'li' ] );
 			echo '</ul>';
 
 		} else {
@@ -805,52 +794,6 @@ class Today extends gEditorial\Module
 	public function query_vars( $public_query_vars )
 	{
 		return array_merge( $this->_get_the_day_query_vars(), $public_query_vars );
-	}
-
-	// FIXME: ADOPT THIS
-	public function pre_get_posts( &$wp_query )
-	{
-		if ( is_admin() || ! $wp_query->is_main_query() )
-			return;
-
-		// a map from the timespan string to actual hours array
-		$hours = [
-			'morning'   => range( 6, 11 ),
-			'afternoon' => range( 12, 17 ),
-			'evening'   => range( 18, 23 ),
-			'night'     => range( 0, 5 ),
-		];
-
-		$customdate = $wp_query->get( 'customdate' );
-		$timespan   = $wp_query->get( 'timespan' );
-
-		// if the vars are not set, this is not a query we're interested in
-		if ( ! $customdate || ! $timespan )
-			return;
-
-		$timestamp = strtotime( $customdate );
-
-		// do nothing if have the wrong values
-		if ( ! $timestamp || ! isset( $hours[$timespan] ) )
-			return;
-
-		// reset query variables, because `WP_Query` does nothing with
-		// 'customdate' or 'timespan', so it's better remove them
-		$wp_query->init();
-
-		// set date query based on custom vars
-		$wp_query->set( 'date_query', [
-			'relation' => 'AND',
-			[
-				'year'  => date( 'Y', $timestamp ),
-				'month' => date( 'm', $timestamp ),
-				'day'   => date( 'd', $timestamp ),
-			],
-			[
-				'hour'    => $hours[$timespan],
-				'compare' => 'IN'
-			],
-		] );
 	}
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
@@ -928,18 +871,18 @@ class Today extends gEditorial\Module
 		$list      = $this->list_posttypes();
 		$query     = $this->_build_meta_query( $constants );
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'ID'     => Tablelist::columnPostID(),
-			'date'   => Tablelist::columnPostDate(),
-			'type'   => Tablelist::columnPostType(),
-			'title'  => Tablelist::columnPostTitle(),
+			'ID'     => gEditorial\Tablelist::columnPostID(),
+			'date'   => gEditorial\Tablelist::columnPostDate(),
+			'type'   => gEditorial\Tablelist::columnPostType(),
+			'title'  => gEditorial\Tablelist::columnPostTitle(),
 			'theday' => [
 				'title' => _x( 'The Day', 'Table Column', 'geditorial-today' ),
 				'args'  => [
@@ -971,7 +914,7 @@ class Today extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'reschedule_by_day' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'reschedule_by_day' ) ) {
 
 					$default   = $this->default_calendar();
 					$constants = $this->get_the_day_constants();
@@ -987,7 +930,7 @@ class Today extends gEditorial\Module
 					foreach ( $query->query( $args ) as $post ) {
 
 						$the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
-						$result  = Datetime::reSchedulePost( $post, $the_day );
+						$result  = gEditorial\Datetime::reSchedulePost( $post, $the_day );
 
 						if ( TRUE === $result )
 							$count++;
@@ -1013,7 +956,7 @@ class Today extends gEditorial\Module
 
 		echo '&nbsp;&nbsp;';
 
-		Settings::submitButton( 'reschedule_by_day', _x( 'Schedule', 'Setting', 'geditorial-today' ) );
+		gEditorial\Settings::submitButton( 'reschedule_by_day', _x( 'Schedule', 'Setting', 'geditorial-today' ) );
 
 		Core\HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Message', 'geditorial-today' ) );
 
@@ -1046,7 +989,7 @@ class Today extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_the_day' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),
 		] ) : $terms;
 	}

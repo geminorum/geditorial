@@ -77,8 +77,8 @@ trait CoreMenuPage
 		return $hook;
 	}
 
-	// NOTE: hack to keep the submenu only on primary paired posttype
-	// for hiding the menu just set `show_in_menu` to `FALSE` on taxonomy args
+	// NOTE: hack to keep the sub-menu only on primary paired post-type
+	// for hiding the menu just set `show_in_menu` to `FALSE` on taxonomy arguments
 	protected function remove_taxonomy_submenu( $taxonomies, $posttypes = NULL )
 	{
 		if ( ! $taxonomies )

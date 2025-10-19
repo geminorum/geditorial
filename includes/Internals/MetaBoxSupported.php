@@ -93,6 +93,8 @@ trait MetaBoxSupported
 			);
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		add_meta_box(
