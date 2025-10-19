@@ -257,7 +257,7 @@ trait TemplatePostType
 		);
 
 		return Core\HTML::tag( 'a', [
-			'href'          => Core\WordPress::getPostNewLink( $object->name, $extra ),
+			'href'          => WordPress\PostType::newLink( $object->name, $extra ),
 			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
 			'target'        => '_blank',
 			'data-posttype' => $object->name,

@@ -490,9 +490,12 @@ class ModuleHelper extends gEditorial\Helper
 				$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 			$buttons[] = Core\HTML::button( $title,
-				Core\WordPress::getPostNewLink( $object->name, $the_day ),
-				/* translators: `%s`: singular name */
-				sprintf( _x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ), $object->labels->singular_name ),
+				WordPress\PostType::newLink( $object->name, $the_day ),
+				sprintf(
+					/* translators: `%s`: singular name */
+					_x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ),
+					$object->labels->singular_name
+				),
 				is_admin()
 			);
 		}
@@ -511,7 +514,7 @@ class ModuleHelper extends gEditorial\Helper
 						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$buttons[] = Core\HTML::button( $title,
-						Core\WordPress::getPostNewLink( $object->name, $the_day ),
+						WordPress\PostType::newLink( $object->name, $the_day ),
 						_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
 					);
@@ -527,7 +530,7 @@ class ModuleHelper extends gEditorial\Helper
 						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$buttons[] = Core\HTML::button( $title,
-						Core\WordPress::getPostEditLink( $the_post ),
+						WordPress\Post::edit( $the_post ),
 						_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
 						is_admin()
 					);

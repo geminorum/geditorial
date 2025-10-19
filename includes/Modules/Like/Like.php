@@ -193,7 +193,7 @@ class Like extends gEditorial\Module
 					'id'     => $this->classs( 'user', $user_id ),
 					'title'  => Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
-					'href'   => $cap ? Core\WordPress::getUserEditLink( $user_id ) : FALSE,
+					'href'   => $cap ? WordPress\User::edit( $user_id ) : FALSE,
 					'meta'   => [ 'title' => Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
@@ -517,7 +517,7 @@ class Like extends gEditorial\Module
 						$count++;
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );
@@ -532,7 +532,7 @@ class Like extends gEditorial\Module
 						$count++;
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );

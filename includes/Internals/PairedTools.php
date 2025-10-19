@@ -136,7 +136,7 @@ trait PairedTools
 				);
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'created',
 				'count'   => count( $posts ),
 			] );
@@ -160,7 +160,7 @@ trait PairedTools
 				$count++;
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -181,7 +181,7 @@ trait PairedTools
 					$count++;
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -189,7 +189,7 @@ trait PairedTools
 		} else if ( Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
 
 			if ( ! gEditorial()->enabled( 'meta' ) )
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 
 			$count = 0;
 			$field = $this->constant( 'field_paired_order', sprintf( 'in_%s_order', $this->constant( $constants[0] ) ) );
@@ -214,7 +214,7 @@ trait PairedTools
 				}
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'ordered',
 				'count'   => $count,
 			] );
@@ -229,7 +229,7 @@ trait PairedTools
 				if ( wp_update_term( $term_id, $taxonomy, $args ) )
 					$count++;
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'purged',
 				'count'   => $count,
 			] );
@@ -252,7 +252,7 @@ trait PairedTools
 					$count++;
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'updated',
 				'count'   => $count,
 			] );
@@ -273,7 +273,7 @@ trait PairedTools
 				}
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'deleted',
 				'count'   => $count,
 			] );
@@ -290,9 +290,9 @@ trait PairedTools
 		if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -300,9 +300,9 @@ trait PairedTools
 		} else if ( Tablelist::isAction( 'sync_paired_dates' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_dates( $constants[0], $constants[1] ) ) )
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );
@@ -310,9 +310,9 @@ trait PairedTools
 		} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_create_paired_terms( $constants[0], $constants[1] ) ) )
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'created',
 				'count'   => $count,
 			] );
@@ -605,7 +605,7 @@ trait PairedTools
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			self::$pairedtools__action_move_from_to => $posttype,
 
 			'movefrom' => implode( ',', $movefrom ),
@@ -670,7 +670,7 @@ trait PairedTools
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => 'force_assign_parents',
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,

@@ -172,8 +172,12 @@ class Happening extends gEditorial\Module
 						'type'        => 'datetime',
 					],
 
-					'website_url' => [ 'type' => 'link' ],
-					'wiki_url'    => [ 'type' => 'link' ],
+					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
+					'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'wiki_url'       => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email', 'quickedit' => TRUE ],
+
 				],
 			],
 			'units' => [

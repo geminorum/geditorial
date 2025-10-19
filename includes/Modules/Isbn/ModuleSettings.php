@@ -46,7 +46,7 @@ class ModuleSettings extends gEditorial\Settings
 			return FALSE;
 
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
-			Core\WordPress::redirectReferer( 'wrong' );
+			WordPress\Redirect::doReferer( 'wrong' );
 
 		$count = WordPress\Database::changePostMetaKey(
 			static::METAKEY_BOOK_MODULE_ISBN,
@@ -54,13 +54,13 @@ class ModuleSettings extends gEditorial\Settings
 		);
 
 		if ( $count )
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'changed',
 				'count'   => $count,
 			] );
 
 		else
-			Core\WordPress::redirectReferer( 'nochange' );
+			WordPress\Redirect::doReferer( 'nochange' );
 
 		return FALSE;
 	}

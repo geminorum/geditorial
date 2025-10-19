@@ -213,7 +213,7 @@ class Attachments extends gEditorial\Module
 			'id'     => $this->classs(),
 			'title'  => _x( 'Attachment Summary', 'Adminbar', 'geditorial-attachments' ),
 			'parent' => $parent,
-			'href'   => Core\WordPress::getPostAttachmentsLink( $post_id ),
+			'href'   => WordPress\Post::mediaLink( $post_id ),
 		];
 
 		$thumbnail_id  = get_post_meta( $post_id, '_thumbnail_id', TRUE );
@@ -282,7 +282,7 @@ class Attachments extends gEditorial\Module
 
 			if ( current_user_can( 'upload_files' ) )
 				echo Core\HTML::tag( 'a', [
-					'href'   => Core\WordPress::getPostAttachmentsLink( $post->ID ),
+					'href'   => WordPress\Post::mediaLink( $post ),
 					'title'  => _x( 'View the list of attachments', 'Title Attr', 'geditorial-attachments' ),
 					'target' => '_blank',
 				], $title );
@@ -367,7 +367,7 @@ class Attachments extends gEditorial\Module
 						if ( wp_delete_attachment( $post_id, TRUE ) )
 							$count++;
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'deleted',
 						'count'   => $count,
 					] );
@@ -380,7 +380,7 @@ class Attachments extends gEditorial\Module
 						if ( WordPress\Media::emptyAttachmentImageMeta( $post_id ) )
 							$count++;
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'emptied',
 						'count'   => $count,
 					] );
@@ -393,7 +393,7 @@ class Attachments extends gEditorial\Module
 						if ( WordPress\Media::deleteAttachmentThumbnails( $post_id ) )
 							$count++;
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'deleted',
 						'count'   => $count,
 					] );

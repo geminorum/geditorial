@@ -288,7 +288,7 @@ class Isbn extends gEditorial\Module
 
 		$metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) ?: 'isbn';
 
-		Core\WordPress::redirect( add_query_arg( [
+		WordPress\Redirect::doWP( add_query_arg( [
 			'newpost' => '',
 			$metakey  => $sanitized,
 		], $archive ), 307 );
@@ -446,7 +446,7 @@ class Isbn extends gEditorial\Module
 				$this->nonce_check( 'imports', $sub );
 
 				if ( ! ModuleSettings::handleImport_from_book_module() )
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 			}
 		}
 	}

@@ -229,7 +229,7 @@ class Tablelist extends WordPress\Main
 						continue 2;
 
 					$list['edit'] = Core\HTML::tag( 'a', [
-						'href'   => Core\WordPress::getPostEditLink( $post_id ),
+						'href'   => WordPress\Post::edit( $post_id ),
 						'class'  => '-link -row-link -row-link-edit',
 						'data'   => [ 'id' => $post_id, 'row' => 'edit' ],
 						'target' => '_blank',
@@ -239,7 +239,7 @@ class Tablelist extends WordPress\Main
 				case 'view':
 
 					$list['view'] = Core\HTML::tag( 'a', [
-						'href'   => Core\WordPress::getPostShortLink( $post_id ),
+						'href'   => WordPress\Post::shortlink( $post_id ),
 						'class'  => '-link -row-link -row-link-view',
 						'data'   => [ 'id' => $post_id, 'row' => 'view' ],
 						'target' => '_blank',
@@ -435,7 +435,7 @@ class Tablelist extends WordPress\Main
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
-					return Core\WordPress::getAuthorEditHTML( $row->post_type, $row->post_author );
+					return WordPress\PostType::authorLink( $row->post_type, $row->post_author );
 
 				if ( $author_data = get_user_by( 'id', $row->post_author ) )
 					return Core\HTML::escape( $author_data->display_name );

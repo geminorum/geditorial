@@ -85,7 +85,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'post',
 				'title'    => _x( 'Site Post', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getPostShortLink( '{{code}}' ),
+				'template' => add_query_arg( [ 'p' => '{{code}}' ], get_bloginfo( 'url' ) ),
 				'cssclass' => '-internal-post',
 				'icon'     => 'admin-post',
 				'logo'     => '',
@@ -93,7 +93,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'attachment',
 				'title'    => _x( 'Site Attachment', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getPostShortLink( '{{code}}' ),
+				'template' => add_query_arg( [ 'p' => '{{code}}' ], get_bloginfo( 'url' ) ),
 				'cssclass' => '-internal-attachment',
 				'icon'     => 'media-default',
 				'logo'     => '',
@@ -101,7 +101,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'term',
 				'title'    => _x( 'Site Term', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => Core\WordPress::getTermShortLink( '{{code}}' ),
+				'template' => add_query_arg( [ 't' => '{{code}}' ], get_bloginfo( 'url' ) ),
 				'cssclass' => '-internal-term',
 				'icon'     => 'tag',
 				'logo'     => '',

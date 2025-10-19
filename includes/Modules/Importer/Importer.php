@@ -643,7 +643,7 @@ class Importer extends gEditorial\Module
 						$count++;
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'imported',
 						'count'   => $count,
 					] );
@@ -655,10 +655,10 @@ class Importer extends gEditorial\Module
 				], TRUE ) ) {
 
 					if ( FALSE === ( $count = $this->_handle_terms_import() ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					else
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'imported',
 							'count'   => $count,
 						] );
@@ -678,7 +678,7 @@ class Importer extends gEditorial\Module
 					$override      = isset( $_POST['posts_import_override'] );
 
 					if ( ! $file = get_attached_file( $attach_id ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					$post_status    = $this->get_setting( 'post_status', 'pending' );
 					$comment_status = $this->get_setting( 'comment_status', 'closed' );
@@ -990,7 +990,7 @@ class Importer extends gEditorial\Module
 					remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 					unset( $iterator );
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'imported',
 						'count'   => $count,
 					] );

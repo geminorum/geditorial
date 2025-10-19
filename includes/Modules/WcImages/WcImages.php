@@ -74,13 +74,13 @@ class WcImages extends gEditorial\Module
 							$count++;
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'synced',
 						'count'   => $count,
 					] );
 				}
 
-				Core\WordPress::redirectReferer( 'huh' );
+				WordPress\Redirect::doReferer( 'huh' );
 			}
 
 			gEditorial\Scripts::enqueueThickBox();

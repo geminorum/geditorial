@@ -215,7 +215,7 @@ class Alphabet extends gEditorial\Module
 				} else {
 
 					$name  = WordPress\Post::title( $post );
-					$link  = Core\WordPress::getPostShortLink( $post->ID );
+					$link  = WordPress\Post::shortlink( $post->ID );
 					$title = empty( $args['meta_title'][$post->post_type] )
 						? FALSE
 						: get_post_meta( $post->ID, $args['meta_title'][$post->post_type], TRUE );

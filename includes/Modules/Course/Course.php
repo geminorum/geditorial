@@ -67,6 +67,7 @@ class Course extends gEditorial\Module
 			'_editlist' => [
 				'admin_ordering',
 				'admin_bulkactions',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
 			],
 			'_frontend' => [
 				[
@@ -295,13 +296,14 @@ class Course extends gEditorial\Module
 		$this->register_taxonomy( 'status_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
-			'show_in_quick_edit' => TRUE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_posttype', [
 			'custom_icon' => 'post-status',
 		] );
 
 		$this->paired_register( [], [
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 			'ical_source'      => 'paired',
 		] );
 
@@ -398,7 +400,7 @@ class Course extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		$this->modulelinks__hook_calendar_linked_post( $screen );
@@ -432,18 +434,18 @@ class Course extends gEditorial\Module
 		if ( is_tax( $this->constant( 'course_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'course_posttype', 'course_paired' ) )
-				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
+				WordPress\Redirect::doWP( get_permalink( $post_id ), 301 );
 
 		} else if ( is_tax( $this->constant( 'span_taxonomy' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_spans', FALSE ) )
-				Core\WordPress::redirect( $redirect, 301 );
+				WordPress\Redirect::doWP( $redirect, 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'course_posttype' ) )
 			|| is_post_type_archive( $this->constant( 'lesson_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				Core\WordPress::redirect( $redirect, 301 );
+				WordPress\Redirect::doWP( $redirect, 301 );
 		}
 	}
 

@@ -465,13 +465,13 @@ class Positions extends gEditorial\Module
 				if ( $reference && $target ) {
 
 					if ( FALSE !== ( $count = $this->subcontent_clone_data_all( $reference, $target, TRUE ) ) )
-						Core\WordPress::redirectURL( Core\WordPress::getPostEditLink( $target ), [
+						WordPress\Redirect::doURL( WordPress\Post::edit( $target ), [
 							'message' => 'created',
 							'count'   => $count,
 						] );
 				}
 
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 
 			case $this->classs( 'clear', 'profile' ):
 
@@ -482,13 +482,13 @@ class Positions extends gEditorial\Module
 				if ( $target ) {
 
 					if ( FALSE !== ( $count = $this->subcontent_delete_data_all( $target, TRUE ) ) )
-						Core\WordPress::redirectURL( Core\WordPress::getPostEditLink( $target ), [
+						WordPress\Redirect::doURL( WordPress\Post::edit( $target ), [
 							'message' => 'deleted',
 							'count'   => $count,
 						] );
 				}
 
-				Core\WordPress::redirectReferer( 'wrong' );
+				WordPress\Redirect::doReferer( 'wrong' );
 		}
 	}
 

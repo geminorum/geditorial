@@ -233,7 +233,7 @@ trait SettingsCore
 		Core\HTML::inputHidden( 'sub', $sub );
 		Core\HTML::inputHidden( 'action', $action );
 
-		Core\WordPress::fieldReferer();
+		WordPress\Redirect::fieldReferer();
 		$this->nonce_field( $context, $sub );
 	}
 

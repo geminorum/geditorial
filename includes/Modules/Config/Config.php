@@ -389,7 +389,7 @@ class Config extends gEditorial\Module
 					$result = gEditorial()->upgrade_old_options();
 
 					if ( $result )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'upgraded',
 							'count'   => count( $result ),
 						] );
@@ -397,10 +397,10 @@ class Config extends gEditorial\Module
 				} else if ( Tablelist::isAction( 'import_all_options' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					if ( ! $data = Parser::fromJSON_Legacy( Core\File::normalize( $file['file'] ) ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					$options = get_option( 'geditorial_options' );
 
@@ -409,9 +409,9 @@ class Config extends gEditorial\Module
 						$options[$module] = (object) $new_options;
 
 					if ( ! update_option( 'geditorial_options', $options, TRUE ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
-					Core\WordPress::redirectReferer( 'updated' );
+					WordPress\Redirect::doReferer( 'updated' );
 
 				} else if ( Tablelist::isAction( 'download_active_options' ) ) {
 
@@ -421,7 +421,7 @@ class Config extends gEditorial\Module
 							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
 						);
 
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				} else if ( Tablelist::isAction( 'download_all_options' ) ) {
 
@@ -431,12 +431,12 @@ class Config extends gEditorial\Module
 							Core\File::prepName( sprintf( '%s-options.%s', $this->base, 'json' ) )
 						);
 
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				} else if ( Tablelist::isAction( 'delete_all_options' ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
-						Core\WordPress::redirectReferer( 'purged' );
+						WordPress\Redirect::doReferer( 'purged' );
 
 				} else if ( Tablelist::isAction( 'custom_fields_empty' ) ) {
 
@@ -445,7 +445,7 @@ class Config extends gEditorial\Module
 						$result = WordPress\Database::deleteEmptyMeta( gEditorial()->module( $post['empty_module'] )->meta_key );
 
 						if ( $result )
-							Core\WordPress::redirectReferer( [
+							WordPress\Redirect::doReferer( [
 								'message' => 'emptied',
 								'count'   => count( $result ),
 							] );
@@ -455,22 +455,22 @@ class Config extends gEditorial\Module
 
 					if ( empty( $_POST['old_o2o_type'] )
 						|| empty( $_POST['new_o2o_type'] ) )
-							Core\WordPress::redirectReferer( 'wrong' );
+							WordPress\Redirect::doReferer( 'wrong' );
 
 					$result = Services\O2O\API::convertConnection( $_POST['old_o2o_type'], $_POST['new_o2o_type'] );
 
 					if ( FALSE === $result )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					else
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'converted',
 							'count'   => $result,
 						] );
 
 				} else {
 
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 
@@ -884,7 +884,7 @@ class Config extends gEditorial\Module
 		if ( $user = gEditorial()->user() ) {
 
 			$name = get_userdata( $user )->display_name;
-			$edit = Core\WordPress::getUserEditLink( $user );
+			$edit = WordPress\User::edit( $user );
 
 			/* translators: `%s`: user link placeholder */
 			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
@@ -1031,10 +1031,10 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		if ( gEditorial()->update_module_option( $module->name, 'enabled', FALSE ) )
-			Core\WordPress::redirectReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
+			WordPress\Redirect::doReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
 
 		else
-			Core\WordPress::redirectReferer( 'error' );
+			WordPress\Redirect::doReferer( 'error' );
 	}
 
 	private function _handle_settings_reset( $module = FALSE, $context = 'settings' )
@@ -1050,7 +1050,7 @@ class Config extends gEditorial\Module
 
 		gEditorial()->update_all_module_options( $module->name, [ 'enabled' => TRUE ] );
 
-		Core\WordPress::redirectReferer( 'resetting' );
+		WordPress\Redirect::doReferer( 'resetting' );
 	}
 
 	private function _handle_settings_save( $module = FALSE, $context = 'settings' )
@@ -1075,6 +1075,6 @@ class Config extends gEditorial\Module
 
 		gEditorial()->update_all_module_options( $module->name, $options );
 
-		Core\WordPress::redirectReferer();
+		WordPress\Redirect::doReferer();
 	}
 }

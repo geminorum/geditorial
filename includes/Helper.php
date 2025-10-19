@@ -285,7 +285,7 @@ class Helper extends WordPress\Main
 		$list = [];
 
 		foreach ( $authors as $author )
-			if ( $html = Core\WordPress::getAuthorEditHTML( $posttype, $author ) )
+			if ( $html = WordPress\PostType::authorLink( $posttype, $author ) )
 				$list[] = $html;
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );
@@ -325,7 +325,6 @@ class Helper extends WordPress\Main
 		if ( 'posttype' === $title_attr )
 			$title_attr = Services\CustomPostType::getLabel( $post->post_type, 'extended_label' );
 
-		// $edit = current_user_can( 'edit_post', $post->ID );
 		$edit = WordPress\Post::can( $post, 'edit_post' );
 
 		if ( 'edit' == $link && ! $edit )
@@ -333,7 +332,7 @@ class Helper extends WordPress\Main
 
 		if ( 'edit' == $link )
 			return Core\HTML::tag( 'a', [
-				'href'   => Core\WordPress::getPostEditLink( $post->ID ),
+				'href'   => WordPress\Post::edit( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
@@ -349,7 +348,7 @@ class Helper extends WordPress\Main
 
 		if ( 'view' == $link )
 			return Core\HTML::tag( 'a', [
-				'href'   => Core\WordPress::getPostShortLink( $post->ID ),
+				'href'   => WordPress\Post::shortlink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
@@ -405,7 +404,7 @@ class Helper extends WordPress\Main
 
 		if ( 'view' == $link )
 			return Core\HTML::tag( 'a', [
-				'href'   => Core\WordPress::getTermShortLink( $term->term_id ),
+				'href'   => WordPress\Term::shortlink( $term->term_id ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
 				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
@@ -520,7 +519,7 @@ class Helper extends WordPress\Main
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
 
 		if ( $edit_last && $post->post_author != $edit_last )
-			$html.= '&nbsp;(<span class="-edit-last">'.Core\WordPress::getAuthorEditHTML( $post->post_type, $edit_last ).'</span>)';
+			$html.= '&nbsp;(<span class="-edit-last">'.WordPress\PostType::authorLink( $post->post_type, $edit_last ).'</span>)';
 
 		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
 	}

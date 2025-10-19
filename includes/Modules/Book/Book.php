@@ -552,7 +552,7 @@ class Book extends gEditorial\Module
 		if ( $this->_paired && is_tax( $this->constant( 'main_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'main_posttype', 'main_paired' ) )
-				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
+				WordPress\Redirect::doWP( get_permalink( $post_id ), 301 );
 
 		} else if ( is_singular( $this->constant( 'main_posttype' ) ) ) {
 

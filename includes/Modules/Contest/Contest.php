@@ -367,13 +367,13 @@ class Contest extends gEditorial\Module
 		if ( is_tax( $this->constant( 'contest_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'contest_posttype', 'contest_paired' ) )
-				Core\WordPress::redirect( get_permalink( $post_id ), 301 );
+				WordPress\Redirect::doWP( get_permalink( $post_id ), 301 );
 
 		} else if ( is_post_type_archive( $this->constant( 'contest_posttype' ) )
 			|| is_post_type_archive( $this->constant( 'apply_posttype' ) ) ) {
 
 			if ( $redirect = $this->get_setting( 'redirect_archives', FALSE ) )
-				Core\WordPress::redirect( $redirect, 301 );
+				WordPress\Redirect::doWP( $redirect, 301 );
 		}
 	}
 

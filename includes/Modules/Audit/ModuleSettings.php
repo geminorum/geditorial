@@ -53,7 +53,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => static::ACTION_FORCE_AUTO_AUDIT,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,
@@ -176,11 +176,11 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_title' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -191,11 +191,11 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_content' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -206,11 +206,11 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_excerpt' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::removeTermObjects( $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'emptied',
 					'count'   => $count,
 				] );
@@ -222,17 +222,17 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_title' );
 
 				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'title', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
+					WordPress\Redirect::doReferer( 'nochange' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
@@ -244,17 +244,17 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_content' );
 
 				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'content', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
+					WordPress\Redirect::doReferer( 'nochange' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
@@ -266,23 +266,23 @@ class ModuleSettings extends gEditorial\Settings
 				$attribute = ModuleHelper::getAttributeSlug( 'empty_excerpt' );
 
 				if ( FALSE === ( $posts = ModuleHelper::getPostsEmpty( 'excerpt', $attribute, $posttypes ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				if ( empty( $posts ) )
-					Core\WordPress::redirectReferer( 'nochange' );
+					WordPress\Redirect::doReferer( 'nochange' );
 
 				if ( FALSE === ( $count = WordPress\Taxonomy::setTermObjects( $posts, $attribute, $taxonomy ) ) )
-					Core\WordPress::redirectReferer( 'wrong' );
+					WordPress\Redirect::doReferer( 'wrong' );
 
 				WordPress\Term::updateCount( $attribute, $taxonomy );
 
-				Core\WordPress::redirectReferer( [
+				WordPress\Redirect::doReferer( [
 					'message' => 'synced',
 					'count'   => $count,
 				] );
 				break;
 		}
 
-		Core\WordPress::redirectReferer( 'huh' );
+		WordPress\Redirect::doReferer( 'huh' );
 	}
 }

@@ -678,7 +678,7 @@ class Cartable extends gEditorial\Module
 				if ( WordPress\Term::add( $group->name, $this->constant( 'group_taxonomy' ), $group->slug ) )
 					$count++;
 
-		Core\WordPress::redirectReferer( [
+		WordPress\Redirect::doReferer( [
 			'message' => 'synced',
 			'count'   => $count,
 		] );

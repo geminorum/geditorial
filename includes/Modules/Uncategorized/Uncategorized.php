@@ -204,7 +204,7 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -223,7 +223,7 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -244,14 +244,14 @@ class Uncategorized extends gEditorial\Module
 						// delete pointer's cache
 						delete_transient( $this->_get_count_cache_key() );
 
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
 					}
 				}
 
-				Core\WordPress::redirectReferer( 'nochange' );
+				WordPress\Redirect::doReferer( 'nochange' );
 			}
 		}
 	}
@@ -339,14 +339,14 @@ class Uncategorized extends gEditorial\Module
 						", trim( $post['live_tax'] ), trim( $post['dead_tax'] ) ) );
 
 						if ( FALSE !== $result )
-							Core\WordPress::redirectReferer( [
+							WordPress\Redirect::doReferer( [
 								'message' => 'changed',
 								'count'   => $result,
 							] );
 					}
 				}
 
-				Core\WordPress::redirectReferer( 'nochange' );
+				WordPress\Redirect::doReferer( 'nochange' );
 			}
 		}
 	}

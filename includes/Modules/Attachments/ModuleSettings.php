@@ -89,7 +89,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => static::ACTION_EMPTY_RAW_METADATA,
 			'type'   => $posttype,
 			'paged'  => $paged + 1,
@@ -112,7 +112,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => static::ACTION_DELETION_BY_MIME,
 			'mime'   => $mimetype,
 		] ) );
@@ -193,7 +193,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => static::ACTION_REATTACH_THUMBNAILS,
 			'type'   => $posttype,
 		] ) );

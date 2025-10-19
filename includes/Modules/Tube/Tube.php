@@ -376,7 +376,7 @@ class Tube extends gEditorial\Module
 				'target' => '_blank',
 			], $this->icon( 'gorbeh-aparat', 'misc-512' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
 
-		$link = empty( $attr['shortlink'] ) ? Core\WordPress::getPostShortLink( $post_id ) : $attr['shortlink'];
+		$link = empty( $attr['shortlink'] ) ? WordPress\Post::shortlink( $post_id ) : $attr['shortlink'];
 
 		$html.= Core\HTML::tag( 'a', [
 			'href'   => $link,

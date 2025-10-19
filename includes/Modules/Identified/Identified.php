@@ -798,7 +798,7 @@ class Identified extends gEditorial\Module
 					return $posts;
 
 				Services\HeaderButtons::register( $this->key, [
-					'link' => Core\WordPress::getPostNewLink( $posttype, [ $metakey => $sanitized ] ),
+					'link' => WordPress\PostType::newLink( $posttype, [ $metakey => $sanitized ] ),
 					'text' => sprintf(
 						/* translators: `%1$s`: add new label, `%2$s`: identifier code */
 						_x( '%1$s with %2$s', 'Header Button', 'geditorial-identified' ),
@@ -962,11 +962,11 @@ class Identified extends gEditorial\Module
 					if ( ! $this->is_post_viewable( $post ) )
 						continue;
 
-					Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
+					WordPress\Redirect::doWP( get_page_link( $post->ID ), 302 );
 				}
 
 				if ( $tokenized = $this->_get_url_for_identifier_notfound( $type, $sanitized, $supported ) )
-					Core\WordPress::redirect( $tokenized, 307 );
+					WordPress\Redirect::doWP( $tokenized, 307 );
 
 				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
 

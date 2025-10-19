@@ -412,13 +412,13 @@ class Ortho extends gEditorial\Module
 					foreach ( $_POST['_cb'] as $post_id )
 						$count += $this->cleanup_post( $post_id );
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
 					] );
 				}
 
-				Core\WordPress::redirectReferer( 'huh' );
+				WordPress\Redirect::doReferer( 'huh' );
 			}
 
 			$this->register_button( 'cleanup_chars', _x( 'Cleanup Chars', 'Button', 'geditorial-ortho' ), TRUE );

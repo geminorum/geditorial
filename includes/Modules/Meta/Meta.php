@@ -1122,7 +1122,7 @@ class Meta extends gEditorial\Module
 							$post['custom_field_limit'] );
 
 					if ( $result )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'converted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],
@@ -1143,7 +1143,7 @@ class Meta extends gEditorial\Module
 						$result = WordPress\Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
 
 					if ( $result )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'deleted',
 							'field'   => $post['custom_field'],
 							'limit'   => $post['custom_field_limit'],

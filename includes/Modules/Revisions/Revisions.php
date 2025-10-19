@@ -315,15 +315,15 @@ class Revisions extends gEditorial\Module
 	public function admin_post()
 	{
 		if ( empty( $_REQUEST['post_id'] ) )
-			Core\WordPress::redirectReferer( 'wrong' );
+			WordPress\Redirect::doReferer( 'wrong' );
 
 		if ( ! $this->nonce_verify( 'purge_'.$_REQUEST['post_id'], $_REQUEST['_wpnonce'] ) )
 			self::cheatin();
 
 		if ( ! current_user_can( $this->caps['purge'], $_REQUEST['post_id'] ) )
-			Core\WordPress::redirectReferer( 'noaccess' );
+			WordPress\Redirect::doReferer( 'noaccess' );
 
-		Core\WordPress::redirectReferer( [
+		WordPress\Redirect::doReferer( [
 			$this->hook( 'purged' ) => $this->purge( $_REQUEST['post_id'] ),
 		] );
 	}
@@ -386,7 +386,7 @@ class Revisions extends gEditorial\Module
 							$count += $this->purge( $post_id );
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'cleaned',
 						'count'   => $count,
 					] );

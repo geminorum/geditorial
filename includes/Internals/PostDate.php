@@ -63,7 +63,7 @@ trait PostDate
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => self::$postdate__action_override_dates,
 			'type'   => $posttype,
 			'paged'  => self::paged() + 1,

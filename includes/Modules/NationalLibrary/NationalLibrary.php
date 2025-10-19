@@ -465,7 +465,7 @@ class NationalLibrary extends gEditorial\Module
 					if ( ! $this->is_post_viewable( $post ) )
 						return;
 
-					Core\WordPress::redirect( get_page_link( $post->ID ), 302 );
+					WordPress\Redirect::doWP( get_page_link( $post->ID ), 302 );
 				}
 
 			} else if ( $fipa = get_query_var( $this->constant( 'fipa_queryvar' ) ) ) {
@@ -477,7 +477,7 @@ class NationalLibrary extends gEditorial\Module
 				if ( ! $url = ModuleHelper::scrapeURLFromISBN( Core\ISBN::sanitize( $fipa ) ) )
 					return; // TODO: maybe redirect to error page
 
-				Core\WordPress::redirect( $url, 302 );
+				WordPress\Redirect::doWP( $url, 302 );
 			}
 		}
 	}
@@ -942,11 +942,11 @@ class NationalLibrary extends gEditorial\Module
 				if ( Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_scrape_pool() )
-						Core\WordPress::redirectReferer( 'huh' );
+						WordPress\Redirect::doReferer( 'huh' );
 
 				} else {
 
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 		}

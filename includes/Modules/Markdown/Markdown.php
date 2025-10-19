@@ -154,25 +154,24 @@ class Markdown extends gEditorial\Module
 					Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
+				break;
 
-			break;
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable to convert content into Markdown. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
+				break;
 
-			break;
 			case 'cleanup':
-
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
 					Ajax::errorMessage( _x( 'Unable to cleanup Markdown content. Please try again.', 'Message', 'geditorial-markdown' ) );
 
 				Ajax::successMessage();
+				break;
 
-			break;
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
@@ -187,7 +186,7 @@ class Markdown extends gEditorial\Module
 	// @REF: https://github.com/michelf/php-markdown
 	private function process_content( $content, $id )
 	{
-		// $content is slashed, but Markdown parser hates it precious.
+		// `$content` is slashed, but Markdown parser hates it precious.
 		$content = stripslashes( $content );
 
 		if ( ! $this->parser )
@@ -198,7 +197,7 @@ class Markdown extends gEditorial\Module
 		if ( $this->get_setting( 'wiki_linking' ) )
 			$content = $this->linking( $content, WordPress\Post::get( $id ) );
 
-		// reference the post_id to make footnote ids unique
+		// Reference the `post_id` to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
 
 		$content = Core\Text::removeP( $content );
@@ -249,7 +248,7 @@ class Markdown extends gEditorial\Module
 		$slug = preg_replace( '/\s+/', '-', $slug );
 
 		if ( $post_id = WordPress\PostType::getIDbySlug( $slug, $post->post_type, TRUE ) )
-			$link = Core\WordPress::getPostShortLink( $post_id );
+			$link = WordPress\Post::shortlink( $post_id );
 
 		else
 			$link = add_query_arg( [
@@ -415,7 +414,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'converted',
 							'count'   => $count,
 						] );
@@ -427,7 +426,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'changed',
 							'count'   => $count,
 						] );
@@ -439,7 +438,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'cleaned',
 							'count'   => $count,
 						] );
@@ -451,7 +450,7 @@ class Markdown extends gEditorial\Module
 							$count++;
 
 					if ( $count )
-						Core\WordPress::redirectReferer( [
+						WordPress\Redirect::doReferer( [
 							'message' => 'purged',
 							'count'   => $count,
 						] );

@@ -620,37 +620,37 @@ class Users extends gEditorial\Module
 				if ( Tablelist::isAction( 'duplicate_role' ) ) {
 
 					if ( ! $from = self::req( 'role_from' ) )
-						Core\WordPress::redirectReferer( 'huh' );
+						WordPress\Redirect::doReferer( 'huh' );
 
 					if ( ! $caps = WordPress\Role::capabilities( $from, FALSE ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					$name  = self::req( 'role_name' ) ?: sprintf( '%s_duplicated', $from );
 					$title = self::req( 'role_title' ) ?: Core\Text::readableKey( $name );
 
 					if ( ! add_role( WordPress\Role::sanitize( $name ), $title, $caps ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
-					Core\WordPress::redirectReferer( 'added' );
+					WordPress\Redirect::doReferer( 'added' );
 
 				} else if ( Tablelist::isAction( 'delete_role' ) ) {
 
 					if ( ! $delete = self::req( 'role_delete' ) )
-						Core\WordPress::redirectReferer( 'huh' );
+						WordPress\Redirect::doReferer( 'huh' );
 
 					if ( in_array( $delete, [ 'administrator', 'subscriber' ], TRUE ) )
-						Core\WordPress::redirectReferer( 'noaccess' );
+						WordPress\Redirect::doReferer( 'noaccess' );
 
 					if ( ! WordPress\Role::object( $delete ) )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					remove_role( $delete );
-					Core\WordPress::redirectReferer( 'removed' );
+					WordPress\Redirect::doReferer( 'removed' );
 
 				} else if ( Tablelist::isAction( 'remap_post_authors' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					$count = 0;
 					$role  = get_option( 'default_role' );
@@ -679,7 +679,7 @@ class Users extends gEditorial\Module
 						}
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message'    => 'synced',
 						'count'      => $count,
 						'attachment' => $file['id'],
@@ -687,7 +687,7 @@ class Users extends gEditorial\Module
 
 				} else {
 
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 		}

@@ -322,7 +322,7 @@ class Schedule extends gEditorial\Module
 
 			if ( current_user_can( $object->cap->create_posts ) ) {
 
-				$buttons.= '<a href="'.Core\WordPress::getPostNewLink( $object->name )
+				$buttons.= '<a href="'.WordPress\PostType::newLink( $object->name )
 					.'" title="'.Core\HTML::escape( $object->labels->add_new_item )
 					.'" data-type="'.$object->name.'" data-title="'.$object->labels->new_item
 					.'" class="-the-day-newpost" target="_blank">'

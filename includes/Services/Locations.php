@@ -9,8 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 class Locations extends gEditorial\Service
 {
-	// TODO: support: `Venue` Module
-
 	public static function setup()
 	{
 		if ( is_admin() )

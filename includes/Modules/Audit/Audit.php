@@ -484,7 +484,7 @@ class Audit extends gEditorial\Module
 
 				} else {
 
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 		}

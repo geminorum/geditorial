@@ -361,10 +361,10 @@ class PostTypeFields extends gEditorial\Service
 		if ( $check ) {
 
 			if ( ! gEditorial()->enabled( $module ) )
-				return FALSE;
+				return $default;
 
 			if ( ! $post = WordPress\Post::get( $post_id ) )
-				return FALSE;
+				return $default;
 
 			$post_id = $post->ID;
 		}

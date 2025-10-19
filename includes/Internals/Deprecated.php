@@ -409,7 +409,7 @@ trait Deprecated
 		else
 			$message = 'wrong';
 
-		Core\WordPress::redirectReferer( $message );
+		WordPress\Redirect::doReferer( $message );
 	}
 
 	// NOTE: DEPRECATED

@@ -47,7 +47,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo '</ul></div>';
 
-		return Core\WordPress::redirectJS( add_query_arg( [
+		return WordPress\Redirect::doJS( add_query_arg( [
 			'action' => static::ACTION_MIGRATE_GTIN,
 			'paged'  => self::paged() + 1,
 		] ) );

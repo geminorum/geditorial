@@ -1019,7 +1019,7 @@ class Today extends gEditorial\Module
 							$count++;
 					}
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'scheduled',
 						'count'   => $count,
 					] );

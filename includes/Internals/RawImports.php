@@ -2,9 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Parser;
-use geminorum\gEditorial\Plugin;
+use geminorum\gEditorial\WordPress;
 
 trait RawImports
 {
@@ -50,10 +50,10 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'csv' : $data = Parser::fromCSV_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'json': $data = Parser::fromJSON_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'xml' : $data = Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'txt' : $data = Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'csv' : $data = gEditorial\Parser::fromCSV_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'json': $data = gEditorial\Parser::fromJSON_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'xml' : $data = gEditorial\Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'txt' : $data = gEditorial\Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) ); break;
 			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile( $key ), [] ); break;
 		}
 
@@ -112,9 +112,9 @@ trait RawImports
 		echo $this->wrap_open( 'wrap' ); // NOTE: needs `wrap` class for admin styles
 
 			Core\HTML::h1( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ) );
-			Core\HTML::desc( sprintf( $this->get_string( 'redirect', 'wp_importer', 'misc', Plugin::moment( FALSE ) ), $url ) );
+			Core\HTML::desc( sprintf( $this->get_string( 'redirect', 'wp_importer', 'misc', gEditorial\Plugin::moment( FALSE ) ), $url ) );
 
-			Core\WordPress::redirectJS( $url, 1000 );
+			WordPress\Redirect::doJS( $url, 1000 );
 		echo '</div>';
 	}
 }

@@ -232,7 +232,7 @@ class Lingo extends gEditorial\Module
 				if ( Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
 
 					if ( ! $data = $this->get_imports_raw_data() )
-						Core\WordPress::redirectReferer( 'wrong' );
+						WordPress\Redirect::doReferer( 'wrong' );
 
 					$count  = 0;
 					$terms  = [];
@@ -258,9 +258,9 @@ class Lingo extends gEditorial\Module
 					}
 
 					if ( ! WordPress\Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
-						Core\WordPress::redirectReferer( 'noadded' );
+						WordPress\Redirect::doReferer( 'noadded' );
 
-					Core\WordPress::redirectReferer( [
+					WordPress\Redirect::doReferer( [
 						'message' => 'created',
 						'count'   => $count,
 					] );

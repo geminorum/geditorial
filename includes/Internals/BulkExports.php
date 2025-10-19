@@ -160,7 +160,7 @@ trait BulkExports
 		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context, $format ) ) )
 			Core\Text::download( $data, Core\File::prepName( $this->exports_get_export_filename( $reference, $target, $type, $context, $format ) ) );
 
-		Core\WordPress::redirectReferer( 'wrong' );
+		WordPress\Redirect::doReferer( 'wrong' );
 	}
 
 	// TODO: apply general filter with token support and override `Core\File::prepName()`

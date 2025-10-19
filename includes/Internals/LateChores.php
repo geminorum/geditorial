@@ -10,11 +10,11 @@ trait LateChores
 {
 
 	/**
-	 * Initiates the after-care procees for given posttypes.
-	 * NOTE: must be called on `init` eg: always!
+	 * Initiates the after-care process for given post-types.
+	 * NOTE: must be called on `init` e.g. always!
 	 *
-	 * @param  string|array $posttypes
-	 * @return false|string $action
+	 * @param string|array $posttypes
+	 * @return false|string
 	 */
 	protected function latechores__init_post_aftercare( $posttypes )
 	{
@@ -46,7 +46,7 @@ trait LateChores
 	}
 
 	// EXAMPLE CALLBACK
-	// protected function latechores_post_aftercare( $post ) {}
+	// `protected function latechores_post_aftercare( $post ) {}`
 
 	public function latechores__collector_post_aftercare( $post_id, $post, $update )
 	{
@@ -80,7 +80,7 @@ trait LateChores
 			return FALSE;
 
 		if ( TRUE === ( $data = $this->latechores_post_aftercare( $post ) ) )
-			return TRUE; // already ok!
+			return TRUE; // already OK!
 
 		if ( empty( $data ) || ! is_array( $data ) )
 			return FALSE; // something's wrong

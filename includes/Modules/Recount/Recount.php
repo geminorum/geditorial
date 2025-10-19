@@ -234,7 +234,7 @@ class Recount extends gEditorial\Module
 				$count++;
 			}
 
-			Core\WordPress::redirectReferer( [
+			WordPress\Redirect::doReferer( [
 				'message' => 'synced',
 				'count'   => $count,
 			] );

@@ -559,7 +559,7 @@ class Tweaks extends gEditorial\Module
 
 		switch ( $column_name ) {
 
-			// FIXME: wont work beacuse of page-title css class
+			// FIXME: wont work because of page-title CSS class
 			case $this->classs( 'title' ):
 
 				// TODO: add before action
@@ -567,8 +567,8 @@ class Tweaks extends gEditorial\Module
 				// TODO: add after action
 				// TODO: must hook to 'the_excerpt' for before excerpt
 				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
+				break;
 
-			break;
 			case $this->classs( 'rows' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -rows"><ul class="-rows -flex-rows">';
@@ -588,8 +588,8 @@ class Tweaks extends gEditorial\Module
 					);
 
 				echo '</ul></div>';
+				break;
 
-			break;
 			case $this->classs( 'atts' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -atts"><ul class="-rows">';
@@ -608,23 +608,23 @@ class Tweaks extends gEditorial\Module
 					);
 
 				echo '</ul></div>';
+				break;
 
-			break;
 			case $this->classs( 'thumb' ):
 
-				$size = NULL; // maybe filter fo this module?!
+				$size = NULL; // MAYBE: filter for this module?!
 				echo $this->filters( 'column_thumb', WordPress\PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
+				break;
 
-			break;
 			case $this->classs( 'order' ):
 
 				echo Listtable::columnOrder( $post->menu_order );
+				break;
 
-			break;
 			case $this->classs( 'id' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
-					echo Core\HTML::link( $post_id, Core\WordPress::getPostShortLink( $post_id ), TRUE );
+					echo Core\HTML::link( $post_id, WordPress\Post::shortlink( $post_id ), TRUE );
 				echo '</div>';
 		}
 	}
@@ -667,6 +667,7 @@ class Tweaks extends gEditorial\Module
 				// do nothing
 
 			} else {
+
 				$new[$key] = $value;
 			}
 
@@ -735,7 +736,7 @@ class Tweaks extends gEditorial\Module
 	{
 		$columns['user'] = $this->get_column_title( 'user', 'comments' );
 
-		// move core WP response column to the end.
+		// Move core WP response column to the end.
 		if ( isset( $columns['response'] ) ) {
 			$response = $columns['response'];
 			unset( $columns['response'] );
@@ -839,8 +840,11 @@ class Tweaks extends gEditorial\Module
 			else
 				$status = $post->comment_status;
 
-			/* translators: `%s`: status */
-			printf( _x( 'Comments are %s', 'Comment Status', 'geditorial-tweaks' ), $status );
+			printf(
+				/* translators: `%s`: status */
+				_x( 'Comments are %s', 'Comment Status', 'geditorial-tweaks' ),
+				$status
+			);
 
 		echo $after;
 	}
@@ -855,7 +859,7 @@ class Tweaks extends gEditorial\Module
 
 		printf( $before, '-post-author' );
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo '<span class="-author">'.Core\WordPress::getAuthorEditHTML( $post->post_type, $post->post_author ).'</span>';
+			echo '<span class="-author">'.WordPress\PostType::authorLink( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
 

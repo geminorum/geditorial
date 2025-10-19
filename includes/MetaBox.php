@@ -463,7 +463,7 @@ class MetaBox extends WordPress\Main
 
 		if ( WordPress\PostType::can( $posttype, 'create_posts' ) )
 			$html = Core\HTML::tag( 'a', [
-				'href'   => Core\WordPress::getPostNewLink( $posttype ),
+				'href'   => WordPress\PostType::newLink( $posttype ),
 				'title'  => $object->labels->add_new_item,
 				'target' => '_blank',
 			], $object->labels->not_found );

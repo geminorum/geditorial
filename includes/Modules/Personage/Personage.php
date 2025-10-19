@@ -1028,11 +1028,11 @@ class Personage extends gEditorial\Module
 				if ( Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_parse_pool() )
-						Core\WordPress::redirectReferer( 'huh' );
+						WordPress\Redirect::doReferer( 'huh' );
 
 				} else {
 
-					Core\WordPress::redirectReferer( 'huh' );
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 		}
