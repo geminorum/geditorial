@@ -18,6 +18,7 @@ class Course extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\LateChores;
 	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -26,6 +27,7 @@ class Course extends gEditorial\Module
 	use Internals\PairedRowActions;
 	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
+	use Internals\PostDate;
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
@@ -64,6 +66,7 @@ class Course extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
+				'admin_bulkactions',
 			],
 			'_frontend' => [
 				[
@@ -89,6 +92,7 @@ class Course extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'override_dates',
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
@@ -197,6 +201,10 @@ class Course extends gEditorial\Module
 						'type'        => 'title_after',
 					],
 					'lead'              => [ 'type' => 'postbox_html' ],
+					'date'              => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'          => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'         => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'           => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'content_fee'       => [ 'type' => 'price' ],
 					'content_embed_url' => [ 'type' => 'embed' ],
 					'text_source_url'   => [ 'type' => 'text_source' ],
@@ -217,6 +225,11 @@ class Course extends gEditorial\Module
 					'source_title' => [ 'type' => 'text' ],
 					'source_url'   => [ 'type' => 'link' ],
 					'highlight'    => [ 'type' => 'note' ],
+
+					'date'      => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 
 					'content_embed_url' => [ 'type' => 'embed' ],
 					'text_source_url'   => [ 'type' => 'text_source' ],
@@ -336,6 +349,8 @@ class Course extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->modulelinks__register_headerbuttons();
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'course_posttype' );
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
@@ -373,6 +388,7 @@ class Course extends gEditorial\Module
 				if ( $screen->post_type == $this->constant( 'lesson_posttype' ) )
 					$this->_hook_bulk_post_updated_messages( 'lesson_posttype' );
 
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );
 				$this->paired__hook_screen_restrictposts();
@@ -389,6 +405,12 @@ class Course extends gEditorial\Module
 	{
 		$this->add_posttype_fields_for( 'meta', 'course_posttype' );
 		$this->add_posttype_fields_for( 'meta', 'lesson_posttype' );
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( [
+				$this->constant( 'course_posttype' ),
+				$this->constant( 'lesson_posttype' ),
+			] );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -485,6 +507,24 @@ class Course extends gEditorial\Module
 		);
 	}
 
+	private function get_postdate_metakeys()
+	{
+		return [
+			Services\PostTypeFields::getPostMetaKey( 'date' ),
+			Services\PostTypeFields::getPostMetaKey( 'datetime' ),
+			Services\PostTypeFields::getPostMetaKey( 'datestart' ),
+			Services\PostTypeFields::getPostMetaKey( 'dateend' ),
+		];
+	}
+
+	protected function latechores_post_aftercare( $post )
+	{
+		return $this->postdate__get_post_data_for_latechores(
+			$post,
+			$this->get_postdate_metakeys()
+		);
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -506,11 +546,34 @@ class Course extends gEditorial\Module
 
 			$this->paired_tools_render_card( $uri, $sub );
 
+			if ( $this->get_setting( 'override_dates', TRUE ) )
+				$this->postdate__render_card_override_dates(
+					$uri,
+					$sub,
+					[
+						$this->constant( 'course_posttype' ),
+						$this->constant( 'lesson_posttype' ),
+					],
+					_x( 'Course/Lesson Date from Meta-data', 'Card', 'geditorial-course' )
+				);
+
 		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )
 	{
+		if ( FALSE === $this->postdate__render_before_override_dates(
+			[
+				$this->constant( 'course_posttype' ),
+				$this->constant( 'lesson_posttype' ),
+			],
+			$this->get_postdate_metakeys(),
+			$uri,
+			$sub,
+			'tools'
+		) )
+			return FALSE;
+
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
