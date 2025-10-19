@@ -4,15 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Book extends gEditorial\Module
@@ -58,7 +51,7 @@ class Book extends gEditorial\Module
 
 	public function settings_intro()
 	{
-		Info::renderNoticeP2P();
+		gEditorial\Info::renderNoticeP2P();
 	}
 
 	protected function get_global_settings()
@@ -526,7 +519,7 @@ class Book extends gEditorial\Module
 
 		// TODO: `$this->paired_register()`
 		$this->register_posttype( 'main_posttype', [
-			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
+			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 			'status_taxonomy'  => TRUE,
@@ -742,7 +735,7 @@ class Book extends gEditorial\Module
 			] );
 
 		else
-			$html.= ShortCode::listPosts( 'assigned',
+			$html.= gEditorial\ShortCode::listPosts( 'assigned',
 				$this->constant( 'main_posttype' ),
 				$this->constant( 'category_taxonomy' ),
 				[
@@ -758,7 +751,7 @@ class Book extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'paired',
+		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'main_posttype' ),
 			$this->constant( 'main_paired' ),
 			array_merge( [
@@ -774,7 +767,7 @@ class Book extends gEditorial\Module
 
 	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),
 			$this->constant( 'serie_taxonomy' ),
 			array_merge( [
@@ -791,7 +784,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->_p2p )
 			return $content;
 
-		return ShortCode::listPosts( 'connected',
+		return gEditorial\ShortCode::listPosts( 'connected',
 			$this->constant( 'main_posttype' ),
 			'',
 			array_merge( [
@@ -853,7 +846,7 @@ class Book extends gEditorial\Module
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
-		return ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap( $html,
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
@@ -939,7 +932,7 @@ class Book extends gEditorial\Module
 			while ( $connected->have_posts() ) {
 				$connected->the_post();
 
-				echo ShortCode::postItem( $GLOBALS['post'], [
+				echo gEditorial\ShortCode::postItem( $GLOBALS['post'], [
 					'item_link'  => WordPress\Post::link( NULL, FALSE ),
 					'item_after' => $this->p2p_get_meta_row( 'main_posttype', $GLOBALS['post']->p2p_id, ' &ndash; ', '' ),
 				] );
@@ -971,13 +964,13 @@ class Book extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Publication Tools', 'Header', 'geditorial-book' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -1000,14 +993,14 @@ class Book extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -1018,7 +1011,7 @@ class Book extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
@@ -1044,28 +1037,29 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'tools' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'tools' ) );
 
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle(),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'date'  => gEditorial\Tablelist::columnPostDate(),
+			'type'  => gEditorial\Tablelist::columnPostType(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
 			'metas' => [
 				'title'    => _x( 'Import Meta', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'fields' => $this->get_importer_fields() ],
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+
 					$html = '';
 
 					foreach ( $column['args']['fields'] as $field => $title )
 						if ( $meta = get_post_meta( $row->ID, $field, TRUE ) )
 							$html.= '<div><b>'.$title.'</b>: '.$meta.'</div>';
 
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 			'related' => [
@@ -1076,13 +1070,13 @@ class Book extends gEditorial\Module
 					$html = '';
 
 					if ( $id = get_post_meta( $row->ID, 'book_publication_id', TRUE ) )
-						$html.= '<div><b>'._x( 'By ID', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $id ).'</div>';
+						$html.= '<div><b>'._x( 'By ID', 'Tools', 'geditorial-book' ).'</b>: '.gEditorial\Helper::getPostTitleRow( $id ).'</div>';
 
 					if ( $title = get_post_meta( $row->ID, 'book_publication_title', TRUE ) )
 						foreach ( (array) WordPress\Post::getByTitle( $title, $column['args']['type'] ) as $post_id )
-							$html.= '<div><b>'._x( 'By Title', 'Tools', 'geditorial-book' ).'</b>: '.Helper::getPostTitleRow( $post_id ).'</div>';
+							$html.= '<div><b>'._x( 'By Title', 'Tools', 'geditorial-book' ).'</b>: '.gEditorial\Helper::getPostTitleRow( $post_id ).'</div>';
 
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 		], $posts, [
@@ -1104,15 +1098,15 @@ class Book extends gEditorial\Module
 			case 'collection'         : return Core\HTML::link( $raw, Core\WordPress::getSearchLink( $raw ) );
 
 			case 'total_pages':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'page' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'page' ) ),
 					Core\Number::format( trim( $raw ) ) );
 
 			case 'total_volumes':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'volume' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'volume' ) ),
 					Core\Number::format( trim( $raw ) ) );
 
 			case 'total_discs':
-				return sprintf( Helper::noopedCount( trim( $raw ), Info::getNoop( 'disc' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'disc' ) ),
 					Core\Number::format( trim( $raw ) ) );
 		}
 

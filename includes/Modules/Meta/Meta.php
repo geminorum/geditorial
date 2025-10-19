@@ -4,16 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Meta extends gEditorial\Module
@@ -417,7 +409,7 @@ class Meta extends gEditorial\Module
 				$this->posttypefields__enqueue_edit_screen( $screen->post_type, $fields );
 				$this->_hook_store_metabox( $screen->post_type, 'posttypefields' );
 
-				Scripts::enqueueClickToClip();
+				gEditorial\Scripts::enqueueClickToClip();
 			}
 		}
 	}
@@ -485,7 +477,7 @@ class Meta extends gEditorial\Module
 								.Core\HTML::escape( $args['description'] ).'">'
 								.Core\HTML::getDashicon( 'editor-help' ).'</span>';
 
-						MetaBox::classEditorBox( $screen, $metabox );
+						gEditorial\MetaBox::classEditorBox( $screen, $metabox );
 
 						add_meta_box( $metabox,
 							$title,
@@ -699,12 +691,12 @@ class Meta extends gEditorial\Module
 			case 'date_of_birth':
 
 				if ( 'print' === $context )
-					return Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' );
+					return gEditorial\Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' );
 
 				if ( 'export' === $context )
-					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+					return gEditorial\Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
 
-				return Datetime::prepDateOfBirth( trim( $raw ) );
+				return gEditorial\Datetime::prepDateOfBirth( trim( $raw ) );
 		}
 
 		switch ( $field_args['type'] ) {
@@ -712,20 +704,20 @@ class Meta extends gEditorial\Module
 			case 'venue':
 
 				if ( 'export' === $context )
-					return WordPress\Strings::getPiped( Helper::getSeparated( $raw ?: $meta ) );
+					return WordPress\Strings::getPiped( gEditorial\Helper::getSeparated( $raw ?: $meta ) );
 
 				if ( 'print' === $context )
-					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
+					return WordPress\Strings::getJoined( gEditorial\Helper::getSeparated( $raw ?: $meta ) );
 
 				return Services\Locations::prepVenue( $raw ?: $meta );
 
 			case 'people':
 
 				if ( 'export' === $context )
-					return WordPress\Strings::getPiped( Helper::getSeparated( $raw ?: $meta ) );
+					return WordPress\Strings::getPiped( gEditorial\Helper::getSeparated( $raw ?: $meta ) );
 
 				if ( 'print' === $context )
-					return WordPress\Strings::getJoined( Helper::getSeparated( $raw ?: $meta ) );
+					return WordPress\Strings::getJoined( gEditorial\Helper::getSeparated( $raw ?: $meta ) );
 
 				return Services\Individuals::prepPeople( $raw ?: $meta );
 
@@ -746,7 +738,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				if ( FALSE === ( $postcode = Info::fromPostCode( $raw ?: $meta ) ) )
+				if ( FALSE === ( $postcode = gEditorial\Info::fromPostCode( $raw ?: $meta ) ) )
 					return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $raw ?: $meta );
 
 				else
@@ -761,7 +753,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $meta ) ) )
+				if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $raw ?: $meta ) ) )
 					return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $meta );
 
 				else
@@ -776,7 +768,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $meta ) ) )
+				if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $raw ?: $meta ) ) )
 					return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $meta );
 
 				else
@@ -787,7 +779,7 @@ class Meta extends gEditorial\Module
 					);
 
 			case 'contact':
-				return Helper::prepContact( trim( $raw ) );
+				return gEditorial\Helper::prepContact( trim( $raw ) );
 
 			case 'email':
 				return Core\Email::prep( $raw, $field_args, $context );
@@ -807,14 +799,14 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return Info::lookupISBN( trim( $raw ) );
+				return gEditorial\Info::lookupISBN( trim( $raw ) );
 
 			case 'vin':
 
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return Info::lookupPlate( trim( $raw ) );
+				return gEditorial\Info::lookupPlate( trim( $raw ) );
 
 			case 'plate':
 
@@ -845,31 +837,31 @@ class Meta extends gEditorial\Module
 			case 'date':
 
 				if ( 'export' === $context )
-					return Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+					return gEditorial\Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
 
-				return Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j' : 'Y/m/d' );
+				return gEditorial\Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j' : 'Y/m/d' );
 
 			case 'datetime':
 
 				if ( 'export' === $context )
-					return Datetime::prepForInput( trim( $raw ),
-						Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
+					return gEditorial\Datetime::prepForInput( trim( $raw ),
+						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
 						'gregorian'
 					);
 
 				if ( 'print' === $context )
-					return Datetime::prepForDisplay(
+					return gEditorial\Datetime::prepForDisplay(
 						trim( $raw ),
-						Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i'
+						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i'
 					);
 
-				return Datetime::prepForDisplay(
+				return gEditorial\Datetime::prepForDisplay(
 					trim( $raw ),
-					Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i'
+					gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i'
 				);
 
 			case 'datestring':
-				return Core\Number::localize( Datetime::stringFormat( $raw ) );
+				return Core\Number::localize( gEditorial\Datetime::stringFormat( $raw ) );
 
 			case 'area':
 				return Core\Area::prep( $raw, $field_args, $context );
@@ -879,35 +871,35 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Template::doEmbedShortCode( trim( $raw ), $post, $context );
+				return gEditorial\Template::doEmbedShortCode( trim( $raw ), $post, $context );
 
 			case 'text_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
+				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
 
 			case 'audio_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Template::doMediaShortCode( trim( $raw ), 'audio', $post, $context );
+				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'audio', $post, $context );
 
 			case 'video_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
+				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
 
 			case 'image_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				return Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
+				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
 
 			case 'embed':
 
@@ -935,7 +927,7 @@ class Meta extends gEditorial\Module
 					return $raw ?: $meta;
 
 				// return Core\LatLng::prep( trim( $raw ) );
-				return Info::lookupLatLng( trim( $raw ) );
+				return gEditorial\Info::lookupLatLng( trim( $raw ) );
 		}
 
 		return $meta;
@@ -1021,7 +1013,7 @@ class Meta extends gEditorial\Module
 		echo '</table>';
 
 		if ( $na )
-			Info::renderNoImportsAvailable();
+			gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	private function _render_imports_db_metakeys( $metakeys, $args )
@@ -1061,13 +1053,13 @@ class Meta extends gEditorial\Module
 
 		echo '&nbsp;&nbsp;';
 
-		Settings::submitButton( 'custom_fields_check',
+		gEditorial\Settings::submitButton( 'custom_fields_check',
 			_x( 'Check', 'Button', 'geditorial-meta' ), TRUE );
 
-		Settings::submitButton( 'custom_fields_convert',
+		gEditorial\Settings::submitButton( 'custom_fields_convert',
 			_x( 'Covert', 'Button', 'geditorial-meta' ) );
 
-		Settings::submitButton( 'custom_fields_delete',
+		gEditorial\Settings::submitButton( 'custom_fields_delete',
 			_x( 'Delete', 'Button', 'geditorial-meta' ), 'danger', TRUE );
 
 		Core\HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Message', 'geditorial-meta' ) );
@@ -1077,16 +1069,19 @@ class Meta extends gEditorial\Module
 
 			echo '<br />';
 			Core\HTML::tableList( [
-				'post_id' => Tablelist::columnPostID(),
-				'type'    => Tablelist::columnPostType( 'post_id' ),
+				'post_id' => gEditorial\Tablelist::columnPostID(),
+				'type'    => gEditorial\Tablelist::columnPostType( 'post_id' ),
 				'title'   => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
 					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 						return WordPress\Post::title( $row->post_id );
 					},
 				],
-				/* translators: `%s`: title */
-				'meta' => sprintf( _x( 'Meta: %s', 'Table Column', 'geditorial-meta' ), Core\HTML::code( $args['custom_field'] ) ),
+				'meta' => sprintf(
+					/* translators: `%s`: title */
+					_x( 'Meta: %s', 'Table Column', 'geditorial-meta' ),
+					Core\HTML::code( $args['custom_field']
+				) ),
 			], WordPress\Database::getPostMetaRows(
 				stripslashes( $args['custom_field'] ),
 				stripslashes( $args['custom_field_limit'] )
@@ -1104,7 +1099,7 @@ class Meta extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( Tablelist::isAction( 'custom_fields_convert' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'custom_fields_convert' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
@@ -1129,7 +1124,7 @@ class Meta extends gEditorial\Module
 							'count'   => $result,
 						] );
 
-				} else if ( Tablelist::isAction( 'custom_fields_delete' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'custom_fields_delete' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,

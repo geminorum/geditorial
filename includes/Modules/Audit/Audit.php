@@ -3,13 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Audit extends gEditorial\Module
@@ -167,18 +163,18 @@ class Audit extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorMessage();
+			gEditorial\Ajax::errorMessage();
 
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-			Ajax::errorUserCant();
+			gEditorial\Ajax::errorUserCant();
 
-		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'list':
 
-				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
 
 			break;
 			case 'store':
@@ -192,10 +188,10 @@ class Audit extends gEditorial\Module
 				wp_set_object_terms( $post['post_id'], Core\Arraay::prepNumeral( $terms ), $taxonomy, FALSE );
 				clean_object_term_cache( $post['post_id'], $taxonomy );
 
-				Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	private function get_adminbar_checklist( $post_id )
@@ -325,7 +321,7 @@ class Audit extends gEditorial\Module
 		$wp_admin_bar->add_node( [
 			'id'    => $this->classs( 'attributes' ),
 			'href'  => $this->get_module_url(),
-			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).Ajax::spinner(),
+			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).gEditorial\Ajax::spinner(),
 			'meta'  => [
 				'class' => 'geditorial-adminbar-node -action quick-assign-action '.$this->classs(),
 				// working but not implemented on js yet!
@@ -372,7 +368,7 @@ class Audit extends gEditorial\Module
 
 					// TODO: fallback to custom tweaks column/hide on tweaks default
 					if ( $this->rowactions__hook_mainlink_for_post( $screen->post_type, 20 ) )
-						Scripts::enqueueColorBox();
+						gEditorial\Scripts::enqueueColorBox();
 				}
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
@@ -414,10 +410,10 @@ class Audit extends gEditorial\Module
 	protected function render_overview_content()
 	{
 		if ( ! $linked = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $linked ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		$this->_render_view_for_post( $post, 'overview' );
 	}
@@ -503,7 +499,7 @@ class Audit extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
 		$available = FALSE;
 		$taxonomy  = $this->constant( 'main_taxonomy' );
@@ -516,7 +512,7 @@ class Audit extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
@@ -556,10 +552,10 @@ class Audit extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 
@@ -580,7 +576,7 @@ class Audit extends gEditorial\Module
 		Core\HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $this->constant( 'main_taxonomy' ) ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 
 		$this->_render_reports_by_user_summary();
 	}
@@ -593,7 +589,7 @@ class Audit extends gEditorial\Module
 			'user_id' => '0',
 		], 'reports' );
 
-		echo Settings::toolboxCardOpen( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ) );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ) );
 
 		$this->do_settings_field( [
 			'type'         => 'user',
@@ -605,7 +601,7 @@ class Audit extends gEditorial\Module
 			'cap'          => TRUE,
 		] );
 
-		Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
+		gEditorial\Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
 		echo '</div>';
 
 		if ( $summary = $this->get_dashboard_term_summary( 'main_taxonomy', NULL, NULL, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
@@ -617,7 +613,7 @@ class Audit extends gEditorial\Module
 	private function _render_view_for_post( $post, $context )
 	{
 		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$data = $this->_get_view_data_for_post( $post, $context );
 

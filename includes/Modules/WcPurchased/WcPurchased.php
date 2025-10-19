@@ -4,10 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -24,7 +21,7 @@ class WcPurchased extends gEditorial\Module
 			'icon'     => 'store',
 			'access'   => 'beta',
 			'frontend' => FALSE,
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
 		];
 	}
 
@@ -69,7 +66,7 @@ class WcPurchased extends gEditorial\Module
 
 				if ( $this->role_can( 'reports' ) ) {
 					$this->filter( 'post_row_actions', 2 );
-					Scripts::enqueueThickBox();
+					gEditorial\Scripts::enqueueThickBox();
 				}
 			}
 		}
@@ -133,7 +130,7 @@ class WcPurchased extends gEditorial\Module
 			],
 			'date_paid' => [
 				'title'    => _x( 'Paid On', 'Column Title', 'geditorial-wc-purchased' ),
-				'args'     => [ 'formats' => Datetime::dateFormats( FALSE ) ],
+				'args'     => [ 'formats' => gEditorial\Datetime::dateFormats( FALSE ) ],
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					return wp_date( $column['args']['formats']['datetime'], $row->get_date_paid() );
 				},
@@ -188,7 +185,7 @@ class WcPurchased extends gEditorial\Module
 
 	private function get_product_purchased( $orders )
 	{
-		$formats = Datetime::dateFormats( FALSE );
+		$formats = gEditorial\Datetime::dateFormats( FALSE );
 
 		$data = [ [
 			'order_number',

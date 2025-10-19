@@ -4,10 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -256,7 +253,7 @@ class Banking extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -302,7 +299,7 @@ class Banking extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Banking Data', 'Default Term: Audit', 'geditorial-banking' ),
 
 			$this->constant( 'term_empty_iban' )     => _x( 'Empty IBAN', 'Default Term: Audit', 'geditorial-banking' ),
@@ -358,14 +355,14 @@ class Banking extends gEditorial\Module
 
 		if ( ! empty( $item['iban'] ) ) {
 
-			if ( FALSE === ( $iban = Info::fromIBAN( $item['iban'] ) ) )
+			if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $item['iban'] ) ) )
 				return $data;
 
 			return ModuleHelper::generateSummary( $iban );
 
 		} else if ( ! empty( $item['card'] ) ) {
 
-			if ( FALSE === ( $card = Info::fromCardNumber( $item['card'] ) ) )
+			if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $item['card'] ) ) )
 				return $data;
 
 			return ModuleHelper::generateSummary( $card );
@@ -388,7 +385,7 @@ class Banking extends gEditorial\Module
 
 				case 'card':
 
-					if ( FALSE === ( $card = Info::fromCardNumber( $value ) ) ) {
+					if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $value ) ) ) {
 
 						if ( $sanitize )
 							$data[$key] = '';
@@ -415,7 +412,7 @@ class Banking extends gEditorial\Module
 
 				case 'iban':
 
-					if ( FALSE === ( $iban = Info::fromIBAN( $value ) ) ) {
+					if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $value ) ) ) {
 
 						if ( $sanitize )
 							$data[$key] = '';
@@ -468,6 +465,6 @@ class Banking extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Bank Accounts', 'Header', 'geditorial-banking' ) ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

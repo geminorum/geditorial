@@ -4,14 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Parser;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Importer extends gEditorial\Module
@@ -38,7 +32,7 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_general'         => [
 				[
 					'field'       => 'skip_no_source_id',
 					'title'       => _x( 'Skip No Source ID', 'Setting Title', 'geditorial-importer' ),
@@ -67,9 +61,11 @@ class Importer extends gEditorial\Module
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
 				],
 				'add_audit_attribute' => [
-					/* translators: `%s`: audit attribute placeholder */
-					sprintf( _x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
-						Core\HTML::code( $this->constant( 'term_newpost_imported' ) ) ),
+					sprintf(
+						/* translators: `%s`: audit attribute placeholder */
+						_x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
+						Core\HTML::code( $this->constant( 'term_newpost_imported' ) )
+					),
 				],
 			],
 			'_defaults' => [
@@ -193,7 +189,7 @@ class Importer extends gEditorial\Module
 				'taxonomy'          => $taxonomy,
 				'name'              => sprintf( $template, $taxonomy ),
 				'hierarchical'      => $object->hierarchical,
-				'show_option_none'  => Settings::showOptionNone(),
+				'show_option_none'  => gEditorial\Settings::showOptionNone(),
 				'option_none_value' => '0',
 				'hide_if_empty'     => TRUE,
 				'hide_empty'        => FALSE,
@@ -248,15 +244,18 @@ class Importer extends gEditorial\Module
 			$map = $this->_guess_fields_map( $headers, $id );
 
 		if ( $dups = Core\Arraay::duplicates( $headers ) )
-			/* translators: `%s`: joined duplicate keys */
-			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
+			echo Core\HTML::warning( sprintf(
+				/* translators: `%s`: joined duplicate keys */
+				_x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ),
+				WordPress\Strings::getJoined( $dups )
+			), FALSE, 'inline' );
 
 		echo '<table class="base-table-raw"><tbody>';
 
 		echo '<tr><td><strong>'._x( 'Source ID', 'Dropdown Label', 'geditorial-importer' );
 		echo '</strong></td><td class="-sep">';
 
-			Settings::fieldSeparate( 'from' );
+			gEditorial\Settings::fieldSeparate( 'from' );
 
 		echo '</td><td>';
 
@@ -264,7 +263,7 @@ class Importer extends gEditorial\Module
 				'selected'   => $source_offset,
 				'name'       => 'source_offset',
 				'class'      => '-dropdown-source-key',
-				'none_title' => Settings::showOptionNone(),
+				'none_title' => gEditorial\Settings::showOptionNone(),
 				'none_value' => 'none', // `0` is offset!
 			] );
 
@@ -280,27 +279,27 @@ class Importer extends gEditorial\Module
 				.Core\HTML::escape( $title )
 			.'</code></td><td class="-sep">';
 
-				Settings::fieldSeparate( 'into' );
+				gEditorial\Settings::fieldSeparate( 'into' );
 
 			echo '</td><td>'
 				.Core\HTML::dropdown( $fields, [
 					'selected'   => array_key_exists( $title, $map ) ? $map[$title] : 'none',
 					'name'       => 'field_map['.$key.']',
-					'none_title' => Settings::showOptionNone(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
 					'none_value' => 'none',
 				] )
 			.'</td><td><td class="-sep">';
 
-				Settings::fieldSeparate( 'ex' );
+				gEditorial\Settings::fieldSeparate( 'ex' );
 
 			echo '</td><td class="-val"><code>'
 				.Core\HTML::sanitizeDisplay( empty( $items[1][$key] ) ? '' : $items[1][$key] )
 			.'</code></td><td class="-sep">';
 
-				Settings::fieldSeparate( 'count' );
+				gEditorial\Settings::fieldSeparate( 'count' );
 
 			echo '</td><td class="-count"><code>'
-				.Helper::htmlCount( WordPress\Strings::filterEmpty( Core\Arraay::column( $items, $key ) ) )
+				.gEditorial\Helper::htmlCount( WordPress\Strings::filterEmpty( Core\Arraay::column( $items, $key ) ) )
 			.'</code></td></tr>';
 		}
 
@@ -310,7 +309,7 @@ class Importer extends gEditorial\Module
 	private function _form_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
 	{
 		echo '<hr class="-silent" />';
-		Settings::fieldSeparate( 'from' );
+		gEditorial\Settings::fieldSeparate( 'from' );
 
 		Core\HTML::inputHidden( 'upload_id' );
 
@@ -325,20 +324,20 @@ class Importer extends gEditorial\Module
 			],
 		] );
 
-		Settings::fieldSeparate( 'or' );
+		gEditorial\Settings::fieldSeparate( 'or' );
 
 		WordPress\Media::selectAttachment( $id, $this->_get_source_mimetypes(), 'attach_id', gEditorial\Plugin::na() );
 
 		echo '<hr class="-silent" />';
 
-		Settings::fieldSeparate( 'into' );
+		gEditorial\Settings::fieldSeparate( 'into' );
 
 		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
 
-		Settings::fieldSeparate( 'as' );
+		gEditorial\Settings::fieldSeparate( 'as' );
 
 		echo Core\HTML::dropdown( WordPress\User::get(), [
 			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
@@ -368,7 +367,7 @@ class Importer extends gEditorial\Module
 				'compare' => 'NOT EXISTS',
 			];
 
-		list( $posts, ) = Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
+		list( $posts, ) = gEditorial\Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
@@ -379,7 +378,7 @@ class Importer extends gEditorial\Module
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $id = get_post_meta( $row->ID, $column['args']['metakey'], TRUE ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 
 					$src = sprintf( $column['args']['template'], $id );
 
@@ -390,15 +389,15 @@ class Importer extends gEditorial\Module
 					], Core\HTML::img( $src ) );
 				},
 			],
-			'ID'    => Tablelist::columnPostID(),
-			'title' => Tablelist::columnPostTitle(),
-			'type'  => Tablelist::columnPostType(),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'type'  => gEditorial\Tablelist::columnPostType(),
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = WordPress\PostType::htmlFeaturedImage( $row->ID, [ 45, 72 ] );
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 		], $posts, [
@@ -451,7 +450,7 @@ class Importer extends gEditorial\Module
 
 			if ( 'importer_custom_meta' == $field )
 				$columns[$headers[$key]] = sprintf(
-					/* translators: `%s`: custom metakey */
+					/* translators: `%s`: custom meta-key */
 					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
 					Core\HTML::code( $headers[$key] )
 				);
@@ -487,8 +486,11 @@ class Importer extends gEditorial\Module
 		$checks = [];
 
 		if ( $row['___source_id'] )
-			/* translators: `%s`: source id */
-			$checks[] = sprintf( _x( 'SourceID: %s', 'Checks', 'geditorial-importer' ), Core\HTML::code( $row['___source_id'] ) );
+			$checks[] = sprintf(
+				/* translators: `%s`: source id */
+				_x( 'SourceID: %s', 'Checks', 'geditorial-importer' ),
+				Core\HTML::code( $row['___source_id'] )
+			);
 
 		else if ( FALSE === $row['___source_id'] )
 			$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
@@ -497,9 +499,11 @@ class Importer extends gEditorial\Module
 			$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
 
 		if ( $row['___matched'] )
-			/* translators: `%s`: post title */
-			$checks[] = sprintf( _x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
-				Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ) );
+			$checks[] = sprintf(
+				/* translators: `%s`: post title */
+				_x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
+				gEditorial\Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] )
+			);
 
 		if ( ! empty( $args['extra']['mapped'] ) ) {
 
@@ -519,14 +523,14 @@ class Importer extends gEditorial\Module
 					$html = '<div class="-danger">'._x( 'Similar:', 'Checks', 'geditorial-importer' ).' ';
 
 					foreach ( $posts as $post_id )
-						$html.= Helper::getPostTitleRow( $post_id, 'edit', FALSE, $post_id ).', ';
+						$html.= gEditorial\Helper::getPostTitleRow( $post_id, 'edit', FALSE, $post_id ).', ';
 
 					$checks[] = trim( $html, ', ' ).'</div>';
 				}
 			}
 		}
 
-		return WordPress\Strings::getJoined( $checks, '', '', Helper::htmlEmpty(), '<br />' );
+		return WordPress\Strings::getJoined( $checks, '', '', gEditorial\Helper::htmlEmpty(), '<br />' );
 	}
 
 	// NOTE: combines raw data with header keys and adds source_id and matched
@@ -603,7 +607,7 @@ class Importer extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( Tablelist::isAction( [
+				if ( gEditorial\Tablelist::isAction( [
 					'images_import',
 					'images_import_as_thumbnail',
 				], TRUE ) ) {
@@ -648,7 +652,7 @@ class Importer extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( Tablelist::isAction( [
+				} else if ( gEditorial\Tablelist::isAction( [
 					'terms_import_newonly',
 					'terms_import_append',
 					'terms_import_override',
@@ -663,7 +667,7 @@ class Importer extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( Tablelist::isAction( [
+				} else if ( gEditorial\Tablelist::isAction( [
 					'posts_import_newonly',
 					'posts_import_override',
 				], TRUE ) ) {
@@ -826,7 +830,7 @@ class Importer extends gEditorial\Module
 										$prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
 
 										$comments[] = [
-											// prefixes the comment content with column name
+											// Prefixes the comment content with column name
 											'comment_content' => sprintf( '[%s]: %s', $headers[$offsetkey], $prepared[$field] ),
 										];
 									}
@@ -997,7 +1001,7 @@ class Importer extends gEditorial\Module
 				}
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 			wp_enqueue_media();
 
 			$this->enqueue_asset_js( [
@@ -1052,20 +1056,20 @@ class Importer extends gEditorial\Module
 
 	private function _render_imports_firstpage( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Content Imports', 'Header', 'geditorial-importer' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Content Imports', 'Header', 'geditorial-importer' ) );
 
 		if ( ! count( $this->posttypes() ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 
-		echo Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
 			$this->_render_imports_for_posts( $uri, $sub );
 		echo '</div>';
 
-		echo Settings::toolboxCardOpen( _x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
 			$this->_render_imports_for_terms( $uri, $sub );
 		echo '</div>';
 
-		echo Settings::toolboxCardOpen( _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
 			$this->_render_imports_for_images( $uri, $sub );
 		echo '</div>';
 
@@ -1104,8 +1108,8 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_offset );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
-			Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
+			gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'posts_step_three' ) ) {
@@ -1133,7 +1137,7 @@ class Importer extends gEditorial\Module
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'posts_step_two' ) ) {
@@ -1158,7 +1162,7 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
@@ -1166,7 +1170,7 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
@@ -1204,9 +1208,9 @@ class Importer extends gEditorial\Module
 			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_offset );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
-			Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
-			Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
+			gEditorial\Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
+			gEditorial\Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'terms_step_three' ) ) {
@@ -1236,7 +1240,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'source_offset', $source_offset );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'terms_step_two' ) ) {
@@ -1260,7 +1264,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
@@ -1268,7 +1272,7 @@ class Importer extends gEditorial\Module
 			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 	}
@@ -1304,20 +1308,20 @@ class Importer extends gEditorial\Module
 			$this->_form_images_table( $args );
 
 			echo $this->wrap_open_buttons();
-			Settings::submitButton( 'images_import_as_thumbnail', _x( 'Import & Set Thumbnail', 'Button', 'geditorial-importer' ), TRUE );
-			Settings::submitButton( 'images_import', _x( 'Import Only', 'Button', 'geditorial-importer' ) );
+			gEditorial\Settings::submitButton( 'images_import_as_thumbnail', _x( 'Import & Set Thumbnail', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::submitButton( 'images_import', _x( 'Import Only', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
 
 			echo '<hr class="-silent" />';
-			Settings::fieldSeparate( 'from' );
+			gEditorial\Settings::fieldSeparate( 'from' );
 
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'metakey',
 				'values'       => $this->_get_metakeys_for_image( $args['posttype'] ),
-				'none_title'   => Settings::showOptionNone(),
+				'none_title'   => gEditorial\Settings::showOptionNone(),
 				'default'      => $args['metakey'],
 				'option_group' => 'forimages',
 				'cap'          => TRUE, // already checked
@@ -1325,7 +1329,7 @@ class Importer extends gEditorial\Module
 
 			echo '<hr class="-silent" />';
 
-			Settings::fieldSeparate( 'in' );
+			gEditorial\Settings::fieldSeparate( 'in' );
 
 			$this->do_settings_field( [
 				'type'         => 'text',
@@ -1339,7 +1343,7 @@ class Importer extends gEditorial\Module
 
 			echo '<hr class="-silent" />';
 
-			Settings::fieldSeparate( 'into' );
+			gEditorial\Settings::fieldSeparate( 'into' );
 
 			$this->do_settings_field( [
 				'type'         => 'select',
@@ -1350,7 +1354,7 @@ class Importer extends gEditorial\Module
 				'cap'          => TRUE, // already checked
 			] );
 
-			Settings::fieldSeparate( 'as' );
+			gEditorial\Settings::fieldSeparate( 'as' );
 
 			$this->do_settings_field( [
 				'type'         => 'user',
@@ -1362,7 +1366,7 @@ class Importer extends gEditorial\Module
 			] );
 
 			echo $this->wrap_open_buttons();
-			Settings::actionButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a meta-key for refrence on importing the attachments.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
@@ -1407,8 +1411,11 @@ class Importer extends gEditorial\Module
 		];
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
-			/* translators: `%s`: taxonomy name placeholder */
-			$fields['importer_tax_'.$taxonomy] = sprintf( _x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ), $taxonomy_object->labels->singular_name );
+			$fields['importer_tax_'.$taxonomy] = sprintf(
+				/* translators: `%s`: taxonomy name placeholder */
+				_x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ),
+				$taxonomy_object->labels->singular_name
+			);
 
 		return $this->filters( 'fields', $fields, $posttype );
 	}
@@ -1427,7 +1434,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
 			if ( $field == 'importer_tax_'.$taxonomy )
-				return array_filter( WordPress\Strings::ksesArray( Helper::getSeparated( $value ) ) );
+				return array_filter( WordPress\Strings::ksesArray( gEditorial\Helper::getSeparated( $value ) ) );
 
 		return $value;
 	}
@@ -1446,7 +1453,7 @@ class Importer extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
-			Helper::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
+			gEditorial\Helper::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
 	}
 
 	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )
@@ -1488,11 +1495,11 @@ class Importer extends gEditorial\Module
 	}
 
 	/**
-	 * Checks if given data is sutable to use on `wp_insert_post()`
+	 * Checks if given data is suitable to use on `wp_insert_post()`
 	 *
-	 * @param  array $data
-	 * @param  bool|int $post_id
-	 * @return bool $empty
+	 * @param array $data
+	 * @param bool|int $post_id
+	 * @return bool
 	 */
 	private function _check_insert_is_empty( $data, $post_id = FALSE )
 	{
@@ -1558,7 +1565,7 @@ class Importer extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
@@ -1571,7 +1578,7 @@ class Importer extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
@@ -1588,10 +1595,10 @@ class Importer extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 
@@ -1648,7 +1655,7 @@ class Importer extends gEditorial\Module
 		$select = $this->classs( 'terms', 'attachment', 'selected' );
 
 		echo '<hr class="-silent" />';
-		Settings::fieldSeparate( 'from' );
+		gEditorial\Settings::fieldSeparate( 'from' );
 
 		Core\HTML::inputHidden( $target );
 
@@ -1663,20 +1670,20 @@ class Importer extends gEditorial\Module
 			],
 		] );
 
-		Settings::fieldSeparate( 'or' );
+		gEditorial\Settings::fieldSeparate( 'or' );
 
 		WordPress\Media::selectAttachment( $id, $this->_get_source_mimetypes(), $select, gEditorial\Plugin::na() );
 
 		echo '<hr class="-silent" />';
 
-		Settings::fieldSeparate( 'into' );
+		gEditorial\Settings::fieldSeparate( 'into' );
 
 		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
 
-		Settings::fieldSeparate( 'as' );
+		gEditorial\Settings::fieldSeparate( 'as' );
 
 		echo Core\HTML::dropdown( WordPress\User::get(), [
 			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
@@ -1693,7 +1700,7 @@ class Importer extends gEditorial\Module
 
 		$this->raise_resources();
 
-		$parsed        = Parser::fromCSV( $file, [ 'headers' => TRUE ] );
+		$parsed        = gEditorial\Parser::fromCSV( $file, [ 'headers' => TRUE ] );
 		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
 
 		if ( $dups = Core\Arraay::duplicates( $parsed['headers'] ) )
@@ -1705,7 +1712,7 @@ class Importer extends gEditorial\Module
 		echo '<tr><td><strong>'._x( 'Source ID', 'Dropdown Label', 'geditorial-importer' );
 		echo '</strong></td><td class="-sep">';
 
-			Settings::fieldSeparate( 'from' );
+			gEditorial\Settings::fieldSeparate( 'from' );
 
 		echo '</td><td>';
 
@@ -1713,7 +1720,7 @@ class Importer extends gEditorial\Module
 				'selected'   => $source_offset,
 				'name'       => 'source_offset',
 				'class'      => '-dropdown-source-key',
-				'none_title' => Settings::showOptionNone(),
+				'none_title' => gEditorial\Settings::showOptionNone(),
 				'none_value' => 'none', // `0` is offset!
 			] );
 
@@ -1732,7 +1739,7 @@ class Importer extends gEditorial\Module
 
 		$this->raise_resources();
 
-		$parsed = Parser::fromCSV( $file );
+		$parsed = gEditorial\Parser::fromCSV( $file );
 
 		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
 
@@ -1796,10 +1803,10 @@ class Importer extends gEditorial\Module
 	public function form_terms_table_callback( $value, $row, $column, $index, $key, $args )
 	{
 		if ( empty( $row['___matched'] ) )
-			return Helper::htmlEmpty();
+			return gEditorial\Helper::htmlEmpty();
 
 		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $column['args']['taxonomy'], $row['___matched'] ) )
-			return Helper::htmlEmpty();
+			return gEditorial\Helper::htmlEmpty();
 
 		echo '<ul class="-rows">';
 
@@ -1828,7 +1835,7 @@ class Importer extends gEditorial\Module
 
 		$this->raise_resources();
 
-		$parsed     = Parser::fromCSV( $file );
+		$parsed     = gEditorial\Parser::fromCSV( $file );
 		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 		$source_key = $parsed['headers'][$source_offset];
 

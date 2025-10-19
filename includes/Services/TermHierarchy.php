@@ -4,8 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class TermHierarchy extends gEditorial\Service
@@ -93,7 +91,7 @@ class TermHierarchy extends gEditorial\Service
 
 			}, 1, 2 );
 
-		Scripts::enqueue( 'admin.singleselect.edit' );
+		gEditorial\Scripts::enqueue( 'admin.singleselect.edit' );
 
 		if ( ! Core\WordPress::isWPcompatible( '6.3.0' ) )
 			return;
@@ -154,7 +152,7 @@ class TermHierarchy extends gEditorial\Service
 				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
 				'id'                => sprintf( '%s-singleselect-%s-%s', static::BASE, $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
 				'option_none_value' => '0',
-				'show_option_none'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
+				'show_option_none'  => CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
 				'show_count'        => FALSE,
 				'hide_empty'        => FALSE,
@@ -166,7 +164,7 @@ class TermHierarchy extends gEditorial\Service
 				continue;
 
 			$html.= sprintf( '<div title="%s">%s</div>',
-				Core\HTML::escapeAttr( Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ), $dropdown );
+				Core\HTML::escapeAttr( CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ), $dropdown );
 		}
 
 		if ( $html ) {

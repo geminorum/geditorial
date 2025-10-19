@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\WordPress;
 
 // @SEE: https://johnbeales.com/2018/changing-the-auto-suggest-behaviour-in-woocommerce/
@@ -421,6 +420,6 @@ class SearchSelect extends gEditorial\Service
 
 		gEditorial()->enqueue_asset_config( $args, 'searchselect' );
 
-		return $enqueued = Scripts::enqueue( 'all.searchselect.select2', [ 'jquery', Scripts::pkgSelect2() ] );
+		return $enqueued = gEditorial\Scripts::enqueue( 'all.searchselect.select2', [ 'jquery', gEditorial\Scripts::pkgSelect2() ] );
 	}
 }

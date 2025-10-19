@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Meeted extends gEditorial\Module
@@ -198,7 +193,7 @@ class Meeted extends gEditorial\Module
 				'canceled' => _x( 'Canceled', 'Status Taxonomy: Default Term', 'geditorial-meeted' ),
 				'held'     => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-meeted' ),
 			],
-			'span_taxonomy' => Datetime::getYears( '-5 years' ),
+			'span_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
@@ -491,21 +486,21 @@ class Meeted extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::fieldPostParent( $object );
+		gEditorial\MetaBox::fieldPostParent( $object );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
-		MetaBox::fieldPostMenuOrder( $object );
+		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
@@ -587,13 +582,13 @@ class Meeted extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Meeting Tools', 'Header', 'geditorial-meeted' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -633,14 +628,14 @@ class Meeted extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -651,6 +646,6 @@ class Meeted extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

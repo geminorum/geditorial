@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Wysiwyg extends gEditorial\Module
@@ -68,8 +67,8 @@ class Wysiwyg extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
-			'redundant', // gEditorial Redundancy
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
+			'redundant', // Editorial Redundancy
 		] + $extra ) );
 	}
 
@@ -88,11 +87,11 @@ class Wysiwyg extends gEditorial\Module
 
 	private function _enqueue_editor( $screen )
 	{
-		// remove the filters which disallow HTML in term descriptions
+		// Removes the filters which disallow HTML in term descriptions
 		remove_filter( 'pre_term_description', 'wp_filter_kses' );
 		remove_filter( 'term_description', 'wp_kses_data' );
 
-		// add filters to disallow unsafe HTML tags
+		// Adds filters to disallow unsafe HTML tags
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			add_filter( 'pre_term_description', 'wp_kses_post' );
 			add_filter( 'term_description', 'wp_kses_post' );
@@ -104,7 +103,7 @@ class Wysiwyg extends gEditorial\Module
 		else if ( 'term' === $screen->base )
 			add_action( $screen->taxonomy.'_edit_form_fields', [ $this, 'edit_form_fields_editor' ], 1, 2 );
 
-		Scripts::enqueueWordCount();
+		gEditorial\Scripts::enqueueWordCount();
 	}
 
 	private function _get_taxonomy_desc_title( $taxonomy )
@@ -160,7 +159,7 @@ class Wysiwyg extends gEditorial\Module
 
 			wp_editor( '', $id, $this->_get_taxonomy_desc_editor_settings( $object, 'description' ) );
 
-			Helper::renderEditorStatusInfo( $id );
+			gEditorial\Helper::renderEditorStatusInfo( $id );
 
 			Core\HTML::desc( $this->_get_taxonomy_desc_desc( $object ) );
 
@@ -200,7 +199,7 @@ JS;
 			wp_editor( htmlspecialchars_decode( $term->description ), $id,
 				$this->_get_taxonomy_desc_editor_settings( $object, 'description' ) );
 
-			Helper::renderEditorStatusInfo( $id );
+			gEditorial\Helper::renderEditorStatusInfo( $id );
 
 			Core\HTML::desc( $this->_get_taxonomy_desc_desc( $object ) );
 			Core\HTML::wrapScript( 'jQuery("textarea#description").closest(".form-field").remove();' );

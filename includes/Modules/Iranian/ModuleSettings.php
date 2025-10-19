@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
@@ -57,7 +55,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -168,7 +166,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -295,11 +293,11 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo self::toolboxColumnOpen( _x( 'Iranian Reports', 'Header', 'geditorial-iranian' ) );
 			echo self::toolboxCardOpen( _x( 'Country Summary', 'Card Title', 'geditorial-iranian' ), FALSE );
-				echo Scripts::markupChartJS( $chartname, static::MODULE );
+				echo gEditorial\Scripts::markupChartJS( $chartname, static::MODULE );
 			echo '</div>';
 		echo '</div>';
 
-		Scripts::enqueueChartJS_Bar( $chartname, $summary, [
+		gEditorial\Scripts::enqueueChartJS_Bar( $chartname, $summary, [
 			'label' => Services\CustomPostType::getLabel( $posttype, 'extended_label' ),
 		] );
 
@@ -361,7 +359,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		$posts = Tablelist::getPosts( $query, [], $posttype, FALSE );
+		$posts = gEditorial\Tablelist::getPosts( $query, [], $posttype, FALSE );
 		$list  = $table = [];
 
 		foreach ( $posts as $post ) {

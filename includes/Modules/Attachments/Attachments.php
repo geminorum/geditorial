@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Attachments extends gEditorial\Module
@@ -313,7 +308,7 @@ class Attachments extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'attached',
+		return gEditorial\ShortCode::listPosts( 'attached',
 			'attachment',
 			'',
 			array_merge( [
@@ -359,7 +354,7 @@ class Attachments extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( Tablelist::isAction( 'delete_permanently', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'delete_permanently', TRUE ) ) {
 
 					$count = 0;
 
@@ -372,7 +367,7 @@ class Attachments extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( Tablelist::isAction( 'empty_metadata', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'empty_metadata', TRUE ) ) {
 
 					$count = 0;
 
@@ -385,7 +380,7 @@ class Attachments extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( Tablelist::isAction( 'remove_thumbnails', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'remove_thumbnails', TRUE ) ) {
 
 					$count = 0;
 
@@ -400,7 +395,7 @@ class Attachments extends gEditorial\Module
 				}
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
@@ -410,11 +405,11 @@ class Attachments extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub, 'reports' ) );
 
-		// $pagination['before'][] = Tablelist::filterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		// $pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		$pagination['actions'] = [
 			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
@@ -432,9 +427,9 @@ class Attachments extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'ID'     => Tablelist::columnPostID(),
-			'date'   => Tablelist::columnPostDate(),
-			'mime'   => Tablelist::columnPostMime(),
+			'ID'     => gEditorial\Tablelist::columnPostID(),
+			'date'   => gEditorial\Tablelist::columnPostDate(),
+			'mime'   => gEditorial\Tablelist::columnPostMime(),
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
@@ -443,37 +438,45 @@ class Attachments extends gEditorial\Module
 					if ( $custom = WordPress\Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
 
-					return Helper::htmlEmpty();
+					return gEditorial\Helper::htmlEmpty();
 				},
 			],
-			'title'  => Tablelist::columnPostTitle( NULL, TRUE, $actions ),
+			'title'  => gEditorial\Tablelist::columnPostTitle( NULL, TRUE, $actions ),
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$list = [];
 
 					if ( $row->post_parent )
-						/* translators: `%s`: linked post title */
-						$list[] = sprintf( _x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' ) );
+						$list[] = sprintf(
+							/* translators: `%s`: linked post title */
+							_x( '[Parent]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							gEditorial\Helper::getPostTitleRow( $row->post_parent, 'view', TRUE, 'posttype' )
+						);
 
 					foreach ( WordPress\PostType::isThumbnail( $row->ID ) as $post_id )
-						/* translators: `%s`: linked post title */
-						$list[] = sprintf( _x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
+						$list[] = sprintf(
+							/* translators: `%s`: linked post title */
+							_x( '[Thumb]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							gEditorial\Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' )
+						);
 
 					foreach ( WordPress\Taxonomy::isThumbnail( $row->ID ) as $term_id )
-						/* translators: `%s`: linked term title */
-						$list[] = sprintf( _x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getTermTitleRow( $term_id, 'view', TRUE ) );
+						$list[] = sprintf(
+							/* translators: `%s`: linked term title */
+							_x( '[Term]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							gEditorial\Helper::getTermTitleRow( $term_id, 'view', TRUE )
+						);
 
 					foreach ( WordPress\Media::searchAttachment( $row->ID ) as $post_id )
-						/* translators: `%s`: linked post title */
-						$list[] = sprintf( _x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
-							Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' ) );
+						$list[] = sprintf(
+							/* translators: `%s`: linked post title */
+							_x( '[Content]: %s', 'Search Result Prefix', 'geditorial-attachments' ),
+							gEditorial\Helper::getPostTitleRow( $post_id, 'view', TRUE, 'posttype' )
+						);
 
-					return $list ? Core\HTML::rows( $list ) : Helper::htmlEmpty();
+					return $list ? Core\HTML::rows( $list ) : gEditorial\Helper::htmlEmpty();
 				},
 			],
 			'sizes' => [
@@ -482,7 +485,8 @@ class Attachments extends gEditorial\Module
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
+
 					$sizes = [];
 
 					if ( ! empty( $meta['filesize'] ) )
@@ -505,7 +509,7 @@ class Attachments extends gEditorial\Module
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 
 					if ( isset( $meta['image_meta'] ) )
 						return Core\HTML::tableCode( $meta['image_meta'] );
@@ -514,7 +518,7 @@ class Attachments extends gEditorial\Module
 						|| wp_attachment_is( 'video', $row->ID ) )
 							return Core\HTML::tableCode( $meta );
 
-					return Helper::htmlEmpty();
+					return gEditorial\Helper::htmlEmpty();
 				},
 			],
 
@@ -534,7 +538,7 @@ class Attachments extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
@@ -556,7 +560,7 @@ class Attachments extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
@@ -579,7 +583,7 @@ class Attachments extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $mimetype = self::req( 'mime' ) )
-			return Info::renderEmptyMIMEtype();
+			return gEditorial\Info::renderEmptyMIMEtype();
 
 		$this->raise_resources();
 
@@ -595,10 +599,10 @@ class Attachments extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 
@@ -614,10 +618,10 @@ class Attachments extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 

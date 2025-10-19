@@ -4,10 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -36,7 +33,6 @@ class Agenda extends gEditorial\Module
 		];
 	}
 
-	// TODO: custom datetime format for each supported posttype
 	protected function get_global_settings()
 	{
 		$roles = $this->get_settings_default_roles();
@@ -237,7 +233,7 @@ class Agenda extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -283,7 +279,7 @@ class Agenda extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Itinerary Data', 'Default Term: Audit', 'geditorial-agenda' ),
 		] ) : $terms;
 	}
@@ -296,6 +292,6 @@ class Agenda extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Itineraries', 'Header', 'geditorial-agenda' ) ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

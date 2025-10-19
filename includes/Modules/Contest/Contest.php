@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Contest extends gEditorial\Module
@@ -381,7 +376,7 @@ class Contest extends gEditorial\Module
 
 	public function contest_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'paired',
+		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'contest_posttype' ),
 			$this->constant( 'contest_paired' ),
 			array_merge( [
@@ -410,10 +405,10 @@ class Contest extends gEditorial\Module
 		else if ( is_singular() )
 			$args['id'] = 'paired';
 
-		if ( ! $html = Template::postImage( array_merge( $args, (array) $atts ), $this->module->name ) )
+		if ( ! $html = gEditorial\Template::postImage( array_merge( $args, (array) $atts ), $this->module->name ) )
 			return $content;
 
-		return ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap( $html,
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);
@@ -429,13 +424,13 @@ class Contest extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Contest Tools', 'Header', 'geditorial-contest' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -458,14 +453,14 @@ class Contest extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -476,7 +471,7 @@ class Contest extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'contest_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
@@ -498,7 +493,7 @@ class Contest extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_abandoned_apply' ) => _x( 'Apply Abandoned', 'Default Term: Audit', 'geditorial-contest' ),
 		] ) : $terms;
 	}

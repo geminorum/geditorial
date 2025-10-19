@@ -4,10 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -118,13 +115,13 @@ class DeadDrops extends gEditorial\Module
 	protected function render_signal_content()
 	{
 		if ( ! $linked = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $linked ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		$this->_render_view_for_post( $post, 'signal' );
-		Scripts::enqueueQRCodeSVG();
+		gEditorial\Scripts::enqueueQRCodeSVG();
 	}
 
 	private function _render_view_for_post( $post, $context )
@@ -138,7 +135,7 @@ class DeadDrops extends gEditorial\Module
 				Core\HTML::desc( $this->get_setting_fallback( 'instructions',
 					_x( 'Scan this with your phone and open it to upload files anonymously.', 'Message', 'geditorial-dead-drops' ) ) );
 				echo '</div>';
-				echo Core\HTML::wrap( Scripts::markupQRCodeSVG( $drop ), '-qrcode-deaddrop' );
+				echo Core\HTML::wrap( gEditorial\Scripts::markupQRCodeSVG( $drop ), '-qrcode-deaddrop' );
 			echo '</div>';
 
 			echo '<div class="-second-row">';
@@ -258,7 +255,7 @@ class DeadDrops extends gEditorial\Module
 			],
 		] );
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 
 		return $button;
 	}
@@ -329,7 +326,7 @@ class DeadDrops extends gEditorial\Module
 		$title = WordPress\Post::title( $args['post'] );
 
 		// @REF: https://github.com/dropzone/dropzone/blob/main/src/options.js
-		$options = array_merge( Info::getDropzoneStrings(), [
+		$options = array_merge( gEditorial\Info::getDropzoneStrings(), [
 
 			// An optional object to send additional headers to the server.
 			'headers' => [
@@ -396,9 +393,9 @@ class DeadDrops extends gEditorial\Module
 
 		printf( '<title>%s</title>', $title );
 
-		if ( Core\HTML::rtl() ) Scripts::linkVazirMatn();
-		Scripts::linkDropzone();
-		Helper::linkStyleSheetAdmin( 'dead-drops', TRUE, 'dropzone' );
+		if ( Core\HTML::rtl() ) gEditorial\Scripts::linkVazirMatn();
+		gEditorial\Scripts::linkDropzone();
+		gEditorial\Helper::linkStyleSheetAdmin( 'dead-drops', TRUE, 'dropzone' );
 
 		// @REF: https://gitlab.com/meno/dropzone/-/wikis/make-the-whole-body-a-dropzone
 		echo '</head><body class="dropzone">';
@@ -419,7 +416,7 @@ class DeadDrops extends gEditorial\Module
 		// Core\HTML::inputHidden( 'post', $args['post']->ID );
 
 		// Don't forget to give this container the `dropzone-previews` class so the previews are formatted correctly.
-		echo Core\HTML::wrap( Scripts::noScriptMessage( FALSE ), 'dropzone-previews', TRUE, [], 'previews' );
+		echo Core\HTML::wrap( gEditorial\Scripts::noScriptMessage( FALSE ), 'dropzone-previews', TRUE, [], 'previews' );
 		// echo '<button id="clickable">Click me to select files</button>';
 
 		// FIXME: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#encoding_for_content-disposition_and_link_headers

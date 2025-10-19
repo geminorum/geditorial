@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Addendum extends gEditorial\Module
@@ -475,7 +472,7 @@ class Addendum extends gEditorial\Module
 		if ( empty( $html ) )
 			return $content;
 
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 
 	public function tools_settings( $sub )
@@ -488,13 +485,13 @@ class Addendum extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Appendage Tools', 'Header', 'geditorial-addendum' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -517,14 +514,14 @@ class Addendum extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -535,6 +532,6 @@ class Addendum extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Modified extends gEditorial\Module
@@ -72,7 +67,7 @@ class Modified extends gEditorial\Module
 					'title'       => _x( 'Display After', 'Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Skips displaying modified since the original content published time.', 'Setting Description', 'geditorial-modified' ),
 					'default'     => '60',
-					'values'      => Settings::minutesOptions(),
+					'values'      => gEditorial\Settings::minutesOptions(),
 				],
 			],
 			'_supports' => [
@@ -84,7 +79,7 @@ class Modified extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Post Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Customizes the post modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
-					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
 					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'post-modified',
@@ -94,7 +89,7 @@ class Modified extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Site Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Customizes the site modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
-					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
 					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'site-modified',
@@ -163,15 +158,15 @@ class Modified extends gEditorial\Module
 
 		$query = new \WP_Query();
 
-		$columns = [ 'title' => Tablelist::columnPostTitleSummary() ];
+		$columns = [ 'title' => gEditorial\Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = Tablelist::columnPostStatusSummary();
+			$columns['status'] = gEditorial\Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = Tablelist::columnPostAuthorSummary();
+			$columns['author'] = gEditorial\Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = Tablelist::columnPostDateModified();
+		$columns['modified'] = gEditorial\Tablelist::columnPostDateModified();
 
 		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => Services\CustomPostType::getLabel( 'post', 'not_found' ),
@@ -188,7 +183,7 @@ class Modified extends gEditorial\Module
 
 		echo $this->wrap( '<small>'.$modified.'</small>', '-'.$this->get_setting( 'insert_content', 'none' ) );
 
-		Scripts::enqueueTimeAgo();
+		gEditorial\Scripts::enqueueTimeAgo();
 	}
 
 	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
@@ -196,7 +191,7 @@ class Modified extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
-			'format'   => Datetime::dateFormats( 'dateonly' ),
+			'format'   => gEditorial\Datetime::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -216,9 +211,9 @@ class Modified extends gEditorial\Module
 		$local = strtotime( $post->post_modified );
 
 		if ( 'timeago' == $args['title'] )
-			$title = Scripts::enqueueTimeAgo()
+			$title = gEditorial\Scripts::enqueueTimeAgo()
 				? FALSE
-				: Datetime::humanTimeDiffRound( $local, $args['round'] );
+				: gEditorial\Datetime::humanTimeDiffRound( $local, $args['round'] );
 		else
 			$title = $args['title'];
 
@@ -227,7 +222,7 @@ class Modified extends gEditorial\Module
 		if ( $args['link'] )
 			$html = Core\HTML::link( $html, $args['link'] );
 
-		return ShortCode::wrap( $html, 'post-modified', $args, FALSE );
+		return gEditorial\ShortCode::wrap( $html, 'post-modified', $args, FALSE );
 	}
 
 	public function get_post_modified( $format = NULL, $post = NULL )
@@ -247,7 +242,7 @@ class Modified extends gEditorial\Module
 
 		if ( $gmt >= $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) )
 			return $prefix.' '.Core\Date::htmlDateTime( $local, $gmt, $format,
-					Datetime::humanTimeDiffRound( $local, FALSE ) );
+				gEditorial\Datetime::humanTimeDiffRound( $local, FALSE ) );
 
 		return FALSE;
 	}
@@ -269,7 +264,7 @@ class Modified extends gEditorial\Module
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'format'   => Datetime::dateFormats( 'dateonly' ),
+			'format'   => gEditorial\Datetime::dateFormats( 'dateonly' ),
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -289,9 +284,9 @@ class Modified extends gEditorial\Module
 		$local = strtotime( $site[0] );
 
 		if ( 'timeago' == $args['title'] )
-			$title = Scripts::enqueueTimeAgo()
+			$title = gEditorial\Scripts::enqueueTimeAgo()
 				? FALSE
-				: Datetime::humanTimeDiffRound( $local, $args['round'] );
+				: gEditorial\Datetime::humanTimeDiffRound( $local, $args['round'] );
 		else
 			$title = $args['title'];
 
@@ -300,7 +295,7 @@ class Modified extends gEditorial\Module
 		if ( $args['link'] )
 			$html = Core\HTML::link( $html, $args['link'] );
 
-		return ShortCode::wrap( $html, 'site-modified', $args, FALSE );
+		return gEditorial\ShortCode::wrap( $html, 'site-modified', $args, FALSE );
 	}
 
 	public function get_site_modified( $format = NULL, $posttypes = NULL, $published = NULL )

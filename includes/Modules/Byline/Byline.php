@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Byline extends gEditorial\Module
@@ -272,7 +268,7 @@ class Byline extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 					$this->_hook_general_supportedbox( $screen );
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 
 				if ( $this->role_can( 'reports' ) )
@@ -282,7 +278,7 @@ class Byline extends gEditorial\Module
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 					$this->_hook_tweaks_column( $screen );
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -372,17 +368,17 @@ class Byline extends gEditorial\Module
 		];
 
 		$this->enqueue_asset_js( $asset, FALSE, [
-			Scripts::enqueueApp( $args['app'] )
+			gEditorial\Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
 
 	public function render_framepage_adminpage( $context )
 	{
 		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		$target = self::req( 'target', 'mainapp' );
 
@@ -391,19 +387,19 @@ class Byline extends gEditorial\Module
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Byline Dock for %s', 'Page Title', 'geditorial-byline' );
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
-				Scripts::renderAppMounter( static::APP_NAME, $this->key );
-				Scripts::noScriptMessage();
+				gEditorial\Scripts::renderAppMounter( static::APP_NAME, $this->key );
+				gEditorial\Scripts::noScriptMessage();
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Byline Overview for %s', 'Page Title', 'geditorial-byline' );
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
 					'default'  => $this->get_notice_for_empty( $target, 'empty', FALSE ),
@@ -412,19 +408,19 @@ class Byline extends gEditorial\Module
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 				], $post );
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else {
 
-			Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 		}
 	}
 
 	public function admin_print_styles_summaryreport()
 	{
-		Scripts::linkBootstrap5();
+		gEditorial\Scripts::linkBootstrap5();
 	}
 
 	/**
@@ -737,7 +733,7 @@ class Byline extends gEditorial\Module
 			],
 		] );
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 
 		return $button;
 	}
@@ -765,7 +761,7 @@ class Byline extends gEditorial\Module
 
 			}, -4, 4 );
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 
 		return TRUE;
 	}
@@ -806,7 +802,7 @@ class Byline extends gEditorial\Module
 		$nodes[] = [
 			'parent' => $classs,
 			'id'     => $classs.'-rendered',
-			'title'  => $this->get_byline_for_post( $post, [ 'link' => FALSE ], Helper::htmlEmpty() ),
+			'title'  => $this->get_byline_for_post( $post, [ 'link' => FALSE ], gEditorial\Helper::htmlEmpty() ),
 			'href'   => $this->framepage_get_mainlink_url( $post->ID, $assign ? 'mainapp' : 'summaryreport' ),
 			'meta' => [
 				'class' => 'do-colorbox-iframe-for-child',
@@ -814,7 +810,7 @@ class Byline extends gEditorial\Module
 			],
 		];
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 	}
 
 	public function imports_settings( $sub )
@@ -833,7 +829,7 @@ class Byline extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoImportsAvailable();
+			gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
 	}
@@ -850,10 +846,10 @@ class Byline extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 

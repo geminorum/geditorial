@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Venue extends gEditorial\Module
@@ -354,7 +350,7 @@ class Venue extends gEditorial\Module
 					if ( $this->get_setting( 'assignment_dock' ) ) {
 
 						$this->_hook_general_supportedbox( $screen );
-						Scripts::enqueueColorBox();
+						gEditorial\Scripts::enqueueColorBox();
 
 					} else {
 
@@ -463,7 +459,7 @@ class Venue extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'paired',
+		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_paired' ),
 			array_merge( [
@@ -487,13 +483,13 @@ class Venue extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Venue Tools', 'Header', 'geditorial-venue' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -516,14 +512,14 @@ class Venue extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -534,6 +530,6 @@ class Venue extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

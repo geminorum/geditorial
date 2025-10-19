@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Tweaks extends gEditorial\Module
@@ -218,7 +213,7 @@ class Tweaks extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
 			'link_category',
 			'ef_editorial_meta',
 			'following_users',
@@ -256,7 +251,7 @@ class Tweaks extends gEditorial\Module
 	{
 		$posttypes = [];
 		$supported = get_post_types_by_support( $feature );
-		$excluded  = Settings::posttypesExcluded( $extra_excludes );
+		$excluded  = gEditorial\Settings::posttypesExcluded( $extra_excludes );
 
 		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported ) && ! in_array( $posttype, $excluded ) )
@@ -273,7 +268,7 @@ class Tweaks extends gEditorial\Module
 
 		return Core\Arraay::prepString(
 			$this->filters( 'posttypes_excluded',
-				Settings::posttypesExcluded( $excludes + (array) $extra ) ) );
+				gEditorial\Settings::posttypesExcluded( $excludes + (array) $extra ) ) );
 	}
 
 	// internal helper
@@ -374,7 +369,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
 		if ( ! Core\WordPress::isAJAX() && $this->in_setting( $posttype, 'column_thumb' ) )
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
 		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
@@ -399,7 +394,7 @@ class Tweaks extends gEditorial\Module
 			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_comment_status' ], 15, 3 );
 	}
 
-	// we use this hook to early control `current_screen` on other modules
+	// Using this hook to early control `current_screen` on other modules
 	public function add_meta_boxes( $posttype, $post )
 	{
 		if ( WordPress\Post::supportBlocks( $post ) )
@@ -432,7 +427,7 @@ class Tweaks extends gEditorial\Module
 
 			// remove_meta_box( 'postexcerpt', $screen, 'normal' );
 
-			MetaBox::classEditorBox( $screen );
+			gEditorial\MetaBox::classEditorBox( $screen );
 
 			add_meta_box( 'postexcerpt',
 				empty( $object->labels->excerpt_label ) ? __( 'Excerpt' ) : $object->labels->excerpt_label,
@@ -444,7 +439,7 @@ class Tweaks extends gEditorial\Module
 	}
 
 	// @REF: https://adambalee.com/search-wordpress-by-custom-fields-without-a-plugin/
-	// join posts and postmeta tables
+	// join posts and post-meta tables
 	public function posts_join( $join, $wp_query )
 	{
 		if ( ! $wp_query->is_search() )
@@ -455,7 +450,7 @@ class Tweaks extends gEditorial\Module
 		return $join." LEFT JOIN {$wpdb->postmeta} AS searchmeta ON {$wpdb->posts}.ID = searchmeta.post_id ";
 	}
 
-	// modify the search query with posts_where
+	// Modifies the search query with posts_where
 	public function posts_where( $where, $wp_query )
 	{
 		if ( ! $wp_query->is_search() )
@@ -613,12 +608,18 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'thumb' ):
 
 				$size = NULL; // MAYBE: filter for this module?!
-				echo $this->filters( 'column_thumb', WordPress\PostType::htmlFeaturedImage( $post_id, $size ), $post_id, $size );
+
+				echo $this->filters( 'column_thumb',
+					WordPress\PostType::htmlFeaturedImage( $post_id, $size ),
+					$post_id,
+					$size
+				);
+
 				break;
 
 			case $this->classs( 'order' ):
 
-				echo Listtable::columnOrder( $post->menu_order );
+				echo gEditorial\Listtable::columnOrder( $post->menu_order );
 				break;
 
 			case $this->classs( 'id' ):
@@ -783,7 +784,7 @@ class Tweaks extends gEditorial\Module
 			$icon  = $object->menu_icon ?? ( $object->hierarchical ? 'category' : 'tag' );
 			$title = Services\CustomTaxonomy::getLabel( $object, 'extended_label' );
 
-			Helper::renderPostTermsEditRow(
+			gEditorial\Helper::renderPostTermsEditRow(
 				$post,
 				$object,
 				sprintf( $before, '-taxonomy-'.$taxonomy ).$this->get_column_icon( $edit, $icon, $title ),
@@ -902,7 +903,7 @@ class Tweaks extends gEditorial\Module
 	{
 		printf( $before, '-post-date' );
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo Helper::getDateEditRow( $post->post_date, '-date' );
+			echo gEditorial\Helper::getDateEditRow( $post->post_date, '-date' );
 		echo $after;
 
 		if ( $post->post_modified != $post->post_date
@@ -910,7 +911,7 @@ class Tweaks extends gEditorial\Module
 
 			printf( $before, '-post-modified' );
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Row Icon Title', 'geditorial-tweaks' ) );
-				echo Helper::getModifiedEditRow( $post, '-edit' );
+				echo gEditorial\Helper::getModifiedEditRow( $post, '-edit' );
 			echo $after;
 		}
 	}
@@ -988,7 +989,7 @@ class Tweaks extends gEditorial\Module
 		if ( ! $this->filters( 'metabox_parent', $posttype->hierarchical, $posttype->name, $post ) )
 			return;
 
-		MetaBox::fieldPostParent( $post, FALSE );
+		gEditorial\MetaBox::fieldPostParent( $post, FALSE );
 	}
 
 	private function do_mainbox_menuorder( $post, $posttype )
@@ -996,7 +997,7 @@ class Tweaks extends gEditorial\Module
 		if ( ! $this->filters( 'metabox_menuorder', TRUE, $posttype->name, $post ) )
 			return;
 
-		MetaBox::fieldPostMenuOrder( $post );
+		gEditorial\MetaBox::fieldPostMenuOrder( $post );
 	}
 
 	private function do_mainbox_slug( $post, $posttype )
@@ -1004,7 +1005,7 @@ class Tweaks extends gEditorial\Module
 		if ( ! $this->filters( 'metabox_slug', empty( $posttype->slug_disabled ), $posttype->name, $post ) )
 			return;
 
-		MetaBox::fieldPostSlug( $post );
+		gEditorial\MetaBox::fieldPostSlug( $post );
 	}
 
 	private function do_mainbox_author( $post, $posttype )
@@ -1012,7 +1013,7 @@ class Tweaks extends gEditorial\Module
 		if ( ! $this->filters( 'metabox_author', empty( $posttype->author_disabled ), $posttype->name, $post ) )
 			return;
 
-		MetaBox::fieldPostAuthor( $post );
+		gEditorial\MetaBox::fieldPostAuthor( $post );
 	}
 
 	// @REF: `post_comment_status_meta_box()`
@@ -1070,7 +1071,7 @@ class Tweaks extends gEditorial\Module
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
-		MetaBox::fieldEditorBox( $post->post_excerpt );
+		gEditorial\MetaBox::fieldEditorBox( $post->post_excerpt );
 	}
 
 	public function post_submitbox_misc_actions( $post )
@@ -1081,7 +1082,7 @@ class Tweaks extends gEditorial\Module
 		echo '<div class="-misc misc-pub-section misc-pub-modified">';
 			echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Modified', 'Misc Action', 'geditorial-tweaks' ) );
 			echo _x( 'Modified:', 'Misc Action', 'geditorial-tweaks' );
-			echo ' '.Helper::getModifiedEditRow( $post, '-edit' );
+			echo ' '.gEditorial\Helper::getModifiedEditRow( $post, '-edit' );
 		echo '</div>';
 	}
 }

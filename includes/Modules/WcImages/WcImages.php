@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class WcImages extends gEditorial\Module
@@ -45,7 +44,7 @@ class WcImages extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'shift_thumb_from_gallery', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'shift_thumb_from_gallery', TRUE ) ) {
 
 					$count = 0;
 
@@ -104,18 +103,18 @@ class WcImages extends gEditorial\Module
 
 		$extra = [];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::PRODUCT_POSTTYPE, $this->get_sub_limit_option( $sub, 'tools' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::PRODUCT_POSTTYPE, $this->get_sub_limit_option( $sub, 'tools' ) );
 
 		$pagination['actions'] = [
 			'shift_thumb_from_gallery' => _x( 'Shift Thumbnail from Gallery', 'Table Action', 'geditorial-wc-images' ),
 		];
 
-		$pagination['before'][] = Tablelist::filterSearch();
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'title' => Tablelist::columnPostTitle(),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
 
 			'thumb' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-wc-images' ),
