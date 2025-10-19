@@ -17,6 +17,8 @@ use geminorum\gEditorial\WordPress;
 class Today extends gEditorial\Module
 {
 	use Internals\Calendars;
+	use Internals\MetaBoxMain;
+	use Internals\MetaBoxSupported;
 
 	protected $the_day  = [];
 	protected $the_post = [];
@@ -120,8 +122,14 @@ class Today extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['metabox'] = [
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'mainbox_title'      => _x( 'The Day', 'MetaBox: `mainbox_title`', 'geditorial-today' ),
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'supportedbox_title' => _x( 'The Day', 'MetaBox: `supportedbox_title`', 'geditorial-today' ),
+		];
+
 		$strings['misc'] = [
-			'meta_box_title'      => _x( 'The Day', 'Column Title', 'geditorial-today' ), // MUST BE DEP
 			'theday_column_title' => _x( 'Day', 'Column Title', 'geditorial-today' ),
 		];
 
@@ -310,18 +318,10 @@ class Today extends gEditorial\Module
 
 				// SEE: http://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 
+				$this->_hook_general_mainbox( $screen );
 				$this->_save_meta_supported( $screen->post_type );
 
 				$this->action( 'edit_form_after_editor' );
-
-				// TODO: migrate tor `_hook_term_supportedbox()`
-				add_meta_box( $this->classs( 'supportedbox' ),
-					$this->get_meta_box_title( 'main_posttype' ),
-					[ $this, 'render_supportedbox_metabox' ],
-					$screen,
-					'side',
-					'high'
-				);
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
 
@@ -341,16 +341,8 @@ class Today extends gEditorial\Module
 
 			} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
+				$this->_hook_general_supportedbox( $screen );
 				$this->_save_meta_supported( $screen->post_type );
-
-				// TODO: migrate tor `_hook_term_supportedbox()`
-				add_meta_box( $this->classs( 'supportedbox' ),
-					$this->get_meta_box_title(),
-					[ $this, 'render_supportedbox_metabox' ],
-					$screen,
-					'side',
-					'high'
-				);
 			}
 
 		} else if ( 'edit' == $screen->base ) {
@@ -444,36 +436,40 @@ class Today extends gEditorial\Module
 		return $this->get_adminpage_url( TRUE, $the_day, 'adminmenu' );
 	}
 
-	public function render_supportedbox_metabox( $post, $box )
+	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
-			return;
+		if ( is_null( $context ) )
+			$context = 'mainbox';
 
-		echo $this->wrap_open( '-admin-metabox' );
-			$this->actions( 'render_metabox', $post, $box, NULL, 'supportedbox' );
+		$this->_render_day_input( $object, $context );
+	}
 
-			$display_year = $post->post_type != $this->constant( 'main_posttype' );
-			$default_type = $this->default_calendar();
+	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	{
+		if ( is_null( $context ) )
+			$context = 'supportedbox';
 
-			// FIXME: must first check query
+		$this->_render_day_input( $object, $context );
+	}
 
-			if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
-				$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
+	// FIXME: must first check query
+	// TODO: conversion buttons
+	// FIXME: must check for duplicate day and gave a green light via js
+	private function _render_day_input( $post, $context = NULL )
+	{
+		$display_year = $post->post_type != $this->constant( 'main_posttype' );
+		$default_type = $this->default_calendar();
 
-			else if ( self::req( 'post' ) )
-				$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
+		if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
+			$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
 
-			else
-				$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
+		else if ( self::req( 'post' ) )
+			$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
 
-			ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
+		else
+			$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
-			// TODO: conversion buttons
-			// FIXME: must check for duplicate day and gave a green light via js
-
-		echo '</div>';
-
-		$this->nonce_field( 'supportedbox' );
+		ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
 	}
 
 	public function do_metabox_excerpt( $post, $box )
@@ -639,6 +635,7 @@ class Today extends gEditorial\Module
 				return;
 
 		if ( ! $this->nonce_verify( 'supportedbox' )
+			&& ! $this->nonce_verify( 'mainbox' )
 			&& ! $this->nonce_verify( 'nobox' ) )
 				return;
 
