@@ -702,51 +702,49 @@ class Today extends gEditorial\Module
 		if ( is_embed() || is_search() )
 			return $template;
 
-		if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
+		if ( get_query_var( 'day_cal', FALSE ) ) {
+
+			$constants = $this->get_the_day_constants();
+			$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
+
+			// no day, just cal
+			if ( 1 === count( $this->the_day ) )
+				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+
+		} else if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'main_posttype' ) )
 			|| is_page_template( 'today-frontpage.php' ) ) {
 
 			$constants = $this->get_the_day_constants();
-
-			if ( is_front_page() || is_page_template() ) {
-
-				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
-
-			} else {
-
-				$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
-
-				// no day, just cal
-				if ( 1 === count( $this->the_day ) )
-					$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
-			}
-
-			$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
-
-			$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
-
-			if ( ! empty( $this->the_post[0] ) )
-				$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
-
-			WordPress\Theme::resetQuery( [
-				'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
-				'post_title'  => $title,
-				'post_author' => 0,
-				'post_type'   => $this->constant( 'main_posttype' ),
-				'is_single'   => TRUE,
-			], [ $this, 'the_day_content' ] );
-
-			$this->enqueue_styles();
-			$this->filter( 'get_the_date', 3 );
-
-			self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-			self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
-
-			// return get_singular_template();
-			return get_single_template();
+			$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
 		}
 
-		return $template;
+		if ( empty( $this->the_day ) )
+			return $template;
+
+		$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
+
+		$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
+
+		if ( ! empty( $this->the_post[0] ) )
+			$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
+
+		WordPress\Theme::resetQuery( [
+			'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
+			'post_title'  => $title,
+			'post_author' => 0,
+			'post_type'   => $this->constant( 'main_posttype' ),
+			'is_single'   => TRUE,
+		], [ $this, 'the_day_content' ] );
+
+		$this->enqueue_styles();
+		$this->filter( 'get_the_date', 3 );
+
+		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
+		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
+
+		// return get_singular_template();
+		return get_single_template();
 	}
 
 	public function the_day_content( $content = '' )
