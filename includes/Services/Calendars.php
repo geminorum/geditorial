@@ -52,6 +52,9 @@ class Calendars extends gEditorial\Service
 			if ( ! $object = WordPress\PostType::object( $post ) )
 				return;
 
+			if ( ! WordPress\PostType::viewable( $object ) )
+				return;
+
 			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) )
 				return;
 
@@ -75,6 +78,9 @@ class Calendars extends gEditorial\Service
 			if ( ! $posttype = WordPress\PostType::object( get_queried_object() ) )
 				return;
 
+			if ( ! WordPress\PostType::viewable( $posttype ) )
+				return;
+
 			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) )
 				return;
 
@@ -96,6 +102,9 @@ class Calendars extends gEditorial\Service
 				return;
 
 			if ( ! $object = WordPress\Taxonomy::object( $term ) )
+				return;
+
+			if ( ! WordPress\Taxonomy::viewable( $object ) )
 				return;
 
 			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) )
