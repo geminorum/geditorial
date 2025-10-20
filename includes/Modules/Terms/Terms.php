@@ -415,6 +415,7 @@ class Terms extends gEditorial\Module
 				// $this->action( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
 				// $this->action( 'taxonomy_handle_tab_content_actions', 1, 8, FALSE, 'gnetwork' );
 
+				$this->filter( 'taxonomy_export_term_meta_data', 4, 8, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_export_term_meta', 2, 8, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_actions', 2, 14, FALSE, 'gnetwork' );
 				$this->filter( 'taxonomy_bulk_callback', 3, 14, FALSE, 'gnetwork' );
@@ -2055,6 +2056,21 @@ class Terms extends gEditorial\Module
 		}
 
 		return $data;
+	}
+
+	// NOTE: converts image attachment id to full URL
+	public function taxonomy_export_term_meta_data( $data, $metakey, $taxonomy, $term )
+	{
+		if ( $metakey !== $this->get_supported_metakey( 'image', $taxonomy ) )
+			return $data;
+
+		// if ( ! in_array( 'image', $this->get_supported( $taxonomy ) ) )
+		// 	return $data;
+
+		if ( ! $img = wp_get_attachment_image_src( (int) $data, 'full' ) )
+			return $data;
+
+		return empty( $img[0] ) ? $data : $img[0];
 	}
 
 	// TODO: check access
