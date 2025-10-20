@@ -14,6 +14,25 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'today';
 
+	public static function getTheDayDateMySQL( $the_day, $type = 'gregorian' )
+	{
+		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
+		$today = self::getTheDayFromToday( NULL, $cal );
+
+		$array = self::atts( [
+			'year'     => $today['year'],
+			'month'    => $today['month'],
+			'day'      => $today['day'],
+			'hour'     => 23,
+			'minute'   => 59,
+			'second'   => 59,
+			'calendar' => $cal,
+			'timezone' => NULL,
+		], $the_day );
+
+		return gEditorial\Datetime::makeMySQLFromArray( $array, NULL, FALSE );
+	}
+
 	// TODO: check minimum/max for day/month
 	// TODO: 4 digit year based on `$type`
 	public static function parseTheFullDay( $text, $type = 'gregorian' )

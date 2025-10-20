@@ -200,6 +200,8 @@ class Today extends gEditorial\Module
 			'date_disabled' => TRUE,
 		] );
 
+		$this->filter( 'calendars_post_events', 3, 8, FALSE, $this->base );
+		$this->filter( 'calendars_posttype_events', 3, 8, FALSE, $this->base );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
 		if ( ! is_admin() )
@@ -858,6 +860,74 @@ class Today extends gEditorial\Module
 		}
 
 		return $query;
+	}
+
+	// NOTE: only hooked on singular
+	public function calendars_post_events( $null, $post, $context )
+	{
+		if ( $this->is_posttype( 'main_posttype', $post ) ) {
+
+			// The day without the year
+
+			$events    = [];
+			$default   = $this->default_calendar();
+			$constants = $this->get_the_day_constants();
+			$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
+			$callback  = [ $this, 'calendars_get_theday_date_callback' ];
+
+			list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
+				'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
+				'the_day' => $the_day,
+			], $constants );
+
+			foreach ( $items as $item )
+				$events[] = Services\Calendars::getSingularCalendar( $item, $context, $callback );
+
+			return $events;
+
+		} else if ( $this->posttype_supported( $post->post_type ) ) {
+
+			$default   = $this->default_calendar();
+			$constants = $this->get_the_day_constants();
+			$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
+			$the_date  = ModuleHelper::getTheDayDateMySQL( $the_day, $default );
+
+			return Services\Calendars::getSingularCalendar( $post, $context, $the_date );
+		}
+
+		return $null;
+	}
+
+	public function calendars_get_theday_date_callback( $post, $context = NULL )
+	{
+		$default   = $this->default_calendar();
+		$constants = $this->get_the_day_constants();
+		$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
+		$the_date  = ModuleHelper::getTheDayDateMySQL( $the_day, $default );
+
+		return Core\Date::getObject( $the_date );
+	}
+
+	public function calendars_posttype_events( $null, $posttype, $context )
+	{
+		if ( $posttype !== $this->constant( 'main_posttype' ) )
+			return $null;
+
+		$events    = [];
+		$default   = $this->default_calendar();
+		$constants = $this->get_the_day_constants();
+		$the_day   = ModuleHelper::getTheDayFromQuery( FALSE, $default, $constants );
+		$callback  = [ $this, 'calendars_get_theday_date_callback' ];
+
+		list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
+			'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
+			'the_day' => $the_day,
+		], $constants );
+
+		foreach ( $items as $item )
+			$events[] = Services\Calendars::getSingularCalendar( $item, $context, $callback );
+
+		return $events;
 	}
 
 	public function reports_settings( $sub )
