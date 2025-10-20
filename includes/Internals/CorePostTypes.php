@@ -13,7 +13,7 @@ use geminorum\gEditorial\WordPress;
 trait CorePostTypes
 {
 
-	public function register_posttype( $constant, $atts = [], $settings = [], $taxonomies = [ 'post_tag' ] )
+	public function register_posttype( $constant, $atts = [], $settings_atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		$posttype = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
@@ -89,31 +89,6 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
 
-		$args = $this->apply_posttype_object_settings(
-			$posttype,
-			$args,
-			$settings,
-			$taxonomies,
-			$constant
-		);
-
-		$object = register_post_type( $posttype, $args );
-
-		if ( self::isError( $object ) )
-			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
-
-		return $this->after_posttype_object_register(
-			$object,
-			$posttype,
-			$args,
-			$settings,
-			$taxonomies,
-			$constant
-		);
-	}
-
-	protected function apply_posttype_object_settings( $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
-	{
 		$settings = self::atts( [
 			'parent_module'     => $this->key,
 			'block_editor'      => FALSE,
@@ -129,9 +104,11 @@ trait CorePostTypes
 			'date_disabled'     => NULL,
 			'author_disabled'   => NULL,
 			'password_disabled' => TRUE,
-			'ical_source'       => TRUE, // `TRUE`/`FALSE`/`paired`
-		], $atts );
+			'ical_source'       => TRUE,         // `TRUE`/`FALSE`/`paired`
+			'no_autosave'       => NULL,         // after register
+		], $settings_atts );
 
+		// NOTE: apply settings BEFORE registration
 		foreach ( $settings as $setting => $value ) {
 
 			// NOTE: `NULL` means do not touch!
@@ -362,15 +339,12 @@ trait CorePostTypes
 			}
 		}
 
-		return $args;
-	}
+		$object = register_post_type( $posttype, $args );
 
-	protected function after_posttype_object_register( $object, $posttype, $args = [], $atts = [], $taxonomies = NULL, $constant = FALSE )
-	{
-		$settings = self::atts( [
-			'no_autosave' => NULL,
-		], $atts );
+		if ( self::isError( $object ) )
+			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
+		// NOTE: apply settings AFTER registration
 		foreach ( $settings as $setting => $value ) {
 
 			// NOTE: `NULL` means do not touch!
