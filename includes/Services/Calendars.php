@@ -26,6 +26,7 @@ class Calendars extends gEditorial\Service
 		add_action( 'template_redirect', [ __CLASS__, 'template_redirect' ] );
 	}
 
+	// @SEE: on taxonomies: https://core.trac.wordpress.org/ticket/33728
 	public static function init()
 	{
 		add_rewrite_endpoint(
@@ -231,6 +232,7 @@ class Calendars extends gEditorial\Service
 		/**
 		 * @package `eluceo/ical`
 		 * @source https://github.com/markuspoerschke/iCal
+		 * @docs https://ical.poerschke.nrw/docs
 		 */
 		$uid   = implode( '-', [ Core\WordPress::currentSiteName(), $post->post_type, $post->ID ] );
 		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );

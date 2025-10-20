@@ -561,8 +561,8 @@ trait CoreTaxonomies
 		];
 
 		if ( FALSE !== $box ) {
-			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
-			$args['empty'] = NULL;                        // displays empty box with link
+			$args['none']  = Settings::showOptionNone();  // NOTE: the label already displayed on the meta-box title
+			$args['empty'] = NULL;                        // NOTE: displays empty box with link
 		} else {
 			$args['empty_link'] = FALSE;
 		}
@@ -642,7 +642,7 @@ trait CoreTaxonomies
 		return $this->constant( $constant ) == $term->taxonomy;
 	}
 
-	// NOTE: reversed fallback/fallback-key
+	// NOTE: reversed `$fallback`/`$fallback_key`
 	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '', $fallback_key = NULL )
 	{
 		return Services\CustomTaxonomy::getLabel(
@@ -700,7 +700,6 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	// TODO: integrate to `$this->register_taxonomy()`
 	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL, $hierarchical = FALSE )
 	{
 		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )
@@ -756,9 +755,9 @@ trait CoreTaxonomies
 	 *
 	 * @param string $constant
 	 * @param string $posttype
-	 * @param null|callable $callback
+	 * @param callable $callback
 	 * @param int $priority
-	 * @param null|string $context
+	 * @param string $context
 	 * @return bool $hooked
 	 */
 	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 80, $context = NULL )

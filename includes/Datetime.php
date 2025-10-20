@@ -265,6 +265,17 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $year, $month, $format ?? Core\Date::MYSQL_FORMAT, $calendar_type ] );
 	}
 
+	// @REF: `cal_days_in_month()`
+	public static function daysInMonth( $month, $year, $calendar = 'gregorian' )
+	{
+		$callback = [ Core\Date::class, 'daysInMonth' ];
+
+		if ( is_callable( [ 'gPersianDateDate', 'daysInMonth' ] ) )
+			$callback = [ 'gPersianDateDate', 'daysInMonth' ];
+
+		return call_user_func_array( $callback, [ $month, $year, $calendar ] );
+	}
+
 	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
 		$callback = [ Core\Date::class, 'makeFromInput' ];
@@ -504,7 +515,7 @@ class Datetime extends WordPress\Main
 	// today and 'future' posts will be published if moved before today
 	// @REF: `handle_ajax_drag_and_drop()`
 	// FIXME: needs fallback
-	public static function reSchedulePost( $post, $input, $calendar = FALSE, $set_timestamp = TRUE )
+	public static function reSchedulePost( $post, $array, $default_calendar = FALSE, $set_timestamp = TRUE )
 	{
 		global $wpdb;
 
@@ -515,11 +526,11 @@ class Datetime extends WordPress\Main
 			return FALSE;
 
 		$the_day = self::atts( [
-			'cal'   => $calendar,
+			'cal'   => $default_calendar,
 			'year'  => NULL,
 			'month' => 1,
 			'day'   => 1,
-		], $input );
+		], $array );
 
 		// fallback to current year
 		if ( is_null( $the_day['year'] ) && is_callable( 'gPersianDateDate', 'to' ) )

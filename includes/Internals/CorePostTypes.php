@@ -371,20 +371,6 @@ trait CorePostTypes
 		return $object;
 	}
 
-	// FIXME: DEPRECATED
-	public function get_posttype_cap_type( $constant )
-	{
-		$default = $this->constant( $constant.'_cap_type', 'post' );
-
-		if ( ! gEditorial()->enabled( 'roled' ) )
-			return $default;
-
-		if ( ! in_array( $this->constant( $constant ), gEditorial()->module( 'roled' )->posttypes() ) )
-			return $default;
-
-		return gEditorial()->module( 'roled' )->constant( 'base_type' );
-	}
-
 	public function get_posttype_labels( $constant )
 	{
 		if ( isset( $this->strings['labels'] )
@@ -461,14 +447,20 @@ trait CorePostTypes
 		$singular = $this->get_posttype_label( $constant, 'singular_name' );
 
 		return [
-			'field'       => $constant.'_supports',
-			'type'        => 'checkboxes-values',
-			/* translators: `%s`: singular posttype name */
-			'title'       => sprintf( _x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ), $singular ),
-			/* translators: `%s`: singular posttype name */
-			'description' => sprintf( _x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ), $singular ),
-			'default'     => $defaults,
-			'values'      => $supports,
+			'field'   => $constant.'_supports',
+			'type'    => 'checkboxes-values',
+			'default' => $defaults,
+			'values'  => $supports,
+			'title'   => sprintf(
+				/* translators: `%s`: singular post-type name */
+				_x( '%s Supports', 'Module: Setting Title', 'geditorial-admin' ),
+				$singular
+			),
+			'description' => sprintf(
+				/* translators: `%s`: singular post-type name */
+				_x( 'Support core and extra features for %s posttype.', 'Module: Setting Description', 'geditorial-admin' ),
+				$singular
+			),
 		];
 	}
 
@@ -536,43 +528,6 @@ trait CorePostTypes
 		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
 	}
 
-	// FIXME: DEPRECATED
-	// NOTE: only applies if the setting is `disabled`
-	protected function _hook_posttype_viewable( $posttype, $default = TRUE, $setting = 'posttype_viewable' )
-	{
-		if ( $this->get_setting( $setting, $default ) )
-			return;
-
-		add_filter( 'is_post_type_viewable',
-			function ( $is_viewable, $object ) use ( $posttype ) {
-				return $object->name === $posttype ? FALSE : $is_viewable;
-			}, 2, 9 );
-
-		add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
-			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
-				if ( 'edit' === $context ) return $access;
-				return $post->post_type === $posttype ? TRUE : $access;
-			}, 12, 6 );
-
-		add_filter( $this->hook_base( 'units', 'access_posttype_field' ),
-			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
-				if ( 'edit' === $context ) return $access;
-				return $post->post_type === $posttype ? TRUE : $access;
-			}, 12, 6 );
-
-		// NOTE: makes Tabloid links visible for non-viewable post-types
-		add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
-			function ( $viewable, $post ) use ( $posttype ) {
-				return $post->post_type === $posttype ? TRUE : $viewable;
-			}, 12, 2 );
-
-		// makes available on current module
-		add_filter( $this->hook_base( $this->key, 'is_post_viewable' ),
-			function ( $viewable, $post ) use ( $posttype ) {
-				return $post->post_type === $posttype ? TRUE : $viewable;
-			}, 12, 2 );
-	}
-
 	public function get_image_sizes_for_posttype( $posttype )
 	{
 		if ( ! isset( $this->image_sizes[$posttype] ) ) {
@@ -611,7 +566,7 @@ trait CorePostTypes
 			WordPress\Media::registerImageSize( $name, array_merge( $size, [ 'p' => [ $posttype ] ] ) );
 	}
 
-	// TODO: must add metabox to list the attachments: maybe on `Attachments` Module
+	// TODO: must add meta-box to list the attachments: maybe on `Attachments` Module
 	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
 	public function posttype__media_register_headerbutton( $constant, $post = NULL, $editor_check = TRUE )
 	{

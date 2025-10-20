@@ -552,4 +552,55 @@ trait Deprecated
 
 		return $icon ?: 'dashicons-'.$default;
 	}
+
+	// NOTE: DEPRECATED
+	public function get_posttype_cap_type( $constant )
+	{
+		$default = $this->constant( $constant.'_cap_type', 'post' );
+
+		if ( ! gEditorial()->enabled( 'roled' ) )
+			return $default;
+
+		if ( ! in_array( $this->constant( $constant ), gEditorial()->module( 'roled' )->posttypes() ) )
+			return $default;
+
+		return gEditorial()->module( 'roled' )->constant( 'base_type' );
+	}
+
+	// NOTE: DEPRECATED
+	// NOTE: only applies if the setting is `disabled`
+	protected function _hook_posttype_viewable( $posttype, $default = TRUE, $setting = 'posttype_viewable' )
+	{
+		if ( $this->get_setting( $setting, $default ) )
+			return;
+
+		add_filter( 'is_post_type_viewable',
+			function ( $is_viewable, $object ) use ( $posttype ) {
+				return $object->name === $posttype ? FALSE : $is_viewable;
+			}, 2, 9 );
+
+		add_filter( $this->hook_base( 'meta', 'access_posttype_field' ),
+			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+				if ( 'edit' === $context ) return $access;
+				return $post->post_type === $posttype ? TRUE : $access;
+			}, 12, 6 );
+
+		add_filter( $this->hook_base( 'units', 'access_posttype_field' ),
+			function ( $access, $field, $post, $context, $user_id, $original ) use ( $posttype ) {
+				if ( 'edit' === $context ) return $access;
+				return $post->post_type === $posttype ? TRUE : $access;
+			}, 12, 6 );
+
+		// NOTE: makes Tabloid links visible for non-viewable post-types
+		add_filter( $this->hook_base( 'tabloid', 'is_post_viewable' ),
+			function ( $viewable, $post ) use ( $posttype ) {
+				return $post->post_type === $posttype ? TRUE : $viewable;
+			}, 12, 2 );
+
+		// makes available on current module
+		add_filter( $this->hook_base( $this->key, 'is_post_viewable' ),
+			function ( $viewable, $post ) use ( $posttype ) {
+				return $post->post_type === $posttype ? TRUE : $viewable;
+			}, 12, 2 );
+	}
 }

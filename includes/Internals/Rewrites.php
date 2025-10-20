@@ -10,6 +10,7 @@ trait Rewrites
 
 	// $constant_prefix.'_endpoint' => 'endpoint',
 	// $constant_prefix.'_queryvar' => 'endpoint',
+	// @SEE: on taxonomies: https://core.trac.wordpress.org/ticket/33728
 	protected function rewrites__add_endpoint( $constant_prefix = 'main' )
 	{
 		if ( ! $query = $this->constant( $constant_prefix.'_queryvar' ) )
