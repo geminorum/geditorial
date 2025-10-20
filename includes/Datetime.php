@@ -275,6 +275,16 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
 	}
 
+	public static function makeMySQLFromArray( $array = [], $format = NULL, $fallback = '' )
+	{
+		$callback = [ Core\Date::class, 'makeMySQLFromArray' ];
+
+		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromArray' ] ) )
+			$callback = [ 'gPersianDateDate', 'makeMySQLFromArray' ];
+
+		return call_user_func_array( $callback, [ $array, $format, $fallback ] );
+	}
+
 	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL, $fallback = NULL )
 	{
 		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
