@@ -142,6 +142,12 @@ trait Strings
 					$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: Strings: MetaBox via Posttype: `listbox_title`', 'geditorial-admin' );
 					break;
 
+				case 'quickedit':
+
+					/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+					$default = _x( 'The %2$s', 'Internal: Strings: MetaBox via Posttype: `quickedit_title`', 'geditorial-admin' );
+					break;
+
 				case 'default':
 				default:
 

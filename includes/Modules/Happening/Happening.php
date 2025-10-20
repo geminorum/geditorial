@@ -119,6 +119,10 @@ class Happening extends gEditorial\Module
 		return [
 			'meta' => [
 				$posttype => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'alt_title'  => [ 'type' => 'text' ],
+
 					'date' => [
 						'title'       => _x( 'Event Date', 'Fields', 'geditorial-happening' ),
 						'description' => _x( 'Determines the date in which the Event is scheduled.', 'Fields', 'geditorial-happening' ),

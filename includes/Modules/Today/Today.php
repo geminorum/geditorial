@@ -122,6 +122,8 @@ class Today extends gEditorial\Module
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbox_title'      => _x( 'The Day', 'MetaBox: `mainbox_title`', 'geditorial-today' ),
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'quickedit_title'    => _x( 'The Day', 'MetaBox: `quickedit_title`', 'geditorial-today' ),
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'supportedbox_title' => _x( 'The Day', 'MetaBox: `supportedbox_title`', 'geditorial-today' ),
 		];
 
@@ -170,7 +172,7 @@ class Today extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		$this->filter( 'query_vars' );
+		$this->filter_append( 'query_vars', $this->_get_query_vars() );
 	}
 
 	public function after_setup_theme()
@@ -483,7 +485,7 @@ class Today extends gEditorial\Module
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';
 
 			echo '<span class="title inline-edit-categories-label">';
-				echo $this->get_string( 'meta_box_title', $posttype, 'misc' );
+				echo $this->strings_metabox_title_via_posttype( $posttype, 'quickedit' );
 			echo '</span>';
 
 			ModuleHelper::theDaySelect( [], TRUE, '', $this->get_calendars() );
@@ -526,9 +528,8 @@ class Today extends gEditorial\Module
 
 	public function edit_form_after_editor( $post )
 	{
-		// TODO: use `MetaBox::checkDraftMetaBox()`
-		if ( ! self::req( 'post' ) )
-			return Core\HTML::desc( _x( 'You can connect posts to this day once you\'ve saved it for the first time.', 'Message', 'geditorial-today' ) );
+		if ( gEditorial\MetaBox::checkDraftMetaBox( NULL, $post ) )
+			return;
 
 		echo $this->wrap_open( '-admin-nobox' );
 
@@ -782,22 +783,6 @@ class Today extends gEditorial\Module
 		return ModuleHelper::titleTheDay( $this->the_day );
 	}
 
-	private function _get_the_day_query_vars()
-	{
-		return [
-			'cal'   => 'day_cal',
-			'month' => 'day_month',
-			'day'   => 'day_day',
-			'year'  => 'day_year',
-			'type'  => 'day_posttype',
-		];
-	}
-
-	public function query_vars( $public_query_vars )
-	{
-		return array_merge( $this->_get_the_day_query_vars(), $public_query_vars );
-	}
-
 	public function post_type_link( $post_link, $post, $leavename, $sample )
 	{
 		if ( ! $this->is_posttype( 'main_posttype', $post ) )
@@ -848,6 +833,17 @@ class Today extends gEditorial\Module
 		}
 
 		return array_merge( $list, $rules );
+	}
+
+	private function _get_query_vars()
+	{
+		return [
+			'cal'   => 'day_cal',
+			'month' => 'day_month',
+			'day'   => 'day_day',
+			'year'  => 'day_year',
+			'type'  => 'day_posttype',
+		];
 	}
 
 	private function _build_meta_query( $constants, $relation = 'OR' )
@@ -1000,7 +996,7 @@ class Today extends gEditorial\Module
 					foreach ( $query->query( $args ) as $post ) {
 
 						$the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
-						$result  = gEditorial\Datetime::reSchedulePost( $post, $the_day );
+						$result  = gEditorial\Datetime::reSchedulePost( $post, $the_day, $default );
 
 						if ( TRUE === $result )
 							$count++;
