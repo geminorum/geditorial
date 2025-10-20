@@ -202,6 +202,35 @@ class Date extends Base
 		return self::make( 0, 0, 0, $parts[1], $parts[2], $parts[0], $calendar, $timezone );
 	}
 
+	public static function makeMySQLFromArray( $array = [], $format = NULL, $fallback = '' )
+	{
+		$parts = self::atts( [
+			'year'     => 1,
+			'month'    => 1,
+			'day'      => 1,
+			'hour'     => 0,
+			'minute'   => 0,
+			'second'   => 0,
+			'calendar' => 'gregorian',
+			'timezone' => self::currentTimeZone(),
+		], $array );
+
+		$timestamp = self::make(
+			$parts['hour'],
+			$parts['minute'],
+			$parts['second'],
+			$parts['month'],
+			$parts['day'],
+			$parts['year'],
+			$parts['calendar'],
+			$parts['timezone']
+		);
+
+		return $timestamp
+			? date( $format ?? static::MYSQL_FORMAT, $timestamp )
+			: $fallback;
+	}
+
 	public static function makeMySQLFromInput( $input, $format = NULL, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
 	{
 		if ( empty( $input ) )

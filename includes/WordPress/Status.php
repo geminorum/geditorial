@@ -12,10 +12,10 @@ class Status extends Core\Base
 	 *
 	 * @source `get_post_stati()`
 	 *
-	 * @param  int $mod
-	 * @param  null|string $capability
-	 * @param  int $user_id
-	 * @return array $list
+	 * @param int $mod
+	 * @param string $capability
+	 * @param int $user_id
+	 * @return array
 	 */
 	public static function get( $mod = 0, $args = [] )
 	{
@@ -40,12 +40,12 @@ class Status extends Core\Base
 	}
 
 	/**
-	 * Retrieves available post statuses for given posttype.
+	 * Retrieves available post statuses for given post-type.
 	 * TODO: https://developer.wordpress.org/apis/transients/
 	 *
-	 * @param  string     $posttype
-	 * @param  null|array $excludes
-	 * @return array      $statuses
+	 * @param string $posttype
+	 * @param array $excludes
+	 * @return array
 	 */
 	public static function available( $posttype, $excludes = NULL )
 	{
@@ -66,8 +66,8 @@ class Status extends Core\Base
 	/**
 	 * Determines whether a post status is considered “viewable”.
 	 *
-	 * @param  string|stdClass $status
-	 * @return bool $viewable
+	 * @param string|object $status
+	 * @return bool
 	 */
 	public static function viewable( $status )
 	{
@@ -78,12 +78,12 @@ class Status extends Core\Base
 	}
 
 	/**
-	 * Retrieves filtered post statuses for given posttypes.
+	 * Retrieves filtered post statuses for given post-types.
 	 *
-	 * @param  string|array $posttypes
-	 * @param  string       $context
-	 * @param  null|array   $excludes
-	 * @return array        $statuses
+	 * @param string|array $posttypes
+	 * @param string $context
+	 * @param array $excludes
+	 * @return array
 	 */
 	public static function acceptable( $posttypes = 'any', $context = 'query', $excludes = NULL )
 	{

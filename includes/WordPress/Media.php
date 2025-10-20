@@ -538,6 +538,7 @@ class Media extends Core\Base
 		return $size ?: $fallback;
 	}
 
+	// WTF: rename to `getAttachmentSrc`
 	public static function htmlAttachmentSrc( $attachment_id, $size = NULL, $fallback = '' )
 	{
 		$img = NULL;
