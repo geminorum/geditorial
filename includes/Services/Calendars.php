@@ -15,6 +15,9 @@ class Calendars extends gEditorial\Service
 
 	public static function setup()
 	{
+		if ( GEDITORIAL_DISABLE_ICAL )
+			return FALSE;
+
 		add_action( 'init', [ __CLASS__, 'init' ] );
 
 		if ( is_admin() )
@@ -332,6 +335,9 @@ class Calendars extends gEditorial\Service
 
 	public static function linkPostCalendar( $post = NULL, $context = NULL )
 	{
+		if ( self::const( 'GEDITORIAL_DISABLE_ICAL' ) )
+			return FALSE;
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
