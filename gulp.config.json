@@ -144,6 +144,7 @@
         "assets/packages",
         "assets/templates",
         "assets/apps",
+        "assets/sass",
         "assets/dev",
         "assets/blocks/**/src",
         "includes/Modules/**/.temp",
@@ -177,6 +178,7 @@
         "assets/packages",
         "assets/templates",
         "assets/apps",
+        "assets/sass",
         "assets/dev",
         "assets/blocks/**/src",
         "includes/Modules/**/.temp",
@@ -198,7 +200,7 @@
         ".temp",
         ".test",
         "node_modules",
-        "indeh.html"
+        "index.html"
       ],
       "comment": "",
       "headers": {
@@ -214,7 +216,7 @@
         ".temp",
         ".test",
         "node_modules",
-        "indeh.html"
+        "index.html"
       ],
       "comment": ""
     }

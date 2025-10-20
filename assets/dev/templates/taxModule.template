@@ -7,7 +7,6 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Shortcode;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
@@ -205,7 +204,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return Shortcode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
