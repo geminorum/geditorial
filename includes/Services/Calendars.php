@@ -242,8 +242,12 @@ class Calendars extends gEditorial\Service
 				new \Eluceo\iCal\Domain\ValueObject\Uri( $shortlink )
 			);
 
-		if ( ! empty( $post->post_excerpt ) )
-			$event->setDescription( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ) );
+		if ( $desc = apply_filters( static::BASE.'_calendars_post_description',
+			WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ),
+			$post,
+			$context
+		) )
+			$event->setDescription( $desc );
 
 		if ( $email = PostTypeFields::getFieldRaw( 'email_address', $post->ID, 'meta', TRUE ) ) {
 
