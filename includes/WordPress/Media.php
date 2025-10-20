@@ -395,11 +395,17 @@ class Media extends Core\Base
 		if ( get_post_meta( $attachment_id, '_wp_attachment_is_custom_background', TRUE ) )
 			return 'custom_background';
 
+		if ( get_post_meta( $attachment_id, '_wp_attachment_context', TRUE ) )
+			return 'custom_context';
+
 		if ( get_post_meta( $attachment_id, '_wp_attachment_is_term_image', TRUE ) )
 			return 'term_image';
 
 		if ( $attachment_id == get_option( 'site_icon' ) )
 			return 'site_icon';
+
+		if ( $attachment_id == get_theme_mod( 'custom_logo' ) )
+			return 'custom_logo';
 
 		if ( $attachment_id == get_theme_mod( 'site_logo' ) )
 			return 'site_logo';

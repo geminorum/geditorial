@@ -25,17 +25,17 @@ class UnicodeUTF8 extends Core\Base
 {
 
 	/**
-	 * Takes an UTF-8 string and returns an array of ints representing the
-	 * Unicode characters. Astral planes are supported ie. the ints in the
-	 * output can be > 0xFFFF. Occurrances of the BOM are ignored. Surrogates
+	 * Takes a `UTF-8` string and returns an array of integers representing the
+	 * Unicode characters. Astral planes are supported i.e. the integers in the
+	 * output can be > 0xFFFF. Occurrences of the BOM are ignored. Surrogates
 	 * are not allowed.
 	 *
-	 * Returns false if the input string isn't a valid UTF-8 octet sequence.
+	 * Returns false if the input string isn't a valid `UTF-8` octet sequence.
 	 **/
 	public static function utf8ToUnicode( $str )
 	{
 		$mState = 0;     // cached expected number of octets after the current octet
-		                 // until the beginning of the next UTF8 character sequence
+		                 // until the beginning of the next `UTF-8` character sequence
 		$mUcs4  = 0;     // cached Unicode character
 		$mBytes = 1;     // cached expected number of octets in the current sequence
 
@@ -48,7 +48,7 @@ class UnicodeUTF8 extends Core\Base
 
 			if ( 0 == $mState ) {
 
-				// When mState is zero we expect either a US-ASCII character or a
+				// When `mState` is zero we expect either an `US-ASCII` character or a
 				// multi-octet sequence.
 				if ( 0 == ( 0x80 & ( $in ) ) ) {
 
@@ -87,7 +87,7 @@ class UnicodeUTF8 extends Core\Base
 					* This is illegal because the encoded code-point must be either
 					* (a) not the shortest form or
 					* (b) outside the Unicode range of 0-0x10FFFF.
-					* Rather than trying to resynchronize, we will carry on until the end
+					* Rather than trying to re-synchronize, we will carry on until the end
 					* of the sequence and let the later error handling code catch it.
 					*/
 					$mUcs4  = ( $in );
@@ -114,7 +114,7 @@ class UnicodeUTF8 extends Core\Base
 
 			} else {
 
-				// When mState is non-zero, We expect a continuation of the multi-octet sequence
+				// When `mState` is non-zero, We expect a continuation of the multi-octet sequence
 				if (0x80 == (0xC0 & ( $in))) {
 
 					// Legal continuation.
@@ -125,7 +125,7 @@ class UnicodeUTF8 extends Core\Base
 
 					if (0 == --$mState) {
 						/*
-						 * End of the multi-octet sequence. mUcs4 now contains the final
+						 * End of the multi-octet sequence. `mUcs4` now contains the final
         				 * Unicode code-point to be output
          				 *
            				 * Check for illegal sequences and code-points.
@@ -138,7 +138,7 @@ class UnicodeUTF8 extends Core\Base
 							( 4 < $mBytes ) ||
 							// From Unicode 3.2, surrogate characters are illegal
 							( ( $mUcs4 & 0xFFFFF800 ) == 0xD800 ) ||
-							// Codepoints outside the Unicode range are illegal
+							// Code-points outside the Unicode range are illegal
 							( $mUcs4 > 0x10FFFF )
 						) {
 							return FALSE;
@@ -149,7 +149,7 @@ class UnicodeUTF8 extends Core\Base
 							$out[] = $mUcs4;
 						}
 
-						//initialize UTF8 cache
+						// initialize `UTF-8` cache
 						$mState = 0;
 						$mUcs4  = 0;
 						$mBytes = 1;
@@ -171,14 +171,14 @@ class UnicodeUTF8 extends Core\Base
 	}
 
 	/**
-	 * Converts given array of Unicode chars into UTF-8 string.
+	 * Converts given array of Unicode chars into `UTF-8` string.
 	 *
-	 * Takes an array of ints representing the Unicode characters and returns
-	 * a UTF-8 string. Astral planes are supported ie. the ints in the
-	 * input can be > 0xFFFF. Occurrances of the BOM are ignored. Surrogates
+	 * Takes an array of integers representing the Unicode characters and returns
+	 * a `UTF-8` string. Astral planes are supported i.e. the integers in the
+	 * input can be > 0xFFFF. Occurrences of the BOM are ignored. Surrogates
 	 * are not allowed.
 	 *
-	 * Returns false if the input array contains ints that represent
+	 * Returns false if the input array contains integers that represent
 	 * surrogates or are outside the Unicode range.
 	 *
 	 * @param array $arr

@@ -10,9 +10,9 @@ class User extends Core\Base
 	public static function get( $all_fields = FALSE, $network = FALSE, $extra = [], $rekey = 'ID' )
 	{
 		$users = get_users( array_merge( [
-			'blog_id' => ( $network ? '' : $GLOBALS['blog_id'] ),
 			'orderby' => 'display_name',
-			'fields'  => ( $all_fields ? 'all_with_meta' : 'all' ),
+			'blog_id' => $network ? '' : $GLOBALS['blog_id'],
+			'fields'  => $all_fields ? 'all_with_meta' : 'all',
 		], $extra ) );
 
 		return Core\Arraay::reKey( $users, $rekey );

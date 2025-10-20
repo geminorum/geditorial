@@ -43,8 +43,8 @@ class MP3File extends Core\Base
 
 	/**
 	 * Retrieves duration time of the MP3 file.
-	 * by CBR (constant bit rate): Read first MP3 frame only (faster)
-	 * by VBR (variable bit rate): Read entire file, frame by frame (slower)
+	 * By `CBR` (constant bitrate): Read first MP3 frame only (faster)
+	 * By `VBR` (variable bitrate): Read entire file, frame by frame (slower)
 	 *
 	 * @param bool $cbr
 	 * @return int $duration
@@ -77,7 +77,7 @@ class MP3File extends Core\Base
 
 			} else if ( 'TAG' === substr( $block, 0, 3 ) ) {
 
-				fseek( $fd, 128 - 10, SEEK_CUR ); //skip over id3v1 tag size
+				fseek( $fd, 128 - 10, SEEK_CUR ); // skip over `id3v1` tag size
 
 			} else {
 
@@ -197,7 +197,7 @@ class MP3File extends Core\Base
 		$emphasis            = ( $b3 & 0x03 );
 
 		return [
-			'Version'        => $version, // MPEGVersion
+			'Version'        => $version, // `MPEGVersion`
 			'Layer'          => $layer,
 			'Protection Bit' => $protection_bit, // 0 = >> protected by 2 byte CRC, 1=>>not protected
 			'Bitrate'        => $bitrate,
