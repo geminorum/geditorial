@@ -20,6 +20,7 @@
     number: '[data-' + module + '=\'number\']',
     alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials values (UpperCase)
     slug: '[data-' + module + '=\'slug\']', // example: warehouse partials names (LowerCase)
+    hook: '[data-' + module + '=\'hook\']',
     identity: '[data-' + module + '=\'identity\']',
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
@@ -360,6 +361,16 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val().trim().replace(/[\s-_]+/gi, '-'))).replace(/[^a-zA-Z0-9-]/gi, '').trim().toLowerCase());
+      });
+    },
+
+    hook: function () {
+      const $el = $(this);
+      try {
+        $el.prop('type', 'text');
+      } catch (e) {}
+      $el.on('change', function () {
+        $el.val(toEnglish(sanitizeDashes($el.val().trim().replace(/[\s-]+/gi, '_'))).replace(/[^a-zA-Z0-9_]/gi, '').trim().toLowerCase());
       });
     },
 
