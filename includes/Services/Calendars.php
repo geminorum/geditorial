@@ -11,6 +11,7 @@ class Calendars extends gEditorial\Service
 	const REWRITE_ENDPOINT_NAME  = 'ics';
 	const REWRITE_ENDPOINT_QUERY = 'ical';
 	const POSTTYPE_ICAL_SOURCE   = 'ical_source';
+	const TAXONOMY_ICAL_SOURCE   = 'ical_source';
 
 	public static function setup()
 	{
@@ -26,7 +27,7 @@ class Calendars extends gEditorial\Service
 	{
 		add_rewrite_endpoint(
 			static::REWRITE_ENDPOINT_NAME,
-			EP_PERMALINK | EP_PAGES,
+			EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS,
 			static::REWRITE_ENDPOINT_QUERY
 		);
 	}
@@ -41,7 +42,7 @@ class Calendars extends gEditorial\Service
 			return;
 
 		$events  = $filename = FALSE;
-		$context = 'icalendar';
+		$context = static::REWRITE_ENDPOINT_QUERY;
 
 		if ( is_singular() ) {
 
@@ -54,13 +55,63 @@ class Calendars extends gEditorial\Service
 			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) )
 				return;
 
-			if ( 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
+			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_post_events', NULL, $post, $context ) ) )
+				$events = $filtered;
+
+			else if ( 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
 				$events = self::getPairedCalendar( $post, $context );
 
 			else
 				$events = self::getSingularCalendar( $post, $context );
 
-			$filename = Core\File::prepName( WordPress\Post::get()->post_name, NULL, FALSE );
+			$filename = apply_filters( static::BASE.'_calendars_post_filename',
+				Core\File::prepName( $post->post_name, $context, FALSE ),
+				$post,
+				$context
+			);
+
+		} else if ( is_post_type_archive() ) {
+
+			if ( ! $posttype = WordPress\PostType::object( get_queried_object() ) )
+				return;
+
+			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) )
+				return;
+
+			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_posttype_events', NULL, $posttype->name, $context ) ) )
+				$events = $filtered;
+
+			else
+				$events = self::getPostTypeCalendar( $posttype, $context );
+
+			$filename = apply_filters( static::BASE.'_calendars_posttype_filename',
+				Core\File::prepName( $posttype->name, $context, FALSE ),
+				$posttype->name,
+				$context
+			);
+
+		} else if ( is_tax() || is_tag() || is_category() ) {
+
+			if ( ! $term = WordPress\Term::get() )
+				return;
+
+			if ( ! $object = WordPress\Taxonomy::object( $term ) )
+				return;
+
+			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) )
+				return;
+
+			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_term_events', NULL, $term, $context ) ) )
+				$events = $filtered;
+
+			else
+				$events = self::getTermCalendar( $term, $context );
+
+			$filename = apply_filters( static::BASE.'_calendars_term_filename',
+				Core\File::prepName( $term->slug, $context, FALSE ),
+				$term,
+				$context
+			);
 		}
 
 		self::exitICS( $events, $filename, $context );
@@ -116,14 +167,51 @@ class Calendars extends gEditorial\Service
 		return $events;
 	}
 
+	public static function getPostTypeCalendar( $posttype, $context = NULL, $the_date = NULL )
+	{
+		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
+			return FALSE;
+
+		$events = [];
+		$items  = WordPress\PostType::getRecent( $posttype->name, [
+			'posts_per_page' => -1,
+		] );
+
+		foreach ( $items as $item )
+			$events[] = self::getSingularCalendar( $item, $context, $the_date );
+
+		return $events;
+	}
+
+	public static function getTermCalendar( $term, $context = NULL, $the_date = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		$events = [];
+		$items  = WordPress\PostType::getRecent( 'any', [
+			'posts_per_page' => -1,
+			'tax_query'      => [ [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => [ $term->term_id ],
+			] ],
+		] );
+
+		foreach ( $items as $item )
+			$events[] = self::getSingularCalendar( $item, $context, $the_date );
+
+		return $events;
+	}
+
 	/**
 	 * Retrieves calendar events based on a singular post.
 	 *
 	 * @param int|object $post
 	 * @param string $context
+	 * @param mixed $the_date
 	 * @return false|object
 	 */
-	public static function getSingularCalendar( $post = NULL, $context = NULL )
+	public static function getSingularCalendar( $post = NULL, $context = NULL, $the_date = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -165,7 +253,36 @@ class Calendars extends gEditorial\Service
 			$event->setLocation( $location );
 		}
 
-		if ( ( $datestart = PostTypeFields::getFieldDate( 'datestart', $post->ID ) )
+		if ( $the_date ) {
+
+			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $the_date )
+					)
+				);
+
+			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $post, $context ] ) ) ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
+					)
+				);
+
+			} else if ( $the_date ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date(
+							Core\Date::getObject( $the_date )
+						)
+					)
+				);
+			}
+
+		} else if ( ( $datestart = PostTypeFields::getFieldDate( 'datestart', $post->ID ) )
 			&& ( $dateend = PostTypeFields::getFieldDate( 'dateend', $post->ID ) ) ) {
 
 			$event->setOccurrence(

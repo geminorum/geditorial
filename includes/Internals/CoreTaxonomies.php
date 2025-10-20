@@ -55,7 +55,7 @@ trait CoreTaxonomies
 			'slug'         => $this->constant( $constant.'_slug', str_replace( '_', '-', $taxonomy ) ),
 			'with_front'   => FALSE,
 			'hierarchical' => $args['hierarchical'],
-			// 'ep_mask'      => EP_NONE,
+			'ep_mask'      => $args['hierarchical'] ? EP_CATEGORIES : EP_TAGS, // default is `EP_NONE`
 		];
 
 		if ( is_null( $args['rewrite'] ) )
@@ -362,7 +362,7 @@ trait CoreTaxonomies
 				case 'reverse_ordered' : $args[Services\TermHierarchy::REVERSE_ORDERED_TERMS] = $value; break;
 				case 'auto_assigned'   : $args[Services\TermHierarchy::AUTO_ASSIGNED_TERMS]   = $value; break;
 				case 'terms_related'   : $args[Services\TermRelations::TAXONOMY_PROP]         = $value; break;
-				case 'ical_source'     : $args[Services\Calendars::POSTTYPE_ICAL_SOURCE]      = $value; break;
+				case 'ical_source'     : $args[Services\Calendars::TAXONOMY_ICAL_SOURCE]      = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
