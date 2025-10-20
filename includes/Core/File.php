@@ -842,6 +842,15 @@ class File extends Base
 		exit;
 	}
 
+	/**
+	 * Includes and evaluates the specified file.
+	 *
+	 * @see https://konstantin.blog/2021/php-benchmark-include-vs-file_get_contents/
+	 *
+	 * @param string $path
+	 * @param mixed $fallback
+	 * @return mixed
+	 */
 	public static function requireData( $path, $fallback = FALSE )
 	{
 		return self::readable( $path )

@@ -35,6 +35,12 @@ class Taxonomy extends Core\Base
 		return (bool) self::object( $taxonomy_or_term );
 	}
 
+	/**
+	 * Determines whether a taxonomy is considered “viewable”.
+	 *
+	 * @param string|object $taxonomy
+	 * @return bool
+	 */
 	public static function viewable( $taxonomy )
 	{
 		if ( ! $taxonomy )

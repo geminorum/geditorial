@@ -157,6 +157,14 @@ class Date extends Base
 		];
 	}
 
+	public static function daysInMonth( $month, $year, $calendar = 'gregorian' )
+	{
+		// @source: https://www.php.net/manual/en/function.cal-days-in-month.php#38666
+		// return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
+
+		return cal_days_in_month( 0, $month, $year ); // `CAL_GREGORIAN`
+	}
+
 	/**
 	 * Gets First and Last Day of Week by Week Number.
 	 *

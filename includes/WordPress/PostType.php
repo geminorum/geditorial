@@ -37,6 +37,12 @@ class PostType extends Core\Base
 		return (bool) self::object( $posttype_or_post );
 	}
 
+	/**
+	 * Determines whether a post type is considered “viewable”.
+	 *
+	 * @param string|object $posttype
+	 * @return bool
+	 */
 	public static function viewable( $posttype )
 	{
 		if ( ! $posttype )
