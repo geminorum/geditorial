@@ -1266,4 +1266,48 @@ class Template extends WordPress\Main
 
 		echo $args['before'].$wrap.Core\HTML::rows( $list ).'</div>'.$args['after'];
 	}
+
+	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
+	public static function eventDate( $start, $end )
+	{
+		// Only a start date
+		if ( empty( $end ) )
+			$date = wp_date( 'F j, Y', $start );
+
+		// Same day
+		else if ( date( 'F j', $start ) == date( 'F j', $end ) )
+			$date = wp_date( 'F j Y', $start );
+
+		// Same Month
+		else if ( date( 'F', $start ) == date( 'F', $end ) )
+			$date = wp_date( 'F j', $start ).'&mdash;'.wp_date( 'j, Y', $end );
+
+		// Same Year
+		else if( date( 'Y', $start ) == date( 'Y', $end ) )
+			$date = wp_date( 'F j', $start ).'&mdash;'.wp_date( 'F j, Y', $end );
+
+		// Any other dates
+		else
+			$date = wp_date( 'F j, Y', $start ).'&mdash;'.wp_date( 'F j, Y', $end );
+
+		return $date;
+	}
+
+	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
+	public static function eventTime( $start, $end )
+	{
+		// Same date, same am/pm
+		if ( date( 'F j', $start ) == date( 'F j', $end ) && date( 'a', $start ) == date( 'a', $end ) )
+			$time = wp_date( 'g:i', $start ).'&mdash;'.wp_date( 'g:i a', $end );
+
+		// Same date, different am/pm
+		else if ( date( 'F j', $start ) == date( 'F j', $end ) )
+			$time = wp_date( 'g:i a', $start ).'&mdash;'.wp_date( 'g:i a', $end );
+
+		// different date
+		else
+			$time = wp_date( 'g:i a', $start ).'&mdash;'.wp_date( 'F j, g:i a', $end );
+
+		return $time;
+	}
 }
