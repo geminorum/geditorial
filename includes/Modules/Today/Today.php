@@ -417,6 +417,11 @@ class Today extends gEditorial\Module
 
 		$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
 
+		return $this->_get_the_day_admin_link( $the_day );
+	}
+
+	private function _get_the_day_admin_link( $the_day )
+	{
 		return $this->get_adminpage_url( TRUE, $the_day, 'adminmenu' );
 	}
 
@@ -436,9 +441,6 @@ class Today extends gEditorial\Module
 		$this->_render_day_input( $object, $context );
 	}
 
-	// FIXME: must first check query
-	// FIXME: must check for duplicate day and gave a green light via js
-	// TODO: conversion buttons
 	private function _render_day_input( $post, $context = NULL )
 	{
 		$calendars    = $this->get_calendars();
@@ -455,6 +457,33 @@ class Today extends gEditorial\Module
 			$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
 		ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $calendars );
+
+		$the_date = ModuleHelper::getTheDayDateMySQL( $the_day, $default_type );
+		$format   = gEditorial\Datetime::dateFormats( 'default' );
+
+		// TODO: display in `table`
+		// TODO: conversion buttons.
+		// TODO: validation colors.
+		// TODO: visible calendar type.
+		// TODO: actions: button to founded `day` post-type on other calendars.
+		// TODO: actions: button to add `day` post-type on other calendars.
+		// TODO: actions: button to download ical.
+		// TODO: must check for duplicate day and gave a green light via js.
+
+		foreach ( $calendars as $calendar => $title ) {
+
+			$other_day = array_merge( $the_day, [ 'cal' => $calendar ] );
+
+			echo Core\HTML::wrap(
+				Core\HTML::tag( 'a', [
+					'href'   => $this->_get_the_day_admin_link( $other_day ),
+					'title'  => $title,
+					'data'   => $other_day,
+					'target' => '_blank',
+				], gEditorial\Datetime::formatByCalendar( $format, $the_date, $calendar ) ),
+				'field-wrap -theday-bycalendar'
+			);
+		}
 	}
 
 	public function manage_posts_columns( $columns )
