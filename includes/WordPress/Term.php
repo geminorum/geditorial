@@ -216,7 +216,7 @@ class Term extends Core\Base
 		if ( ! $term = self::get( $term ) )
 			return $fallback;
 
-		if ( ! $url = get_term_link( $term ) )
+		if ( ! $url = get_term_link( $term, $term->taxonomy ) )
 			return $fallback;
 
 		return $url;
@@ -304,7 +304,7 @@ class Term extends Core\Base
 		if ( ! $term = self::get( $term ) )
 			return $fallback;
 
-		if ( ! $url = get_term_link( $term ) )
+		if ( ! $url = get_term_link( $term, $term->taxonomy ) )
 			return $fallback;
 
 		if ( is_wp_error( $url ) )

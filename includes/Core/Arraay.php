@@ -585,6 +585,19 @@ class Arraay extends Base
 		return TRUE;
 	}
 
+	/**
+	 * Checks if a value exists in an array.
+	 * NOTE: case-insensitive version of `in_array()`
+	 *
+	 * @param string $needle
+	 * @param array $haystack
+	 * @return bool
+	 */
+	public static function in( $needle, $haystack )
+	{
+		return in_array( strtolower( $needle ), array_map( 'strtolower', $haystack ) );
+	}
+
 	public static function has( $needle, $haystack, $strict = TRUE )
 	{
 		return FALSE !== array_search( $needle, (array) $haystack, $strict );
