@@ -12,9 +12,35 @@ class Datetime extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE )
+	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
 	{
-		return Core\Date::htmlCurrent( ( is_null( $format ) ? self::dateFormats( 'datetime' ) : $format ), $class, $title );
+		$html = self::htmlDateTime(
+			'now',
+			$format ?? self::dateFormats( 'datetime' ),
+			$title,
+			$calendar_type,
+			$timezone_string,
+			$locale
+		);
+
+		return $class
+			? '<span class="'.$class.'">'.$html.'</span>'
+			: $html;
+	}
+
+	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	{
+		return HTML::tag( 'time', [
+			'datetime' => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
+			'title'    => $title,
+			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
+		], self::formatByCalendar(
+			$format ?? self::dateFormats( 'dateonly' ),
+			$datetime_string,
+			$calendar_type,
+			$timezone_string,
+			$locale
+		) );
 	}
 
 	// @REF: https://unicode-table.com/en/060D/
@@ -323,7 +349,13 @@ class Datetime extends WordPress\Main
 		if ( is_callable( [ 'gPersianDateDate', 'formatByCalendar' ] ) )
 			$callback = [ 'gPersianDateDate', 'formatByCalendar' ];
 
-		return call_user_func_array( $callback, [ $format, $datetime_string, $calendar_type, $timezone_string, $locale ] );
+		return call_user_func_array( $callback, [
+			$format ?? self::dateFormats( 'default' ),
+			$datetime_string,
+			$calendar_type,
+			$timezone_string,
+			$locale,
+		] );
 	}
 
 	public static function prepForInput( $date, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
@@ -331,7 +363,12 @@ class Datetime extends WordPress\Main
 		if ( $year = self::prepYearOnly( $date, FALSE ) )
 			return $year;
 
-		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone_string, FALSE );
+		return self::formatByCalendar(
+			$format,
+			$date,
+			$calendar_type,
+			$timezone_string
+		);
 	}
 
 	public static function prepYearOnly( $data, $localize = TRUE, $fallback = '' )
@@ -347,29 +384,29 @@ class Datetime extends WordPress\Main
 		return $localize ? Core\Number::localize( $sanitized ) : $sanitized;
 	}
 
-	public static function prepForDisplay( $data, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepForDisplay( $datetime_string, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
-		if ( $year = self::prepYearOnly( $data ) )
+		if ( $year = self::prepYearOnly( $datetime_string ) )
 			return $year;
 
-		if ( $data && ( $timestamp = strtotime( $data ) ) )
-			return Core\Date::htmlDateTime(
-				$timestamp,
-				NULL,
+		if ( $datetime_string )
+			return self::htmlDateTime(
+				$datetime_string,
 				$format ?? self::dateFormats( 'default' ),
-				self::humanTimeDiffRound( $timestamp, FALSE )
+				self::humanTimeDiffRound( strtotime( $datetime_string ), FALSE ),
+				$calendar_type,
+				$timezone_string
 			);
 
-		return $data ?: '';
+		return $datetime_string ?: '';
 	}
 
-	// TODO: utilize `htmlDateTime()`
-	public static function prepDateOfBirth( $date, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepDateOfBirth( $datetime_string, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
-		if ( ! $date )
+		if ( ! $datetime_string )
 			return '';
 
-		$age = Core\Date::calculateAge( $date, $calendar_type, $timezone_string );
+		$age = Core\Date::calculateAge( $datetime_string, $calendar_type, $timezone_string );
 
 		$title = sprintf(
 			/* translators: `%s`: year number */
@@ -377,12 +414,18 @@ class Datetime extends WordPress\Main
 			Core\Number::format( $age['year'] )
 		);
 
-		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'birthday' ), $calendar_type, $timezone_string );
-		$template = '<span title="%s" class="%s">%s</span>';
+		$template  = '<span title="%s" class="%s" datetime="%s">%s</span>';
+		$datetime  = Core\Date::getISO8601( $datetime_string, $timezone_string, '' );
+		$formatted = self::formatByCalendar(
+			$format ?? self::dateFormats( 'birthday' ),
+			$datetime_string,
+			$calendar_type,
+			$timezone_string
+		);
 
 		return $reversed
-			? sprintf( $template, $html, 'date-of-birth', $title )
-			: sprintf( $template, $title, 'date-of-birth', $html );
+			? sprintf( $template, $formatted, 'date-of-birth', $datetime, $title )
+			: sprintf( $template, $title, 'date-of-birth', $datetime, $formatted );
 	}
 
 	// NOTE: falls back on raw data: like `1362`
