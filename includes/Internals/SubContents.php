@@ -15,7 +15,6 @@ use geminorum\gEditorial\WordPress;
 
 trait SubContents
 {
-
 	protected function subcontent_get_strings_for_js( $extra = [] )
 	{
 		return array_merge( [
@@ -50,6 +49,13 @@ trait SubContents
 	protected function subcontent_get_comment_type()
 	{
 		return $this->constant( 'subcontent_type', $this->key );
+	}
+
+	// NOTE: Allows the sub-content types to have Avatar.
+	protected function subcontent__enable_comment_avatar()
+	{
+		$this->filter_append( 'get_avatar_comment_types',
+			$this->subcontent_get_comment_type() );
 	}
 
 	protected function subcontent_is_comment_type( $data_or_comment, $type = NULL )

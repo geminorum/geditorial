@@ -441,8 +441,9 @@ class Today extends gEditorial\Module
 	// TODO: conversion buttons
 	private function _render_day_input( $post, $context = NULL )
 	{
-		$display_year = $post->post_type != $this->constant( 'main_posttype' );
+		$calendars    = $this->get_calendars();
 		$default_type = $this->default_calendar();
+		$display_year = $post->post_type != $this->constant( 'main_posttype' );
 
 		if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
 			$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
@@ -453,7 +454,7 @@ class Today extends gEditorial\Module
 		else
 			$the_day = ModuleHelper::getTheDayFromQuery( TRUE, $default_type, $this->get_the_day_constants( $display_year ) );
 
-		ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $this->get_calendars() );
+		ModuleHelper::theDaySelect( $the_day, $display_year, $default_type, $calendars );
 	}
 
 	public function manage_posts_columns( $columns )
@@ -624,7 +625,7 @@ class Today extends gEditorial\Module
 				continue;
 
 			if ( 'cal' == $field )
-				$postmeta[$field] = Services\Calendars::sanitize( $value, $this->default_calendar() );
+				$postmeta[$field] = Core\Date::sanitizeCalendar( $value, $this->default_calendar() );
 			else
 				$postmeta[$field] = Core\Number::translate( $value );
 		}
@@ -1089,11 +1090,11 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today__cal'  : return Services\Calendars::sanitize( trim( $value ), $this->default_calendar() );
+			case 'today__cal'  : return Core\Date::sanitizeCalendar( Core\Text::trim( $value ), $this->default_calendar(), $this->get_calendars() );
 			case 'today__year' :
 			case 'today__month':
-			case 'today__day'  : return Core\Number::translate( trim( $value ) );
-			case 'today__full' : return ModuleHelper::parseTheFullDay( trim( $value ), $this->default_calendar() );
+			case 'today__day'  : return Core\Number::translate( Core\Text::trim( $value ) );
+			case 'today__full' : return ModuleHelper::parseTheFullDay( Core\Text::trim( $value ), $this->default_calendar() );
 		}
 
 		return $value;
@@ -1105,9 +1106,10 @@ class Today extends gEditorial\Module
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
-		$default  = $this->default_calendar();
-		$fields   = array_keys( $this->_get_importer_fields( $post->post_type ) );
-		$postmeta = [ 'cal' => $default ]; // `set_today_meta()` needs cal
+		$default   = $this->default_calendar();
+		$calendars = $this->get_calendars();
+		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
+		$postmeta  = [ 'cal' => $default ]; // `set_today_meta()` needs cal
 
 		foreach ( $atts['map'] as $offset => $field ) {
 
@@ -1124,7 +1126,7 @@ class Today extends gEditorial\Module
 				$postmeta = ModuleHelper::parseTheFullDay( $value, array_key_exists( 'cal', $postmeta ) ? $postmeta['cal'] : $default );
 
 			else if ( 'cal' == $key )
-				$postmeta[$key] = Services\Calendars::sanitize( $value, $default );
+				$postmeta[$key] = Core\Date::sanitizeCalendar( $value, $default, $calendars );
 
 			else
 				$postmeta[$key] = Core\Number::translate( $value );

@@ -383,7 +383,7 @@ class Calendars extends gEditorial\Service
 
 	/**
 	 * Sanitizes given calendar type string.
-	 * @old: `Datetime::sanitizeCalendar()`
+	 * NOTE: DEPRECATED
 	 *
 	 * @param string $calendar
 	 * @param string $default
@@ -391,6 +391,8 @@ class Calendars extends gEditorial\Service
 	 */
 	public static function sanitize( $calendar, $default = 'gregorian' )
 	{
+		self::_dev_dep( 'Core\Date::sanitizeCalendar()' );
+
 		$calendars = self::getDefualts( FALSE );
 		$sanitized = $calendar;
 

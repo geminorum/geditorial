@@ -320,7 +320,7 @@ class Settings extends WordPress\Main
 	{
 		return [
 			'title'           => _x( 'Title', 'Settings: Option: PostType Support', 'geditorial-admin' ),
-			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', 'geditorial-admin' ),
+			'editor'          => _x( 'Editor', 'Settings: Option: PostType Support', 'geditorial-admin' ), // NOTE: `'editor' => [ 'notes' => TRUE ],`
 			'excerpt'         => _x( 'Excerpt', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'author'          => _x( 'Author', 'Settings: Option: PostType Support', 'geditorial-admin' ),
 			'autosave'        => _x( 'Auto-Save', 'Settings: Option: PostType Support', 'geditorial-admin' ), // NOTE: For backward compatibility reasons, adding `editor` support implies `autosave` support, so one would need to explicitly use `remove_post_type_support()` to remove it. @REF https://core.trac.wordpress.org/changeset/58201

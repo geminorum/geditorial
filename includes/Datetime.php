@@ -145,7 +145,7 @@ class Datetime extends WordPress\Main
 		if ( is_null( $format ) )
 			$format = self::dateFormats( 'default' );
 
-		return Core\Date::get( $format, $local, FALSE );
+		return Core\Date::get( $format, $local );
 	}
 
 	public static function humanTimeDiff( $timestamp, $now = '' )
@@ -266,24 +266,24 @@ class Datetime extends WordPress\Main
 	}
 
 	// @REF: `cal_days_in_month()`
-	public static function daysInMonth( $month, $year, $calendar = 'gregorian' )
+	public static function daysInMonth( $month, $year, $calendar_type = 'gregorian' )
 	{
 		$callback = [ Core\Date::class, 'daysInMonth' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'daysInMonth' ] ) )
 			$callback = [ 'gPersianDateDate', 'daysInMonth' ];
 
-		return call_user_func_array( $callback, [ $month, $year, $calendar ] );
+		return call_user_func_array( $callback, [ $month, $year, $calendar_type ] );
 	}
 
-	public static function makeFromInput( $input, $calendar = 'gregorian', $timezone = NULL, $fallback = '' )
+	public static function makeFromInput( $input, $calendar_type = 'gregorian', $timezone_string = NULL, $fallback = '' )
 	{
 		$callback = [ Core\Date::class, 'makeFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
 
-		return call_user_func_array( $callback, [ $input, $calendar, $timezone, $fallback ] );
+		return call_user_func_array( $callback, [ $input, $calendar_type, $timezone_string, $fallback ] );
 	}
 
 	public static function makeMySQLFromArray( $array = [], $format = NULL, $fallback = '' )
@@ -296,17 +296,16 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $array, $format, $fallback ] );
 	}
 
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL, $fallback = NULL )
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $fallback = NULL )
 	{
 		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
 
-		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone, $fallback ] );
+		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone_string, $fallback ] );
 	}
 
-	public static function prepForInput( $date, $format = NULL, $calendar_type = NULL, $timezone = NULL )
 	/**
 	 * Retrieves the date, by given calendar in localized format.
 	 *
@@ -327,11 +326,12 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $format, $datetime_string, $calendar_type, $timezone_string, $locale ] );
 	}
 
+	public static function prepForInput( $date, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
 		if ( $year = self::prepYearOnly( $date, FALSE ) )
 			return $year;
 
-		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone, FALSE );
+		return apply_filters( 'date_format_i18n', $date, $format, $calendar_type, $timezone_string, FALSE );
 	}
 
 	public static function prepYearOnly( $data, $localize = TRUE, $fallback = '' )
@@ -347,7 +347,7 @@ class Datetime extends WordPress\Main
 		return $localize ? Core\Number::localize( $sanitized ) : $sanitized;
 	}
 
-	public static function prepForDisplay( $data, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepForDisplay( $data, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
 		if ( $year = self::prepYearOnly( $data ) )
 			return $year;
@@ -364,12 +364,12 @@ class Datetime extends WordPress\Main
 	}
 
 	// TODO: utilize `htmlDateTime()`
-	public static function prepDateOfBirth( $date, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepDateOfBirth( $date, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
 		if ( ! $date )
 			return '';
 
-		$age = Core\Date::calculateAge( $date, $calendar_type, $timezone );
+		$age = Core\Date::calculateAge( $date, $calendar_type, $timezone_string );
 
 		$title = sprintf(
 			/* translators: `%s`: year number */
@@ -377,7 +377,7 @@ class Datetime extends WordPress\Main
 			Core\Number::format( $age['year'] )
 		);
 
-		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'birthday' ), $calendar_type, $timezone );
+		$html     = apply_filters( 'date_format_i18n', $date, $format ?? self::dateFormats( 'birthday' ), $calendar_type, $timezone_string );
 		$template = '<span title="%s" class="%s">%s</span>';
 
 		return $reversed
@@ -386,7 +386,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// NOTE: falls back on raw data: like `1362`
-	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = 'yearonly', $calendar_type = 'gregorian', $timezone = NULL )
+	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = 'yearonly', $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
 		if ( ! $born && ! $dead )
 			return '';
@@ -396,8 +396,8 @@ class Datetime extends WordPress\Main
 			: '(<span class="-born" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-dead" title="%4$s">%2$s</span>)';
 
 		return Core\Text::trim( vsprintf( $template, [
-			self::prepForDisplay( $born, self::dateFormats( $context ), $calendar_type, $timezone ),
-			self::prepForDisplay( $dead, self::dateFormats( $context ), $calendar_type, $timezone ),
+			self::prepForDisplay( $born, self::dateFormats( $context ), $calendar_type, $timezone_string ),
+			self::prepForDisplay( $dead, self::dateFormats( $context ), $calendar_type, $timezone_string ),
 			_x( 'Birthed', 'Datetime: Title Attribute', 'geditorial' ),
 			_x( 'Deceased', 'Datetime: Title Attribute', 'geditorial' ),
 			'&ndash;', // WordPress\Strings::separator(),
@@ -604,13 +604,13 @@ class Datetime extends WordPress\Main
 	// NOT USED
 	// FIXME: DROP THIS
 	// returns array of post date in given cal
-	public static function getTheDayByPost( $post, $default_type = 'gregorian' )
+	public static function getTheDayByPost( $post, $calendar_type = 'gregorian' )
 	{
 		$the_day = [ 'cal' => 'gregorian' ];
 
 		// 'post_status' => 'auto-draft',
 
-		switch ( strtolower( $default_type ) ) {
+		switch ( strtolower( $calendar_type ) ) {
 
 			case 'hijri':
 			case 'islamic':

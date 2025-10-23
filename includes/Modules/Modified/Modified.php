@@ -356,6 +356,6 @@ class Modified extends gEditorial\Module
 		if ( TRUE === $format )
 			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
 
-		return Core\Date::get( $format, strtotime( $results[0]->{$date} ), FALSE );
+		return Core\Date::get( $format, strtotime( $results[0]->{$date} ) );
 	}
 }

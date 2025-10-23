@@ -13,13 +13,16 @@ class Contest extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
+	use Internals\LateChores;
 	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
 	use Internals\PairedRowActions;
+	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
+	use Internals\PostDate;
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 
@@ -59,6 +62,7 @@ class Contest extends gEditorial\Module
 			],
 			'_editlist' => [
 				'admin_ordering',
+				'admin_bulkactions',
 			],
 			'_frontend' => [
 				[
@@ -71,9 +75,11 @@ class Contest extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'override_dates',
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
+				'thumbnail_fallback',
 				$this->settings_supports_option( 'contest_posttype', TRUE ),
 				$this->settings_supports_option( 'apply_posttype', TRUE ),
 			],
@@ -174,6 +180,10 @@ class Contest extends gEditorial\Module
 						'type'        => 'date'
 					],
 
+					'date'           => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'       => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'      => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'        => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'venue_string'   => [ 'type' => 'venue' ],
 					'contact_string' => [ 'type' => 'contact' ],   // `url`/`email`/`phone`
 					'website_url'    => [ 'type' => 'link' ],
@@ -187,6 +197,11 @@ class Contest extends gEditorial\Module
 						'icon'        => 'calendar-alt',
 						'type'        => 'date'
 					],
+
+					'date'      => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 				],
 			],
 		];
@@ -235,6 +250,7 @@ class Contest extends gEditorial\Module
 		$this->paired_register( [], [
 			'custom_icon'     => $this->module->icon,
 			'status_taxonomy' => TRUE,
+			'ical_source'     => 'paired',
 		], [
 			'custom_icon' => 'category',
 		] );
@@ -245,6 +261,8 @@ class Contest extends gEditorial\Module
 
 		$this->register_shortcode( 'contest_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
+
+		$this->_hook_paired_thumbnail_fallback();
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 
@@ -283,6 +301,8 @@ class Contest extends gEditorial\Module
 
 			} else if ( 'edit' == $screen->base ) {
 
+				$this->modulelinks__register_headerbuttons();
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'contest_posttype' );
 				$this->pairedcore__hook_sync_paired();
@@ -346,6 +366,12 @@ class Contest extends gEditorial\Module
 	{
 		$this->add_posttype_fields_for( 'meta', 'contest_posttype' );
 		$this->add_posttype_fields_supported();
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( [
+				$this->constant( 'contest_posttype' ),
+				$this->constant( 'apply_posttype' ),
+			] );
 	}
 
 	public function dashboard_glance_items( $items )
@@ -414,6 +440,14 @@ class Contest extends gEditorial\Module
 		);
 	}
 
+	protected function latechores_post_aftercare( $post )
+	{
+		return $this->postdate__get_post_data_for_latechores(
+			$post,
+			Services\PostTypeFields::getPostDateMetaKeys()
+		);
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -435,11 +469,34 @@ class Contest extends gEditorial\Module
 
 			$this->paired_tools_render_card( $uri, $sub );
 
+			if ( $this->get_setting( 'override_dates', TRUE ) )
+				$this->postdate__render_card_override_dates(
+					$uri,
+					$sub,
+					[
+						$this->constant( 'contest_posttype' ),
+						$this->constant( 'apply_posttype' ),
+					],
+					_x( 'Contest/Apply Date from Meta-data', 'Card', 'geditorial-contest' )
+				);
+
 		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )
 	{
+		if ( FALSE === $this->postdate__render_before_override_dates(
+			[
+				$this->constant( 'contest_posttype' ),
+				$this->constant( 'apply_posttype' ),
+			],
+			Services\PostTypeFields::getPostDateMetaKeys(),
+			$uri,
+			$sub,
+			'tools'
+		) )
+			return FALSE;
+
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
