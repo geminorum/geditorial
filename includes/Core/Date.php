@@ -79,18 +79,18 @@ class Date extends Base
 					$timezone ?? new \DateTimeZone( self::currentTimeZone() )
 				);
 
-			return $datetime ? $datetime->format( $format ) : FALSE;
+			return $datetime ? $datetime->format( $format ?? 'm/d/Y' ) : FALSE;
 		}
 
 		if ( ! extension_loaded( 'intl' ) )
 			return self::get(
-				$format,
+				$format ?? 'm/d/Y',
 				$datetime_string ? strtotime( $datetime_string ) : NULL,
 				$timezone_string
 			);
 
 		return self::formatByIntl(
-			self::convertFormatPHPtoISO( $format ),
+			self::convertFormatPHPtoISO( $format ?? 'm/d/Y' ),
 			$datetime_string,
 			$calendar_type,
 			$timezone_string,
@@ -236,7 +236,7 @@ class Date extends Base
 	 *
 	 * The problem I've run into is that “first day of the week” is subjective.
 	 * Some people believe the first day of the week is “Monday” while others
-	 * believe the first day of the week is “Sunday”. ISO-8601 specifies the
+	 * believe the first day of the week is “Sunday”. `ISO-8601` specifies the
 	 * first day of the week as “Monday”. Whereas, most western calendars
 	 * display Sunday as the first day of the week and Saturday as the last
 	 * day of the week.
@@ -268,7 +268,7 @@ class Date extends Base
 			return $fallback;
 
 		// FIXME: needs sanity checks
-		$parts = explode( '/', apply_filters( 'string_format_i18n_back', $input ) );
+		$parts = explode( '/', Number::translate( $input ) );
 
 		if ( is_null( $timezone ) )
 			$timezone = self::currentTimeZone();
@@ -351,13 +351,13 @@ class Date extends Base
 		] : $start;
 	}
 
-	public static function calculateAge( $date, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function calculateAge( $datetime_string, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
 		if ( empty( $date ) )
 			return FALSE;
 
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );
-		$birthday = new \DateTime( $date, $timezone );
+		$birthday = new \DateTime( $datetime_string, $timezone );
 		$now      = new \DateTime( 'now', $timezone );
 		$diff     = $now->diff( $birthday );
 
@@ -368,13 +368,13 @@ class Date extends Base
 		];
 	}
 
-	public static function isUnderAged( $date, $age_of_majority = 18, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function isUnderAged( $datetime_string, $age_of_majority = 18, $calendar_type = 'gregorian', $timezone_string = NULL )
 	{
-		if ( empty( $date ) )
+		if ( empty( $datetime_string ) )
 			return FALSE;
 
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );
-		$birthday = new \DateTime( $date, $timezone );
+		$birthday = new \DateTime( $datetime_string, $timezone );
 		$now      = new \DateTime( sprintf( '-%s years', $age_of_majority ), $timezone );
 		$diff     = $now->diff( $birthday );
 
@@ -403,25 +403,26 @@ class Date extends Base
 	}
 
 	/**
-	 * Returns an ISO-8601 date from a date string.
+	 * Returns an `ISO-8601` date from a date string.
 	 * NOTE: timezone should be UTC before using this
 	 * @SEE: https://www.reddit.com/r/PHP/comments/hnd438/why_isnt_date_iso8601_deprecated/
 	 *
 	 * @source `bp_core_get_iso8601_date()`
 	 * @example `2004-02-12T15:19:21+00:00`
 	 *
-	 * @param null|int|string $timestamp
+	 * @param int|string $timestamp
+	 * @param string $timezone_string
 	 * @param string $fallback
 	 * @return string
 	 */
-	public static function getISO8601( $date = NULL, $fallback = '' )
+	public static function getISO8601( $date = NULL, $timezone_string = NULL, $fallback = '' )
 	{
 		if ( ! $date && ! is_null( $date ) )
 			return $fallback;
 
 		try {
 
-			$datetime = new \DateTime( $date, new \DateTimeZone( 'UTC' ) );
+			$datetime = new \DateTime( $date, new \DateTimeZone( $timezone_string ?? 'UTC' ) );
 
 		} catch ( \Exception $e ) {
 
@@ -437,6 +438,7 @@ class Date extends Base
 		return $class ? '<span class="'.$class.'">'.$html.'</span>' : $html;
 	}
 
+	// NOTE: DEPRECATED
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
 		return HTML::tag( 'time', [
@@ -788,7 +790,7 @@ class Date extends Base
 		$parts = [ 'year', 'month', 'day', 'hour', 'minute', 'second' ];
 
 		if ( $i18n )
-			$time = apply_filters( 'string_format_i18n_back', self::get_Legacy( static::MYSQL_FORMAT, FALSE, $gmt ) );
+			$time = Number::translate( self::get_Legacy( static::MYSQL_FORMAT, FALSE, $gmt ) );
 		else
 			$time = current_time( 'mysql', $gmt );
 
