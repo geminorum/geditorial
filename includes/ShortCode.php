@@ -274,6 +274,7 @@ class ShortCode extends WordPress\Main
 		$image = Core\HTML::tag( 'img', [
 			'src'      => $thumbnail_img,
 			'alt'      => WordPress\Media::getAttachmentImageAlt( $image_id, $title ),
+			'class'    => apply_filters( 'get_image_tag_class', '-term-image img-fluid', $image_id, 'none', $args['item_image_size'] ),
 			'loading'  => $args['item_image_loading'],
 			'decoding' => $args['item_image_decoding'],
 		] );
@@ -772,6 +773,7 @@ class ShortCode extends WordPress\Main
 		$image = Core\HTML::tag( 'img', [
 			'src'      => $thumbnail_img,
 			'alt'      => WordPress\Media::getAttachmentImageAlt( $image_id, $title ),
+			'class'    => apply_filters( 'get_image_tag_class', '-post-image img-fluid', $image_id, 'none', $args['item_image_size'] ),
 			'loading'  => $args['item_image_loading'],
 			'decoding' => $args['item_image_decoding'],
 		] );

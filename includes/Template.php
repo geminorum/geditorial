@@ -258,7 +258,7 @@ class Template extends WordPress\Main
 			'size'         => NULL,
 			'alt'          => NULL,
 			'alt_fallback' => 'parent_title',
-			'class'        => '-post-image',
+			'class'        => '-post-image img-fluid',
 		], $atts );
 
 		if ( is_null( $args['alt'] ) && $args['thumbnail'] )
@@ -316,7 +316,7 @@ class Template extends WordPress\Main
 			'size'         => NULL,
 			'alt'          => NULL,                                 // `FALSE` to disable
 			'alt_fallback' => 'parent_title',                       // `FALSE` to disable
-			'class'        => '-post-image',
+			'class'        => '-post-image img-fluid',
 			'type'         => 'post',
 			'link'         => 'parent',
 			'newtab'       => FALSE,
