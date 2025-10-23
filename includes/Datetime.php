@@ -307,6 +307,26 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function prepForInput( $date, $format = NULL, $calendar_type = NULL, $timezone = NULL )
+	/**
+	 * Retrieves the date, by given calendar in localized format.
+	 *
+	 * @param string $format
+	 * @param string $datetime_string
+	 * @param string $calendar_type
+	 * @param string $timezone_string
+	 * @param string $locale
+	 * @return false|string
+	 */
+	public static function formatByCalendar( $format, $datetime_string = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	{
+		$callback = [ Core\Date::class, 'formatByCalendar' ];
+
+		if ( is_callable( [ 'gPersianDateDate', 'formatByCalendar' ] ) )
+			$callback = [ 'gPersianDateDate', 'formatByCalendar' ];
+
+		return call_user_func_array( $callback, [ $format, $datetime_string, $calendar_type, $timezone_string, $locale ] );
+	}
+
 	{
 		if ( $year = self::prepYearOnly( $date, FALSE ) )
 			return $year;
