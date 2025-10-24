@@ -329,7 +329,7 @@ trait BulkExports
 	{
 		return Datetime::prepForInput( $data,
 			Datetime::isDateOnly( $data ) ? 'Y/n/j' : 'Y/n/j H:i',
-			'gregorian'
+			$this->default_calendar()
 		);
 	}
 

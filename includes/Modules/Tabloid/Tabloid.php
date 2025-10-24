@@ -370,7 +370,7 @@ class Tabloid extends gEditorial\Module
 			$data = $response;
 
 		if ( $comments = Services\RestAPI::getCommentsResponse( $post, 'view' ) )
-			$data['comments_rendered'] = ModuleHelper::prepCommentsforPost( $comments );
+			$data['comments_rendered'] = ModuleHelper::prepCommentsforPost( $comments, $this->default_calendar() );
 
 		// Fallback if `title` is not supported by the post-type
 		if ( empty( $data['title'] ) )

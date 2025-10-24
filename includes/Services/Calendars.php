@@ -389,10 +389,11 @@ class Calendars extends gEditorial\Service
 	 * @param string $default
 	 * @return string
 	 */
-	public static function sanitize( $calendar, $default = 'gregorian' )
+	public static function sanitize( $calendar, $default = NULL )
 	{
 		self::_dev_dep( 'Core\Date::sanitizeCalendar()' );
 
+		$default   = $default ?? Core\L10n::calendar();
 		$calendars = self::getDefualts( FALSE );
 		$sanitized = $calendar;
 

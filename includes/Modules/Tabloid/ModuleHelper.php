@@ -43,7 +43,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $data;
 	}
 
-	public static function prepCommentsforPost( $comments, $fallback = [] )
+	public static function prepCommentsforPost( $comments, $calendar = NULL, $fallback = [] )
 	{
 		if ( ! $comments )
 			return $fallback;
@@ -55,7 +55,7 @@ class ModuleHelper extends gEditorial\Helper
 
 			$comment['content_rendered'] = $comment['content']['rendered'];
 			$comment['author_rendered']  = Core\Text::trim( $avatar.' '.$author );
-			$comment['date_rendered']    = gEditorial\Datetime::prepForDisplay( $comment['date'], 'Y/n/j' );
+			$comment['date_rendered']    = gEditorial\Datetime::prepForDisplay( $comment['date'], 'Y/n/j', $calendar );
 
 			unset( $comment['author_avatar_urls'] );
 			unset( $comment['date_gmt'] );

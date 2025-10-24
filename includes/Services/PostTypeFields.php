@@ -27,20 +27,29 @@ class PostTypeFields extends gEditorial\Service
 			return $meta;
 
 		$sanitized = Core\Number::translate( $criteria );
+		$calendar  = self::getDefaultCalendar( 'meta' );
 
-		if ( $date = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', 'persian' ) )
+		if ( $date = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
 						$meta[$field['metakey']] = $date;
 
-		if ( $datetime = Datetime::makeMySQLFromInput( $sanitized, NULL, 'persian' ) )
+		if ( $datetime = Datetime::makeMySQLFromInput( $sanitized, NULL, $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
 						$meta[$field['metakey']] = $datetime;
 
 		return $meta;
+	}
+
+	public static function getDefaultCalendar( $module = 'meta', $check = TRUE )
+	{
+		if ( $check && ! gEditorial()->enabled( $module ) )
+			return Core\L10n::calendar();
+
+		return gEditorial()->module( $module )->default_calendar();
 	}
 
 	/**
@@ -393,7 +402,7 @@ class PostTypeFields extends gEditorial\Service
 
 	// OLD: `Helper::prepMetaRow()`
 	// TODO: support: `dob`,`date`,`datetime`
-	public static function prepFieldRow( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public static function prepFieldRow( $value, $field_key = NULL, $field = [], $raw = NULL, $module = 'meta' )
 	{
 		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
 
@@ -546,10 +555,18 @@ class PostTypeFields extends gEditorial\Service
 					return Core\Number::localize( $raw ?: $value );
 
 				case 'date':
-					return Datetime::prepForDisplay( $raw ?: $value, 'Y/m/d' );
+					return Datetime::prepForDisplay(
+						$raw ?: $value,
+						'Y/m/d',
+						self::getDefaultCalendar( $module )
+					);
 
 				case 'datetime':
-					return Datetime::prepForDisplay( $raw ?: $value, Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i' );
+					return Datetime::prepForDisplay(
+						$raw ?: $value,
+						Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i',
+						self::getDefaultCalendar( $module )
+					);
 
 				case 'distance':
 					return Core\Distance::prep( $raw ?: $value, $field );

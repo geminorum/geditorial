@@ -12,7 +12,7 @@ class Datetime extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		$html = self::htmlDateTime(
 			'now',
@@ -28,7 +28,7 @@ class Datetime extends WordPress\Main
 			: $html;
 	}
 
-	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		return HTML::tag( 'time', [
 			'datetime' => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
@@ -272,9 +272,10 @@ class Datetime extends WordPress\Main
 
 	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
 	{
-		$callback = [ WordPress\Database::class, 'getPostTypeMonths' ];
+		$callback      = [ WordPress\Database::class, 'getPostTypeMonths' ];
+		$calendar_type = $calendar_type ?? Core\L10n::calendar();
 
-		if ( 'persian' == $calendar_type
+		if ( 'persian' === $calendar_type
 			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
 				$callback = [ 'gPersianDateWordPress', 'getPostTypeMonths' ];
 
@@ -288,7 +289,12 @@ class Datetime extends WordPress\Main
 		if ( is_callable( [ 'gPersianDateDate', 'monthFirstAndLast' ] ) )
 			$callback = [ 'gPersianDateDate', 'monthFirstAndLast' ];
 
-		return call_user_func_array( $callback, [ $year, $month, $format ?? Core\Date::MYSQL_FORMAT, $calendar_type ] );
+		return call_user_func_array( $callback, [
+			$year,
+			$month,
+			$format ?? Core\Date::MYSQL_FORMAT,
+			$calendar_type ?? Core\L10n::calendar(),
+		] );
 	}
 
 	// @REF: `cal_days_in_month()`
@@ -299,7 +305,11 @@ class Datetime extends WordPress\Main
 		if ( is_callable( [ 'gPersianDateDate', 'daysInMonth' ] ) )
 			$callback = [ 'gPersianDateDate', 'daysInMonth' ];
 
-		return call_user_func_array( $callback, [ $month, $year, $calendar_type ] );
+		return call_user_func_array( $callback, [
+			$month,
+			$year,
+			$calendar_type ?? Core\L10n::calendar(),
+		] );
 	}
 
 	public static function makeFromInput( $input, $calendar_type = 'gregorian', $timezone_string = NULL, $fallback = '' )
@@ -309,7 +319,12 @@ class Datetime extends WordPress\Main
 		if ( is_callable( [ 'gPersianDateDate', 'makeFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeFromInput' ];
 
-		return call_user_func_array( $callback, [ $input, $calendar_type, $timezone_string, $fallback ] );
+		return call_user_func_array( $callback, [
+			$input,
+			$calendar_type ?? Core\L10n::calendar(),
+			$timezone_string,
+			$fallback,
+		] );
 	}
 
 	public static function makeMySQLFromArray( $array = [], $format = NULL, $fallback = '' )
@@ -322,14 +337,20 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [ $array, $format, $fallback ] );
 	}
 
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $fallback = NULL )
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = NULL, $timezone_string = NULL, $fallback = NULL )
 	{
 		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
 			$callback = [ 'gPersianDateDate', 'makeMySQLFromInput' ];
 
-		return call_user_func_array( $callback, [ $input, $format, $calendar_type, $timezone_string, $fallback ] );
+		return call_user_func_array( $callback, [
+			$input,
+			$format,
+			$calendar_type ?? Core\L10n::calendar(),
+			$timezone_string,
+			$fallback,
+		] );
 	}
 
 	/**
@@ -342,7 +363,7 @@ class Datetime extends WordPress\Main
 	 * @param string $locale
 	 * @return false|string
 	 */
-	public static function formatByCalendar( $format, $datetime_string = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	public static function formatByCalendar( $format, $datetime_string = NULL, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		$callback = [ Core\Date::class, 'formatByCalendar' ];
 
@@ -352,13 +373,13 @@ class Datetime extends WordPress\Main
 		return call_user_func_array( $callback, [
 			$format ?? self::dateFormats( 'default' ),
 			$datetime_string,
-			$calendar_type,
+			$calendar_type ?? Core\L10n::calendar( $locale ),
 			$timezone_string,
 			$locale,
 		] );
 	}
 
-	public static function prepForInput( $date, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepForInput( $date, $format = NULL, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( $year = self::prepYearOnly( $date, FALSE ) )
 			return $year;
@@ -384,7 +405,7 @@ class Datetime extends WordPress\Main
 		return $localize ? Core\Number::localize( $sanitized ) : $sanitized;
 	}
 
-	public static function prepForDisplay( $datetime_string, $format = NULL, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepForDisplay( $datetime_string, $format = NULL, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( $year = self::prepYearOnly( $datetime_string ) )
 			return $year;
@@ -401,7 +422,7 @@ class Datetime extends WordPress\Main
 		return $datetime_string ?: '';
 	}
 
-	public static function prepDateOfBirth( $datetime_string, $format = NULL, $reversed = FALSE, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepDateOfBirth( $datetime_string, $format = NULL, $reversed = FALSE, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( ! $datetime_string )
 			return '';
@@ -429,7 +450,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// NOTE: falls back on raw data: like `1362`
-	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = 'yearonly', $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = NULL, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( ! $born && ! $dead )
 			return '';
@@ -439,8 +460,8 @@ class Datetime extends WordPress\Main
 			: '(<span class="-born" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-dead" title="%4$s">%2$s</span>)';
 
 		return Core\Text::trim( vsprintf( $template, [
-			self::prepForDisplay( $born, self::dateFormats( $context ), $calendar_type, $timezone_string ),
-			self::prepForDisplay( $dead, self::dateFormats( $context ), $calendar_type, $timezone_string ),
+			self::prepForDisplay( $born, self::dateFormats( $context ?? 'yearonly' ), $calendar_type, $timezone_string ),
+			self::prepForDisplay( $dead, self::dateFormats( $context ?? 'yearonly' ), $calendar_type, $timezone_string ),
 			_x( 'Birthed', 'Datetime: Title Attribute', 'geditorial' ),
 			_x( 'Deceased', 'Datetime: Title Attribute', 'geditorial' ),
 			'&ndash;', // WordPress\Strings::separator(),
@@ -526,8 +547,10 @@ class Datetime extends WordPress\Main
 	}
 
 	// FIXME: find a better way!
-	public static function getMonths( $calendar_type = 'gregorian' )
+	public static function getMonths( $calendar_type = NULL )
 	{
+		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+
 		if ( is_callable( [ 'gPersianDateStrings', 'month' ] ) ) {
 
 			$map = [
@@ -550,8 +573,10 @@ class Datetime extends WordPress\Main
 		return [];
 	}
 
-	public static function getCalendar( $calendar_type = 'gregorian', $args = [] )
+	public static function getCalendar( $calendar_type = NULL, $args = [] )
 	{
+		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+
 		if ( is_callable( [ 'gPersianDateCalendar', 'build' ] ) ) {
 
 			$map = [
@@ -647,9 +672,10 @@ class Datetime extends WordPress\Main
 	// NOT USED
 	// FIXME: DROP THIS
 	// returns array of post date in given cal
-	public static function getTheDayByPost( $post, $calendar_type = 'gregorian' )
+	public static function getTheDayByPost( $post, $calendar_type = NULL )
 	{
-		$the_day = [ 'cal' => 'gregorian' ];
+		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+		$the_day       = [ 'cal' => 'gregorian' ];
 
 		// 'post_status' => 'auto-draft',
 

@@ -93,7 +93,7 @@ trait PostDate
 		return Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: post date, `%2$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
-				Core\HTML::code( Datetime::prepForDisplay( $data['post_date'] ) ),
+				Core\HTML::code( Datetime::prepForDisplay( $data['post_date'], NULL, $this->default_calendar() ) ),
 				WordPress\Post::title( $post ),
 			], TRUE );
 	}

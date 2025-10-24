@@ -658,7 +658,8 @@ trait PostTypeFields
 
 	public function render_posttype_fields( $post, $box = FALSE, $fields = NULL, $context = NULL, $extra = [] )
 	{
-		$user_id = get_current_user_id();
+		$user_id  = get_current_user_id();
+		$calendar = $this->default_calendar();
 
 		if ( is_null( $context ) )
 			$context = 'mainbox';
@@ -672,6 +673,12 @@ trait PostTypeFields
 				continue;
 
 			// Passing extra for rendering on each field
+			if ( isset( $extra['calendar'] ) )
+				$field['calendar_type'] = $extra['calendar'];
+
+			else
+				$field['calendar_type'] = $calendar;
+
 			if ( isset( $extra['rest'] ) )
 				$field['name_for_rest'] = $extra['rest'];
 
@@ -1043,11 +1050,11 @@ trait PostTypeFields
 			return $value;
 
 		switch ( $field['type'] ) {
-			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' )     : $value;
-			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' ) : $value;
-			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )             : $value;
-			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )             : $value;
-			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                 : $value;
+			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', $this->default_calendar() )     : $value;
+			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', $this->default_calendar() ) : $value;
+			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )                           : $value;
+			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )                           : $value;
+			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                               : $value;
 		}
 
 		return $value;

@@ -691,12 +691,25 @@ class Meta extends gEditorial\Module
 			case 'date_of_birth':
 
 				if ( 'print' === $context )
-					return gEditorial\Datetime::prepForDisplay( trim( $raw ), 'Y/n/j' );
+					return gEditorial\Datetime::prepForDisplay(
+						trim( $raw ),
+						'Y/n/j',
+						$this->default_calendar()
+					);
 
 				if ( 'export' === $context )
-					return gEditorial\Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+					return gEditorial\Datetime::prepForInput(
+						trim( $raw ),
+						'Y/m/d',
+						$this->default_calendar()
+					);
 
-				return gEditorial\Datetime::prepDateOfBirth( trim( $raw ) );
+				return gEditorial\Datetime::prepDateOfBirth(
+					trim( $raw ),
+					NULL,
+					FALSE,
+					$this->default_calendar()
+				);
 		}
 
 		switch ( $field_args['type'] ) {
@@ -837,27 +850,38 @@ class Meta extends gEditorial\Module
 			case 'date':
 
 				if ( 'export' === $context )
-					return gEditorial\Datetime::prepForInput( trim( $raw ), 'Y/m/d', 'gregorian' );
+					return gEditorial\Datetime::prepForInput(
+						trim( $raw ),
+						'Y/m/d',
+						$this->default_calendar()
+					);
 
-				return gEditorial\Datetime::prepForDisplay( trim( $raw ), $context == 'print' ? 'Y/n/j' : 'Y/m/d' );
+				return gEditorial\Datetime::prepForDisplay(
+					trim( $raw ),
+					$context == 'print' ? 'Y/n/j' : 'Y/m/d',
+					$this->default_calendar()
+				);
 
 			case 'datetime':
 
 				if ( 'export' === $context )
-					return gEditorial\Datetime::prepForInput( trim( $raw ),
+					return gEditorial\Datetime::prepForInput(
+						trim( $raw ),
 						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
-						'gregorian'
+						$this->default_calendar()
 					);
 
 				if ( 'print' === $context )
 					return gEditorial\Datetime::prepForDisplay(
 						trim( $raw ),
-						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i'
+						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
+						$this->default_calendar()
 					);
 
 				return gEditorial\Datetime::prepForDisplay(
 					trim( $raw ),
-					gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i'
+					gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i',
+					$this->default_calendar()
 				);
 
 			case 'datestring':

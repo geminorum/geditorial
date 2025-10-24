@@ -9,9 +9,9 @@ use geminorum\gEditorial\WordPress;
 trait Calendars
 {
 
-	public function get_calendars( $default = [ 'gregorian' ], $filtered = TRUE )
+	public function get_calendars( $default = NULL, $filtered = TRUE )
 	{
-		$settings = $this->get_setting( 'calendar_list', $default );
+		$settings = $this->get_setting( 'calendar_list', $default ?? [ Core\L10n::calendar() ] );
 		$defaults = Services\Calendars::getDefualts( $filtered );
 		return array_intersect_key( $defaults, array_flip( $settings ) );
 	}

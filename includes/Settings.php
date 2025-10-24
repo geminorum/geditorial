@@ -1531,7 +1531,7 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Default Calendar', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'type'        => 'select',
-			'default'     => 'gregorian',
+			'default'     => Core\L10n::calendar(),
 			'values'      => Services\Calendars::getDefualts( TRUE ),
 		];
 	}
@@ -1543,7 +1543,7 @@ class Settings extends WordPress\Main
 			'title'       => _x( 'Calendar List', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: '',
 			'type'        => 'checkboxes',
-			'default'     => [ 'gregorian' ],
+			'default'     => [ Core\L10n::calendar() ],
 			'values'      => Services\Calendars::getDefualts( TRUE ),
 		];
 	}

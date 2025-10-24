@@ -528,9 +528,9 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: better to be on module-core than the internal
-	public function default_calendar( $default = 'gregorian' )
+	public function default_calendar( $default = NULL )
 	{
-		return $this->get_setting( 'calendar_type', $default );
+		return $this->get_setting( 'calendar_type', $default ?? Core\L10n::calendar() );
 	}
 
 	public function get_search_form( $constant_or_hidden = [], $search_query = FALSE )
@@ -866,7 +866,7 @@ class Module extends WordPress\Module
 				return $prepped; // bail if already prepped
 		}
 
-		return Services\PostTypeFields::prepFieldRow( $value, $field_key, $field, $raw );
+		return Services\PostTypeFields::prepFieldRow( $value, $field_key, $field, $raw, 'meta' );
 	}
 
 	// TODO: customize column position/sorting

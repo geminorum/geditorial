@@ -150,9 +150,9 @@ class Paired extends gEditorial\Service
 	private static function _get_item_date( $post, $context = NULL )
 	{
 		if ( $custom = PostTypeFields::getFieldRaw( 'print_date', $post->ID ) )
-			return Datetime::prepForDisplay( $custom );
+			return Datetime::prepForDisplay( $custom, NULL, PostTypeFields::getDefaultCalendar() );
 
-		return Datetime::prepForDisplay( $post->post_date );
+		return Datetime::prepForDisplay( $post->post_date, NULL, PostTypeFields::getDefaultCalendar() );
 	}
 
 	public static function tabloid_post_summaries_multipaired( $list, $data, $post, $context )

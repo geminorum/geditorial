@@ -1100,8 +1100,9 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
-					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d', 'gregorian' );
+					$cal   = $this->default_calendar();
+					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $cal );
+					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d', $cal );
 					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
@@ -1117,8 +1118,9 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
-					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', 'gregorian' );
+					$cal   = $this->default_calendar();
+					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $cal );
+					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', $cal );
 					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
@@ -1520,7 +1522,7 @@ class Terms extends gEditorial\Module
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? Datetime::prepForInput( $meta, 'Y/m/d', 'gregorian' ) : $meta ),
+					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? Datetime::prepForInput( $meta, 'Y/m/d', $this->default_calendar() ) : $meta ),
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -1535,7 +1537,7 @@ class Terms extends gEditorial\Module
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d H:i', 'gregorian' ),
+					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d H:i', $this->default_calendar() ),
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -1896,7 +1898,7 @@ class Terms extends gEditorial\Module
 					case 'dead':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d' );
+							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $this->default_calendar() );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -1907,7 +1909,7 @@ class Terms extends gEditorial\Module
 					case 'dateend':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i' );
+							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $this->default_calendar() );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -2434,7 +2436,9 @@ class Terms extends gEditorial\Module
 
 		$html = Datetime::prepBornDeadForDisplay(
 			get_term_meta( $term->term_id, $this->get_supported_metakey( 'born', $taxonomy ), TRUE ),
-			get_term_meta( $term->term_id, $this->get_supported_metakey( 'dead', $taxonomy ), TRUE )
+			get_term_meta( $term->term_id, $this->get_supported_metakey( 'dead', $taxonomy ), TRUE ),
+			NULL,
+			$this->default_calendar()
 		);
 
 		return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;

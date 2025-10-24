@@ -891,6 +891,7 @@ class MetaBox extends WordPress\Main
 
 			/// render settings
 			'name_for_rest' => ! is_admin(), // Determines the `name` format of the tag
+			'calendar_type' => Core\L10n::calendar(),
 		];
 	}
 
@@ -1079,7 +1080,7 @@ class MetaBox extends WordPress\Main
 				$wrap[] = '-inputdate';
 
 				if ( $value )
-					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d', 'gregorian' );
+					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d', $field['calendar_type'] );
 
 				break;
 
@@ -1092,7 +1093,7 @@ class MetaBox extends WordPress\Main
 				$wrap[] = '-inputdate';
 
 				if ( $value )
-					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d H:i', 'gregorian' );
+					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d H:i', $field['calendar_type'] );
 
 				break;
 

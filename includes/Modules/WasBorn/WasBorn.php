@@ -1110,7 +1110,7 @@ class WasBorn extends gEditorial\Module
 		return Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: date-time, `%2$s`: year taxonomy, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
-				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ) ) ),
+				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ), NULL, $this->default_calendar() ) ),
 				Core\HTML::code( $year ),
 				WordPress\Post::title( $post ),
 			], TRUE );

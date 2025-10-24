@@ -14,7 +14,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'today';
 
-	public static function getTheDayDateMySQL( $the_day, $type = 'gregorian' )
+	public static function getTheDayDateMySQL( $the_day, $type = NULL )
 	{
 		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
 		$today = self::getTheDayFromToday( NULL, $cal );
@@ -35,7 +35,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	// TODO: check minimum/max for day/month
 	// TODO: 4 digit year based on `$type`
-	public static function parseTheFullDay( $text, $type = 'gregorian' )
+	public static function parseTheFullDay( $text, $type = NULL )
 	{
 		if ( WordPress\Strings::isEmpty( $text ) )
 			return [];
@@ -73,8 +73,9 @@ class ModuleHelper extends gEditorial\Helper
 	}
 
 	// returns array of post date in given cal
-	public static function getTheDayFromToday( $today = NULL, $type = 'gregorian' )
+	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
+		$type    = $type ?? Core\L10n::calendar();
 		$the_day = [ 'cal' => 'gregorian' ];
 
 		if ( is_null( $today ) )
@@ -233,9 +234,10 @@ class ModuleHelper extends gEditorial\Helper
 		return home_url( implode( '/', $the_day ) );
 	}
 
-	public static function getTheDayFromPost( $post, $default_type = 'gregorian', $constants = NULL )
+	public static function getTheDayFromPost( $post, $default_type = NULL, $constants = NULL )
 	{
-		$the_day = [];
+		$the_day      = [];
+		$default_type = $default_type ?? Core\L10n::calendar();
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
@@ -252,9 +254,10 @@ class ModuleHelper extends gEditorial\Helper
 		return $the_day;
 	}
 
-	public static function getTheDayFromQuery( $admin = NULL, $default_type = 'gregorian', $constants = NULL )
+	public static function getTheDayFromQuery( $admin = NULL, $default_type = NULL, $constants = NULL )
 	{
-		$the_day = [];
+		$the_day      = [];
+		$default_type = $default_type ?? Core\L10n::calendar();
 
 		if ( is_null( $admin ) )
 			$admin = is_admin();
@@ -279,9 +282,10 @@ class ModuleHelper extends gEditorial\Helper
 
 	// NOT USED
 	// FIXME: DROP THIS
-	public static function getTheDayByPost( $post, $default_type = 'gregorian', $constants = NULL )
+	public static function getTheDayByPost( $post, $default_type = NULL, $constants = NULL )
 	{
-		$the_day = [];
+		$the_day      = [];
+		$default_type = $default_type ?? Core\L10n::calendar();
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
@@ -406,10 +410,10 @@ class ModuleHelper extends gEditorial\Helper
 		return [ $posts, $pagination ];
 	}
 
-	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = 'gregorian', $calendars = NULL )
+	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = NULL, $calendars = NULL )
 	{
 		$args = self::atts( [
-			'cal'   => $default_type,
+			'cal'   => $default_type ?? Core\L10n::calendar(),
 			'day'   => '',
 			'month' => '',
 			'year'  => '',
