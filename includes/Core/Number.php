@@ -220,7 +220,7 @@ class Number extends Base
 		$num_levels = str_split( $number, 3 );
 
 		for ( $i = 0; $i < count( $num_levels ); $i++ ) {
-			$levels--;
+			--$levels;
 
 			$hundreds = (int) ( $num_levels[$i] / 100 );
 			$hundreds = ( $hundreds ? ' '.$list1[$hundreds].' hundred'.' ' : '' );

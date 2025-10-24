@@ -526,7 +526,7 @@ class File extends Base
 
 		foreach ( (array) $files as $file )
 			if ( @unlink( self::normalize( $file ) ) )
-				$count++;
+				++$count;
 
 		return $count;
 	}
@@ -913,7 +913,7 @@ class File extends Base
 
 			while ( $line = fgets( $file_handler ) ) {
 
-				$i++;
+				++$i;
 
 				// case-sensitive is false by default
 				if ( FALSE === $case_sensitive ) {

@@ -1010,7 +1010,7 @@ class Text extends Base
 			$codetemp = $code - 192 - ( $bytesnumber > 2 ? 32 : 0 ) - ( $bytesnumber > 3 ? 16 : 0 );
 
 			for ( $i = 2; $i <= $bytesnumber; $i++ ) {
-				$offset++;
+				++$offset;
 
 				$code2    = ord( substr( $text, $offset, 1 ) ) - 128; // 10xxxxxx
 				$codetemp = $codetemp * 64 + $code2;

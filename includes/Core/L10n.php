@@ -15,6 +15,22 @@ class L10n extends Base
 		return $site ? get_locale() : determine_locale();
 	}
 
+	public static function calendar( $locale = NULL, $fallback = 'gregorian' )
+	{
+		switch ( $locale ?? self::locale() ) {
+
+			case 'fa':
+			case 'fa_IR': return 'persian';
+
+			case 'ar': return 'islamic';
+
+			case '': // empty means English!
+			case 'en': return 'gregorian';
+		}
+
+		return $fallback;
+	}
+
 	// FIXME: UNFINISHED!
 	// numeric formatting information
 	public static function localeconv( $field = FALSE, $fallback = NULL )
@@ -94,7 +110,12 @@ class L10n extends Base
 
 	public static function getNooped( $singular, $plural )
 	{
-		return [ 'singular' => $singular, 'plural' => $plural, 'context' => NULL, 'domain' => NULL ];
+		return [
+			'singular' => $singular,
+			'plural'   => $plural,
+			'context'  => NULL,
+			'domain'   => NULL,
+		];
 	}
 
 	public static function sprintfNooped( $nooped, $count )

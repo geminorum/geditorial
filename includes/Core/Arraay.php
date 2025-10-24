@@ -405,7 +405,7 @@ class Arraay extends Base
 		$key_pos = array_search( $key, array_keys( $array ) );
 
 		if ( 'after' == $position )
-			$key_pos++;
+			++$key_pos;
 
 		if ( FALSE !== $key_pos ) {
 

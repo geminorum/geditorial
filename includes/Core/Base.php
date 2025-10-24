@@ -238,7 +238,7 @@ class Base
 
 		$log.= $trace[$offset]['function'].'()';
 
-		$offset++;
+		++$offset;
 
 		if ( isset( $trace[$offset]['function'] ) ) {
 
@@ -313,9 +313,10 @@ class Base
 	{
 		print str_repeat( '=', 50 )."\n";
 		$i = 1;
+
 		foreach ( $stacktrace as $node ) {
 			print "$i. ".basename( $node['file'] ).':'.$node['function'].'('.$node['line'].")\n";
-			$i++;
+			++$i;
 		}
 	}
 

@@ -70,8 +70,10 @@ class Date extends Base
 	 * @param string $locale
 	 * @return false|string
 	 */
-	public static function formatByCalendar( $format, $datetime_string = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	public static function formatByCalendar( $format, $datetime_string = NULL, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
+		$calendar_type = $calendar_type ?? L10n::calendar( $locale );
+
 		if ( 'gregorian' === $calendar_type ) {
 
 				$datetime = date_create(
@@ -212,7 +214,7 @@ class Date extends Base
 		return $datetime->format( $format );
 	}
 
-	public static function monthFirstAndLast( $year, $month, $format = NULL, $calendar_type = 'gregorian' )
+	public static function monthFirstAndLast( $year, $month, $format = NULL, $calendar_type = NULL )
 	{
 		$start = new \DateTime( $year.'-'.$month.'-01 00:00:00' );
 		$end   = $start->modify( '+1 month -1 day -1 minute' );
@@ -223,7 +225,7 @@ class Date extends Base
 		];
 	}
 
-	public static function daysInMonth( $month, $year, $calendar_type = 'gregorian' )
+	public static function daysInMonth( $month, $year, $calendar_type = NULL )
 	{
 		// @source: https://www.php.net/manual/en/function.cal-days-in-month.php#38666
 		// return $month == 2 ? ($year % 4 ? 28 : ($year % 100 ? 29 : ($year % 400 ? 28 : 29))) : (($month - 1) % 7 % 2 ? 30 : 31);
@@ -250,7 +252,7 @@ class Date extends Base
 	 * @param string $calendar_type
 	 * @return array
 	 */
-	public static function weekFirstAndLast( $year, $week, $format = NULL, $calendar_type = 'gregorian' )
+	public static function weekFirstAndLast( $year, $week, $format = NULL, $calendar_type = NULL )
 	{
 		// We need to specify 'today' otherwise `datetime`
 		// constructor uses 'now' which includes current time.
@@ -262,16 +264,13 @@ class Date extends Base
 		];
 	}
 
-	public static function makeFromInput( $input, $calendar_type = 'gregorian', $timezone = NULL, $fallback = '' )
+	public static function makeFromInput( $input, $calendar_type = NULL, $timezone = NULL, $fallback = '' )
 	{
 		if ( empty( $input ) )
 			return $fallback;
 
 		// FIXME: needs sanity checks
 		$parts = explode( '/', Number::translate( $input ) );
-
-		if ( is_null( $timezone ) )
-			$timezone = self::currentTimeZone();
 
 		return self::make( 0, 0, 0, $parts[1], $parts[2], $parts[0], $calendar_type, $timezone );
 	}
@@ -285,8 +284,8 @@ class Date extends Base
 			'hour'     => 0,
 			'minute'   => 0,
 			'second'   => 0,
-			'calendar' => 'gregorian',
-			'timezone' => self::currentTimeZone(),
+			'calendar' => NULL,
+			'timezone' => NULL,
 		], $array );
 
 		$timestamp = self::make(
@@ -305,18 +304,15 @@ class Date extends Base
 			: $fallback;
 	}
 
-	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = 'gregorian', $timezone = NULL, $fallback = '' )
+	public static function makeMySQLFromInput( $input, $format = NULL, $calendar_type = NULL, $timezone = NULL, $fallback = '' )
 	{
 		if ( empty( $input ) )
 			return $fallback;
 
-		if ( is_null( $format ) )
-			$format = static::MYSQL_FORMAT;
+		if ( ! $datetime = date( $format ?? static::MYSQL_FORMAT, self::makeFromInput( $input, $calendar_type, $timezone ) ) )
+			return $fallback;
 
-		if ( is_null( $timezone ) )
-			$timezone = self::currentTimeZone();
-
-		return date( $format, self::makeFromInput( $input, $calendar_type, $timezone ) );
+		return $datetime;
 	}
 
 	/**
@@ -331,7 +327,7 @@ class Date extends Base
 	 * @param bool $extended
 	 * @return string|array
 	 */
-	public static function calculateDecade( $timestamp, $calendar_type = 'gregorian', $timezone_string = NULL, $extended = FALSE )
+	public static function calculateDecade( $timestamp, $calendar_type = NULL, $timezone_string = NULL, $extended = FALSE )
 	{
 		if ( empty( $timestamp ) )
 			return FALSE;
@@ -351,7 +347,7 @@ class Date extends Base
 		] : $start;
 	}
 
-	public static function calculateAge( $datetime_string, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function calculateAge( $datetime_string, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( empty( $date ) )
 			return FALSE;
@@ -368,7 +364,7 @@ class Date extends Base
 		];
 	}
 
-	public static function isUnderAged( $datetime_string, $age_of_majority = 18, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function isUnderAged( $datetime_string, $age_of_majority = 18, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( empty( $datetime_string ) )
 			return FALSE;
@@ -381,7 +377,7 @@ class Date extends Base
 		return ! $diff->invert;
 	}
 
-	public static function make( $hour, $minute, $second, $month, $day, $year, $calendar_type = 'gregorian', $timezone_string = NULL )
+	public static function make( $hour, $minute, $second, $month, $day, $year, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		$time = $year.'-'.sprintf( '%02d', $month ).'-'.sprintf( '%02d', $day ).' ';
 		$time.= sprintf( '%02d', $hour ).':'.sprintf( '%02d', $minute ).':'.sprintf( '%02d', $second );
@@ -479,7 +475,7 @@ class Date extends Base
 			if ( ! $count )
 				continue;
 
-			$i++;
+			++$i;
 
 			if ( $round && $i > $round )
 				break;
@@ -890,11 +886,12 @@ class Date extends Base
 	 * @param string $locale
 	 * @return false|string
 	 */
-	public static function formatByIntl( $format, $datetime_string = NULL, $calendar_type = 'gregorian', $timezone_string = NULL, $locale = NULL )
+	public static function formatByIntl( $format, $datetime_string = NULL, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		$locale   = $locale ?? L10n::locale( TRUE );
+		$fallback = L10n::calendar( $locale );
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );
-		$calendar = self::sanitizeCalendar( $calendar_type, 'gregorian' );
+		$calendar = self::sanitizeCalendar( $calendar_type ?? $fallback, $fallback );
 
 		if ( ! $intl = \IntlCalendar::createInstance( $timezone, sprintf( '%s@calendar=%s', $locale, $calendar ) ) )
 			return FALSE;
@@ -966,8 +963,9 @@ class Date extends Base
 	 * @param array $extra
 	 * @return string
 	 */
-	public static function sanitizeCalendar( $calendar_type, $fallback = FALSE, $extra = [] )
+	public static function sanitizeCalendar( $calendar_type, $fallback = NULL, $extra = [] )
 	{
+		$fallback  = $fallback ?? Core\L10n::calendar();
 		$sanitized = $calendar_type;
 
 		if ( ! $calendar_type )

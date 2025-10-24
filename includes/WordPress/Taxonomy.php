@@ -1147,7 +1147,7 @@ class Taxonomy extends Core\Base
 			", $object_id, $tt_id );
 
 			if ( $wpdb->query( $query ) )
-				$count++;
+				++$count;
 
 			wp_cache_delete( $object_id, $taxonomy.'_relationships' );
 			do_action( 'deleted_term_relationships', $object_id, $tt_id, $taxonomy );
@@ -1193,7 +1193,7 @@ class Taxonomy extends Core\Base
 			wp_cache_delete( $object_id, $taxonomy.'_relationships' );
 			do_action( 'added_term_relationship', $object_id, $tt_id, $taxonomy );
 
-			$count++;
+			++$count;
 		}
 
 		wp_cache_delete( 'last_changed', 'terms' );
