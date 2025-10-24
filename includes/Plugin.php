@@ -350,7 +350,7 @@ class Plugin
 			return (array) $this->_modules;
 
 		if ( in_array( Core\L10n::locale(), [ 'fa', 'fa_IR', 'fa_AF' ] ) )
-			return Core\L10n::sortAlphabet( (array) $this->_modules, $orderby );
+			return Misc\Alphabet::sort( (array) $this->_modules, $orderby );
 
 		return wp_list_sort( (array) $this->_modules, $orderby );
 	}
