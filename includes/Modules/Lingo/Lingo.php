@@ -254,7 +254,7 @@ class Lingo extends gEditorial\Module
 						];
 
 						$terms[] = $term;
-						$count++;
+						++$count;
 					}
 
 					if ( ! WordPress\Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )

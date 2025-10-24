@@ -246,7 +246,8 @@ class Series extends gEditorial\Module
 
 			$posts[$i] = gEditorial\MetaBox::getTermPosts( $taxonomy, $term, $posttypes, TRUE, $post->ID );
 			$map[$i]   = $term->term_id;
-			$i++;
+
+			++$i;
 		}
 
 		if ( empty( $dropdowns ) || $this->get_setting( 'multiple_instances' ) ) {
@@ -395,7 +396,7 @@ class Series extends gEditorial\Module
 			else
 				$key = strtotime( $post->post_date );
 
-			$i++;
+			++$i;
 			// $post->menu_order = $key;
 
 			$o[$key] = $post;

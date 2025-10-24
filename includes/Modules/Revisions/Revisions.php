@@ -129,7 +129,7 @@ class Revisions extends gEditorial\Module
 
 		foreach ( $post_ids as $post_id )
 			if ( $this->purge( $post_id ) )
-				$purged++;
+				++$purged;
 
 		return add_query_arg( $this->hook( 'purged' ), $purged, $redirect_to );
 	}
@@ -296,7 +296,7 @@ class Revisions extends gEditorial\Module
 
 		foreach ( wp_get_post_revisions( $post_id ) as $revision )
 			if ( ! is_wp_error( wp_delete_post_revision( $revision ) ) )
-				$count++;
+				++$count;
 
 		return $count;
 	}
@@ -381,7 +381,7 @@ class Revisions extends gEditorial\Module
 
 						if ( wp_is_post_revision( $post_id )
 							&& wp_delete_post_revision( $post_id ) )
-								$count++;
+								++$count;
 						else
 							$count += $this->purge( $post_id );
 					}

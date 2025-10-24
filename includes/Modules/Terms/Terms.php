@@ -2142,7 +2142,7 @@ class Terms extends gEditorial\Module
 			], TRUE );
 
 			if ( ! self::isError( $updated ) )
-				$count++;
+				++$count;
 		}
 
 		return TRUE;
@@ -2177,7 +2177,7 @@ class Terms extends gEditorial\Module
 				continue;
 
 			if ( delete_term_meta( $term->term_id, $metakey ) )
-				$count++;
+				++$count;
 		}
 
 		return TRUE;

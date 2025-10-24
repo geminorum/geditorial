@@ -1076,7 +1076,7 @@ class Template extends WordPress\Main
 			$key = $order ? ( $key + (int) $order ) : $key;
 			$key = $key ? $key : ( $i * 100 );
 
-			$i++;
+			++$i;
 			// $post->menu_order = $start;
 
 			$o[$key] = $post;

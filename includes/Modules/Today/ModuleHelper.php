@@ -72,7 +72,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $temp;
 	}
 
-	// returns array of post date in given cal
+	// Returns array of post date in given cal
 	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
 		$type    = $type ?? Core\L10n::calendar();

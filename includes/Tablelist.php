@@ -554,16 +554,13 @@ class Tablelist extends WordPress\Main
 
 	public static function columnTermMetaDateStart( $metakey = NULL, $calendar = NULL )
 	{
-		if ( is_null( $metakey ) )
-			$metakey = 'datestart';
-
 		return [
 			'title'    => _x( 'Date-Start', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
 			'class'    => 'datetime',
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $metakey, $calendar ) {
 				$html = '';
 
-				if ( $meta = get_term_meta( $row->term_id, $metakey, TRUE ) )
+				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'datestart', TRUE ) )
 					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $calendar );
 
 				return $html ?: Helper::htmlEmpty();
@@ -573,16 +570,13 @@ class Tablelist extends WordPress\Main
 
 	public static function columnTermMetaDateEnd( $metakey = NULL, $calendar = NULL )
 	{
-		if ( is_null( $metakey ) )
-			$metakey = 'dateend';
-
 		return [
 			'title'    => _x( 'Date-End', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
 			'class'    => 'datetime',
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $metakey, $calendar ) {
 				$html = '';
 
-				if ( $meta = get_term_meta( $row->term_id, $metakey, TRUE ) )
+				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'dateend', TRUE ) )
 					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $calendar );
 
 				return $html ?: Helper::htmlEmpty();

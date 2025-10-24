@@ -69,7 +69,7 @@ trait LateChores
 
 		foreach ( $list as $post )
 			if ( $this->latechores__do_post_aftercare_single( $post ) )
-				$count++;
+				++$count;
 
 		$this->log( 'NOTICE', sprintf( 'after-care process of posts (%s): %s', $count, implode( ',', $list ) ), $list );
 	}
@@ -170,7 +170,7 @@ trait LateChores
 		foreach ( $post_ids as $post_id )
 			if ( FALSE !== ( $data = $this->latechores_post_aftercare( (int) $post_id ) ) )
 				if ( wp_update_post( array_merge( $data, [ 'ID' => (int) $post_id ] ) ) )
-					$saved++;
+					++$saved;
 
 		return add_query_arg( $this->hook( 'aftercaremsg' ), $saved, $redirect_to );
 	}

@@ -360,7 +360,7 @@ class Attachments extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( wp_delete_attachment( $post_id, TRUE ) )
-							$count++;
+							++$count;
 
 					WordPress\Redirect::doReferer( [
 						'message' => 'deleted',
@@ -373,7 +373,7 @@ class Attachments extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( WordPress\Media::emptyAttachmentImageMeta( $post_id ) )
-							$count++;
+							++$count;
 
 					WordPress\Redirect::doReferer( [
 						'message' => 'emptied',
@@ -386,7 +386,7 @@ class Attachments extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( WordPress\Media::deleteAttachmentThumbnails( $post_id ) )
-							$count++;
+							++$count;
 
 					WordPress\Redirect::doReferer( [
 						'message' => 'deleted',

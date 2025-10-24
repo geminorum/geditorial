@@ -1029,7 +1029,7 @@ class Today extends gEditorial\Module
 						$result  = gEditorial\Datetime::reSchedulePost( $post, $the_day, $default );
 
 						if ( TRUE === $result )
-							$count++;
+							++$count;
 					}
 
 					WordPress\Redirect::doReferer( [

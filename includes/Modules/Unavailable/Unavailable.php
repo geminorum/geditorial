@@ -202,7 +202,7 @@ class Unavailable extends gEditorial\Module
 
 		foreach ( $comment_ids as $comment_id )
 			if ( $this->comment_archive( $comment_id, ( $doaction == 'comment_doarchive' ? TRUE : FALSE ) ) )
-				$archived++;
+				++$archived;
 
 		return add_query_arg( 'archived', $archived, $redirect_to );
 	}

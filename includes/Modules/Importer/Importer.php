@@ -644,7 +644,7 @@ class Importer extends gEditorial\Module
 						if ( isset( $_POST['images_import_as_thumbnail'] ) )
 							set_post_thumbnail( $post_id, $attachment );
 
-						$count++;
+						++$count;
 					}
 
 					WordPress\Redirect::doReferer( [
@@ -986,7 +986,7 @@ class Importer extends gEditorial\Module
 						// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
 						wp_after_insert_post( $post_id, $oldpost ? TRUE : FALSE, $oldpost ?: NULL );
 
-						$count++;
+						++$count;
 					}
 
 					$this->actions( 'posts_after', $posttype );
@@ -1878,7 +1878,7 @@ class Importer extends gEditorial\Module
 
 			$this->actions( 'terms_after_each', $posttype );
 
-			$count++;
+			++$count;
 		}
 
 		$this->actions( 'terms_after', $posttype );

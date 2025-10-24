@@ -442,7 +442,7 @@ class Audit extends gEditorial\Module
 				continue;
 
 			if ( ModuleHelper::doAutoAuditPost( $post_id, TRUE, $taxonomy ) )
-				$count++;
+				++$count;
 		}
 
 		return add_query_arg( $this->hook( 'audited' ), $count, $redirect_to );

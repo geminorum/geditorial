@@ -231,7 +231,7 @@ class Recount extends gEditorial\Module
 
 			foreach ( $terms as $term_id ) {
 				$this->_do_recount_term( (int) $term_id );
-				$count++;
+				++$count;
 			}
 
 			WordPress\Redirect::doReferer( [

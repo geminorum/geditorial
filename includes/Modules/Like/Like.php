@@ -300,7 +300,7 @@ class Like extends gEditorial\Module
 
 			if ( FALSE !== $key ) {
 
-				$total--;
+				--$total;
 				unset( $users[$key] );
 
 				$this->set_liked_users( $post_id, $users );
@@ -312,7 +312,7 @@ class Like extends gEditorial\Module
 
 			if ( $timestamp = array_search( $cookie[$post_id], $guests ) ) {
 
-				$total--;
+				--$total;
 				unset( $guests[$timestamp] );
 
 				$this->set_liked_guests( $post_id, $guests );
@@ -340,7 +340,7 @@ class Like extends gEditorial\Module
 
 			if ( ! array_search( $user_id, $users ) ) {
 
-				$total++;
+				++$total;
 				$users[$time] = $user_id;
 
 				$this->set_liked_users( $post_id, $users );
@@ -357,7 +357,7 @@ class Like extends gEditorial\Module
 			if ( ! array_key_exists( $post_id, $cookie )
 				&& ! array_search( $ip, $guests ) ) {
 
-				$total++;
+				++$total;
 				$guests[$time] = $ip;
 
 				$this->set_liked_guests( $post_id, $guests );
@@ -514,7 +514,7 @@ class Like extends gEditorial\Module
 
 					foreach ( $posts as $post_id ) {
 						$this->sync_counts( $post_id );
-						$count++;
+						++$count;
 					}
 
 					WordPress\Redirect::doReferer( [
@@ -529,7 +529,7 @@ class Like extends gEditorial\Module
 					foreach ( $_POST['_cb'] as $post_id ) {
 
 						$this->sync_counts( $post_id );
-						$count++;
+						++$count;
 					}
 
 					WordPress\Redirect::doReferer( [

@@ -215,7 +215,8 @@ class Specs extends gEditorial\Module
 			}
 
 			$meta[$row['spec_order']] = $row;
-			$counter++;
+
+			++$counter;
 		}
 
 		if ( count( $meta ) ) {

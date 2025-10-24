@@ -8,6 +8,77 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsCore
 {
+
+	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
+	{
+		return [
+			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
+			'type'    => 'priority',
+			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial-admin' ),
+			'default' => $default,
+		];
+	}
+
+	// NOTE: features are `TRUE` by default
+	public function get_feature( $field, $fallback = TRUE )
+	{
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+
+		if ( array_key_exists( $field, $settings ) )
+			return $settings[$field];
+
+		if ( array_key_exists( $field, $this->features ) )
+			return $this->features[$field];
+
+		return $fallback;
+	}
+
+	public function get_setting( $field, $fallback = NULL )
+	{
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+
+		if ( array_key_exists( $field, $settings ) )
+			return $settings[$field];
+
+		if ( array_key_exists( $field, $this->deafults ) )
+			return $this->deafults[$field];
+
+		return $fallback;
+	}
+
+	public function get_setting_fallback( $field, $fallback, $empty = '' )
+	{
+		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+
+		if ( array_key_exists( $field, $settings ) ) {
+
+			if ( '0' === $settings[$field] )
+				return $empty;
+
+			if ( ! empty( $settings[$field] ) )
+				return $settings[$field];
+		}
+
+		if ( array_key_exists( $field, $this->deafults ) )
+			return $this->deafults[$field];
+
+		return $fallback;
+	}
+
+	// Checks arrays with support of old settings
+	public function in_setting( $item, $field, $default = [] )
+	{
+		$setting = $this->get_setting( $field );
+
+		if ( FALSE === $setting || TRUE === $setting )
+			return $setting;
+
+		if ( is_null( $setting ) )
+			$setting = $default;
+
+		return in_array( $item, (array) $setting, TRUE );
+	}
+
 	public function settings_from()
 	{
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name

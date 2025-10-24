@@ -342,7 +342,7 @@ class Roled extends gEditorial\Module
 
 			$role->add_cap( 'read' ); // duh?!
 
-			$count++;
+			++$count;
 		}
 
 		// add default caps into administrator
@@ -361,7 +361,7 @@ class Roled extends gEditorial\Module
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->has_cap( $cap ) )
 				if ( $object->add_cap( $editorial ) )
-					$count++;
+					++$count;
 
 		return $count;
 	}
@@ -375,7 +375,7 @@ class Roled extends gEditorial\Module
 
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->remove_cap( $editorial ) )
-				$count++;
+				++$count;
 
 		return $count;
 	}
@@ -387,7 +387,7 @@ class Roled extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $core )
 			if ( remove_role( $prefix.$core ) )
-				$count++;
+				++$count;
 
 		// removes default caps from other roles
 		$this->remove_default_caps( 'administrator' );

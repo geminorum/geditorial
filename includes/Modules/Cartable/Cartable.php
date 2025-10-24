@@ -669,14 +669,14 @@ class Cartable extends gEditorial\Module
 					continue;
 
 				if ( WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE ) )
-					$count++;
+					++$count;
 			}
 		}
 
 		if ( $this->support_groups )
 			foreach ( WordPress\Taxonomy::getTerms( $this->constant( 'group_ref' ), FALSE, TRUE ) as $group )
 				if ( WordPress\Term::add( $group->name, $this->constant( 'group_taxonomy' ), $group->slug ) )
-					$count++;
+					++$count;
 
 		WordPress\Redirect::doReferer( [
 			'message' => 'synced',

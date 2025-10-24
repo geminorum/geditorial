@@ -333,7 +333,7 @@ trait BulkExports
 		);
 	}
 
-	// prevents the duplicate headers to avoid messing up the excel exports
+	// Prevents the duplicate headers to avoid messing up the excel exports.
 	protected function exports_generate_column_header( $headers, $header )
 	{
 		static $counter = [];
@@ -344,7 +344,7 @@ trait BulkExports
 		if ( empty( $counter[$header] ) )
 			$counter[$header] = 2;
 		else
-			$counter[$header]++;
+			++$counter[$header];
 
 		return sprintf(
 			/* translators: `%1$s`: column title, `%2$s`: column counter */

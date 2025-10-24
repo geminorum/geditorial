@@ -157,7 +157,7 @@ trait PairedTools
 				else
 					delete_term_meta( $term_id, $meta_key );
 
-				$count++;
+				++$count;
 			}
 
 			WordPress\Redirect::doReferer( [
@@ -178,7 +178,7 @@ trait PairedTools
 					continue;
 
 				if ( wp_update_term( $term_id, $this->constant( $constants[1] ), [ 'description' => $post->post_excerpt ] ) )
-					$count++;
+					++$count;
 			}
 
 			WordPress\Redirect::doReferer( [
@@ -209,7 +209,7 @@ trait PairedTools
 							'menu_order' => $order,
 						] );
 
-						$count++;
+						++$count;
 					}
 				}
 			}
@@ -227,7 +227,7 @@ trait PairedTools
 
 			foreach ( $_POST['_cb'] as $term_id )
 				if ( wp_update_term( $term_id, $taxonomy, $args ) )
-					$count++;
+					++$count;
 
 			WordPress\Redirect::doReferer( [
 				'message' => 'purged',
@@ -249,7 +249,7 @@ trait PairedTools
 					continue;
 
 				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $constants[0], $constants[1] ) )
-					$count++;
+					++$count;
 			}
 
 			WordPress\Redirect::doReferer( [
@@ -269,7 +269,7 @@ trait PairedTools
 					$deleted = wp_delete_term( $term_id, $taxonomy );
 
 					if ( $deleted && ! is_wp_error( $deleted ) )
-						$count++;
+						++$count;
 				}
 			}
 
@@ -479,7 +479,7 @@ trait PairedTools
 			$result = wp_set_object_terms( (int) $post_id, $term_id, $taxonomy, FALSE );
 
 			if ( ! is_wp_error( $result ) )
-				$count++;
+				++$count;
 		}
 
 		return $count;
@@ -513,7 +513,7 @@ trait PairedTools
 			$result = update_term_meta( $term_id, $datetime, $post->post_date );
 
 			if ( ! is_wp_error( $result ) )
-				$count++;
+				++$count;
 		}
 
 		return $count;
@@ -544,7 +544,7 @@ trait PairedTools
 
 		foreach ( $posts as $post )
 			if ( $this->paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key ) )
-				$count++;
+				++$count;
 
 		return $count;
 	}

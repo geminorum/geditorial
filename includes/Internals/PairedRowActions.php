@@ -288,7 +288,7 @@ trait PairedRowActions
 					$result = wp_set_object_terms( (int) $post_id, NULL, $paired );
 
 					if ( ! is_wp_error( $result ) )
-						$count++;
+						++$count;
 				}
 
 				return add_query_arg( $this->hook( 'processed' ), $count, $redirect_to );

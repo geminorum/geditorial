@@ -635,7 +635,8 @@ class Papered extends gEditorial\Module
 				$row['unitsdata'] = ModuleHelper::getPosttypeFieldsData( $item, 'units' );
 
 			$data[] = $this->filters( 'view_list_item', $row, $item, $index, $source, $profile, $context, $list );
-			$index++;
+
+			++$index;
 		}
 
 		return $data;

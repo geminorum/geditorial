@@ -411,7 +411,7 @@ class Markdown extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->convert_post( $post_id ) )
-							$count++;
+							++$count;
 
 					if ( $count )
 						WordPress\Redirect::doReferer( [
@@ -423,7 +423,7 @@ class Markdown extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->process_post( $post_id ) )
-							$count++;
+							++$count;
 
 					if ( $count )
 						WordPress\Redirect::doReferer( [
@@ -435,7 +435,7 @@ class Markdown extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->cleanup_post( $post_id ) )
-							$count++;
+							++$count;
 
 					if ( $count )
 						WordPress\Redirect::doReferer( [
@@ -447,7 +447,7 @@ class Markdown extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->discard_post( $post_id ) )
-							$count++;
+							++$count;
 
 					if ( $count )
 						WordPress\Redirect::doReferer( [

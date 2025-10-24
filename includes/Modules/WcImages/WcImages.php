@@ -70,7 +70,7 @@ class WcImages extends gEditorial\Module
 						$product->set_gallery_image_ids( $gallery );
 
 						if ( $product->save() )
-							$count++;
+							++$count;
 					}
 
 					WordPress\Redirect::doReferer( [

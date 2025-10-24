@@ -113,7 +113,7 @@ class Switcher extends gEditorial\Module
 
 			foreach ( $post_ids as $post_id )
 				if ( Services\CustomPostType::switchType( $post_id, $posttype ) )
-					$switched++;
+					++$switched;
 
 			return add_query_arg( [
 				$this->hook( 'to' )    => $posttype,

@@ -155,7 +155,7 @@ trait CoreRowActions
 					$result = wp_set_object_terms( (int) $post_id, (int) $default, $taxonomy, FALSE );
 
 					if ( ! is_wp_error( $result ) )
-						$saved++;
+						++$saved;
 				}
 
 				return add_query_arg( $message, $saved, $redirect_to );

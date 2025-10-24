@@ -30,7 +30,7 @@ class Datetime extends WordPress\Main
 
 	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
-		return HTML::tag( 'time', [
+		return Core\HTML::tag( 'time', [
 			'datetime' => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
 			'title'    => $title,
 			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
@@ -298,6 +298,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// @REF: `cal_days_in_month()`
+	// @SEE: `Datetime::getMonths()`
 	public static function daysInMonth( $month, $year, $calendar_type = 'gregorian' )
 	{
 		$callback = [ Core\Date::class, 'daysInMonth' ];
@@ -547,6 +548,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// FIXME: find a better way!
+	// @SEE: `Datetime::daysInMonth()`
 	public static function getMonths( $calendar_type = NULL )
 	{
 		$calendar_type = $calendar_type ?? Core\L10n::calendar();

@@ -140,7 +140,7 @@ class Uncategorized extends gEditorial\Module
 				continue;
 
 			if ( call_user_func_array( $callback, [ $post_id, $taxonomies ] ) )
-				$count++;
+				++$count;
 		}
 
 		return add_query_arg( $this->hook( 'cleaned' ), $count, $redirect_to );
@@ -215,7 +215,7 @@ class Uncategorized extends gEditorial\Module
 					foreach ( $_POST['_cb'] as $post_id ) {
 
 						if ( $this->_do_clean_unregistered( $post_id ) )
-							$count++;
+							++$count;
 					}
 
 					if ( $count ) {
@@ -236,7 +236,7 @@ class Uncategorized extends gEditorial\Module
 					foreach ( $_POST['_cb'] as $post_id ) {
 
 						if ( $this->_do_clean_unattached( $post_id, $taxonomies ) )
-							$count++;
+							++$count;
 					}
 
 					if ( $count ) {
@@ -480,7 +480,7 @@ class Uncategorized extends gEditorial\Module
 			$results = wp_set_object_terms( $post->ID, $diff, $taxonomy );
 
 			if ( ! self::isError( $results ) )
-				$count++;
+				++$count;
 		}
 
 		return $count;
