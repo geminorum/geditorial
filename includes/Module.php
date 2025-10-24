@@ -18,6 +18,7 @@ class Module extends WordPress\Module
 	use Internals\SettingsPostTypes;
 	use Internals\SettingsRoles;
 	use Internals\SettingsTaxonomies;
+	use Internals\ShortCodes;
 	use Internals\Strings;
 
 	public $module;
@@ -508,23 +509,6 @@ class Module extends WordPress\Module
 	public function update_option( $key, $value )
 	{
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
-	}
-
-	// TODO: move to `ShortCodes` Internal
-	protected function register_shortcode( $constant, $callback = NULL, $force = FALSE )
-	{
-		if ( ! $force && ! $this->get_setting( 'shortcode_support', FALSE ) )
-			return;
-
-		if ( is_null( $callback ) && method_exists( $this, $constant ) )
-			$callback = [ $this, $constant ];
-
-		$shortcode = $this->constant( $constant );
-
-		remove_shortcode( $shortcode );
-		add_shortcode( $shortcode, $callback );
-
-		add_filter( $this->hook_base( 'shortcode', $shortcode ), $callback, 10, 3 );
 	}
 
 	// NOTE: better to be on module-core than the internal
