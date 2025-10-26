@@ -503,11 +503,14 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'list_supported_fields', $list, $taxonomy );
 	}
 
-	// TODO: handle if `$taxonomy` was an array
-	// NOTE: by default the meta-key is the same as the field
+	// NOTE: globally available via: `Services\TaxonomyFields::getTermMetaKey()`
 	private function get_supported_metakey( $field, $taxonomy = FALSE )
 	{
-		return $this->filters( 'supported_field_metakey', $field, $field, $taxonomy );
+		return $this->filters( 'supported_field_metakey',
+			$field,  // NOTE: by default the meta-key is the same as the field
+			$field,
+			$taxonomy // TODO: handle if `$taxonomy` was an array
+		);
 	}
 
 	// NOTE: by default the meta-type is the same as the field

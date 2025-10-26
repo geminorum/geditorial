@@ -253,6 +253,7 @@ class Plugin
 			'SearchSelect',
 			// 'ShortMessages',
 			'Sitemaps',
+			'TaxonomyFields',
 			'TaxonomyTaxonomy',
 			'TermHierarchy',
 			'TermRelations',
