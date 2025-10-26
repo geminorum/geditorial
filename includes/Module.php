@@ -379,10 +379,10 @@ class Module extends WordPress\Module
 		$text  = $this->get_string( 'mainbutton_text', $context ?: $post->post_type, 'metabox', $name );
 
 		if ( $inline )
-			// WTF: thickbox bug: does not process the arg after `TB_inline`!
+			// WTF: thick-box bug: does not process the query arguments after `TB_inline`!
 			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
 		else
-			// WTF: thickbox bug: does not pass the args after `TB_iframe`!
+			// WTF: thick-box bug: does not pass the query arguments after `TB_iframe`!
 			$link = $this->get_adminpage_url( TRUE, array_merge( [
 				'linked'   => $post->ID,
 				'noheader' => 1,
@@ -419,84 +419,9 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// TODO: move to `SettingsCore` Internal
-	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
-	{
-		return [
-			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
-			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial-admin' ),
-			'default' => $default,
-		];
-	}
-
 	public function slug()
 	{
 		return str_replace( '_', '-', $this->module->name );
-	}
-
-	// TODO: move to `SettingsCore` Internal
-	// NOTE: features are `TRUE` by default
-	public function get_feature( $field, $fallback = TRUE )
-	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
-
-		if ( array_key_exists( $field, $settings ) )
-			return $settings[$field];
-
-		if ( array_key_exists( $field, $this->features ) )
-			return $this->features[$field];
-
-		return $fallback;
-	}
-
-	// TODO: move to `SettingsCore` Internal
-	public function get_setting( $field, $fallback = NULL )
-	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
-
-		if ( array_key_exists( $field, $settings ) )
-			return $settings[$field];
-
-		if ( array_key_exists( $field, $this->deafults ) )
-			return $this->deafults[$field];
-
-		return $fallback;
-	}
-
-	// TODO: move to `SettingsCore` Internal
-	public function get_setting_fallback( $field, $fallback, $empty = '' )
-	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
-
-		if ( array_key_exists( $field, $settings ) ) {
-
-			if ( '0' === $settings[$field] )
-				return $empty;
-
-			if ( ! empty( $settings[$field] ) )
-				return $settings[$field];
-		}
-
-		if ( array_key_exists( $field, $this->deafults ) )
-			return $this->deafults[$field];
-
-		return $fallback;
-	}
-
-	// TODO: move to `SettingsCore` Internal
-	// checks arrays with support of old settings
-	public function in_setting( $item, $field, $default = [] )
-	{
-		$setting = $this->get_setting( $field );
-
-		if ( FALSE === $setting || TRUE === $setting )
-			return $setting;
-
-		if ( is_null( $setting ) )
-			$setting = $default;
-
-		return in_array( $item, (array) $setting, TRUE );
 	}
 
 	/**

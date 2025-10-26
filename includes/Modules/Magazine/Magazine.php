@@ -39,6 +39,7 @@ class Magazine extends gEditorial\Module
 			'icon'     => 'book',
 			'access'   => 'stable',
 			'keywords' => [
+				'issue',
 				'pairedmodule',
 			],
 		];
@@ -302,6 +303,7 @@ class Magazine extends gEditorial\Module
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
+				$this->modulelinks__register_headerbuttons();
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );

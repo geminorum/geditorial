@@ -117,7 +117,7 @@ class Alphabet extends gEditorial\Module
 			'before'            => '',
 			'after'             => '',
 			'class'             => '',
-		], $atts, $tag );
+		], $atts, $tag ?: $this->constant( 'shortcode_posts' ) );
 
 		if ( FALSE === $args['context'] || empty( $args['posttype'] ) )
 			return NULL;
@@ -281,7 +281,7 @@ class Alphabet extends gEditorial\Module
 			'before'         => '',
 			'after'          => '',
 			'class'          => '',
-		], $atts, $tag );
+		], $atts, $tag ?: $this->constant( 'shortcode_terms' ) );
 
 		if ( FALSE === $args['context'] || empty( $args['taxonomy'] ) )
 			return NULL;

@@ -121,9 +121,9 @@ class Home extends gEditorial\Module
 			$this->action( 'pre_get_posts', 1, 9 );
 
 			if ( count( $posttypes ) ) {
-				add_filter( 'gpersiandate_calendar_posttypes', [ $this, 'calendar_posttypes' ] );
-				add_filter( 'gnetwork_search_404_posttypes', [ $this, 'search_404_posttypes' ] );
-				add_filter( 'gtheme_content_rows_posttypes', [ $this, 'content_rows_posttypes' ], 9, 2 );
+				$this->filter( 'calendar_posttypes', 1, 10, FALSE, 'gpersiandate' );
+				$this->filter( 'search_404_posttypes', 1, 10, FALSE, 'gnetwork' );
+				$this->filter( 'content_rows_posttypes', 2, 9, FALSE, 'gtheme' );
 
 				$this->filter( 'widget_posts_args' );
 				$this->filter( 'widget_archives_args' );

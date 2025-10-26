@@ -199,7 +199,7 @@ class Modified extends gEditorial\Module
 			'wrap'     => TRUE,
 			'before'   => '',
 			'after'    => '',
-		], $atts, $tag );
+		], $atts, $tag ?: $this->constant( 'post_modified_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -272,7 +272,7 @@ class Modified extends gEditorial\Module
 			'wrap'     => TRUE,
 			'before'   => '',
 			'after'    => '',
-		], $atts, $tag );
+		], $atts, $tag ?: $this->constant( 'site_modified_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;

@@ -22,11 +22,11 @@ class Today extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'today',
-			'title'  => _x( 'Today', 'Modules: Today', 'geditorial-admin' ),
-			'desc'   => _x( 'The day in History', 'Modules: Today', 'geditorial-admin' ),
-			'icon'   => 'calendar-alt',
-			'access' => 'beta',
+			'name'     => 'today',
+			'title'    => _x( 'Today', 'Modules: Today', 'geditorial-admin' ),
+			'desc'     => _x( 'The day in History', 'Modules: Today', 'geditorial-admin' ),
+			'icon'     => 'calendar-alt',
+			'access'   => 'beta',
 			'keywords' => [
 				'day',
 				'calendar',
@@ -709,8 +709,12 @@ class Today extends gEditorial\Module
 			$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
 
 			// no day, just cal
-			if ( 1 === count( $this->the_day ) )
+			if ( 1 === count( $this->the_day ) ) {
 				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+
+				// today in this calendar
+				unset( $this->the_day['year'] );
+			}
 
 		} else if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'main_posttype' ) )
@@ -718,6 +722,9 @@ class Today extends gEditorial\Module
 
 			$constants = $this->get_the_day_constants();
 			$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
+
+			// today in this calendar
+			unset( $this->the_day['year'] );
 		}
 
 		if ( empty( $this->the_day ) )
@@ -748,13 +755,18 @@ class Today extends gEditorial\Module
 		return get_single_template();
 	}
 
-	public function the_day_content( $content = '' )
+	public function the_day_content( $content = '', $the_day = NULL )
 	{
+		$the_day = $the_day ?? $this->the_day;
+
+		if ( empty( $the_day ) )
+			return $content;
+
 		$posttypes = $this->posttypes();
 
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
 			'type'    => get_query_var( 'day_posttype', $posttypes ),
-			'the_day' => $this->the_day,
+			'the_day' => $the_day,
 		], $this->get_the_day_constants() );
 
 		ob_start();
@@ -793,7 +805,7 @@ class Today extends gEditorial\Module
 			echo $this->wrap( $this->get_search_form( $hiddens ), '-search-form' );
 		}
 
-		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $this->the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
 		if ( $buttons ) {
 

@@ -20,6 +20,7 @@ class Course extends gEditorial\Module
 	use Internals\PairedCore;
 	use Internals\PairedFront;
 	use Internals\PairedMetaBox;
+	use Internals\PairedRest;
 	use Internals\PairedRowActions;
 	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
@@ -36,6 +37,8 @@ class Course extends gEditorial\Module
 			'icon'     => 'welcome-learn-more',
 			'access'   => 'beta',
 			'keywords' => [
+				'course',
+				'lesson',
 				'doublepaired',
 			],
 		];
