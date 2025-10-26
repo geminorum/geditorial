@@ -265,7 +265,7 @@ class Today extends gEditorial\Module
 		$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
 
 		if ( 1 === count( $this->the_day ) )
-			$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+			$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->the_day['cal'] );
 
 		$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
 
@@ -448,7 +448,7 @@ class Today extends gEditorial\Module
 		$display_year = $post->post_type != $this->constant( 'main_posttype' );
 
 		if ( 'auto-draft' == $post->post_status && $this->get_setting( 'today_in_draft' ) )
-			$the_day = ModuleHelper::getTheDayFromToday( NULL, $default_type );
+			$the_day = gEditorial\Datetime::getTheDay( NULL, $default_type );
 
 		else if ( self::req( 'post' ) )
 			$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
@@ -710,7 +710,7 @@ class Today extends gEditorial\Module
 
 			// no day, just cal
 			if ( 1 === count( $this->the_day ) ) {
-				$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->the_day['cal'] );
+				$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->the_day['cal'] );
 
 				// today in this calendar
 				unset( $this->the_day['year'] );
@@ -721,7 +721,7 @@ class Today extends gEditorial\Module
 			|| is_page_template( 'today-frontpage.php' ) ) {
 
 			$constants = $this->get_the_day_constants();
-			$this->the_day = ModuleHelper::getTheDayFromToday( NULL, $this->default_calendar() );
+			$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->default_calendar() );
 
 			// today in this calendar
 			unset( $this->the_day['year'] );

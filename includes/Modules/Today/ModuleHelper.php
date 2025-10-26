@@ -17,7 +17,7 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getTheDayDateMySQL( $the_day, $type = NULL )
 	{
 		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
-		$today = self::getTheDayFromToday( NULL, $cal );
+		$today = gEditorial\Datetime::getTheDay( NULL, $cal );
 
 		$array = self::atts( [
 			'year'     => $today['year'],
@@ -72,45 +72,11 @@ class ModuleHelper extends gEditorial\Helper
 		return $temp;
 	}
 
-	// Returns array of post date in given cal
+	// NOTE: DEPRECATED
 	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
-		$type    = $type ?? Core\L10n::calendar();
-		$the_day = [ 'cal' => 'gregorian' ];
-
-		if ( is_null( $today ) )
-			$today = current_time( 'timestamp' );
-
-		if ( in_array( $type, [ 'hijri', 'islamic' ] ) ) {
-
-			$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
-			$the_day['cal'] = 'islamic';
-
-		} else if ( in_array( $type, [ 'jalali', 'persian' ] ) ) {
-
-			$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
-			$the_day['cal'] = 'persian';
-		}
-
-		if ( class_exists( 'gPersianDateDateTime' )
-			&& 'gregorian' != $the_day['cal'] ) {
-
-			list(
-				$the_day['year'],
-				$the_day['month'],
-				$the_day['day']
-			) = call_user_func_array( $convertor,
-				explode( '-', date( 'Y-n-j', $today ) ) );
-
-		} else {
-
-			$the_day['cal']   = 'gregorian';
-			$the_day['day']   = date( 'j', $today );
-			$the_day['month'] = date( 'n', $today );
-			$the_day['year']  = date( 'Y', $today );
-		}
-
-		return $the_day;
+		self::_dev_dep( 'Datetime::getTheDay()' );
+		return gEditorial\Datetime::getTheDay( $today, $type );
 	}
 
 	public static function titleTheDay( $stored, $empty = '&mdash;', $display_cal = TRUE )
@@ -276,29 +242,6 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( empty( $the_day['cal'] ) )
 			return array_merge( [ 'cal' => $default_type ], $the_day );
-
-		return $the_day;
-	}
-
-	// NOT USED
-	// FIXME: DROP THIS
-	public static function getTheDayByPost( $post, $default_type = NULL, $constants = NULL )
-	{
-		$the_day      = [];
-		$default_type = $default_type ?? Core\L10n::calendar();
-
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
-
-		$post_meta = get_post_meta( $post->ID );
-
-		$the_day['cal'] = empty( $post_meta[$constants['cal']][0] ) ? self::req( 'cal', $default_type ) : $post_meta[$constants['cal']][0];
-
-		$post_date = Datetime::getTheDayByPost( $post, $the_day['cal'] );
-
-		$the_day['day']   = empty( $post_meta[$constants['day']][0] ) ? self::req( 'day', $post_date['day'] ) : $post_meta[$constants['day']][0];
-		$the_day['month'] = empty( $post_meta[$constants['month']][0] ) ? self::req( 'month', $post_date['month'] ) : $post_meta[$constants['month']][0];
-		$the_day['year']  = empty( $post_meta[$constants['year']][0] ) ? self::req( 'year', $post_date['year'] ) : $post_meta[$constants['year']][0];
 
 		return $the_day;
 	}

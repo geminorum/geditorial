@@ -671,52 +671,27 @@ class Datetime extends WordPress\Main
 		return TRUE;
 	}
 
-	// NOT USED
-	// FIXME: DROP THIS
-	// returns array of post date in given cal
-	public static function getTheDayByPost( $post, $calendar_type = NULL )
+	/**
+	 * Retrieves the day array in given calendar
+	 * @old: `::getTheDayFromToday()`
+	 *
+	 * @param string $datetime_string
+	 * @param string $calendar_type
+	 * @return array
+	 */
+	public static function getTheDay( $datetime_string = NULL, $calendar_type = NULL )
 	{
 		$calendar_type = $calendar_type ?? Core\L10n::calendar();
-		$the_day       = [ 'cal' => 'gregorian' ];
+		$the_day       = [ 'cal' => $calendar_type ];
 
-		// 'post_status' => 'auto-draft',
+		if ( ! $the_date = self::formatByCalendar( 'Y-n-j', $datetime_string, $calendar_type, NULL, '' ) )
+			return $the_day;
 
-		switch ( strtolower( $calendar_type ) ) {
-
-			case 'hijri':
-			case 'islamic':
-
-				$convertor = [ 'gPersianDateDateTime', 'toHijri' ];
-				$the_day['cal'] = 'hijri';
-
-			case 'jalali':
-			case 'persian':
-
-				$convertor = [ 'gPersianDateDateTime', 'toJalali' ];
-				$the_day['cal'] = 'jalali';
-
-			default:
-
-				if ( class_exists( 'gPersianDateDateTime' )
-					&& 'gregorian' != $the_day['cal'] ) {
-
-					list(
-						$the_day['year'],
-						$the_day['month'],
-						$the_day['day']
-					) = call_user_func_array( $convertor,
-						explode( '-', mysql2date( 'Y-n-j', $post->post_date, FALSE ) ) );
-
-				} else {
-
-					$the_day['cal'] = 'gregorian';
-					$the_day['day']   = mysql2date( 'j', $post->post_date, FALSE );
-					$the_day['month'] = mysql2date( 'n', $post->post_date, FALSE );
-					$the_day['year']  = mysql2date( 'Y', $post->post_date, FALSE );
-				}
-
-				// FIXME: add time
-		}
+		list(
+			$the_day['year'],
+			$the_day['month'],
+			$the_day['day']
+		) = explode( '-', $the_date );
 
 		return $the_day;
 	}
