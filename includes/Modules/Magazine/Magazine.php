@@ -25,6 +25,7 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedRowActions;
 	use Internals\PairedImports;
 	use Internals\PairedRest;
+	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
 	use Internals\PostDate;
 	use Internals\PostMeta;
@@ -97,6 +98,7 @@ class Magazine extends gEditorial\Module
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
+				'thumbnail_fallback',
 				$this->settings_supports_option( 'primary_posttype', TRUE ),
 			],
 			'_reports' => [
@@ -272,6 +274,8 @@ class Magazine extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 		$this->register_shortcode( 'span_shortcode' );
 		$this->register_shortcode( 'cover_shortcode' );
+
+		$this->_hook_paired_thumbnail_fallback();
 
 		if ( is_admin() )
 			return;
