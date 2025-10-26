@@ -16,6 +16,7 @@ class Magazine extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
+	use Internals\LateChores;
 	use Internals\MetaBoxMain;
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
@@ -25,6 +26,7 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedImports;
 	use Internals\PairedRest;
 	use Internals\PairedTools;
+	use Internals\PostDate;
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 	use Internals\QuickPosts;
@@ -91,6 +93,7 @@ class Magazine extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'override_dates',
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
@@ -185,6 +188,10 @@ class Magazine extends gEditorial\Module
 						'icon'        => 'admin-page',
 					],
 
+					'date'         => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'     => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'    => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'      => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'highlight'    => [ 'type' => 'note' ],
 					'source_title' => [ 'type' => 'text' ],
 					'source_url'   => [ 'type' => 'link' ],
@@ -304,6 +311,7 @@ class Magazine extends gEditorial\Module
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
 				$this->modulelinks__register_headerbuttons();
+				$this->latechores__hook_admin_bulkactions( $screen );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 				$this->coreadmin__hook_admin_ordering( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
@@ -357,6 +365,9 @@ class Magazine extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+
+		if ( $this->get_setting( 'override_dates', TRUE ) )
+			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
 	public function admin_menu()
@@ -510,6 +521,14 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
+	protected function latechores_post_aftercare( $post )
+	{
+		return $this->postdate__get_post_data_for_latechores(
+			$post,
+			Services\PostTypeFields::getPostDateMetaKeys()
+		);
+	}
+
 	public function tools_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
@@ -531,11 +550,29 @@ class Magazine extends gEditorial\Module
 
 			$this->paired_tools_render_card( $uri, $sub );
 
+			if ( $this->get_setting( 'override_dates', TRUE ) )
+				$this->postdate__render_card_override_dates(
+					$uri,
+					$sub,
+					$this->constant( 'primary_posttype' ),
+					_x( 'Issue Date from Meta-data', 'Card', 'geditorial-magazine' )
+				);
+
+
 		echo '</div>';
 	}
 
 	protected function render_tools_html_before( $uri, $sub )
 	{
+		if ( FALSE === $this->postdate__render_before_override_dates(
+			$this->constant( 'primary_posttype' ),
+			Services\PostTypeFields::getPostDateMetaKeys(),
+			$uri,
+			$sub,
+			'tools'
+		) )
+			return FALSE;
+
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
