@@ -126,6 +126,7 @@ class Home extends gEditorial\Module
 				add_filter( 'gtheme_content_rows_posttypes', [ $this, 'content_rows_posttypes' ], 9, 2 );
 
 				$this->filter( 'widget_posts_args' );
+				$this->filter( 'widget_archives_args' );
 				$this->filter( 'widget_comments_args' );
 			}
 		}
@@ -349,6 +350,14 @@ class Home extends gEditorial\Module
 	public function content_rows_posttypes( $posttypes, $context )
 	{
 		return 'latest' == $context ? $this->posttypes() : $posttypes;
+	}
+
+	public function widget_archives_args( $args )
+	{
+		if ( ! isset( $args['post_type'] ) )
+			$args['post_type'] = $this->posttypes();
+
+		return $args;
 	}
 
 	public function widget_posts_args( $args )
