@@ -1185,7 +1185,7 @@ class Template extends WordPress\Main
 			'heading'     => '3',     // heading level or `FALSE` to disable
 			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
-			'image_field' => NULL,
+			'image_field' => Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ),
 			'name_only'   => FALSE,   // Avoids the name-only data (no description/image)
 			'before'      => '',
 			'after'       => '',
