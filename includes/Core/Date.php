@@ -349,7 +349,7 @@ class Date extends Base
 
 	public static function calculateAge( $datetime_string, $calendar_type = NULL, $timezone_string = NULL )
 	{
-		if ( empty( $date ) )
+		if ( empty( $datetime_string ) )
 			return FALSE;
 
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );

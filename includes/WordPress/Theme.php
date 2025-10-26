@@ -310,7 +310,7 @@ class Theme extends Core\Base
 		self::compatActive( TRUE );
 
 		if ( $content_callback && is_callable( $content_callback ) )
-			add_filter( 'the_content', $content_callback );
+			Hook::filterOnce( 'the_content', $content_callback );
 
 		// If we are in theme-compat, we don't need the `Edit` post link.
 		add_filter( 'get_edit_post_link',

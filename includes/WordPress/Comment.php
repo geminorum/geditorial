@@ -9,12 +9,11 @@ class Comment extends Core\Base
 
 	/**
 	 * Retrieves comment data given a comment ID or comment object.
+	 * NOTE: simplified version of `get_comment()`
 	 *
-	 * simplified `get_comment()`
-	 *
-	 * @param  null|int|object $comment
-	 * @param  string $output
-	 * @return object $comment
+	 * @param int|object $comment
+	 * @param string $output
+	 * @return object
 	 */
 	public static function get( $comment = NULL, $output = OBJECT )
 	{
@@ -36,8 +35,8 @@ class Comment extends Core\Base
 	/**
 	 * Retrieves comment type given a comment ID or comment object.
 	 *
-	 * @param  null|int|object $comment
-	 * @return string $commenttype
+	 * @param int|object $comment
+	 * @return string
 	 */
 	public static function type( $comment = NULL )
 	{
@@ -50,10 +49,10 @@ class Comment extends Core\Base
 	/**
 	 * Retrieves meta-data for a given comment.
 	 *
-	 * @param  object|int $comment
-	 * @param  bool|array $keys `false` for all meta
-	 * @param  bool $single
-	 * @return array $metadata
+	 * @param object|int $comment
+	 * @param bool|array $keys `false` for all meta
+	 * @param bool $single
+	 * @return array
 	 */
 	public static function getMeta( $comment, $keys = FALSE, $single = TRUE )
 	{
@@ -88,8 +87,8 @@ class Comment extends Core\Base
 	/**
 	 * Retrieves comment rest route given a comment ID or comment object.
 	 *
-	 * @param  null|int|object $comment
-	 * @return false|string    $route
+	 * @param int|object $comment
+	 * @return false|string
 	 */
 	public static function getRestRoute( $comment = NULL )
 	{
