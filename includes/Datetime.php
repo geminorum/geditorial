@@ -691,7 +691,7 @@ class Datetime extends WordPress\Main
 			$the_day['year'],
 			$the_day['month'],
 			$the_day['day']
-		) = explode( '-', $the_date );
+		) = explode( '-', Core\Number::translate( $the_date ) );
 
 		return $the_day;
 	}

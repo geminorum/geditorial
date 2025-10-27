@@ -21,10 +21,10 @@ class Magazine extends gEditorial\Module
 	use Internals\PairedAdmin;
 	use Internals\PairedCore;
 	use Internals\PairedFront;
-	use Internals\PairedMetaBox;
-	use Internals\PairedRowActions;
 	use Internals\PairedImports;
+	use Internals\PairedMetaBox;
 	use Internals\PairedRest;
+	use Internals\PairedRowActions;
 	use Internals\PairedThumbnail;
 	use Internals\PairedTools;
 	use Internals\PostDate;

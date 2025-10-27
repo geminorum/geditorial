@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -97,7 +95,7 @@ class ModuleHelper extends gEditorial\Helper
 			$gEditorialTodayCalendars = Services\Calendars::getDefualts();
 
 		if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
-			$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
+			$gEditorialTodayMonths[$the_day['cal']] = gEditorial\Datetime::getMonths( $the_day['cal'] );
 
 		$parts = [];
 
@@ -126,7 +124,7 @@ class ModuleHelper extends gEditorial\Helper
 				? $the_day['cal']
 				: $gEditorialTodayCalendars[$the_day['cal']];
 
-		return WordPress\Strings::getJoined( $parts, '[', ']', '', Datetime::dateSeparator() );
+		return WordPress\Strings::getJoined( $parts, '[', ']', '', gEditorial\Datetime::dateSeparator() );
 	}
 
 	public static function displayTheDay( $stored, $empty = '&mdash;' )
@@ -151,7 +149,7 @@ class ModuleHelper extends gEditorial\Helper
 				$gEditorialTodayCalendars = Services\Calendars::getDefualts();
 
 			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
-				$gEditorialTodayMonths[$the_day['cal']] = Datetime::getMonths( $the_day['cal'] );
+				$gEditorialTodayMonths[$the_day['cal']] = gEditorial\Datetime::getMonths( $the_day['cal'] );
 
 			echo '<div class="-today -date-badge">';
 
@@ -218,6 +216,9 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getTheDayFromPost( $post, $default_type = NULL, $constants = NULL )
 	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
 		$the_day      = [];
 		$default_type = $default_type ?? Core\L10n::calendar();
 
@@ -322,7 +323,7 @@ class ModuleHelper extends gEditorial\Helper
 			'paged'   => self::paged(),
 			'orderby' => self::orderby( 'ID' ),
 			'order'   => self::order( 'asc' ),
-			'status'  => [ 'publish', 'future', 'draft', 'pending' ],
+			'status'  => WordPress\Status::acceptable( isset( $atts['type'] ) ? $atts['type'] : 'any' ),
 		], $atts );
 
 		if ( is_null( $constants ) )
@@ -364,7 +365,14 @@ class ModuleHelper extends gEditorial\Helper
 		if ( $args['count'] )
 			return count( $posts );
 
-		$pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $args['limit'], $args['paged'], [], $args['all'] );
+		$pagination = Core\HTML::tablePagination(
+			$query->found_posts,
+			$query->max_num_pages,
+			$args['limit'],
+			$args['paged'],
+			[],
+			$args['all']
+		);
 
 		return [ $posts, $pagination ];
 	}
@@ -381,9 +389,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( is_null( $calendars ) )
 			$calendars = Services\Calendars::getDefualts( TRUE );
 
-		$html = '';
-
-		$html.= Core\HTML::tag( 'input', [
+		$html = Core\HTML::tag( 'input', [
 			'type'         => 'text',
 			'autocomplete' => 'off',
 			'min'          => '1',
@@ -579,6 +585,7 @@ class ModuleHelper extends gEditorial\Helper
 			return;
 
 		$buttons = [];
+		$admin   = is_admin();
 
 		unset( $the_day['year'] );
 
@@ -591,8 +598,8 @@ class ModuleHelper extends gEditorial\Helper
 
 			$title = $object->labels->add_new_item;
 
-			if ( is_admin() )
-				$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
+			if ( $admin )
+				$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 			$buttons[] = Core\HTML::button( $title,
 				WordPress\PostType::newLink( $object->name, $the_day ),
@@ -601,7 +608,7 @@ class ModuleHelper extends gEditorial\Helper
 					_x( 'New %s connected to this day', 'Title Attr', 'geditorial-today' ),
 					$object->labels->singular_name
 				),
-				is_admin()
+				$admin
 			);
 		}
 
@@ -615,13 +622,13 @@ class ModuleHelper extends gEditorial\Helper
 
 					$title = $object->labels->add_new_item;
 
-					if ( is_admin() )
-						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
+					if ( $admin )
+						$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$buttons[] = Core\HTML::button( $title,
 						WordPress\PostType::newLink( $object->name, $the_day ),
 						_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
-						is_admin()
+						$admin
 					);
 				}
 
@@ -631,13 +638,13 @@ class ModuleHelper extends gEditorial\Helper
 
 					$title = $object->labels->edit_item;
 
-					if ( is_admin() )
-						$title = Visual::getPostTypeIconMarkup( $object ).' '.$title;
+					if ( $admin )
+						$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
 					$buttons[] = Core\HTML::button( $title,
 						WordPress\Post::edit( $the_post ),
 						_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
-						is_admin()
+						$admin
 					);
 				}
 			}

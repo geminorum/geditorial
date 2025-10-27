@@ -480,7 +480,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// FALSE for all
-	private function get_supported( $taxonomy = FALSE )
+	public function get_supported( $taxonomy = FALSE )
 	{
 		$list = [];
 
@@ -488,11 +488,14 @@ class Terms extends gEditorial\Module
 			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
 				$list[] = $field;
 
-		return $this->filters( 'supported_fields', $list, $taxonomy );
+		return $this->filters( 'supported_fields',
+			$list,
+			$taxonomy
+		);
 	}
 
 	// FALSE for all
-	private function list_supported( $taxonomy = FALSE )
+	public function list_supported( $taxonomy = FALSE )
 	{
 		$list = [];
 
@@ -500,11 +503,14 @@ class Terms extends gEditorial\Module
 			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
 				$list[$field] = $this->strings['titles'][$field];
 
-		return $this->filters( 'list_supported_fields', $list, $taxonomy );
+		return $this->filters( 'list_supported_fields',
+			$list,
+			$taxonomy
+		);
 	}
 
 	// NOTE: globally available via: `Services\TaxonomyFields::getTermMetaKey()`
-	private function get_supported_metakey( $field, $taxonomy = FALSE )
+	public function get_supported_metakey( $field, $taxonomy = FALSE )
 	{
 		return $this->filters( 'supported_field_metakey',
 			$field,  // NOTE: by default the meta-key is the same as the field
@@ -513,28 +519,44 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	// NOTE: by default the meta-type is the same as the field
-	private function get_supported_field_metatype( $field, $taxonomy )
+	public function get_supported_field_metatype( $field, $taxonomy )
 	{
-		return $this->filters( 'supported_field_metatype', $field, $field, $taxonomy );
+		return $this->filters( 'supported_field_metatype',
+			$field, // NOTE: by default the meta-type is the same as the field
+			$field,
+			$taxonomy
+		);
 	}
 
-	private function get_supported_taxonomies( $field )
+	public function get_supported_taxonomies( $field )
 	{
-		return $this->filters( 'supported_field_taxonomies', $this->get_setting( 'term_'.$field, [] ), $field );
+		return $this->filters( 'supported_field_taxonomies',
+			$this->get_setting( 'term_'.$field, [] ),
+			$field
+		);
 	}
 
-	private function get_supported_field_title( $field, $taxonomy, $term = FALSE )
+	public function get_supported_field_title( $field, $taxonomy, $term = FALSE )
 	{
-		return $this->filters( 'field_'.$field.'_title', $this->get_string( $field, $taxonomy, 'titles', $field ), $taxonomy, $field, $term );
+		return $this->filters( 'field_'.$field.'_title',
+			$this->get_string( $field, $taxonomy, 'titles', $field ),
+			$taxonomy,
+			$field,
+			$term
+		);
 	}
 
-	private function get_supported_field_desc( $field, $taxonomy, $term = FALSE )
+	public function get_supported_field_desc( $field, $taxonomy, $term = FALSE )
 	{
-		return $this->filters( 'field_'.$field.'_desc', $this->get_string( $field, $taxonomy, 'descriptions', '' ), $taxonomy, $field, $term );
+		return $this->filters( 'field_'.$field.'_desc',
+			$this->get_string( $field, $taxonomy, 'descriptions', '' ),
+			$taxonomy,
+			$field,
+			$term
+		);
 	}
 
-	private function get_supported_position( $field, $taxonomy = FALSE )
+	public function get_supported_position( $field, $taxonomy = FALSE )
 	{
 		switch ( $field ) {
 
@@ -568,7 +590,11 @@ class Terms extends gEditorial\Module
 				$position = [ 'name', 'after' ];
 		}
 
-		return $this->filters( 'supported_field_position', $position, $field, $taxonomy );
+		return $this->filters( 'supported_field_position',
+			$position,
+			$field,
+			$taxonomy
+		);
 	}
 
 	// TODO: `meta_rendered` just like meta module

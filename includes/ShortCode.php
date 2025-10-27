@@ -1013,6 +1013,12 @@ class ShortCode extends WordPress\Main
 				'terms'    => [ $term->term_id ],
 			] ];
 
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					WordPress\Taxonomy::types( $term ),
+					(array) $args['exclude_posttypes']
+				);
+
 		} else if ( $args['slug'] ) {
 
 			if ( ! $taxonomy )
@@ -1025,6 +1031,12 @@ class ShortCode extends WordPress\Main
 				'taxonomy' => $term->taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
+
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					WordPress\Taxonomy::types( $term ),
+					(array) $args['exclude_posttypes']
+				);
 
 		} else if ( $posttype && is_post_type_archive( $posttype ) ) {
 
@@ -1039,6 +1051,12 @@ class ShortCode extends WordPress\Main
 				'taxonomy' => $term->taxonomy,
 				'terms'    => [ $term->term_id ],
 			] ];
+
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					WordPress\Taxonomy::types( $term ),
+					(array) $args['exclude_posttypes']
+				);
 
 		} else if ( 'paired' === $list && $posttype && is_singular( $posttype ) ) {
 

@@ -791,9 +791,6 @@ class Today extends gEditorial\Module
 			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
-		// TODO: font-page only: list this week events
-		// TODO: font-page only: list this month events
-
 		$navigation = ModuleHelper::theDayNavigation( $the_day, $this->default_calendar() );
 		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
@@ -837,6 +834,7 @@ class Today extends gEditorial\Module
 
 	// `/{cal}/{month}/{day}/{year}/{posttype}`
 	// `/{cal}/year/{year}/{month}/{posttype}`
+	// TODO: support for week: `/{cal}/week/{year}/{month}/{posttype}`
 	public function rewrite_rules_array( $rules )
 	{
 		$list     = [];
@@ -896,6 +894,7 @@ class Today extends gEditorial\Module
 			'month' => 'day_month',
 			'day'   => 'day_day',
 			'year'  => 'day_year',
+			'week'  => 'day_week',
 			'type'  => 'day_posttype',
 		];
 	}
