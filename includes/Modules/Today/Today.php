@@ -782,8 +782,13 @@ class Today extends gEditorial\Module
 		if ( count( $posts ) ) {
 
 			echo '<ul class="-items">';
+
 			foreach ( $posts as $post )
-				echo gEditorial\ShortCode::postTitle( $post, [ 'title_tag' => 'li' ] );
+				echo gEditorial\ShortCode::postTitle( $post, [
+					'title_tag' => 'li',
+					'title_cb'  => [ $this, 'shortcode_posttitle_callback' ],
+				] );
+
 			echo '</ul>';
 
 		} else {
@@ -811,6 +816,17 @@ class Today extends gEditorial\Module
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
+	}
+
+	public function shortcode_posttitle_callback( $post, $atts, $text )
+	{
+		if ( ! $the_date = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar() ) )
+			return $text;
+
+		if ( ! $prefix = trim( ModuleHelper::titleTheDay( $the_date, '[]', FALSE ), '[]' ) )
+			return $text;
+
+		return sprintf( '[%s]: %s', $prefix, $text );
 	}
 
 	public function get_the_date( $the_date, $d, $post )
