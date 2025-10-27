@@ -72,6 +72,7 @@ class Today extends gEditorial\Module
 				],
 			],
 			'_supports' => [
+				'shortcode_support',
 				'thumbnail_support',
 				$this->settings_supports_option( 'main_posttype', [
 					'title',
@@ -80,7 +81,8 @@ class Today extends gEditorial\Module
 				] ),
 			],
 			'_constants' => [
-				'main_posttype_constant' => [ NULL, 'day' ],
+				'main_posttype_constant'  => [ NULL, 'day' ],
+				'main_shortcode_constant' => [ NULL, 'the-day' ],
 			],
 		];
 	}
@@ -88,7 +90,10 @@ class Today extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_posttype' => 'day',
+			'main_posttype'     => 'day',
+			'main_shortcode'    => 'the-day',
+			'title_shortcode'   => 'the-day-title',
+			'buttons_shortcode' => 'the-day-buttons',
 
 			'metakey_cal'   => '_theday_cal',
 			'metakey_day'   => '_theday_day',
@@ -200,6 +205,10 @@ class Today extends gEditorial\Module
 			'slug_disabled' => TRUE,
 			'date_disabled' => TRUE,
 		] );
+
+		$this->register_shortcode( 'main_shortcode' );
+		$this->register_shortcode( 'title_shortcode' );
+		$this->register_shortcode( 'buttons_shortcode' );
 
 		$this->filter( 'calendars_post_events', 3, 8, FALSE, $this->base );
 		$this->filter( 'calendars_posttype_events', 3, 8, FALSE, $this->base );
@@ -754,18 +763,18 @@ class Today extends gEditorial\Module
 		return get_single_template();
 	}
 
-	public function the_day_content( $content = '', $the_day = NULL )
+	public function the_day_content( $content = '', $the_day = NULL, $posttypes = NULL )
 	{
 		$the_day = $the_day ?? $this->the_day;
 
 		if ( empty( $the_day ) )
 			return $content;
 
-		$posttypes = $this->posttypes();
+		$supported = $this->posttypes();
 		$calendar  = $this->default_calendar();
 
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-			'type'    => get_query_var( 'day_posttype', $posttypes ),
+			'type'    => $posttypes ?? get_query_var( 'day_posttype', $supported ),
 			'the_day' => $the_day,
 			'all'     => TRUE,
 		], $this->get_the_day_constants() );
@@ -799,7 +808,7 @@ class Today extends gEditorial\Module
 		}
 
 		$navigation = ModuleHelper::theDayNavigation( $the_day, $calendar );
-		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		$buttons    = ModuleHelper::theDayNewConnected( $supported, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
 		if ( $navigation || $buttons ) {
 
@@ -996,6 +1005,121 @@ class Today extends gEditorial\Module
 			$events[] = Services\Calendars::getSingularCalendar( $item, $context, $callback );
 
 		return $events;
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'cal'       => $this->default_calendar(),
+			'day'       => '',
+			'month'     => '',
+			'year'      => '',
+			'the_day'   => NULL,
+			'posttypes' => $this->posttypes(),
+			'context'   => NULL,
+			'wrap'      => TRUE,
+			'before'    => '',
+			'after'     => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$the_day = $args['the_day'] ?? array_filter( Core\Arraay::keepByKeys( $args, [
+			'cal'     => '',
+			'day'     => '',
+			'month'   => '',
+			'year'    => '',
+		] ) );
+
+		if ( ! $html = $this->the_day_content( '', $the_day, $args['posttypes'] ) )
+			return $content;
+
+		return gEditorial\ShortCode::wrap( $html, 'the-day', $args );
+	}
+
+	public function title_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'cal'     => $this->default_calendar(),
+			'day'     => '',
+			'month'   => '',
+			'year'    => '',
+			'the_day' => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'title_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$the_day = $args['the_day'] ?? array_filter( Core\Arraay::keepByKeys( $args, [
+			'cal'     => '',
+			'day'     => '',
+			'month'   => '',
+			'year'    => '',
+		] ) );
+
+		if ( ! $html = trim( ModuleHelper::titleTheDay( $the_day, '[]', FALSE ), '[]' ) )
+			return $content;
+
+		return gEditorial\ShortCode::wrap( $html, 'the-day-title', $args );
+	}
+
+	public function buttons_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'cal'        => $this->default_calendar(),
+			'day'        => '',
+			'month'      => '',
+			'year'       => '',
+			'the_day'    => NULL,
+			'navigation' => TRUE,
+			'newposts'   => FALSE,
+			'posttypes'  => $this->posttypes(),
+			'context'    => NULL,
+			'wrap'       => TRUE,
+			'before'     => '',
+			'after'      => '',
+		], $atts, $tag ?: $this->constant( 'buttons_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$the_day = $args['the_day'] ?? array_filter( Core\Arraay::keepByKeys( $args, [
+			'cal'     => '',
+			'day'     => '',
+			'month'   => '',
+			'year'    => '',
+		] ) );
+
+		$html = '';
+
+		$navigation = $args['navigation'] ? ModuleHelper::theDayNavigation( $the_day, $this->default_calendar(), [] ) : [];
+		$buttons    = $args['newposts'] ? ModuleHelper::theDayNewConnected( $args['posttypes'], $the_day ) : [];
+
+		if ( $navigation || $buttons ) {
+
+			// $html.= $this->wrap_open_buttons();
+
+				if ( $navigation )
+					$html.= implode( '&nbsp;&nbsp;', $navigation );
+
+				if ( $navigation && $buttons )
+					$html.= '&nbsp;&nbsp;';
+
+				if ( $buttons )
+					$html.= implode( '&nbsp;&nbsp;', $buttons );
+
+			// $html.= '</p>';
+		}
+
+		if ( ! $html )
+			return $content;
+
+		return gEditorial\ShortCode::wrap( $html, 'the-day-title', $args );
 	}
 
 	public function reports_settings( $sub )
