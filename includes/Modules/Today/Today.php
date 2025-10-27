@@ -451,7 +451,7 @@ class Today extends gEditorial\Module
 
 	private function _render_day_input( $post, $context = NULL )
 	{
-		$calendars    = $this->get_calendars();
+		$calendars    = $this->list_calendars();
 		$default_type = $this->default_calendar();
 		$display_year = $post->post_type != $this->constant( 'main_posttype' );
 
@@ -526,7 +526,7 @@ class Today extends gEditorial\Module
 				echo $this->strings_metabox_title_via_posttype( $posttype, 'quickedit' );
 			echo '</span>';
 
-			ModuleHelper::theDaySelect( [], TRUE, '', $this->get_calendars() );
+			ModuleHelper::theDaySelect( [], TRUE, '', $this->list_calendars() );
 
 		echo '</div>';
 
@@ -876,12 +876,11 @@ class Today extends gEditorial\Module
 
 	public function rewrite_rules_array( $rules )
 	{
-		$list      = [];
-		$posttype  = $this->constant( 'main_posttype' );
-		$calendars = $this->get_setting( 'calendar_list', [ Core\L10n::calendar() ] );
-		$base      = $this->get_link_base();
+		$list     = [];
+		$base     = $this->get_link_base();
+		$posttype = $this->constant( 'main_posttype' );
 
-		foreach ( $calendars as $calendar ) {
+		foreach ( $this->get_calendars() as $calendar ) {
 
 			// `/{rest_base}/{cal}/{month}/{day}/{year}/{posttype}`
 			// `/{rest_base}/{cal}/year/{year}/{month}/{posttype}`
@@ -1309,7 +1308,7 @@ class Today extends gEditorial\Module
 
 		switch ( $field ) {
 
-			case 'today__cal'  : return Core\Date::sanitizeCalendar( Core\Text::trim( $value ), $this->default_calendar(), $this->get_calendars() );
+			case 'today__cal'  : return Core\Date::sanitizeCalendar( Core\Text::trim( $value ), $this->default_calendar(), $this->list_calendars() );
 			case 'today__year' :
 			case 'today__month':
 			case 'today__day'  : return Core\Number::translate( Core\Text::trim( $value ) );
@@ -1326,7 +1325,7 @@ class Today extends gEditorial\Module
 			return;
 
 		$default   = $this->default_calendar();
-		$calendars = $this->get_calendars();
+		$calendars = $this->list_calendars();
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
 		$postmeta  = [ 'cal' => $default ]; // `set_today_meta()` needs cal
 

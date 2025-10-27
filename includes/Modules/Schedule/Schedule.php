@@ -193,7 +193,7 @@ class Schedule extends gEditorial\Module
 		if ( $month = self::req( 'month', FALSE ) )
 			$args['this_month'] = $month;
 
-		$calendars = $this->get_calendars();
+		$calendars = $this->list_calendars();
 
 		if ( count( $calendars ) > 1 ) {
 
