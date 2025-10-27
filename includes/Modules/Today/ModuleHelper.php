@@ -191,6 +191,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		// sorting the variables!
 		$the_day = self::atts( [
+			'base'  => gEditorial()->module( static::MODULE )->get_link_base(),
 			'cal'   => '',
 			'month' => '',
 			'day'   => '',
@@ -207,8 +208,8 @@ class ModuleHelper extends gEditorial\Helper
 
 			case 'annual'  : unset( $the_day['year'] ); break;
 			case 'themonth': unset( $the_day['year'], $the_day['day'] ); break;
-			case 'monthly' : $path = sprintf( '%s/year/%s/%s', $the_day['cal'], $the_day['year'], $the_day['month'] ); break;
-			case 'yearly'  : $path = sprintf( '%s/year/%s', $the_day['cal'], $the_day['year'] ); break;
+			case 'monthly' : $path = sprintf( '%s/%s/year/%s/%s', $the_day['base'], $the_day['cal'], $the_day['year'], $the_day['month'] ); break;
+			case 'yearly'  : $path = sprintf( '%s/%s/year/%s', $the_day['base'], $the_day['cal'], $the_day['year'] ); break;
 		}
 
 		return home_url( $path ?: implode( '/', $the_day ) );

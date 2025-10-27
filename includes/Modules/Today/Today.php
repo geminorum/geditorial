@@ -170,7 +170,7 @@ class Today extends gEditorial\Module
 	{
 		parent::setup();
 
-		$this->filter( 'rewrite_rules_array' );
+		$this->filter( 'rewrite_rules_array', 1, 20 );
 		$this->filter( 'post_type_link', 4 );
 
 		if ( is_admin() )
@@ -859,31 +859,55 @@ class Today extends gEditorial\Module
 		return ModuleHelper::getTheDayLink( $the_day );
 	}
 
-	// `/{cal}/{month}/{day}/{year}/{posttype}`
-	// `/{cal}/year/{year}/{month}/{posttype}`
-	// TODO: support for week: `/{cal}/week/{year}/{month}/{posttype}`
+	// NOTE: same as `rest_base` on the main post-type
+	public function get_link_base()
+	{
+		static $base;
+
+		if ( empty( $base ) ) {
+			$posttype = $this->constant( 'main_posttype' );
+			$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
+			$base     = $this->constant( 'main_posttype'.'_rest', $this->constant( 'main_posttype'.'_archive', $plural ) );
+			$base     = $this->filters( 'get_link_base', $base, $posttype );
+		}
+
+		return $base;
+	}
+
 	public function rewrite_rules_array( $rules )
 	{
-		$list     = [];
-		$posttype = $this->constant( 'main_posttype' );
-		// $pattern   = '([^/]+)';
+		$list      = [];
+		$posttype  = $this->constant( 'main_posttype' );
+		$calendars = $this->get_setting( 'calendar_list', [ Core\L10n::calendar() ] );
+		$base      = $this->get_link_base();
 
-		foreach ( $this->get_setting( 'calendar_list', [] ) as $calendar ) {
+		foreach ( $calendars as $calendar ) {
 
-			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$posttype
+			// `/{rest_base}/{cal}/{month}/{day}/{year}/{posttype}`
+			// `/{rest_base}/{cal}/year/{year}/{month}/{posttype}`
+			// TODO: support for week: `/{rest_base}/{cal}/week/{year}/{month}/{posttype}`
+
+			/**
+			 * - Better to always prefix with calendar.
+			 * - To keep the link history intact and SEO happy.
+			 * - The user may change his mind about multiple calendars.
+			 */
+			$prefix = '^'.$base.'/'.$calendar;
+
+			$list[$prefix.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/(.+)/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]'
 				.'&day_posttype=$matches[4]';
 
-			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/([0-9]{1,2})/([0-9]{1,2})/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]'
 				.'&day_year=$matches[3]';
 
-			$list['^'.$calendar.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/([0-9]{1,2})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]';
@@ -892,22 +916,22 @@ class Today extends gEditorial\Module
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]';
 
-			$list['^'.$calendar.'/year/([0-9]{4})/([0-9]{1,2})/(.+)/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/year/([0-9]{4})/([0-9]{1,2})/(.+)/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_year=$matches[1]'
 				.'&day_month=$matches[2]'
 				.'&day_posttype=$matches[3]';
 
-			$list['^'.$calendar.'/year/([0-9]{4})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/year/([0-9]{4})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_year=$matches[1]'
 				.'&day_month=$matches[2]';
 
-			$list['^'.$calendar.'/year/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/year/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_year=$matches[1]';
 
-			$list['^'.$calendar.'/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar;
 		}
 
