@@ -762,10 +762,12 @@ class Today extends gEditorial\Module
 			return $content;
 
 		$posttypes = $this->posttypes();
+		$calendar  = $this->default_calendar();
 
 		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
 			'type'    => get_query_var( 'day_posttype', $posttypes ),
 			'the_day' => $the_day,
+			'all'     => TRUE,
 		], $this->get_the_day_constants() );
 
 		ob_start();
@@ -796,7 +798,7 @@ class Today extends gEditorial\Module
 			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
-		$navigation = ModuleHelper::theDayNavigation( $the_day, $this->default_calendar() );
+		$navigation = ModuleHelper::theDayNavigation( $the_day, $calendar );
 		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
 		if ( $navigation || $buttons ) {
@@ -987,6 +989,7 @@ class Today extends gEditorial\Module
 		list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
 			'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
 			'the_day' => $the_day,
+			'all'     => TRUE,
 		], $constants );
 
 		foreach ( $items as $item )
