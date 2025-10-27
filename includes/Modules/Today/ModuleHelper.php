@@ -189,15 +189,31 @@ class ModuleHelper extends gEditorial\Helper
 		}
 	}
 
-	public static function getTheDayLink( $the_day, $context = 'full' )
+	public static function getTheDayLink( $data, $target = 'full' )
 	{
-		switch ( $context ) {
+		// sorting the variables!
+		$the_day = self::atts( [
+			'cal'   => '',
+			'month' => '',
+			'day'   => '',
+			'year'  => '',
+		], $data );
+
+		$path = '';
+
+		switch ( $target ) {
+			// DEPRECATED!
 			case 'cal'  : unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
 			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
 			case 'month': unset( $the_day['day'] ); break;
+
+			case 'annual'  : unset( $the_day['year'] ); break;
+			case 'themonth': unset( $the_day['year'], $the_day['day'] ); break;
+			case 'monthly' : $path = sprintf( '%s/year/%s/%s', $the_day['cal'], $the_day['year'], $the_day['month'] ); break;
+			case 'yearly'  : $path = sprintf( '%s/year/%s', $the_day['cal'], $the_day['year'] ); break;
 		}
 
-		return home_url( implode( '/', $the_day ) );
+		return home_url( $path ?: implode( '/', $the_day ) );
 	}
 
 	public static function getTheDayFromPost( $post, $default_type = NULL, $constants = NULL )
@@ -432,6 +448,129 @@ class ModuleHelper extends gEditorial\Helper
 		], $html );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -select' );
+	}
+
+	public static function theDayNavigation( $the_day, $type = NULL, $fallback = FALSE )
+	{
+		if ( empty( $the_day ) )
+			return $fallback;
+
+		if ( ! $datetime = Core\Date::getObject( self::getTheDayDateMySQL( $the_day, $type ) ) )
+			return $fallback;
+
+		$buttons = [];
+		$count   = count( $the_day );
+
+		if ( 2 === $count && ! empty( $the_day['year'] ) ) {
+
+			// yearly: `/{cal}/year/{year}`
+
+			$buttons['next'] = Core\HTML::button(
+				_x( 'Next Year', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 year' ), $type ), 'yearly' ),
+				_x( 'The Next Year in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['previous'] = Core\HTML::button(
+				_x( 'Previous Year', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 year' ), $type ), 'yearly' ),
+				_x( 'The Previous Year in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+		} else if ( 2 === $count ) {
+
+			// the-month: `/{cal}/{month}`
+
+			$buttons['next'] = Core\HTML::button(
+				_x( 'Next Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 month' ), $type ), 'themonth' ),
+				_x( 'The Next Month in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['previous'] = Core\HTML::button(
+				_x( 'Previous Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 month' ), $type ), 'themonth' ),
+				_x( 'The Previous Month in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+		} else if ( 3 === $count && empty( $the_day['day'] ) ) {
+
+			// monthly: `/{cal}/year/{year}/{month}`
+
+			$buttons['next'] = Core\HTML::button(
+				_x( 'Next Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 month' ), $type ), 'monthly' ),
+				_x( 'The Next Month in this Year', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['previous'] = Core\HTML::button(
+				_x( 'Previous Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 month' ), $type ), 'monthly' ),
+				_x( 'The Previous Month in this Year', 'Title Attr', 'geditorial-today' )
+			);
+
+			$current = gEditorial\Datetime::getTheDay( $datetime, $type );
+
+			$buttons['month'] = Core\HTML::button(
+				_x( 'This Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'themonth' ),
+				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['year'] = Core\HTML::button(
+				_x( 'This Year', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'yearly' ),
+				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+		} else if ( 3 === $count ) {
+
+			// annual: `/{cal}/{month}/{day}`
+
+			$buttons['next'] = Core\HTML::button(
+				_x( 'Next Day', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 day' ), $type ), 'annual' ),
+				_x( 'The Next Day in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['previous'] = Core\HTML::button(
+				_x( 'Previous Day', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 day' ), $type ), 'annual' ),
+				_x( 'The Previous Day in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$current = gEditorial\Datetime::getTheDay( $datetime, $type );
+
+			$buttons['month'] = Core\HTML::button(
+				_x( 'This Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'themonth' ),
+				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['year'] = Core\HTML::button(
+				_x( 'This Year', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'yearly' ),
+				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+		} else {
+
+			// full-date: `/{cal}/{month}/{day}/{year}`
+
+			$buttons['next'] = Core\HTML::button(
+				_x( 'Next Day', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 day' ), $type ), 'full' ),
+				_x( 'The Next Day', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['previous'] = Core\HTML::button(
+				_x( 'Previous Day', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 day' ), $type ), 'full' ),
+				_x( 'The Previous Day', 'Title Attr', 'geditorial-today' )
+			);
+		}
+
+		return $buttons;
 	}
 
 	public static function theDayNewConnected( $posttypes, $the_day = [], $the_post = FALSE )

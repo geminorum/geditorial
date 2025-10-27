@@ -805,15 +805,22 @@ class Today extends gEditorial\Module
 			echo $this->wrap( $this->get_search_form( $hiddens ), '-search-form' );
 		}
 
-		$buttons = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		$navigation = ModuleHelper::theDayNavigation( $the_day, $this->default_calendar() );
+		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
 
-		if ( $buttons ) {
-
-			// TODO: next/prev day buttons
-			// TODO: next/perv month button
+		if ( $navigation || $buttons ) {
 
 			echo $this->wrap_open_buttons();
-				echo implode( '&nbsp;&nbsp;', $buttons );
+
+				if ( $navigation )
+					echo implode( '&nbsp;&nbsp;', $navigation );
+
+				if ( $navigation && $buttons )
+					echo '&nbsp;&nbsp;';
+
+				if ( $buttons )
+					echo implode( '&nbsp;&nbsp;', $buttons );
+
 			echo '</p>';
 		}
 
