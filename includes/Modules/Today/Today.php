@@ -912,7 +912,7 @@ class Today extends gEditorial\Module
 				.'&day_month=$matches[1]'
 				.'&day_day=$matches[2]';
 
-			$list['^'.$calendar.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+			$list[$prefix.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]';
 
