@@ -839,7 +839,8 @@ class Today extends gEditorial\Module
 		return ModuleHelper::getTheDayLink( $the_day );
 	}
 
-	// `/cal/month/day/year/posttype`
+	// `/{cal}/{month}/{day}/{year}/{posttype}`
+	// `/{cal}/year/{year}/{month}/{posttype}`
 	public function rewrite_rules_array( $rules )
 	{
 		$list     = [];
@@ -869,6 +870,21 @@ class Today extends gEditorial\Module
 			$list['^'.$calendar.'/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar
 				.'&day_month=$matches[1]';
+
+			$list['^'.$calendar.'/year/([0-9]{4})/([0-9]{1,2})/(.+)/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
+				.'&day_year=$matches[1]'
+				.'&day_month=$matches[2]'
+				.'&day_posttype=$matches[3]';
+
+			$list['^'.$calendar.'/year/([0-9]{4})/([0-9]{1,2})/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
+				.'&day_year=$matches[1]'
+				.'&day_month=$matches[2]';
+
+			$list['^'.$calendar.'/year/([0-9]{4})/?$'] = 'index.php?post_type='.$posttype
+				.'&day_cal='.$calendar
+				.'&day_year=$matches[1]';
 
 			$list['^'.$calendar.'/?$'] = 'index.php?post_type='.$posttype
 				.'&day_cal='.$calendar;
