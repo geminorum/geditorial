@@ -70,7 +70,6 @@ class Today extends gEditorial\Module
 					'title'       => _x( 'Override Front-Page', 'Setting Title', 'geditorial-today' ),
 					'description' => _x( 'Displays today list of connected posts on front-page.', 'Setting Description', 'geditorial-today' ),
 				],
-				'display_searchform',
 			],
 			'_supports' => [
 				'thumbnail_support',
@@ -794,16 +793,6 @@ class Today extends gEditorial\Module
 
 		// TODO: font-page only: list this week events
 		// TODO: font-page only: list this month events
-
-		if ( ! is_admin() ) {
-
-			$hiddens = [];
-
-			foreach ( $posttypes as $posttype )
-				$hiddens['post_type[]'] = $posttype;
-
-			echo $this->wrap( $this->get_search_form( $hiddens ), '-search-form' );
-		}
 
 		$navigation = ModuleHelper::theDayNavigation( $the_day, $this->default_calendar() );
 		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
