@@ -220,9 +220,9 @@ class ModuleHelper extends gEditorial\Helper
 		}
 	}
 
-	public static function getTheDayLink( $data, $target = 'full' )
+	public static function getTheDayLink( $data, $target = NULL, $admin = NULL )
 	{
-		$admin = is_admin();
+		$admin = $admin ?? is_admin();
 		$path  = '';
 
 		// sorting the variables!
@@ -234,7 +234,7 @@ class ModuleHelper extends gEditorial\Helper
 			'year'  => '',
 		], $data );
 
-		switch ( $target ) {
+		switch ( $target ?? 'full' ) {
 
 			case 'cal'  : unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
 			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
@@ -696,7 +696,7 @@ class ModuleHelper extends gEditorial\Helper
 	public static function theDayNewConnected( $posttypes, $the_day = [], $posts = [] )
 	{
 		if ( ! is_user_logged_in() )
-			return;
+			return [];
 
 		$buttons = [];
 		$admin   = is_admin();

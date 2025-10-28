@@ -136,7 +136,7 @@ class AdvancedQueries extends gEditorial\Service
 	 * This will set the value of the meta-query to [-1], if the value is empty.
 	 * @source https://core.trac.wordpress.org/ticket/33341#comment:5
 	 *
-	 * @param  object $query
+	 * @param object $query
 	 * @return void
 	 */
 	public static function pre_get_posts_empty_compare( &$query )

@@ -17,7 +17,7 @@ class Today extends gEditorial\Module
 	use Internals\MetaBoxSupported;
 
 	protected $__today = [];
-	protected $__posts = NULL;
+	protected $__posts = [];
 
 	public static function module()
 	{
@@ -835,6 +835,7 @@ class Today extends gEditorial\Module
 
 		$posttypes = $posttypes ?? get_query_var( 'day_posttype', $this->posttypes() );
 		$type      = $this->default_calendar();
+		$admin     = is_admin();
 		$blocks    = [];
 
 		foreach ( $this->__today as $calendar => $_the_day ) {
@@ -888,16 +889,14 @@ class Today extends gEditorial\Module
 			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
-		$navigation = ModuleHelper::theDayNavigation( $this->__today[$type], $type );
-		$buttons    = ModuleHelper::theDayNewConnected(
-			$posttypes,
-			$this->__today[$type],
-			is_user_logged_in() ? $this->__posts : FALSE
-		);
+		$_the_day   = Core\Arraay::getByKeyOrFirst( $this->__today, $type );
+		$navigation = ModuleHelper::theDayNavigation( $_the_day, $type );
+		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $_the_day, $this->__posts );
 
 		if ( $navigation || $buttons ) {
 
-			echo $this->wrap_open_buttons();
+			if ( $admin )
+				echo $this->wrap_open_buttons();
 
 				if ( $navigation )
 					echo implode( '&nbsp;&nbsp;', $navigation );
@@ -908,7 +907,8 @@ class Today extends gEditorial\Module
 				if ( $buttons )
 					echo implode( '&nbsp;&nbsp;', $buttons );
 
-			echo '</p>';
+			if ( $admin )
+				echo '</p>';
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
@@ -958,7 +958,7 @@ class Today extends gEditorial\Module
 			$this->get_the_day_constants()
 		);
 
-		return ModuleHelper::getTheDayLink( $the_day );
+		return ModuleHelper::getTheDayLink( $the_day, NULL, FALSE );
 	}
 
 	// NOTE: same as `rest_base` on the main post-type
@@ -1073,8 +1073,10 @@ class Today extends gEditorial\Module
 			$events    = [];
 			$default   = $this->default_calendar();
 			$constants = $this->get_the_day_constants();
-			$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
 			$callback  = [ $this, 'calendars_get_theday_date_callback' ];
+
+			if ( FALSE === ( $the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants ) ) )
+				return $null;
 
 			list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
 				'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
@@ -1090,8 +1092,12 @@ class Today extends gEditorial\Module
 
 			$default   = $this->default_calendar();
 			$constants = $this->get_the_day_constants();
-			$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
-			$the_date  = ModuleHelper::getTheDayDateMySQL( $the_day, $default );
+
+			if ( FALSE === ( $the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants ) ) )
+				return $null;
+
+			if ( ! $the_date = ModuleHelper::getTheDayDateMySQL( $the_day, $default, FALSE ) )
+				return $null;
 
 			return Services\Calendars::getSingularCalendar( $post, $context, $the_date );
 		}
@@ -1103,8 +1109,12 @@ class Today extends gEditorial\Module
 	{
 		$default   = $this->default_calendar();
 		$constants = $this->get_the_day_constants();
-		$the_day   = ModuleHelper::getTheDayFromPost( $post, $default, $constants );
-		$the_date  = ModuleHelper::getTheDayDateMySQL( $the_day, $default );
+
+		if ( ! $the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants ) )
+			return FALSE;
+
+		if ( ! $the_date = ModuleHelper::getTheDayDateMySQL( $the_day, $default ) )
+			return FALSE;
 
 		return Core\Date::getObject( $the_date );
 	}
@@ -1117,8 +1127,10 @@ class Today extends gEditorial\Module
 		$events    = [];
 		$default   = $this->default_calendar();
 		$constants = $this->get_the_day_constants();
-		$the_day   = ModuleHelper::getTheDayFromQuery( FALSE, $default, $constants );
 		$callback  = [ $this, 'calendars_get_theday_date_callback' ];
+
+		if ( FALSE === ( $the_day = ModuleHelper::getTheDayFromQuery( FALSE, $default, $constants ) ) )
+			return $null;
 
 		list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
 			'type'    => get_query_var( 'day_posttype', $this->posttypes() ),

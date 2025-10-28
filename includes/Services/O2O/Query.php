@@ -160,7 +160,7 @@ class Query extends Core\Base
 				case 'from':
 
 					$fields = array_reverse( $fields );
-					// fallthrough
+					// fall-through
 
 				case 'to':
 
