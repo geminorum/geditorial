@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-03-25 05:34+0330\n"
+"PO-Revision-Date: 2025-08-14 21:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
 "X-Domain: geditorial-wc-terms\n"
 
@@ -59,87 +59,97 @@ msgctxt "Setting Description"
 msgid "Tab priority where the term introduction appears on the tabs."
 msgstr ""
 
-#: WcTerms.php:72
+#: WcTerms.php:73
 msgctxt "Setting Title"
 msgid "Exclude Default Terms"
 msgstr "استنثنای رده‌های پیش‌فرض"
 
-#: WcTerms.php:73
+#: WcTerms.php:74
 msgctxt "Setting Description"
 msgid "Strips default term form list of displayed terms."
 msgstr ""
 
-#: WcTerms.php:78
+#: WcTerms.php:79
 msgctxt "Setting Title"
 msgid "Combined Terms"
 msgstr "ترکیب رده‌ها"
 
-#: WcTerms.php:79
+#: WcTerms.php:80
 msgctxt "Setting Description"
 msgid "Displays all assigned terms on single product tab."
 msgstr ""
 
-#: WcTerms.php:84
+#: WcTerms.php:85
 msgctxt "Setting Title"
 msgid "Singular Term"
 msgstr "تک رده"
 
-#: WcTerms.php:85
+#: WcTerms.php:86
 msgctxt "Setting Description"
 msgid "Displays only the first term introduction."
 msgstr ""
 
-#: WcTerms.php:92
+#: WcTerms.php:93
 msgctxt "Setting Title"
 msgid "Archive Title"
 msgstr "عنوان بایگانی"
 
-#: WcTerms.php:93
+#: WcTerms.php:94
 msgctxt "Setting Description"
 msgid "Enhance the term archive titles."
 msgstr ""
 
-#: WcTerms.php:96
+#: WcTerms.php:98
 msgctxt "Setting Option"
 msgid "Disabled"
 msgstr "غیرفعال"
 
-#: WcTerms.php:97
+#: WcTerms.php:99
 msgctxt "Setting Option"
 msgid "Heading Level 1"
 msgstr "سربرگ سطح ۱"
 
-#: WcTerms.php:98
+#: WcTerms.php:100
 msgctxt "Setting Option"
 msgid "Heading Level 2"
 msgstr "سربرگ سطح ۲"
 
-#: WcTerms.php:99
+#: WcTerms.php:101
 msgctxt "Setting Option"
 msgid "Heading Level 3"
 msgstr "سربرگ سطح ۳"
 
-#: WcTerms.php:100
+#: WcTerms.php:102
 msgctxt "Setting Option"
 msgid "Heading Level 4"
 msgstr "سربرگ سطح ۴"
 
-#: WcTerms.php:101
+#: WcTerms.php:103
 msgctxt "Setting Option"
 msgid "Heading Level 5"
 msgstr "سربرگ سطح ۵"
 
-#: WcTerms.php:102
+#: WcTerms.php:104
 msgctxt "Setting Option"
 msgid "Heading Level 6"
 msgstr "سربرگ سطح ۶"
 
-#: WcTerms.php:107
+#: WcTerms.php:109
 msgctxt "Setting Title"
 msgid "Archive Descriptions"
 msgstr "توضیحات بایگانی"
 
-#: WcTerms.php:108
+#: WcTerms.php:110
 msgctxt "Setting Description"
 msgid "Enhance the term archive descriptions with assigned image."
+msgstr ""
+
+#: WcTerms.php:114
+msgctxt "Setting Title"
+msgid "Archive Sub-terms"
+msgstr "زیررده‌های بایگانی"
+
+#: WcTerms.php:115
+msgctxt "Setting Description"
+msgid "Enhance the term archive with list of sub-terms."
 msgstr ""

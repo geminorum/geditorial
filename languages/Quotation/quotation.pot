@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
@@ -27,6 +27,7 @@ msgstr[1] ""
 
 #. translators: `%s`: count number
 #: Quotation.php:76
+#, php-format
 msgid "%s Quotation"
 msgid_plural "%s Quotations"
 msgstr[0] ""
@@ -150,30 +151,35 @@ msgstr ""
 
 #. translators: `%1$s`: post parent, `%2$s`: menu order
 #: Quotation.php:278
+#, php-format
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr ""
 
 #. translators: `%s`: page start placeholder
 #: Quotation.php:307
+#, php-format
 msgctxt "Display"
 msgid "Starts on Page %s"
 msgstr ""
 
 #. translators: `%s`: page end placeholder
 #: Quotation.php:314
+#, php-format
 msgctxt "Display"
 msgid "Ends in Page %s"
 msgstr ""
 
 #. translators: `%s`: section placeholder
 #: Quotation.php:321
+#, php-format
 msgctxt "Display"
 msgid "Section %s"
 msgstr ""
 
 #. translators: `%s`: volume placeholder
 #: Quotation.php:328
+#, php-format
 msgctxt "Display"
 msgid "Volume %s"
 msgstr ""

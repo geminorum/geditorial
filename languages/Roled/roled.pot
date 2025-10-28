@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Roled\n"
 "X-Domain: geditorial-roled\n"
 
@@ -55,6 +55,7 @@ msgstr ""
 
 #. translators: `%s`: role name
 #: Roled.php:75
+#, php-format
 msgctxt "Setting Title"
 msgid "Role Name for %s"
 msgstr ""
@@ -67,6 +68,7 @@ msgstr ""
 #. translators: `%s`: role name
 #: Roled.php:78
 #: Roled.php:333
+#, php-format
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr ""

@@ -1,0 +1,2 @@
+<?php
+return ['domain'=>'geditorial-statistical','plural-forms'=>NULL,'language'=>'fa_IR','project-id-version'=>'gEditorial Statistical','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-05-12 21:32+0330','x-generator'=>'Poedit 3.6','messages'=>['HeaderStatistical Reports'=>'گزارش‌های آماری','HeaderBy PostType'=>'بر اساس نوع‌فرسته','None TitleAll Users'=>'همهٔ کاربران','None TitleAll Months'=>'همهٔ ماه‌ها','ButtonQuery Stats'=>'درخواست گزارش']];

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Regioned\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:27+0330\n"
+"PO-Revision-Date: 2025-06-11 08:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Regioned\n"
 "X-Domain: geditorial-regioned\n"
 
-#: Regioned.php:88
+#: Regioned.php:87
 msgid "Regionality Definition"
 msgid_plural "Regionality Definitions"
 msgstr[0] "واحد‌های منطقه‌ای"
 msgstr[1] "واحد منطقه‌ای"
 
-#: Regioned.php:92
+#: Regioned.php:91
 msgctxt "Label: Show Option All"
 msgid "Regionalities"
 msgstr "منطقه‌بندی"
 
-#: Regioned.php:93
+#: Regioned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Athlete\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:32+0330\n"
+"PO-Revision-Date: 2025-08-14 12:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,289 +15,252 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
 "X-Domain: geditorial-athlete\n"
 
-#: Athlete.php:115
+#: Athlete.php:97
 msgid "Sports Field"
 msgid_plural "Sports Fields"
 msgstr[0] "رشته‌های ورزشی"
 msgstr[1] "رشته ورزشی"
 
-#: Athlete.php:119
-msgctxt "Label: Menu Name"
+#: Athlete.php:101
+msgctxt "Label: `menu_name`"
 msgid "Sports"
-msgstr "ورزش"
+msgstr "ورزشی"
 
-#: Athlete.php:120
-msgctxt "Label: Show Option All"
+#: Athlete.php:102
+msgctxt "Label: `show_option_all`"
 msgid "Sports Field"
-msgstr "رشته ورزشی"
+msgstr "رشته‌های ورزشی"
 
-#: Athlete.php:121
-msgctxt "Label: Show Option No Terms"
-msgid "(Unknown)"
-msgstr "(نامعلوم)"
+#: Athlete.php:103
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unspecified)"
+msgstr "(نامشخص)"
 
-#: Athlete.php:126
-msgctxt "Field Label: `label`"
-msgid "Event"
-msgstr "رویداد"
-
-#: Athlete.php:127
-msgctxt "Field Label: `grade`"
-msgid "Grade"
-msgstr "نمره"
-
-#: Athlete.php:128
-msgctxt "Field Label: `age`"
-msgid "Age"
-msgstr "سن"
-
-#: Athlete.php:129
-msgctxt "Field Label: `stature`"
-msgid "Stature"
-msgstr "قامت"
-
-#: Athlete.php:130
-msgctxt "Field Label: `mass`"
-msgid "Mass"
-msgstr "وزن"
-
-#: Athlete.php:131
-msgctxt "Field Label: `date`"
-msgid "Date"
-msgstr "تاریخ"
-
-#: Athlete.php:132
-msgctxt "Field Label: `location`"
-msgid "Venue"
-msgstr "محل برگزاری"
-
-#: Athlete.php:133
-msgctxt "Field Label: `location`"
-msgid "Instructors"
-msgstr "مربیان"
-
-#: Athlete.php:134
-msgctxt "Field Label: `desc`"
-msgid "Description"
-msgstr "توضیحات"
-
-#: Athlete.php:140
-msgctxt "Tab Title"
-msgid "Athletics"
-msgstr "آمادگی جسمانی"
-
-#: Athlete.php:144
-msgctxt "Notice"
-msgid "There is no athletic information available!"
-msgstr "هیچ اطلاعات ورزشی در دسترس نیست!"
-
-#: Athlete.php:145
-msgctxt "Notice"
-msgid "You do not have the necessary permission to manage this athletic data."
-msgstr "شما مجوز دسترس لازم برای مدیریت این داده‌های ورزشی را ندارید."
-
-#: Athlete.php:152
-msgctxt "Setting Description"
-msgid "Supports sports fields for the selected post-types."
-msgstr "رشته ورزشی را برای نوع‌فرسته‌های انتخاب‌شده پشتیبانی می‌کند."
-
-#: Athlete.php:156
-msgctxt "MetaBox Title"
-msgid "Athletics"
-msgstr "آمادگی جسمانی"
-
-#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Athlete.php:160
-msgctxt "Button Title"
-msgid "Athletics of %1$s"
-msgstr "سوابق ورزشی %2$s"
-
-#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Athlete.php:162
-msgctxt "Button Text"
-msgid "%1$s Manage the Athletics of %2$s"
-msgstr "%1$s مدیریت سوابق ورزشی %2$s"
-
-#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Athlete.php:165
-msgctxt "Action Title"
-msgid "Athletics of %1$s"
-msgstr "آمادگی جسمانی %1$s"
-
-#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Athlete.php:167
-msgctxt "Action Text"
-msgid "Athletics"
-msgstr "آمادگی جسمانی"
-
-#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Athlete.php:170
-msgctxt "Row Title"
-msgid "Athletics of %1$s"
-msgstr "آمادگی جسمانی برای %1$s"
-
-#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Athlete.php:172
-msgctxt "Row Text"
-msgid "Athletics"
-msgstr "آمادگی جسمانی"
-
-#: Athlete.php:184
-msgctxt "Field Title"
-msgid "Mass"
-msgstr "وزن"
-
-#: Athlete.php:185
-msgctxt "Field Description"
-msgid "Body Mass in Kilograms"
-msgstr "وزن جسمی به کیلوگرم"
-
-#: Athlete.php:192
-msgctxt "Field Title"
-msgid "Stature"
-msgstr "قامت"
-
-#: Athlete.php:193
-msgctxt "Field Description"
-msgid "Body Stature in Centimetres"
-msgstr "قامت جسم به سانتی‌متر"
-
-#: Athlete.php:210
+#: Athlete.php:117
 msgctxt "Default Term: Sports Field"
 msgid "Acrobatic"
 msgstr "حرکتی"
 
-#: Athlete.php:211
+#: Athlete.php:118
 msgctxt "Default Term: Sports Field"
 msgid "Air"
 msgstr "هوایی"
 
-#: Athlete.php:212
+#: Athlete.php:119
 msgctxt "Default Term: Sports Field"
 msgid "Performance"
 msgstr "نمایشی"
 
-#: Athlete.php:213
+#: Athlete.php:120
 msgctxt "Default Term: Sports Field"
 msgid "Martial Arts"
 msgstr "رزمی"
 
-#: Athlete.php:214
+#: Athlete.php:121
 msgctxt "Default Term: Sports Field"
 msgid "Strength"
 msgstr "قدرتی"
 
-#: Athlete.php:215
+#: Athlete.php:122
 msgctxt "Default Term: Sports Field"
 msgid "Adventure"
 msgstr "ماجراجویانه"
 
-#: Athlete.php:216
+#: Athlete.php:123
 msgctxt "Default Term: Sports Field"
 msgid "Riding"
 msgstr "سواری"
 
-#: Athlete.php:217
+#: Athlete.php:124
 msgctxt "Default Term: Sports Field"
 msgid "Shooting"
 msgstr "تیراندازی"
 
-#: Athlete.php:218
+#: Athlete.php:125
 msgctxt "Default Term: Sports Field"
 msgid "Group"
 msgstr "گروهی"
 
-#: Athlete.php:219
+#: Athlete.php:126
 msgctxt "Default Term: Sports Field"
 msgid "Net and Wall"
 msgstr "راکتی"
 
-#: Athlete.php:220
+#: Athlete.php:127
 msgctxt "Default Term: Sports Field"
 msgid "Mind"
 msgstr "فکری"
 
-#: Athlete.php:221
+#: Athlete.php:128
 msgctxt "Default Term: Sports Field"
 msgid "Beach"
 msgstr "ساحلی"
 
-#: Athlete.php:222
+#: Athlete.php:129
 msgctxt "Default Term: Sports Field"
 msgid "Water"
 msgstr "آبی"
 
-#: Athlete.php:223
+#: Athlete.php:130
 msgctxt "Default Term: Sports Field"
 msgid "Snow"
 msgstr "برفی"
 
-#. translators: `%s`: post title
-#: Athlete.php:404
-msgctxt "Page Title"
-msgid "Athletics Grid for %s"
-msgstr "آمادگی جسمانی برای %s"
+#~ msgctxt "Label: Show Option All"
+#~ msgid "Sports Field"
+#~ msgstr "رشته ورزشی"
 
-#. translators: `%s`: post title
-#: Athlete.php:406
-msgctxt "Page Title"
-msgid "Athletics Overview for %s"
-msgstr "نمای کلی آمادگی جسمانی برای %s"
+#~ msgctxt "Label: Show Option No Terms"
+#~ msgid "(Unknown)"
+#~ msgstr "(نامعلوم)"
 
-#: Athlete.php:440
-msgctxt "Default Term: Audit"
-msgid "Empty Athletics Data"
-msgstr "داده‌های ورزشی خالی"
+#~ msgctxt "Field Label: `label`"
+#~ msgid "Event"
+#~ msgstr "رویداد"
 
-#: ModuleHelper.php:46
-msgctxt "BMI: Message"
-msgid "Your BMI falls within the underweight range."
-msgstr "BMI شما در محدوده کمبود وزن لازم است."
+#~ msgctxt "Field Label: `grade`"
+#~ msgid "Grade"
+#~ msgstr "نمره"
 
-#: ModuleHelper.php:47
-msgctxt "BMI: Report"
-msgid "The Person is underweight."
-msgstr "این فرد کمبود وزن دارد."
+#~ msgctxt "Field Label: `age`"
+#~ msgid "Age"
+#~ msgstr "سن"
 
-#: ModuleHelper.php:53
-msgctxt "BMI: Message"
-msgid "Your BMI falls within the normal or healthy weight range."
-msgstr "BMI شما در محدوده وزنی مناسب و سالم است."
+#~ msgctxt "Field Label: `stature`"
+#~ msgid "Stature"
+#~ msgstr "قامت"
 
-#: ModuleHelper.php:54
-msgctxt "BMI: Report"
-msgid "The Person has healthy weight."
-msgstr "وزن این فرد مناسب است."
+#~ msgctxt "Field Label: `mass`"
+#~ msgid "Mass"
+#~ msgstr "وزن"
 
-#: ModuleHelper.php:60
-msgctxt "BMI Message"
-msgid "Your BMI falls within the overweight range."
-msgstr "BMI شما در محدوده اضافه وزن قرار دارد."
+#~ msgctxt "Field Label: `date`"
+#~ msgid "Date"
+#~ msgstr "تاریخ"
 
-#: ModuleHelper.php:61
-msgctxt "BMI: Report"
-msgid "The Person is overweight."
-msgstr "این فرد اضافه وزن دارد."
+#~ msgctxt "Field Label: `location`"
+#~ msgid "Venue"
+#~ msgstr "محل برگزاری"
 
-#: ModuleHelper.php:67
-msgctxt "BMI Message"
-msgid "Your BMI falls within the obese (class one) range."
-msgstr "BMI شما در محدوده چاقی (درجه ۱) قرار دارد."
+#~ msgctxt "Field Label: `location`"
+#~ msgid "Instructors"
+#~ msgstr "مربیان"
 
-#: ModuleHelper.php:68 ModuleHelper.php:75 ModuleHelper.php:82
-msgctxt "BMI: Report"
-msgid "The Person is obese."
-msgstr "این فرد چاق است."
+#~ msgctxt "Field Label: `desc`"
+#~ msgid "Description"
+#~ msgstr "توضیحات"
 
-#: ModuleHelper.php:74
-msgctxt "BMI Message"
-msgid "Your BMI falls within the obese (class two) range."
-msgstr "BMI شما در محدوده چاقی (درجه۲) قرار دارد."
+#~ msgctxt "Tab Title"
+#~ msgid "Athletics"
+#~ msgstr "آمادگی جسمانی"
 
-#: ModuleHelper.php:81
-msgctxt "BMI Message"
-msgid "Your BMI falls within the obese (class three) range."
-msgstr "BMI شما در محدوده چاقی (درجه ۳) قرار دارد."
+#~ msgctxt "Notice"
+#~ msgid "There is no athletic information available!"
+#~ msgstr "هیچ اطلاعات ورزشی در دسترس نیست!"
+
+#~ msgctxt "Notice"
+#~ msgid "You do not have the necessary permission to manage this athletic data."
+#~ msgstr "شما مجوز دسترس لازم برای مدیریت این داده‌های ورزشی را ندارید."
+
+#~ msgctxt "Setting Description"
+#~ msgid "Supports sports fields for the selected post-types."
+#~ msgstr "رشته ورزشی را برای نوع‌فرسته‌های انتخاب‌شده پشتیبانی می‌کند."
+
+#~ msgctxt "MetaBox Title"
+#~ msgid "Athletics"
+#~ msgstr "آمادگی جسمانی"
+
+#~ msgctxt "Button Title"
+#~ msgid "Athletics of %1$s"
+#~ msgstr "سوابق ورزشی %2$s"
+
+#~ msgctxt "Button Text"
+#~ msgid "%1$s Manage the Athletics of %2$s"
+#~ msgstr "%1$s مدیریت سوابق ورزشی %2$s"
+
+#~ msgctxt "Action Title"
+#~ msgid "Athletics of %1$s"
+#~ msgstr "آمادگی جسمانی %1$s"
+
+#~ msgctxt "Action Text"
+#~ msgid "Athletics"
+#~ msgstr "آمادگی جسمانی"
+
+#~ msgctxt "Row Title"
+#~ msgid "Athletics of %1$s"
+#~ msgstr "آمادگی جسمانی برای %1$s"
+
+#~ msgctxt "Row Text"
+#~ msgid "Athletics"
+#~ msgstr "آمادگی جسمانی"
+
+#~ msgctxt "Field Title"
+#~ msgid "Mass"
+#~ msgstr "وزن"
+
+#~ msgctxt "Field Description"
+#~ msgid "Body Mass in Kilograms"
+#~ msgstr "وزن جسمی به کیلوگرم"
+
+#~ msgctxt "Field Title"
+#~ msgid "Stature"
+#~ msgstr "قامت"
+
+#~ msgctxt "Field Description"
+#~ msgid "Body Stature in Centimetres"
+#~ msgstr "قامت جسم به سانتی‌متر"
+
+#~ msgctxt "Page Title"
+#~ msgid "Athletics Grid for %s"
+#~ msgstr "آمادگی جسمانی برای %s"
+
+#~ msgctxt "Page Title"
+#~ msgid "Athletics Overview for %s"
+#~ msgstr "نمای کلی آمادگی جسمانی برای %s"
+
+#~ msgctxt "Default Term: Audit"
+#~ msgid "Empty Athletics Data"
+#~ msgstr "داده‌های ورزشی خالی"
+
+#~ msgctxt "BMI: Message"
+#~ msgid "Your BMI falls within the underweight range."
+#~ msgstr "BMI شما در محدوده کمبود وزن لازم است."
+
+#~ msgctxt "BMI: Report"
+#~ msgid "The Person is underweight."
+#~ msgstr "این فرد کمبود وزن دارد."
+
+#~ msgctxt "BMI: Message"
+#~ msgid "Your BMI falls within the normal or healthy weight range."
+#~ msgstr "BMI شما در محدوده وزنی مناسب و سالم است."
+
+#~ msgctxt "BMI: Report"
+#~ msgid "The Person has healthy weight."
+#~ msgstr "وزن این فرد مناسب است."
+
+#~ msgctxt "BMI Message"
+#~ msgid "Your BMI falls within the overweight range."
+#~ msgstr "BMI شما در محدوده اضافه وزن قرار دارد."
+
+#~ msgctxt "BMI: Report"
+#~ msgid "The Person is overweight."
+#~ msgstr "این فرد اضافه وزن دارد."
+
+#~ msgctxt "BMI Message"
+#~ msgid "Your BMI falls within the obese (class one) range."
+#~ msgstr "BMI شما در محدوده چاقی (درجه ۱) قرار دارد."
+
+#~ msgctxt "BMI: Report"
+#~ msgid "The Person is obese."
+#~ msgstr "این فرد چاق است."
+
+#~ msgctxt "BMI Message"
+#~ msgid "Your BMI falls within the obese (class two) range."
+#~ msgstr "BMI شما در محدوده چاقی (درجه۲) قرار دارد."
+
+#~ msgctxt "BMI Message"
+#~ msgid "Your BMI falls within the obese (class three) range."
+#~ msgstr "BMI شما در محدوده چاقی (درجه ۳) قرار دارد."
 
 #~ msgctxt "BMI Message"
 #~ msgid "Your BMI falls within the obese range."

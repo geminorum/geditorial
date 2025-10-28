@@ -1,0 +1,99 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Slided\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Slided\n"
+"X-Domain: geditorial-slided\n"
+
+#: Slided.php:39
+msgctxt "Setting Title"
+msgid "Title"
+msgstr ""
+
+#: Slided.php:40
+msgctxt "Setting Description"
+msgid "Description."
+msgstr ""
+
+#: Slided.php:49
+msgctxt "Setting Title"
+msgid "Slider Areas"
+msgstr ""
+
+#: Slided.php:54
+msgctxt "Setting Title"
+msgid "Action"
+msgstr ""
+
+#: Slided.php:55
+msgctxt "Setting Description"
+msgid "Action hook where the slider appears on front-end."
+msgstr ""
+
+#: Slided.php:63
+msgctxt "Setting Title"
+msgid "Priority"
+msgstr ""
+
+#: Slided.php:64
+msgctxt "Setting Description"
+msgid "Action priority where the slider runs on the action."
+msgstr ""
+
+#: Slided.php:70
+msgctxt "Setting Title"
+msgid "Name"
+msgstr ""
+
+#: Slided.php:71
+msgctxt "Setting Description"
+msgid "The name or title of the sidebar displayed in the Sliders interface."
+msgstr ""
+
+#: Slided.php:76
+msgctxt "Setting Title"
+msgid "Before Slider"
+msgstr ""
+
+#: Slided.php:77
+msgctxt "Setting Description"
+msgid "HTML opening before each slider markup on front-end."
+msgstr ""
+
+#: Slided.php:84
+msgctxt "Setting Title"
+msgid "After Slider"
+msgstr ""
+
+#: Slided.php:85
+msgctxt "Setting Description"
+msgid "HTML closing after each slider markup on front-end."
+msgstr ""
+
+#: Slided.php:92
+msgctxt "Setting Title"
+msgid "Before Title"
+msgstr ""
+
+#: Slided.php:93
+msgctxt "Setting Description"
+msgid "HTML opening before each slider title on front-end."
+msgstr ""
+
+#: Slided.php:100
+msgctxt "Setting Title"
+msgid "After Title"
+msgstr ""
+
+#: Slided.php:101
+msgctxt "Setting Description"
+msgid "HTML closing after each slider title on front-end."
+msgstr ""

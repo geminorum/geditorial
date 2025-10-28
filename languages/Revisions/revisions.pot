@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Revisions\n"
 "X-Domain: geditorial-revisions\n"
 
@@ -40,6 +40,7 @@ msgstr ""
 
 #. translators: `%s`: code placeholder
 #: Revisions.php:65
+#, php-format
 msgctxt "Setting Description"
 msgid "The maximum number of revisions to save for each post. %s for every revision."
 msgstr ""
@@ -51,6 +52,7 @@ msgstr ""
 
 #. translators: `%s`: revisions count
 #: Revisions.php:145
+#, php-format
 msgctxt "Message"
 msgid "%s items(s) revisions purged!"
 msgstr ""
@@ -62,6 +64,7 @@ msgstr ""
 
 #. translators: `%s`: revisions count
 #: Revisions.php:165
+#, php-format
 msgctxt "Row"
 msgid "%s Revision"
 msgid_plural "%s Revisions"
@@ -115,6 +118,7 @@ msgstr ""
 
 #. translators: `%s`: revisions count
 #: Revisions.php:287
+#, php-format
 msgctxt "Button"
 msgid "Browse %s Revisions"
 msgstr ""

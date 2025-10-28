@@ -9,174 +9,186 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Iranian\n"
 "X-Domain: geditorial-iranian\n"
 
 #. translators: `%s`: supported object label
-#: Iranian.php:55
+#: Iranian.php:60
+#, php-format
 msgctxt "Setting Title"
 msgid "Identity Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:56
+#: Iranian.php:63
 msgctxt "Setting Description"
 msgid "Defines identity meta-key for the post-type."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: Iranian.php:67
+#: Iranian.php:75
+#, php-format
 msgctxt "Setting Title"
 msgid "Location Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:68
+#: Iranian.php:78
 msgctxt "Setting Description"
 msgid "Defines location meta-key for the post-type."
 msgstr ""
 
-#: Iranian.php:102
+#: Iranian.php:112
 msgctxt "Setting Description"
 msgid "Supports meta fields for the selected post-types."
 msgstr ""
 
-#: Iranian.php:114
+#: Iranian.php:124
 msgctxt "Field Title"
 msgid "Birth Certificate"
 msgstr ""
 
-#: Iranian.php:115
+#: Iranian.php:125
 msgctxt "Field Description"
 msgid "Iranian Birth Certificate Number"
 msgstr ""
 
-#: Iranian.php:149
+#: Iranian.php:160
 msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr ""
 
-#: Iranian.php:220
+#: Iranian.php:231
 msgctxt "Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:274
+#: Iranian.php:285
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:379
-#: ModuleSettings.php:296
+#: Iranian.php:424
+#: ModuleSettings.php:294
 msgctxt "Header"
 msgid "Iranian Reports"
 msgstr ""
 
-#: ModuleSettings.php:27
+#: ModuleSettings.php:25
 msgctxt "Card Title"
 msgid "Compare Identity to Birth Certificate"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:35
+#: ModuleSettings.php:33
+#, php-format
 msgctxt "Button"
 msgid "Compare Identity for %s"
 msgstr ""
 
-#: ModuleSettings.php:39
+#: ModuleSettings.php:37
 msgctxt "Button Description"
 msgid "Tries to un-set the certificate duplicated from identity data."
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:94
-#: ModuleSettings.php:120
+#: ModuleSettings.php:92
+#: ModuleSettings.php:118
+#, php-format
 msgctxt "Notice"
 msgid "There is problem removing Birth Certificate Number for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: birth certificate number, `%2$s`: post title
-#: ModuleSettings.php:100
-#: ModuleSettings.php:126
+#: ModuleSettings.php:98
+#: ModuleSettings.php:124
+#, php-format
 msgctxt "Notice"
 msgid "Birth Certificate Number %1$s removed for &ldquo;%2$s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: identity code, `%2$s`: birth certificate number
-#: ModuleSettings.php:112
+#: ModuleSettings.php:110
+#, php-format
 msgctxt "Notice"
 msgid "Identity (%1$s) and Birth Certificate Number (%2$s) are diffrent!"
 msgstr ""
 
-#: ModuleSettings.php:137
+#: ModuleSettings.php:135
 msgctxt "Card Title"
 msgid "Location by Identity"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:145
-#: ModuleSettings.php:256
-#: ModuleSettings.php:280
+#: ModuleSettings.php:143
+#: ModuleSettings.php:254
+#: ModuleSettings.php:278
+#, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: ModuleSettings.php:149
+#: ModuleSettings.php:147
 msgctxt "Button Description"
 msgid "Tries to set the location based on identity data."
 msgstr ""
 
 #. translators: `%s`: identity code
-#: ModuleSettings.php:208
+#: ModuleSettings.php:206
+#, php-format
 msgctxt "Notice"
 msgid "No location data available for &ldquo;%s&rdquo;!"
 msgstr ""
 
 #. translators: `%s`: identity code
-#: ModuleSettings.php:215
+#: ModuleSettings.php:213
+#, php-format
 msgctxt "Notice"
 msgid "No city data available for &ldquo;%s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: city data, `%2$s`: identity code
-#: ModuleSettings.php:222
+#: ModuleSettings.php:220
+#, php-format
 msgctxt "Notice"
 msgid "City data is empty for %1$s: %2$s!"
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:230
+#: ModuleSettings.php:228
+#, php-format
 msgctxt "Notice"
 msgid "There is problem updating location for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: city data, `%2$s`: identity code, `%3$s`: post title
-#: ModuleSettings.php:236
+#: ModuleSettings.php:234
+#, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;."
 msgstr ""
 
-#: ModuleSettings.php:248
-#: ModuleSettings.php:297
+#: ModuleSettings.php:246
+#: ModuleSettings.php:295
 msgctxt "Card Title"
 msgid "Country Summary"
 msgstr ""
 
-#: ModuleSettings.php:260
+#: ModuleSettings.php:258
 msgctxt "Button Description"
 msgid "Tries to summarize the country info based on the raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:272
+#: ModuleSettings.php:270
 msgctxt "Card Title"
 msgid "City Summary"
 msgstr ""
 
-#: ModuleSettings.php:284
+#: ModuleSettings.php:282
 msgctxt "Button Description"
 msgid "Tries to summarize the city info based on the raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:337
+#: ModuleSettings.php:335
 msgctxt "Button"
 msgid "Next Batch"
 msgstr ""

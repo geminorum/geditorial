@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
 "X-Domain: geditorial-wc-units\n"
 
@@ -94,6 +94,7 @@ msgstr ""
 #: WcUnits.php:171
 #: WcUnits.php:181
 #: WcUnits.php:191
+#, php-format
 msgctxt "Setting Title"
 msgid "Template for %s"
 msgstr ""
@@ -105,6 +106,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:81
+#, php-format
 msgctxt "Setting Default"
 msgid "%s kg"
 msgstr ""
@@ -116,6 +118,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:91
+#, php-format
 msgctxt "Setting Default"
 msgid "%s g"
 msgstr ""
@@ -127,6 +130,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:101
+#, php-format
 msgctxt "Setting Default"
 msgid "%s lbs"
 msgstr ""
@@ -138,6 +142,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:111
+#, php-format
 msgctxt "Setting Default"
 msgid "%s oz"
 msgstr ""
@@ -194,6 +199,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:154
+#, php-format
 msgctxt "Setting Default"
 msgid "%s m"
 msgstr ""
@@ -205,6 +211,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:164
+#, php-format
 msgctxt "Setting Default"
 msgid "%s cm"
 msgstr ""
@@ -216,6 +223,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:174
+#, php-format
 msgctxt "Setting Default"
 msgid "%s mm"
 msgstr ""
@@ -227,6 +235,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:184
+#, php-format
 msgctxt "Setting Default"
 msgid "%s in"
 msgstr ""
@@ -238,6 +247,7 @@ msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:194
+#, php-format
 msgctxt "Setting Default"
 msgid "%s yd"
 msgstr ""

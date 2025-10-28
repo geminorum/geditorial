@@ -3,128 +3,131 @@ msgstr ""
 "Project-Id-Version: gEditorial Isbn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-12 17:17+0330\n"
+"PO-Revision-Date: 2025-09-19 22:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Isbn\n"
 "X-Domain: geditorial-isbn\n"
 
-#: Isbn.php:47
+#: Isbn.php:46
 msgctxt "Setting Title"
 msgid "Default Post-Type"
 msgstr "نوع‌فرسته پیش‌فرض"
 
+#: Isbn.php:47
+msgctxt "Setting Description"
+msgid "Defines the default post-type to create new posts with queried data on front-end."
+msgstr ""
+
 #: Isbn.php:48
 msgctxt "Setting Description"
-msgid ""
-"Defines the default post-type to create new posts with queried data on front-"
-"end."
-msgstr ""
-
-#: Isbn.php:49
-msgctxt "Setting Description"
 msgid "Define supported post-types first!"
-msgstr ""
+msgstr "ابتدا نوع‌فرسته‌های پشتیبانی شده را تعریف کنید!"
 
-#: Isbn.php:55
+#: Isbn.php:54
 msgctxt "Setting Description"
 msgid "Adds results by ISBN information on front-end search."
-msgstr ""
+msgstr "در جست‌وجوی روی سایت، نتایج بر اساس اطلاعات ISBN را اضافه می‌کند."
 
-#: Isbn.php:74
+#: Isbn.php:73
 msgctxt "Field Title"
 msgid "Bibliographic"
 msgstr "کتابشناسی"
 
-#: Isbn.php:75
+#: Isbn.php:74
 msgctxt "Field Description"
 msgid "National Bibliographic Number"
 msgstr "شماره کتابشناسی ملی"
 
-#: Isbn.php:83 Isbn.php:400
+#: Isbn.php:82 Isbn.php:408
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:84 Isbn.php:93 Isbn.php:104 Isbn.php:115 Isbn.php:126
+#: Isbn.php:83 Isbn.php:92 Isbn.php:103 Isbn.php:114 Isbn.php:125
 msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr "شماره استاندارد بین‌المللی کتاب"
 
-#: Isbn.php:92 Isbn.php:406
+#: Isbn.php:91 Isbn.php:414
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr "شابک #۲"
 
-#: Isbn.php:98
+#: Isbn.php:97
 msgctxt "Field Title"
 msgid "ISBN #2 Label"
 msgstr "عنوان شابک #۲"
 
-#: Isbn.php:99
+#: Isbn.php:98
 msgctxt "Field Description"
 msgid "Label to use on ISBN #2"
 msgstr "عنوان برای استفاده با شابک #۲"
 
-#: Isbn.php:103 Isbn.php:412
+#: Isbn.php:102 Isbn.php:420
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr "شابک #۳"
 
-#: Isbn.php:109
+#: Isbn.php:108
 msgctxt "Field Title"
 msgid "ISBN #3 Label"
 msgstr "عنوان شابک #۳"
 
-#: Isbn.php:110
+#: Isbn.php:109
 msgctxt "Field Description"
 msgid "Label to use on ISBN #3"
 msgstr "عنوان برای استفاده با شابک #۳"
 
-#: Isbn.php:114 Isbn.php:418
+#: Isbn.php:113 Isbn.php:426
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr "شابک #۴"
 
-#: Isbn.php:120
+#: Isbn.php:119
 msgctxt "Field Title"
 msgid "ISBN #4 Label"
 msgstr "عنوان شابک #۴"
 
-#: Isbn.php:121
+#: Isbn.php:120
 msgctxt "Field Description"
 msgid "Label to use on ISBN #4"
 msgstr "عنوان برای استفاده با شابک #۴"
 
-#: Isbn.php:125 Isbn.php:424
+#: Isbn.php:124 Isbn.php:432
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr "شابک #۵"
 
-#: Isbn.php:131
+#: Isbn.php:130
 msgctxt "Field Title"
 msgid "ISBN #5 Label"
 msgstr "عنوان شابک #۵"
 
-#: Isbn.php:132
+#: Isbn.php:131
 msgctxt "Field Description"
 msgid "Label to use on ISBN #5"
 msgstr "عنوان برای استفاده با شابک #۵"
 
-#: Isbn.php:330
+#: Isbn.php:332
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:447
+#: Isbn.php:455
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr "درون‌ریزی‌های شابک"
+
+#: Isbn.php:483
+msgctxt "Field Title Attr"
+msgid "See the page about this on National Library website."
+msgstr "به صفحه مربوط به این کتاب در سایت کتابخانه ملی مراجعه کنید."
 
 #: ModuleSettings.php:27
 msgctxt "Card Title"
@@ -136,8 +139,9 @@ msgctxt "Button"
 msgid "Migrate Data"
 msgstr "انتقال داده‌ها"
 
-#. translators: %s: number of rows found
+#. translators: `%s`: number of rows found
 #: ModuleSettings.php:34
+#, php-format
 msgctxt "Message"
 msgid "Converts meta-keys of found %s rows into current module keys."
 msgstr "کلیدمتای %s ردیف پیداشده را به کلیدهای پودمان فعلی تبدیل می‌کند."

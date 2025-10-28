@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
 
@@ -58,47 +58,47 @@ msgctxt "Message"
 msgid "Unable to convert content into Markdown. Please try again."
 msgstr ""
 
-#: Markdown.php:171
+#: Markdown.php:170
 msgctxt "Message"
 msgid "Unable to cleanup Markdown content. Please try again."
 msgstr ""
 
-#: Markdown.php:179
+#: Markdown.php:178
 msgctxt "Message"
 msgid "Unable to discard Markdown content back into HTML. Please try again."
 msgstr ""
 
-#: Markdown.php:469
+#: Markdown.php:468
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr ""
 
-#: Markdown.php:470
+#: Markdown.php:469
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr ""
 
-#: Markdown.php:471
+#: Markdown.php:470
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr ""
 
-#: Markdown.php:472
+#: Markdown.php:471
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr ""
 
-#: Markdown.php:483
+#: Markdown.php:482
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr ""
 
-#: Markdown.php:494
+#: Markdown.php:493
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr ""
 
-#: Markdown.php:495
+#: Markdown.php:494
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr ""

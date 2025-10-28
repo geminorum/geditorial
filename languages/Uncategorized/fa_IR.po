@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Uncategorized\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-07 05:06+0330\n"
+"PO-Revision-Date: 2025-10-04 23:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
@@ -42,12 +42,14 @@ msgstr "پاک‌سازی پیوست‌نشده‌ها"
 
 #. translators: `%s`: count
 #: Uncategorized.php:159
+#, php-format
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr "%s مورد پاک‌سازی شد!"
 
 #. translators: `%s`: posts count
 #: Uncategorized.php:170
+#, php-format
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
 msgid_plural "%s Uncategorized Posts"

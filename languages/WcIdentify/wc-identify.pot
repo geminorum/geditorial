@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcIdentify\n"
 "X-Domain: geditorial-wc-identify\n"
 
@@ -30,24 +30,28 @@ msgstr ""
 
 #. translators: `%1$s`: gtin placeholder, `%2$s`: product title
 #: ModuleSettings.php:64
+#, php-format
 msgctxt "Notice"
 msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
 #: ModuleSettings.php:82
+#, php-format
 msgctxt "Notice"
 msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
 msgstr ""
 
 #. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
 #: ModuleSettings.php:96
+#, php-format
 msgctxt "Notice"
 msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
 msgstr ""
 
 #. translators: `%s`: product title
 #: ModuleSettings.php:105
+#, php-format
 msgctxt "Notice"
 msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
 msgstr ""
@@ -83,7 +87,8 @@ msgid "Overrides the default label for the global unique id on product attribute
 msgstr ""
 
 #: WcIdentify.php:63
-#: WcIdentify.php:94
+#: WcIdentify.php:103
+#: WcIdentify.php:120
 msgctxt "Attribute Label"
 msgid "GTIN"
 msgstr ""
@@ -98,7 +103,12 @@ msgctxt "Setting Description"
 msgid "Instructs output structured data that a valid identifier for the product doesn't exist."
 msgstr ""
 
-#: WcIdentify.php:125
+#: WcIdentify.php:104
+msgctxt "Notice"
+msgid "Click to Copy"
+msgstr ""
+
+#: WcIdentify.php:168
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr ""

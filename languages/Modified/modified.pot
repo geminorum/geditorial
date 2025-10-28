@@ -9,76 +9,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:50
+#: Modified.php:45
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr ""
 
-#: Modified.php:51
+#: Modified.php:46
 msgctxt "Setting Description"
 msgid "Displays last published instead of modified date."
 msgstr ""
 
-#: Modified.php:57
+#: Modified.php:52
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Modified.php:58
+#: Modified.php:53
 msgctxt "Setting Description"
 msgid "Custom string before the modified time on the content."
 msgstr ""
 
-#: Modified.php:59
+#: Modified.php:54
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr ""
 
-#: Modified.php:64
+#: Modified.php:59
 msgctxt "Setting Title"
 msgid "Insert Format"
 msgstr ""
 
-#: Modified.php:65
+#: Modified.php:60
 msgctxt "Setting Description"
 msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:72
+#: Modified.php:67
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr ""
 
-#: Modified.php:73
+#: Modified.php:68
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
-#: Modified.php:85
+#: Modified.php:80
 msgctxt "Setting: Setting Title"
 msgid "Post Shortcode Tag"
 msgstr ""
 
-#: Modified.php:86
+#: Modified.php:81
 msgctxt "Setting: Setting Description"
 msgid "Customizes the post modified short-code tag. Leave blank for default."
 msgstr ""
 
-#: Modified.php:95
+#: Modified.php:90
 msgctxt "Setting: Setting Title"
 msgid "Site Shortcode Tag"
 msgstr ""
 
-#: Modified.php:96
+#: Modified.php:91
 msgctxt "Setting: Setting Description"
 msgid "Customizes the site modified short-code tag. Leave blank for default."
 msgstr ""
 
-#: Modified.php:140
+#: Modified.php:135
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
 msgstr ""

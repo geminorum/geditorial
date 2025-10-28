@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Identify\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-14 21:29+0330\n"
+"PO-Revision-Date: 2025-08-14 21:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,33 +11,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcIdentify\n"
 "X-Domain: geditorial-wc-identify\n"
 
-#: ModuleSettings.php:20
+#: ModuleSettings.php:19
 msgctxt "Card Title"
 msgid "Attribute to GTIN"
 msgstr "ویژگی به GTIN"
 
-#: ModuleSettings.php:24
+#: ModuleSettings.php:23
 msgctxt "Button"
 msgid "Migrate Data"
 msgstr "انتقال داده‌ها"
 
-#: ModuleSettings.php:26
+#: ModuleSettings.php:25
 msgctxt "Message"
 msgid "Imports GTIN product attributes into built-in global unique ID fields."
 msgstr "ویژگی‌های کالای GTIN را در زمینه‌های شناسه یکتای جهانی درون‌ریزی می‌کند."
 
-#. translators: %1$s: gtin placeholder, `%2$s`: product title
-#: ModuleSettings.php:65
+#. translators: `%1$s`: gtin placeholder, `%2$s`: product title
+#: ModuleSettings.php:64
+#, php-format
 msgctxt "Notice"
 msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
 msgstr "شناسه %1$s پیش از این &rdquo;%2$s&ldquo; برای ذخیره شده است."
 
-#. translators: %1$s: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
-#: ModuleSettings.php:83
+#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:82
+#, php-format
 msgctxt "Notice"
 msgid ""
 "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. "
@@ -46,8 +48,9 @@ msgstr ""
 "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این "
 "ویژگی شامل بیش از یک گزینه است!"
 
-#. translators: %1$s: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
-#: ModuleSettings.php:97
+#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:96
+#, php-format
 msgctxt "Notice"
 msgid ""
 "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. "
@@ -56,8 +59,9 @@ msgstr ""
 "شناسه %1$s از ویژگی &rdquo;%2$s&ldquo; برای &rdquo;%3$s&ldquo; منتقل شد. این "
 "ویژگی با موفقیت حذف شد!"
 
-#. translators: %s: product title
-#: ModuleSettings.php:106
+#. translators: `%s`: product title
+#: ModuleSettings.php:105
+#, php-format
 msgctxt "Notice"
 msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
 msgstr "هیچ ویژگی GTIN مناسبی برای &rdquo;%s&ldquo; پیدا نشد."
@@ -95,7 +99,7 @@ msgid ""
 "table."
 msgstr "شاخص پیش‌فرض شناسه یکتای جهانی را در جدول ویژگی‌های کالا رونویسی می‌کند."
 
-#: WcIdentify.php:63 WcIdentify.php:94
+#: WcIdentify.php:63 WcIdentify.php:103 WcIdentify.php:120
 msgctxt "Attribute Label"
 msgid "GTIN"
 msgstr "شناسه"
@@ -113,7 +117,12 @@ msgid ""
 msgstr ""
 "داده‌های ساختاریافته خروجی را برای عدم وجود شناسه معتبر کالا، راهنمایی می‌کند."
 
-#: WcIdentify.php:125
+#: WcIdentify.php:104
+msgctxt "Notice"
+msgid "Click to Copy"
+msgstr "کلیک برای کپی"
+
+#: WcIdentify.php:168
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr "ابزارهای شناسایی کالا"

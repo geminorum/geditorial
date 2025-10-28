@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Statuses\n"
 "X-Domain: geditorial-statuses\n"
 
@@ -35,12 +35,14 @@ msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:71
+#, php-format
 msgctxt "Setting Title"
 msgid "Roles for %s"
 msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:73
+#, php-format
 msgctxt "Setting Description"
 msgid "The <b>%s</b> status will be visibile to the selected roles."
 msgstr ""
@@ -62,36 +64,42 @@ msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:149
+#, php-format
 msgctxt "MetaBox Submit"
 msgid "Submit: %s"
 msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:151
+#, php-format
 msgctxt "MetaBox Save On"
 msgid "Save as %s on:"
 msgstr ""
 
 #. translators: `%1$s`: status name, `%2$s`: time placeholder
 #: Statuses.php:153
+#, php-format
 msgctxt "MetaBox Save Date"
 msgid "Save as %1$s on: %2$s"
 msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:155
+#, php-format
 msgctxt "MetaBox Saved On"
 msgid "Saved as %s on:"
 msgstr ""
 
 #. translators: `%1$s`: status name, `%2$s`: time placeholder
 #: Statuses.php:157
+#, php-format
 msgctxt "MetaBox Saved Date"
 msgid "Saved as %1$s on: %2$s"
 msgstr ""
 
 #. translators: `%s`: status name
 #: Statuses.php:159
+#, php-format
 msgctxt "MetaBox Saved On"
 msgid "Save as %s <b>now</b>"
 msgstr ""

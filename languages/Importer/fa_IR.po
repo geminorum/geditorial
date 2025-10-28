@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Importer\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-12 16:54+0330\n"
+"PO-Revision-Date: 2025-05-02 16:02+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
 "X-Domain: geditorial-importer\n"
 
@@ -68,7 +68,7 @@ msgstr ""
 "داده‌های خام منبع و ارجاع به پیوست آن را به صورت متا در هر مورد درون‌ریزی شده، "
 "ذخیره می‌کند."
 
-#. translators: %s: audit attribute placeholder
+#. translators: `%s`: audit attribute placeholder
 #: Importer.php:71
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
@@ -103,7 +103,7 @@ msgctxt "Menu"
 msgid "Import"
 msgstr "درون‌ریزی"
 
-#. translators: %s: joined duplicate keys
+#. translators: `%s`: joined duplicate keys
 #: Importer.php:252 Importer.php:1701
 msgctxt "Message"
 msgid "Found duplicate column headers: %s"
@@ -134,7 +134,7 @@ msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr "بند‌انگشتی"
 
-#. translators: %s: count placeholder
+#. translators: `%s`: count placeholder
 #: Importer.php:406
 msgctxt "Header"
 msgid "%s Records Found"
@@ -145,19 +145,19 @@ msgctxt "Table Column"
 msgid "[Checks]"
 msgstr "[بررسی‌ها]"
 
-#. translators: %s: custom metakey
+#. translators: `%s`: custom metakey
 #: Importer.php:455
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr "سفارشی: %s"
 
-#. translators: %1$s: count placeholder, `%2$s`: attachment title
+#. translators: `%1$s`: count placeholder, `%2$s`: attachment title
 #: Importer.php:466 Importer.php:1777
 msgctxt "Header"
 msgid "%1$s Records Found for &ldquo;%2$s&rdquo;"
 msgstr "%1$s مورد برای &rdquo;%2$s&ldquo; پیدا شد"
 
-#. translators: %s: source id
+#. translators: `%s`: source id
 #: Importer.php:491
 msgctxt "Checks"
 msgid "SourceID: %s"
@@ -173,7 +173,7 @@ msgctxt "Checks"
 msgid "Skipped: No SourceID"
 msgstr "ردشده: بدون شناسه منبع"
 
-#. translators: %s: post title
+#. translators: `%s`: post title
 #: Importer.php:501
 msgctxt "Checks"
 msgid "Matched: %s"
@@ -231,7 +231,7 @@ msgctxt "Message"
 msgid "Select records to finally import."
 msgstr "موارد نهایی برای درون‌ریزی را انتخاب کنید."
 
-#. translators: %s: attachment title
+#. translators: `%s`: attachment title
 #: Importer.php:1121 Importer.php:1225
 msgctxt "Header"
 msgid "Terms to Append All for &ldquo;%s&rdquo;"
@@ -256,7 +256,7 @@ msgstr ""
 "یک رده از هر رده‌بندی پشتیبانی‌شده توسط نوع‌فرسته را برای الحاق به همه فرسته‌های "
 "درون‌ریزی‌شده انتخاب کنید."
 
-#. translators: %s: attachment title
+#. translators: `%s`: attachment title
 #: Importer.php:1149 Importer.php:1252
 msgctxt "Header"
 msgid "Map the Importer for &ldquo;%s&rdquo;"
@@ -361,7 +361,7 @@ msgctxt "Post Field"
 msgid "Comment Content"
 msgstr "دیدگاه فرسته"
 
-#. translators: %s: taxonomy name placeholder
+#. translators: `%s`: taxonomy name placeholder
 #: Importer.php:1411
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
@@ -377,7 +377,7 @@ msgctxt "Card Title"
 msgid "Clean-up Raw Data"
 msgstr "پاک‌سازی داده‌های خام"
 
-#. translators: %s: post-type label
+#. translators: `%s`: post-type label
 #: ModuleSettings.php:26
 msgctxt "Button"
 msgid "On %s"
@@ -388,13 +388,13 @@ msgctxt "Button Description"
 msgid "Tries to clean imported raw meta-data."
 msgstr "برای پاک‌سازی داده‌های خام درون‌ریزی‌شده تلاش می‌کند."
 
-#. translators: %1$s: post title, `%2$s`: post id
+#. translators: `%1$s`: post title, `%2$s`: post id
 #: ModuleSettings.php:61
 msgctxt "Notice"
 msgid "No meta-data available on &ldquo;%1$s&rdquo; (%2$s)."
 msgstr "متاداده‌ای برای &rdquo;%1$s&ldquo; (%2$s) در دسترس نیست."
 
-#. translators: %1$s: post title, `%2$s`: post id
+#. translators: `%1$s`: post title, `%2$s`: post id
 #: ModuleSettings.php:79
 msgctxt "Notice"
 msgid "Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)."

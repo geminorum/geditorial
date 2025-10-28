@@ -9,37 +9,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Remoted\n"
 "X-Domain: geditorial-remoted\n"
 
-#: Remoted.php:40
+#: Remoted.php:41
 msgctxt "Setting Title"
 msgid "Remote Base"
 msgstr ""
 
-#: Remoted.php:41
-#: Remoted.php:47
+#: Remoted.php:42
+#: Remoted.php:48
 msgctxt "Setting Description"
 msgid "Full URL into the remote base for receiving uploads."
 msgstr ""
 
-#: Remoted.php:46
+#: Remoted.php:47
 msgctxt "Setting Title"
 msgid "Remote Hash"
 msgstr ""
 
-#: Remoted.php:66
+#: Remoted.php:67
 msgctxt "Dashboard Widget Title"
 msgid "Remote Uploads"
 msgstr ""
 
-#: Remoted.php:89
+#: Remoted.php:90
 msgctxt "Button"
 msgid "Upload Files"
 msgstr ""
 
-#: Remoted.php:92
+#: Remoted.php:93
 msgctxt "Notice"
 msgid "Your browser does not support HTML5 upload."
 msgstr ""

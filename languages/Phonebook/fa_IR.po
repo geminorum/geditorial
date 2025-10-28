@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Phonebook\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:43+0330\n"
+"PO-Revision-Date: 2025-10-13 13:38+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,292 +11,333 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
 "X-Domain: geditorial-phonebook\n"
 
-#: Phonebook.php:55
+#: Phonebook.php:53
 msgctxt "Setting Description"
 msgid "Roles that can view contact information."
 msgstr "نقش‌هایی که می‌توانند اطلاعات تماس را مشاهده کنند."
 
-#: Phonebook.php:56
+#: Phonebook.php:54
 msgctxt "Setting Description"
 msgid "Roles that can assign contact information."
 msgstr "نقش‌هایی که می‌توانند اطلاعات تماس را تعریف کنند."
 
-#: Phonebook.php:63
+#: Phonebook.php:61
 msgctxt "Setting Description"
 msgid "Adds results by Phone and Mobile information on front-end search."
-msgstr ""
+msgstr "نتایج را بر اساس تلفن و اطلاعات موبایل در جستجوی روی سایت اضافه می‌کند."
 
-#: Phonebook.php:90
+#: Phonebook.php:88
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Phonebook.php:91
+#: Phonebook.php:89
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr "تماس"
 
-#: Phonebook.php:92
+#: Phonebook.php:90
 msgctxt "Field Label: `fullname`"
 msgid "Fullname"
 msgstr "نام کامل"
 
-#: Phonebook.php:93
+#: Phonebook.php:91
 msgctxt "Field Label: `relation`"
 msgid "Relation"
 msgstr "نسبت"
 
-#: Phonebook.php:94
+#: Phonebook.php:92
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: Phonebook.php:95
+#: Phonebook.php:93
 msgctxt "Field Label: `address`"
 msgid "Address"
 msgstr "نشانی"
 
-#: Phonebook.php:101
+#: Phonebook.php:99
 msgctxt "Tab Title"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
-#: Phonebook.php:105
+#: Phonebook.php:103
 msgctxt "Notice"
 msgid "There is no contact information available!"
 msgstr "هیچ اطلاعات تماسی در دسترس نیست!"
 
-#: Phonebook.php:106
+#: Phonebook.php:104
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the contact data."
 msgstr "شما دسترسی لازم برای مدیریت اطلاعات تماس را ندارید."
 
-#: Phonebook.php:113
+#: Phonebook.php:111
+msgctxt "Setting Info"
+msgid "Meta Field Posttypes"
+msgstr "نوع‌فرسته‌های فیلد متا"
+
+#: Phonebook.php:112
+msgctxt "Setting Info"
+msgid "Applies Post-type fields on selected post-types."
+msgstr "فیلدهای متا را برای نوع‌فرسته‌های انتخاب‌شده اعمال می‌کند."
+
+#: Phonebook.php:116
 msgctxt "MetaBox Title"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Phonebook.php:117
+#: Phonebook.php:120
+#, php-format
 msgctxt "Button Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Phonebook.php:119
+#: Phonebook.php:122
+#, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Contacts of %2$s"
 msgstr "%1$s مدیریت تماس‌های %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Phonebook.php:122
+#: Phonebook.php:125
+#, php-format
 msgctxt "Action Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Phonebook.php:124
+#: Phonebook.php:127
 msgctxt "Action Text"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Phonebook.php:127
+#: Phonebook.php:130
+#, php-format
 msgctxt "Row Title"
 msgid "Contacts of %1$s"
 msgstr "تماس‌های %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Phonebook.php:129
+#: Phonebook.php:132
 msgctxt "Row Text"
 msgid "Contacts"
 msgstr "تماس‌ها"
 
-#: Phonebook.php:141
+#: Phonebook.php:145
 msgctxt "Field Title"
 msgid "Mobile Number"
 msgstr "شماره همراه"
 
-#: Phonebook.php:142
+#: Phonebook.php:146
 msgctxt "Field Description"
 msgid "Primary Mobile Contact Number of the Person"
 msgstr "شماره تماس با همراه اصلی فرد"
 
-#: Phonebook.php:149
+#: Phonebook.php:153
 msgctxt "Field Title"
 msgid "Secondary Mobile"
 msgstr "همراه دوم"
 
-#: Phonebook.php:150
+#: Phonebook.php:154
 msgctxt "Field Description"
 msgid "Secondary Mobile Contact Number of the Person"
 msgstr "شماره تماس با همراه فرعی فرد"
 
-#: Phonebook.php:155
+#: Phonebook.php:159
 msgctxt "Field Title"
 msgid "Parent's Mobile"
 msgstr "همراه والد"
 
-#: Phonebook.php:156
+#: Phonebook.php:160
 msgctxt "Field Description"
 msgid "Parent Mobile Contact Number of the Person"
 msgstr "شماره تماس با همراه والد فرد"
 
-#: Phonebook.php:161
+#: Phonebook.php:165
 msgctxt "Field Title"
 msgid "Phone Number"
 msgstr "شماره تلفن"
 
-#: Phonebook.php:162
+#: Phonebook.php:166
 msgctxt "Field Description"
 msgid "Primary Phone Contact Number of the Person"
 msgstr "شماره تماس ثابت اصلی فرد"
 
-#: Phonebook.php:167
+#: Phonebook.php:171
 msgctxt "Field Title"
 msgid "Secondary Phone"
 msgstr "تلفن دوم"
 
-#: Phonebook.php:168
+#: Phonebook.php:172
 msgctxt "Field Description"
 msgid "Secondary Phone Contact Number of the Person"
 msgstr "شماره تماس ثابت فرعی فرد"
 
-#: Phonebook.php:173
+#: Phonebook.php:177
 msgctxt "Field Title"
 msgid "Parent's Phone"
 msgstr "تلفن والد"
 
-#: Phonebook.php:174
+#: Phonebook.php:178
 msgctxt "Field Description"
 msgid "Parent Phone Contact Number of the Person"
 msgstr "شماره تماس ثابت والد فرد"
 
-#: Phonebook.php:179
+#: Phonebook.php:195
+msgctxt "Field Title"
+msgid "Building Name"
+msgstr "نام ساختمان"
+
+#: Phonebook.php:196
+msgctxt "Field Description"
+msgid "Address Unit for the Building"
+msgstr "واحد آدرس ساختمان"
+
+#: Phonebook.php:200
+msgctxt "Field Title"
+msgid "Room Number"
+msgstr "شماره اتاق"
+
+#: Phonebook.php:201
+msgctxt "Field Description"
+msgid "Address Unit for the Room"
+msgstr "واحد آدرس برای اتاق"
+
+#: Phonebook.php:205
 msgctxt "Field Title"
 msgid "Postal Address"
 msgstr "نشانی پستی"
 
-#: Phonebook.php:180
+#: Phonebook.php:206
 msgctxt "Field Description"
 msgid "Full Postal Address about the Content, including city, state etc."
 msgstr "نشانی کامل پستی مربوط به محتوا، شامل استان، شهر و غیره."
 
-#: Phonebook.php:185
+#: Phonebook.php:211
 msgctxt "Field Title"
 msgid "Postal Code"
 msgstr "کد پستی"
 
-#: Phonebook.php:186
+#: Phonebook.php:212
 msgctxt "Field Description"
 msgid "Postal Code about the Content."
 msgstr "اطلاعات کدپستی مربوط محتوا."
 
-#: Phonebook.php:191
+#: Phonebook.php:217
 msgctxt "Field Title"
 msgid "Home Address"
 msgstr "نشانی خانه"
 
-#: Phonebook.php:192
+#: Phonebook.php:218
 msgctxt "Field Description"
 msgid "Full home address, including city, state etc."
 msgstr "نشانی کامل خانه، شامل استان، شهر و غیره."
 
-#: Phonebook.php:197
+#: Phonebook.php:223
 msgctxt "Field Title"
 msgid "Work Address"
 msgstr "نشانی محل کار"
 
-#: Phonebook.php:198
+#: Phonebook.php:224
 msgctxt "Field Description"
 msgid "Full work address, including city, state etc."
 msgstr "نشانی کامل محل کار، شامل استان، شهر و غیره."
 
-#: Phonebook.php:203
+#: Phonebook.php:229
 msgctxt "Field Title"
 msgid "Parent's Address"
 msgstr "نشانی والدین"
 
-#: Phonebook.php:204
+#: Phonebook.php:230
 msgctxt "Field Description"
 msgid "Full family address, including city, state etc."
 msgstr "نشانی کامل خانوادگی، شامل استان، شهر و غیره."
 
-#: Phonebook.php:209
+#: Phonebook.php:235
 msgctxt "Field Title"
 msgid "Emergency Contact"
 msgstr "شماره اضطراری"
 
-#: Phonebook.php:210
+#: Phonebook.php:236
 msgctxt "Field Description"
 msgid "Mobile Contact Number of the Person Who Will Be Contacted on Emergency"
 msgstr "شماره همراه اضطراری شخصی که در صورت نیاز با او تماس گرفته شود"
 
-#: Phonebook.php:215
+#: Phonebook.php:241
 msgctxt "Field Title"
 msgid "Emergency Person"
 msgstr "شخص اضطراری"
 
-#: Phonebook.php:216
+#: Phonebook.php:242
 msgctxt "Field Description"
 msgid "Full Name of the Person Who Will Be Contacted on Emergency"
 msgstr "نام کامل شخصی که در صورت نیاز با او تماس گرفته شود"
 
-#: Phonebook.php:221
+#: Phonebook.php:247
 msgctxt "Field Title"
 msgid "Emergency Address"
 msgstr "نشانی اضطراری"
 
-#: Phonebook.php:222
+#: Phonebook.php:248
 msgctxt "Field Description"
 msgid "Full address to Be reached on Emergency"
 msgstr "نشانی کامل محلی که در مواقع اضطراری به آن مراجعه شود"
 
 #. translators: `%s`: post title
-#: Phonebook.php:357
+#: Phonebook.php:383
+#, php-format
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr "جدول تماس‌ها برای %s"
 
 #. translators: `%s`: post title
-#: Phonebook.php:359
+#: Phonebook.php:385
+#, php-format
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr "بررسی تماس‌های %s"
 
-#: Phonebook.php:405
+#: Phonebook.php:431
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr "اطلاعات تماس خالی"
 
-#: Phonebook.php:406
+#: Phonebook.php:432
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr "شماره همراه خالی"
 
-#: Phonebook.php:620
+#: Phonebook.php:643
 msgctxt "Possible Phone Key"
 msgid "Mobile"
 msgstr "همراه"
 
-#: Phonebook.php:621
+#: Phonebook.php:644
 msgctxt "Possible Phone Key"
 msgid "Mobile Phone"
 msgstr "تلفن همراه"
 
-#: Phonebook.php:622
+#: Phonebook.php:645
 msgctxt "Possible Phone Key"
 msgid "Phone"
 msgstr "تلفن"
 
-#: Phonebook.php:623
+#: Phonebook.php:646
 msgctxt "Possible Phone Key"
 msgid "Phone Number"
 msgstr "شماره تلفن"
+
+#: Phonebook.php:698
+msgctxt "Header"
+msgid "Overview of the Contacts"
+msgstr "بررسی تماس‌ها"
 
 #~ msgctxt "Field Title"
 #~ msgid "Family Address"

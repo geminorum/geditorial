@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Archives\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-14 21:18+0330\n"
+"PO-Revision-Date: 2025-07-19 13:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,103 +11,110 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Archives\n"
 "X-Domain: geditorial-archives\n"
 
-#. translators: %s: supported object label
-#: Archives.php:45 Archives.php:79
+#. translators: `%s`: supported object label
+#: Archives.php:45 Archives.php:88
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Title for %s"
 msgstr "عنوان بایگانی برای %s"
 
-#: Archives.php:46
+#: Archives.php:48
 msgctxt "Setting Description"
 msgid "Used as title on the posttype archive pages."
 msgstr "برای عنوان در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
-#: Archives.php:49 Archives.php:100 Archives.php:468
+#: Archives.php:51 Archives.php:117 Archives.php:571
 msgctxt "Icon Title"
 msgid "View Archives Page"
 msgstr "نمایش صفحه بایگانی"
 
-#. translators: %s: supported object label
-#: Archives.php:56 Archives.php:88
+#. translators: `%s`: supported object label
+#: Archives.php:59 Archives.php:100
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Content for %s"
 msgstr "محتوای بایگانی برای %s"
 
-#: Archives.php:57
+#: Archives.php:62
 msgctxt "Setting Description"
 msgid "Used as content on the posttype archive pages."
 msgstr "برای محتوا در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
-#. translators: %s: supported object label
-#: Archives.php:65 Archives.php:109
+#. translators: `%s`: supported object label
+#: Archives.php:71 Archives.php:127
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Template for %s"
 msgstr "الگوی بایگانی برای %s"
 
-#: Archives.php:66
+#: Archives.php:74
 msgctxt "Setting Description"
 msgid "Used as page template on the posttype archive pages."
 msgstr "برای الگو در صفحات بایگانی نوع‌نوشته استفاده خواهد شد."
 
-#: Archives.php:80
+#: Archives.php:91
 msgctxt "Setting Description"
 msgid "Used as title on the taxonomy archive pages."
 msgstr "برای عنوان در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#: Archives.php:89
+#: Archives.php:103
 msgctxt "Setting Description"
 msgid "Used as content on the taxonomy archive pages."
 msgstr "برای محتوا در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#. translators: %s: supported object label
-#: Archives.php:97
+#. translators: `%s`: supported object label
+#: Archives.php:112
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Slug for %s"
 msgstr "نامک بایگانی برای %s"
 
-#: Archives.php:98
+#: Archives.php:115
 msgctxt "Setting Description"
 msgid "Used as slug on the taxonomy archive pages."
 msgstr "برای نامک در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#: Archives.php:110
+#: Archives.php:130
 msgctxt "Setting Description"
 msgid "Used as page template on the taxonomy archive pages."
 msgstr "برای الگو در صفحات بایگانی رده‌بندی استفاده خواهد شد."
 
-#: Archives.php:115
+#: Archives.php:135
 msgctxt "Setting Description"
 msgid "Prepends a search form to the posttype archive pages."
 msgstr "پیش از محتوای بایگانی نوع‌نوشته، فرم جست‌جو اضافه می‌کند."
 
-#. translators: %s: supported object label
-#: Archives.php:164 Archives.php:178
+#. translators: `%s`: supported object label
+#: Archives.php:187 Archives.php:202
+#, php-format
 msgctxt "Help Sidebar"
 msgid "%s Archives"
 msgstr "بایگانی %s"
 
-#. translators: %s: supported object label
-#: Archives.php:443 Archives.php:452
+#. translators: `%s`: supported object label
+#: Archives.php:546 Archives.php:555
+#, php-format
 msgctxt "Navigation MetaBox"
 msgid "%s Archives"
 msgstr "بایگانی %s"
 
-#. translators: %s: taxonomy object label
-#: Archives.php:471
+#. translators: `%s`: taxonomy object label
+#: Archives.php:575
+#, php-format
 msgctxt "Card Title"
 msgid "Custom Archives Page for &ldquo;%s&rdquo;"
 msgstr "صفحه بایگانی سفارشی برای &rdquo;%s&ldquo;"
 
-#: Archives.php:483
+#: Archives.php:589
 msgctxt "Description"
 msgid "Link to the custom archives page generated for terms in this taxonomy."
 msgstr "پیوند به صفحه بایگانی سفارشی برای رده‌ها در این رده‌بندی."
 
-#: Archives.php:487
+#: Archives.php:593
 msgctxt "Message"
 msgid "There are no no custom archives pages available!"
 msgstr "صفحه بایگانی سفارشی در دسترس نیست!"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tabloid\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-04 02:11+0330\n"
+"PO-Revision-Date: 2025-10-20 12:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,41 +11,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tabloid\n"
 "X-Domain: geditorial-tabloid\n"
 
-#: Tabloid.php:42
+#: Tabloid.php:41
 msgctxt "Setting Description"
 msgid "Roles that can view overviews."
-msgstr ""
+msgstr "نقش‌هایی که می‌توانند نمای‌کلی را ببینند."
+
+#: Tabloid.php:42
+msgctxt "Setting Description"
+msgid "Roles that can print overviews."
+msgstr "نقش‌هایی که می‌توانند نمای‌کلی را چاپ کنند."
 
 #: Tabloid.php:43
 msgctxt "Setting Description"
-msgid "Roles that can print overviews."
-msgstr ""
-
-#: Tabloid.php:44
-msgctxt "Setting Description"
 msgid "Roles that can export overviews."
-msgstr ""
+msgstr "نقش‌هایی که می‌توانند نمای‌کلی را برون‌بری کنند."
 
-#: Tabloid.php:138 Tabloid.php:164
+#: Tabloid.php:137 Tabloid.php:163
 msgctxt "Action"
 msgid "Overview"
 msgstr "در یک نگاه"
 
-#. translators: %1$s: current post title, `%2$s`: posttype singular name
-#: Tabloid.php:144
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Tabloid.php:143
+#, php-format
 msgctxt "Post Row Action Title Attr"
 msgid "Overview of this %2$s"
-msgstr "نمای‌کلی برای %s"
+msgstr "نمای‌کلی برای %2$s"
 
-#. translators: %1$s: current term name, `%2$s`: taxonomy singular name
-#: Tabloid.php:170
+#. translators: `%1$s`: current term name, `%2$s`: taxonomy singular name
+#: Tabloid.php:169
+#, php-format
 msgctxt "Term Row Action Title Attr"
 msgid "Overview of this %2$s"
-msgstr "نمای‌کلی برای %s"
+msgstr "نمای‌کلی برای %2$s"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Action Title for %s"

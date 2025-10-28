@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcCheckout\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-15 02:16+0330\n"
+"PO-Revision-Date: 2025-10-28 22:16+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcCheckout\n"
 "X-Domain: geditorial-wc-checkout\n"
 
@@ -52,11 +52,8 @@ msgstr "شاخص توضیحات سفارش"
 
 #: WcCheckout.php:55
 msgctxt "Setting Description"
-msgid ""
-"Changes default `Order notes` label for customers. Leave empty to use defaults."
-msgstr ""
-"شاخص پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی "
-"بگذارید."
+msgid "Changes default `Order notes` label for customers. Leave empty to use defaults."
+msgstr "شاخص پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی بگذارید."
 
 #: WcCheckout.php:61
 msgctxt "Setting Title"
@@ -65,12 +62,8 @@ msgstr "جای‌نمای توضیحات سفارش"
 
 #: WcCheckout.php:62
 msgctxt "Setting Description"
-msgid ""
-"Changes default `Order notes` placeholder for customers. Leave empty to use "
-"defaults."
-msgstr ""
-"جای‌نمای پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی "
-"بگذارید."
+msgid "Changes default `Order notes` placeholder for customers. Leave empty to use defaults."
+msgstr "جای‌نمای پیش‌فرض «توضیحات سفارش» را برای مشتریان تغییر می‌دهد. برای پیش‌فرض خالی بگذارید."
 
 #: WcCheckout.php:73
 msgctxt "Setting Section Title"

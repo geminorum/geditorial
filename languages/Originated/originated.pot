@@ -9,37 +9,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Originated\n"
 "X-Domain: geditorial-originated\n"
 
-#: Originated.php:95
+#: Originated.php:93
 msgid "Origin"
 msgid_plural "Origins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Originated.php:99
+#: Originated.php:97
 msgctxt "Label: `extended_label`"
 msgid "Content Origins"
 msgstr ""
 
-#: Originated.php:100
+#: Originated.php:98
 msgctxt "Label: `menu_name`"
 msgid "Content Origins"
 msgstr ""
 
-#: Originated.php:101
+#: Originated.php:99
 msgctxt "Label: `show_option_all`"
 msgid "Origins"
 msgstr ""
 
-#: Originated.php:102
+#: Originated.php:100
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unoriginated)"
 msgstr ""
 
-#: Originated.php:125
+#: Originated.php:123
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr ""

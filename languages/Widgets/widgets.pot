@@ -9,147 +9,148 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Widgets\n"
 "X-Domain: geditorial-widgets\n"
 
-#: Widgets.php:32
+#: Widgets.php:35
 msgctxt "Setting Title"
 msgid "Theme Options"
 msgstr ""
 
-#: Widgets.php:33
+#: Widgets.php:36
 msgctxt "Setting Description"
 msgid "Enables &ldquo;Edit Theme Options&rdquo; capability for selected roles."
 msgstr ""
 
-#: Widgets.php:38
+#: Widgets.php:41
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr ""
 
-#: Widgets.php:47
+#: Widgets.php:50
 msgctxt "Setting Title"
 msgid "Widget Areas"
 msgstr ""
 
-#: Widgets.php:52
+#: Widgets.php:55
 msgctxt "Setting Title"
 msgid "Action"
 msgstr ""
 
-#: Widgets.php:53
+#: Widgets.php:56
 msgctxt "Setting Description"
 msgid "Action hook where the widget appears on front-end."
 msgstr ""
 
-#: Widgets.php:60
+#: Widgets.php:64
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr ""
 
-#: Widgets.php:61
+#: Widgets.php:65
 msgctxt "Setting Description"
 msgid "Action priority where the widget runs on the action."
 msgstr ""
 
-#: Widgets.php:67
+#: Widgets.php:71
 msgctxt "Setting Title"
 msgid "Name"
 msgstr ""
 
-#: Widgets.php:68
+#: Widgets.php:72
 msgctxt "Setting Description"
 msgid "The name or title of the sidebar displayed in the Widgets interface."
 msgstr ""
 
-#: Widgets.php:73
+#: Widgets.php:77
 msgctxt "Setting Title"
 msgid "Before Widget"
 msgstr ""
 
-#: Widgets.php:74
+#: Widgets.php:78
 msgctxt "Setting Description"
 msgid "HTML opening before each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:81
+#: Widgets.php:85
 msgctxt "Setting Title"
 msgid "After Widget"
 msgstr ""
 
-#: Widgets.php:82
+#: Widgets.php:86
 msgctxt "Setting Description"
 msgid "HTML closing after each widget markup on front-end."
 msgstr ""
 
-#: Widgets.php:89
+#: Widgets.php:93
 msgctxt "Setting Title"
 msgid "Before Title"
 msgstr ""
 
-#: Widgets.php:90
+#: Widgets.php:94
 msgctxt "Setting Description"
 msgid "HTML opening before each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:97
+#: Widgets.php:101
 msgctxt "Setting Title"
 msgid "After Title"
 msgstr ""
 
-#: Widgets.php:98
+#: Widgets.php:102
 msgctxt "Setting Description"
 msgid "HTML closing after each widget title on front-end."
 msgstr ""
 
-#: Widgets.php:163
+#: Widgets.php:167
 msgctxt "Widget Area Unnamed"
 msgid "[Unnamed]"
 msgstr ""
 
 #. translators: `%s`: widget area name
-#: Widgets.php:172
+#: Widgets.php:177
+#, php-format
 msgctxt "Widget Area Prefix"
 msgid "Editorial: %s"
 msgstr ""
 
-#: Widgets/CustomHTML.php:16
+#: Widgets/CustomHTML.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Custom HTML"
 msgstr ""
 
-#: Widgets/CustomHTML.php:17
+#: Widgets/CustomHTML.php:19
 msgctxt "Widget Description"
 msgid "Displays arbitrary HTML code with support for shortcodes and embeds."
 msgstr ""
 
-#: Widgets/CustomHTML.php:72
+#: Widgets/CustomHTML.php:74
 msgctxt "Widget: Custom HTML"
 msgid "Process Embeds"
 msgstr ""
 
-#: Widgets/CustomHTML.php:73
+#: Widgets/CustomHTML.php:75
 msgctxt "Widget: Custom HTML"
 msgid "Process Shortcodes"
 msgstr ""
 
-#: Widgets/CustomHTML.php:74
+#: Widgets/CustomHTML.php:76
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters"
 msgstr ""
 
-#: Widgets/CustomHTML.php:75
+#: Widgets/CustomHTML.php:77
 msgctxt "Widget: Custom HTML"
 msgid "Process Filters (Legacy)"
 msgstr ""
 
-#: Widgets/CustomHTML.php:76
+#: Widgets/CustomHTML.php:78
 msgctxt "Widget: Custom HTML"
 msgid "Automatic Paragraphs"
 msgstr ""
 
-#: Widgets/CustomHTML.php:77
+#: Widgets/CustomHTML.php:79
 msgctxt "Widget: Custom HTML"
 msgid "Bypass Caching"
 msgstr ""
@@ -176,6 +177,7 @@ msgstr ""
 
 #. translators: `%s`: documents url
 #: Widgets/GCalEvents.php:85
+#, php-format
 msgctxt "Widget: Google Calendar"
 msgid "Get your API key <a href=\"%s\" target=\"_blank\">here</a>."
 msgstr ""
@@ -211,7 +213,7 @@ msgid "Displays the results of search for namesake to current term on selected t
 msgstr ""
 
 #: Widgets/NamesakeTerms.php:100
-#: Widgets/PostTerms.php:82
+#: Widgets/PostTerms.php:83
 #: Widgets/SearchTerms.php:98
 msgctxt "Widget: Setting"
 msgid "Select none for all taxonomies."
@@ -252,12 +254,12 @@ msgctxt "Widget: Setting"
 msgid "Hide on Paged Results"
 msgstr ""
 
-#: Widgets/PostTerms.php:17
+#: Widgets/PostTerms.php:18
 msgctxt "Widget Title"
 msgid "Editorial: Post Terms"
 msgstr ""
 
-#: Widgets/PostTerms.php:18
+#: Widgets/PostTerms.php:19
 msgctxt "Widget Description"
 msgid "Displays the assigned terms of the current post."
 msgstr ""
@@ -287,77 +289,77 @@ msgctxt "Widget: Setting"
 msgid "Strip Hash-tags"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:22
+#: Widgets/WPRestPosts.php:18
 msgctxt "Widget Title"
 msgid "Editorial: WP-REST Posts"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:23
+#: Widgets/WPRestPosts.php:19
 msgctxt "Widget Description"
 msgid "Displays list of posts from a public WordPress site."
 msgstr ""
 
-#: Widgets/WPRestPosts.php:111
+#: Widgets/WPRestPosts.php:107
 msgctxt "Widget: WP-REST Posts"
 msgid "Resource URL:"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:112
+#: Widgets/WPRestPosts.php:108
 msgctxt "Widget: WP-REST Posts"
 msgid "Endpoint:"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:113
+#: Widgets/WPRestPosts.php:109
 msgctxt "Widget: WP-REST Posts"
 msgid "Tag IDs:"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:114
+#: Widgets/WPRestPosts.php:110
 msgctxt "Widget: WP-REST Posts"
 msgid "Category IDs:"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:115
+#: Widgets/WPRestPosts.php:111
 msgctxt "Widget: WP-REST Posts"
 msgid "Extra Args:"
 msgstr ""
 
-#: Widgets/WPRestPosts.php:119
+#: Widgets/WPRestPosts.php:115
 msgctxt "Widget: WP-REST Posts"
 msgid "No posts!"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:22
+#: Widgets/WPRestSingle.php:18
 msgctxt "Widget Title"
 msgid "Editorial: WP-REST Single"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:23
+#: Widgets/WPRestSingle.php:19
 msgctxt "Widget Description"
 msgid "Displays single post from a public WordPress site."
 msgstr ""
 
-#: Widgets/WPRestSingle.php:90
+#: Widgets/WPRestSingle.php:86
 msgctxt "Widget: WP-REST Single"
 msgid "Resource URL:"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:91
+#: Widgets/WPRestSingle.php:87
 msgctxt "Widget: WP-REST Single"
 msgid "Endpoint:"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:92
+#: Widgets/WPRestSingle.php:88
 msgctxt "Widget: WP-REST Single"
 msgid "Extra Args:"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:93
+#: Widgets/WPRestSingle.php:89
 msgctxt "Widget: WP-REST Single"
 msgid "Post ID:"
 msgstr ""
 
-#: Widgets/WPRestSingle.php:95
+#: Widgets/WPRestSingle.php:91
 msgctxt "Widget: WP-REST Single"
 msgid "No post!"
 msgstr ""

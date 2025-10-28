@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Like\n"
 "X-Domain: geditorial-like\n"
 
@@ -85,12 +85,14 @@ msgstr ""
 
 #. translators: `%s`: count placeholder
 #: Like.php:186
+#, php-format
 msgctxt "Adminbar"
 msgid "Like Summary: Users %s"
 msgstr ""
 
 #. translators: `%s`: count placeholder
 #: Like.php:206
+#, php-format
 msgctxt "Adminbar"
 msgid "Like Summary: Guests %s"
 msgstr ""
@@ -102,6 +104,7 @@ msgstr ""
 
 #. translators: `%s`: likes count
 #: Like.php:472
+#, php-format
 msgctxt "Noop"
 msgid "%s Like"
 msgid_plural "%s Likes"
@@ -110,6 +113,7 @@ msgstr[1] ""
 
 #. translators: `%s`: users count
 #: Like.php:480
+#, php-format
 msgctxt "Noop"
 msgid "%s User"
 msgid_plural "%s Users"
@@ -118,6 +122,7 @@ msgstr[1] ""
 
 #. translators: `%s`: guests count
 #: Like.php:484
+#, php-format
 msgctxt "Noop"
 msgid "%s Guest"
 msgid_plural "%s Guests"

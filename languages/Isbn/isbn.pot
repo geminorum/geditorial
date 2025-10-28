@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Isbn\n"
 "X-Domain: geditorial-isbn\n"
 
@@ -44,7 +44,7 @@ msgid "National Bibliographic Number"
 msgstr ""
 
 #: Isbn.php:82
-#: Isbn.php:405
+#: Isbn.php:409
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr ""
@@ -59,7 +59,7 @@ msgid "International Standard Book Number"
 msgstr ""
 
 #: Isbn.php:91
-#: Isbn.php:411
+#: Isbn.php:415
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr ""
@@ -75,7 +75,7 @@ msgid "Label to use on ISBN #2"
 msgstr ""
 
 #: Isbn.php:102
-#: Isbn.php:417
+#: Isbn.php:421
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "Label to use on ISBN #3"
 msgstr ""
 
 #: Isbn.php:113
-#: Isbn.php:423
+#: Isbn.php:427
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr ""
@@ -107,7 +107,7 @@ msgid "Label to use on ISBN #4"
 msgstr ""
 
 #: Isbn.php:124
-#: Isbn.php:429
+#: Isbn.php:433
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr ""
@@ -122,14 +122,19 @@ msgctxt "Field Description"
 msgid "Label to use on ISBN #5"
 msgstr ""
 
-#: Isbn.php:329
+#: Isbn.php:333
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:452
+#: Isbn.php:456
 msgctxt "Header"
 msgid "ISBN Imports"
+msgstr ""
+
+#: Isbn.php:484
+msgctxt "Field Title Attr"
+msgid "See the page about this on National Library website."
 msgstr ""
 
 #: ModuleSettings.php:27
@@ -144,6 +149,7 @@ msgstr ""
 
 #. translators: `%s`: number of rows found
 #: ModuleSettings.php:34
+#, php-format
 msgctxt "Message"
 msgid "Converts meta-keys of found %s rows into current module keys."
 msgstr ""

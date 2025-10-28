@@ -27,3 +27,13 @@ msgstr ""
 msgctxt "Shortcode Name"
 msgid "Stock Status"
 msgstr ""
+
+#: WcShortcodes.php:50
+msgctxt "Shortcode Name"
+msgid "Scheduled On-sales"
+msgstr ""
+
+#: WcShortcodes.php:213
+msgctxt "Message"
+msgid "There are no products available!"
+msgstr ""

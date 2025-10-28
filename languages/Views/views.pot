@@ -9,21 +9,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Views\n"
 "X-Domain: geditorial-views\n"
 
-#: Views.php:32
+#: Views.php:27
 msgctxt "Message"
 msgid "Note that the logget-out users count by default."
 msgstr ""
 
-#: Views.php:49
+#: Views.php:51
 msgctxt "Event Name"
 msgid "Entry Views"
 msgstr ""
 
-#: Views.php:70
+#: Views.php:72
 msgctxt "Title Attr"
 msgid "View Summary"
 msgstr ""

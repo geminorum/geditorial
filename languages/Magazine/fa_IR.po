@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Magazine\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-07 05:05+0330\n"
+"PO-Revision-Date: 2025-10-28 22:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,147 +11,153 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Domain: geditorial-magazine\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 
-#: Magazine.php:59
+#: Magazine.php:60
 msgctxt "Settings"
 msgid "Issue Sections"
 msgstr "بخش‌های شماره"
 
-#: Magazine.php:60
+#: Magazine.php:61
 msgctxt "Settings"
 msgid "Section taxonomy for the issues and supported post-types."
 msgstr "رده‌بندی بخش‌ها را برای شماره‌ها و نوع‌نوشته‌های پشتیبانی‌شده اضافه می‌کند."
 
-#: Magazine.php:76
+#: Magazine.php:77
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr "بازگردانی بایگانی"
 
-#: Magazine.php:77
+#: Magazine.php:78
 msgctxt "Settings"
 msgid "Redirects issue archives to this URL. Leave empty to disable."
-msgstr ""
-"بایگانی شماره‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی بگذارید."
+msgstr "بایگانی شماره‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌‌سازی خالی بگذارید."
 
-#: Magazine.php:83
+#: Magazine.php:84
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr "بازگردانی دوره‌ها"
 
-#: Magazine.php:84
+#: Magazine.php:85
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
-msgstr ""
-"بایگانی همه دوره‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی بگذارید."
+msgstr "بایگانی همه دوره‌ها را به این نشانی بازگردانی می‌کند. برای غیرفعال‌سازی خالی بگذارید."
 
-#: Magazine.php:134 Magazine.php:135
+#: Magazine.php:137 Magazine.php:138
 msgid "Issue"
 msgid_plural "Issues"
 msgstr[0] "شماره‌ها"
 msgstr[1] "شماره"
 
-#: Magazine.php:136
+#: Magazine.php:139
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] "دوره‌ها"
 msgstr[1] "دوره"
 
-#: Magazine.php:137
+#: Magazine.php:140
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Magazine.php:141
+#: Magazine.php:144
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr "طرح شماره"
 
-#: Magazine.php:150
+#: Magazine.php:153
 msgctxt "Misc: `column_icon_title`"
 msgid "Issue"
 msgstr "شماره"
 
-#: Magazine.php:155
+#: Magazine.php:158
 msgctxt "Label: MetaBox Title"
 msgid "The Issue"
 msgstr "این شماره"
 
-#: Magazine.php:156
+#: Magazine.php:159
 msgctxt "Label: MetaBox Title"
 msgid "In This Issue"
 msgstr "در این شماره"
 
-#: Magazine.php:180
+#: Magazine.php:183
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr "خط شماره"
 
-#: Magazine.php:181
+#: Magazine.php:184
 msgctxt "Field Description"
 msgid "The issue number line"
 msgstr "شماره مسلسل شماره"
 
-#: Magazine.php:185 Magazine.php:223
+#: Magazine.php:188 Magazine.php:230
 msgctxt "Field Title"
 msgid "Total Pages"
 msgstr "تعداد صفحات"
 
-#: Magazine.php:186
+#: Magazine.php:189
 msgctxt "Field Description"
 msgid "The issue total pages"
 msgstr "مجموع صفحات شماره"
 
-#: Magazine.php:207
+#: Magazine.php:214
 msgctxt "Field Title"
 msgid "Order"
 msgstr "چینش"
 
-#: Magazine.php:208
+#: Magazine.php:215
 msgctxt "Field Description"
 msgid "Post order in issue list"
 msgstr "چینش این نوشته در فهرست شماره"
 
-#: Magazine.php:215
+#: Magazine.php:222
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr "صفحه شروع"
 
-#: Magazine.php:216
+#: Magazine.php:223
 msgctxt "Field Description"
 msgid "Post start page on issue (printed)"
 msgstr "صفحه شروع این نوشته در شماره"
 
-#: Magazine.php:224
+#: Magazine.php:231
 msgctxt "Field Description"
 msgid "Post total pages on issue (printed)"
 msgstr "مجموع صفحات این نوشته در شماره"
 
 #. translators: `%s`: order
-#: Magazine.php:438
+#: Magazine.php:451
+#, php-format
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr "چیدمان در شماره: %s"
 
 #. translators: `%s`: page
-#: Magazine.php:445
+#: Magazine.php:458
+#, php-format
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr "صفحه شروع: %s"
 
 #. translators: `%s`: total count
-#: Magazine.php:451
+#: Magazine.php:464
+#, php-format
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr "مجموع صفحات: %s"
 
-#: Magazine.php:532
+#: Magazine.php:553
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr "ابزارهای مجله"
+
+#: Magazine.php:562
+msgctxt "Card"
+msgid "Issue Date from Meta-data"
+msgstr ""
 
 #: Widgets/IssueCover.php:18
 msgctxt "Widget Title"

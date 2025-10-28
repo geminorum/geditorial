@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Meeted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:41+0330\n"
+"PO-Revision-Date: 2025-04-19 23:07+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -180,12 +180,12 @@ msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr "کد یکتا برای جلسه"
 
-#: Meeted.php:608
+#: Meeted.php:609
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr "ابزارهای جلسه"
 
-#: Meeted.php:617
+#: Meeted.php:618
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""

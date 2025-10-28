@@ -9,89 +9,91 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:38
+#: Estimated.php:36
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr ""
 
-#: Estimated.php:39
+#: Estimated.php:37
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr ""
 
-#: Estimated.php:45
+#: Estimated.php:43
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Estimated.php:46
+#: Estimated.php:44
 msgctxt "Setting Description"
 msgid "Custom string before the estimated time on the content."
 msgstr ""
 
-#: Estimated.php:47
-#: Estimated.php:209
+#: Estimated.php:45
+#: Estimated.php:214
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr ""
 
-#: Estimated.php:52
+#: Estimated.php:50
 msgctxt "Setting Title"
 msgid "Content Teaser"
 msgstr ""
 
-#: Estimated.php:53
+#: Estimated.php:51
 msgctxt "Setting Description"
 msgid "Calculate teaser text along with rest of the content"
 msgstr ""
 
-#: Estimated.php:56
+#: Estimated.php:54
 msgctxt "Content Teaser Option"
 msgid "Ignore"
 msgstr ""
 
-#: Estimated.php:57
+#: Estimated.php:55
 msgctxt "Content Teaser Option"
 msgid "Include"
 msgstr ""
 
-#: Estimated.php:65
+#: Estimated.php:63
 msgctxt "Setting Title"
 msgid "Minimum Words"
 msgstr ""
 
-#: Estimated.php:66
+#: Estimated.php:64
 msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr ""
 
-#: Estimated.php:113
+#: Estimated.php:118
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr ""
 
-#: Estimated.php:116
+#: Estimated.php:121
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
 #. translators: `%s`: words count
-#: Estimated.php:149
-#: Estimated.php:233
+#: Estimated.php:154
+#: Estimated.php:238
+#, php-format
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute"
 msgstr ""
 
-#: Estimated.php:222
+#: Estimated.php:227
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: `%s`: number of minutes
-#: Estimated.php:226
+#: Estimated.php:231
+#, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""

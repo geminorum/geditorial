@@ -9,164 +9,166 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Organization\n"
 "X-Domain: geditorial-organization\n"
 
-#: Organization.php:68
+#: Organization.php:69
 msgctxt "Settings"
 msgid "Sub-department Support"
 msgstr ""
 
-#: Organization.php:69
+#: Organization.php:70
 msgctxt "Settings"
 msgid "Substitute taxonomy for the departments and supported post-types."
 msgstr ""
 
-#: Organization.php:94
+#: Organization.php:95
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Organization.php:95
+#: Organization.php:96
 msgctxt "Settings"
 msgid "Redirects department archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Organization.php:143
 #: Organization.php:144
+#: Organization.php:145
 msgid "Department"
 msgid_plural "Departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:145
+#: Organization.php:146
 msgid "Department Category"
 msgid_plural "Department Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:146
+#: Organization.php:147
 msgid "Sub-department"
 msgid_plural "Sub-departments"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:147
+#: Organization.php:148
 msgid "Department Type"
 msgid_plural "Department Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Organization.php:148
+#: Organization.php:149
 msgid "Department Status"
 msgid_plural "Department Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: `%s`: paired item title
-#: Organization.php:153
+#: Organization.php:154
+#, php-format
 msgctxt "Label: `paired_connected_to`"
 msgid "Member of %s Department"
 msgstr ""
 
-#: Organization.php:154
+#: Organization.php:155
 msgctxt "Label: Featured Image"
 msgid "Department Badge"
 msgstr ""
 
-#: Organization.php:155
+#: Organization.php:156
 msgctxt "Label: MetaBox Title"
 msgid "The Department"
 msgstr ""
 
-#: Organization.php:158
+#: Organization.php:159
 msgctxt "Label: MetaBox Title"
 msgid "In This Department"
 msgstr ""
 
-#: Organization.php:161
+#: Organization.php:162
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Organization.php:164
+#: Organization.php:165
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Organization.php:167
+#: Organization.php:168
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Organization.php:176
+#: Organization.php:177
 msgctxt "Misc: `column_icon_title`"
 msgid "Department"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Organization.php:181
+#: Organization.php:182
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Organization.php:191
+#: Organization.php:192
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Organization.php:192
+#: Organization.php:193
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Organization.php:193
+#: Organization.php:194
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Organization.php:194
+#: Organization.php:195
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Organization.php:195
+#: Organization.php:196
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Organization.php:221
+#: Organization.php:222
 msgctxt "Field Title"
 msgid "Administrators"
 msgstr ""
 
-#: Organization.php:222
+#: Organization.php:223
 msgctxt "Field Description"
 msgid "People Who Participate as Administrators in This Organization"
 msgstr ""
 
-#: Organization.php:230
+#: Organization.php:231
 msgctxt "Field Title"
 msgid "Organization Code"
 msgstr ""
 
-#: Organization.php:231
+#: Organization.php:232
 msgctxt "Field Description"
 msgid "Unique Organization Code"
 msgstr ""
 
-#: Organization.php:241
+#: Organization.php:242
 msgctxt "Field Title"
 msgid "Organization Number"
 msgstr ""
 
-#: Organization.php:242
+#: Organization.php:243
 msgctxt "Field Description"
 msgid "Unique Organization Membership Number"
 msgstr ""
 
-#: Organization.php:713
+#: Organization.php:714
 msgctxt "Header"
 msgid "Organization Tools"
 msgstr ""

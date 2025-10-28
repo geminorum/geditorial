@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
 "X-Domain: geditorial-dashboard\n"
 
@@ -35,12 +35,14 @@ msgstr ""
 
 #. translators: `%s`: HTML word
 #: Dashboard.php:48
+#, php-format
 msgctxt "Settings: Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
 #. translators: `%s`: HTML word
 #: Dashboard.php:50
+#, php-format
 msgctxt "Settings: Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""

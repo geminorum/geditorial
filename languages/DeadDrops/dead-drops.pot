@@ -9,38 +9,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/DeadDrops\n"
 "X-Domain: geditorial-dead-drops\n"
 
-#: DeadDrops.php:46
+#: DeadDrops.php:43
 msgctxt "Setting Title"
 msgid "Signal Instructions"
 msgstr ""
 
-#: DeadDrops.php:47
+#: DeadDrops.php:44
 msgctxt "Setting Description"
 msgid "Displays beside the qr-code on the signalling pop-up. Leave blank for default."
 msgstr ""
 
-#: DeadDrops.php:48
-#: DeadDrops.php:139
+#: DeadDrops.php:45
+#: DeadDrops.php:136
 msgctxt "Message"
 msgid "Scan this with your phone and open it to upload files anonymously."
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: DeadDrops.php:73
+#: DeadDrops.php:70
+#, php-format
 msgctxt "Button Title"
 msgid "Dead Drop for %1$s"
 msgstr ""
 
-#: DeadDrops.php:245
+#: DeadDrops.php:242
 msgctxt "Header Button"
 msgid "Dead Drop"
 msgstr ""
 
-#: DeadDrops.php:413
+#: DeadDrops.php:410
 msgctxt "Button"
 msgid "Discard"
 msgstr ""

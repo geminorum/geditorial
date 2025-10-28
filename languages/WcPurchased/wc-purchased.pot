@@ -9,62 +9,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcPurchased\n"
 "X-Domain: geditorial-wc-purchased\n"
 
-#: WcPurchased.php:42
+#: WcPurchased.php:37
 msgctxt "Setting Title"
 msgid "Order Statuses"
 msgstr ""
 
-#: WcPurchased.php:43
+#: WcPurchased.php:38
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:92
+#: WcPurchased.php:87
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WcPurchased.php:95
+#: WcPurchased.php:90
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WcPurchased.php:104
-#: WcPurchased.php:107
+#: WcPurchased.php:99
+#: WcPurchased.php:102
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WcPurchased.php:110
+#: WcPurchased.php:105
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WcPurchased.php:120
+#: WcPurchased.php:115
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WcPurchased.php:131
+#: WcPurchased.php:126
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:137
+#: WcPurchased.php:132
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WcPurchased.php:144
+#: WcPurchased.php:139
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WcPurchased.php:150
+#: WcPurchased.php:145
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

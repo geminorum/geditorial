@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
@@ -109,22 +109,22 @@ msgctxt "Header"
 msgid "Orthography Sandbox"
 msgstr ""
 
-#: Ortho.php:409
+#: Ortho.php:424
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr ""
 
-#: Ortho.php:425
+#: Ortho.php:440
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:426
+#: Ortho.php:441
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr ""
 
-#: Ortho.php:453
+#: Ortho.php:468
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

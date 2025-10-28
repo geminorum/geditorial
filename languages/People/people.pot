@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/People\n"
 "X-Domain: geditorial-people\n"
 
@@ -18,90 +18,90 @@ msgctxt "Setting Description"
 msgid "Whether to assign multiple affiliations in edit panel."
 msgstr ""
 
-#: People.php:72
+#: People.php:81
 msgid "Person"
 msgid_plural "People"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:73
+#: People.php:82
 msgid "Affiliation"
 msgid_plural "Affiliations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:74
+#: People.php:83
 msgid "Honorific"
 msgid_plural "Honorifics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:78
+#: People.php:87
 msgctxt "Label: `name_field_description`"
 msgid "What is the full-name of the person."
 msgstr ""
 
-#: People.php:79
+#: People.php:88
 msgctxt "Label: `slug_field_description`"
 msgid "Define the URL-friendly version of the name of the person."
 msgstr ""
 
-#: People.php:80
+#: People.php:89
 msgctxt "Label: `desc_field_description`"
 msgid "Describe the person in more words."
 msgstr ""
 
-#: People.php:81
+#: People.php:90
 msgctxt "Label: `manage_description`"
 msgid "Define the individuals affiliated with this site."
 msgstr ""
 
-#: People.php:84
+#: People.php:93
 msgctxt "Label: `extended_label`"
 msgid "People Affiliations"
 msgstr ""
 
-#: People.php:85
+#: People.php:94
 msgctxt "Label: `column_title`"
 msgid "Affiliations"
 msgstr ""
 
-#: People.php:86
+#: People.php:95
 msgctxt "Label: `show_option_all`"
 msgid "People Affiliations"
 msgstr ""
 
-#: People.php:87
+#: People.php:96
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unaffiliated)"
 msgstr ""
 
-#: People.php:88
+#: People.php:97
 msgctxt "Label: `assign_description`"
 msgid "Defines the affiliation of the person."
 msgstr ""
 
-#: People.php:91
+#: People.php:100
 msgctxt "Label: `extended_label`"
 msgid "People Honorifics"
 msgstr ""
 
-#: People.php:92
+#: People.php:101
 msgctxt "Label: `column_title`"
 msgid "Honorifics"
 msgstr ""
 
-#: People.php:93
+#: People.php:102
 msgctxt "Label: `show_option_all`"
 msgid "People Honorifics"
 msgstr ""
 
-#: People.php:94
+#: People.php:103
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr ""
 
-#: People.php:95
+#: People.php:104
 msgctxt "Label: `assign_description`"
 msgid "Defines the honorifics of the person."
 msgstr ""

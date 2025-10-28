@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-07 04:57+0330\n"
+"PO-Revision-Date: 2025-09-24 01:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 
@@ -58,9 +58,7 @@ msgstr "نمایش گزارش پیوست‌های نوشته."
 #: Attachments.php:75
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
-msgstr ""
-"در نمای فهرست کتابخانه رسانه‌ای، امکان محدودیت بر اساس نویسندگان را اضافه "
-"می‌کند."
+msgstr "در نمای فهرست کتابخانه رسانه‌ای، امکان محدودیت بر اساس نویسندگان را اضافه می‌کند."
 
 #: Attachments.php:78
 msgctxt "Setting Title"
@@ -70,8 +68,7 @@ msgstr "محدودسازی کتاب‌خانه"
 #: Attachments.php:79
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
-msgstr ""
-"در نمای فهرست کتابخانه رسانه‌ای، هر کاربر را محدود به پرونده‌های خودش می‌کند."
+msgstr "در نمای فهرست کتابخانه رسانه‌ای، هر کاربر را محدود به پرونده‌های خودش می‌کند."
 
 #: Attachments.php:87
 msgctxt "Setting Title"
@@ -79,8 +76,6 @@ msgid "ShortCode Caption"
 msgstr "برنگاشت شورت‌کد"
 
 #: Attachments.php:88
-#| msgctxt "Setting Description"
-#| msgid "Displays attachment summary of the post."
 msgctxt "Setting Description"
 msgid "Displays the attachment caption after each item on the list."
 msgstr ""
@@ -91,8 +86,6 @@ msgid "ShortCode Description"
 msgstr "توضیحات شورت‌کد"
 
 #: Attachments.php:93
-#| msgctxt "Setting Description"
-#| msgid "Displays attachment summary of the post."
 msgctxt "Setting Description"
 msgid "Displays the attachment description after each item on the list."
 msgstr ""
@@ -108,99 +101,105 @@ msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: `%s`: attachments count
-#: Attachments.php:278
+#: Attachments.php:279
+#, php-format
 msgctxt "Noop"
 msgid "%s Attachment"
 msgid_plural "%s Attachments"
 msgstr[0] "%s پیوست"
 msgstr[1] "%s پیوست"
 
-#: Attachments.php:283
+#: Attachments.php:286
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:318
+#: Attachments.php:321
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: `%s`: attachment parent title
-#: Attachments.php:320
+#: Attachments.php:323
+#, php-format
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:416
+#: Attachments.php:420
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr "پاک‌کردن برای همیشه"
 
-#: Attachments.php:417
+#: Attachments.php:421
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr "خالی‌کردن فراداده‌ها"
 
-#: Attachments.php:418
+#: Attachments.php:422
 msgctxt "Table Action"
 msgid "Remove Thumbnails"
 msgstr "حذف بندانگشتی‌ها"
 
-#: Attachments.php:435
+#: Attachments.php:439
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:447
+#: Attachments.php:451
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:454
+#: Attachments.php:458
+#, php-format
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr "[والد]: %s"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:459
+#: Attachments.php:463
+#, php-format
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr "[برگزیده]: %s"
 
 #. translators: `%s`: linked term title
-#: Attachments.php:464
+#: Attachments.php:468
+#, php-format
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr "[رده]: %s"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:469
+#: Attachments.php:473
+#, php-format
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr "[محتوا]: %s"
 
-#: Attachments.php:476
+#: Attachments.php:480
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:499
+#: Attachments.php:503
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:520
+#: Attachments.php:524
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:521
+#: Attachments.php:525
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."
 
-#: Attachments.php:533
+#: Attachments.php:537
 msgctxt "Header"
 msgid "Attachment Tools"
 msgstr "ابزارهایی برای پیوست‌ها"
@@ -217,6 +216,7 @@ msgstr "پیوست دوباره بدون والدها"
 
 #. translators: `%s`: post-type label
 #: ModuleSettings.php:28 ModuleSettings.php:43
+#, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr "در %s"
@@ -248,50 +248,56 @@ msgstr ""
 
 #. translators: `%s`: attachment id
 #: ModuleSettings.php:126 ModuleSettings.php:207
+#, php-format
 msgctxt "Notice"
 msgid "Attachment ID (%s) is not valid!"
 msgstr ""
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
 #: ModuleSettings.php:133
+#, php-format
 msgctxt "Notice"
 msgid "There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s)."
 msgstr ""
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
 #: ModuleSettings.php:140
+#, php-format
 msgctxt "Notice"
 msgid "Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)."
 msgstr ""
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
 #: ModuleSettings.php:154
+#, php-format
 msgctxt "Notice"
 msgid "There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s)."
 msgstr ""
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
 #: ModuleSettings.php:161
+#, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted!"
 msgstr ""
 
 #. translators: `%s`: parent id
 #: ModuleSettings.php:214
+#, php-format
 msgctxt "Notice"
 msgid "Parent ID (%s) is not valid!"
 msgstr ""
 
 #. translators: `%1$s`: attachment id, `%2$s`: parent title
 #: ModuleSettings.php:221
+#, php-format
 msgctxt "Notice"
-msgid ""
-"There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;."
+msgid "There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id, `%3$s`: parent title
 #: ModuleSettings.php:228
+#, php-format
 msgctxt "Notice"
-msgid ""
-"&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;."
+msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;."
 msgstr ""

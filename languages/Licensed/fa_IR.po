@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Licensed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:24+0330\n"
+"PO-Revision-Date: 2025-06-11 08:50+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,57 +11,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 "X-Poedit-Basepath: ../../includes/Modules/Vehicle\n"
 "X-Domain: geditorial-vehicle\n"
 
-#: Licensed.php:88
+#: Licensed.php:85
 msgid "Driving Licence"
 msgid_plural "Driving Licences"
 msgstr[0] "گواهینامه‌های رانندگی"
 msgstr[1] "گواهینامه رانندگی"
 
-#: Licensed.php:92
+#: Licensed.php:89
 msgctxt "Label: Show Option All"
 msgid "Licences"
 msgstr "گواهینامه‌ها"
 
-#: Licensed.php:93
+#: Licensed.php:90
 msgctxt "Label: Show Option No Terms"
 msgid "(Unlicensed)"
 msgstr "(بدون گواهینامه)"
 
-#: Licensed.php:105
+#: Licensed.php:102
 msgctxt "Default Term"
 msgid "Motorcycle"
 msgstr "موتورسیکلت"
 
-#: Licensed.php:106
+#: Licensed.php:103
 msgctxt "Default Term"
 msgid "Category Three"
 msgstr "پایه سه"
 
-#: Licensed.php:107
+#: Licensed.php:104
 msgctxt "Default Term"
 msgid "Category Two"
 msgstr "پایه دو"
 
-#: Licensed.php:108
+#: Licensed.php:105
 msgctxt "Default Term"
 msgid "Category One"
 msgstr "پایه یک"
 
-#: Licensed.php:109
+#: Licensed.php:106
 msgctxt "Default Term"
 msgid "Loader"
 msgstr "لودر"
 
-#: Licensed.php:110
+#: Licensed.php:107
 msgctxt "Default Term"
 msgid "Helicopter"
 msgstr "هلیکوپتر"
 
-#: Licensed.php:111
+#: Licensed.php:108
 msgctxt "Default Term"
 msgid "Airplane"
 msgstr "هواپیما"

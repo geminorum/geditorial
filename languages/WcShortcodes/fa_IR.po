@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcShortcodes\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-06-02 12:14+0330\n"
+"PO-Revision-Date: 2025-07-09 22:58+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -28,3 +28,13 @@ msgstr "امکان استفاده از شورت‌کدهای انتخاب‌شد
 msgctxt "Shortcode Name"
 msgid "Stock Status"
 msgstr "وضعیت موجودی"
+
+#: WcShortcodes.php:50
+msgctxt "Shortcode Name"
+msgid "Scheduled On-sales"
+msgstr "حراج‌های زمان‌بندی‌شده"
+
+#: WcShortcodes.php:213
+msgctxt "Message"
+msgid "There are no products available!"
+msgstr "هیچ کالایی برای نمایش وجود ندارد!"

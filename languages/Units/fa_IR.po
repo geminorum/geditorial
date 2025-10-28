@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Units\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-07 05:06+0330\n"
+"PO-Revision-Date: 2025-10-04 23:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Units\n"
 "X-Domain: geditorial-units\n"
 
@@ -20,247 +20,247 @@ msgctxt "Help Tab Title"
 msgid "Shortcodes"
 msgstr "شورت‌کد‌ها"
 
-#: ModuleInfo.php:31
+#: ModuleInfo.php:33
 msgctxt "Book Cover"
 msgid "Octavo"
 msgstr "وزیری"
 
-#: ModuleInfo.php:32
+#: ModuleInfo.php:34
 msgctxt "Book Cover"
 msgid "Folio"
 msgstr "سلطانی"
 
-#: ModuleInfo.php:33
+#: ModuleInfo.php:35
 msgctxt "Book Cover"
 msgid "Medium Octavo"
 msgstr "رقعی"
 
-#: ModuleInfo.php:34
+#: ModuleInfo.php:36
 msgctxt "Book Cover"
 msgid "Quatro"
 msgstr "رحلی"
 
-#: ModuleInfo.php:35
+#: ModuleInfo.php:37
 msgctxt "Book Cover"
 msgid "Duodecimo"
 msgstr "پالتویی"
 
-#: ModuleInfo.php:36
+#: ModuleInfo.php:38
 msgctxt "Book Cover"
 msgid "Sextodecimo"
 msgstr "جیبی"
 
-#: ModuleInfo.php:45
+#: ModuleInfo.php:47
 msgctxt "Paper Size"
 msgid "A1"
 msgstr ""
 
-#: ModuleInfo.php:46
+#: ModuleInfo.php:48
 msgctxt "Paper Size"
 msgid "A2"
 msgstr ""
 
-#: ModuleInfo.php:47
+#: ModuleInfo.php:49
 msgctxt "Paper Size"
 msgid "A3"
 msgstr ""
 
-#: ModuleInfo.php:48
+#: ModuleInfo.php:50
 msgctxt "Paper Size"
 msgid "A4"
 msgstr ""
 
-#: ModuleInfo.php:49
+#: ModuleInfo.php:51
 msgctxt "Paper Size"
 msgid "A5"
 msgstr ""
 
-#: ModuleInfo.php:50
+#: ModuleInfo.php:52
 msgctxt "Paper Size"
 msgid "A6"
 msgstr ""
 
-#: ModuleInfo.php:57
+#: ModuleInfo.php:59
 msgctxt "Shoe Size"
 msgid "35"
 msgstr "۳۵"
 
-#: ModuleInfo.php:58
+#: ModuleInfo.php:60
 msgctxt "Shoe Size"
 msgid "36"
 msgstr "۳۶"
 
-#: ModuleInfo.php:59
+#: ModuleInfo.php:61
 msgctxt "Shoe Size"
 msgid "37"
 msgstr "۳۷"
 
-#: ModuleInfo.php:60
+#: ModuleInfo.php:62
 msgctxt "Shoe Size"
 msgid "38"
 msgstr "۳۸"
 
-#: ModuleInfo.php:61
+#: ModuleInfo.php:63
 msgctxt "Shoe Size"
 msgid "39"
 msgstr "۳۹"
 
-#: ModuleInfo.php:62
+#: ModuleInfo.php:64
 msgctxt "Shoe Size"
 msgid "40"
 msgstr "۴۰"
 
-#: ModuleInfo.php:63
+#: ModuleInfo.php:65
 msgctxt "Shoe Size"
 msgid "41"
 msgstr "۴۱"
 
-#: ModuleInfo.php:64
+#: ModuleInfo.php:66
 msgctxt "Shoe Size"
 msgid "42"
 msgstr "۴۲"
 
-#: ModuleInfo.php:65
+#: ModuleInfo.php:67
 msgctxt "Shoe Size"
 msgid "43"
 msgstr "۴۳"
 
-#: ModuleInfo.php:66
+#: ModuleInfo.php:68
 msgctxt "Shoe Size"
 msgid "44"
 msgstr "۴۴"
 
-#: ModuleInfo.php:67
+#: ModuleInfo.php:69
 msgctxt "Shoe Size"
 msgid "45"
 msgstr "۴۵"
 
-#: ModuleInfo.php:68
+#: ModuleInfo.php:70
 msgctxt "Shoe Size"
 msgid "46"
 msgstr "۴۶"
 
-#: ModuleInfo.php:69
+#: ModuleInfo.php:71
 msgctxt "Shoe Size"
 msgid "47"
 msgstr "۴۷"
 
-#: ModuleInfo.php:70
+#: ModuleInfo.php:72
 msgctxt "Shoe Size"
 msgid "48"
 msgstr "۴۸"
 
-#: ModuleInfo.php:71
+#: ModuleInfo.php:73
 msgctxt "Shoe Size"
 msgid "50"
 msgstr "۵۰"
 
-#: ModuleInfo.php:79
+#: ModuleInfo.php:81
 msgctxt "Shirt Size"
 msgid "Small"
 msgstr "کوچک"
 
-#: ModuleInfo.php:80
+#: ModuleInfo.php:82
 msgctxt "Shirt Size"
 msgid "Medium"
 msgstr "متوسط"
 
-#: ModuleInfo.php:81
+#: ModuleInfo.php:83
 msgctxt "Shirt Size"
 msgid "Large"
 msgstr "بزرگ"
 
-#: ModuleInfo.php:82
+#: ModuleInfo.php:84
 msgctxt "Shirt Size"
 msgid "X-Large"
 msgstr "X-بزرگ"
 
-#: ModuleInfo.php:83
+#: ModuleInfo.php:85
 msgctxt "Shirt Size"
 msgid "2X-Large"
 msgstr "۲X-بزرگ"
 
-#: ModuleInfo.php:84
+#: ModuleInfo.php:86
 msgctxt "Shirt Size"
 msgid "3X-Large"
 msgstr "۳X-بزرگ"
 
-#: ModuleInfo.php:93
+#: ModuleInfo.php:95
 msgctxt "Pant Size"
 msgid "30"
 msgstr "۳۰"
 
-#: ModuleInfo.php:94
+#: ModuleInfo.php:96
 msgctxt "Pant Size"
 msgid "32"
 msgstr "۳۲"
 
-#: ModuleInfo.php:95
+#: ModuleInfo.php:97
 msgctxt "Pant Size"
 msgid "33"
 msgstr "۳۳"
 
-#: ModuleInfo.php:96
+#: ModuleInfo.php:98
 msgctxt "Pant Size"
 msgid "34"
 msgstr "۳۴"
 
-#: ModuleInfo.php:97
+#: ModuleInfo.php:99
 msgctxt "Pant Size"
 msgid "35"
 msgstr "۳۵"
 
-#: ModuleInfo.php:98
+#: ModuleInfo.php:100
 msgctxt "Pant Size"
 msgid "36"
 msgstr "۳۶"
 
-#: ModuleInfo.php:99
+#: ModuleInfo.php:101
 msgctxt "Pant Size"
 msgid "38"
 msgstr "۳۷"
 
-#: ModuleInfo.php:100
+#: ModuleInfo.php:102
 msgctxt "Pant Size"
 msgid "40"
 msgstr "۴۰"
 
-#: ModuleInfo.php:101
+#: ModuleInfo.php:103
 msgctxt "Pant Size"
 msgid "42"
 msgstr "۴۲"
 
-#: ModuleInfo.php:102
+#: ModuleInfo.php:104
 msgctxt "Pant Size"
 msgid "44"
 msgstr "۴۴"
 
-#: ModuleInfo.php:103
+#: ModuleInfo.php:105
 msgctxt "Pant Size"
 msgid "46"
 msgstr "۴۶"
 
-#: ModuleInfo.php:104
+#: ModuleInfo.php:106
 msgctxt "Pant Size"
 msgid "48"
 msgstr "۴۸"
 
-#: ModuleInfo.php:105
+#: ModuleInfo.php:107
 msgctxt "Pant Size"
 msgid "50"
 msgstr "۵۰"
 
-#: ModuleInfo.php:106
+#: ModuleInfo.php:108
 msgctxt "Pant Size"
 msgid "52"
 msgstr "۵۲"
 
-#: ModuleInfo.php:107
+#: ModuleInfo.php:109
 msgctxt "Pant Size"
 msgid "54"
 msgstr "۵۴"
 
-#: ModuleInfo.php:108
+#: ModuleInfo.php:110
 msgctxt "Pant Size"
 msgid "56"
 msgstr "۵۶"
@@ -427,12 +427,14 @@ msgstr "&ndash; انتخاب قطع &ndash;"
 
 #. translators: `%s`: field title
 #: Units.php:125
+#, php-format
 msgctxt "Import Field Title"
 msgid "Units: %s"
 msgstr "واحد: %s"
 
 #. translators: `%s`: field title
 #: Units.php:127
+#, php-format
 msgctxt "Import Field Title"
 msgid "Units: %s [Ignored]"
 msgstr "واحد: %s [نادیده]"
@@ -460,30 +462,35 @@ msgstr "ابعاد"
 
 #. translators: `%s`: shoe size placeholder
 #: Units.php:293
+#, php-format
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr "کفش %s"
 
 #. translators: `%s`: shirt size placeholder
 #: Units.php:302
+#, php-format
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr "پیراهن %s"
 
 #. translators: `%s`: pants size placeholder
 #: Units.php:311
+#, php-format
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr "شلوار %s"
 
 #. translators: `%s`: book cover placeholder
 #: Units.php:320
+#, php-format
 msgctxt "Display"
 msgid "%s Book-Cover"
 msgstr "قطع %s"
 
 #. translators: `%s`: paper size cover placeholder
 #: Units.php:329
+#, php-format
 msgctxt "Display"
 msgid "Size %s Paper"
 msgstr "کاغذ %s"

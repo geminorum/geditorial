@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Programmed\n"
 "X-Domain: geditorial-programmed\n"
 
@@ -123,12 +123,14 @@ msgstr ""
 
 #. translators: `%s`: item count
 #: Programmed.php:178
+#, php-format
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Program Participants (%s)"
 msgstr ""
 
 #. translators: `%s`: item count
 #: Programmed.php:180
+#, php-format
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Program Participations (%s)"
 msgstr ""
@@ -140,6 +142,7 @@ msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
 #: Programmed.php:186
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
@@ -174,12 +177,12 @@ msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr ""
 
-#: Programmed.php:607
+#: Programmed.php:595
 msgctxt "Header"
 msgid "Program Tools"
 msgstr ""
 
-#: Programmed.php:616
+#: Programmed.php:604
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr ""

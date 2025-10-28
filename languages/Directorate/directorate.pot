@@ -9,164 +9,166 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Directorate\n"
 "X-Domain: geditorial-directorate\n"
 
-#: Directorate.php:71
+#: Directorate.php:63
 msgctxt "Settings"
 msgid "Sub-committee Support"
 msgstr ""
 
-#: Directorate.php:72
+#: Directorate.php:64
 msgctxt "Settings"
 msgid "Substitute taxonomy for the committees and supported post-types."
 msgstr ""
 
-#: Directorate.php:97
+#: Directorate.php:89
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Directorate.php:98
+#: Directorate.php:90
 msgctxt "Settings"
 msgid "Redirects committee archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Directorate.php:145
-#: Directorate.php:146
+#: Directorate.php:137
+#: Directorate.php:138
 msgid "Committee"
 msgid_plural "Committees"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:147
+#: Directorate.php:139
 msgid "Committee Category"
 msgid_plural "Committee Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:148
+#: Directorate.php:140
 msgid "Subcommittee"
 msgid_plural "Subcommittees"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:149
+#: Directorate.php:141
 msgid "Committee Type"
 msgid_plural "Committee Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Directorate.php:150
+#: Directorate.php:142
 msgid "Committee Status"
 msgid_plural "Committee Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: `%s`: paired item title
-#: Directorate.php:155
+#: Directorate.php:147
+#, php-format
 msgctxt "Label: `paired_connected_to`"
 msgid "Member of %s Committee"
 msgstr ""
 
-#: Directorate.php:156
+#: Directorate.php:148
 msgctxt "Label: Featured Image"
 msgid "Committee Badge"
 msgstr ""
 
-#: Directorate.php:157
+#: Directorate.php:149
 msgctxt "Label: `metabox_title`"
 msgid "The Committee"
 msgstr ""
 
-#: Directorate.php:160
+#: Directorate.php:152
 msgctxt "Label: `metabox_title`"
 msgid "In This Committee"
 msgstr ""
 
-#: Directorate.php:163
+#: Directorate.php:155
 msgctxt "Label: `menu_name`"
 msgid "Categories"
 msgstr ""
 
-#: Directorate.php:166
+#: Directorate.php:158
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Directorate.php:169
+#: Directorate.php:161
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Directorate.php:178
+#: Directorate.php:170
 msgctxt "Misc: `column_icon_title`"
 msgid "Committee"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Directorate.php:183
+#: Directorate.php:175
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "%2$s Members of &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Directorate.php:193
+#: Directorate.php:185
 msgctxt "Default Term"
 msgid "Working"
 msgstr ""
 
-#: Directorate.php:194
+#: Directorate.php:186
 msgctxt "Default Term"
 msgid "Inactive"
 msgstr ""
 
-#: Directorate.php:195
+#: Directorate.php:187
 msgctxt "Default Term"
 msgid "Resolved"
 msgstr ""
 
-#: Directorate.php:196
+#: Directorate.php:188
 msgctxt "Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Directorate.php:197
+#: Directorate.php:189
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Directorate.php:223
+#: Directorate.php:215
 msgctxt "Field Title"
 msgid "Directors"
 msgstr ""
 
-#: Directorate.php:224
+#: Directorate.php:216
 msgctxt "Field Description"
 msgid "People Who are Board Members of This Committee"
 msgstr ""
 
-#: Directorate.php:231
+#: Directorate.php:223
 msgctxt "Field Title"
 msgid "Committee Code"
 msgstr ""
 
-#: Directorate.php:232
+#: Directorate.php:224
 msgctxt "Field Description"
 msgid "Unique Committee Code"
 msgstr ""
 
-#: Directorate.php:242
+#: Directorate.php:234
 msgctxt "Field Title"
 msgid "Membership Number"
 msgstr ""
 
-#: Directorate.php:243
+#: Directorate.php:235
 msgctxt "Field Description"
 msgid "Unique Committee Membership Number"
 msgstr ""
 
-#: Directorate.php:713
+#: Directorate.php:705
 msgctxt "Header"
 msgid "Directorate Tools"
 msgstr ""

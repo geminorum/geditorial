@@ -9,146 +9,154 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 "X-Domain: geditorial-magazine\n"
 
-#: Magazine.php:59
+#: Magazine.php:60
 msgctxt "Settings"
 msgid "Issue Sections"
 msgstr ""
 
-#: Magazine.php:60
+#: Magazine.php:61
 msgctxt "Settings"
 msgid "Section taxonomy for the issues and supported post-types."
 msgstr ""
 
-#: Magazine.php:76
+#: Magazine.php:77
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Magazine.php:77
+#: Magazine.php:78
 msgctxt "Settings"
 msgid "Redirects issue archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:83
+#: Magazine.php:84
 msgctxt "Settings"
 msgid "Redirect Spans"
 msgstr ""
 
-#: Magazine.php:84
+#: Magazine.php:85
 msgctxt "Settings"
 msgid "Redirects all span archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Magazine.php:134
-#: Magazine.php:135
+#: Magazine.php:137
+#: Magazine.php:138
 msgid "Issue"
 msgid_plural "Issues"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:136
+#: Magazine.php:139
 msgid "Span"
 msgid_plural "Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:137
+#: Magazine.php:140
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Magazine.php:141
+#: Magazine.php:144
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Magazine.php:150
+#: Magazine.php:153
 msgctxt "Misc: `column_icon_title`"
 msgid "Issue"
 msgstr ""
 
-#: Magazine.php:155
+#: Magazine.php:158
 msgctxt "Label: MetaBox Title"
 msgid "The Issue"
 msgstr ""
 
-#: Magazine.php:156
+#: Magazine.php:159
 msgctxt "Label: MetaBox Title"
 msgid "In This Issue"
 msgstr ""
 
-#: Magazine.php:180
+#: Magazine.php:183
 msgctxt "Field Title"
 msgid "Number Line"
 msgstr ""
 
-#: Magazine.php:181
+#: Magazine.php:184
 msgctxt "Field Description"
 msgid "The issue number line"
 msgstr ""
 
-#: Magazine.php:185
-#: Magazine.php:223
+#: Magazine.php:188
+#: Magazine.php:230
 msgctxt "Field Title"
 msgid "Total Pages"
 msgstr ""
 
-#: Magazine.php:186
+#: Magazine.php:189
 msgctxt "Field Description"
 msgid "The issue total pages"
 msgstr ""
 
-#: Magazine.php:207
+#: Magazine.php:214
 msgctxt "Field Title"
 msgid "Order"
 msgstr ""
 
-#: Magazine.php:208
+#: Magazine.php:215
 msgctxt "Field Description"
 msgid "Post order in issue list"
 msgstr ""
 
-#: Magazine.php:215
+#: Magazine.php:222
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr ""
 
-#: Magazine.php:216
+#: Magazine.php:223
 msgctxt "Field Description"
 msgid "Post start page on issue (printed)"
 msgstr ""
 
-#: Magazine.php:224
+#: Magazine.php:231
 msgctxt "Field Description"
 msgid "Post total pages on issue (printed)"
 msgstr ""
 
 #. translators: `%s`: order
-#: Magazine.php:438
+#: Magazine.php:451
+#, php-format
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr ""
 
 #. translators: `%s`: page
-#: Magazine.php:445
+#: Magazine.php:458
+#, php-format
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr ""
 
 #. translators: `%s`: total count
-#: Magazine.php:451
+#: Magazine.php:464
+#, php-format
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:532
+#: Magazine.php:553
 msgctxt "Header"
 msgid "Magazine Tools"
+msgstr ""
+
+#: Magazine.php:562
+msgctxt "Card"
+msgid "Issue Date from Meta-data"
 msgstr ""
 
 #: Widgets/IssueCover.php:18

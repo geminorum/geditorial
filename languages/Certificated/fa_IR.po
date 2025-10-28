@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Certificated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-01 18:19+0330\n"
+"PO-Revision-Date: 2025-06-11 08:51+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,18 +15,18 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Certificated\n"
 "X-Domain: geditorial-certificated\n"
 
-#: Certificated.php:96
+#: Certificated.php:88
 msgid "Certification"
 msgid_plural "Certifications"
 msgstr[0] "گواهی‌ها"
 msgstr[1] "گواهی"
 
-#: Certificated.php:100
+#: Certificated.php:92
 msgctxt "Label: Show Option All"
 msgid "Certifications"
 msgstr "گواهی"
 
-#: Certificated.php:101
+#: Certificated.php:93
 msgctxt "Label: Show Option No Terms"
 msgid "(Un-certificated)"
 msgstr "(بی‌گواهی)"

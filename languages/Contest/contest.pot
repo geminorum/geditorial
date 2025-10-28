@@ -9,143 +9,148 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 "X-Domain: geditorial-contest\n"
 
-#: Contest.php:55
+#: Contest.php:53
 msgctxt "Settings"
 msgid "Contest Sections"
 msgstr ""
 
-#: Contest.php:56
+#: Contest.php:54
 msgctxt "Settings"
 msgid "Section taxonomy for the contests and supported post-types."
 msgstr ""
 
-#: Contest.php:72
+#: Contest.php:71
 msgctxt "Settings"
 msgid "Redirect Archives"
 msgstr ""
 
-#: Contest.php:73
+#: Contest.php:72
 msgctxt "Settings"
 msgid "Redirects contest and apply archives to this URL. Leave empty to disable."
 msgstr ""
 
-#: Contest.php:115
 #: Contest.php:116
+#: Contest.php:117
 msgid "Contest"
 msgid_plural "Contests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:117
+#: Contest.php:118
 msgid "Contest Category"
 msgid_plural "Contest Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:118
+#: Contest.php:119
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:119
+#: Contest.php:120
 msgid "Apply"
 msgid_plural "Applies"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:120
+#: Contest.php:121
 msgid "Apply Category"
 msgid_plural "Apply Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:121
+#: Contest.php:122
 msgid "Apply Status"
 msgid_plural "Apply Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Contest.php:125
+#: Contest.php:126
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Contest.php:135
+#: Contest.php:136
 msgctxt "MetaBox Title"
 msgid "The Contest"
 msgstr ""
 
-#: Contest.php:136
+#: Contest.php:137
 msgctxt "MetaBox Title"
 msgid "In This Contest"
 msgstr ""
 
-#: Contest.php:139
+#: Contest.php:140
 msgctxt "MetaBox Title"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:145
+#: Contest.php:146
 msgctxt "Column Title"
 msgid "Applies"
 msgstr ""
 
-#: Contest.php:148
+#: Contest.php:149
 msgctxt "Misc: `column_icon_title`"
 msgid "Contest"
 msgstr ""
 
-#: Contest.php:159
+#: Contest.php:160
 msgctxt "Default Term"
 msgid "Approved"
 msgstr ""
 
-#: Contest.php:160
+#: Contest.php:161
 msgctxt "Default Term"
 msgid "Pending"
 msgstr ""
 
-#: Contest.php:161
+#: Contest.php:162
 msgctxt "Default Term"
 msgid "Maybe Later"
 msgstr ""
 
-#: Contest.php:162
+#: Contest.php:163
 msgctxt "Default Term"
 msgid "Rejected"
 msgstr ""
 
-#: Contest.php:176
+#: Contest.php:177
 msgctxt "Field Title"
 msgid "Deadline Date"
 msgstr ""
 
-#: Contest.php:177
+#: Contest.php:178
 msgctxt "Field Description"
 msgid "The last date for submitting the applications."
 msgstr ""
 
-#: Contest.php:189
+#: Contest.php:194
 msgctxt "Field Title"
 msgid "Submission Date"
 msgstr ""
 
-#: Contest.php:190
+#: Contest.php:195
 msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr ""
 
-#: Contest.php:438
+#: Contest.php:468
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr ""
 
-#: Contest.php:501
+#: Contest.php:480
+msgctxt "Card"
+msgid "Contest/Apply Date from Meta-data"
+msgstr ""
+
+#: Contest.php:554
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr ""

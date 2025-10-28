@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tabloid\n"
 "X-Domain: geditorial-tabloid\n"
 
@@ -34,14 +34,16 @@ msgctxt "Action"
 msgid "Overview"
 msgstr ""
 
-#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Tabloid.php:143
+#, php-format
 msgctxt "Post Row Action Title Attr"
 msgid "Overview of this %2$s"
 msgstr ""
 
 #. translators: `%1$s`: current term name, `%2$s`: taxonomy singular name
 #: Tabloid.php:169
+#, php-format
 msgctxt "Term Row Action Title Attr"
 msgid "Overview of this %2$s"
 msgstr ""

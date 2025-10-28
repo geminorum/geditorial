@@ -9,89 +9,134 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/NationalLibrary\n"
 "X-Domain: geditorial-national-library\n"
 
-#: ModuleHelper.php:33
+#: ModuleHelper.php:34
 msgctxt "Helper: Title Attr"
 msgid "Book Page on Nali.ir"
 msgstr ""
 
-#: ModuleHelper.php:63
+#: ModuleHelper.php:65
 msgctxt "Helper: Title Attr"
 msgid "Search ISBN on Nali.ir"
 msgstr ""
 
-#: ModuleHelper.php:373
+#: ModuleHelper.php:430
 msgctxt "Helper: Title Attr"
 msgid "Search People on Nali.ir"
 msgstr ""
 
+#: ModuleSettings.php:40
+msgctxt "Card Title"
+msgid "ISBN Scraper"
+msgstr ""
+
+#: ModuleSettings.php:49
+msgctxt "Placeholder"
+msgid "One ISBN per line"
+msgstr ""
+
+#. translators: `%s`: file ext placeholder
+#: ModuleSettings.php:58
+#, php-format
+msgctxt "Message"
+msgid "Generates a %s file with scraped parts of each book."
+msgstr ""
+
 #. translators: `%s`: supported object label
-#: NationalLibrary.php:56
+#: NationalLibrary.php:57
+#, php-format
 msgctxt "Setting Title"
 msgid "Bib Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:59
+#: NationalLibrary.php:60
 msgctxt "Setting Description"
 msgid "Defines Bib meta-key for the post-type."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: NationalLibrary.php:71
+#: NationalLibrary.php:72
+#, php-format
 msgctxt "Setting Title"
 msgid "ISBN Meta-key for %s"
 msgstr ""
 
-#: NationalLibrary.php:74
+#: NationalLibrary.php:75
 msgctxt "Setting Description"
 msgid "Defines ISBN meta-key for the post-type."
 msgstr ""
 
-#: NationalLibrary.php:89
+#: NationalLibrary.php:90
 msgctxt "Setting Description"
 msgid "Select to display data as tab for the products."
 msgstr ""
 
-#: NationalLibrary.php:95
+#: NationalLibrary.php:96
 msgctxt "Setting Title"
 msgid "New-Post Hints"
 msgstr ""
 
-#: NationalLibrary.php:96
+#: NationalLibrary.php:97
 msgctxt "Setting Description"
 msgid "Displays Bibliographic information on new post edit screen."
 msgstr ""
 
-#: NationalLibrary.php:102
+#: NationalLibrary.php:104
 msgctxt "Setting Description"
 msgid "Adds results by Bibliographic information on front-end search."
 msgstr ""
 
-#: NationalLibrary.php:105
+#: NationalLibrary.php:107
 msgctxt "Setting Title"
 msgid "Custom Queries"
 msgstr ""
 
-#: NationalLibrary.php:106
+#: NationalLibrary.php:108
 msgctxt "Setting Description"
 msgid "Appends end-points for Bib/Fipa numbers on front-end."
 msgstr ""
 
-#: NationalLibrary.php:195
+#: NationalLibrary.php:211
 msgctxt "RestAPI: Arg Description"
 msgid "The ISBN or Biblio Code to process."
 msgstr ""
 
-#: NationalLibrary.php:492
-#: NationalLibrary.php:570
+#: NationalLibrary.php:326
+msgctxt "Meta-Box Title"
+msgid "Fipa"
+msgstr ""
+
+#: NationalLibrary.php:341
+#: NationalLibrary.php:350
+#: NationalLibrary.php:412
+#: NationalLibrary.php:421
+msgctxt "Button Text"
+msgid "National Library"
+msgstr ""
+
+#: NationalLibrary.php:342
+#: NationalLibrary.php:351
+#: NationalLibrary.php:413
+#: NationalLibrary.php:422
+msgctxt "Button Title Attr"
+msgid "Book Page on Opac.Nali.ir"
+msgstr ""
+
+#: NationalLibrary.php:606
+#: NationalLibrary.php:682
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr ""
 
-#: NationalLibrary.php:571
+#: NationalLibrary.php:683
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
+msgstr ""
+
+#: NationalLibrary.php:957
+msgctxt "Header"
+msgid "National Library Tools"
 msgstr ""

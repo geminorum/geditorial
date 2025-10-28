@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Positions\n"
 "X-Domain: geditorial-positions\n"
 
@@ -100,18 +100,21 @@ msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Positions.php:143
+#, php-format
 msgctxt "Button Title"
 msgid "Positions of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Positions.php:145
+#, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Positions of %2$s"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Positions.php:148
+#, php-format
 msgctxt "Action Title"
 msgid "Positions of %1$s"
 msgstr ""
@@ -124,6 +127,7 @@ msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Positions.php:153
+#, php-format
 msgctxt "Row Title"
 msgid "Positions of %1$s"
 msgstr ""
@@ -136,6 +140,7 @@ msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: profile post title
 #: Positions.php:392
+#, php-format
 msgctxt "Button Label"
 msgid "%1$s Mount: %2$s"
 msgstr ""
@@ -147,6 +152,7 @@ msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: profile post title
 #: Positions.php:408
+#, php-format
 msgctxt "Button Label"
 msgid "%1$s Clear: %2$s"
 msgstr ""
@@ -168,12 +174,14 @@ msgstr ""
 
 #. translators: `%s`: post title
 #: Positions.php:542
+#, php-format
 msgctxt "Page Title"
 msgid "Position Grid for %s"
 msgstr ""
 
 #. translators: `%s`: post title
 #: Positions.php:544
+#, php-format
 msgctxt "Page Title"
 msgid "Positions Overview for %s"
 msgstr ""

@@ -208,3 +208,8 @@ msgstr ""
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr ""
+
+#: Physical.php:356
+msgctxt "Header"
+msgid "Overview of the Physical Examinations"
+msgstr ""

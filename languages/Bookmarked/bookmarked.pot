@@ -9,116 +9,127 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
 "X-Domain: geditorial-bookmarked\n"
 
-#: Bookmarked.php:87
+#: Bookmarked.php:86
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Bookmarked.php:88
+#: Bookmarked.php:87
 msgctxt "Field Label: `link`"
 msgid "Bookmark"
 msgstr ""
 
-#: Bookmarked.php:89
+#: Bookmarked.php:88
 msgctxt "Field Label: `type`"
 msgid "Type"
 msgstr ""
 
-#: Bookmarked.php:90
+#: Bookmarked.php:89
 msgctxt "Field Label: `code`"
 msgid "Code"
 msgstr ""
 
-#: Bookmarked.php:93
+#: Bookmarked.php:92
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Bookmarked.php:99
+#: Bookmarked.php:98
 msgctxt "Tab Title"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:103
+#: Bookmarked.php:102
 msgctxt "Notice"
 msgid "There is no bookmarks information available!"
 msgstr ""
 
-#: Bookmarked.php:104
+#: Bookmarked.php:103
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the bookmarks data."
 msgstr ""
 
-#: Bookmarked.php:111
+#: Bookmarked.php:110
 msgctxt "MetaBox Title"
 msgid "Bookmarks"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:115
+#: Bookmarked.php:114
+#, php-format
 msgctxt "Button Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:117
+#: Bookmarked.php:116
+#, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Bookmarks of %2$s"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:120
+#: Bookmarked.php:119
+#, php-format
 msgctxt "Action Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:122
+#: Bookmarked.php:121
 msgctxt "Action Text"
 msgid "Bookmarks"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:125
+#: Bookmarked.php:124
+#, php-format
 msgctxt "Row Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:127
+#: Bookmarked.php:126
 msgctxt "Row Text"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:139
+#: Bookmarked.php:138
 msgctxt "Field Title"
 msgid "Bookmarks Title"
 msgstr ""
 
-#: Bookmarked.php:140
+#: Bookmarked.php:139
 msgctxt "Field Description"
 msgid "The Bookmarks Table Caption"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Bookmarked.php:274
+#: Bookmarked.php:273
+#, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Bookmarked.php:276
+#: Bookmarked.php:275
+#, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr ""
 
-#: Bookmarked.php:324
+#: Bookmarked.php:323
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
+msgstr ""
+
+#: Bookmarked.php:375
+msgctxt "Header"
+msgid "Overview of the Bookmarks"
 msgstr ""
 
 #: ModuleHelper.php:79
@@ -183,130 +194,180 @@ msgstr ""
 
 #: ModuleHelper.php:151
 msgctxt "Type Option"
-msgid "Behkhaan Profile"
+msgid "Behkhaan Book"
 msgstr ""
 
 #: ModuleHelper.php:156
 msgctxt "Type Description"
-msgid "More about this on Behkhaan network."
+msgid "More about this book on Behkhaan network."
 msgstr ""
 
-#: ModuleHelper.php:160
+#: ModuleHelper.php:161
+msgctxt "Type Option"
+msgid "Behkhaan Profile"
+msgstr ""
+
+#: ModuleHelper.php:166
+msgctxt "Type Description"
+msgid "More about this person on Behkhaan network."
+msgstr ""
+
+#: ModuleHelper.php:171
 msgctxt "Type Option"
 msgid "Neshan Map"
 msgstr ""
 
-#: ModuleHelper.php:165
+#: ModuleHelper.php:176
 msgctxt "Type Description"
 msgid "More about this on Neshan maps."
 msgstr ""
 
-#: ModuleHelper.php:169
+#: ModuleHelper.php:180
 msgctxt "Type Option"
 msgid "Balad Map"
 msgstr ""
 
-#: ModuleHelper.php:174
+#: ModuleHelper.php:185
 msgctxt "Type Description"
 msgid "More about this on Balad maps."
 msgstr ""
 
-#: ModuleHelper.php:178
+#: ModuleHelper.php:189
 msgctxt "Type Option"
 msgid "Aparat Video"
 msgstr ""
 
-#: ModuleHelper.php:183
+#: ModuleHelper.php:194
 msgctxt "Type Description"
 msgid "More about this on Aparat video platform."
 msgstr ""
 
-#: ModuleHelper.php:187
+#: ModuleHelper.php:198
 msgctxt "Type Option"
 msgid "Youtube Video"
 msgstr ""
 
-#: ModuleHelper.php:192
+#: ModuleHelper.php:203
 msgctxt "Type Description"
 msgid "More about this on Youtube video platform."
 msgstr ""
 
-#: ModuleHelper.php:196
+#: ModuleHelper.php:207
 msgctxt "Type Option"
 msgid "Wikipedia Page"
 msgstr ""
 
-#: ModuleHelper.php:201
+#: ModuleHelper.php:212
 msgctxt "Type Description"
 msgid "More about this on an Wikipedia page."
 msgstr ""
 
-#: ModuleHelper.php:205
+#: ModuleHelper.php:216
+msgctxt "Type Option"
+msgid "Letterboxd Page"
+msgstr ""
+
+#: ModuleHelper.php:221
+msgctxt "Type Description"
+msgid "More about this on a Letterboxd page."
+msgstr ""
+
+#: ModuleHelper.php:225
+msgctxt "Type Option"
+msgid "IMDB Page"
+msgstr ""
+
+#: ModuleHelper.php:230
+msgctxt "Type Description"
+msgid "More about this on an IMDB page."
+msgstr ""
+
+#: ModuleHelper.php:235
+msgctxt "Type Option"
+msgid "TMDB Movie"
+msgstr ""
+
+#: ModuleHelper.php:240
+msgctxt "Type Description"
+msgid "More about this film on The Movie Database."
+msgstr ""
+
+#: ModuleHelper.php:245
+msgctxt "Type Option"
+msgid "TMDB Person"
+msgstr ""
+
+#: ModuleHelper.php:250
+msgctxt "Type Description"
+msgid "More about this person on The Movie Database."
+msgstr ""
+
+#: ModuleHelper.php:255
 msgctxt "Type Option"
 msgid "Navaar Audio"
 msgstr ""
 
-#: ModuleHelper.php:210
+#: ModuleHelper.php:260
 msgctxt "Type Description"
 msgid "More about this on an Navaar audio."
 msgstr ""
 
-#: ModuleHelper.php:215
+#: ModuleHelper.php:265
 msgctxt "Type Option"
 msgid "Email Address"
 msgstr ""
 
-#: ModuleHelper.php:220
+#: ModuleHelper.php:270
 msgctxt "Type Description"
 msgid "Contact someone about this via email."
 msgstr ""
 
-#: ModuleHelper.php:224
+#: ModuleHelper.php:274
 msgctxt "Type Option"
 msgid "Phone Number"
 msgstr ""
 
-#: ModuleHelper.php:229
+#: ModuleHelper.php:279
 msgctxt "Type Description"
 msgid "Contact someone about this via phone."
 msgstr ""
 
-#: ModuleHelper.php:233
+#: ModuleHelper.php:283
 msgctxt "Type Option"
 msgid "Mobile Number"
 msgstr ""
 
-#: ModuleHelper.php:238
+#: ModuleHelper.php:288
 msgctxt "Type Description"
 msgid "Contact someone about this via mobile phone."
 msgstr ""
 
-#: ModuleHelper.php:242
+#: ModuleHelper.php:292
 msgctxt "Type Option"
 msgid "SMS Number"
 msgstr ""
 
-#: ModuleHelper.php:247
+#: ModuleHelper.php:297
 msgctxt "Type Description"
 msgid "Contact someone about this via short message."
 msgstr ""
 
-#: ModuleHelper.php:251
+#: ModuleHelper.php:301
 msgctxt "Type Option"
 msgid "PDF Document"
 msgstr ""
 
-#: ModuleHelper.php:256
+#: ModuleHelper.php:306
 msgctxt "Type Description"
 msgid "Read more about this as PDF format."
 msgstr ""
 
-#: ModuleHelper.php:260
+#: ModuleHelper.php:310
 msgctxt "Type Option"
 msgid "ePub Book"
 msgstr ""
 
-#: ModuleHelper.php:265
+#: ModuleHelper.php:315
 msgctxt "Type Description"
 msgid "Read more about this as ePub book."
 msgstr ""

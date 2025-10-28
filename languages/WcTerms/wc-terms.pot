@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
 "X-Domain: geditorial-wc-terms\n"
 
@@ -141,4 +141,24 @@ msgstr ""
 #: WcTerms.php:110
 msgctxt "Setting Description"
 msgid "Enhance the term archive descriptions with assigned image."
+msgstr ""
+
+#: WcTerms.php:114
+msgctxt "Setting Title"
+msgid "Archive Sub-terms"
+msgstr ""
+
+#: WcTerms.php:115
+msgctxt "Setting Description"
+msgid "Enhance the term archive with list of sub-terms."
+msgstr ""
+
+#: WcTerms.php:119
+msgctxt "Setting Title"
+msgid "Archive Assigned"
+msgstr ""
+
+#: WcTerms.php:120
+msgctxt "Setting Description"
+msgid "Enhance the term archive with list of assigned posts."
 msgstr ""

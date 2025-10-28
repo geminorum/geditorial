@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Banking\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:33+0330\n"
+"PO-Revision-Date: 2025-09-24 01:23+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Banking\n"
 "X-Domain: geditorial-banking\n"
 
@@ -82,18 +82,21 @@ msgstr "بانک‌داری"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Banking.php:118
+#, php-format
 msgctxt "Button Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Banking.php:120
+#, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Accounts of %2$s"
 msgstr "%1$s مدیریت حساب‌های %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Banking.php:123
+#, php-format
 msgctxt "Action Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
@@ -106,6 +109,7 @@ msgstr "حساب‌های بانکی"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Banking.php:128
+#, php-format
 msgctxt "Row Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
@@ -138,12 +142,14 @@ msgstr "شماره کارت بانکی"
 
 #. translators: `%s`: post title
 #: Banking.php:287
+#, php-format
 msgctxt "Page Title"
 msgid "Bank Grid for %s"
 msgstr "شبکه بانکی برای %s"
 
 #. translators: `%s`: post title
 #: Banking.php:289
+#, php-format
 msgctxt "Page Title"
 msgid "Bank Overview for %s"
 msgstr "بررسی بانک %s"
@@ -168,20 +174,28 @@ msgctxt "Default Term: Audit"
 msgid "Duplicate IBAN"
 msgstr "شبا تکراری"
 
+#: Banking.php:470
+msgctxt "Header"
+msgid "Overview of the Bank Accounts"
+msgstr "مروری بر حساب‌های بانکی"
+
 #. translators: `%s`: account
 #: ModuleHelper.php:26
+#, php-format
 msgctxt "Helper"
 msgid "Number: %s"
 msgstr "شماره: %s"
 
 #. translators: `%s`: bank-name
 #: ModuleHelper.php:33
+#, php-format
 msgctxt "Helper"
 msgid "Account with %s"
 msgstr "حساب در %s"
 
 #. translators: `%s`: country
 #: ModuleHelper.php:40
+#, php-format
 msgctxt "Helper"
 msgid "From %s"
 msgstr "از %s"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Entry\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-12 17:15+0330\n"
+"PO-Revision-Date: 2025-10-14 11:11+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,74 +11,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 "X-Poedit-Basepath: ../../includes/Modules/Entry\n"
 "X-Domain: geditorial-entry\n"
 
-#. translators: %s: category taxonomy name
-#: Entry.php:50
+#. translators: `%s`: category taxonomy name
+#: Entry.php:51
+#, php-format
 msgctxt "Settings"
 msgid "Makes <strong>%s</strong> available for selection in navigation menus."
-msgstr ""
-
-#: Entry.php:56
-msgctxt "Settings"
-msgid "Auto-link Sections"
-msgstr "پیوند خود‌کار بخش‌ها"
+msgstr "<strong>%s‎ را</strong> برای انتخاب در فهرست‌های راه‌بری در دسترس قرار می‌دهد."
 
 #: Entry.php:57
 msgctxt "Settings"
-msgid "Tries to linkify the section titles in the entry content."
-msgstr "تلاش می‌کند عنوان بخش‌ها در متن ورودیه را پیوند‌دهی کند."
+msgid "Auto-link Terms"
+msgstr "پیوند خود‌کار رده‌ها"
 
-#: Entry.php:97
+#. translators: `%s`: category taxonomy name
+#: Entry.php:60
+#, php-format
+msgctxt "Settings"
+msgid "Tries to linkify the string of <strong>%s</strong> in the entry content."
+msgstr "برای پیونددهی رشته‌های <strong>%s</strong>، در متن ورودیه تلاش می‌کند."
+
+#: Entry.php:102
 msgid "Entry"
 msgid_plural "Entries"
 msgstr[0] "ورودیه‌ها"
 msgstr[1] "ورودیه"
 
-#: Entry.php:98
+#: Entry.php:103
 msgid "Section"
 msgid_plural "Sections"
 msgstr[0] "بخش‌ها"
 msgstr[1] "بخش"
 
-#: Entry.php:102
+#: Entry.php:107
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr "تصویر کاور"
 
-#: Entry.php:103
+#: Entry.php:108
 msgctxt "Label: Column Title"
 msgid "Section"
 msgstr "بخش"
 
-#: Entry.php:104
+#: Entry.php:109
 msgctxt "Label: Uncategorized"
 msgid "Unsectioned"
 msgstr "بخش‌بندی‌نشده"
 
-#: Entry.php:109
+#: Entry.php:114
 msgctxt "Default Term: Name"
 msgid "[Unsectioned]"
 msgstr "بخش‌بندی‌نشده‌ها"
 
-#: Entry.php:110
+#: Entry.php:115
 msgctxt "Default Term: Description"
 msgid "Unsectioned Entries"
 msgstr "ورودیه‌های بخش‌بندی‌نشده"
 
-#: Entry.php:200
+#: Entry.php:203
 msgctxt "Adminbar"
 msgid "Entry Sections"
 msgstr "بخش‌های ورودیه"
 
-#: Entry.php:217
+#: Entry.php:220
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr "بخش ورودیه"
 
-#: Entry.php:221
+#: Entry.php:224
 msgctxt "UI: Label"
 msgid "Section"
 msgstr "بخش"

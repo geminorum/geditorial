@@ -9,177 +9,180 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
 "X-Domain: geditorial-missioned\n"
 
-#: Missioned.php:67
+#: Missioned.php:62
 msgctxt "Settings"
 msgid "Mission Levels"
 msgstr ""
 
-#: Missioned.php:68
+#: Missioned.php:63
 msgctxt "Settings"
 msgid "Substitute taxonomy for the missions and supported post-types."
 msgstr ""
 
-#: Missioned.php:132
-#: Missioned.php:133
+#: Missioned.php:127
+#: Missioned.php:128
 msgid "Mission"
 msgid_plural "Missions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:134
+#: Missioned.php:129
 msgid "Mission Category"
 msgid_plural "Mission Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:135
+#: Missioned.php:130
 msgid "Mission Level"
 msgid_plural "Mission Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:136
+#: Missioned.php:131
 msgid "Mission Program"
 msgid_plural "Mission Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:137
+#: Missioned.php:132
 msgid "Mission Span"
 msgid_plural "Mission Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:138
+#: Missioned.php:133
 msgid "Mission Type"
 msgid_plural "Mission Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:139
+#: Missioned.php:134
 msgid "Mission Status"
 msgid_plural "Mission Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:143
+#: Missioned.php:138
 msgctxt "Label: `menu_name`"
 msgid "Missions"
 msgstr ""
 
-#: Missioned.php:144
+#: Missioned.php:139
 msgctxt "Label: Featured Image"
 msgid "Mission Poster"
 msgstr ""
 
-#: Missioned.php:145
+#: Missioned.php:140
 msgctxt "Label: MetaBox Title"
 msgid "The Mission"
 msgstr ""
 
-#: Missioned.php:148
+#: Missioned.php:143
 msgctxt "Label: MetaBox Title"
 msgid "In This Mission"
 msgstr ""
 
-#: Missioned.php:151
+#: Missioned.php:146
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Missioned.php:154
+#: Missioned.php:149
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Missioned.php:157
+#: Missioned.php:152
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Missioned.php:160
+#: Missioned.php:155
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Missioned.php:163
+#: Missioned.php:158
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Missioned.php:172
+#: Missioned.php:167
 msgctxt "Notice"
 msgid "There is no mission information available!"
 msgstr ""
 
-#: Missioned.php:173
+#: Missioned.php:168
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the mission information."
 msgstr ""
 
 #. translators: `%s`: item count
-#: Missioned.php:178
+#: Missioned.php:173
+#, php-format
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Mission Participants (%s)"
 msgstr ""
 
 #. translators: `%s`: item count
-#: Missioned.php:180
+#: Missioned.php:175
+#, php-format
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Mission Participations (%s)"
 msgstr ""
 
-#: Missioned.php:181
+#: Missioned.php:176
 msgctxt "Misc: `column_icon_title`"
 msgid "Missions"
 msgstr ""
 
-#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Missioned.php:186
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Missioned.php:181
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Missioned.php:197
+#: Missioned.php:192
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Missioned.php:198
+#: Missioned.php:193
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Missioned.php:240
+#: Missioned.php:235
 msgctxt "Field Title"
 msgid "Officers"
 msgstr ""
 
-#: Missioned.php:241
+#: Missioned.php:236
 msgctxt "Field Description"
 msgid "People Who Participate as Officers in This Mission"
 msgstr ""
 
-#: Missioned.php:248
+#: Missioned.php:243
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr ""
 
-#: Missioned.php:249
+#: Missioned.php:244
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:608
+#: Missioned.php:591
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:617
+#: Missioned.php:600
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""

@@ -9,7 +9,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Listed\n"
 "X-Domain: geditorial-listed\n"
 
@@ -123,12 +123,14 @@ msgstr ""
 
 #. translators: `%s`: item count
 #: Listed.php:179
+#, php-format
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Listing Attendees (%s)"
 msgstr ""
 
 #. translators: `%s`: item count
 #: Listed.php:181
+#, php-format
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Listings (%s)"
 msgstr ""
@@ -140,6 +142,7 @@ msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
 #: Listed.php:187
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "Attendees on &ldquo;%1$s&rdquo;"
 msgstr ""
@@ -194,12 +197,12 @@ msgctxt "Field Description"
 msgid "Unique Listing Code"
 msgstr ""
 
-#: Listed.php:615
+#: Listed.php:603
 msgctxt "Header"
 msgid "Listing Tools"
 msgstr ""
 
-#: Listed.php:624
+#: Listed.php:612
 msgctxt "Card"
 msgid "Listing Date from Meta-data"
 msgstr ""

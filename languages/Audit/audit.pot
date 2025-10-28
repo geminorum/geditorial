@@ -9,172 +9,175 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Audit\n"
 "X-Domain: geditorial-audit\n"
 
-#: Audit.php:53
+#: Audit.php:49
 msgctxt "Setting Title"
 msgid "Auto-Audit for Empties"
 msgstr ""
 
-#: Audit.php:54
+#: Audit.php:50
 msgctxt "Setting Description"
 msgid "Tries to automatically assign empty attributes on supported posts."
 msgstr ""
 
-#: Audit.php:91
+#: Audit.php:87
 msgid "Audit Attribute"
 msgid_plural "Audit Attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Audit.php:95
+#: Audit.php:91
 msgctxt "Label: Menu Name"
 msgid "Content Audit"
 msgstr ""
 
-#: Audit.php:96
+#: Audit.php:92
 msgctxt "Label: Show Option All"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:97
+#: Audit.php:93
 msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Audit.php:107
+#: Audit.php:103
+#, php-format
 msgctxt "Action Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
-#: Audit.php:109
+#: Audit.php:105
 msgctxt "Action Text"
 msgid "Audit"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Audit.php:112
+#: Audit.php:108
+#, php-format
 msgctxt "Row Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
-#: Audit.php:114
+#: Audit.php:110
 msgctxt "Row Text"
 msgid "Audit"
 msgstr ""
 
-#: Audit.php:124
+#: Audit.php:120
 msgctxt "Default Term"
 msgid "Audited"
 msgstr ""
 
-#: Audit.php:125
+#: Audit.php:121
 msgctxt "Default Term"
 msgid "Outdated"
 msgstr ""
 
-#: Audit.php:126
+#: Audit.php:122
 msgctxt "Default Term"
 msgid "Redundant"
 msgstr ""
 
-#: Audit.php:127
+#: Audit.php:123
 msgctxt "Default Term"
 msgid "Review SEO"
 msgstr ""
 
-#: Audit.php:128
+#: Audit.php:124
 msgctxt "Default Term"
 msgid "Review Style"
 msgstr ""
 
-#: Audit.php:129
+#: Audit.php:125
 msgctxt "Default Term"
 msgid "Trivial"
 msgstr ""
 
-#: Audit.php:130
+#: Audit.php:126
 msgctxt "Default Term"
 msgid "Initial Copy"
 msgstr ""
 
-#: Audit.php:131
+#: Audit.php:127
 msgctxt "Default Term"
 msgid "Unfinished"
 msgstr ""
 
-#: Audit.php:132
+#: Audit.php:128
 msgctxt "Default Term"
 msgid "No Title"
 msgstr ""
 
-#: Audit.php:133
+#: Audit.php:129
 msgctxt "Default Term"
 msgid "No Content"
 msgstr ""
 
-#: Audit.php:134
+#: Audit.php:130
 msgctxt "Default Term"
 msgid "No Excerpt"
 msgstr ""
 
-#: Audit.php:135
+#: Audit.php:131
 msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:281
+#: Audit.php:277
 msgctxt "Adminbar"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:328
+#: Audit.php:324
 msgctxt "Adminbar: Title Attr"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:346
+#: Audit.php:342
 msgctxt "Adminbar: Title Attr"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:428
+#: Audit.php:424
 msgctxt "Action"
 msgid "Force Auto-Audit"
 msgstr ""
 
 #. translators: `%s`: count
-#: Audit.php:466
+#: Audit.php:462
+#, php-format
 msgctxt "Message"
 msgid "%s items(s) Audited!"
 msgstr ""
 
-#: Audit.php:506
+#: Audit.php:502
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:580
+#: Audit.php:576
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:596
+#: Audit.php:592
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:601
+#: Audit.php:597
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:608
+#: Audit.php:604
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""
@@ -186,6 +189,7 @@ msgstr ""
 
 #. translators: `%s`: post-type label
 #: ModuleSettings.php:31
+#, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
@@ -197,12 +201,14 @@ msgstr ""
 
 #. translators: `%s`: post title
 #: ModuleSettings.php:68
+#, php-format
 msgctxt "Notice"
 msgid "No Audits applied for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: count terms, `%2$s`: post title
 #: ModuleSettings.php:74
+#, php-format
 msgctxt "Notice"
 msgid "%1$s attributes set for &ldquo;%2$s&rdquo;."
 msgstr ""
@@ -270,6 +276,7 @@ msgstr ""
 
 #. translators: `%1$s`: empty post count, `%2$s`: assigned term count
 #: ModuleSettings.php:164
+#, php-format
 msgctxt "Card: Description"
 msgid "Currently found %1$s empty posts and %2$s assigned to the attribute."
 msgstr ""

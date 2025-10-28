@@ -9,78 +9,80 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
-#: WcWidgets.php:33
+#: WcWidgets.php:37
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr ""
 
-#: WcWidgets.php:40
+#: WcWidgets.php:44
 msgctxt "Setting Title"
 msgid "Custom Areas"
 msgstr ""
 
-#: WcWidgets.php:41
+#: WcWidgets.php:45
 msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:79
+#: WcWidgets.php:83
 msgctxt "Action Hook"
 msgid "Thank-you (Before Order Details)"
 msgstr ""
 
-#: WcWidgets.php:84
+#: WcWidgets.php:88
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:89
+#: WcWidgets.php:93
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:94
+#: WcWidgets.php:98
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr ""
 
-#: WcWidgets.php:99
+#: WcWidgets.php:103
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr ""
 
-#: WcWidgets.php:104
+#: WcWidgets.php:108
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr ""
 
-#: WcWidgets.php:109
+#: WcWidgets.php:113
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr ""
 
-#: WcWidgets.php:117
+#: WcWidgets.php:121
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr ""
 
-#: WcWidgets.php:124
+#: WcWidgets.php:128
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
 #. translators: `%s`: widget area name
-#: WcWidgets.php:159
+#: WcWidgets.php:172
+#, php-format
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
 #. translators: `%s`: widget action hook
-#: WcWidgets.php:161
+#: WcWidgets.php:177
+#, php-format
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
 msgstr ""

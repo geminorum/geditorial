@@ -9,26 +9,26 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Alphabet\n"
 "X-Domain: geditorial-alphabet\n"
 
-#: Alphabet.php:38
+#: Alphabet.php:39
 msgctxt "Setting: Setting Title"
 msgid "Posts Shortcode Tag"
 msgstr ""
 
-#: Alphabet.php:39
+#: Alphabet.php:40
 msgctxt "Setting: Setting Description"
 msgid "Customizes the alphabet list of posts short-code tag. Leave blank for default."
 msgstr ""
 
-#: Alphabet.php:48
+#: Alphabet.php:49
 msgctxt "Setting: Setting Title"
 msgid "Terms Shortcode Tag"
 msgstr ""
 
-#: Alphabet.php:49
+#: Alphabet.php:50
 msgctxt "Setting: Setting Description"
 msgid "Customizes the alphabet list of terms short-code tag. Leave blank for default."
 msgstr ""

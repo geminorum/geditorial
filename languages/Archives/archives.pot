@@ -9,13 +9,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/Archives\n"
 "X-Domain: geditorial-archives\n"
 
 #. translators: `%s`: supported object label
 #: Archives.php:45
 #: Archives.php:88
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Title for %s"
 msgstr ""
@@ -27,7 +28,7 @@ msgstr ""
 
 #: Archives.php:51
 #: Archives.php:117
-#: Archives.php:490
+#: Archives.php:570
 msgctxt "Icon Title"
 msgid "View Archives Page"
 msgstr ""
@@ -35,6 +36,7 @@ msgstr ""
 #. translators: `%s`: supported object label
 #: Archives.php:59
 #: Archives.php:100
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Content for %s"
 msgstr ""
@@ -47,6 +49,7 @@ msgstr ""
 #. translators: `%s`: supported object label
 #: Archives.php:71
 #: Archives.php:127
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Template for %s"
 msgstr ""
@@ -68,6 +71,7 @@ msgstr ""
 
 #. translators: `%s`: supported object label
 #: Archives.php:112
+#, php-format
 msgctxt "Setting Title"
 msgid "Archives Slug for %s"
 msgstr ""
@@ -88,31 +92,34 @@ msgid "Prepends a search form to the posttype archive pages."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: Archives.php:186
-#: Archives.php:201
+#: Archives.php:187
+#: Archives.php:202
+#, php-format
 msgctxt "Help Sidebar"
 msgid "%s Archives"
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: Archives.php:465
-#: Archives.php:474
+#: Archives.php:545
+#: Archives.php:554
+#, php-format
 msgctxt "Navigation MetaBox"
 msgid "%s Archives"
 msgstr ""
 
 #. translators: `%s`: taxonomy object label
-#: Archives.php:494
+#: Archives.php:574
+#, php-format
 msgctxt "Card Title"
 msgid "Custom Archives Page for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Archives.php:508
+#: Archives.php:588
 msgctxt "Description"
 msgid "Link to the custom archives page generated for terms in this taxonomy."
 msgstr ""
 
-#: Archives.php:512
+#: Archives.php:592
 msgctxt "Message"
 msgid "There are no no custom archives pages available!"
 msgstr ""
