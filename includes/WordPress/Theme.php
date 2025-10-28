@@ -190,7 +190,7 @@ class Theme extends Core\Base
 	}
 
 	// @SOURCE: `bp_theme_compat_reset_post()`
-	public static function resetQuery( $args = [], $content_callback = FALSE )
+	public static function resetQuery( $args = [], $content_callback = FALSE, $title_callback = FALSE )
 	{
 		global $wp_query, $post;
 
@@ -310,7 +310,12 @@ class Theme extends Core\Base
 		self::compatActive( TRUE );
 
 		if ( $content_callback && is_callable( $content_callback ) )
-			Hook::filterOnce( 'the_content', $content_callback );
+			Hook::filterOnce( 'the_content', $content_callback, 12, 1 );
+
+		// NOTE: cannot relay on `$post_id` filter data!
+		if ( $title_callback && is_callable( $title_callback ) )
+			// Hook::filterOnce( 'the_title', $title_callback, 12, 2 );
+			add_filter( 'the_title', $title_callback, 12, 2 );
 
 		// If we are in theme-compat, we don't need the `Edit` post link.
 		add_filter( 'get_edit_post_link',

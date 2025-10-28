@@ -451,6 +451,27 @@ class Arraay extends Base
 		return $new;
 	}
 
+	/**
+	 * Retrieves the value in an array given the key or the first key.
+	 *
+	 * @param array $input
+	 * @param string|int $key
+	 * @param mixed $fallback
+	 * @return mixed
+	 */
+	public static function getByKeyOrFirst( $input, $key, $fallback = NULL )
+	{
+		if ( empty( $input ) )
+			return $fallback;
+
+		if ( array_key_exists( $key, $input ) )
+			return $input[$key];
+
+		$first = self::keyFirst( $input );
+
+		return $input[$first];
+	}
+
 	// `array_key_first()` for php < 7.3.0
 	public static function keyFirst( $input )
 	{

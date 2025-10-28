@@ -76,8 +76,11 @@ class Date extends Base
 
 		if ( 'gregorian' === $calendar_type ) {
 
+			if ( is_a( $datetime_string, 'DateTimeInterface' ) )
+				$datetime = $datetime_string;
+			else
 				$datetime = date_create(
-					$datetime_string,
+					$datetime_string ?? 'now',
 					$timezone ?? new \DateTimeZone( self::currentTimeZone() )
 				);
 
@@ -911,7 +914,11 @@ class Date extends Base
 			$format
 		);
 
-		return datefmt_format( $formatter, strtotime( $datetime_string ?? 'now' ) );
+		$datetime = is_a( $datetime_string, 'DateTimeInterface' )
+			? $datetime_string
+			: strtotime( $datetime_string ?? 'now' );
+
+		return datefmt_format( $formatter, $datetime );
 	}
 
 	// @REF: https://unicode-org.github.io/icu/userguide/format_parse/datetime/#date-field-symbol-table

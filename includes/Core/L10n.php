@@ -21,6 +21,23 @@ class L10n extends Base
 		return $site ? get_locale() : determine_locale();
 	}
 
+	public static function sanitize( $locale = NULL )
+	{
+		if ( '' === $locale || 'en' === $locale )
+			return 'en_US';
+
+		if ( 'fa' === $locale )
+			return 'fa_IR';
+
+		// if ( 'ar' === $locale )
+		// 	return 'ar_'; // WTF?!
+
+		if ( $locale && ! is_null( $locale ) )
+			return $locale;
+
+		return self::locale();
+	}
+
 	public static function calendar( $locale = NULL, $fallback = 'gregorian' )
 	{
 		switch ( $locale ?? self::locale() ) {

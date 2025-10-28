@@ -154,8 +154,10 @@ class HTML extends Base
 
 		$classes = [
 			'btn',
-			'btn-default',
-			'btn-xs',
+			'btn-default', // DEPRECATED
+			'btn-outline-secondary', // BS5
+			// 'btn-xs',
+			'btn-sm',
 			'button',
 			'-button',
 		];
@@ -169,7 +171,7 @@ class HTML extends Base
 			'title'  => $title,
 			'class'  => $classes,
 			'data'   => $data,
-			'target' => '_blank',
+			// 'target' => '_blank',
 		], $html );
 	}
 
