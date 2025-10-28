@@ -16,8 +16,8 @@ class Today extends gEditorial\Module
 	use Internals\MetaBoxMain;
 	use Internals\MetaBoxSupported;
 
-	protected $the_day  = [];
-	protected $the_post = [];
+	protected $__today = [];
+	protected $__posts = NULL;
 
 	public static function module()
 	{
@@ -268,15 +268,6 @@ class Today extends gEditorial\Module
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );
 
-		$constants = $this->get_the_day_constants();
-
-		$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
-
-		if ( 1 === count( $this->the_day ) )
-			$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->the_day['cal'] );
-
-		$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
-
 		// $this->enqueue_asset_js();
 	}
 
@@ -289,22 +280,20 @@ class Today extends gEditorial\Module
 			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
 				echo '<div id="postbox-container-2" class="postbox-container">';
 
-					$title = trim( ModuleHelper::titleTheDay( $this->the_day ), '[]' );
+					Core\HTML::h3( $this->the_day_title_callback() );
 
-					if ( ! empty( $this->the_post[0] ) )
-						$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
+					foreach ( $this->__posts as $post )
+						Core\HTML::h4( WordPress\Post::title( $post ) );
 
-					Core\HTML::h3( $title );
-
-					$html = $this->the_day_content();
-					echo Core\HTML::wrap( $html, $this->classs( 'today' ) );
-
+					echo $this->the_day_content_callback();
 
 				echo '</div>';
 				echo '<div id="postbox-container-1" class="postbox-container">';
 
-					// self::dump( $this->the_day );
-					// self::dump( $this->the_post );
+					if ( Core\WordPress::isDev() ) {
+						self::dump( $this->__today );
+						self::dump( $this->__posts );
+					}
 
 				echo '</div>';
 			echo '</div></div>';
@@ -425,10 +414,10 @@ class Today extends gEditorial\Module
 
 		$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $this->get_the_day_constants( $display_year ) );
 
-		return $this->_get_the_day_admin_link( $the_day );
+		return $this->get_the_day_admin_link( $the_day );
 	}
 
-	private function _get_the_day_admin_link( $the_day )
+	public function get_the_day_admin_link( $the_day )
 	{
 		return $this->get_adminpage_url( TRUE, $the_day, 'adminmenu' );
 	}
@@ -484,7 +473,7 @@ class Today extends gEditorial\Module
 
 			echo Core\HTML::wrap(
 				Core\HTML::tag( 'a', [
-					'href'   => $this->_get_the_day_admin_link( $other_day ),
+					'href'   => $this->get_the_day_admin_link( $other_day ),
 					'title'  => $title,
 					'data'   => $other_day,
 					'target' => '_blank',
@@ -711,47 +700,24 @@ class Today extends gEditorial\Module
 		if ( is_embed() || is_search() )
 			return $template;
 
-		if ( get_query_var( 'day_cal', FALSE ) ) {
-
-			$constants = $this->get_the_day_constants();
-			$this->the_day = ModuleHelper::getTheDayFromQuery( FALSE, $this->default_calendar(), $constants );
-
-			// no day, just cal
-			if ( 1 === count( $this->the_day ) ) {
-				$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->the_day['cal'] );
-
-				// today in this calendar
-				unset( $this->the_day['year'] );
-			}
-
-		} else if ( ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
+		if ( get_query_var( 'day_cal', FALSE )
+			|| ( $this->get_setting( 'override_frontpage' ) && is_front_page() )
 			|| is_post_type_archive( $this->constant( 'main_posttype' ) )
 			|| is_page_template( 'today-frontpage.php' ) ) {
 
-			$constants = $this->get_the_day_constants();
-			$this->the_day = gEditorial\Datetime::getTheDay( NULL, $this->default_calendar() );
+		} else {
 
-			// today in this calendar
-			unset( $this->the_day['year'] );
-		}
-
-		if ( empty( $this->the_day ) )
 			return $template;
-
-		$this->the_post = ModuleHelper::getDayPost( $this->the_day, $constants );
-
-		$title = trim( ModuleHelper::titleTheDay( $this->the_day, '[]', FALSE ), '[]' );
-
-		if ( ! empty( $this->the_post[0] ) )
-			$title = WordPress\Post::title( $this->the_post[0] ).' ['.$title.']';
+		}
 
 		WordPress\Theme::resetQuery( [
 			'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
-			'post_title'  => $title,
+			'post_title'  => '',
 			'post_author' => 0,
 			'post_type'   => $this->constant( 'main_posttype' ),
 			'is_single'   => TRUE,
-		], [ $this, 'the_day_content' ] );
+		], [ $this, 'the_day_content_callback' ],
+			[ $this, 'the_day_title_callback' ] );
 
 		$this->enqueue_styles();
 		$this->filter( 'get_the_date', 3 );
@@ -763,52 +729,171 @@ class Today extends gEditorial\Module
 		return get_single_template();
 	}
 
-	public function the_day_content( $content = '', $the_day = NULL, $posttypes = NULL )
+	public function prime_today( $the_day = NULL )
 	{
-		$the_day = $the_day ?? $this->the_day;
+		if ( ! empty( $this->__today ) && ! is_null( $the_day ) )
+			return TRUE;
 
-		if ( empty( $the_day ) )
+		$type      = $this->default_calendar();
+		$constants = $this->get_the_day_constants();
+		$the_day   = $the_day ?? ModuleHelper::getTheDayFromQuery( NULL, FALSE, $constants );
+		$count     = count( array_filter( (array) $the_day ) );
+
+		if ( ! $count ) {
+
+			// `/{base}`
+			// front-page no calendar without the year
+			// display today in all calendars
+
+			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), FALSE );
+			$this->__posts = ModuleHelper::getDayPost( $this->__today[$type], $constants );
+
+		} else if ( 1 === $count && ! empty( $the_day['cal'] ) ) {
+
+			// `/{base}/{calendar}`
+			// calendar only page without the year
+			// display today in this calendar
+
+			$_the_day = gEditorial\Datetime::getTheDay( NULL, $the_day['cal'] );
+
+			unset( $_the_day['year'] );
+
+			$this->__today = [ $the_day['cal'] => $_the_day ];
+
+		} else if ( 3 === $count && empty( $the_day['year'] ) ) {
+
+			// `/{base}/{calendar}/{month}/{day}`
+			// day in calendar without the year
+			// display the day on all calendars
+
+			// NOTE: creates the day in this year, in lunar calendars (e.g. `islamic`) may shift a day or two!
+			$datetime = ModuleHelper::getTheDayDateMySQL( $the_day, $type );
+
+			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), FALSE, $datetime );
+			$this->__posts = ModuleHelper::getDayPost( $this->__today[$type], $constants );
+
+		} else if ( 2 === $count && ! empty( $the_day['month'] ) ) {
+
+			// `/{base}/{calendar}/{month}`
+			// month in calendar without the year
+			// display the month on this calendar
+
+			$this->__today = [ $the_day['cal'] => $the_day ];
+
+		} else if ( 2 === $count && ! empty( $the_day['year'] ) ) {
+
+			// `/{base}/{calendar}/year/{year}`
+			// year in calendar without the month
+			// display the year on this calendar
+
+			$this->__today = [ $the_day['cal'] => $the_day ];
+
+		} else if ( 3 === $count && ! empty( $the_day['year'] ) ) {
+
+			// `/{base}/{calendar}/year/{year}/{month}`
+			// month in calendar with the year
+			// display the month on this calendar
+
+			$this->__today = [ $the_day['cal'] => $the_day ];
+
+		} else {
+
+			// UNKNOWN
+
+			$_type = ! empty( $the_day['cal'] ) ? $the_day['cal'] : $type;
+
+			$this->__today = [ $_type => $the_day ];
+			$this->__posts = ModuleHelper::getDayPost( $this->__today[$_type], $constants );
+		}
+
+		return TRUE;
+	}
+
+	// TODO: make clickable!!
+	public function the_day_title_callback( $title = '', $post_id = 0, $the_day = NULL )
+	{
+		// theme-compt ID is `0`
+		if ( $post_id )
+			return $title;
+
+		if ( ! $this->prime_today( $the_day ) )
+			return $title;
+
+		$titles    = [];
+		$separator = ' &ndash; ';
+
+		foreach ( $this->__today as $calendar => $_the_day )
+			$titles[] = trim( ModuleHelper::titleTheDay( $_the_day, '[]', NULL ), '[]' );
+
+		return implode( $separator, $titles );
+	}
+
+	public function the_day_content_callback( $content = '', $the_day = NULL, $posttypes = NULL )
+	{
+		if ( ! $this->prime_today( $the_day ) )
 			return $content;
 
-		$supported = $this->posttypes();
-		$calendar  = $this->default_calendar();
+		$posttypes = $posttypes ?? get_query_var( 'day_posttype', $this->posttypes() );
+		$type      = $this->default_calendar();
+		$blocks    = [];
 
-		list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-			'type'    => $posttypes ?? get_query_var( 'day_posttype', $supported ),
-			'the_day' => $the_day,
-			'all'     => TRUE,
-		], $this->get_the_day_constants() );
+		foreach ( $this->__today as $calendar => $_the_day ) {
+
+			// NOTE: we can query multiple days at once bu the DB takes forever to respond!
+
+			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
+				'type'    => $posttypes,
+				'the_day' => $_the_day,
+				'all'     => TRUE,
+			], $this->get_the_day_constants() );
+
+			if ( ! empty( $posts ) )
+				$blocks[$calendar] = $posts;
+		}
 
 		ob_start();
 
-		if ( ! empty( $this->the_post[0] ) ) {
+		foreach ( $this->__posts as $post ) {
 
 			// has excerpt
-			if ( $this->the_post[0]->post_excerpt ) {
-				$html = wpautop( WordPress\Strings::prepDescription( $this->the_post[0]->post_excerpt, TRUE, FALSE ), FALSE );
+			if ( $post->post_excerpt ) {
+				$html = wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE );
 				echo Core\HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
 			}
 		}
 
-		if ( count( $posts ) ) {
+		if ( count( $blocks ) ) {
 
-			echo '<ul class="-items">';
+			echo '<div class="row">';
 
-			foreach ( $posts as $post )
-				echo gEditorial\ShortCode::postTitle( $post, [
-					'title_tag' => 'li',
-					'title_cb'  => [ $this, 'shortcode_posttitle_callback' ],
-				] );
+			foreach ( $blocks as $calendar => $posts ) {
 
-			echo '</ul>';
+				echo '<div class="col" data-calendar="'.$calendar.'">';
+				echo '<ul class="-items">';
+
+				foreach ( $posts as $post )
+					echo gEditorial\ShortCode::postTitle( $post, [
+						'title_tag' => 'li',
+						'title_cb'  => [ $this, 'shortcode_posttitle_callback' ],
+					] );
+
+				echo '</ul>';
+				echo '</div>';
+			}
+
+			echo '</div>';
 
 		} else {
 
 			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
-		$navigation = ModuleHelper::theDayNavigation( $the_day, $calendar );
-		$buttons    = ModuleHelper::theDayNewConnected( $supported, $the_day, ( empty( $this->the_post[0] ) ? TRUE : $this->the_post[0]->ID ) );
+		$navigation = ModuleHelper::theDayNavigation( $this->__today[$type], $type );
+		$buttons    = ModuleHelper::theDayNewConnected(
+			$posttypes,
+			$this->__today[$type],
+			is_user_logged_in() ? $this->__posts : FALSE
+		);
 
 		if ( $navigation || $buttons ) {
 
@@ -840,9 +925,26 @@ class Today extends gEditorial\Module
 		return sprintf( '[%s]: %s', $prefix, $text );
 	}
 
-	public function get_the_date( $the_date, $d, $post )
+	public function get_the_date( $the_date, $d, $post, $the_day = NULL )
 	{
-		return ModuleHelper::titleTheDay( $this->the_day );
+		// theme-compt ID is `0`
+		if ( $post->ID )
+			return $the_date;
+
+		if ( ! $this->prime_today( $the_day ) )
+			return $the_date;
+
+		$type = $this->default_calendar();
+
+		// the day in default calendar
+		if ( ! empty( $this->__today[$type] ) )
+			return ModuleHelper::titleTheDay( $this->__today[$type], $the_date, NULL );
+
+		// the day in first calendar
+		foreach ( $this->__today as $calendar => $_the_day )
+			return ModuleHelper::titleTheDay( $_the_day, $the_date, NULL );
+
+		return $the_date;
 	}
 
 	public function post_type_link( $post_link, $post, $leavename, $sample )
@@ -1055,7 +1157,7 @@ class Today extends gEditorial\Module
 			'year'    => '',
 		] ) );
 
-		if ( ! $html = $this->the_day_content( '', $the_day, $args['posttypes'] ) )
+		if ( ! $html = $this->the_day_content_callback( '', $the_day, $args['posttypes'] ) )
 			return $content;
 
 		return gEditorial\ShortCode::wrap( $html, 'the-day', $args );

@@ -12,6 +12,23 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'today';
 
+	public static function getTheDayAllCalendars( $calendars, $year = FALSE, $datetime_string = NULL )
+	{
+		$list = [];
+
+		foreach ( $calendars as $calendar ) {
+
+			$the_day = gEditorial\Datetime::getTheDay( $datetime_string, $calendar );
+
+			if ( ! $year )
+				unset( $the_day['year'] );
+
+			$list[$calendar] = $the_day;
+		}
+
+		return $list;
+	}
+
 	public static function getTheDayDateMySQL( $the_day, $type = NULL )
 	{
 		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
@@ -77,6 +94,18 @@ class ModuleHelper extends gEditorial\Helper
 		return gEditorial\Datetime::getTheDay( $today, $type );
 	}
 
+	// NOT USED
+	public static function titleToday( $calendars, $separator = ' &ndash; ', $year = FALSE )
+	{
+		$titles = [];
+		$today  = self::getTheDayAllCalendars( $calendars, $year );
+
+		foreach ( $today as $the_day )
+			$titles[] = trim( ModuleHelper::titleTheDay( $the_day, '[]', FALSE ), '[]' );
+
+		return implode( $separator, $titles );
+	}
+
 	public static function titleTheDay( $stored, $empty = '&mdash;', $display_cal = TRUE )
 	{
 		global $gEditorialTodayCalendars, $gEditorialTodayMonths;
@@ -118,6 +147,10 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( empty( $parts ) )
 			return $empty;
+
+		// maybe should display calendar!
+		if ( is_null( $display_cal ) )
+			$display_cal = 2 === count( array_filter( $the_day ) ) && ! empty( $the_day['year'] );
 
 		if ( $the_day['cal'] && $display_cal )
 			$parts['cal'] = empty( $gEditorialTodayCalendars[$the_day['cal']] )
@@ -189,28 +222,45 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getTheDayLink( $data, $target = 'full' )
 	{
+		$admin = is_admin();
+		$path  = '';
+
 		// sorting the variables!
 		$the_day = self::atts( [
-			'base'  => gEditorial()->module( static::MODULE )->get_link_base(),
+			'base'  => $admin ? '' : gEditorial()->module( static::MODULE )->get_link_base(),
 			'cal'   => '',
 			'month' => '',
 			'day'   => '',
 			'year'  => '',
 		], $data );
 
-		$path = '';
-
 		switch ( $target ) {
-			// DEPRECATED!
+
 			case 'cal'  : unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
 			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
 			case 'month': unset( $the_day['day'] ); break;
 
 			case 'annual'  : unset( $the_day['year'] ); break;
 			case 'themonth': unset( $the_day['year'], $the_day['day'] ); break;
-			case 'monthly' : $path = sprintf( '%s/%s/year/%s/%s', $the_day['base'], $the_day['cal'], $the_day['year'], $the_day['month'] ); break;
-			case 'yearly'  : $path = sprintf( '%s/%s/year/%s', $the_day['base'], $the_day['cal'], $the_day['year'] ); break;
+
+			case 'yearly':
+
+				if ( $admin )
+					unset( $the_day['month'], $the_day['day'] );
+
+				else
+					$path = sprintf( '%s/%s/year/%s', $the_day['base'], $the_day['cal'], $the_day['year'] ); break;
+
+			case 'monthly':
+
+				if ( $admin || empty( $the_day['year'] ) )
+					unset( $the_day['day'] );
+				else
+					$path = sprintf( '%s/%s/year/%s/%s', $the_day['base'], $the_day['cal'], $the_day['year'], $the_day['month'] ); break;
 		}
+
+		if ( $admin )
+			return gEditorial()->module( static::MODULE )->get_the_day_admin_link( $the_day );
 
 		return home_url( $path ?: implode( '/', $the_day ) );
 	}
@@ -258,7 +308,7 @@ class ModuleHelper extends gEditorial\Helper
 				$the_day[$field] = $var;
 		}
 
-		if ( empty( $the_day['cal'] ) )
+		if ( $default_type && empty( $the_day['cal'] ) )
 			return array_merge( [ 'cal' => $default_type ], $the_day );
 
 		return $the_day;
@@ -280,22 +330,23 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getDayPost( $stored, $constants = NULL )
 	{
-		$the_day = self::atts( [
+		$posttype = self::constant( 'main_posttype', 'day' );
+		$the_day  = self::atts( [
 			'cal'   => '',
 			'day'   => '',
 			'month' => '',
-			// 'year'  => '', // there is no year in day cpt
+			// 'year'  => '', // there is no year in `day` post-type
 		], $stored );
 
 		if ( is_null( $constants ) )
 			$constants = self::getTheDayConstants();
 
 		$args = [
-			'post_type'        => self::constant( 'main_posttype', 'day' ),
-			'post_status'      => 'any',
+			'post_type'        => $posttype,
+			'post_status'      => is_admin() ? WordPress\Status::acceptable( $posttype ) : 'publish',
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
-			'meta_query'       => [],
+			'meta_query'       => [ 'relation' => 'AND' ],
 		];
 
 		foreach ( $constants as $field => $constant ) {
@@ -305,6 +356,7 @@ class ModuleHelper extends gEditorial\Helper
 					'key'     => $constant,
 					'value'   => $the_day[$field],
 					'compare' => '=',
+					'type'    => 'cal' === $field ? 'CHAR' : 'NUMERIC',
 				];
 			}
 		}
@@ -313,31 +365,42 @@ class ModuleHelper extends gEditorial\Helper
 		return $query->query( $args );
 	}
 
+	// NOTE: we can query multiple days at once bu the DB takes forever to respond!
 	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
 		$args = self::atts( [
 			'the_day' => [],
+			'today'   => [],
 			'type'    => 'any',
 			'all'     => FALSE,
 			'count'   => FALSE,
 			'limit'   => self::limit(),
 			'paged'   => self::paged(),
 			'orderby' => self::orderby( 'ID' ),
-			'order'   => self::order( 'asc' ),
-			'status'  => WordPress\Status::acceptable( isset( $atts['type'] ) ? $atts['type'] : 'any' ),
+			'order'   => self::order( 'desc' ),
+			'status'  => is_admin() ? WordPress\Status::acceptable( isset( $atts['type'] ) ? $atts['type'] : 'any' ) : 'publish',
 		], $atts );
 
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
+		if ( empty( $args['today'] ) )
+			$args['today'] = [ $args['the_day'] ];
+
+		// if ( is_null( $constants ) )
+		// 	$constants = self::getTheDayConstants();
 
 		$query_args = [
-			// 'orderby'          => $args['orderby'],
-			// 'order'            => $args['order'],
-			'post_type'        => $args['type'],
-			'post_status'      => $args['status'],
-			'suppress_filters' => TRUE,
-			// 'no_found_rows'    => TRUE,
+			'orderby'             => $args['orderby'],
+			'order'               => $args['order'],
+			'post_type'           => $args['type'],
+			'post_status'         => $args['status'],
+			'posts_per_page'      => -1,
+			'suppress_filters'    => TRUE,
+			'no_found_rows'       => TRUE,
+			'ignore_sticky_posts' => TRUE,
 		];
+
+		// if ( 'meta_value_num' === $query_args['orderby'] )
+		// 	// $query_args['meta_key'] = $constants['year'];
+		// 	$query_args['meta_key'] = array_values( $constants );
 
 		if ( ! $args['count'] && ! $args['all'] ) {
 			$query_args['posts_per_page'] = $args['limit'];
@@ -347,18 +410,10 @@ class ModuleHelper extends gEditorial\Helper
 		if ( $args['count'] )
 			$query_args['fields'] = 'ids';
 
-		$query_args['meta_query'] = [];
+		list( $query_args['meta_query'], $query_args['orderby'] ) = self::theDayMetaQuery( $args['today'], $constants );
 
-		foreach ( $constants as $field => $constant ) {
-			if ( ! empty( $args['the_day'][$field] ) ) {
-				$query_args['orderby'][$field.'_clause'] = 'ASC'; // https://make.wordpress.org/core/?p=12639
-				$query_args['meta_query'][$field.'_clause'] = [
-					'key'     => $constant,
-					'value'   => $args['the_day'][$field],
-					'compare' => '=',
-				];
-			}
-		}
+		if ( 'date' === $query_args['orderby'] )
+			$query_args['order'] = 'ASC';
 
 		$query = new \WP_Query();
 		$posts = $query->query( $query_args );
@@ -376,6 +431,47 @@ class ModuleHelper extends gEditorial\Helper
 		);
 
 		return [ $posts, $pagination ];
+	}
+
+	public static function theDayMetaQuery( $today, $constants = NULL )
+	{
+		$metaquery = [ 'relation' => 'OR' ];
+		$orderby   = [];
+
+		if ( is_null( $constants ) )
+			$constants = self::getTheDayConstants();
+
+		foreach ( $today as $offset => $the_day ) {
+
+			if ( empty( $the_day ) )
+				continue;
+
+			$block = [];
+
+			foreach ( $constants as $field => $constant ) {
+
+				if ( empty( $the_day[$field] ) )
+					continue;
+
+				$clause = sprintf( 'the_day_%s_clause_%s', $field, $offset );
+
+				if ( ! empty( $the_day[$field] ) )
+					$block[$clause] = [
+						'key'     => $constant,
+						'value'   => $the_day[$field],
+						'compare' => '=',
+						'type'    => 'cal' === $field ? 'CHAR' : 'NUMERIC',
+					];
+			}
+
+			if ( ! empty( $block ) ) {
+				$clause = sprintf( 'the_day_%s_clause', $offset );
+				$block['relation'] = 'AND';
+				$metaquery[$clause] = $block;
+			}
+		}
+
+		return [ $metaquery, $orderby ?: 'date' ];
 	}
 
 	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = NULL, $calendars = NULL )
@@ -578,12 +674,26 @@ class ModuleHelper extends gEditorial\Helper
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 day' ), $the_day['cal'] ), 'full' ),
 				_x( 'The Previous Day', 'Title Attr', 'geditorial-today' )
 			);
+
+			$current = gEditorial\Datetime::getTheDay( $datetime, $the_day['cal'] );
+
+			$buttons['month'] = Core\HTML::button(
+				_x( 'This Month', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'monthly' ),
+				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
+
+			$buttons['year'] = Core\HTML::button(
+				_x( 'This Year', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'yearly' ),
+				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
 		}
 
 		return $buttons;
 	}
 
-	public static function theDayNewConnected( $posttypes, $the_day = [], $the_post = FALSE )
+	public static function theDayNewConnected( $posttypes, $the_day = [], $posts = [] )
 	{
 		if ( ! is_user_logged_in() )
 			return;
@@ -593,7 +703,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		unset( $the_day['year'] );
 
-		foreach ( $posttypes as $posttype ) {
+		foreach ( (array) $posttypes as $posttype ) {
 
 			$object = WordPress\PostType::object( $posttype );
 
@@ -616,41 +726,39 @@ class ModuleHelper extends gEditorial\Helper
 			);
 		}
 
-		if ( FALSE !== $the_post ) {
+		if ( FALSE === $posts )
+			return $buttons;
 
-			$object = WordPress\PostType::object( self::constant( 'main_posttype', 'day' ) );
+		$object = WordPress\PostType::object( self::constant( 'main_posttype', 'day' ) );
 
-			if ( TRUE === $the_post ) {
+		if ( WordPress\PostType::can( $object, 'create_posts' ) ) {
 
-				if ( current_user_can( $object->cap->create_posts ) ) {
+			$title = $object->labels->add_new_item;
 
-					$title = $object->labels->add_new_item;
+			if ( $admin )
+				$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
-					if ( $admin )
-						$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
+			$buttons[] = Core\HTML::button( $title,
+				WordPress\PostType::newLink( $object->name, $the_day ),
+				_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
+				$admin
+			);
+		}
 
-					$buttons[] = Core\HTML::button( $title,
-						WordPress\PostType::newLink( $object->name, $the_day ),
-						_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
-						$admin
-					);
-				}
+		foreach ( $posts as $post ) {
 
-			} else if ( $the_post ) {
+			if ( current_user_can( 'edit_post', $post->ID ) ) {
 
-				if ( current_user_can( 'edit_post', (int) $the_post ) ) {
+				$title = $object->labels->edit_item;
 
-					$title = $object->labels->edit_item;
+				if ( $admin )
+					$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
 
-					if ( $admin )
-						$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
-
-					$buttons[] = Core\HTML::button( $title,
-						WordPress\Post::edit( $the_post ),
-						_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
-						$admin
-					);
-				}
+				$buttons[] = Core\HTML::button( $title,
+					WordPress\Post::edit( $post ),
+					_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
+					$admin
+				);
 			}
 		}
 
