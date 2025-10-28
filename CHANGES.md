@@ -1,3 +1,146 @@
+### 3.33.0
+* internal/core-post-type: parent module on post-type args
+* internal/core-post-types: combine register sub-methods
+* internal/core-taxonomies: bail setting if capabilities are customized
+* internal/core-taxonomies: better handling rest base
+* internal/core-taxonomies: parent module on taxonomy args
+* internal/meta-box-custom: excerpt box revised
+* internal/module-links: auto hook calendar linked post
+* internal/paired-assignment: app for ordered connections
+* internal/paired-core: apply ordering from term relations
+* internal/paired-core: custom capabilities for paired taxonomy
+* internal/paired-core: terms related as paired setting
+* internal/post-type-fields: access check for draft posts
+* internal/post-type-fields: customize name attr format
+* internal/quick-posts: new-post hooks revised
+* internal/raw-imports: support multiple data files
+* internal/rest-api: get route helper
+* internal/settings-fields: register fields via constant
+* internal/sub-contents: check post-type exists on searchable fields
+* internal/sub-contents: table overview on reports
+* internal/sub-contents: treat comment date as modified
+* internal/template-taxonomy: avoid override on product taxonomies
+* internal/template-taxonomy: support for custom archives
+* internal/view-engine: check if partials path exists
+* main/datetime: apply calendar on helpers
+* main/datetime: dynamic default calendar based on current locale
+* main/datetime: format by calendar with fallback
+* main/datetime: make my-sql from array
+* main/datetime: the day array by calendar
+* main/module: contexts on screen option pre page
+* main/plugin: drop dark mode styles
+* main/plugin: extend allowed url protocols
+* main/plugin: setup services helper
+* main/plugin: style for woo-commerce admin
+* main/scripts: refresh api for color-box iframes
+* main/settings: context url revised
+* main/settings: passing context into header title helper
+* main/settings: support for ortho on settings fields
+* main/shortcode: core filter for image css class
+* main/shortcode: list post assigned to a term
+* main/shortcode: passing singular term into term title renderer
+* main/table-list: correct pagination for terms
+* main/template: event date/time form timespan
+* main/template: hide term intro on name only
+* main/template: support for more media short-codes
+* main/visual: support for all icon formats on fallback
+* module/alphabet: display empty terms option
+* module/alphabet: filter posts by term
+* module/alphabet: wrap the description/excerpt tags
+* module/archives: support for term archive pages
+* module/badges: migrate to taxonomy overview on reports
+* module/book: rename p2p short-code
+* module/book: support for quick new-post
+* module/bookmarked: support for behkhaan books
+* module/bookmarked: support more option types
+* module/byline: check for assign access of targets
+* module/byline: exclude taxonomies from empty terms
+* module/byline: exclude taxonomy from empty terms
+* module/byline: short-circuit post count by users
+* module/byline: support tax query on products short-code
+* module/config: empty modules message
+* module/config: export enabled module settings
+* module/config: import options as object for each module
+* module/config: passing context to handlers
+* module/course: support for date fields
+* module/estimated: meta-ley from constants
+* module/happening: override dates by meta
+* module/happening: support for status taxonomy
+* module/home: apply post-types on archives widget
+* module/identified: already identified warning on new posts
+* module/identified: binary-eye button on admin-bar
+* module/identified: check for already identified on new-post template
+* module/identified: post identify logic separated
+* module/identified: sanitized to isbn-13
+* module/identified: support for identifier on meta array
+* module/iranian: state/city info for post-codes
+* module/isbn: convert initial meta fields to isbn13
+* module/isbn: prep meta fields
+* module/like: meta-ley from constants
+* module/magazine: support for date fields
+* module/magazine: support for thumbnail fallbacks
+* module/meta: support for lat/lng type field
+* module/meta: support for plate type fields
+* module/national-library: default title on new post via admin
+* module/national-library: fallback via altering isbn format
+* module/national-library: filter for table css class
+* module/national-library: fipa on saved supported posts
+* module/national-library: header button on new posts
+* module/national-library: new-post hints revised
+* module/national-library: scrape pool tool
+* module/ortho: avoid trimming the first letter on word footnotes
+* module/ortho: handle dash in input
+* module/ortho: support for hook input types
+* module/ortho: support for slug fields
+* module/physical: 🆕 module
+* module/short-codes: :new: shortcode for assigned posts
+* module/socialite: prep meta fields
+* module/statistical: 🆕 module
+* module/tabs: before/after content hooks
+* module/tabs: support for post comments
+* module/terms: convert image attachment id to full url
+* module/terms: same order as module on script
+* module/today: display same day on other calendars
+* module/today: drop search form support
+* module/today: front page handling revised
+* module/today: handling the day fully revised
+* module/today: link structure revised
+* module/today: migrate to meta-box internals
+* module/today: navigation buttons
+* module/today: new post buttons as array
+* module/today: support for meta fields on the post-type
+* module/today: support for shortcodes
+* module/today: support year on rewrite rules
+* module/today: the day ical on supported archives
+* module/today: the day prefix on the post list
+* module/uploader: 🆕 module
+* module/venue: cap-type/viewable for primary post-type
+* module/views: meta-ley from constants
+* module/wc-checkout: 🆕 module
+* module/wc-identify: custom action hook for gtin data
+* module/wc-identify: gtin support on aws
+* module/wc-shortcodes: 🆕 module
+* module/wc-terms: support for list of assigned posts other than products
+* module/wc-terms: support for sub-terms after archive description
+* module/wc-tracking: renamed from wc-postal
+* module/wc-widgets: passing sidebar args only if exists
+* service/admin-screen: migrate from actions module
+* service/admin-screen: restrict by taxonomy settings
+* service/barcodes: header button for binary-eye
+* service/calendars: check for viewable data
+* service/calendars: disable constant for ical
+* service/calendars: filter for event description
+* service/calendars: support for ical format
+* service/content-actions: 🆕 service
+* service/file-cache: 🆕 service
+* service/location: singular location from the post
+* service/post-type-fields: date field helpers
+* service/rest-api: filter for all terms rendered props
+* service/rest-api: terms rendered field for supported post-types
+* service/taxonomy-fields: 🆕 service
+* service/term-hierarchy: prioritize the child terms on single selected
+* service/term-relations: rest field for taxonomy with post prop
+
 ### 3.32.0
 * app/assignment-dock: 🆕 app
 * internal/core-admin: support for ajax on multiple column
