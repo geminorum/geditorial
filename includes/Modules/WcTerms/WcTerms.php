@@ -114,6 +114,11 @@ class WcTerms extends gEditorial\Module
 					'title'       => _x( 'Archive Sub-terms', 'Setting Title', 'geditorial-wc-terms' ),
 					'description' => _x( 'Enhance the term archive with list of sub-terms.', 'Setting Description', 'geditorial-wc-terms' ),
 				],
+				[
+					'field'       => 'term_archive_assigned',
+					'title'       => _x( 'Archive Assigned', 'Setting Title', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the term archive with list of assigned posts.', 'Setting Description', 'geditorial-wc-terms' ),
+				],
 			],
 		];
 	}
@@ -135,6 +140,9 @@ class WcTerms extends gEditorial\Module
 
 		if ( $this->get_setting( 'term_archive_subterms' ) )
 			$this->action( 'archive_description', 12, 0, 'subterms', 'woocommerce' );
+
+		if ( $this->get_setting( 'term_archive_assigned' ) )
+			$this->action( 'archive_description', 22, 0, 'assigned', 'woocommerce' );
 
 		$this->_init_tab_from_taxonomy();
 	}
@@ -179,6 +187,38 @@ class WcTerms extends gEditorial\Module
 
 		if ( $term = get_queried_object() )
 			gEditorial\Template::renderTermSubTerms( $term, [], $this->module->name );
+	}
+
+	public function archive_description_assigned()
+	{
+		if ( ! is_product_taxonomy() )
+			return;
+
+		if ( absint( get_query_var( 'paged' ) ) )
+			return;
+
+		if ( ! $term = get_queried_object() )
+			return;
+
+		if ( in_array( $term->taxonomy, WordPress\WooCommerce::PRODUCT_TAXONOMIES, TRUE ) )
+			return;
+
+		echo gEditorial\ShortCode::listPosts( 'assigned',
+			'',
+			$term->taxonomy,
+			$this->filters( 'term_listassigned_args', [
+				'context' => 'woocommerce',
+				'term_id' => $term->term_id,
+				'future'  => 'off',
+				'title'   => FALSE,
+				'wrap'    => FALSE,
+				'before'  => $this->wrap_open( '-term-listassigned' ),
+				'after'   => '</div>',
+				'module'  => $this->module->name,
+
+				'exclude_posttypes' => WordPress\WooCommerce::PRODUCT_POSTTYPE,
+			], $term ),
+		);
 	}
 
 	private function _init_tab_from_taxonomy()
