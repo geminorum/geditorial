@@ -102,6 +102,7 @@ $spacer: 1rem !default;
       }
     }
 
+    &.-theday-bycalendar,
     &.-needs-refresh,
     &.-empty {
       margin-bottom: 0;
@@ -121,6 +122,10 @@ $spacer: 1rem !default;
           color: #222;
         }
       }
+    }
+
+    &.-theday-bycalendar {
+      text-align: center;
     }
 
     // &.-inputgeneral {}
