@@ -1216,7 +1216,7 @@ class ShortCode extends WordPress\Main
 
 		foreach ( $items as $item ) {
 
-			// NOTE: callback must setup postdata
+			// NOTE: call-back must setup post-data
 			// @REF: https://developer.wordpress.org/?p=2837#comment-874
 			// `$GLOBALS['post'] = $item;`
 			// `setup_postdata( $item );`

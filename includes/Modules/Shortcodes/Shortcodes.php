@@ -287,6 +287,7 @@ class Shortcodes extends gEditorial\Module
 			'',
 			array_merge( [
 				'item_image_tile' => TRUE,
+				'item_title'      => '%s',   // `%s` for term title
 			], (array) $atts ),
 			$content,
 			$this->constant( 'term_tiles_shortcode', $tag ),

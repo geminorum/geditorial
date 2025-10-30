@@ -103,6 +103,7 @@ class Template extends WordPress\Main
 			'caption_link' => FALSE,                                // custom `figcaption` link / TRUE for default
 			'fallback'     => FALSE,
 			'default'      => FALSE,
+			'context'      => NULL,
 			'before'       => '',
 			'after'        => '',
 			'echo'         => TRUE,
@@ -1187,17 +1188,19 @@ class Template extends WordPress\Main
 			'image_link'  => 'url',
 			'image_field' => Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ),
 			'name_only'   => FALSE,   // Avoids the name-only data (no description/image)
+			'context'     => NULL,
 			'before'      => '',
 			'after'       => '',
 		], $atts );
 
-		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction">';
+		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$desc   = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
 		$suffix = $args['secondary'] ?? apply_filters( sprintf( '%s_term_intro_title_suffix', static::BASE ), '', $term, $desc, $args, $module );
 
 		$image = self::termImage( [
 			'id'       => $term,
 			'taxonomy' => $term->taxonomy,
+			'context'  => $args['context'],
 			'link'     => $args['image_link'],
 			'field'    => $args['image_field'],
 			'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
@@ -1244,6 +1247,7 @@ class Template extends WordPress\Main
 
 		$args = self::atts( [
 			'hide_empty' => TRUE,
+			'context'    => NULL,
 			'before'     => '',
 			'after'      => '',
 		], $atts );
@@ -1258,7 +1262,7 @@ class Template extends WordPress\Main
 		if ( empty( $terms ) )
 			return;
 
-		$wrap = '<div class="-wrap '.static::BASE.'-wrap -term-listsubterms">';
+		$wrap = '<div class="-wrap '.static::BASE.'-wrap -term-listsubterms'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$list = [];
 
 		foreach ( $terms as $term )

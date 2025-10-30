@@ -142,7 +142,8 @@ class WcTerms extends gEditorial\Module
 			$this->action( 'archive_description', 12, 0, 'subterms', 'woocommerce' );
 
 		if ( $this->get_setting( 'term_archive_assigned' ) )
-			$this->action( 'archive_description', 22, 0, 'assigned', 'woocommerce' );
+			// $this->action( 'archive_description', 22, 0, 'assigned', 'woocommerce' );
+			$this->action( 'after_main_content', -8, 0, 'assigned', 'woocommerce' );
 
 		$this->_init_tab_from_taxonomy();
 	}
@@ -173,6 +174,7 @@ class WcTerms extends gEditorial\Module
 
 		if ( $term = get_queried_object() )
 			gEditorial\Template::renderTermIntro( $term, [
+				'context' => 'woocommerce',
 				'heading' => $this->get_setting( 'term_archive_title' ),
 			], $this->module->name );
 	}
@@ -186,10 +188,13 @@ class WcTerms extends gEditorial\Module
 			return;
 
 		if ( $term = get_queried_object() )
-			gEditorial\Template::renderTermSubTerms( $term, [], $this->module->name );
+			gEditorial\Template::renderTermSubTerms( $term, [
+				'context' => 'woocommerce',
+			], $this->module->name );
 	}
 
-	public function archive_description_assigned()
+	// public function archive_description_assigned()
+	public function after_main_content_assigned()
 	{
 		if ( ! is_product_taxonomy() )
 			return;
@@ -282,6 +287,7 @@ class WcTerms extends gEditorial\Module
 				'callback' => function () use ( $terms, $heading ) {
 					foreach ( $terms as $term )
 						gEditorial\Template::renderTermIntro( $term, [
+							'context'    => 'woocommerce',
 							'heading'    => $heading,
 							'image_link' => 'attachment',
 						], $this->module->name );
@@ -306,6 +312,7 @@ class WcTerms extends gEditorial\Module
 				'priority' => $row['priority'],
 				'callback' => function () use ( $term, $heading ) {
 					gEditorial\Template::renderTermIntro( $term, [
+						'context'    => 'woocommerce',
 						'heading'    => $heading,
 						'image_link' => 'attachment',
 					], $this->module->name );
