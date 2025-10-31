@@ -917,7 +917,7 @@ trait CoreTaxonomies
 
 				$terms = get_terms( [
 					'taxonomy'   => $taxonomy->name,
-					'parent'     => 0,
+					'parent'     => 0, // parents only
 					'hide_empty' => TRUE,
 
 					'update_term_meta_cache' => FALSE,

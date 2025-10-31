@@ -56,8 +56,12 @@ class Attachments extends gEditorial\Module
 					'dir'         => 'ltr',
 				],
 				[
-					'field'       => 'fallback_alt_to_title',
-					'title'       => _x( 'Fallback Alt to Title', 'Setting Title', 'geditorial-attachments' ),
+					'field' => 'fallback_alt_to_title',
+					'title' => sprintf(
+						/* translators: `%s`: `alt` */
+						_x( 'Fallback %s to Title', 'Setting Title', 'geditorial-attachments' ),
+						Core\HTML::code( 'alt' )
+					),
 					'description' => _x( 'Tries to fill empty alt attribute with attachment title on images.', 'Setting Description', 'geditorial-attachments' ),
 				],
 			],
@@ -135,13 +139,14 @@ class Attachments extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
+		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'attachment_count' ) )
 				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20 );
 
-		} else if ( 'upload' == $screen->base ) {
+		} else if ( 'upload' === $screen->base ) {
+
 			$this->corerestrictposts__hook_screen_authors();
 		}
 	}
@@ -153,7 +158,7 @@ class Attachments extends gEditorial\Module
 		return ltrim( rtrim( $prefix, '/' ), '/' );
 	}
 
-	// TODO: add custom endpoint like `thumbnail` or `cover` for posttype thumbnail
+	// TODO: add custom endpoint like `thumbnail` or `cover` for post-type thumbnail
 	private function add_rewrite_rule()
 	{
 		add_rewrite_rule(
@@ -235,7 +240,7 @@ class Attachments extends gEditorial\Module
 				'href'   => wp_get_attachment_url( $attachment->ID ),
 			];
 
-			// TODO: add submenu for: title/caption/description/sizes
+			// TODO: add sub-menu for: title/caption/description/sizes
 		}
 	}
 
@@ -380,12 +385,12 @@ class Attachments extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'remove_thumbnails', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'delete_sizes', TRUE ) ) {
 
 					$count = 0;
 
 					foreach ( $_POST['_cb'] as $post_id )
-						if ( WordPress\Media::deleteAttachmentThumbnails( $post_id ) )
+						if ( WordPress\Media::deleteImageSizes( $post_id ) )
 							++$count;
 
 					WordPress\Redirect::doReferer( [
@@ -414,7 +419,7 @@ class Attachments extends gEditorial\Module
 		$pagination['actions'] = [
 			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
 			'empty_metadata'     => _x( 'Empty Meta-data', 'Table Action', 'geditorial-attachments' ),
-			'remove_thumbnails'  => _x( 'Remove Thumbnails', 'Table Action', 'geditorial-attachments' ),
+			'delete_sizes'       => _x( 'Delete Sizes', 'Table Action', 'geditorial-attachments' ),
 		];
 
 		$actions = [
