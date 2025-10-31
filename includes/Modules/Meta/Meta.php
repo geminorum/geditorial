@@ -133,6 +133,7 @@ class Meta extends gEditorial\Module
 				'area'      => _x( 'Area', 'Titles', 'geditorial-meta' ),
 				'period'    => _x( 'Period', 'Titles', 'geditorial-meta' ),
 				'amount'    => _x( 'Amount', 'Titles', 'geditorial-meta' ),
+				'sku'       => _x( 'SKU', 'Titles', 'geditorial-meta' ),
 
 				'notes'       => _x( 'Notes', 'Titles', 'geditorial-meta' ),
 				'reference'   => _x( 'Reference', 'Titles', 'geditorial-meta' ),
@@ -196,6 +197,7 @@ class Meta extends gEditorial\Module
 				'area'      => _x( 'The formatted area, measured in square metres.', 'Descriptions', 'geditorial-meta' ),
 				'period'    => _x( 'The length of time about the post.', 'Descriptions', 'geditorial-meta' ),
 				'amount'    => _x( 'The quantity number about the post.', 'Descriptions', 'geditorial-meta' ),
+				'sku'       => _x( 'Stock Keeping Unit', 'Descriptions', 'geditorial-meta' ),
 
 				'notes'       => _x( 'General Notes about the Content', 'Descriptions: `notes`', 'geditorial-meta' ),
 				'reference'   => _x( 'Full Reference to the Content', 'Descriptions: `reference`', 'geditorial-meta' ),
@@ -282,6 +284,7 @@ class Meta extends gEditorial\Module
 					'area'      => [ 'type' => 'area' ],
 					'period'    => [ 'type' => 'text' ],
 					'amount'    => [ 'type' => 'number' ],
+					'sku'       => [ 'type' => 'code', 'quickedit' => TRUE ],
 
 					'notes'       => [ 'type' => 'note' ],
 					'reference'   => [ 'type' => 'note' ],
