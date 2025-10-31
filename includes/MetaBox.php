@@ -14,15 +14,20 @@ class MetaBox extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function checkHidden( $metabox_id, $posttype = FALSE, $after = '' )
+	public static function checkHidden( $metabox_id, $after = '', $posttype = FALSE )
 	{
+		static $hidden = NULL;
+
 		if ( ! $metabox_id )
 			return FALSE;
 
 		if ( $posttype && WordPress\PostType::supportBlocks( $posttype ) )
 			return FALSE;
 
-		if ( ! in_array( $metabox_id, get_hidden_meta_boxes( get_current_screen() ) ) )
+		if ( is_null( $hidden ) )
+			$hidden = (array) get_hidden_meta_boxes( get_current_screen() );
+
+		if ( ! in_array( $metabox_id, $hidden, TRUE ) )
 			return FALSE;
 
 		$html = Core\HTML::tag( 'a', [
@@ -130,7 +135,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $args['taxonomy'] )
 			return FALSE;
 
-		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'], '', $args['posttype'] ) )
 			return;
 
 		if ( ! is_null( $terms ) ) {
@@ -281,7 +286,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $args['taxonomy'] )
 			return FALSE;
 
-		if ( $args['metabox'] && self::checkHidden( $args['metabox'], $args['posttype'] ) )
+		if ( $args['metabox'] && self::checkHidden( $args['metabox'], '', $args['posttype'] ) )
 			return FALSE;
 
 		$selected = $post_id ? WordPress\Taxonomy::getPostTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];

@@ -757,7 +757,13 @@ class Module extends WordPress\Module
 		if ( FALSE === $box )
 			return FALSE;
 
-		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
+		// NOTE: argument order changed
+		return MetaBox::checkHidden(
+			empty( $box['id'] ) ? $this->classs( $box ) : $box['id'],
+			$after,
+			$posttype
+		);
+	}
 
 	// Checks to bail early if column is hidden
 	protected function check_hidden_column( $column, $after = '' )
