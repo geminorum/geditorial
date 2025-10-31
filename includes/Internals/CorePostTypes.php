@@ -146,7 +146,7 @@ trait CorePostTypes
 					/**
 					 * The URL to the icon to be used for this menu. Pass a
 					 * `base64-encoded` SVG using a data URI, which will be
-					 * colored to match the color scheme -- this should begin
+					 * colored to match the color scheme -this should begin
 					 * with `data:image/svg+xml;base64,`.
 					 *
 					 * Pass the name of a `Dashicons` helper class to use a font
@@ -155,7 +155,7 @@ trait CorePostTypes
 					 * Pass `none` to leave `div.wp-menu-image` empty so an icon
 					 * can be added via CSS.
 					 *
-					 * Defaults to use the posts icon.
+					 * Default is to use the posts icon.
 					 */
 
 					if ( array_key_exists( 'menu_icon', $args ) )

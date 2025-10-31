@@ -399,6 +399,14 @@ class Book extends gEditorial\Module
 						'quickedit'   => TRUE,
 						'bulkedit'    => FALSE,
 					],
+
+					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
+					'contact_string' => [ 'type' => 'contact' ],                      // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'wiki_url'       => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email', 'quickedit' => TRUE ],
+					'sku'            => [ 'type' => 'code', 'quickedit' => TRUE ],
+
 					'highlight'    => [ 'type' => 'note' ],
 					'source_title' => [ 'type' => 'text' ],
 					'source_url'   => [ 'type' => 'link' ],
@@ -484,6 +492,13 @@ class Book extends gEditorial\Module
 			'content_rich' => TRUE,   // even empty shows on sitemaps
 		], 'main_posttype', [
 			'custom_icon' => 'book',
+			'suitable_metas'  => [
+				'image'     => NULL,
+				'url'       => NULL,
+				'tagline'   => NULL,
+				'establish' => NULL,
+				'abolish'   => NULL,
+			],
 		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [

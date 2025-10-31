@@ -125,7 +125,7 @@ class Chronicles extends gEditorial\Module
 		return $strings;
 	}
 
-	// TODO: founded date/dismanteled date/
+	// TODO: founded date/dismantled dates
 	// TODO: incorporation/dissolution dates
 	protected function get_global_fields()
 	{
@@ -135,7 +135,7 @@ class Chronicles extends gEditorial\Module
 					'establish_date' => [
 						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/establish.html
 						'title'       => _x( 'Establish Date', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Organization Was Established', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the entity was established.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
@@ -145,16 +145,25 @@ class Chronicles extends gEditorial\Module
 					'abolish_date' => [
 						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/abolish.html
 						'title'       => _x( 'Abolish Date', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Organization Was Terminated, Disbanded, Inactivated, or Superseded', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the entity was terminated, disbanded, inactivated, or superseded.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
-						// 'quickedit'   => TRUE,
+						'quickedit'   => FALSE,
+						'bulkedit'    => FALSE,
+						'order'       => 45,
+					],
+					'purchase_date' => [
+						'title'       => _x( 'Purchase Date', 'Field Title', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the good was purchased.', 'Field Description', 'geditorial-chronicles' ),
+						'icon'        => 'cart',
+						'type'        => 'date',
+						'quickedit'   => TRUE,
 						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'release_date' => [
 						'title'       => _x( 'Release Date', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Product will Released', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the good will released.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
@@ -163,7 +172,7 @@ class Chronicles extends gEditorial\Module
 					],
 					'expire_date' => [
 						'title'       => _x( 'Expire Date', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Product will Expired', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the good Will expired.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
@@ -173,7 +182,7 @@ class Chronicles extends gEditorial\Module
 					'date_of_birth' => [
 						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/birth.html
 						'title'       => _x( 'Date of Birth', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Person Was Born', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the person was born.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipback',
 						'type'        => 'date',
 						'quickedit'   => TRUE,
@@ -183,23 +192,23 @@ class Chronicles extends gEditorial\Module
 					'date_of_death' => [
 						// @REF: https://www.archives.gov/research/catalog/lcdrg/elements/death.html
 						'title'       => _x( 'Date of Death', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'The Date on Which the Person Died', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the date on which the person has died.', 'Field Description', 'geditorial-chronicles' ),
 						'icon'        => 'controls-skipforward',
 						'type'        => 'date',
-						// 'quickedit'   => TRUE,
+						'quickedit'   => FALSE,
 						'bulkedit'    => FALSE,
 						'order'       => 45,
 					],
 					'place_of_birth' => [
 						'title'       => _x( 'Place of Birth', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'Place Where the Person was Born', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the place where the person was born.', 'Field Description', 'geditorial-chronicles' ),
 						'type'        => 'venue',
 						'data_length' => 15,
 						'order'       => 50,
 					],
 					'place_of_death' => [
 						'title'       => _x( 'Place of Death', 'Field Title', 'geditorial-chronicles' ),
-						'description' => _x( 'Place Where the Person Died', 'Field Description', 'geditorial-chronicles' ),
+						'description' => _x( 'Defines the place where the person has died.', 'Field Description', 'geditorial-chronicles' ),
 						'type'        => 'venue',
 						'data_length' => 15,
 						'order'       => 55,

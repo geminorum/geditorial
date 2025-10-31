@@ -2266,7 +2266,7 @@ class Terms extends gEditorial\Module
 	 *
 	 * @param array $defaults
 	 * @param array $taxonomies
-	 * @return array $defaults
+	 * @return array
 	 */
 	public function get_terms_defaults_ordering( $defaults, $taxonomies )
 	{
@@ -2337,10 +2337,10 @@ class Terms extends gEditorial\Module
 	 * Adjusts term query to handle custom sorting parameters.
 	 * @source: `wc_terms_clauses()`
 	 *
-	 * @param array  $clauses
-	 * @param array  $taxonomies
-	 * @param array  $args
-	 * @return array $clauses
+	 * @param array $clauses
+	 * @param array $taxonomies
+	 * @param array $args
+	 * @return array
 	 */
 	public function terms_clauses_ordering( $clauses, $taxonomies, $args )
 	{

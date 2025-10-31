@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Labeled extends gEditorial\Module
@@ -192,7 +191,7 @@ class Labeled extends gEditorial\Module
 			return;
 
 		if ( array_key_exists( 'label_string', $fields ) || array_key_exists( 'label_taxonomy', $fields ) )
-			Template::metaTermField( [
+			gEditorial\Template::metaTermField( [
 				'field'    => 'label_string',
 				'taxonomy' => $this->constant( 'main_taxonomy' ),
 				'before'   => $this->wrap_open_row().$this->get_column_icon( FALSE, $fields['label_string']['icon'], $fields['label_string']['title'] ),
@@ -208,6 +207,6 @@ class Labeled extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

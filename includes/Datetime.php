@@ -451,6 +451,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// NOTE: falls back on raw data: like `1362`
+	// TODO: support other spans like: establish/abolish
 	public static function prepBornDeadForDisplay( $born = '', $dead = '', $context = NULL, $calendar_type = NULL, $timezone_string = NULL )
 	{
 		if ( ! $born && ! $dead )

@@ -105,8 +105,8 @@ class AdvancedQueries extends gEditorial\Service
 	 * @source https://wordpress.stackexchange.com/a/11826
 	 *
 	 *
-	 * @param   string      $search
-	 * @param   WP_Query    $wp_query
+	 * @param string $search
+	 * @param WP_Query $wp_query
 	 */
 	public static function posts_search_posttitle_only( $search, $wp_query )
 	{

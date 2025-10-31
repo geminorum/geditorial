@@ -1461,7 +1461,7 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $html, $wrap );
 	}
 
-	// just like any other meta-field but stores in `$post->post_parent`
+	// Like any other meta-field but stores in `$post->post_parent`
 	public static function renderFieldPostParent( $field, $post = NULL, $module = NULL )
 	{
 		if ( empty( $field['name'] ) )
@@ -1703,7 +1703,7 @@ class MetaBox extends WordPress\Main
 			&& in_array( $post->post_status, [ 'draft', 'auto-draft' ], TRUE )
 			&& ( $metakey = Services\PostTypeFields::getPostMetaKey( $field['name'], $module ) ) ) {
 
-			// fills the meta by query data only on new posts
+			// Fills the meta by query data, only on new posts.
 			$meta = WordPress\Strings::kses( self::req( $metakey, '' ), 'none' );
 			$meta = Services\PostTypeFields::replaceTokens( $meta, $field, $post, 'raw' );
 			$meta = apply_filters( sprintf( '%s_%s_%s_%s', static::BASE, $module, 'initial', $field['name'] ), $meta, $field, $post, $module );

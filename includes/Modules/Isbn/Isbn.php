@@ -23,6 +23,7 @@ class Isbn extends gEditorial\Module
 			'icon'     => [ 'misc-16', 'upc-scan' ],
 			'access'   => 'beta',
 			'keywords' => [
+				'book',
 				'barcode',
 				'woocommerce',
 				'bibliographic',
