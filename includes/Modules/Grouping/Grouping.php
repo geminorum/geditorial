@@ -169,9 +169,14 @@ class Grouping extends gEditorial\Module
 			} );
 
 		add_action( 'manage_'.$taxonomy.'_custom_column',
-			static function ( $display, $column, $term_id ) use ( $taxonomy ) {
-				if ( 'users' == $column )
-					echo Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
+			function ( $display, $column, $term_id ) use ( $taxonomy ) {
+				if ( 'users' !== $column )
+					return;
+
+				if ( $this->check_hidden_column( $column ) )
+					return;
+
+				echo Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
 			}, 10, 3 );
 	}
 

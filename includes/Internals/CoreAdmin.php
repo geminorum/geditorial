@@ -203,6 +203,9 @@ trait CoreAdmin
 				if ( $this->hook_base( 'multiplesupported' ) !== $column )
 					return;
 
+				if ( $this->check_hidden_column( $column ) )
+					return;
+
 				if ( ! $term = WordPress\Term::get( $term_id, $object->name ) )
 					return;
 

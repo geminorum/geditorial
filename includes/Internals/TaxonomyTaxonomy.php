@@ -129,10 +129,13 @@ trait TaxonomyTaxonomy
 			} );
 
 		add_filter( sprintf( 'manage_%s_custom_column', $taxonomy ),
-			function ( $string, $column_name, $term_id ) use ( $target, $singleselect ) {
+			function ( $string, $column, $term_id ) use ( $target, $singleselect ) {
 
-				if ( $this->classs( $target ) !== $column_name )
-					return $string;
+				if ( $this->classs( $target ) !== $column )
+					return;
+
+				if ( $this->check_hidden_column( $column ) )
+					return;
 
 				if ( ! $term = WordPress\Term::get( (int) $term_id ) )
 					return;

@@ -548,11 +548,14 @@ class Tweaks extends gEditorial\Module
 		return 'geditorial-tweaks-title';
 	}
 
-	public function posts_custom_column( $column_name, $post_id )
+	public function posts_custom_column( $column, $post_id )
 	{
 		global $post, $wp_list_table;
 
-		switch ( $column_name ) {
+		if ( $this->check_hidden_column( $column ) )
+			return;
+
+		switch ( $column ) {
 
 			// FIXME: wont work because of page-title CSS class
 			case $this->classs( 'title' ):
@@ -675,9 +678,12 @@ class Tweaks extends gEditorial\Module
 		return $new;
 	}
 
-	public function manage_users_custom_column( $output, $column_name, $user_id )
+	public function manage_users_custom_column( $output, $column, $user_id )
 	{
-		if ( $this->classs( 'user' ) == $column_name ) {
+		if ( $this->classs( 'user' ) == $column ) {
+
+			if ( $this->check_hidden_column( $column ) )
+				return $output;
 
 			ob_start();
 
@@ -694,7 +700,10 @@ class Tweaks extends gEditorial\Module
 
 			$output.= ob_get_clean();
 
-		} else if ( $this->classs( 'contacts' ) == $column_name ) {
+		} else if ( $this->classs( 'contacts' ) == $column ) {
+
+			if ( $this->check_hidden_column( $column ) )
+				return $output;
 
 			ob_start();
 
@@ -711,7 +720,10 @@ class Tweaks extends gEditorial\Module
 
 			$output.= ob_get_clean();
 
-		} else if ( $this->classs( 'id' ) == $column_name ) {
+		} else if ( $this->classs( 'id' ) == $column ) {
+
+			if ( $this->check_hidden_column( $column ) )
+				return $output;
 
 			ob_start();
 
@@ -747,9 +759,12 @@ class Tweaks extends gEditorial\Module
 		return $columns;
 	}
 
-	public function comments_custom_column( $column_name, $comment_id )
+	public function comments_custom_column( $column, $comment_id )
 	{
-		if ( 'user' !== $column_name )
+		if ( 'user' !== $column )
+			return;
+
+		if ( $this->check_hidden_column( $column ) )
 			return;
 
 		$comment = WordPress\Comment::get( $comment_id );

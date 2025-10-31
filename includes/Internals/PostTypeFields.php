@@ -912,14 +912,14 @@ trait PostTypeFields
 		$this->posttypefields__hook_default_rows( $posttype );
 	}
 
-	public function bulk_edit_custom_box_posttypefields( $column_name, $posttype )
+	public function bulk_edit_custom_box_posttypefields( $column, $posttype )
 	{
-		$this->quick_edit_custom_box_posttypefields( $column_name, $posttype, TRUE );
+		$this->quick_edit_custom_box_posttypefields( $column, $posttype, TRUE );
 	}
 
-	public function quick_edit_custom_box_posttypefields( $column_name, $posttype, $bulkedit = FALSE )
+	public function quick_edit_custom_box_posttypefields( $column, $posttype, $bulkedit = FALSE )
 	{
-		if ( $this->classs() != $column_name )
+		if ( $this->classs() != $column )
 			return FALSE;
 
 		$fields = $this->get_posttype_fields( $posttype );
@@ -997,9 +997,9 @@ trait PostTypeFields
 		], $position[0], $position[1] );
 	}
 
-	public function posts_custom_column_posttypefields( $column_name, $post_id )
+	public function posts_custom_column_posttypefields( $column, $post_id )
 	{
-		if ( $this->classs() != $column_name )
+		if ( $this->classs() != $column )
 			return;
 
 		if ( ! $post = WordPress\Post::get( $post_id ) )
@@ -1009,6 +1009,28 @@ trait PostTypeFields
 		$user_id  = get_current_user_id();
 		$fields   = $this->get_posttype_fields( $post->post_type );
 		$excludes = $this->posttypefields_custom_column_excludes( $fields );
+
+		// TODO: move this to `add_inline_data` action hook
+		// NOTE: only for `quickedit` enabled fields
+		// NOTE: better here than `add_inline_data` hook to access `$fields`
+		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
+			$this->hidden( $this->posttypefields_prep_posttype_field_for_input(
+				$this->get_postmeta_field( $post->ID, $field ),
+				$field,
+				$args
+			), [
+				'disabled' => $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true',
+			], $prefix.$field );
+			// echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
+			// 	.'" class="hidden '.$prefix.$field.'">'.
+			// 	$this->posttypefields_prep_posttype_field_for_input(
+			// 		$this->get_postmeta_field( $post->ID, $field ),
+			// 		$field,
+			// 		$args
+			// 	).'</div>';
+
+		if ( $this->check_hidden_column( $column ) )
+			return;
 
 		echo '<div class="geditorial-admin-wrap-column -'.$this->module->name.'"><ul class="-rows">';
 
@@ -1029,18 +1051,6 @@ trait PostTypeFields
 			);
 
 		echo '</ul></div>';
-
-		// TODO: use `$this->hidden()`
-		// TODO: move this to `add_inline_data` action hook
-		// NOTE: for `quickedit` enabled fields
-		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
-			echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
-				.'" class="hidden '.$prefix.$field.'">'.
-				$this->posttypefields_prep_posttype_field_for_input(
-					$this->get_postmeta_field( $post->ID, $field ),
-					$field,
-					$args
-				).'</div>';
 	}
 
 	// NOTE: for more `MetaBox::renderFieldInput()`

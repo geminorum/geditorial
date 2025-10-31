@@ -302,9 +302,12 @@ class Users extends gEditorial\Module
 		return $new;
 	}
 
-	public function manage_users_custom_column( $output, $column_name, $user_id )
+	public function manage_users_custom_column( $output, $column, $user_id )
 	{
-		if ( $this->classs( 'counts' ) != $column_name )
+		if ( $this->classs( 'counts' ) != $column )
+			return $output;
+
+		if ( $this->check_hidden_column( $column ) )
 			return $output;
 
 		if ( empty( $this->cache['posttypes'] ) )
@@ -370,8 +373,13 @@ class Users extends gEditorial\Module
 
 	public function custom_column_groups( $display, $column, $term_id )
 	{
-		if ( 'users' == $column )
-			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
+		if ( 'users' !== $column )
+			return;
+
+		if ( $this->check_hidden_column( $column ) )
+			return;
+
+		echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
 	}
 
 	public function manage_columns_types( $columns )
@@ -382,8 +390,13 @@ class Users extends gEditorial\Module
 
 	public function custom_column_types( $display, $column, $term_id )
 	{
-		if ( 'users' == $column )
-			echo Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
+		if ( 'users' !== $column )
+			return;
+
+		if ( $this->check_hidden_column( $column ) )
+			return;
+
+		echo Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
 	}
 
 	public function edit_user_profile( $user )

@@ -490,9 +490,12 @@ class Today extends gEditorial\Module
 		], 'title', 'before' );
 	}
 
-	public function posts_custom_column( $column_name, $post_id )
+	public function posts_custom_column( $column, $post_id )
 	{
-		if ( 'theday' == $column_name ) {
+		if ( 'theday' == $column ) {
+
+			if ( $this->check_hidden_column( $column ) )
+				return;
 
 			$the_day = ModuleHelper::getTheDayFromPost(
 				WordPress\Post::get( $post_id ),
@@ -504,9 +507,9 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function quick_edit_custom_box( $column_name, $posttype )
+	public function quick_edit_custom_box( $column, $posttype )
 	{
-		if ( 'theday' != $column_name )
+		if ( 'theday' != $column )
 			return FALSE;
 
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';

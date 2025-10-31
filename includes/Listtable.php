@@ -14,6 +14,29 @@ class Listtable extends WordPress\Main
 		return gEditorial();
 	}
 
+	public static function checkHidden( $column_id, $after = '' )
+	{
+		static $hidden = NULL;
+
+		if ( ! $column_id )
+			return FALSE;
+
+		if ( is_null( $hidden ) )
+			$hidden = (array) get_hidden_columns( get_current_screen() );
+
+		if ( ! in_array( $column_id, $hidden, TRUE ) )
+			return FALSE;
+
+		$html = Core\HTML::tag( 'a', [
+			'href'  => add_query_arg( 'flush', '' ),
+			'class' => [ '-description', '-refresh' ],
+		], _x( 'Please refresh the page to generate the data.', 'Listtable: Refresh Link', 'geditorial' ) );
+
+		echo Core\HTML::wrap( $html, 'cell-wrap -needs-refresh' ).$after;
+
+		return TRUE;
+	}
+
 	public static function columnCount( $count, $title_attr = NULL )
 	{
 		return Helper::htmlCount( $count, $title_attr )

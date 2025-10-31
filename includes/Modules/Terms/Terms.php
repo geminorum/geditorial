@@ -826,7 +826,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
 	}
 
-	public function custom_column( $string, $column_name, $term_id )
+	public function custom_column( $string, $column, $term_id )
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $string;
@@ -836,14 +836,17 @@ class Terms extends gEditorial\Module
 
 		foreach ( $supported as $field ) {
 
-			if ( $this->classs( $field ) != $column_name )
+			if ( $this->classs( $field ) != $column )
 				continue;
 
 			$this->display_form_field( $field, $taxonomy, $term, TRUE );
 		}
 
+		if ( $this->check_hidden_column( $column ) )
+			return $string;
+
 		// NOTE: here for custom column with multiple fields support
-		$this->actions( 'custom_column', $column_name, $taxonomy, $supported, $term );
+		$this->actions( 'custom_column', $column, $taxonomy, $supported, $term );
 	}
 
 	// TODO: use read-only inputs on non-columns

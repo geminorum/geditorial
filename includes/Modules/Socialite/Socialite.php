@@ -313,15 +313,13 @@ class Socialite extends gEditorial\Module
 		return $columns; // TODO
 	}
 
-	public function terms_custom_column( $column_name, $taxonomy, $supported, $term )
+	public function terms_custom_column( $column, $taxonomy, $supported, $term )
 	{
-		if ( $column_name !== $this->classs() )
-			return;
-
-		echo $this->_get_term_icons( $term, $this->supported, [
-			'-icon-list',
-			'-social-links',
-		] );
+		if ( $column === $this->classs() )
+			echo $this->_get_term_icons( $term, $this->supported, [
+				'-icon-list',
+				'-social-links',
+			] );
 	}
 
 	private function _get_term_icons( $term, $fields = NULL, $extra = [] )

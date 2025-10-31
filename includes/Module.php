@@ -758,6 +758,17 @@ class Module extends WordPress\Module
 			return FALSE;
 
 		return MetaBox::checkHidden( ( empty( $box['id'] ) ? $this->classs( $box ) : $box['id'] ), $posttype, $after );
+
+	// Checks to bail early if column is hidden
+	protected function check_hidden_column( $column, $after = '' )
+	{
+		if ( FALSE === $column )
+			return FALSE;
+
+		return Listtable::checkHidden(
+			$column ?? $this->classs(),
+			$after
+		);
 	}
 
 	// DEFAULT METHOD
