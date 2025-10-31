@@ -164,6 +164,8 @@
       app.inlineDate('dateend', tag, event);
       app.inlineDate('born', tag, event);
       app.inlineDate('dead', tag, event);
+      app.inlineDate('establish', tag, event);
+      app.inlineDate('abolish', tag, event);
       // 'distance', // TODO
       // 'duration', // TODO
       // 'area',     // TODO
