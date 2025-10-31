@@ -242,7 +242,6 @@ class Contest extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'apply_posttype', [
-			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );

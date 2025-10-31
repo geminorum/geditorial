@@ -118,7 +118,6 @@ class Abo extends gEditorial\Module
 			'data_length'        => _x( '3', 'Main Taxonomy Argument: `data_length`', 'geditorial-abo' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 			'single_selected' => TRUE,
 		] );

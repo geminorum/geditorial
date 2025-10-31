@@ -123,7 +123,6 @@ class Licensed extends gEditorial\Module
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 		] );
 

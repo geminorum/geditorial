@@ -230,10 +230,7 @@ class Tube extends gEditorial\Module
 			'custom_icon' => $this->module->icon,
 		] );
 
-		$this->register_posttype( 'primary_posttype', [
-
-		], [
-			'custom_icon'      => $this->module->icon,
+		$this->register_posttype( 'primary_posttype', [], [
 			'primary_taxonomy' => $this->constant( 'primary_taxonomy' ),
 		] );
 

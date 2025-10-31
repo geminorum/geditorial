@@ -145,7 +145,6 @@ class Audit extends gEditorial\Module
 			'show_in_menu'       => FALSE,
 			'meta_box_cb'        => '__checklist_restricted_terms_callback',
 		], NULL, [
-			'custom_icon'    => $this->module->icon,
 			'custom_captype' => TRUE,
 		] );
 

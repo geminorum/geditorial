@@ -120,7 +120,6 @@ class People extends gEditorial\Module
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'terms_related'   => TRUE,
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,

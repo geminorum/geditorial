@@ -119,7 +119,6 @@ class Inquire extends gEditorial\Module
 			'meta_box_cb'  => NULL, // default meta box
 		], 'main_posttype', [
 			'is_viewable' => $viewable,
-			'custom_icon' => $this->module->icon,
 		] );
 
 		$this->register_taxonomy( 'status_taxonomy', [
@@ -129,7 +128,6 @@ class Inquire extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'main_posttype', [
 			'is_viewable'     => $viewable,
-			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
@@ -146,7 +144,6 @@ class Inquire extends gEditorial\Module
 
 		$this->register_posttype( 'main_posttype', [], [
 			'is_viewable'     => $viewable,
-			'custom_icon'     => $this->module->icon,
 			'status_taxonomy' => TRUE,
 		] );
 	}

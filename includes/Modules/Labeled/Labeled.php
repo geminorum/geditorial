@@ -134,7 +134,6 @@ class Labeled extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], FALSE, [
-			'custom_icon'    => $this->module->icon,
 			'custom_captype' => TRUE,
 		] );
 

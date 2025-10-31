@@ -326,7 +326,6 @@ class Listed extends gEditorial\Module
 			'default_term'       => NULL,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
-			'custom_icon'    => $this->module->icon,
 			'custom_captype' => $captype,
 		] );
 
@@ -346,7 +345,6 @@ class Listed extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
 			'is_viewable'    => $viewable,
-			'custom_icon'    => 'backup',
 			'custom_captype' => $captype,
 			'admin_managed'  => TRUE,
 		] );
@@ -368,7 +366,6 @@ class Listed extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
 			'is_viewable'     => $viewable,
-			'custom_icon'     => 'post-status',
 			'custom_captype'  => $captype,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
@@ -376,13 +373,11 @@ class Listed extends gEditorial\Module
 
 		$this->paired_register( [], [
 			'is_viewable'      => $viewable,
-			'custom_icon'      => $this->module->icon,
 			'custom_captype'   => $captype,
 			'primary_taxonomy' => TRUE,
 			'status_taxonomy'  => TRUE,
 		], [
 			'is_viewable'    => $viewable,
-			'custom_icon'    => 'performance',
 			'custom_captype' => $captype,
 		] );
 

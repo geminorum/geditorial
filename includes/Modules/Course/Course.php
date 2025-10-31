@@ -279,9 +279,7 @@ class Course extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
-		], 'course_posttype', [
-			'custom_icon' => 'backup',
-		] );
+		], 'course_posttype', [] );
 
 		$this->register_taxonomy( 'format_taxonomy', [
 			'hierarchical'       => TRUE,
@@ -298,7 +296,6 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'lesson_posttype', [
-			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );

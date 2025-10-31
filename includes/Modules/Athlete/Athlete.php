@@ -142,10 +142,8 @@ class Athlete extends gEditorial\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'custom_captype'  => TRUE,
 		] );
 

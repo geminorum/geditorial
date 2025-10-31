@@ -118,7 +118,6 @@ class Achieved extends gEditorial\Module
 			'data_length'        => _x( '120', 'Main Taxonomy Argument: `data_length`', 'geditorial-achieved' ),
 		], NULL, [
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'     => $this->module->icon,
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,

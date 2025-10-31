@@ -209,8 +209,27 @@ trait CoreTaxonomies
 					if ( array_key_exists( 'menu_icon', $args ) )
 						break;
 
-					if ( TRUE === $value )
-						$icon = $this->module->icon ?: ( $args['hierarchical'] ? 'category' : 'tag' );
+					if ( TRUE === $value && in_array( $constant, [
+						'main_taxonomy',
+						'primary_taxonomy',
+						'category_taxonomy',
+						'primary_paired',
+					], TRUE ) )
+						$icon = $this->module->icon;
+
+					else if ( TRUE === $value && in_array( $constant, [
+						'status_taxonomy',
+					], TRUE ) )
+						$icon = 'post-status';
+
+					else if ( TRUE === $value && in_array( $constant, [
+						'span_taxonomy',
+						'year_taxonomy',
+					], TRUE ) )
+						$icon = 'backup';
+
+					else if ( TRUE === $value )
+						$icon = $args['hierarchical'] ? 'category' : 'tag';
 
 					else if ( $value )
 						$icon = $value;

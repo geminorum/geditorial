@@ -319,20 +319,17 @@ class Directorate extends gEditorial\Module
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
-			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );
 
 		$this->paired_register( [], [
 			'is_viewable'      => $viewable,
-			'custom_icon'      => $this->module->icon,
 			'custom_captype'   => $captype,
 			'primary_taxonomy' => TRUE,
 			'status_taxonomy'  => TRUE,
 		], [
 			'is_viewable'    => $viewable,
-			'custom_icon'    => $this->module->icon,
 			'custom_captype' => $captype,
 		] );
 

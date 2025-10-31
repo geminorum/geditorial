@@ -161,7 +161,13 @@ trait CorePostTypes
 					if ( array_key_exists( 'menu_icon', $args ) )
 						break;
 
-					if ( TRUE === $value )
+					if ( TRUE === $value && in_array( $constant, [
+						'main_posttype',
+						'primary_posttype',
+					], TRUE ) )
+						$icon = $this->module->icon;
+
+					else if ( TRUE === $value )
 						$icon = $this->module->icon ?: 'welcome-write-blog';
 
 					else if ( $value )

@@ -245,12 +245,10 @@ class Venue extends gEditorial\Module
 		] );
 
 		$this->paired_register( [], [
-			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
 			'is_viewable'      => $viewable,
 			'custom_captype'   => $captype,
 		], [
-			'custom_icon'    => 'building',
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
 		] );

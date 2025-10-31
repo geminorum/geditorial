@@ -172,7 +172,6 @@ class Symposium extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'main_posttype', [], [
-			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}

@@ -254,7 +254,6 @@ class Happening extends gEditorial\Module
 			'hierarchical'       => TRUE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit', TRUE ),
 		], 'primary_posttype', [
-			'custom_icon'     => 'post-status',
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 		] );

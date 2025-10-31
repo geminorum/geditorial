@@ -129,7 +129,6 @@ class Genres extends gEditorial\Module
 			'data_length'  => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-genres' ),
 		], NULL, [
 			'auto_parents' => $this->get_setting( 'auto_term_parents', TRUE ),
-			'custom_icon'  => $this->module->icon,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

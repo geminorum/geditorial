@@ -101,7 +101,6 @@ class Pitches extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'primary_posttype', [], [
-			'custom_icon'      => $this->module->icon,
 			'primary_taxonomy' => TRUE,
 		] );
 	}
