@@ -1689,7 +1689,15 @@ class MetaBox extends WordPress\Main
 
 	private static function _getMetaFieldRaw( $field, $post, $module )
 	{
-		$meta = Template::getMetaFieldRaw( $field['name'], $post->ID, $module, FALSE, '' );
+		if ( ! empty( $field['taxonomy'] ) && in_array( $field['type'], [ 'term' ], TRUE ) ) {
+
+			$terms = WordPress\Taxonomy::getPostTerms( $field['taxonomy'], $post, FALSE );
+			$meta  = empty( $terms ) ? '' : reset( $terms );
+
+		} else {
+
+			$meta = Template::getMetaFieldRaw( $field['name'], $post->ID, $module, FALSE, '' );
+		}
 
 		if ( '' === $meta
 			&& in_array( $post->post_status, [ 'draft', 'auto-draft' ], TRUE )
