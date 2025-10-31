@@ -2056,13 +2056,20 @@ class Terms extends gEditorial\Module
 		return empty( $meta ) ? get_current_user_id() : $meta;
 	}
 
-	public function display_media_states( $media_states, $post )
+	public function display_media_states( $states, $post )
 	{
-		if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $post->ID, 'image' ) )
-			/* translators: `%s`: term name */
-			$media_states[] = sprintf( _x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ), get_term( $term_id )->name );
+		// NOTE: in some cases we assign featured image of a post-type into paired taxonomy
+		if ( $post->post_parent )
+			return $states;
 
-		return $media_states;
+		if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $this->get_supported_metakey( 'image' ), $post->ID ) )
+			$states[] = sprintf(
+				/* translators: `%s`: term name */
+				_x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ),
+				WordPress\Term::htmlLink( (int) $term_id ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' )
+			);
+
+		return $states;
 	}
 
 	public function datacodes_print_template_data( $data, $type, $term, $metakey )
