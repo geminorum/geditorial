@@ -823,21 +823,21 @@ class Arraay extends Base
 	 * Retrieves duplicate values of an array.
 	 * @source https://stackoverflow.com/a/3450063
 	 *
-	 * @param  array $array
-	 * @return array $duplicates
+	 * @param array $array
+	 * @return array
 	 */
 	public static function duplicates( $array )
 	{
-		return \array_diff_assoc( $array, \array_unique( $array ) );
+		return array_diff_assoc( $array, array_unique( $array ) );
 	}
 
 	/**
-	 * Prepears list of objects with provided keys.
+	 * Preps list of objects with provided keys.
 	 *
-	 * @param  array $array
-	 * @param  string $index_key
-	 * @param  string $value_key
-	 * @return array $list
+	 * @param array $array
+	 * @param string $index_key
+	 * @param string $value_key
+	 * @return array
 	 */
 	public static function toObjectForJS( $array, $index_key = 'code', $value_key = 'label' )
 	{
@@ -860,8 +860,8 @@ class Arraay extends Base
 	 *
 	 * @source https://stackoverflow.com/a/4345578
 	 *
-	 * @param  object $object
-	 * @return array $array
+	 * @param object $object
+	 * @return array
 	 */
 	public static function fromObject( $object )
 	{
@@ -945,7 +945,7 @@ class Arraay extends Base
 	{
 		$grouped = [];
 
-		\array_walk( $array, static function ( $value, $key ) use ( &$grouped ) {
+		array_walk( $array, static function ( $value, $key ) use ( &$grouped ) {
 			if ( ! isset( $grouped[$value] ) || ! is_array( $grouped[$value] ) )
 				$grouped[$value] = [];
 			$grouped[$value][] = $key;

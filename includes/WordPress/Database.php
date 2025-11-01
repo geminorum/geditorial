@@ -344,7 +344,7 @@ class Database extends Core\Base
 		", $posttype );
 
 		$key = md5( $query );
-		$cache = wp_cache_get( 'wp_get_archives' , 'general' );
+		$cache = wp_cache_get( 'wp_get_archives', 'general' );
 
 		if ( ! isset( $cache[$key] ) ) {
 			$months = $wpdb->get_results( $query );

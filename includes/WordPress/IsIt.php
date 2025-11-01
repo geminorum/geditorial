@@ -6,6 +6,18 @@ use geminorum\gEditorial\Core;
 
 class IsIt extends Core\Base
 {
+	/**
+	 * Determines whether the current request is for the login screen.
+	 * NOTE: `is_login()` @since WP 6.1.0
+	 * @see https://core.trac.wordpress.org/ticket/19898
+	 * @link https://make.wordpress.org/core/2022/09/11/new-is_login-function-for-determining-if-a-page-is-the-login-screen/
+	 *
+	 * @return bool
+	 */
+	public static function login()
+	{
+		return FALSE !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
+	}
 
 	/**
 	 * Test if the current browser runs on a mobile device (smart phone, tablet, etc.).

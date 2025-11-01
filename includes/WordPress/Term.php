@@ -383,8 +383,7 @@ class Term extends Core\Base
 
 	/**
 	 * Checks if a term is publicly viewable.
-	 * @source: `is_term_publicly_viewable()`
-	 * @since WP 6.1.0
+	 * @source: `is_term_publicly_viewable()` @since WP 6.1.0
 	 *
 	 * @param int|string|object $term
 	 * @return bool

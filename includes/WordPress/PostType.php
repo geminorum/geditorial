@@ -7,9 +7,8 @@ use geminorum\gEditorial\Core;
 class PostType extends Core\Base
 {
 
-	const NAME_INPUT_PATTERN    = '[-a-zA-Z0-9_]{3,20}';
-	const PRIMARY_TAXONOMY_PROP = 'primary_taxonomy';   // FIXME: DEPRECATED
-	const MAP_CAP_IMPORT_POSTS  = 'edit_others_posts';
+	const NAME_INPUT_PATTERN   = '[-a-zA-Z0-9_]{3,20}';
+	const MAP_CAP_IMPORT_POSTS = 'edit_others_posts';
 
 	public static function object( $posttype_or_post )
 	{
@@ -73,26 +72,26 @@ class PostType extends Core\Base
 	 *
 	 * If assigned post-type `capability_type` argument:
 	 *
-	 * /// Meta capabilities
-	 * 	[edit_post]   => "edit_{$capability_type}"
-	 * 	[read_post]   => "read_{$capability_type}"
-	 * 	[delete_post] => "delete_{$capability_type}"
+	 * Meta capabilities
+	 * - `edit_post`: `edit_{$capability_type}`
+	 * - `read_post`: `read_{$capability_type}`
+	 * - `delete_post`: `delete_{$capability_type}`
 	 *
-	 * /// Primitive capabilities used outside of map_meta_cap():
-	 * 	[edit_posts]             => "edit_{$capability_type}s"
-	 * 	[edit_others_posts]      => "edit_others_{$capability_type}s"
-	 * 	[publish_posts]          => "publish_{$capability_type}s"
-	 * 	[read_private_posts]     => "read_private_{$capability_type}s"
+	 * Primitive capabilities used outside of `map_meta_cap()`.
+	 * - `edit_posts`: `edit_{$capability_type}s`
+	 * - `edit_others_posts`: `edit_others_{$capability_type}s`
+	 * - `publish_posts`: `publish_{$capability_type}s`
+	 * - `read_private_posts`: `read_private_{$capability_type}s`
 	 *
-	 * /// Primitive capabilities used within map_meta_cap():
-	 * 	[read]                   => "read",
-	 * 	[delete_posts]           => "delete_{$capability_type}s"
-	 * 	[delete_private_posts]   => "delete_private_{$capability_type}s"
-	 * 	[delete_published_posts] => "delete_published_{$capability_type}s"
-	 * 	[delete_others_posts]    => "delete_others_{$capability_type}s"
-	 * 	[edit_private_posts]     => "edit_private_{$capability_type}s"
-	 * 	[edit_published_posts]   => "edit_published_{$capability_type}s"
-	 * 	[create_posts]           => "edit_{$capability_type}s"
+	 * Primitive capabilities used within `map_meta_cap()`.
+	 * - `read`: `read`
+	 * - `delete_posts`: `delete_{$capability_type}s`
+	 * - `delete_private_posts`: `delete_private_{$capability_type}s`
+	 * - `delete_published_posts`: `delete_published_{$capability_type}s`
+	 * - `delete_others_posts`: `delete_others_{$capability_type}s`
+	 * - `edit_private_posts`: `edit_private_{$capability_type}s`
+	 * - `edit_published_posts`: `edit_published_{$capability_type}s`
+	 * - `create_posts`: `edit_{$capability_type}s`
 	 *
 	 * @param string|object $posttype
 	 * @param null|string $capability
@@ -188,11 +187,11 @@ class PostType extends Core\Base
 	 *  `show_in_rest` Boolean: If true, will return post types whitelisted for the REST API
 	 * 	`_builtin` Boolean: If true, will return WordPress default post types. Use false to return only custom post types.
 	 *
-	 * @param  int $mod
-	 * @param  array $args
-	 * @param  null|string $capability
-	 * @param  int $user_id
-	 * @return array $list
+	 * @param int $mod
+	 * @param array $args
+	 * @param string $capability
+	 * @param int $user_id
+	 * @return array
 	 */
 	public static function get( $mod = 0, $args = [ 'public' => TRUE ], $capability = NULL, $user_id = NULL )
 	{
@@ -301,39 +300,6 @@ class PostType extends Core\Base
 			], Core\HTML::escape( $author_data->display_name ) );
 
 		return FALSE;
-	}
-
-	// * 'publish' - a published post or page
-	// * 'pending' - post is pending review
-	// * 'draft' - a post in draft status
-	// * 'auto-draft' - a newly created post, with no content
-	// * 'future' - a post to publish in the future
-	// * 'private' - not visible to users who are not logged in
-	// * 'inherit' - a revision. see get_children.
-	// * 'trash' - post is in trashbin. added with Version 2.9.
-	// NOTE: DEPRECATED
-	public static function getStatuses()
-	{
-		global $wp_post_statuses;
-
-		$statuses = [];
-
-		foreach ( $wp_post_statuses as $status )
-			$statuses[$status->name] = $status->label;
-
-		return $statuses;
-	}
-
-	public static function getAvailableStatuses( $posttype, $excludes = NULL )
-	{
-		if ( is_null( $excludes ) )
-			$excludes = [
-				'trash',
-				'private',
-				'auto-draft',
-			];
-
-		return array_diff_key( get_available_post_statuses( $posttype ), (array) $excludes );
 	}
 
 	// @REF: https://stackoverflow.com/questions/4829199/sql-is-there-a-way-to-get-the-average-number-of-characters-for-a-field
@@ -531,74 +497,6 @@ class PostType extends Core\Base
 		return (array) $query->query( $args );
 	}
 
-	// NOTE: DEPRECATED: use `Post::getByTitle()`
-	public static function getIDsByTitle( $title, $atts = [] )
-	{
-		$args = array_merge( [
-			'title'          => $title,
-			'fields'         => 'ids',
-			'post_type'      => 'any',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-
-			'no_found_rows'          => TRUE,
-			'suppress_filters'       => TRUE,
-			'update_post_meta_cache' => FALSE,
-			'update_post_term_cache' => FALSE,
-			'lazy_load_term_meta'    => FALSE,
-		], $atts );
-
-		$query = new \WP_Query();
-
-		return (array) $query->query( $args );
-	}
-
-	// TODO: move to `Post` Class
-	public static function getIDbySlug( $slug, $posttype = 'post', $url = FALSE )
-	{
-		static $cache = [];
-
-		if ( $url ) {
-			$slug = rawurlencode( urldecode( $slug ) );
-			$slug = sanitize_title( basename( $slug ) );
-		}
-
-		$slug = trim( $slug );
-
-		if ( isset( $cache[$posttype] ) && array_key_exists( $slug, $cache[$posttype] ) )
-			return $cache[$posttype][$slug];
-
-		global $wpdb;
-
-		$id = $wpdb->get_var( $wpdb->prepare( "
-			SELECT ID
-			FROM {$wpdb->posts}
-			WHERE post_name = %s
-			AND post_type = %s
-		", $slug, $posttype ) );
-
-		return $cache[$posttype][$slug] = $id;
-	}
-
-	public static function getLastRevisionID( $post )
-	{
-		if ( ! $post = get_post( $post ) )
-			return FALSE;
-
-		global $wpdb;
-
-		return $wpdb->get_var(
-			$wpdb->prepare( "
-				SELECT ID
-				FROM {$wpdb->posts}
-				WHERE post_parent = %s
-				AND post_type = 'revision'
-				AND post_status = 'inherit'
-				ORDER BY post_date DESC
-			", $post->ID )
-		);
-	}
-
 	// TODO: use db query
 	public static function getLastMenuOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $statuses = NULL )
 	{
@@ -655,20 +553,6 @@ class PostType extends Core\Base
 		$posts = $query->query( $args );
 
 		return empty( $posts ) ? FALSE : $posts[0];
-	}
-
-	public static function getParentPostID( $post_id = NULL, $object = FALSE )
-	{
-		if ( ! $post = get_post( $post_id ) )
-			return FALSE;
-
-		if ( empty( $post->post_parent ) )
-			return FALSE;
-
-		if ( $object )
-			return get_post( $post->post_parent );
-
-		return (int) $post->post_parent;
 	}
 
 	// @REF: `wp_dashboard_recent_drafts()`
@@ -747,34 +631,17 @@ class PostType extends Core\Base
 	public static function getThumbnailID( $post_id, $metakey = NULL )
 	{
 		if ( is_null( $metakey ) )
-			$thumbnail_id = get_post_thumbnail_id( $post_id ); // has filter @since WP 5.9.0
+			return get_post_thumbnail_id( $post_id );
 
-		else if ( $metakey )
-			$thumbnail_id = (int) get_post_meta( $post_id, $metakey, TRUE );
+		if ( $metakey )
+			// NOTE: this is a core filter @since WP 5.9.0
+			// @old `geditorial_get_post_thumbnail_id`
+			return apply_filters( 'post_thumbnail_id',
+				(int) get_post_meta( $post_id, $metakey, TRUE ),
+				get_post( $post_id )
+			);
 
-		else
-			$thumbnail_id = FALSE;
-
-		return apply_filters( 'geditorial_get_post_thumbnail_id', $thumbnail_id, $post_id, $metakey );
-	}
-
-	// NOTE: DEPRECATED
-	public static function getArchiveLink( $posttype )
-	{
-		self::_dep( 'WordPress\PostType::link()' );
-
-		return self::link( $posttype );
-	}
-
-	// NOTE: DEPRECATED
-	public static function supportBlocksByPost( $post )
-	{
-		self::_dep( 'WordPress\Post::supportBlocks()' );
-
-		if ( ! function_exists( 'use_block_editor_for_post' ) )
-			return FALSE;
-
-		return use_block_editor_for_post( $post );
+		return FALSE;
 	}
 
 	public static function supportBlocks( $posttype )
@@ -786,23 +653,6 @@ class PostType extends Core\Base
 			return FALSE;
 
 		return use_block_editor_for_post_type( $object->name );
-	}
-
-	public static function newPostFromTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = 0 )
-	{
-		if ( ! is_object( $term ) && ! is_array( $term ) )
-			$term = get_term( $term, $taxonomy );
-
-		$new_post = [
-			'post_title'   => $term->name,
-			'post_name'    => $term->slug,
-			'post_content' => $term->description,
-			'post_status'  => 'pending',
-			'post_author'  => $user_id ? $user_id : get_current_user_id(),
-			'post_type'    => $posttype,
-		];
-
-		return wp_insert_post( $new_post );
 	}
 
 	public static function current( $default = NULL )
@@ -842,56 +692,6 @@ class PostType extends Core\Base
 			$args['post_type'] = $posttype;
 
 		return add_query_arg( $args, ( 'attachment' === $posttype ? 'upload.php' : 'edit.php' ) );
-	}
-
-	// NOTE: DEPRECATED: use `Post::get()`
-	public static function getPost( $post = NULL, $output = OBJECT, $filter = 'raw' )
-	{
-		return Post::get( $post, $output, $filter );
-	}
-
-	// NOTE: DEPRECATED: use `Post::link()`
-	public static function getPostLink( $post, $fallback = NULL, $statuses = NULL )
-	{
-		return Post::link( $post, $fallback, $statuses );
-	}
-
-	// NOTE: DEPRECATED: use `Post::title()`
-	public static function getPostTitle( $post, $fallback = NULL, $filter = TRUE )
-	{
-		return Post::title( $post, $fallback, $filter );
-	}
-
-	// NOTE: DEPRECATED: use `Post::getParentTitles()`
-	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL )
-	{
-		return Post::getParentTitles( $post, $suffix, $linked, $separator );
-	}
-
-	// NOTE: DEPRECATED: use `Services\PrimaryTaxonomy::get()`
-	public static function getPrimaryTaxonomy( $posttype, $fallback = FALSE )
-	{
-		self::_dep( 'Services\PrimaryTaxonomy::get()' );
-
-		$taxonomy = $fallback;
-
-		if ( 'post' === $posttype )
-			$taxonomy = 'category';
-
-		else if ( 'page' === $posttype )
-			$taxonomy = $fallback;
-
-		else if ( $posttype === WooCommerce::PRODUCT_POSTTYPE && WooCommerce::isActive() )
-			$taxonomy = WooCommerce::PROCUCT_CATEGORY;
-
-		if ( ! $taxonomy && ( $object = self::object( $posttype ) ) ) {
-
-			if ( ! empty( $object->{self::PRIMARY_TAXONOMY_PROP} )
-				&& Taxonomy::exists( $object->{self::PRIMARY_TAXONOMY_PROP} ) )
-					$taxonomy = $object->{self::PRIMARY_TAXONOMY_PROP};
-		}
-
-		return apply_filters( 'geditorial_posttype_primary_taxonomy', $taxonomy, $posttype, $fallback );
 	}
 
 	/**

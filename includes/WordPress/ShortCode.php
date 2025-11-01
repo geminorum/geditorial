@@ -31,7 +31,7 @@ class ShortCode extends Core\Base
 	 * @global array $shortcode_tags
 	 * @param string $shortcode The short-code tag name.
 	 * @param array $atts The attributes (optional).
-	 * @param array $content The short-code content (null by default).
+	 * @param array The short-code content (null by default).
 	 *
 	 * @return string|bool False on failure, the result of the short-code on success.
 	 */
@@ -43,6 +43,20 @@ class ShortCode extends Core\Base
 			return call_user_func( $shortcode_tags[$shortcode], $atts, $content, $shortcode );
 
 		return $content;
+	}
+
+	// NOTE: like `Core\HTML::tag()`
+	public static function build( $tag, $atts = [], $content = NULL )
+	{
+		$args = '';
+
+		foreach ( $atts as $key => $value )
+			$args.= sprintf( ' %s="%s"', $key, $value );
+
+		if ( $content )
+			return sprintf( '[%1$s%2$s]%3$s[/%4$s]', $tag, $args, $content, $tag );
+
+		return sprintf( '[%1$s%2$s /]', $tag, $args );
 	}
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [], $base = '' )

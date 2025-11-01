@@ -6,7 +6,6 @@ use geminorum\gEditorial\Core;
 
 class Post extends Core\Base
 {
-
 	/**
 	 * Retrieves post data given a post ID or post object.
 	 *
@@ -57,8 +56,7 @@ class Post extends Core\Base
 
 	/**
 	 * Determines whether a post is publicly viewable.
-	 *
-	 * @source `is_post_publicly_viewable()` @since WP5.7.0
+	 * @source `is_post_publicly_viewable()` @since WP 5.7.0
 	 *
 	 * @param int|object $post
 	 * @return bool
@@ -363,6 +361,61 @@ class Post extends Core\Base
 		return $query->query( $args );
 	}
 
+	// @old: `WordPress\PostType::getIDbySlug()`
+	public static function getIDbyURL( $url, $posttype = 'post' )
+	{
+		if ( ! $url = trim( $url ?: '' ) )
+			return FALSE;
+
+		$encoded   = rawurlencode( urldecode( $url ) );
+		$sanitized = sanitize_title( basename( $encoded ) );
+
+		return self::getIDbySlug( $sanitized, $posttype );
+	}
+
+	// @old: `WordPress\PostType::getIDbySlug()`
+	public static function getIDbySlug( $slug, $posttype = 'post' )
+	{
+		static $cache = [];
+
+		if ( ! $slug = trim( $slug ?: '' ) )
+			return FALSE;
+
+		if ( isset( $cache[$posttype] ) && array_key_exists( $slug, $cache[$posttype] ) )
+			return $cache[$posttype][$slug];
+
+		global $wpdb;
+
+		$id = $wpdb->get_var( $wpdb->prepare( "
+			SELECT ID
+			FROM {$wpdb->posts}
+			WHERE post_name = %s
+			AND post_type = %s
+		", $slug, $posttype ) );
+
+		return $cache[$posttype][$slug] = $id;
+	}
+
+	// @old: `WordPress\PostType::getLastRevisionID()`
+	public static function getLastRevisionID( $post )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		global $wpdb;
+
+		return $wpdb->get_var(
+			$wpdb->prepare( "
+				SELECT ID
+				FROM {$wpdb->posts}
+				WHERE post_parent = %s
+				AND post_type = 'revision'
+				AND post_status = 'inherit'
+				ORDER BY post_date DESC
+			", $post->ID )
+		);
+	}
+
 	/**
 	 * Updates the post-type for the given post.
 	 * Also accepts post and post-type objects
@@ -622,6 +675,21 @@ class Post extends Core\Base
 		return $meta;
 	}
 
+	// @old: `WordPress\PostType::getParentPostID()`
+	public static function getParent( $post = NULL, $object = TRUE )
+	{
+		if ( ! $post = self::get( $post ) )
+			return FALSE;
+
+		if ( empty( $post->post_parent ) )
+			return FALSE;
+
+		if ( $object )
+			return self::get( $post->post_parent );
+
+		return (int) $post->post_parent;
+	}
+
 	/**
 	 * Updates the parent for the given post.
 	 * NOTE: directly updates db to avoid `wp_update_post()`
@@ -653,6 +721,24 @@ class Post extends Core\Base
 		clean_post_cache( $post_id );
 
 		return TRUE;
+	}
+
+	// @old: `WordPress\PostType::newPostFromTerm()`
+	public static function newByTerm( $term, $taxonomy = 'category', $posttype = 'post', $user_id = NULL )
+	{
+		if ( ! $term = Term::get( $term, $taxonomy ) )
+			return FALSE;
+
+		$new_post = [
+			'post_title'   => $term->name,
+			'post_name'    => $term->slug,
+			'post_content' => $term->description,
+			'post_status'  => 'pending',
+			'post_author'  => $user_id ?? get_current_user_id(),
+			'post_type'    => $posttype,
+		];
+
+		return wp_insert_post( $new_post );
 	}
 
 	public static function image( $post, $context = NULL, $size = NULL, $thumbnail_id = NULL )

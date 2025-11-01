@@ -9,7 +9,7 @@ class Strings extends Core\Base
 
 	/**
 	 * Retrieves the list item separator based on the locale.
-	 * wrapper for `wp_get_list_item_separator()` @since WP 6.0.0
+	 * NOTE: wrapper for `wp_get_list_item_separator()` @since WP 6.0.0
 	 *
 	 * @return string $separator
 	 */
@@ -21,7 +21,7 @@ class Strings extends Core\Base
 		return __( ', ' ); // _x( ', ', 'Strings: Item Seperator', 'geditorial' );
 	}
 
-	// NOTE: OLD: `Helper::getStringsFromName()`
+	// @OLD: `Helper::getStringsFromName()`
 	public static function getNameForms( $name )
 	{
 		if ( ! $name )

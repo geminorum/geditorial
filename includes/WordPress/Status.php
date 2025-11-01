@@ -12,6 +12,15 @@ class Status extends Core\Base
 	 *
 	 * @source `get_post_stati()`
 	 *
+	 * - `publish`: a published post or page
+	 * - `pending`: post is pending review
+	 * - `draft`: a post in draft status
+	 * - `auto-draft`: a newly created post, with no content
+	 * - `future`: a post to publish in the future
+	 * - `private`: not visible to users who are not logged in
+	 * - `inherit`: a revision. @see `get_children()`.
+	 * - `trash`: post is in trash-bin. added with WP2.9
+	 *
 	 * @param int $mod
 	 * @param string $capability
 	 * @param int $user_id

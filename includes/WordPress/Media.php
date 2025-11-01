@@ -289,7 +289,7 @@ class Media extends Core\Base
 		if ( empty( $url ) )
 			return FALSE;
 
-		// filters the list of allowed file extensions when sideloading an image from a URL @since 5.6.0
+		// filters the list of allowed file extensions when sideloading an image from a URL @since WP 5.6.0
 		$extensions = apply_filters( 'image_sideload_extensions', [ 'jpg', 'jpeg', 'jpe', 'png', 'gif', 'webp', 'avif' ], $url );
 
 		// set variables for storage, fix file filename for query strings
