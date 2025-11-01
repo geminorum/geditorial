@@ -456,36 +456,27 @@ class Helper extends WordPress\Main
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{
 		return is_null( $title_attr )
-			? '<span class="-empty '.$class.'">&mdash;</span>'
+			? '<span class="-empty '.Core\HTML::prepClass( $class ).'">&mdash;</span>'
 			: sprintf( '<span title="%s" class="'.Core\HTML::prepClass( '-empty', $class ).'">&mdash;</span>', $title_attr );
 	}
 
 	// TODO: move to `WordPress\Strings`
-	public static function htmlCount( $count, $title_attr = NULL, $empty = NULL )
+	public static function htmlCount( $count, $title = NULL, $empty = NULL )
 	{
-		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Count', 'Helper: No Count Title Attribute', 'geditorial' );
-
 		if ( is_array( $count ) )
 			$count = count( $count );
 
 		return $count
 			? Core\Number::format( $count )
-			: ( is_null( $empty ) ? self::htmlEmpty( 'column-count-empty', $title_attr ) : $empty );
+			: $empty ?? self::htmlEmpty( 'column-count-empty', $title ?? _x( 'No Count', 'Helper: Title Attribute', 'geditorial' ) );
 	}
 
 	// TODO: move to `WordPress\Strings`
-	public static function htmlOrder( $order, $title_attr = NULL )
+	public static function htmlOrder( $order, $title = NULL )
 	{
-		if ( is_null( $title_attr ) )
-			$title_attr = _x( 'No Order', 'Helper: No Order Title Attribute', 'geditorial' );
-
-		if ( $order )
-			$html = Core\Number::localize( $order );
-		else
-			$html = sprintf( '<span title="%s" class="column-order-empty -empty">&mdash;</span>', $title_attr );
-
-		return $html;
+		return $order
+			? Core\Number::localize( $order )
+			: $empty ?? self::htmlEmpty( 'column-order-empty', $title ?? _x( 'No Order', 'Helper: Title Attribute', 'geditorial' ) );
 	}
 
 	public static function getDateEditRow( $timestamp, $class = FALSE )

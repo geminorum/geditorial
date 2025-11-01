@@ -296,17 +296,19 @@ class Terms extends gEditorial\Module
 		$excluded  = $this->taxonomies_excluded();
 
 		switch ( $field ) {
-			case 'role'     : $excluded[] = 'audit_attribute'; break;
-			case 'plural'   : $excluded[] = 'post_tag'; break;
-			case 'overwrite': $excluded[] = 'post_tag'; break;
-			case 'fullname' : $excluded[] = 'post_tag'; break;
-			case 'tagline'  : $excluded[] = 'post_tag'; break;
-			case 'subtitle' : $excluded[] = 'post_tag'; break;
-			case 'barcode'  : $excluded[] = 'warehouse_placement'; break;
-			case 'image'    : $excluded = array_merge( $excluded, [ 'post_tag', 'product_brand', 'product_cat', 'product_tag' ] ); break;
-			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );                                     // NOTE: override!
-			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );                                                  // NOTE: override!
-			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );                                                  // NOTE: override!
+			case 'role'     : $excluded = array_merge( $excluded, [ 'audit_attribute' ] ); break;
+			case 'plural'   : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
+			case 'overwrite': $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
+			case 'fullname' : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
+			case 'tagline'  : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
+			case 'subtitle' : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
+			case 'image'    : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag', 'product_cat', 'product_brand' ] ); break;
+			case 'barcode'  : $excluded = array_merge( $excluded, [ 'warehouse_placement' ] ); break;
+
+			// NOTE: override!
+			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );
+			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
+			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
 			case 'establish': return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publication_publisher', 'provider_brand', 'vehicle_manufacturer' ] );
 			case 'abolish'  : return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publication_publisher', 'provider_brand', 'vehicle_manufacturer' ] );
 		}
@@ -840,6 +842,7 @@ class Terms extends gEditorial\Module
 				continue;
 
 			$this->display_form_field( $field, $taxonomy, $term, TRUE );
+			break;
 		}
 
 		if ( $this->check_hidden_column( $column ) )

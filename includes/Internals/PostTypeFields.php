@@ -1010,7 +1010,6 @@ trait PostTypeFields
 		$fields   = $this->get_posttype_fields( $post->post_type );
 		$excludes = $this->posttypefields_custom_column_excludes( $fields );
 
-		// TODO: move this to `add_inline_data` action hook
 		// NOTE: only for `quickedit` enabled fields
 		// NOTE: better here than `add_inline_data` hook to access `$fields`
 		foreach ( Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) as $field => $args )
@@ -1021,13 +1020,6 @@ trait PostTypeFields
 			), [
 				'disabled' => $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true',
 			], $prefix.$field );
-			// echo '<div data-disabled="'.( $this->access_posttype_field( $args, $post, 'edit', $user_id ) ? 'false' : 'true' )
-			// 	.'" class="hidden '.$prefix.$field.'">'.
-			// 	$this->posttypefields_prep_posttype_field_for_input(
-			// 		$this->get_postmeta_field( $post->ID, $field ),
-			// 		$field,
-			// 		$args
-			// 	).'</div>';
 
 		if ( $this->check_hidden_column( $column ) )
 			return;

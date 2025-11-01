@@ -491,8 +491,8 @@ class Book extends gEditorial\Module
 			'meta_box_cb'  => NULL,   // default meta box
 			'content_rich' => TRUE,   // even empty shows on sitemaps
 		], 'main_posttype', [
-			'custom_icon' => 'book',
-			'suitable_metas'  => [
+			'custom_icon'    => 'book',
+			'suitable_metas' => [
 				'image'     => NULL,
 				'url'       => NULL,
 				'tagline'   => NULL,

@@ -438,6 +438,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
+	// TODO: move to Services
 	// @REF: https://adambalee.com/search-wordpress-by-custom-fields-without-a-plugin/
 	// join posts and post-meta tables
 	public function posts_join( $join, $wp_query )
