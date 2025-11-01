@@ -28,12 +28,14 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
   @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms");  // `dashicons-admin-site-alt3`
-  @include plugin-listtable-column-icon("source", "\f504", "column-geditorial-terms");  // `dashicons-external`
-  @include plugin-listtable-column-icon("embed", "\f13f", "column-geditorial-terms");   // `dashicons-embed-generic`
-  @include plugin-listtable-column-icon("url", "\f103", "column-geditorial-terms");     // `dashicons-admin-links`
-  @include plugin-listtable-column-icon("born", "\f517", "column-geditorial-terms");     // `dashicons-controls-skipforward`
-  @include plugin-listtable-column-icon("dead", "\f516", "column-geditorial-terms");     // `dashicons-controls-skipback`
+  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms");     // `dashicons-admin-site-alt3`
+  @include plugin-listtable-column-icon("source", "\f504", "column-geditorial-terms");     // `dashicons-external`
+  @include plugin-listtable-column-icon("embed", "\f13f", "column-geditorial-terms");      // `dashicons-embed-generic`
+  @include plugin-listtable-column-icon("url", "\f103", "column-geditorial-terms");        // `dashicons-admin-links`
+  @include plugin-listtable-column-icon("born", "\f517", "column-geditorial-terms");       // `dashicons-controls-skipforward`
+  @include plugin-listtable-column-icon("dead", "\f516", "column-geditorial-terms");       // `dashicons-controls-skipback`
+  @include plugin-listtable-column-icon("establish", "\f12a", "column-geditorial-terms");  // `dashicons-yes-alt`
+  @include plugin-listtable-column-icon("abolish", "\f153", "column-geditorial-terms");    // `dashicons-dismiss`
 
   .wp-list-table.tags {
     .column-slug {
