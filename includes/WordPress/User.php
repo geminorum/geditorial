@@ -134,29 +134,62 @@ class User extends Core\Base
 		return reset( $users );
 	}
 
-	public static function getIDbyMeta( $meta, $value, $single = TRUE )
+	public static function getIDbyMeta( $key, $value, $single = TRUE )
 	{
-		static $data = [];
+		global $wpdb, $gEditorialUserIDbyMeta;
+
+		if ( empty( $key ) || empty( $value ) )
+			return FALSE;
+
+		if ( empty( $gEditorialUserIDbyMeta ) )
+			$gEditorialUserIDbyMeta = [];
 
 		$group = $single ? 'single' : 'all';
 
-		if ( isset( $data[$meta][$group][$value] ) )
-			return $data[$meta][$group][$value];
-
-		global $wpdb;
+		if ( isset( $gEditorialUserIDbyMeta[$key][$group][$value] ) )
+			return $gEditorialUserIDbyMeta[$key][$group][$value];
 
 		$query = $wpdb->prepare( "
 			SELECT user_id
 			FROM {$wpdb->usermeta}
 			WHERE meta_key = %s
 			AND meta_value = %s
-		", $meta, $value );
+		", $key, $value );
 
 		$results = $single
 			? $wpdb->get_var( $query )
 			: $wpdb->get_col( $query );
 
-		return $data[$meta][$group][$value] = $results;
+		return $gEditorialUserIDbyMeta[$key][$group][$value] = $results;
+	}
+
+	public static function invalidateIDbyMeta( $meta, $value = FALSE )
+	{
+		global $gEditorialUserIDbyMeta;
+
+		if ( empty( $meta ) )
+			return TRUE;
+
+		if ( empty( $gEditorialUserIDbyMeta ) )
+			return TRUE;
+
+		if ( FALSE === $value ) {
+
+			// clear all meta by key
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialUserIDbyMeta[$key]['all'] );
+				unset( $gEditorialUserIDbyMeta[$key]['single'] );
+			}
+
+		} else {
+
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialUserIDbyMeta[$key]['all'][$value] );
+				unset( $gEditorialUserIDbyMeta[$key]['single'][$value] );
+			}
+		}
+
+		return TRUE;
 	}
 
 	// @REF: `get_blogs_of_user()`

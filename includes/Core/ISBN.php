@@ -27,10 +27,22 @@ class ISBN extends Base
 				? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-not-valid' ] ], HTML::wrapLTR( $input ) )
 				: $input;
 
-		$string = Text::dashify( self::sanitize( $input ), 3, '&ndash;' );
+		if ( class_exists( 'Nicebooks\\Isbn\\IsbnTools' ) ) {
+
+			/**
+			 * @package `nicebooks/isbn`
+			 * @source https://github.com/nicebooks-com/isbn/tree/0.3.48
+			 */
+			$tools  = new \Nicebooks\Isbn\IsbnTools();
+			$string = $tools->format( self::sanitize( $input ) );
+
+		} else {
+
+			$string = Text::dashify( self::sanitize( $input ), 3, '&ndash;' );
+		}
 
 		return $wrap
-			? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-valid' ] ], HTML::wrapLTR( $string ) )
+			? HTML::tag( 'span', [ 'class' => [ 'isbn', '-is-valid'	] ], HTML::wrapLTR( $string ) )
 			: $string;
 	}
 

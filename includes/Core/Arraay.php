@@ -958,10 +958,10 @@ class Arraay extends Base
 	 * Handles combine from unequal arrays.
 	 * @source https://www.php.net/manual/en/function.array-combine.php#106318
 	 *
-	 * @param  array $keys
-	 * @param  array $values
-	 * @param  bool  $pad
-	 * @return array $combined
+	 * @param array $keys
+	 * @param array $values
+	 * @param bool  $pad
+	 * @return array
 	 */
 	public static function combine( $keys, $values, $pad = TRUE )
 	{

@@ -357,38 +357,38 @@ class PostType extends Core\Base
 
 	// TODO: support regex on meta-keys
 	// @SEE: https://tommcfarlin.com/get-post-id-by-meta-value/
-	public static function getIDbyMeta( $meta, $value, $single = TRUE )
+	public static function getIDbyMeta( $key, $value, $single = TRUE )
 	{
-		global $wpdb, $gEditorialIDbyMeta;
+		global $wpdb, $gEditorialPostIDbyMeta;
 
-		if ( empty( $meta ) || empty( $value ) )
+		if ( empty( $key ) || empty( $value ) )
 			return FALSE;
 
-		if ( empty( $gEditorialIDbyMeta ) )
-			$gEditorialIDbyMeta = [];
+		if ( empty( $gEditorialPostIDbyMeta ) )
+			$gEditorialPostIDbyMeta = [];
 
 		$group = $single ? 'single' : 'all';
 
-		if ( isset( $gEditorialIDbyMeta[$meta][$group][$value] ) )
-			return $gEditorialIDbyMeta[$meta][$group][$value];
+		if ( isset( $gEditorialPostIDbyMeta[$key][$group][$value] ) )
+			return $gEditorialPostIDbyMeta[$key][$group][$value];
 
 		$query = $wpdb->prepare( "
 			SELECT post_id
 			FROM {$wpdb->postmeta}
 			WHERE meta_key = %s
 			AND meta_value = %s
-		", $meta, $value );
+		", $key, $value );
 
 		$results = $single
 			? $wpdb->get_var( $query )
 			: $wpdb->get_col( $query );
 
-		return $gEditorialIDbyMeta[$meta][$group][$value] = $results;
+		return $gEditorialPostIDbyMeta[$key][$group][$value] = $results;
 	}
 
 	public static function getIDListbyMeta( $meta, $values )
 	{
-		global $wpdb, $gEditorialIDbyMeta;
+		global $wpdb, $gEditorialPostIDbyMeta;
 
 		if ( empty( $meta ) )
 			return FALSE;
@@ -412,39 +412,39 @@ class PostType extends Core\Base
 
 		$list = Core\Arraay::pluck( $results, 'post_id', 'meta_value' );
 
-		if ( empty( $gEditorialIDbyMeta ) )
-			$gEditorialIDbyMeta = [];
+		if ( empty( $gEditorialPostIDbyMeta ) )
+			$gEditorialPostIDbyMeta = [];
 
 		// update cache
 		foreach ( $filtered as $value )
-			$gEditorialIDbyMeta[$meta]['single'][$value] = array_key_exists( $value, $list ) ? $list[$value] : FALSE;
+			$gEditorialPostIDbyMeta[$meta]['single'][$value] = array_key_exists( $value, $list ) ? $list[$value] : FALSE;
 
 		return $list;
 	}
 
-	public static function invalidateIDbyMeta( $meta, $value )
+	public static function invalidateIDbyMeta( $meta, $value = FALSE )
 	{
-		global $gEditorialIDbyMeta;
+		global $gEditorialPostIDbyMeta;
 
 		if ( empty( $meta ) )
 			return TRUE;
 
-		if ( empty( $gEditorialIDbyMeta ) )
+		if ( empty( $gEditorialPostIDbyMeta ) )
 			return TRUE;
 
 		if ( FALSE === $value ) {
 
 			// clear all meta by key
 			foreach ( (array) $meta as $key ) {
-				unset( $gEditorialIDbyMeta[$key]['all'] );
-				unset( $gEditorialIDbyMeta[$key]['single'] );
+				unset( $gEditorialPostIDbyMeta[$key]['all'] );
+				unset( $gEditorialPostIDbyMeta[$key]['single'] );
 			}
 
 		} else {
 
 			foreach ( (array) $meta as $key ) {
-				unset( $gEditorialIDbyMeta[$key]['all'][$value] );
-				unset( $gEditorialIDbyMeta[$key]['single'][$value] );
+				unset( $gEditorialPostIDbyMeta[$key]['all'][$value] );
+				unset( $gEditorialPostIDbyMeta[$key]['single'][$value] );
 			}
 		}
 

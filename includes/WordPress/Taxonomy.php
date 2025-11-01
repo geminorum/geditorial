@@ -880,25 +880,62 @@ class Taxonomy extends Core\Base
 		return $callbacks[$object->name] = $callback;
 	}
 
-	public static function getIDbyMeta( $key, $value )
+	public static function getIDbyMeta( $key, $value, $single = TRUE )
 	{
-		static $results = [];
+		global $wpdb, $gEditorialTermIDbyMeta;
 
-		if ( isset( $results[$key][$value] ) )
-			return $results[$key][$value];
+		if ( empty( $key ) || empty( $value ) )
+			return FALSE;
 
-		global $wpdb;
+		if ( empty( $gEditorialTermIDbyMeta ) )
+			$gEditorialTermIDbyMeta = [];
 
-		$term_id = $wpdb->get_var(
-			$wpdb->prepare( "
-				SELECT term_id
-				FROM {$wpdb->termmeta}
-				WHERE meta_key = %s
-				AND meta_value = %s
-			", $key, $value )
-		);
+		$group = $single ? 'single' : 'all';
 
-		return $results[$key][$value] = $term_id;
+		if ( isset( $gEditorialTermIDbyMeta[$key][$group][$value] ) )
+			return $gEditorialTermIDbyMeta[$key][$group][$value];
+
+		$query = $wpdb->prepare( "
+			SELECT term_id
+			FROM {$wpdb->termmeta}
+			WHERE meta_key = %s
+			AND meta_value = %s
+		", $key, $value );
+
+		$results = $single
+			? $wpdb->get_var( $query )
+			: $wpdb->get_col( $query );
+
+		return $gEditorialTermIDbyMeta[$key][$group][$value] = $results;
+	}
+
+	public static function invalidateIDbyMeta( $meta, $value = FALSE )
+	{
+		global $gEditorialTermIDbyMeta;
+
+		if ( empty( $meta ) )
+			return TRUE;
+
+		if ( empty( $gEditorialTermIDbyMeta ) )
+			return TRUE;
+
+		if ( FALSE === $value ) {
+
+			// clear all meta by key
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialTermIDbyMeta[$key]['all'] );
+				unset( $gEditorialTermIDbyMeta[$key]['single'] );
+			}
+
+		} else {
+
+			foreach ( (array) $meta as $key ) {
+				unset( $gEditorialTermIDbyMeta[$key]['all'][$value] );
+				unset( $gEditorialTermIDbyMeta[$key]['single'][$value] );
+			}
+		}
+
+		return TRUE;
 	}
 
 	/**

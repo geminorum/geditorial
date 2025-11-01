@@ -632,8 +632,15 @@ class Media extends Core\Base
 		return $mime;
 	}
 
-	// @REF: `wp_delete_attachment_files()
+	// NOTE: DEPRECATED
 	public static function deleteAttachmentThumbnails( $attachment_id )
+	{
+		self::_dev_dep( 'WordPress\Media::deleteImageSizes()' );
+		return self::deleteImageSizes( $attachment_id );
+	}
+
+	// @REF: `wp_delete_attachment_files()
+	public static function deleteImageSizes( $attachment_id )
 	{
 		if ( ! $attachment_id )
 			return FALSE;
@@ -649,7 +656,7 @@ class Media extends Core\Base
 		$backup_sizes = get_post_meta( $attachment->ID, '_wp_attachment_backup_sizes', TRUE );
 		$file         = get_attached_file( $attachment_id );
 
-		// removes intermediate and backup images if there are any
+		// Removes intermediate and backup images if there are any
 		if ( isset( $metadata['sizes'] ) && is_array( $metadata['sizes'] ) ) {
 
 			$intermediate_dir = path_join( $uploads['basedir'], dirname( $file ) );
