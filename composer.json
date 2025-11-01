@@ -38,7 +38,8 @@
     "brick/postcode": "^0.3.1",
     "adhocore/jwt": "^1.1",
     "eluceo/ical": "^2.13.0",
-    "yocto/yoclib-openlocationcode": "^1.0"
+    "yocto/yoclib-openlocationcode": "^1.0",
+    "nicebooks/isbn": "^0.3.48"
   },
   "require-dev": {
     "sabre/vobject": "^4.5.5",

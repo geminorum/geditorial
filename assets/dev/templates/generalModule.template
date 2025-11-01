@@ -114,14 +114,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'default_term'       => NULL,
 		], 'primary_posttype', [
 			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon' => $this->module->icon,
+			// 'custom_icon' => $this->module->icon, // // default is module icon
 		] );
 
 		$this->register_posttype( 'primary_posttype', [
 
 		], [
 			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'      => $this->module->icon,
+			// 'custom_icon'      => $this->module->icon, // default is module icon
 			'primary_taxonomy' => TRUE,
 		] );
 

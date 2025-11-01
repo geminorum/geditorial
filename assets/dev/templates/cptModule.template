@@ -99,14 +99,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 		], NULL, [
 			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon' => $this->module->icon,
+			// 'custom_icon' => $this->module->icon, // default is module icon
 		] );
 
 		$this->register_posttype( 'main_posttype', [
 
 		], [
 			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
-			'custom_icon'      => $this->module->icon,
+			// 'custom_icon'      => $this->module->icon, // default is module icon
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}
