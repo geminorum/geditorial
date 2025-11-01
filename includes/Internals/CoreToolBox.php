@@ -20,7 +20,7 @@ trait CoreToolBox
 				$links = [];
 
 				foreach ( $this->get_module_links() as $link )
-					$links[] = Core\HTML::tag( 'a' , [
+					$links[] = Core\HTML::tag( 'a', [
 						'href'  => $link['url'],
 						'class' => [ 'button', '-button' ],
 					], $link['title'] );

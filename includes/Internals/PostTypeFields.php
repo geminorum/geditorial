@@ -415,7 +415,7 @@ trait PostTypeFields
 			case 'venue':
 			case 'people':
 
-				$sanitized = WordPress\Strings::kses( $data, 'none' ) ;
+				$sanitized = WordPress\Strings::kses( $data, 'none' );
 				$sanitized = WordPress\Strings::getPiped( Helper::getSeparated( $sanitized ) );
 				break;
 
@@ -952,7 +952,7 @@ trait PostTypeFields
 						echo '<span class="input-text-wrap">';
 						echo '<textarea name="'.Core\HTML::escape( $name ).'" value=""';
 						echo ' class="'.Core\HTML::prepClass( $class ).'"';
-						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"') : '';
+						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"' ) : '';
 						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 						echo $args['ltr'] ? ' dir="ltr"' : '';
 						echo ' rows="1" /></textarea></span>';
@@ -967,7 +967,7 @@ trait PostTypeFields
 						echo '<span class="input-text-wrap">';
 						echo '<input name="'.Core\HTML::escape( $name ).'" value=""';
 						echo ' class="'.Core\HTML::prepClass( $class ).'"';
-						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"') : '';
+						echo $args['autocomplete'] ? ( ' autocomplete="'.$args['autocomplete'].'"' ) : '';
 						echo $args['pattern'] ? ( ' pattern="'.$args['pattern'].'"' ) : '';
 						echo $args['ltr'] ? ' dir="ltr"' : '';
 						echo $args['type'] === 'number' ? ' type="number" ' : ' type="text" ';

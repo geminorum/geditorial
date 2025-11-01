@@ -3,18 +3,20 @@
 \geminorum\gEditorial\WordPress\User::superAdminOnly();
 
 $files = [
-	// 'Address',
-	// 'Country',
-	// 'CSV',
-	// 'Date',
-	// 'Duration',
-	// 'IBAN',
-	// 'ISBN',
-	// 'LatLng',
-	// 'Mime',
-	// 'Names',
-	// 'Phone',
-	// 'Vin',
+	// 'Test_Address',
+	// 'Test_Country',
+	// 'Test_CSV',
+	// 'Test_Date',
+	// 'Test_Duration',
+	// 'Test_IBAN',
+	// 'Test_ISBN',
+	// 'Test_LatLng',
+	// 'Test_Gpx',
+	// 'Test_Mime',
+	// 'Test_Names',
+	// 'Test_Phone',
+	// 'Test_Vin',
+	// 'Test_HTML',
 ];
 
 foreach ( $files as $file )

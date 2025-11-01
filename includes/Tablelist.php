@@ -214,7 +214,7 @@ class Tablelist extends WordPress\Main
 					if ( ! $edit )
 						continue 2;
 
-					if ( $revision_id = WordPress\PostType::getLastRevisionID( $post_id ) )
+					if ( $revision_id = WordPress\Post::getLastRevisionID( $post_id ) )
 						$list['revisions'] = Core\HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $revision_id ),
 							'class'  => '-link -row-link -row-link-revisions',

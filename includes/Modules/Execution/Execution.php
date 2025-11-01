@@ -42,6 +42,7 @@ class Execution extends gEditorial\Module
 				'execution',
 				'taxmodule',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

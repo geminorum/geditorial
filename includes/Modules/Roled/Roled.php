@@ -148,8 +148,8 @@ class Roled extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		if ( $this->get_setting( 'disable_builtin_post' ) ) {
-			$this->filter( 'register_post_post_type_args', 2, 12, 'disable' ); // @since WP6.0.0
-			$this->filter( 'register_category_taxonomy_args', 2, 12, 'disable' ); // @since WP6.0.0
+			$this->filter( 'register_post_post_type_args', 2, 12, 'disable' );     // @since WP 6.0.0
+			$this->filter( 'register_category_taxonomy_args', 2, 12, 'disable' );  // @since WP 6.0.0
 
 			$this->filter_append( $this->hook_base( 'posttypes_excluded' ), 'post' );
 			$this->filter_append( $this->hook_base( 'taxonomies_excluded' ), 'category' );
@@ -162,7 +162,7 @@ class Roled extends gEditorial\Module
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
-	// hack to hide shared tag submenu on other cpt
+	// NOTE: hacked to hide shared tag sub-menu on other post-types
 	public function admin_menu()
 	{
 		global $menu;
@@ -228,7 +228,7 @@ class Roled extends gEditorial\Module
 
 		return [
 
-			// mapped, no need to add them to ours
+			// Already mapped, no need to add them to this.
 			// 'edit_post'   => 'edit_'.$base[0],
 			// 'read_post'   => 'read_'.$base[0],
 			// 'delete_post' => 'delete_'.$base[0],
@@ -389,7 +389,7 @@ class Roled extends gEditorial\Module
 			if ( remove_role( $prefix.$core ) )
 				++$count;
 
-		// removes default caps from other roles
+		// Removes default caps from other roles.
 		$this->remove_default_caps( 'administrator' );
 		$this->remove_default_caps( 'editor' );
 

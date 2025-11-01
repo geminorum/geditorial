@@ -125,10 +125,10 @@ trait PairedTools
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $this->constant( $constants[0] ) ) )
+				if ( WordPress\Post::getIDbySlug( $terms[$term_id]->slug, $this->constant( $constants[0] ) ) )
 					continue;
 
-				$posts[] = WordPress\PostType::newPostFromTerm(
+				$posts[] = WordPress\Post::newByTerm(
 					$terms[$term_id],
 					$this->constant( $constants[1] ),
 					$this->constant( $constants[0] ),
@@ -245,7 +245,7 @@ trait PairedTools
 				if ( ! isset( $terms[$term_id] ) )
 					continue;
 
-				if ( ! $post_id = WordPress\PostType::getIDbySlug( $terms[$term_id]->slug, $posttype ) )
+				if ( ! $post_id = WordPress\Post::getIDbySlug( $terms[$term_id]->slug, $posttype ) )
 					continue;
 
 				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $constants[0], $constants[1] ) )
@@ -329,6 +329,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
+		$context = 'tools';
 		$columns = [
 			'_cb'  => 'term_id',
 			'name' => Tablelist::columnTermName(),
@@ -337,7 +338,7 @@ trait PairedTools
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
-					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
+					if ( $post_id = WordPress\Post::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
 						$html = Helper::htmlEmpty();
@@ -382,11 +383,10 @@ trait PairedTools
 
 			'count' => [
 				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants, $context ) {
 
-					// FIXME: use `paired_count_connected_to()`
-					if ( $post_id = WordPress\PostType::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
-						return Core\Number::format( $this->paired_get_from_posts( $post_id, $constants[0], $constants[1], TRUE ) );
+					if ( $post_id = WordPress\Post::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
+						return Core\Number::format( $this->paired_count_connected_to( $post_id, $context ) );
 
 					return Core\Number::format( $row->count );
 				},

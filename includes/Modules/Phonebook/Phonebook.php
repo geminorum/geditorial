@@ -36,6 +36,7 @@ class Phonebook extends gEditorial\Module
 			'keywords' => [
 				'contact',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

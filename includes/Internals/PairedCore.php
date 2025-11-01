@@ -1107,7 +1107,7 @@ trait PairedCore
 		$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
 
 		if ( ! $post_id && $check_slug )
-			$post_id = WordPress\PostType::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
+			$post_id = WordPress\Post::getIDbySlug( $term->slug, $this->constant( $posttype_constant_key ) );
 
 		return $post_id;
 	}

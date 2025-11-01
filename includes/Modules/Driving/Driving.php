@@ -30,6 +30,7 @@ class Driving extends gEditorial\Module
 				'car',
 				'vehicle',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

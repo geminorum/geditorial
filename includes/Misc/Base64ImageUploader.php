@@ -75,7 +75,7 @@ class Base64ImageUploader extends Core\Base
 
 		$upload_dir      = wp_upload_dir();
 		$upload_path     = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ).DIRECTORY_SEPARATOR;
-		$decoded         = base64_decode($this->strippedData()) ;
+		$decoded         = base64_decode($this->strippedData());
 		$filename        = 'upload.'.$this->extension;
 		$hashed_filename = md5( $filename . microtime() ).'_'.$filename;
 		$image_upload    = file_put_contents( $upload_path.$hashed_filename, $decoded );

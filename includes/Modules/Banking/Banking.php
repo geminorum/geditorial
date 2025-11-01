@@ -29,6 +29,7 @@ class Banking extends gEditorial\Module
 			'keywords' => [
 				'account',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

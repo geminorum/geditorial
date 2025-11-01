@@ -81,7 +81,7 @@ trait RawImports
 			Core\HTML::h4( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ), 'title' );
 			Core\HTML::desc( $this->get_string( 'description', 'wp_importer', 'misc', '' ) );
 
-			$link = Core\HTML::tag( 'a' , [
+			$link = Core\HTML::tag( 'a', [
 				'href'  => $imports_url,
 				'class' => [ 'button', '-button' ],
 			], $this->get_string( 'button', 'wp_importer', 'misc',

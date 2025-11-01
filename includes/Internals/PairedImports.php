@@ -34,7 +34,7 @@ trait PairedImports
 		if ( ! $selected = self::req( WordPress\Taxonomy::queryVar( $this->constant( $constants[1] ) ) ) )
 			return FALSE;
 
-		if ( ! $post_id = WordPress\PostType::getIDbySlug( $selected, $this->constant( $constants[0] ) ) )
+		if ( ! $post_id = WordPress\Post::getIDbySlug( $selected, $this->constant( $constants[0] ) ) )
 			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post_id ) )

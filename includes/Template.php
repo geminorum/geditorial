@@ -341,7 +341,7 @@ class Template extends WordPress\Main
 			$args['id'] = WordPress\PostType::getRandomPostID( $args['type'], TRUE );
 
 		else if ( 'parent' == $args['id'] )
-			$args['id'] = WordPress\PostType::getParentPostID();
+			$args['id'] = WordPress\Post::getParent( NULL, FALSE );
 
 		else if ( $module && in_array( $args['id'], [ 'assoc', 'linked', 'paired' ] ) )
 			$args['id'] = gEditorial()->module( $module )->get_linked_to_posts( NULL, TRUE );
@@ -1287,7 +1287,7 @@ class Template extends WordPress\Main
 			$date = wp_date( 'F j', $start ).'&mdash;'.wp_date( 'j, Y', $end );
 
 		// Same Year
-		else if( date( 'Y', $start ) == date( 'Y', $end ) )
+		else if ( date( 'Y', $start ) == date( 'Y', $end ) )
 			$date = wp_date( 'F j', $start ).'&mdash;'.wp_date( 'F j, Y', $end );
 
 		// Any other dates

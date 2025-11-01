@@ -196,7 +196,7 @@ class ModuleSettings extends gEditorial\Settings
 			)
 		);
 
-		// bail if cannot parse the data
+		// BAIL: if cannot parse the data
 		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -205,7 +205,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if no first name exists
+		// BAIL: if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: first-name string, `%2$s`: full-name string, `%3$s`: post title */
@@ -215,7 +215,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if no last name exists
+		// BAIL: if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: last-name string, `%2$s`: full-name string, `%3$s`: post title */
@@ -225,7 +225,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if cannot store first name meta
+		// BAIL: if cannot store first name meta
 		if ( $parsed['first_name'] !== $_first_name && ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -234,7 +234,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if cannot store last name meta
+		// BAIL: if cannot store last name meta
 		if ( $parsed['last_name'] !== $_last_name && ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -243,13 +243,13 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// override middle name only if not exists
+		// Overrides middle name only if not exists
 		if ( $middle_name && ! WordPress\Strings::isEmpty( $parsed['middle_name'] )
 			&& ! get_post_meta( $post->ID, $middle_name['metakey'], TRUE ) )
 				update_post_meta( $post->ID, $middle_name['metakey'], $parsed['middle_name'] );
 
 		return self::processingListItem( $verbose,
-			/* translators: `%1$s`: parsed fullname, `%2$s`: full-name string, `%3$s`: post title */
+			/* translators: `%1$s`: parsed full-name, `%2$s`: full-name string, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $parsed['fullname'] ),
 				Core\HTML::code( $_fullname ),
@@ -265,17 +265,17 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! $_fullname = get_post_meta( $post->ID, $fullname['metakey'], TRUE ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
-		// bail if problem removing the original full-name meta
+		// BAIL: if problem removing the original full-name meta
 		if ( ! delete_post_meta( $post->ID, $fullname['metakey'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: `%1$s`: fullname string, `%2$s`: post title */
+				/* translators: `%1$s`: full-name string, `%2$s`: post title */
 				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
-			/* translators: `%1$s`: fullname string, `%2$s`: post title */
+			/* translators: `%1$s`: full-name string, `%2$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; full-name data deleted on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $_fullname ),
 				WordPress\Post::title( $post ),
@@ -290,7 +290,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! $_fullname = get_post_meta( $post->ID, $fullname['metakey'], TRUE ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
-		// bail if cannot parse the data
+		// BAIL: if cannot parse the data
 		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -299,7 +299,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if no first name exists
+		// BAIL: if no first name exists
 		if ( $first_name && WordPress\Strings::isEmpty( $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: first-name string, `%2$s`: full-name string, `%3$s`: post title */
@@ -309,7 +309,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if no last name exists
+		// BAIL: if no last name exists
 		if ( $last_name && WordPress\Strings::isEmpty( $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: last-name string, `%2$s`: full-name string, `%3$s`: post title */
@@ -319,7 +319,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if cannot store first name meta
+		// BAIL: if cannot store first name meta
 		if ( ! update_post_meta( $post->ID, $first_name['metakey'], $parsed['first_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -328,7 +328,7 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// bail if cannot store last name meta
+		// BAIL: if cannot store last name meta
 		if ( ! update_post_meta( $post->ID, $last_name['metakey'], $parsed['last_name'] ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
@@ -337,22 +337,22 @@ class ModuleSettings extends gEditorial\Settings
 					WordPress\Post::title( $post ),
 				] );
 
-		// override middle name only if not exists
+		// Overrides middle name only if not exists
 		if ( $middle_name && ! WordPress\Strings::isEmpty( $parsed['middle_name'] )
 			&& ! get_post_meta( $post->ID, $middle_name['metakey'], TRUE ) )
 				update_post_meta( $post->ID, $middle_name['metakey'], $parsed['middle_name'] );
 
-		// bail if problem removing the original full-name meta
+		// BAIL: if problem removing the original full-name meta
 		if ( ! delete_post_meta( $post->ID, $fullname['metakey'] ) )
 			return self::processingListItem( $verbose,
-				/* translators: `%1$s`: fullname string, `%2$s`: post title */
+				/* translators: `%1$s`: full-name string, `%2$s`: post title */
 				_x( 'There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
 					Core\HTML::code( $_fullname ),
 					WordPress\Post::title( $post ),
 				] );
 
 		return self::processingListItem( $verbose,
-			/* translators: `%1$s`: parsed fullname, `%2$s`: full-name string, `%3$s`: post title */
+			/* translators: `%1$s`: parsed full-name, `%2$s`: full-name string, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-personage' ), [
 				Core\HTML::escape( $parsed['fullname'] ),
 				Core\HTML::code( $_fullname ),

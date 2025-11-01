@@ -89,7 +89,7 @@ trait PairedRowActions
 					return FALSE;
 
 				// bail if post with same slug exists
-				if ( WordPress\PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+				if ( WordPress\Post::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
 				$object_lists = [];
@@ -120,7 +120,7 @@ trait PairedRowActions
 					return FALSE;
 
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-				$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+				$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 				if ( self::isError( $post_id ) )
 					return FALSE;
@@ -143,7 +143,7 @@ trait PairedRowActions
 					return FALSE;
 
 				// bail if post with same slug exists
-				if ( WordPress\PostType::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
+				if ( WordPress\Post::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
 				$object_lists = [];
@@ -174,7 +174,7 @@ trait PairedRowActions
 					return FALSE;
 
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-				$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+				$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 				if ( self::isError( $post_id ) )
 					return FALSE;
@@ -200,7 +200,7 @@ trait PairedRowActions
 					$term = get_term( $term_id, $taxonomy );
 
 					// bail if post with same slug exists
-					if ( WordPress\PostType::getIDbySlug( $term->slug, $paired_posttype ) )
+					if ( WordPress\Post::getIDbySlug( $term->slug, $paired_posttype ) )
 						continue;
 
 					$current_objects = (array) $wpdb->get_col( $wpdb->prepare( "
@@ -225,7 +225,7 @@ trait PairedRowActions
 						continue;
 
 					$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
-					$post_id = WordPress\PostType::newPostFromTerm( $cloned, $paired_taxonomy, $paired_posttype );
+					$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
 					if ( self::isError( $post_id ) )
 						continue;

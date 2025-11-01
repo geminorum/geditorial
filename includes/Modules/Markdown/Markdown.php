@@ -247,7 +247,7 @@ class Markdown extends gEditorial\Module
 
 		$slug = preg_replace( '/\s+/', '-', $slug );
 
-		if ( $post_id = WordPress\PostType::getIDbySlug( $slug, $post->post_type, TRUE ) )
+		if ( $post_id = WordPress\Post::getIDbyURL( $slug, $post->post_type ) )
 			$link = WordPress\Post::shortlink( $post_id );
 
 		else

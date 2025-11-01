@@ -156,7 +156,7 @@ class LangLongUTM extends Core\Base
 
 		sscanf( $UTMZone, '%d%s', $ZoneNumber, $ZoneLetter );
 
-		if ( strcmp ('N', $ZoneLetter ) <= 0 ) {
+		if ( strcmp( 'N', $ZoneLetter ) <= 0 ) {
 			$NorthernHemisphere = 1; // point is in northern hemisphere
 		} else {
 			$NorthernHemisphere = 0; // point is in southern hemisphere

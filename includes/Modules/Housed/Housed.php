@@ -38,6 +38,7 @@ class Housed extends gEditorial\Module
 				'housing',
 				'taxmodule',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

@@ -41,6 +41,7 @@ class Diagnosed extends gEditorial\Module
 				'medical',
 				'taxmodule',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

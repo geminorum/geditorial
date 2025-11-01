@@ -300,7 +300,7 @@ class DeadDrops extends gEditorial\Module
 			$deaddrop = sprintf( '%s/%s/%s', Core\URL::untrail( get_permalink( $post ) ), $endpoint, $secret );
 
 		else
-			$deaddrop = WordPress\Post::shortlink( $post->ID, [ $endpoint => $secret ] ) ;
+			$deaddrop = WordPress\Post::shortlink( $post->ID, [ $endpoint => $secret ] );
 
 		if ( $user_id = get_current_user_id() )
 			$deaddrop = add_query_arg( [ 'u' => $user_id ], $deaddrop );

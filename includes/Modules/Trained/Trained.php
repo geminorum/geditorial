@@ -274,7 +274,7 @@ class Trained extends gEditorial\Module
 			],
 			'units' => [
 				$posttype => [
-					'total_days'   => [ 'type' => 'day' ,   'data_unit' => 'day'    ],
+					'total_days'   => [ 'type' => 'day',    'data_unit' => 'day'    ],
 					'total_hours'  => [ 'type' => 'hour',   'data_unit' => 'hour'   ],
 					'total_people' => [ 'type' => 'person', 'data_unit' => 'person' ],
 				],

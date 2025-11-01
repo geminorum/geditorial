@@ -35,6 +35,7 @@ class Byline extends gEditorial\Module
 				'individual',
 				'literature',
 				'woocommerce',
+				'tabmodule',
 			],
 		];
 	}

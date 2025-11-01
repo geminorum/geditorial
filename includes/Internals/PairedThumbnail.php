@@ -21,25 +21,9 @@ trait PairedThumbnail
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
 
-		// core filter @since WP 5.9.0
+		// NOTE: this is a core filter @since WP 5.9.0
 		add_filter( 'post_thumbnail_id', function ( $thumbnail_id, $post ) use ( $posttypes ) {
 			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
-		}, 8, 2 );
-
-		// no need @since WP 5.9.0
-		if ( Core\WordPress::isWPcompatible( '5.9.0' ) )
-			return;
-
-		add_filter( 'geditorial_get_post_thumbnail_id', function ( $thumbnail_id, $post_id ) use ( $posttypes ) {
-			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
-		}, 8, 2 );
-
-		add_filter( 'gtheme_image_get_thumbnail_id', function ( $thumbnail_id, $post_id ) use ( $posttypes ) {
-			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_id, $posttypes );
-		}, 8, 2 );
-
-		add_filter( 'gnetwork_rest_thumbnail_id', function ( $thumbnail_id, $post_array ) use ( $posttypes ) {
-			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post_array['id'], $posttypes );
 		}, 8, 2 );
 	}
 

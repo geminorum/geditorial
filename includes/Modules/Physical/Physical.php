@@ -38,6 +38,7 @@ class Physical extends gEditorial\Module
 				'sport',
 				'hasshortcode',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

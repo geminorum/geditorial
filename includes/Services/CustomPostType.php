@@ -259,7 +259,7 @@ class CustomPostType extends gEditorial\Service
 			/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */
 			'post_published'                 => _x( '%2$s published.', 'CustomPostType: Message for `post_published`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */
-			'post_saved'                     => _x( '%2$s saved.' , 'CustomPostType: Message for `post_saved`', 'geditorial' ),
+			'post_saved'                     => _x( '%2$s saved.', 'CustomPostType: Message for `post_saved`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */
 			'post_submitted'                 => _x( '%2$s submitted.', 'CustomPostType: Message for `post_submitted`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural posttype, `%2$s`: camel case / singular posttype, `%3$s`: lower case / plural posttype, `%4$s`: lower case / singular posttype, `%5$s`: `%s` placeholder */

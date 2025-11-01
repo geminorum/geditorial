@@ -17,7 +17,7 @@ class PrimaryTaxonomy extends gEditorial\Service
 	 *
 	 * @param string $posttype
 	 * @param mixed $fallback
-	 * @return string $taxonomy
+	 * @return string
 	 */
 	public static function get( $posttype, $fallback = FALSE )
 	{

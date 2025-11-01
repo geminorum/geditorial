@@ -29,6 +29,7 @@ class Agenda extends gEditorial\Module
 			'keywords' => [
 				'itinerary',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

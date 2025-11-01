@@ -35,6 +35,7 @@ class NextOfKin extends gEditorial\Module
 			'keywords' => [
 				'family',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

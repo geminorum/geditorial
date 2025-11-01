@@ -30,6 +30,7 @@ class Bookmarked extends gEditorial\Module
 			'keywords' => [
 				'external',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

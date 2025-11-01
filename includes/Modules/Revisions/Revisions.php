@@ -209,7 +209,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
-	// @SEE: `wp_get_post_revisions_url()` @since WP5.9
+	// @SEE: `wp_get_post_revisions_url()` @since WP 5.9
 	public function wp_post_revision_title_expanded( $revision_date_author, $revision, $link )
 	{
 		$parts = [];

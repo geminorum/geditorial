@@ -504,7 +504,7 @@ class Config extends gEditorial\Module
 
 		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-admin' ) );
 
-		$action = $this->hook_base( 'reports' , 'general_summary' );
+		$action = $this->hook_base( 'reports', 'general_summary' );
 
 		if ( has_action( $action ) )
 			do_action( $action, $uri );
@@ -687,7 +687,7 @@ class Config extends gEditorial\Module
 
 		Core\HTML::h3( _x( 'General Editorial Roles', 'Header', 'geditorial-admin' ) );
 
-		$action = $this->hook_base( 'roles' , 'general_summary' );
+		$action = $this->hook_base( 'roles', 'general_summary' );
 
 		if ( has_action( $action ) )
 			do_action( $action, $uri );
@@ -768,7 +768,7 @@ class Config extends gEditorial\Module
 	// TODO: download link
 	protected function imports_data( $uri )
 	{
-		foreach ( apply_filters( $this->hook_base( 'imports' , 'data_summary' ), [] ) as $row ) {
+		foreach ( apply_filters( $this->hook_base( 'imports', 'data_summary' ), [] ) as $row ) {
 
 			if ( ! $view = $this->viewengine__view_by_template( 'data-summary', 'imports' ) )
 				continue;
@@ -800,7 +800,7 @@ class Config extends gEditorial\Module
 
 		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-admin' ) );
 
-		$action = $this->hook_base( 'imports' , 'general_summary' );
+		$action = $this->hook_base( 'imports', 'general_summary' );
 
 		if ( has_action( $action ) )
 			do_action( $action, $uri );

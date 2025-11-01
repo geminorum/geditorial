@@ -25,6 +25,7 @@ class Tabs extends gEditorial\Module
 			'keywords' => [
 				'frontend',
 				'bootstrap',
+				'tabmodule',
 			],
 		];
 	}
@@ -101,7 +102,7 @@ class Tabs extends gEditorial\Module
 				'priority'    => 8,
 			];
 
-		// TODO: move to `Meta` Module
+		// TODO: move to `MetaTabs` Module
 		if ( $posttype && post_type_supports( $posttype, 'meta_fields' ) )
 			$tabs[] = [
 				'name'        => 'meta_summary',
@@ -112,7 +113,7 @@ class Tabs extends gEditorial\Module
 				'priority'    => 10,
 			];
 
-		// TODO: move to `Attachments` Module
+		// TODO: Move to new module `Appendix`/`AttachmentTabs` for listing selected attachment mimes after post/widget
 		if ( gEditorial()->enabled( 'attachments' ) )
 			$tabs[] = [
 				'name'        => 'attachment_summary',

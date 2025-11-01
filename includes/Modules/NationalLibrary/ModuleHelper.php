@@ -22,7 +22,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function linkBib( $bib, $link = TRUE, $html = NULL, $class = FALSE )
 	{
-		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib ) ;
+		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib );
 
 		if ( ! $link )
 			return $url;
@@ -118,11 +118,11 @@ class ModuleHelper extends gEditorial\Helper
 			'isbn'   => $isbn ? Core\ISBN::sanitize( $isbn ) : '',
 		];
 
-		foreach ( $dom->find( '.formcontent table table table' )->children('tr') as $tr ) {
+		foreach ( $dom->find( '.formcontent table table table' )->children( 'tr' ) as $tr ) {
 
 			$row = [];
 
-			foreach ( $tr->children('td') as $cell ) {
+			foreach ( $tr->children( 'td' ) as $cell ) {
 
 				$text = Core\Text::trim( $cell->text() );
 

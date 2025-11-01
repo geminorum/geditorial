@@ -30,6 +30,7 @@ class Chronicles extends gEditorial\Module
 			'keywords' => [
 				'timeline',
 				'subcontent',
+				'tabmodule',
 			],
 		];
 	}

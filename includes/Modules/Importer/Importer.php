@@ -137,7 +137,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( $this->posttypes() as $posttype )
 			if ( WordPress\PostType::can( $posttype, 'import_posts' ) )
-				$submenu[('post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype)][] = [
+				$submenu[( 'post' == $posttype ? 'edit.php' : sprintf( 'edit.php?post_type=%s',$posttype ) )][] = [
 					Services\CustomPostType::getLabel( $posttype, 'import_items', FALSE, _x( 'Import', 'Menu', 'geditorial-importer' ) ),
 					'exist', // already checked
 					$this->get_imports_page_url( NULL, [ 'posttype' => $posttype ] ),
