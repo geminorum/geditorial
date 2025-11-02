@@ -41,7 +41,12 @@ if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 	require_once GEDITORIAL_DIR.'assets/vendor/autoload.php';
 
 	function gEditorial() {
-		return \geminorum\gEditorial\Plugin::instance();
+		return \geminorum\gEditorial\Plugin::instance(
+			GEDITORIAL_DIR,
+			GEDITORIAL_URL,
+			GEDITORIAL_FILE,
+			GEDITORIAL_VERSION
+		);
 	}
 
 	// NOTE: `$gEditorial` is on global context

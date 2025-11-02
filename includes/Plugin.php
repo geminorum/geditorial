@@ -2,11 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-#[\AllowDynamicProperties] // TODO: implement the magic methods `__get()` and `__set()`
-class Plugin
+#[\AllowDynamicProperties]
+class Plugin extends WordPress\Plugin
 {
-
-	const BASE = 'geditorial';
+	public $base = 'geditorial';
 
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
@@ -19,21 +18,7 @@ class Plugin
 	private $_options;
 	private $_modules;
 
-	public static function instance()
-	{
-		static $instance = NULL;
-
-		if ( NULL === $instance ) {
-			$instance = new Plugin();
-			$instance->setup();
-		}
-
-		return $instance;
-	}
-
-	public function __construct() {}
-
-	private function setup()
+	protected function setup_check()
 	{
 		if ( is_network_admin() || is_user_admin() )
 			return FALSE;
@@ -49,10 +34,18 @@ class Plugin
 				return FALSE;
 		}
 
-		$this->_path    = GEDITORIAL_DIR.'includes/Modules/';
+		return TRUE;
+	}
+
+	protected function initialize()
+	{
+		$this->_path    = sprintf( '%sincludes/Modules/', $this->__dir );
 		$this->_modules = new \stdClass();
 		$this->_options = new \stdClass();
+	}
 
+	protected function actions()
+	{
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
 		add_action( 'init', [ $this, 'init_late' ], 999 );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
@@ -62,27 +55,14 @@ class Plugin
 		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
 		add_filter( 'kses_allowed_protocols', [ $this, 'kses_allowed_protocols' ], 20, 1 );
 
-		add_filter( static::BASE.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
+		add_filter( $this->base.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
 
 		if ( ! is_admin() ) {
 
 			add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
-			add_filter( 'template_include', [ $this, 'template_include' ], 98 ); // before gTheme
+			add_filter( 'template_include', [ $this, 'template_include' ], 98 );  // before `gTheme`
 		}
-
-		do_action( sprintf( '%s_loaded', static::BASE ) );
-	}
-
-	public function files( $stack, $check = TRUE, $base = GEDITORIAL_DIR )
-	{
-		foreach ( (array) $stack as $path )
-
-			if ( ! $check )
-				require_once $base.'includes/'.$path.'.php';
-
-			else if ( Core\File::readable( $base.'includes/'.$path.'.php' ) )
-				require_once $base.'includes/'.$path.'.php';
 	}
 
 	public function admin_init()
@@ -93,8 +73,6 @@ class Plugin
 
 	public function plugins_loaded()
 	{
-		$this->load_textdomains( GEDITORIAL_DIR );
-		$this->define_constants();
 		$this->load_modules();
 		$this->load_options();
 		$this->init_modules();
@@ -105,20 +83,20 @@ class Plugin
 
 	// NOTE: `custom path` once set by `load_plugin_textdomain()`
 	// NOTE: assumes the plugin directory is the same as the textdomain
-	private function load_textdomains( $path )
+	protected function textdomains()
 	{
-		load_plugin_textdomain( static::BASE, FALSE, static::BASE.'/languages' );
+		parent::textdomains();
 
 		if ( ! is_admin() )
 			return;
 
-		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), static::BASE );
-		load_textdomain( static::BASE.'-admin', $path."languages/admin-{$locale}.mo", $locale );
+		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
+		load_textdomain( $this->base.'-admin', $this->__dir."languages/admin-{$locale}.mo", $locale );
 	}
 
-	private function define_constants()
+	protected function late_constants()
 	{
-		$constants = [
+		return [
 			'GEDITORIAL_BETA_FEATURES'     => TRUE,
 			'GEDITORIAL_LOAD_PRIVATES'     => FALSE,
 			'GEDITORIAL_DEBUG_MODE'        => FALSE,
@@ -128,13 +106,10 @@ class Plugin
 			'GEDITORIAL_DISABLE_HELP_TABS' => FALSE,
 			'GEDITORIAL_STRING_DELIMITERS' => NULL,
 
-			'GEDITORIAL_CACHE_DIR' => WP_CONTENT_DIR.'/cache', // FALSE to disable
-			'GEDITORIAL_CACHE_URL' => WP_CONTENT_URL.'/cache',
-			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12, // 12 hours
+			'GEDITORIAL_CACHE_DIR' => sprintf( '%s/cache/%s', WP_CONTENT_DIR, $this->base ),   // FALSE to disable
+			'GEDITORIAL_CACHE_URL' => sprintf( '%s/cache/%s', WP_CONTENT_URL, $this->base ),
+			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12,                                            // 12 hours
 		];
-
-		foreach ( $constants as $key => $val )
-			defined( $key ) || define( $key, $val );
 	}
 
 	private function load_modules()
@@ -163,15 +138,16 @@ class Plugin
 		$defaults = [
 			'folder'     => $folder,
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
-			'icon'       => 'screenoptions', // `dashicons` class / SVG icon array
-			'textdomain' => sprintf( '%s-%s', static::BASE, Core\Text::sanitizeBase( $args['name'] ) ), // or `NULL` for plugin base
-			'configure'  => TRUE,  // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
-			'i18n'       => TRUE,  // or `FALSE`, `adminonly`, `frontonly`, `restonly`
-			'frontend'   => TRUE,  // Whether or not the module should be loaded on the frontend
-			'autoload'   => FALSE, // Auto-loading a module will remove the ability to enable/disable it
-			'disabled'   => FALSE, // FALSE or string explaining why the module is not available
-			'access'     => 'unknown', // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
-			'keywords'   => [],
+			'textdomain' => sprintf( '%s-%s', $this->base, Core\Text::sanitizeBase( $args['name'] ) ),   // or `NULL` for plugin base
+
+			'icon'      => 'screenoptions',   // `dashicons` class / SVG icon array
+			'configure' => TRUE,              // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
+			'i18n'      => TRUE,              // or `FALSE`, `adminonly`, `frontonly`, `restonly`
+			'frontend'  => TRUE,              // Whether or not the module should be loaded on the frontend
+			'autoload'  => FALSE,             // Auto-loading a module will remove the ability to enable/disable it
+			'disabled'  => FALSE,             // FALSE or string explaining why the module is not available
+			'access'    => 'unknown',         // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
+			'keywords'  => [],
 		];
 
 		$this->_modules->{$args['name']} = (object) array_merge( $defaults, $args );
@@ -182,7 +158,7 @@ class Plugin
 	private function load_options()
 	{
 		$frontend = ! is_admin();
-		$options  = get_option( static::BASE.'_options' );
+		$options  = get_option( $this->base.'_options' );
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
@@ -199,7 +175,7 @@ class Plugin
 
 	private function init_modules()
 	{
-		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), static::BASE );
+		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
 		$stage  = Helper::const( 'WP_STAGE', 'production' ); // 'development'
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
@@ -426,7 +402,7 @@ class Plugin
 			return $options;
 
 		foreach ( $this->_modules as $name => $enabled )
-			$options[$name] = get_option( static::BASE.'_'.$name.'_options', '{{NO-OPTIONS}}' );
+			$options[$name] = get_option( $this->base.'_'.$name.'_options', '{{NO-OPTIONS}}' );
 
 		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
 
@@ -444,7 +420,7 @@ class Plugin
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
-			$key = static::BASE.'_'.$mod_name.'_options';
+			$key = $this->base.'_'.$mod_name.'_options';
 			$old = get_option( $key );
 
 			if ( isset( $options[$mod_name] ) ) {
@@ -515,7 +491,7 @@ class Plugin
 
 	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
 	{
-		return $option === static::BASE.'_options' ? TRUE : $autoload;
+		return $option === $this->base.'_options' ? TRUE : $autoload;
 	}
 
 	/**
@@ -577,8 +553,8 @@ class Plugin
 	public function wp_enqueue_scripts()
 	{
 		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() ) {
-			wp_enqueue_style( static::BASE.'-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all.css', [], GEDITORIAL_VERSION );
-			wp_style_add_data( static::BASE.'-adminbar', 'rtl', 'replace' );
+			wp_enqueue_style( $this->base.'-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all.css', [], GEDITORIAL_VERSION );
+			wp_style_add_data( $this->base.'-adminbar', 'rtl', 'replace' );
 		}
 
 		if ( ! $this->asset_styles )
@@ -587,12 +563,12 @@ class Plugin
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( static::BASE.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
-		wp_style_add_data( static::BASE.'-front', 'rtl', 'replace' );
+		wp_enqueue_style( $this->base.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
+		wp_style_add_data( $this->base.'-front', 'rtl', 'replace' );
 
 		if ( WordPress\WooCommerce::isActive() ) {
-			wp_enqueue_style( static::BASE.'-woocommerce-front', GEDITORIAL_URL.'assets/css/front.woocommerce.css', [], GEDITORIAL_VERSION );
-			wp_style_add_data( static::BASE.'-woocommerce-front', 'rtl', 'replace' );
+			wp_enqueue_style( $this->base.'-woocommerce-front', GEDITORIAL_URL.'assets/css/front.woocommerce.css', [], GEDITORIAL_VERSION );
+			wp_style_add_data( $this->base.'-woocommerce-front', 'rtl', 'replace' );
 		}
 
 		if ( defined( 'GNETWORK_VERSION' ) )
@@ -659,7 +635,7 @@ class Plugin
 
 	public function admin_bar_init()
 	{
-		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, static::BASE ] );
+		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, $this->base ] );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )
@@ -667,7 +643,7 @@ class Plugin
 		if ( empty( $this->adminbar_nodes ) )
 			return;
 
-		if ( in_array( static::BASE, Core\Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
+		if ( in_array( $this->base, Core\Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
 
 			if ( ! is_user_logged_in() )
 				$link = FALSE;
@@ -682,7 +658,7 @@ class Plugin
 				$link = FALSE;
 
 			$wp_admin_bar->add_node( [
-				'id'     => static::BASE,
+				'id'     => $this->base,
 				'title'  => Visual::getAdminBarIconMarkup(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
