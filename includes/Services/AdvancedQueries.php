@@ -56,7 +56,11 @@ class AdvancedQueries extends gEditorial\Service
 		$where = [];
 
 		foreach ( $meta as $pair )
-			$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
+			if ( empty( $pair[2] ) )
+				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
+			else
+				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value LIKE %s)", $pair[0], '%'.$wpdb->esc_like( $pair[1] ).'%' );
+
 
 		$posts = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
 
