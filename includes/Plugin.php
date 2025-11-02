@@ -82,7 +82,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// NOTE: `custom path` once set by `load_plugin_textdomain()`
-	// NOTE: assumes the plugin directory is the same as the textdomain
+	// NOTE: assumes the plugin directory is the same as the `textdomain`
 	protected function textdomains()
 	{
 		parent::textdomains();
@@ -135,6 +135,7 @@ class Plugin extends WordPress\Plugin
 		if ( ! isset( $args['name'], $args['title'] ) )
 			return FALSE;
 
+		// TODO: Move to `Modulation` Service
 		$defaults = [
 			'folder'     => $folder,
 			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
@@ -206,15 +207,11 @@ class Plugin extends WordPress\Plugin
 			'AdminScreen',
 			'AdvancedQueries',
 			'Barcodes',
-			// 'BinaryPond',
-			// 'BookCovers',
 			'Calendars',
 			'ContentActions',
-			// 'Coordinates',
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',
-			// 'GeoTagging',
 			'HeaderButtons',
 			'Individuals',
 			'LateChores',
@@ -227,7 +224,6 @@ class Plugin extends WordPress\Plugin
 			'PrimaryTaxonomy',
 			'RestAPI',
 			'SearchSelect',
-			// 'ShortMessages',
 			'Sitemaps',
 			'TaxonomyFields',
 			'TaxonomyTaxonomy',
@@ -240,6 +236,7 @@ class Plugin extends WordPress\Plugin
 				call_user_func( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] );
 	}
 
+	// TODO: Move to `ClassicEditor` Service
 	public function init_late()
 	{
 		if ( count( $this->editor_buttons )
@@ -304,6 +301,7 @@ class Plugin extends WordPress\Plugin
 		return TRUE;
 	}
 
+	// TODO: Move to `Modulation` Service
 	public function disable_process( $module, $context = 'import' )
 	{
 		// already not enabled!
@@ -440,6 +438,7 @@ class Plugin extends WordPress\Plugin
 		return $upgraded;
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
@@ -484,6 +483,7 @@ class Plugin extends WordPress\Plugin
 		}
 	}
 
+	// TODO: Move to `ClassicEditor` Service
 	public function mce_external_languages( $languages )
 	{
 		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/Misc/TinyMceStrings.php' ] );
@@ -496,6 +496,7 @@ class Plugin extends WordPress\Plugin
 
 	/**
 	 * Filters the list of protocols allowed in HTML attributes.
+	 * TODO: Move to `Markup` Service
 	 *
 	 * @param array $protocols
 	 * @return array
@@ -540,16 +541,19 @@ class Plugin extends WordPress\Plugin
 		get_footer( $name );
 	}
 
+	// TODO: Move to `Markup` Service
 	public function markdown_to_html( $raw )
 	{
 		return Helper::mdExtra( $raw );
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public function enqueue_styles()
 	{
 		$this->asset_styles = TRUE;
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public function wp_enqueue_scripts()
 	{
 		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() ) {
@@ -578,6 +582,7 @@ class Plugin extends WordPress\Plugin
 		wp_style_add_data( 'gnetwork-front', 'rtl', 'replace' );
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public function enqueue_asset_config( $args = [], $module = NULL )
 	{
 		$this->asset_config = TRUE;
@@ -598,6 +603,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// used in front & admin
+	// TODO: Move to `AssetRegistry` Service
 	public function footer_asset_config()
 	{
 		if ( $this->asset_config )
@@ -606,6 +612,7 @@ class Plugin extends WordPress\Plugin
 		Core\Icon::printSprites( $this->asset_icons );
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public function icon( $name, $group, $enqueue = TRUE )
 	{
 		if ( $icon = Core\Icon::get( $name, $group ) ) {
@@ -633,11 +640,13 @@ class Plugin extends WordPress\Plugin
 		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
 	}
 
+	// TODO: Move to `AdminbarRegistry` Service
 	public function admin_bar_init()
 	{
 		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, $this->base ] );
 	}
 
+	// TODO: Move to `AdminbarRegistry` Service
 	public function admin_bar_menu( $wp_admin_bar )
 	{
 		if ( empty( $this->adminbar_nodes ) )
@@ -689,6 +698,7 @@ class Plugin extends WordPress\Plugin
 		return 0;
 	}
 
+	// TODO: Move to `Locations` Service / keep wrapper method on plugin object
 	public function base_country()
 	{
 		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )

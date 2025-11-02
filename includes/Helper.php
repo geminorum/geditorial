@@ -11,6 +11,7 @@ class Helper extends WordPress\Main
 		return gEditorial();
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleClass( $module, $check = TRUE )
 	{
 		$class = '';
@@ -26,6 +27,7 @@ class Helper extends WordPress\Main
 		return $class;
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleSlug( $module, $link = TRUE )
 	{
 		return $link
@@ -33,6 +35,7 @@ class Helper extends WordPress\Main
 			: ucwords( str_replace( [ '_', '-' ], ' ', $module ) );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleLoading( $module, $stage = NULL )
 	{
 		if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
@@ -52,6 +55,7 @@ class Helper extends WordPress\Main
 		return TRUE;
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleEnabled( $options )
 	{
 		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;
@@ -66,7 +70,7 @@ class Helper extends WordPress\Main
 	}
 
 	// TODO: must check for minimum version of WooCommerce
-	// TODO: move to `Info`
+	// TODO: Move to `Modulation` Service
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
 		return WordPress\WooCommerce::isActive()
@@ -74,7 +78,7 @@ class Helper extends WordPress\Main
 			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Helper', 'geditorial-admin' ) : $message );
 	}
 
-	// TODO: move to `Info`
+	// TODO: Move to `Modulation` Service
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
 		$current = Core\L10n::locale( TRUE );
@@ -86,6 +90,7 @@ class Helper extends WordPress\Main
 		return $message ?? _x( 'Not Available on Current Locale', 'Helper', 'geditorial-admin' );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function enqueueVirastar()
 	{
 		if ( ! gEditorial()->enabled( 'ortho' ) )
@@ -94,16 +99,19 @@ class Helper extends WordPress\Main
 		return gEditorial()->module( 'ortho' )->enqueueVirastar();
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )
 	{
 		return $taxonomy === gEditorial()->constant( 'genres', 'main_taxonomy', $fallback );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function isTaxonomyAudit( $taxonomy, $fallback = 'audit_attribute' )
 	{
 		return $taxonomy === gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function setTaxonomyAudit( $post, $term_ids, $append = TRUE, $fallback = 'audit_attribute' )
 	{
 		if ( ! gEditorial()->enabled( 'audit' ) )
@@ -139,11 +147,13 @@ class Helper extends WordPress\Main
 	}
 
 	// override to use plugin version
+	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $verbose = TRUE )
 	{
 		return Core\HTML::linkStyleSheet( $url, $version, $media, $verbose );
 	}
 
+	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheetAdmin( $page, $verbose = TRUE, $prefix = 'admin' )
 	{
 		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
@@ -151,6 +161,7 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Prepares data for display as a contact.
+	 * TODO: Move to `Individuals` Service
 	 *
 	 * @param string $value
 	 * @param string $title
@@ -247,7 +258,7 @@ class Helper extends WordPress\Main
 
 		foreach ( $terms as $term )
 			$list[] = Core\HTML::tag( 'a', [
-				// better to pass the term_id instead of term slug
+				// NOTE: better to pass the `term_id` instead of term `slug`
 				'href'  => add_query_arg( [ $term->taxonomy => $term->term_id ], $link ),
 				'title' => urldecode( $term->slug ),
 				'class' => '-term -taxonomy-term',
@@ -428,7 +439,7 @@ class Helper extends WordPress\Main
 	}
 
 	// TODO: `line-count`
-	// TODO: move to `Info`
+	// TODO: Move to `ClassicEditor` Service
 	public static function renderEditorStatusInfo( $target )
 	{
 		echo '<div class="-wrap -editor-status-info">';
@@ -560,6 +571,7 @@ class Helper extends WordPress\Main
 			return $layout;
 	}
 
+	// TODO: Move to `Markup` Service
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
 	public static function getMustache( $base = GEDITORIAL_DIR )
 	{
@@ -584,6 +596,7 @@ class Helper extends WordPress\Main
 		return $gEditorialMustache;
 	}
 
+	// TODO: Move to `Markup` Service
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
 	public static function renderMustache( $part, $data = [], $verbose = TRUE )
 	{
@@ -596,6 +609,7 @@ class Helper extends WordPress\Main
 		echo $html;
 	}
 
+	// TODO: Move to `Markup` Service
 	public static function mdExtra( $markdown )
 	{
 		global $gEditorialMarkdownExtra;
@@ -612,6 +626,7 @@ class Helper extends WordPress\Main
 	/**
 	 * Separates given string by set of delimiters into an array.
 	 * NOTE: applies the plugin filter on default delimiters
+	 * TODO: Move to `Markup` Service
 	 *
 	 * @param string $string
 	 * @param null|string|array $delimiters
@@ -631,6 +646,7 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Retrieves the list of string delimiters.
+	 * TODO: Move to `Markup` Service
 	 *
 	 * @param string $default
 	 * @return null|array
