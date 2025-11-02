@@ -94,7 +94,7 @@ class Widget extends \WP_Widget
 
 		$key = $this->widget_cache_key( $instance );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $cache = get_transient( $key ) ) )

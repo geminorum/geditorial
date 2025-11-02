@@ -110,7 +110,7 @@ trait CoreCapabilities
 					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 						return $caps;
 
-					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+					if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 						return [ 'do_not_allow' ];
 			}
 
@@ -163,7 +163,7 @@ trait CoreCapabilities
 					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
 						return $caps;
 
-					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+					if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 						return [ 'do_not_allow' ];
 			}
 

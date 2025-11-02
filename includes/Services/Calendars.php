@@ -234,7 +234,7 @@ class Calendars extends gEditorial\Service
 		 * @source https://github.com/markuspoerschke/iCal
 		 * @docs https://ical.poerschke.nrw/docs
 		 */
-		$uid   = implode( '-', [ Core\WordPress::currentSiteName(), $post->post_type, $post->ID ] );
+		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID ] );
 		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
 		$event->touch( new \Eluceo\iCal\Domain\ValueObject\Timestamp( Core\Date::getObject( $post->post_modified ) ) );
 		$event->setSummary( WordPress\Post::fullTitle( $post ) );

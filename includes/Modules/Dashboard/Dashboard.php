@@ -176,7 +176,7 @@ class Dashboard extends gEditorial\Module
 	private function _init_hooks()
 	{
 		nocache_headers();
-		// WordPress::doNotCache();
+		// WordPress\Site::doNotCache();
 
 		$page = get_query_var( $this->classs(), FALSE );
 

@@ -860,7 +860,7 @@ trait CoreTaxonomies
 	// NOTE: check for not-admin before calling
 	protected function hook_adminbar_node_for_taxonomy( $constant, $parent = NULL )
 	{
-		if ( ! Core\WordPress::mustRegisterUI( FALSE ) )
+		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
 			return FALSE;
 
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )

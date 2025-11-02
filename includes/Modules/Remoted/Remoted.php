@@ -66,7 +66,7 @@ class Remoted extends gEditorial\Module
 			'remote-uploads',
 			_x( 'Remote Uploads', 'Dashboard Widget Title', 'geditorial-remoted' ),
 			Core\HTTP::htmlStatus(
-				Core\HTTP::getStatus( $remote, ! Core\WordPress::isDev() ),
+				Core\HTTP::getStatus( $remote, ! WordPress\IsIt::dev() ),
 				NULL,
 				'<code class="postbox-title-action -status" title="%s" style="color:%s">%s</code>'
 			)

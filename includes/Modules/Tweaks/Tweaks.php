@@ -368,7 +368,7 @@ class Tweaks extends gEditorial\Module
 		// add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns_late' ], 999, 1 );
 		// add_filter( 'list_table_primary_column', [ $this, 'list_table_primary_column' ], 10, 2 );
 
-		if ( ! Core\WordPress::isAJAX() && $this->in_setting( $posttype, 'column_thumb' ) )
+		if ( ! WordPress\IsIt::ajax() && $this->in_setting( $posttype, 'column_thumb' ) )
 			gEditorial\Scripts::enqueueThickBox();
 
 		// INTERNAL HOOKS
@@ -876,7 +876,7 @@ class Tweaks extends gEditorial\Module
 
 		printf( $before, '-post-author' );
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo '<span class="-author">'.WordPress\PostType::authorLink( $post->post_type, $post->post_author ).'</span>';
+			echo '<span class="-author">'.WordPress\PostType::authorEditMarkup( $post->post_type, $post->post_author ).'</span>';
 		echo '</li>';
 	}
 
@@ -942,7 +942,7 @@ class Tweaks extends gEditorial\Module
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
-		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), '<li class="-row tweaks-user-atts -roles">'.$role, $after );
+		echo WordPress\Strings::getJoined( WordPress\Role::get( 0, [], $user ), '<li class="-row tweaks-user-atts -roles">'.$role, $after );
 	}
 
 	public function column_contacts_default( $user, $before, $after )

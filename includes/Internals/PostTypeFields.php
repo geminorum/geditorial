@@ -897,7 +897,7 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_edit_screen( $posttype )
 	{
-		if ( Core\WordPress::isWPcompatible( '6.3.0' ) ) {
+		if ( WordPress\IsIt::compatWP( '6.3.0' ) ) {
 			$this->action( 'bulk_edit_posts', 2, 12, 'posttypefields' );
 			$this->action( 'bulk_edit_custom_box', 2, 12, 'posttypefields' );
 		}
@@ -1238,7 +1238,7 @@ trait PostTypeFields
 		$this->filter( 'pairedimports_import_types', 4, 5, 'posttypefields', $this->base );
 
 		$attribute = $this->constant( 'restapi_attribute', sprintf( '%s_rendered', $this->key ) );
-		$is_rest   = Core\WordPress::isREST();
+		$is_rest   = WordPress\IsIt::rest();
 
 		foreach ( $this->posttypes() as $posttype ) {
 

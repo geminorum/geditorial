@@ -124,7 +124,7 @@ class Alphabet extends gEditorial\Module
 
 		$key = $this->hash( 'posts', $args );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -288,7 +288,7 @@ class Alphabet extends gEditorial\Module
 
 		$key = $this->hash( 'terms', $args );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {

@@ -157,7 +157,7 @@ class DeadDrops extends gEditorial\Module
 	// NOTE: the author must have upload cap to use the core endpoint.
 	public function determine_current_user( $user_id )
 	{
-		if ( $user_id || ! Core\WordPress::isREST() )
+		if ( $user_id || ! WordPress\IsIt::rest() )
 			return $user_id;
 
 		$user = self::req( 'author' );

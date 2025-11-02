@@ -23,7 +23,7 @@ trait SettingsHelp
 		if ( GEDITORIAL_DISABLE_HELP_TABS )
 			return;
 
-		if ( ! Core\WordPress::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
+		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
 			return;
 
 		if ( is_null( $screen ) )

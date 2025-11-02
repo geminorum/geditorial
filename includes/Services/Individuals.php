@@ -59,7 +59,7 @@ class Individuals extends gEditorial\Service
 
 	public static function filter_prep_individual_front( $individual, $raw, $value )
 	{
-		if ( $link = Core\WordPress::getSearchLink( $individual ) )
+		if ( $link = WordPress\URL::search( $individual ) )
 			return Core\HTML::link( $individual, $link );
 
 		return $individual;

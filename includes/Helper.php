@@ -285,7 +285,7 @@ class Helper extends WordPress\Main
 		$list = [];
 
 		foreach ( $authors as $author )
-			if ( $html = WordPress\PostType::authorLink( $posttype, $author ) )
+			if ( $html = WordPress\PostType::authorEditMarkup( $posttype, $author ) )
 				$list[] = $html;
 
 		echo WordPress\Strings::getJoined( $list, $before, $after );
@@ -510,7 +510,7 @@ class Helper extends WordPress\Main
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
 
 		if ( $edit_last && $post->post_author != $edit_last )
-			$html.= '&nbsp;(<span class="-edit-last">'.WordPress\PostType::authorLink( $post->post_type, $edit_last ).'</span>)';
+			$html.= '&nbsp;(<span class="-edit-last">'.WordPress\PostType::authorEditMarkup( $post->post_type, $edit_last ).'</span>)';
 
 		return $class ? Core\HTML::wrap( $html, $class, FALSE ) : $html;
 	}
@@ -552,7 +552,7 @@ class Helper extends WordPress\Main
 			$layout = $plugin;
 
 		if ( $no_cache && $layout )
-			Core\WordPress::doNotCache();
+			WordPress\Site::doNotCache();
 
 		if ( $require && $layout )
 			require_once $layout;

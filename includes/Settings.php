@@ -447,8 +447,11 @@ class Settings extends WordPress\Main
 	public static function showOptionNone( $string = NULL )
 	{
 		if ( $string )
-			/* translators: `%s`: options */
-			return sprintf( _x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' ), $string );
+			return sprintf(
+				/* translators: `%s`: options */
+				_x( '&ndash; Select %s &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' ),
+				$string
+			);
 
 		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' );
 	}
@@ -1005,7 +1008,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can assign paired defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1567,7 +1570,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1580,7 +1583,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1593,7 +1596,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1606,7 +1609,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1619,7 +1622,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?: '',
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1632,7 +1635,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1645,7 +1648,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can access data tools.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1658,7 +1661,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can access data imports.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1672,7 +1675,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1685,7 +1688,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1698,7 +1701,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1711,7 +1714,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can access the links to public endpoints in the site.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1724,7 +1727,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1737,7 +1740,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -1750,7 +1753,7 @@ class Settings extends WordPress\Main
 			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
 			'default'     => [],
 			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\User::getAllRoleList(),
+			'values'      => $roles ?? WordPress\Role::get(),
 		];
 	}
 
@@ -3718,7 +3721,7 @@ class Settings extends WordPress\Main
 					call_user_func_array( $args['callback'], [ &$args,
 						compact( 'html', 'value', 'name', 'id', 'exclude' ) ] );
 
-				} else if ( Core\WordPress::isDev() ) {
+				} else if ( WordPress\IsIt::dev() ) {
 
 					echo 'Error: Setting Is NOT Callable!';
 				}

@@ -33,7 +33,7 @@ class Locations extends gEditorial\Service
 
 	public static function filter_prep_location_front( $location, $raw, $value )
 	{
-		if ( $link = Core\WordPress::getSearchLink( $location ) )
+		if ( $link = WordPress\URL::search( $location ) )
 			return Core\HTML::link( $location, $link );
 
 		return $location;

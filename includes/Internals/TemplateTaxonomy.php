@@ -86,7 +86,7 @@ trait TemplateTaxonomy
 				$empty_callback = [ $this, 'templatetaxonomy_empty_content' ];
 
 			nocache_headers();
-			// Core\WordPress::doNotCache();
+			// WordPress\Site::doNotCache();
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,

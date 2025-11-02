@@ -11,13 +11,13 @@ trait SettingsRoles
 	/**
 	 * Gets default roles for use in settings.
 	 *
-	 * @param  array $extra_excludes
-	 * @param  bool  $filtered
-	 * @return array $rols
+	 * @param array $extra_excludes
+	 * @param bool $filtered
+	 * @return array
 	 */
 	protected function get_settings_default_roles( $extra_excludes = [], $force_include = [], $filtered = TRUE )
 	{
-		$supported = WordPress\User::getAllRoleList( $filtered );
+		$supported = WordPress\Role::get( 0, [], FALSE, $filtered );
 		$excluded  = Settings::rolesExcluded( $extra_excludes );
 
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );

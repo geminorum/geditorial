@@ -121,7 +121,7 @@ class Module extends WordPress\Module
 		if ( 'adminonly' === $this->module->i18n && ! is_admin() )
 			return FALSE;
 
-		if ( 'restonly' === $this->module->i18n && ! Core\WordPress::isREST() )
+		if ( 'restonly' === $this->module->i18n && ! WordPress\IsIt::rest() )
 			return FALSE;
 
 		if ( 'frontonly' === $this->module->i18n && is_admin() )
@@ -150,8 +150,8 @@ class Module extends WordPress\Module
 	protected function setup( $args = [] )
 	{
 		$admin = is_admin();
-		$ajax  = Core\WordPress::isAJAX();
-		$ui    = Core\WordPress::mustRegisterUI( FALSE );
+		$ajax  = WordPress\IsIt::ajax();
+		$ui    = WordPress\Screen::mustRegisterUI( FALSE );
 
 		if ( $admin && $ui && ( TRUE === $this->module->configure || 'settings' === $this->module->configure ) )
 			add_action( $this->hook_base( 'settings_load' ), [ $this, 'register_settings' ] );
@@ -571,7 +571,7 @@ class Module extends WordPress\Module
 	// NOTE: for Ajax calls on quick-edit
 	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
 	{
-		if ( ! Core\WordPress::isAdminAJAX() )
+		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
 		if ( is_null( $request ) )
@@ -599,7 +599,7 @@ class Module extends WordPress\Module
 	// NOTE: for Ajax calls on quick-edit
 	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
 	{
-		if ( ! Core\WordPress::isAdminAJAX() )
+		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
 		if ( is_null( $request ) )
@@ -866,7 +866,7 @@ class Module extends WordPress\Module
 		Services\LateChores::termCountCollect();
 		wp_defer_comment_counting( TRUE );
 
-		if ( ! Core\WordPress::isDev() )
+		if ( ! WordPress\IsIt::dev() )
 			do_action( 'qm/cease' ); // Query-Monitor: Cease data collections
 
 		return $this->raise_memory_limit( $count, $per, $context ?? 'import' );

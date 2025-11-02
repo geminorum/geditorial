@@ -910,7 +910,7 @@ class WasBorn extends gEditorial\Module
 		$roundup  = $this->get_setting( 'average_round_up', TRUE );
 		$cachekey = $this->hash( 'mean_age', 'posts', Core\Arraay::pluck( $posts, 'ID' ), $roundup );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $cachekey );
 
 		if ( FALSE === ( $average = get_transient( $cachekey ) ) ) {

@@ -648,7 +648,7 @@ class Audit extends gEditorial\Module
 		}
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
-		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
+		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 
 		return $this->filters( 'view_data_for_post', $data, $post, $context );
@@ -659,7 +659,7 @@ class Audit extends gEditorial\Module
 		WordPress\Taxonomy::disableTermCounting();
 		Services\LateChores::termCountCollect();
 
-		if ( ! Core\WordPress::isDev() )
+		if ( ! WordPress\IsIt::dev() )
 			do_action( 'qm/cease' ); // Query Monitor: Cease data collections
 
 		return $this->raise_memory_limit( $count, $per, $context ?? 'audit' );

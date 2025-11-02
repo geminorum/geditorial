@@ -518,7 +518,7 @@ class Uncategorized extends gEditorial\Module
 		$taxonomies = $this->taxonomies();
 		$cache_key  = $this->_get_count_cache_key( $taxonomies );
 
-		if ( Core\WordPress::isFlush( 'edit_others_posts' ) )
+		if ( WordPress\IsIt::flush( 'edit_others_posts' ) )
 			delete_transient( $cache_key );
 
 		if ( FALSE === ( $count = get_transient( $cache_key ) ) ) {

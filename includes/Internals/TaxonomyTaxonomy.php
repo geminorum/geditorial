@@ -45,7 +45,7 @@ trait TaxonomyTaxonomy
 		add_action( 'edit_term', $callback, 10, 3 );
 		add_action( 'create_term', $callback, 10, 3 );
 
-		if ( ! $column || ! Core\WordPress::isAJAX() )
+		if ( ! $column || ! WordPress\IsIt::ajax() )
 			return TRUE;
 
 		if ( ! $taxonomy = $this->is_inline_save_taxonomy( (array) $subjects ) )

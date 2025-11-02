@@ -22,7 +22,7 @@ trait DashboardSummary
 		$scope = $this->get_setting( 'summary_scope', 'all' );
 		$key   = $this->hash( 'widgetsummary', $scope, get_current_user_id() );
 
-		if ( Core\WordPress::isFlush( 'read' ) )
+		if ( WordPress\IsIt::flush( 'read' ) )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -98,7 +98,7 @@ trait DashboardSummary
 		$scope = $this->get_setting( 'summary_scope', 'all' );
 		$key   = $this->hash( 'widgetsummary', $taxonomy, $scope, get_current_user_id() );
 
-		if ( Core\WordPress::isFlush( 'read' ) )
+		if ( WordPress\IsIt::flush( 'read' ) )
 			delete_transient( $key );
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
@@ -172,7 +172,7 @@ trait DashboardSummary
 
 				if ( $check && ( $roles = get_term_meta( $terms[$term_slug]->term_id, 'roles', TRUE ) ) ) {
 
-					if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+					if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 						continue;
 				}
 

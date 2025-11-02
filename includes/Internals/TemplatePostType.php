@@ -51,7 +51,7 @@ trait TemplatePostType
 
 			add_filter( 'wp_robots', 'wp_robots_no_robots' );
 			nocache_headers();
-			// Core\WordPress::doNotCache();
+			// WordPress\Site::doNotCache();
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
@@ -81,7 +81,7 @@ trait TemplatePostType
 
 			add_filter( 'wp_robots', 'wp_robots_no_robots' );
 			nocache_headers();
-			// Core\WordPress::doNotCache();
+			// WordPress\Site::doNotCache();
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,

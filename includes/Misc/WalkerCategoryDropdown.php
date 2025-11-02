@@ -17,7 +17,7 @@ class WalkerCategoryDropdown extends \Walker_CategoryDropdown
 
 			if ( $roles = get_term_meta( $term->term_id, 'roles', TRUE ) ) {
 
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ) ) ) {
+				if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ) ) ) {
 
 					if ( 'disabled' === $args['restricted'] ) {
 

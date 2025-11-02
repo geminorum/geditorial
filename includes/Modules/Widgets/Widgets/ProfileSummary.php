@@ -81,7 +81,7 @@ class ProfileSummary extends gEditorial\Widget
 			}
 
 			// TODO: add option for display
-			echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ),
+			echo WordPress\Strings::getJoined( WordPress\Role::get( 0, [], $user ),
 				'<li class="-row -roles list-group-item">'.Info::renderIcon( 'roles', NULL, FALSE, FALSE ).' ',
 				'</li>'
 			);

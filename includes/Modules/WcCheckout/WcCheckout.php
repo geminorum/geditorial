@@ -103,7 +103,7 @@ class WcCheckout extends gEditorial\Module
 		// now continue only if we're at checkout
 		// is_checkout() was broken as of WC 3.2 in Ajax context, double-check for `is_ajax`
 		// I would check `WOOCOMMERCE_CHECKOUT` but testing shows it's not set reliably
-		if ( ! is_checkout() && ! Core\WordPress::isAJAX() )
+		if ( ! is_checkout() && ! WordPress\IsIt::ajax() )
 			return;
 
 		// remove coupon forms since why would you want a coupon for a free cart??

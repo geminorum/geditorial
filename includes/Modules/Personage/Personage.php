@@ -553,7 +553,7 @@ class Personage extends gEditorial\Module
 
 	public function prep_individual_admin( $individual, $raw, $value )
 	{
-		if ( $link = Core\WordPress::getAdminSearchLink( $individual, $this->constant( 'main_posttype' ) ) )
+		if ( $link = WordPress\URL::searchAdmin( $individual, $this->constant( 'main_posttype' ) ) )
 			return Core\HTML::link( $individual, $link, TRUE );
 
 		return $individual;

@@ -24,7 +24,7 @@ trait LateChores
 		$action = $this->hook( 'latechores', 'post_aftercare' );
 		add_action( $action, [ $this, 'latechores__do_post_aftercare' ], 10, 2 );
 
-		// if ( Core\WordPress::isCRON() )
+		// if ( WordPress\IsIt::cron() )
 		// 	return $action;
 
 		$collectors = [];

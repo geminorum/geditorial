@@ -279,7 +279,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$key = $this->hash( 'fipa', 'code', $code );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
@@ -520,7 +520,7 @@ class NationalLibrary extends gEditorial\Module
 	{
 		$key = $this->hash( 'fipa', 'post', $post->ID );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
@@ -617,7 +617,7 @@ class NationalLibrary extends gEditorial\Module
 	{
 		$key = $this->hash( 'fipa', 'product', $product->get_id() );
 
-		if ( Core\WordPress::isFlush() )
+		if ( WordPress\IsIt::flush() )
 			delete_transient( $key );
 
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
@@ -821,7 +821,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! empty( $this->cache[$posttype]['raw'] ) )
 			$this->_render_fipa_data( $this->cache[$posttype]['raw'], 'newpost' );
 
-		if ( ! Core\WordPress::isDev() )
+		if ( ! WordPress\IsIt::dev() )
 			return;
 
 		if ( ! empty( $this->cache[$posttype]['parsed'] ) && ! is_admin() )

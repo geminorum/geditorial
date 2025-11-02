@@ -744,7 +744,7 @@ class Template extends WordPress\Main
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 
-			$args['link'] = Core\WordPress::getSearchLink( $meta );
+			$args['link'] = WordPress\URL::search( $meta );
 
 			if ( is_null( $args['description'] ) )
 				/* translators: `%s`: search query */

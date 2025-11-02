@@ -160,7 +160,7 @@ trait CoreAdmin
 
 	protected function coreadmin__ajax_taxonomy_multiple_supported_column( $constant )
 	{
-		if ( ! $constant || ! Core\WordPress::isAJAX() )
+		if ( ! $constant || ! WordPress\IsIt::ajax() )
 			return FALSE;
 
 		if ( ! $taxonomy = $this->is_inline_save_taxonomy( $constant ) )

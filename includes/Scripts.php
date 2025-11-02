@@ -308,7 +308,7 @@ JS;
 	{
 		$handle = static::BASE.'-vuejs';
 
-		$url = Core\WordPress::isDev()
+		$url = WordPress\IsIt::dev()
 			? 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.min.js';
 
@@ -325,7 +325,7 @@ JS;
 	{
 		$handle = static::BASE.'-vuejs';
 
-		$url = Core\WordPress::isDev()
+		$url = WordPress\IsIt::dev()
 			? 'https://unpkg.com/vue@'.$ver.'/dist/vue.global.js'
 			: 'https://cdn.jsdelivr.net/npm/vue@'.$ver.'/dist/vue.global.min.js';
 
@@ -750,7 +750,7 @@ JS;
 	?><script type="text/javascript">
 /* <![CDATA[ */
 	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo Core\HTML::encode( $props ); ?>;
-	<?php if ( Core\WordPress::isDev() ) {
+	<?php if ( WordPress\IsIt::dev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 		echo "\t".'jQuery(document).on("gEditorial:Module:Loaded", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";

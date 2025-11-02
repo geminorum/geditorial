@@ -26,7 +26,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 		if ( ! $roles )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
-		if ( WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ) ) )
+		if ( WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ) ) )
 			return $this->_start_el( $output, $term, $depth, $args, $id );
 
 		if ( 'disabled' == $atts['restricted'] ) {

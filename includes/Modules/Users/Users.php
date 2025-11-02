@@ -614,7 +614,7 @@ class Users extends gEditorial\Module
 		}
 
 		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-users' ) );
-		echo WordPress\Strings::getJoined( WordPress\User::getRoleList( $user ), sprintf( $before, '-roles' ).$role, $after );
+		echo WordPress\Strings::getJoined( WordPress\Role::get( 0, [], $user ), sprintf( $before, '-roles' ).$role, $after );
 
 		$this->tweaks_column_user( $user, $before, $after );
 

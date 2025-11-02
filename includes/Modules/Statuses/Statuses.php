@@ -281,7 +281,7 @@ class Statuses extends gEditorial\Module
 			'suppress_filter' => TRUE,
 			'meta_query'      => [ [
 				'key'     => 'role',
-				'value'   => WordPress\User::getRoles(),
+				'value'   => WordPress\Role::get( 2, [], NULL ),
 				'compare' => 'IN'
 			] ],
 		];

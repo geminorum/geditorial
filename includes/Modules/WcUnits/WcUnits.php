@@ -225,7 +225,7 @@ class WcUnits extends gEditorial\Module
 		if ( $admin )
 			$this->filter( 'products_general_settings', 1, 99, FALSE, 'woocommerce' );
 
-		if ( $admin && ! Core\WordPress::isAJAX() && $this->get_setting( 'non_admin_only', TRUE ) )
+		if ( $admin && ! WordPress\IsIt::ajax() && $this->get_setting( 'non_admin_only', TRUE ) )
 			return;
 
 		$this->filter( 'format_weight', 2, 12, FALSE, 'woocommerce' );

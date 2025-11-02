@@ -94,7 +94,7 @@ trait SettingsCore
 
 		echo '</form>';
 
-		if ( Core\WordPress::isDev() )
+		if ( WordPress\IsIt::dev() )
 			self::dump( $this->options );
 	}
 
@@ -632,7 +632,7 @@ trait SettingsCore
 
 			$title   = NULL;
 			$count   = gEditorial()->count();
-			$flush   = Core\WordPress::maybeFlushRules();
+			$flush   = WordPress\URL::maybeFlushRules();
 			$filters = TRUE;
 
 		} else {

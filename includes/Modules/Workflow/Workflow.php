@@ -310,7 +310,7 @@ class Workflow extends gEditorial\Module
 
 			if ( ! $admin && $metas['roles'] ) {
 
-				if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $metas['roles'] ), $user_id ) )
+				if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $metas['roles'] ), $user_id ) )
 					$status['disabled'] = TRUE;
 			}
 

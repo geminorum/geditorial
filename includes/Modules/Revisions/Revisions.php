@@ -270,7 +270,7 @@ class Revisions extends gEditorial\Module
 				'class' => 'button button-small -purge hide-if-no-js', // works with no js but need for style
 				'title' => _x( 'Purge all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'data'  => [ 'parent' => $post->ID ],
-				'href'  => Core\WordPress::getAdminPostLink( $this->hook( 'purge' ), [
+				'href'  => WordPress\URL::adminPOST( $this->hook( 'purge' ), [
 					'post_id'  => $post->ID,
 					'_wpnonce' => $this->nonce_create( 'purge_'.$post->ID ),
 				] ),

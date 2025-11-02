@@ -27,7 +27,7 @@ trait MainDownload
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$verify   = ! Core\WordPress::isDev();
+		$verify   = ! WordPress\IsIt::dev();
 		$filesize = $httpstatus = FALSE;
 
 		if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
@@ -67,8 +67,8 @@ trait MainDownload
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$flush    = Core\WordPress::isFlush();
-		$verify   = ! Core\WordPress::isDev();
+		$flush    = WordPress\IsIt::flush();
+		$verify   = ! WordPress\IsIt::dev();
 		$metakey  = $this->constant( 'maindownload_filesize', '_main_download_filesize' );
 		$filesize = '';
 

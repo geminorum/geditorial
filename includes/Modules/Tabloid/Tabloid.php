@@ -388,7 +388,7 @@ class Tabloid extends gEditorial\Module
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
 		$data['__can_edit']   = WordPress\Post::edit( $post );
-		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
+		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
@@ -449,7 +449,7 @@ class Tabloid extends gEditorial\Module
 
 		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
 		$data['__can_edit']   = WordPress\Term::edit( $term );
-		$data['__can_debug']  = Core\WordPress::isDev() || WordPress\User::isSuperAdmin();
+		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
 		$data['__today']      = Datetime::dateFormat( 'now', 'print' );

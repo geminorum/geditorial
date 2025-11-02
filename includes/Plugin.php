@@ -472,7 +472,7 @@ class Plugin
 		if ( ! defined( 'GNETWORK_VERSION' ) )
 			Helper::linkStyleSheetAdmin( 'gnetwork' );
 
-		if ( Core\WordPress::isIFrame() )
+		if ( WordPress\IsIt::iFrame() )
 			Helper::linkStyleSheetAdmin( 'iframe' );
 
 		else if ( in_array( $screen->base, [

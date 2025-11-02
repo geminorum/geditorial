@@ -290,7 +290,7 @@ class Today extends gEditorial\Module
 				echo '</div>';
 				echo '<div id="postbox-container-1" class="postbox-container">';
 
-					if ( Core\WordPress::isDev() ) {
+					if ( WordPress\IsIt::dev() ) {
 						self::dump( $this->__today );
 						self::dump( $this->__posts );
 					}

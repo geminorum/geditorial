@@ -38,7 +38,7 @@ trait CoreRoles
 			if ( $admins )
 				$setting = array_merge( $setting, [ 'administrator' ] );
 
-			if ( WordPress\User::hasRole( $setting, $user_id ) )
+			if ( WordPress\Role::has( $setting, $user_id ) )
 				return TRUE;
 		}
 

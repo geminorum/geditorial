@@ -22,7 +22,7 @@ class LateChores extends gEditorial\Service
 	{
 		static $hooked = NULL;
 
-		if ( ! is_null( $hooked ) || Core\WordPress::isCRON() )
+		if ( ! is_null( $hooked ) || WordPress\IsIt::cron() )
 			return $hooked;
 
 		add_action( 'set_object_terms',

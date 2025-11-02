@@ -223,7 +223,7 @@ trait PairedCore
 							return $caps;
 
 						// NOTE: Applies the customized roles stored as term meta-data via `Terms` module
-						if ( ! WordPress\User::hasRole( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+						if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
 							return [ 'do_not_allow' ];
 				}
 
