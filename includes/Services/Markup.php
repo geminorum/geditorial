@@ -26,7 +26,7 @@ class Markup extends gEditorial\Service
 	 * @param array $protocols
 	 * @return array
 	 */
-	public function kses_allowed_protocols( $protocols )
+	public static function kses_allowed_protocols( $protocols )
 	{
 		return array_merge( $protocols, [
 			'tel', // to be safe

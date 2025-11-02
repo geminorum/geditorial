@@ -4,13 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 trait SubContents
@@ -726,7 +720,7 @@ trait SubContents
 				} else if ( empty( $value ) || ! trim( $value ) ) {
 
 					if ( 'display' === $context )
-						$item[$key] = Helper::htmlEmpty();
+						$item[$key] = gEditorial\Helper::htmlEmpty();
 
 					else
 						// also passing raw data
@@ -797,7 +791,7 @@ trait SubContents
 			return $value;
 
 		if ( WordPress\Strings::isEmpty( $value ) )
-			return Helper::htmlEmpty();
+			return gEditorial\Helper::htmlEmpty();
 
 		$types   = $this->subcontent_get_field_types( 'import' );
 		$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
@@ -1013,9 +1007,9 @@ trait SubContents
 			);
 
 		if ( ! empty( $item['_date'] ) ) {
-			$datetime = Datetime::dateFormat( $item['_date'], $context );
+			$datetime = gEditorial\Datetime::dateFormat( $item['_date'], $context );
 			// $timeago  = human_time_diff( strtotime( $item['_date'] ) );
-			$timeago  = Datetime::moment( strtotime( $item['_date'] ) );
+			$timeago  = gEditorial\Datetime::moment( strtotime( $item['_date'] ) );
 		}
 
 		// NOTE: like `WordPress\Post::summary()`
@@ -1080,7 +1074,7 @@ trait SubContents
 		$data = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
 		$html = Core\HTML::tableSimple( $data, $args['fields'], FALSE );
 
-		return ShortCode::wrap( $html, $constant, $args );
+		return gEditorial\ShortCode::wrap( $html, $constant, $args );
 	}
 
 	protected function subcontent_hook__post_tabs( $priority = NULL )
@@ -1152,23 +1146,23 @@ trait SubContents
 	protected function subcontent_do_render_iframe_content( $context = NULL, $assign_template = NULL, $reports_template = NULL, $custom_app = NULL )
 	{
 		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( $this->role_can_post( $post, 'assign' ) ) {
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
-				Scripts::renderAppMounter( $custom_app ?? 'subcontent-grid', $this->key );
-				Scripts::noScriptMessage();
+				gEditorial\Scripts::renderAppMounter( $custom_app ?? 'subcontent-grid', $this->key );
+				gEditorial\Scripts::noScriptMessage();
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) ) {
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				echo $this->subcontent_do_main_shortcode( [
 					'id'      => $post,
@@ -1176,13 +1170,13 @@ trait SubContents
 					'class'   => '-table-content',
 				], $this->get_notice_for_empty( $context ) );
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else {
 
-			Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 		}
 	}
 
@@ -1234,7 +1228,7 @@ trait SubContents
 		];
 
 		$this->enqueue_asset_js( $asset, FALSE, [
-			Scripts::enqueueApp( $args['app'] )
+			gEditorial\Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
 
@@ -1243,12 +1237,12 @@ trait SubContents
 		if ( ! $this->role_can( 'assign' ) )
 			return;
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 
 		// $this->enqueue_asset_js( [], $screen, [
 		// 	'jquery',
 		// 	'wp-api-request',
-		// 	Scripts::enqueueColorBox(),
+		// 	gEditorial\Scripts::enqueueColorBox(),
 		// ] );
 	}
 

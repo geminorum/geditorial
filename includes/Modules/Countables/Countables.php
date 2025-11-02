@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Countables extends gEditorial\Module
@@ -109,7 +107,7 @@ class Countables extends gEditorial\Module
 			$html.= $args['wrap_class'] ? Core\HTML::wrap( $box, $args['wrap_class'] ) : $box;
 		}
 
-		return ShortCode::wrap( $html, $this->constant( 'posttype_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'posttype_shortcode' ), $args );
 	}
 
 	public function taxonomy_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -156,6 +154,6 @@ class Countables extends gEditorial\Module
 			$html.= $args['wrap_class'] ? Core\HTML::wrap( $box, $args['wrap_class'] ) : $box;
 		}
 
-		return ShortCode::wrap( $html, $this->constant( 'taxonomy_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'taxonomy_shortcode' ), $args );
 	}
 }
