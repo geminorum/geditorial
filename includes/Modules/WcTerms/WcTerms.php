@@ -265,7 +265,7 @@ class WcTerms extends gEditorial\Module
 			$excludes[] = WordPress\Taxonomy::getDefaultTermID( $row['taxonomy'] );
 
 		if ( $row['excludes'] )
-			$excludes = array_merge( $excludes, gEditorial\Helper::getSeparated( $row['excludes'] ) );
+			$excludes = array_merge( $excludes, Services\Markup::getSeparated( $row['excludes'] ) );
 
 		if ( count( $excludes ) )
 			$terms = Core\Arraay::stripByKeys( $terms, Core\Arraay::prepNumeral( $excludes ) );

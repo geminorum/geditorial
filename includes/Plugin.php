@@ -53,9 +53,6 @@ class Plugin extends WordPress\Plugin
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
-		add_filter( 'kses_allowed_protocols', [ $this, 'kses_allowed_protocols' ], 20, 1 );
-
-		add_filter( $this->base.'_markdown_to_html', [ $this, 'markdown_to_html' ] );
 
 		if ( ! is_admin() ) {
 
@@ -217,6 +214,7 @@ class Plugin extends WordPress\Plugin
 			'LateChores',
 			'LineDiscovery',
 			'Locations',
+			'Markup',
 			'ObjectHints',
 			'ObjectToObject',
 			'Paired',
@@ -494,23 +492,6 @@ class Plugin extends WordPress\Plugin
 		return $option === $this->base.'_options' ? TRUE : $autoload;
 	}
 
-	/**
-	 * Filters the list of protocols allowed in HTML attributes.
-	 * TODO: Move to `Markup` Service
-	 *
-	 * @param array $protocols
-	 * @return array
-	 */
-	public function kses_allowed_protocols( $protocols )
-	{
-		return array_merge( $protocols, [
-			'tel', // to be safe
-			'sms', // to be safe
-			'geo',
-			'binaryeye', // https://github.com/markusfisch/BinaryEye
-		] );
-	}
-
 	public function template_include( $template )
 	{
 		if ( ! $custom = get_page_template_slug() )
@@ -539,12 +520,6 @@ class Plugin extends WordPress\Plugin
 			return;
 
 		get_footer( $name );
-	}
-
-	// TODO: Move to `Markup` Service
-	public function markdown_to_html( $raw )
-	{
-		return Helper::mdExtra( $raw );
 	}
 
 	// TODO: Move to `AssetRegistry` Service

@@ -592,7 +592,7 @@ class Directorate extends gEditorial\Module
 			return $value;
 
 		$type   = $this->constant( 'primary_posttype' );
-		$codes = gEditorial\Helper::getSeparated( $value );
+		$codes = Services\Markup::getSeparated( $value );
 		$list  = [];
 
 		foreach ( $codes as $code )
@@ -618,7 +618,7 @@ class Directorate extends gEditorial\Module
 			if ( 'committee_code' === Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) ) ) {
 
 				$type  = $this->constant( 'primary_posttype' );
-				$codes = gEditorial\Helper::getSeparated( $atts['raw'][$offset] );
+				$codes = Services\Markup::getSeparated( $atts['raw'][$offset] );
 				$list  = [];
 
 				foreach ( $codes as $code )

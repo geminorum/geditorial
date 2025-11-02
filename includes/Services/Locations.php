@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class Locations extends gEditorial\Service
@@ -24,7 +23,7 @@ class Locations extends gEditorial\Service
 
 		$list = [];
 
-		foreach ( Helper::getSeparated( $value ) as $location )
+		foreach ( Markup::getSeparated( $value ) as $location )
 			if ( $prepared = apply_filters( static::BASE.'_prep_location', $location, $location, $value ) )
 				$list[] = $prepared;
 

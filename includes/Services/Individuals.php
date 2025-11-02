@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
@@ -34,7 +33,7 @@ class Individuals extends gEditorial\Service
 
 		$list = [];
 
-		foreach ( Helper::getSeparated( $value ) as $individual )
+		foreach ( Markup::getSeparated( $value ) as $individual )
 			if ( $prepared = apply_filters( static::BASE.'_prep_individual', $individual, $individual, $value ) )
 				$list[] = $prepared;
 

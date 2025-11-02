@@ -1434,7 +1434,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
 			if ( $field == 'importer_tax_'.$taxonomy )
-				return array_filter( WordPress\Strings::ksesArray( gEditorial\Helper::getSeparated( $value ) ) );
+				return array_filter( WordPress\Strings::ksesArray( Services\Markup::getSeparated( $value ) ) );
 
 		return $value;
 	}

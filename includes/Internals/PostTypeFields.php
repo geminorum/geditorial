@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
@@ -416,7 +415,7 @@ trait PostTypeFields
 			case 'people':
 
 				$sanitized = WordPress\Strings::kses( $data, 'none' );
-				$sanitized = WordPress\Strings::getPiped( Helper::getSeparated( $sanitized ) );
+				$sanitized = WordPress\Strings::getPiped( Services\Markup::getSeparated( $sanitized ) );
 				break;
 
 			case 'embed':
@@ -1164,7 +1163,7 @@ trait PostTypeFields
 			return FALSE;
 
 		$type   = $this->constant( $constants[0] );
-		$values = Helper::getSeparated( $data );
+		$values = Services\Markup::getSeparated( $data );
 		$list   = [];
 
 		foreach ( $values as $value )
@@ -1562,7 +1561,7 @@ trait PostTypeFields
 
 		foreach ( $rows as $row )
 			$this->posttypefields_do_migrate_field_raw(
-				Helper::getSeparated( $row->meta ),
+				Services\Markup::getSeparated( $row->meta ),
 				$field,
 				$row->post_id
 			);

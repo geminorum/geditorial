@@ -184,7 +184,7 @@ class WcRelated extends gEditorial\Module
 			$excludes[] = WordPress\Taxonomy::getDefaultTermID( 'product_cat' );
 
 		if ( $list = $this->get_setting( 'exclude_product_cats' ) )
-			$excludes = array_merge( $excludes, Helper::getSeparated( $list ) );
+			$excludes = array_merge( $excludes, Services\Markup::getSeparated( $list ) );
 
 		if ( ! $excludes = Core\Arraay::prepNumeral( $excludes ) )
 			return $term_ids;
@@ -203,7 +203,7 @@ class WcRelated extends gEditorial\Module
 			$excludes[] = WordPress\Taxonomy::getDefaultTermID( 'product_tag' );
 
 		if ( $list = $this->get_setting( 'exclude_product_tags' ) )
-			$excludes = array_merge( $excludes, Helper::getSeparated( $list ) );
+			$excludes = array_merge( $excludes, Services\Markup::getSeparated( $list ) );
 
 		if ( ! $excludes = Core\Arraay::prepNumeral( $excludes ) )
 			return $term_ids;

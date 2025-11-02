@@ -570,7 +570,7 @@ trait SubContents
 
 				case 'location':
 				case 'people'  :
-					$data[$raw_key] = WordPress\Strings::getPiped( Helper::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
+					$data[$raw_key] = WordPress\Strings::getPiped( Services\Markup::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
 					break;
 
 				case 'bankname'  :

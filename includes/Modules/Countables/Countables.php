@@ -85,7 +85,7 @@ class Countables extends gEditorial\Module
 		if ( is_null( $args['template'] ) )
 			$args['template'] = $this->countbox_default_template( 'posttype' );
 
-		foreach ( Helper::getSeparated( $args['post_type'] ) as $posttype ) {
+		foreach ( Services\Markup::getSeparated( $args['post_type'] ) as $posttype ) {
 
 			if ( ! $posttype )
 				continue;
@@ -135,7 +135,7 @@ class Countables extends gEditorial\Module
 		if ( is_null( $args['template'] ) )
 			$args['template'] = $this->countbox_default_template( 'taxonomy' );
 
-		foreach ( Helper::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
+		foreach ( Services\Markup::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
 
 			if ( ! WordPress\Taxonomy::exists( $taxonomy ) )
 				continue;
