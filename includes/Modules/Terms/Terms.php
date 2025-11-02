@@ -131,6 +131,10 @@ class Terms extends gEditorial\Module
 				'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
 				'default'     => TRUE,
 			],
+		];
+
+		$settings['_frontend'] = [
+			'frontend_search' => [ _x( 'Adds results by field information on front-end search.', 'Setting Description', 'geditorial-terms' ) ],
 			'adminbar_summary',
 		];
 
@@ -324,6 +328,9 @@ class Terms extends gEditorial\Module
 
 		$this->action( [ 'edit_term', 'create_term' ], 3 );
 		$this->action( 'delete_attachment', 2, 12 );
+
+		if ( $this->get_setting( 'frontend_search' ) )
+			$this->filter( 'terms_search_append_meta_frontend', 4, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'apply_ordering' ) ) {
 
@@ -2271,6 +2278,40 @@ class Terms extends gEditorial\Module
 				return FALSE;
 
 		return $delete;
+	}
+
+	public function terms_search_append_meta_frontend( $meta, $search, $taxonomies, $args )
+	{
+		if ( empty( $taxonomies ) )
+			return $meta;
+
+		foreach ( $taxonomies as $taxonomy ) {
+
+			foreach ( $this->get_supported( $taxonomy ) as $field ) {
+
+				if ( ! $metakey = $this->get_supported_metakey( $field, $taxonomy ) )
+					continue;
+
+				switch ( $field ) {
+
+					// TODO: check discovery before special fields: `latlng`/`identity`
+
+					case 'fullname':
+					case 'tagline':
+					case 'subtitle':
+					case 'contact':
+					case 'venue':
+					case 'label':
+					case 'code':
+					case 'barcode':
+
+						// NOTE: search must not be exact!
+						$meta[] = [ $metakey, $search, TRUE ];
+				}
+			}
+		}
+
+		return $meta;
 	}
 
 	/**

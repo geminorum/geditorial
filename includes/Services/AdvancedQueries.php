@@ -15,6 +15,7 @@ class AdvancedQueries extends gEditorial\Service
 	{
 		add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts' ], 1, 1 );
 		add_filter( 'posts_search', [ __CLASS__, 'posts_search' ], 8, 2 );
+		add_filter( 'terms_clauses', [ __CLASS__, 'terms_clauses' ], 8, 3 );
 
 		// WORKING BUT DISABLED
 		// add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );
@@ -68,6 +69,43 @@ class AdvancedQueries extends gEditorial\Service
 			$search = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $posts ) . "))))", $search );
 
 		return $search;
+	}
+
+	public static function terms_clauses( $clauses, $taxonomies, $args )
+	{
+		global $wpdb;
+
+		if ( empty( $args['search'] ) )
+			return $clauses;
+
+		if ( WordPress\Strings::isEmpty( $args['search'] ) )
+			return $clauses;
+
+		$meta   = [];
+		$filter = sprintf( '%s_terms_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+
+		foreach ( WordPress\Strings::getSeparated( $args['search'], static::SEARCH_OPERATOR_OR ) as $criteria )
+			if ( ! WordPress\Strings::isEmpty( $criteria ) )
+				$meta = apply_filters( $filter, $meta, $criteria, $taxonomies, $args );
+
+		if ( ! count( $meta ) )
+			return $clauses;
+
+		$query = "SELECT term_id FROM {$wpdb->termmeta} WHERE ";
+		$where = [];
+
+		foreach ( $meta as $pair )
+			if ( empty( $pair[2] ) )
+				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
+			else
+				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value LIKE %s)", $pair[0], '%'.$wpdb->esc_like( $pair[1] ).'%' );
+
+		$terms = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
+
+		if ( ! empty( $terms ) )
+			$clauses['where'] = str_replace( '))', ") OR (t.term_id IN (" . implode( ',', $terms ) . ")))", $clauses['where'] );
+
+		return $clauses;
 	}
 
 	// @REF: https://stackoverflow.com/a/64184587
