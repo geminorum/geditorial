@@ -82,7 +82,7 @@ class Identified extends gEditorial\Module
 					Core\HTML::code( 'BinaryEye' )
 				),
 			],
-			'frontend_search' => [ _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ) ],
+			'frontend_search' => [ _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ), TRUE ],
 			[
 				'field'       => 'queryable_types',
 				'type'        => 'checkboxes-values',
@@ -218,7 +218,7 @@ class Identified extends gEditorial\Module
 
 		$this->_init_queryable_types();
 
-		if ( $this->get_setting( 'frontend_search' ) )
+		if ( $this->get_setting( 'frontend_search', TRUE ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		$this->action( 'template_newpost_beforetitle', 6, 8, FALSE, $this->base );

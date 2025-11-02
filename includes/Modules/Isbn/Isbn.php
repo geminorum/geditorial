@@ -52,7 +52,7 @@ class Isbn extends gEditorial\Module
 				],
 			],
 			'_frontend' => [
-				'frontend_search' => [ _x( 'Adds results by ISBN information on front-end search.', 'Setting Description', 'geditorial-isbn' ) ],
+				'frontend_search' => [ _x( 'Adds results by ISBN information on front-end search.', 'Setting Description', 'geditorial-isbn' ), TRUE ],
 			],
 		];
 	}
@@ -167,7 +167,7 @@ class Isbn extends gEditorial\Module
 		$this->filter( 'templateposttype_addnew_extra', 2, 10, FALSE, $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
-		if ( $this->get_setting( 'frontend_search' ) )
+		if ( $this->get_setting( 'frontend_search', TRUE ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		$this->register_shortcode( 'main_shortcode' );

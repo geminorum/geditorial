@@ -134,7 +134,7 @@ class Terms extends gEditorial\Module
 		];
 
 		$settings['_frontend'] = [
-			'frontend_search' => [ _x( 'Adds results by field information on front-end search.', 'Setting Description', 'geditorial-terms' ) ],
+			'frontend_search' => [ _x( 'Adds results by field information on front-end search.', 'Setting Description', 'geditorial-terms' ), TRUE ],
 			'adminbar_summary',
 		];
 
@@ -329,7 +329,7 @@ class Terms extends gEditorial\Module
 		$this->action( [ 'edit_term', 'create_term' ], 3 );
 		$this->action( 'delete_attachment', 2, 12 );
 
-		if ( $this->get_setting( 'frontend_search' ) )
+		if ( $this->get_setting( 'frontend_search', TRUE ) )
 			$this->filter( 'terms_search_append_meta_frontend', 4, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'apply_ordering' ) ) {

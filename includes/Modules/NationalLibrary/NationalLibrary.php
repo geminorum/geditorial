@@ -102,7 +102,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$settings['_frontend'] = [
 			'tabs_support',
-			'frontend_search' => [ _x( 'Adds results by Bibliographic information on front-end search.', 'Setting Description', 'geditorial-national-library' ) ],
+			'frontend_search' => [ _x( 'Adds results by Bibliographic information on front-end search.', 'Setting Description', 'geditorial-national-library' ), TRUE ],
 			[
 				'field'       => 'custom_queries',
 				'title'       => _x( 'Custom Queries', 'Setting Title', 'geditorial-national-library' ),
@@ -158,7 +158,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$this->_init_custom_queries();
 
-		if ( $this->get_setting( 'frontend_search' ) )
+		if ( $this->get_setting( 'frontend_search', TRUE ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )

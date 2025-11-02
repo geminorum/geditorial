@@ -24,7 +24,7 @@ class Icons extends gEditorial\Service
 	 * @param string $fallback
 	 * @return string $markup
 	 */
-	public static function getIcon( $icon, $fallback = 'admin-post' )
+	public static function get( $icon, $fallback = 'admin-post' )
 	{
 		if ( ! $icon || 'none' === $icon )
 			return Core\HTML::getDashicon( $fallback );

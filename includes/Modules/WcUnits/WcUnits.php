@@ -4,8 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
 
 class WcUnits extends gEditorial\Module
 {
@@ -19,7 +20,7 @@ class WcUnits extends gEditorial\Module
 			'icon'     => 'image-crop',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
 		];
 	}
 
@@ -72,40 +73,52 @@ class WcUnits extends gEditorial\Module
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'weight_template__kg',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'kg' ) ),
+					'field' => 'weight_template__kg',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'kg' )
+					),
 					'description' => _x( 'Used as template upon display of weights in “Kilograms”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s kg', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'weight_template__g',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'g' ) ),
+					'field' => 'weight_template__g',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'g' )
+					),
 					'description' => _x( 'Used as template upon display of weight in “Grams”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s g', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'weight_template__lbs',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'lbs' ) ),
+					'field' => 'weight_template__lbs',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'lbs' )
+					),
 					'description' => _x( 'Used as template upon display of weights in “Pounds”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s lbs', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'weight_template__oz',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'oz' ) ),
+					'field' => 'weight_template__oz',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'oz' )
+					),
 					'description' => _x( 'Used as template upon display of weight in “Ounces”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s oz', 'Setting Default', 'geditorial-wc-units' ),
@@ -145,50 +158,65 @@ class WcUnits extends gEditorial\Module
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'dimensions_template__m',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'm' ) ),
+					'field' => 'dimensions_template__m',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'm' )
+					),
 					'description' => _x( 'Used as template upon display of dimensions in “Metres”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s m', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'dimensions_template__cm',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'cm' ) ),
+					'field' => 'dimensions_template__cm',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'cm' )
+					),
 					'description' => _x( 'Used as template upon display of dimensions in “Centimetres”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s cm', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'dimensions_template__mm',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'mm' ) ),
+					'field' => 'dimensions_template__mm',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'mm' )
+					),
 					'description' => _x( 'Used as template upon display of dimensions in “Millimetres”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s mm', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'dimensions_template__in',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'in' ) ),
+					'field' => 'dimensions_template__in',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'in' )
+					),
 					'description' => _x( 'Used as template upon display of dimensions in “Inchs”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s in', 'Setting Default', 'geditorial-wc-units' ),
 					'field_class' => [ 'medium-text' ],
 				],
 				[
-					'field'       => 'dimensions_template__yd',
-					'type'        => 'text',
-					/* translators: `%s`: unit name */
-					'title'       => sprintf( _x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ), Core\HTML::code( 'yd' ) ),
+					'field' => 'dimensions_template__yd',
+					'type'  => 'text',
+					'title' => sprintf(
+						/* translators: `%s`: unit name */
+						_x( 'Template for %s', 'Setting Title', 'geditorial-wc-units' ),
+						Core\HTML::code( 'yd' )
+					),
 					'description' => _x( 'Used as template upon display of dimensions in “Yards”.', 'Setting Description', 'geditorial-wc-units' ),
 					/* translators: `%s`: unit amount */
 					'default'     => _x( '%s yd', 'Setting Default', 'geditorial-wc-units' ),
@@ -313,7 +341,7 @@ class WcUnits extends gEditorial\Module
 		return $attributes + $after;
 	}
 
-	// hints the formatting on wc settings page
+	// Hints the formatting on WooCommerce settings page
 	public function products_general_settings( $settings )
 	{
 		foreach ( $settings as &$setting ) {
