@@ -447,8 +447,8 @@ class Media extends Core\Base
 	 * NOTE: searches only for portion of the attached file
 	 * like: `2021/10/filename` where `filename.ext` is the filename
 	 *
-	 * @param  int  $attachment_id
-	 * @return array $post_ids
+	 * @param int $attachment_id
+	 * @return array
 	 */
 	public static function searchAttachment( $attachment_id )
 	{
