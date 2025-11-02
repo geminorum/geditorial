@@ -18,7 +18,7 @@ class Strings extends Core\Base
 		if ( function_exists( 'wp_get_list_item_separator' ) )
 			return wp_get_list_item_separator();
 
-		return __( ', ' ); // _x( ', ', 'Strings: Item Seperator', 'geditorial' );
+		return __( ', ' );
 	}
 
 	// @OLD: `Helper::getStringsFromName()`
@@ -360,20 +360,23 @@ class Strings extends Core\Base
 
 			$data = Core\Number::translate( $data );
 
-			$numbers  = new \geminorum\gEditorial\Misc\NumbersInPersian();
-			$ordinals = $numbers->get_range_ordinal_reverse( 1, 100 );
+			if ( class_exists( 'geminorum\\gEditorial\\Misc\\NumbersInPersian' ) ) {
 
-			foreach ( $ordinals as $ordinal => $index ) {
+				$numbers  = new \geminorum\gEditorial\Misc\NumbersInPersian();
+				$ordinals = $numbers->get_range_ordinal_reverse( 1, 100 );
 
-				$pattern = sprintf( '/[\s,،](%s|%s)[\s,،]/mu',
-					preg_quote( $ordinal ),
-					preg_quote( str_ireplace( ' ', '', $ordinal ) )
-				);
+				foreach ( $ordinals as $ordinal => $index ) {
 
-				$data = preg_replace_callback( $pattern,
-					static function ( $matches ) use ( $index ) {
-						return sprintf( ' %s ', $index ); // padding with space
-					}, $data );
+					$pattern = sprintf( '/[\s,،](%s|%s)[\s,،]/mu',
+						preg_quote( $ordinal ),
+						preg_quote( str_ireplace( ' ', '', $ordinal ) )
+					);
+
+					$data = preg_replace_callback( $pattern,
+						static function ( $matches ) use ( $index ) {
+							return sprintf( ' %s ', $index ); // padding with space
+						}, $data );
+				}
 			}
 
 			$prefixes = [

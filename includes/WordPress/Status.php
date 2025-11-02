@@ -65,7 +65,7 @@ class Status extends Core\Base
 				'auto-draft',
 			];
 
-		$statuses = Core\WordPress::isAdvancedCache()
+		$statuses = IsIt::advancedCache()
 			? get_available_post_statuses( $posttype )
 			// : [ 'publish', 'future', 'draft' ];
 			: [ 'publish', 'future' ];

@@ -9,6 +9,17 @@ class Hook extends Core\Base
 
 	// @SEE: https://github.com/Rarst/advanced-hooks-api
 
+	// shows all the "filters" currently attached to a hook
+	public static function filters( $hook )
+	{
+		global $wp_filter;
+
+		if ( ! isset( $wp_filter[$hook] ) )
+			return;
+
+		self::dump( $wp_filter[$hook] );
+	}
+
 	/**
 	 * Adds a callback function to a filter hook and run only once.
 	 * This works around the common "filter sandwich" pattern where you have to

@@ -277,6 +277,7 @@ class PostType extends Core\Base
 		], $extra ), admin_url( 'edit.php' ) );
 	}
 
+	// OLD: `Core\WordPress::getPostNewLink()`
 	public static function newLink( $posttype, $extra = [] )
 	{
 		$args = 'post' === $posttype
@@ -287,7 +288,8 @@ class PostType extends Core\Base
 	}
 
 	// OLD: `Core\WordPress::getAuthorEditHTML()`
-	public static function authorLink( $posttype, $author, $extra = [] )
+	// OLD: `WordPress\PostType::authorLink()`
+	public static function authorEditMarkup( $posttype, $author, $extra = [] )
 	{
 		if ( $author_data = get_user_by( 'id', $author ) )
 			return Core\HTML::tag( 'a', [

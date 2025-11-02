@@ -246,7 +246,7 @@ class HTTP extends Base
 
 		$response = wp_remote_post( $url, $args );
 
-		if ( WordPress::isDev() )
+		if ( 'development' === self::const( 'WP_STAGE' ) )
 			self::_log( $args, wp_remote_retrieve_body( $response ) );
 
 		if ( self::isError( $response ) )

@@ -471,57 +471,6 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'term_links-'.$taxonomy, $list );
 	}
 
-	public static function getObjectTerms( $taxonomy, $object_id, $fields = 'ids', $extra = [] )
-	{
-		$args = array_merge( [
-			'taxonomy'   => $taxonomy,
-			'object_ids' => $object_id,
-			'hide_empty' => FALSE,
-
-			'fields'  => $fields,
-			'orderby' => 'none',
-
-			'suppress_filter'        => TRUE,
-			'update_term_meta_cache' => FALSE,
-		], $extra );
-
-		$query = new \WP_Term_Query();
-		return $query->query( $args );
-	}
-
-	/**
-	 * Retrieves the terms of the taxonomy that are attached to the post.
-	 * NOTE: hits cached terms for the post
-	 *
-	 * @param string $taxonomy
-	 * @param object $post
-	 * @param bool $object
-	 * @param bool $key
-	 * @param string $index_key
-	 * @return array
-	 */
-	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE, $index_key = NULL )
-	{
-		$terms = get_the_terms( $post, $taxonomy );
-
-		if ( empty( $terms ) || is_wp_error( $terms ) )
-			return [];
-
-		if ( ! $object )
-			return Core\Arraay::pluck( $terms, $key ?: 'term_id', $index_key );
-
-		if ( $key )
-			return Core\Arraay::reKey( $terms, $key );
-
-		return $terms;
-	}
-
-	// NOTE: DEPRECATED: use `Term::getMeta()`
-	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
-	{
-		return Term::getMeta( $term, $keys, $single );
-	}
-
 	// FIXME: rewrite this!
 	public static function getTerms( $taxonomy, $object_id = FALSE, $object = FALSE, $key = 'term_id', $extra = [], $post_object = TRUE )
 	{
@@ -585,54 +534,6 @@ class Taxonomy extends Core\Base
 		$list = Core\Arraay::pluck( $terms, $key );
 
 		return $object ? array_combine( $list, $terms ) : $list;
-	}
-
-	// FIXME: check and exclude terms with `trashed` meta
-	// @REF: https://developer.wordpress.org/?p=22286
-	public static function listTerms( $taxonomy, $fields = NULL, $extra = [], $ordering = TRUE )
-	{
-		$args = [
-			'taxonomy'   => (array) $taxonomy,
-			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
-			'hide_empty' => FALSE,
-		];
-
-		if ( $ordering )
-			$args = array_merge( $args, [
-				'order'      => 'ASC',
-				'orderby'    => 'meta_value_num, name', // 'name',
-				'meta_query' => [
-					// @REF: https://core.trac.wordpress.org/ticket/34996
-					// FIXME: drop order here: see Terms: `apply_ordering`
-					'relation' => 'OR',
-					[
-						'key'     => 'order',
-						'compare' => 'NOT EXISTS'
-					],
-					[
-						'key'     => 'order',
-						'compare' => '>=',
-						'value'   => 0,
-					],
-				],
-			] );
-
-		$query = new \WP_Term_Query( array_merge( $args, $extra ) );
-
-		if ( empty( $query->terms ) )
-			return [];
-
-		return $query->terms;
-	}
-
-	public static function listTermsJS( $taxonomy, $fields = NULL, $extra = [] )
-	{
-		if ( is_null( $fields ) )
-			$fields = [ 'term_id', 'name' ];
-
-		return array_map( function ( $term ) use ( $fields ) {
-			return Core\Arraay::keepByKeys( get_object_vars( $term ), $fields );
-		}, self::listTerms( $taxonomy, 'all', $extra ) );
 	}
 
 	public static function prepTerms( $taxonomy, $extra = [], $terms = NULL, $key = 'term_id', $object = TRUE )
@@ -1037,6 +938,109 @@ class Taxonomy extends Core\Base
 		return get_term( $term['term_id'], $taxonomy );
 	}
 
+	public static function getObjectTerms( $taxonomy, $object_id, $fields = 'ids', $extra = [] )
+	{
+		$args = array_merge( [
+			'taxonomy'   => $taxonomy,
+			'object_ids' => $object_id,
+			'hide_empty' => FALSE,
+
+			'fields'  => $fields,
+			'orderby' => 'none',
+
+			'suppress_filter'        => TRUE,
+			'update_term_meta_cache' => FALSE,
+		], $extra );
+
+		$query = new \WP_Term_Query();
+		return $query->query( $args );
+	}
+
+	/**
+	 * Determines whether a taxonomy term exists.
+	 * Formerly `is_term()`, Introduced in WP 2.3.0.
+	 *
+	 * @SEE: https://make.wordpress.org/core/2022/04/28/taxonomy-performance-improvements-in-wordpress-6-0/
+	 * @SOURCE: OLD VERSION OF `term_exists()`
+	 *
+	 * @global wpdb $wpdb WordPress database abstraction object.
+	 *
+	 * @param int|string $term: The term to check. Accepts term ID, slug, or name.
+	 * @param string $taxonomy: Optional. The taxonomy name to use.
+	 * @param int $parent: Optional. ID of parent term under which to confine the exists search.
+	 * @return mixed Returns null if the term does not exist.
+	 *               Returns the term ID if no taxonomy is specified and the term ID exists.
+	 *               Returns an array of the term ID and the term taxonomy ID if the taxonomy is specified and the pairing exists.
+	 *               Returns 0 if term ID 0 is passed to the function.
+	 */
+	public static function termExists( $term, $taxonomy = '', $parent = NULL )
+	{
+		global $wpdb;
+
+		if ( NULL === $term )
+			return NULL;
+
+		$select     = "SELECT term_id FROM $wpdb->terms as t WHERE ";
+		$tax_select = "SELECT tt.term_id, tt.term_taxonomy_id FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy as tt ON tt.term_id = t.term_id WHERE ";
+
+		if ( is_int( $term ) ) {
+
+			if ( 0 === $term )
+				return 0;
+
+			$where = 't.term_id = %d';
+
+			if ( ! empty( $taxonomy ) ) {
+
+				// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+				return $wpdb->get_row( $wpdb->prepare( $tax_select . $where . ' AND tt.taxonomy = %s', $term, $taxonomy ), ARRAY_A );
+
+			} else {
+
+				return $wpdb->get_var( $wpdb->prepare( $select . $where, $term ) );
+			}
+		}
+
+		$term = trim( wp_unslash( $term ) );
+		$slug = sanitize_title( $term );
+
+		$where             = 't.slug = %s';
+		$else_where        = 't.name = %s';
+		$where_fields      = array( $slug );
+		$else_where_fields = array( $term );
+		$orderby           = 'ORDER BY t.term_id ASC';
+		$limit             = 'LIMIT 1';
+
+		if ( ! empty( $taxonomy ) ) {
+			if ( is_numeric( $parent ) ) {
+				$parent              = (int) $parent;
+				$where_fields[]      = $parent;
+				$else_where_fields[] = $parent;
+				$where              .= ' AND tt.parent = %d';
+				$else_where         .= ' AND tt.parent = %d';
+			}
+
+			$where_fields[]      = $taxonomy;
+			$else_where_fields[] = $taxonomy;
+
+			$result = $wpdb->get_row( $wpdb->prepare( "SELECT tt.term_id, tt.term_taxonomy_id FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy as tt ON tt.term_id = t.term_id WHERE $where AND tt.taxonomy = %s $orderby $limit", $where_fields ), ARRAY_A );
+			if ( $result ) {
+				return $result;
+			}
+
+			return $wpdb->get_row( $wpdb->prepare( "SELECT tt.term_id, tt.term_taxonomy_id FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy as tt ON tt.term_id = t.term_id WHERE $else_where AND tt.taxonomy = %s $orderby $limit", $else_where_fields ), ARRAY_A );
+		}
+
+		// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+		$result = $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM $wpdb->terms as t WHERE $where $orderby $limit", $where_fields ) );
+
+		if ( $result )
+			return $result;
+
+		// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+		return $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM $wpdb->terms as t WHERE $else_where $orderby $limit", $else_where_fields ) );
+	}
+
 	/**
 	 * Inserts set of terms into a taxonomy.
 	 *
@@ -1336,6 +1340,87 @@ class Taxonomy extends Core\Base
 
 		$query = new \WP_Term_Query();
 		return $query->query( $args );
+	}
+
+	/**
+	 * Retrieves the terms of the taxonomy that are attached to the post.
+	 * NOTE: hits cached terms for the post
+	 *
+	 * @param string $taxonomy
+	 * @param object $post
+	 * @param bool $object
+	 * @param bool $key
+	 * @param string $index_key
+	 * @return array
+	 */
+	public static function getPostTerms( $taxonomy, $post = NULL, $object = TRUE, $key = FALSE, $index_key = NULL )
+	{
+		$terms = get_the_terms( $post, $taxonomy );
+
+		if ( empty( $terms ) || is_wp_error( $terms ) )
+			return [];
+
+		if ( ! $object )
+			return Core\Arraay::pluck( $terms, $key ?: 'term_id', $index_key );
+
+		if ( $key )
+			return Core\Arraay::reKey( $terms, $key );
+
+		return $terms;
+	}
+
+	// FIXME: check and exclude terms with `trashed` meta
+	// @REF: https://developer.wordpress.org/?p=22286
+	public static function listTerms( $taxonomy, $fields = NULL, $extra = [], $ordering = TRUE )
+	{
+		$args = [
+			'taxonomy'   => (array) $taxonomy,
+			'fields'     => is_null( $fields ) ? 'id=>name' : $fields,
+			'hide_empty' => FALSE,
+		];
+
+		if ( $ordering )
+			$args = array_merge( $args, [
+				'order'      => 'ASC',
+				'orderby'    => 'meta_value_num, name', // 'name',
+				'meta_query' => [
+					// @REF: https://core.trac.wordpress.org/ticket/34996
+					// FIXME: drop order here: see Terms: `apply_ordering`
+					'relation' => 'OR',
+					[
+						'key'     => 'order',
+						'compare' => 'NOT EXISTS'
+					],
+					[
+						'key'     => 'order',
+						'compare' => '>=',
+						'value'   => 0,
+					],
+				],
+			] );
+
+		$query = new \WP_Term_Query( array_merge( $args, $extra ) );
+
+		if ( empty( $query->terms ) )
+			return [];
+
+		return $query->terms;
+	}
+
+	public static function listTermsJS( $taxonomy, $fields = NULL, $extra = [] )
+	{
+		if ( is_null( $fields ) )
+			$fields = [ 'term_id', 'name' ];
+
+		return array_map( function ( $term ) use ( $fields ) {
+			return Core\Arraay::keepByKeys( get_object_vars( $term ), $fields );
+		}, self::listTerms( $taxonomy, 'all', $extra ) );
+	}
+
+	// NOTE: DEPRECATED: use `Term::getMeta()`
+	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
+	{
+		return Term::getMeta( $term, $keys, $single );
 	}
 
 	public static function addSupport( $taxonomy, $features )

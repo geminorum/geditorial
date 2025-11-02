@@ -5,9 +5,82 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Validation extends Base
 {
 
-	// @SEE: http://www.aliarash.com/article/shenasameli/shenasa_meli.htm
+	public static function sanitizePostCode( $input )
+	{
+		$sanitized = Number::translate( Text::trim( $input ) );
 
+		if ( ! self::isPostCode( $sanitized ) )
+			return '';
+
+		return $sanitized;
+	}
+
+	public static function isPostCode( $input )
+	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
+			return self::isIranPostCode( $input );
+
+		// @SOURCE: `WC_Validation::is_postcode()`
+		if ( 0 < strlen( trim( preg_replace( '/[\s\-A-Za-z0-9]/', '', $input ) ) ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
+	// @REF: https://github.com/VahidN/DNTPersianUtils.Core/blob/master/src/DNTPersianUtils.Core/Validators/IranCodesUtils.cs#L13
+	// @REF: https://www.dotnettips.info/newsarchive/details/14187
+	public static function isIranPostCode( $input )
+	{
+		return (bool) preg_match( '/(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}/',
+			trim( str_ireplace( [ '-', ' ' ], '', Number::translate( Text::trim( $input ) ) ) ) );
+	}
+
+	public static function getMobileHTMLPattern()
+	{
+		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
+			return '[0-9۰-۹+]{11,}';
+
+		return '[0-9+]{11,}';
+	}
+
+	public static function sanitizePhoneNumber( $input )
+	{
+		return Phone::sanitize( $input );
+	}
+
+	public static function isPhoneNumber( $input )
+	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		if ( ! Phone::is( $input ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
+	public static function sanitizeMobileNumber( $input )
+	{
+		return Phone::sanitize( $input );
+	}
+
+	public static function isMobileNumber( $input )
+	{
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		if ( ! Phone::is( $input ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
+	// @SEE: http://www.aliarash.com/article/shenasameli/shenasa_meli.htm
 	// @SEE: https://github.com/whatwg/html/issues/5740
+	// ^(\d{7}|\d{10})$
 	public static function getIdentityNumberHTMLPattern()
 	{
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )

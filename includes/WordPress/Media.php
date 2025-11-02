@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
 
 class Media extends Core\Base
 {
@@ -363,7 +362,7 @@ class Media extends Core\Base
 	public static function getUploadURL( $sub = '' )
 	{
 		$upload = wp_upload_dir( NULL, FALSE, FALSE );
-		$base   = Core\WordPress::isSSL() ? str_ireplace( 'http://', 'https://', $upload['baseurl'] ) : $upload['baseurl'];
+		$base   = IsIt::ssl() ? str_ireplace( 'http://', 'https://', $upload['baseurl'] ) : $upload['baseurl'];
 		return $sub ? $base.'/'.$sub : $base;
 	}
 
@@ -377,7 +376,7 @@ class Media extends Core\Base
 	public static function htmlAttachmentShortLink( $id, $html, $extra = '', $rel = 'attachment' )
 	{
 		return Core\HTML::tag( 'a', [
-			'href'  => WordPress\Post::shortlink( $id ),
+			'href'  => Post::shortlink( $id ),
 			'rel'   => $rel,
 			'class' => Core\HTML::attrClass( $extra, '-attachment' ),
 			'data'  => [ 'id' => $id ],
@@ -435,7 +434,7 @@ class Media extends Core\Base
 			Core\Arraay::reKey( $attachments, 'ID' ),
 			array(
 				'name'       => $name,
-				'none_title' => Settings::showOptionNone(),
+				'none_title' => __( 'Select an item' ), // Settings::showOptionNone(),
 				'class'      => '-attachment',
 				'selected'   => $selected,
 				'prop'       => 'post_title',
