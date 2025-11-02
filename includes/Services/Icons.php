@@ -1,20 +1,18 @@
-<?php namespace geminorum\gEditorial;
+<?php namespace geminorum\gEditorial\Services;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-class Visual extends WordPress\Main
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
+
+class Icons extends gEditorial\Service
 {
-	const BASE = 'geditorial';
-
 	const MENUICON_PROP = 'editorial_icon';
-
-	public static function factory()
-	{
-		return gEditorial();
-	}
 
 	/**
 	 * Retrieves mark-up for given icon.
+	 * OLD: `Visual::getIcon()`
 	 * TODO: support for `none`: `div.wp-menu-image`
 	 *
 	 * The URL to the icon to be used for `add_menu_page()`
@@ -46,7 +44,8 @@ class Visual extends WordPress\Main
 		return Core\HTML::getDashicon( $icon );
 	}
 
-	public static function getMenuIcon( $icon, $fallback = NULL )
+	// OLD: `Visual::getMenuIcon()`
+	public static function menu( $icon, $fallback = NULL )
 	{
 		if ( ! $icon )
 			$icon = $fallback ?? 'screenoptions';
@@ -56,7 +55,8 @@ class Visual extends WordPress\Main
 			: sprintf( 'dashicons-%s', $icon );
 	}
 
-	public static function getPostTypeIconMarkup( $posttype, $fallback = NULL, $raw = FALSE )
+	// OLD: `Visual::getPostTypeIconMarkup()`
+	public static function posttypeMarkup( $posttype, $fallback = NULL, $raw = FALSE )
 	{
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return $raw
@@ -66,7 +66,7 @@ class Visual extends WordPress\Main
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
 				? $object->{static::MENUICON_PROP}
-				: self::getIcon( $object->{static::MENUICON_PROP} );
+				: self::get( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
@@ -91,7 +91,8 @@ class Visual extends WordPress\Main
 			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 	}
 
-	public static function getTaxonomyIconMarkup( $taxonomy, $fallback = NULL, $raw = FALSE )
+	// OLD: `Visual::getTaxonomyIconMarkup()`
+	public static function taxonomyMarkup( $taxonomy, $fallback = NULL, $raw = FALSE )
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return $raw
@@ -101,7 +102,7 @@ class Visual extends WordPress\Main
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
 				? $object->{static::MENUICON_PROP}
-				: self::getIcon( $object->{static::MENUICON_PROP} );
+				: self::get( $object->{static::MENUICON_PROP} );
 
 		if ( ! empty( $object->menu_icon )
 			&& is_string( $object->menu_icon ) ) {
@@ -126,7 +127,8 @@ class Visual extends WordPress\Main
 			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
 	}
 
-	public static function getAdminBarIconMarkup( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
+	// OLD: `Visual::getAdminBarIconMarkup()`
+	public static function adminBarMarkup( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
 	{
 		return Core\HTML::tag( 'span', [
 			'class' => [

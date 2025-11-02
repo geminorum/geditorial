@@ -179,12 +179,12 @@ class Helper extends WordPress\Main
 				$value,
 				[ 'title' => $title ?? $value ],
 				$icon ? 'icon' : 'display',
-				$icon ? Visual::getIcon( [ 'misc-16', 'envelope-fill' ] ) : NULL
+				$icon ? Services\Icons::get( [ 'misc-16', 'envelope-fill' ] ) : NULL
 			);
 
 		else if ( Core\URL::isValid( $value ) )
 			$prepared = Core\HTML::link(
-				$icon ? Visual::getIcon( [ 'misc-16', 'link-45deg' ] ) : Core\URL::prepTitle( $value ),
+				$icon ? Services\Icons::get( [ 'misc-16', 'link-45deg' ] ) : Core\URL::prepTitle( $value ),
 				$value,
 				TRUE
 			);
@@ -194,12 +194,12 @@ class Helper extends WordPress\Main
 				$value,
 				[ 'title' => $title ],
 				$icon ? 'icon' : 'display',
-				$icon ? Visual::getIcon( [ 'misc-16', 'telephone-fill' ] ) : NULL
+				$icon ? Services\Icons::get( [ 'misc-16', 'telephone-fill' ] ) : NULL
 			);
 
 		else
 			$prepared = $icon
-				? Core\HTML::tag( 'span', [ 'title' => $value ], Visual::getIcon( [ 'misc-16', 'patch-question-fill' ] ) )
+				? Core\HTML::tag( 'span', [ 'title' => $value ], Services\Icons::get( [ 'misc-16', 'patch-question-fill' ] ) )
 				: Core\HTML::escape( $value );
 
 		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );

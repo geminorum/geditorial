@@ -7,7 +7,6 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait PairedImports
@@ -72,7 +71,7 @@ trait PairedImports
 		$label = $label ?? sprintf(
 			/* translators: `%s`: icon markup */
 			_x( '%s Upload', 'Internal: PairedImports: Button Label', 'geditorial' ),
-			Visual::getIcon( 'upload' )
+			Services\Icons::get( 'upload' )
 		);
 
 		return Core\HTML::tag( 'a', [

@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Visual;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Markdown extends gEditorial\Module
@@ -482,7 +482,7 @@ class Markdown extends gEditorial\Module
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return $this->is_markdown( $row->ID ) ? Visual::getIcon( $this->module->icon ) : '';
+					return $this->is_markdown( $row->ID ) ? Services\Icons::get( $this->module->icon ) : '';
 				},
 			],
 			'title' => Tablelist::columnPostTitle(),

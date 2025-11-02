@@ -7,8 +7,8 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Positions extends gEditorial\Module
@@ -390,7 +390,7 @@ class Positions extends gEditorial\Module
 				$label = sprintf(
 					/* translators: `%1$s`: icon markup, `%2$s`: profile post title */
 					_x( '%1$s Mount: %2$s', 'Button Label', 'geditorial-positions' ),
-					Visual::getIcon( 'database-add' ),
+					Services\Icons::get( 'database-add' ),
 					WordPress\Post::title( $profile, '' )
 				);
 
@@ -406,7 +406,7 @@ class Positions extends gEditorial\Module
 				$label = sprintf(
 					/* translators: `%1$s`: icon markup, `%2$s`: profile post title */
 					_x( '%1$s Clear: %2$s', 'Button Label', 'geditorial-positions' ),
-					Visual::getIcon( 'database-remove' ),
+					Services\Icons::get( 'database-remove' ),
 					WordPress\Post::title( $profile, '' )
 				);
 

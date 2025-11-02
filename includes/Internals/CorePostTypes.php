@@ -7,7 +7,6 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
@@ -183,7 +182,7 @@ trait CorePostTypes
 						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
 
 					// NOTE: passing icon on the original format: string/array
-					$args[Visual::MENUICON_PROP] = $icon;
+					$args[Services\Icons::MENUICON_PROP] = $icon;
 
 					break;
 

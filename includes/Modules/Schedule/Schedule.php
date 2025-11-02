@@ -9,8 +9,8 @@ use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Schedule extends gEditorial\Module
@@ -297,7 +297,7 @@ class Schedule extends gEditorial\Module
 			$this->cache['posttype_statuses'] = WordPress\Status::get();
 
 		if ( ! isset( $this->cache['posttype_icons'][$post->post_type] ) )
-			$this->cache['posttype_icons'][$post->post_type] = Visual::getPostTypeIconMarkup( $post->post_type );
+			$this->cache['posttype_icons'][$post->post_type] = Services\Icons::posttypeMarkup( $post->post_type );
 
 		$title = Core\Number::localize( date( 'H:i', strtotime( $post->post_date ) ) );
 
@@ -326,7 +326,7 @@ class Schedule extends gEditorial\Module
 					.'" title="'.Core\HTML::escape( $object->labels->add_new_item )
 					.'" data-type="'.$object->name.'" data-title="'.$object->labels->new_item
 					.'" class="-the-day-newpost" target="_blank">'
-					.Visual::getPostTypeIconMarkup( $object ).'</a>';
+					.Services\Icons::posttypeMarkup( $object ).'</a>';
 			}
 		}
 

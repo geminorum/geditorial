@@ -210,6 +210,7 @@ class Plugin extends WordPress\Plugin
 			'CustomTaxonomy',
 			'FileCache',
 			'HeaderButtons',
+			'Icons',
 			'Individuals',
 			'LateChores',
 			'LineDiscovery',
@@ -643,7 +644,7 @@ class Plugin extends WordPress\Plugin
 
 			$wp_admin_bar->add_node( [
 				'id'     => $this->base,
-				'title'  => Visual::getAdminBarIconMarkup(),
+				'title'  => Services\Icons::adminBarMarkup(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
 				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],

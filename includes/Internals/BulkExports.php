@@ -8,7 +8,6 @@ use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Template;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait BulkExports
@@ -23,7 +22,7 @@ trait BulkExports
 			$label = sprintf(
 				/* translators: `%1$s`: icon markup, `%2$s`: export type title */
 				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
-				Visual::getIcon( 'download' ),
+				Services\Icons::get( 'download' ),
 				$type_args['title']
 			);
 

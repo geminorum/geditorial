@@ -8,7 +8,6 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Papered extends gEditorial\Module
@@ -910,7 +909,7 @@ class Papered extends gEditorial\Module
 			'title'    => $title ? sprintf( $title, $post, $name ) : FALSE,
 			'class'    => [ '-button', 'button', '-button-icon', 'do-colorbox-iframe' ],
 			'disabled' => TRUE,
-		], sprintf( $text, Visual::getIcon( 'welcome-view-site' ), $name ) );
+		], sprintf( $text, Services\Icons::get( 'welcome-view-site' ), $name ) );
 
 		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
@@ -923,7 +922,7 @@ class Papered extends gEditorial\Module
 			'title'    => $title ? sprintf( $title, $post, $name ) : FALSE,
 			'class'    => [ '-button', 'button', '-button-icon' ],
 			'disabled' => TRUE,
-		], sprintf( $text, Visual::getIcon( 'printer' ), $name ) );
+		], sprintf( $text, Services\Icons::get( 'printer' ), $name ) );
 
 		$html.= Core\HTML::tag( 'iframe', [
 			'id'     => $this->classs( 'printiframe' ),
@@ -996,7 +995,7 @@ class Papered extends gEditorial\Module
 				'-button-icon',
 			],
 			'onclick' => $func.'("'.$id.'")',
-		], sprintf( $text, Visual::getIcon( 'printer' ), $name ) );
+		], sprintf( $text, Services\Icons::get( 'printer' ), $name ) );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons -buttons-half' );
 

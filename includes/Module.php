@@ -394,7 +394,7 @@ class Module extends WordPress\Module
 			'id'    => $this->classs( 'mainbutton', $context ),
 			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
 			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
-		], sprintf( $text, Visual::getIcon( $this->module->icon ), $name ) );
+		], sprintf( $text, Services\Icons::get( $this->module->icon ), $name ) );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
@@ -637,7 +637,7 @@ class Module extends WordPress\Module
 			'title'  => $title ?: FALSE,
 			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
 			'target' => $link ? '_blank' : FALSE,
-		], Visual::getIcon( $icon ) );
+		], Services\Icons::get( $icon ) );
 	}
 
 	// NOTE: adds the `{$module_key}-enabled` class to body in admin

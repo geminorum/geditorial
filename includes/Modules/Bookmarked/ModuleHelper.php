@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Visual;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -57,7 +57,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( 'attachment' === $type && ! empty( $row['__code'] ) )
 				$item['icon'] = Core\Icon::guessByMIME( WordPress\Attachment::type( (int) $row['__code'] ), $item['icon'] );
 
-			$item['icon'] = Visual::getIcon( $item['icon'], 'external' );
+			$item['icon'] = Services\Icons::get( $item['icon'], 'external' );
 
 			if ( ! empty( $option['color'] ) && Core\Color::validHex( $option['color'] ) ) {
 				$item['color']   = $option['color'];

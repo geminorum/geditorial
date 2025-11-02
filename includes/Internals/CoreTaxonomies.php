@@ -8,7 +8,6 @@ use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 trait CoreTaxonomies
@@ -244,7 +243,7 @@ trait CoreTaxonomies
 						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
 
 					// NOTE: passing icon on the original format: string/array
-					$args[Visual::MENUICON_PROP] = $icon;
+					$args[Services\Icons::MENUICON_PROP] = $icon;
 
 					break;
 
@@ -898,7 +897,7 @@ trait CoreTaxonomies
 		return Services\HeaderButtons::register( $this->classs( $taxonomy ), [
 			'text'     => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
 			'title'    => Services\CustomTaxonomy::getLabel( $taxonomy, 'manage_description' ),
-			'icon'     => Visual::getTaxonomyIconMarkup( $taxonomy, NULL, TRUE ),
+			'icon'     => Services\Icons::taxonomyMarkup( $taxonomy, NULL, TRUE ),
 			'link'     => $edit,
 			'priority' => 12,
 		] );

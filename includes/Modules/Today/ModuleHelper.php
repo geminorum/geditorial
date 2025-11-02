@@ -713,7 +713,7 @@ class ModuleHelper extends gEditorial\Helper
 			$title = $object->labels->add_new_item;
 
 			if ( $admin )
-				$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
+				$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
 
 			$buttons[] = Core\HTML::button( $title,
 				WordPress\PostType::newLink( $object->name, $the_day ),
@@ -736,7 +736,7 @@ class ModuleHelper extends gEditorial\Helper
 			$title = $object->labels->add_new_item;
 
 			if ( $admin )
-				$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
+				$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
 
 			$buttons[] = Core\HTML::button( $title,
 				WordPress\PostType::newLink( $object->name, $the_day ),
@@ -752,7 +752,7 @@ class ModuleHelper extends gEditorial\Helper
 				$title = $object->labels->edit_item;
 
 				if ( $admin )
-					$title = gEditorial\Visual::getPostTypeIconMarkup( $object ).' '.$title;
+					$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
 
 				$buttons[] = Core\HTML::button( $title,
 					WordPress\Post::edit( $post ),

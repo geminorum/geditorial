@@ -5,8 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Visual;
 use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
@@ -217,7 +217,7 @@ class Entry extends gEditorial\Module
 	{
 		shortcode_ui_register_for_shortcode( $this->constant( 'main_shortcode' ), [
 			'label'         => Core\HTML::escape( _x( 'Entry Section', 'UI: Label', 'geditorial-entry' ) ),
-			'listItemImage' => Visual::getMenuIcon( $this->module->icon ),
+			'listItemImage' => Services\Icons::menu( $this->module->icon ),
 			'attrs'         => [
 				[
 					'label'    => Core\HTML::escape( _x( 'Section', 'UI: Label', 'geditorial-entry' ) ),

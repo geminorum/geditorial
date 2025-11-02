@@ -111,7 +111,7 @@ class Config extends gEditorial\Module
 			'editorial_settings',
 			$slug,
 			[ $this, 'admin_settings_page' ],
-			gEditorial\Visual::getMenuIcon( $this->module->icon ),
+			Services\Icons::menu( $this->module->icon ),
 		);
 
 		$hook_tools = add_submenu_page(
@@ -956,7 +956,7 @@ class Config extends gEditorial\Module
 				.( $enabled ? '-enabled' : '-disabled' ).'">';
 
 			if ( $module->icon )
-				echo gEditorial\Visual::getIcon( $module->icon );
+				echo Services\Icons::get( $module->icon );
 
 			echo gEditorial\Ajax::spinner();
 

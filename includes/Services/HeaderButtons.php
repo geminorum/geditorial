@@ -72,7 +72,7 @@ class HeaderButtons extends gEditorial\Service
 				continue;
 
 			if ( ! empty( $button['icon'] ) )
-				$button['text'] = sprintf( '%s %s', gEditorial\Visual::getIcon( $button['icon'] ), $button['text'] );
+				$button['text'] = sprintf( '%s %s', Icons::get( $button['icon'] ), $button['text'] );
 
 			if ( ! empty( $button['html'] ) )
 				$args['buttons'][] = $button['html'];
