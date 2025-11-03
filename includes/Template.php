@@ -486,11 +486,7 @@ class Template extends WordPress\Main
 		if ( in_array( $field, [ 'name', 'description', 'slug', 'count' ], TRUE ) )
 			return trim( strip_tags( sanitize_term_field( $field, $term->{$field}, $term->term_id, $term->taxonomy, 'display' ) ) );
 
-		// NOTE: meta field supported by Terms module
-		if ( ! in_array( $field, [ 'order', 'tagline', 'contact', 'image', 'author', 'color', 'role', 'roles', 'posttype', 'posttypes' ], TRUE ) )
-			return $default;
-
-		if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
+		if ( $meta = Services\TaxonomyFields::getField( $field, [ 'id' => $term, 'default' => $default ] ) )
 			return trim( $meta );
 
 		return $default;
