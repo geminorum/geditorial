@@ -393,6 +393,39 @@ class Datetime extends WordPress\Main
 		);
 	}
 
+	// NOTE: alternative to `Datetime::makeMySQLFromInput()` since the input only in year/mysql-format
+	public static function prepForMySQL( $input, $format = NULL, $calendar_type = NULL, $timezone_string = NULL )
+	{
+		if ( ! $input )
+			return FALSE;
+
+		if ( ! $sanitized = Core\Number::translate( Core\Text::trim( $input ) ) )
+			return FALSE;
+
+		// NOTE: year-onlies stored in targeted calendar
+		if ( 4 === strlen( $sanitized ) )
+			$datetime = self::makeMySQLFromInput(
+				sprintf( '%s-01-01', $sanitized ),
+				$format,
+				$calendar_type,
+				$timezone_string,
+				FALSE
+			);
+
+		// NOTE: full-dates stored in Gregorian
+		else if ( Core\Date::isInFormat( $sanitized, 'Y-m-d' ) )
+			// $datetime = sprintf( '%s 23:59:59', $sanitized );
+			$datetime = sprintf( '%s 00:00:00', $sanitized );
+
+		else if ( Core\Date::isInFormat( $sanitized, $format ?? Core\Date::MYSQL_FORMAT ) )
+			$datetime = $sanitized;
+
+		else
+			return FALSE;
+
+		return $datetime;
+	}
+
 	public static function prepYearOnly( $data, $localize = TRUE, $fallback = '' )
 	{
 		if ( ! $data )

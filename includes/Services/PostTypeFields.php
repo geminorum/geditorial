@@ -384,18 +384,12 @@ class PostTypeFields extends gEditorial\Service
 		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
 	}
 
-	public static function getFieldDate( $field_key, $post_id, $module = 'meta', $check = TRUE, $default = FALSE )
+	public static function getFieldDate( $field_key, $post_id, $module = 'meta', $check = TRUE, $default = FALSE, $default_calendar = NULL )
 	{
 		if ( ! $date = self::getFieldRaw( $field_key, $post_id, $module, $check, $default ) )
 			return $default;
 
-		if ( Core\Date::isInFormat( $date, 'Y-m-d' ) )
-			$datetime = sprintf( '%s 23:59:59', $date );
-
-		else if ( Core\Date::isInFormat( $date, Core\Date::MYSQL_FORMAT ) )
-			$datetime = $date;
-
-		else
+		if ( ! $datetime = Datetime::prepForMySQL( $date, NULL, $default_calendar ?? self::getDefaultCalendar( $module, FALSE ) ) )
 			return $default;
 
 		return Core\Date::getObject( $datetime );

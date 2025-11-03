@@ -158,13 +158,9 @@ trait PostDate
 		if ( ! $date )
 			return Settings::processingListItem( $verbose, gEditorial\Plugin::na() );
 
-		if ( Core\Date::isInFormat( $date, 'Y-m-d' ) )
-			$datetime = sprintf( '%s 23:59:59', $date );
+		$datetime = Datetime::prepForMySQL( $date, NULL, $this->default_calendar() );
 
-		else if ( Core\Date::isInFormat( $date, Core\Date::MYSQL_FORMAT ) )
-			$datetime = $date;
-
-		else if ( $verbose )
+		if ( ! $datetime && $verbose )
 			return Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: date-time, `%2$s`: post title */
 				_x( 'Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-admin' ), [
@@ -172,7 +168,7 @@ trait PostDate
 					WordPress\Post::title( $post ),
 				] );
 
-		else
+		else if ( ! $datetime )
 			return $this->log( 'FAILED', sprintf( 'after-care process of #%s: date is not valid: %s', $post->ID, $date ), [ $post->ID, $date ] );
 
 		if ( $datetime === $post->post_date )
