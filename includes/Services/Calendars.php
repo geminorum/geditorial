@@ -8,10 +8,11 @@ use geminorum\gEditorial\WordPress;
 
 class Calendars extends gEditorial\Service
 {
-	const REWRITE_ENDPOINT_NAME  = 'ics';
-	const REWRITE_ENDPOINT_QUERY = 'ical';
-	const POSTTYPE_ICAL_SOURCE   = 'ical_source';
-	const TAXONOMY_ICAL_SOURCE   = 'ical_source';
+	const REWRITE_ENDPOINT_NAME    = 'ics';
+	const REWRITE_ENDPOINT_QUERY   = 'ical';
+	const REWRITE_ENDPOINT_CONTEXT = 'calendar';
+	const POSTTYPE_ICAL_SOURCE     = 'ical_source';
+	const TAXONOMY_ICAL_SOURCE     = 'ical_source';
 
 	public static function setup()
 	{
@@ -46,7 +47,7 @@ class Calendars extends gEditorial\Service
 			return;
 
 		$events  = $filename = FALSE;
-		$context = static::REWRITE_ENDPOINT_QUERY;
+		$context = get_query_var( static::REWRITE_ENDPOINT_QUERY ) ?: static::REWRITE_ENDPOINT_CONTEXT;
 
 		if ( is_singular() ) {
 
@@ -236,7 +237,7 @@ class Calendars extends gEditorial\Service
 		 * @source https://github.com/markuspoerschke/iCal
 		 * @docs https://ical.poerschke.nrw/docs
 		 */
-		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID ] );
+		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID, $context ?? static::REWRITE_ENDPOINT_CONTEXT ] );
 		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
 		$event->touch( new \Eluceo\iCal\Domain\ValueObject\Timestamp( Core\Date::getObject( $post->post_modified ) ) );
 
@@ -369,7 +370,11 @@ class Calendars extends gEditorial\Service
 			return FALSE;
 
 		return apply_filters( static::BASE.'_calendars_post_link',
-			WordPress\Post::endpointLink( static::REWRITE_ENDPOINT_NAME, $post ),
+			WordPress\Post::endpointURL(
+				static::REWRITE_ENDPOINT_NAME,
+				$post,
+				static::REWRITE_ENDPOINT_CONTEXT === $context ? NULL : $context
+			),
 			$post,
 			$context
 		);
