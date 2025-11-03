@@ -337,7 +337,7 @@ class Strings extends Core\Base
 		if ( $shortcode )
 			$text = ShortCode::apply( $text, TRUE );
 
-		$text = apply_filters( 'geditorial_markdown_to_html', $text );
+		$text = apply_filters( 'geditorial_markdown_to_html', $text, $autop );
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );
 
