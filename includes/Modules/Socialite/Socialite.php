@@ -299,7 +299,7 @@ class Socialite extends gEditorial\Module
 
 	public function terms_manage_columns( $columns, $taxonomy, $supported )
 	{
-		if ( ! array_intersect( $supported, $this->supported ) )
+		if ( ! Core\Arraay::exists( $supported, $this->supported ) )
 			return $columns;
 
 		return Core\Arraay::insert( $columns, [

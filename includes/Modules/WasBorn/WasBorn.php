@@ -904,7 +904,7 @@ class WasBorn extends gEditorial\Module
 
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
-		if ( ! array_intersect( $posttypes, $supported ) )
+		if ( ! Core\Arraay::exists( $posttypes, $supported ) )
 			return $null;
 
 		$roundup  = $this->get_setting( 'average_round_up', TRUE );
@@ -1163,9 +1163,7 @@ class WasBorn extends gEditorial\Module
 	// @REF: `hook_dashboardsummary_paired_post_summaries()`
 	public function paired_post_summaries( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context )
 	{
-		$supported = $this->get_setting_posttypes( 'parent' );
-
-		if ( ! array_intersect( $posttypes, $supported ) )
+		if ( ! Core\Arraay::exists( $posttypes, $this->get_setting_posttypes( 'parent' ) ) )
 			return $summaries;
 
 		if ( ! $html = $this->get_dashboard_summary_content( 'paired', NULL, $paired, 'li' ) )

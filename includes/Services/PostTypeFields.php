@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class PostTypeFields extends gEditorial\Service
@@ -350,7 +349,7 @@ class PostTypeFields extends gEditorial\Service
 		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
-			$args['filter'] = [ Template::class, 'doEmbedShortCode' ];
+			$args['filter'] = [ gEditorial\Template::class, 'doEmbedShortCode' ];
 
 		if ( $args['filter'] && is_callable( $args['filter'] ) )
 			$meta = call_user_func( $args['filter'], $meta );

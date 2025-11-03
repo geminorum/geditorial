@@ -560,7 +560,7 @@ class Phonebook extends gEditorial\Module
 
 		$supported = $this->posttypes();
 
-		if ( ! array_intersect( $supported, (array) $queried['posttype'] ) )
+		if ( ! Core\Arraay::exists( $supported, (array) $queried['posttype'] ) )
 			return $null;
 
 		foreach ( (array) $queried['posttype'] as $posttype ) {
@@ -589,7 +589,7 @@ class Phonebook extends gEditorial\Module
 
 		$supported = $this->posttypes();
 
-		if ( ! array_intersect( $supported, (array) $posttypes ) )
+		if ( ! Core\Arraay::exists( $supported, (array) $posttypes ) )
 			return $discovered;
 
 		$phone  = FALSE;

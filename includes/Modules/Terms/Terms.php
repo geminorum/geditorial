@@ -503,14 +503,14 @@ class Terms extends gEditorial\Module
 	// FALSE for all
 	public function get_supported( $taxonomy = FALSE )
 	{
-		$list = [];
+		$fields = [];
 
 		foreach ( $this->_get_supported_raw() as $field )
 			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
-				$list[] = $field;
+				$fields[] = $field;
 
 		return $this->filters( 'supported_fields',
-			$list,
+			$fields,
 			$taxonomy
 		);
 	}

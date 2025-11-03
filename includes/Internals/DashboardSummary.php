@@ -324,7 +324,7 @@ trait DashboardSummary
 		add_filter( $this->hook_base( 'paired', 'post_summaries' ),
 			function ( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context ) use ( $constant, $supported ) {
 
-				if ( ! array_intersect( $posttypes, $supported ) )
+				if ( ! Core\Arraay::exists( $posttypes, $supported ) )
 					return $summaries;
 
 				$html = $this->get_dashboard_term_summary(

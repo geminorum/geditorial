@@ -564,7 +564,7 @@ class Identified extends gEditorial\Module
 		$supported  = $this->posttypes();
 		$identifier = FALSE;
 
-		if ( ! array_intersect( $supported, (array) $posttypes ) )
+		if ( ! Core\Arraay::exists( $supported, (array) $posttypes ) )
 			return $discovered;
 
 		foreach ( (array) $posttypes as $posttype ) {
@@ -658,7 +658,7 @@ class Identified extends gEditorial\Module
 		$supported  = $this->posttypes();
 		$identifier = FALSE;
 
-		if ( ! array_intersect( $supported, (array) $queried['posttype'] ) )
+		if ( ! Core\Arraay::exists( $supported, (array) $queried['posttype'] ) )
 			return $null;
 
 		foreach ( (array) $queried['posttype'] as $posttype ) {

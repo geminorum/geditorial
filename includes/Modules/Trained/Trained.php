@@ -546,7 +546,7 @@ class Trained extends gEditorial\Module
 	// NOTE: only returns selected supported crossing fields
 	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
 	{
-		if ( ! \array_intersect( $this->posttypes(), $posttypes ) )
+		if ( ! Core\Arraay::exists( $this->posttypes(), $posttypes ) )
 			return $types;
 
 		if ( $field = Services\PostTypeFields::isAvailable( 'training_code', $this->constant( 'primary_posttype' ), 'meta' ) )

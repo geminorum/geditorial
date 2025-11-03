@@ -420,7 +420,7 @@ class Alphabet extends gEditorial\Module
 			return '';
 
 		// no actives on this alphabet
-		if ( empty( array_intersect( Core\Arraay::column( $alphabet, 'letter' ), $actives ) ) )
+		if ( ! Core\Arraay::exists( Core\Arraay::column( $alphabet, 'letter' ), $actives ) )
 			return '';
 
 		$list = [];

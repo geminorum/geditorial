@@ -503,7 +503,7 @@ trait PostTypeFields
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 
 				// accepts year only
-				if ( strlen( $sanitized ) > 4 )
+				if ( 4 !== strlen( $sanitized ) )
 					$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, FALSE );
 
 				break;

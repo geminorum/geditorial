@@ -161,7 +161,7 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Prepares data for display as a contact.
-	 * TODO: Move to `Individuals` Service
+	 * TODO: Move to `Contacts` Service
 	 *
 	 * @param string $value
 	 * @param string $title
