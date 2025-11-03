@@ -38,6 +38,26 @@ class Locations extends gEditorial\Service
 		return $location;
 	}
 
+	public static function getTermLocation( $term = NULL, $context = NULL )
+	{
+		if ( ! gEditorial()->enabled( 'terms' ) )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		if ( $address = TaxonomyFields::getFieldRaw( 'address', $term->term_id ) ) {
+
+			return [
+				'address' => $address,
+				'title'   => TaxonomyFields::getFieldRaw( 'venue', $term->term_id ) ?: '',
+				'latlng'  => TaxonomyFields::getFieldRaw( 'latlng', $term->term_id ) ?: '',
+			];
+		}
+
+		return FALSE;
+	}
+
 	public static function getSingularLocation( $post = NULL, $context = NULL )
 	{
 		if ( ! gEditorial()->enabled( 'meta' ) )

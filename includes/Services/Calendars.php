@@ -368,6 +368,133 @@ class Calendars extends gEditorial\Service
 		return $event;
 	}
 
+	/**
+	 * Retrieves calendar events based on a singular term.
+	 *
+	 * @param int|object $term
+	 * @param string $context
+	 * @param mixed $the_date
+	 * @param mixed $the_summary
+	 * @return false|object
+	 */
+	public static function getTermEvent( $term, $context = NULL, $the_date = NULL, $the_summary = NULL )
+	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		/**
+		 * @package `eluceo/ical`
+		 * @source https://github.com/markuspoerschke/iCal
+		 * @docs https://ical.poerschke.nrw/docs
+		 */
+		$uid   = implode( '-', [ WordPress\Site::name(), $term->taxonomy, $term->term_id, $context ?? static::ICAL_DEFAULT_CONTEXT ] );
+		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
+
+		// NOTE: firstly check for the date for early bailing!
+		if ( $the_date ) {
+
+			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $the_date )
+					)
+				);
+
+			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $term, $context ] ) ) ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
+					)
+				);
+
+			} else if ( $the_date ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date(
+							Core\Date::getObject( $the_date )
+						)
+					)
+				);
+			}
+
+		} else if ( ( $datestart = TaxonomyFields::getFieldDate( 'datestart', $term->term_id ) )
+			&& ( $dateend = TaxonomyFields::getFieldDate( 'dateend', $term->term_id ) ) ) {
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
+			);
+
+		} else if ( $datetime = TaxonomyFields::getFieldDate( 'datetime', $term->term_id ) ) {
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+					new \Eluceo\iCal\Domain\ValueObject\Date( $datetime )
+				)
+			);
+
+		} else if ( $date = TaxonomyFields::getFieldDate( 'date', $term->term_id ) ) {
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+					new \Eluceo\iCal\Domain\ValueObject\Date( $date )
+				)
+			);
+
+		} else {
+
+			return FALSE; // no data, no event!
+		}
+
+		if ( $the_summary ) {
+
+			if ( is_callable( $the_summary ) && ( $called = call_user_func_array( $the_summary, [ $term, $context ] ) ) ) {
+
+				$event->setSummary( $called );
+
+			} else if ( Core\Text::has( $the_summary, '{{' ) ) {
+
+				$event->setSummary( Core\Text::replaceTokens( $the_summary, WordPress\Term::summary( $term, $context ) ) );
+
+			} else {
+
+				$event->setSummary( $the_summary );
+			}
+
+		} else {
+
+			$event->setSummary( WordPress\Post::title( $term ) );
+		}
+
+		if ( $shortlink = WordPress\Term::shortlink( $term ) )
+			$event->setUrl(
+				new \Eluceo\iCal\Domain\ValueObject\Uri( $shortlink )
+			);
+
+		if ( $desc = apply_filters( static::BASE.'_calendars_term_description',
+			WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ),
+			$term,
+			$context
+		) )
+			$event->setDescription( $desc );
+
+		if ( $venue = Locations::getTermLocation( $term, $context ) ) {
+
+			$location = new \Eluceo\iCal\Domain\ValueObject\Location( $venue['address'], $venue['title'] );
+
+			if ( ! empty( $venue['latlng'] ) && Core\LatLng::is( $venue['latlng'] ) )
+				$location = $location->withGeographicPosition(
+					new \Eluceo\iCal\Domain\ValueObject\GeographicPosition(
+						...Core\LatLng::extract( $venue['latlng'] ) ) );
+
+			$event->setLocation( $location );
+		}
+
+		return $event;
+	}
+
 	public static function sanitizeContextForLink( $context = NULL, $target = NULL, $object = NULL )
 	{
 		$filtred = apply_filters( static::BASE.'_calendars_sanitize_ical_context',
@@ -405,6 +532,25 @@ class Calendars extends gEditorial\Service
 				self::sanitizeContextForLink( $context, 'post', $post )
 			),
 			$post,
+			$context
+		);
+	}
+
+	public static function linkTermCalendar( $term = NULL, $context = NULL )
+	{
+		if ( self::const( 'GEDITORIAL_DISABLE_ICAL' ) )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		return apply_filters( static::BASE.'_calendars_term_link',
+			WordPress\Term::endpointURL(
+				static::REWRITE_ENDPOINT_NAME,
+				$term,
+				self::sanitizeContextForLink( $context, 'term', $term )
+			),
+			$term,
 			$context
 		);
 	}

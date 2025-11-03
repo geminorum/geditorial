@@ -9,6 +9,7 @@ use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Listtable;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
@@ -61,6 +62,7 @@ class Terms extends gEditorial\Module
 		'embed',
 		'url',
 		// 'identity',  // TODO
+		// 'address'    // TODO
 		// 'plate',     // TODO
 	];
 
@@ -357,6 +359,8 @@ class Terms extends gEditorial\Module
 		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
 		$this->action( 'term_intro_description_before', 5, 2, FALSE, $this->base );
 		$this->action( 'term_intro_description_after', 5, 5, FALSE, $this->base );
+		$this->filter( 'calendars_sanitize_ical_context', 3, 8, FALSE, $this->base );
+		$this->filter( 'calendars_term_events', 3, 8, FALSE, $this->base );
 
 		if ( ! is_admin() )
 			return;
@@ -2603,5 +2607,69 @@ class Terms extends gEditorial\Module
 
 		if ( $meta = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE ) )
 			echo Core\HTML::wrap( Core\HTML::link( $title, $meta, TRUE ), '-term-'.$field );
+	}
+
+	public function calendars_sanitize_ical_context( $context, $target, $object )
+	{
+		if ( 'term' !== $target )
+			return $context;
+
+		if ( ! $term = WordPress\Term::get( $object ) )
+			return $context;
+
+		$fields = [
+			'born',
+			'dead',
+			'establish',
+			'abolish',
+		];
+
+		if ( Core\Arraay::exists( $fields, $this->get_supported( $term->taxonomy ) ) )
+			return Services\Calendars::ICAL_TIMESPAN_CONTEXT;
+
+		return $context;
+	}
+
+	// NOTE: applies only if the context is `timespan` e.g. `?ical=timespan`
+	public function calendars_term_events( $null, $term, $context )
+	{
+		if ( $null || Services\Calendars::ICAL_TIMESPAN_CONTEXT !== $context )
+			return $null;
+
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
+			return $null;
+
+		$supported = $this->get_supported( $taxonomy );
+
+		if ( in_array( 'born', $supported, TRUE )
+			&& in_array( 'dead', $supported, TRUE ) ) {
+
+			$events  = [];
+			$default = $this->default_calendar();
+
+			if ( $born = Services\TaxonomyFields::getFieldDate( 'born', $term->term_id, $this->key, FALSE, $default ) )
+				$events[] = Services\Calendars::getTermEvent( $term, $context, $born );
+
+			if ( $dead = Services\TaxonomyFields::getFieldDate( 'dead', $term->term_id, $this->key, FALSE, $default ) )
+				$events[] = Services\Calendars::getTermEvent( $term, $context, $dead );
+
+			return $events;
+
+		} else if ( in_array( 'establish', $supported, TRUE )
+			&& in_array( 'abolish', $supported, TRUE ) ) {
+
+			$events  = [];
+			$default = $this->default_calendar();
+
+			if ( $establish = Services\TaxonomyFields::getFieldDate( 'establish', $term->term_id, $this->key, FALSE, $default ) )
+				$events[] = Services\Calendars::getTermEvent( $term, $context, $establish );
+
+			if ( $abolish = Services\TaxonomyFields::getFieldDate( 'abolish', $term->term_id, $this->key, FALSE, $default ) )
+				$events[] = Services\Calendars::getTermEvent( $term, $context, $abolish );
+
+			return $events;
+		}
+
+		return FALSE; // will return an empty calendar!
 	}
 }
