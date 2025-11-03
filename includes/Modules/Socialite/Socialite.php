@@ -266,7 +266,7 @@ class Socialite extends gEditorial\Module
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
 
-		echo $this->_get_term_icons( $term, NULL, [
+		echo $this->_get_term_icons( $term, $args['context'], NULL, [
 			'-icon-list',
 			'-social-links',
 		] );
@@ -316,13 +316,13 @@ class Socialite extends gEditorial\Module
 	public function terms_custom_column( $column, $taxonomy, $supported, $term )
 	{
 		if ( $column === $this->classs() )
-			echo $this->_get_term_icons( $term, $this->supported, [
+			echo $this->_get_term_icons( $term, 'column', $this->supported, [
 				'-icon-list',
 				'-social-links',
 			] );
 	}
 
-	private function _get_term_icons( $term, $fields = NULL, $extra = [] )
+	private function _get_term_icons( $term, $context = NULL, $fields = NULL, $extra = [] )
 	{
 		$list = [];
 
@@ -333,16 +333,24 @@ class Socialite extends gEditorial\Module
 				'_contact',
 
 		foreach ( $fields as $field )
-			if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
-				$list[$field] = $this->_get_field_link( $field,
-					$this->_get_field_url( $meta, $field, $term->taxonomy ), $term->taxonomy );
+			if ( $url = $this->_get_field_url( $field, $term, $context ) )
+				$list[$field] = $this->_get_field_link( $field, $url, $term, $context );
 
 		return $this->wrap( Core\HTML::rows( $list ), $extra );
 	}
 
-	private function _get_field_url( $value, $key, $taxonomy = FALSE )
+	private function _get_field_url( $field, $term, $context = NULL )
 	{
-		switch ( $key ) {
+		if ( in_array( $field, [ '_contact' ], TRUE ) )
+			$field = Core\Text::stripPrefix( $field, '_' );
+
+		if ( ! $metakey = Services\TaxonomyFields::getTermMetaKey( $field, $term->taxonomy ) )
+			return FALSE;
+
+		if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+			return FALSE;
+
+		switch ( $field ) {
 			case 'twitter'  :
 			case 'tiktok'   :
 			case 'facebook' :
@@ -356,18 +364,18 @@ class Socialite extends gEditorial\Module
 			case 'eitaa'    :
 			case 'wikipedia':
 
-				return Core\Third::getHandleURL( $value, $key );
+				return Core\Third::getHandleURL( $meta, $field );
 
 			// Extra support for front-end only.
-				return Core\Text::trim( $value );
 			case '_contact':
+				return Core\Text::trim( $meta );
 		}
 
-		return Core\HTML::escapeURL( $value );
+		return Core\HTML::escapeURL( $meta );
 	}
 
 	// better to define here!
-	private function _get_field_icon( $field, $taxonomy = FALSE )
+	private function _get_field_icon( $field, $taxonomy = FALSE, $context = NULL )
 	{
 		$default = [ 'gridicons', 'share' ];
 
@@ -389,7 +397,7 @@ class Socialite extends gEditorial\Module
 		return Core\Icon::guess( $field, $default );
 	}
 
-	private function _get_field_link( $field, $url, $taxonomy = FALSE )
+	private function _get_field_link( $field, $url, $term, $context = NULL )
 	{
 		switch ( $field ) {
 
@@ -399,13 +407,14 @@ class Socialite extends gEditorial\Module
 
 			default:
 				return $this->get_column_icon( $url,
-					$this->_get_field_icon( $field, $taxonomy ),
-					$this->get_string( $field, $taxonomy, 'titles', $field ),
-					$taxonomy,
+					$this->_get_field_icon( $field, $term->taxonomy, $context ),
+					$this->get_string( $field, $term->taxonomy, 'titles', $field ),
+					$term->taxonomy,
 					[
 						$this->classs( 'field' ),
 						sprintf( '-field-%s', $field ),
-						$taxonomy ? sprintf( '-taxonomy-%s', $taxonomy ) : '',
+						sprintf( '-taxonomy-%s', $term->taxonomy ),
+						$context ? sprintf( '-%s', $context ) : '',
 						Core\URL::isValid( $url ) ? '-valid-url' : '-invalid-url',
 					]
 				);
