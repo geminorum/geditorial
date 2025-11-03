@@ -151,6 +151,7 @@ class Socialite extends gEditorial\Module
 				'goodreads' => _x( 'Goodreads', 'Title', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Wikipedia', 'Title', 'geditorial-socialite' ),
+				'_ical'      => _x( 'iCal', 'Title', 'geditorial-socialite' ),
 			],
 			'descriptions' => [
 				'twitter'   => _x( 'Handle or URL to a Twitter account.', 'Description', 'geditorial-socialite' ),
@@ -328,9 +329,12 @@ class Socialite extends gEditorial\Module
 
 		if ( is_null( $fields ) )
 			$fields = array_merge( [
-			], $this->supported );
 				// adds before the list
 				'_contact',
+			], $this->supported, [
+				// adds after the list
+				'_ical',
+			] );
 
 		foreach ( $fields as $field )
 			if ( $url = $this->_get_field_url( $field, $term, $context ) )
@@ -341,6 +345,9 @@ class Socialite extends gEditorial\Module
 
 	private function _get_field_url( $field, $term, $context = NULL )
 	{
+		if ( '_ical' === $field )
+			return Services\Calendars::linkTermCalendar( $term, $context );
+
 		if ( in_array( $field, [ '_contact' ], TRUE ) )
 			$field = Core\Text::stripPrefix( $field, '_' );
 
@@ -392,6 +399,7 @@ class Socialite extends gEditorial\Module
 			case 'goodreads': return [ 'misc-24', 'goodreads' ];
 			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
 			case 'wikipedia': return [ 'misc-16', 'wikipedia' ];
+			case '_ical':     return [ 'misc-16', 'calendar-plus-fill' ];
 		}
 
 		return Core\Icon::guess( $field, $default );
@@ -405,6 +413,7 @@ class Socialite extends gEditorial\Module
 			case '_contact':
 				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
 
+			case '_ical':
 			default:
 				return $this->get_column_icon( $url,
 					$this->_get_field_icon( $field, $term->taxonomy, $context ),
