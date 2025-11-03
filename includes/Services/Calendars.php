@@ -140,6 +140,11 @@ class Calendars extends gEditorial\Service
 		if ( ! $filename )
 			$filename = Core\File::prepName( $context ?? 'calendar' );
 
+		/**
+		 * @package `eluceo/ical`
+		 * @source https://github.com/markuspoerschke/iCal
+		 * @docs https://ical.poerschke.nrw/docs
+		 */
 		$calendar = new \Eluceo\iCal\Domain\Entity\Calendar( $events ?: [] );
 		$factory  = new \Eluceo\iCal\Presentation\Factory\CalendarFactory();
 
@@ -238,6 +243,9 @@ class Calendars extends gEditorial\Service
 		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID, $context ?? static::REWRITE_ENDPOINT_CONTEXT ] );
 		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
 		$event->touch( new \Eluceo\iCal\Domain\ValueObject\Timestamp( Core\Date::getObject( $post->post_modified ) ) );
+
+		// TODO: firstly check for the date for early bailing!
+		// TODO: properly handling entities in the summary/description like `nbsp`
 
 		if ( $the_summary ) {
 

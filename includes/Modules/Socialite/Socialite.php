@@ -328,8 +328,9 @@ class Socialite extends gEditorial\Module
 
 		if ( is_null( $fields ) )
 			$fields = array_merge( [
-				'contact', // adds before the list
 			], $this->supported );
+				// adds before the list
+				'_contact',
 
 		foreach ( $fields as $field )
 			if ( $meta = get_term_meta( $term->term_id, $field, TRUE ) )
@@ -358,8 +359,8 @@ class Socialite extends gEditorial\Module
 				return Core\Third::getHandleURL( $value, $key );
 
 			// Extra support for front-end only.
-			case 'contact':
 				return Core\Text::trim( $value );
+			case '_contact':
 		}
 
 		return Core\HTML::escapeURL( $value );
@@ -393,7 +394,7 @@ class Socialite extends gEditorial\Module
 		switch ( $field ) {
 
 			// Extra support for front-end only.
-			case 'contact':
+			case '_contact':
 				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
 
 			default:

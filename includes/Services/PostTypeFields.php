@@ -54,6 +54,7 @@ class PostTypeFields extends gEditorial\Service
 
 	/**
 	 * Retrieves the post meta-key for given field.
+	 * TODO: rename to `getMetaKey`
 	 *
 	 * @param string $field_key
 	 * @param string $module

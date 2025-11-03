@@ -10,6 +10,7 @@ class TaxonomyFields extends gEditorial\Service
 {
 	/**
 	 * Retrieves the term meta-key for given field.
+	 * TODO: rename to `getMetaKey`
 	 *
 	 * @param string $field_key
 	 * @param string $taxonomy

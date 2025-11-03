@@ -1066,7 +1066,6 @@ class Today extends gEditorial\Module
 		return $query;
 	}
 
-	// NOTE: only hooked on singular
 	public function calendars_post_events( $null, $post, $context )
 	{
 		if ( $this->is_posttype( 'main_posttype', $post ) ) {

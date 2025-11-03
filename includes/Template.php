@@ -496,15 +496,13 @@ class Template extends WordPress\Main
 		return $default;
 	}
 
+	// TODO: support more post-type props
 	public static function getPostField( $field = 'title', $post = NULL, $default = '' )
 	{
-		if ( 'title' == $field )
+		if ( 'title' === $field )
 			return trim( strip_tags( get_the_title( $post ) ) );
 
-		if ( $field )
-			return self::getMetaField( $field, [ 'id' => $post, 'default' => $default ] );
-
-		return $default;
+		return self::getMetaField( $field, [ 'id' => $post, 'default' => $default ] );
 	}
 
 	public static function metaFieldHTML( $field, $atts = [] )
