@@ -66,10 +66,10 @@ class Calendars extends gEditorial\Service
 				$events = $filtered;
 
 			else if ( 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
-				$events = self::getPairedCalendar( $post, $context );
+				$events = self::getPairedEvents( $post, $context );
 
 			else
-				$events = self::getSingularCalendar( $post, $context );
+				$events = self::getPostEvent( $post, $context );
 
 			$filename = apply_filters( static::BASE.'_calendars_post_filename',
 				Core\File::prepName( $post->post_name, $context, FALSE ),
@@ -92,7 +92,7 @@ class Calendars extends gEditorial\Service
 				$events = $filtered;
 
 			else
-				$events = self::getPostTypeCalendar( $posttype, $context );
+				$events = self::getPostTypeEvents( $posttype, $context );
 
 			$filename = apply_filters( static::BASE.'_calendars_posttype_filename',
 				Core\File::prepName( $posttype->name, $context, FALSE ),
@@ -118,7 +118,7 @@ class Calendars extends gEditorial\Service
 				$events = $filtered;
 
 			else
-				$events = self::getTermCalendar( $term, $context );
+				$events = self::getTaxonomyEvents( $term, $context );
 
 			$filename = apply_filters( static::BASE.'_calendars_term_filename',
 				Core\File::prepName( $term->slug, $context, FALSE ),
@@ -153,7 +153,7 @@ class Calendars extends gEditorial\Service
 		exit;
 	}
 
-	public static function getPairedCalendar( $post = NULL, $context = NULL )
+	public static function getPairedEvents( $post = NULL, $context = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -175,12 +175,12 @@ class Calendars extends gEditorial\Service
 		$events = [];
 
 		foreach ( $items as $item )
-			$events[] = self::getSingularCalendar( $item, $context );
+			$events[] = self::getPostEvent( $item, $context );
 
 		return $events;
 	}
 
-	public static function getPostTypeCalendar( $posttype, $context = NULL, $the_date = NULL )
+	public static function getPostTypeEvents( $posttype, $context = NULL, $the_date = NULL )
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -191,12 +191,12 @@ class Calendars extends gEditorial\Service
 		] );
 
 		foreach ( $items as $item )
-			$events[] = self::getSingularCalendar( $item, $context, $the_date );
+			$events[] = self::getPostEvent( $item, $context, $the_date );
 
 		return $events;
 	}
 
-	public static function getTermCalendar( $term, $context = NULL, $the_date = NULL )
+	public static function getTaxonomyEvents( $term, $context = NULL, $the_date = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
@@ -211,20 +211,22 @@ class Calendars extends gEditorial\Service
 		] );
 
 		foreach ( $items as $item )
-			$events[] = self::getSingularCalendar( $item, $context, $the_date );
+			$events[] = self::getPostEvent( $item, $context, $the_date );
 
 		return $events;
 	}
 
 	/**
 	 * Retrieves calendar events based on a singular post.
+	 * OLD: `Services\Calendars::getSingularCalendar()`
 	 *
 	 * @param int|object $post
 	 * @param string $context
 	 * @param mixed $the_date
+	 * @param mixed $the_summary
 	 * @return false|object
 	 */
-	public static function getSingularCalendar( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL )
+	public static function getPostEvent( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

@@ -1087,7 +1087,7 @@ class Today extends gEditorial\Module
 			], $constants );
 
 			foreach ( $items as $item )
-				$events[] = Services\Calendars::getSingularCalendar( $item, $context, $callback );
+				$events[] = Services\Calendars::getPostEvent( $item, $context, $callback );
 
 			return $events;
 
@@ -1102,7 +1102,7 @@ class Today extends gEditorial\Module
 			if ( ! $the_date = ModuleHelper::getTheDayDateMySQL( $the_day, $default, FALSE ) )
 				return $null;
 
-			return Services\Calendars::getSingularCalendar( $post, $context, $the_date );
+			return Services\Calendars::getPostEvent( $post, $context, $the_date );
 		}
 
 		return $null;
@@ -1142,7 +1142,7 @@ class Today extends gEditorial\Module
 		], $constants );
 
 		foreach ( $items as $item )
-			$events[] = Services\Calendars::getSingularCalendar( $item, $context, $callback );
+			$events[] = Services\Calendars::getPostEvent( $item, $context, $callback );
 
 		return $events;
 	}
