@@ -10,14 +10,14 @@ class Markup extends gEditorial\Service
 {
 	public static function setup()
 	{
-		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdown_to_html' ] );
+		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdown_to_html' ], 10, 3 );
 		add_filter( 'kses_allowed_protocols', [ __CLASS__, 'kses_allowed_protocols' ], 20, 1 );
 	}
 
 	// @hook `geditorial_markdown_to_html`
-	public static function markdown_to_html( $raw )
+	public static function markdown_to_html( $raw, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
-		return self::mdExtra( $raw );
+		return self::mdExtra( Core\Text::trim( $raw ), $autop, $strip_frontmatter );
 	}
 
 	/**
@@ -36,17 +36,41 @@ class Markup extends gEditorial\Service
 		] );
 	}
 
-	public static function mdExtra( $markdown )
+	public static function mdExtra( $markdown, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
 		global $gEditorialMarkdownExtra;
 
 		if ( empty( $markdown ) || ! class_exists( '\Michelf\MarkdownExtra' ) )
-			return $markdown;
+			return $strip_frontmatter ? self::stripFrontMatter( $markdown ) : $markdown;
 
 		if ( empty( $gEditorialMarkdownExtra ) )
+			/**
+			 * @package `michelf/php-markdown`
+			 * @source https://github.com/michelf/php-markdown
+			 * @docs https://michelf.ca/projects/php-markdown/reference/
+			 */
 			$gEditorialMarkdownExtra = new \Michelf\MarkdownExtra();
 
-		return $gEditorialMarkdownExtra->defaultTransform( $markdown );
+		if ( $strip_frontmatter )
+			$markdown = self::stripFrontMatter( $markdown );
+
+		$markdown = $gEditorialMarkdownExtra->defaultTransform( $markdown );
+
+		return $autop ? $markdown : Core\Text::removeP( $markdown );
+	}
+
+	// @source https://github.com/ergebnis/front-matter/blob/main/src/YamlParser.php
+	private const FRONTMATTER_PATTERN = "{^(?P<frontMatterWithDelimiters>(?:---)[\r\n|\n]*(?P<frontMatterWithoutDelimiters>.*?)[\r\n|\n]+(?:---)[\r\n|\n]{0,1})(?P<bodyMatter>.*)$}s";
+
+	public static function stripFrontMatter( $text )
+	{
+		if ( empty( $text ) )
+			return $text;
+
+		if ( ! preg_match( static::FRONTMATTER_PATTERN, (string) $text, $matches ) )
+			return $text;
+
+		return str_replace( $matches['frontMatterWithDelimiters'], '', $text );
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki
