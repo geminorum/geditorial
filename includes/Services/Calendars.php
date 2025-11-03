@@ -224,7 +224,7 @@ class Calendars extends gEditorial\Service
 	 * @param mixed $the_date
 	 * @return false|object
 	 */
-	public static function getSingularCalendar( $post = NULL, $context = NULL, $the_date = NULL )
+	public static function getSingularCalendar( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -237,7 +237,26 @@ class Calendars extends gEditorial\Service
 		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID ] );
 		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
 		$event->touch( new \Eluceo\iCal\Domain\ValueObject\Timestamp( Core\Date::getObject( $post->post_modified ) ) );
-		$event->setSummary( WordPress\Post::fullTitle( $post ) );
+
+		if ( $the_summary ) {
+
+			if ( is_callable( $the_summary ) && ( $called = call_user_func_array( $the_summary, [ $post, $context ] ) ) ) {
+
+				$event->setSummary( $called );
+
+			} else if ( Core\Text::has( $the_summary, '{{' ) ) {
+
+				$event->setSummary( Core\Text::replaceTokens( $the_summary, WordPress\Post::summary( $post, $context ) ) );
+
+			} else {
+
+				$event->setSummary( $the_summary );
+			}
+
+		} else {
+
+			$event->setSummary( WordPress\Post::fullTitle( $post ) );
+		}
 
 		if ( $shortlink = WordPress\Post::shortlink( $post ) )
 			$event->setUrl(
