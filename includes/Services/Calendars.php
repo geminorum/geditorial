@@ -131,18 +131,16 @@ class Calendars extends gEditorial\Service
 		self::exitICS( $events, $filename, $context );
 	}
 
+	// NOTE: may return empty calendar markup!
 	public static function exitICS( $events, $filename = FALSE, $context = NULL )
 	{
-		if ( empty( $events ) )
-			return FALSE;
-
-		if ( ! is_array( $events ) )
+		if ( $events && ! is_array( $events ) )
 			$events = [ $events ];
 
 		if ( ! $filename )
 			$filename = Core\File::prepName( $context ?? 'calendar' );
 
-		$calendar = new \Eluceo\iCal\Domain\Entity\Calendar( $events );
+		$calendar = new \Eluceo\iCal\Domain\Entity\Calendar( $events ?: [] );
 		$factory  = new \Eluceo\iCal\Presentation\Factory\CalendarFactory();
 
 		Core\HTTP::headers( [
