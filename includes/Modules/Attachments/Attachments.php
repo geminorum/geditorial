@@ -397,6 +397,10 @@ class Attachments extends gEditorial\Module
 						'message' => 'deleted',
 						'count'   => $count,
 					] );
+
+				} else {
+
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 
@@ -432,8 +436,6 @@ class Attachments extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'ID'     => gEditorial\Tablelist::columnPostID(),
-			'date'   => gEditorial\Tablelist::columnPostDate(),
 			'mime'   => gEditorial\Tablelist::columnPostMime(),
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),

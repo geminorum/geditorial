@@ -113,7 +113,6 @@ class WcImages extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => gEditorial\Tablelist::columnPostID(),
 			'title' => gEditorial\Tablelist::columnPostTitle(),
 
 			'thumb' => [

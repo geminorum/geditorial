@@ -288,7 +288,7 @@ class PostTypeFields extends gEditorial\Service
 			'noaccess' => NULL,     // returns upon no access, `NULL` for `default` argument
 			'context'  => 'view',   // access checks, `FALSE` to disable checks
 			'filter'   => FALSE,    // or `__do_embed_shortcode`
-			'prefix'   => FALSE,    // prefix the value with field prop
+			'prefix'   => FALSE,    // prefix value with field prop
 			'trim'     => FALSE,    // or number of chars
 			'before'   => '',
 			'after'    => '',

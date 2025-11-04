@@ -1287,7 +1287,12 @@ class Today extends gEditorial\Module
 		$list      = $this->list_posttypes();
 		$query     = $this->_build_meta_query( $constants );
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts(
+			$query,
+			[],
+			array_keys( $list ),
+			$this->get_sub_limit_option( $sub, 'reports' )
+		);
 
 		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
 		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
@@ -1295,7 +1300,6 @@ class Today extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'ID'     => gEditorial\Tablelist::columnPostID(),
 			'date'   => gEditorial\Tablelist::columnPostDate(),
 			'type'   => gEditorial\Tablelist::columnPostType(),
 			'title'  => gEditorial\Tablelist::columnPostTitle(),

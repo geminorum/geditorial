@@ -1058,8 +1058,6 @@ class Book extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => gEditorial\Tablelist::columnPostID(),
-			'date'  => gEditorial\Tablelist::columnPostDate(),
 			'type'  => gEditorial\Tablelist::columnPostType(),
 			'title' => gEditorial\Tablelist::columnPostTitle(),
 			'metas' => [

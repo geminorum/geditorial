@@ -1504,7 +1504,7 @@ trait PostTypeFields
 
 			if ( Core\Text::starts( $field, sprintf( '%s_ignored__', $this->key ) ) ) {
 
-				// saves only if it is a new post
+				// only if a new post
 				if ( empty( $atts['updated'] ) )
 					$this->posttypefields_do_import_field( $atts['raw'][$offset], $fields[$field], $post );
 

@@ -38,7 +38,7 @@ class Icons extends gEditorial\Service
 		if ( Core\Text::starts( $icon, 'dashicons-' ) )
 			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
 
-		if ( Core\URL::isValid( $icon ) )
+		else if ( Core\URL::isValid( $icon ) )
 			return Core\Icon::wrapURL( esc_url( $icon ) );
 
 		return Core\HTML::getDashicon( $icon );

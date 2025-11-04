@@ -344,9 +344,11 @@ class Uncategorized extends gEditorial\Module
 								'count'   => $result,
 							] );
 					}
-				}
 
-				WordPress\Redirect::doReferer( 'nochange' );
+				} else {
+
+					WordPress\Redirect::doReferer( 'huh' );
+				}
 			}
 		}
 	}

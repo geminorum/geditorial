@@ -461,7 +461,8 @@ class Plugin extends WordPress\Plugin
 		] ) )
 			Helper::linkStyleSheetAdmin( $screen->base );
 
-		else if ( Core\Text::starts( $screen->base, 'dashboard_page' ) )
+		else if ( Core\Text::starts( $screen->base, 'dashboard_page' )
+			&& ! Core\Text::ends( $screen->base, [ 'reports' ] ) ) // NOTE: contexts displaying under dashboard-page
 			Helper::linkStyleSheetAdmin( 'dashboard' );
 
 		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )

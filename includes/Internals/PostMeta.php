@@ -44,7 +44,7 @@ trait PostMeta
 		if ( ! $this->store_postmeta( $post_id, $data, $this->get_postmeta_key( $field, $prefix ) ) )
 			return FALSE;
 
-		// tries to cleanup old field keys, upon changing in the future
+		// Tries to clean-up old field keys, upon changing in the future
 		foreach ( $this->sanitize_postmeta_field_key( $field ) as $offset => $field_key )
 			if ( $offset ) // skips the current key!
 				delete_post_meta( $post_id, $this->get_postmeta_key( $field_key, $prefix ) );
@@ -52,7 +52,7 @@ trait PostMeta
 		return TRUE;
 	}
 
-	// fetch module meta array
+	// Fetch module meta array
 	// back-comp only
 	public function get_postmeta_legacy( $post_id, $default = [], $metakey = NULL )
 	{
