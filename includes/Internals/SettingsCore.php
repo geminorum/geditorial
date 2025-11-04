@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsCore
@@ -315,7 +316,10 @@ trait SettingsCore
 		if ( ! $this->cuc( $context ) )
 			return $subs;
 
-		return array_merge( $subs, [ $this->module->name => $this->module->title ], $extra );
+		return array_merge( $subs, [ $this->module->name => [
+			'title' => $this->module->title,
+			'icon'  => Services\Icons::get( $this->module->icon ),
+		] ], $extra );
 	}
 
 	public function settings_validate( $options, $context = 'settings' )

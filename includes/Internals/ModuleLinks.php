@@ -26,7 +26,7 @@ trait ModuleLinks
 					'title'   => sprintf(
 						/* translators: `%s`: sub title */
 						_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
-						$title
+						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
 
@@ -40,7 +40,7 @@ trait ModuleLinks
 					'title'   => sprintf(
 						/* translators: `%s`: sub title */
 						_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
-						$title
+						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
 
@@ -54,7 +54,7 @@ trait ModuleLinks
 					'title'   => sprintf(
 						/* translators: `%s`: sub title */
 						_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
-						$title
+						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
 
@@ -68,7 +68,7 @@ trait ModuleLinks
 					'title'   => sprintf(
 						/* translators: `%s`: sub title */
 						_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
-						$title
+						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
 
