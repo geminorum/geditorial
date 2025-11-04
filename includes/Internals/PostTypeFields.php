@@ -213,6 +213,7 @@ trait PostTypeFields
 
 				'metakey'     => $this->get_postmeta_key( $field ), // for referencing
 				'sanitize'    => NULL, // callback
+				'empty'       => NULL, // callback // `NULL` for default / `FALSE` for disable
 				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML input pattern
 				'default'     => NULL, // currently only on rest
@@ -1676,6 +1677,89 @@ trait PostTypeFields
 
 			$this->posttypefields_do_import_field( $data[$field], $args, $post, $override );
 		}
+	}
+
+	protected function posttypefields__do_check_empty_fields( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( empty( $this->cache['fields'][$post->post_type] ) )
+			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $this->cache['fields'][$post->post_type] as $field ) {
+
+			if ( ! array_key_exists( 'empty', $field ) )
+				continue;
+
+			if ( FALSE === $field['empty'] )
+				continue;
+
+			// if ( in_array( $field['name'], [ 'term', 'post_parent' ] ) )
+			// 	continue;
+
+			if ( FALSE === ( $meta = $this->get_postmeta_field( $post->ID, $field['name'] ) ) )
+				continue;
+
+			if ( is_null( $field['empty'] ) && WordPress\Strings::isEmpty( $meta ) )
+				$this->posttypefields_do_import_field( FALSE, $field, $post, TRUE );
+
+			else if ( is_callable( $field['empty'] )
+				&& call_user_func_array( $field['empty'], [ $meta, $field, $post ] ) )
+				$this->posttypefields_do_import_field( FALSE, $field, $post, TRUE );
+		}
+
+		return TRUE;
+	}
+
+	protected function posttypefields__do_convert_legacy_fields( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( empty( $this->cache['fields'][$post->post_type] ) )
+			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
+
+		return $this->clean_postmeta_legacy( $post->ID, $this->cache['fields'][$post->post_type] );
+	}
+
+	protected function posttypefields__do_sanitize_fields( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( empty( $this->cache['fields'][$post->post_type] ) )
+			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $this->cache['fields'][$post->post_type] as $field ) {
+
+			if ( FALSE === ( $meta = $this->get_postmeta_field( $post->ID, $field['name'] ) ) )
+				continue;
+
+			// NOTE: again storing the data will trigger sanitization
+			$this->posttypefields_do_import_field( $meta, $field, $post, TRUE );
+		}
+
+		return TRUE;
+	}
+
+	protected function posttypefields__do_empty_all_metadata( $post )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( empty( $this->cache['fields'][$post->post_type] ) )
+			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
+
+		foreach ( $this->cache['fields'][$post->post_type] as $field ) {
+
+			if ( in_array( $field['name'], [ 'term', 'post_parent' ] ) )
+				continue;
+
+			$this->set_postmeta_field( $post->ID, $field['name'], FALSE );
+		}
+
+		return TRUE;
 	}
 
 	protected function posttypefields__hook_template_newpost()

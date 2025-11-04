@@ -14,6 +14,7 @@ class Units extends gEditorial\Module
 {
 	use Internals\PostMeta;
 	use Internals\PostTypeFields;
+	use Internals\PostTypeFieldsReports;
 
 	protected $priority_init           = 12;
 	protected $priority_current_screen = 12;
@@ -361,5 +362,27 @@ class Units extends gEditorial\Module
 			return $fields[$field_key];
 
 		return [ $field_key ];
+	}
+
+	public function reports_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'reports', $sub );
+				$this->posttypefields_reports_handle_tablelist( $sub );
+
+				WordPress\Redirect::doReferer( 'huh' );
+			}
+
+			gEditorial\Scripts::enqueueThickBox();
+		}
+	}
+
+	protected function render_reports_html( $uri, $sub )
+	{
+		if ( ! $this->posttypefields_reports_render_tablelist( $uri, $sub ) )
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }
