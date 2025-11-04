@@ -58,7 +58,7 @@ class Locations extends gEditorial\Service
 		return FALSE;
 	}
 
-	public static function getSingularLocation( $post = NULL, $context = NULL )
+	public static function getPostLocation( $post = NULL, $context = NULL )
 	{
 		if ( ! gEditorial()->enabled( 'meta' ) )
 			return FALSE;

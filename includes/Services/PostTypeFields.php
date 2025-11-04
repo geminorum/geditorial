@@ -4,9 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\WordPress;
 
 class PostTypeFields extends gEditorial\Service
@@ -28,13 +25,13 @@ class PostTypeFields extends gEditorial\Service
 		$sanitized = Core\Number::translate( $criteria );
 		$calendar  = self::getDefaultCalendar( 'meta' );
 
-		if ( $date = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $calendar ) )
+		if ( $date = gEditorial\Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
 						$meta[$field['metakey']] = $date;
 
-		if ( $datetime = Datetime::makeMySQLFromInput( $sanitized, NULL, $calendar ) )
+		if ( $datetime = gEditorial\Datetime::makeMySQLFromInput( $sanitized, NULL, $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
@@ -388,7 +385,7 @@ class PostTypeFields extends gEditorial\Service
 		if ( ! $date = self::getFieldRaw( $field_key, $post_id, $module, $check, $default ) )
 			return $default;
 
-		if ( ! $datetime = Datetime::prepForMySQL( $date, NULL, $default_calendar ?? self::getDefaultCalendar( $module, FALSE ) ) )
+		if ( ! $datetime = gEditorial\Datetime::prepForMySQL( $date, NULL, $default_calendar ?? self::getDefaultCalendar( $module, FALSE ) ) )
 			return $default;
 
 		return Core\Date::getObject( $datetime );
@@ -415,22 +412,22 @@ class PostTypeFields extends gEditorial\Service
 
 			case 'items':
 			case 'total_items':
-				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'item' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'item' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'pages':
 			case 'total_pages':
-				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'page' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'page' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'volumes':
 			case 'total_volumes':
-				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'volume' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'volume' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'discs':
 			case 'total_discs':
-				return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( 'disc' ) ),
+				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'disc' ) ),
 					Core\Number::format( $raw ?: $value ) );
 		}
 
@@ -449,7 +446,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'hour':
 				case 'member':
 				case 'person':
-					return sprintf( Helper::noopedCount( $raw ?: $value, Info::getNoop( $field['type'] ) ),
+					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( $field['type'] ) ),
 						Core\Number::format( $raw ?: $value ) );
 
 				case 'gram':
@@ -494,7 +491,7 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'postcode':
 
-					if ( FALSE === ( $postcode = Info::fromPostCode( $raw ?: $value ) ) )
+					if ( FALSE === ( $postcode = gEditorial\Info::fromPostCode( $raw ?: $value ) ) )
 						return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $raw ?: $value );
 
 					else
@@ -506,7 +503,7 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'iban':
 
-					if ( FALSE === ( $iban = Info::fromIBAN( $raw ?: $value ) ) )
+					if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $raw ?: $value ) ) )
 						return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $value );
 
 					else
@@ -518,7 +515,7 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'bankcard':
 
-					if ( FALSE === ( $card = Info::fromCardNumber( $raw ?: $value ) ) )
+					if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $raw ?: $value ) ) )
 						return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $value );
 
 					else
@@ -529,13 +526,13 @@ class PostTypeFields extends gEditorial\Service
 						);
 
 				case 'isbn':
-					// return Info::lookupISBN( $raw ?: $value );
+					// return gEditorial\Info::lookupISBN( $raw ?: $value );
 					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
 
 				case 'vin':
-					return Info::lookupVIN( $raw ?: $value );
+					return gEditorial\Info::lookupVIN( $raw ?: $value );
 
 				case 'plate':
 					return sprintf( '<span class="-plate %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
@@ -549,16 +546,16 @@ class PostTypeFields extends gEditorial\Service
 					return Core\Number::localize( $raw ?: $value );
 
 				case 'date':
-					return Datetime::prepForDisplay(
+					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
 						'Y/m/d',
 						self::getDefaultCalendar( $module )
 					);
 
 				case 'datetime':
-					return Datetime::prepForDisplay(
+					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
-						Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i',
+						gEditorial\Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i',
 						self::getDefaultCalendar( $module )
 					);
 
@@ -574,7 +571,10 @@ class PostTypeFields extends gEditorial\Service
 				case 'contact_method':
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
-						: sprintf( '<span title="%s">@%s</span>', empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ), $raw ?: $value );
+						: sprintf( '<span title="%s">@%s</span>',
+							empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ),
+							$raw ?: $value
+						);
 
 				case 'email':
 					return Core\Email::prep( $raw ?: $value, $field, 'admin' );
@@ -592,7 +592,7 @@ class PostTypeFields extends gEditorial\Service
 					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
 
 				case 'latlng':
-					return Info::lookupLatLng( $raw ?: $value );
+					return gEditorial\Info::lookupLatLng( $raw ?: $value );
 
 				case 'text_source':
 				case 'audio_source':
@@ -609,7 +609,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'post':
 				case 'attachment':
 				case 'parent_post':
-					return Helper::getPostTitleRow( (int) $raw ?: $value );
+					return gEditorial\Helper::getPostTitleRow( (int) $raw ?: $value );
 
 				// TODO
 				// case 'posts':
@@ -617,7 +617,7 @@ class PostTypeFields extends gEditorial\Service
 				// case 'term':
 
 				case 'user':
-					return Helper::getAuthorsEditRow(
+					return gEditorial\Helper::getAuthorsEditRow(
 						(int) $raw ?: $value,
 						self::req( 'post_type', 'post' )
 					);
@@ -634,8 +634,8 @@ class PostTypeFields extends gEditorial\Service
 				case 'card':
 				case 'metre':
 
-					return sprintf( Helper::noopedCount( $raw ?: $value,
-						Info::getNoop( $field['data_unit'] ) ),
+					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value,
+						gEditorial\Info::getNoop( $field['data_unit'] ) ),
 						Core\Number::format( $raw ?: $value )
 					);
 			}
@@ -646,7 +646,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
-			case 'contact'    : return Helper::prepContact( $raw ?: $value );
+			case 'contact'    : return gEditorial\Helper::prepContact( $raw ?: $value );
 		}
 
 		// NOTE: fifth priority: last resorts
@@ -689,7 +689,7 @@ class PostTypeFields extends gEditorial\Service
 	{
 		switch ( strtolower( $token ) ) {
 
-			case 'today'   : return Datetime::dateFormat( 'now', empty( $args['context'] ) ? 'default' : $args['context'] );
+			case 'today'   : return gEditorial\Datetime::dateFormat( 'now', empty( $args['context'] ) ? 'default' : $args['context'] );
 			case 'thisyear': return Core\Date::get( 'Y' );
 		}
 

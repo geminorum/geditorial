@@ -152,7 +152,7 @@ class TaxonomyFields extends gEditorial\Service
 		if ( ! $date = self::getFieldRaw( $field_key, $term_id, $module, $check, $default ) )
 			return $default;
 
-		if ( ! $datetime = Datetime::prepForMySQL( $date, NULL, $default_calendar ?? self::getDefaultCalendar( $module, FALSE ) ) )
+		if ( ! $datetime = gEditorial\Datetime::prepForMySQL( $date, NULL, $default_calendar ?? self::getDefaultCalendar( $module, FALSE ) ) )
 			return $default;
 
 		return Core\Date::getObject( $datetime );
