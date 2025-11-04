@@ -63,6 +63,7 @@ class Terms extends gEditorial\Module
 		'url',
 		// 'identity',  // TODO
 		// 'address'    // TODO
+		// 'email'      // TODO
 		// 'plate',     // TODO
 	];
 
@@ -2639,37 +2640,56 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $null;
 
-		$supported = $this->get_supported( $taxonomy );
+		if ( ! $supported = $this->get_supported( $taxonomy ) )
+			return $null;
+
+		$events  = [];
+		$default = $this->default_calendar();
 
 		if ( in_array( 'born', $supported, TRUE )
 			&& in_array( 'dead', $supported, TRUE ) ) {
 
-			$events  = [];
-			$default = $this->default_calendar();
-
-			if ( $born = Services\TaxonomyFields::getFieldDate( 'born', $term->term_id, $this->key, FALSE, $default ) )
-				$events[] = Services\Calendars::getTermEvent( $term, $context, $born );
-
-			if ( $dead = Services\TaxonomyFields::getFieldDate( 'dead', $term->term_id, $this->key, FALSE, $default ) )
-				$events[] = Services\Calendars::getTermEvent( $term, $context, $dead );
+			foreach ( [ 'born', 'dead' ] as $field )
+				if ( $event = $this->_calendars_term_event( $term, $field, $context, $default ) )
+					$events[] = $event;
 
 			return $events;
 
 		} else if ( in_array( 'establish', $supported, TRUE )
 			&& in_array( 'abolish', $supported, TRUE ) ) {
 
-			$events  = [];
-			$default = $this->default_calendar();
-
-			if ( $establish = Services\TaxonomyFields::getFieldDate( 'establish', $term->term_id, $this->key, FALSE, $default ) )
-				$events[] = Services\Calendars::getTermEvent( $term, $context, $establish );
-
-			if ( $abolish = Services\TaxonomyFields::getFieldDate( 'abolish', $term->term_id, $this->key, FALSE, $default ) )
-				$events[] = Services\Calendars::getTermEvent( $term, $context, $abolish );
+			foreach ( [ 'establish', 'abolish' ] as $field )
+				if ( $event = $this->_calendars_term_event( $term, $field, $context, $default ) )
+					$events[] = $event;
 
 			return $events;
 		}
 
-		return FALSE; // will return an empty calendar!
+		return $null;
+	}
+
+	private function _calendars_term_event( $term, $field, $context, $default_calendar = NULL )
+	{
+		$date = Services\TaxonomyFields::getFieldDate(
+			$field,
+			$term->term_id,
+			'terms', // NOTE: better to be hard-coded
+			FALSE,
+			FALSE,
+			$default_calendar ?? $this->default_calendar()
+		);
+
+		if ( $date )
+			return Services\Calendars::getTermEvent(
+				$term,
+				$context,
+				$date,
+				sprintf( '%s (%s)',
+					'{{title}}', // NOTE: see `WordPress\Term::summary()`
+					$this->get_supported_field_title( $field, $term->taxonomy, $term )
+				)
+			);
+
+		return FALSE;
 	}
 }

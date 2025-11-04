@@ -149,6 +149,14 @@ class Calendars extends gEditorial\Service
 		$calendar = new \Eluceo\iCal\Domain\Entity\Calendar( $events ?: [] );
 		$factory  = new \Eluceo\iCal\Presentation\Factory\CalendarFactory();
 
+		// NOTE: WORKING BUT: generates unnecessary data!
+		// @SEE: https://ical.poerschke.nrw/docs/component-timezone
+		// $calendar->addTimeZone(
+		// 	\Eluceo\iCal\Domain\Entity\TimeZone::createFromPhpDateTimeZone(
+		// 		new \DateTimeZone( Core\Date::currentTimeZone() )
+		// 	)
+		// );
+
 		Core\HTTP::headers( [
 			'Content-Type'        => 'text/calendar; charset=utf-8',
 			'Content-Disposition' => sprintf( 'attachment; filename="%s.ics"', $filename ),
@@ -229,66 +237,192 @@ class Calendars extends gEditorial\Service
 	 * @param string $context
 	 * @param mixed $the_date
 	 * @param mixed $the_summary
+	 * @param mixed $the_location
 	 * @return false|object
 	 */
-	public static function getPostEvent( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL )
+	public static function getPostEvent( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL, $the_location = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
+
+		$final = $summary = $vanue = FALSE;
+
+		// @REF: https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.4.7
+		$uid = implode( '-', [
+			WordPress\Site::name(),
+			$post->post_type,
+			$post->ID, $context ?? static::ICAL_DEFAULT_CONTEXT,
+		] );
 
 		/**
 		 * @package `eluceo/ical`
 		 * @source https://github.com/markuspoerschke/iCal
 		 * @docs https://ical.poerschke.nrw/docs
 		 */
-		$uid   = implode( '-', [ WordPress\Site::name(), $post->post_type, $post->ID, $context ?? static::ICAL_DEFAULT_CONTEXT ] );
-		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
-		$event->touch( new \Eluceo\iCal\Domain\ValueObject\Timestamp( Core\Date::getObject( $post->post_modified ) ) );
+		$event = new \Eluceo\iCal\Domain\Entity\Event(
+			new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid )
+		);
 
-		// TODO: firstly check for the date for early bailing!
-		// TODO: properly handling entities in the summary/description like `nbsp`
+		$event->touch(
+			new \Eluceo\iCal\Domain\ValueObject\Timestamp(
+				Core\Date::getObject( $post->post_modified )
+			)
+		);
+
+		// NOTE: firstly check for the date for early bailing!
+		if ( $the_date ) {
+
+			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+
+				$final = $the_date;
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $the_date )
+					)
+				);
+
+			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $post, $context ] ) ) ) {
+
+				$final = $called;
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
+					)
+				);
+
+			} else if ( $the_date ) {
+
+				$final = Core\Date::getObject( $the_date );
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $final )
+					)
+				);
+			}
+
+		} else if ( ( $datestart = PostTypeFields::getFieldDate( 'datestart', $post->ID ) )
+			&& ( $dateend = PostTypeFields::getFieldDate( 'dateend', $post->ID ) ) ) {
+
+			$final = $datestart; // NOTE: only the begingging, LOL!
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
+			);
+
+		} else if ( $datetime = PostTypeFields::getFieldDate( 'datetime', $post->ID ) ) {
+
+			$final = $datetime;
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+					new \Eluceo\iCal\Domain\ValueObject\Date( $datetime )
+				)
+			);
+
+		} else if ( $date = PostTypeFields::getFieldDate( 'date', $post->ID ) ) {
+
+			$final = $date;
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+					new \Eluceo\iCal\Domain\ValueObject\Date( $date )
+				)
+			);
+
+		} else {
+
+			// no extra field data: using the post date
+			$final = Core\Date::getObject( $post->post_date );
+
+			$event->setOccurrence(
+				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+					new \Eluceo\iCal\Domain\ValueObject\Date( $final )
+				)
+			);
+		}
 
 		if ( $the_summary ) {
 
-			if ( is_callable( $the_summary ) && ( $called = call_user_func_array( $the_summary, [ $post, $context ] ) ) ) {
+			if ( is_array( $the_summary ) && is_callable( $the_summary ) ) {
 
-				$event->setSummary( $called );
+				$summary = call_user_func_array( $the_summary, [ $post, $context, $final ] );
 
 			} else if ( Core\Text::has( $the_summary, '{{' ) ) {
 
-				$event->setSummary( Core\Text::replaceTokens( $the_summary, WordPress\Post::summary( $post, $context ) ) );
+				$summary = Core\Text::replaceTokens( $the_summary, WordPress\Post::summary( $post, $context ) );
 
 			} else {
 
-				$event->setSummary( $the_summary );
+				$summary = $the_summary;
 			}
 
 		} else {
 
-			$event->setSummary( WordPress\Post::fullTitle( $post ) );
+			$summary = WordPress\Post::fullTitle( $post );
 		}
 
-		if ( $shortlink = WordPress\Post::shortlink( $post ) )
-			$event->setUrl(
-				new \Eluceo\iCal\Domain\ValueObject\Uri( $shortlink )
-			);
+		if ( $summary )
+			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
+
+		if ( $link = apply_filters( static::BASE.'_calendars_post_url',
+			WordPress\Term::Post( $post ),
+			$post,
+			$context,
+			$final
+		) )
+			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
 		if ( $desc = apply_filters( static::BASE.'_calendars_post_description',
 			WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ),
 			$post,
-			$context
+			$context,
+			$final
 		) )
-			$event->setDescription( $desc );
+			$event->setDescription( Core\Text::prepDescForICAL( $desc ) );
 
 		if ( $email = PostTypeFields::getFieldRaw( 'email_address', $post->ID, 'meta', TRUE ) ) {
 
 			$organizer = new \Eluceo\iCal\Domain\ValueObject\Organizer(
-    			new \Eluceo\iCal\Domain\ValueObject\EmailAddress( $email ) );
+				new \Eluceo\iCal\Domain\ValueObject\EmailAddress( $email ) );
 
 			$event->setOrganizer( $organizer );
 		}
 
-		if ( $venue = Locations::getSingularLocation( $post, $context ) ) {
+		if ( is_null( $the_location ) ) {
+
+			$venue = Locations::getPostLocation( $post, $context );
+
+		} else if ( $the_location ) {
+
+			if ( is_array( $the_location ) && is_callable( $the_location ) ) {
+
+				$venue = call_user_func_array( $the_location, [ $post, $context, $final ] );
+
+			} else if ( Core\Text::has( $the_location, '{{' ) ) {
+
+				$venue = Core\Text::replaceTokens( $the_location, WordPress\Post::summary( $post, $context ) );
+
+			} else if ( ! is_array( $the_location ) ) {
+
+				$venue = [
+					'address' => $the_location,
+					'title'   => '',
+				];
+
+			} else {
+
+				$venue = self::atts( [
+					'address' => '',
+					'title'   => '',
+					'latlng'  => '',
+				], $the_location );
+			}
+		}
+
+		if ( $venue ) {
 
 			$location = new \Eluceo\iCal\Domain\ValueObject\Location( $venue['address'], $venue['title'] );
 
@@ -300,100 +434,51 @@ class Calendars extends gEditorial\Service
 			$event->setLocation( $location );
 		}
 
-		if ( $the_date ) {
-
-			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
-
-				$event->setOccurrence(
-					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date( $the_date )
-					)
-				);
-
-			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $post, $context ] ) ) ) {
-
-				$event->setOccurrence(
-					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
-					)
-				);
-
-			} else if ( $the_date ) {
-
-				$event->setOccurrence(
-					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date(
-							Core\Date::getObject( $the_date )
-						)
-					)
-				);
-			}
-
-		} else if ( ( $datestart = PostTypeFields::getFieldDate( 'datestart', $post->ID ) )
-			&& ( $dateend = PostTypeFields::getFieldDate( 'dateend', $post->ID ) ) ) {
-
-			$event->setOccurrence(
-				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
-			);
-
-		} else if ( $datetime = PostTypeFields::getFieldDate( 'datetime', $post->ID ) ) {
-
-			$event->setOccurrence(
-				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-					new \Eluceo\iCal\Domain\ValueObject\Date( $datetime )
-				)
-			);
-
-		} else if ( $date = PostTypeFields::getFieldDate( 'date', $post->ID ) ) {
-
-			$event->setOccurrence(
-				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-					new \Eluceo\iCal\Domain\ValueObject\Date( $date )
-				)
-			);
-
-		} else {
-
-			// no extra field data: using the post date
-
-			$event->setOccurrence(
-				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-					new \Eluceo\iCal\Domain\ValueObject\Date(
-						Core\Date::getObject( $post->post_date )
-					)
-				)
-			);
-		}
 
 		return $event;
 	}
 
 	/**
 	 * Retrieves calendar events based on a singular term.
+	 * TODO: handle `touch`
 	 *
 	 * @param int|object $term
 	 * @param string $context
 	 * @param mixed $the_date
 	 * @param mixed $the_summary
+	 * @param mixed $the_location
 	 * @return false|object
 	 */
-	public static function getTermEvent( $term, $context = NULL, $the_date = NULL, $the_summary = NULL )
+	public static function getTermEvent( $term, $context = NULL, $the_date = NULL, $the_summary = NULL, $the_location = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
+
+		$final = $summary = $venue = FALSE;
+
+		// @REF: https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.4.7
+		$uid = implode( '-', [
+			WordPress\Site::name(),
+			$term->taxonomy,
+			$term->term_id,
+			$context ?? static::ICAL_DEFAULT_CONTEXT,
+		] );
 
 		/**
 		 * @package `eluceo/ical`
 		 * @source https://github.com/markuspoerschke/iCal
 		 * @docs https://ical.poerschke.nrw/docs
 		 */
-		$uid   = implode( '-', [ WordPress\Site::name(), $term->taxonomy, $term->term_id, $context ?? static::ICAL_DEFAULT_CONTEXT ] );
-		$event = new \Eluceo\iCal\Domain\Entity\Event( new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid ) );
+		$event = new \Eluceo\iCal\Domain\Entity\Event(
+			new \Eluceo\iCal\Domain\ValueObject\UniqueIdentifier( $uid )
+		);
 
 		// NOTE: firstly check for the date for early bailing!
 		if ( $the_date ) {
 
 			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+
+				$final = $the_date;
 
 				$event->setOccurrence(
 					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
@@ -403,6 +488,8 @@ class Calendars extends gEditorial\Service
 
 			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $term, $context ] ) ) ) {
 
+				$final = $called;
+
 				$event->setOccurrence(
 					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
 						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
@@ -411,11 +498,11 @@ class Calendars extends gEditorial\Service
 
 			} else if ( $the_date ) {
 
+				$final = Core\Date::getObject( $the_date );
+
 				$event->setOccurrence(
 					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date(
-							Core\Date::getObject( $the_date )
-						)
+						new \Eluceo\iCal\Domain\ValueObject\Date( $final )
 					)
 				);
 			}
@@ -423,11 +510,15 @@ class Calendars extends gEditorial\Service
 		} else if ( ( $datestart = TaxonomyFields::getFieldDate( 'datestart', $term->term_id ) )
 			&& ( $dateend = TaxonomyFields::getFieldDate( 'dateend', $term->term_id ) ) ) {
 
+			$final = $datestart; // NOTE: only the begingging, LOL!
+
 			$event->setOccurrence(
 				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
 			);
 
 		} else if ( $datetime = TaxonomyFields::getFieldDate( 'datetime', $term->term_id ) ) {
+
+			$final = $datetime;
 
 			$event->setOccurrence(
 				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
@@ -436,6 +527,8 @@ class Calendars extends gEditorial\Service
 			);
 
 		} else if ( $date = TaxonomyFields::getFieldDate( 'date', $term->term_id ) ) {
+
+			$final = $date;
 
 			$event->setOccurrence(
 				new \Eluceo\iCal\Domain\ValueObject\SingleDay(
@@ -450,37 +543,86 @@ class Calendars extends gEditorial\Service
 
 		if ( $the_summary ) {
 
-			if ( is_callable( $the_summary ) && ( $called = call_user_func_array( $the_summary, [ $term, $context ] ) ) ) {
+			if ( is_array( $the_summary ) && is_callable( $the_summary ) ) {
 
-				$event->setSummary( $called );
+				$summary = call_user_func_array( $the_summary, [ $term, $context, $final ] );
 
 			} else if ( Core\Text::has( $the_summary, '{{' ) ) {
 
-				$event->setSummary( Core\Text::replaceTokens( $the_summary, WordPress\Term::summary( $term, $context ) ) );
+				$summary = Core\Text::replaceTokens(
+					$the_summary,
+					WordPress\Term::summary( $term, $context )
+				);
 
 			} else {
 
-				$event->setSummary( $the_summary );
+				$summary = $the_summary;
 			}
 
 		} else {
 
-			$event->setSummary( WordPress\Post::title( $term ) );
+			$summary = WordPress\Post::title( $term );
 		}
 
-		if ( $shortlink = WordPress\Term::shortlink( $term ) )
-			$event->setUrl(
-				new \Eluceo\iCal\Domain\ValueObject\Uri( $shortlink )
-			);
+		if ( $summary )
+			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
+
+		if ( $link = apply_filters( static::BASE.'_calendars_term_url',
+			WordPress\Term::shortlink( $term ),
+			$term,
+			$context,
+			$final
+		) )
+			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
 		if ( $desc = apply_filters( static::BASE.'_calendars_term_description',
 			WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ),
 			$term,
-			$context
+			$context,
+			$final
 		) )
-			$event->setDescription( $desc );
+			$event->setDescription( Core\Text::prepDescForICAL( $desc ) );
 
-		if ( $venue = Locations::getTermLocation( $term, $context ) ) {
+		if ( $email = TaxonomyFields::getFieldRaw( 'email', $term->term_id, 'terms', TRUE ) ) {
+
+			$organizer = new \Eluceo\iCal\Domain\ValueObject\Organizer(
+				new \Eluceo\iCal\Domain\ValueObject\EmailAddress( $email ) );
+
+			$event->setOrganizer( $organizer );
+		}
+
+		if ( is_null( $the_location ) ) {
+
+			$venue = Locations::getTermLocation( $term, $context );
+
+		} else if ( $the_location ) {
+
+			if ( is_array( $the_location ) && is_callable( $the_location ) ) {
+
+				$venue = call_user_func_array( $the_location, [ $term, $context, $final ] );
+
+			} else if ( Core\Text::has( $the_location, '{{' ) ) {
+
+				$venue = Core\Text::replaceTokens( $the_location, WordPress\Term::summary( $term, $context ) );
+
+			} else if ( ! is_array( $the_location ) ) {
+
+				$venue = [
+					'address' => $the_location,
+					'title'   => '',
+				];
+
+			} else {
+
+				$venue = self::atts( [
+					'address' => '',
+					'title'   => '',
+					'latlng'  => '',
+				], $the_location );
+			}
+		}
+
+		if ( $venue ) {
 
 			$location = new \Eluceo\iCal\Domain\ValueObject\Location( $venue['address'], $venue['title'] );
 

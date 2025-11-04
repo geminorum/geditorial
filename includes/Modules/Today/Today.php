@@ -210,6 +210,7 @@ class Today extends gEditorial\Module
 		$this->register_shortcode( 'title_shortcode' );
 		$this->register_shortcode( 'buttons_shortcode' );
 
+		$this->filter( 'calendars_term_url', 4, 12, FALSE, $this->base );
 		$this->filter( 'calendars_post_events', 3, 8, FALSE, $this->base );
 		$this->filter( 'calendars_posttype_events', 3, 8, FALSE, $this->base );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
@@ -1064,6 +1065,20 @@ class Today extends gEditorial\Module
 		}
 
 		return $query;
+	}
+
+	// MAYBE: filter by taxonomy
+	public function calendars_term_url( $link, $term, $context, $datetime )
+	{
+		if ( ! in_array( $context, [ Services\Calendars::ICAL_TIMESPAN_CONTEXT ], TRUE ) )
+			return $link;
+
+		$the_day = gEditorial\Datetime::getTheDay( $datetime, $this->default_calendar() );
+
+		if ( 1 === count( $the_day ) )
+			return $link;
+
+		return ModuleHelper::getTheDayLink( $the_day, NULL, FALSE );
 	}
 
 	public function calendars_post_events( $null, $post, $context )
