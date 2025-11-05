@@ -896,6 +896,7 @@ class Identified extends gEditorial\Module
 
 		$this->action( 'pre_get_posts', 1, 10, 'queryable_types' );
 		$this->action( 'template_redirect', 0, 9, 'queryable_types' );
+		$this->filter_self( 'is_post_viewable', 2, 10, 'queryable_types' );
 	}
 
 	public function pre_get_posts_queryable_types( &$query )
@@ -962,7 +963,10 @@ class Identified extends gEditorial\Module
 					if ( ! $this->is_post_viewable( $post ) )
 						continue;
 
-					WordPress\Redirect::doWP( get_page_link( $post->ID ), 302 );
+					if ( ! $link = WordPress\Post::link( $post, FALSE, WordPress\Status::acceptable( $post->post_type ) ) )
+						continue;
+
+					WordPress\Redirect::doWP( $link, 302 );
 				}
 
 				if ( $tokenized = $this->_get_url_for_identifier_notfound( $type, $sanitized, $supported ) )
@@ -973,6 +977,18 @@ class Identified extends gEditorial\Module
 				WordPress\Theme::set404();
 			}
 		}
+	}
+
+	public function is_post_viewable_queryable_types( $viewable, $post )
+	{
+		if ( $viewable )
+			return $viewable;
+
+		// The type is not viewable so letting go!
+		if ( ! WordPress\PostType::viewable( $post->post_type ) )
+			return $viewable;
+
+		return WordPress\Post::can( $post, 'read_post' );
 	}
 
 	private function _get_url_for_identifier_notfound( $type, $data, $supported = [] )
