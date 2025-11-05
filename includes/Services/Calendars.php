@@ -61,13 +61,13 @@ class Calendars extends gEditorial\Service
 			if ( ! WordPress\PostType::viewable( $object ) )
 				return;
 
-			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) )
+			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $object->name )
 				return;
 
 			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_post_events', NULL, $post, $context ) ) )
 				$events = $filtered;
 
-			else if ( 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
+			else if ( 'post' !== $object->name && 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
 				$events = self::getPairedEvents( $post, $context );
 
 			else
@@ -87,7 +87,7 @@ class Calendars extends gEditorial\Service
 			if ( ! WordPress\PostType::viewable( $posttype ) )
 				return;
 
-			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) )
+			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $posttype )
 				return;
 
 			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_posttype_events', NULL, $posttype->name, $context ) ) )
@@ -113,7 +113,7 @@ class Calendars extends gEditorial\Service
 			if ( ! WordPress\Taxonomy::viewable( $object ) )
 				return;
 
-			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) )
+			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) && 'category' !== $object->name )
 				return;
 
 			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_term_events', NULL, $term, $context ) ) )
