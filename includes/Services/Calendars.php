@@ -79,6 +79,8 @@ class Calendars extends gEditorial\Service
 				$context
 			);
 
+			self::exitICS( $events, $filename, $context );
+
 		} else if ( is_post_type_archive() ) {
 
 			if ( ! $posttype = WordPress\PostType::object( get_queried_object() ) )
@@ -101,6 +103,8 @@ class Calendars extends gEditorial\Service
 				$posttype->name,
 				$context
 			);
+
+			self::exitICS( $events, $filename, $context );
 
 		} else if ( is_tax() || is_tag() || is_category() ) {
 
@@ -127,9 +131,13 @@ class Calendars extends gEditorial\Service
 				$term,
 				$context
 			);
+
+			self::exitICS( $events, $filename, $context );
 		}
 
-		self::exitICS( $events, $filename, $context );
+		do_action( static::BASE.'_calendars_ical_notfound', $context );
+
+		WordPress\Theme::set404();
 	}
 
 	// NOTE: may return empty calendar markup!
