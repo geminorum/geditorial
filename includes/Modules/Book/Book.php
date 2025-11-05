@@ -153,7 +153,6 @@ class Book extends gEditorial\Module
 			'category_taxonomy' => 'publication_category',
 			'serie_taxonomy'    => 'publication_serie',       // TODO: move to new Tax-Module: فروست
 			'location_taxonomy' => 'publication_library',
-			'brand_taxonomy'    => 'publication_publisher',
 			'type_taxonomy'     => 'publication_type',
 			'status_taxonomy'   => 'publication_status',
 			'size_taxonomy'     => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
@@ -178,7 +177,6 @@ class Book extends gEditorial\Module
 				'category_taxonomy' => _n_noop( 'Publication Category', 'Publication Categories', 'geditorial-book' ),
 				'serie_taxonomy'    => _n_noop( 'Serie', 'Series', 'geditorial-book' ),
 				'location_taxonomy' => _n_noop( 'Library', 'Libraries', 'geditorial-book' ),
-				'brand_taxonomy'    => _n_noop( 'Publisher', 'Publishers', 'geditorial-book' ),
 				'type_taxonomy'     => _n_noop( 'Publication Type', 'Publication Types', 'geditorial-book' ),
 				'status_taxonomy'   => _n_noop( 'Publication Status', 'Publication Statuses', 'geditorial-book' ),
 				'size_taxonomy'     => _n_noop( 'Publication Size', 'Publication Sizes', 'geditorial-book' ),
@@ -196,10 +194,6 @@ class Book extends gEditorial\Module
 				'serie_taxonomy' => [
 					'show_option_all'      => _x( 'Serie', 'Label: Show Option All', 'geditorial-book' ),
 					'show_option_no_items' => _x( '(Non-Series)', 'Label: Show Option No Items', 'geditorial-book' ),
-				],
-				'brand_taxonomy' => [
-					'show_option_all'      => _x( 'Publisher', 'Label: Show Option All', 'geditorial-book' ),
-					'show_option_no_items' => _x( '(Without Publisher)', 'Label: Show Option No Items', 'geditorial-book' ),
 				],
 			],
 			'p2p' => [
@@ -487,20 +481,6 @@ class Book extends gEditorial\Module
 			'custom_icon' => 'book-alt',
 		] );
 
-		$this->register_taxonomy( 'brand_taxonomy', [
-			'meta_box_cb'  => NULL,   // default meta box
-			'content_rich' => TRUE,   // even empty shows on sitemaps
-		], 'main_posttype', [
-			'custom_icon'    => 'book',
-			'suitable_metas' => [
-				'image'     => NULL,
-				'url'       => NULL,
-				'tagline'   => NULL,
-				'establish' => NULL,
-				'abolish'   => NULL,
-			],
-		] );
-
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical' => TRUE,
 			'meta_box_cb'  => '__checklist_terms_callback',
@@ -630,7 +610,6 @@ class Book extends gEditorial\Module
 					'serie_taxonomy',
 					'location_taxonomy',
 					'status_taxonomy',
-					'brand_taxonomy',
 				] );
 			}
 

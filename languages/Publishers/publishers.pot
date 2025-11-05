@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Publishers\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Publishers\n"
+"X-Domain: geditorial-publishers\n"
+
+#: Publishers.php:95
+msgid "Publisher"
+msgid_plural "Publishers"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Publishers.php:99
+msgctxt "Label: `extended_label`"
+msgid "Publishers Directory"
+msgstr ""
+
+#: Publishers.php:100
+msgctxt "Label: `menu_name`"
+msgid "Publishers Directory"
+msgstr ""
+
+#: Publishers.php:101
+msgctxt "Label: `show_option_all`"
+msgid "Publishers"
+msgstr ""
+
+#: Publishers.php:102
+msgctxt "Label: `show_option_no_items`"
+msgid "(Undefined)"
+msgstr ""
+
+#: Publishers.php:125
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
