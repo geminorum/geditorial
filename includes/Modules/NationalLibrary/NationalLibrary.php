@@ -441,6 +441,7 @@ class NationalLibrary extends gEditorial\Module
 			return;
 
 		$this->action( 'template_redirect', 0, 9, 'custom_queries' );
+		$this->filter_self( 'is_post_viewable', 2, 10, 'custom_queries' );
 	}
 
 	public function template_redirect_custom_queries()
@@ -466,7 +467,10 @@ class NationalLibrary extends gEditorial\Module
 					if ( ! $this->is_post_viewable( $post ) )
 						return;
 
-					WordPress\Redirect::doWP( get_page_link( $post->ID ), 302 );
+					if ( ! $link = WordPress\Post::link( $post, FALSE, WordPress\Status::acceptable( $post->post_type ) ) )
+						continue;
+
+					WordPress\Redirect::doWP( $link, 302 );
 				}
 
 			} else if ( $fipa = get_query_var( $this->constant( 'fipa_queryvar' ) ) ) {
@@ -481,6 +485,18 @@ class NationalLibrary extends gEditorial\Module
 				WordPress\Redirect::doWP( $url, 302 );
 			}
 		}
+	}
+
+	public function is_post_viewable_custom_queries( $viewable, $post )
+	{
+		if ( $viewable )
+			return $viewable;
+
+		// The type is not viewable so letting go!
+		if ( ! WordPress\PostType::viewable( $post->post_type ) )
+			return $viewable;
+
+		return WordPress\Post::can( $post, 'read_post' );
 	}
 
 	public function lookup_isbn( $url, $isbn )
