@@ -92,6 +92,10 @@ table.base-table-list {
       width: 200px;
     }
 
+    &.-meta-metafields {
+      width: 55%;
+    }
+
     &.-field-meta-program_code,
     &.-field-meta-listing_code,
     &.-field-meta-meeting_code,
@@ -124,6 +128,13 @@ table.base-table-list {
     .field-wrap.-summary {
       ul {
         margin: 0;
+      }
+    }
+
+    &.-meta-metafields {
+      td.-var {
+        text-align: left;
+        width: 95px;
       }
     }
   }

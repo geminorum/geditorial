@@ -20,6 +20,12 @@
     }
   }
 
+  .form-table {
+    &:empty {
+      display: none;
+    }
+  }
+
   p.submit {
     .button-primary:active {
       vertical-align: baseline;
