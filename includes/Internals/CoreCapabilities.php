@@ -2,23 +2,24 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreCapabilities
 {
-
 	/**
 	 * Wraps Role API method for given taxonomy constant
 	 * NOTE: WTF: maybe check if taxonomy exists
 	 *
 	 * @param string $constant
 	 * @param string|array $whats
-	 * @param null|int $user_id
+	 * @param int $user_id
 	 * @param bool $fallback
 	 * @param bool $admins
 	 * @param string $prefix
-	 * @return bool $can
+	 * @return bool
 	 */
 	protected function corecaps_taxonomy_role_can( $constant, $whats, $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
 	{
@@ -38,7 +39,7 @@ trait CoreCapabilities
 	 * @REF: https://make.wordpress.org/core/?p=20496
 	 *
 	 * @param string $constant
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_roles( $constant )
 	{
@@ -125,7 +126,7 @@ trait CoreCapabilities
 	 * @REF: https://make.wordpress.org/core/?p=20496
 	 *
 	 * @param string $constant
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corecaps__handle_taxonomy_metacaps_forced( $constant )
 	{
@@ -178,9 +179,9 @@ trait CoreCapabilities
 	 *
 	 * @param string $constant
 	 * @param bool $locking
-	 * @param null|array $terms
-	 * @param null|string $empty
-	 * @return array $settings
+	 * @param array $terms
+	 * @param string $empty
+	 * @return array
 	 */
 	protected function corecaps_taxonomy_get_roles_settings( $constant, $restricted = FALSE, $locking = FALSE, $terms = NULL, $empty = NULL )
 	{
@@ -195,33 +196,45 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_manage_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Manage Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description' => sprintf( _x( 'Roles that can Manage, Edit and Delete %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
-				'values'      => $roles,
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Roles that can Manage, Edit and Delete %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
+				'values' => $roles,
 			],
 			[
 				'field'       => sprintf( 'taxonomy_%s_assign_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description' => sprintf( _x( 'Roles that can Assign %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
-				'values'      => $roles,
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Roles that can Assign %s.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
+				'values' => $roles,
 			],
 			[
 				'field'       => sprintf( 'taxonomy_%s_reports_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Reports Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description' => sprintf( _x( 'Roles that can see %s Reports.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
-				'values'      => $roles,
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Roles that can see %s Reports.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
+				'values' => $roles,
 			],
 			[
 				'field'       => sprintf( 'taxonomy_%s_tools_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Tools Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description' => sprintf( _x( 'Roles that can use %s Tools.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
-				'values'      => $roles,
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Roles that can use %s Tools.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
+				'values' => $roles,
 			],
 		];
 
@@ -231,16 +244,22 @@ trait CoreCapabilities
 				'field'       => sprintf( 'taxonomy_%s_restricted_roles', $taxonomy ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Restricted Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description' => sprintf( _x( 'Roles that check for %s visibility.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
-				'values'      => $roles,
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Roles that check for %s visibility.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
+				'values' => $roles,
 			];
 
 			$settings[] = [
-				'field'       => sprintf( 'taxonomy_%s_restricted_visibility', $taxonomy ),
-				'type'        => 'select',
-				/* translators: `%s`: taxonomy extended label */
-				'title'       => sprintf( _x( 'Restricted %s', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ), $label ),
+				'field' => sprintf( 'taxonomy_%s_restricted_visibility', $taxonomy ),
+				'type'  => 'select',
+				'title' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Restricted %s', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
+					$label
+				),
 				'description' => _x( 'Handles visibility of each item based on meta values.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
 				'default'     => 'disabled',
 				'values'      => [
@@ -252,11 +271,14 @@ trait CoreCapabilities
 
 		if ( $locking )
 			$settings[] = [
-				'field'        => 'locking_terms',
-				'type'         => 'checkbox-panel',
-				'title'        => _x( 'Locking Terms', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
-				/* translators: `%s`: taxonomy extended label */
-				'description'  => sprintf( _x( 'Selected items will lock editing the post to %s managers.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ), $label ),
+				'field'       => 'locking_terms',
+				'type'        => 'checkbox-panel',
+				'title'       => _x( 'Locking Terms', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
+				'description' => sprintf(
+					/* translators: `%s`: taxonomy extended label */
+					_x( 'Selected items will lock editing the post to %s managers.', 'Internal: CoreCapabilities: Setting Description', 'geditorial-admin' ),
+					$label
+				),
 				'string_empty' => $empty ?? $this->get_taxonomy_label( $constant, 'no_items_available', NULL, 'no_terms' ),
 				'values'       => $terms ?? WordPress\Taxonomy::listTerms( $taxonomy ),
 			];

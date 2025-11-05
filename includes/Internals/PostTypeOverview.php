@@ -2,11 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 trait PostTypeOverview
@@ -37,23 +35,23 @@ trait PostTypeOverview
 		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub, $context ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub, $context ) );
 
 		// TODO: filter by fields
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		if ( ! $this->get_setting( 'override_dates', TRUE ) )
-			$columns['date'] = Tablelist::columnPostDate();
+			$columns['date'] = gEditorial\Tablelist::columnPostDate();
 
-		$columns['title'] = Tablelist::columnPostTitle();
+		$columns['title'] = gEditorial\Tablelist::columnPostTitle();
 
 		foreach ( $taxes as $taxonomy => $object )
 			$columns['tax__'.$taxonomy] = [
 				'title'    => $object->label,
 				'class'    => sprintf( '-field-%s-%s', 'tax', $taxonomy ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object ) {
-					Helper::renderPostTermsEditRow( $row, $object );
+					gEditorial\Helper::renderPostTermsEditRow( $row, $object );
 					return '';
 				},
 			];
@@ -63,11 +61,11 @@ trait PostTypeOverview
 				'title'    => $field['title'],
 				'class'    => sprintf( '-field-%s-%s', 'meta', $field_key ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field, $context ) {
-					return Template::getMetaField( $field_key, [
+					return gEditorial\Template::getMetaField( $field_key, [
 						'id'      => $row->ID,
 						'default' => $field['default'],
 						'context' => $context,
-					], FALSE, 'meta' ) ?: Helper::htmlEmpty();
+					], FALSE, 'meta' ) ?: gEditorial\Helper::htmlEmpty();
 				},
 			];
 
@@ -76,11 +74,11 @@ trait PostTypeOverview
 				'title'    => $unit['title'],
 				'class'    => sprintf( '-field-%s-%s', 'unit', $unit_key ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $unit_key, $unit, $context ) {
-					return Template::getMetaField( $unit_key, [
+					return gEditorial\Template::getMetaField( $unit_key, [
 						'id'      => $row->ID,
 						'default' => $unit['default'],
 						'context' => $context,
-					], FALSE, 'units' ) ?: Helper::htmlEmpty();
+					], FALSE, 'units' ) ?: gEditorial\Helper::htmlEmpty();
 				},
 			];
 
@@ -92,7 +90,7 @@ trait PostTypeOverview
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $context ) {
 
 					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, $context ) ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 
 					return $this->nooped_count( 'paired_item', count( $connected ) );
 				},

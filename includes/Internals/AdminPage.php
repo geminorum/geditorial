@@ -2,9 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait AdminPage
@@ -103,7 +103,7 @@ trait AdminPage
 		if ( $context && method_exists( $this, 'render_'.$context.'_content' ) )
 			$content = [ $this, 'render_'.$context.'_content' ];
 
-		Settings::wrapOpen( $this->key, $context, $this->get_string( 'page_title', $context, 'adminpage', '' ) );
+		gEditorial\Settings::wrapOpen( $this->key, $context, $this->get_string( 'page_title', $context, 'adminpage', '' ) );
 
 			$this->render_adminpage_header_title( NULL, NULL, NULL, $context );
 			$this->render_adminpage_header_nav( $uri, $sub, $subs, $context );
@@ -113,7 +113,7 @@ trait AdminPage
 			$this->render_form_end( $uri, $sub, $action, $context, FALSE );
 			$this->render_adminpage_signature( $uri, $sub, $subs, $context );
 
-		Settings::wrapClose();
+		gEditorial\Settings::wrapClose();
 	}
 
 	// DEFAULT CALLBACK
@@ -171,7 +171,7 @@ trait AdminPage
 		$this->render_default_mainpage( 'subpage', 'update' );
 	}
 
-	// allows for filtering the page title
+	// Allows for filtering the page title
 	// TODO: add compact mode to hide this on user screen setting
 	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
 	{
@@ -188,7 +188,7 @@ trait AdminPage
 			$icon = $this->module->icon;
 
 		if ( $title )
-			Settings::headerTitle( 'adminpage', $title, $links, NULL, $icon );
+			gEditorial\Settings::headerTitle( 'adminpage', $title, $links, NULL, $icon );
 	}
 
 	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )

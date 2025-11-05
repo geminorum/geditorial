@@ -2,8 +2,10 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsTaxonomies
@@ -41,7 +43,7 @@ trait SettingsTaxonomies
 
 		$option = $this->hook_base( $this->module->name );
 
-		Settings::addModuleSection( $option, [
+		gEditorial\Settings::addModuleSection( $option, [
 			'id'            => $option.'_taxonomies',
 			'title'         => _x( 'Taxonomies', 'Internal: SettingsTaxonomies: Section Title', 'geditorial-admin' ),
 			'section_class' => 'taxonomies_option_section',
@@ -60,7 +62,7 @@ trait SettingsTaxonomies
 		if ( $before = $this->get_string( 'taxonomies_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
-		echo Settings::tabPanelOpen();
+		echo gEditorial\Settings::tabPanelOpen();
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
@@ -148,7 +150,7 @@ trait SettingsTaxonomies
 	{
 		return Core\Arraay::prepString(
 			$this->filters( 'taxonomies_excluded',
-				Settings::taxonomiesExcluded( $extra ) ) );
+				gEditorial\Settings::taxonomiesExcluded( $extra ) ) );
 	}
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )

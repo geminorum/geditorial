@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Isbn extends gEditorial\Module
@@ -30,9 +27,10 @@ class Isbn extends gEditorial\Module
 			'keywords' => [
 				'book',
 				'barcode',
-				'woocommerce',
 				'bibliographic',
 				'identifier',
+				'metafield',
+				'woocommerce',
 			],
 		];
 	}
@@ -52,7 +50,7 @@ class Isbn extends gEditorial\Module
 					'title'        => _x( 'Default Post-Type', 'Setting Title', 'geditorial-isbn' ),
 					'description'  => _x( 'Defines the default post-type to create new posts with queried data on front-end.', 'Setting Description', 'geditorial-isbn' ),
 					'string_empty' => _x( 'Define supported post-types first!', 'Setting Description', 'geditorial-isbn' ),
-					'none_title'   => Settings::showOptionNone(),
+					'none_title'   => gEditorial\Settings::showOptionNone(),
 					'values'       => $this->list_posttypes() ?: FALSE,
 				],
 			],
@@ -145,7 +143,7 @@ class Isbn extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded',
-			Settings::posttypesExcluded( $extra + [ WordPress\WooCommerce::PRODUCT_POSTTYPE ] ) );
+			gEditorial\Settings::posttypesExcluded( $extra + [ WordPress\WooCommerce::PRODUCT_POSTTYPE ] ) );
 	}
 
 	public function meta_init()
@@ -211,7 +209,7 @@ class Isbn extends gEditorial\Module
 		$html = '';
 
 		if ( $args['raw'] && $data = Core\ISBN::sanitize( $args['raw'] ) )
-			$html = Info::lookupISBN( $data );
+			$html = gEditorial\Info::lookupISBN( $data );
 
 		// TODO: support Woo Commerce
 
@@ -221,7 +219,7 @@ class Isbn extends gEditorial\Module
 		if ( ! $html )
 			return $content;
 
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 
 	private function _get_main_isbn_metakey( $posttype, $fallback = FALSE )
@@ -466,7 +464,7 @@ class Isbn extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoImportsAvailable();
+			gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
 	}

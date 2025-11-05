@@ -2,13 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PostMeta
 {
-
 	public function get_postmeta_key( $field, $prefix = NULL )
 	{
 		return sprintf( '_%s_%s', ( is_null( $prefix ) ? $this->key : $prefix ), $field );

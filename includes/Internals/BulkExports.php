@@ -2,17 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Parser;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 trait BulkExports
 {
-
 	protected function exports_get_export_buttons( $reference, $context, $target = NULL )
 	{
 		$html = '';
@@ -238,10 +234,10 @@ trait BulkExports
 			}
 
 			foreach ( $fields as $field => $field_title )
-				$row[] = Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE, 'meta' ) ?: '';
+				$row[] = gEditorial\Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE, 'meta' ) ?: '';
 
 			foreach ( $units as $unit => $unit_title )
-				$row[] = Template::getMetaField( $unit, [ 'id' => $post, 'context' => 'export' ], FALSE, 'units' ) ?: '';
+				$row[] = gEditorial\Template::getMetaField( $unit, [ 'id' => $post, 'context' => 'export' ], FALSE, 'units' ) ?: '';
 
 			$saved = get_post_meta( $post->ID );
 
@@ -279,7 +275,7 @@ trait BulkExports
 
 				foreach ( $props as $prop => $prop_title )
 					$headers[$prop] = $this->exports_generate_column_header( $headers,
-						$prop_title ?? Info::getPosttypePropTitle( $prop, $posttypes[0], 'export' ) ?: $prop );
+						$prop_title ?? gEditorial\Info::getPosttypePropTitle( $prop, $posttypes[0], 'export' ) ?: $prop );
 
 				foreach ( $fields as $field => $field_title )
 					$headers['field__'.$field] = $this->exports_generate_column_header( $headers,
@@ -313,7 +309,7 @@ trait BulkExports
 				else
 					$sheet_title = WordPress\Post::title( $reference, NULL, FALSE );
 
-				return Parser::toXLSX_Legacy(
+				return gEditorial\Parser::toXLSX_Legacy(
 					$data,
 					array_values( $headers ),
 					$sheet_title,
@@ -326,8 +322,8 @@ trait BulkExports
 
 	protected function exports_generate_date_value( $data, $prop )
 	{
-		return Datetime::prepForInput( $data,
-			Datetime::isDateOnly( $data ) ? 'Y/n/j' : 'Y/n/j H:i',
+		return gEditorial\Datetime::prepForInput( $data,
+			gEditorial\Datetime::isDateOnly( $data ) ? 'Y/n/j' : 'Y/n/j H:i',
 			$this->default_calendar()
 		);
 	}

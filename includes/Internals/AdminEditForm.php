@@ -2,9 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 trait AdminEditForm
@@ -12,7 +12,7 @@ trait AdminEditForm
 	protected function _hook_editform_meta_summary( $fields = NULL, $priority = NULL )
 	{
 		add_action( 'edit_form_after_title', function ( $post ) use ( $fields ) {
-			echo $this->wrap( Template::metaSummary( [
+			echo $this->wrap( gEditorial\Template::metaSummary( [
 				'echo'   => FALSE,
 				'id'     => $post->ID,
 				'type'   => $post->post_type,

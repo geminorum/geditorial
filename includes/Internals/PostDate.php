@@ -4,16 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 trait PostDate
 {
-
 	public static $postdate__action_override_dates = 'postdate_do_override_dates';
 
 	protected function postdate__render_before_override_dates( $supported, $metakeys, $uri = '', $sub = NULL, $context = 'tools' )
@@ -29,10 +24,10 @@ trait PostDate
 	public function postdate__do_override_dates( $supported, $metakeys, $limit = 25 )
 	{
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! in_array( $posttype, (array) $supported, TRUE ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources( $limit );
 
@@ -51,12 +46,12 @@ trait PostDate
 				'compare' => 'EXISTS'
 			];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return Settings::processingAllDone();
+			return gEditorial\Settings::processingAllDone();
 
-		echo Settings::processingListOpen();
+		echo gEditorial\Settings::processingListOpen();
 
 		foreach ( $posts as $post )
 			$this->postdate__post_override_date( $post, $metakeys, TRUE );
@@ -76,12 +71,12 @@ trait PostDate
 			return TRUE;
 
 		if ( empty( $data ) || ! is_array( $data ) )
-			return Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+			return gEditorial\Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$updated = wp_update_post( array_merge( $data, [ 'ID' => $post->ID ] ) );
 
 		if ( ! $updated || self::isError( $updated ) )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: post date, `%2$s`: post title */
 				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $data['post_date'] ),
@@ -90,25 +85,25 @@ trait PostDate
 
 		$this->actions( 'postdate_after_post_override_date', $updated, $data['post_date'], $metakeys, $verbose );
 
-		return Settings::processingListItem( $verbose,
+		return gEditorial\Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: post date, `%2$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
-				Core\HTML::code( Datetime::prepForDisplay( $data['post_date'], NULL, $this->default_calendar() ) ),
+				Core\HTML::code( gEditorial\Datetime::prepForDisplay( $data['post_date'], NULL, $this->default_calendar() ) ),
 				WordPress\Post::title( $post ),
 			], TRUE );
 	}
 
 	public function postdate__render_card_override_dates( $uri = '', $sub = NULL, $supported_list = NULL, $card_title = NULL )
 	{
-		echo Settings::toolboxCardOpen( $card_title ?? _x( 'Post-date by Meta-fields', 'Internal: PostDate: Card Title', 'geditorial-admin' ) );
+		echo gEditorial\Settings::toolboxCardOpen( $card_title ?? _x( 'Post-date by Meta-fields', 'Internal: PostDate: Card Title', 'geditorial-admin' ) );
 
 			if ( is_null( $supported_list ) )
-				Settings::submitButton( self::$postdate__action_override_dates,
+				gEditorial\Settings::submitButton( self::$postdate__action_override_dates,
 					_x( 'Sync Dates', 'Internal: PostDate: Button', 'geditorial-admin' ), 'small' );
 
 			else if ( is_array( $supported_list ) && Core\Arraay::isAssoc( $supported_list ) )
 				foreach ( $supported_list as $posttype => $label )
-					Settings::submitButton( add_query_arg( [
+					gEditorial\Settings::submitButton( add_query_arg( [
 						'sub'    => $sub,
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
@@ -120,7 +115,7 @@ trait PostDate
 
 			else if ( is_array( $supported_list ) )
 				foreach ( $supported_list as $posttype )
-					Settings::submitButton( add_query_arg( [
+					gEditorial\Settings::submitButton( add_query_arg( [
 						'sub'    => $sub,
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
@@ -131,7 +126,7 @@ trait PostDate
 					), 'link-small' );
 
 			else if ( is_string( $supported_list ) )
-				Settings::submitButton( add_query_arg( [
+				gEditorial\Settings::submitButton( add_query_arg( [
 					'sub'    => $sub,
 					'action' => self::$postdate__action_override_dates,
 					'type'   => $supported_list,
@@ -147,7 +142,7 @@ trait PostDate
 	public function postdate__get_post_data_for_latechores( $post, $metakeys, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+			return gEditorial\Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		$date = FALSE;
 
@@ -156,12 +151,12 @@ trait PostDate
 				break;
 
 		if ( ! $date )
-			return Settings::processingListItem( $verbose, gEditorial\Plugin::na() );
+			return gEditorial\Settings::processingListItem( $verbose, gEditorial\Plugin::na() );
 
-		$datetime = Datetime::prepForMySQL( $date, NULL, $this->default_calendar() );
+		$datetime = gEditorial\Datetime::prepForMySQL( $date, NULL, $this->default_calendar() );
 
 		if ( ! $datetime && $verbose )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: date-time, `%2$s`: post title */
 				_x( 'Date data (%1$s) is not valid for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $date ),
@@ -172,7 +167,7 @@ trait PostDate
 			return $this->log( 'FAILED', sprintf( 'after-care process of #%s: date is not valid: %s', $post->ID, $date ), [ $post->ID, $date ] );
 
 		if ( $datetime === $post->post_date )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: date-time, `%2$s`: post title */
 				_x( 'Date data (%1$s) already is set for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $datetime ),

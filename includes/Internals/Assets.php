@@ -2,7 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait Assets
@@ -82,9 +84,9 @@ trait Assets
 		return $handle;
 	}
 
-	// combined global styles
 	// CAUTION: front only
-	// TODO: also we need api for module specified css
+	// NOTE: combined global styles
+	// TODO: also we need API for module specified CSS
 	public function enqueue_styles()
 	{
 		gEditorial()->enqueue_styles();

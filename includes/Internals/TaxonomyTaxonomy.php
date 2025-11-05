@@ -2,10 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 // TODO: Network Taxonomy Bulk Action: assign target taxonomy to selected terms (via secondary input)
@@ -71,7 +70,7 @@ trait TaxonomyTaxonomy
 
 			add_action( $screen->taxonomy.'_add_form_fields',
 				function ( $taxonomy ) use ( $target ) {
-					Settings::fieldType(
+					gEditorial\Settings::fieldType(
 						Services\TaxonomyTaxonomy::getSettingsFieldArgs( $target, 'addnew' ),
 						$this->scripts
 					);
@@ -87,7 +86,7 @@ trait TaxonomyTaxonomy
 						if ( $this->classs( $target ) !== $column )
 							return;
 
-						Settings::fieldType(
+						gEditorial\Settings::fieldType(
 							Services\TaxonomyTaxonomy::getSettingsFieldArgs( $target, 'quickedit' ),
 							$this->scripts
 						);
@@ -103,7 +102,7 @@ trait TaxonomyTaxonomy
 
 			add_action( $screen->taxonomy.'_edit_form_fields',
 				function ( $term, $taxonomy ) use ( $target ) {
-					Settings::fieldType(
+					gEditorial\Settings::fieldType(
 						Services\TaxonomyTaxonomy::getSettingsFieldArgs( $target, 'editterm', $term ),
 						$this->scripts
 					);
@@ -145,7 +144,7 @@ trait TaxonomyTaxonomy
 
 				if ( empty( $terms ) || self::isError( $terms ) ) {
 
-					echo Helper::htmlEmpty();
+					echo gEditorial\Helper::htmlEmpty();
 					$this->hidden( '0', [
 						'name'         => $name,
 						'target'       => 'quickedit',

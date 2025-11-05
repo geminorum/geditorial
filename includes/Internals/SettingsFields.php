@@ -2,13 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsFields
 {
-
 	public function register_settings_fields_option( $section_title = NULL )
 	{
 		if ( is_null( $section_title ) )
@@ -24,7 +24,7 @@ trait SettingsFields
 
 			if ( count( $fields ) ) {
 
-				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'section_class' => 'fields_option_section fields_option-'.$posttype,
@@ -64,7 +64,7 @@ trait SettingsFields
 
 			} else if ( isset( $all[$posttype] ) ) {
 
-				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
@@ -128,7 +128,7 @@ trait SettingsFields
 
 	public function settings_fields_option_none( $args )
 	{
-		Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
+		gEditorial\Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
 	}
 
 	public function posttype_fields_all( $posttype = 'post', $module = NULL )

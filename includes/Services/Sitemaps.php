@@ -22,9 +22,9 @@ class Sitemaps extends gEditorial\Service
 	 *
 	 * NOTE: also see: `hook_taxonomy_sitemap_show_empty`
 	 *
-	 * @param  array  $args
-	 * @param  string $taxonomy
-	 * @return array  $filtered
+	 * @param array $args
+	 * @param string $taxonomy
+	 * @return array
 	 */
 	public static function taxonomies_query_args( $args, $taxonomy )
 	{

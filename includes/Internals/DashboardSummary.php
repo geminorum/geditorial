@@ -2,15 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait DashboardSummary
 {
-
 	// USAGE: `$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );`
 	public function render_widget_dashboard_summary( $object, $box )
 	{
@@ -37,7 +35,7 @@ trait DashboardSummary
 
 			} else {
 
-				Info::renderNoReportsAvailable();
+				gEditorial\Info::renderNoReportsAvailable();
 			}
 		}
 
@@ -110,7 +108,7 @@ trait DashboardSummary
 
 			} else {
 
-				Info::renderNoReportsAvailable();
+				gEditorial\Info::renderNoReportsAvailable();
 			}
 		}
 
@@ -204,7 +202,7 @@ trait DashboardSummary
 
 					if ( count( $posttypes ) > 1 )
 						$text = vsprintf( '<b>%3$s</b> %1$s: <b title="%4$s">%2$s</b>', [
-							Helper::noopedCount( $count, $nooped[$type] ),
+							gEditorial\Helper::noopedCount( $count, $nooped[$type] ),
 							WordPress\Strings::trimChars( $name, 35 ),
 							Core\Number::format( $count ),
 							$name,
@@ -269,7 +267,7 @@ trait DashboardSummary
 
 				if ( count( $posttypes ) > 1 )
 					$text = vsprintf( '<b>%3$s</b> %1$s %2$s', [
-						Helper::noopedCount( $count, $nooped[$type] ),
+						gEditorial\Helper::noopedCount( $count, $nooped[$type] ),
 						$none,
 						Core\Number::format( $count ),
 					] );

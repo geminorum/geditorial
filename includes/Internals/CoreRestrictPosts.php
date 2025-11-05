@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Listtable;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreRestrictPosts
 {
-
 	/**
 	 * Hooks corresponding actions/filters for `restrict_manage_posts` of WordPress.
 	 * NOTE: enabled by default, use `admin_restrict` setting for disable
@@ -19,7 +18,7 @@ trait CoreRestrictPosts
 	 * @param string|array $constants
 	 * @param null|bool|string $check_role
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_screen_taxonomies( $constants, $check_role = FALSE, $priority = 10 )
 	{
@@ -46,7 +45,7 @@ trait CoreRestrictPosts
 
 				foreach ( $taxonomies as $taxonomy )
 					if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-						Listtable::restrictByTaxonomy( $taxonomy );
+						gEditorial\Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
 
@@ -54,7 +53,7 @@ trait CoreRestrictPosts
 			static function ( &$query ) use ( $taxonomies ) {
 
 				foreach ( $taxonomies as $taxonomy )
-					Listtable::parseQueryTaxonomy( $query, $taxonomy );
+					gEditorial\Listtable::parseQueryTaxonomy( $query, $taxonomy );
 
 			}, 12, 1 );
 
@@ -68,7 +67,7 @@ trait CoreRestrictPosts
 	 *
 	 * @param null|bool|string $check_role
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_screen_authors( $check_role = FALSE, $priority = 12 )
 	{
@@ -83,7 +82,7 @@ trait CoreRestrictPosts
 		add_action( 'restrict_manage_posts',
 			static function ( $posttype, $which ) {
 
-				Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0 );
+				gEditorial\Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0 );
 
 			}, $priority, 2 );
 
@@ -98,7 +97,7 @@ trait CoreRestrictPosts
 	 * @param string $posttype
 	 * @param string|array $constants
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_sortby_taxonomies( $posttype, $constants, $priority = 10 )
 	{
@@ -129,7 +128,7 @@ trait CoreRestrictPosts
 
 				foreach ( $taxonomies as $taxonomy )
 					if ( sprintf( 'taxonomy-%s', $taxonomy ) === $wp_query->query['orderby'] )
-						return Listtable::orderClausesByTaxonomy( $pieces, $wp_query, $taxonomy );
+						return gEditorial\Listtable::orderClausesByTaxonomy( $pieces, $wp_query, $taxonomy );
 
 				return $pieces;
 			}, 10, 2 );
@@ -141,8 +140,8 @@ trait CoreRestrictPosts
 	 * Hooks post parent into core query.
 	 *
 	 * @param string $constant
-	 * @param null|string $query_var
-	 * @return bool $hooked
+	 * @param string $query_var
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_parsequery_for_post_parent( $constant, $query_var = NULL )
 	{
@@ -170,11 +169,11 @@ trait CoreRestrictPosts
 	 * NOTE: the post children are from a different post-type
 	 *
 	 * @param string $constant
-	 * @param null|string $icon
-	 * @param null|string $module
-	 * @param null|false|string $empty
+	 * @param string $icon
+	 * @param string $module
+	 * @param false|string $empty
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_columnrow_for_post_children( $parent_type, $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
@@ -223,11 +222,11 @@ trait CoreRestrictPosts
 	 * NOTE: the parent post is from a different post-type
 	 *
 	 * @param string $posttype
-	 * @param null|string $icon
-	 * @param null|string $module
-	 * @param null|false|string $empty
+	 * @param string $icon
+	 * @param string $module
+	 * @param false|string $empty
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function corerestrictposts__hook_columnrow_for_parent_post( $posttype, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
@@ -245,7 +244,7 @@ trait CoreRestrictPosts
 				printf( $before, '-parent-post -type-'.$posttype.( $post->post_parent ? ' -has-parent-post' : ' -has-not-parent-post' ) );
 
 					if ( $post->post_parent )
-						echo $edit.Helper::getPostTitleRow( $post->post_parent, $can ? 'edit' : FALSE, FALSE, 'posttype' );
+						echo $edit.gEditorial\Helper::getPostTitleRow( $post->post_parent, $can ? 'edit' : FALSE, FALSE, 'posttype' );
 
 					else
 						echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );

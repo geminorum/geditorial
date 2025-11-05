@@ -357,7 +357,7 @@ class Workflow extends gEditorial\Module
 		if ( ! $statuses[$post_status->name]->viewable )
 			return $is_viewable;
 
-		// NOTE: `0`: Undefined, `1`: Nonviewable, `2`: Viewable
+		// NOTE: `0`: Undefined, `1`: None-Viewable, `2`: Viewable
 		return '2' == $statuses[$post_status->name]->viewable;
 	}
 

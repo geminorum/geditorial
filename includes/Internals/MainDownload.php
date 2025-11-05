@@ -2,8 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait MainDownload
@@ -13,10 +14,10 @@ trait MainDownload
 	{
 		$link = $url = $attachment = FALSE;
 
-		if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) )
+		if ( $url = gEditorial\Template::getMetaFieldRaw( 'main_download_url', $post->ID ) )
 			$link = $url;
 
-		else if ( $attachment = Template::getMetaFieldRaw( 'main_download_id', $post->ID ) )
+		else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) )
 			$link = wp_get_attachment_url( (int) $attachment );
 
 		return $this->filters( 'main_download', $link, $post, $url, $attachment );
@@ -30,12 +31,12 @@ trait MainDownload
 		$verify   = ! WordPress\IsIt::dev();
 		$filesize = $httpstatus = FALSE;
 
-		if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
+		if ( $url = gEditorial\Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
 			$filesize   = Core\HTTP::getSize( $url, $verify );
 			$httpstatus = Core\HTTP::getStatus( $url, $verify );
 
-		} else if ( $attachment = Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
+		} else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
 
 			if ( $url = wp_get_attachment_url( (int) $attachment ) )
 				$httpstatus = Core\HTTP::getStatus( $url, $verify );
@@ -76,14 +77,14 @@ trait MainDownload
 
 			$filesize = $meta;
 
-		} else if ( $url = Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
+		} else if ( $url = gEditorial\Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
 			$filesize = Core\HTTP::getSize( $url, $verify );
 
 			if ( $filesize && $filesize > 0 )
 				update_post_meta( $post->ID, $metakey, $filesize );
 
-		} else if ( $attachment = Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
+		} else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
 
 			if ( $meta = wp_get_attachment_metadata( (int) $attachment ) ) {
 

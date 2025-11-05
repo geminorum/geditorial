@@ -151,11 +151,11 @@ class Book extends gEditorial\Module
 			'main_posttype_p2p' => 'related_publications',
 			'main_paired'       => 'related_publication',
 			'category_taxonomy' => 'publication_category',
-			'serie_taxonomy'    => 'publication_serie',       // TODO: move to new Tax-Module: فروست
+			'serie_taxonomy'    => 'publication_serie',      // TODO: move to new Tax-Module: فروست
 			'location_taxonomy' => 'publication_library',
 			'type_taxonomy'     => 'publication_type',
 			'status_taxonomy'   => 'publication_status',
-			'size_taxonomy'     => 'publication_size',        // TODO: move to `Units` Module: `book_cover`
+			'size_taxonomy'     => 'publication_size',       // TODO: move to `Units` Module: `book_cover`
 
 			'main_shortcode'  => 'publication',
 			'p2p_shortcode'   => 'publication-p2p',

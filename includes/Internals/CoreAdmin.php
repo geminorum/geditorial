@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
@@ -45,9 +46,9 @@ trait CoreAdmin
 	/**
 	 * Hooks filter to unset given columns.
 	 *
-	 * @param  string     $posttype
-	 * @param  null|array $list
-	 * @return bool       $hooked
+	 * @param string $posttype
+	 * @param array $list
+	 * @return bool
 	 */
 	protected function coreadmin__unset_columns( $posttype, $list = NULL )
 	{
@@ -67,9 +68,9 @@ trait CoreAdmin
 	/**
 	 * Hooks `views_{$this->screen->id}` filter to unset given views.
 	 *
-	 * @param  string     $posttype
-	 * @param  null|array $list
-	 * @return bool       $hooked
+	 * @param string $posttype
+	 * @param array $list
+	 * @return bool
 	 */
 	protected function coreadmin__unset_views( $posttype, $list = NULL )
 	{

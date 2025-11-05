@@ -2,11 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Ajax;
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 trait QuickPosts
@@ -144,7 +142,7 @@ trait QuickPosts
 		}
 
 		if ( $object->hierarchical )
-			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
+			gEditorial\MetaBox::fieldPostParent( $post, FALSE, 'parent' );
 
 		// OLD HOOK: `{$base}_{$module}_newpost_content`
 		do_action( $this->hook_base( 'template', 'newpost', 'aftercontent' ),
@@ -163,7 +161,7 @@ trait QuickPosts
 		echo $this->wrap_open_buttons();
 
 			echo '<span class="-message"></span>';
-			echo Ajax::spinner();
+			echo gEditorial\Ajax::spinner();
 
 			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),
 				$posttype,
@@ -197,10 +195,11 @@ trait QuickPosts
 						// FIXME: move `recents` to pre-configured action
 						// FIXME: correct the selectors
 
-						/* translators: `%s`: post-type singular name */
-						$hint = sprintf( _x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ), $object->labels->singular_name );
-
-						Template::renderRecentByPosttype( $object, '#', NULL, $hint, [
+						gEditorial\Template::renderRecentByPosttype( $object, '#', NULL, sprintf(
+							/* translators: `%s`: post-type singular name */
+							_x( 'Or select this %s', 'Module: Recents', 'geditorial-admin' ),
+							$object->labels->singular_name
+						), [
 							'post_status' => WordPress\Status::acceptable( $posttype, 'recent', [ 'pending' ] ),
 						] );
 
@@ -257,7 +256,7 @@ trait QuickPosts
 		if ( ! current_user_can( $object->cap->create_posts ) )
 			return FALSE;
 
-		// for inline only
+		// NOTE: for inline only
 		// modal id must be: `{$base}-{$module}-thickbox-{$context}`
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
@@ -268,10 +267,10 @@ trait QuickPosts
 		$name  = $object->labels->singular_name;
 
 		if ( $inline )
-			// WTF: thickbox bug: does not process the arg after `TB_inline`!
+			// NOTE: WTF: thick-box bug: does not process the arg after `TB_inline`!
 			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
 		else
-			// WTF: thickbox bug: does not pass the args after `TB_iframe`!
+			// NOTE: WTF: thick-box bug: does not pass the args after `TB_iframe`!
 			$link = $this->get_adminpage_url( TRUE, array_merge( [
 				'type'     => $posttype,
 				'linked'   => $post->ID,

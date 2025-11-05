@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 trait TemplatePostType
@@ -217,7 +216,7 @@ trait TemplatePostType
 		// TODO: add widget area
 
 		if ( is_post_type_archive() )
-			return ShortCode::listPosts( 'assigned',
+			return gEditorial\ShortCode::listPosts( 'assigned',
 				$posttype,
 				'',
 				[

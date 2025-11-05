@@ -2,13 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Listtable;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PairedAdmin
 {
-
 	/**
 	 * Hooks corresponding actions/filters for `restrict_manage_posts` of WordPress.
 	 * NOTE: enabled by default, use `admin_restrict` setting for disable
@@ -17,7 +17,7 @@ trait PairedAdmin
 	 *
 	 * @param null|bool|string $check_role
 	 * @param int $priority
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function paired__hook_screen_restrictposts( $check_role = FALSE, $priority = 10 )
 	{
@@ -45,14 +45,14 @@ trait PairedAdmin
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-					Listtable::restrictByTaxonomy( $taxonomy );
+					gEditorial\Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
 
 		add_action( 'parse_query',
 			function ( &$query ) use ( $constants ) {
 
-				Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
+				gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
 
 			}, 12, 1 );
 

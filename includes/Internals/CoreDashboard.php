@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreDashboard
 {
-
 	protected function dashboard_glance_post( $constant, $roles = NULL )
 	{
 		if ( ! $this->role_can( $roles ) )
@@ -17,7 +16,7 @@ trait CoreDashboard
 
 		$posttype = $this->constant( $constant );
 
-		return MetaBox::glancePosttype(
+		return gEditorial\MetaBox::glancePosttype(
 			$posttype,
 			Services\CustomPostType::getLabel( $posttype, 'noop' ),
 			'-'.$this->slug()
@@ -31,7 +30,7 @@ trait CoreDashboard
 
 		$taxonomy = $this->constant( $constant );
 
-		return MetaBox::glanceTaxonomy(
+		return gEditorial\MetaBox::glanceTaxonomy(
 			$taxonomy,
 			Services\CustomTaxonomy::getLabel( $taxonomy, 'noop' ),
 			'-'.$this->slug()
@@ -62,20 +61,20 @@ trait CoreDashboard
 
 		if ( is_array( $action ) ) {
 
-			$title.= MetaBox::getTitleAction( $action );
+			$title.= gEditorial\MetaBox::getTitleAction( $action );
 
 		} else if ( $action ) {
 
 			switch ( $action ) {
 
 				case 'refresh':
-					$title.= MetaBox::titleActionRefresh( $hook );
+					$title.= gEditorial\MetaBox::titleActionRefresh( $hook );
 					break;
 
 				case 'info' :
 
 					if ( method_exists( $this, 'get_widget_'.$hook.'_info' ) )
-						$title.= MetaBox::titleActionInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
+						$title.= gEditorial\MetaBox::titleActionInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
 
 					break;
 

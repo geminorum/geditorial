@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait PairedAssignment
@@ -130,17 +128,17 @@ trait PairedAssignment
 		];
 
 		return $this->enqueue_asset_js( $asset, FALSE, [
-			Scripts::enqueueApp( $args['app'] )
+			gEditorial\Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
 
 	protected function paired_assignment__do_render_iframe_content( $context = NULL, $assign_template = NULL, $reports_template = NULL, $custom_app = NULL )
 	{
 		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		$target = self::req( 'target', 'mainapp' );
 
@@ -149,29 +147,29 @@ trait PairedAssignment
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Assignment Dock for %s', 'Internal: PairedAssignment: Page Title', 'geditorial-admin' );
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
-				Scripts::renderAppMounter( $custom_app ?? ( defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock' ), $this->key );
-				Scripts::noScriptMessage();
+				gEditorial\Scripts::renderAppMounter( $custom_app ?? ( defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock' ), $this->key );
+				gEditorial\Scripts::noScriptMessage();
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Assignment Overview for %s', 'Internal: PairedAssignment: Page Title', 'geditorial-admin' );
 
-			Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				// TODO
 
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 
 		} else {
 
-			Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 		}
 	}
 

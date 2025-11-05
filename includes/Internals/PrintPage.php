@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PrintPage
 {
-
 	// USAGE: `$print = $this->_hook_submenu_adminpage( 'printpage' );`
 	public function render_printpage_adminpage()
 	{
@@ -43,12 +42,12 @@ trait PrintPage
 		$rtl  = is_rtl();
 		$lang = get_bloginfo( 'language', 'display' );
 
-		if ( $header = Helper::getLayout( 'print.header' ) )
+		if ( $header = gEditorial\Helper::getLayout( 'print.header' ) )
 			require_once $header; // to expose scope vars
 
 		$this->actions( 'printpage_render_contents', $profile );
 
-		if ( $footer = Helper::getLayout( 'print.footer' ) )
+		if ( $footer = gEditorial\Helper::getLayout( 'print.footer' ) )
 			require_once $footer; // to expose scope vars
 
 		exit; // avoiding query monitor output

@@ -2,7 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreMenuPage
@@ -105,8 +107,8 @@ trait CoreMenuPage
 	 * @SEE: https://gist.github.com/luistar15/333a25888e8804fd17490815a74ecc21
 	 * @SEE: https://github.com/WordPress/wordpress-develop/pull/3024
 	 *
-	 * @param  string|object $posttype
-	 * @return bool $hooked
+	 * @param string|object $posttype
+	 * @return bool
 	 */
 	protected function _hack_adminmenu_no_create_posts( $posttype )
 	{

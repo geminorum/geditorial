@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
@@ -84,11 +85,11 @@ trait PairedRowActions
 
 			case 'cross-terms':
 
-				// bail if no target given
+				// Bail if no target given
 				if ( empty( $target ) )
 					return FALSE;
 
-				// bail if post with same slug exists
+				// Bail if post with same slug exists
 				if ( WordPress\Post::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
@@ -108,7 +109,7 @@ trait PairedRowActions
 
 				$object_ids = Core\Arraay::prepNumeral( array_intersect( ...$object_lists ) );
 
-				// bail if cross term results are ampty
+				// Bail if cross term results are empty
 				if ( empty( $object_ids ) )
 					return FALSE;
 
@@ -138,11 +139,11 @@ trait PairedRowActions
 
 			case 'union-terms':
 
-				// bail if no target given
+				// Bail if no target given
 				if ( empty( $target ) )
 					return FALSE;
 
-				// bail if post with same slug exists
+				// Bail if post with same slug exists
 				if ( WordPress\Post::getIDbySlug( sanitize_title( $target ), $paired_posttype ) )
 					return FALSE;
 
@@ -162,7 +163,7 @@ trait PairedRowActions
 
 				$object_ids = Core\Arraay::prepNumeral( ...$object_lists );
 
-				// bail if cross term results are ampty
+				// Bail if cross term results are empty
 				if ( empty( $object_ids ) )
 					return FALSE;
 
@@ -199,7 +200,7 @@ trait PairedRowActions
 
 					$term = get_term( $term_id, $taxonomy );
 
-					// bail if post with same slug exists
+					// Bail if post with same slug exists
 					if ( WordPress\Post::getIDbySlug( $term->slug, $paired_posttype ) )
 						continue;
 
@@ -210,7 +211,7 @@ trait PairedRowActions
 						AND p.post_type IN ( '".implode( "', '", esc_sql( $supported ) )."' )
 					", $term->term_taxonomy_id ) );
 
-					// bail if the term is empty
+					// Bail if the term is empty
 					if ( empty( $current_objects ) )
 						continue;
 
@@ -262,9 +263,9 @@ trait PairedRowActions
 			function ( $actions ) use ( $constants ) {
 				return array_merge( $actions, [
 
-					// bulk action to strip all paired terms fro selected supported posts
+					// bulk action to strip all paired terms for selected supported posts
 					$this->classs( 'do_abandon' ) => sprintf(
-						/* translators: `%s`: posttype plural label  */
+						/* translators: `%s`: post-type plural label  */
 						_x( 'Abandon All %s', 'Internal: PairedRowAction: Action', 'geditorial-admin' ),
 						$this->get_posttype_label( $constants[0] )
 					)
@@ -304,8 +305,11 @@ trait PairedRowActions
 
 				$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
-				/* translators: `%s`: count */
-				echo Core\HTML::success( sprintf( _x( '%s items(s) processed!', 'Message', 'geditorial-admin' ), Core\Number::format( $count ) ) );
+				echo Core\HTML::success( sprintf(
+					/* translators: `%s`: count */
+					_x( '%s items(s) processed!', 'Message', 'geditorial-admin' ),
+					Core\Number::format( $count ) )
+				);
 			} );
 	}
 }

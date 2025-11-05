@@ -2,9 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 trait TaxonomyOverview
@@ -36,9 +36,9 @@ trait TaxonomyOverview
 		$description = TRUE;
 		$exports     = method_exists( $this, 'exports_get_export_links' );
 
-		list( $terms, $pagination ) = Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub, $context ) );
+		list( $terms, $pagination ) = gEditorial\Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub, $context ) );
 
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		$columns = [
 			'_cb'  => 'term_id',
@@ -47,7 +47,7 @@ trait TaxonomyOverview
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )
-						return Plugin::na( FALSE );
+						return gEditorial\Plugin::na( FALSE );
 
 					$html = WordPress\Term::title( $term );
 
@@ -63,14 +63,14 @@ trait TaxonomyOverview
 
 					if ( $exports )
 						return array_merge(
-							Tablelist::getTermRowActions( $term ),
+							gEditorial\Tablelist::getTermRowActions( $term ),
 							$this->exports_get_export_links( $term->term_id, $context, 'assigned' )
 						);
 
-					return Tablelist::getTermRowActions( $term );
+					return gEditorial\Tablelist::getTermRowActions( $term );
 				},
 			],
-			'desc' => Tablelist::columnTermDesc(),
+			'desc' => gEditorial\Tablelist::columnTermDesc(),
 		];
 
 		if ( is_null( $title ) )

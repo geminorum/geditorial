@@ -2,7 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreIncludes
@@ -38,12 +40,12 @@ trait CoreIncludes
 	 * @source `locate_template()`
 	 * @source `get_template_part()`
 	 *
-	 * @param  string      $slug
-	 * @param  null|string $name
-	 * @param  bool        $load
-	 * @param  bool        $once
-	 * @param  array       $args
-	 * @return string      $located
+	 * @param string $slug
+	 * @param string $name
+	 * @param bool $load
+	 * @param bool $once
+	 * @param array $args
+	 * @return string
 	 */
 	protected function locate_template_part( $slug, $name = NULL, $load = FALSE, $once = TRUE, $args = [] )
 	{

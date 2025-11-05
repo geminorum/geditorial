@@ -2,15 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PairedCore
 {
-
 	// EXAMPLE CALLBACK
 	// protected function paired_get_paired_constants()
 	// {
@@ -136,9 +134,9 @@ trait PairedCore
 			$extra['primary_taxonomy'] = $this->constant( $paired[3] );
 
 		$object = $this->register_posttype( $paired[0], array_merge( [
-			MetaBox::POSTTYPE_MAINBOX_PROP         => TRUE,
-			Services\Paired::PAIRED_TAXONOMY_PROP  => $this->_paired,
-			Services\Paired::PAIRED_SUPPORTED_PROP => $supported,
+			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
+			Services\Paired::PAIRED_TAXONOMY_PROP     => $this->_paired,
+			Services\Paired::PAIRED_SUPPORTED_PROP    => $supported,
 
 			'public'            => ! $paired[5],
 			'hierarchical'      => $paired[4],
@@ -279,7 +277,7 @@ trait PairedCore
 	}
 
 	/**
-	 * Renders pointers about given paired posttype.
+	 * Renders pointers about given paired post-type.
 	 * @example `$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );`
 	 *
 	 * @param object $post
@@ -301,7 +299,7 @@ trait PairedCore
 			return;
 
 		if ( FALSE === ( $connected = $this->paired_all_connected_to( $post, 'pointers' ) ) )
-			return Info::renderSomethingIsWrong( $before, $after );
+			return gEditorial\Info::renderSomethingIsWrong( $before, $after );
 
 		$count = count( $connected );
 

@@ -4,11 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 trait PostTypeFields
@@ -51,7 +47,7 @@ trait PostTypeFields
 
 		} else if ( ! empty( $field['data_unit'] ) ) {
 
-			$unit_info    = Info::getUnit( $field['data_unit'], '' );
+			$unit_info    = gEditorial\Info::getUnit( $field['data_unit'], '' );
 			$export_title = Core\Text::trim( sprintf( '%s (%s)', $field['title'], $unit_info[0] ) );
 
 		} else if ( ! empty( $field['title'] ) ) {
@@ -505,7 +501,7 @@ trait PostTypeFields
 
 				// accepts year only
 				if ( 4 !== strlen( $sanitized ) )
-					$sanitized = Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, FALSE );
+					$sanitized = gEditorial\Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $this->default_calendar(), NULL, FALSE );
 
 				break;
 
@@ -519,7 +515,7 @@ trait PostTypeFields
 				// @SEE: https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#dates
 
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
-				$sanitized = Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, FALSE );
+				$sanitized = gEditorial\Datetime::makeMySQLFromInput( $sanitized, NULL, $this->default_calendar(), NULL, FALSE );
 				break;
 
 			case 'latlng':
@@ -697,7 +693,7 @@ trait PostTypeFields
 				case 'papersize':
 				case 'select':
 
-					MetaBox::renderFieldSelect( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldSelect( $field, $post, $this->module->name );
 					break;
 
 				case 'title_before':
@@ -733,7 +729,7 @@ trait PostTypeFields
 				case 'link':
 				case 'latlng':
 
-					MetaBox::renderFieldInput( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldInput( $field, $post, $this->module->name );
 					break;
 
 				case 'float':
@@ -751,7 +747,7 @@ trait PostTypeFields
 				case 'metre':
 				case 'kilometre':
 
-					MetaBox::renderFieldNumber( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
 
 				case 'widget': // WTF?!
@@ -759,28 +755,28 @@ trait PostTypeFields
 				case 'note':
 				case 'textarea':
 
-					MetaBox::renderFieldTextarea( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldTextarea( $field, $post, $this->module->name );
 					break;
 
 				case 'parent_post':
 
-					MetaBox::renderFieldPostParent( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldPostParent( $field, $post, $this->module->name );
 					break;
 
 				case 'user':
 
-					MetaBox::renderFieldUser( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldUser( $field, $post, $this->module->name );
 					break;
 
 				case 'attachment':
 
-					// MetaBox::renderFieldAttachment( $field, $post, $this->module->name ); // FIXME
-					MetaBox::renderFieldNumber( $field, $post, $this->module->name );
+					// gEditorial\MetaBox::renderFieldAttachment( $field, $post, $this->module->name ); // FIXME
+					gEditorial\MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
 
 				case 'post':
 
-					MetaBox::renderFieldPost( $field, $post, $this->module->name );
+					gEditorial\MetaBox::renderFieldPost( $field, $post, $this->module->name );
 					break;
 
 				case 'term':
@@ -795,10 +791,10 @@ trait PostTypeFields
 						break;
 
 					if ( $count > 15 ) // WTF: customize this!
-						MetaBox::renderFieldTerm( $field, $post, $this->module->name );
+						gEditorial\MetaBox::renderFieldTerm( $field, $post, $this->module->name );
 
 					else
-						MetaBox::renderFieldSelect( $field, $post, $this->module->name );
+						gEditorial\MetaBox::renderFieldSelect( $field, $post, $this->module->name );
 			}
 
 			if ( ! empty( $extra['after'] ) )
@@ -847,7 +843,7 @@ trait PostTypeFields
 
 		foreach ( $fields as $field => $args ) {
 
-			// skip for fields that are auto-saved on admin edit-post page
+			// Skips for fields that are auto-saved on admin edit-post page
 			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
 				continue;
 
@@ -1051,11 +1047,11 @@ trait PostTypeFields
 			return $value;
 
 		switch ( $field['type'] ) {
-			case 'date'    : return $value ? Datetime::prepForInput( $value, 'Y/m/d', $this->default_calendar() )     : $value;
-			case 'datetime': return $value ? Datetime::prepForInput( $value, 'Y/m/d H:i', $this->default_calendar() ) : $value;
-			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )                           : $value;
-			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )                           : $value;
-			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                               : $value;
+			case 'date'    : return $value ? gEditorial\Datetime::prepForInput( $value, 'Y/m/d', $this->default_calendar() )     : $value;
+			case 'datetime': return $value ? gEditorial\Datetime::prepForInput( $value, 'Y/m/d H:i', $this->default_calendar() ) : $value;
+			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )                                      : $value;
+			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )                                      : $value;
+			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                                          : $value;
 		}
 
 		return $value;
@@ -1410,14 +1406,14 @@ trait PostTypeFields
 			if ( empty( $args['rest'] ) )
 				continue;
 
-			$meta = Template::getMetaField( $field, [
+			$meta = gEditorial\Template::getMetaField( $field, [
 				'id'       => $post->ID,
 				'default'  => $args['default'],
 				'context'  => $context,
 				'noaccess' => FALSE,
 			], FALSE, $this->key );
 
-			// if no access or default is FALSE
+			// If no access or default is FALSE
 			if ( FALSE === $meta && $meta !== $args['default'] )
 				continue;
 
@@ -1428,7 +1424,7 @@ trait PostTypeFields
 			];
 
 			if ( $raw )
-				$row['value'] = Template::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
+				$row['value'] = gEditorial\Template::getMetaFieldRaw( $field, $post->ID, $this->key, FALSE, NULL );
 
 			$list[] = $row;
 		}

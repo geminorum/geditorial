@@ -73,7 +73,7 @@ trait PairedMetaBox
 			if ( $term->parent )
 				$parents[] = $term->parent;
 
-			// avoid if has child in the list
+			// Avoid if has child in the list
 			if ( $forced && in_array( $term->term_id, $parents, TRUE ) )
 				continue;
 
@@ -107,7 +107,7 @@ trait PairedMetaBox
 			$displayed[] = $to_post_id;
 		}
 
-		// final check if had children in the list
+		// Final check if had children in the list
 		if ( $forced && count( $parents ) )
 			$dropdowns = Core\Arraay::stripByKeys( $dropdowns, Core\Arraay::prepNumeral( $parents ) );
 
@@ -123,7 +123,7 @@ trait PairedMetaBox
 			if ( $dropdown )
 				echo $dropdown;
 
-		// TODO: support for clear all button via js, like `subterms`
+		// TODO: support for clear all button via JS, like `subterms`
 
 		if ( $subterm )
 			$this->enqueue_asset_js( 'subterms', 'module' );

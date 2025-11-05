@@ -4,8 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -55,7 +53,7 @@ trait Strings
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return $this->strings['noops'][$constant];
 
-		if ( NULL !== ( $pre = Info::getNoop( $constant ) ) )
+		if ( NULL !== ( $pre = gEditorial\Info::getNoop( $constant ) ) )
 			return $pre;
 
 		$noop = [
@@ -79,7 +77,7 @@ trait Strings
 	public function nooped_count( $constant, $count )
 	{
 		return sprintf(
-			Helper::noopedCount( $count, $this->get_noop( $constant ) ),
+			gEditorial\Helper::noopedCount( $count, $this->get_noop( $constant ) ),
 			Core\Number::format( $count )
 		);
 	}

@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Regioned extends gEditorial\Module
@@ -21,8 +21,6 @@ class Regioned extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: add subcontent api for list of regioned background: سابقه کاری در مناطق
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
@@ -34,8 +32,8 @@ class Regioned extends gEditorial\Module
 			'icon'     => 'admin-site-alt3',
 			'access'   => 'beta',
 			'keywords' => [
-				'taxmodule',
 				'regional',
+				'taxmodule',
 			],
 		];
 	}
@@ -180,6 +178,6 @@ class Regioned extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

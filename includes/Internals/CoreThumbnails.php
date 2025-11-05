@@ -2,8 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Template;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait CoreThumbnails
@@ -20,7 +21,7 @@ trait CoreThumbnails
 				if ( ! WordPress\Post::can( $post, 'read_post' ) )
 					return $data;
 
-				$html = Template::postImage( [
+				$html = gEditorial\Template::postImage( [
 					'id'     => $post,
 					'link'   => 'edit',
 					'newtab' => TRUE,

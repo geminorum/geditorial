@@ -2,8 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait MetaBoxMain
@@ -87,7 +88,7 @@ trait MetaBoxMain
 		if ( is_null( $context ) )
 			$context = 'mainbox';
 
-		MetaBox::fieldPostMenuOrder( $object );
-		MetaBox::fieldPostParent( $object );
+		gEditorial\MetaBox::fieldPostMenuOrder( $object );
+		gEditorial\MetaBox::fieldPostParent( $object );
 	}
 }

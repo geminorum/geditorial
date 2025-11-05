@@ -2,15 +2,15 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsPostTypes
 {
-
 	/**
-	 * Retrieves settings option for the target posttypes.
+	 * Retrieves settings option for the target post-types.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
 	 * @param string $target
@@ -44,7 +44,7 @@ trait SettingsPostTypes
 
 		$option = $this->hook_base( $this->module->name );
 
-		Settings::addModuleSection( $option, [
+		gEditorial\Settings::addModuleSection( $option, [
 			'id'            => $option.'_posttypes',
 			'title'         => _x( 'Post-types', 'Internal: SettingsPostTypes: Section Title', 'geditorial-admin' ),
 			'section_class' => 'posttypes_option_section',
@@ -63,7 +63,7 @@ trait SettingsPostTypes
 		if ( $before = $this->get_string( 'post_types_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
-		echo Settings::tabPanelOpen();
+		echo gEditorial\Settings::tabPanelOpen();
 
 		foreach ( $this->all_posttypes() as $posttype => $label ) {
 
@@ -172,13 +172,13 @@ trait SettingsPostTypes
 
 		return Core\Arraay::prepString(
 			$this->filters( 'posttypes_excluded',
-				Settings::posttypesExcluded( $extra ) ) );
+				gEditorial\Settings::posttypesExcluded( $extra ) ) );
 	}
 
 	// DEFAULT METHOD
 	protected function posttypes_parents( $extra = [] )
 	{
-		return $this->filters( 'posttypes_parents', Settings::posttypesParents( $extra ) );
+		return $this->filters( 'posttypes_parents', gEditorial\Settings::posttypesParents( $extra ) );
 	}
 
 	/**

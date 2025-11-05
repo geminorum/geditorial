@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait TemplateTaxonomy
 {
-
 	/**
 	 * Hooks override mechanism for custom *main* archives page of
 	 * given taxonomy.
@@ -215,7 +214,7 @@ trait TemplateTaxonomy
 			$this->key,
 		] );
 
-		$list = ShortCode::listPosts( 'assigned',
+		$list = gEditorial\ShortCode::listPosts( 'assigned',
 			'',
 			$taxonomy,
 			[

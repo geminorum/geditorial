@@ -2,16 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait PairedImports
 {
-
 	/**
 	 * Appends import button on edit posts page,
 	 * while restricted by the paired via java-script.
@@ -49,7 +46,7 @@ trait PairedImports
 				Core\HTML::wrapjQueryReady( '$($("#'.$id.'").html()).insertBefore($("#wpbody-content div.wrap hr.wp-header-end"));' );
 			} );
 
-		Scripts::enqueueColorBox();
+		gEditorial\Scripts::enqueueColorBox();
 
 		// TODO: add row action to remove from paired via AJAX
 		// TODO: add bulk action to remove from paired
@@ -184,16 +181,16 @@ trait PairedImports
 			],
 		], FALSE, [], '_importitems' );
 
-		Scripts::enqueueApp( 'import-items', [ Scripts::pkgSheetJS() ] );
+		gEditorial\Scripts::enqueueApp( 'import-items', [ gEditorial\Scripts::pkgSheetJS() ] );
 	}
 
 	public function render_importitems_adminpage()
 	{
 		if ( ! $post = self::req( 'linked' ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return Info::renderNoPostsAvailable();
+			return gEditorial\Info::renderNoPostsAvailable();
 
 		$context = 'importitems';
 
@@ -205,18 +202,18 @@ trait PairedImports
 				WordPress\Post::title( $post )
 			);
 
-			Settings::wrapOpen( $this->key, $context, $title );
+			gEditorial\Settings::wrapOpen( $this->key, $context, $title );
 
-				Scripts::renderAppMounter( 'import-items', $this->key );
-				Scripts::noScriptMessage();
+				gEditorial\Scripts::renderAppMounter( 'import-items', $this->key );
+				gEditorial\Scripts::noScriptMessage();
 
-			Settings::wrapClose();
+			gEditorial\Settings::wrapClose();
 
 		} else {
 
-			Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE );
 		}
 	}
 }

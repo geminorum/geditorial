@@ -2,14 +2,14 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 trait PairedFront
 {
-	// excludes paired posttype from subterm archives
+	// Excludes paired post-type from sub-term archives
 	protected function _hook_paired_exclude_from_subterm()
 	{
 		if ( ! $this->get_setting( 'subterms_support' ) )
@@ -99,7 +99,7 @@ trait PairedFront
 
 						'callback' => function ( $post ) use ( $posttype, $constants ) {
 
-							echo ShortCode::listPosts( 'paired',
+							echo gEditorial\ShortCode::listPosts( 'paired',
 								$this->constant( $constants[0] ),
 								$this->constant( $constants[1] ),
 								[
@@ -143,7 +143,7 @@ trait PairedFront
 
 						'callback' => function ( $post ) use ( $supported, $constants ) {
 
-							echo ShortCode::listPosts( 'paired',
+							echo gEditorial\ShortCode::listPosts( 'paired',
 								$this->constant( $constants[0] ),
 								$this->constant( $constants[1] ),
 								[

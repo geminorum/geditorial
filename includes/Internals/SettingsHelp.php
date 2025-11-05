@@ -2,20 +2,21 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsHelp
 {
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		return Settings::helpContent( $this->module );
+		return gEditorial\Settings::helpContent( $this->module );
 	}
 
 	protected function settings_help_sidebar( $context = 'settings' )
 	{
-		return Settings::helpSidebar( $this->get_module_links() );
+		return gEditorial\Settings::helpSidebar( $this->get_module_links() );
 	}
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )

@@ -2,8 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsRoles
@@ -18,7 +19,7 @@ trait SettingsRoles
 	protected function get_settings_default_roles( $extra_excludes = [], $force_include = [], $filtered = TRUE )
 	{
 		$supported = WordPress\Role::get( 0, [], FALSE, $filtered );
-		$excluded  = Settings::rolesExcluded( $extra_excludes );
+		$excluded  = gEditorial\Settings::rolesExcluded( $extra_excludes );
 
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
 	}

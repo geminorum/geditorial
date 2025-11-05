@@ -2,17 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait PairedTools
 {
-
 	public static $pairedtools__action_move_from_to = 'pairedtools_do_move_from_to';
 
 	protected function paired_tools_render_card( $uri = '', $sub = NULL, $supported_list = NULL )
@@ -23,16 +19,16 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		echo Settings::toolboxCardOpen( _x( 'Paired Move From-To', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Paired Move From-To', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
-			MetaBox::checklistTerms( 0, [
+			gEditorial\MetaBox::checklistTerms( 0, [
 				'taxonomy'    => $this->constant( $constants[1] ),
 				'name'        => 'movefrom',
 				'show_count'  => TRUE,
-				'minus_count' => 1, // the main post-type also get assigned
+				'minus_count' => 1,                                  // NOTE: the main post-type also get assigned
 			] );
 
-			MetaBox::singleselectTerms( 0, [
+			gEditorial\MetaBox::singleselectTerms( 0, [
 				'taxonomy' => $this->constant( $constants[1] ),
 				'name'     => 'moveto',
 			] );
@@ -40,7 +36,7 @@ trait PairedTools
 			echo $this->wrap_open( '-wrap-button-row' );
 
 			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-				Settings::submitButton( self::$pairedtools__action_move_from_to.'['.$posttype.']', sprintf(
+				gEditorial\Settings::submitButton( self::$pairedtools__action_move_from_to.'['.$posttype.']', sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-admin' ),
 					$label
@@ -50,21 +46,21 @@ trait PairedTools
 
 		echo '</div></div>';
 
-		echo Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Paired Tools', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
 		echo $this->wrap_open( '-wrap-button-row' );
-			Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+			gEditorial\Settings::submitButton( 'sync_paired_terms', _x( 'Sync Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
 			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
 		// NO NEED: we use the main post date directly
 		// echo $this->wrap_open( '-wrap-button-row' );
-		// 	Settings::submitButton( 'sync_paired_dates', _x( 'Sync Paired Dates', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+		// 	gEditorial\Settings::submitButton( 'sync_paired_dates', _x( 'Sync Paired Dates', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
 		// 	Core\HTML::desc( _x( 'Tries to set the paired term date based on main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		// echo '</div>';
 
 		echo $this->wrap_open( '-wrap-button-row' );
-			Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
+			gEditorial\Settings::submitButton( 'create_paired_terms', _x( 'Create Paired Terms', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
 			Core\HTML::desc( _x( 'Tries to create paired terms for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
@@ -72,10 +68,10 @@ trait PairedTools
 
 		if ( $this->get_setting( 'paired_force_parents' ) ) {
 
-			echo Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial-admin' ) );
+			echo gEditorial\Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial-admin' ) );
 
 				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-					Settings::submitButton( add_query_arg( [
+					gEditorial\Settings::submitButton( add_query_arg( [
 						'action' => 'force_assign_parents',
 						'type'   => $posttype,
 						] ), sprintf(
@@ -115,7 +111,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		if ( Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
+		if ( gEditorial\Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
 
 			$terms = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
 			$posts = [];
@@ -141,7 +137,7 @@ trait PairedTools
 				'count'   => count( $posts ),
 			] );
 
-		} else if ( Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
 
 			$meta_key = $this->constant( 'metakey_term_image', 'image' );
 			$count    = 0;
@@ -165,7 +161,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'resync_paired_descs', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'resync_paired_descs', TRUE ) ) {
 
 			$count = 0;
 
@@ -186,7 +182,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
 
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -219,7 +215,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
 
 			$taxonomy = $this->constant( $constants[1] );
 			$args     = [ 'description' => '' ];
@@ -234,7 +230,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
 
 			$posttype = $this->constant( $constants[0] );
 			$terms    = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
@@ -257,7 +253,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
 
 			$taxonomy = $this->constant( $constants[1] );
 			$count    = 0;
@@ -287,7 +283,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
-		if ( Tablelist::isAction( 'sync_paired_terms' ) ) {
+		if ( gEditorial\Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -297,7 +293,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'sync_paired_dates' ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'sync_paired_dates' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_dates( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -307,7 +303,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( Tablelist::isAction( 'create_paired_terms' ) ) {
+		} else if ( gEditorial\Tablelist::isAction( 'create_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_create_paired_terms( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -332,23 +328,23 @@ trait PairedTools
 		$context = 'tools';
 		$columns = [
 			'_cb'  => 'term_id',
-			'name' => Tablelist::columnTermName(),
+			'name' => gEditorial\Tablelist::columnTermName(),
 
 			'related' => [
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\Post::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
-						$html = Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						$html = gEditorial\Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
-						$html = Helper::htmlEmpty();
+						$html = gEditorial\Helper::htmlEmpty();
 
 					$html.= '<hr />';
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
-						$html.= Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
+						$html.= gEditorial\Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
 					else
-						$html.= Helper::htmlEmpty();
+						$html.= gEditorial\Helper::htmlEmpty();
 
 					return $html;
 				},
@@ -360,7 +356,7 @@ trait PairedTools
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
 
 					if ( empty( $row->description ) )
-						$html = Helper::htmlEmpty();
+						$html = gEditorial\Helper::htmlEmpty();
 					else
 						$html = WordPress\Strings::prepDescription( $row->description );
 
@@ -372,7 +368,7 @@ trait PairedTools
 							return $html.gEditorial()->na();
 
 						if ( empty( $post->post_excerpt ) )
-							$html.= Helper::htmlEmpty();
+							$html.= gEditorial\Helper::htmlEmpty();
 						else
 							$html.= WordPress\Strings::prepDescription( $post->post_excerpt );
 					}
@@ -401,7 +397,7 @@ trait PairedTools
 					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
 						$html = WordPress\PostType::htmlFeaturedImage( $post_id, [ 45, 72 ] );
 
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 
@@ -410,12 +406,12 @@ trait PairedTools
 				'class'    => 'image-column',
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 					$html = WordPress\Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
-					return $html ?: Helper::htmlEmpty();
+					return $html ?: gEditorial\Helper::htmlEmpty();
 				},
 			],
 		];
 
-		list( $data, $pagination ) = Tablelist::getTerms( [], [], $this->constant( $constants[1] ) );
+		list( $data, $pagination ) = gEditorial\Tablelist::getTerms( [], [], $this->constant( $constants[1] ) );
 
 		if ( FALSE !== $actions ) {
 
@@ -433,7 +429,7 @@ trait PairedTools
 			], $actions );
 		}
 
-		$pagination['before'][] = Tablelist::filterSearch();
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
 		if ( is_null( $title ) )
 			$title = sprintf(
@@ -558,13 +554,13 @@ trait PairedTools
 			$posttype = Core\Arraay::keyFirst( $posttype );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		if ( ! $movefrom = self::req( 'movefrom' ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		if ( ! $moveto = self::req( 'moveto' ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$taxonomy = $this->constant( $constants[1] );
 		$movefrom = Core\Arraay::prepNumeral( is_array( $movefrom ) ? $movefrom : explode( ',', $movefrom ) );
@@ -583,10 +579,10 @@ trait PairedTools
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return Settings::processingAllDone( [
+			return gEditorial\Settings::processingAllDone( [
 				self::$pairedtools__action_move_from_to,
 				'movefrom',
 				'moveto',
@@ -598,7 +594,7 @@ trait PairedTools
 			$moveto   = WordPress\Taxonomy::appendParentTermIDs( $moveto, $taxonomy );
 		}
 
-		echo Settings::processingListOpen();
+		echo gEditorial\Settings::processingListOpen();
 
 		foreach ( $posts as $post )
 			$this->paired__do_post_move_from_to( $post, $taxonomy, $movefrom, $moveto, TRUE );
@@ -625,14 +621,14 @@ trait PairedTools
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		if ( self::isError( $result ) )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: post title, `%2$s`: error message */
 				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 					$result->get_error_message(),
 				] );
 
-		return Settings::processingListItem( $verbose,
+		return gEditorial\Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: count terms, `%2$s`: post title */
 			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),
@@ -643,10 +639,10 @@ trait PairedTools
 	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
 	{
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources( $limit );
 
@@ -658,12 +654,12 @@ trait PairedTools
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return Settings::processingAllDone();
+			return gEditorial\Settings::processingAllDone();
 
-		echo Settings::processingListOpen();
+		echo gEditorial\Settings::processingListOpen();
 
 		foreach ( $posts as $post )
 			$this->paired__do_force_assign_parents( $post, $taxonomy, TRUE );
@@ -680,21 +676,21 @@ trait PairedTools
 	protected function paired__do_force_assign_parents( $post, $taxonomy, $verbose = FALSE )
 	{
 		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%s`: post title */
 				_x( 'Something is wrong for &ldquo;%s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 				] );
 
 		if ( self::isError( $result ) )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: post title, `%2$s`: error message */
 				_x( 'Something is wrong for &ldquo;%1$s&rdquo;: %2$s', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 					WordPress\Post::title( $post ),
 					$result->get_error_message(),
 				] );
 
-		return Settings::processingListItem( $verbose,
+		return gEditorial\Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: count terms, `%2$s`: post title */
 			_x( '%1$s terms set for &ldquo;%2$s&rdquo;!', 'Internal: PairedTools: Notice', 'geditorial-admin' ), [
 				Core\HTML::code( count( $result ) ),

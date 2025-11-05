@@ -2,14 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 trait SettingsCore
 {
-
 	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
 	{
 		return [
@@ -87,7 +86,7 @@ trait SettingsCore
 
 			$this->render_form_fields( $this->module->name );
 
-			Settings::moduleSections( $this->hook_base( $this->module->name ) );
+			gEditorial\Settings::moduleSections( $this->hook_base( $this->module->name ) );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.Core\HTML::escape( $this->module->name ).'" />';
 
@@ -134,7 +133,7 @@ trait SettingsCore
 			$buttons = $this->buttons;
 
 		foreach ( $buttons as $button )
-			Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );
+			gEditorial\Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
@@ -495,13 +494,13 @@ trait SettingsCore
 						continue;
 
 					if ( is_string( $key ) && $setting == $key )
-						return method_exists( Settings::class, 'getSetting_'.$key )
-							? call_user_func_array( [ Settings::class, 'getSetting_'.$key ], (array) $field )
+						return method_exists( gEditorial\Settings::class, 'getSetting_'.$key )
+							? call_user_func_array( [ gEditorial\Settings::class, 'getSetting_'.$key ], (array) $field )
 							: [];
 
 					else if ( is_string( $field ) && $setting == $field )
-						return method_exists( Settings::class, 'getSetting_'.$field )
-							? call_user_func( [ Settings::class, 'getSetting_'.$field ] )
+						return method_exists( gEditorial\Settings::class, 'getSetting_'.$field )
+							? call_user_func( [ gEditorial\Settings::class, 'getSetting_'.$field ] )
 							: [];
 
 					else if ( is_array( $field ) && isset( $field['field'] ) && $setting == $field['field'] )
@@ -570,22 +569,22 @@ trait SettingsCore
 			if ( is_array( $fields ) ) {
 
 				$section = $this->hook_base( $this->module->name ).$section_suffix;
-				$title   = Settings::getModuleSectionTitle( $section_suffix );
+				$title   = gEditorial\Settings::getModuleSectionTitle( $section_suffix );
 
 				if ( ! $title && method_exists( $this, 'settings_section_titles' ) )
 					$title = call_user_func_array( [ $this, 'settings_section_titles' ], [ $section_suffix ] );
 
 				if ( method_exists( $this, 'settings_section'.$section_suffix ) )
 					$callback = [ $this, 'settings_section'.$section_suffix ];
-				else if ( method_exists( Settings::class, 'settings_section'.$section_suffix ) )
-					$callback = [ Settings::class, 'settings_section'.$section_suffix ];
+				else if ( method_exists( gEditorial\Settings::class, 'settings_section'.$section_suffix ) )
+					$callback = [ gEditorial\Settings::class, 'settings_section'.$section_suffix ];
 				else
 					$callback = '__return_false';
 
-				Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'callback'      => $callback,
-					'title'         => empty( $title[0] ) ? Settings::makeModuleSectionTitle( $section_suffix ) : $title[0],
+					'title'         => empty( $title[0] ) ? gEditorial\Settings::makeModuleSectionTitle( $section_suffix ) : $title[0],
 					'description'   => empty( $title[1] ) ? FALSE : $title[1],
 					'section_class' => 'settings_section',
 				] );
@@ -595,11 +594,11 @@ trait SettingsCore
 					if ( FALSE === $field )
 						continue;
 
-					if ( is_string( $key ) && method_exists( Settings::class, 'getSetting_'.$key ) )
-						$args = call_user_func_array( [ Settings::class, 'getSetting_'.$key ], (array) $field );
+					if ( is_string( $key ) && method_exists( gEditorial\Settings::class, 'getSetting_'.$key ) )
+						$args = call_user_func_array( [ gEditorial\Settings::class, 'getSetting_'.$key ], (array) $field );
 
-					else if ( is_string( $field ) && method_exists( Settings::class, 'getSetting_'.$field ) )
-						$args = call_user_func( [ Settings::class, 'getSetting_'.$field ] );
+					else if ( is_string( $field ) && method_exists( gEditorial\Settings::class, 'getSetting_'.$field ) )
+						$args = call_user_func( [ gEditorial\Settings::class, 'getSetting_'.$field ] );
 
 					else if ( ! is_string( $key ) && is_array( $field ) )
 						$args = $field;
@@ -641,7 +640,7 @@ trait SettingsCore
 
 		} else {
 
-			$back  = Settings::getURLbyContext( 'settings' );
+			$back  = gEditorial\Settings::getURLbyContext( 'settings' );
 			$title = sprintf(
 				/* translators: `%s`: module title */
 				_x( 'Editorial: %s', 'Module', 'geditorial-admin' ),
@@ -649,10 +648,10 @@ trait SettingsCore
 			);
 		}
 
-		Settings::wrapOpen( $this->module->name );
+		gEditorial\Settings::wrapOpen( $this->module->name );
 
-			Settings::headerTitle( 'settings', $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
-			Settings::message();
+			gEditorial\Settings::headerTitle( 'settings', $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
+			gEditorial\Settings::message();
 
 			if ( $flush )
 				echo Core\HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial-admin' ), FALSE );
@@ -665,13 +664,13 @@ trait SettingsCore
 			if ( method_exists( $this, 'settings_intro' ) )
 				$this->settings_intro();
 
-		Settings::wrapClose();
+		gEditorial\Settings::wrapClose();
 	}
 
 	protected function settings_footer()
 	{
 		if ( 'config' == $this->module->name )
-			Settings::settingsCredits();
+			gEditorial\Settings::settingsCredits();
 
 		else
 			$this->settings_signature( 'settings' );
@@ -679,7 +678,7 @@ trait SettingsCore
 
 	protected function settings_signature( $context = 'settings' )
 	{
-		Settings::settingsSignature();
+		gEditorial\Settings::settingsSignature();
 	}
 
 	public function add_settings_field( $r = [] )
@@ -729,7 +728,7 @@ trait SettingsCore
 		if ( empty( $args['cap'] ) )
 			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
 
-		Settings::fieldType( $args, $this->scripts );
+		gEditorial\Settings::fieldType( $args, $this->scripts );
 	}
 
 	public function settings_print_scripts()

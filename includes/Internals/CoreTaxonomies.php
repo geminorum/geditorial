@@ -2,17 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait CoreTaxonomies
 {
-
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
 	public function register_taxonomy( $constant, $atts = [], $targets = NULL, $settings_atts = [] )
 	{
@@ -109,7 +105,7 @@ trait CoreTaxonomies
 			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
 			'meta_tagline'    => NULL,     // FALSE, meta-key or `TRUE` for default `tagline` // TODO
 			'suitable_metas'  => NULL,     // list of meta suggested for this taxonomy: `field` => `title` / NULL // TODO
-			'ical_source'     => TRUE, // `TRUE`/`FALSE`/`paired`
+			'ical_source'     => TRUE,     // `TRUE`/`FALSE`/`paired`
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';
@@ -422,7 +418,7 @@ trait CoreTaxonomies
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Services\CustomTaxonomy::generateLabels(
-				Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
+				gEditorial\Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
 				$labels,
 				$this->constant( $constant )
 			);
@@ -479,7 +475,7 @@ trait CoreTaxonomies
 				$box
 			);
 
-			MetaBox::checklistTerms( $post->ID, $args );
+			gEditorial\MetaBox::checklistTerms( $post->ID, $args );
 
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
@@ -517,7 +513,7 @@ trait CoreTaxonomies
 				$box
 			);
 
-			MetaBox::checklistTerms( $post->ID, $args, $terms );
+			gEditorial\MetaBox::checklistTerms( $post->ID, $args, $terms );
 
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
@@ -554,7 +550,7 @@ trait CoreTaxonomies
 				$box
 			);
 
-			MetaBox::checklistTerms( $post->ID, $args );
+			gEditorial\MetaBox::checklistTerms( $post->ID, $args );
 
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
@@ -579,8 +575,8 @@ trait CoreTaxonomies
 		];
 
 		if ( FALSE !== $box ) {
-			$args['none']  = Settings::showOptionNone();  // NOTE: the label already displayed on the meta-box title
-			$args['empty'] = NULL;                        // NOTE: displays empty box with link
+			$args['none']  = gEditorial\Settings::showOptionNone();  // NOTE: the label already displayed on the meta-box title
+			$args['empty'] = NULL;                                   // NOTE: displays empty box with link
 		} else {
 			$args['empty_link'] = FALSE;
 		}
@@ -594,7 +590,7 @@ trait CoreTaxonomies
 				$box
 			);
 
-			MetaBox::singleselectTerms( $post->ID, $args );
+			gEditorial\MetaBox::singleselectTerms( $post->ID, $args );
 
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
@@ -619,8 +615,8 @@ trait CoreTaxonomies
 		];
 
 		if ( FALSE !== $box ) {
-			$args['none']  = Settings::showOptionNone();  // label already displayed on the metabox title
-			$args['empty'] = NULL;                        // displays empty box with link
+			$args['none']  = gEditorial\Settings::showOptionNone();  // NOTE: the label already displayed on the meta-box title
+			$args['empty'] = NULL;                                   // NOTE: displays empty box with link
 		} else {
 			$args['empty_link'] = FALSE;
 		}
@@ -637,7 +633,7 @@ trait CoreTaxonomies
 				$box
 			);
 
-			MetaBox::singleselectTerms( $post->ID, $args );
+			gEditorial\MetaBox::singleselectTerms( $post->ID, $args );
 
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
@@ -783,7 +779,7 @@ trait CoreTaxonomies
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
-		if ( empty( $object->{MetaBox::POSTTYPE_MAINBOX_PROP} ) ) {
+		if ( empty( $object->{gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP} ) ) {
 
 			add_action( 'add_meta_boxes',
 				function ( $posttype, $post ) use ( $constant, $callback ) {
@@ -951,7 +947,7 @@ trait CoreTaxonomies
 
 		add_action( 'parse_query',
 			static function ( &$query ) use ( $taxonomy ) {
-				Listtable::parseQueryTaxonomy( $query, $taxonomy->name );
+				gEditorial\Listtable::parseQueryTaxonomy( $query, $taxonomy->name );
 			}, 12, 1 );
 
 		return TRUE;

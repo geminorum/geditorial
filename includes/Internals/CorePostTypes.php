@@ -2,16 +2,13 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
 {
-
 	public function register_posttype( $constant, $atts = [], $settings_atts = [], $taxonomies = [ 'post_tag' ] )
 	{
 		$posttype = $this->constant( $constant );
@@ -53,8 +50,8 @@ trait CorePostTypes
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
 			/// gEditorial Props
-			Services\Paired::PAIRED_TAXONOMY_PROP => FALSE,  // @SEE: `Paired::isPostType()`
-			MetaBox::POSTTYPE_MAINBOX_PROP        => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
+			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
+			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
@@ -401,7 +398,7 @@ trait CorePostTypes
 
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return Services\CustomPostType::generateLabels(
-				Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
+				gEditorial\Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
 				// DEPRECATED: back-comp: use `labels->featured_image`
 				$this->get_string( 'featured', $constant, 'misc', NULL ),
 				$labels,
@@ -426,7 +423,7 @@ trait CorePostTypes
 			$excludes = [ 'post-formats', 'trackbacks' ];
 
 		$posttype = $this->constant( $constant );
-		$supports = $this->filters( $constant.'_supports', Settings::supportsOptions(), $posttype, $excludes );
+		$supports = $this->filters( $constant.'_supports', gEditorial\Settings::supportsOptions(), $posttype, $excludes );
 
 		// has custom fields
 		foreach ( [ 'meta', 'units', 'geo', 'seo' ] as $type )
