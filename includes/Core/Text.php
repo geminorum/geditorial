@@ -1831,4 +1831,45 @@ class Text extends Base
 
 		return $chunks;
 	}
+
+	/**
+	 * Prepares data for use as description on `iCal` markup.
+	 * TODO: properly handling entities like `nbsp`
+	 *
+	 * [Interesting](https://stackoverflow.com/a/12187526/4864081)
+	 * I find that Outlook formats my first line bold if it's followed
+	 * 2 newlines (\n), then by at least 3 lines of text, the first of
+	 * which must have a capital letter. Two minimalist examples:
+	 * - this works: `DESCRIPTION:I am bold\n\nThey\nthey\nthey`
+	 * - this doesn't: `DESCRIPTION:I am not bold\n\nthey\nthey\nthey`
+	 *
+	 * @see https://www.kanzaki.com/docs/ical/text.html
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	public static function prepDescForICAL( $text )
+	{
+		if ( ! $text )
+			return  '';
+
+		$text = self::normalizeWhitespace( $text, TRUE );
+		$text = self::normalizeZWNJ( $text );
+
+		// https://gist.github.com/kenmoini/d170a057e7da1dd3abe9458b332aeb5a#file-ics-php-L136
+		$text = preg_replace( '/([\,;])/', '\\\$1', $text );
+
+		// https://stackoverflow.com/q/6191503
+		// $search = array('\\', ';', ',', "\r\n", "\n", "\r");
+    	// $replace = array('\\\\', '\;', '\,', '\n', '\n', '\n');
+    	// $text = str_replace($search, $replace, $text);
+
+		// // https://stackoverflow.com/a/6192156
+		// // Note the mixture of single and double quotes for the line break (Double quotes interpret the line breaks whereas single ones don't)
+		// $search = array('/',';',',',"\N","\n");
+		// $replace = array('\/','\;','\,','\n','\n');
+		// $text = str_replace($search,$replace,$text);
+
+		return self::trim( $text );
+	}
 }

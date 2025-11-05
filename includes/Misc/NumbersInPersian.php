@@ -203,7 +203,7 @@ class NumbersInPersian extends Core\Base
 			$list[$ordinal] = $number;
 		}
 
-		return $list;
+		return array_reverse( $list );
 	}
 
 	public function test( $max = 1000, $start = 0 )
@@ -218,5 +218,47 @@ class NumbersInPersian extends Core\Base
 		}
 
 		echo '</ol>';
+	}
+
+	/**
+	 * Converts back occurrences of the ordinals to numerals.
+	 *
+	 * @param string $input
+	 * @param int $range
+	 * @return string
+	 */
+	public static function textOrdinalToNumbers( $input, $range = 100 )
+	{
+		$instance = new static();
+		$data     = sprintf( ' %s ', $input ); // padding with space
+		$template = '/[\s,،|\\/](%s|%s)[\s,،|\\/]/mu';
+		// $template = '/[\s,،|](%s|%s)[\s,،|]/mu';
+
+		foreach ( $instance->get_range_ordinal_reverse( 1, $range ) as $ordinal => $index ) {
+
+			$pattern = sprintf( $template,
+				preg_quote( $ordinal ),
+				preg_quote( str_ireplace( ' ', '', $ordinal ) )
+			);
+
+			$data = preg_replace_callback( $pattern,
+				static function ( $matches ) use ( $index ) {
+					return sprintf( ' %s ', $index ); // padding with space
+				}, $data );
+		}
+
+		return trim( $data );
+	}
+
+	public static function numberToOrdinal( $number )
+	{
+		$instance = new static();
+		return $instance->number_to_ordinal( $number );
+	}
+
+	public static function numberToWords( $number )
+	{
+		$instance = new static();
+		return $instance->number_to_words( $number );
 	}
 }

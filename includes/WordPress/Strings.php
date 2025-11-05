@@ -360,24 +360,8 @@ class Strings extends Core\Base
 
 			$data = Core\Number::translate( $data );
 
-			if ( class_exists( 'geminorum\\gEditorial\\Misc\\NumbersInPersian' ) ) {
-
-				$numbers  = new \geminorum\gEditorial\Misc\NumbersInPersian();
-				$ordinals = $numbers->get_range_ordinal_reverse( 1, 100 );
-
-				foreach ( $ordinals as $ordinal => $index ) {
-
-					$pattern = sprintf( '/[\s,،](%s|%s)[\s,،]/mu',
-						preg_quote( $ordinal ),
-						preg_quote( str_ireplace( ' ', '', $ordinal ) )
-					);
-
-					$data = preg_replace_callback( $pattern,
-						static function ( $matches ) use ( $index ) {
-							return sprintf( ' %s ', $index ); // padding with space
-						}, $data );
-				}
-			}
+			if ( class_exists( 'geminorum\\gEditorial\\Misc\\NumbersInPersian' ) )
+				$data = NumbersInPersian::textOrdinalToNumbers( $data, 100 );
 
 			$prefixes = [
 				'پلاک'   => 'پ',
