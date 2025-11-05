@@ -343,6 +343,27 @@ class Calendars extends gEditorial\Service
 				)
 			);
 
+		} else if ( $published = PostTypeFields::getFieldRaw( 'published', $post->ID, 'meta', TRUE ) ) {
+
+			if ( $final = gEditorial\Misc\DateParser::parse( $published, PostTypeFields::getDefaultCalendar( 'meta', FALSE ) ) ) {
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $final )
+					)
+				);
+
+			} else {
+
+				$final = Core\Date::getObject( $post->post_date );
+
+				$event->setOccurrence(
+					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+						new \Eluceo\iCal\Domain\ValueObject\Date( $final )
+					)
+				);
+			}
+
 		} else {
 
 			// no extra field data: using the post date
