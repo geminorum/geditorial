@@ -8,6 +8,7 @@ $files = [
 	// 'Test_CSV',
 	// 'Test_Date',
 	// 'Test_Date_2',
+	// 'Test_Date_3',
 	// 'Test_Duration',
 	// 'Test_IBAN',
 	// 'Test_ISBN',

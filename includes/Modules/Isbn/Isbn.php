@@ -13,6 +13,11 @@ use geminorum\gEditorial\WordPress;
 
 class Isbn extends gEditorial\Module
 {
+	use Internals\RawImports;
+
+	protected $imports_datafiles = [
+		'range-message' => 'RangeMessage.xml'  // Tue, 4 Nov 2025 23:31:28 GMT @source https://www.isbn-international.org/range_file_generation
+	];
 
 	public static function module()
 	{

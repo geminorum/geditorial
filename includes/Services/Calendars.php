@@ -317,7 +317,7 @@ class Calendars extends gEditorial\Service
 		} else if ( ( $datestart = PostTypeFields::getFieldDate( 'datestart', $post->ID ) )
 			&& ( $dateend = PostTypeFields::getFieldDate( 'dateend', $post->ID ) ) ) {
 
-			$final = $datestart; // NOTE: only the begingging, LOL!
+			$final = $datestart;
 
 			$event->setOccurrence(
 				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
@@ -400,7 +400,7 @@ class Calendars extends gEditorial\Service
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
 		if ( $link = apply_filters( static::BASE.'_calendars_post_url',
-			WordPress\Term::Post( $post ),
+			WordPress\Post::shortlink( $post ),
 			$post,
 			$context,
 			$final
@@ -553,7 +553,7 @@ class Calendars extends gEditorial\Service
 		} else if ( ( $datestart = TaxonomyFields::getFieldDate( 'datestart', $term->term_id ) )
 			&& ( $dateend = TaxonomyFields::getFieldDate( 'dateend', $term->term_id ) ) ) {
 
-			$final = $datestart; // NOTE: only the begingging, LOL!
+			$final = $datestart;
 
 			$event->setOccurrence(
 				new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $datestart, $dateend )
