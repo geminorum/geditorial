@@ -450,7 +450,9 @@ class NationalLibrary extends gEditorial\Module
 
 			if ( $bib = get_query_var( $this->constant( 'bib_queryvar' ) ) ) {
 
-				foreach ( $this->posttypes() as $posttype ) {
+				$supported = $this->posttypes();
+
+				foreach ( $supported as $posttype ) {
 
 					if ( ! $metakey = $this->_get_posttype_bib_metakey( $posttype ) )
 						continue;
@@ -473,14 +475,18 @@ class NationalLibrary extends gEditorial\Module
 					WordPress\Redirect::doWP( $link, 302 );
 				}
 
+				$this->actions( 'bib_notfound', $bib, $supported );
+
+				WordPress\Theme::set404();
+
 			} else if ( $fipa = get_query_var( $this->constant( 'fipa_queryvar' ) ) ) {
 
 				// NOTE: `$fipa` is `ISBN`
 				if ( ! Core\ISBN::validate( $fipa ) )
-					return; // TODO: maybe redirect to error page
+					return WordPress\Theme::set404();
 
 				if ( ! $url = ModuleHelper::scrapeURLFromISBN( Core\ISBN::sanitize( $fipa ) ) )
-					return; // TODO: maybe redirect to error page
+					return WordPress\Theme::set404();
 
 				WordPress\Redirect::doWP( $url, 302 );
 			}
