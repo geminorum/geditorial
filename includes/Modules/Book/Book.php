@@ -332,6 +332,7 @@ class Book extends gEditorial\Module
 						'description' => _x( 'Specefic Print of the Publication', 'Field Description', 'geditorial-book' ),
 						'icon'        => 'book',
 					],
+					// @SEE: `Metropolis` Module
 					'publish_location' => [
 						'title'       => _x( 'Publish Location', 'Field Title', 'geditorial-book' ),
 						'description' => _x( 'Location Published', 'Field Description', 'geditorial-book' ),
