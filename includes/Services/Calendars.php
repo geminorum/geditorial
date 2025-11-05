@@ -284,13 +284,24 @@ class Calendars extends gEditorial\Service
 
 			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $post, $context ] ) ) ) {
 
-				$final = $called;
+				if ( is_array( $called ) ) {
 
-				$event->setOccurrence(
-					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
-					)
-				);
+					$final = $called[0];
+
+					$event->setOccurrence(
+						new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $called[0], $called[1] )
+					);
+
+				} else {
+
+					$final = $called;
+
+					$event->setOccurrence(
+						new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+							new \Eluceo\iCal\Domain\ValueObject\Date( $called )
+						)
+					);
+				}
 
 			} else if ( $the_date ) {
 
@@ -488,13 +499,24 @@ class Calendars extends gEditorial\Service
 
 			} else if ( is_callable( $the_date ) && ( $called = call_user_func_array( $the_date, [ $term, $context ] ) ) ) {
 
-				$final = $called;
+				if ( is_array( $called ) ) {
 
-				$event->setOccurrence(
-					new \Eluceo\iCal\Domain\ValueObject\SingleDay(
-						new \Eluceo\iCal\Domain\ValueObject\Date( $called )
-					)
-				);
+					$final = $called[0];
+
+					$event->setOccurrence(
+						new \Eluceo\iCal\Domain\ValueObject\TimeSpan( $called[0], $called[1] )
+					);
+
+				} else {
+
+					$final = $called;
+
+					$event->setOccurrence(
+						new \Eluceo\iCal\Domain\ValueObject\SingleDay(
+							new \Eluceo\iCal\Domain\ValueObject\Date( $called )
+						)
+					);
+				}
 
 			} else if ( $the_date ) {
 
