@@ -503,7 +503,7 @@ class Identified extends gEditorial\Module
 		return array_change_key_case( $list, CASE_LOWER );
 	}
 
-	public function sanitize_identifier( $value, $type = 'code', $post = FALSE )
+	public function sanitize_identifier( $value, $type = 'code', $post = FALSE, $strict = FALSE )
 	{
 		if ( WordPress\Strings::isEmpty( $value ) )
 			return FALSE;
@@ -512,16 +512,23 @@ class Identified extends gEditorial\Module
 
 			case 'isbn':
 
-				$sanitized = Core\ISBN::convertToISBN13( Core\ISBN::sanitize( $value ) );
+				// $sanitized = Core\ISBN::convertToISBN13( Core\ISBN::sanitize( $value ) );
+				$sanitized = Core\ISBN::discovery( $value );
+
+				if ( $strict && ! Core\ISBN::validate( $sanitized ) )
+					$sanitized = '';
+
 				break;
 
 			case 'gtin':
 
+				// TODO: research this?!
 				$sanitized = Core\ISBN::sanitize( $value );
 				break;
 
 			case 'identity':
 
+				// NOTE: this is strict
 				$sanitized = Core\Validation::sanitizeIdentityNumber( $value );
 				break;
 
@@ -531,7 +538,7 @@ class Identified extends gEditorial\Module
 				$sanitized = Core\Number::translate( trim( $value ) );
 		}
 
-		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post );
+		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post, $strict );
 	}
 
 	public function subcontent_provide_summary( $data, $item, $parent, $context )
@@ -975,6 +982,45 @@ class Identified extends gEditorial\Module
 				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
 
 				WordPress\Theme::set404();
+			}
+
+		} else if ( is_search() && ! have_posts() ) {
+
+			// avoid core filtering
+			if ( ! $criteria = trim( get_query_var( 's' ) ) )
+				return;
+
+			foreach ( $this->get_setting( 'queryable_types', [] ) as $type ) {
+
+				if ( ! $sanitized = $this->sanitize_identifier( $criteria, $type, FALSE, TRUE ) )
+					continue;
+
+				$supported = $this->_get_supported_by_identifier_type( $type );
+
+				foreach ( $supported as $posttype => $metakey ) {
+
+					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $sanitized ) )
+						continue;
+
+					if ( ! $post = WordPress\Post::get( $post_id ) )
+						continue;
+
+					if ( $post->post_type !== $posttype )
+						continue;
+
+					if ( ! $this->is_post_viewable( $post ) )
+						continue;
+
+					if ( ! $link = WordPress\Post::link( $post, FALSE, WordPress\Status::acceptable( $post->post_type ) ) )
+						continue;
+
+					WordPress\Redirect::doWP( $link, 302 );
+				}
+
+				if ( $tokenized = $this->_get_url_for_identifier_notfound( $type, $sanitized, $supported ) )
+					WordPress\Redirect::doWP( $tokenized, 307 );
+
+				$this->actions( 'identifier_notfound', $type, $sanitized, $supported );
 			}
 		}
 	}
