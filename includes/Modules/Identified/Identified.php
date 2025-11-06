@@ -1039,6 +1039,9 @@ class Identified extends gEditorial\Module
 
 	private function _get_url_for_identifier_notfound( $type, $data, $supported = [] )
 	{
+		if ( ! is_user_logged_in() )
+			return FALSE;
+
 		if ( ! $template = $this->get_setting( sprintf( '%s_type_notfound_template', $type ) ) )
 			return FALSE;
 
