@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
@@ -328,7 +327,7 @@ class Entry extends gEditorial\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),
 			$this->constant( 'category_taxonomy' ),
 			array_merge( [

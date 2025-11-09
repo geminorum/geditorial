@@ -716,15 +716,21 @@ class Today extends gEditorial\Module
 
 		WordPress\Theme::resetQuery( [
 			'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
-			'post_title'  => '',
+			'post_title'  => '&nbsp;', // avoid considering the `.-empty-title`
 			'post_author' => 0,
 			'post_type'   => $this->constant( 'main_posttype' ),
 			'is_single'   => TRUE,
 		], [ $this, 'the_day_content_callback' ],
 			[ $this, 'the_day_title_callback' ] );
 
-		$this->enqueue_styles();
 		$this->filter( 'get_the_date', 3 );
+		$this->filter_append( 'post_class', [ 'the-day' ] );
+
+		$this->filter_false( 'gtheme_navigation_crumb_archive' );
+		$this->filter_empty_string( 'previous_post_link' );
+		$this->filter_empty_string( 'next_post_link' );
+
+		$this->enqueue_styles();
 
 		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
 		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
@@ -1256,7 +1262,7 @@ class Today extends gEditorial\Module
 
 		if ( $navigation || $buttons ) {
 
-			// $html.= $this->wrap_open_buttons();
+			$html.= $this->wrap_open( '-buttons', '-navigation' );
 
 				if ( $navigation )
 					$html.= implode( '&nbsp;&nbsp;', $navigation );
@@ -1267,7 +1273,7 @@ class Today extends gEditorial\Module
 				if ( $buttons )
 					$html.= implode( '&nbsp;&nbsp;', $buttons );
 
-			// $html.= '</p>';
+			$html.= '</div>';
 		}
 
 		if ( ! $html )

@@ -553,6 +553,7 @@ class ModuleHelper extends gEditorial\Helper
 		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
+	// TODO: add today button
 	public static function theDayNavigation( $the_day, $type = NULL, $fallback = FALSE )
 	{
 		if ( empty( $the_day ) )

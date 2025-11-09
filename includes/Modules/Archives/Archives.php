@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Archives extends gEditorial\Module
@@ -47,7 +46,7 @@ class Archives extends gEditorial\Module
 				),
 				'description' => _x( 'Used as title on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'placeholder' => $this->_get_posttype_archive_title( $posttype_name, FALSE ),
-				'after'       => Settings::fieldAfterIcon( $this->get_posttype_archive_link( $posttype_name ),
+				'after'       => gEditorial\Settings::fieldAfterIcon( $this->get_posttype_archive_link( $posttype_name ),
 					_x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 			];
 
@@ -113,7 +112,7 @@ class Archives extends gEditorial\Module
 					Core\HTML::tag( 'i', $taxonomy_label )
 				),
 				'description' => _x( 'Used as slug on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
-				'after'       => Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ),
+				'after'       => gEditorial\Settings::fieldAfterIcon( $this->get_taxonomy_archive_link( $taxonomy_name ),
 					_x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ),
 				'placeholder' => $this->_taxonomy_archive_slug( $taxonomy_name, FALSE ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -147,7 +146,7 @@ class Archives extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( get_post_types( [
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( get_post_types( [
 			'public'      => FALSE,
 			'has_archive' => FALSE,
 		], 'names', 'or' ) + $extra ) );
@@ -155,7 +154,7 @@ class Archives extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
 			'public'                              => FALSE,
 			'has_archive'                         => FALSE,   // NOTE: gEditorial prop
 			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
@@ -180,7 +179,7 @@ class Archives extends gEditorial\Module
 	{
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
-			$screen->set_help_sidebar( Settings::helpSidebar( [ [
+			$screen->set_help_sidebar( gEditorial\Settings::helpSidebar( [ [
 				'url'   => $this->get_taxonomy_archive_link( $screen->taxonomy ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -195,7 +194,7 @@ class Archives extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			$screen->set_help_sidebar( Settings::helpSidebar( [ [
+			$screen->set_help_sidebar( gEditorial\Settings::helpSidebar( [ [
 				'url'   => $this->get_posttype_archive_link( $screen->post_type ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -567,7 +566,7 @@ class Archives extends gEditorial\Module
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 
-			$icon = $link ? Settings::fieldAfterIcon( $link, _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ) : '';
+			$icon = $link ? gEditorial\Settings::fieldAfterIcon( $link, _x( 'View Archives Page', 'Icon Title', 'geditorial-archives' ), 'external' ) : '';
 
 			Core\HTML::h4( sprintf(
 				/* translators: `%s`: taxonomy object label */

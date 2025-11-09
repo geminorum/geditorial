@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Tabs extends gEditorial\Module
@@ -130,7 +129,7 @@ class Tabs extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded',
-			Settings::posttypesExcluded(
+			gEditorial\Settings::posttypesExcluded(
 				get_post_types( [
 					'public' => FALSE,
 				], 'names', 'or' ) + $extra
@@ -141,7 +140,7 @@ class Tabs extends gEditorial\Module
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded',
-			Settings::taxonomiesExcluded(
+			gEditorial\Settings::taxonomiesExcluded(
 				get_taxonomies( [
 					'public'                              => FALSE,
 					Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
@@ -260,7 +259,7 @@ class Tabs extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		echo $this->wrap( Template::metaSummary( [
+		echo $this->wrap( gEditorial\Template::metaSummary( [
 			'echo'   => FALSE,
 			'id'     => $post->ID,
 			'type'   => $post->post_type,

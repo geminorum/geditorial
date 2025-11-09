@@ -284,6 +284,9 @@ class Isbn extends gEditorial\Module
 		if ( ! $posttype = $this->get_setting( 'default_posttype' ) )
 			return;
 
+		// if ( ! Core\ISBN::validate( $sanitized ) )
+		// 	return;
+
 		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return;
 

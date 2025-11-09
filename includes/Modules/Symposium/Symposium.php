@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Symposium extends gEditorial\Module
@@ -221,6 +221,6 @@ class Symposium extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

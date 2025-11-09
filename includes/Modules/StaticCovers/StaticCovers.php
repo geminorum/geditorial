@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class StaticCovers extends gEditorial\Module
@@ -52,7 +48,7 @@ class StaticCovers extends gEditorial\Module
 				),
 				'description' => _x( 'Defines reference meta-key for the post-type.', 'Setting Description', 'geditorial-static-covers' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_metakey, 'code' ),
 				'placeholder' => $default_metakey,
 				'default'     => $default_metakey,
 			];
@@ -87,7 +83,7 @@ class StaticCovers extends gEditorial\Module
 					$posttype_tokens
 				),
 				'field_class' => [ 'semi-large-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
 			];
 
 			$settings['_posttypes'][] = [
@@ -129,7 +125,7 @@ class StaticCovers extends gEditorial\Module
 				),
 				'description' => _x( 'Defines reference meta-key for the taxonomy.', 'Setting Description', 'geditorial-static-covers' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_metakey, 'code' ),
 				'placeholder' => $default_metakey,
 				'default'     => $default_metakey,
 			];
@@ -164,7 +160,7 @@ class StaticCovers extends gEditorial\Module
 					$taxonomy_tokens
 				),
 				'field_class' => [ 'semi-large-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( Core\File::normalize( ABSPATH ), 'code' ),
 			];
 
 			$settings['_taxonomies'][] = [
@@ -306,8 +302,8 @@ class StaticCovers extends gEditorial\Module
 
 					$this->_register_headerbuttons_for_post( $screen->post_type );
 					$this->_hook_general_supportedbox( $screen, NULL, 'side', 'high' );
-					Scripts::enqueueThickBox();
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueThickBox();
+					gEditorial\Scripts::enqueueColorBox();
 
 				} else if ( 'edit' == $screen->base ) {
 
@@ -358,14 +354,14 @@ class StaticCovers extends gEditorial\Module
 		if ( 'term' == self::req( 'target', 'post' ) ) {
 
 			if ( ! $term = WordPress\Term::get( self::req( 'linked', FALSE ) ) )
-				return Info::renderNoTermsAvailable();
+				return gEditorial\Info::renderNoTermsAvailable();
 
 			$this->_render_view_for_term( $term, $context );
 
 		} else {
 
 			if ( ! $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) )
-				return Info::renderNoPostsAvailable();
+				return gEditorial\Info::renderNoPostsAvailable();
 
 			$this->_render_view_for_post( $post, $context );
 		}
@@ -374,7 +370,7 @@ class StaticCovers extends gEditorial\Module
 	private function _render_view_for_term( $term, $context )
 	{
 		if ( ! $view = $this->viewengine__view_by_term( $term, $context ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$data = $this->_get_view_data_for_term( $term, $context );
 
@@ -416,7 +412,7 @@ class StaticCovers extends gEditorial\Module
 	private function _render_view_for_post( $post, $context )
 	{
 		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$data = $this->_get_view_data_for_post( $post, $context );
 
@@ -998,7 +994,7 @@ class StaticCovers extends gEditorial\Module
 			$html = '<figure class="'.Core\HTML::prepClass( 'figure', $args['figure'] ).'">'.$html.'</figure>';
 		}
 
-		return ShortCode::wrap( $html, $this->constant( 'post_cover_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'post_cover_shortcode' ), $args );
 	}
 
 	public function term_cover_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -1074,7 +1070,7 @@ class StaticCovers extends gEditorial\Module
 			$html = '<figure class="'.Core\HTML::prepClass( 'figure', $args['figure'] ).'">'.$html.'</figure>';
 		}
 
-		return ShortCode::wrap( $html, $this->constant( 'term_cover_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'term_cover_shortcode' ), $args );
 	}
 
 	private function _register_headerbuttons_for_post_secondary( $posttype, $post = NULL, $handle = NULL )

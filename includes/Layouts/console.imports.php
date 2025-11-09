@@ -1,6 +1,8 @@
 <?php defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-\geminorum\gEditorial\WordPress\User::superAdminOnly();
+use geminorum\gEditorial\WordPress;
+
+WordPress\User::superAdminOnly();
 
 $files = [
 	// 'Test_Address',

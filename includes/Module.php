@@ -257,6 +257,23 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		if ( ! empty( $this->caps[$context] ) )
+			return current_user_can( $this->caps[$context] );
+
+		if ( current_user_can( sprintf( 'editorial_%s', $context ) ) )
+			return TRUE;
+
+		if ( ! empty( $this->caps['default'] ) )
+			return current_user_can( $this->caps['default'] );
+
+		else if ( $fallback )
+			return current_user_can( $fallback );
+
+		return FALSE;
+	}
+
 	public function setup_disabled()
 	{
 		if ( $this->disable_no_customs && ! count( $this->posttypes() ) && ! count( $this->taxonomies() ) )
@@ -711,39 +728,6 @@ class Module extends WordPress\Module
 				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
 
 		return $data;
-	}
-
-	protected function _hook_ajax( $auth = TRUE, $hook = NULL, $method = 'do_ajax' )
-	{
-		if ( is_null( $hook ) )
-			$hook = $this->hook();
-
-		if ( is_null( $auth ) || TRUE === $auth )
-			add_action( 'wp_ajax_'.$hook, [ $this, $method ] );
-
-		if ( is_null( $auth ) || FALSE === $auth )
-			add_action( 'wp_ajax_nopriv_'.$hook, [ $this, $method ] );
-	}
-
-	protected function _hook_post( $auth = TRUE, $hook = NULL, $method = 'post' )
-	{
-		if ( ! is_admin() )
-			return;
-
-		if ( is_null( $hook ) )
-			$hook = $this->hook();
-
-		if ( is_null( $auth ) || TRUE === $auth )
-			add_action( 'admin_post_'.$hook, [ $this, $method ] );
-
-		if ( is_null( $auth ) || FALSE === $auth )
-			add_action( 'admin_post_nopriv_'.$hook, [ $this, $method ] );
-	}
-
-	// DEFAULT FILTER
-	public function post()
-	{
-		wp_die();
 	}
 
 	public function icon( $name, $group = NULL )

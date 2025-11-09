@@ -4,10 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -91,14 +88,14 @@ class Tabloid extends gEditorial\Module
 							'priority' => -9,
 						] );
 
-						Scripts::enqueueColorBox();
+						gEditorial\Scripts::enqueueColorBox();
 					}
 
 				} else if ( 'edit' == $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, FALSE, TRUE, NULL, TRUE ) )
-							Scripts::enqueueColorBox();
+							gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 
@@ -116,14 +113,14 @@ class Tabloid extends gEditorial\Module
 							'priority' => -9,
 						] );
 
-						Scripts::enqueueColorBox();
+						gEditorial\Scripts::enqueueColorBox();
 					}
 
 				} else if ( 'edit-tags' == $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& $this->rowactions__hook_mainlink_for_term( $screen->taxonomy, 8, FALSE, TRUE, NULL, TRUE ) )
-							Scripts::enqueueColorBox();
+							gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -233,27 +230,27 @@ class Tabloid extends gEditorial\Module
 		if ( 'post' === self::req( 'target' ) ) {
 
 			if ( ! $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) )
-				return Info::renderNoPostsAvailable();
+				return gEditorial\Info::renderNoPostsAvailable();
 
 			$this->_render_view_for_post( $post, 'overview' );
 
 		} else if ( 'term' === self::req( 'target' ) ) {
 
 			if ( ! $term = WordPress\Term::get( self::req( 'linked', FALSE ) ) )
-				return Info::renderNoTermsAvailable();
+				return gEditorial\Info::renderNoTermsAvailable();
 
 			$this->_render_view_for_term( $term, 'overview' );
 
 		} else {
 
-			Info::renderNoDataAvailable();
+			gEditorial\Info::renderNoDataAvailable();
 		}
 	}
 
 	private function _render_view_for_post( $post, $context )
 	{
 		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$data = $this->_get_view_data_for_post( $post, $context );
 
@@ -277,7 +274,7 @@ class Tabloid extends gEditorial\Module
 	private function _render_view_for_term( $term, $context )
 	{
 		if ( ! $view = $this->viewengine__view_by_term( $term, $context ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$data = $this->_get_view_data_for_term( $term, $context );
 
@@ -306,10 +303,10 @@ class Tabloid extends gEditorial\Module
 		$flags = (array) $data['___flags'];
 
 		if ( in_array( 'needs-barcode', $flags, TRUE ) )
-			Scripts::enqueueJSBarcode();
+			gEditorial\Scripts::enqueueJSBarcode();
 
 		if ( in_array( 'needs-qrcode', $flags, TRUE ) )
-			Scripts::enqueueQRCodeSVG();
+			gEditorial\Scripts::enqueueQRCodeSVG();
 	}
 
 	private function _handle_flags_for_term( $term, $context, $data )
@@ -320,10 +317,10 @@ class Tabloid extends gEditorial\Module
 		$flags = (array) $data['___flags'];
 
 		if ( in_array( 'needs-barcode', $flags, TRUE ) )
-			Scripts::enqueueJSBarcode();
+			gEditorial\Scripts::enqueueJSBarcode();
 
 		if ( in_array( 'needs-qrcode', $flags, TRUE ) )
-			Scripts::enqueueQRCodeSVG();
+			gEditorial\Scripts::enqueueQRCodeSVG();
 	}
 
 	private function _print_script_for_post( $post, $context, $data )
@@ -336,11 +333,11 @@ class Tabloid extends gEditorial\Module
 		$this->enqueue_asset_js( [
 			'config' => [
 				'printtitle'  => WordPress\Post::title( $post ),
-				'printstyles' => Scripts::getPrintStylesURL(),
+				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
 			],
 		], $this->dotted( $context ), [
 			'jquery',
-			Scripts::pkgPrintThis(),
+			gEditorial\Scripts::pkgPrintThis(),
 		] );
 	}
 
@@ -354,11 +351,11 @@ class Tabloid extends gEditorial\Module
 		$this->enqueue_asset_js( [
 			'config' => [
 				'printtitle'  => WordPress\Term::title( $term ),
-				'printstyles' => Scripts::getPrintStylesURL(),
+				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
 			],
 		], $this->dotted( $context ), [
 			'jquery',
-			Scripts::pkgPrintThis(),
+			gEditorial\Scripts::pkgPrintThis(),
 		] );
 	}
 
@@ -391,7 +388,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
-		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
+		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
 		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'terms', 'custom', 'comments' ], '' );
@@ -452,7 +449,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
-		$data['__today']      = Datetime::dateFormat( 'now', 'print' );
+		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'print' );
 		$data['__summaries']  = $this->filters( 'term_summaries', [], $data, $term, $context );
 		$data['___flags']     = $this->filters( 'term_flags', [], $data, $term, $context );
 		$data['___sides']     = array_fill_keys( [ 'term', 'meta', 'terms', 'custom' ], '' );

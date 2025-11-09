@@ -603,7 +603,7 @@ class Identified extends gEditorial\Module
 		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return new \WP_Error( 'create_noaccess', gEditorial\Plugin::denied( FALSE ) );
 
-		unset( $row[$key] ); // avoid passsing into meta action
+		unset( $row[$key] ); // avoid passing into meta action
 
 		return $insert
 			? $this->_insert_post_by_identifier( $posttype, $identifier, $metakey, $row )

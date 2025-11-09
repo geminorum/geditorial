@@ -1316,6 +1316,7 @@ class Terms extends gEditorial\Module
 
 	/**
 	 * Deletes all attachment images for any term.
+	 * @ref: `_delete_attachment_theme_mod()`
 	 *
 	 * @param int $post_id
 	 * @param mixed $post

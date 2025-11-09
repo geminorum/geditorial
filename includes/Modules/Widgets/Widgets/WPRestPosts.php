@@ -100,10 +100,7 @@ class WPRestPosts extends gEditorial\Widget
 	{
 		$this->before_form( $instance );
 
-		$this->form_title( $instance );
-		$this->form_title_link( $instance );
-		$this->form_title_image( $instance );
-
+		$this->form_open_group( 'config' );
 		$this->form_custom_link( $instance, '', 'resource', _x( 'Resource URL:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, 'posts', 'endpoint', _x( 'Endpoint:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, '', 'tags', _x( 'Tag IDs:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
@@ -111,16 +108,22 @@ class WPRestPosts extends gEditorial\Widget
 		$this->form_custom_code( $instance, '', 'extra', _x( 'Extra Args:', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
 		$this->form_number( $instance );
 		$this->form_trim_chars( $instance );
-
 		$this->form_custom_empty( $instance, _x( 'No posts!', 'Widget: WP-REST Posts', 'geditorial-widgets' ) );
-		$this->form_context( $instance );
-		$this->form_class( $instance );
+		$this->form_close_group();
 
-		echo '<div class="-group">';
+		$this->form_open_group( 'heading' );
+		$this->form_title( $instance );
+		$this->form_title_link( $instance );
+		$this->form_title_image( $instance );
+		$this->form_class( $instance );
+		$this->form_context( $instance );
+		$this->form_close_group();
+
+		$this->form_open_group( 'customs' );
 		$this->form_open_widget( $instance );
 		$this->form_after_title( $instance );
 		$this->form_close_widget( $instance );
-		echo '</div>';
+		$this->form_close_group();
 
 		$this->after_form( $instance );
 	}

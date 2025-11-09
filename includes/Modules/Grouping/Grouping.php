@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\MetaBox;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -176,7 +174,7 @@ class Grouping extends gEditorial\Module
 				if ( $this->check_hidden_column( $column ) )
 					return;
 
-				echo Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
+				echo gEditorial\Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
 			}, 10, 3 );
 	}
 
@@ -190,7 +188,7 @@ class Grouping extends gEditorial\Module
 				$custom['menu']
 			);
 
-			Helper::renderUserTermsEditRow(
+			gEditorial\Helper::renderUserTermsEditRow(
 				$user->ID,
 				$custom['name'],
 				sprintf( $before, '-taxonomy-'.$custom['rewrite'] ).$icon,
@@ -236,7 +234,7 @@ class Grouping extends gEditorial\Module
 			if ( ! $taxonomy = get_taxonomy( $custom['name'] ) )
 				continue;
 
-			MetaBox::tableRowObjectTaxonomy(
+			gEditorial\MetaBox::tableRowObjectTaxonomy(
 				$taxonomy->name,
 				$user->ID,
 				$this->classs( $taxonomy->name, 'taxonomy' ),
@@ -253,7 +251,7 @@ class Grouping extends gEditorial\Module
 			return;
 
 		foreach ( $this->get_custom_taxonomies() as $custom )
-			MetaBox::storeObjectTaxonomy(
+			gEditorial\MetaBox::storeObjectTaxonomy(
 				$custom['name'],
 				$user_id,
 				self::req( $this->classs( $custom['name'], 'taxonomy' ) )

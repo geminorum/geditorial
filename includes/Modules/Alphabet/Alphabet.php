@@ -4,9 +4,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Misc;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Alphabet extends gEditorial\Module
@@ -38,7 +38,7 @@ class Alphabet extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Posts Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
 					'description' => _x( 'Customizes the alphabet list of posts short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
-					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
 					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'alphabet-posts',
@@ -48,7 +48,7 @@ class Alphabet extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Terms Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
 					'description' => _x( 'Customizes the alphabet list of terms short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
-					'after'       => Settings::fieldAfterShortCodeConstant(),
+					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
 					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'alphabet-terms',
@@ -67,7 +67,7 @@ class Alphabet extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -249,7 +249,7 @@ class Alphabet extends gEditorial\Module
 			$html = '<ul class="'.$this->key.'-letters -letters list-inline">'.$list.'</ul>'
 				.$fields.'<ul class="'.$this->key.'-definitions -definitions list-unstyled">'.$html.'</ul>';
 
-			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
+			$html = gEditorial\ShortCode::wrap( $html, $this->constant( 'shortcode_posts' ), $args );
 			$html = Core\Text::minifyHTML( $html );
 
 			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
@@ -405,7 +405,7 @@ class Alphabet extends gEditorial\Module
 			$html = '<ul class="'.$this->key.'-letters -letters list-inline">'.$list.'</ul>'
 				.$fields.'<ul class="'.$this->key.'-definitions -definitions list-unstyled">'.$html.'</ul>';
 
-			$html = ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
+			$html = gEditorial\ShortCode::wrap( $html, $this->constant( 'shortcode_terms' ), $args );
 			$html = Core\Text::minifyHTML( $html );
 
 			set_transient( $key, $html, 12 * HOUR_IN_SECONDS );
