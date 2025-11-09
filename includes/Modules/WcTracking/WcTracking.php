@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcTracking extends gEditorial\Module
@@ -19,7 +19,7 @@ class WcTracking extends gEditorial\Module
 			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Tracking', 'geditorial-admin' ),
 			'icon'     => [ 'misc-48', 'ir-post' ], // 'buddicons-tracking',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];
 	}
 

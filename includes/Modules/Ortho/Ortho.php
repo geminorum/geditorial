@@ -31,7 +31,7 @@ class Ortho extends gEditorial\Module
 			'icon'     => [ 'misc-32', 'pen' ],
 			'frontend' => FALSE,
 			'access'   => 'stable',
-			'disabled' => Helper::moduleCheckLocale( 'fa_IR' ),
+			'disabled' => Services\Modulation::moduleCheckLocale( 'fa_IR' ),
 		];
 	}
 

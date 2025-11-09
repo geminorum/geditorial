@@ -21,7 +21,7 @@ class WcPurchased extends gEditorial\Module
 			'icon'     => 'store',
 			'access'   => 'beta',
 			'frontend' => FALSE,
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];
 	}
 

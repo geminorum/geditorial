@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcCheckout extends gEditorial\Module
@@ -20,7 +20,7 @@ class WcCheckout extends gEditorial\Module
 			'icon'     => 'store',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'woocommerce',
 			],

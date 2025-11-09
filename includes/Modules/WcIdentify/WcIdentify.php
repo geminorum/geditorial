@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcIdentify extends gEditorial\Module
@@ -33,7 +34,7 @@ class WcIdentify extends gEditorial\Module
 			'desc'     => _x( 'Product Identification Enhancements', 'Modules: WC Identify', 'geditorial-admin' ),
 			'icon'     => 'store',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'gtin',
 				'woocommerce',

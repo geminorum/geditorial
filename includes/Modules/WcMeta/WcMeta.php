@@ -20,7 +20,7 @@ class WcMeta extends gEditorial\Module
 			'icon'     => 'tag',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'metafields',
 				'woocommerce',

@@ -20,7 +20,7 @@ class WcTerms extends gEditorial\Module
 			'icon'     => 'image-filter',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'woocommerce',
 			],

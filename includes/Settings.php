@@ -2511,7 +2511,7 @@ class Settings extends WordPress\Main
 	{
 		return FALSE === $module || 'config' == $module->name
 			? 'https://github.com/geminorum/geditorial/wiki'
-			: 'https://github.com/geminorum/geditorial/wiki/Modules-'.Helper::moduleSlug( $module->name );
+			: 'https://github.com/geminorum/geditorial/wiki/Modules-'.Services\Modulation::moduleSlug( $module->name );
 	}
 
 	public static function settingsCredits()
@@ -2606,7 +2606,7 @@ class Settings extends WordPress\Main
 
 		$page = FALSE === $module || 'config' === $module->name
 			? 'Home'
-			: 'Modules-'.Helper::moduleSlug( $module->name );
+			: 'Modules-'.Services\Modulation::moduleSlug( $module->name );
 
 		echo gnetwork_github( [
 			'repo'    => 'geminorum/geditorial',

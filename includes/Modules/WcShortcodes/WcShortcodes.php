@@ -19,7 +19,7 @@ class WcShortcodes extends gEditorial\Module
 			'desc'     => _x( 'Shortcode Enhancements for WooCommerce', 'Modules: WC Shortcodes', 'geditorial-admin' ),
 			'icon'     => 'media-code',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'shortcode',
 				'woocommerce',

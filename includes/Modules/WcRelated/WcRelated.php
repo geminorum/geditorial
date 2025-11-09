@@ -19,7 +19,7 @@ class WcRelated extends gEditorial\Module
 			'icon'     => 'tagcloud',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];
 	}
 

@@ -70,10 +70,10 @@ class Plugin extends WordPress\Plugin
 
 	public function plugins_loaded()
 	{
+		$this->setup_services();
 		$this->load_modules();
 		$this->load_options();
 		$this->init_modules();
-		$this->setup_services();
 
 		// \TenUp\ContentConnect\Plugin::instance();
 	}
@@ -119,38 +119,18 @@ class Plugin extends WordPress\Plugin
 			if ( ! file_exists( $this->_path.$module.'/'.$module.'.php' ) )
 				continue;
 
-			if ( $class = Helper::moduleClass( $module ) )
+			if ( $class = Services\Modulation::moduleClass( $module ) )
 				$this->register_module( call_user_func( [ $class, 'module' ] ), $module, $class );
 		}
 	}
 
+	// NOTE: public interface to register internal/external modules
 	public function register_module( $args = [], $folder = FALSE, $class = NULL )
 	{
-		if ( FALSE === $args )
+		if ( ! $registration = Services\Modulation::moduleObject( $args, $folder, $class ) )
 			return FALSE;
 
-		if ( ! isset( $args['name'], $args['title'] ) )
-			return FALSE;
-
-		// TODO: Move to `Modulation` Service
-		$defaults = [
-			'folder'     => $folder,
-			'class'      => $class ?: Helper::moduleClass( $args['name'], FALSE ),
-			'textdomain' => sprintf( '%s-%s', $this->base, Core\Text::sanitizeBase( $args['name'] ) ),   // or `NULL` for plugin base
-
-			'icon'      => 'screenoptions',   // `dashicons` class / SVG icon array
-			'configure' => TRUE,              // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
-			'i18n'      => TRUE,              // or `FALSE`, `adminonly`, `frontonly`, `restonly`
-			'frontend'  => TRUE,              // Whether or not the module should be loaded on the frontend
-			'autoload'  => FALSE,             // Auto-loading a module will remove the ability to enable/disable it
-			'disabled'  => FALSE,             // FALSE or string explaining why the module is not available
-			'access'    => 'unknown',         // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
-			'keywords'  => [],
-		];
-
-		$this->_modules->{$args['name']} = (object) array_merge( $defaults, $args );
-
-		return TRUE;
+		$this->_modules->{$registration[0]} = $registration[1];
 	}
 
 	private function load_options()
@@ -181,10 +161,10 @@ class Plugin extends WordPress\Plugin
 			if ( ! isset( $this->_options->{$mod_name} ) )
 				continue;
 
-			if ( ! Helper::moduleLoading( $module, $stage ) )
+			if ( ! Services\Modulation::moduleLoading( $module, $stage ) )
 				continue;
 
-			if ( $module->autoload || Helper::moduleEnabled( $this->_options->{$mod_name} ) ) {
+			if ( $module->autoload || Services\Modulation::moduleEnabled( $this->_options->{$mod_name} ) ) {
 
 				$class = $module->class;
 				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path, $locale );
@@ -300,7 +280,6 @@ class Plugin extends WordPress\Plugin
 		return TRUE;
 	}
 
-	// TODO: Move to `Modulation` Service
 	public function disable_process( $module, $context = 'import' )
 	{
 		// already not enabled!

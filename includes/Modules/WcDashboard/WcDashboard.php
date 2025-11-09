@@ -18,7 +18,7 @@ class WcDashboard extends gEditorial\Module
 			'desc'     => _x( 'Customer Dashboard Enhancements for WooCommerce', 'Modules: WC Dashboard', 'geditorial-admin' ),
 			'icon'     => 'dashboard',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'frontend',
 				'dashboard',

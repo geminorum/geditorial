@@ -358,7 +358,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'reports', 'settings' ), $sub );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 	}
 
 	public function admin_tools_load()
@@ -471,7 +471,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'tools', 'settings' ), $sub );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
@@ -493,7 +493,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'roles', 'settings' ), $sub );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 	}
 
 	// TODO: display download reports box for each module
@@ -708,7 +708,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'imports', 'settings' ), $sub );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 	}
 
 	public function admin_imports_page()
@@ -821,7 +821,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'customs', 'settings' ), $sub );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 	}
 
 	public function admin_customs_page()
@@ -946,7 +946,7 @@ class Config extends gEditorial\Module
 			if ( $this->module->name === $module->name )
 				continue;
 
-			if ( ! gEditorial\Helper::moduleLoading( $module, $stage ) )
+			if ( ! Services\Modulation::moduleLoading( $module, $stage ) )
 				continue;
 
 			$enabled = gEditorial()->enabled( $module->name, FALSE );
@@ -995,7 +995,7 @@ class Config extends gEditorial\Module
 			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
 
 		do_action( $this->hook_base( 'settings', 'load' ), $module );
-		gEditorial\Helper::enqueueVirastar();
+		Services\Modulation::enqueueVirastar();
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', gEditorial\Scripts::pkgListJS() ] );
 		gEditorial\Scripts::enqueueAdminSelectAll();

@@ -20,7 +20,7 @@ class WcUnits extends gEditorial\Module
 			'icon'     => 'image-crop',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];
 	}
 

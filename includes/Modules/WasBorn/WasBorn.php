@@ -975,7 +975,7 @@ class WasBorn extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_dob_data' ) => _x( 'Empty Date-of-Birth', 'Default Term: Audit', 'geditorial-was-born' ),
 			$this->constant( 'term_is_under_aged' )  => _x( 'Is Under-Aged', 'Default Term: Audit', 'geditorial-was-born' ),
 		] ) : $terms;

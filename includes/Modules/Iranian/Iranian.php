@@ -31,7 +31,7 @@ class Iranian extends gEditorial\Module
 			'icon'     => [ 'misc-1000', 'ir-map' ],
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckLocale( 'fa_IR' ),
+			'disabled' => Services\Modulation::moduleCheckLocale( 'fa_IR' ),
 			'keywords' => [
 				'publicapi',
 				'persian',

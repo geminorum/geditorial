@@ -643,7 +643,7 @@ class Identified extends gEditorial\Module
 			return new \WP_Error( 'cannot_create_post', gEditorial\Plugin::wrong( FALSE ) );
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
-			Helper::setTaxonomyAudit( $post_id, $this->constant( 'term_newpost_by_identifier' ) );
+			Services\Modulation::setTaxonomyAudit( $post_id, $this->constant( 'term_newpost_by_identifier' ) );
 
 		// NOTE: `$override` is false because it's new post
 		$this->posttypefields__do_action_import_data( $post_id, $raw, FALSE, FALSE, 'meta' );
@@ -690,7 +690,7 @@ class Identified extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_identification' )     => _x( 'Empty Identification', 'Default Term: Audit', 'geditorial-identified' ),
 			$this->constant( 'term_duplicate_identification' ) => _x( 'Duplicate Identification', 'Default Term: Audit', 'geditorial-identified' ),
 			$this->constant( 'term_invalid_identification' )   => _x( 'Invalid Identification', 'Default Term: Audit', 'geditorial-identified' ),

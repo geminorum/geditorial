@@ -300,7 +300,7 @@ class Driving extends gEditorial\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return gEditorial\Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Vehicle Data', 'Default Term: Audit', 'geditorial-driving' ),
 		] ) : $terms;
 	}

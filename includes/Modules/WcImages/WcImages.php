@@ -21,7 +21,7 @@ class WcImages extends gEditorial\Module
 			'configure' => 'tools',
 			'access'    => 'beta',
 			'frontend'  => FALSE,
-			'disabled'  => gEditorial\Helper::moduleCheckWooCommerce(),
+			'disabled'  => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords'  => [
 				'image',
 				'woocommerce',

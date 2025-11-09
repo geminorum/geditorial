@@ -3,7 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Helper;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WcLimited extends gEditorial\Module
@@ -17,7 +17,7 @@ class WcLimited extends gEditorial\Module
 			'desc'     => _x( 'Product Purchasing Limits for WooCommerce', 'Modules: WC Limited', 'geditorial-admin' ),
 			'icon'     => 'store',
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckWooCommerce(),
+			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];
 	}
 

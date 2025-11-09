@@ -1453,7 +1453,7 @@ class Importer extends gEditorial\Module
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
-			gEditorial\Helper::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
+			Services\Modulation::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
 	}
 
 	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )

@@ -25,7 +25,7 @@ class NationalLibrary extends gEditorial\Module
 			'desc'     => _x( 'Tools for National Library and Archives', 'Modules: National Library', 'geditorial-admin' ),
 			'icon'     => [ 'misc-88', 'nlai.ir' ],
 			'access'   => 'beta',
-			'disabled' => Helper::moduleCheckLocale( 'fa_IR' ),
+			'disabled' => Services\Modulation::moduleCheckLocale( 'fa_IR' ),
 			'keywords' => [
 				'book',
 				'publication',
