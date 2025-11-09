@@ -18,6 +18,7 @@ class Today extends gEditorial\Module
 
 	protected $__today = [];
 	protected $__posts = [];
+	protected $__home  = FALSE;
 
 	public static function module()
 	{
@@ -757,6 +758,7 @@ class Today extends gEditorial\Module
 
 			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), FALSE );
 			$this->__posts = ModuleHelper::getDayPost( $this->__today[$type], $constants );
+			$this->__home  = TRUE;
 
 		} else if ( 1 === $count && ! empty( $the_day['cal'] ) ) {
 
@@ -769,6 +771,7 @@ class Today extends gEditorial\Module
 			unset( $_the_day['year'] );
 
 			$this->__today = [ $the_day['cal'] => $_the_day ];
+			$this->__home  = TRUE;
 
 		} else if ( 3 === $count && empty( $the_day['year'] ) ) {
 
@@ -900,7 +903,7 @@ class Today extends gEditorial\Module
 		}
 
 		$_the_day   = Core\Arraay::getByKeyOrFirst( $this->__today, $type );
-		$navigation = ModuleHelper::theDayNavigation( $_the_day, $type );
+		$navigation = ModuleHelper::theDayNavigation( $_the_day, $type, ! $this->__home );
 		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $_the_day, $this->__posts );
 
 		if ( $navigation || $buttons ) {
@@ -1236,6 +1239,7 @@ class Today extends gEditorial\Module
 			'month'      => '',
 			'year'       => '',
 			'the_day'    => NULL,
+			'today'      => ! $this->__home,
 			'navigation' => TRUE,
 			'newposts'   => FALSE,
 			'posttypes'  => $this->posttypes(),
@@ -1257,7 +1261,7 @@ class Today extends gEditorial\Module
 
 		$html = '';
 
-		$navigation = $args['navigation'] ? ModuleHelper::theDayNavigation( $the_day, $this->default_calendar(), [] ) : [];
+		$navigation = $args['navigation'] ? ModuleHelper::theDayNavigation( $the_day, $this->default_calendar(), $args['today'], [] ) : [];
 		$buttons    = $args['newposts'] ? ModuleHelper::theDayNewConnected( $args['posttypes'], $the_day ) : [];
 
 		if ( $navigation || $buttons ) {

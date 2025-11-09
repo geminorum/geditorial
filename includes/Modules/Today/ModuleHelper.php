@@ -240,6 +240,7 @@ class ModuleHelper extends gEditorial\Helper
 			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
 			case 'month': unset( $the_day['day'] ); break;
 
+			case 'today'   : $path = sprintf( '%s/%s', $the_day['base'], $the_day['cal'] ); break;
 			case 'annual'  : unset( $the_day['year'] ); break;
 			case 'themonth': unset( $the_day['year'], $the_day['day'] ); break;
 
@@ -553,8 +554,7 @@ class ModuleHelper extends gEditorial\Helper
 		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
-	// TODO: add today button
-	public static function theDayNavigation( $the_day, $type = NULL, $fallback = FALSE )
+	public static function theDayNavigation( $the_day, $type = NULL, $today = NULL, $fallback = FALSE )
 	{
 		if ( empty( $the_day ) )
 			return $fallback;
@@ -567,6 +567,14 @@ class ModuleHelper extends gEditorial\Helper
 
 		$buttons = [];
 		$count   = count( $the_day );
+		$today   = $today ?? TRUE;     // WTF: we should compare the day with!
+
+		if ( $today )
+			$buttons['today'] = Core\HTML::button(
+				_x( 'Today', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( [ 'cal' => $the_day['cal'] ], 'today' ),
+				_x( 'Today in this Calendar', 'Title Attr', 'geditorial-today' )
+			);
 
 		if ( 2 === $count && ! empty( $the_day['year'] ) ) {
 
