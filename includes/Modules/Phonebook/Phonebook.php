@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Phonebook extends gEditorial\Module
@@ -353,7 +349,7 @@ class Phonebook extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -444,7 +440,7 @@ class Phonebook extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_empty_mobile_number' ), $taxonomy ) ) {
 
-			if ( Template::getMetaFieldRaw( 'mobile_number', $post->ID ) )
+			if ( gEditorial\Template::getMetaFieldRaw( 'mobile_number', $post->ID ) )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
@@ -697,6 +693,6 @@ class Phonebook extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Contacts', 'Header', 'geditorial-phonebook' ) ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class WasBorn extends gEditorial\Module
@@ -60,7 +56,7 @@ class WasBorn extends gEditorial\Module
 				),
 				'description' => _x( 'Defines date-of-birth meta-key for the post-type.', 'Setting Description', 'geditorial-was-born' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_dob_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_dob_metakey, 'code' ),
 				'placeholder' => $default_dob_metakey,
 				'default'     => $default_dob_metakey,
 			];
@@ -75,7 +71,7 @@ class WasBorn extends gEditorial\Module
 				'type'        => 'number',
 				'title'       => _x( 'Age of Majority', 'Setting Title', 'geditorial-was-born' ),
 				'description' => _x( 'The threshold of legal adulthood as recognized or declared in law.', 'Setting Description', 'geditorial-was-born' ),
-				'after'       => Settings::fieldAfterIcon( 'https://en.wikipedia.org/wiki/Age_of_majority' ),
+				'after'       => gEditorial\Settings::fieldAfterIcon( 'https://en.wikipedia.org/wiki/Age_of_majority' ),
 				'default'     => 18,
 			],
 			[
@@ -160,8 +156,8 @@ class WasBorn extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'year_taxonomy'  => Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
-			'group_taxonomy' => Info::getAgeStructure( TRUE ),
+			'year_taxonomy'  => gEditorial\Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
+			'group_taxonomy' => gEditorial\Info::getAgeStructure( TRUE ),
 			'main_taxonomy'  => [
 				'male'   => _x( 'Male', 'Default Term', 'geditorial-was-born' ),
 				'female' => _x( 'Female', 'Default Term', 'geditorial-was-born' ),
@@ -287,10 +283,10 @@ class WasBorn extends gEditorial\Module
 		$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'main_taxonomy' ), (array) $option, TRUE ) )
-			Listtable::restrictByTaxonomy( $this->constant( 'main_taxonomy' ) );
+			gEditorial\Listtable::restrictByTaxonomy( $this->constant( 'main_taxonomy' ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'group_taxonomy' ), (array) $option, TRUE ) )
-			Listtable::restrictByTaxonomy( $this->constant( 'group_taxonomy' ), FALSE, [
+			gEditorial\Listtable::restrictByTaxonomy( $this->constant( 'group_taxonomy' ), FALSE, [
 				'hide_empty'    => FALSE,
 				'hide_if_empty' => FALSE,
 			] );
@@ -298,7 +294,7 @@ class WasBorn extends gEditorial\Module
 
 	public function parse_query_admin_restrict( &$query )
 	{
-		Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
+		gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
 
 		$object    = WordPress\Taxonomy::object( $this->constant( 'group_taxonomy' ) );
 		$query_var = WordPress\Taxonomy::queryVar( $object );
@@ -456,7 +452,7 @@ class WasBorn extends gEditorial\Module
 
 			if ( count( $posttypes ) > 1 )
 				$text = vsprintf( '<b>%3$s</b> %1$s: <span title="%4$s">[%2$s]</span>', [
-					Helper::noopedCount( $count, $nooped[$posttype] ),
+					gEditorial\Helper::noopedCount( $count, $nooped[$posttype] ),
 					WordPress\Strings::trimChars( $title, 35 ),
 					Core\Number::format( $count ),
 					$title,
@@ -465,7 +461,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( Helper::noopedCount( $count, Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -551,7 +547,7 @@ class WasBorn extends gEditorial\Module
 
 			if ( count( $posttypes ) > 1 )
 				$text = vsprintf( '<b>%3$s</b> %1$s: <span title="%4$s">[%2$s]</span>', [
-					Helper::noopedCount( $count, $nooped[$posttype] ),
+					gEditorial\Helper::noopedCount( $count, $nooped[$posttype] ),
 					WordPress\Strings::trimChars( $title, 35 ),
 					Core\Number::format( $count ),
 					$title,
@@ -560,7 +556,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( Helper::noopedCount( $count, Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -622,14 +618,14 @@ class WasBorn extends gEditorial\Module
 				$text = vsprintf( '<b>%3$s</b> (%1$s) <span title="%4$s">[%2$s]</span>', [
 					$labels[$posttype],
 					WordPress\Strings::trimChars( $title, 35 ),
-					sprintf( Helper::noopedCount( $average, Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
+					sprintf( gEditorial\Helper::noopedCount( $average, gEditorial\Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
 					$title,
 				] );
 
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( Helper::noopedCount( $average, Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
+					sprintf( gEditorial\Helper::noopedCount( $average, gEditorial\Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
 				] );
 
 			$classes = [
@@ -701,7 +697,7 @@ class WasBorn extends gEditorial\Module
 
 			if ( count( $posttypes ) > 1 )
 				$text = vsprintf( '<b>%3$s</b> %1$s: <span title="%4$s">[%2$s]</span>', [
-					Helper::noopedCount( $count, $nooped[$posttype] ),
+					gEditorial\Helper::noopedCount( $count, $nooped[$posttype] ),
 					WordPress\Strings::trimChars( $title, 35 ),
 					Core\Number::format( $count ),
 					$title,
@@ -710,7 +706,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( Helper::noopedCount( $count, Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -791,7 +787,7 @@ class WasBorn extends gEditorial\Module
 
 				if ( count( $posttypes ) > 1 )
 					$text = vsprintf( '<b title="%5$s">%3$s</b> %1$s: <span title="%4$s">[%2$s]</span>', [
-						Helper::noopedCount( $count, $nooped[$posttype] ),
+						gEditorial\Helper::noopedCount( $count, $nooped[$posttype] ),
 						WordPress\Strings::trimChars( $name, 35 ),
 						Core\Number::format( $count ),
 						$name,
@@ -801,7 +797,7 @@ class WasBorn extends gEditorial\Module
 				else
 					$text = vsprintf( '<b>%2$s</b> <span title="%3$s">[%1$s]</span>', [
 						$name,
-						sprintf( Helper::noopedCount( $count, Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+						sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
 						$span,
 					] );
 
@@ -962,7 +958,7 @@ class WasBorn extends gEditorial\Module
 		printf( $before, '-date-of-birth' );
 		echo $this->get_column_icon();
 
-		echo Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
+		echo gEditorial\Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
 
 		if ( Core\Date::isUnderAged( $dob, $legal, $cal ) )
 			printf( ' (<span class="%s">%s</span>)', '-color-danger -is-under-aged',
@@ -1033,7 +1029,7 @@ class WasBorn extends gEditorial\Module
 		$data['source']['dob']['cal']           = $cal;
 		$data['source']['dob']['age']           = Core\Date::calculateAge( $dob, $cal );
 		$data['source']['dob']['is_under_aged'] = Core\Date::isUnderAged( $dob, $legal, $cal );
-		$data['source']['rendered']['dob']      = Datetime::prepDateOfBirth( $dob, NULL, FALSE, $cal );
+		$data['source']['rendered']['dob']      = gEditorial\Datetime::prepDateOfBirth( $dob, NULL, FALSE, $cal );
 		$data['source']['rendered']['age']      = Core\Number::localize( $data['source']['dob']['age'] );
 
 		return $data;
@@ -1049,12 +1045,12 @@ class WasBorn extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
 
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
 		if ( ! count( $posttypes ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->postdate__render_card_override_dates(
@@ -1065,7 +1061,7 @@ class WasBorn extends gEditorial\Module
 			);
 
 		else
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
 	}
@@ -1099,17 +1095,17 @@ class WasBorn extends gEditorial\Module
 		$result = wp_set_object_terms( $post->ID, $terms, $taxonomy, FALSE );
 
 		if ( self::isError( $result ) )
-			return Settings::processingListItem( $verbose,
+			return gEditorial\Settings::processingListItem( $verbose,
 				/* translators: `%1$s`: year taxonomy, `%2$s`: post title */
 				_x( 'There is problem updating year taxonomy (%1$s) for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
 					Core\HTML::code( $year ),
 					WordPress\Post::title( $post ),
 				] );
 
-		return Settings::processingListItem( $verbose,
+		return gEditorial\Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: date-time, `%2$s`: year taxonomy, `%3$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set with %2$s year on &ldquo;%3$s&rdquo;.', 'Notice', 'geditorial-was-born' ), [
-				Core\HTML::code( Datetime::prepDateOfBirth( trim( $datetime ), NULL, $this->default_calendar() ) ),
+				Core\HTML::code( gEditorial\Datetime::prepDateOfBirth( trim( $datetime ), NULL, $this->default_calendar() ) ),
 				Core\HTML::code( $year ),
 				WordPress\Post::title( $post ),
 			], TRUE );

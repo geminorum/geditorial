@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -36,7 +36,7 @@ class WcTracking extends gEditorial\Module
 					'description' => _x( 'Defines the meta-key that stored the tracking identifier data. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => 'post_barcode',
 					'field_class' => [ 'regular-text', 'code-text' ],
-					'after'       => Settings::fieldAfterIcon( 'https://github.com/MahdiY/Persian-woocommerce-shipping' ),
+					'after'       => gEditorial\Settings::fieldAfterIcon( 'https://github.com/MahdiY/Persian-woocommerce-shipping' ),
 				],
 				[
 					'field'       => 'service_template',
@@ -45,7 +45,7 @@ class WcTracking extends gEditorial\Module
 					'description' => _x( 'Defines the template that used to build the url to the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => 'https://tracking.post.ir/?id=%s',
 					'field_class' => [ 'regular-text', 'code-text' ],
-					'after'       => Settings::fieldAfterIcon( 'https://tracking.post.ir' ),
+					'after'       => gEditorial\Settings::fieldAfterIcon( 'https://tracking.post.ir' ),
 				],
 				[
 					'field'       => 'service_icon',
@@ -54,7 +54,7 @@ class WcTracking extends gEditorial\Module
 					'description' => _x( 'Defines the image that used as visual identifier of the tracking service. Leave empty to use default.', 'Setting Description', 'geditorial-wc-tracking' ),
 					'placeholder' => $icon,
 					'field_class' => [ 'regular-text', 'url-text' ],
-					'after'       => Settings::fieldAfterIcon( $icon, _x( 'View Default Icon', 'Setting Icon', 'geditorial-wc-tracking' ), 'external' ),
+					'after'       => gEditorial\Settings::fieldAfterIcon( $icon, _x( 'View Default Icon', 'Setting Icon', 'geditorial-wc-tracking' ), 'external' ),
 				],
 			],
 			'_defaults' => [

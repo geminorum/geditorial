@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 // @SEE: `Evaluation` Module
@@ -260,7 +256,7 @@ class Physical extends gEditorial\Module
 						if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 							$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-						Scripts::enqueueColorBox();
+						gEditorial\Scripts::enqueueColorBox();
 					}
 				}
 			}
@@ -323,10 +319,10 @@ class Physical extends gEditorial\Module
 		if ( ! array_key_exists( 'mass_in_kg', $fields ) || ! array_key_exists( 'stature_in_cm', $fields ) )
 			return;
 
-		if ( ! $mass = Template::getMetaFieldRaw( 'mass_in_kg', $post->ID, 'units' ) )
+		if ( ! $mass = gEditorial\Template::getMetaFieldRaw( 'mass_in_kg', $post->ID, 'units' ) )
 			return;
 
-		if ( ! $stature = Template::getMetaFieldRaw( 'stature_in_cm', $post->ID, 'units' ) )
+		if ( ! $stature = gEditorial\Template::getMetaFieldRaw( 'stature_in_cm', $post->ID, 'units' ) )
 			return;
 
 		// FIXME: passing age/gender
@@ -355,6 +351,6 @@ class Physical extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Physical Examinations', 'Header', 'geditorial-physical' ) ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

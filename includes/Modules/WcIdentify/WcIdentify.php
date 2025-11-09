@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -68,7 +66,7 @@ class WcIdentify extends gEditorial\Module
 					'field'       => 'gtin_exemptions',
 					'title'       => _x( 'GTIN Exemptions', 'Setting Title', 'geditorial-wc-identify' ),
 					'description' => _x( 'Instructs output structured data that a valid identifier for the product doesn\'t exist.', 'Setting Description', 'geditorial-wc-identify' ),
-					'after'       => Settings::fieldAfterIcon( 'https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/' ),
+					'after'       => gEditorial\Settings::fieldAfterIcon( 'https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/' ),
 				],
 			],
 		];
@@ -100,7 +98,7 @@ class WcIdentify extends gEditorial\Module
 			'raw'    => $raw,
 			'gtin'   => $gtin,
 			'prep'   => Core\ISBN::prep( $raw, TRUE ),
-			'link'   => Info::lookupISBN( $gtin ),
+			'link'   => gEditorial\Info::lookupISBN( $gtin ),
 			'label'  => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
 			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
 		];
@@ -119,7 +117,7 @@ class WcIdentify extends gEditorial\Module
 			if ( $gtin = $product->get_global_unique_id() )
 				$before[$this->classs( 'gtin' )] = [
 					'label' => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
-					'value' => $this->get_setting( 'gtin_lookup' ) ? Info::lookupISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
+					'value' => $this->get_setting( 'gtin_lookup' ) ? gEditorial\Info::lookupISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
 				];
 		}
 
@@ -173,7 +171,7 @@ class WcIdentify extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}

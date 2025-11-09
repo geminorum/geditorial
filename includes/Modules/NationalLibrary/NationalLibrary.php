@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class NationalLibrary extends gEditorial\Module
@@ -60,7 +56,7 @@ class NationalLibrary extends gEditorial\Module
 				),
 				'description' => _x( 'Defines Bib meta-key for the post-type.', 'Setting Description', 'geditorial-national-library' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $bib_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $bib_metakey, 'code' ),
 				'placeholder' => $bib_metakey,
 				'default'     => $bib_metakey,
 			];
@@ -75,7 +71,7 @@ class NationalLibrary extends gEditorial\Module
 				),
 				'description' => _x( 'Defines ISBN meta-key for the post-type.', 'Setting Description', 'geditorial-national-library' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $isbn_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $isbn_metakey, 'code' ),
 				'placeholder' => $isbn_metakey,
 				'default'     => $isbn_metakey,
 			];
@@ -951,7 +947,7 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! $html )
 			return $content;
 
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 
 	public function tools_settings( $sub )
@@ -962,7 +958,7 @@ class NationalLibrary extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
+				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_scrape_pool() )
 						WordPress\Redirect::doReferer( 'huh' );

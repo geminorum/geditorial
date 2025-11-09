@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -132,7 +133,7 @@ class WcAttributes extends gEditorial\Module
 	/**
 	 * Adds the URL field to the edit attribute term form.
 	 *
-	 * @param  object $term
+	 * @param object $term
 	 * @return void
 	 */
 	public function edit_attribute_url_meta_field( $term )
@@ -166,7 +167,7 @@ class WcAttributes extends gEditorial\Module
 	/**
 	 * Saves the URL field for attribute terms.
 	 *
-	 * @param  int $term_id
+	 * @param int $term_id
 	 * @return void
 	 */
 	public function save_attribute_url( $term_id )
@@ -198,7 +199,7 @@ class WcAttributes extends gEditorial\Module
 	 *
 	 * @param string $filtered
 	 * @param object $attribute
-	 * @param array  $values
+	 * @param array $values
 	 * @return void
 	 */
 	public function attribute_linkable_attributes( $filtered, $attribute, $values )

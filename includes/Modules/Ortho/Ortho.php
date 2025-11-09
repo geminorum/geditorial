@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 use geminorum\gNetwork\Core\Orthography;
@@ -166,7 +163,7 @@ class Ortho extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -216,7 +213,7 @@ class Ortho extends gEditorial\Module
 		if ( $this->virastar_enqueued )
 			return TRUE;
 
-		$virastar = Scripts::registerPackage( 'virastar',
+		$virastar = gEditorial\Scripts::registerPackage( 'virastar',
 			NULL, [], ModuleInfo::VIRASTAR_VERSION );
 
 		// cleanup
@@ -237,7 +234,7 @@ class Ortho extends gEditorial\Module
 		if ( $this->persiantools_enqueued )
 			return TRUE;
 
-		$persiantools = Scripts::registerPackage( 'persiantools',
+		$persiantools = gEditorial\Scripts::registerPackage( 'persiantools',
 			NULL, [], ModuleInfo::PERSIANTOOLS_VERSION );
 
 		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
@@ -405,7 +402,7 @@ class Ortho extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( Tablelist::isAction( 'cleanup_chars', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'cleanup_chars', TRUE ) ) {
 
 					$count = 0;
 
@@ -434,7 +431,7 @@ class Ortho extends gEditorial\Module
 		if ( 'none' != $char )
 			$query['s'] = $extra['char'] = $char;
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Core\HTML::dropdown( [
 			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
@@ -443,20 +440,20 @@ class Ortho extends gEditorial\Module
 			'name'       => 'char',
 			'selected'   => self::req( 'char', 'none' ),
 			'none_value' => 'none',
-			'none_title' => Settings::showOptionNone(),
+			'none_title' => gEditorial\Settings::showOptionNone(),
 		] );
 
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		$columns = [
 			'_cb'     => 'ID',
-			'ID'      => Tablelist::columnPostID(),
-			'date'    => Tablelist::columnPostDate(),
-			'type'    => Tablelist::columnPostType(),
-			'title'   => Tablelist::columnPostTitle(),
-			'excerpt' => Tablelist::columnPostExcerpt(),
+			'ID'      => gEditorial\Tablelist::columnPostID(),
+			'date'    => gEditorial\Tablelist::columnPostDate(),
+			'type'    => gEditorial\Tablelist::columnPostType(),
+			'title'   => gEditorial\Tablelist::columnPostTitle(),
+			'excerpt' => gEditorial\Tablelist::columnPostExcerpt(),
 		];
 
 		if ( gEditorial()->enabled( 'meta' ) )

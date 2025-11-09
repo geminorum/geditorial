@@ -49,7 +49,7 @@ trait CorePostTypes
 			'delete_with_user'    => FALSE,
 			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
 
-			/// gEditorial Props
+			/// gEditorial Props // TODO: move to settings
 			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
 			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => FALSE,  // @SEE: `hook_taxonomy_metabox_mainbox()`
 

@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Personage extends gEditorial\Module
@@ -356,7 +351,7 @@ class Personage extends gEditorial\Module
 		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => FALSE,
 
-			MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
+			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
 			'is_viewable'       => $viewable,
 			'custom_icon'       => $this->module->icon,
@@ -515,7 +510,7 @@ class Personage extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
@@ -669,7 +664,7 @@ class Personage extends gEditorial\Module
 			return $data;
 
 		if ( $vcard = ModuleTemplate::vcard( [ 'id' => $post, 'echo' => FALSE, 'default' => '' ] ) ) {
-			$data['___sides']['meta'].= Core\HTML::wrap( Scripts::markupQRCodeSVG( $vcard, [ 'width' => 128, 'height' => 128, 'ecl' => 'H' ] ), '-qrcode-vcard' );
+			$data['___sides']['meta'].= Core\HTML::wrap( gEditorial\Scripts::markupQRCodeSVG( $vcard, [ 'width' => 128, 'height' => 128, 'ecl' => 'H' ] ), '-qrcode-vcard' );
 			// TODO: download VCard button after the qr-code
 			$data['___flags'][] = 'needs-qrcode';
 		}
@@ -699,7 +694,7 @@ class Personage extends gEditorial\Module
 			$data['source']['rendered']['vcarddata'] = $vcard;
 
 		if ( in_array( 'needs-securitytoken', $data['profile']['flags'], TRUE ) )
-			$data['tokens'][] = Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
+			$data['tokens'][] = gEditorial\Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
 
 		return $data;
 	}
@@ -726,7 +721,7 @@ class Personage extends gEditorial\Module
 			$row['rendered']['vcarddata'] = $vcard;
 
 		if ( in_array( 'needs-securitytoken', $row['flags'], TRUE ) )
-			$row['tokens'][] = Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
+			$row['tokens'][] = gEditorial\Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
 
 		return $row;
 	}
@@ -1023,7 +1018,7 @@ class Personage extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
+				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_parse_pool() )
 						WordPress\Redirect::doReferer( 'huh' );
@@ -1054,7 +1049,7 @@ class Personage extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 
 	public function imports_settings( $sub )
@@ -1077,7 +1072,7 @@ class Personage extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			Info::renderNoImportsAvailable();
+			gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
 	}
@@ -1100,7 +1095,7 @@ class Personage extends gEditorial\Module
 		$posttype = $this->constant( 'main_posttype' );
 
 		if ( ! $fullname = Services\PostTypeFields::isAvailable( 'fullname', $posttype, 'meta' ) )
-			return Info::renderNotSupportedField();
+			return gEditorial\Info::renderNotSupportedField();
 
 		$this->raise_resources();
 

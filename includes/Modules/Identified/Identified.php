@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Identified extends gEditorial\Module
@@ -52,7 +50,7 @@ class Identified extends gEditorial\Module
 				),
 				'description' => _x( 'Defines identifier meta-key for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_metakey, 'code' ),
 				'placeholder' => $default_metakey,
 				'default'     => $default_metakey,
 			];
@@ -110,7 +108,7 @@ class Identified extends gEditorial\Module
 					WordPress\Strings::getJoined( [ Core\HTML::code( 'type' ), Core\HTML::code( 'data' ) ] )
 				),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_template, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_template, 'code' ),
 				'placeholder' => $default_template,
 				'default'     => $default_template,
 			];

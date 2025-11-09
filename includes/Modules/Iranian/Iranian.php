@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Iranian extends gEditorial\Module
@@ -62,7 +59,7 @@ class Iranian extends gEditorial\Module
 				),
 				'description' => _x( 'Defines identity meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_identity_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_identity_metakey, 'code' ),
 				'placeholder' => $default_identity_metakey,
 				'default'     => $default_identity_metakey,
 			];
@@ -77,7 +74,7 @@ class Iranian extends gEditorial\Module
 				),
 				'description' => _x( 'Defines location meta-key for the post-type.', 'Setting Description', 'geditorial-iranian' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'after'       => Settings::fieldAfterText( $default_location_metakey, 'code' ),
+				'after'       => gEditorial\Settings::fieldAfterText( $default_location_metakey, 'code' ),
 				'placeholder' => $default_identity_metakey,
 				'default'     => $default_location_metakey,
 			];
@@ -239,7 +236,7 @@ class Iranian extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
@@ -256,13 +253,13 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		if ( ! $data = $this->get_imports_raw_data( 'identity-locations', 'json' ) )
-			return Info::renderNoDataAvailable();
+			return gEditorial\Info::renderNoDataAvailable();
 
 		$this->raise_resources();
 
@@ -282,7 +279,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
 
 		$available = FALSE;
 		$parents   = $this->get_setting_posttypes( 'parent' );
@@ -295,7 +292,7 @@ class Iranian extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
 	}
@@ -312,10 +309,10 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 
@@ -421,7 +418,7 @@ class Iranian extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen( _x( 'Iranian Reports', 'Header', 'geditorial-iranian' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Reports', 'Header', 'geditorial-iranian' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();
@@ -433,7 +430,7 @@ class Iranian extends gEditorial\Module
 			$available = TRUE;
 
 		if ( ! $available )
-			Info::renderNoReportsAvailable();
+			gEditorial\Info::renderNoReportsAvailable();
 
 		echo '</div>';
 	}
@@ -453,10 +450,10 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 
@@ -474,10 +471,10 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return Info::renderEmptyPosttype();
+			return gEditorial\Info::renderEmptyPosttype();
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return Info::renderNotSupportedPosttype();
+			return gEditorial\Info::renderNotSupportedPosttype();
 
 		$this->raise_resources();
 

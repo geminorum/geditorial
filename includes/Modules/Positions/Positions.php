@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Positions extends gEditorial\Module
@@ -294,7 +291,7 @@ class Positions extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 
@@ -333,7 +330,7 @@ class Positions extends gEditorial\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'checkprofile' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'checkprofile' );
 
-					Scripts::enqueueColorBox();
+					gEditorial\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -414,7 +411,7 @@ class Positions extends gEditorial\Module
 					'href'  => $this->_get_clear_link( $object, $profile, $context ),
 					'class' => [ 'button', '-button', '-button-icon', '-mountbutton', '-button-danger' ],
 					'title' => _x( 'Click to Clear the Position Profile', 'Button Title', 'geditorial-positions' ),
-				], Settings::getButtonConfirm() ), $label );
+				], gEditorial\Settings::getButtonConfirm() ), $label );
 			}
 
 			if ( count( $buttons ) )

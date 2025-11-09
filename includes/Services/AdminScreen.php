@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class AdminScreen extends gEditorial\Service
@@ -125,7 +124,7 @@ class AdminScreen extends gEditorial\Service
 		add_action( 'edit_form_after_title', static function ( $post ) {
 
 			$title = WordPress\Post::title( $post );
-			$after = Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated.', 'Service: AdminScreen: ReadOnly Title Info', 'geditorial-admin' ) );
+			$after = gEditorial\Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated.', 'Service: AdminScreen: ReadOnly Title Info', 'geditorial-admin' ) );
 
 			echo Core\HTML::wrap(
 				$title.' '.$after,
