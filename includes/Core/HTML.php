@@ -1156,7 +1156,6 @@ class HTML extends Base
 		echo $html;
 	}
 
-	// FIXME: must use internal `add_query_arg()` and remove `message`/`count` args
 	public static function tableNavigation( $pagination = [] )
 	{
 		$args = self::atts( [
@@ -1211,8 +1210,10 @@ class HTML extends Base
 
 			echo self::tag( 'a', [
 				'href' => add_query_arg( array_merge( $args['extra'], [
-					'order' => ( 'ASC' === $args['order'] ) ? 'desc' : 'asc',
-					'limit' => $args['limit'],
+					'message' => FALSE,
+					'count'   => FALSE,
+					'order'   => ( 'ASC' === $args['order'] ) ? 'desc' : 'asc',
+					'limit'   => $args['limit'],
 			 ] ) ),
 				'class' => '-order -link button -icon',
 			], $icons['order'] );
@@ -1241,16 +1242,20 @@ class HTML extends Base
 			} else {
 				echo self::tag( 'a', [
 					'href' => add_query_arg( array_merge( $args['extra'], [
-						'paged' => FALSE,
-						'limit' => $args['limit'],
+						'message' => FALSE,
+						'count'   => FALSE,
+						'paged'   => FALSE,
+						'limit'   => $args['limit'],
 					] ) ),
 					'class' => '-first -link button -icon',
 				], $icons['first'] );
 				echo '&nbsp;';
 				echo self::tag( 'a', [
 					'href' => add_query_arg( array_merge( $args['extra'], [
-						'paged' => $args['previous'],
-						'limit' => $args['limit'],
+						'message' => FALSE,
+						'count'   => FALSE,
+						'paged'   => $args['previous'],
+						'limit'   => $args['limit'],
 					] ) ),
 					'class' => '-previous -link button -icon',
 				], $icons['previous'] );
@@ -1259,8 +1264,10 @@ class HTML extends Base
 			echo '&nbsp;';
 			echo self::tag( 'a', [
 				'href' => add_query_arg( array_merge( $args['extra'], [
-					'paged' => $args['paged'],
-					'limit' => $args['limit'],
+					'message' => FALSE,
+					'count'   => FALSE,
+					'paged'   => $args['paged'],
+					'limit'   => $args['limit'],
 				] ) ),
 				'class' => '-refresh -link button -icon',
 			], $icons['refresh'] );
@@ -1273,8 +1280,10 @@ class HTML extends Base
 			} else {
 				echo self::tag( 'a', [
 					'href' => add_query_arg( array_merge( $args['extra'], [
-						'paged' => $args['next'],
-						'limit' => $args['limit'],
+						'message' => FALSE,
+						'count'   => FALSE,
+						'paged'   => $args['next'],
+						'limit'   => $args['limit'],
 					] ) ),
 					'class' => '-next -link button -icon',
 				], $icons['next'] );
@@ -1284,7 +1293,9 @@ class HTML extends Base
 				if ( $args['pages'] )
 					echo self::tag( 'a', [
 						'href' => add_query_arg( array_merge( $args['extra'], [
-							'paged' => $args['pages'],
+							'message' => FALSE,
+							'count'   => FALSE,
+							'paged'   => $args['pages'],
 							'limit' => $args['limit'],
 					 	] ) ),
 						'class' => '-last -link button -icon',

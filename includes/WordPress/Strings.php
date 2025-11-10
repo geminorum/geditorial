@@ -120,10 +120,10 @@ class Strings extends Core\Base
 	 * Separates given string by set of delimiters into an array.
 	 *
 	 * @param string $string
-	 * @param null|string|array $delimiters
-	 * @param null|int $limit
+	 * @param string|array $delimiters
+	 * @param int $limit
 	 * @param string $delimiter
-	 * @return array $separated
+	 * @return array
 	 */
 	public static function getSeparated( $string, $delimiters = NULL, $limit = NULL, $delimiter = '|' )
 	{
@@ -274,12 +274,12 @@ class Strings extends Core\Base
 
 	/**
 	 * Filters text content and strips out disallowed HTML.
-	 * wrapper for `wp_kses()`
+	 * NOTE: wrapper for `wp_kses()`
 	 *
-	 * @param  string $text
-	 * @param  string $context
-	 * @param  array $allowed
-	 * @return string $filtered
+	 * @param string $text
+	 * @param string $context
+	 * @param array $allowed
+	 * @return string
 	 */
 	public static function kses( $text, $context = 'none', $allowed = NULL )
 	{
@@ -344,6 +344,7 @@ class Strings extends Core\Base
 		return $autop ? wpautop( $text ) : $text;
 	}
 
+	// TODO: move to `Misc\PersianAddress`
 	public static function prepAddress( $data, $context = 'display', $fallback = FALSE )
 	{
 		if ( self::empty( $data ) )
