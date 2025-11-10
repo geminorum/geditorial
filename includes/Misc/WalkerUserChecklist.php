@@ -2,8 +2,9 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core\HTML;
-use geminorum\gEditorial\WordPress\Term;
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class WalkerUserChecklist extends \Walker
 {
@@ -14,13 +15,13 @@ class WalkerUserChecklist extends \Walker
 	{
 		$value = FALSE;
 
-		// FIXME: waiting for WP 5.0 to use `meta_box_sanitize_cb` in the user tax
+		// FIXME: waiting for @since WP 5.0 to use `meta_box_sanitize_cb` in the user tax
 		// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
 
 		// FIXME: also the tax must change back to non-hierarchical
 		// $value = $user->user_login;
 
-		if ( $term = Term::get( $user->user_login, $args['taxonomy'] ) )
+		if ( $term = WordPress\Term::get( $user->user_login, $args['taxonomy'] ) )
 			$value = $term->term_id;
 
 		if ( ! empty( $args['atts']['name'] ) )
@@ -37,21 +38,21 @@ class WalkerUserChecklist extends \Walker
 			if ( in_array( $user->user_login, (array) $args['selected'] ) ) {
 				$inner_class.= ' selected -selected';
 				$aria_checked = 'true';
-				// $icon_after   = HTML::getDashicon( 'yes' ); // working but no need
+				// $icon_after   = Core\HTML::getDashicon( 'yes' ); // working but no need
 			}
 
 			$output.= '<li class="-user">'
 				.'<div class="'.$inner_class.'" data-term-id='.$term->term_id
 				.' tabindex="0" role="checkbox" aria-checked="'.$aria_checked.'">'
 				.( get_option( 'show_avatars' ) ? get_avatar( $user->ID, 16 ) : '' )
-				.'<span class="-name">'.HTML::escape( $user->display_name ).'</span> '
+				.'<span class="-name">'.Core\HTML::escape( $user->display_name ).'</span> '
 				.'<code class="-login">&#8206;@'.$user->user_login.'&#8207;</code>'
 				.$icon_after.'</div>';
 
 		} else {
 
 			$output.= "\n".'<li class="-user"><label>'.
-				HTML::tag( 'input', [
+				Core\HTML::tag( 'input', [
 					'type'     => 'checkbox',
 					'name'     => $name.'[]',
 					'value'    => $value, // $user->user_login,
@@ -59,9 +60,9 @@ class WalkerUserChecklist extends \Walker
 					'disabled' => ! empty( $args['disabled'] ) || ! $value,
 				] )
 				.( get_option( 'show_avatars' ) ? get_avatar( $user->ID, 32 ) : '' )
-				.' <span class="-name">'.HTML::escape( $user->display_name ).'</span>'
+				.' <span class="-name">'.Core\HTML::escape( $user->display_name ).'</span>'
 				.' <code class="-login">&#8206;@'.$user->user_login.'&#8207;</code>'
-				.'<br /><span class="-email code">'.HTML::mailto( $user->user_email ).'</span></label>';
+				.'<br /><span class="-email code">'.Core\HTML::mailto( $user->user_email ).'</span></label>';
 		}
 	}
 

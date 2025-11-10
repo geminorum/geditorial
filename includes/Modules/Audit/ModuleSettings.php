@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
@@ -41,7 +40,7 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		$query = [];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();

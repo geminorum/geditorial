@@ -119,7 +119,7 @@ class Plugin extends WordPress\Plugin
 			if ( ! file_exists( $this->_path.$module.'/'.$module.'.php' ) )
 				continue;
 
-			if ( $class = Services\Modulation::moduleClass( $module ) )
+			if ( $class = Services\Modulation::moduleClass( $module, TRUE, __NAMESPACE__.'\\Modules' ) )
 				$this->register_module( call_user_func( [ $class, 'module' ] ), $module, $class );
 		}
 	}

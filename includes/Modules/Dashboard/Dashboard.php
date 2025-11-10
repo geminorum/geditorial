@@ -4,7 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Dashboard extends gEditorial\Module
@@ -33,7 +34,7 @@ class Dashboard extends gEditorial\Module
 					'title'       => _x( 'Dashboard Page', 'Setting Title', 'geditorial-dashboard' ),
 					'description' => _x( 'Displays the selected page as dashboard page.', 'Setting Description', 'geditorial-dashboard' ),
 					'default'     => '0',
-					'exclude'     => Settings::getPageExcludes( [ 'front' ] ),
+					'exclude'     => gEditorial\Settings::getPageExcludes( [ 'front' ] ),
 				],
 				[
 					'field'       => 'dashboard_navmenu',
@@ -44,10 +45,16 @@ class Dashboard extends gEditorial\Module
 				'widget_support',
 			],
 			'_frontend' => [
-				/* translators: `%s`: HTML word */
-				'before_content' => sprintf( _x( 'Adds %s before contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ), '<code>HTML</code>' ),
-				/* translators: `%s`: HTML word */
-				'after_content'  => sprintf( _x( 'Adds %s after contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ), '<code>HTML</code>' ),
+				'before_content' => sprintf(
+					/* translators: `%s`: HTML word */
+					_x( 'Adds %s before contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
+					Core\HTML::code( 'HTML' )
+				),
+				'after_content'  => sprintf(
+					/* translators: `%s`: HTML word */
+					_x( 'Adds %s after contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
+					Core\HTML::code( 'HTML' )
+				),
 			],
 		];
 	}

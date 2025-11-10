@@ -908,8 +908,9 @@ class Today extends gEditorial\Module
 
 		if ( $navigation || $buttons ) {
 
-			if ( $admin )
-				echo $this->wrap_open_buttons();
+			echo $admin
+				? $this->wrap_open_buttons()
+				: $this->wrap_open( [ '-buttons', '-navigation' ] );
 
 				if ( $navigation )
 					echo implode( '&nbsp;&nbsp;', $navigation );
@@ -920,8 +921,7 @@ class Today extends gEditorial\Module
 				if ( $buttons )
 					echo implode( '&nbsp;&nbsp;', $buttons );
 
-			if ( $admin )
-				echo '</p>';
+			echo $admin ? '</p>' : '</div>';
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
@@ -1266,7 +1266,7 @@ class Today extends gEditorial\Module
 
 		if ( $navigation || $buttons ) {
 
-			$html.= $this->wrap_open( '-buttons', '-navigation' );
+			$html.= $this->wrap_open( [ '-buttons', '-navigation' ] );
 
 				if ( $navigation )
 					$html.= implode( '&nbsp;&nbsp;', $navigation );

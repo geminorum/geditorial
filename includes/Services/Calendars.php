@@ -44,6 +44,9 @@ class Calendars extends gEditorial\Service
 	{
 		global $wp_query;
 
+		if ( is_robots() || is_favicon() )
+			return;
+
 		if ( ! array_key_exists( static::REWRITE_ENDPOINT_QUERY, $wp_query->query_vars ) )
 			return;
 

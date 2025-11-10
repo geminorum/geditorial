@@ -115,6 +115,9 @@ class Like extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() )
+			return;
+
 		if ( is_embed() || is_search() )
 			return;
 

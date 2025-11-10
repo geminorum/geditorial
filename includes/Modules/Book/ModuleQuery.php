@@ -7,19 +7,19 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class ModuleQuery extends \WP_Query
 {
 
-	private $cpt = 'publication';
-	private $tax = 'publication_category';
+	private $_posttype = 'publication';
+	private $_taxonomy = 'publication_category';
 
 	public function __construct( $args = [] )
 	{
-		$this->cpt = gEditorial()->constant( 'book', 'main_posttype', 'publication' );
-		$this->tax = gEditorial()->constant( 'book', 'category_taxonomy', 'publication_category' );
+		$this->_posttype = gEditorial()->constant( 'book', 'main_posttype', 'publication' );
+		$this->_taxonomy = gEditorial()->constant( 'book', 'category_taxonomy', 'publication_category' );
 
 		// force these args
 		$args = array_merge( $args, [
-			'post_type'              => $this->cpt,
-			'posts_per_page'         => -1, // turn off paging
-			'no_found_rows'          => TRUE, // optimize query for no paging
+			'post_type'              => $this->_posttype,
+			'posts_per_page'         => -1,                 // turn off paging
+			'no_found_rows'          => TRUE,               // optimize query for no paging
 			'update_post_term_cache' => FALSE,
 			'update_post_meta_cache' => FALSE,
 			'lazy_load_term_meta'    => FALSE,
@@ -45,7 +45,7 @@ class ModuleQuery extends \WP_Query
 	public function posts_fields( $sql )
 	{
 		global $wpdb;
-		return $sql.", {$wpdb->terms}.name AS '{$this->tax}'";
+		return $sql.", {$wpdb->terms}.name AS '{$this->_taxonomy}'";
 	}
 
 	public function posts_join( $sql )
@@ -61,7 +61,7 @@ class ModuleQuery extends \WP_Query
 	public function posts_where( $sql )
 	{
 		global $wpdb;
-		return $sql." AND {$wpdb->term_taxonomy}.taxonomy = '{$this->tax}'";
+		return $sql." AND {$wpdb->term_taxonomy}.taxonomy = '{$this->_taxonomy}'";
 	}
 
 	public function posts_orderby( $sql )
