@@ -259,6 +259,12 @@ class Module extends WordPress\Module
 
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
+		return $this->_cuc( $context, $fallback );
+	}
+
+	// NOTE: to prevent infinite loops!
+	public function _cuc( $context = 'settings', $fallback = '' )
+	{
 		if ( ! empty( $this->caps[$context] ) )
 			return current_user_can( $this->caps[$context] );
 

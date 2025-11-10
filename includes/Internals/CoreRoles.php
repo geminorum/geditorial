@@ -98,7 +98,7 @@ trait CoreRoles
 	{
 		return in_array( $context, $customized ?? [ 'reports' ], TRUE )
 			? $this->role_can( $context, NULL, $fallback )
-			: parent::cuc( $context, $fallback );
+			: $this->_cuc( $context, $fallback );
 	}
 
 	/**
@@ -114,6 +114,6 @@ trait CoreRoles
 	{
 		return in_array( $context, $customized ?? [ 'reports', 'tools' ], TRUE )
 			? $this->corecaps_taxonomy_role_can( $constant, $context, NULL, $fallback )
-			: parent::cuc( $context, $fallback );
+			: $this->_cuc( $context, $fallback );
 	}
 }
