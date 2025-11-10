@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
@@ -202,7 +201,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return gEditorial\ShortCode::listPosts( 'assigned',
+		return <%= namespaceBase %>\ShortCode::listPosts( 'assigned',
 			'post',
 			$this->constant( 'main_taxonomy' ),
 			array_merge( [
@@ -222,6 +221,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return <%= namespaceBase %>\Info::renderNoReportsAvailable();
 	}
 }

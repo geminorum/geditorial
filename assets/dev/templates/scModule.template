@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Helper;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Info;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Scripts;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\Template;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
@@ -207,7 +203,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 					if ( ! $this->rowactions__hook_mainlink_for_post( $screen->post_type, 18, 'subcontent' ) )
 						$this->coreadmin__hook_tweaks_column_row( $screen->post_type, 18, 'subcontent' );
 
-					Scripts::enqueueColorBox();
+					<%= namespaceBase %>\Scripts::enqueueColorBox();
 				}
 			}
 		}
@@ -253,7 +249,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function audit_get_default_terms( $terms, $taxonomy )
 	{
-		return Helper::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
+		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Definition Data', 'Default Term: Audit', '<%= moduleTextdomain %>' ),
 		] ) : $terms;
 	}
@@ -266,6 +262,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Definitions', 'Header', '<%= moduleTextdomain %>' ) ) )
-			return Info::renderNoReportsAvailable();
+			return <%= namespaceBase %>\Info::renderNoReportsAvailable();
 	}
 }

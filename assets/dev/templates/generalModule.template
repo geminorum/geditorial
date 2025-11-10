@@ -6,7 +6,6 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
-use <%= namespaceAuthor %>\<%= namespaceBase %>\ShortCode;
 use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
@@ -154,6 +153,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$html = '';
 
-		return ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return <%= namespaceBase %>\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
 	}
 }
