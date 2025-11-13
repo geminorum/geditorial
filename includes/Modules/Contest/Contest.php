@@ -198,10 +198,11 @@ class Contest extends gEditorial\Module
 						'type'        => 'date'
 					],
 
-					'date'      => [ 'type' => 'date',     'quickedit' => TRUE ],
-					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'event_summary' => [ 'type' => 'text' ],
+					'date'          => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'      => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'     => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'       => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 				],
 			],
 		];

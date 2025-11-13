@@ -226,10 +226,11 @@ class Course extends gEditorial\Module
 					'source_url'   => [ 'type' => 'link' ],
 					'highlight'    => [ 'type' => 'note' ],
 
-					'date'      => [ 'type' => 'date',     'quickedit' => TRUE ],
-					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'event_summary' => [ 'type' => 'text' ],
+					'date'          => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'      => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'     => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'       => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 
 					'content_embed_url' => [ 'type' => 'embed' ],
 					'text_source_url'   => [ 'type' => 'text_source' ],

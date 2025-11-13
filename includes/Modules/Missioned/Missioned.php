@@ -216,12 +216,13 @@ class Missioned extends gEditorial\Module
 					'video_source_url'  => [ 'type' => 'video_source' ],
 					'image_source_url'  => [ 'type' => 'image_source' ],
 
-					'date'      => [ 'type' => 'date', 'quickedit' => TRUE ],
-					'datetime'  => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'datestart' => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'dateend'   => [ 'type' => 'datetime', 'quickedit' => TRUE ],
-					'distance'  => [ 'type' => 'distance', 'quickedit' => TRUE ],
-					'duration'  => [ 'type' => 'duration', 'quickedit' => TRUE ],
+					'event_summary' => [ 'type' => 'text' ],
+					'date'          => [ 'type' => 'date',     'quickedit' => TRUE ],
+					'datetime'      => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'datestart'     => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'dateend'       => [ 'type' => 'datetime', 'quickedit' => TRUE ],
+					'distance'      => [ 'type' => 'distance', 'quickedit' => TRUE ],
+					'duration'      => [ 'type' => 'duration', 'quickedit' => TRUE ],
 
 					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
 					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone

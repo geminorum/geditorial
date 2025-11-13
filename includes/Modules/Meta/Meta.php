@@ -122,6 +122,8 @@ class Meta extends gEditorial\Module
 				'main_download_url' => _x( 'Main Download URL', 'Titles', 'geditorial-meta' ),
 				'main_download_id'  => _x( 'Main Download Attachment', 'Titles', 'geditorial-meta' ),
 
+				'event_summary'  => _x( 'Event Summary', 'Titles', 'geditorial-meta' ),
+
 				'date'      => _x( 'Date', 'Titles', 'geditorial-meta' ),
 				'datetime'  => _x( 'Date-Time', 'Titles', 'geditorial-meta' ),
 				'datestart' => _x( 'Date-Start', 'Titles', 'geditorial-meta' ),
@@ -185,6 +187,8 @@ class Meta extends gEditorial\Module
 				'image_source_url'  => _x( 'Image Source URL of the Content', 'Descriptions', 'geditorial-meta' ),
 				'main_download_url' => _x( 'Downloadable URL of the External Content', 'Descriptions', 'geditorial-meta' ),
 				'main_download_id'  => _x( 'Downloadable Attachment of the External Content', 'Descriptions', 'geditorial-meta' ),
+
+				'event_summary'  => _x( 'Summary of the Event appears on the Calendar', 'Descriptions', 'geditorial-meta' ),
 
 				'date'      => _x( 'Posts can have date to help organize them.', 'Descriptions', 'geditorial-meta' ),
 				'datetime'  => _x( 'Posts can have date-time to help organize them.', 'Descriptions', 'geditorial-meta' ),
@@ -273,19 +277,20 @@ class Meta extends gEditorial\Module
 					'main_download_url' => [ 'type' => 'downloadable' ],
 					'main_download_id'  => [ 'type' => 'attachment' ],
 
-					'date'      => [ 'type' => 'date' ],
-					'datetime'  => [ 'type' => 'datetime' ],
-					'datestart' => [ 'type' => 'datetime' ],
-					'dateend'   => [ 'type' => 'datetime' ],
-					'time'      => [ 'type' => 'time' ],
-					'timestart' => [ 'type' => 'time' ],
-					'timeend'   => [ 'type' => 'time' ],
-					'distance'  => [ 'type' => 'distance' ],
-					'duration'  => [ 'type' => 'duration' ],
-					'area'      => [ 'type' => 'area' ],
-					'period'    => [ 'type' => 'text' ],
-					'amount'    => [ 'type' => 'number' ],
-					'sku'       => [ 'type' => 'code', 'quickedit' => TRUE ],
+					'event_summary' => [ 'type' => 'text' ],
+					'date'          => [ 'type' => 'date' ],
+					'datetime'      => [ 'type' => 'datetime' ],
+					'datestart'     => [ 'type' => 'datetime' ],
+					'dateend'       => [ 'type' => 'datetime' ],
+					'time'          => [ 'type' => 'time' ],
+					'timestart'     => [ 'type' => 'time' ],
+					'timeend'       => [ 'type' => 'time' ],
+					'distance'      => [ 'type' => 'distance' ],
+					'duration'      => [ 'type' => 'duration' ],
+					'area'          => [ 'type' => 'area' ],
+					'period'        => [ 'type' => 'text' ],
+					'amount'        => [ 'type' => 'number' ],
+					'sku'           => [ 'type' => 'code', 'quickedit' => TRUE ],
 
 					'notes'       => [ 'type' => 'note' ],
 					'reference'   => [ 'type' => 'note' ],
@@ -330,6 +335,7 @@ class Meta extends gEditorial\Module
 		$this->action( 'posttypefields_import_raw_data', 5, 9, 'action', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
 		$this->filter( 'objecthints_tips_for_post', 5, 8, FALSE, $this->base );
+		$this->filter( 'calendars_post_summary', 4, 8, FALSE, $this->base );
 	}
 
 	public function importer_init()
@@ -671,6 +677,23 @@ class Meta extends gEditorial\Module
 
 		return array_merge( $tips,
 			ModuleHelper::generateHints( $post, $extend, $context, $queried ) );
+	}
+
+	public function calendars_post_summary( $summary, $post, $context, $final )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $summary;
+
+		if ( ! $fields = $this->get_posttype_fields( $post->post_type ) )
+			return $summary;
+
+		if ( ! array_key_exists( 'event_summary', $fields ) )
+			return $summary;
+
+		if ( $meta = Services\PostTypeFields::getFieldRaw( 'event_summary', $post->ID, $this->key, FALSE ) )
+			return $meta;
+
+		return $summary;
 	}
 
 	// @REF: `Template::getMetaField()`

@@ -407,7 +407,12 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::fullTitle( $post );
 		}
 
-		if ( $summary )
+		if ( $summary = apply_filters( static::BASE.'_calendars_post_summary',
+			$summary,
+			$post,
+			$context,
+			$final
+		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
 		if ( $link = apply_filters( static::BASE.'_calendars_post_url',
@@ -618,7 +623,12 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::title( $term );
 		}
 
-		if ( $summary )
+		if ( $summary = apply_filters( static::BASE.'_calendars_term_summary',
+			$summary,
+			$term,
+			$context,
+			$final
+		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
 		if ( $link = apply_filters( static::BASE.'_calendars_term_url',
