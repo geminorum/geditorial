@@ -20,7 +20,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'icon'     => '<%= moduleDashicon %>',
 			'access'   => 'planned',
 			'keywords' => [
-				'hasshortcode',
+				'has-shortcodes',
 			],
 		];
 	}

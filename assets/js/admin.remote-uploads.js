@@ -44,9 +44,10 @@
         browse_button: document.getElementById(s.pickfiles),
         url: app.config.remote,
         chunk_size: app.config.chunk,
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
+        // mode: 'cors',
+        // headers: {
+        //   // 'Access-Control-Allow-Origin': '*'
+        // },
         filters: {
           prevent_duplicates: true,
           max_file_size: app.config.maxsize,

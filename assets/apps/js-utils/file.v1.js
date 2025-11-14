@@ -44,7 +44,27 @@ const getExt = (input) => /(?:\.([^.]+))?$/.exec(input);
  */
 const getName = (input) => input.replace(/\.[^/.]+$/, '');
 
+/**
+ * Take a file and convert to a base64 encoded string.
+ * @source https://gist.github.com/wpscholar/d03a94a6e9699025c4c469632a8590f1
+ *
+ * @param buffer A Buffer instance.
+ * @returns {string} A base64 encoded string.
+ */
+const base64Encode = (buffer) => new Buffer.from(buffer).toString('base64');
+
+/**
+ * Take a base64 encoded string and convert to a buffer.
+ * @source https://gist.github.com/wpscholar/d03a94a6e9699025c4c469632a8590f1
+ *
+ * @param base64
+ * @returns {Buffer}
+ */
+const base64Decode = (base64) => new Buffer.from(base64, 'base64');
+
 export {
+  base64Encode,
+  base64Decode,
   formatBytes,
   baseName,
   getName,

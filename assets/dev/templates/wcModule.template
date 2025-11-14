@@ -22,7 +22,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'',
-				'hasshortcode',
+				'has-shortcodes',
 				'woocommerce',
 			],
 		];
