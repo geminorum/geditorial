@@ -142,8 +142,7 @@ class WcTerms extends gEditorial\Module
 			$this->action( 'archive_description', 12, 0, 'subterms', 'woocommerce' );
 
 		if ( $this->get_setting( 'term_archive_assigned' ) )
-			// $this->action( 'archive_description', 22, 0, 'assigned', 'woocommerce' );
-			$this->action( 'after_main_content', -8, 0, 'assigned', 'woocommerce' );
+			$this->_init_archive_assigned();
 
 		$this->_init_tab_from_taxonomy();
 	}
@@ -193,13 +192,20 @@ class WcTerms extends gEditorial\Module
 			], $this->module->name );
 	}
 
-	// public function archive_description_assigned()
+	/**
+	 * Revives template for terms with no products but other assignments.
+	 * NOTE: intended targets are `people`/`year_span` taxonomies
+	 */
+	private function _init_archive_assigned()
+	{
+		$this->action( 'after_main_content', -8, 0, 'assigned', 'woocommerce' );
+		$this->action( 'pre_get_posts', 1, 99, 'assigned' );
+		$this->action( 'template_redirect', 1, 99, 'assigned' );
+	}
+
 	public function after_main_content_assigned()
 	{
 		if ( ! is_product_taxonomy() )
-			return;
-
-		if ( absint( get_query_var( 'paged' ) ) )
 			return;
 
 		if ( ! $term = get_queried_object() )
@@ -208,7 +214,7 @@ class WcTerms extends gEditorial\Module
 		if ( in_array( $term->taxonomy, WordPress\WooCommerce::PRODUCT_TAXONOMIES, TRUE ) )
 			return;
 
-		echo gEditorial\ShortCode::listPosts( 'assigned',
+		$html = gEditorial\ShortCode::listPosts( 'assigned',
 			'',
 			$term->taxonomy,
 			$this->filters( 'term_listassigned_args', [
@@ -217,20 +223,94 @@ class WcTerms extends gEditorial\Module
 				'future'  => 'off',
 				'title'   => FALSE,
 				'wrap'    => FALSE,
-				'before'  => $this->wrap_open( '-term-listassigned' ),
+				'before'  => $this->wrap_open( [ '-term-listassigned', sprintf( 'columns-%d', wc_get_default_products_per_row() ) ] ),
 				'after'   => '</div>',
 				'module'  => $this->module->name,
+
+				'order'   => 'DESC',
+				'orderby' => 'date',
+				'paged'   => get_query_var( 'paged' ),
+				'limit'   => WordPress\WooCommerce::getPerPage(),
 
 				'exclude_posttypes' => WordPress\WooCommerce::PRODUCT_POSTTYPE,
 			], $term ),
 		);
+
+		if ( ! $html )
+			return;
+
+		echo $html;
+		woocommerce_pagination(); // FIXME: WTF: paged posts on limited products
+	}
+
+	public function pre_get_posts_assigned( &$wp_query )
+	{
+		if ( ! $wp_query->is_main_query() )
+			return;
+
+		if ( ! is_product_taxonomy() )
+			return;
+
+		if ( $wp_query->is_tax( WordPress\WooCommerce::PRODUCT_TAXONOMIES ) )
+			return;
+
+		$wp_query->set( 'post_type', WordPress\WooCommerce::PRODUCT_POSTTYPE );
+	}
+
+	public function template_redirect_assigned()
+	{
+		global $wp_query;
+
+		if ( empty( $wp_query ) )
+			return;
+
+		// already has products
+		if ( $wp_query->have_posts() )
+			return;
+
+		if ( $wp_query->is_embed() || $wp_query->is_search() )
+			return;
+
+		// NOTE: `is_tax()` is not available on paged
+
+		if ( ! $term = WordPress\Term::get( get_queried_object() ) )
+			return;
+
+		if ( ! in_array( $term->taxonomy, get_object_taxonomies( WordPress\WooCommerce::PRODUCT_POSTTYPE ), TRUE ) )
+			return;
+
+		if ( in_array( $term->taxonomy, WordPress\WooCommerce::PRODUCT_TAXONOMIES, TRUE ) )
+			return;
+
+		$posttypes = Core\Arraay::stripByValue(
+			WordPress\Taxonomy::types( $term ),
+			WordPress\WooCommerce::PRODUCT_POSTTYPE
+		);
+
+		if ( empty( $posttypes ) )
+			return;
+
+		$this->filter_append( 'body_class', [ 'no-products-listassigned' ] );
+		$this->filter_empty_array( 'woocommerce_catalog_orderby', 99 );
+		$this->filter_empty_array( 'woocommerce_catalog_orderedby', 99 );
+		remove_filter( 'pre_get_posts', [ $this, 'pre_get_posts_assigned' ], 99 );
+
+		$_query = wp_parse_args( $wp_query->query );
+
+		$wp_query->init();
+		$wp_query->set( 'post_type', $posttypes );
+		$wp_query->set( 'paged', empty( $_query['paged'] ) ? 0 : $_query['paged'] );
+		$wp_query->set( 'tax_query', [ [
+				'taxonomy' => $term->taxonomy,
+				'terms'    => [ $term->term_id ],
+				'field'    => 'term_id',
+			] ] );
+
+		$wp_query->get_posts();
 	}
 
 	private function _init_tab_from_taxonomy()
 	{
-		if ( is_admin() )
-			return;
-
 		foreach ( $this->get_setting( 'tab_from_taxonomy', [] ) as $offset => $row ) {
 
 			if ( empty( $row['taxonomy'] ) || ! WordPress\Taxonomy::exists( $row['taxonomy'] ) )
