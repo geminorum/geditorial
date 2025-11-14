@@ -45,7 +45,7 @@
       return lang === 'fa-IR' ? toPersian(number) : number;
     },
     str: function (el, key) {
-      return el.data(section + '-' + key) || app.strings[key];
+      return el.data(module + '-' + key) || app.strings[key];
     },
 
     // @REF: https://select2.org/configuration/options-api
@@ -54,7 +54,7 @@
         dir: $('html').attr('dir'),
         width: '100%', // 'element'
         theme: el.data('theme') || plugin._base,
-        // allowClear: true, // problems with button positioning
+        allowClear: true,
         minimumInputLength: el.data('query-minimum') || 5,
         placeholder: { id: '0', text: app.str(el, 'placeholder') },
         language: {

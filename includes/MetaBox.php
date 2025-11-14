@@ -1496,6 +1496,12 @@ class MetaBox extends WordPress\Main
 				'value'    => $parent->ID,
 			], WordPress\Post::title( $parent ) );
 
+		// NOTE: no need for `Select2` but passing in case JavaScript-disabled.
+		$none = Core\HTML::tag( 'option', [
+			'selected' => empty( $parent ),
+			'value'    => '0',
+		], Settings::showOptionNone() );
+
 		$atts = [
 			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
@@ -1520,7 +1526,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $none.$html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SearchSelect::enqueueSelect2();
 	}
@@ -1551,6 +1557,12 @@ class MetaBox extends WordPress\Main
 				'value'    => $value,
 			], WordPress\Post::title( $value ) );
 
+		// NOTE: no need for `Select2` but passing in case JavaScript-disabled.
+		$none = Core\HTML::tag( 'option', [
+			'selected' => empty( $value ),
+			'value'    => '0',
+		], Settings::showOptionNone() );
+
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
@@ -1575,7 +1587,7 @@ class MetaBox extends WordPress\Main
 			],
 		];
 
-		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $html ), 'field-wrap -select hide-if-no-js' );
+		echo Core\HTML::wrap( Core\HTML::tag( 'select', $atts, $none.$html ), 'field-wrap -select hide-if-no-js' );
 
 		return Services\SearchSelect::enqueueSelect2();
 	}

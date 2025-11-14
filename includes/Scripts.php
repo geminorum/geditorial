@@ -704,9 +704,26 @@ JS;
 	// @REF: https://select2.org/
 	public static function pkgSelect2( $enqueue = FALSE, $ver = '4.1.0-rc.0' )
 	{
-		return $enqueue
-			? self::enqueuePackage( 'select2', 'select2/select2', [ 'jquery' ], $ver )
-			: self::registerPackage( 'select2', 'select2/select2', [ 'jquery' ], $ver );
+		$handle    = 'select2';
+		$dir       = Core\HTML::rtl() ? '-rtl' : '';
+		$wooselect = WordPress\WooCommerce::isActive();
+
+		if ( $enqueue ) {
+
+			wp_enqueue_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $ver, TRUE );
+
+			if ( ! $wooselect )
+				wp_enqueue_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $ver, 'screen' );
+
+		} else {
+
+			wp_register_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $ver, TRUE );
+
+			if ( ! $wooselect )
+				wp_register_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $ver, 'screen' );
+		}
+
+		return $handle;
 	}
 
 	public static function linkBootstrap5( $ver = '5.3.8', $screen = 'all' )
