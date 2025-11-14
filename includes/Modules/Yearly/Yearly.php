@@ -123,6 +123,11 @@ class Yearly extends gEditorial\Module
 		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		if ( is_admin() )
+			return;
+
+		$this->filter( 'posts_clauses', 2, 20, 'orderbyname' );
 	}
 
 	public function current_screen( $screen )
@@ -178,6 +183,43 @@ class Yearly extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	/**
+	 * Modifies the SQL query clauses for custom post ordering.
+	 * @source https://gist.github.com/wpscholar/ef8fe292b469f59aa9dde644b960c690
+	 *
+	 * @param array $clauses The list of clauses for the query.
+	 * @param WP_Query $query The WP_Query instance.
+	 * @return array Modified clauses.
+	 */
+	public function posts_clauses_orderbyname( array $clauses, \WP_Query $query )
+	{
+		global $wpdb;
+
+		$orderby  = $query->get( 'orderby' );
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		if ( $taxonomy === $orderby || ( is_array( $orderby ) && array_key_exists( $taxonomy, $orderby ) ) ) {
+
+			$prefix = str_replace( array( ' ', '-' ), '_', $taxonomy );
+			$tr     = esc_sql( "{$prefix}_term_relationships" );
+			$tt     = esc_sql( "{$prefix}_term_taxonomy" );
+			$t      = esc_sql( "{$prefix}_terms" );
+
+			$clauses['join'] .= <<<SQL
+LEFT OUTER JOIN {$wpdb->term_relationships} AS {$tr} ON {$wpdb->posts}.ID={$tr}.object_id
+LEFT OUTER JOIN {$wpdb->term_taxonomy} AS {$tt} ON {$tr}.term_taxonomy_id={$tt}.term_taxonomy_id
+LEFT OUTER JOIN {$wpdb->terms} AS {$t} ON {$tt}.term_id={$t}.term_id
+SQL;
+
+			$clauses['where']  .= " AND (taxonomy = '{$taxonomy}' OR taxonomy IS NULL)";
+			$clauses['groupby'] = "{$tr}.object_id";
+			$clauses['orderby'] = "GROUP_CONCAT({$t}.name ORDER BY name ASC) ";
+			$clauses['orderby'].= ( 'ASC' === strtoupper( $query->get( 'order', 'DESC' ) ) ) ? 'ASC' : 'DESC';
+		}
+
+		return $clauses;
 	}
 
 	public function reports_settings( $sub )
