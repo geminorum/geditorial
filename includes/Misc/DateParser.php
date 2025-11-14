@@ -55,16 +55,34 @@ class DateParser extends Core\Base
 		if ( ! $sanitized = Core\Number::translate( Core\Text::trim( Core\Text::singleWhitespace( $input ) ) ) )
 			return FALSE;
 
-		if ( ! $parts = self::extractParts( $sanitized ) )
-			return FALSE;
+		if ( 'gregorian' === $calendar ) {
 
-		if ( 3 !== count( $parts ) )
-			return FALSE;
+			preg_match( '/^(\d{4})-(\d{1,2})-(\d{1,2})/', $sanitized, $matches );
 
-		if ( $parts[2] > 31 )
-			$parts = array_reverse( $parts );
+			if ( empty( $matches ) || ! is_array( $matches ) || count( $matches ) < 4 )
+				return FALSE;
 
-		if ( 'persian' === $calendar ) {
+			if ( ! checkdate( $matches[2], $matches[3], $matches[1] ) )
+				return FALSE;
+
+			$parts = [
+				$matches[1],
+				$matches[2],
+				$matches[3],
+			];
+
+			return date_create( implode( '-', $parts ), $timezone ?? new \DateTimeZone( wp_timezone_string() ) );
+
+		} else if ( 'persian' === $calendar ) {
+
+			if ( ! $parts = self::extractParts( $sanitized ) )
+				return FALSE;
+
+			if ( 3 !== count( $parts ) )
+				return FALSE;
+
+			if ( $parts[2] > 31 )
+				$parts = array_reverse( $parts );
 
 			if ( 2 === strlen( $parts[0] ) )
 				$parts[0] = (int) sprintf( '13%d', $parts[0] );

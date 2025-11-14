@@ -338,12 +338,15 @@ class HTTP extends Base
 
 	// @REF: https://github.com/10up/restricted-site-access/blob/develop/restricted_site_access.php
 	// @SEE: https://wordpress.org/support/topic/how-to-troubleshoot-client-ip-detection/
+	// CloudFlare: https://www.cloudflare.com/ips/
 	public static function clientIP()
 	{
 		$headers = [
-			'HTTP_CF_CONNECTING_IP', // @REF: https://github.com/10up/restricted-site-access/issues/109
+			'HTTP_CF_CONNECTING_IP' ,  // CloudFlare // @REF: https://github.com/10up/restricted-site-access/issues/109
+			'HTTP_INCAP_CLIENT_IP'  ,  // Incapsula
+			'HTTP_X_SUCURI_CLIENTIP',  // Sucuri
 			'HTTP_CLIENT_IP',
-			'HTTP_X_FORWARDED_FOR',
+			'HTTP_X_FORWARDED_FOR'  ,  // Any Proxy
 			'HTTP_X_FORWARDED',
 			'HTTP_X_CLUSTER_CLIENT_IP',
 			'HTTP_FORWARDED_FOR',

@@ -27,7 +27,7 @@ class MP3File extends Core\Base
 	 *
 	 * @param int $duration
 	 * @param bool $simple
-	 * @return string formatted
+	 * @return string
 	 */
 	public static function formatTime( $duration, $simple = FALSE )
 	{
@@ -47,7 +47,7 @@ class MP3File extends Core\Base
 	 * By `VBR` (variable bitrate): Read entire file, frame by frame (slower)
 	 *
 	 * @param bool $cbr
-	 * @return int $duration
+	 * @return int
 	 */
 	public function getDuration( $cbr = FALSE )
 	{
