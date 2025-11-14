@@ -43,11 +43,12 @@ class TaxonomyTaxonomy extends gEditorial\Service
 		if ( FALSE !== $term && ! ( $term = WordPress\Term::get( $term ) ) )
 			return FALSE;
 
-		$data      = [];
-		$default   = $selected = $wrap = FALSE;
-		$field     = sprintf( static::FIELD_FIELD_TEMPLATE, static::BASE, $object->name );
-		$html_name = sprintf( static::FIELD_NAME_TEMPLATE, static::BASE, $object->name );
-		$html_id   = sprintf( static::FIELD_ID_TEMPLATE, static::BASE, $object->name, $context );
+		$data        = [];
+		$default     = $selected = $wrap = FALSE;
+		$field       = sprintf( static::FIELD_FIELD_TEMPLATE, static::BASE, $object->name );
+		$html_name   = sprintf( static::FIELD_NAME_TEMPLATE, static::BASE, $object->name );
+		$html_id     = sprintf( static::FIELD_ID_TEMPLATE, static::BASE, $object->name, $context );
+		$description = CustomTaxonomy::getLabel( $object, 'assign_description' );
 
 		switch ( $context ) {
 
@@ -64,6 +65,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 			case 'quickedit':
 				$wrap = 'fieldset';
 				$data['quickedit'] = $html_name;
+				$description = ''; // avoid display
 		}
 
 		if ( ! TermHierarchy::isSingleTerm( $object ) )
@@ -81,7 +83,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 				'values'       => WordPress\Taxonomy::listTerms( $object->name ),
 				'default'      => (array) ( ( $term ? $selected : $default ) ?: [] ),
 				'title'        => CustomTaxonomy::getLabel( $object, 'extended_label' ),
-				'description'  => CustomTaxonomy::getLabel( $object, 'assign_description' ),
+				'description'  => $description,
 				'string_empty' => CustomTaxonomy::getLabel( $object, 'extended_no_items' ),
 			];
 
@@ -99,7 +101,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 				'values'       => WordPress\Taxonomy::listTerms( $object->name ) ?: FALSE,
 				'default'      => ( $term ? ( $selected ? $selected[0] : '0' ) : ( $default ?: '0' ) ),
 				'title'        => CustomTaxonomy::getLabel( $object, 'extended_label' ),
-				'description'  => CustomTaxonomy::getLabel( $object, 'assign_description' ),
+				'description'  => $description,
 				'string_empty' => CustomTaxonomy::getLabel( $object, 'extended_no_items' ),
 				'none_title'   => CustomTaxonomy::getLabel( $object, 'show_option_none' ),
 				'none_value'   => '0',
