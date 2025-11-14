@@ -23,7 +23,7 @@ class Attachments extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'attachment',
-				'hasshortcode',
+				'has-shortcodes',
 			],
 		];
 	}

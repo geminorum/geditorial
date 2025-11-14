@@ -613,10 +613,10 @@ class Plugin extends WordPress\Plugin
 			if ( ! is_user_logged_in() )
 				$link = FALSE;
 
-			else if ( WordPress\User::cuc( 'manage_options' ) )
+			else if ( current_user_can( 'manage_options' ) )
 				$link = Settings::getURLbyContext( 'settings' );
 
-			else if ( WordPress\User::cuc( 'edit_others_posts' ) )
+			else if ( current_user_can( 'edit_others_posts' ) )
 				$link = Settings::getURLbyContext( 'reports' );
 
 			else

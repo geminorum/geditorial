@@ -70,14 +70,7 @@ class WcRelated extends gEditorial\Module
 					'description' => _x( 'Sets all products are related.', 'Setting Description', 'geditorial-wc-related' ),
 				],
 			],
-			'_misc' => [
-				[
-					'field'       => 'related_on_tabs',
-					'title'       => _x( 'Related on Tabs', 'Setting Title', 'geditorial-wc-related' ),
-					'description' => _x( 'Displays Upsells and Related products on front-end product tabs.', 'Setting Description', 'geditorial-wc-related' ),
-				],
-			],
-			'_custom' => [
+			'_customtabs' => [
 				[
 					'field'       => 'hide_outofstock_attribute',
 					'title'       => _x( 'Hide Out-of-Stock', 'Setting Title', 'geditorial-wc-related' ),
@@ -103,6 +96,13 @@ class WcRelated extends gEditorial\Module
 							'description' => _x( 'Template for related products heading.', 'Setting Description', 'geditorial-wc-related' ),
 						],
 					],
+				],
+			],
+			'_misc' => [
+				[
+					'field'       => 'related_on_tabs',
+					'title'       => _x( 'Related on Tabs', 'Setting Title', 'geditorial-wc-related' ),
+					'description' => _x( 'Displays Upsells and Related products on front-end product tabs.', 'Setting Description', 'geditorial-wc-related' ),
 				],
 			],
 		];

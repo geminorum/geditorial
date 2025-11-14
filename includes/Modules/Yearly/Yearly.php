@@ -33,6 +33,7 @@ class Yearly extends gEditorial\Module
 			'icon'     => 'clock',
 			'access'   => 'beta',
 			'keywords' => [
+				'calendar',
 				'taxmodule',
 			],
 		];

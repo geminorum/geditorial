@@ -39,7 +39,7 @@ class Course extends gEditorial\Module
 			'keywords' => [
 				'course',
 				'lesson',
-				'doublepaired',
+				'double-paired',
 			],
 		];
 	}

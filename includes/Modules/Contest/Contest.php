@@ -36,7 +36,7 @@ class Contest extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'apply',
-				'doublepaired',
+				'double-paired',
 			],
 		];
 	}

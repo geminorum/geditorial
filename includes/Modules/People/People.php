@@ -167,7 +167,7 @@ class People extends gEditorial\Module
 
 		add_filter( $taxonomy.'_name', [ $this, 'people_term_name' ], 8, 3 );
 		$this->filter( 'pre_term_name', 2, 12 );
-		$this->filter( 'wp_insert_term_data', 3, 9 );
+		$this->filter( 'insert_term_data', 3, 9, FALSE, 'wp' );
 	}
 
 	public function current_screen( $screen )
@@ -290,8 +290,17 @@ class People extends gEditorial\Module
 			: $value;
 	}
 
-	// NOTE: tries to make slug family last if name provided is family first
-	public function wp_insert_term_data( $data, $taxonomy, $args )
+	/**
+	 * Filters term data before it is inserted into the database.
+	 * NOTE: tries to make slug family last if name provided is family first.
+	 * @hook: `wp_insert_term_data`
+	 *
+	 * @param array $data
+	 * @param string $taxonomy
+	 * @param array $args
+	 * @return array
+	 */
+	public function insert_term_data( $data, $taxonomy, $args )
 	{
 		if ( $this->constant( 'main_taxonomy' ) !== $taxonomy )
 			return $data;
@@ -304,7 +313,9 @@ class People extends gEditorial\Module
 		if ( ! empty( $args['slug'] ) )
 			return $data;
 
-		$slug = Core\Text::formatSlug( Core\Text::nameFamilyLast( $data['name'] ) );
+		$slug = Core\Text::nameFamilyLast( $data['name'] );
+		$slug = Core\Text::formatSlug( $slug );
+		$slug = sanitize_title( $slug );
 
 		// Avoids DB queries if the same
 		if ( $data['slug'] !== $slug )

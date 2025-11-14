@@ -77,7 +77,8 @@ trait CoreRestrictPosts
 		if ( FALSE !== $check_role && ! $this->role_can( $check_role ?? 'reports' ) )
 			return FALSE;
 
-		// FIXME: WTF: check for `list_users` cap!
+		else if ( FALSE === $check_role && ! current_user_can( 'list_users' ) )
+			return FALSE;
 
 		add_action( 'restrict_manage_posts',
 			static function ( $posttype, $which ) {

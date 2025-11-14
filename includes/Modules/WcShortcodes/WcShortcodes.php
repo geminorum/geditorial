@@ -22,6 +22,7 @@ class WcShortcodes extends gEditorial\Module
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
 				'shortcode',
+				'has-shortcodes',
 				'woocommerce',
 			],
 		];
@@ -146,8 +147,8 @@ class WcShortcodes extends gEditorial\Module
 	public function wc_scheduled_on_sales_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'limit'   => 12,      // TODO: get default from WC
-			'columns' => 3,       // TODO: get default from WC
+			'limit'   => wc_get_default_products_per_row() * wc_get_default_product_rows_per_page(),
+			'columns' => wc_get_default_products_per_row(),
 			'empty'   => FALSE,   // `NULL` for default text
 			'paged'   => NULL,
 			'context' => NULL,
@@ -213,6 +214,6 @@ class WcShortcodes extends gEditorial\Module
 			$html = $args['empty'] ?? _x( 'There are no products available!', 'Message', 'geditorial-wc-shortcodes' );
 		}
 
-		return gEditorial\ShortCode::wrap( $html ?: NULL, $this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html ?: $content, $this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
 	}
 }

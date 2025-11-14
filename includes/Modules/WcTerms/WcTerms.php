@@ -91,7 +91,7 @@ class WcTerms extends gEditorial\Module
 					'field'       => 'term_archive_title',
 					'type'        => 'select',
 					'title'       => _x( 'Archive Title', 'Setting Title', 'geditorial-wc-terms' ),
-					'description' => _x( 'Enhance the term archive titles.', 'Setting Description', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the product term archive titles.', 'Setting Description', 'geditorial-wc-terms' ),
 					'deafult'     => '0',
 					// TODO: move up
 					'values'      => [
@@ -107,17 +107,17 @@ class WcTerms extends gEditorial\Module
 				[
 					'field'       => 'term_archive_desc',
 					'title'       => _x( 'Archive Descriptions', 'Setting Title', 'geditorial-wc-terms' ),
-					'description' => _x( 'Enhance the term archive descriptions with assigned image.', 'Setting Description', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the product term archive descriptions with assigned image.', 'Setting Description', 'geditorial-wc-terms' ),
 				],
 				[
 					'field'       => 'term_archive_subterms',
 					'title'       => _x( 'Archive Sub-terms', 'Setting Title', 'geditorial-wc-terms' ),
-					'description' => _x( 'Enhance the term archive with list of sub-terms.', 'Setting Description', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the product term archive with list of sub-terms.', 'Setting Description', 'geditorial-wc-terms' ),
 				],
 				[
 					'field'       => 'term_archive_assigned',
 					'title'       => _x( 'Archive Assigned', 'Setting Title', 'geditorial-wc-terms' ),
-					'description' => _x( 'Enhance the term archive with list of assigned posts.', 'Setting Description', 'geditorial-wc-terms' ),
+					'description' => _x( 'Enhance the product term archive with list of assigned posts.', 'Setting Description', 'geditorial-wc-terms' ),
 				],
 			],
 		];

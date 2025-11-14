@@ -886,6 +886,7 @@ class ShortCode extends WordPress\Main
 			'list_class' => '-list',
 
 			'limit'         => -1,
+			'paged'         => 0,
 			'order'         => 'ASC',
 			'orderby'       => '',            // empty for default
 			'order_cb'      => FALSE,         // `NULL` for default order by paired meta
@@ -948,6 +949,7 @@ class ShortCode extends WordPress\Main
 		$query = [
 			'orderby'          => 'date',
 			'order'            => $args['order'],
+			'paged'            => $args['paged'],
 			'posts_per_page'   => $args['limit'],
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,

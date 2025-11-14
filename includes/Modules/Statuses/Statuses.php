@@ -24,7 +24,13 @@ class Statuses extends gEditorial\Module
 			'desc'     => _x( 'WP-Statuses Companion', 'Modules: Statuses', 'geditorial-admin' ),
 			'icon'     => 'post-status',
 			'access'   => 'beta',
-			'disabled' => class_exists( 'WP_Statuses' ) ? FALSE : _x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial-admin' ),
+			'disabled' => class_exists( 'WP_Statuses' )
+				? FALSE
+				: Core\HTML::link(
+					_x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial-admin' ),
+					'https://github.com/imath/wp-statuses',
+					TRUE
+				),
 			'keywords' => [
 				'companion',
 				'status',

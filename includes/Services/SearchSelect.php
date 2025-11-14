@@ -95,7 +95,7 @@ class SearchSelect extends gEditorial\Service
 
 			case 'user':
 
-				if ( ! WordPress\User::cuc( 'list_users' ) )
+				if ( ! current_user_can( 'list_users' ) )
 					return RestAPI::getErrorForbidden();
 
 				$response = self::_get_select2_users( $queried );

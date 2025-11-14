@@ -19,6 +19,10 @@ class Connected extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'disabled' => defined( 'P2P_PLUGIN_VERSION' ) ? FALSE : _x( 'Needs Posts-to-Posts', 'Modules: Connected', 'geditorial-admin' ),
+			'keywords' => [
+				'manual-connect',
+				'p2p',
+			],
 		];
 	}
 

@@ -43,6 +43,7 @@ class Book extends gEditorial\Module
 			'keywords' => [
 				'publication',
 				'literature',
+				'has-widgets',
 				'pairedmodule',
 				'cptmodule',
 			],

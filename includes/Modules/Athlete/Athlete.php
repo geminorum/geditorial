@@ -33,7 +33,7 @@ class Athlete extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'sport',
-				'hasshortcode',
+				'has-shortcodes',
 				'taxmodule',
 			],
 		];

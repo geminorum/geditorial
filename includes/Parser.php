@@ -9,7 +9,7 @@ class Parser extends WordPress\Main
 
 	/**
 	 * Data parsing is the process of extracting relevant information
-	 * from unstructured data sources and transforming it into a structured
+	 * from unstructured datasources and transforming it into a structured
 	 * format that can be easily analyzed. A data parser is a software
 	 * program or tool used to automate this process.
 	 *
@@ -289,7 +289,7 @@ class Parser extends WordPress\Main
 	 * @param array $styles
 	 * @param string $title
 	 * @param string $description
-	 * @return string $content
+	 * @return string
 	 */
 	public static function toXLSX_Legacy( $data, $headers = [], $sheet = NULL, $widths = NULL, $options = NULL, $styles = NULL, $title = NULL, $description = NULL )
 	{

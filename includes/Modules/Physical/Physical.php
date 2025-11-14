@@ -32,7 +32,7 @@ class Physical extends gEditorial\Module
 			'keywords' => [
 				'grade',
 				'sport',
-				'hasshortcode',
+				'has-shortcodes',
 				'subcontent',
 				'tabmodule',
 			],

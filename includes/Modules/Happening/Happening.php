@@ -28,6 +28,7 @@ class Happening extends gEditorial\Module
 			'keywords' => [
 				'event',
 				'calendar',
+				'has-widgets',
 				'cptmodule',
 			],
 		];

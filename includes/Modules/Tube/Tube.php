@@ -28,7 +28,7 @@ class Tube extends gEditorial\Module
 			'keywords' => [
 				'video',
 				'clip',
-				'doublepaired',
+				'double-paired',
 			],
 		];
 	}

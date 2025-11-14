@@ -888,7 +888,7 @@ class MetaBox extends WordPress\Main
 			'repeat'       => FALSE,
 			'ltr'          => FALSE,
 			'taxonomy'     => FALSE,
-			'posttype'     => FALSE,
+			'posttype'     => NULL,        // `NULL` means same as the post / `FALSE` disable
 			'exclude'      => FALSE,       // `NULL` means parent post
 			'role'         => FALSE,
 			'group'        => 'general',
@@ -1481,8 +1481,11 @@ class MetaBox extends WordPress\Main
 		$html = '';
 		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
 
-		if ( ! $args['posttype'] )
+		if ( is_null( $args['posttype'] ) )
 			$args['posttype'] = $post->post_type;
+
+		else if ( ! $args['posttype'] )
+			return FALSE;
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );

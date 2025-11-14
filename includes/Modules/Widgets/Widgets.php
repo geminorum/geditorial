@@ -20,7 +20,7 @@ class Widgets extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'stable',
 			'keywords' => [
-				'widget',
+				'has-widgets',
 			],
 		];
 	}

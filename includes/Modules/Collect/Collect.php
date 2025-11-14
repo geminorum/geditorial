@@ -33,6 +33,7 @@ class Collect extends gEditorial\Module
 			'icon'     => 'star-filled',
 			'access'   => 'beta',
 			'keywords' => [
+				'has-widgets',
 				'pairedmodule',
 			],
 		];

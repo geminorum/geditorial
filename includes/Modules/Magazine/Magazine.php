@@ -43,6 +43,7 @@ class Magazine extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'issue',
+				'has-widgets',
 				'pairedmodule',
 			],
 		];

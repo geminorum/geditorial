@@ -2241,6 +2241,7 @@ class Settings extends WordPress\Main
 			case '_taxonomies' : return [ _x( 'Taxonomies', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_subcontent' : return [ _x( 'Sub-Contents', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_bulkactions': return [ _x( 'Bulk Actions', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_customtabs' : return [ _x( 'Custom Tabs', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_roles'      : return [ _x( 'Availability', 'Settings: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Settings: Section Description', 'geditorial-admin' ) ];
 			case '_units'      : return [ _x( 'Units Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_geo'        : return [ _x( 'Geo Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

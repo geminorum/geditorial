@@ -32,7 +32,7 @@ class Interested extends gEditorial\Module
 			'icon'     => 'info',
 			'access'   => 'beta',
 			'keywords' => [
-				'hasshortcode',
+				'has-shortcodes',
 				'taxmodule',
 			],
 		];

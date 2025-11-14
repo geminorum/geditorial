@@ -33,7 +33,7 @@ class Publishers extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'branding',
-				'hasshortcode',
+				'has-shortcodes',
 				'taxmodule',
 			],
 		];

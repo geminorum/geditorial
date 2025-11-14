@@ -32,7 +32,7 @@ class Achieved extends gEditorial\Module
 			'icon'     => 'awards',
 			'access'   => 'beta',
 			'keywords' => [
-				'hasshortcode',
+				'has-shortcodes',
 				'taxmodule',
 			],
 		];

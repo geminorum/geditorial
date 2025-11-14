@@ -23,7 +23,7 @@ class WcWidgets extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
-				'widget',
+				'has-widgets',
 				'woocommerce',
 			],
 		];

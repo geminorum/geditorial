@@ -16,6 +16,7 @@ class PostTypeFields extends gEditorial\Service
 		}
 	}
 
+	// TODO: move to `Meta` Module
 	// NOTE: runs only on `fa_IR` locale
 	public static function posts_search_append_meta( $meta, $criteria, $posttypes )
 	{
