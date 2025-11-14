@@ -241,6 +241,7 @@ $spacer: 1rem !default;
     &.-select {
       select {
         width: 100%;
+        height: 30px; // same as type text
         max-width: unset;
       }
     }

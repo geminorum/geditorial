@@ -212,8 +212,10 @@
       // .button-secondary {}
 
       .-wrap.-danger,
+      .-wrap.-danger a,
       .-button-danger {
         color: $brand-danger;
+        text-decoration: none;
 
         &:hover {
           color: color.adjust($brand-danger, $lightness: -20%);

@@ -18,7 +18,6 @@
 @import "partials/today.all.mixins";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/actions.admin.post";
 @import "partials/activities.admin.post";
 @import "partials/comments.admin.post";
 @import "partials/drafts.admin.post";
@@ -56,6 +55,17 @@ body.disable-posttype-password .postbox .inside .misc-pub-section.misc-pub-visib
 body.disable-posttype-tinymce #content-tmce.wp-switch-editor.switch-tmce,
 body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
   display: none;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+.submitbox {
+  .-wrap.-post-actions {
+    margin-bottom: $spacer * .5;
+
+    select {
+      width: 100%;
+    }
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
