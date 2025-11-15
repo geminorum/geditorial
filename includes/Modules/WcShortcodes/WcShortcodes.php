@@ -135,6 +135,7 @@ class WcShortcodes extends gEditorial\Module
 
 	/**
 	 * WooCommerce scheduled on-sale products list short-code.
+	 * @SEE: `WC_Shortcodes::sale_products()`
 	 *
 	 * @author Hamid Reza Yazdani (yazdaniwp)
 	 * @source https://github.com/hamidrezayazdani/wc-scheduled-onsales-shortcode
@@ -146,25 +147,23 @@ class WcShortcodes extends gEditorial\Module
 	 */
 	public function wc_scheduled_on_sales_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		$args = shortcode_atts( [
-			'limit'   => wc_get_default_products_per_row() * wc_get_default_product_rows_per_page(),
-			'columns' => wc_get_default_products_per_row(),
-			'empty'   => FALSE,   // `NULL` for default text
-			'paged'   => NULL,
-			'context' => NULL,
-			'wrap'    => TRUE,
-			'class'   => '',
-			'before'  => '',
-			'after'   => '',
+		$columns = wc_get_default_products_per_row();
+		$args    = shortcode_atts( [
+			'limit'     => $columns * wc_get_default_product_rows_per_page(),
+			'columns'   => $columns,
+			'paged'     => get_query_var( 'paged' ) ?: 1,
+			'empty'     => FALSE,                                               // `NULL` for default text
+			'timestamp' => time(),
+			'context'   => NULL,
+			'wrap'      => TRUE,
+			'class'     => '',
+			'before'    => '',
+			'after'     => '',
 		], $atts, $tag ?: $this->constant( 'wc_scheduled_on_sales_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		if ( is_null( $args['paged'] ) )
-			$args['paged'] = get_query_var( 'paged' ) ?: 1;
-
-		$time  = time();
 		$query = [
 			'post_type'      => [ 'product', 'product_variation' ],
 			'post__in'       => array_merge( [ 0 ], wc_get_product_ids_on_sale() ),
@@ -182,7 +181,7 @@ class WcShortcodes extends gEditorial\Module
 
 				[
 					'key'     => '_sale_price_dates_to',
-					'value'   => $time,
+					'value'   => $args['timestamp'],
 					'compare' => '>',
 				],
 			],
@@ -214,6 +213,7 @@ class WcShortcodes extends gEditorial\Module
 			$html = $args['empty'] ?? _x( 'There are no products available!', 'Message', 'geditorial-wc-shortcodes' );
 		}
 
-		return gEditorial\ShortCode::wrap( $html ?: $content, $this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap( $html ?: $content,
+			$this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
 	}
 }

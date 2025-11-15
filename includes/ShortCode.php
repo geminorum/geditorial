@@ -899,7 +899,7 @@ class ShortCode extends WordPress\Main
 			'cover'      => FALSE,   // must have thumbnail
 			'future'     => 'on',
 			'mime_type'  => '',      // only for attachments / like: `image`
-			'connection' => '',      // only for o2o
+			'connection' => '',      // only for o2o/p2p
 
 			'module'       => $module,   // main caller module
 			'field_module' => 'meta',    // getting meta field from
@@ -914,7 +914,7 @@ class ShortCode extends WordPress\Main
 
 	// list: `assigned`: posts by terms
 	// list: `paired`: posts by meta (PAIRED API)
-	// list: `connected`: posts by o2o
+	// list: `object2object`: posts by p2p/o2o
 	// list: `attached`: posts by inheritance
 	// list: `alphabetized`: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
@@ -953,6 +953,8 @@ class ShortCode extends WordPress\Main
 			'posts_per_page'   => $args['limit'],
 			'suppress_filters' => TRUE,
 			'no_found_rows'    => TRUE,
+			'tax_query'        => [],
+			'meta_query'       => [],
 		];
 
 		if ( ! empty( $args['posttypes'] ) )
@@ -984,7 +986,7 @@ class ShortCode extends WordPress\Main
 			if ( ! $args['orderby'] )
 				$query['orderby'] = 'menu_order';
 
-		} else if ( 'connected' === $list ) {
+		} else if ( 'object2object' === $list ) {
 
 			if ( $posttype && is_post_type_archive( $posttype ) ) {
 
@@ -1010,10 +1012,10 @@ class ShortCode extends WordPress\Main
 			if ( ! $term = get_term_by( 'id', $args['term_id'] ?: $args['id'], $taxonomy ) )
 				return $content;
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $term->taxonomy,
 				'terms'    => [ $term->term_id ],
-			] ];
+			];
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
@@ -1029,10 +1031,10 @@ class ShortCode extends WordPress\Main
 			if ( ! $term = get_term_by( 'slug', $args['slug'], $taxonomy ) )
 				return $content;
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $term->taxonomy,
 				'terms'    => [ $term->term_id ],
-			] ];
+			];
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
@@ -1049,10 +1051,10 @@ class ShortCode extends WordPress\Main
 			if ( ! $term = get_queried_object() )
 				return $content;
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $term->taxonomy,
 				'terms'    => [ $term->term_id ],
-			] ];
+			];
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
@@ -1086,10 +1088,10 @@ class ShortCode extends WordPress\Main
 					return $content;
 			}
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $taxonomy,
 				'terms'    => [ $term->term_id ],
-			] ];
+			];
 
 			if ( is_null( $args['title'] ) )
 				$args['title'] = FALSE; // disable on main post singular
@@ -1129,10 +1131,10 @@ class ShortCode extends WordPress\Main
 			if ( ! $term = WordPress\Term::get( $args['term_id'] ) )
 				return $content;
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $taxonomy ?: $term->taxonomy,
 				'terms'    => [ $term->term_id ],
-			] ];
+			];
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
@@ -1151,10 +1153,10 @@ class ShortCode extends WordPress\Main
 			if ( ! $term = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
 				return $content;
 
-			$query['tax_query'] = [ [
+			$query['tax_query'][] = [
 				'taxonomy' => $taxonomy,
 				'terms'    => Core\Arraay::pluck( $term, 'term_id' ),
-			] ];
+			];
 
 			$skip = TRUE; // maybe queried itself!
 
@@ -1166,10 +1168,10 @@ class ShortCode extends WordPress\Main
 		if ( $args['item_image_tile']
 			&& FALSE === $args['item_image_empty'] ) {
 
-			$query['meta_query'] = [ [
+			$query['meta_query'][] = [
 				'key'     => $args['item_image_metakey'], // '_thumbnail_id',
 				'compare' => 'EXISTS'
-			] ];
+			];
 		}
 
 		$class = new \WP_Query();
@@ -1188,7 +1190,7 @@ class ShortCode extends WordPress\Main
 
 			$ref = $term;
 
-		} else if ( 'paired' == $list || 'connected' == $list ) {
+		} else if ( 'paired' == $list || 'object2object' == $list ) {
 
 			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $post, $args );

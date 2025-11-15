@@ -9,12 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxSupported
 {
-
-	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default', $extra = [] )
+	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = NULL, $metabox_priority = NULL, $extra = [] )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
+		$context  = $context ?? 'supportedbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box ) use ( $context, $screen ) {
 
@@ -42,6 +39,8 @@ trait MetaBoxSupported
 			);
 
 			echo '</div>';
+
+			$this->nonce_field( $context );
 		};
 
 		add_meta_box(
@@ -49,25 +48,24 @@ trait MetaBoxSupported
 			$this->strings_metabox_title_via_taxonomy( $screen->taxonomy, $context ),
 			$callback,
 			$screen,
-			$metabox_context,
-			$metabox_priority
+			$metabox_context ?? 'side',
+			$metabox_priority ?? 'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return array_merge( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], (array) $extra );
+			} );
 	}
 
-	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = 'side', $metabox_priority = 'default', $extra = [] )
+	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = NULL, $metabox_priority = NULL, $extra = [] )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
+		$context  = $context ?? 'supportedbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box ) use ( $context, $screen ) {
 
@@ -104,28 +102,26 @@ trait MetaBoxSupported
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
-			$metabox_context,
-			$metabox_priority
+			$metabox_context ?? 'side',
+			$metabox_priority ?? 'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return array_merge( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], (array) $extra );
+			} );
 	}
 
 	// DEFAULT METHOD
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$context = $context ?? 'supportedbox';
+		$screen  = $screen  ?? get_current_screen();
 
 		if ( 'post' === $screen->base )
 			$action_context = sprintf( '%s_%s', $context, $object->post_type );

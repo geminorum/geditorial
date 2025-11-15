@@ -1220,6 +1220,20 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_connected_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'connected_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Connected Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the connected short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
 	public static function getSetting_primary_posttype_constant( $description = NULL, $default = '' )
 	{
 		return [
