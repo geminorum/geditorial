@@ -1218,19 +1218,23 @@ class ShortCode extends WordPress\Main
 
 		foreach ( $items as $item ) {
 
-			// NOTE: call-back must setup post-data
-			// @REF: https://developer.wordpress.org/?p=2837#comment-874
-			// `$GLOBALS['post'] = $item;`
-			// `setup_postdata( $item );`
+			if ( $args['item_cb'] ) {
 
-			if ( $args['item_cb'] )
+				// NOTE: no need for call-back to setup post-data
+				// @REF: https://developer.wordpress.org/?p=2837#comment-874
+				$GLOBALS['post'] = $item;
+				setup_postdata( $item );
+
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $ref ] );
 
-			else if ( $args['item_image_tile'] )
+			} else if ( $args['item_image_tile'] ) {
+
 				$html.= self::postImage( $item, $args );
 
-			else
+			} else {
+
 				$html.= self::postItem( $item, $args );
+			}
 		}
 
 		if ( $args['list_tag'] )
@@ -1243,7 +1247,10 @@ class ShortCode extends WordPress\Main
 
 		$html = self::wrap( $html, $tag, $args );
 
-		// wp_reset_postdata();
+		// NOTE: since callback used setup post data
+		if ( $args['item_cb'] )
+			wp_reset_postdata();
+
 		wp_cache_set( $key, $html, $group );
 
 		return $html;
