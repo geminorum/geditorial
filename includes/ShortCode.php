@@ -847,6 +847,7 @@ class ShortCode extends WordPress\Main
 			'term_id' => '',
 			'id'      => '',   // DEPRECATED
 			'slug'    => '',
+			'metakey' => '',
 
 			'title'          => NULL,                                                            // `FALSE` to disable
 			'title_cb'       => FALSE,
@@ -915,6 +916,7 @@ class ShortCode extends WordPress\Main
 	// list: `assigned`: posts by terms
 	// list: `paired`: posts by meta (PAIRED API)
 	// list: `object2object`: posts by p2p/o2o
+	// list: `metadata`: posts by metadata comparison
 	// list: `attached`: posts by inheritance
 	// list: `alphabetized`: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
@@ -1001,6 +1003,37 @@ class ShortCode extends WordPress\Main
 
 				return $content;
 			}
+
+		} else if ( 'metadata' === $list ) {
+
+			if ( empty( $args['metakey'] ) )
+				return $content;
+
+			if ( $args['post_id'] ) {
+
+				$post = WordPress\Post::get( $args['post_id'] );
+
+			} else if ( $posttype && is_singular( $posttype ) ) {
+
+				$post = WordPress\Post::get( get_queried_object_id() );
+
+			} else {
+
+				return $content;
+			}
+
+			$query['meta_query']['relation'] = 'AND';
+			$query['meta_query'][] = [
+				'key'     => $args['metakey'],
+				'value'   => $post->ID,
+				'compare' => '=',
+			];
+
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					$args['posttypes'],
+					(array) $args['exclude_posttypes']
+				);
 
 		} else if ( 'all' === $args['id'] || 'all' === $args['term_id'] ) {
 
@@ -1190,7 +1223,7 @@ class ShortCode extends WordPress\Main
 
 			$ref = $term;
 
-		} else if ( 'paired' == $list || 'object2object' == $list ) {
+		} else if ( in_array( $list, [ 'paired', 'object2object', 'metadata' ], TRUE ) ) {
 
 			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $post, $args );
