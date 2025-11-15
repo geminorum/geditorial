@@ -10,6 +10,11 @@ class Widget extends \WP_Widget
 	const MODULE = FALSE;
 	const WIDGET = FALSE;
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	protected static function constant( $key, $default = FALSE )
 	{
 		return gEditorial()->constant( static::MODULE, $key, $default );
@@ -22,6 +27,17 @@ class Widget extends \WP_Widget
 			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook
 		), ...$args );
+	}
+
+	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )
+	{
+		if ( ! $module = $module ?? static::MODULE )
+			return [];
+
+		if ( $check && ! static::factory()->enabled( $module ) )
+			return [];
+
+		return static::factory()->module( $module )->posttypes( $posttypes );
 	}
 
 	public function __construct()
