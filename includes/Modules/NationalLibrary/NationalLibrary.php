@@ -98,6 +98,8 @@ class NationalLibrary extends gEditorial\Module
 
 		$settings['_frontend'] = [
 			'tabs_support',
+			'tab_title'       => [ NULL , _x( 'Fipa', 'Setting Default', 'geditorial-national-library' ) ],
+			'tab_priority'    => [ NULL , 90 ],
 			'frontend_search' => [ _x( 'Adds results by Bibliographic information on front-end search.', 'Setting Description', 'geditorial-national-library' ), TRUE ],
 			[
 				'field'       => 'custom_queries',
@@ -158,7 +160,7 @@ class NationalLibrary extends gEditorial\Module
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
-			$this->filter( 'product_tabs', 1, 99, FALSE, 'woocommerce' );
+			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 90 ), FALSE, 'woocommerce' );
 
 		if ( $this->get_setting( 'newpost_hints' ) ) {
 
@@ -609,7 +611,6 @@ class NationalLibrary extends gEditorial\Module
 		return $meta;
 	}
 
-	// NOTE: `priority` does not applied on this filter!
 	public function product_tabs( $tabs )
 	{
 		global $product;
@@ -622,8 +623,8 @@ class NationalLibrary extends gEditorial\Module
 
 		return Core\Arraay::insert( $tabs, [
 			$this->classs( 'fipa' ) => [
-				'title'    => _x( 'Fipa', 'Tab Title', 'geditorial-national-library' ),
-				// 'priority' => 18,
+				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Fipa', 'Setting Default', 'geditorial-national-library' ) ),
+				'priority' => $this->get_setting( 'tab_priority', 90 ), // NOTE: `priority` does not applied on this filter!
 				'callback' => function () use ( $data ) {
 					$this->_render_fipa_data( $data, 'tabs' );
 				},

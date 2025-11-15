@@ -60,20 +60,8 @@ class Byline extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
-				[
-					'field'       => 'tab_title',
-					'type'        => 'text',
-					'title'       => _x( 'Tab Title', 'Setting Title', 'geditorial-byline' ),
-					'description' => _x( 'Template for the custom byline tab title. Leave empty to use defaults.', 'Setting Description', 'geditorial-byline' ),
-					'placeholder' => _x( 'People', 'Setting Default', 'geditorial-byline' ),
-				],
-				[
-					'field'       => 'tab_priority',
-					'type'        => 'priority',
-					'title'       => _x( 'Tab Priority', 'Setting Title', 'geditorial-byline' ),
-					'description' => _x( 'Priority of the custom byline tab.', 'Setting Description', 'geditorial-byline' ),
-					'default'     => 20,
-				],
+				'tab_title'    => [ NULL, _x( 'People', 'Setting Default', 'geditorial-byline' ) ],
+				'tab_priority' => [ NULL, 20 ],
 			],
 			'_constants' => [
 				'main_taxonomy_constant' => [ NULL, 'relation' ],
@@ -699,6 +687,7 @@ class Byline extends gEditorial\Module
 		return array_merge( $tabs, [
 			$this->key => [
 				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'People', 'Setting Default', 'geditorial-byline' ) ),
+				'priority' => $this->get_setting( 'tab_priority', 20 ), // NOTE: `priority` does not applied on this filter!
 				'callback' => function () use ( $post_id ) {
 					ModuleTemplate::renderDefault( [
 						'default'  => $this->get_notice_for_empty( 'woocommerce', 'empty', FALSE ),

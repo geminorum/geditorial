@@ -83,6 +83,8 @@ class Diagnosed extends gEditorial\Module
 				'show_in_navmenus',
 				'archive_override',
 				'tabs_support',
+				'tab_title'    => [ NULL, $this->strings['frontend']['tab_title'] ],
+				'tab_priority' => [ NULL, 80 ],
 			],
 			'_constants' => [
 				'main_taxonomy_constant'  => [ NULL, 'diagnosis' ],

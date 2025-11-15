@@ -624,6 +624,33 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_tab_title( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'tab_title',
+			'type'        => 'text',
+			'title'       => _x( 'Tab Title', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Template for the custom tab title. Leave empty to use defaults.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?: '',
+			'placeholder' => $default ?: '',
+		];
+	}
+
+	public static function getSetting_tab_priority( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'tab_priority',
+			'type'        => 'priority',
+			'title'       => _x( 'Tab Priority', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? sprintf(
+				/* translators: `%s`: zero placeholder */
+				_x( 'Priority of the custom tab. Leave at %s to use defaults.', 'Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( '0' )
+			),
+			'default' => $default ?: 0,
+		];
+	}
+
 	public static function getSetting_woocommerce_support( $description = NULL, $default = NULL )
 	{
 		return [

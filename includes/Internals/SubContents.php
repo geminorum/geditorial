@@ -1092,7 +1092,7 @@ trait SubContents
 					$tabs[] = [
 
 						'name'  => $this->hook( 'subcontent', $posttype ),
-						'title' => $this->get_string( 'tab_title', $posttype, 'frontend', $this->module->title ),
+						'title' => $this->get_setting_fallback( 'tab_title', $this->get_string( 'tab_title', $posttype, 'frontend', $this->module->title ) ),
 
 						'viewable' => function ( $post ) {
 							return (bool) $this->subcontent_get_data_count( $post, 'tabs' );
@@ -1107,7 +1107,7 @@ trait SubContents
 							], $this->get_notice_for_empty( 'tabs' ) );
 						},
 
-						'priority' => $priority ?? 80,
+						'priority' => $this->get_setting( 'tab_priority', 80 ),
 					];
 
 				return $tabs;

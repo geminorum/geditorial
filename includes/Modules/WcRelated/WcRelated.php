@@ -99,11 +99,9 @@ class WcRelated extends gEditorial\Module
 				],
 			],
 			'_misc' => [
-				[
-					'field'       => 'related_on_tabs',
-					'title'       => _x( 'Related on Tabs', 'Setting Title', 'geditorial-wc-related' ),
-					'description' => _x( 'Displays Upsells and Related products on front-end product tabs.', 'Setting Description', 'geditorial-wc-related' ),
-				],
+				'tabs_support' => [ _x( 'Displays Upsells and Related products on front-end product tabs.', 'Setting Description', 'geditorial-wc-related' ), FALSE ],
+				'tab_title'    => [ NULL , _x( 'Related Products', 'Setting Default', 'geditorial-wc-related' ) ],
+				'tab_priority' => [ NULL , 25 ],
 			],
 		];
 	}
@@ -132,8 +130,8 @@ class WcRelated extends gEditorial\Module
 		if ( $this->get_setting( 'exclude_default_terms' ) || $this->get_setting( 'exclude_product_tags' ) )
 			$this->filter( 'get_related_product_tag_terms', 2, 12, FALSE, 'woocommerce' );
 
-		if ( $this->get_setting( 'related_on_tabs' ) )
-			$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
+		if ( $this->get_setting( 'tabs_support', FALSE ) )
+			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 25 ), FALSE, 'woocommerce' );
 
 		// if not on tabs
 		else if ( ! empty( $this->get_setting( 'related_by_taxonomy' ) ) ) {
@@ -224,9 +222,9 @@ class WcRelated extends gEditorial\Module
 			|| apply_filters( 'woocommerce_product_related_posts_force_display', FALSE, $product->get_id() ) ) {
 
 			$tabs['related'] = [
-				'title'    => $this->filters( 'tab_related_title', __( 'Related products', 'woocommerce' ), $product ), // TODO: use custom title
+				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Related Products', 'Setting Default', 'geditorial-wc-related' ) ),
+				'priority' => $this->get_setting( 'tab_priority', 25 ), // NOTE: `priority` does not applied on this filter!
 				'callback' => [ $this, 'product_tabs_related_callback' ],
-				'priority' => 25,
 			];
 
 			remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );

@@ -62,6 +62,8 @@ class NextOfKin extends gEditorial\Module
 			],
 			'_frontend' => [
 				'tabs_support',
+				'tab_title'    => [ NULL, $this->strings['frontend']['tab_title'] ],
+				'tab_priority' => [ NULL, 80 ],
 			],
 			'_supports' => [
 				'shortcode_support',
