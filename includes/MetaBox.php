@@ -388,12 +388,49 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function getTermPosts( $taxonomy, $term_or_id, $posttypes = NULL, $title = FALSE, $current = FALSE, $exclude = [] )
+	public static function getChildrenPosts( $post, $posttypes = NULL, $title = FALSE, $current = FALSE, $exclude = [] )
 	{
-		if ( ! $term_or_id || is_wp_error( $term_or_id ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
 
-		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
+		$posttype = is_null( $posttypes ) ? 'any' : (array) $posttypes;
+
+		$args = [
+			'posts_per_page' => -1,
+			'orderby'        => [ 'menu_order', 'date' ],
+			'order'          => 'ASC',
+			'post_type'      => $posttype,
+			'post_status'    => WordPress\Status::acceptable( $posttype ),
+			'post__not_in'   => $exclude,
+			'post_parent'    => $post->ID,
+		];
+
+		$posts = get_posts( $args );
+
+		if ( empty( $posts ) )
+			return FALSE;
+
+		$html     = '';
+		$statuses = WordPress\Status::get();
+
+		if ( TRUE === $title )
+			$html.= Core\HTML::tag( 'h4', Helper::getPostTitleRow( $post ) );
+
+		else if ( $title )
+			$html.= Core\HTML::tag( 'h4', $title );
+
+		$html.= '<ol>';
+
+		foreach ( $posts as $post )
+			$html.= '<li>'.Helper::getPostTitleRow( $post, ( $post->ID == $current ? FALSE : 'edit' ), $statuses ).'</li>';
+
+		return Core\HTML::wrap( $html.'</ol>', 'field-wrap -list' );
+	}
+
+	// TODO: move to `WordPress\MetaBox`
+	public static function getTermPosts( $taxonomy, $term, $posttypes = NULL, $title = FALSE, $current = FALSE, $exclude = [] )
+	{
+		if ( ! $term = WordPress\Term::get( $term, $taxonomy ) )
 			return '';
 
 		$posttype = is_null( $posttypes ) ? 'any' : (array) $posttypes;
