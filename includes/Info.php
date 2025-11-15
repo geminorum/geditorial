@@ -203,9 +203,12 @@ class Info extends WordPress\Main
 		if ( defined( 'P2P_PLUGIN_VERSION' ) )
 			return;
 
-		/* translators: `%1$s`: plugin url, `%2$s`: plugin url */
-		Core\HTML::desc( sprintf( _x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial-admin' ),
-			'https://github.com/scribu/wp-posts-to-posts/', 'https://github.com/voceconnect/objects-to-objects' ) );
+		Core\HTML::desc( sprintf(
+			/* translators: `%1$s`: plugin URL, `%2$s`: plugin URL */
+			_x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial-admin' ),
+			'https://github.com/scribu/wp-posts-to-posts/',
+			'https://github.com/voceconnect/objects-to-objects' )
+		);
 	}
 
 	// OLD: `infoP2P()`
@@ -214,7 +217,7 @@ class Info extends WordPress\Main
 		return sprintf(
 			/* translators: `%s`: code placeholder */
 			_x( 'Connected via %s', 'Info: P2P', 'geditorial-admin' ),
-			'<code>P2P</code>'
+			Core\HTML::code( 'P2P' )
 		);
 	}
 

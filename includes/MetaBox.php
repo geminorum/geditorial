@@ -40,6 +40,7 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	// FIXME: adopt `wp_dropdown_categories()`
 	// FIXME: add taxonomy `title::description` as drop-down title attribute
 	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
@@ -100,6 +101,7 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $html, 'field-wrap -select' );
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	// TODO: radio list box using custom walker
 	// CAUTION: tax must be hierarchical.
 	// Hierarchical taxonomies save by IDs,
@@ -221,7 +223,7 @@ class MetaBox extends WordPress\Main
 		if ( is_null( $args['selected_preserve'] ) )
 			$args['selected_preserve'] = ! $atts['disabled'];
 
-		// preserves terms that hidden on the current list
+		// Preserves terms that hidden on the current list.
 		if ( $args['selected_preserve'] ) {
 
 			$diff = array_diff( $atts['selected_cats'], Core\Arraay::pluck( $terms, 'term_id' ) );
@@ -251,8 +253,8 @@ class MetaBox extends WordPress\Main
 		if ( ! $atts['selected_only'] )
 			$html.= call_user_func_array( [ $walker, 'walk' ], [ $terms, 0, $atts ] );
 
-		// allows for an empty term set to be sent. 0 is an invalid Term ID
-		// and will be ignored by empty() checks
+		// Allows for an empty term set to be sent. `0` is an invalid Term ID
+		// and will be ignored by `empty()` checks
 		if ( ! $args['list_only'] && ! $atts['disabled'] )
 			$hidden.= '<input type="hidden" name="'.$name.'[]" value="0" />';
 
@@ -268,6 +270,7 @@ class MetaBox extends WordPress\Main
 		echo $html;
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	public static function checklistUserTerms( $post_id = 0, $atts = [], $users = NULL, $threshold = 5 )
 	{
 		$args = self::args( $atts, [
@@ -278,9 +281,9 @@ class MetaBox extends WordPress\Main
 			'restricted'        => NULL,
 			'list_only'         => NULL,
 			'selected_only'     => NULL,
-			'selected_preserve' => NULL,          // keep hidden selected / NULL to check for assign cap
+			'selected_preserve' => NULL,          // Keep hidden selected / NULL to check for assign cap
 			'walker'            => NULL,
-			'name'              => 'tax_input',   // override if not saving by core
+			'name'              => 'tax_input',   // Override if not saving by core
 		] );
 
 		if ( ! $args['taxonomy'] )
@@ -332,7 +335,7 @@ class MetaBox extends WordPress\Main
 		if ( is_null( $args['selected_preserve'] ) )
 			$args['selected_preserve'] = ! $atts['disabled'];
 
-		// preserves users that hidden on the current list
+		// Preserves users that hidden on the current list.
 		if ( $args['selected_preserve'] ) {
 
 			$diff = array_diff( $selected, Core\Arraay::pluck( $users, 'user_login' ) );
@@ -364,12 +367,12 @@ class MetaBox extends WordPress\Main
 
 		$html.= Core\HTML::wrap( '<ul>'.$list.'</ul>', 'field-wrap -list' );
 
-		// allows for an empty term set to be sent. 0 is an invalid Term ID
-		// and will be ignored by empty() checks
+		// Allows for an empty term set to be sent. `0` is an invalid Term ID
+		// and will be ignored by `empty()` checks
 		if ( ! $args['list_only'] && ! $atts['disabled'] )
 			$hidden.= '<input type="hidden" name="'.$args['name'].'['.$args['taxonomy'].'][]" value="0" />';
 
-		// ListJS needs the wrap!
+		// `List.JS` needs the wrap!
 		echo '<div id="'.$id.'" class="field-wrap -listjs">'.$html.'</div>';
 		echo $hidden;
 
@@ -388,6 +391,7 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	public static function getChildrenPosts( $post, $posttypes = NULL, $title = FALSE, $current = FALSE, $exclude = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -520,30 +524,29 @@ class MetaBox extends WordPress\Main
 		echo $html;
 	}
 
+	// NOTE: DEPRECATED
 	public static function getTitleAction( $action )
 	{
-		return empty( $action['link'] ) ? '' : ' <span class="postbox-title-action"><a href="'.esc_url( $action['url'] ).'" title="'.$action['title'].'">'.$action['link'].'</a></span>';
+		self::_dev_dep( 'WordPress\MetaBox::markupTitleAction()' );
+
+		return WordPress\MetaBox::markupTitleAction( $action );
 	}
 
 	public static function titleActionRefresh()
 	{
-		return self::getTitleAction( [
+		return WordPress\MetaBox::markupTitleAction( [
 			'url'   => add_query_arg( 'flush', '' ),
 			'title' => _x( 'Click to refresh the content', 'MetaBox: Title Action', 'geditorial' ),
 			'link'  => _x( 'Refresh', 'MetaBox: Title Action', 'geditorial' ),
 		] );
 	}
 
+	// NOTE: DEPRECATED
 	public static function titleActionInfo( $info )
 	{
-		if ( ! $info )
-			return '';
+		self::_dev_dep( 'WordPress\MetaBox::markupTitleInfo()' );
 
-		$html = ' <span class="postbox-title-action" data-tooltip="'.Core\Text::wordWrap( $info ).'"';
-		$html.= ' data-tooltip-pos="'.( Core\HTML::rtl() ? 'down-left' : 'down-right' ).'"';
-		$html.= ' data-tooltip-length="xlarge">'.Core\HTML::getDashicon( 'info' ).'</span>';
-
-		return $html;
+		return WordPress\MetaBox::markupTitleInfo( $info );
 	}
 
 	// PAIRED API
@@ -627,7 +630,7 @@ class MetaBox extends WordPress\Main
 		return $html ? Core\HTML::wrap( $html, 'field-wrap -select' ) : '';
 	}
 
-	// FIXME: DEPRECATED
+	// NOTE: DEPRECATED
 	public static function dropdownAssocPosts( $posttype, $selected = '', $prefix = '', $exclude = '' )
 	{
 		$html = wp_dropdown_pages( [
@@ -669,6 +672,7 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $html, 'field-wrap -inputnumber' );
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	// @REF: `post_slug_meta_box()`
 	public static function fieldPostSlug( $post )
 	{
@@ -687,6 +691,7 @@ class MetaBox extends WordPress\Main
 		echo Core\HTML::wrap( $html, 'field-wrap -inputcode' );
 	}
 
+	// TODO: move to `WordPress\MetaBox`
 	// @REF: `post_author_meta_box()`
 	public static function fieldPostAuthor( $post )
 	{

@@ -530,7 +530,7 @@ class Module extends WordPress\Module
 
 		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'editor-help' ).'</span>';
+			$title.= WordPress\MetaBox::markupTitleHelp( $info );
 
 		if ( FALSE === $url || FALSE === $edit_cap )
 			return $title;

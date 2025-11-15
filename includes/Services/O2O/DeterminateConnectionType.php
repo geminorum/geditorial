@@ -8,7 +8,7 @@ class DeterminateConnectionType implements DirectionStrategy
 
 	public function get_arrow()
 	{
-		return '&rarr;';
+		return is_rtl() ? '&larr;' : '&rarr;';
 	}
 
 	public function choose_direction( $direction )

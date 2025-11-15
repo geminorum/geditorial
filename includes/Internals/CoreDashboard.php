@@ -61,7 +61,7 @@ trait CoreDashboard
 
 		if ( is_array( $action ) ) {
 
-			$title.= gEditorial\MetaBox::getTitleAction( $action );
+			$title.= WordPress\MetaBox::markupTitleAction( $action );
 
 		} else if ( $action ) {
 
@@ -74,7 +74,7 @@ trait CoreDashboard
 				case 'info' :
 
 					if ( method_exists( $this, 'get_widget_'.$hook.'_info' ) )
-						$title.= gEditorial\MetaBox::titleActionInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
+						$title.= WordPress\MetaBox::markupTitleInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
 
 					break;
 

@@ -223,7 +223,7 @@ class Quotation extends gEditorial\Module
 
 				$this->filter( 'the_title', 2, 9 );
 
-				// TODO: MAYBE: restrict quotations by parents
+				// TODO: restrict quotations by parents
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) ) {
 					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'book-alt', 'meta', NULL, -10 );
@@ -259,9 +259,14 @@ class Quotation extends gEditorial\Module
 		return $items;
 	}
 
+	public function meta_render_metabox( $post, $box, $fields = NULL, $context = 'mainbox' )
+	{
+		gEditorial\MetaBox::fieldPostMenuOrder( $post );
+	}
+
 	// @REF: `MetaBox::fieldPostParent()`
 	// @REF: `page_attributes_misc_attributes`
-	public function meta_render_metabox( $post, $box, $fields = NULL, $context = 'mainbox' )
+	public function meta_render_metabox_OLD( $post, $box, $fields = NULL, $context = 'mainbox' )
 	{
 		$html = Core\HTML::tag( 'input', [
 			'name'        => 'menu_order',

@@ -475,9 +475,7 @@ class Meta extends gEditorial\Module
 						$title   = empty( $args['title'] ) ? $field : $args['title'];
 
 						if ( ! empty( $args['description'] ) )
-							$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'
-								.Core\HTML::escape( $args['description'] ).'">'
-								.Core\HTML::getDashicon( 'editor-help' ).'</span>';
+							$title.= WordPress\MetaBox::markupTitleHelp( $args['description'] );
 
 						gEditorial\MetaBox::classEditorBox( $screen, $metabox );
 

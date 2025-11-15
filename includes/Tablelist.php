@@ -31,7 +31,7 @@ class Tablelist extends WordPress\Main
 	 * @param array $extra
 	 * @param string|array $taxonomy
 	 * @param int|false $perpage
-	 * @return array $data
+	 * @return array
 	 */
 	public static function getTerms( $atts = [], $extra = [], $taxonomy = '', $perpage = 25 )
 	{
@@ -88,11 +88,11 @@ class Tablelist extends WordPress\Main
 	 *
 	 * NOTE: false `$perpage` will result in list of posts only.
 	 *
-	 * @param  array        $atts
-	 * @param  array        $extra
-	 * @param  string|array $posttypes
-	 * @param  int|false    $perpage
-	 * @return array        $data
+	 * @param array $atts
+	 * @param array $extra
+	 * @param string|array $posttypes
+	 * @param int|false $perpage
+	 * @return array
 	 */
 	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
 	{
@@ -250,6 +250,7 @@ class Tablelist extends WordPress\Main
 		return $list;
 	}
 
+	// @SEE: `Helper::getTermTitleRow()`
 	public static function getTermTitleRow( $term, $link = 'edit' )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )

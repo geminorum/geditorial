@@ -137,8 +137,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		$context = $context ?? 'mainbox';
 
 		if ( method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
 			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
@@ -209,7 +208,7 @@ trait PairedMetaBox
 		} );
 	}
 
-	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = 'advanced', $extra = [] )
+	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = NULL, $extra = [] )
 	{
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
@@ -217,9 +216,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $context ) )
-			$context = 'listbox';
-
+		$context  = $context ?? 'listbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box ) use ( $constants, $context, $screen ) {
 
@@ -247,7 +244,7 @@ trait PairedMetaBox
 			else
 				echo Core\HTML::wrap( $this->strings_metabox_noitems_via_posttype( $screen->post_type, $context ), 'field-wrap -empty' );
 
-			$this->_render_listbox_extra( $object, $box, $context, $screen );
+			$this->_render_paired_listbox_extra( $object, $box, $context, $screen );
 
 			echo '</div>';
 
@@ -259,7 +256,7 @@ trait PairedMetaBox
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
-			$metabox_context,
+			$metabox_context ?? 'advanced',
 			'low'
 		);
 
@@ -279,12 +276,10 @@ trait PairedMetaBox
 	// DEFAULT METHOD
 	// TODO: support for `post_actions` on Actions module
 	// TODO: support for empty paired items with js button confirmation
-	protected function _render_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
+	protected function _render_paired_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'listbox';
-
-		$html = '';
+		$html    = '';
+		$context = $context ?? 'listbox';
 
 		if ( $this->_paired && $this->role_can( 'import', NULL, TRUE ) && method_exists( $this, 'pairedimports_get_import_buttons' ) )
 			$html.= $this->pairedimports_get_import_buttons( $post, $context );
@@ -303,9 +298,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $context ) )
-			$context = 'pairedbox';
-
+		$context  = $context ?? 'pairedbox';
 		$metabox  = $this->classs( $context );
 		$action   = sprintf( 'render_%s_metabox', $context );
 		$callback = function ( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
@@ -599,7 +592,7 @@ trait PairedMetaBox
 			else
 				echo Core\HTML::wrap( $noitems, 'field-wrap -empty' );
 
-			$this->_render_megabox_extra( $object, $box, $context, $screen );
+			$this->_render_paired_megabox_extra( $object, $box, $context, $screen );
 
 			echo '</div>';
 
@@ -636,11 +629,11 @@ trait PairedMetaBox
 	// DEFAULT METHOD
 	// https://codepen.io/geminorum/pen/yLQqYVX
 	// NOTE: alternative to `listbox`
-	protected function _render_megabox_extra( $post, $box, $context = NULL, $screen = NULL )
+	protected function _render_paired_megabox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
 		if ( is_null( $context ) )
 			$context = 'megabox';
 
-		$this->_render_listbox_extra( $post, $box, $context, $screen );
+		$this->_render_paired_listbox_extra( $post, $box, $context, $screen );
 	}
 }

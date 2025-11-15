@@ -293,7 +293,7 @@ trait Deprecated
 		return $title; // <--
 
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
+			$title.= $title.= WordPress\MetaBox::markupTitleHelp( $info );
 
 		if ( current_user_can( $object->cap->edit_others_posts ) ) {
 
@@ -326,7 +326,7 @@ trait Deprecated
 
 		// TODO: 'metabox_icon'
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= ' <span class="postbox-title-info" style="display:none" data-title="info" title="'.Core\HTML::escape( $info ).'">'.Core\HTML::getDashicon( 'info' ).'</span>';
+			$title.= $title.= WordPress\MetaBox::markupTitleHelp( $info );
 
 		if ( is_null( $url ) )
 			$url = WordPress\Taxonomy::edit( $object, [ 'post_type' => $posttype ] );

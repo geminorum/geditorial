@@ -167,6 +167,7 @@ class Helper extends WordPress\Main
 		echo WordPress\Strings::getJoined( $list, $before, $after );
 	}
 
+	// TODO: move to `Tablelist`
 	// NOTE: the output of `the_title()` is `un-escaped`
 	// @REF: https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
 	public static function getPostTitleRow( $post, $link = 'edit', $status = FALSE, $title_attr = NULL )
@@ -240,6 +241,8 @@ class Helper extends WordPress\Main
 		], $title ).$after;
 	}
 
+	// TODO: move to `Tablelist`
+	// @SEE: `Tablelist::getTermTitleRow()`
 	public static function getTermTitleRow( $term, $link = 'edit', $taxonomy = FALSE, $title_attr = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
