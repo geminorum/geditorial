@@ -14,6 +14,7 @@ class Quotation extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\MetaBoxList;
 
 	public static function module()
 	{
@@ -79,6 +80,11 @@ class Quotation extends gEditorial\Module
 
 		if ( ! is_admin() )
 			return $strings;
+
+		$strings['metabox'] = [
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+			'listbox_title' => _x( 'Quotations from &ldquo;%1$s&rdquo; %2$s', 'MetaBox: `listbox_title`', 'geditorial-quotation' ),
+		];
 
 		$strings['misc'] = [
 			'main_posttype' => [
@@ -230,7 +236,14 @@ class Quotation extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'post' == $screen->base ) {
+
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) ) {
+					$this->filter( 'the_title', 2, 9 );
+					$this->_hook_children_listbox( $screen, $this->constant( 'main_posttype' ) );
+				}
+
+			} else if ( 'edit' == $screen->base ) {
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) )
 					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'main_posttype', NULL, NULL, NULL, -10 );
