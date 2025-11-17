@@ -774,6 +774,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
+	// TODO: use `connected_shortcode` constant
 	public function p2p_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		if ( ! $this->_p2p )
@@ -788,7 +789,7 @@ class Book extends gEditorial\Module
 				'posttypes'     => $this->get_setting( 'p2p_posttypes', [] ),
 				'title_cb'      => [ $this, 'shortcode_title_cb' ],
 				'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
-				'title_anchor'  => 'publications',
+				'title_anchor'  => $this->posttype_anchor( 'main_posttype' ),
 				'title_link'    => FALSE,
 			], (array) $atts ),
 			$content,

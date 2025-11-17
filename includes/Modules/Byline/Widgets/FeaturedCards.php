@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
-use geminorum\gEditorial\Modules\Byline\ModuleTemplate;
+use geminorum\gEditorial\Modules\Byline;
 
 class FeaturedCards extends gEditorial\Widget
 {
@@ -36,7 +36,7 @@ class FeaturedCards extends gEditorial\Widget
 		if ( ! $post_id = get_queried_object_id() )
 			return FALSE;
 
-		$html = ModuleTemplate::renderFeatured( [
+		$html = Byline\ModuleTemplate::renderFeatured( [
 			'default'  => FALSE,
 			'echo'     => FALSE,
 			'hidden'   => ! empty( $instance['hidden'] ),

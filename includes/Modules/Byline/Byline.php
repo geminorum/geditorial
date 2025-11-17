@@ -215,7 +215,7 @@ class Byline extends gEditorial\Module
 						'title' => $this->get_setting_fallback( 'tab_title', _x( 'People', 'Setting Default', 'geditorial-byline' ) ),
 
 						'viewable' => function ( $post ) {
-							return (bool) $this->has_byline_for_post( $post, 'tabs' );
+							return (bool) $this->has_content_for_post( $post, 'tabs' );
 						},
 
 						'callback' => function ( $post ) {
@@ -242,9 +242,7 @@ class Byline extends gEditorial\Module
 		if ( is_admin() )
 			return;
 
-		$priority = $this->get_setting( 'tab_priority', 12 );
-
-		$this->filter( 'product_tabs', 1, $priority, FALSE, 'woocommerce' );
+		$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 12 ), FALSE, 'woocommerce' );
 	}
 
 	public function current_screen( $screen )
@@ -582,7 +580,7 @@ class Byline extends gEditorial\Module
 	}
 
 	// NOTE: checks for assigned supported terms to the post
-	public function has_byline_for_post( $post = NULL, $context = NULL )
+	public function has_content_for_post( $post = NULL, $context = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -692,7 +690,7 @@ class Byline extends gEditorial\Module
 
 		$post_id = $product->get_id();
 
-		if ( ! $this->has_byline_for_post( $post_id, 'woocommerce' ) )
+		if ( ! $this->has_content_for_post( $post_id, 'woocommerce' ) )
 			return $tabs;
 
 		return array_merge( $tabs, [

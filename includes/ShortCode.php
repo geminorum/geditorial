@@ -990,11 +990,12 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'object2object' === $list ) {
 
-			if ( $posttype && is_post_type_archive( $posttype ) ) {
+			// if ( $posttype && is_post_type_archive( $posttype ) ) {
 
-				$query['post_type'] = $posttype;
+			// 	$query['post_type'] = $posttype;
 
-			} else if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
+			// } else if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
+			if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
 				$query['connected_items'] = $post;
@@ -1021,6 +1022,9 @@ class ShortCode extends WordPress\Main
 
 				return $content;
 			}
+
+			if ( ! $post )
+				return $content;
 
 			$query['meta_query']['relation'] = 'AND';
 			$query['meta_query'][] = [

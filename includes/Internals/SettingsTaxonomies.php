@@ -110,6 +110,17 @@ trait SettingsTaxonomies
 		return $taxonomy && in_array( $taxonomy, $this->taxonomies(), TRUE );
 	}
 
+	public function taxonomy_anchor( $taxonomy )
+	{
+		$taxonomy = $this->constant( $taxonomy, $taxonomy );
+		$object   = WordPress\Taxonomy::object( $taxonomy );
+
+		if ( ! empty( $object->rest_base ) )
+			return $object->rest_base;
+
+		return Core\L10n::pluralize( $taxonomy );
+	}
+
 	public function screen_taxonomy_supported( $screen, $base = [ 'edit-tags', 'term' ] )
 	{
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )

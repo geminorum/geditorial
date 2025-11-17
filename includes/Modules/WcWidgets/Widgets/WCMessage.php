@@ -81,6 +81,7 @@ class WCMessage extends gEditorial\Widget
 		$this->form_title_link( $instance );
 		$this->form_title_image( $instance );
 		$this->form_class( $instance );
+		// $this->form_context( $instance );
 		$this->form_close_group();
 
 		$this->form_open_group( 'customs' );

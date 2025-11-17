@@ -12,6 +12,22 @@ class Template extends WordPress\Main
 		return gEditorial();
 	}
 
+	public static function perPageItems( $default = NULL )
+	{
+		if ( WordPress\WooCommerce::isActive() )
+			return WordPress\WooCommerce::getDefaultColumns() * WordPress\WooCommercegetDefaultRows();
+
+		return get_option( 'posts_per_page', $default ?? 10 );
+	}
+
+	public static function perRowColumns( $default = NULL )
+	{
+		if ( WordPress\WooCommerce::isActive() )
+			return WordPress\WooCommerce::getDefaultColumns( $default );
+
+		return $default ?? ''; // maybe add `Customizer` control
+	}
+
 	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '', $metakey = NULL )
 	{
 		if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )

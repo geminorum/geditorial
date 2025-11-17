@@ -215,22 +215,26 @@ class WcTerms extends gEditorial\Module
 			return;
 
 		$html = gEditorial\ShortCode::listPosts( 'assigned',
-			'',
+			WordPress\WooCommerce::PRODUCT_POSTTYPE,
 			$term->taxonomy,
 			$this->filters( 'term_listassigned_args', [
 				'context' => 'woocommerce',
-				'term_id' => $term->term_id,
-				'future'  => 'off',
-				'title'   => FALSE,
-				'wrap'    => FALSE,
-				'before'  => $this->wrap_open( [ '-term-listassigned', sprintf( 'columns-%d', wc_get_default_products_per_row() ) ] ),
-				'after'   => '</div>',
 				'module'  => $this->module->name,
+				'term_id' => $term->term_id,
+
+				'future' => 'off',
+				'title'  => FALSE,
+				'wrap'   => FALSE,
+				'after'  => '</div>',
+				'before' => $this->wrap_open( [
+					'-term-listassigned',
+					sprintf( 'columns-%d', wc_get_default_products_per_row() ),
+				] ),
 
 				'order'   => 'DESC',
 				'orderby' => 'date',
 				'paged'   => get_query_var( 'paged' ),
-				'limit'   => WordPress\WooCommerce::getPerPage(),
+				'limit'   => wc_get_default_product_rows_per_page() * wc_get_default_products_per_row(),
 
 				'exclude_posttypes' => WordPress\WooCommerce::PRODUCT_POSTTYPE,
 			], $term ),

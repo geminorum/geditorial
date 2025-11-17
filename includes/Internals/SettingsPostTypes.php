@@ -118,6 +118,17 @@ trait SettingsPostTypes
 			&& $this->get_setting( 'woocommerce_support', $supported_default );
 	}
 
+	public function posttype_anchor( $posttype )
+	{
+		$posttype = $this->constant( $posttype, $posttype );
+		$object   = WordPress\PostType::object( $posttype );
+
+		if ( ! empty( $object->rest_base ) )
+			return $object->rest_base;
+
+		return Core\L10n::pluralize( $posttype );
+	}
+
 	public function screen_posttype_supported( $screen, $base = [ 'edit', 'post' ] )
 	{
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
