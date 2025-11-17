@@ -48,6 +48,7 @@ class WcShortcodes extends gEditorial\Module
 	{
 		return [
 			'wc-stock-status'       => _x( 'Stock Status', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
+			'wc-order-count'        => _x( 'Order Count', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
 			'wc-scheduled-on-sales' => _x( 'Scheduled On-sales', 'Shortcode Name', 'geditorial-wc-shortcodes' ),
 		];
 	}
@@ -56,6 +57,7 @@ class WcShortcodes extends gEditorial\Module
 	{
 		return [
 			'wc_stock_status_shortcode'       => 'wc-stock-status',
+			'wc_order_count_shortcode'        => 'wc-order-count',
 			'wc_scheduled_on_sales_shortcode' => 'wc-scheduled-on-sales',
 		];
 	}
@@ -215,5 +217,44 @@ class WcShortcodes extends gEditorial\Module
 
 		return gEditorial\ShortCode::wrap( $html ?: $content,
 			$this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
+
+	/**
+	 * Displays the total number of orders by given status.
+	 * @source https://github.com/bekarice/woocommerce-display-order-count/blob/master/woocommerce-display-order-count.php
+	 *
+	 * @param array $atts
+	 * @param string $content
+	 * @param string $tag
+	 * @return string
+	 */
+	public function wc_order_count_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'status'  => 'completed',
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'wc_order_count_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$count = 0;
+
+		foreach ( WordPress\Strings::getSeparated( $args['status'] ) as $status ) {
+			if ( ! Core\Text::starts( $status, 'wc-' ) )
+				$status = sprintf( 'wc-%s', $status );
+
+			$count+= wp_count_posts( WordPress\WooCommerce::ORDER_POSTTYPE )->$status;
+		}
+
+		return gEditorial\ShortCode::wrap(
+			Core\Number::format( $count ),
+			$this->constant( 'wc_order_count_shortcode' ),
+			$args,
+			FALSE
+		);
 	}
 }
