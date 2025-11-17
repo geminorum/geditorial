@@ -20,6 +20,7 @@ class ModuleHelper extends gEditorial\Helper
 			'before'  => '',
 			'after'   => '',
 			'context' => NULL,
+			'columns' => '',
 
 			'featured' => NULL,    // only `featured`
 			'link'     => TRUE,
@@ -106,6 +107,7 @@ class ModuleHelper extends gEditorial\Helper
 			'after'    => '',
 			'context'  => NULL,
 			'template' => NULL,
+			'columns'  => '',     // NOTE: only appends a wrap class `columns-%d`
 
 			'featured' => NULL,    // only `featured`
 			'link'     => TRUE,
@@ -183,6 +185,7 @@ class ModuleHelper extends gEditorial\Helper
 			'after'    => '',
 			'context'  => NULL,
 			'callback' => NULL,
+			'columns'  => '',     // MAYBE: pass into `Intro`
 
 			'featured'    => TRUE,    // only `featured`
 			'link'        => TRUE,

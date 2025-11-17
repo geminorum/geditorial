@@ -2,9 +2,9 @@
 {{! @source: https://codepen.io/geminorum/pen/zxYmabp }}
 {{! @source: https://www.reshot.com/free-svg-icons/item/avatar-E7JU2GQ3FT/ }}
 
-<div class="geditorial-wrap -wrap -template-cardsrow -byline">
+<div class="geditorial-wrap -wrap -template-featuredcards -byline">
 	<div class="container-fluid">
-		<div class="row row-cols-2 row-cols-sm-4 r1ow-cols-md-4 g-2">
+		<div class="row row-cols-2 row-cols-sm-4 r1ow-cols-md-4 g-2{{#args.columns}} columns-{{args.columns}}{{/args.columns}}">
 		{{#data}}
 			<div class="col">
 				<div class="section-card">

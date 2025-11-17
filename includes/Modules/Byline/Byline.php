@@ -211,7 +211,7 @@ class Byline extends gEditorial\Module
 
 							ModuleTemplate::renderDefault( [
 								'default'  => $this->get_notice_for_empty( 'tabs', 'empty', FALSE ),
-								'template' => 'cardsrow',
+								'template' => 'featuredcards',
 								'hidden'   => TRUE,
 								'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 							], $post );
@@ -392,7 +392,7 @@ class Byline extends gEditorial\Module
 
 				ModuleTemplate::renderDefault( [
 					'default'  => $this->get_notice_for_empty( $target, 'empty', FALSE ),
-					'template' => 'cardsrow',
+					'template' => 'adminoverview',
 					'hidden'   => TRUE,
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 				], $post );
@@ -691,7 +691,7 @@ class Byline extends gEditorial\Module
 				'callback' => function () use ( $post_id ) {
 					ModuleTemplate::renderDefault( [
 						'default'  => $this->get_notice_for_empty( 'woocommerce', 'empty', FALSE ),
-						'template' => 'cardsrow',
+						'template' => 'featuredcards',
 						'hidden'   => TRUE,
 						'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 					], $post_id );

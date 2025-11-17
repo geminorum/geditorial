@@ -38,7 +38,7 @@ class ModuleTemplate extends gEditorial\Template
 			$atts['featured'] = TRUE;
 
 		if ( ! array_key_exists( 'template', $atts ) )
-			$atts['template'] = 'cards';
+			$atts['template'] = 'featuredcards';
 
 		if ( ! array_key_exists( 'walker', $atts ) )
 			$atts['walker'] = [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ];
