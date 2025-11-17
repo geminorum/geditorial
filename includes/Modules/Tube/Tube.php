@@ -13,6 +13,9 @@ use geminorum\gEditorial\WordPress;
 class Tube extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
+	use Internals\MetaBoxList;
+	use Internals\O2OMetaBox;
 	use Internals\PostMeta;
 
 	private $_wp_video_shortcode_attr = '';
@@ -29,6 +32,8 @@ class Tube extends gEditorial\Module
 				'video',
 				'clip',
 				'double-paired',
+				'manual-connect',
+				'o2o',
 			],
 		];
 	}
@@ -65,10 +70,12 @@ class Tube extends gEditorial\Module
 				$this->settings_supports_option( 'secondary_posttype', TRUE ),
 			],
 			'_constants' => [
-				'primary_posttype_constant'   => [ NULL, 'video' ],
-				'primary_taxonomy_constant'   => [ NULL, 'video_category' ],
-				'secondary_posttype_constant' => [ NULL, 'channel' ],
-				'secondary_taxonomy_constant' => [ NULL, 'channel_category' ],
+				'primary_posttype_constant'    => [ NULL, 'video' ],
+				'primary_taxonomy_constant'    => [ NULL, 'video_category' ],
+				'secondary_posttype_constant'  => [ NULL, 'channel' ],
+				'secondary_taxonomy_constant'  => [ NULL, 'channel_category' ],
+				'connected_shortcode_constant' => [ NULL, 'connected-videos' ],
+				'children_shortcode_constant'  => [ NULL, 'channel-videos' ],
 			],
 		];
 	}
@@ -76,14 +83,15 @@ class Tube extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype'             => 'video',                   // ALT: `clip`
-			'primary_posttype_connected'   => 'connected_videos',
-			'primary_taxonomy'             => 'video_category',
-			'secondary_posttype'           => 'channel',
-			'secondary_posttype_connected' => 'connected_channels',
-			'secondary_taxonomy'           => 'channel_category',
-			'primary_shortcode'            => 'tube-video-category',
-			'secondary_shortcode'          => 'tube-channel-category',
+			'primary_posttype'           => 'video',                   // ALT: `clip`
+			'primary_posttype_connected' => 'connected_videos',
+			'primary_taxonomy'           => 'video_category',
+			'secondary_posttype'         => 'channel',
+			'secondary_taxonomy'         => 'channel_category',
+			'primary_shortcode'          => 'tube-video-category',
+			'secondary_shortcode'        => 'tube-channel-category',
+			'connected_shortcode'        => 'connected-videos',
+			'children_shortcode'         => 'channel-videos',
 		];
 	}
 
@@ -95,6 +103,9 @@ class Tube extends gEditorial\Module
 				'primary_taxonomy'   => _n_noop( 'Video Category', 'Video Categories', 'geditorial-tube' ),
 				'secondary_posttype' => _n_noop( 'Channel', 'Channels', 'geditorial-tube' ),
 				'secondary_taxonomy' => _n_noop( 'Channel Category', 'Channel Categories', 'geditorial-tube' ),
+
+				/* translators: `%s`: count number */
+				'primary_posttype_count' => _n_noop( '%s Video', '%s Videos', 'geditorial-tube' ),
 			],
 		];
 
@@ -106,12 +117,6 @@ class Tube extends gEditorial\Module
 				'title' => [
 					'from' => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
 					'to'   => _x( 'Connected Posts', 'O2O', 'geditorial-tube' ),
-				],
-			],
-			'secondary_posttype' => [
-				'title' => [
-					'from' => _x( 'Connected Channels', 'O2O', 'geditorial-tube' ),
-					'to'   => _x( 'Connected Videos', 'O2O', 'geditorial-tube' ),
 				],
 			],
 		];
@@ -128,6 +133,13 @@ class Tube extends gEditorial\Module
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
 					'lead'       => [ 'type' => 'postbox_html' ],
+
+					'parent_post_id' => [
+						'title'       => _x( 'Channel', 'Field Title', 'geditorial-tube' ),
+						'description' => _x( 'Parent Channel of the Video', 'Field Description', 'geditorial-tube' ),
+						'type'        => 'parent_post',
+						'posttype'    => $this->get_setting( 'video_channels' ) ? $this->constant( 'secondary_posttype' ) : FALSE,
+					],
 
 					'featured_people' => [
 						'title'       => _x( 'Featured People', 'Field Title', 'geditorial-tube' ),
@@ -205,15 +217,6 @@ class Tube extends gEditorial\Module
 				'to'   => $this->constant( 'primary_posttype' ),
 				'from' => $posttypes,
 			] );
-
-		if ( $this->get_setting( 'video_channels' ) )
-			Services\O2O\API::registerConnectionType( [
-				'name' => $this->constant( 'secondary_posttype_connected' ),
-				'to'   => $this->constant( 'secondary_posttype' ),
-				'from' => $this->constant( 'primary_posttype' ),
-
-				'reciprocal' => TRUE,
-			] );
 	}
 
 	public function init()
@@ -235,6 +238,7 @@ class Tube extends gEditorial\Module
 		] );
 
 		$this->register_shortcode( 'primary_shortcode' );
+		$this->register_shortcode( 'connected_shortcode' );
 
 		if ( $this->get_setting( 'video_channels' ) ) {
 
@@ -256,6 +260,7 @@ class Tube extends gEditorial\Module
 			] );
 
 			$this->register_shortcode( 'secondary_shortcode' );
+			$this->register_shortcode( 'children_shortcode' );
 		}
 
 		if ( ! is_admin() && $this->get_setting( 'video_toolbar' ) ) {
@@ -274,7 +279,21 @@ class Tube extends gEditorial\Module
 
 				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
+
+				$this->o2o_register_metabox_from(
+					'primary_posttype_connected',
+					$this->get_setting( 'connected_posttypes', [] ),
+					$screen
+				);
+
 			} else if ( 'edit' == $screen->base ) {
+
+				// TODO: restrict videos by channel
+
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
+					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'playlist-video', 'meta', NULL, -10 );
+					$this->corerestrictposts__hook_parsequery_for_post_parent( 'primary_posttype' );
+				}
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
@@ -289,10 +308,32 @@ class Tube extends gEditorial\Module
 
 				$this->posttype__media_register_headerbutton( 'secondary_posttype' );
 				$this->_hook_post_updated_messages( 'secondary_posttype' );
+
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
+					$this->_hook_children_listbox( $screen, $this->constant( 'primary_posttype' ) );
+
 			} else if ( 'edit' == $screen->base ) {
+
+				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
+					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'primary_posttype', NULL, NULL, NULL, -10 );
 
 				$this->_hook_bulk_post_updated_messages( 'secondary_posttype' );
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
+			}
+
+		} else if ( $this->in_setting( $screen->post_type, 'connected_posttypes' ) ) {
+
+			if ( 'post' == $screen->base ) {
+
+				$this->o2o_register_metabox_to(
+					'primary_posttype_connected',
+					$this->constant( 'primary_posttype' ),
+					$screen
+				);
+
+			} else if ( 'edit' == $screen->base ) {
+
+				// TODO: columnrow_for_o2o_connected_to
 			}
 		}
 	}
@@ -323,6 +364,7 @@ class Tube extends gEditorial\Module
 		return $override;
 	}
 
+	// TODO: move to `ModuleHelper`
 	public function wp_video_shortcode( $output, $atts, $video, $post_id, $library )
 	{
 		if ( ! isset( $this->_wp_video_shortcode_attr ) )
@@ -420,6 +462,28 @@ class Tube extends gEditorial\Module
 		);
 	}
 
+	public function connected_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		if ( ! $this->_o2o )
+			return $content;
+
+		return ShortCode::listPosts( 'object2object',
+			$this->constant( 'primary_posttype' ),
+			'',
+			array_merge( [
+				'post_id'       => NULL,
+				'posttypes'     => $this->get_setting( 'connected_posttypes', [] ),
+				// 'title_cb'      => [ $this, 'shortcode_title_cb' ],
+				// 'item_after_cb' => [ $this, 'shortcode_item_after_cb' ],
+				'title_anchor'  => $this->posttype_anchor( 'primary_posttype' ),
+				'title_link'    => FALSE,
+			], (array) $atts ),
+			$content,
+			$this->constant( 'connected_shortcode', $tag ),
+			$this->key
+		);
+	}
+
 	public function secondary_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return ShortCode::listPosts( 'assigned',
@@ -430,6 +494,21 @@ class Tube extends gEditorial\Module
 			], (array) $atts ),
 			$content,
 			$this->constant( 'secondary_shortcode', $tag ),
+			$this->key
+		);
+	}
+
+	public function children_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return ShortCode::listPosts( 'children',
+			$this->constant( 'secondary_posttype' ),
+			'',
+			array_merge( [
+				'post_id'   => NULL,
+				'posttypes' => [ $this->constant( 'primary_posttype' ) ],
+			], (array) $atts ),
+			$content,
+			$this->constant( 'children_shortcode', $tag ),
 			$this->key
 		);
 	}
