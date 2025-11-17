@@ -917,6 +917,7 @@ class ShortCode extends WordPress\Main
 	// list: `paired`: posts by meta (PAIRED API)
 	// list: `object2object`: posts by p2p/o2o
 	// list: `metadata`: posts by metadata comparison
+	// list: `children`: posts by parent of another post-type.
 	// list: `attached`: posts by inheritance
 	// list: `alphabetized`: posts sorted by alphabet // TODO!
 	// list: `custom`: posts by id list // TODO!
@@ -1032,6 +1033,32 @@ class ShortCode extends WordPress\Main
 				'value'   => $post->ID,
 				'compare' => '=',
 			];
+
+			if ( $args['exclude_posttypes'] )
+				$query['post_type'] = array_diff(
+					$args['posttypes'],
+					(array) $args['exclude_posttypes']
+				);
+
+		} else if ( 'children' === $list ) {
+
+			if ( $args['post_id'] ) {
+
+				$post = WordPress\Post::get( $args['post_id'] );
+
+			} else if ( $posttype && is_singular( $posttype ) ) {
+
+				$post = WordPress\Post::get( get_queried_object_id() );
+
+			} else {
+
+				return $content;
+			}
+
+			if ( ! $post )
+				return $content;
+
+			$query['post_parent'] = $post->ID;
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
@@ -1227,7 +1254,7 @@ class ShortCode extends WordPress\Main
 
 			$ref = $term;
 
-		} else if ( in_array( $list, [ 'paired', 'object2object', 'metadata' ], TRUE ) ) {
+		} else if ( in_array( $list, [ 'paired', 'object2object', 'metadata', 'children' ], TRUE ) ) {
 
 			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $post, $args );
