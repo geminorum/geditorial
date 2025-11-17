@@ -57,6 +57,7 @@ class Byline extends gEditorial\Module
 			'_supports' => [
 				'tabs_support',
 				'woocommerce_support',
+				'shortcode_support',
 				'widget_support',
 			],
 			'_frontend' => [
@@ -65,7 +66,8 @@ class Byline extends gEditorial\Module
 				'tab_priority' => [ NULL, 20 ],
 			],
 			'_constants' => [
-				'main_taxonomy_constant' => [ NULL, 'relation' ],
+				'main_taxonomy_constant'  => [ NULL, 'relation' ],
+				'main_shortcode_constant' => [ NULL, 'byline' ],
 			],
 		];
 	}
@@ -74,6 +76,7 @@ class Byline extends gEditorial\Module
 	{
 		return [
 			'main_taxonomy'     => 'relation',
+			'main_shortcode'    => 'byline',
 			'restapi_attribute' => 'byline',
 		];
 	}
@@ -179,6 +182,8 @@ class Byline extends gEditorial\Module
 			'custom_icon'   => 'nametag',
 			'admin_managed' => $this->role_can( 'manage' ) ? NULL : TRUE,
 		] );
+
+		$this->register_shortcode( 'main_shortcode' );
 
 		$this->filter( 'searchselect_result_extra_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'termrelations_supported', 4, 9, FALSE, $this->base );
@@ -807,6 +812,41 @@ class Byline extends gEditorial\Module
 		];
 
 		gEditorial\Scripts::enqueueColorBox();
+	}
+
+	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'id'       => get_queried_object_id(),
+			'featured' => NULL,
+			'hidden'   => NULL,
+			'context'  => NULL,
+			'wrap'     => TRUE,
+			'class'    => '',
+			'before'   => '',
+			'after'    => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		$_args = Core\Arraay::keepByKeys( $args, [
+			'context',
+			'featured',
+			'hidden',
+		] );
+
+		if ( ! $html = $this->get_byline_for_post( $post, $_args ) )
+			return $content;
+
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 
 	public function imports_settings( $sub )
