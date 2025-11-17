@@ -57,6 +57,7 @@ class Byline extends gEditorial\Module
 			'_supports' => [
 				'tabs_support',
 				'woocommerce_support',
+				'widget_support',
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -159,6 +160,11 @@ class Byline extends gEditorial\Module
 				'proofreader'  => _x( 'Proofreader', 'Main Taxonomy: Default Term', 'geditorial-byline' ),    // @REF: https://www.flexjobs.com/blog/post/how-to-become-proofreader
 			],
 		];
+	}
+
+	public function widgets_init()
+	{
+		register_widget( __NAMESPACE__.'\\Widgets\\FeaturedCards' );
 	}
 
 	public function init()
