@@ -7,10 +7,10 @@ This gist contains a convenient script to generate iCalendar (.ics) files on the
 ```php
 include 'ICS.php'
 
-$properties = array(
+$properties = [
   'dtstart' => 'now',
   'dtend' => 'now + 30 minutes'
-);
+];
 
 $ics = new ICS($properties);
 $ics_file_contents = $ics->to_string();

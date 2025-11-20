@@ -472,7 +472,7 @@ class Arraay extends Base
 		return $input[$first];
 	}
 
-	// `array_key_first()` for php < 7.3.0
+	// `array_key_first()` for PHP < 7.3.0
 	public static function keyFirst( $input )
 	{
 		if ( function_exists( 'array_key_first' ) )
@@ -484,7 +484,7 @@ class Arraay extends Base
 		return NULL;
 	}
 
-	// `array_key_last()` for php < 7.3.0
+	// `array_key_last()` for PHP < 7.3.0
 	public static function keyLast( $input )
 	{
 		if ( function_exists( 'array_key_last' ) )
@@ -537,7 +537,7 @@ class Arraay extends Base
 		return wp_list_pluck( $input, $field, $index_key );
 	}
 
-	// `array_column()` for php < 5.5
+	// `array_column()` for PHP < 5.5
 	// @SEE: https://github.com/ramsey/array_column/blob/master/src/array_column.php
 	// @REF: http://php.net/manual/en/function.array-column.php#118831
 	// ALT: `wp_list_pluck()`

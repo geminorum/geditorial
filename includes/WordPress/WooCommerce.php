@@ -160,11 +160,17 @@ class WooCommerce extends Core\Base
 		return $product;
 	}
 
-	public static function getPerPage()
+	public static function getDefaultColumns( $fallback = NULL )
 	{
-		$columns = wc_get_default_products_per_row();
-		$rows    = wc_get_default_product_rows_per_page();
+		return function_exists( 'wc_get_default_products_per_row' )
+			? wc_get_default_products_per_row()
+			: $fallback ?? '4';
+	}
 
-		return ( $columns * $rows ) ?: get_option( 'posts_per_page', 10 );
+	public static function getDefaultRows( $fallback = NULL )
+	{
+		return function_exists( 'wc_get_default_product_rows_per_page' )
+			? wc_get_default_product_rows_per_page()
+			: $fallback ?? '4';
 	}
 }

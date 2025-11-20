@@ -48,7 +48,7 @@ class DBTable extends Core\Base
 	/**
 	* @var boolean Is this table for a site, or global
 	*/
-	protected $global = false;
+	protected $global = FALSE;
 
 	/**
 	* @var string Passed directly into register_activation_hook()
@@ -83,7 +83,7 @@ class DBTable extends Core\Base
 	/**
 	* @var WPDB Database object (usually $GLOBALS['wpdb'])
 	*/
-	protected $db = false;
+	protected $db = FALSE;
 
 	/** Methods ***************************************************************/
 
@@ -340,7 +340,7 @@ class DBTable extends Core\Base
 
 		// Bail if dbDelta() moved in WordPress core
 		if ( ! function_exists( 'dbDelta' ) ) {
-			return false;
+			return FALSE;
 		}
 
 		// Run CREATE TABLE query
@@ -416,7 +416,7 @@ class DBTable extends Core\Base
 
 		// Bail if table name was garbaged
 		if ( empty( $clean ) ) {
-			return false;
+			return FALSE;
 		}
 
 		// Return the cleaned table name

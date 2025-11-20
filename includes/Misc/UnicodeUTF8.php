@@ -39,7 +39,7 @@ class UnicodeUTF8 extends Core\Base
 		$mUcs4  = 0;     // cached Unicode character
 		$mBytes = 1;     // cached expected number of octets in the current sequence
 
-		$out = array();
+		$out = [];
 		$len = strlen( $str );
 
 		for ( $i = 0; $i < $len; $i++ ) {

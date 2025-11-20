@@ -24,6 +24,9 @@ class Term extends Core\Base
 		if ( $term_or_id instanceof \WP_Term )
 			return $term_or_id;
 
+		if ( is_wp_error( $term_or_id ) )
+			return FALSE;
+
 		if ( ! $term_or_id ) {
 
 			if ( is_admin() ) {

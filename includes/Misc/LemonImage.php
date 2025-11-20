@@ -10,7 +10,7 @@ use geminorum\gEditorial\Core;
  * @source https://github.com/aristath/Lemon_Image
  *
  * `$image  = LemonImage::create( $image_url_or_id );`
- * `$resize = $image->resize( array( 'width' => 500, 'height' => 300 ) );`
+ * `$resize = $image->resize( [ 'width' => 500, 'height' => 300  );`
  * `$new_url = $resize['url'];`
  *
  * - If you only define `width` or `height` the image will be resized using
@@ -246,14 +246,14 @@ class LemonImage extends Core\Base
 	 * NOTE: This is a slightly modified version of http://goo.gl/9iS0CO
 	 *
 	 * @param string $url The image URL.
-	 * @param int|null $width The image width.
-	 * @param int|null $height The image height.
+	 * @param int $width The image width.
+	 * @param int $height The image height.
 	 * @param bool $crop If we want to crop the image or not.
 	 * @param bool|int $retina If we want to generate a retina image or not.
 	 *                         If an integer is used then it's used as a multiplier (@2x, @3x etc.).
 	 * @return array An array containing the resized image URL, width, height, and file type.
 	 */
-	private static function _resize( $url, $width = NULL, $height = NULL, $crop = true, $retina = FALSE )
+	private static function _resize( $url, $width = NULL, $height = NULL, $crop = TRUE, $retina = FALSE )
 	{
 		global $wpdb;
 

@@ -98,15 +98,14 @@ class Main extends Core\Base
 			: static::factory()->module( $module )->get_postmeta_field( $post_id, $field, $default, $metakey );
 	}
 
-	// FIXME: WTF?!
-	protected static function post_types( $posttypes = NULL, $module = NULL )
+	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )
 	{
-		if ( is_null( $module ) )
-			$module = static::MODULE;
+		if ( ! $module = $module ?? static::MODULE )
+			return [];
 
-		// if ( static::MODULE && static::factory()->enabled( static::MODULE ) )
-			return static::factory()->module( $module )->posttypes( $posttypes );
+		if ( $check && ! static::factory()->enabled( $module ) )
+			return [];
 
-		return [];
+		return static::factory()->module( $module )->posttypes( $posttypes );
 	}
 }

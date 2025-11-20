@@ -430,7 +430,7 @@ class NamesInPersian extends Core\Base
 			if ( FALSE !== strpos( $string, '|' ) )
 				$parts = explode( '|', $string );
 			else
-				$parts = array( $string );
+				$parts = [ $string ];
 
 			foreach ( $parts as $part ) {
 

@@ -261,4 +261,31 @@ class NumbersInPersian extends Core\Base
 		$instance = new static();
 		return $instance->number_to_words( $number );
 	}
+
+	/**
+	 * Removes Ordinal suffix in given words.
+	 * @source https://github.com/persian-tools/php-persian-tools/blob/master/src/Traits/RemoveOrdinalSuffix.php
+	 *
+	 * `سه هزارم`: `سه هزار`
+	 * `سه هزارمین`: `سه هزار`
+	 *
+	 * @param string $word
+	 * @return string
+	 */
+	static public function removeOrdinalSuffix( string $word )
+	{
+		if ( empty( $word ) )
+			return $word;
+
+		$word = preg_replace( '/مین$/i', '', $word );
+		$word = preg_replace( '/(ام| اُم)$/i', '', $word );
+
+		if ( 'سوم' === mb_substr( $word, -3 ) )
+			$word = mb_substr( $word, 0, -3 ).'سه';
+
+		else if ( 'م' === mb_substr( $word, -1 ) )
+			$word = mb_substr( $word, 0, -1 );
+
+		return $word;
+	}
 }

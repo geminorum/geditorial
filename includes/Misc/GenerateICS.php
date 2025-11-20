@@ -51,9 +51,9 @@ class GenerateICS extends Core\Base
 
 	const DT_FORMAT = 'Ymd\THis\Z';
 
-	protected $properties = array();
+	protected $properties = [];
 
-	private $available_properties = array(
+	private $available_properties = [
 		'description',
 		'htmldescription',
 		'dtend',
@@ -61,56 +61,59 @@ class GenerateICS extends Core\Base
 		'location',
 		'summary',
 		'url'
-	);
+	];
 
-	public function __construct($props) {
-		$this->set($props);
+	public function __construct( $props )
+	{
+		$this->set( $props );
 	}
 
-	public function set($key, $val = false) {
-		if (is_array($key)) {
-			foreach ($key as $k => $v) {
-				$this->set($k, $v);
-			}
+	public function set( $key, $val = FALSE )
+	{
+		if ( is_array( $key )) {
+
+			foreach ( $key as $k => $v )
+				$this->set( $k, $v );
+
 		} else {
-			if (in_array($key, $this->available_properties)) {
-				$this->properties[$key] = $this->sanitize_val($val, $key);
-			}
+
+			if ( in_array($key, $this->available_properties ) )
+				$this->properties[$key] = $this->sanitize_val( $val, $key );
 		}
 	}
 
-	public function to_string() {
+	public function to_string()
+	{
 		$rows = $this->build_props();
-		return implode("\r\n", $rows);
+		return implode( "\r\n", $rows );
 	}
 
 	private function build_props()
 	{
-		// Build ICS properties - add header
-		$ics_props = array(
+		// Build `ICS` properties - add header
+		$ics_props = [
 			'BEGIN:VCALENDAR',
 			'VERSION:2.0',
 			'PRODID:-//hacksw/handcal//NONSGML v1.0//EN',
 			'CALSCALE:GREGORIAN',
 			'BEGIN:VEVENT'
-		);
+		];
 
-		// Build ICS properties - add header
-		$props = array();
+		// Build `ICS` properties - add header
+		$props = [];
 
-		foreach($this->properties as $k => $v) {
+		foreach ( $this->properties as $k => $v ) {
 
-			//Don't handle htmldescription, set a special key for that
-			if ($k !== 'htmldescription') {
-				$props[strtoupper($k . ($k === 'url' ? ';VALUE=URI' : ''))] = $v;
-			}
-			else {
-				$props['X-ALT-DESC;FMTTYPE=text/html'] = '<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 3.2//EN""><HTML><BODY>' . $v . '</BODY></HTML>';
-			}
+			// Don't handle `htmldescription`, set a special key for that
+			if ( $k !== 'htmldescription' )
+				$props[strtoupper($k.($k === 'url' ? ';VALUE=URI' : ''))] = $v;
+
+			else
+				$props['X-ALT-DESC;FMTTYPE=text/html'] = '<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 3.2//EN""><HTML><BODY>'.$v.'</BODY></HTML>';
 		}
 
 		// Set some default values
-		$props['DTSTAMP'] = $this->format_timestamp('now');
+		$props['DTSTAMP'] = $this->format_timestamp( 'now' );
 		$props['UID'] = uniqid();
 
 		// Append properties
@@ -118,34 +121,39 @@ class GenerateICS extends Core\Base
 			$ics_props[] = "$k:$v";
 		}
 
-		// Build ICS properties - add footer
+		// Build `ICS` properties - add footer
 		$ics_props[] = 'END:VEVENT';
 		$ics_props[] = 'END:VCALENDAR';
 
 		return $ics_props;
 	}
 
-	private function sanitize_val($val, $key = false)
+	private function sanitize_val( $val, $key = FALSE )
 	{
-		switch($key) {
+		switch ( $key ) {
+
 			case 'dtend':
 			case 'dtstamp':
 			case 'dtstart':
-				$val = $this->format_timestamp($val);
+
+				$val = $this->format_timestamp( $val );
 				break;
+
 			default:
-				$val = $this->escape_string($val);
+
+				$val = $this->escape_string( $val );
 		}
 
 		return $val;
 	}
 
-	private function format_timestamp($timestamp) {
-		$dt = new DateTime($timestamp);
-		return $dt->format(self::DT_FORMAT);
+	private function format_timestamp( $timestamp )
+	{
+		$dt = new \DateTime($timestamp);
+		return $dt->format( self::DT_FORMAT );
 	}
 
-	private function escape_string($str)
+	private function escape_string( $str )
 	{
 		return preg_replace('/([\,;])/','\\\$1', $str);
 	}
