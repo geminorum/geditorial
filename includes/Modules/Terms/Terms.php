@@ -4,14 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Template;
 use geminorum\gEditorial\WordPress;
 
 class Terms extends gEditorial\Module
@@ -277,7 +271,7 @@ class Terms extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -409,11 +403,11 @@ class Terms extends gEditorial\Module
 
 				if ( 'image' == $field ) {
 
-					Scripts::enqueueThickBox();
+					gEditorial\Scripts::enqueueThickBox();
 
 				} else if ( 'color' == $field ) {
 
-					Scripts::enqueueColorPicker();
+					gEditorial\Scripts::enqueueColorPicker();
 				}
 			}
 
@@ -469,11 +463,11 @@ class Terms extends gEditorial\Module
 
 				if ( 'image' == $field ) {
 
-					Scripts::enqueueThickBox();
+					gEditorial\Scripts::enqueueThickBox();
 
 				} else if ( 'color' == $field ) {
 
-					Scripts::enqueueColorPicker();
+					gEditorial\Scripts::enqueueColorPicker();
 				}
 			}
 
@@ -879,7 +873,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta || '0' === $meta ) {
 
-					$html = Listtable::columnOrder( $meta );
+					$html = gEditorial\Listtable::columnOrder( $meta );
 
 				} else {
 
@@ -899,7 +893,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta || '0' === $meta ) {
 
-					$html = $meta ? Core\Number::format( $meta ) : Helper::htmlEmpty( '-'.$metakey );
+					$html = $meta ? Core\Number::format( $meta ) : gEditorial\Helper::htmlEmpty( '-'.$metakey );
 
 				} else {
 
@@ -971,7 +965,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ), Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
+					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ), gEditorial\Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
 
 				} else {
 
@@ -1020,7 +1014,7 @@ class Terms extends gEditorial\Module
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
-						.Helper::prepContact( $meta, NULL, '', TRUE ).'</span>';
+						.gEditorial\Helper::prepContact( $meta, NULL, '', TRUE ).'</span>';
 
 				} else {
 
@@ -1166,8 +1160,8 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$cal   = $this->default_calendar();
-					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $cal );
-					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d', $cal );
+					$date  = gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $cal );
+					$input = gEditorial\Datetime::prepForInput( trim( $meta ), 'Y/m/d', $cal );
 					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
@@ -1184,8 +1178,8 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$cal   = $this->default_calendar();
-					$date  = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $cal );
-					$input = Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', $cal );
+					$date  = gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $cal );
+					$input = gEditorial\Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', $cal );
 					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
@@ -1284,12 +1278,12 @@ class Terms extends gEditorial\Module
 
 					// accepts year only
 					if ( strlen( $meta ) > 4 )
-						$meta = Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
+						$meta = gEditorial\Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
 
 				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
 
 					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
-					$meta = Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
+					$meta = gEditorial\Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
 
 				} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
 
@@ -1442,13 +1436,13 @@ class Terms extends gEditorial\Module
 			break;
 			case 'author':
 
-				// selected value on add new term form
+				// Selected value on add new term form
 				if ( FALSE === $term )
 					$meta = get_current_user_id();
 
-				$html.= Listtable::restrictByAuthor( empty( $meta ) ? '0' : $meta, 'term-'.$field, [
+				$html.= gEditorial\Listtable::restrictByAuthor( empty( $meta ) ? '0' : $meta, 'term-'.$field, [
 					'echo'            => FALSE,
-					'show_option_all' => Settings::showOptionNone(),
+					'show_option_all' => gEditorial\Settings::showOptionNone(),
 				] );
 
 			break;
@@ -1458,13 +1452,13 @@ class Terms extends gEditorial\Module
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
-					'none_title' => Settings::showOptionNone(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
 			break;
 			case 'roles':
 
-				$html.= Settings::tabPanelOpen();
+				$html.= gEditorial\Settings::tabPanelOpen();
 
 				foreach ( $this->get_settings_default_roles() as $role => $name ) {
 
@@ -1490,13 +1484,13 @@ class Terms extends gEditorial\Module
 					'id'         => $this->classs( $field, 'id' ),
 					'name'       => 'term-'.$field,
 					'selected'   => empty( $meta ) ? '0' : $meta,
-					'none_title' => Settings::showOptionNone(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
 			break;
 			case 'posttypes':
 
-				$html.= Settings::tabPanelOpen();
+				$html.= gEditorial\Settings::tabPanelOpen();
 
 				foreach ( WordPress\PostType::get( 2 ) as $posttype => $name ) {
 
@@ -1590,7 +1584,7 @@ class Terms extends gEditorial\Module
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? Datetime::prepForInput( $meta, 'Y/m/d', $this->default_calendar() ) : $meta ),
+					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? gEditorial\Datetime::prepForInput( $meta, 'Y/m/d', $this->default_calendar() ) : $meta ),
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -1605,7 +1599,7 @@ class Terms extends gEditorial\Module
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : Datetime::prepForInput( $meta, 'Y/m/d H:i', $this->default_calendar() ),
+					'value' => empty( $meta ) ? '' : gEditorial\Datetime::prepForInput( $meta, 'Y/m/d H:i', $this->default_calendar() ),
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -1690,9 +1684,9 @@ class Terms extends gEditorial\Module
 			break;
 			case 'author':
 
-				$html.= Listtable::restrictByAuthor( 0, 'term-'.$field, [
+				$html.= gEditorial\Listtable::restrictByAuthor( 0, 'term-'.$field, [
 					'echo'            => FALSE,
-					'show_option_all' => Settings::showOptionNone(),
+					'show_option_all' => gEditorial\Settings::showOptionNone(),
 				] );
 
 			break;
@@ -1715,7 +1709,7 @@ class Terms extends gEditorial\Module
 				$html.= Core\HTML::dropdown( $this->get_settings_default_roles(), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
-					'none_title' => Settings::showOptionNone(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
 			break;
@@ -1724,7 +1718,7 @@ class Terms extends gEditorial\Module
 				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ), [
 					'name'       => 'term-'.$field,
 					'selected'   => '0',
-					'none_title' => Settings::showOptionNone(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
 				break;
@@ -1889,7 +1883,7 @@ class Terms extends gEditorial\Module
 
 					case 'order':
 
-						$node['title'].= ': '.Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
+						$node['title'].= ': '.gEditorial\Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
 						break;
 
 					case 'days':
@@ -1957,7 +1951,7 @@ class Terms extends gEditorial\Module
 					case 'contact':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Helper::prepContact( $meta );
+							$node['title'].= ': '.gEditorial\Helper::prepContact( $meta );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -1970,7 +1964,7 @@ class Terms extends gEditorial\Module
 					case 'abolish':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $this->default_calendar() );
+							$node['title'].= ': '.gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $this->default_calendar() );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -1981,7 +1975,7 @@ class Terms extends gEditorial\Module
 					case 'dateend':
 
 						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $this->default_calendar() );
+							$node['title'].= ': '.gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $this->default_calendar() );
 						else
 							$node['title'].= ': '.gEditorial\Plugin::na();
 
@@ -2546,7 +2540,7 @@ class Terms extends gEditorial\Module
 		if ( in_array( 'born', $supported, TRUE )
 			&& in_array( 'dead', $supported, TRUE ) ) {
 
-			$html = Datetime::prepBornDeadForDisplay(
+			$html = gEditorial\Datetime::prepBornDeadForDisplay(
 				get_term_meta( $term->term_id, $this->get_supported_metakey( 'born', $taxonomy ), TRUE ),
 				get_term_meta( $term->term_id, $this->get_supported_metakey( 'dead', $taxonomy ), TRUE ),
 				NULL,
@@ -2558,7 +2552,7 @@ class Terms extends gEditorial\Module
 		} else if ( in_array( 'establish', $supported, TRUE )
 			&& in_array( 'abolish', $supported, TRUE ) ) {
 
-			$html = Datetime::prepBornDeadForDisplay(
+			$html = gEditorial\Datetime::prepBornDeadForDisplay(
 				get_term_meta( $term->term_id, $this->get_supported_metakey( 'establish', $taxonomy ), TRUE ),
 				get_term_meta( $term->term_id, $this->get_supported_metakey( 'abolish', $taxonomy ), TRUE ),
 				NULL,
@@ -2599,7 +2593,7 @@ class Terms extends gEditorial\Module
 			$this->_render_source_link( $term, 'source' );
 
 		if ( in_array( 'embed', $supported, TRUE ) )
-			echo Template::doMediaShortCode( get_term_meta( $term->term_id, $this->get_supported_metakey( 'embed', $taxonomy ), TRUE ) ?: '' );
+			echo gEditorial\Template::doMediaShortCode( get_term_meta( $term->term_id, $this->get_supported_metakey( 'embed', $taxonomy ), TRUE ) ?: '' );
 	}
 
 	private function _render_source_link( $term, $field = 'source' )

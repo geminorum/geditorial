@@ -4,9 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class CustomPostType extends gEditorial\Service
@@ -211,7 +208,7 @@ class CustomPostType extends gEditorial\Service
 				return $object->labels->all_items;
 
 			case 'show_option_none':
-				return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+				return sprintf( '&ndash; %s &ndash;', gEditorial\Settings::showRadioNone() );
 
 			case 'show_option_parent':
 				return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
@@ -275,7 +272,7 @@ class CustomPostType extends gEditorial\Service
 			$permalink = '';
 
 		$preview = $scheduled = $view = '';
-		$scheduled_date = Datetime::dateFormat( $post->post_date, 'datetime' );
+		$scheduled_date = gEditorial\Datetime::dateFormat( $post->post_date, 'datetime' );
 
 		if ( WordPress\PostType::viewable( $post_type_object ) ) {
 			$view      = ' '.Core\HTML::link( $messages['view_post'], $permalink );
@@ -327,7 +324,7 @@ class CustomPostType extends gEditorial\Service
 
 		foreach ( $templates as $key => $template )
 			// Needs to apply the role so we use `noopedCount()`
-			$messages[$key] = vsprintf( Helper::noopedCount( $counts[$key], $template ), $strings );
+			$messages[$key] = vsprintf( gEditorial\Helper::noopedCount( $counts[$key], $template ), $strings );
 
 		return $messages;
 	}

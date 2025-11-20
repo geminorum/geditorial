@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Recount extends gEditorial\Module
@@ -153,9 +153,9 @@ class Recount extends gEditorial\Module
 			$count = $this->_do_recount_term( (int) $term_id );
 
 		if ( FALSE === $count )
-			return Helper::htmlEmpty();
+			return gEditorial\Helper::htmlEmpty();
 
-		$html = Helper::htmlCount( (int) $count );
+		$html = gEditorial\Helper::htmlCount( (int) $count );
 		$edit = WordPress\PostType::getEditLinkByTerm(
 			(int) $term_id,
 			self::req( 'post_type', 'post' ),
@@ -204,13 +204,13 @@ class Recount extends gEditorial\Module
 
 	public function taxonomy_tab_maintenance_content( $taxonomy, $object )
 	{
-		echo Settings::toolboxCardOpen( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), FALSE );
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), FALSE );
 
 			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs' );
 				$this->nonce_field( 'do-recount-items' );
 
 				echo $this->wrap_open_buttons( '-toolbox-buttons' );
-					Settings::submitButton( $this->classs( 'do-recount-items' ), _x( 'Re-count Items for all Terms', 'Tab Tools', 'geditorial-recount' ), 'small button-primary' );
+					gEditorial\Settings::submitButton( $this->classs( 'do-recount-items' ), _x( 'Re-count Items for all Terms', 'Tab Tools', 'geditorial-recount' ), 'small button-primary' );
 				echo '</p>';
 
 			$this->render_form_end( NULL, 'recount-items', 'maintenance', 'tabs' );

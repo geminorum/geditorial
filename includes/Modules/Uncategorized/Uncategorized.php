@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Uncategorized extends gEditorial\Module
@@ -50,7 +46,7 @@ class Uncategorized extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
 			'system_tags',
 			'nav_menu',
 			'post_format',
@@ -72,7 +68,7 @@ class Uncategorized extends gEditorial\Module
 	public function current_screen( $screen )
 	{
 		if ( 'edit' == $screen->base
-			// TODO: add separate list of posttypes on settings for this
+			// TODO: add separate list of post-types on settings for this
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			add_filter( "views_{$screen->id}", function ( $views ) use ( $screen ) {
@@ -82,7 +78,7 @@ class Uncategorized extends gEditorial\Module
 			$this->rowactions__hook_admin_bulkactions( $screen );
 
 		} else if ( 'dashboard' == $screen->base
-			// NOTE: only for `post` posttype
+			// NOTE: only for `post` post-type
 			&& current_user_can( 'edit_others_posts' ) ) {
 
 			$this->filter( 'dashboard_pointers', 1, 10, FALSE, 'gnetwork' );
@@ -155,12 +151,15 @@ class Uncategorized extends gEditorial\Module
 
 		$_SERVER['REQUEST_URI'] = remove_query_arg( $hook, $_SERVER['REQUEST_URI'] );
 
-		/* translators: `%s`: count */
-		echo Core\HTML::success( sprintf( _x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ), Core\Number::format( $count ) ) );
+		echo Core\HTML::success( sprintf(
+			/* translators: `%s`: count */
+			_x( '%s items(s) cleaned!', 'Message', 'geditorial-uncategorized' ),
+			Core\Number::format( $count )
+		) );
 	}
 
 	// NOTE: already cap checked!
-	// TODO: posinter for all supported posttypes
+	// TODO: pointer for all supported post-types
 	public function dashboard_pointers( $items )
 	{
 		if ( ! $count = $this->_get_post_count() )
@@ -174,7 +173,7 @@ class Uncategorized extends gEditorial\Module
 			'href'  => $can ? $this->get_module_url( 'reports' ) : FALSE,
 			'title' => _x( 'You need to assign categories to some posts!', 'Title Attr', 'geditorial-uncategorized' ),
 			'class' => '-uncategorized-count',
-		], sprintf( Helper::noopedCount( $count, $noopd ), Core\Number::format( $count ) ) );
+		], sprintf( gEditorial\Helper::noopedCount( $count, $noopd ), Core\Number::format( $count ) ) );
 
 		return $items;
 	}
@@ -189,7 +188,7 @@ class Uncategorized extends gEditorial\Module
 
 				$count = 0;
 
-				if ( Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
 
 					$taxonomies = $this->taxonomies();
 
@@ -210,7 +209,7 @@ class Uncategorized extends gEditorial\Module
 						] );
 					}
 
-				} else if ( Tablelist::isAction( 'clean_unregistered', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'clean_unregistered', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
@@ -229,7 +228,7 @@ class Uncategorized extends gEditorial\Module
 						] );
 					}
 
-				} else if ( Tablelist::isAction( 'clean_unattached', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'clean_unattached', TRUE ) ) {
 
 					$taxonomies = WordPress\Taxonomy::get( -1 );
 
@@ -263,24 +262,24 @@ class Uncategorized extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
-		// TODO: add screen help tabs explainig the actions
+		// TODO: add screen help tabs explaining the actions
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unattached']    = _x( 'Clean Unattached', 'Action', 'geditorial-uncategorized' );
 
-		$pagination['before'][] = Tablelist::filterPostTypes();
-		$pagination['before'][] = Tablelist::filterAuthors();
-		$pagination['before'][] = Tablelist::filterSearch();
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes();
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors();
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
 		Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle(),
-			'terms' => Tablelist::columnPostTerms(),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'date'  => gEditorial\Tablelist::columnPostDate(),
+			'type'  => gEditorial\Tablelist::columnPostType(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'terms' => gEditorial\Tablelist::columnPostTerms(),
 			'raw'   => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-uncategorized' ),
 				'class'    => '-has-list',
@@ -292,7 +291,7 @@ class Uncategorized extends gEditorial\Module
 					] );
 
 					if ( empty( $query->terms ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 
 					$list = [];
 
@@ -323,7 +322,7 @@ class Uncategorized extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'orphaned_terms' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -388,7 +387,7 @@ class Uncategorized extends gEditorial\Module
 
 				echo '&nbsp;&nbsp;';
 
-				Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
+				gEditorial\Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
 
 				Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
 
@@ -398,7 +397,7 @@ class Uncategorized extends gEditorial\Module
 		}
 
 		if ( ! $available )
-			Info::renderNoToolsAvailable();
+			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</table>';
 	}

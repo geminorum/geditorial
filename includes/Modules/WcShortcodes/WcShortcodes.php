@@ -132,7 +132,12 @@ class WcShortcodes extends gEditorial\Module
 
 		$html = wc_get_stock_html( $product );
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'wc_stock_status_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'wc_stock_status_shortcode' ),
+			$args,
+			FALSE
+		);
 	}
 
 	/**
@@ -215,8 +220,15 @@ class WcShortcodes extends gEditorial\Module
 			$html = $args['empty'] ?? _x( 'There are no products available!', 'Message', 'geditorial-wc-shortcodes' );
 		}
 
-		return gEditorial\ShortCode::wrap( $html ?: $content,
-			$this->constant( 'wc_scheduled_on_sales_shortcode' ), $args );
+		if ( ! $html )
+			return $content;
+
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'wc_scheduled_on_sales_shortcode' ),
+			$args
+		);
+	}
 
 	/**
 	 * Displays the total number of orders by given status.

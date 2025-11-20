@@ -15,7 +15,7 @@ abstract class Factory
 		add_action( 'o2o_registered_connection_type', [ $this, 'check_ctype' ], 10, 2 );
 	}
 
-	// check if a newly registered connection type needs an item to be produced
+	// Check if a newly registered connection type needs an item to be produced.
 	public function check_ctype( $ctype, $args )
 	{
 		$sub_args = $this->expand_arg( $args );
@@ -26,7 +26,7 @@ abstract class Factory
 		$this->queue[$ctype->name] = (object) $sub_args;
 	}
 
-	// collect sub-args from main connection type args and set defaults
+	// Collect sub-args from main connection type args and set defaults
 	protected function expand_arg( $args )
 	{
 		if ( isset( $args[$this->key] ) ) {
@@ -44,7 +44,7 @@ abstract class Factory
 		return Core\Base::args( $sub_args, [ 'show' => 'any' ] );
 	}
 
-	// begin processing item queue for a particular screen
+	// Begin processing item queue for a particular screen.
 	public function add_items()
 	{
 		$screen = get_current_screen();
@@ -60,7 +60,7 @@ abstract class Factory
 		$this->filter( $screen_map[$screen->base], $screen->post_type );
 	}
 
-	// filter item queue based on object type
+	// Filter item queue based on object type.
 	public function filter( $object_type, $post_type )
 	{
 		foreach ( $this->queue as $o2o_type => $args ) {

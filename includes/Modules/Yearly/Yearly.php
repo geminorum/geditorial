@@ -203,7 +203,7 @@ class Yearly extends gEditorial\Module
 
 		if ( $taxonomy === $orderby || ( is_array( $orderby ) && array_key_exists( $taxonomy, $orderby ) ) ) {
 
-			$prefix = str_replace( array( ' ', '-' ), '_', $taxonomy );
+			$prefix = str_replace( [ ' ', '-' ], '_', $taxonomy );
 			$tr     = esc_sql( "{$prefix}_term_relationships" );
 			$tt     = esc_sql( "{$prefix}_term_taxonomy" );
 			$t      = esc_sql( "{$prefix}_terms" );

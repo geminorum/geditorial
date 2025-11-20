@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\WordPress;
 
 class LateChores extends gEditorial\Service
@@ -80,7 +79,7 @@ class LateChores extends gEditorial\Service
 		$count = WordPress\Taxonomy::updateTermCount( $term_ids );
 		$log   = sprintf( 'LATE TERM COUNT: (%s): %s', $count, implode( ',', $term_ids ) );
 
-		Helper::log( $log, static::BASE, 'NOTICE', $term_ids );
+		gEditorial\Helper::log( $log, static::BASE, 'NOTICE', $term_ids );
 	}
 
 	// @REF: https://actionscheduler.org/usage/

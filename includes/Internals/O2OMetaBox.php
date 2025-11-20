@@ -13,6 +13,9 @@ trait O2OMetaBox
 {
 	protected function o2o_register_metabox_from( $connection_constant, $posttypes = NULL, $screen = NULL )
 	{
+		if ( ! $this->_o2o )
+			return FALSE;
+
 		$connection = $this->constant( $connection_constant );
 
 		if ( ! $type = Services\O2O\API::type( $connection ) )
@@ -69,6 +72,9 @@ trait O2OMetaBox
 
 	protected function o2o_register_metabox_to( $connection_constant, $posttypes = NULL, $screen = NULL )
 	{
+		if ( ! $this->_o2o )
+			return FALSE;
+
 		$connection = $this->constant( $connection_constant );
 
 		if ( ! $type = Services\O2O\API::type( $connection ) )

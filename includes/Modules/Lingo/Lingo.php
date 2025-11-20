@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Lingo extends gEditorial\Module
@@ -229,7 +227,7 @@ class Lingo extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
 
 					if ( ! $data = $this->get_imports_raw_data() )
 						WordPress\Redirect::doReferer( 'wrong' );
@@ -291,9 +289,9 @@ class Lingo extends gEditorial\Module
 					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 						if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
-							return Helper::getTermTitleRow( $term );
+							return gEditorial\Helper::getTermTitleRow( $term );
 
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 					}
 				],
 				'name' => [
@@ -318,10 +316,10 @@ class Lingo extends gEditorial\Module
 		echo '<tr><th scope="row">&nbsp;</th><td>';
 		echo $this->wrap_open_buttons( '-imports' );
 
-		Settings::submitButton( 'language_taxonomy_create',
+		gEditorial\Settings::submitButton( 'language_taxonomy_create',
 			_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
 
-		Settings::submitCheckBox( 'language_taxonomy_update',
+		gEditorial\Settings::submitCheckBox( 'language_taxonomy_update',
 			_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
 
 		echo '</p>';

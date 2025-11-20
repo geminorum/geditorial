@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Drafts extends gEditorial\Module
@@ -161,7 +159,7 @@ class Drafts extends gEditorial\Module
 		$nodes[] = [
 			'id'    => $this->classs(),
 			'href'  => '#',
-			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).Ajax::spinner(),
+			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).gEditorial\Ajax::spinner(),
 			'meta'  => [ 'class' => 'geditorial-adminbar-node '.$this->classs() ],
 		];
 
@@ -179,48 +177,48 @@ class Drafts extends gEditorial\Module
 			case 'private':
 
 				if ( empty( $post['post_id'] ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $this->make_private( $post['post_id'] ) )
-					Ajax::errorMessage( __( 'Unable to make preview private. Please try again.', 'geditorial-drafts' ) );
+					gEditorial\Ajax::errorMessage( __( 'Unable to make preview private. Please try again.', 'geditorial-drafts' ) );
 
-				Ajax::success();
+				gEditorial\Ajax::success();
 
 			break;
 			case 'public':
 
 				if ( empty( $post['post_id'] ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $link = $this->make_public( $post['post_id'] ) )
-					Ajax::errorMessage( __( 'Unable to make preview public. Please try again.', 'geditorial-drafts' ) );
+					gEditorial\Ajax::errorMessage( __( 'Unable to make preview public. Please try again.', 'geditorial-drafts' ) );
 
-				Ajax::success( $link );
+				gEditorial\Ajax::success( $link );
 
 			break;
 			case 'list':
 
-				Ajax::checkReferer( $this->hook() );
+				gEditorial\Ajax::checkReferer( $this->hook() );
 
 				if ( ! $this->role_can( 'adminbar' ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
-				Ajax::success( $this->drafts_list() );
+				gEditorial\Ajax::success( $this->drafts_list() );
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	private function drafts_list()
@@ -241,8 +239,8 @@ class Drafts extends gEditorial\Module
 
 			foreach ( $this->get_drafts( $posttype, $user ) as $post ) {
 
-				$block.= '<li>'.Helper::getPostTitleRow( $post, 'edit', FALSE,
-					Datetime::postModified( $post, TRUE ) ).'</li>';
+				$block.= '<li>'.gEditorial\Helper::getPostTitleRow( $post, 'edit', FALSE,
+					gEditorial\Datetime::postModified( $post, TRUE ) ).'</li>';
 
 				// FIXME: add author suffix
 			}
@@ -312,7 +310,7 @@ class Drafts extends gEditorial\Module
 			'onclick'  => 'this.focus();this.select()',
 		] );
 
-		echo Ajax::spinner();
+		echo gEditorial\Ajax::spinner();
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',

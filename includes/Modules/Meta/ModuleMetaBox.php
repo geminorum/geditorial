@@ -4,8 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleMetaBox extends gEditorial\MetaBox
@@ -163,7 +162,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		wp_dropdown_categories( [
 			'taxonomy'          => $tax,
 			'selected'          => WordPress\Taxonomy::theTerm( $tax, $post->ID ),
-			'show_option_none'  => Settings::showOptionNone( $title ),
+			'show_option_none'  => gEditorial\Settings::showOptionNone( $title ),
 			'option_none_value' => '0',
 			'class'             => 'geditorial-admin-dropbown geditorial-meta-field-'.$field.( $ltr ? ' dropbown-ltr' : '' ),
 			'name'              => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),

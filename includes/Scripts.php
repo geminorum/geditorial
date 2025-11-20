@@ -229,7 +229,7 @@ JS;
 		wp_enqueue_style( 'code-editor' );
 	}
 
-	// LEGACY: do not use thickbox anymore!
+	// LEGACY: do not use thick-box anymore!
 	// @SEE: https://core.trac.wordpress.org/ticket/17249
 	// @SEE: http://web.archive.org/web/20130224045422/http://binarybonsai.com/blog/using-thickbox-in-the-wordpress-admin
 	// @SEE: https://codex.wordpress.org/Javascript_Reference/ThickBox
@@ -275,19 +275,19 @@ JS;
 	 * @link https://cdn.sheetjs.com/
 	 * @link https://git.sheetjs.com/SheetJS/sheetjs
 	 *
-	 * @param  bool   $enqueue
-	 * @param  string $ver
-	 * @return string $handle
+	 * @param bool $enqueue
+	 * @param string $version
+	 * @return string
 	 */
-	public static function pkgSheetJS( $enqueue = FALSE, $ver = '0.20.3' )
+	public static function pkgSheetJS( $enqueue = FALSE, $version = '0.20.3' )
 	{
-		$handle = 'xlsx'; // NOTE: no prefix to use as dep for apps.
+		$handle = 'xlsx'; // NOTE: no prefix to use as dependency for apps.
 
 		if ( $enqueue )
-			wp_enqueue_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $version, TRUE );
 
 		else
-			wp_register_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $ver, TRUE );
+			wp_register_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $version, TRUE );
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
 

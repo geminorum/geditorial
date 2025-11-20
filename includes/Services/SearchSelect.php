@@ -384,7 +384,6 @@ class SearchSelect extends gEditorial\Service
 		];
 	}
 
-	// TODO: better styling
 	public static function enqueueSelect2( $extra = [] )
 	{
 		static $enqueued = FALSE;

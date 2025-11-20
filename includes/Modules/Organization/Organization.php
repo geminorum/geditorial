@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Organization extends gEditorial\Module
@@ -443,7 +438,7 @@ class Organization extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		$this->modulelinks__hook_calendar_linked_post( $screen );
@@ -488,16 +483,16 @@ class Organization extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::fieldPostMenuOrder( $object );
-		MetaBox::fieldPostParent( $object );
+		gEditorial\MetaBox::fieldPostMenuOrder( $object );
+		gEditorial\MetaBox::fieldPostParent( $object );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
@@ -506,7 +501,7 @@ class Organization extends gEditorial\Module
 
 	public function subterm_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_subterm' ),
 			array_merge( [
@@ -664,7 +659,7 @@ class Organization extends gEditorial\Module
 			'taxonomy'          => $taxonomy->name,
 			'name'              => sprintf( $name_template, $taxonomy->name ),
 			'hierarchical'      => $taxonomy->hierarchical,
-			'show_option_none'  => Settings::showOptionNone(),
+			'show_option_none'  => gEditorial\Settings::showOptionNone(),
 			'option_none_value' => '0',
 			'hide_if_empty'     => TRUE,
 			'hide_empty'        => FALSE,
@@ -700,13 +695,13 @@ class Organization extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Organization Tools', 'Header', 'geditorial-organization' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -729,14 +724,14 @@ class Organization extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -747,6 +742,6 @@ class Organization extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

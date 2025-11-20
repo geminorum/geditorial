@@ -4,11 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Cartable extends gEditorial\Module
@@ -481,9 +478,9 @@ class Cartable extends gEditorial\Module
 			}
 		}
 
-		Settings::wrapOpen( $this->key, 'listtable' );
+		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( 'listtable', _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
+			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
 
 			$context = self::req( 'context', $context );
 			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
@@ -509,7 +506,7 @@ class Cartable extends gEditorial\Module
 			}
 
 			$this->settings_signature( 'listtable' );
-		Settings::wrapClose();
+		gEditorial\Settings::wrapClose();
 	}
 
 	private function _hook_tweaks_column_attr( $posttype )
@@ -577,7 +574,7 @@ class Cartable extends gEditorial\Module
 				if ( $term = get_term_by( 'slug', $slug, $this->constant( 'type_taxonomy' ) ) )
 					$list[] = Core\HTML::escape( $term->name ); // FIXME: make clickable
 
-			echo WordPressStrings::getJoined( $list );
+			echo WordPress\Strings::getJoined( $list );
 		echo $after;
 	}
 
@@ -732,7 +729,7 @@ class Cartable extends gEditorial\Module
 			return;
 
 		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_taxonomy' ) ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		$this->tableCartableSummary( $term, $box['args']['context'] );
 	}
@@ -818,7 +815,7 @@ class Cartable extends gEditorial\Module
 			$users = $this->get_blog_users();
 		}
 
-		$list = MetaBox::checklistUserTerms( $post->ID, [
+		$list = gEditorial\MetaBox::checklistUserTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'user_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'list_only'         => $disable,
@@ -834,7 +831,7 @@ class Cartable extends gEditorial\Module
 	{
 		$disable = ! $this->role_can( 'assign_group' );
 
-		MetaBox::checklistTerms( $post->ID, [
+		gEditorial\MetaBox::checklistTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'group_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
@@ -848,7 +845,7 @@ class Cartable extends gEditorial\Module
 	{
 		$disable = ! $this->role_can( 'assign_type' );
 
-		MetaBox::checklistTerms( $post->ID, [
+		gEditorial\MetaBox::checklistTerms( $post->ID, [
 			'taxonomy'          => $this->constant( 'type_taxonomy' ),
 			'posttype'          => $post->post_type,
 			'edit'              => FALSE,
@@ -900,19 +897,19 @@ class Cartable extends gEditorial\Module
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( NULL, $context ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( NULL, $context ) );
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			// 'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			// 'type'  => Tablelist::columnPostType(), // FIXME: add setting for this
-			'title' => Tablelist::columnPostTitle(),
-			'terms' => Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
+			// 'ID'    => gEditorial\Tablelist::columnPostID(),
+			'date'  => gEditorial\Tablelist::columnPostDate(),
+			// 'type'  => gEditorial\Tablelist::columnPostType(), // FIXME: add setting for this
+			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'terms' => gEditorial\Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
@@ -953,15 +950,15 @@ class Cartable extends gEditorial\Module
 
 		$query = new \WP_Query();
 
-		$columns = [ 'title' => Tablelist::columnPostTitleSummary() ];
+		$columns = [ 'title' => gEditorial\Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = Tablelist::columnPostStatusSummary();
+			$columns['status'] = gEditorial\Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = Tablelist::columnPostAuthorSummary();
+			$columns['author'] = gEditorial\Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = Tablelist::columnPostDateModified();
+		$columns['modified'] = gEditorial\Tablelist::columnPostDateModified();
 
 		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'The cartable is empty!', 'Message', 'geditorial-cartable' ),

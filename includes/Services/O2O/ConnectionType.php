@@ -7,7 +7,6 @@ use geminorum\gEditorial\Core;
 // `P2P_Connection_Type`
 class ConnectionType extends Core\Base
 {
-
 	public $name;
 	public $side;
 	public $cardinality;

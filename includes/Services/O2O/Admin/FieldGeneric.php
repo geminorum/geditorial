@@ -27,8 +27,6 @@ class FieldGeneric implements Field
 		if ( 'select' == $args['type'] && ! isset( $args['text'] ) )
 			$args['text'] = '';
 
-Core\Base::_log($args, $o2o_id);
-
 		return O2O\Forms\API::input_from_meta( $args, $o2o_id, 'o2o' );
 	}
 }

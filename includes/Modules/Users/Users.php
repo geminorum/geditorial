@@ -4,12 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Listtable;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Users extends gEditorial\Module
@@ -328,12 +324,12 @@ class Users extends gEditorial\Module
 		if ( count( $list ) )
 			echo Core\HTML::tableCode( $list );
 		else
-			echo Listtable::columnCount( 0 );
+			echo gEditorial\Listtable::columnCount( 0 );
 
 		return ob_get_clean();
 	}
 
-	// FIXME: use `Helper::renderUserTermsEditRow()`
+	// FIXME: use `gEditorial\Helper::renderUserTermsEditRow()`
 	public function tweaks_column_user( $user, $before, $after )
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
@@ -379,7 +375,7 @@ class Users extends gEditorial\Module
 		if ( $this->check_hidden_column( $column ) )
 			return;
 
-		echo Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
+		echo gEditorial\Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
 	}
 
 	public function manage_columns_types( $columns )
@@ -396,13 +392,13 @@ class Users extends gEditorial\Module
 		if ( $this->check_hidden_column( $column ) )
 			return;
 
-		echo Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
+		echo gEditorial\Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
 	}
 
 	public function edit_user_profile( $user )
 	{
 		if ( $this->get_setting( 'user_groups' ) )
-			MetaBox::tableRowObjectTaxonomy(
+			gEditorial\MetaBox::tableRowObjectTaxonomy(
 				$this->constant( 'group_taxonomy' ),
 				$user->ID,
 				$this->classs( 'group-taxonomy' ),
@@ -412,7 +408,7 @@ class Users extends gEditorial\Module
 			);
 
 		if ( $this->get_setting( 'user_types' ) )
-			MetaBox::tableRowObjectTaxonomy(
+			gEditorial\MetaBox::tableRowObjectTaxonomy(
 				$this->constant( 'type_taxonomy' ),
 				$user->ID,
 				$this->classs( 'type-taxonomy' ),
@@ -442,7 +438,7 @@ class Users extends gEditorial\Module
 
 			if ( ! empty( $terms ) ) {
 
-				echo Settings::tabPanelOpen();
+				echo gEditorial\Settings::tabPanelOpen();
 
 				foreach ( $terms as $term ) {
 
@@ -462,7 +458,7 @@ class Users extends gEditorial\Module
 
 				echo '</ul></div>';
 
-				// passing empty value for clearing up
+				// Passing empty value for clearing up
 				echo '<input type="hidden" name="categories[]" value="0" />';
 
 			} else {
@@ -495,14 +491,14 @@ class Users extends gEditorial\Module
 			return FALSE;
 
 		if ( $this->get_setting( 'user_groups' ) )
-			MetaBox::storeObjectTaxonomy(
+			gEditorial\MetaBox::storeObjectTaxonomy(
 				$this->constant( 'group_taxonomy' ),
 				$user_id,
 				self::req( $this->classs( 'group-taxonomy' ), [] )
 			);
 
 		if ( $this->get_setting( 'user_types' ) )
-			MetaBox::storeObjectTaxonomy(
+			gEditorial\MetaBox::storeObjectTaxonomy(
 				$this->constant( 'type_taxonomy' ),
 				$user_id,
 				self::req( $this->classs( 'type-taxonomy' ), [] )
@@ -523,7 +519,7 @@ class Users extends gEditorial\Module
 
 			$selected = $this->get_user_categories( NULL, NULL, FALSE );
 
-			// only if user has one cat, otherwise fallback to default
+			// Only if user has one cat, otherwise fallback to default.
 			if ( 1 === count( $selected ) )
 				return $selected[0];
 		}
@@ -543,7 +539,7 @@ class Users extends gEditorial\Module
 
 		echo $this->wrap_open( '-admin-metabox' );
 
-			MetaBox::checklistTerms( $post->ID, [
+			gEditorial\MetaBox::checklistTerms( $post->ID, [
 				'taxonomy'          => 'category',
 				'posttype'          => $post->post_type,
 				'edit'              => FALSE,
@@ -609,7 +605,7 @@ class Users extends gEditorial\Module
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Row Icon Title', 'geditorial-users' ) );
 				/* translators: `%s`: date */
 				printf( _x( 'Registered on %s', 'Row', 'geditorial-users' ),
-					Helper::getDateEditRow( $user->user_registered, '-registered' ) );
+					gEditorial\Helper::getDateEditRow( $user->user_registered, '-registered' ) );
 			echo $after;
 		}
 
@@ -630,7 +626,7 @@ class Users extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'duplicate_role' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'duplicate_role' ) ) {
 
 					if ( ! $from = self::req( 'role_from' ) )
 						WordPress\Redirect::doReferer( 'huh' );
@@ -646,7 +642,7 @@ class Users extends gEditorial\Module
 
 					WordPress\Redirect::doReferer( 'added' );
 
-				} else if ( Tablelist::isAction( 'delete_role' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'delete_role' ) ) {
 
 					if ( ! $delete = self::req( 'role_delete' ) )
 						WordPress\Redirect::doReferer( 'huh' );
@@ -660,7 +656,7 @@ class Users extends gEditorial\Module
 					remove_role( $delete );
 					WordPress\Redirect::doReferer( 'removed' );
 
-				} else if ( Tablelist::isAction( 'remap_post_authors' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'remap_post_authors' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						WordPress\Redirect::doReferer( 'wrong' );
@@ -707,11 +703,11 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: move to `Config`: `render_roles_html()`
-	// TODO: export/import/overrite roles via json list of caps // MAYBE: new Module
+	// TODO: export/import/override roles via JSON list of caps // MAYBE: new Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		$roles = WordPress\Role::get();
-		$none  = Settings::showOptionNone();
+		$none  = gEditorial\Settings::showOptionNone();
 
 		echo '<table class="form-table">';
 		echo '<tr><th scope="row">'._x( 'Duplicate Current Roles', 'Header', 'geditorial-users' ).'</th><td>';
@@ -725,7 +721,7 @@ class Users extends gEditorial\Module
 			'none_title' => $none,
 		] );
 
-		Settings::fieldSeparate( 'to' );
+		gEditorial\Settings::fieldSeparate( 'to' );
 
 		$this->do_settings_field( [
 			'type'        => 'text',
@@ -737,7 +733,7 @@ class Users extends gEditorial\Module
 			'dir'         => 'ltr',
 		] );
 
-		Settings::fieldSeparate( 'as' );
+		gEditorial\Settings::fieldSeparate( 'as' );
 
 		$this->do_settings_field( [
 			'type'        => 'text',
@@ -749,7 +745,7 @@ class Users extends gEditorial\Module
 		] );
 
 		echo $this->wrap_open_buttons();
-			Settings::submitButton( 'duplicate_role', _x( 'Duplicate Role', 'Button', 'geditorial-users' ), FALSE );
+			gEditorial\Settings::submitButton( 'duplicate_role', _x( 'Duplicate Role', 'Button', 'geditorial-users' ), FALSE );
 			Core\HTML::desc( _x( 'Tries to make a duplicate from existing roles with given name and title.', 'Message', 'geditorial-users' ), FALSE );
 
 		echo '</p></td></tr>';
@@ -765,7 +761,7 @@ class Users extends gEditorial\Module
 		] );
 
 		echo $this->wrap_open_buttons();
-		Settings::submitButton( 'delete_role', _x( 'Delete Role', 'Button', 'geditorial-users' ), 'danger', TRUE );
+		gEditorial\Settings::submitButton( 'delete_role', _x( 'Delete Role', 'Button', 'geditorial-users' ), 'danger', TRUE );
 		Core\HTML::desc( _x( 'Tries to wipe the selected existing role.', 'Message', 'geditorial-users' ), FALSE );
 
 		echo '</p></td></tr>';
@@ -773,7 +769,7 @@ class Users extends gEditorial\Module
 
 		if ( $filesize = $this->settings_render_upload_field( '.csv' ) ) {
 			echo $this->wrap_open_buttons();
-				Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
+				gEditorial\Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 
 				Core\HTML::desc( sprintf(
 					/* translators: `%1$s`: file ext-type, `%2$s`: file size */

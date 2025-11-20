@@ -4,13 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Programmed extends gEditorial\Module
@@ -182,7 +177,7 @@ class Programmed extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'listbox_title' => _x( 'Participants on &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-programmed' ),
 		];
 
@@ -197,7 +192,7 @@ class Programmed extends gEditorial\Module
 				'planned' => _x( 'Planned', 'Status Taxonomy: Default Term', 'geditorial-programmed' ),
 				'held'    => _x( 'Held', 'Status Taxonomy: Default Term', 'geditorial-programmed' ),
 			],
-			'span_taxonomy' => Datetime::getYears( '-5 years' ),
+			'span_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
@@ -464,7 +459,7 @@ class Programmed extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		$this->modulelinks__hook_calendar_linked_post( $screen );
@@ -485,21 +480,21 @@ class Programmed extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		MetaBox::fieldPostParent( $object );
+		gEditorial\MetaBox::fieldPostParent( $object );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
-		MetaBox::singleselectTerms( $object->ID, [
+		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
-		MetaBox::fieldPostMenuOrder( $object );
+		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 	}
 
 	public function identified_default_posttype_identifier_metakey( $default, $posttype )
@@ -581,13 +576,13 @@ class Programmed extends gEditorial\Module
 				$this->paired_tools_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo Settings::toolboxColumnOpen(
+		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Program Tools', 'Header', 'geditorial-programmed' ) );
 
 			$this->paired_tools_render_card( $uri, $sub );
@@ -627,14 +622,14 @@ class Programmed extends gEditorial\Module
 				$this->paired_imports_handle_tablelist( $sub );
 			}
 
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 		}
 	}
 
 	protected function render_imports_html( $uri, $sub )
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
-			return Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable();
 	}
 
 	public function reports_settings( $sub )
@@ -645,6 +640,6 @@ class Programmed extends gEditorial\Module
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

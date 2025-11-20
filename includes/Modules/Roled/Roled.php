@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Roled extends gEditorial\Module
@@ -69,13 +69,19 @@ class Roled extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $role )
 			$settings['_general'][] = [
-				'field'       => 'role_name_'.$role,
-				'type'        => 'text',
-				/* translators: `%s`: role name */
-				'title'       => sprintf( _x( 'Role Name for %s', 'Setting Title', 'geditorial-roled' ), $roles[$role] ),
+				'field' => 'role_name_'.$role,
+				'type'  => 'text',
+				'title' => sprintf(
+					/* translators: `%s`: role name */
+					_x( 'Role Name for %s', 'Setting Title', 'geditorial-roled' ),
+					$roles[$role]
+				),
 				'description' => _x( 'Custom name for the duplicated role.', 'Setting Description', 'geditorial-roled' ),
-				/* translators: `%s`: role name */
-				'default'     => sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), $roles[$role] ),
+				'default'     => sprintf(
+					/* translators: `%s`: role name */
+					_x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ),
+					$roles[$role]
+				),
 			];
 
 		return $settings;
@@ -415,15 +421,15 @@ class Roled extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( Tablelist::isAction( 'duplicate_default_roles' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'duplicate_default_roles' ) ) {
 
 					$this->duplicate_default_roles();
 
-				} else if ( Tablelist::isAction( 'add_defaults_to_editor' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'add_defaults_to_editor' ) ) {
 
 					$this->add_default_caps( 'editor' );
 
-				} else if ( Tablelist::isAction( 'remove_duplicate_roles' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'remove_duplicate_roles' ) ) {
 
 					$this->remove_duplicate_roles();
 				}
@@ -439,11 +445,11 @@ class Roled extends gEditorial\Module
 
 		echo '<tr><th scope="row">'._x( 'Current Roles', 'Header', 'geditorial-roled' ).'</th><td>';
 
-		Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Button', 'geditorial-roled' ), TRUE );
-		Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Button', 'geditorial-roled' ) );
-		Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Button', 'geditorial-roled' ) );
-		Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Button', 'geditorial-roled' ) );
-		Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roled' ), 'danger' );
+		gEditorial\Settings::submitButton( 'check_current_roles', _x( 'Check Roles', 'Button', 'geditorial-roled' ), TRUE );
+		gEditorial\Settings::submitButton( 'check_current_caps', _x( 'Check Capabilities', 'Button', 'geditorial-roled' ) );
+		gEditorial\Settings::submitButton( 'duplicate_default_roles', _x( 'Duplicate Defaults', 'Button', 'geditorial-roled' ) );
+		gEditorial\Settings::submitButton( 'add_defaults_to_editor', _x( 'Add Default Caps to Editors', 'Button', 'geditorial-roled' ) );
+		gEditorial\Settings::submitButton( 'remove_duplicate_roles', _x( 'Remove Duplicates', 'Button', 'geditorial-roled' ), 'danger' );
 
 		if ( isset( $_POST['check_current_roles'] ) )
 			echo Core\HTML::tableCode( $this->get_settings_default_roles(), TRUE );

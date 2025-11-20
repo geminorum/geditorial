@@ -2,10 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-// `P2P_Determinate_Connection_Type`
 class DeterminateConnectionType implements DirectionStrategy
 {
-
 	public function get_arrow()
 	{
 		return is_rtl() ? '&larr;' : '&rarr;';

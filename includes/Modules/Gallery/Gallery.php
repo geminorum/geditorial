@@ -3,8 +3,10 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
 
 class Gallery extends gEditorial\Module
 {
@@ -68,7 +70,7 @@ class Gallery extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'album_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'album_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()

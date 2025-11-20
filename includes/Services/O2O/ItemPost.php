@@ -2,10 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-// `P2P_Item_Post`
 class ItemPost extends Item
 {
-
 	public function get_title()
 	{
 		return get_the_title( $this->item );

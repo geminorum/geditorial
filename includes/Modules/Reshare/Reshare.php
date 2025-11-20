@@ -3,9 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Reshare extends gEditorial\Module
@@ -16,11 +16,15 @@ class Reshare extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'reshare',
-			'title'  => _x( 'Reshare', 'Modules: Reshare', 'geditorial-admin' ),
-			'desc'   => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial-admin' ),
-			'icon'   => 'share-alt',
-			'access' => 'beta',
+			'name'     => 'reshare',
+			'title'    => _x( 'Reshare', 'Modules: Reshare', 'geditorial-admin' ),
+			'desc'     => _x( 'Contents from Other Sources', 'Modules: Reshare', 'geditorial-admin' ),
+			'icon'     => 'share-alt',
+			'access'   => 'beta',
+			'keywords' => [
+				'manual-connect',
+				'cptmodule',
+			],
 		];
 	}
 
@@ -61,7 +65,7 @@ class Reshare extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()

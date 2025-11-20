@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Specs extends gEditorial\Module
@@ -122,7 +120,7 @@ class Specs extends gEditorial\Module
 				'high'
 			);
 
-			$this->enqueue_asset_js( [], $screen, [ 'jquery', Scripts::pkgSortable() ] );
+			$this->enqueue_asset_js( [], $screen, [ 'jquery', gEditorial\Scripts::pkgSortable() ] );
 
 			$this->_hook_store_metabox( $screen->post_type );
 			add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
@@ -307,7 +305,7 @@ class Specs extends gEditorial\Module
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+			return gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
 
 		$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post, TRUE, 'term_id' );
 		$metas = $this->get_postmeta_legacy( $post->ID );
@@ -429,7 +427,7 @@ class Specs extends gEditorial\Module
 		echo '<input type="hidden" class="item-order" name="geditorial-specs-spec_order[]" value="'.$order.'" />';
 	}
 
-	public function shortcode_specs( $atts, $content = null, $tag = '' )
+	public function shortcode_specs( $atts, $content = NULL, $tag = '' )
 	{
 		global $post;
 

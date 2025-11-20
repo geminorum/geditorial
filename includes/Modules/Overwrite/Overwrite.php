@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Overwrite extends gEditorial\Module
@@ -187,7 +187,7 @@ class Overwrite extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', Settings::taxonomiesExcluded( get_taxonomies( [
+		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
 			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,   // NOTE: gEditorial prop
 		], 'names', 'or' ) + $extra ) );
 	}

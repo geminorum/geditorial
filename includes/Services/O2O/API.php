@@ -128,7 +128,7 @@ class API extends Core\Base
 			if ( empty( $args[$key] ) )
 				return [];
 
-			$value = Database::array2SQL( Utils::normalize( $args[ $key ] ) );
+			$value = Database::array2SQL( Utils::normalize( $args[$key] ) );
 
 			$where.= " AND o2o_$key IN ($value)";
 		}

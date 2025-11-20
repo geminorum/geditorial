@@ -3,13 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Like extends gEditorial\Module
@@ -194,10 +190,10 @@ class Like extends gEditorial\Module
 			foreach ( $users as $timestamp => $user_id )
 				$nodes[] = [
 					'id'     => $this->classs( 'user', $user_id ),
-					'title'  => Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
+					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
 					'href'   => $cap ? WordPress\User::edit( $user_id ) : FALSE,
-					'meta'   => [ 'title' => Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [ 'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 
@@ -214,10 +210,10 @@ class Like extends gEditorial\Module
 			foreach ( $guests as $timestamp => $ip )
 				$nodes[] = [
 					'id'     => $this->classs( 'guest', $timestamp ),
-					'title'  => Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.$ip,
+					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.$ip,
 					'parent' => $this->classs( 'guests' ),
 					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ),
-					'meta'   => [ 'title' => Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [ 'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
 				];
 		}
 	}
@@ -234,7 +230,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->check( $post['id'] );
 
-				Ajax::success( [
+				gEditorial\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => $check ? 'unlike' : 'dolike',
 					'remove'  => 'loading',
@@ -247,11 +243,11 @@ class Like extends gEditorial\Module
 			break;
 			case 'dolike':
 
-				Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
-				Ajax::success( [
+				gEditorial\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
@@ -263,11 +259,11 @@ class Like extends gEditorial\Module
 			break;
 			case 'unlike':
 
-				Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
-				Ajax::success( [
+				gEditorial\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
@@ -277,7 +273,7 @@ class Like extends gEditorial\Module
 				] );
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	public function title( $liked, $post_id = NULL )
@@ -403,7 +399,7 @@ class Like extends gEditorial\Module
 			if ( ! empty( $query->results ) ) {
 				foreach ( $query->results as $user ) {
 
-					// FIXME: needs internal api
+					// FIXME: needs internal API
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
@@ -499,7 +495,7 @@ class Like extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( Tablelist::isAction( 'sync_counts_all' ) ) {
+				if ( gEditorial\Tablelist::isAction( 'sync_counts_all' ) ) {
 
 					$count = 0;
 					$query = new \WP_Query();
@@ -525,7 +521,7 @@ class Like extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( Tablelist::isAction( 'sync_counts', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'sync_counts', TRUE ) ) {
 
 					$count = 0;
 
@@ -553,44 +549,44 @@ class Like extends gEditorial\Module
 			'order'    => 'DESC',
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Table Action', 'geditorial-like' );
 		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Table Action', 'geditorial-like' );
 
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle(),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'date'  => gEditorial\Tablelist::columnPostDate(),
+			'type'  => gEditorial\Tablelist::columnPostType(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
 			'total' => [
 				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return Helper::htmlCount( $this->get_liked_total( $row->ID ) );
+					return gEditorial\Helper::htmlCount( $this->get_liked_total( $row->ID ) );
 				},
 			],
 			'guests' => [
 				'title'    => _x( 'Guests', 'Table Column', 'geditorial-like' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return Helper::htmlCount( $this->get_liked_guests( $row->ID ) );
+					return gEditorial\Helper::htmlCount( $this->get_liked_guests( $row->ID ) );
 				},
 			],
 			'users' => [
 				'title'    => _x( 'Users', 'Table Column', 'geditorial-like' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return Helper::htmlCount( $this->get_liked_users( $row->ID ) );
+					return gEditorial\Helper::htmlCount( $this->get_liked_users( $row->ID ) );
 				},
 			],
 			'avatars' => [
 				'title'    => _x( 'Avatars', 'Table Column', 'geditorial-like' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
 					$html = $this->avatars( $row->ID );
-					return $html ? Core\HTML::tag( 'ul', $html ) : Helper::htmlEmpty();
+					return $html ? Core\HTML::tag( 'ul', $html ) : gEditorial\Helper::htmlEmpty();
 				},
 			],
 		], $posts, [

@@ -4,8 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Helper;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
@@ -250,8 +248,8 @@ class Units extends gEditorial\Module
 				if ( 'export' === $context )
 					return trim( $raw );
 
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					Info::getNoop( $field_args['type'] ) ),
+				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ),
+					gEditorial\Info::getNoop( $field_args['type'] ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 		}
@@ -266,8 +264,8 @@ class Units extends gEditorial\Module
 				if ( 'export' === $context )
 					return trim( $raw );
 
-				return sprintf( Helper::noopedCount( trim( $raw ),
-					Info::getNoop( $field_args['data_unit'] ) ),
+				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ),
+					gEditorial\Info::getNoop( $field_args['data_unit'] ) ),
 					Core\Number::format( trim( $raw ) )
 				);
 		}

@@ -4,10 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 
-// `P2P_Connection_Type_Factory`
 class ConnectionTypeFactory extends Core\Base
 {
-
 	private static $instances = [];
 
 	public static function register( $atts )

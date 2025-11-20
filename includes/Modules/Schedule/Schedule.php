@@ -3,14 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class Schedule extends gEditorial\Module
@@ -18,8 +13,6 @@ class Schedule extends gEditorial\Module
 	use Internals\Calendars;
 
 	protected $disable_no_posttypes = TRUE;
-
-	// TODO: rename to `Scheduled`
 
 	public static function module()
 	{
@@ -31,6 +24,9 @@ class Schedule extends gEditorial\Module
 			'access'   => 'beta',
 			'frontend' => FALSE,
 			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Schedule', 'geditorial-admin' ),
+			'keywords' => [
+				'calendar',
+			],
 		];
 	}
 
@@ -78,48 +74,48 @@ class Schedule extends gEditorial\Module
 			case 'reschedule':
 
 				if ( empty( $post['post_id'] ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
-				Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+				gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 				if ( ! $target = WordPress\Post::get( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
-					Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Message', 'geditorial-schedule' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Message', 'geditorial-schedule' ) );
 
-				$result = Datetime::reSchedulePost( $target, $post );
+				$result = gEditorial\Datetime::reSchedulePost( $target, $post );
 
 				if ( TRUE === $result )
-					Ajax::successMessage();
+					gEditorial\Ajax::successMessage();
 
 				if ( $result )
-					Ajax::errorMessage( $result ?: NULL );
+					gEditorial\Ajax::errorMessage( $result ?: NULL );
 
-				Ajax::errorMessage();
+				gEditorial\Ajax::errorMessage();
 
 			break;
 			case 'addnew':
 
-				Ajax::checkReferer( $this->hook( 'add-new' ) );
+				gEditorial\Ajax::checkReferer( $this->hook( 'add-new' ) );
 
 				parse_str( $post['data'], $data );
 
 				if ( ! WordPress\PostType::can( $data['post_type'], 'create_posts' ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
-				// Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
+				// gEditorial\Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
 
 				if ( ! $new = $this->add_new_post( $data['post_type'], $data['date_cal'], $data['date_year'], $data['date_month'], $data['date_day'], $data['post_title'] ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
-				Ajax::success( $this->get_post_row( $data['date_day'], $new ) );
+				gEditorial\Ajax::success( $this->get_post_row( $data['date_day'], $new ) );
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	// TODO: use `$this->_hook_wp_submenu_page()`
@@ -141,7 +137,7 @@ class Schedule extends gEditorial\Module
 	{
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );
-		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', Scripts::pkgSortable() ] );
+		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', gEditorial\Scripts::pkgSortable() ] );
 	}
 
 	public function page_row_actions( $actions, $post )
@@ -207,18 +203,18 @@ class Schedule extends gEditorial\Module
 			$links = FALSE;
 		}
 
-		Settings::wrapOpen( $this->key, 'listtable' );
+		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
 
-			Settings::headerTitle( 'listtable', _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
+			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
 
 			$html = Core\HTML::wrap( '', '-messages' );
-			$html.= Datetime::getCalendar( $cal, $args );
+			$html.= gEditorial\Datetime::getCalendar( $cal, $args );
 			$html.= $this->add_new_box( $cal );
 
 			echo '<div class="'.Core\HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
 			$this->settings_signature( 'listtable' );
-		Settings::wrapClose();
+		gEditorial\Settings::wrapClose();
 	}
 
 	private function add_new_box( $calendar )
@@ -253,7 +249,7 @@ class Schedule extends gEditorial\Module
 	{
 		$cal = self::req( 'cal', $this->default_calendar() );
 
-		$html = Ajax::spinner();
+		$html = gEditorial\Ajax::spinner();
 		$html.= '<span class="-the-day-number">'.Core\Number::localize( $the_day ).'</span>';
 
 		if ( $today )
@@ -307,7 +303,7 @@ class Schedule extends gEditorial\Module
 		$title = $this->filters( 'post_row_title', $title, $post, $the_day, $calendar_args );
 
 		$html.= $this->cache['posttype_icons'][$post->post_type].'</span> ';
-		$html.= Helper::getPostTitleRow( $post, 'edit', $this->cache['posttype_statuses'], $title );
+		$html.= gEditorial\Helper::getPostTitleRow( $post, 'edit', $this->cache['posttype_statuses'], $title );
 
 		return $html.'</li>';
 	}

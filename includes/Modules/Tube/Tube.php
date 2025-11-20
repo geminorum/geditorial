@@ -6,8 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Tube extends gEditorial\Module
@@ -193,7 +191,7 @@ class Tube extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'secondary_posttype' ),
 		] ) );
@@ -450,7 +448,7 @@ class Tube extends gEditorial\Module
 
 	public function primary_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
 			$this->constant( 'primary_taxonomy' ),
 			array_merge( [
@@ -467,7 +465,7 @@ class Tube extends gEditorial\Module
 		if ( ! $this->_o2o )
 			return $content;
 
-		return ShortCode::listPosts( 'object2object',
+		return gEditorial\ShortCode::listPosts( 'object2object',
 			$this->constant( 'primary_posttype' ),
 			'',
 			array_merge( [
@@ -486,7 +484,7 @@ class Tube extends gEditorial\Module
 
 	public function secondary_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'secondary_posttype' ),
 			$this->constant( 'secondary_taxonomy' ),
 			array_merge( [
@@ -500,7 +498,7 @@ class Tube extends gEditorial\Module
 
 	public function children_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
-		return ShortCode::listPosts( 'children',
+		return gEditorial\ShortCode::listPosts( 'children',
 			$this->constant( 'secondary_posttype' ),
 			'',
 			array_merge( [

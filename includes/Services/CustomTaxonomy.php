@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Settings;
 use geminorum\gEditorial\WordPress;
 
 class CustomTaxonomy extends gEditorial\Service
@@ -199,7 +198,7 @@ class CustomTaxonomy extends gEditorial\Service
 				return $object->labels->all_items;
 
 			case 'show_option_none':
-				return sprintf( '&ndash; %s &ndash;', Settings::showRadioNone() );
+				return sprintf( '&ndash; %s &ndash;', gEditorial\Settings::showRadioNone() );
 
 			case 'show_option_parent':
 				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );

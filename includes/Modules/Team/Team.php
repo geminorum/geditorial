@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Settings;
+use geminorum\gEditorial\WordPress;
 
 class Team extends gEditorial\Module
 {
@@ -17,11 +17,15 @@ class Team extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'team',
-			'title'  => _x( 'Team', 'Modules: Team', 'geditorial-admin' ),
-			'desc'   => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial-admin' ),
-			'icon'   => 'groups',
-			'access' => 'beta',
+			'name'     => 'team',
+			'title'    => _x( 'Team', 'Modules: Team', 'geditorial-admin' ),
+			'desc'     => _x( 'Profiles for Editorial Teams', 'Modules: Team', 'geditorial-admin' ),
+			'icon'     => 'groups',
+			'access'   => 'beta',
+			'keywords' => [
+				'manual-connect',
+				'cptmodule',
+			],
 		];
 	}
 
@@ -114,7 +118,7 @@ class Team extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', Settings::posttypesExcluded( $extra + [ $this->constant( 'member_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'member_posttype' ) ] ) );
 	}
 
 	public function after_setup_theme()

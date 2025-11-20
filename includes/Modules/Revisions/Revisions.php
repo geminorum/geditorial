@@ -3,12 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Helper;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Revisions extends gEditorial\Module
@@ -173,7 +170,7 @@ class Revisions extends gEditorial\Module
 					else
 						echo $title;
 
-					Helper::getAuthorsEditRow(
+					gEditorial\Helper::getAuthorsEditRow(
 						array_unique( Core\Arraay::pluck( $revisions, 'post_author' ) ),
 						$post->post_type,
 						' <span class="-authors">(', ')</span>'
@@ -202,9 +199,9 @@ class Revisions extends gEditorial\Module
 	public static function wordCount( $revision )
 	{
 		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s/%2$s/%3$s</span>]', [
-			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
-			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
-			Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
+			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
+			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
+			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
 			_x( 'Title/Content/Excerpt Word Count', 'Title Attr', 'geditorial-revisions' ),
 		] );
 	}
@@ -219,9 +216,9 @@ class Revisions extends gEditorial\Module
 		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
 
 		$time = strtotime( $revision->post_modified );
-		$date = Datetime::dateFormat( $time, 'datetime' );
+		$date = gEditorial\Datetime::dateFormat( $time, 'datetime' );
 
-		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', Datetime::humanTimeDiffRound( $time, FALSE ), $date );
+		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', gEditorial\Datetime::humanTimeDiffRound( $time, FALSE ), $date );
 		$parts['datetime'] = sprintf( '<span class="-datetime">(<small>%s</small>)</span>', $date );
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
@@ -245,7 +242,7 @@ class Revisions extends gEditorial\Module
 			$parts['autosave'] = _x( '[Autosave]', 'Indicator', 'geditorial-revisions' );
 
 		if ( $link )
-			$parts['loading'] = Ajax::spinner();
+			$parts['loading'] = gEditorial\Ajax::spinner();
 
 		return sprintf( '<span class="geditorial-admin-wrap-inline -revisions">%s</span>', implode( ' ', $parts ) );
 	}
@@ -276,7 +273,7 @@ class Revisions extends gEditorial\Module
 				] ),
 			], _x( 'Purge Revisions', 'Button', 'geditorial-revisions' ) );
 
-			echo Ajax::spinner();
+			echo gEditorial\Ajax::spinner();
 
 			echo Core\HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
@@ -334,35 +331,35 @@ class Revisions extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorMessage();
+			gEditorial\Ajax::errorMessage();
 
-		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'purge':
 
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
-				Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
+				gEditorial\Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
 
 			break;
 			case 'delete':
 
 				if ( empty( $post['revision_id'] ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
 				if ( ! current_user_can( $this->caps['delete'], $post['post_id'] ) )
-					Ajax::errorUserCant();
+					gEditorial\Ajax::errorUserCant();
 
 				if ( is_wp_error( wp_delete_post_revision( $post['revision_id'] ) ) )
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 
-				Ajax::successMessage();
+				gEditorial\Ajax::successMessage();
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	public function reports_settings( $sub )
@@ -373,7 +370,7 @@ class Revisions extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( Tablelist::isAction( 'cleanup_revisions', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'cleanup_revisions', TRUE ) ) {
 
 					$count = 0;
 
@@ -402,15 +399,15 @@ class Revisions extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getPostArray();
 
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Table Action', 'geditorial-revisions' );
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
+			'ID'    => gEditorial\Tablelist::columnPostID(),
+			'date'  => gEditorial\Tablelist::columnPostDate(),
+			'type'  => gEditorial\Tablelist::columnPostType(),
+			'title' => gEditorial\Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Table Column', 'geditorial-revisions' ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
@@ -418,13 +415,13 @@ class Revisions extends gEditorial\Module
 					$html = '';
 
 					if ( ! $revisions = wp_get_post_revisions( $row->ID ) )
-						return Helper::htmlEmpty();
+						return gEditorial\Helper::htmlEmpty();
 
 					foreach ( $revisions as $revision ) {
 
 						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
 						$block.= ' '.self::wordCount( $revision );
-						$block.= ' &ndash; '.Datetime::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block.= ' &ndash; '.gEditorial\Datetime::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
 						$block.= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
 
 						$html.= '<div>'.$block.'</div>';
@@ -433,7 +430,7 @@ class Revisions extends gEditorial\Module
 					return $html;
 				},
 			],
-			'terms' => Tablelist::columnPostTerms(),
+			'terms' => gEditorial\Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

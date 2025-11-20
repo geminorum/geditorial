@@ -2,28 +2,26 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-// `P2P_Directed_Connection_Type`
 class DirectedConnectionType
 {
-
 	protected $ctype;
 	protected $direction;
 
 	protected $self_connections;
 	protected $duplicate_connections;
 
-	function __construct( $ctype, $direction )
+	public function __construct( $ctype, $direction )
 	{
 		$this->ctype     = $ctype;
 		$this->direction = $direction;
 	}
 
-	function __get( $key )
+	public function __get( $key )
 	{
 		return $this->ctype->{$key};
 	}
 
-	function __isset( $key )
+	public function __isset( $key )
 	{
 		return isset( $this->ctype->{$key} );
 	}
@@ -101,7 +99,7 @@ class DirectedConnectionType
 		return $side->get_base_qv( $side->translate_qv( $q ) );
 	}
 
-	// get a list of posts connected to other posts connected to a post
+	// Get a list of posts connected to other posts connected to a post
 	public function get_related( $item, $extra_qv = [], $output = 'raw' )
 	{
 		$extra_qv['fields']       = 'ids';
@@ -117,7 +115,7 @@ class DirectedConnectionType
 		return $this->flip_direction()->get_connected( $connected->items, $additional_qv, $output );
 	}
 
-	// get a list of items that are connected to a given item
+	// Get a list of items that are connected to a given item
 	public function get_connected( $item, $extra_qv = [], $output = 'raw' )
 	{
 		$args = array_merge( $extra_qv, [
@@ -144,7 +142,7 @@ class DirectedConnectionType
 		return FALSE;
 	}
 
-	// get a list of items that could be connected to a given item
+	// Get a list of items that could be connected to a given item
 	public function get_connectable( $arg, $extra_qv = [], $output = 'raw' )
 	{
 		$side = $this->get( 'opposite', 'side' );
