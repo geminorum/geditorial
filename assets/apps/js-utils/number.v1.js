@@ -152,6 +152,14 @@ const factorial = (number) => {
   return calculateFactorial(number - 1);
 };
 
+/**
+ * Checks if all digits are the same (e.g., "1111111111")
+ *
+ * @param {Int} input
+ * @returns {Bool}
+ */
+const repeated = (input) => /^(\d)\1{9}$/.test(input);
+
 export {
   toInt,
   toDecimal,
@@ -166,5 +174,6 @@ export {
   toEnglish,
   toEnglishALT,
   toPersian,
-  factorial
+  factorial,
+  repeated
 };

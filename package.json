@@ -94,6 +94,7 @@
     "jsbarcode": "^3.12.1",
     "list.js": "^2.3.1",
     "modern-normalize": "^3.0.1",
+    "mustache": "^4.2.0",
     "normalize.css": "^8.0.1",
     "onscan.js": "^1.5.2",
     "paper-css": "^0.4.1",
@@ -127,6 +128,8 @@
       "Vue",
       "wp",
       "ajaxurl",
+      "confirm",
+      "alert",
       "top",
       "self"
     ]
