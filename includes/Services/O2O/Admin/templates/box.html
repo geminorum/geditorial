@@ -1,0 +1,43 @@
+<div class="o2o-box" {{attributes}}>
+	<p class="help">{{help}}</p>
+
+	{{#connections}}
+	<table class="o2o-connections" {{{hide}}}>
+		<thead>
+			<tr>
+				{{#thead}}
+				<th class="o2o-col-{{column}}">{{{title}}}</th>
+				{{/thead}}
+			</tr>
+		</thead>
+
+		<tbody>
+			{{#tbody}}
+			{{>table-row}}
+			{{/tbody}}
+		</tbody>
+	</table>
+	{{/connections}}
+
+	{{#create-connections}}
+	<div class="o2o-create-connections" {{{hide}}}>
+		<p class="o2o-toggle-tabs"><a href="#">+ {{{label}}}</a></p>
+
+		<div class="o2o-create-connections-tabs" style="display: none">
+			{{#show-tab-headers}}
+			<ul class="wp-tab-bar clearfix">
+				{{#tabs}}
+				<li {{#is-active}}class="wp-tab-active"{{/is-active}} data-ref=".o2o-tab-{{tab-id}}"><a href="#">{{{tab-title}}}</a></li>
+				{{/tabs}}
+			</ul>
+			{{/show-tab-headers}}
+
+			{{#tabs}}
+			<div class="o2o-tab-{{tab-id}} tabs-panel">
+				{{{tab-content}}}
+			</div>
+			{{/tabs}}
+		</div>
+	</div>
+	{{/create-connections}}
+</div>

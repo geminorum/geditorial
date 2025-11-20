@@ -1,10 +1,10 @@
-<?php namespace geminorum\gEditorial\Services\O2O;
+<?php namespace geminorum\gEditorial\Services\O2O\Admin;
 
-defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services\O2O;
 
-class DropdownFactory extends Factory
+class DropdownFactory extends O2O\Factory
 {
-
 	protected $key = 'admin_dropdown';
 
 	public function __construct()
@@ -17,7 +17,8 @@ class DropdownFactory extends Factory
 
 	public function add_item( $directed, $object_type, $post_type, $title )
 	{
-		$class = __NAMESPACE__.'Dropdown_'.ucfirst( $object_type );
-		$item  = new $class( $directed, $title );
+		$class = __NAMESPACE__.'\\Dropdown'.ucfirst( $object_type );
+
+		new $class( $directed, $title );
 	}
 }

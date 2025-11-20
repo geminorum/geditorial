@@ -1,10 +1,10 @@
-<?php namespace geminorum\gEditorial\Services\O2O;
+<?php namespace geminorum\gEditorial\Services\O2O\Admin;
 
-defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services\O2O;
 
-// a dropdown above a list table in wp-admin
-abstract class Dropdown
-{
+// A dropdown above a list table in `wp-admin`
+abstract class Dropdown {
 
 	protected $ctype;
 	protected $title;
@@ -35,12 +35,11 @@ abstract class Dropdown
 		else
 			$title = $this->title;
 
-		return scbForms::input( [
-			'type'    => 'select',
-			'name'    => [ 'o2o', $this->ctype->name, $direction ],
-			'choices' => self::get_choices( $this->ctype ),
-			'text'    => $title,
-		], $_GET );
+		return Core\HTML::dropdown( self::get_choices( $this->ctype ), [
+			'name'       => sprintf( 'o2o-%s-%s', $this->ctype->name, $direction ),
+			'selected'   => Core\HTML::req( sprintf( 'o2o-%s-%s', $this->ctype->name, $direction ) ),
+			'none_title' => $title,
+		] );
 	}
 
 	protected static function get_qv()
@@ -51,10 +50,8 @@ abstract class Dropdown
 		$args = [];
 		$tmp  = reset( $_GET['o2o'] );
 
-		$args['connected_type'] = key( $_GET['o2o'] );
-
-		// list( $args['connected_direction'], $args['connected_items'] ) = each( $tmp );
 		// @REF: https://github.com/scribu/wp-posts-to-posts/pull/579/files
+		$args['connected_type']      = key( $_GET['o2o'] );
 		$args['connected_direction'] = key( $tmp );
 		$args['connected_items']     = current( $tmp );
 
@@ -68,15 +65,14 @@ abstract class Dropdown
 	{
 		$extra_qv = [
 			'o2o:per_page' => -1,
-			'o2o:context'  => 'admin_dropdown'
+			'o2o:context'  => 'admin_dropdown',
 		];
 
 		$connected = $directed->get_connected( 'any', $extra_qv, 'abstract' );
-
-		$options = [];
+		$options   = [];
 
 		foreach ( $connected->items as $item )
-			$options[ $item->get_id() ] = $item->get_title();
+			$options[$item->get_id()] = $item->get_title();
 
 		return $options;
 	}

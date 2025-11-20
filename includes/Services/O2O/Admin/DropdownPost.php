@@ -1,6 +1,7 @@
-<?php namespace geminorum\gEditorial\Services\O2O;
+<?php namespace geminorum\gEditorial\Services\O2O\Admin;
 
-defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services\O2O;
 
 class DropdownPost extends Dropdown
 {
@@ -13,8 +14,9 @@ class DropdownPost extends Dropdown
 		add_action( 'restrict_manage_posts', [ $this, 'show_dropdown' ] );
 	}
 
-	static function massage_query( $request )
+	public static function massage_query( $request )
 	{
 		return array_merge( $request, self::get_qv() );
 	}
 }
+

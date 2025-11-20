@@ -1,0 +1,8 @@
+<input type="hidden" name="old_o2o_type" value="{{old_o2o_type}}" />
+<select name="new_o2o_type">
+	<option></option>
+	{{#options}}
+	<option>{{.}}</option>
+	{{/options}}
+</select>
+<input class="button button-small" type="submit" name="o2o_convert" value="{{{button_text}}}" />

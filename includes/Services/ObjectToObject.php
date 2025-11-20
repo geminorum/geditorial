@@ -39,13 +39,15 @@ class ObjectToObject extends gEditorial\Service
 		if ( ! is_admin() )
 			return;
 
-		// define( 'O2O_BOX_NONCE', 'o2o-box' );
+		define( 'GEDITORIAL_O2O_BOX_NONCE', 'o2o-box' );
 
-		// new P2P_Box_Factory;
-		// new P2P_Column_Factory;
-		// new P2P_Dropdown_Factory;
+		// O2O\Admin\Mustache::init();
 
-		// `P2P_Tools_Page::setup()`
+		new O2O\Admin\BoxFactory;
+		new O2O\Admin\ColumnFactory;
+		new O2O\Admin\DropdownFactory;
+
+		// O2O\Admin\ToolsPage::setup();
 		add_action( 'admin_notices', [ __CLASS__, 'maybeInstall' ] );
 	}
 
@@ -143,11 +145,16 @@ class ObjectToObject extends gEditorial\Service
 	// make the query vars public
 	public static function query_vars( $public_query_vars )
 	{
-		return array_merge( $public_query_vars, [
+		return array_merge( $public_query_vars, self::get_custom_query_vars() );
+	}
+
+	public static function get_custom_query_vars()
+	{
+		return [
 			'connected_type',
 			'connected_items',
 			'connected_direction',
-		] );
+		];
 	}
 
 	public static function maybeInstall()
@@ -285,5 +292,39 @@ class ObjectToObject extends gEditorial\Service
 		$o2o = $type->disconnect( $request['from'], $request['to'] );
 
 		return is_wp_error( $o2o ) ? $o2o : TRUE;
+	}
+
+	// OLD: `Box::init_scripts()`
+	public static function enqueueBox( $extra = [] )
+	{
+		static $enqueued = FALSE;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		$args = self::recursiveParseArgs( $extra, [
+			'strings' => [
+				'confirm' => _x( 'Are you sure you want to delete all connections?', 'O2O', 'geditorial-admin' ),
+			],
+		] );
+
+		if ( ! array_key_exists( '_rest', $args ) )
+			$args['_rest'] = sprintf( '/%s', self::namespace() );
+
+		if ( ! array_key_exists( '_nonce', $args ) )
+			$args['_nonce'] = wp_create_nonce( GEDITORIAL_O2O_BOX_NONCE );
+
+		if ( ! array_key_exists( '_spinner', $args ) )
+			$args['_spinner'] = admin_url( 'images/wpspin_light.gif' );
+
+		gEditorial()->enqueue_asset_config( $args, 'o2obox' );
+
+		add_action( 'admin_footer', [ __NAMESPACE__.'\\O2O\\Admin\\Box', 'add_templates' ] );
+
+		return $enqueued = gEditorial\Scripts::enqueue( 'admin.o2obox', [
+			'jquery',
+			'backbone',
+			gEditorial\Scripts::pkgMustache(),
+		] );
 	}
 }

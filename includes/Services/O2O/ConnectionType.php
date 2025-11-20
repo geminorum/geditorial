@@ -15,6 +15,9 @@ class ConnectionType extends Core\Base
 	public $fields;
 	public $args;
 	public $strategy;
+	public $duplicate_connections;
+	public $self_connections;
+	public $reciprocal;
 
 	public $sortable;
 	public $data = [];
