@@ -294,6 +294,21 @@ JS;
 		return $handle;
 	}
 
+	public static function pkgMustache( $enqueue = FALSE, $version = '4.2.0' )
+	{
+		$handle = 'mustache';  // NOTE: no prefix to use as dependency for apps.
+
+		if ( $enqueue )
+			wp_enqueue_script( $handle, static::URL.'assets/packages/mustache.js/mustache.min.js', [], $version, TRUE );
+
+		else
+			wp_register_script( $handle, static::URL.'assets/packages/mustache.js/mustache.min.js', [], $version, TRUE );
+
+		// wp_script_add_data( $handle, 'strategy', 'defer' );
+
+		return $handle;
+	}
+
 	public static function pkgAutosize( $ver = '6.0.1' )
 	{
 		$handle = static::BASE.'-autosize';
