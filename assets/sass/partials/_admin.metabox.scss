@@ -48,6 +48,16 @@ $spacer: 1rem !default;
     @include theme-box-sizing-reset;
   }
 
+  p.-metabox-desc {
+    color: $gray-light;
+    font-size: 0.89em;
+    margin-bottom: -.5em;
+
+    &:hover {
+      color: $gray-darker;
+    }
+  }
+
   .field-wrap {
     margin-bottom: 2px;
 

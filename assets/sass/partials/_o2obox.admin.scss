@@ -1,0 +1,256 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// gEditorial Partials: O2OBox: Admin
+
+////////////////////////////////////////////////////////////////////////////////
+$spacer: 1rem !default;
+
+////////////////////////////////////////////////////////////////////////////////
+.o2o-placeholder {
+  color: #AAA;
+}
+
+.o2o-box {
+  td {
+    a {
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      margin: 2px 0;
+      max-height: 60px;
+      max-width: 80px;
+    }
+  }
+
+  .tabs-panel {
+    border: 1px solid #DFDFDF;
+    display: none;
+    padding: 10px;
+
+    button {
+      clear: both;
+      display: block;
+      margin-top: 8px;
+    }
+  }
+
+  p.help {
+    color: #666;
+    font-style: normal;
+  }
+
+  .o2o-tab-search {
+    display: block;
+  }
+
+  .post-state {
+    font-style: italic;
+  }
+}
+
+.o2o-toggle-tabs {
+  font-weight: 700;
+  margin-bottom: 0;
+
+  + div {
+    margin-top: $spacer;
+  }
+}
+
+.tabs-panel {
+  border-radius: 0 3px 3px 3px;
+}
+
+.o2o-results {
+  background-color: #F9F9F9;
+  border-color: #DFDFDF;
+  border-radius: 3px;
+  border-spacing: 0;
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+
+  + .o2o-navigation {
+    margin-top: $spacer * .5;
+  }
+
+  td {
+    border-top: 1px solid #DFDFDF;
+    padding: 3px 6px;
+  }
+
+  tr {
+    &:first-child {
+      td {
+        border-top: 0;
+      }
+    }
+  }
+}
+
+.o2o-connections {
+  background-color: #F9F9F9;
+  border-color: #DFDFDF;
+  border-radius: 3px;
+  border-spacing: 0;
+  border-style: solid;
+  border-width: 1px;
+  width: 100%;
+
+  td {
+    border-top: 1px solid #DFDFDF;
+    padding: 3px 6px;
+
+    input[type="text"] {
+      width: 100%;
+    }
+  }
+
+  th {
+    padding: 3px 6px;
+    background-color: #F1F1F1;
+    text-align: left;
+  }
+}
+
+.o2o-search {
+  + {
+    .o2o-results {
+      margin-top: 8px;
+    }
+    .o2o-notice {
+      margin-top: 8px;
+    }
+  }
+
+  .o2o-spinner {
+    margin-left: -20px;
+    opacity: 0.8;
+    vertical-align: -0.3em;
+  }
+}
+
+th.o2o-col-delete {
+  padding: 0;
+}
+
+td.o2o-col-delete {
+  padding: 0;
+}
+
+td.o2o-col-create {
+  padding: 0;
+  .o2o-icon {
+    padding: 0;
+  }
+}
+
+.o2o-col-delete {
+  width: 16px;
+  border-right: 1px solid transparent;
+  &:hover {
+    background-color: #f5f5f5;
+    border-right-color: #ddd;
+    cursor: pointer;
+    .o2o-icon {
+      opacity: 1;
+    }
+  }
+  .o2o-icon {
+    background: url(../images/minus.png) no-repeat scroll 50% 50% transparent;
+  }
+}
+
+.o2o-icon {
+  display: block;
+  height: 16px;
+  width: 16px;
+  opacity: 0.5;
+  padding: 5px 6px;
+  vertical-align: middle;
+}
+
+.o2o-col-create {
+  div {
+    padding: 5px 6px;
+    vertical-align: middle;
+  }
+  &:hover {
+    background-color: #f5f5f5;
+    border-right-color: #ddd;
+    cursor: pointer;
+
+    .o2o-icon {
+      opacity: 1;
+    }
+  }
+  .o2o-icon {
+    background: url(../images/plus.png) no-repeat scroll 50% 50% transparent;
+    float: left;
+    margin-right: 6px;
+  }
+}
+
+td.o2o-col-order {
+  width: 13px;
+}
+
+tr {
+  &:hover {
+    td.o2o-col-order {
+      cursor: move;
+      background: url(../images/sort.png) no-repeat scroll 50% 50% transparent;
+    }
+  }
+}
+
+.o2o-tab-search {
+  input {
+    background-color: transparent;
+    padding-right: 22px;
+    margin: 0;
+  }
+}
+
+.o2o-tab-create-post {
+  input[type="text"] {
+    width: 100%;
+    display: block;
+  }
+}
+
+.o2o-navigation {
+  clear: both;
+  display: table;
+  overflow: hidden;
+
+  .button.inactive {
+    border-color: #bbb;
+    color: #aaa;
+    background: #f6f6f6;
+    text-shadow: none;
+    cursor: default;
+
+    &:hover {
+      border-color: #bbb;
+      color: #aaa;
+      background: #f6f6f6;
+      text-shadow: none;
+      cursor: default;
+    }
+  }
+
+  div {
+    float: left;
+    line-height: 13px;
+    padding: 6px 5px 0;
+  }
+
+  .o2o-spinner {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+}
