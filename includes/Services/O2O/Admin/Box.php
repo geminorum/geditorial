@@ -37,7 +37,7 @@ class Box extends Core\Base
 		echo Core\HTML::tag( 'script', [
 			'type' => 'text/html',
 			'id'   => "o2o-template-$slug",
-		], file_get_contents( dirname( __FILE__ )."/templates/$slug.html" ) );
+		], file_get_contents( dirname( __FILE__ )."/templates/$slug.mustache" ) );
 	}
 
 	public function render( $item )

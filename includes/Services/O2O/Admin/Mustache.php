@@ -10,7 +10,7 @@ abstract class Mustache
 	public static function init()
 	{
 		$path   = dirname( __FILE__ ).'/templates';
-		$loader = new \Mustache\Loader\FilesystemLoader( $path, [ 'extension' => 'html' ] );
+		$loader = new \Mustache\Loader\FilesystemLoader( $path );
 
 		self::$mustache = new \Mustache\Engine( [
 			'loader'          => $loader,
