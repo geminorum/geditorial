@@ -2075,12 +2075,27 @@ class Terms extends gEditorial\Module
 		if ( $post->post_parent )
 			return $states;
 
-		if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $this->get_supported_metakey( 'image' ), $post->ID ) )
+		if ( ! $term_id = WordPress\Taxonomy::getIDbyMeta( $this->get_supported_metakey( 'image' ), $post->ID ) )
+			return $states;
+
+		if ( WordPress\IsIt::ajax() ) {
+
+			// NOTE: on media modal HTML tags will escaped
+
 			$states[] = sprintf(
 				/* translators: `%s`: term name */
+				_x( 'Term Image for “%s”', 'Media State', 'geditorial-terms' ),
+				WordPress\Term::title( (int) $term_id, FALSE ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' )
+			);
+
+		} else {
+
+			$states[] = sprintf(
+				/* translators: `%s`: term link */
 				_x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ),
 				WordPress\Term::htmlLink( (int) $term_id ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' )
 			);
+		}
 
 		return $states;
 	}
