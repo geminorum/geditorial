@@ -103,9 +103,9 @@ class Plugin extends WordPress\Plugin
 			'GEDITORIAL_DISABLE_HELP_TABS' => FALSE,
 			'GEDITORIAL_STRING_DELIMITERS' => NULL,
 
-			'GEDITORIAL_CACHE_DIR' => sprintf( '%s/cache/%s', WP_CONTENT_DIR, $this->base ),   // FALSE to disable
-			'GEDITORIAL_CACHE_URL' => sprintf( '%s/cache/%s', WP_CONTENT_URL, $this->base ),
-			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12,                                            // 12 hours
+			'GEDITORIAL_CACHE_DIR' => sprintf( '%s/cache', WP_CONTENT_DIR ),   // FALSE to disable
+			'GEDITORIAL_CACHE_URL' => sprintf( '%s/cache', WP_CONTENT_URL ),
+			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12,                            // 12 hours
 		];
 	}
 

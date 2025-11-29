@@ -13,21 +13,21 @@ class FileCache extends gEditorial\Service
 		if ( ! GEDITORIAL_CACHE_DIR )
 			return FALSE;
 
-		if ( is_null( $base ) )
-			$base = self::BASE;
+		$base = $base ?? self::BASE;
+		$path = GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub;
+		$path = Core\File::untrail( Core\File::normalize( $path ) );
 
-		$path = Core\File::normalize( GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub );
-
-		if ( file_exists( $path ) )
-			return Core\URL::untrail( $path );
+		if ( @file_exists( $path ) )
+			return $path;
 
 		if ( ! wp_mkdir_p( $path ) )
 			return FALSE;
 
+		// FIXME: check if the folder is writable
 		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
 		Core\File::putDoNotBackup( $path );
 
-		return Core\URL::untrail( $path );
+		return $path;
 	}
 
 	public static function getURL( $sub, $base = NULL )
@@ -35,8 +35,7 @@ class FileCache extends gEditorial\Service
 		if ( ! GEDITORIAL_CACHE_DIR ) // correct, we check for path constant
 			return FALSE;
 
-		if ( is_null( $base ) )
-			$base = self::BASE;
+		$base = $base ?? self::BASE;
 
 		return Core\URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
 	}
