@@ -6,7 +6,7 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-class ObjectToObject extends gEditorial\Service
+class ObjectsToObjects extends gEditorial\Service
 {
 	public static function setup()
 	{

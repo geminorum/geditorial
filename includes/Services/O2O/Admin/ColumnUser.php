@@ -34,7 +34,7 @@ class ColumnUser extends Column
 			$query->query_vars,
 			wp_array_slice_assoc(
 				$_GET,
-				Services\ObjectToObject::get_custom_query_vars()
+				Services\ObjectsToObjects::get_custom_query_vars()
 			)
 		);
 	}

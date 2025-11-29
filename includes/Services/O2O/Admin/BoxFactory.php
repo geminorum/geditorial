@@ -54,7 +54,7 @@ class BoxFactory extends O2O\Factory
 			$box_args->priority
 		);
 
-		Services\ObjectToObject::enqueueBox();
+		Services\ObjectsToObjects::enqueueBox();
 	}
 
 	private static function show_box( $directed, $post )

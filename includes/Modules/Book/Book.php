@@ -780,7 +780,7 @@ class Book extends gEditorial\Module
 		if ( ! $this->_p2p )
 			return $content;
 
-		return gEditorial\ShortCode::listPosts( 'object2object',
+		return gEditorial\ShortCode::listPosts( 'objects2objects',
 			$this->constant( 'main_posttype' ),
 			'',
 			array_merge( [

@@ -197,7 +197,7 @@ class Plugin extends WordPress\Plugin
 			'Locations',
 			'Markup',
 			'ObjectHints',
-			'ObjectToObject',
+			'ObjectsToObjects',
 			'Paired',
 			'PostTypeFields',
 			'PrimaryTaxonomy',

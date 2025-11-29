@@ -465,7 +465,7 @@ class Tube extends gEditorial\Module
 		if ( ! $this->_o2o )
 			return $content;
 
-		return gEditorial\ShortCode::listPosts( 'object2object',
+		return gEditorial\ShortCode::listPosts( 'objects2objects',
 			$this->constant( 'primary_posttype' ),
 			'',
 			array_merge( [

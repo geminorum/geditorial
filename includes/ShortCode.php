@@ -915,7 +915,7 @@ class ShortCode extends WordPress\Main
 
 	// list: `assigned`: posts by terms
 	// list: `paired`: posts by meta (PAIRED API)
-	// list: `object2object`: posts by p2p/o2o
+	// list: `objects2objects`: posts by p2p/o2o
 	// list: `metadata`: posts by metadata comparison
 	// list: `children`: posts by parent of another post-type.
 	// list: `attached`: posts by inheritance
@@ -989,7 +989,7 @@ class ShortCode extends WordPress\Main
 			if ( ! $args['orderby'] )
 				$query['orderby'] = 'menu_order';
 
-		} else if ( 'object2object' === $list ) {
+		} else if ( 'objects2objects' === $list ) {
 
 			// if ( $posttype && is_post_type_archive( $posttype ) ) {
 
@@ -1254,7 +1254,7 @@ class ShortCode extends WordPress\Main
 
 			$ref = $term;
 
-		} else if ( in_array( $list, [ 'paired', 'object2object', 'metadata', 'children' ], TRUE ) ) {
+		} else if ( in_array( $list, [ 'paired', 'objects2objects', 'metadata', 'children' ], TRUE ) ) {
 
 			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = self::postTitle( $post, $args );
