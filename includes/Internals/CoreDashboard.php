@@ -52,7 +52,7 @@ trait CoreDashboard
 			);
 
 		$screen = get_current_screen();
-		$hook   = self::sanitize_hook( $name );
+		$hook   = Core\Text::sanitizeHook( $name );
 		$id     = $this->classs( $name );
 		$title  = $this->filters( 'dashboard_widget_title', $title, $name, $context );
 		$args   = array_merge( [

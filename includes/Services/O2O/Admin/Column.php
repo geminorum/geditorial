@@ -44,7 +44,7 @@ abstract class Column
 
 		$connected = $this->ctype->get_connected( $items, $extra_qv, 'abstract' );
 
-		$this->connected = Core\Arraay::groupBy( $connected->items, [ O2O\Utils, 'getOtherID' ] );
+		$this->connected = Core\Arraay::groupBy( $connected->items, [ '\\geminorum\\gEditorial\\Services\\O2O\\Utils', 'getOtherID' ] );
 	}
 
 	public function styles()

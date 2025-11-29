@@ -1266,8 +1266,8 @@ class Settings extends WordPress\Main
 		return [
 			'field'       => 'children_shortcode_constant',
 			'type'        => 'text',
-			'title'       => _x( 'Connected Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the connected short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'title'       => _x( 'Children Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the children short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'after'       => self::fieldAfterShortCodeConstant(),
 			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],

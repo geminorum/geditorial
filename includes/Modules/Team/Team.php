@@ -155,7 +155,7 @@ class Team extends gEditorial\Module
 			'to'   => 'user',
 
 			'to_query_vars' => [
-				'role' => 'contributor' // FIXME: get setting fot this
+				'role' => 'contributor' // FIXME: get setting for this
 			],
 		] );
 	}

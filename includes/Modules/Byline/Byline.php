@@ -139,13 +139,14 @@ class Byline extends gEditorial\Module
 		return [
 			'main_taxonomy' => [
 				'author'       => _x( 'Author', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
-				'co_author'    => _x( 'Co-Author', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
+				'translator'   => _x( 'Translator', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
+				'reporter'     => _x( 'Reporter', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'editor'       => _x( 'Editor', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'prefacer'     => _x( 'Prefacer', 'Main Taxonomy: Default Term', 'geditorial-byline' ),       // @REF: https://abadis.ir/entofa/prefacer/
 				'subject'      => _x( 'Subject', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
+				'guest'        => _x( 'Guest', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
+				'host'         => _x( 'Host', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'photographer' => _x( 'Photographer', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
-				'translator'   => _x( 'Translator', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
-				'reporter'     => _x( 'Reporter', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'commentator'  => _x( 'Commentator', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'artist'       => _x( 'Artist', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'co_artist'    => _x( 'Co-Artist', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
@@ -161,6 +162,7 @@ class Byline extends gEditorial\Module
 				'speaker'      => _x( 'Speaker', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'critic'       => _x( 'Critic', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 				'proofreader'  => _x( 'Proofreader', 'Main Taxonomy: Default Term', 'geditorial-byline' ),    // @REF: https://www.flexjobs.com/blog/post/how-to-become-proofreader
+				'co_author'    => _x( 'Co-Author', 'Main Taxonomy: Default Term', 'geditorial-byline' ),
 			],
 		];
 	}

@@ -11,7 +11,7 @@ trait PostsToPosts
 {
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
-	public function p2p_register( $constant, $posttypes = NULL )
+	protected function p2p_register( $constant, $posttypes = NULL )
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -20,10 +20,10 @@ trait PostsToPosts
 			return FALSE;
 
 		$to  = $this->constant( $constant );
-		$p2p = $this->constant( $constant.'_p2p' );
+		$p2p = $this->constant( sprintf( '%s_p2p', $constant ) );
 		$pre = empty( $this->strings['p2p'][$constant] ) ? [] : $this->strings['p2p'][$constant];
 
-		$args = array_merge( [
+		$args = apply_filters( $this->hook( $to, 'p2p', 'args' ), array_merge( [
 			'name'            => $p2p,
 			'from'            => $posttypes,
 			'to'              => $to,
@@ -33,13 +33,15 @@ trait PostsToPosts
 				'show'    => 'from',
 				'context' => 'advanced',
 			],
-		], $pre );
+		], $pre ), $posttypes, $p2p );
 
-		$hook = 'geditorial_'.$this->module->name.'_'.$to.'_p2p_args';
+		if ( ! $args )
+			return FALSE; // $this->log( 'NOTICE', 'P2P REGISTRATION SKIPPED BY FILTER ON: '.$p2p );
 
-		if ( $args = apply_filters( $hook, $args, $posttypes ) )
-			if ( p2p_register_connection_type( $args ) )
-				$this->_p2p = $p2p;
+		if ( ! p2p_register_connection_type( $args ) )
+			return $this->log( 'NOTICE', 'P2P REGISTRATION ERROR ON: '.$p2p );
+
+		return $this->_p2p = $p2p;
 	}
 
 	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )
@@ -82,7 +84,7 @@ trait PostsToPosts
 		if ( ! $this->_p2p )
 			return FALSE;
 
-		$type = p2p_type( $this->constant( $constant.'_p2p' ) );
+		$type = p2p_type( $this->constant( sprintf( '%s_p2p', $constant ) ) );
 		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
 		$id   = $type->connect( $from, $to, $meta );
 
@@ -102,8 +104,11 @@ trait PostsToPosts
 		if ( ! $this->_p2p )
 			return;
 
-		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
-		$type  = $this->constant( $constant.'_p2p' );
+		$type  = $this->constant( sprintf( '%s_p2p', $constant ) );
+		$extra = [
+			'p2p:per_page' => -1,
+			'p2p:context'  => 'admin_column',
+		];
 
 		if ( ! $p2p_type = p2p_type( $type ) )
 			return;
@@ -115,7 +120,11 @@ trait PostsToPosts
 			return;
 
 		if ( empty( $icons[$constant] ) )
-			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['to'] );
+			$icons[$constant] = $this->get_column_icon(
+				FALSE,
+				NULL,
+				$this->strings['p2p'][$constant]['title']['to']
+			);
 
 		if ( empty( $this->cache['posttypes'] ) )
 			$this->cache['posttypes'] = WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] );
@@ -137,7 +146,7 @@ trait PostsToPosts
 			foreach ( array_unique( Core\Arraay::pluck( $p2p->items, 'post_type' ) ) as $posttype )
 				$list[] = Core\HTML::tag( 'a', [
 					'href'   => WordPress\PostType::edit( $posttype, $args ),
-					'title'  => _x( 'View the connected list', 'Module: P2P', 'geditorial' ),
+					'title'  => _x( 'View the connected list', 'Internal: PostsToPosts', 'geditorial' ),
 					'target' => '_blank',
 				], $this->cache['posttypes'][$posttype] );
 
@@ -154,10 +163,17 @@ trait PostsToPosts
 			return;
 
 		if ( empty( $icons[$constant] ) )
-			$icons[$constant] = $this->get_column_icon( FALSE, NULL, $this->strings['p2p'][$constant]['title']['from'] );
+			$icons[$constant] = $this->get_column_icon(
+				FALSE,
+				NULL,
+				$this->strings['p2p'][$constant]['title']['from']
+			);
 
-		$extra = [ 'p2p:per_page' => -1, 'p2p:context' => 'admin_column' ];
 		$type  = $this->constant( $constant.'_p2p' );
+		$extra = [
+			'p2p:per_page' => -1,
+			'p2p:context'  => 'admin_column',
+		];
 
 		if ( ! $p2p_type = p2p_type( $type ) )
 			return;
@@ -182,7 +198,7 @@ trait PostsToPosts
 
 				echo Core\HTML::tag( 'a', [
 					'href'   => WordPress\PostType::edit( $post->post_type, $args ),
-					'title'  => _x( 'View all connected', 'Module: P2P', 'geditorial' ),
+					'title'  => _x( 'View all connected', 'Internal: PostsToPosts', 'geditorial' ),
 					'target' => '_blank',
 				], WordPress\Strings::trimChars( $item->get_title(), 85 ) );
 

@@ -351,7 +351,7 @@ class Module extends WordPress\Module
 
 		$this->init_default_terms();
 
-		$prefix   = self::sanitize_base( $this->key );
+		$prefix   = Core\Text::sanitizeBase( $this->key );
 		$callback = static function ( $key, $value ) use ( $prefix ) {
 			return [ sprintf( '%s-%s.php', $prefix, $key ) => $value ];
 		};

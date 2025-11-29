@@ -24,7 +24,7 @@ trait RestAPI
 
 		foreach ( func_get_args() as $arg )
 			if ( $arg )
-				$route.= '/'.strtolower( self::sanitize_base( $arg ) );
+				$route.= '/'.strtolower( Core\Text::sanitizeBase( $arg ) );
 
 		return $route;
 	}
@@ -34,7 +34,7 @@ trait RestAPI
 	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '', $extra = [] )
 	{
 		$args = [];
-		$hook = self::sanitize_hook( $route );
+		$hook = Core\Text::sanitizeHook( $route );
 
 		foreach ( (array) $methods as $method ) {
 
