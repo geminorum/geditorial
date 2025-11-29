@@ -39,6 +39,17 @@ class Attachments extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_general' => [
+				[
+					'field'       => 'auto_rotation',
+					'title'       => _x( 'Auto Rotation', 'Setting Title', 'geditorial-attachments' ),
+					'description' => sprintf(
+						/* translators: `%s`: `EXIF` */
+						_x( 'Fixes the rotation of JPEG images using %s extension, immediately after the upload.', 'Setting Description', 'geditorial-attachments' ),
+						Core\HTML::code( 'EXIF' )
+					),
+				],
+			],
 			'_frontend' => [
 				'adminbar_summary',
 				[
@@ -110,6 +121,9 @@ class Attachments extends gEditorial\Module
 	{
 		parent::init();
 
+		if ( $this->get_setting( 'auto_rotation' ) )
+			$this->action( 'add_attachment', 1, 4, 'auto_rotation' );
+
 		if ( $this->get_setting( 'rewrite_permalink' ) ) {
 			$this->add_rewrite_rule();
 			$this->filter( 'attachment_link', 2, 20 );
@@ -149,6 +163,31 @@ class Attachments extends gEditorial\Module
 
 			$this->corerestrictposts__hook_screen_authors();
 		}
+	}
+
+	/**
+	 * Action: Fires once an attachment has been added.
+	 * Adopted from: Image Rotation Fixer 1.0 By `Mert Yazıcıoğlu`
+	 * @source https://github.com/merty/image-rotation-fixer
+	 *
+	 * @param int $post_id
+	 * @return void
+	 */
+	public function add_attachment_auto_rotation( $post_id )
+	{
+		if ( ! $attachment = WordPress\Post::get( $post_id ) )
+			return FALSE;
+
+		if ( 'image/jpeg' !== $attachment->post_mime_type )
+			return FALSE;
+
+		$filepath = Core\URL::toPath( $attachment->guid );
+
+		if ( ! Core\Image::rotationJPEG( $filepath ) )
+			return FALSE;
+
+		$metadata = wp_generate_attachment_metadata( $attachment->ID, $filepath );
+		wp_update_attachment_metadata( $attachment->ID, $metadata );
 	}
 
 	private function get_prefix_permalink()
