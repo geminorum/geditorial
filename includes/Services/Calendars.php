@@ -731,14 +731,16 @@ class Calendars extends gEditorial\Service
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
+		$sanitized = self::sanitizeContextForLink( $context, 'post', $post );
+
 		return apply_filters( static::BASE.'_calendars_post_link',
 			WordPress\Post::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$post,
-				self::sanitizeContextForLink( $context, 'post', $post )
+				$sanitized
 			),
 			$post,
-			$context
+			$sanitized
 		);
 	}
 
@@ -750,14 +752,16 @@ class Calendars extends gEditorial\Service
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
+		$sanitized = self::sanitizeContextForLink( $context, 'term', $term );
+
 		return apply_filters( static::BASE.'_calendars_term_link',
 			WordPress\Term::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$term,
-				self::sanitizeContextForLink( $context, 'term', $term )
+				$sanitized
 			),
 			$term,
-			$context
+			$sanitized
 		);
 	}
 

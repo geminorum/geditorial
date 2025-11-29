@@ -355,6 +355,7 @@ class Terms extends gEditorial\Module
 		$this->action( 'term_intro_description_before', 5, 2, FALSE, $this->base );
 		$this->action( 'term_intro_description_after', 5, 5, FALSE, $this->base );
 		$this->filter( 'calendars_sanitize_ical_context', 3, 8, FALSE, $this->base );
+		$this->filter( 'calendars_term_link', 3, 8, FALSE, $this->base );
 		$this->filter( 'calendars_term_events', 3, 8, FALSE, $this->base );
 
 		if ( ! is_admin() )
@@ -2620,12 +2621,16 @@ class Terms extends gEditorial\Module
 			echo Core\HTML::wrap( Core\HTML::link( $title, $meta, TRUE ), '-term-'.$field );
 	}
 
+	// NOTE: `timespan` only if taxonomy supported.
 	public function calendars_sanitize_ical_context( $context, $target, $object )
 	{
 		if ( 'term' !== $target )
 			return $context;
 
-		if ( ! $term = WordPress\Term::get( $object ) )
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $object ) )
+			return $context;
+
+		if ( ! $supported = $this->get_supported( $taxonomy ) )
 			return $context;
 
 		$fields = [
@@ -2635,10 +2640,39 @@ class Terms extends gEditorial\Module
 			'abolish',
 		];
 
-		if ( Core\Arraay::exists( $fields, $this->get_supported( $term->taxonomy ) ) )
+		if ( Core\Arraay::exists( $fields, $supported ) )
 			return Services\Calendars::ICAL_TIMESPAN_CONTEXT;
 
 		return $context;
+	}
+
+	// NOTE: `timespan` only if terms has data.
+	public function calendars_term_link( $url, $term, $context )
+	{
+		if ( Services\Calendars::ICAL_TIMESPAN_CONTEXT !== $context )
+			return $url;
+
+		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
+			return $url;
+
+		if ( ! $supported = $this->get_supported( $taxonomy ) )
+			return FALSE;
+
+		$fields = [
+			'born',
+			'establish',
+			'dead',
+			'abolish',
+		];
+
+		if ( ! Core\Arraay::exists( $fields, $supported ) )
+			return FALSE;
+
+		foreach ( $fields as $field )
+			if ( get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
+				return $url;
+
+		return FALSE;
 	}
 
 	// NOTE: applies only if the context is `timespan` e.g. `?ical=timespan`
