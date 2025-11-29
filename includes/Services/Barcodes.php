@@ -67,36 +67,44 @@ class Barcodes extends gEditorial\Service
 		return $data;
 	}
 
+	// @REF: https://bwip-js.metafloor.com/demo/demo.html
+	const TYPES_WITH_TEXT = [
+		'isbn',  // NOTE: must be dashed
+		'ean13',
+		'code39',
+		'code39ext',
+		'code128',
+	];
+
 	// @REF: https://github.com/metafloor/bwip-js/wiki/Online-Barcode-API
 	// @SEE: https://github.com/metafloor/bwip-js/wiki/BWIPP-Barcode-Types
-	public static function getBWIPPjs( $type, $text, $extra = [], $tag = FALSE, $cache = TRUE, $sub = 'bwipjs', $base = NULL )
+	public static function getByBWIPP( $type, $text, $extra = [], $tag = FALSE, $cache = TRUE, $sub = 'bwipjs', $base = NULL )
 	{
 		if ( ! GEDITORIAL_CACHE_DIR )
 			$cache = FALSE;
 
 		$direct = add_query_arg( array_merge( [
-			'bcid'        => $type, // must follow immediately after the question mark
-			// 'scaleX'      => '2',
-			// 'scale'       => '2',
+			'bcid'        => $type, // Must follow immediately after the question mark.
+			'scale'       => '2',
 			'text'        => $text,
-			'includetext' => '', // to display the code
+			'includetext' => in_array( $type, static::TYPES_WITH_TEXT, TRUE ) ? '' : FALSE,
 		], $extra ), 'https://bwipjs-api.metafloor.com' );
 
 		if ( ! $cache )
 			return $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ) ] ) : $direct;
 
 		$file = sprintf( '%s.png', md5( maybe_serialize( $direct ) ) );
-		$path = FileCache::getDIR( $sub, $base ).'/'.$file;
 		$url  = FileCache::getURL( $sub, $base ).'/'.$file;
+		$path = FileCache::getDIR( $sub, $base );
 
-		if ( ! file_exists( $path.'/'.$file ) ) {
+		if ( ! Core\File::exists( $file, $path ) ) {
 
 			$bypass = $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
 
 			if ( ! $image = Core\HTTP::getContents( $direct ) )
 				return $bypass;
 
-			if ( FALSE === file_put_contents( $path.'/'.$file, $image ) )
+			if ( FALSE === Core\File::putContents( $file, $image, $path ) )
 				return $bypass;
 		}
 

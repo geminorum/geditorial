@@ -15,6 +15,6 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function barcode( $data )
 	{
-		return Services\Barcodes::getBWIPPjs( static::BARCODE, $data );
+		return Services\Barcodes::getByBWIPP( static::BARCODE, $data );
 	}
 }
