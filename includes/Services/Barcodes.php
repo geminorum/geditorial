@@ -110,4 +110,41 @@ class Barcodes extends gEditorial\Service
 
 		return $tag ? Core\HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;
 	}
+
+	public static function getQRCode( $data, $type = 'text', $size = 300, $tag = FALSE, $cache = TRUE, $sub = 'qrcodes', $base = NULL )
+	{
+		if ( ! GEDITORIAL_CACHE_DIR )
+			$cache = FALSE;
+
+		switch ( $type ) {
+			case 'url'    : $prepared = Core\DataCode::prepDataURL( $data ); break;
+			case 'email'  : $prepared = Core\DataCode::prepDataEmail( is_array( $data ) ? $data : [ 'email' => $data ] ); break;
+			case 'phone'  : $prepared = Core\DataCode::prepDataPhone( $data ); break;
+			case 'sms'    : $prepared = Core\DataCode::prepDataSMS( is_array( $data ) ? $data : [ 'mobile' => $data ] ); break;
+			case 'contact': $prepared = Core\DataCode::prepDataContact( is_array( $data ) ? $data : [ 'name' => $data ] ); break;
+			default       : $prepared = trim( $data ); break;
+		}
+
+		if ( ! $cache )
+			return Core\DataCode::getQRCode( $prepared, [ 'tag' => $tag, 'size' => $size ] );
+
+		$file = sprintf( '%s-%s.svg', md5( maybe_serialize( $prepared ) ), $size );
+		$url  = Core\URL::trail( FileCache::getURL( $sub, $base ) ).$file;
+		$path = FileCache::getDIR( $sub, $base );
+
+		if ( ! Core\File::exists( $file, $path ) ) {
+
+			if ( ! Core\DataCode::cacheQRCode( Core\File::join( $path, $file ), $prepared, [ 'size' => $size ] ) )
+				return $tag ? '' : FALSE;
+		}
+
+		return $tag ? Core\HTML::tag( 'img', [
+			'src'      => $url,
+			'width'    => $size,
+			'height'   => $size,
+			'alt'      => '',
+			'decoding' => 'async',
+			'loading'  => 'lazy',
+		] ) : $url;
+	}
 }
