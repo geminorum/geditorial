@@ -72,9 +72,9 @@ class Term extends Core\Base
 	 * NOTE: caches the results
 	 *
 	 * @param int|object $term
-	 * @param null|string $capability
-	 * @param null|int|object $user_id
-	 * @param bool $fallback
+	 * @param string $capability
+	 * @param int|object $user_id
+	 * @param mixed $fallback
 	 * @return bool
 	 */
 	public static function can( $term, $capability, $user_id = NULL, $fallback = FALSE )
@@ -118,8 +118,8 @@ class Term extends Core\Base
 	 * Retrieves term title given a term ID or term object.
 	 * @old `Taxonomy::getTermTitle()`
 	 *
-	 * @param null|int|object $term
-	 * @param null|string $fallback
+	 * @param int|object $term
+	 * @param string $fallback
 	 * @param bool $filter
 	 * @return string
 	 */
@@ -151,7 +151,7 @@ class Term extends Core\Base
 	 * @param null|int|object $term
 	 * @param string $suffix
 	 * @param string|bool $linked
-	 * @param null|string $separator
+	 * @param string $separator
 	 * @return string
 	 */
 	public static function getParentTitles( $term, $suffix = '', $linked = FALSE, $separator = NULL )

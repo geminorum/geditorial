@@ -1614,4 +1614,12 @@ class HTML extends Base
 			.'" onclick="this.focus();this.select()" '
 			.( $readonly ? 'readonly' : '' ).' />';
 	}
+
+	public static function removeAll( $html )
+	{
+		while ( preg_match( '/<[^>]*>/', $html ) )
+			$html = preg_replace( '/<[^>]*>.*?<\/[^>]*>|<[^>]*\/>|<[^>]*>/s', '', $html );
+
+		return Text::trim( $html );
+	}
 }
