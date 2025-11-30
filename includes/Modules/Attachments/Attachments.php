@@ -49,6 +49,15 @@ class Attachments extends gEditorial\Module
 						Core\HTML::code( 'EXIF' )
 					),
 				],
+				[
+					'field' => 'fallback_alt_to_title',
+					'title' => sprintf(
+						/* translators: `%s`: `alt` */
+						_x( 'Fallback %s to Title', 'Setting Title', 'geditorial-attachments' ),
+						Core\HTML::code( 'alt' )
+					),
+					'description' => _x( 'Tries to fill empty alt attribute with attachment title on images.', 'Setting Description', 'geditorial-attachments' ),
+				],
 			],
 			'_frontend' => [
 				'adminbar_summary',
@@ -65,15 +74,6 @@ class Attachments extends gEditorial\Module
 					'field_class' => [ 'medium-text', 'code' ],
 					'placeholder' => 'media',
 					'dir'         => 'ltr',
-				],
-				[
-					'field' => 'fallback_alt_to_title',
-					'title' => sprintf(
-						/* translators: `%s`: `alt` */
-						_x( 'Fallback %s to Title', 'Setting Title', 'geditorial-attachments' ),
-						Core\HTML::code( 'alt' )
-					),
-					'description' => _x( 'Tries to fill empty alt attribute with attachment title on images.', 'Setting Description', 'geditorial-attachments' ),
 				],
 			],
 			'_editlist' => [
@@ -167,8 +167,7 @@ class Attachments extends gEditorial\Module
 
 	/**
 	 * Action: Fires once an attachment has been added.
-	 * Adopted from: Image Rotation Fixer 1.0 By `Mert Yazıcıoğlu`
-	 * @source https://github.com/merty/image-rotation-fixer
+	 * @hook `add_attachment`
 	 *
 	 * @param int $post_id
 	 * @return void
@@ -197,7 +196,6 @@ class Attachments extends gEditorial\Module
 		return ltrim( rtrim( $prefix, '/' ), '/' );
 	}
 
-	// TODO: add custom endpoint like `thumbnail` or `cover` for post-type thumbnail
 	private function add_rewrite_rule()
 	{
 		add_rewrite_rule(
@@ -233,6 +231,7 @@ class Attachments extends gEditorial\Module
 		return $query;
 	}
 
+	// TODO: add sub-menu for: title/caption/description/sizes
 	public function adminbar_init( &$nodes, $parent )
 	{
 		if ( is_admin() || ! is_singular( $this->posttypes() ) )
@@ -278,8 +277,6 @@ class Attachments extends gEditorial\Module
 				'parent' => $this->classs(),
 				'href'   => wp_get_attachment_url( $attachment->ID ),
 			];
-
-			// TODO: add sub-menu for: title/caption/description/sizes
 		}
 	}
 

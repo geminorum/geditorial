@@ -28,7 +28,7 @@ trait PostsToPosts
 			'from'            => $posttypes,
 			'to'              => $to,
 			'can_create_post' => FALSE,
-			'admin_column'    => 'from', // 'any', 'from', 'to', FALSE
+			'admin_column'    => FALSE, // 'any', 'from', 'to', FALSE
 			'admin_box'       => [
 				'show'    => 'from',
 				'context' => 'advanced',

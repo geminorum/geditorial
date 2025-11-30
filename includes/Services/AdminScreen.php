@@ -78,24 +78,23 @@ class AdminScreen extends gEditorial\Service
 		echo '</div><br class="clear" /></div></div>';
 	}
 
-	// TODO: maybe filter for disable asset enqueue by taxonomy
 	private static function _enqueue_screen_script( $screen, $taxonomy = NULL, $mainkey = NULL )
 	{
 		$taxonomy = $taxonomy ?? $screen->taxonomy;
-		$mainkey = $mainkey ?? 'adminscreen';
+		$mainkey  = $mainkey  ?? 'adminscreen';
 
-		if ( ! apply_filters( static::BASE.'_adminscreen_enhancements', TRUE, $taxonomy, $mainkey, $screen ) )
+		if ( ! apply_filters( static::BASE.'_'.$mainkey.'_enhancements', TRUE, $taxonomy, $mainkey, $screen ) )
 			return FALSE;
 
 		if ( 'edit-tags' === $screen->base ) {
 
 			$asset = [
-				'strings'  => [],
+				// '_nonce'   => wp_create_nonce( $mainkey ),
+				// 'strings'  => [],
 				'settings' => [
-					'inputs'  => apply_filters( static::BASE.'_adminscreen_fillbyquery_inputs', [], $taxonomy, $mainkey ),
-					'selects' => apply_filters( static::BASE.'_adminscreen_fillbyquery_selects', [], $taxonomy, $mainkey ),
+					'inputs'  => apply_filters( implode( '_', [ static::BASE, $mainkey, 'fillbyquery', 'inputs' ] ), [], $taxonomy, $mainkey ),
+					'selects' => apply_filters( implode( '_', [ static::BASE, $mainkey, 'fillbyquery', 'selects' ] ), [], $taxonomy, $mainkey ),
 				],
-				'_nonce'   => wp_create_nonce( $mainkey ),
 			];
 
 			gEditorial()->enqueue_asset_config( $asset, $mainkey );

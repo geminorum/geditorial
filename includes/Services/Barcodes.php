@@ -6,8 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-// FIXME: Already included: https://github.com/tecnickcom/tc-lib-barcode
-
 class Barcodes extends gEditorial\Service
 {
 
@@ -78,6 +76,7 @@ class Barcodes extends gEditorial\Service
 
 	// @REF: https://github.com/metafloor/bwip-js/wiki/Online-Barcode-API
 	// @SEE: https://github.com/metafloor/bwip-js/wiki/BWIPP-Barcode-Types
+	// https://github.com/metafloor/bwip-js/wiki/BWIPP-border-vs-bwipjs-padding
 	public static function getByBWIPP( $type, $text, $extra = [], $tag = FALSE, $cache = TRUE, $sub = 'bwipjs', $base = NULL )
 	{
 		if ( ! GEDITORIAL_CACHE_DIR )
@@ -122,7 +121,7 @@ class Barcodes extends gEditorial\Service
 			case 'phone'  : $prepared = Core\DataCode::prepDataPhone( $data ); break;
 			case 'sms'    : $prepared = Core\DataCode::prepDataSMS( is_array( $data ) ? $data : [ 'mobile' => $data ] ); break;
 			case 'contact': $prepared = Core\DataCode::prepDataContact( is_array( $data ) ? $data : [ 'name' => $data ] ); break;
-			default       : $prepared = trim( $data ); break;
+			default       : $prepared = Core\Text::trim( $data ); break;
 		}
 
 		if ( ! $cache )

@@ -424,7 +424,7 @@ class Tablelist extends WordPress\Main
 				if ( isset( $column['args']['statuses'][$row->post_status] ) )
 					return $column['args']['statuses'][$row->post_status];
 
-				return Core\HTML::tag( 'code', $row->post_status );
+				return Core\HTML::code( $row->post_status );
 			},
 		];
 	}

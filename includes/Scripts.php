@@ -66,6 +66,7 @@ class Scripts extends WordPress\Main
 
 		wp_enqueue_script( $handle, $script, Core\Arraay::prepString( $config['dependencies'], $dependencies ), $config['version'], TRUE );
 		wp_script_add_data( $handle, 'strategy', 'defer' ); // @REF: https://make.wordpress.org/core/2023/07/14/registering-scripts-with-async-and-defer-attributes-in-wordpress-6-3/
+		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -122,6 +123,7 @@ class Scripts extends WordPress\Main
 
 		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
 		wp_script_add_data( $handle, 'strategy', 'defer' );
+		wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -265,6 +267,7 @@ JS;
 		}
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
+		wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -290,6 +293,7 @@ JS;
 			wp_register_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $version, TRUE );
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
+		wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -305,6 +309,7 @@ JS;
 			wp_register_script( $handle, static::URL.'assets/packages/mustache.js/mustache.min.js', [], $version, TRUE );
 
 		// wp_script_add_data( $handle, 'strategy', 'defer' );
+		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -550,6 +555,7 @@ JS;
 		}
 
 		wp_script_add_data( $handle, 'strategy', 'defer' );
+		wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}
@@ -582,6 +588,7 @@ JS;
 		}
 
 		// wp_script_add_data( $handle, 'strategy', 'defer' );
+		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
 
 		return $handle;
 	}

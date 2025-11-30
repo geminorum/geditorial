@@ -21,6 +21,7 @@ class WcIdentity extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
+				'wc-checkout',
 				'woocommerce',
 			],
 		];

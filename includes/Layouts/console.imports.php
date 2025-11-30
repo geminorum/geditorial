@@ -21,6 +21,7 @@ $files = [
 	// 'Test_Phone',
 	// 'Test_Vin',
 	// 'Test_HTML',
+	// 'Test_Barcode_1',
 ];
 
 foreach ( $files as $file )

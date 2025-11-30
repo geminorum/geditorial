@@ -21,6 +21,7 @@ class WcAttributes extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
+				'markdown',
 				'woocommerce',
 			],
 		];
@@ -118,9 +119,7 @@ class WcAttributes extends gEditorial\Module
 				'id'    => $this->classs( $field, 'id' ),
 				'name'  => 'attribute-'.$field,
 				'type'  => 'url',
-				// 'value' => empty( $meta ) ? '' : $meta,
 				'class' => [ 'code' ],
-				// 'data'  => [ 'type' => 'url' ],
 			] );
 
 			Core\HTML::desc( _x( 'External link for this attribute.', 'Field Description', 'geditorial-wc-attributes' ) );
@@ -154,7 +153,6 @@ class WcAttributes extends gEditorial\Module
 				'type'  => 'url',
 				'value' => empty( $data ) ? '' : $data,
 				'class' => [ 'code' ],
-				// 'data'  => [ 'type' => 'url' ],
 			] );
 
 			Core\HTML::desc( _x( 'External link for this attribute.', 'Field Description', 'geditorial-wc-attributes' ) );
