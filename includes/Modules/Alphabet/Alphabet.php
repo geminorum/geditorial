@@ -100,6 +100,7 @@ class Alphabet extends gEditorial\Module
 			'locale'            => Core\L10n::locale( TRUE ),
 			'alternative'       => 'en_US',                     // FALSE to disable
 			'posttype'          => $this->posttypes(),
+			'exclude_posttypes' => '',
 			'term'              => FALSE,
 			'excerpt'           => FALSE,
 			'comments'          => FALSE,
@@ -132,11 +133,22 @@ class Alphabet extends gEditorial\Module
 			if ( $args['locale'] == $args['alternative'] )
 				$args['alternative'] = FALSE;
 
+			if ( 'any' === $args['posttypes'] )
+				$posttypes = WordPress\PostType::get( -1 );
+
+			else
+				$posttypes = WordPress\Strings::getSeparated( $args['posttypes'] );
+
+			if ( $args['exclude_posttypes'] )
+				$posttypes = array_diff( $posttypes,
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+				);
+
 			$query_args = [
 				'orderby'          => 'title',
 				'order'            => 'ASC',
 				'post_status'      => 'publish',
-				'post_type'        => $args['posttype'],
+				'post_type'        => $posttypes,
 				'posts_per_page'   => -1,
 				'suppress_filters' => TRUE,
 			];
@@ -169,10 +181,10 @@ class Alphabet extends gEditorial\Module
 				$args['item_cb'] = FALSE;
 
 			if ( is_null( $args['meta_title'] ) )
-				$args['meta_title'] = $this->filters( 'post_title_metakeys', [], (array) $args['posttype'] );
+				$args['meta_title'] = $this->filters( 'post_title_metakeys', [], $posttypes );
 
 			else if ( $args['meta_title'] && ! is_array( $args['meta_title'] ) )
-				$args['meta_title'] = array_fill_keys( (array) $args['posttype'], $args['meta_title'] );
+				$args['meta_title'] = array_fill_keys( $posttypes, $args['meta_title'] );
 
 			else if ( ! $args['meta_title'] )
 				$args['meta_title'] = [];
@@ -261,26 +273,27 @@ class Alphabet extends gEditorial\Module
 	public function shortcode_terms( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'locale'         => Core\L10n::locale( TRUE ),
-			'alternative'    => 'en_US',                     // FALSE to disable
-			'taxonomy'       => $this->taxonomies(),
-			'description'    => FALSE,
-			'hide_empty'     => TRUE,
-			'count'          => FALSE,
-			'count_template' => '&nbsp;(%s)',
-			'meta_title'     => NULL,
-			'list_mode'      => 'dl',                        // `dl`/`ul`/`ol`
-			'list_tag'       => NULL,
-			'term_tag'       => NULL,
-			'desc_tag'       => NULL,
-			'head_tag'       => NULL,
-			'heading_cb'     => FALSE,
-			'item_cb'        => FALSE,
-			'context'        => NULL,
-			'wrap'           => TRUE,
-			'before'         => '',
-			'after'          => '',
-			'class'          => '',
+			'locale'             => Core\L10n::locale( TRUE ),
+			'alternative'        => 'en_US',                     // FALSE to disable
+			'taxonomy'           => $this->taxonomies(),
+			'exclude_taxonomies' => '',
+			'description'        => FALSE,
+			'hide_empty'         => TRUE,
+			'count'              => FALSE,
+			'count_template'     => '&nbsp;(%s)',
+			'meta_title'         => NULL,
+			'list_mode'          => 'dl',                        // `dl`/`ul`/`ol`
+			'list_tag'           => NULL,
+			'term_tag'           => NULL,
+			'desc_tag'           => NULL,
+			'head_tag'           => NULL,
+			'heading_cb'         => FALSE,
+			'item_cb'            => FALSE,
+			'context'            => NULL,
+			'wrap'               => TRUE,
+			'before'             => '',
+			'after'              => '',
+			'class'              => '',
 		], $atts, $tag ?: $this->constant( 'shortcode_terms' ) );
 
 		if ( FALSE === $args['context'] || empty( $args['taxonomy'] ) )
@@ -296,9 +309,16 @@ class Alphabet extends gEditorial\Module
 			if ( $args['locale'] == $args['alternative'] )
 				$args['alternative'] = FALSE;
 
+			$taxonomies = WordPress\Strings::getSeparated( $args['taxonomy'] );
+
+			if ( $args['exclude_taxonomies'] )
+				$taxonomies = array_diff( $taxonomies,
+					WordPress\Strings::getSeparated( $args['exclude_taxonomies'] )
+				);
+
 			$query_args = [
 				'hide_empty' => $args['hide_empty'],
-				'taxonomy'   => $args['taxonomy'],
+				'taxonomy'   => $taxonomies,
 				'orderby'    => 'name',
 				'order'      => 'ASC',
 			];
@@ -325,10 +345,10 @@ class Alphabet extends gEditorial\Module
 				$args['item_cb'] = FALSE;
 
 			if ( is_null( $args['meta_title'] ) )
-				$args['meta_title'] = $this->filters( 'term_title_metakeys', [], (array) $args['taxonomy'] );
+				$args['meta_title'] = $this->filters( 'term_title_metakeys', [], $taxonomies );
 
 			else if ( $args['meta_title'] && ! is_array( $args['meta_title'] ) )
-				$args['meta_title'] = array_fill_keys( (array) $args['taxonomy'], $args['meta_title'] );
+				$args['meta_title'] = array_fill_keys( $taxonomies, $args['meta_title'] );
 
 			else if ( ! $args['meta_title'] )
 				$args['meta_title'] = [];
