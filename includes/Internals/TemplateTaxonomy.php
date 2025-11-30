@@ -240,13 +240,23 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: button for overridden empty/archive page
 	public function templatetaxonomy_get_add_new( $taxonomy, $title = FALSE, $label = NULL )
 	{
-		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy, [ 'name' => $title ] ) )
+		$extra = apply_filters(
+			$this->hook_base( 'template', 'taxonomy', 'addnew', 'extra' ),
+			[
+				'name' => $title,
+			],
+			$taxonomy,
+			$title,
+			$this->key
+		);
+
+		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy, $extra ) )
 			return '';
 
 		$object = WordPress\Taxonomy::object( $taxonomy );
 
 		return Core\HTML::tag( 'a', [
-			'href'          => $edit, // FIXME: `name` not passing into input
+			'href'          => $edit,
 			'class'         => [ 'button', '-add-term', '-add-term-'.$object->name ],
 			'target'        => '_blank',
 			'data-taxonomy' => $object->name,

@@ -152,19 +152,20 @@ class AdminScreen extends gEditorial\Service
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 	private static function _hook_editform_readonly_title( $screen = NULL )
 	{
-		add_action( 'edit_form_after_title', static function ( $post ) {
+		add_action( 'edit_form_after_title',
+			static function ( $post ) {
 
-			$title = WordPress\Post::title( $post );
-			$after = gEditorial\Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated.', 'Service: AdminScreen: ReadOnly Title Info', 'geditorial-admin' ) );
+				$title = WordPress\Post::title( $post );
+				$after = gEditorial\Settings::fieldAfterIcon( '#', _x( 'This Title is Auto-Generated.', 'Service: AdminScreen: ReadOnly Title Info', 'geditorial-admin' ) );
 
-			echo Core\HTML::wrap(
-				$title.' '.$after,
-				'-readonly-title',
-				TRUE,
-				[],
-				sprintf( '%s-readonlytitle', static::BASE )
-			);
-		}, 1, 1 );
+				echo Core\HTML::wrap(
+					$title.' '.$after,
+					'-readonly-title',
+					TRUE,
+					[],
+					sprintf( '%s-readonlytitle', static::BASE )
+				);
+			}, 1, 1 );
 	}
 
 	/**
@@ -180,36 +181,44 @@ class AdminScreen extends gEditorial\Service
 		if ( is_null( $screen ) )
 			$screen = get_current_screen();
 
-		add_filter( 'page_row_actions', static function ( $actions, $post) use ( $screen ) {
-			if ( $post->post_type === $screen->post_type )
-				unset( $actions['inline hide-if-no-js'] );
-			return $actions;
-		}, 12, 2 );
+		add_filter( 'page_row_actions',
+			static function ( $actions, $post) use ( $screen ) {
+				if ( $post->post_type === $screen->post_type )
+					unset( $actions['inline hide-if-no-js'] );
+				return $actions;
+			}, 12, 2 );
 
-		add_filter( 'post_row_actions', static function ( $actions, $post ) use ( $screen ) {
-			if ( $post->post_type === $screen->post_type )
-				unset( $actions['inline hide-if-no-js'] );
-			return $actions;
-		}, 12, 2 );
+		add_filter( 'post_row_actions',
+			static function ( $actions, $post ) use ( $screen ) {
+				if ( $post->post_type === $screen->post_type )
+					unset( $actions['inline hide-if-no-js'] );
+				return $actions;
+			}, 12, 2 );
 
-		add_filter( 'bulk_actions-'.$screen->id, static function ( $actions ) {
-			unset( $actions['edit'] );
-			return $actions;
-		} );
+		add_filter( 'bulk_actions-'.$screen->id,
+			static function ( $actions ) {
+				unset( $actions['edit'] );
+				return $actions;
+			} );
 	}
 
 	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
 	public static function screen_settings( $settings, $screen )
 	{
-		$taxonomies = apply_filters( static::BASE.'_screen_restrict_taxonomies', [], $screen );
+		$taxonomies = apply_filters(
+			static::BASE.'_screen_restrict_taxonomies',
+			[],
+			$screen
+		);
 
 		if ( empty( $taxonomies ) )
 			return $settings;
 
-		$selected = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
-		$name     = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
+		$name  = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
+		$value = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
 
-		$html = '<fieldset><legend>'._x( 'Restrictions', 'Service: AdminScreen: Screen Settings Title', 'geditorial-admin' ).'</legend>';
+		$html = '<fieldset>';
+		$html.= Core\HTML::tag( 'legend', _x( 'Restrictions', 'Service: AdminScreen: Screen Settings Title', 'geditorial-admin' ) );
 
 		$html.= Core\HTML::multiSelect( array_map( 'get_taxonomy', $taxonomies ), [
 			'item_tag' => FALSE, // 'span',
@@ -217,19 +226,28 @@ class AdminScreen extends gEditorial\Service
 			'value'    => 'name',
 			'id'       => static::BASE.'-tax-restrictions',
 			'name'     => $name,
-			'selected' => FALSE === $selected ? $taxonomies : $selected,
+			'selected' => FALSE === $value ? $taxonomies : $value,
 		] );
 
 		// hidden to clear the settings
-		$html.= '<input type="hidden" name="'.$name.'[0]" value="1" /></fieldset>';
+		$html.= '<input type="hidden" name="'.$name.'[0]" value="1" />';
+		$html.= '</fieldset>';
 
 		return $settings.$html;
 	}
 
-	// Lets our screen options passing through
-	// @since WP 5.4.2 Only applied to options ending with '_page',
-	// or the 'layout_columns' option
-	// @REF: https://core.trac.wordpress.org/changeset/47951
+	/**
+	 * Lets the plugin screen options passing through.
+	 *
+	 * Only applied to options ending with `_page`,
+	 * or the `layout_columns` option @since WP 5.4.2
+	 * @REF: https://core.trac.wordpress.org/changeset/47951
+	 *
+	 * @param mixed $false
+	 * @param string $option
+	 * @param mixed $value
+	 * @return mixed
+	 */
 	public static function set_screen_option( $false, $option, $value )
 	{
 		return Core\Text::starts( $option, static::BASE ) ? $value : $false;

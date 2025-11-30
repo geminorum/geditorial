@@ -248,11 +248,13 @@ trait TemplatePostType
 		// FIXME: must check if post is unpublished
 
 		$extra = apply_filters(
-			$this->hook_base( 'templateposttype', 'addnew_extra' ),
+			$this->hook_base( 'template', 'posttype', 'addnew', 'extra' ),
 			[
 				'post_title' => $title,
 			],
-			$object->name
+			$object->name,
+			$title,
+			$this->key
 		);
 
 		return Core\HTML::tag( 'a', [

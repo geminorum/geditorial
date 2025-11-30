@@ -167,7 +167,7 @@ class Isbn extends gEditorial\Module
 		$this->filter_module( 'identified', 'possible_keys_for_identifier', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
-		$this->filter( 'templateposttype_addnew_extra', 2, 10, FALSE, $this->base );
+		$this->filter( 'template_posttype_addnew_extra', 4, 10, FALSE, $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
 		if ( $this->get_setting( 'frontend_search', TRUE ) )
@@ -301,7 +301,7 @@ class Isbn extends gEditorial\Module
 		], $archive ), 307 );
 	}
 
-	public function templateposttype_addnew_extra( $extra, $posttype )
+	public function template_posttype_addnew_extra( $extra, $posttype, $title, $module )
 	{
 		if ( ! $isbn = self::req( 'isbn' ) )
 			return $extra;
