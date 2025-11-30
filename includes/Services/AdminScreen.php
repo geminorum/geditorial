@@ -40,10 +40,15 @@ class AdminScreen extends gEditorial\Service
 
 	public static function current_screen( $screen )
 	{
-		if ( 'term' === $screen->base && $screen->taxonomy ) {
+		if ( $screen->taxonomy ) {
 
-			add_action( "{$screen->taxonomy}_term_edit_form_top", [ __CLASS__, 'term_edit_form_open' ], -9999999, 2 );
-			add_action( "{$screen->taxonomy}_edit_form", [ __CLASS__, 'term_edit_form_close' ], 9999999, 2 );
+			if ( 'term' === $screen->base ) {
+
+				add_action( "{$screen->taxonomy}_term_edit_form_top", [ __CLASS__, 'term_edit_form_open' ], -9999999, 2 );
+				add_action( "{$screen->taxonomy}_edit_form", [ __CLASS__, 'term_edit_form_close' ], 9999999, 2 );
+			}
+
+			self::_enqueue_screen_script( $screen );
 
 		} else if ( $screen->post_type ) {
 
@@ -71,6 +76,33 @@ class AdminScreen extends gEditorial\Service
 			// do_accordion_sections( get_current_screen(), 'side', $term );
 			do_meta_boxes( get_current_screen(), 'side', $term );
 		echo '</div><br class="clear" /></div></div>';
+	}
+
+	// TODO: maybe filter for disable asset enqueue by taxonomy
+	private static function _enqueue_screen_script( $screen, $taxonomy = NULL, $mainkey = NULL )
+	{
+		$taxonomy = $taxonomy ?? $screen->taxonomy;
+		$mainkey = $mainkey ?? 'adminscreen';
+
+		if ( ! apply_filters( static::BASE.'_adminscreen_enhancements', TRUE, $taxonomy, $mainkey, $screen ) )
+			return FALSE;
+
+		if ( 'edit-tags' === $screen->base ) {
+
+			$asset = [
+				'strings'  => [],
+				'settings' => [
+					'inputs'  => apply_filters( static::BASE.'_adminscreen_fillbyquery_inputs', [], $taxonomy, $mainkey ),
+					'selects' => apply_filters( static::BASE.'_adminscreen_fillbyquery_selects', [], $taxonomy, $mainkey ),
+				],
+				'_nonce'   => wp_create_nonce( $mainkey ),
+			];
+
+			gEditorial()->enqueue_asset_config( $asset, $mainkey );
+			gEditorial\Scripts::enqueue( sprintf( '%s.%s', $screen->base, $mainkey ) );
+		}
+
+		return TRUE;
 	}
 
 	public static function _handle_posttype_body_class( $screen )
