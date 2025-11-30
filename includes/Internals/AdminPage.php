@@ -40,7 +40,7 @@ trait AdminPage
 		if ( is_null( $position ) )
 			$position = empty( $this->positions[$context] ) ? 3 : $this->positions[$context];
 
-		$hook = add_menu_page(
+		$this->screens[$context] = add_menu_page(
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			$menu,
 			$cap,
@@ -61,7 +61,13 @@ trait AdminPage
 				[ $this, 'render_menu_adminpage' ]
 			);
 
-		add_action( 'load-'.$hook, [ $this, 'load_menu_adminpage' ], 10, 0 );
+		if ( $this->screens[$context] )
+			add_action(
+				sprintf( 'load-%s', $this->screens[$context] ),
+				[ $this, 'load_menu_adminpage' ],
+				10,
+				0
+			);
 
 		return $slug;
 	}

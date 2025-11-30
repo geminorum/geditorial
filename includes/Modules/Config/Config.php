@@ -96,7 +96,8 @@ class Config extends gEditorial\Module
 		$slug = $this->classs_base( 'settings' );
 		$edit = current_user_can( 'edit_posts' );
 
-		$hook_reports = add_submenu_page(
+		// `dashboard_page_geditorial-reports`
+		$this->screens['reports'] = add_submenu_page(
 			'index.php',
 			_x( 'Editorial Reports', 'Menu Title', 'geditorial-admin' ),
 			_x( 'My Reports', 'Menu Title', 'geditorial-admin' ),
@@ -105,7 +106,8 @@ class Config extends gEditorial\Module
 			[ $this, 'admin_reports_page' ]
 		);
 
-		$hook_settings = add_menu_page(
+		// `toplevel_page_geditorial-settings`
+		$this->screens['settings'] = add_menu_page(
 			$this->module->title,
 			$this->module->title,
 			'editorial_settings',
@@ -114,7 +116,8 @@ class Config extends gEditorial\Module
 			Services\Icons::menu( $this->module->icon ),
 		);
 
-		$hook_tools = add_submenu_page(
+		// `tools_page_geditorial-tools`
+		$this->screens['tools'] = add_submenu_page(
 			$edit ? 'tools.php' : $slug,
 			_x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' ),
 			( $edit
@@ -141,9 +144,9 @@ class Config extends gEditorial\Module
 			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
 			NULL, 'editorial_customs' );
 
-		add_action( 'load-'.$hook_reports, [ $this, 'admin_reports_load' ] );
-		add_action( 'load-'.$hook_settings, [ $this, 'admin_settings_load' ] );
-		add_action( 'load-'.$hook_tools, [ $this, 'admin_tools_load' ] );
+		add_action( sprintf( 'load-%s', $this->screens['reports'] ), [ $this, 'admin_reports_load' ] );
+		add_action( sprintf( 'load-%s', $this->screens['settings'] ), [ $this, 'admin_settings_load' ] );
+		add_action( sprintf( 'load-%s', $this->screens['tools'] ), [ $this, 'admin_tools_load' ] );
 
 		if ( $this->is_thrift_mode() )
 			return;

@@ -31,13 +31,15 @@ trait CoreMenuPage
 		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
 			return FALSE;
 
-		return add_submenu_page(
+		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,
 			Core\HTML::escape( $this->get_string( 'page_title', $constant, $context, $posttype->labels->all_items ) ),
 			Core\HTML::escape( $this->get_string( 'menu_title', $constant, $context, $posttype->labels->menu_name ) ),
 			$posttype->cap->edit_posts,
 			'edit.php?post_type='.$posttype->name
 		);
+
+		return $this->screens[$constant];
 	}
 
 	// $parent_slug options: `options-general.php`, `users.php`
@@ -47,13 +49,15 @@ trait CoreMenuPage
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
 			return FALSE;
 
-		return add_submenu_page(
+		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,
 			Core\HTML::escape( $this->get_string( 'page_title', $constant, $context, $taxonomy->labels->name ) ),
 			Core\HTML::escape( $this->get_string( 'menu_title', $constant, $context, $taxonomy->labels->menu_name ) ),
 			$taxonomy->cap->manage_terms,
 			'edit-tags.php?taxonomy='.$taxonomy->name
 		);
+
+		return $this->screens[$constant];
 	}
 
 	protected function _hook_wp_submenu_page( $context, $parent_slug, $page_title, $menu_title = NULL, $capability = NULL, $menu_slug = '', $callback = '', $position = NULL )
@@ -63,7 +67,7 @@ trait CoreMenuPage
 
 		$default_callback = [ $this, sprintf( 'admin_%s_page', $context ) ];
 
-		$hook = add_submenu_page(
+		$this->screens[$context] = add_submenu_page(
 			$parent_slug,
 			$page_title,
 			( is_null( $menu_title ) ? $page_title : $menu_title ),
@@ -73,10 +77,15 @@ trait CoreMenuPage
 			( is_null( $position ) ? ( isset( $this->positions[$context] ) ? $this->positions[$context] : NULL ) : $position )
 		);
 
-		if ( $hook )
-			add_action( 'load-'.$hook, [ $this, sprintf( 'admin_%s_load', $context ) ] );
+		if ( $this->screens[$context] )
+			add_action(
+				sprintf( 'load-%s', $this->screens[$context] ),
+				[ $this, sprintf( 'admin_%s_load', $context ) ],
+				10,
+				0
+			);
 
-		return $hook;
+		return $this->screens[$context];
 	}
 
 	// NOTE: hack to keep the sub-menu only on primary paired post-type

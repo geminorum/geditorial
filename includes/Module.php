@@ -41,6 +41,7 @@ class Module extends WordPress\Module
 	protected $priority_template_redirect = 10;
 	protected $priority_template_include  = 10;
 
+	protected $screens   = []; // screen-id by context/constant
 	protected $positions = []; // menu positions by context/constant
 	protected $deafults  = []; // default settings
 

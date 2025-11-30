@@ -131,6 +131,7 @@ class Schedule extends gEditorial\Module
 		);
 
 		add_action( 'load-'.$hook, [ $this, 'admin_calendar_load' ] );
+		$this->screens['adminmenu'] = $hook;
 	}
 
 	public function admin_calendar_load()
