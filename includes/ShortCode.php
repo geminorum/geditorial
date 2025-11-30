@@ -961,7 +961,7 @@ class ShortCode extends WordPress\Main
 		];
 
 		if ( ! empty( $args['posttypes'] ) )
-			$query['post_type'] = $args['posttypes'];
+			$query['post_type'] = WordPress\Strings::getSeparated( $args['posttypes'] );
 
 		// NOTE: back-compat / DROP THIS
 		if ( 'page' == $args['orderby'] )
@@ -1036,8 +1036,8 @@ class ShortCode extends WordPress\Main
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
-					$args['posttypes'],
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['posttypes'] ),
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( 'children' === $list ) {
@@ -1062,8 +1062,8 @@ class ShortCode extends WordPress\Main
 
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
-					$args['posttypes'],
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['posttypes'] ),
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( 'all' === $args['id'] || 'all' === $args['term_id'] ) {
@@ -1084,7 +1084,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( $args['slug'] ) {
@@ -1103,7 +1103,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( $posttype && is_post_type_archive( $posttype ) ) {
@@ -1123,7 +1123,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( 'paired' === $list && $posttype && is_singular( $posttype ) ) {
@@ -1167,7 +1167,7 @@ class ShortCode extends WordPress\Main
 			if ( empty( $args['posttypes'] ) )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $taxonomy ),
-					Core\Arraay::prepString( $posttype, $args['exclude_posttypes'] ),
+					Core\Arraay::prepString( $posttype, WordPress\Strings::getSeparated( $args['exclude_posttypes'] ) ),
 				);
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
@@ -1184,7 +1184,7 @@ class ShortCode extends WordPress\Main
 			if ( ! $paired_posts = gEditorial()->module( $args['module'] )->paired_all_connected_from( $args['post_id'] ?: NULL, 'query', 'ids' ) )
 				return $content;
 
-			$query['post_type']           = $posttype;      // override with main post-type
+			$query['post_type']           = [ $posttype ];      // override with main post-type
 			$query['post__in']            = $paired_posts;
 			$query['ignore_sticky_posts'] = TRUE;
 
@@ -1203,7 +1203,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					(array) $args['exclude_posttypes']
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
