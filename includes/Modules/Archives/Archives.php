@@ -471,8 +471,10 @@ class Archives extends gEditorial\Module
 				$this->key,
 			] );
 
-		$html.= Core\Text::replaceTokens( $setting, WordPress\Term::summary( $this->current_queried ) );
-		$html = $this->filters( 'term_archive_content', $html, $this->current_queried );
+		$setting = Core\Text::replaceTokens( $setting, WordPress\Term::summary( $this->current_queried ) );
+
+		$html.= WordPress\ShortCode::apply( sprintf( $setting, $this->current_queried ) );
+		$html= $this->filters( 'term_archive_content', $html, $this->current_queried );
 
 		return Core\HTML::wrap( $html, '-term-archives-content' );
 	}
