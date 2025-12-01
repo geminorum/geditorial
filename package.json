@@ -3,7 +3,7 @@
   "productName": "gEditorial",
   "version": "3.33.0",
   "description": "Our Editorial in WordPress",
-  "license": "GPL-3+",
+  "license": "GPL-2.0-or-later",
   "homepage": "https://github.com/geminorum/geditorial",
   "author": {
     "name": "Nasser Rafie",
