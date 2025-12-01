@@ -15,6 +15,7 @@ class AdminScreen extends gEditorial\Service
 
 		add_action( 'init', [ __CLASS__, 'init_late_admin' ], 999 );
 		add_action( 'current_screen', [ __CLASS__, 'current_screen' ], 1, 1 );
+		add_action( 'admin_print_styles', [ __CLASS__, 'admin_print_styles' ], 1, 0 );
 	}
 
 	public static function init_late_admin()
@@ -54,6 +55,38 @@ class AdminScreen extends gEditorial\Service
 
 			self::_handle_posttype_body_class( $screen );
 		}
+	}
+
+	public static function admin_print_styles()
+	{
+		self::_print_user_colors();
+	}
+
+	// @REF: https://wordpress.stackexchange.com/a/369713
+	private static function _print_user_colors()
+	{
+		global $_wp_admin_css_colors;
+
+		$colors = [];
+		$scheme = WordPress\User::colorScheme();
+
+		if ( ! array_key_exists( $scheme, $_wp_admin_css_colors ) )
+			return FALSE;
+
+		foreach ( $_wp_admin_css_colors[$scheme]->colors as $key => $color )
+			$colors[] = "\t".sprintf( '--%s-admin-color-%s: %s;', static::BASE, $key, $color );
+
+		foreach ( $_wp_admin_css_colors[$scheme]->icon_colors as $key => $color )
+			$colors[] = "\t".sprintf( '--%s-admin-color-icon-%s: %s;', static::BASE, $key, $color );
+
+		if ( ! $colors = apply_filters( implode( '_', [ static::BASE, 'adminscreen', 'colors' ] ), $colors, $scheme, static::BASE ) )
+			return FALSE;
+
+        echo '<style id="'.static::BASE.'-admin-colors" data-scheme="'.$scheme.'">'."\n";
+			echo ':root {'."\n".implode( "\n", $colors )."\n".'}'."\n";
+		echo '</style>'."\n";
+
+		return $scheme;
 	}
 
 	public static function edit_form_after_title( $post )
