@@ -64,7 +64,7 @@ class Plugin extends WordPress\Plugin
 
 	public function admin_init()
 	{
-		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ] );
+		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 999 );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
 
@@ -416,7 +416,7 @@ class Plugin extends WordPress\Plugin
 		return $upgraded;
 	}
 
-	// TODO: Move to `AssetRegistry` Service
+	// TODO: Move to `AdminScreen` Service
 	public function admin_print_styles()
 	{
 		$screen = get_current_screen();
@@ -457,8 +457,10 @@ class Plugin extends WordPress\Plugin
 				'settings',
 				'dashboard',
 			] as $context )
-				if ( Settings::isScreenContext( $context, $screen ) )
+				if ( Settings::isScreenContext( $context, $screen ) ) {
 					Helper::linkStyleSheetAdmin( $context );
+					break;
+				}
 		}
 	}
 

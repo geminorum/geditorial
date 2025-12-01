@@ -31,10 +31,10 @@ class Reshare extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
+			'posttypes_option' => 'posttypes_option',
+			'_general'         => [
 				'comment_status',
 			],
-			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',

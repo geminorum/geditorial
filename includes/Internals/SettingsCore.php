@@ -534,9 +534,7 @@ trait SettingsCore
 		if ( 'settings' != $context ) {
 
 			$this->register_help_tabs( NULL, $context );
-
-			if ( $screen_option )
-				$this->add_sub_screen_option( $sub, $context, TRUE === $screen_option ? 'per_page' : $screen_option );
+			$this->add_sub_screen_option( $sub, $context, $screen_option );
 
 			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 		}

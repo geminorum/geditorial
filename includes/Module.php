@@ -54,9 +54,9 @@ class Module extends WordPress\Module
 	protected $partials_remote  = [];
 	protected $process_disabled = [];
 
-	protected $disable_no_customs    = FALSE; // not hooking module if has no posttypes/taxonomies
-	protected $disable_no_posttypes  = FALSE; // not hooking module if has no posttypes
-	protected $disable_no_taxonomies = FALSE; // not hooking module if has no taxonomies
+	protected $disable_no_customs    = FALSE; // Avoids hooking module if has no post-types/taxonomies
+	protected $disable_no_posttypes  = FALSE; // Avoids hooking module if has no post-types
+	protected $disable_no_taxonomies = FALSE; // Avoids hooking module if has no taxonomies
 
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];

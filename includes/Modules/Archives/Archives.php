@@ -227,13 +227,12 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'default_taxonomy_content', $default, $taxonomy );
 	}
 
-	// TODO: `[posts-assigned exclude_posttypes="product" /]`
 	private function _get_default_term_content( $taxonomy = NULL )
 	{
 		$default = '';
 
 		if ( WordPress\ShortCode::exists( 'posts-assigned' ) )
-			$default = '[posts-assigned term_id="{{_id}}" title="0" /]';
+			$default = '[posts-assigned term_id="{{_id}}" title="0" exclude_posttypes="product" /]';
 
 		else if ( WordPress\ShortCode::exists( 'alphabet-posts' ) )
 			$default = '[alphabet-posts term="{{_id}}" list_mode="ul" posttype="any" exclude_posttypes="product" /]';

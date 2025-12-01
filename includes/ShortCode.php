@@ -338,10 +338,10 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // Call-back for title
+			'title_cb'       => FALSE,                            // The callback for title.
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // Call-back for title attribute
+			'title_title_cb' => FALSE,                            // The callback for title attribute.
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',
@@ -417,10 +417,10 @@ class ShortCode extends WordPress\Main
 
 		$args = self::atts( [
 			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // Call-back for title
+			'title_cb'       => FALSE,                            // The callback for title.
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // Call-back for title attribute
+			'title_title_cb' => FALSE,                            // The callback for title attribute.
 			'title_tag'      => 'h3',
 			'title_anchor'   => '%2$s',
 			'title_class'    => '-title',
@@ -526,7 +526,7 @@ class ShortCode extends WordPress\Main
 
 		if ( $args['title'] ) {
 
-			// only if post present, avoid linking to itself
+			// NOTE: only if post present, avoid linking to itself.
 			if ( is_null( $args['title_link'] ) && $link && $post )
 				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
@@ -632,7 +632,7 @@ class ShortCode extends WordPress\Main
 
 			if ( TRUE === $args['item_link'] ) {
 
-				// Avoid linking to the same page
+				// Avoid linking to the same page.
 				if ( is_singular() && ( $current = WordPress\Post::get() ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
@@ -853,13 +853,13 @@ class ShortCode extends WordPress\Main
 			'title_cb'       => FALSE,
 			'title_link'     => NULL,                                                            // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => _x( 'Permanent link', 'ShortCode: Title Attr', 'geditorial' ),
-			'title_title_cb' => FALSE,                                                           // Call-back for title attr
+			'title_title_cb' => FALSE,                                                           // The callback for title attribute.
 			'title_tag'      => 'h3',
 			'title_anchor'   => $taxonomy.'-%2$s',
 			'title_class'    => '-title',
 			'title_dummy'    => '<span class="-dummy"></span>',
 			'title_after'    => '',
-			'title_label'    => 'all_items',                                                     // label key for posttype/taxonomy object
+			'title_label'    => 'all_items',                                                     // The `label` key for post-type/taxonomy object.
 
 			'item_cb'       => FALSE,
 			'item_link'     => TRUE,
@@ -900,7 +900,7 @@ class ShortCode extends WordPress\Main
 			'cover'      => FALSE,   // must have thumbnail
 			'future'     => 'on',
 			'mime_type'  => '',      // only for attachments / like: `image`
-			'connection' => '',      // only for o2o/p2p
+			'connection' => '',      // only for `o2o`/`p2p`
 
 			'module'       => $module,   // main caller module
 			'field_module' => 'meta',    // getting meta field from
@@ -915,7 +915,7 @@ class ShortCode extends WordPress\Main
 
 	// list: `assigned`: posts by terms
 	// list: `paired`: posts by meta (PAIRED API)
-	// list: `objects2objects`: posts by p2p/o2o
+	// list: `objects2objects`: posts by `p2p`/`o2o`
 	// list: `metadata`: posts by metadata comparison
 	// list: `children`: posts by parent of another post-type.
 	// list: `attached`: posts by inheritance
@@ -923,14 +923,22 @@ class ShortCode extends WordPress\Main
 	// list: `custom`: posts by id list // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		// $defs = self::getDefaults( $posttype, $taxonomy, [ $posttype ], [], $module );
-		$defs = self::getDefaults( $posttype, $taxonomy, [], [], $module );
-		$args = shortcode_atts( $defs, $atts, $tag );
+		$args = shortcode_atts(
+			self::getDefaults(
+				$posttype,
+				$taxonomy,
+				[],
+				[],
+				$module
+			),
+			$atts,
+			$tag
+		);
 
 		if ( FALSE === $args['context'] )
 			return NULL;
 
-		// back-comp
+		// NOTE: back-compatibility
 		if ( 'associated' == $list )
 			$list = 'paired';
 
@@ -963,7 +971,7 @@ class ShortCode extends WordPress\Main
 		if ( ! empty( $args['posttypes'] ) )
 			$query['post_type'] = WordPress\Strings::getSeparated( $args['posttypes'] );
 
-		// NOTE: back-compat / DROP THIS
+		// NOTE: back-compatibility / DROP THIS
 		if ( 'page' == $args['orderby'] )
 			$args['orderby'] = 'order';
 
@@ -1128,7 +1136,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'paired' === $list && $posttype && is_singular( $posttype ) ) {
 
-			// gets the list of supported posts paired to this post
+			// Gets the list of supported posts paired to this post.
 
 			if ( ! $post = WordPress\Post::get( $args['post_id'] ?: NULL ) )
 				return $content;
@@ -1172,7 +1180,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'paired' === $list && is_singular( $args['posttypes'] ) ) {
 
-			// Gets the list of main posts paired to this supported post
+			// Gets the list of main posts paired to this supported post.
 
 			if ( ! $args['module'] ) {
 
@@ -1190,7 +1198,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'assigned' === $list && $args['term_id'] ) {
 
-			// Gets the list of posts by the term
+			// Gets the list of posts by the term,
 
 			if ( ! $term = WordPress\Term::get( $args['term_id'] ) )
 				return $content;
@@ -1208,7 +1216,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
 
-			// Gets the list of posts by the taxonomy
+			// Gets the list of posts by the taxonomy.
 
 			if ( ! $post = WordPress\Post::get( $args['post_id'] ?: NULL ) )
 				return $content;
@@ -1271,7 +1279,7 @@ class ShortCode extends WordPress\Main
 
 		if ( $args['orderby'] == 'order' ) {
 
-			// The callback may change items, so applies even if only one item exists.
+			// NOTE: the callback may change items, so applies even if only one item exists.
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 
@@ -1325,7 +1333,7 @@ class ShortCode extends WordPress\Main
 	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'assigned' )`
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dep( 'ShortCode::listPosts()' );
+		self::_dep( 'ShortCode::listPosts( \'assigned\' )' );
 
 		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
@@ -1645,8 +1653,17 @@ class ShortCode extends WordPress\Main
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
 	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$defs = self::getDefaults( '', $taxonomy, [], [], $module );
-		$args = shortcode_atts( $defs, $atts, $tag );
+		$args = shortcode_atts(
+			self::getDefaults(
+				'',
+				$taxonomy,
+				[],
+				[],
+				$module
+			),
+			$atts,
+			$tag
+		);
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -1728,7 +1745,7 @@ class ShortCode extends WordPress\Main
 
 		if ( $args['orderby'] == 'order' ) {
 
-			// calback may change items, so even if one item
+			// NOTE: the callback may change items, so even if one item.
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 

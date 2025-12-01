@@ -215,7 +215,7 @@ class Config extends gEditorial\Module
 		gEditorial\Settings::wrapClose();
 	}
 
-	// TODO: display `wp_dashboard` on overview
+	// TODO: display `wp_dashboard()` on overview
 	protected function reports_overview( $uri )
 	{
 		do_action( $this->hook_base( 'reports', 'overview' ), $uri );
@@ -347,20 +347,31 @@ class Config extends gEditorial\Module
 
 	public function admin_reports_load()
 	{
-		$sub = gEditorial\Settings::sub();
+		$context = 'reports';
+		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
 
 			// if ( ! empty( $_POST ) ) {
-			// 	$this->nonce_check( 'roles', $sub );
+			// 	$this->nonce_check( $context, $sub );
 			// }
 
-			add_action( $this->hook_base( 'reports', 'sub', $sub ), [ $this, 'reports_sub' ], 10, 2 );
+			add_action(
+				$this->hook_base( $context, 'sub', $sub ),
+				[ $this, $context.'_sub' ],
+				10,
+				2
+			);
 
-			$this->register_help_tabs( NULL, 'reports' );
+			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action( $this->hook_base( 'reports', 'settings' ), $sub );
+		do_action(
+			$this->hook_base( $context, 'settings' ),
+			$sub,
+			$context
+		);
+
 		Services\Modulation::enqueueVirastar();
 	}
 

@@ -12,6 +12,7 @@ class People extends gEditorial\Module
 {
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
+	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\TaxonomyTaxonomy;
 	use Internals\TemplateTaxonomy;
@@ -216,6 +217,14 @@ class People extends gEditorial\Module
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+	}
+
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_taxonomy( 'main_taxonomy' ) )
+			$items[] = $glance;
+
+		return $items;
 	}
 
 	public function template_include( $template )
