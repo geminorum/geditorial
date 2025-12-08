@@ -189,7 +189,7 @@ trait PairedAssignment
 		$metakey    = $this->constant( 'metakey_term_image', 'image' );
 		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
 
-		if ( $src = WordPress\Media::htmlAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
+		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
 			return $src;
 
 		return $data;

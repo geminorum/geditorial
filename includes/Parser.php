@@ -16,6 +16,21 @@ class Parser extends WordPress\Main
 	 * @source https://www.bureauworks.com/blog/what-is-data-parsing
 	 */
 
+	/**
+	 * What's the difference between a 'tokenizer', 'lexer' and 'parser'?
+	 *
+	 * - A tokenizer just splits text into smaller units such as words.
+	 * Tokenizing into letters, syllables, sentences etc. is also possible.
+	 *
+	 * - A lexer does the same plus attaches extra information to each token.
+	 * If we tokenize into words, a lexer would attach tags like number, word,
+	 * punctuation etc.
+	 *
+	 * - A parser usually uses the output of a lexer and constructs a parse tree.
+	 *
+	 * @source https://www.quora.com/Whats-the-difference-between-a-tokenizer-lexer-and-parser
+	 */
+
 	public static function factory()
 	{
 		return gEditorial();
@@ -32,8 +47,8 @@ class Parser extends WordPress\Main
 			'mapping'     => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => 0,       // starts @ `0`
-			'extra_url'   => FALSE,
-			'extra_size'  => FALSE,
+			'extra_url'   => FALSE,   // Returns full URL to the file.
+			'extra_size'  => FALSE,   // Returns file size
 		], $atts );
 
 		$data = [
@@ -202,7 +217,7 @@ class Parser extends WordPress\Main
 					);
 			}
 
-			break; // no need to iterate through other sheets
+			break; // no need to do iterate through other sheets
 		}
 
 		$reader->close();
@@ -267,7 +282,7 @@ class Parser extends WordPress\Main
 
 		xml_parse_into_struct( $parser, $contents, $values, $index );
 
-		// xml_parser_free() has no effect as of PHP 8.0.
+		// `xml_parser_free()` has no effect as of PHP 8.0.0
 		if ( PHP_VERSION_ID < 80000 )
 			xml_parser_free( $parser );
 

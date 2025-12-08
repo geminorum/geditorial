@@ -290,13 +290,19 @@ class Entry extends gEditorial\Module
 	{
 		$sections = WordPress\Taxonomy::prepTerms( $this->constant( 'category_taxonomy' ), [], NULL, 'name' );
 
-		return Core\Text::replaceWords( Core\Arraay::pluck( $sections, 'name' ), $content, static function ( $matched ) use ( $sections ) {
-			return Core\HTML::tag( 'a', [
-				'href'  => $sections[$matched]->link,
-				'class' => '-entry-section',
-				'data'  => [ 'desc' => trim( strip_tags( $sections[$matched]->description ) ) ],
-			], $matched );
-		} );
+		return Core\Text::replaceWords(
+			Core\Arraay::pluck( $sections, 'name' ),
+			$content,
+			static function ( $matched ) use ( $sections ) {
+				return Core\HTML::tag( 'a', [
+					'href'  => $sections[$matched]->link,
+					'class' => '-entry-section',
+					'data'  => [
+						'desc' => Core\Text::stripTags( $sections[$matched]->description ),
+					],
+				], $matched );
+			}
+		);
 	}
 
 	public function template_include( $template )
@@ -345,15 +351,15 @@ class Entry extends gEditorial\Module
 			return $html;
 
 		if ( $post_id )
-			$link = get_permalink( $post_id ); // full permalink
+			$link = get_permalink( $post_id ); // full permanent-link
 
 		else
-			$link = rawurlencode( $slug ); // we handle 404s
+			$link = rawurlencode( $slug ); // we handle 404
 
 		return '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound' ).'">'.$text.'</a>';
 	}
 
-	// cleanup query arg added by `Markdown` module
+	// Cleans-up query argument added by `Markdown` module
 	public function redirect_canonical( $redirect_url, $requested_url )
 	{
 		return remove_query_arg( 'post_type', $redirect_url );

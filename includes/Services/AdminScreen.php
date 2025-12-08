@@ -73,12 +73,15 @@ class AdminScreen extends gEditorial\Service
 		if ( ! array_key_exists( $scheme, $_wp_admin_css_colors ) )
 			return FALSE;
 
-		foreach ( $_wp_admin_css_colors[$scheme]->colors as $key => $color )
-			$colors[] = "\t".sprintf( '--%s-admin-color-%s: %s;', static::BASE, $key, $color );
+		foreach ( $_wp_admin_css_colors[$scheme]->colors as $key => $data )
+			if ( $color = sanitize_hex_color( $data ) )
+				$colors[] = "\t".sprintf( '--%s-admin-color-%s: %s;', static::BASE, $key, $color );
 
-		foreach ( $_wp_admin_css_colors[$scheme]->icon_colors as $key => $color )
-			$colors[] = "\t".sprintf( '--%s-admin-color-icon-%s: %s;', static::BASE, $key, $color );
+		foreach ( $_wp_admin_css_colors[$scheme]->icon_colors as $key => $data )
+			if ( $color = sanitize_hex_color( $data ) )
+				$colors[] = "\t".sprintf( '--%s-admin-color-icon-%s: %s;', static::BASE, $key, $color );
 
+		// @hook `geditorial_adminscreen_colors`
 		if ( ! $colors = apply_filters( implode( '_', [ static::BASE, 'adminscreen', 'colors' ] ), $colors, $scheme, static::BASE ) )
 			return FALSE;
 
@@ -286,6 +289,8 @@ class AdminScreen extends gEditorial\Service
 		return Core\Text::starts( $option, static::BASE ) ? $value : $false;
 	}
 
+	// @SEE: https://www.joedolson.com/2013/01/custom-wordpress-screen-options/
+	// @SEE: https://webkul.com/blog/how-to-add-custom-screen-option-in-woocommerce/
 	private static function _handle_set_screen_options( $posttype )
 	{
 		$name = sprintf( '%s-restrict-%s', static::BASE, $posttype );

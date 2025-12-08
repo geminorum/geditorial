@@ -3,6 +3,7 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
@@ -28,10 +29,10 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function theIssueTitleCB( $post, $args = [] )
 	{
-		return trim( strip_tags( self::getMetaField( 'number_line', [
+		return Core\Text::stripTags( self::getMetaField( 'number_line', [
 			'id'      => $post->ID,
 			'default' => $args['item_title'],
-		] ) ) );
+		] ) );
 	}
 
 	public static function theIssueMeta( $field = 'number_line', $atts = [] )

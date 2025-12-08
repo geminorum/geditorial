@@ -2540,7 +2540,7 @@ class Terms extends gEditorial\Module
 		$metakey    = $this->get_supported_metakey( 'image', $term->taxonomy );
 		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
 
-		if ( $src = WordPress\Media::htmlAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
+		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
 			return $src;
 
 		return $data;

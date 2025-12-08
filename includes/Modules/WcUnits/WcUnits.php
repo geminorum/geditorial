@@ -61,7 +61,7 @@ class WcUnits extends gEditorial\Module
 				],
 				[
 					'field'       => 'weight_attr_bottom',
-					'title'       => _x( 'After All Attribiutes', 'Setting Title', 'geditorial-wc-units' ),
+					'title'       => _x( 'After All Attributes', 'Setting Title', 'geditorial-wc-units' ),
 					'description' => _x( 'Moves the weight to the bottom of the product attributes table.', 'Setting Description', 'geditorial-wc-units' ),
 				],
 				[
@@ -146,7 +146,7 @@ class WcUnits extends gEditorial\Module
 				],
 				[
 					'field'       => 'dimensions_attr_bottom',
-					'title'       => _x( 'After All Attribiutes', 'Setting Title', 'geditorial-wc-units' ),
+					'title'       => _x( 'After All Attributes', 'Setting Title', 'geditorial-wc-units' ),
 					'description' => _x( 'Moves the dimensions to the bottom of the product attributes table.', 'Setting Description', 'geditorial-wc-units' ),
 				],
 				[

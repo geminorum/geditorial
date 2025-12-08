@@ -216,7 +216,7 @@ class Badges extends gEditorial\Module
 
 			$name  = sanitize_term_field( 'name', $badge->name, $badge->term_id, $badge->taxonomy, 'display' );
 			$slug  = sanitize_term_field( 'slug', $badge->slug, $badge->term_id, $badge->taxonomy, 'display' );
-			$image = WordPress\Media::htmlAttachmentSrc( WordPress\Taxonomy::getThumbnailID( $badge->term_id ) );
+			$image = WordPress\Media::getAttachmentSrc( WordPress\Taxonomy::getThumbnailID( $badge->term_id ) );
 
 			$tokens = [
 				'term_name'    => $name,

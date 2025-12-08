@@ -67,7 +67,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = sprintf( $args['title'],
 				$text,
 				$link,
-				Core\HTML::escape( trim( strip_tags( $term->description ) ) ),
+				Core\HTML::escape( Core\Text::stripTags( $term->description ) ),
 				( $attr ?: '' )
 			);
 
@@ -250,7 +250,7 @@ class ShortCode extends WordPress\Main
 		if ( is_null( $args['item_image_size'] ) )
 			$args['item_image_size'] = WordPress\Media::getAttachmentImageDefaultSize( NULL, $term->taxonomy );
 
-		if ( ! $thumbnail_img = WordPress\Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
+		if ( ! $thumbnail_img = WordPress\Media::getAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
 		$text = WordPress\Term::title( $term );
@@ -749,7 +749,7 @@ class ShortCode extends WordPress\Main
 		if ( is_null( $args['item_image_size'] ) )
 			$args['item_image_size'] = WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
 
-		if ( ! $thumbnail_img = WordPress\Media::htmlAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
+		if ( ! $thumbnail_img = WordPress\Media::getAttachmentSrc( $image_id, $args['item_image_size'], FALSE ) )
 			return $fallback;
 
 		$text = WordPress\Post::title( $post, FALSE );

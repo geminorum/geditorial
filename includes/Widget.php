@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 #[\AllowDynamicProperties]
 class Widget extends \WP_Widget
 {
-
 	const BASE   = 'geditorial';
 	const MODULE = FALSE;
 	const WIDGET = FALSE;
@@ -251,7 +250,7 @@ class Widget extends \WP_Widget
 			'avatar_size' => 'digit',
 		], $extra );
 
-		$instance   = $new; // apparently all necessary fields will pass on the new
+		$instance   = $new; // Apparently all necessary fields will pass on the new!
 		$unfiltered = current_user_can( 'unfiltered_html' );
 
 		foreach ( $fields as $field => $type ) {
@@ -260,14 +259,14 @@ class Widget extends \WP_Widget
 				continue;
 
 			switch ( $type ) {
-				case 'key':   $instance[$field] = strip_tags( $new[$field] ); break;
+				case 'key':   $instance[$field] = Core\Text::stripTags( $new[$field] ); break;
 				case 'keys':  $instance[$field] = array_keys( array_filter( $new[$field] ) ); break;
 				case 'digit': $instance[$field] = (int) $new[$field]; break;
 				case 'text':  $instance[$field] = sanitize_text_field( $new[$field] ); break;
-				case 'url':   $instance[$field] = strip_tags( $new[$field] ); break;
+				case 'url':   $instance[$field] = Core\Text::stripTags( $new[$field] ); break;
 				case 'html':  $instance[$field] = trim( $unfiltered ? $new[$field] : wp_kses_post( $new[$field] ) ); break;
 
-				default: $instance[$field] = strip_tags( $new[$type] );
+				default: $instance[$field] = Core\Text::stripTags( $new[$type] );
 			}
 		}
 
@@ -343,9 +342,9 @@ class Widget extends \WP_Widget
 			return;
 
 		switch ( $title ) {
-			case 'heading': Core\HTML::h4( _x( 'Heading', 'Widget Core: Group', 'geditorial-admin' ), '-title' ); break;
+			case 'heading': Core\HTML::h4( _x( 'Heading', 'Widget Core: Group', 'geditorial-admin' ),       '-title' ); break;
 			case 'misc'   : Core\HTML::h4( _x( 'Miscellaneous', 'Widget Core: Group', 'geditorial-admin' ), '-title' ); break;
-			case 'customs': Core\HTML::h4( _x( 'Customs', 'Widget Core: Group', 'geditorial-admin' ), '-title' ); break;
+			case 'customs': Core\HTML::h4( _x( 'Customs', 'Widget Core: Group', 'geditorial-admin' ),       '-title' ); break;
 			case 'config' : Core\HTML::h4( _x( 'Configuration', 'Widget Core: Group', 'geditorial-admin' ), '-title' ); break;
 			default       : Core\HTML::h4( $title, '-title' ); break;
 		}

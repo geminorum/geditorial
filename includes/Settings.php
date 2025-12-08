@@ -1205,6 +1205,20 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_searchform_shortcode_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'searchform_shortcode_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Search Form Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the search form short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
 	public static function getSetting_span_shortcode_constant( $description = NULL, $default = '' )
 	{
 		return [

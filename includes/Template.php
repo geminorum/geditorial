@@ -282,7 +282,7 @@ class Template extends WordPress\Main
 			$args['alt'] = WordPress\Media::getAttachmentImageAlt( $args['thumbnail'], FALSE );
 
 		if ( ! $args['alt'] && 'parent_title' === $args['alt_fallback'] )
-			$args['alt'] = trim( strip_tags( get_the_title( $args['id'] ) ) );
+			$args['alt'] = Core\Text::stripTags( get_the_title( $args['id'] ) );
 
 		if ( $src = WordPress\Post::image( $args['id'], NULL, $args['size'], $args['thumbnail'] ) )
 			$html = Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
@@ -500,7 +500,7 @@ class Template extends WordPress\Main
 			return $default;
 
 		if ( in_array( $field, [ 'name', 'description', 'slug', 'count' ], TRUE ) )
-			return trim( strip_tags( sanitize_term_field( $field, $term->{$field}, $term->term_id, $term->taxonomy, 'display' ) ) );
+			return Core\Text::stripTags( sanitize_term_field( $field, $term->{$field}, $term->term_id, $term->taxonomy, 'display' ) );
 
 		if ( $meta = Services\TaxonomyFields::getField( $field, [ 'id' => $term, 'default' => $default ] ) )
 			return trim( $meta );
@@ -512,7 +512,7 @@ class Template extends WordPress\Main
 	public static function getPostField( $field = 'title', $post = NULL, $default = '' )
 	{
 		if ( 'title' === $field )
-			return trim( strip_tags( get_the_title( $post ) ) );
+			return Core\Text::stripTags( get_the_title( $post ) );
 
 		return self::getMetaField( $field, [ 'id' => $post, 'default' => $default ] );
 	}
@@ -750,7 +750,7 @@ class Template extends WordPress\Main
 				$args['link'] = WordPress\Term::link( $term );
 
 			if ( is_null( $args['description'] ) )
-				$args['description'] = Core\Text::trim( strip_tags( $term->description ) );
+				$args['description'] = Core\Text::stripTags( $term->description );
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 

@@ -3,7 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\WordPress\PostType;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
 {
@@ -12,7 +13,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function getLatestCourseID()
 	{
-		return PostType::getLastMenuOrder( self::constant( 'course_posttype', 'course' ), '', 'ID', 'publish' );
+		return WordPress\PostType::getLastMenuOrder( self::constant( 'course_posttype', 'course' ), '', 'ID', 'publish' );
 	}
 
 	public static function theCourse( $atts = [] )
@@ -28,10 +29,10 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function theCourseTitleCB( $post, $args = [] )
 	{
-		return trim( strip_tags( self::getMetaField( 'sub_title', [
+		return Core\Text::stripTags( self::getMetaField( 'sub_title', [
 			'id'      => $post->ID,
 			'default' => $args['item_title'],
-		] ) ) );
+		] ) );
 	}
 
 	public static function theCover( $atts = [] )

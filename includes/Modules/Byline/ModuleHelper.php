@@ -147,7 +147,7 @@ class ModuleHelper extends gEditorial\Helper
 				'name'  => WordPress\Term::title( $item['term'], '' ),
 				'link'  => WordPress\Term::link( $item['term'], '' ),
 				'edit'  => WordPress\Term::edit( $item['term'], [], '' ),
-				'desc'  => $item['term']->description ? WordPress\Strings::prepDescription( strip_tags( $item['term']->description ) ) : '',
+				'desc'  => $item['term']->description ? WordPress\Strings::prepDescription( $item['term']->description ) : '',
 				'notes' => empty( $item['relation']['notes'] ) ? '' : $item['relation']['notes'],
 				'rel'   => empty( $item['relation']['relation'] ) ? '' : $item['relation']['relation'],
 				'img'   => ModuleTemplate::getTermImageSrc( 'thumbnail', $item['term'] ),

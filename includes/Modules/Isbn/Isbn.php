@@ -57,6 +57,9 @@ class Isbn extends gEditorial\Module
 			'_frontend' => [
 				'frontend_search' => [ _x( 'Adds results by ISBN information on front-end search.', 'Setting Description', 'geditorial-isbn' ), TRUE ],
 			],
+			'_constants' => [
+				'main_shortcode_constant' => [ NULL, 'isbn' ],
+			],
 		];
 	}
 

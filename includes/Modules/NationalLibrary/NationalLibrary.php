@@ -109,6 +109,10 @@ class NationalLibrary extends gEditorial\Module
 			'admin_rowactions',
 		];
 
+		$settings['_constants'] = [
+			'main_shortcode_constant'       => [ NULL, 'fipa' ],
+		];
+
 		return $settings;
 	}
 
@@ -120,7 +124,7 @@ class NationalLibrary extends gEditorial\Module
 			'fipa_queryvar' => 'fipa',   // NOTE: value is an `ISBN`
 			'bib_queryvar'  => 'bib',    // NOTE: value is an `National Bibliographic Number`
 
-			'main_shortcode' => 'fipa',
+			'main_shortcode'       => 'fipa',
 
 			'metakey_bib_posttype'  => 'nali_bib',        // FALLBACK
 			'metakey_isbn_posttype' => 'isbn',            // FALLBACK

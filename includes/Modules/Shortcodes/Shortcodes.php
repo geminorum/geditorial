@@ -118,7 +118,7 @@ class Shortcodes extends gEditorial\Module
 		foreach ( $matches[0] as $offset => $shortcode )
 			$nodes[] = [
 				'id'     => $this->classs( 'shortcode', $offset ),
-				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.WordPress\Strings::trimChars( strip_tags( $shortcode ), 125 ).'</span>',
+				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.WordPress\Strings::trimChars( Core\Text::stripTags( $shortcode ), 125 ).'</span>',
 				'parent' => $this->classs(),
 				'href'   => FALSE,
 			];

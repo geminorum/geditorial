@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Headings extends gEditorial\Module
@@ -90,7 +92,7 @@ class Headings extends gEditorial\Module
 
 	public function toc_callback( $match )
 	{
-		$title = trim( strip_tags( $match[3] ) );
+		$title = Core\Text::stripTags( $match[3] );
 
 		if ( ! $title )
 			return $match[0];

@@ -29,12 +29,9 @@ class Scripts extends WordPress\Main
 		echo $html;
 	}
 
-	public static function renderAppMounter( $name, $module = FALSE, $html = NULL )
+	public static function renderAppMounter( $name, $module = FALSE, $verbose = TRUE, $message = NULL )
 	{
-		if ( is_null( $html ) )
-			$html = Plugin::moment();
-
-		echo Core\HTML::tag( 'div', [
+		$html = Core\HTML::tag( 'div', [
 			'id'    => sprintf( '%s-app-%s', static::BASE, $name ),
 			'class' => [
 				'-wrap',
@@ -43,23 +40,26 @@ class Scripts extends WordPress\Main
 				'editorial-app',
 				'hide-if-no-js',
 			],
-		], $html ?: '' );
+		], $message ?? Plugin::moment() );
+
+		if ( ! $verbose )
+			return $html;
+
+		echo $html;
 	}
 
 	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = NULL, $base_url = NULL )
 	{
 		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $name ) );
 
-		$script = sprintf( '%s%s/%s/build/main.js', $base_url ?? static::URL, $path, $name );
-		$style  = sprintf( '%s%s/%s/build/main.css', $base_url ?? static::URL, $path, $name );
+		$script = sprintf( '%s%s/%s/build/main.js',        $base_url  ?? static::URL,  $path, $name );
+		$style  = sprintf( '%s%s/%s/build/main.css',       $base_url  ?? static::URL,  $path, $name );
 		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path ?? static::PATH, $path, $name );
 
-		$config = Core\File::readable( $asset )
-			? require( $asset )
-			: [
-				'dependencies' => [],
-				'version'      => $version ?? static::VERSION,
-			];
+		$config = Core\File::requireData( $asset, [
+			'dependencies' => [],
+			'version'      => $version ?? static::VERSION,
+		] );
 
 		wp_enqueue_style( $handle, $style, [], $config['version'], 'all' );
 		wp_style_add_data( $handle, 'rtl', 'replace' );

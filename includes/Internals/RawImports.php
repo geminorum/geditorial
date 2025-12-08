@@ -32,9 +32,10 @@ trait RawImports
 			return FALSE;
 
 		$data  = NULL;
-		$group = $this->hook_base( 'rawimports_data', $key );
+		$id    = $this->hook_key( $key );
+		$group = $this->hook_base( 'rawimports_data' );
 
-		if ( FALSE !== ( $cache = wp_cache_get( $this->key, $group ) ) )
+		if ( FALSE !== ( $cache = wp_cache_get( $id, $group ) ) )
 			return $cache;
 
 		if ( is_null( $type ) ) {
@@ -51,18 +52,18 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'csv' : $data = gEditorial\Parser::fromCSV_Legacy( $this->get_imports_datafile( $key ) ); break;
+			case 'csv' : $data = gEditorial\Parser::fromCSV_Legacy( $this->get_imports_datafile( $key ) );  break;
 			case 'json': $data = gEditorial\Parser::fromJSON_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'xml' : $data = gEditorial\Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'txt' : $data = gEditorial\Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile( $key ), [] ); break;
+			case 'xml' : $data = gEditorial\Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) );  break;
+			case 'txt' : $data = gEditorial\Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) );  break;
+			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile( $key ), [] );         break;
 		}
 
-		if ( empty( $data ) )
-			wp_cache_set( $this->key, NULL, $group ); // to avoid repeats
-
-		else
-			wp_cache_set( $this->key, $data, $group );
+		wp_cache_set(
+			$id,
+			empty( $data ) ? NULL : $data, // to avoid repeats
+			$group
+		);
 
 		return empty( $data ) ? NULL : $data;
 	}

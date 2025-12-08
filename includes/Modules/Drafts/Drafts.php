@@ -246,7 +246,7 @@ class Drafts extends gEditorial\Module
 			}
 
 			if ( ! $block )
-				continue; // FIXME: add new posttype link
+				continue; // FIXME: add new post-type link
 
 			$link = Core\HTML::tag( 'a', [
 				'href'  => WordPress\PostType::edit( $posttype, [ 'post_status' => 'draft', 'author' => $user ] ),
