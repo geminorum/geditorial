@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Config extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
+	use Internals\RawImports;
 	use Internals\ViewEngines;
 
 	protected $caps     = [];  // reset the default caps!
@@ -46,6 +47,7 @@ class Config extends gEditorial\Module
 	{
 		parent::init();
 		$this->filter( 'map_meta_cap', 4 );
+		$this->action( 'import_filters' );
 	}
 
 	// @REF: http://justintadlock.com/?p=2462
@@ -88,6 +90,19 @@ class Config extends gEditorial\Module
 		}
 
 		return $caps;
+	}
+
+	/**
+	 * Fires at the end of the Import screen.
+	 *
+	 * @return void
+	 */
+	public function import_filters()
+	{
+		// TODO: add more details for the end-user via `wp_importer` on strings api
+		$this->render_imports_toolbox_card(
+			$this->get_module_url( 'imports', 'overview' )
+		);
 	}
 
 	public function admin_menu()
