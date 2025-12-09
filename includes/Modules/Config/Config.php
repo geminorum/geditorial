@@ -215,10 +215,13 @@ class Config extends gEditorial\Module
 		gEditorial\Settings::wrapClose();
 	}
 
-	// TODO: display `wp_dashboard()` on overview
+	// NOTE: maybe using `wp_dashboard()` on overview
 	protected function reports_overview( $uri )
 	{
-		do_action( $this->hook_base( 'reports', 'overview' ), $uri );
+		Services\AdminScreen::renderLayout( 'reports',
+			function ( $context, $screen ) use ( $uri ) {
+				do_action( $this->hook_base( $context, 'overview' ), $uri );
+			} );
 	}
 
 	public function admin_tools_page()
@@ -350,7 +353,17 @@ class Config extends gEditorial\Module
 		$context = 'reports';
 		$sub     = gEditorial\Settings::sub();
 
-		if ( 'general' == $sub ) {
+		if ( 'overview' === $sub ) {
+
+			// NOTE: Meta-Box @hook `add_meta_boxes_geditorial_reports`
+			Services\AdminScreen::loadLayout(
+				$this->hook_base( $context ),
+				$context
+			);
+
+			$this->register_help_tabs( NULL, $context );
+
+		} else if ( 'general' === $sub ) {
 
 			// if ( ! empty( $_POST ) ) {
 			// 	$this->nonce_check( $context, $sub );

@@ -306,4 +306,69 @@ class AdminScreen extends gEditorial\Service
 			Core\Arraay::prepString( array_keys( $_POST[$name] ) )
 		);
 	}
+
+	// @source https://code.tutsplus.com/integrating-with-wordpress-ui-meta-boxes-on-custom-pages--wp-26843a
+	// @ref https://gist.github.com/stephenh1988/3676396
+	public static function loadLayout( $layout_context, $context = NULL, $object = NULL )
+	{
+		// Trigger the add_meta_boxes hooks to allow meta boxes to be added.
+		do_action( sprintf( 'add_meta_boxes_%s', $layout_context ), $object );
+		do_action( 'add_meta_boxes', $layout_context, $object );
+
+		// Enqueue WordPress script for handling the meta boxes.
+		wp_enqueue_script( 'postbox' );
+
+		add_screen_option( 'layout_columns', [
+			'max'     => 2,
+			'default' => 2,
+		] );
+
+		add_action( 'admin_print_footer_scripts',
+			static function () {
+				Core\HTML::wrapjQueryReady( 'postboxes.add_postbox_toggles(pagenow);' );
+			} );
+	}
+
+	// @see `wp_dashboard()`
+	public static function renderLayout( $context, $main_callback = NULL, $title_callback = NULL, $object = NULL )
+	{
+		if ( ! $screen = get_current_screen() )
+			return FALSE;
+
+		echo '<div id="poststuff">';
+		echo '<div id="post-body" class="metabox-holder columns-'.( 1 == $screen->get_columns() ? '1' : '2' ).'">';
+			echo '<div id="post-body-content">';
+
+				if ( $title_callback && is_callable( $title_callback ) ) {
+					echo '<div id="titlediv">';
+						call_user_func_array( $title_callback, [ $context, $screen, $object ] );
+					echo '</div>';
+				}
+
+				if ( $main_callback && is_callable( $main_callback ) ) {
+					echo '<div id="postdivrich" class="postarea wp-editor-expand">';
+						call_user_func_array( $main_callback, [ $context, $screen, $object ] );
+					echo '</div>';
+				}
+
+			echo '</div>';
+			echo '<div id="postbox-container-1" class="postbox-container">';
+
+				do_meta_boxes( $screen, 'side', $object );
+
+			echo '</div>';
+			echo '<div id="postbox-container-2" class="postbox-container">';
+
+				do_meta_boxes( $screen, 'normal', $object );
+				do_meta_boxes( $screen, 'advanced', $object );
+
+			echo '</div>';
+
+		echo '</div>';
+		echo '</div>';
+
+		// Used to save closed meta-boxes and their order.
+		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', FALSE );
+		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', FALSE );
+	}
 }
