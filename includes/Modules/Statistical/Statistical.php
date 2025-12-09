@@ -25,7 +25,7 @@ class Statistical extends gEditorial\Module
 			'frontend' => FALSE,
 			'keywords' => [
 				'user',
-				'report',
+				'content-report',
 			],
 		];
 	}

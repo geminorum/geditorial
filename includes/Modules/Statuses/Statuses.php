@@ -72,12 +72,18 @@ class Statuses extends gEditorial\Module
 
 		foreach ( $statuses as $status )
 			$settings['_roles'][] = [
-				'field'       => 'status_roles_'.$status->term_id,
-				'type'        => 'checkboxes',
-				/* translators: `%s`: status name */
-				'title'       => sprintf( _x( 'Roles for %s', 'Setting Title', 'geditorial-statuses' ), $status->name ),
-				/* translators: `%s`: status name */
-				'description' => sprintf( _x( 'The <b>%s</b> status will be visibile to the selected roles.', 'Setting Description', 'geditorial-statuses' ), $status->name ),
+				'field' => 'status_roles_'.$status->term_id,
+				'type'  => 'checkboxes',
+				'title' => sprintf(
+					/* translators: `%s`: status name */
+					_x( 'Roles for %s', 'Setting Title', 'geditorial-statuses' ),
+					$status->name
+				),
+				'description' => sprintf(
+					/* translators: `%s`: status name */
+					_x( 'The %s status will be visibile to the selected roles.', 'Setting Description', 'geditorial-statuses' ),
+					Core\HTML::tag( 'strong', $status->name )
+				),
 				'values'      => $roles,
 			];
 
@@ -137,15 +143,15 @@ class Statuses extends gEditorial\Module
 				'show_in_admin_all_list'    => TRUE,
 				'show_in_admin_status_list' => $can,
 
-				// WP Statuses specific args
+				// WP Statuses specific arguments
 				'show_in_metabox_dropdown'    => $can,
 				'show_in_inline_dropdown'     => $can,
 				'show_in_press_this_dropdown' => $can,
 
-				// FIXME: check for posttype meta
+				// FIXME: check for post-type meta
 				'post_type' => $this->posttypes(),
 
-				// FIXME: check for posttype icon
+				// FIXME: check for post-type icon
 				// 'dashicon' => 'dashicons-archive',
 
 				'labels' => [

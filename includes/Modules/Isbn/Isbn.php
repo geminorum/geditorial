@@ -29,7 +29,7 @@ class Isbn extends gEditorial\Module
 				'barcode',
 				'bibliographic',
 				'identifier',
-				'metafield',
+				'meta-field',
 				'woocommerce',
 			],
 		];

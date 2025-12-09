@@ -33,7 +33,7 @@ class Labeled extends gEditorial\Module
 			'icon'     => 'tag',
 			'access'   => 'beta',
 			'keywords' => [
-				'metafield',
+				'meta-field',
 				'taxmodule',
 			],
 		];
@@ -99,6 +99,7 @@ class Labeled extends gEditorial\Module
 				'interview'    => _x( 'Interview', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
 				'review'       => _x( 'Review', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
 				'report'       => _x( 'Report', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
+				'reportage'    => _x( 'Reportage', 'Main Taxonomy: Default Term', 'geditorial-labeled' ),
 			],
 		];
 	}

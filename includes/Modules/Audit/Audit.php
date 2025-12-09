@@ -31,6 +31,7 @@ class Audit extends gEditorial\Module
 			'icon'     => 'visibility',
 			'access'   => 'stable',
 			'keywords' => [
+				'content-report',
 				'taxmodule',
 			],
 		];

@@ -12,8 +12,7 @@ trait MetaBoxMain
 
 	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		$context = $context ?? 'mainbox';
 
 		if ( ! empty( $screen->post_type ) && method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
 			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
@@ -85,8 +84,7 @@ trait MetaBoxMain
 	// DEFAULT METHOD
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		$context = $context ?? 'mainbox';
 
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 		gEditorial\MetaBox::fieldPostParent( $object );

@@ -48,19 +48,20 @@ class Parser extends WordPress\Main
 			'sheet_name'  => NULL,
 			'sheet_index' => 0,       // starts @ `0`
 			'extra_url'   => FALSE,   // Returns full URL to the file.
-			'extra_size'  => FALSE,   // Returns file size
+			'extra_size'  => FALSE,   // Returns file size of the file.
 		], $atts );
 
 		$data = [
-			'file_path'   => Core\File::normalize( $path ),
-			'file_ext'    => 'csv',
-			'readable'    => FALSE,                           // initial
+			'file_path' => Core\File::normalize( $path ),
+			'file_ext'  => 'csv',
+
+			'readable'    => FALSE,   // initial
 			'file_url'    => NULL,
 			'file_size'   => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => NULL,
 			'headers'     => NULL,
-			'items'       => [],                              // starts @ `1`
+			'items'       => [],      // starts @ `1`
 		];
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
@@ -140,20 +141,21 @@ class Parser extends WordPress\Main
 			'mapping'     => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => 0,       // starts @ `0`
-			'extra_url'   => FALSE,
-			'extra_size'  => FALSE,
+			'extra_url'   => FALSE,   // Returns full URL to the file.
+			'extra_size'  => FALSE,   // Returns file size of the file.
 		], $atts );
 
 		$data = [
-			'file_path'   => Core\File::normalize( $path ),
-			'file_ext'    => 'xlsx',
-			'readable'    => FALSE,                           // initial
+			'file_path' => Core\File::normalize( $path ),
+			'file_ext'  => 'xlsx',
+
+			'readable'    => FALSE,   // initial
 			'file_url'    => NULL,
 			'file_size'   => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => NULL,
 			'headers'     => NULL,
-			'items'       => [],                              // starts @ `1`
+			'items'       => [],      // starts @ `1`
 		];
 
 		if ( ! Core\File::readable( $data['file_path'] ) )

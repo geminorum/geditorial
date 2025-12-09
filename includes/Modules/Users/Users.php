@@ -603,9 +603,11 @@ class Users extends gEditorial\Module
 		if ( $user->user_registered ) {
 			printf( $before, '-registered' );
 				echo $this->get_column_icon( FALSE, 'calendar', _x( 'Registered', 'Row Icon Title', 'geditorial-users' ) );
-				/* translators: `%s`: date */
-				printf( _x( 'Registered on %s', 'Row', 'geditorial-users' ),
-					gEditorial\Helper::getDateEditRow( $user->user_registered, '-registered' ) );
+				printf(
+					/* translators: `%s`: date */
+					_x( 'Registered on %s', 'Row', 'geditorial-users' ),
+					gEditorial\Helper::getDateEditRow( $user->user_registered, '-registered' )
+				);
 			echo $after;
 		}
 
@@ -794,7 +796,7 @@ class Users extends gEditorial\Module
 		);
 	}
 
-	// FIXME: DRAFT : need styling / register the shortcode!!
+	// FIXME: DRAFT : need styling / register the short-code!
 	// @SEE: https://core.trac.wordpress.org/ticket/31383
 	public function user_groups_shortcode()
 	{
