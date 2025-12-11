@@ -45,11 +45,11 @@
     "git:gc": "git gc --prune=now"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^8.35.0",
-    "@wordpress/browserslist-config": "^6.35.0",
-    "@wordpress/stylelint-config": "^23.27.0",
+    "@wordpress/babel-preset-default": "^8.36.0",
+    "@wordpress/browserslist-config": "^6.36.0",
+    "@wordpress/stylelint-config": "^23.28.0",
     "autoprefixer": "^10.4.22",
-    "browserslist": "^4.28.0",
+    "browserslist": "^4.28.1",
     "cssnano": "^7.1.2",
     "del": "^8.0.1",
     "fancy-log": "^2.0.0",
@@ -76,8 +76,8 @@
     "postcss": "^8.5.6",
     "rtlcss": "^4.3.0",
     "semistandard": "^17.0.0",
-    "stylelint": "^16.25.0",
-    "stylelint-scss": "^6.12.1",
+    "stylelint": "^16.26.1",
+    "stylelint-scss": "^6.13.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {

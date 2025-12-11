@@ -1,4 +1,8 @@
-### 3.33.0
+# gEditorial Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [3.33.0]
 * internal/core-post-type: parent module on post-type args
 * internal/core-post-types: combine register sub-methods
 * internal/core-taxonomies: bail setting if capabilities are customized
@@ -141,7 +145,7 @@
 * service/term-hierarchy: prioritize the child terms on single selected
 * service/term-relations: rest field for taxonomy with post prop
 
-### 3.32.0
+## [3.32.0]
 * app/assignment-dock: 🆕 app
 * internal/core-admin: support for ajax on multiple column
 * internal/core-admin: tidy up using post-type icons
@@ -229,7 +233,7 @@
 * service/term-hierarchy: is single term check
 * service/term-relations: 🆕 service
 
-### 3.31.0
+## [3.31.0]
 * internal/bulk-exports: avoid column header duplicates
 * internal/bulk-exports: column width for post props
 * internal/bulk-exports: default taxonomy by primary prop
@@ -315,7 +319,7 @@
 * service/post-type-fields: replace token support
 * service/term-hierarchy: support bulk-edit for single select term
 
-### 3.30.0
+## [3.30.0]
 * internal/core-admin: display taxonomy states
 * internal/core-admin: multiple supported column for taxonomies
 * internal/core-admin: state background color based on the term color
@@ -394,7 +398,7 @@
 * service/term-hierarchy: single term select prop
 * service/term-hierarchy: support for auto assigned taxonomies
 
-### 3.29.2
+## [3.29.2]
 * internal/settings-core: render upload field
 * module/config: export/import all options
 * module/execution: sub-contents for executive board
@@ -405,7 +409,7 @@
 * module/was-born: handle roles for gender taxonomy
 * service/search-select: use of search column arg for title only
 
-### 3.29.1
+## [3.29.1]
 * internal/core-taxonomies: term parents as views
 * main/plugin: untitled string helper
 * main/scripts: support for plupload v3
@@ -418,7 +422,7 @@
 * service/post-type-fields: default field icons
 * service/term-hierarchy: reverse ordered terms
 
-### 3.29.0
+## [3.29.0]
 * app/import-items: clear already added rows
 * internal/bulk-exports: cap check on each targets
 * internal/bulk-exports: general filters for customs/taxonomies
@@ -506,7 +510,7 @@
 * service/search-select: support for extra/image on results
 * service/term-hierarchy: :new: service
 
-### 3.28.1
+## [3.28.1]
 * internal/bulk-exports: get enabled fields for full export
 * internal/bulk-exports: support for export title
 * internal/bulk-exports: support for unit fields
@@ -516,7 +520,7 @@
 * module/papered: refactoring helpers
 * module/papered: support for primary taxonomy
 
-### 3.28.0
+## [3.28.0]
 * internal/bulk-exports: support custom export fields
 * internal/bulk-exports: support for column titles
 * internal/settings-taxonomies: show in quick-edit
@@ -552,7 +556,7 @@
 * module/personage: support for public statuses
 * module/personage: support view item on papred
 
-### 3.27.4
+## [3.27.4]
 * internal/bulk-exports: support for format
 * internal/paired-row-actions: actions for supported post-types
 * main/helper: xlsx generator
@@ -565,23 +569,23 @@
 * module/quotation: prep meta fields for display
 * module/static-covers: support rest field
 
-### 3.27.3
+## [3.27.3]
 * main/module: auto-hook terms init action
 * module/importer: prep meta-keys for purge
 * module/personage: renamed from `persona`
 
-### 3.27.2
+## [3.27.2]
 * module/execution: renamed from `executed`
 * module/organization: support for custom cap-type
 * module/units: support for member/person fields
 
-### 3.27.1
+## [3.27.1]
 * module/meeted: :new: module
 * module/missioned: upgrade to latest
 * module/programmed: :new: module
 * module/yearly: :new: module
 
-### 3.27.0
+## [3.27.0]
 * app/import-items: account for the lack of identifier prop
 * internal/admin-page: cap check revised for non admins
 * internal/bulk-exports: better file names
@@ -696,7 +700,7 @@
 * module/was-born: single-select on gender
 * service/post-type-fields: post meta-key helper
 
-### 3.26.7
+## [3.26.7]
 * internal/late-chores: avoid re-hooking on cron calls
 * internal/paired-core: optional manage restricted to admins
 * internal/paired-tools: force assign parents
@@ -715,7 +719,7 @@
 * module/widgets: :new: profile summary widget
 * service/sitemaps: display empty terms
 
-### 3.26.6
+## [3.26.6]
 * main/list-table: passing object as taxonomy
 * module/identified: :new: module
 * module/iranian: location database revised
@@ -723,24 +727,24 @@
 * module/persona: :new: module
 * module/trained: :new: module
 
-### 3.26.5
+## [3.26.5]
 * internal/post-type-fields: check for viewable for logged-out
 
-### 3.26.4
+## [3.26.4]
 * internal/post-type-fields: check for correct caps
 * internal/post-type-fields: check if site is switched
 
-### 3.26.3
+## [3.26.3]
 * main/template: handle pseudo-meta on switch sites
 
-### 3.26.2
+## [3.26.2]
 * main/template: override field args for remote posts
 
-### 3.26.1
+## [3.26.1]
 * internal/main-download: better handling file length
 * main/template: avoid bail-out on undefined fields
 
-### 3.26.0
+## [3.26.0]
 * app/import-items: :new: vue js app
 * internal/core-admin: unset columns on table-list
 * internal/core-capabilities: handle forced caps for taxonomy
@@ -921,7 +925,7 @@
 * service/search-select: renamed from select-single
 * service/search-select: support for wp error as result
 
-### 3.25.0
+## [3.25.0]
 * main/helper: action hook for editor status info
 * main/helper: description field label for taxonomies
 * main/helper: fallback for featured string for post-type labels
@@ -984,7 +988,7 @@
 * service/select-single: support for user queries
 * service/select-single: using rest nonce to auth
 
-### 3.24.0
+## [3.24.0]
 * assets/dev: new module template
 * main/datetime: prep date string for input/display
 * main/helper: json/xml parser methods
@@ -1116,7 +1120,7 @@
 * service/paired: :new: initial service
 * service/select-single: :new: service
 
-### 3.23.4
+## [3.23.4]
 * main/helper: term title row
 * main/module: :new: paired taxonomy bulk actions
 * main/module: better handling default image size
@@ -1139,7 +1143,7 @@
 * module/wc-widgets: support hook on before order details
 * module/wc-widgets: support hooks on wc dashboard
 
-### 3.23.3
+## [3.23.3]
 * main/module: more accurate hooking
 * main/module: support for async decoding attr on image tags
 * main/shortcode: link to preview on unpublished posts
@@ -1152,7 +1156,7 @@
 * module/attachments: posttype label as title attr on searches
 * module/attachments: search for attachments as thumbnails
 
-### 3.23.2
+## [3.23.2]
 * main/datetime: disable date separator on formatting
 * main/helper: filtering label templates
 * main/helper: filtering posttype message templates
@@ -1185,7 +1189,7 @@
 * module/venue: more meta fields
 * module/venue: support template api
 
-### 3.23.1
+## [3.23.1]
 * main/module: custom content callback on template api
 * main/module: filtering default terms
 * main/module: late set labels on registering posttypes
@@ -1198,7 +1202,7 @@
 * module/grouping: :new: module
 * module/today: support for auto-audit on empty the-day
 
-### 3.23.0
+## [3.23.0]
 * main/listtable: skip restrict by author for large user count
 * main/module: better checks for inline save posttypes
 * main/module: better checks for inline save taxonomy
@@ -1229,7 +1233,7 @@
 * module/today: auto-select date inputs
 * module/wc-images: :new: module
 
-### 3.22.1
+## [3.22.1]
 * main/widget: :warning: passing new instance as base
 * main/widget: custom title on the form
 * main/widget: wrap as items on the form
@@ -1238,7 +1242,7 @@
 * module/importer: non-forced old id numbers
 * module/regional: :new: module
 
-### 3.22.0
+## [3.22.0]
 * main/helper: cache folder api
 * main/helper: optional skip filters on post titles
 * main/module: custom caps based on taxonomy
@@ -1287,7 +1291,7 @@
 * module/widgets: search terms: taxonomy name hint
 * module/widgets: search terms: widget form revised
 
-### 3.21.0
+## [3.21.0]
 * :wrench: psr-4 autoloading comp
 * main/datetime: initial date string format helper
 * main/metabox: optional display empty dropdown on paired
@@ -1351,7 +1355,7 @@
 * module/wc-widgets: :new: module
 * module/widgets: more options on search terms
 
-### 3.20.1
+## [3.20.1]
 * main/helper: using internal method for getting the post
 * main/module: :new: paired thumbnail fallback
 * main/module: hook paired to on rest api
@@ -1360,7 +1364,7 @@
 * main/template: filter for raw meta fields
 * module/widgets: :new: wprest-single widget
 
-### 3.20.0
+## [3.20.0]
 * main/module: better handling settings args
 * main/module: filtering taxonomy excluded
 * main/module: generalizing method for linked to posts
@@ -1398,7 +1402,7 @@
 * module/wc-purchased: support order statuses
 * module/wc-purchased: titles with sku
 
-### 3.19.0
+## [3.19.0]
 * :wrench: php 7.2
 * assets/package: :new: libre barcode fonts
 * main/helper: better contexts for cpt/tax string generators
@@ -1488,7 +1492,7 @@
 * module/widgets: search terms: search names and slugs
 * module/widgets: search terms: singular name as title on multiple taxonomy setup
 
-### 3.18.0
+## [3.18.0]
 * main/helper: filter empty strings on arrays
 * main/module: avoid checking empty subgroups on strings api
 * main/module: better slug/rest base for taxonomies
@@ -1522,14 +1526,14 @@
 * module/terms: set current user as author of the term
 * module/widgets: :new: search terms widget
 
-### 3.17.1
+## [3.17.1]
 * main/module: rename default method for display meta row
 * main/template: filter meta summary rows
 * main/template: get postmeta raw revised
 * module/book: better handling isbn data
 * module/importer: optional skip imports into posts with thumbnails
 
-### 3.17.0
+## [3.17.0]
 * main/module: :warning: fixed ignoring extra supported posttypes
 * main/module: check for cap on list of supported posttypes
 * main/module: default filter for calendar post row title
@@ -1568,7 +1572,7 @@
 * module/venue: missing assoc post helper
 * module/venue: suffix for supported on calendar rows
 
-### 3.16.3
+## [3.16.3]
 * main/template: customize context on term field helper
 * main/template: meta summary helper
 * main/template: optional ignore of co-fields with term type
@@ -1578,7 +1582,7 @@
 * module/book: isbn barcode helper
 * module/book: meta summary helper
 
-### 3.16.2
+## [3.16.2]
 * main/module: tidy-up constants for taxonomy slugs
 * main/widget: method for cache keys
 * module/contest: total hide of the assoc tax
@@ -1588,7 +1592,7 @@
 * module/course: total hide of the assoc tax
 * module/team: rename category taxonomy to group
 
-### 3.16.1
+## [3.16.1]
 * main/module: check for p2p before helpers
 * main/shortcode: disabling title on list posts
 * module/book: check for p2p before helpers
@@ -1604,7 +1608,7 @@
 * module/tweaks: revert excluding essential taxes
 * module/venue: :new: module
 
-### 3.16.0
+## [3.16.0]
 * main/metabox: passing supported posttypes for terms posts
 * main/module: add fields for supported posttypes
 * main/module: auto hook store metabox action
@@ -1651,7 +1655,7 @@
 * module/meta: upgrade posttype fields on raw imports
 * module/tweaks: avoid double input for menu order
 
-### 3.15.9
+## [3.15.9]
 * main/helper: :warning: correct logic for domain absence on nooped strings
 * main/helper: empty string helper
 * main/helper: filter results on seperated strings
@@ -1699,7 +1703,7 @@
 * module/revisions: revision row enhancements
 * module/specs: :warning: correct class for excerpt handling
 
-### 3.15.8
+## [3.15.8]
 * main/listtable: restrict by author helper
 * main/metabox: :warning: display empty term select
 * main/metabox: refresh field list styles
@@ -1723,7 +1727,7 @@
 * module/terms: :new: action: move tagline to desc
 * module/today: disable column on edit list
 
-### 3.15.7
+## [3.15.7]
 * main/helper: author filter for tables
 * main/helper: html empty method
 * main/helper: prep contact method
@@ -1782,7 +1786,7 @@
 * module/terms: clean uncategorized terms
 * module/tweaks: modified as action on publish box
 
-### 3.15.5
+## [3.15.5]
 * main/helper: count for empty dates on edit rows
 * main/module: normalize path
 * main/plugin: passing already class names
@@ -1805,7 +1809,7 @@
 * module/series: wrap post title with heading
 * module/tube: optional support for channels
 
-### 3.15.4
+## [3.15.4]
 * main/datetime: new main class
 * main/helper: better handling the day for reschedule
 * main/module: append subs once
@@ -1836,7 +1840,7 @@
 * module/today: reschedule by the day tool
 * module/tweaks: skip metabox scripts on block editor
 
-### 3.15.3
+## [3.15.3]
 * main/helper: better prep for title/desc
 * main/helper: more labels for posttypes
 * main/module: initial support for blocks
@@ -1846,7 +1850,7 @@
 * module/modified: help tab placeholders info
 * module/modified: last published date option
 
-### 3.15.2
+## [3.15.2]
 * main/plugin: content actions api
 * main/plugin: initial support for dark mode
 * main/module: optional support for rest
@@ -1885,7 +1889,7 @@
 * module/tweaks: better exclusion of supported posttypes
 * module/widgets: wprest-posts: custom endpoint
 
-### 3.15.1
+## [3.15.1]
 * assets/package: virastar updated to 0.13.0
 * main/main: using psr-4 autoload for core and main files
 * main/module: create posts only for mapped caps
@@ -1896,7 +1900,7 @@
 * module/users: :new: author categories
 * module/users: support tweaks for counts columns
 
-### 3.15.0
+## [3.15.0]
 * main/plugin: iframe styles
 * main/ajax: js module container deprecated
 * main/listtable: :new: new main component
@@ -1961,7 +1965,7 @@
 * module/workflow: temporarily hiding inline/bulk edit action
 * module/workflow: display current status description
 
-### 3.14.0
+## [3.14.0]
 * main/plugin: editorial user api
 * main/module: internal api for metabox class
 * main/module: returning html for columns
@@ -1988,7 +1992,7 @@
 * module/users: :warning: fixed clearing up user groups
 * module/workflow: :new: new module
 
-### 3.13.3
+## [3.13.3]
 * main/module: check for init action along with posttype exists
 * main/module: default filter for increasing menu order on new posts
 * main/module: comment status on more modules
@@ -2016,7 +2020,7 @@
 * module/users: roles/groups/types on the profile widget
 * module/widgets: wprest: fallback for themes with no partial for rows
 
-### 3.13.2
+## [3.13.2]
 * main/main: check for minimum required veriosn of php
 * main/module: :new: internal api for bailing on hidden metaboxes
 * main/module: conditional check for embed before insert content
@@ -2037,7 +2041,7 @@
 * module/users: profile edit as metabox action
 * module/users: avoid using post terms cache for user objects
 
-### 3.13.1
+## [3.13.1]
 * main/module: internal api for dashboard setup
 * main/module: skip pasing section to setting methods
 * module/alphabet: refactoring shortcode markup
@@ -2053,7 +2057,7 @@
 * module/widgets: selective enabling widgets
 * moduel/widgets: custom empty message
 
-### 3.13.0
+## [3.13.0]
 * main/plugin: rtl style on front
 * main/plugin: :new: module disabled notice
 * main/plugin: separate adminbar styles
@@ -2114,7 +2118,7 @@
 * module/revisions: disabled while disabled by constant
 * module/tube: default meta fields
 
-### 3.12.0
+## [3.12.0]
 * main/plugin: check if adminbar is showing
 * main/plugin: bypass module registration
 * main/plugin: skip front hooks on admin
@@ -2139,7 +2143,7 @@
 * module/tweaks: simpler check for posttype image size
 * module/widgets: :new: widget: custom html
 
-### 3.11.3
+## [3.11.3]
 * main/ajax: better success method
 * main/helper: support timestamp for date edit row
 * main/helper: attachment link row action
@@ -2167,7 +2171,7 @@
 * module/terms: trigger action on updating term images
 * module/widgets: :new: module
 
-### 3.11.2
+## [3.11.2]
 * main/module: passing terms into default terms installer
 * main/module: some default section titles
 * main/module: custom hook for ajax helper
@@ -2178,14 +2182,14 @@
 * module/config: flush rewrite rules warning
 * module/tweaks: reorganizing setting options
 
-### 3.11.1
+## [3.11.1]
 * main/module: :new: support for custom svg icons
 * main/module: some default section titles
 * main/helper: data count on get counted
 * module/alphabet: :new: module
 * module/terms: tuning scripts on edit tags screen
 
-### 3.11.0
+## [3.11.0]
 * main/plugin: :new: internal api for posttype templates
 * main/module: filter for column thumb html
 * main/module: cleanup init actions
@@ -2245,7 +2249,7 @@
 * module/users: check for selected all users on author restrict
 * module/users: :new: dashboard widget for current user contacts
 
-### 3.10.2
+## [3.10.2]
 * main/helper: sanitize calendar
 * main/settings: insert cover default setting
 * main/widget: switch to transient
@@ -2279,7 +2283,7 @@
 * module/tweaks: hide author column if has attr action
 * module/users: user types on tweaks column
 
-### 3.10.1
+## [3.10.1]
 * main/ajax: rest api in global js object
 * main/ajax: correct send success message
 * main/ajax: default nonce for wp rest
@@ -2314,7 +2318,7 @@
 * module/users: author default restrictions
 * module/users: groups on user tweaks column
 
-### 3.10.0
+## [3.10.0]
 * assets/js: rethinking structure
 * assets/js: jquery sortable from packages dir
 * main/main: first attempt for an adminbar api
@@ -2403,7 +2407,7 @@
 * module/tweaks: :new: post name on attr column
 * module/tweaks: :new: thumbnail column
 
-### 3.9.15
+## [3.9.15]
 * main/modulecore: simplifying init/ajax hooks
 * main/modulecore: settings form before/after helpers
 * main/modulecore: revert linked term method
@@ -2433,7 +2437,7 @@
 * module/users: disable username sanitizing
 * module/users: adding settings descriptions
 
-### 3.9.14
+## [3.9.14]
 * wordpress/database: exclude default statues from taxonomy count/not
 * main/helper: more time diff helpers
 * main/modulecore: thickbox for thumb column images
@@ -2445,7 +2449,7 @@
 * module/ortho: lib version/repo/demo links
 * module/terms: :warning: fixed not counting all posts
 
-### 3.9.13
+## [3.9.13]
 * main/helper: revising text/number filters
 * main/main: styles for edit comments/term base
 * main/modulecore: api for trashed linked post/tax
@@ -2457,7 +2461,7 @@
 * module/terms: :new: cleanup terms action for uncategorized table
 * module/tweaks: :new: user column on edit comments screen
 
-### 3.9.12
+## [3.9.12]
 * main/modulecore: try not to register ui when it's possible
 * main/modulecore: rethinking strict manage posts
 * main/modulecore: using core helper for multi sort
@@ -2472,7 +2476,7 @@
 * module/ortho: :up: [virastar](https://github.com/juvee/virastar/) updated to v0.11.0
 * module/tweaks: check if posttype support author for attr column
 
-### 3.9.11
+## [3.9.11]
 * assets/js: console logging the module
 * main/modulecore: handling dashes in module names
 * main/modulecore: :warning: space before new admin body class
@@ -2487,12 +2491,12 @@
 * module/terms: hide id column
 * module/tweaks: do not load on front-end
 
-### 3.9.10
+## [3.9.10]
 * module/modified: check for cap before linking authors in dashboard
 * module/today: styling admin edit date stamp
 * module/tweaks: sortable id column
 
-### 3.9.9
+## [3.9.9]
 * main/helper: nbsp before hellip on trim chars
 * main/helper: future status for term posts
 * main/modulecore: api for sortable tax column, [see](http://scribu.net/wordpress/sortable-taxonomy-columns.html)
@@ -2508,10 +2512,10 @@
 * module/tweaks: author in attr column
 * module/tweaks: no need for posttype arg
 
-### 3.9.8
+## [3.9.8]
 * module/ortho: giving back focus to title input
 
-### 3.9.7
+## [3.9.7]
 * core/base: dep func helper
 * main/helper: removed direct use of gen tax labels
 * main/helper: prep desc helper
@@ -2544,11 +2548,11 @@
 * module/tweaks: more tax exceptions
 * module/tweaks: using column title helper
 
-### 3.9.6
+## [3.9.6]
 * core/date: :warning: fixed fatal
 * wordpress/module: :warning: fixed fatal
 
-### 3.9.5
+## [3.9.5]
 * core/number: :new: new core class
 * core/html: table side generator
 * wordpress/user: :new: new core wp class
@@ -2598,7 +2602,7 @@
 * module/tweaks: more tax exceptions
 * module/tweaks: :warning: fixed page extra column
 
-### 3.9.4
+## [3.9.4]
 * core/text: :new: core class
 * wordpress/module: :new: new helper class
 * wordpress/taxonomy: :new: new helper class
@@ -2621,7 +2625,7 @@
 * module/tweaks: :new: id column
 * module/tweaks: support posttype template, [see](https://make.wordpress.org/core/?p=20437)
 
-### 3.9.3
+## [3.9.3]
 * all: using constant helper method
 * core/html: check for empty array before table code
 * main/main: style for admin users page
@@ -2635,17 +2639,17 @@
 * module/meta: option to disable lead insertion
 * module/users: post count summary in users list table
 
-### 3.9.2
+## [3.9.2]
 * main/main: skip checking for folders!
 * module/meta: missed string for column row
 * module/series: correct check for series count
 * module/tweaks: attachment summery for each post
 * module/tweaks: check for manage terms cap before linking on taxes
 
-### 3.9.1
+## [3.9.1]
 * core/html: method renamed, fixed fatal on PHP5.6
 
-### 3.9.0
+## [3.9.0]
 * core/html: moved for notice generations
 * core/wordpress: redirect helpers
 * core/wordpress: moved post/tax edit link generators
@@ -2691,7 +2695,7 @@
 * module/today: correct translation context
 * module/users: :new: user groups
 
-### 3.8.2
+## [3.8.2]
 * core/base: internal log method
 * core/html: moved to HTML class for tag generations
 * main/modulecore: using submit button helper
@@ -2703,7 +2707,7 @@
 * module/meta: fixed cap notice upon sanitizing
 * module/settings: revamped!
 
-### 3.8.1
+## [3.8.1]
 * main/helper: nooped strings for count format
 * main/settings: revising strings
 * module/audit: preventing empty reports
@@ -2711,7 +2715,7 @@
 * module/reshare: source meta before/after content
 * module/book: p2p info on settings
 
-### 3.8.0
+## [3.8.0]
 * core/base: moved to core folder
 * core/wordpress: new class
 * core/html: new class
@@ -2752,15 +2756,15 @@
 * module/headings: new module
 * module/ortho: new module
 
-### 3.7.6
+## [3.7.6]
 * module: skip empty items on dashboard glance
 * module: revert back to tweaks strings on setup
 * book: hook p2p connected to content actions
 
-### 3.7.5
+## [3.7.5]
 * today: fixed fatal
 
-### 3.7.4
+## [3.7.4]
 * module: setting for admin edit page ordering
 * module: p2p admin column
 * module: tweaks strings moved to current screen hook
@@ -2769,7 +2773,7 @@
 * entry: custom post updated messages
 * today: temporarily using text type for inputs
 
-### 3.7.3
+## [3.7.3]
 * module: check tax query var from constants
 * module: disable tax tagcloud
 * module: disable auto custom cpt permalink args
@@ -2777,7 +2781,7 @@
 * entry: quick edit box for section tax
 * magazine: quick edit box for section tax
 
-### 3.7.2
+## [3.7.2]
 * tweaks: link on tax icon
 * settings: delete all options via general tools
 * entry: default comment status setting
@@ -2788,11 +2792,11 @@
 * audit: admin box no checked on top
 * meta: hide before/after input if no js
 
-### 3.7.1
+## [3.7.1]
 * book: p2p support
 * today: setting for draft is in today
 
-### 3.7.0
+## [3.7.0]
 * all: internal api for at a glance dashboard widget
 * book: new module
 * meta: another step on migrating to the new meta fields api
@@ -2807,19 +2811,19 @@
 * specs: using label generators
 * tweaks: passing current post type to string helper
 
-### 3.6.1
+## [3.6.1]
 * all: Persian translation updated
 * today: fixed template fatal!
 * entry: fixed admin edit notice
 * reshare: using label generators
 
-### 3.6.0
+## [3.6.0]
 * entry: support for [gPeople](http://geminorum.ir/wordpress/gpeople)
 * estimated: fixed strict notice
 * event: new module
 * today: new module
 
-### 3.5.0
+## [3.5.0]
 * modulecore: fast forward registering tax meta boxes
 * modulecore: using filter for shortcodes
 * modulecore: help side bar for all modules
@@ -2830,10 +2834,10 @@
 * meta: now field can be an array
 * entry: revised, now focused on just be section/entry
 
-### 3.4.0
+## [3.4.0]
 * tools: orphaned term converter
 
-### 3.3.0
+## [3.3.0]
 * all: changes in edit-tags screen on WP4.5, [see](https://make.wordpress.org/core/2016/03/07/changes-to-the-term-edit-page-in-wordpress-4-5/)
 * modulecore: using edit tags link helper
 * modulecore: column cover image small size & link to original
@@ -2846,19 +2850,19 @@
 * tweaks: checklist tree, adopted from [Category Checklist Tree](https://wordpress.org/plugins/category-checklist-tree/) by [scribu](http://scribu.net/wordpress/category-checklist-tree)
 * tweaks: search box for cat taxes, adopted from [Searchable Categories](https://wordpress.org/plugins/searchable-categories/) by [Jason Corradino](http://ididntbreak.it)
 
-### 3.2.0
+## [3.2.0]
 * main: helping if module enabled
 * gallery: exclude after global filters
 
-### 3.1.0
+## [3.1.0]
 * enqueue front styles for drafts & estimated modules
 * skip registering alpha modules on production
 
-### 3.0.0
+## [3.0.0]
 * moved to [Semantic Versioning](http://semver.org/)
 * almost complete rewriting of all internal apis to reduce memory footprint
 
-### 0.2.13
+## [0.2.13]
 * all: foundation for new meta fields api
 * all: remove meta box api
 * all: load frontend arg changed
@@ -2875,64 +2879,64 @@
 * tweaks: fixed fallback for tax icon / attr
 * contest: code refactoring
 
-### 0.2.12
+## [0.2.12]
 * all: removed old options calls
 * all: new api for: tools page / save post / parse query / restrict manage posts / post parent field
 * settings: upgrade option tool
 * book: basic query class / see [Extending WP_Query](http://bradt.ca/blog/extending-wp_query/)
 
-### 0.2.11
+## [0.2.11]
 * all: new widget api based on [gTheme 3](https://github.com/geminorum/gtheme_03) code
 * all: better handling image sizes
 * entry: code refactoring
 * magazine: semantic default callback for cover
 
-### 0.2.10
+## [0.2.10]
 * all: check if theme support thumbnail for all posttypes
 * all: default terms api
 * reshare: support for cpt thumbnail
 
-### 0.2.9
+## [0.2.9]
 * all: internal api for: post type thumbnail / list table column / p2p
 * book: new module
 * magazine: code refactoring
 
-### 0.2.8
+## [0.2.8]
 * magazine: fallback for issues with no cover
 * reshare: template helper
 
-### 0.2.7
+## [0.2.7]
 * all: internal api for tinymce plugins
 * series: switch to template class structure
 
-### 0.2.6
+## [0.2.6]
 * tweaks: simple post excerpt meta box
 * audit: using internal tax meta box api
 
-### 0.2.5
+## [0.2.5]
 * reshare: new module
 
-### 0.2.4
+## [0.2.4]
 * magazine: new option for redirecting issue cpt archives
 * magazine: restrict issue cpt by span on admin edit
 * magazine: disable months dropdown for issue cpt on admin edit
 * meta: inline edit on post table override fixed!
 
-### 0.2.3
+## [0.2.3]
 * magazine: using pages dropdown instead of terms
 * magazine: separate save post and update post
 * magazine: handle trash and delete issues
 
-### 0.2.2
+## [0.2.2]
 * all: new `add_image_size()` method with post type support
 * all: moveup `set_meta()` and used as internal api. this will remove empty meta rows in db
 * alphabets: new module draft
 * gallery: new module draft
 * submit: new module draft
 
-### 0.2.1
+## [0.2.1]
 * cleanup and updated language pot
 * meta: support label tax in tweaks module
 
-### 0.2.0
+## [0.2.0]
 * github publish
