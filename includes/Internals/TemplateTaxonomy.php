@@ -81,12 +81,6 @@ trait TemplateTaxonomy
 
 			do_action( $this->hook_base( 'template', 'taxonomy', '404', 'init' ), $taxonomy );
 
-			if ( is_null( $empty_callback ) )
-				$empty_callback = [ $this, 'templatetaxonomy_empty_content' ];
-
-			nocache_headers();
-			// WordPress\Site::doNotCache();
-
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templatetaxonomy_get_empty_title( $taxonomy ),
@@ -94,7 +88,10 @@ trait TemplateTaxonomy
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
 				'taxonomy'   => $taxonomy,
-			], $empty_callback );
+			], [
+				'disable_robots' => TRUE,
+				'disable_cache'  => TRUE,
+			], $empty_callback ?? [ $this, 'templatetaxonomy_empty_content' ] );
 
 			$this->filter_append( 'post_class', [ 'empty-term', 'empty-term-'.$taxonomy ] );
 
@@ -104,9 +101,6 @@ trait TemplateTaxonomy
 		} else {
 
 			do_action( $this->hook_base( 'template', 'taxonomy', 'archive', 'init' ), $taxonomy );
-
-			if ( is_null( $archive_callback ) )
-				$archive_callback = [ $this, 'templatetaxonomy_archive_content' ];
 
 			// stored for late use
 			$this->current_queried = get_queried_object_id();
@@ -119,25 +113,16 @@ trait TemplateTaxonomy
 				'is_archive' => TRUE,
 				'is_tax'     => TRUE,
 				'taxonomy'   => $taxonomy,
-			], $archive_callback );
+			], [], $archive_callback ?? [ $this, 'templatetaxonomy_archive_content' ] );
 
 			$this->filter_append( 'post_class', [ 'archive-term', 'archive-term-'.$taxonomy ] );
 			// $this->filter( 'single_term_title' ); // no need on terms
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
-
-			$this->filter_false( 'feed_links_extra_show_tax_feed' );
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'archive_template' ) );
 		}
 
-		$this->filter_empty_string( 'previous_post_link' );
-		$this->filter_empty_string( 'next_post_link' );
-
 		$this->enqueue_styles();
-
-		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
 		return $template;
 	}

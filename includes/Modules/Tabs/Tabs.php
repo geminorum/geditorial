@@ -272,8 +272,10 @@ class Tabs extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$attachemts = WordPress\Media::getAttachments( $post->ID,
-			$this->mimetype_post_attachment_summary( $post ) );
+		$attachemts = WordPress\Attachment::list(
+			$post->ID,
+			$this->mimetype_post_attachment_summary( $post )
+		);
 
 		return (bool) count( $attachemts );
 	}

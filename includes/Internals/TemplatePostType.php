@@ -45,24 +45,18 @@ trait TemplatePostType
 
 			do_action( $this->hook_base( 'template', 'posttype', '404', 'init' ), $posttype );
 
-			if ( is_null( $empty_callback ) )
-				$empty_callback = [ $this, 'templateposttype_empty_content' ];
-
-			add_filter( 'wp_robots', 'wp_robots_no_robots' );
-			nocache_headers();
-			// WordPress\Site::doNotCache();
-
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templateposttype_get_empty_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_single'  => TRUE,
 				'is_404'     => TRUE,
-			], $empty_callback );
+			], [
+				'disable_robots' => TRUE,
+				'disable_cache'  => TRUE,
+			], $empty_callback ?? [ $this, 'templateposttype_empty_content' ] );
 
 			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
-			remove_filter( 'the_content', 'wpautop' );
-			remove_filter( 'the_content', 'wptexturize' );
 
 			// $template = get_singular_template();
 			$template = get_single_template();
@@ -75,27 +69,20 @@ trait TemplatePostType
 
 			do_action( $this->hook_base( 'template', 'newpost', 'init' ), $posttype );
 
-			if ( is_null( $newpost_callback ) )
-				$newpost_callback = [ $this, 'templateposttype_newpost_content' ];
-
-			add_filter( 'wp_robots', 'wp_robots_no_robots' );
-			nocache_headers();
-			// WordPress\Site::doNotCache();
-
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templateposttype_get_newpost_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], $newpost_callback );
+			], [
+				'disable_robots' => TRUE,
+				'disable_cache'  => TRUE,
+			], $newpost_callback ?? [ $this, 'templateposttype_newpost_content' ] );
 
 			$this->filter_append( 'post_class', [ 'newpost-posttype', 'newpost-'.$posttype ] );
 			$this->filter( 'post_type_archive_title', 2, 0, 'templateposttype_newpost' );
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2, 10, 'templateposttype_newpost' );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
-			remove_filter( 'the_content', 'wpautop' );
-			remove_filter( 'the_content', 'wptexturize' );
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'newpost_template' ) );
 
@@ -120,32 +107,22 @@ trait TemplatePostType
 
 			do_action( $this->hook_base( 'template', 'posttype', 'archive', 'init' ), $posttype );
 
-			if ( is_null( $archive_callback ) )
-				$archive_callback = [ $this, 'templateposttype_archive_content' ];
-
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templateposttype_get_archive_title( $posttype ),
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], $archive_callback );
+			], [], $archive_callback ?? [ $this, 'templateposttype_archive_content' ] );
 
 			$this->filter_append( 'post_class', [ 'archive-posttype', 'archive-'.$posttype ] );
 			$this->filter( 'post_type_archive_title', 2 );
 			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'archive_template' ) );
 		}
 
-		$this->filter_empty_string( 'previous_post_link' );
-		$this->filter_empty_string( 'next_post_link' );
-
 		$this->enqueue_styles();
-
-		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 
 		return $template;
 	}

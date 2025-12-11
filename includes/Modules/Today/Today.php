@@ -721,20 +721,14 @@ class Today extends gEditorial\Module
 			'post_author' => 0,
 			'post_type'   => $this->constant( 'main_posttype' ),
 			'is_single'   => TRUE,
-		], [ $this, 'the_day_content_callback' ],
+		], [], [ $this, 'the_day_content_callback' ],
 			[ $this, 'the_day_title_callback' ] );
 
-		$this->filter( 'get_the_date', 3 );
-		$this->filter_append( 'post_class', [ 'the-day' ] );
-
-		$this->filter_false( 'gtheme_navigation_crumb_archive' );
-		$this->filter_empty_string( 'previous_post_link' );
-		$this->filter_empty_string( 'next_post_link' );
-
 		$this->enqueue_styles();
-
-		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
+		$this->filter( 'get_the_date', 3 );
+		$this->filter_append( 'post_class', [
+			'the-day',
+		] );
 
 		// return get_singular_template();
 		return get_single_template();

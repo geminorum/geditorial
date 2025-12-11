@@ -309,13 +309,16 @@ class Archives extends gEditorial\Module
 					'post_type'  => 'page',
 					'is_page'    => TRUE,
 					'is_archive' => TRUE,
-				], [ $this, 'template_term_archives' ] );
-
-				$this->_template_include_extra( [ 'term-archives', 'term-archives-'.$taxonomy ] );
+				], [], [ $this, 'template_term_archives' ] );
 
 				$this->filter( 'get_the_archive_title', 1, 12, 'term' );
 				$this->filter( 'document_title_parts', 1, 12, 'term' );
-				$this->filter_false( 'gtheme_navigation_crumb_archive' );
+
+				$this->enqueue_styles();
+				$this->filter_append( 'post_class', [
+					'term-archives',
+					'term-archives-'.$taxonomy,
+				] );
 
 				return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
 			}
@@ -328,13 +331,16 @@ class Archives extends gEditorial\Module
 				'post_type'  => 'page',
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], [ $this, 'template_taxonomy_archives' ] );
-
-			$this->_template_include_extra( [ 'taxonomy-archives', 'taxonomy-archives-'.$taxonomy ] );
+			], [], [ $this, 'template_taxonomy_archives' ] );
 
 			$this->filter( 'get_the_archive_title', 1, 12, 'taxonomy' );
 			$this->filter( 'document_title_parts', 1, 12, 'taxonomy' );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
+
+			$this->enqueue_styles();
+			$this->filter_append( 'post_class', [
+				'taxonomy-archives',
+				'taxonomy-archives-'.$taxonomy,
+			] );
 
 			return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
 
@@ -353,31 +359,20 @@ class Archives extends gEditorial\Module
 				'post_type'  => $posttype,
 				'is_page'    => TRUE,
 				'is_archive' => TRUE,
-			], [ $this, 'templateposttype_archive_content' ] );
-
-			$this->_template_include_extra( 'archive-entry' );
+			], [], [ $this, 'templateposttype_archive_content' ] );
 
 			$this->filter( 'get_the_archive_title', 1, 12, 'posttype' );
 			$this->filter( 'document_title_parts', 1, 12, 'posttype' );
-			$this->filter_false( 'gtheme_navigation_crumb_archive' );
+
+			$this->enqueue_styles();
+			$this->filter_append( 'post_class', [
+				'archive-entry',
+			] );
 
 			return WordPress\Theme::getTemplate( $this->get_setting( 'posttype_'.$posttype.'_template' ) );
 		}
 
 		return $template;
-	}
-
-	private function _template_include_extra( $classes )
-	{
-		$this->filter_append( 'post_class', $classes );
-
-		$this->filter_empty_string( 'previous_post_link' );
-		$this->filter_empty_string( 'next_post_link' );
-
-		$this->enqueue_styles();
-
-		self::define( 'GNETWORK_DISABLE_CONTENT_ACTIONS', TRUE );
-		self::define( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS', TRUE );
 	}
 
 	public function get_the_archive_title_posttype( $name )

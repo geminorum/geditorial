@@ -136,7 +136,7 @@ class Attachments extends gEditorial\Module
 			return;
 
 		if ( $this->get_setting( 'fallback_alt_to_title' ) )
-			$this->filter( 'wp_get_attachment_image_attributes', 3, 8 );
+			$this->filter( 'get_attachment_image_attributes', 3, 8, FALSE, 'wp' );
 	}
 
 	public function setup_ajax()
@@ -242,7 +242,7 @@ class Attachments extends gEditorial\Module
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
 
-		$attachments = WordPress\Media::getAttachments( $post_id, '' );
+		$attachments = WordPress\Attachment::list( $post_id, '' );
 
 		if ( empty( $attachments ) )
 			return;
@@ -298,7 +298,7 @@ class Attachments extends gEditorial\Module
 
 	private function _render_summary_row( $post, $before, $after )
 	{
-		$attachments = WordPress\Media::getAttachments( $post->ID, '' );
+		$attachments = WordPress\Attachment::list( $post->ID, '' );
 
 		if ( ! $count = count( $attachments ) )
 			return;
@@ -339,7 +339,7 @@ class Attachments extends gEditorial\Module
 		echo $after;
 	}
 
-	public function wp_get_attachment_image_attributes( $attr, $attachment, $size )
+	public function get_attachment_image_attributes( $attr, $attachment, $size )
 	{
 		if ( is_array( $attr ) && array_key_exists( 'alt', $attr ) && '' == $attr['alt'] )
 			$attr['alt'] = get_the_title( $attachment );
