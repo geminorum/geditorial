@@ -425,7 +425,11 @@ class Plugin extends WordPress\Plugin
 		if ( ! defined( 'GNETWORK_VERSION' ) )
 			Helper::linkStyleSheetAdmin( 'gnetwork' );
 
-		if ( WordPress\IsIt::iFrame() )
+		// NOTE: must check before IFRAME
+		if ( WordPress\IsIt::customize() )
+			Helper::linkStyleSheetAdmin( 'customize' );
+
+		else if ( WordPress\IsIt::iFrame() )
 			Helper::linkStyleSheetAdmin( 'iframe' );
 
 		else if ( in_array( $screen->base, [
