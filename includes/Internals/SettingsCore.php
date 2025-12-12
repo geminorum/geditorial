@@ -109,6 +109,8 @@ trait SettingsCore
 		foreach ( $this->get_module_links() as $link )
 			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'customs', 'listtable' ], TRUE ) )
 				$this->register_button( $link['url'], $link['title'], 'link' );
+
+		$this->register_settings_extra_buttons( $module );
 	}
 
 	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
@@ -556,6 +558,15 @@ trait SettingsCore
 		if ( $this->setup_disabled() )
 			$this->strings = $this->filters( 'strings', $this->get_global_strings(), $this->module );
 
+		if ( $this->nonce_verify( 'settings', NULL, $module ) )
+			$this->handle_settings_extra_buttons( $module );
+
+		add_action( 'admin_notices',
+			function () use ( $module ) {
+				$this->notice_settings_extra_buttons( $module );
+			} );
+
+		// NOTE: DEPRECATED
 		if ( method_exists( $this, 'before_settings' ) )
 			$this->before_settings( $module );
 
@@ -772,4 +783,8 @@ trait SettingsCore
 
 		return Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
 	}
+
+	protected function notice_settings_extra_buttons( $module ) {}
+	protected function handle_settings_extra_buttons( $module ) {}
+	protected function register_settings_extra_buttons( $module ) {}
 }

@@ -176,22 +176,7 @@ class Cartable extends gEditorial\Module
 			'noops' => [
 				'type_taxonomy' => _n_noop( 'Cartable Type', 'Cartable Types', 'geditorial-cartable' ),
 			],
-			'settings' => [
-				'sync_terms' => _x( 'Sync Users & Groups', 'Button', 'geditorial-cartable' ),
-			],
 		];
-	}
-
-	public function before_settings( $module = FALSE )
-	{
-		if ( isset( $_POST['sync_terms'] ) )
-			$this->do_sync_terms();
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-		$this->register_button( 'sync_terms' );
 	}
 
 	public function init()
@@ -643,6 +628,20 @@ class Cartable extends gEditorial\Module
 				);
 			}
 		}
+	}
+
+	protected function handle_settings_extra_buttons( $module )
+	{
+		if ( isset( $_POST['sync_terms'] ) )
+			$this->do_sync_terms();
+	}
+
+	protected function register_settings_extra_buttons( $module )
+	{
+		$this->register_button(
+			'sync_terms',
+			_x( 'Sync Users & Groups', 'Button', 'geditorial-cartable' )
+		);
 	}
 
 	protected function do_sync_terms()

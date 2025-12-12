@@ -123,34 +123,6 @@ class Roled extends gEditorial\Module
 		return $posttypes;
 	}
 
-	public function before_settings( $module = FALSE )
-	{
-		// FIXME: WTF: nonce!
-
-		if ( isset( $_POST['duplicate_default_roles'] ) )
-			$this->duplicate_default_roles();
-
-		else if ( isset( $_POST['add_defaults_to_editor'] ) )
-			$this->add_default_caps( 'editor' );
-
-		else if ( isset( $_POST['remove_duplicate_roles'] ) )
-			$this->remove_duplicate_roles();
-
-		else if ( isset( $_POST['add_theme_to_editor'] ) )
-			$this->add_theme_caps( 'editor' );
-	}
-
-	public function default_buttons( $module = FALSE )
-	{
-		parent::default_buttons( $module );
-
-		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Button', 'geditorial-roled' ) );
-		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Button', 'geditorial-roled' ), 'danger' );
-		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Button', 'geditorial-roled' ) );
-
-		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roled' ) );
-	}
-
 	public function after_setup_theme()
 	{
 		if ( $this->get_setting( 'disable_builtin_post' ) ) {
@@ -314,6 +286,30 @@ class Roled extends gEditorial\Module
 		}
 
 		return $caps;
+	}
+
+	protected function handle_settings_extra_buttons( $module )
+	{
+		if ( isset( $_POST['duplicate_default_roles'] ) )
+			$this->duplicate_default_roles();
+
+		else if ( isset( $_POST['add_defaults_to_editor'] ) )
+			$this->add_default_caps( 'editor' );
+
+		else if ( isset( $_POST['remove_duplicate_roles'] ) )
+			$this->remove_duplicate_roles();
+
+		else if ( isset( $_POST['add_theme_to_editor'] ) )
+			$this->add_theme_caps( 'editor' );
+	}
+
+	protected function register_settings_extra_buttons( $module )
+	{
+		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Button', 'geditorial-roled' ) );
+		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Button', 'geditorial-roled' ), 'danger' );
+		$this->register_button( 'add_defaults_to_editor', _x( 'Add Default Caps to Editor Role', 'Button', 'geditorial-roled' ) );
+
+		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roled' ) );
 	}
 
 	private function duplicate_default_roles()
