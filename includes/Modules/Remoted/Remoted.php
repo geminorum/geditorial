@@ -12,6 +12,7 @@ use geminorum\gEditorial\WordPress;
 class Remoted extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\ViewEngines;
 
 	protected $deafults  = [ 'dashboard_widgets' => TRUE ];
 
@@ -39,20 +40,52 @@ class Remoted extends gEditorial\Module
 					'field'       => 'remote_base',
 					'type'        => 'url',
 					'title'       => _x( 'Remote Base', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Full URL into the remote base for receiving uploads.', 'Setting Description', 'geditorial-remoted' ),
+					'description' => _x( 'Full URL into the remote base of receiving uploads.', 'Setting Description', 'geditorial-remoted' ),
 				],
 				[
-					'field'       => 'remote_hash',
+					'field'       => 'remote_target',
 					'type'        => 'text',
-					'title'       => _x( 'Remote Hash', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Full URL into the remote base for receiving uploads.', 'Setting Description', 'geditorial-remoted' ),
-					'field_class' => [ 'medium-text', 'code-text' ],
+					'title'       => _x( 'Remote Target', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Relative path for the receiving uploads. Leave empty for the base.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'regular-text', 'code-text' ],
+				],
+				[
+					'field'       => 'remote_identifier',
+					'type'        => 'text',
+					'title'       => _x( 'Remote Identifier', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Unique string for the receiver. Must start with a letter.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'regular-text', 'code-text' ],
+					'default'     => $this->_generate_identifier(),
+				],
+				[
+					'field'       => 'remote_token',
+					'type'        => 'text',
+					'title'       => _x( 'Remote Token', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Communication key for the receiver. Only letters and numbers.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'regular-text', 'code-text' ],
+					'default'     => $this->_generate_token(),
 				],
 			],
 			'_roles' => [
 				'uploads_roles' => [ NULL, $this->get_settings_default_roles() ],
 			],
 		];
+	}
+
+	public function setup_disabled()
+	{
+		$settings = [
+			'remote_base',
+			// 'remote_target', // targets can be empty
+			'remote_identifier',
+			'remote_token',
+		];
+
+		foreach ( $settings as $setting )
+			if ( ! $this->get_setting( $setting ) )
+				return TRUE;
+
+		return FALSE;
 	}
 
 	public function dashboard_widgets()
@@ -66,7 +99,7 @@ class Remoted extends gEditorial\Module
 			'remote-uploads',
 			_x( 'Remote Uploads', 'Dashboard Widget Title', 'geditorial-remoted' ),
 			Core\HTTP::htmlStatus(
-				Core\HTTP::getStatus( $remote, ! WordPress\IsIt::dev() ),
+				Core\HTTP::getStatus( add_query_arg( 'ready', '', $remote ), ! WordPress\IsIt::dev() ),
 				NULL,
 				'<code class="postbox-title-action -status" title="%s" style="color:%s">%s</code>'
 			)
@@ -126,9 +159,147 @@ class Remoted extends gEditorial\Module
 		if ( ! $base = $this->get_setting( 'remote_base' ) )
 			return FALSE;
 
-		if ( ! $hash = $this->get_setting( 'remote_hash' ) )
+		if ( ! $identifier = $this->get_setting( 'remote_identifier' ) )
 			return FALSE;
 
-		return sprintf( '%s/%s.php', Core\URL::untrail( $base ), $hash );
+		if ( ! $token = $this->get_setting( 'remote_token' ) )
+			return FALSE;
+
+		return add_query_arg( [
+			'token' => $token,
+		], sprintf(
+			'%s/%s/%s.php',
+			Core\URL::untrail( $base ),
+			$identifier,
+			$identifier
+		) );
+	}
+
+	// NOTE: must start with a letter.
+	private function _generate_identifier( $length = NULL )
+	{
+		return sprintf( 'ph%s', strtoupper( wp_generate_password( $length ?? 8, FALSE ) ) );
+	}
+
+	private function _generate_token( $length = NULL )
+	{
+		return wp_generate_password( $length ?? 20, FALSE );
+	}
+
+	protected function handle_settings_extra_buttons( $module )
+	{
+		if ( isset( $_POST['generate_receiver'] ) ) {
+
+			if ( $this->_do_generate_receiver() )
+				WordPress\Redirect::doReferer( 'maked' );
+
+		} else if ( isset( $_POST['cleanup_receiver'] ) ) {
+
+			if ( $this->_do_cleanup_receiver() )
+				WordPress\Redirect::doReferer( 'purged' );
+		}
+	}
+
+	protected function register_settings_extra_buttons( $module )
+	{
+		if ( ! $identifier = $this->get_setting( 'remote_identifier' ) )
+			return;
+
+		$destination = WP_CONTENT_DIR;
+		$filename    = sprintf( '%s.zip', $identifier );
+
+		if ( Core\File::exists( $filename, $destination ) ) {
+
+			$this->register_button(
+				sprintf( '%s/%s', Core\URL::fromPath( $destination ), $filename ),
+				_x( 'Download Receiver', 'Button', 'geditorial-remoted' ),
+				'link'
+			);
+
+			$this->register_button(
+				'cleanup_receiver',
+				_x( 'Cleanup Receiver', 'Button', 'geditorial-remoted' ),
+				'danger'
+			);
+
+		} else {
+
+			$this->register_button(
+				'generate_receiver',
+				_x( 'Generate Receiver', 'Button', 'geditorial-remoted' )
+			);
+		}
+	}
+
+	private function _do_cleanup_receiver( $destination = NULL, $template = NULL )
+	{
+		if ( ! $identifier = $this->get_setting( 'remote_identifier' ) )
+			return FALSE;
+
+		Core\File::removeDir( Core\File::join( get_temp_dir(), $identifier ) );
+
+		@unlink( Core\File::join(
+			$destination ?? WP_CONTENT_DIR,
+			sprintf( '%s.zip', $identifier )
+		) );
+
+		return TRUE;
+	}
+
+	private function _do_generate_receiver( $destination = NULL, $template = NULL )
+	{
+		if ( ! $this->_do_cleanup_receiver( $destination, $template ) )
+			WordPress\Redirect::doReferer( 'wrong' );
+
+		if ( ! $filename = Core\File::tempName() )
+			WordPress\Redirect::doReferer( 'error' );
+
+		if ( ! $view = $this->viewengine__view_by_template( $template ?? 'default', 'receiver' ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		$data = [
+			'base'       => $this->get_setting( 'remote_base', '' ),
+			'identifier' => $this->get_setting( 'remote_identifier', '' ),
+			'token'      => $this->get_setting( 'remote_token', '' ),
+			'target'     => $this->get_setting( 'remote_target', '' ),
+		];
+
+		if ( ! $html = $this->viewengine__render( $view, $data, FALSE ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		if ( ! @file_put_contents( $filename, $html ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		$path = Core\File::join( get_temp_dir(), $data['identifier'] );
+
+		if ( ! wp_mkdir_p( $path ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		if ( ! copy( $filename, Core\File::join( $path, sprintf( '%s.php', $data['identifier'] ) ) ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		// MAYBE: move-up!
+		$htaccess = '# BEGIN PROTECT DIR'."\n";
+		$htaccess.= 'Options -Indexes'."\n";
+		$htaccess.= "\n";
+		$htaccess.= '<FilesMatch "debug\.log|error_log">'."\n";
+  		$htaccess.= "\t".'Order allow,deny'."\n";
+  		$htaccess.= "\t".'Deny from all'."\n";
+		$htaccess.= '</FilesMatch>'."\n";
+		$htaccess.= '# END PROTECT DIR'."\n";
+
+		Core\File::putContents( '.htaccess', $htaccess, $path, FALSE );
+		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+		Core\File::putDoNotBackup( $path );
+
+		$zipped = Core\File::join(
+			$destination ?? WP_CONTENT_DIR,
+			sprintf( '%s.zip', $data['identifier'] )
+		);
+
+		if ( ! Core\Zip::zipDir( $path, $zipped ) )
+			WordPress\Redirect::doReferer( 'error' );
+
+		return Core\File::normalize( $zipped );
 	}
 }
