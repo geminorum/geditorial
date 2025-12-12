@@ -745,9 +745,14 @@ class MetaBox extends WordPress\Main
 
 	public static function classEditorBox( $screen, $id = 'postexcerpt' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, static function ( $classes ) {
-			return array_merge( $classes, [ static::BASE.'-wrap', '-admin-postbox', '-admin-postbox-editorbox' ] );
-		} );
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$id,
+			static function ( $classes ) {
+				return Core\Arraay::prepString( $classes, [
+					static::BASE.'-wrap',
+					'-admin-postbox',
+					'-admin-postbox-editorbox',
+				] );
+			} );
 	}
 
 	public static function fieldEditorBox( $content = '', $id = 'excerpt', $title = NULL, $atts = [] )

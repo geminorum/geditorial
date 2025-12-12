@@ -472,9 +472,10 @@ class Module extends WordPress\Module
 			return '';
 
 		if ( $search_query )
-			add_filter( 'get_search_query', static function ( $query ) use ( $search_query ) {
-				return $query ? $query : $search_query;
-			} );
+			add_filter( 'get_search_query',
+				static function ( $query ) use ( $search_query ) {
+					return $query ? $query : $search_query;
+				} );
 
 		$form = get_search_form( FALSE );
 
@@ -511,9 +512,15 @@ class Module extends WordPress\Module
 
 	protected function class_metabox( $screen, $context = 'mainbox' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ), function ( $classes ) use ( $context ) {
-			return array_merge( $classes, [ $this->base.'-wrap', '-admin-postbox', '-'.$this->key, '-'.$this->key.'-'.$context ] );
-		} );
+		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ),
+			function ( $classes ) use ( $context ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				] );
+			} );
 	}
 
 	// TODO: filter the results

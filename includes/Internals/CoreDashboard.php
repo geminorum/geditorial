@@ -44,18 +44,18 @@ trait CoreDashboard
 		// if ( ! $this->cuc( $context ) )
 		// 	return FALSE;
 
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'widget_title',
-				$this->get_setting( 'summary_scope', 'all' ),
-				$context,
-				_x( 'Editorial Content Summary', 'Module: Dashboard Widget Title', 'geditorial-admin' )
-			);
+		$title = $title ?? $this->get_string(
+			'widget_title',
+			$this->get_setting( 'summary_scope', 'all' ),
+			$context,
+			_x( 'Editorial Content Summary', 'Module: Dashboard Widget Title', 'geditorial-admin' )
+		);
 
-		$screen = get_current_screen();
-		$hook   = Core\Text::sanitizeHook( $name );
-		$id     = $this->classs( $name );
-		$title  = $this->filters( 'dashboard_widget_title', $title, $name, $context );
-		$args   = array_merge( [
+		$screen  = get_current_screen();
+		$hook    = Core\Text::sanitizeHook( $name );
+		$metabox = $this->classs( $name );
+		$title   = $this->filters( 'dashboard_widget_title', $title, $name, $context );
+		$args    = array_merge( [
 			'__widget_basename' => $title, // passing title without extra markup
 		], $extra );
 
@@ -68,38 +68,51 @@ trait CoreDashboard
 			switch ( $action ) {
 
 				case 'refresh':
+
 					$title.= gEditorial\MetaBox::titleActionRefresh( $hook );
+
 					break;
 
 				case 'info' :
 
-					if ( method_exists( $this, 'get_widget_'.$hook.'_info' ) )
-						$title.= WordPress\MetaBox::markupTitleInfo( call_user_func( [ $this, 'get_widget_'.$hook.'_info' ] ) );
+					$info_callback = sprintf( 'get_widget_%s_info', $hook );
+
+					if ( method_exists( $this, $info_callback ) )
+						$title.= WordPress\MetaBox::markupTitleInfo(
+							call_user_func( [ $this, $info_callback ] )
+						);
 
 					break;
 
 				default:
+
 					$title.= $action;
 			}
 		}
 
-		if ( is_null( $callback ) )
-			$callback = [ $this, 'render_widget_'.$hook ];
+		add_meta_box(
+			$metabox,
+			$title,
+			$callback ?? [ $this, sprintf( 'render_widget_%s', $hook ) ],
+			$screen,
+			'normal',
+			'default',
+			$args
+		);
 
-		add_meta_box( $id, $title, $callback, $screen, 'normal', 'default', $args );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $name, $context ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-admin-postbox'.'-'.$name,
+					'-'.$this->key,
+					'-'.$this->key.'-'.$name,
+					'-context-'.$context,
+				] );
+			} );
 
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id, function ( $classes ) use ( $name, $context ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-admin-postbox'.'-'.$name,
-				'-'.$this->key,
-				'-'.$this->key.'-'.$name,
-				'-context-'.$context,
-			] );
-		} );
-
-		if ( in_array( $id, get_hidden_meta_boxes( $screen ) ) )
+		if ( in_array( $metabox, get_hidden_meta_boxes( $screen ) ) )
 			return FALSE; // prevent scripts
 
 		return TRUE;

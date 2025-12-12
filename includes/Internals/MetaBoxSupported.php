@@ -54,12 +54,12 @@ trait MetaBoxSupported
 
 		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
-				return array_merge( $classes, [
+				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
 					'-admin-postbox',
 					'-'.$this->key,
 					'-'.$this->key.'-'.$context,
-				], (array) $extra );
+				], $extra );
 			} );
 	}
 
@@ -108,12 +108,12 @@ trait MetaBoxSupported
 
 		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
-				return array_merge( $classes, [
+				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
 					'-admin-postbox',
 					'-'.$this->key,
 					'-'.$this->key.'-'.$context,
-				], (array) $extra );
+				], $extra );
 			} );
 	}
 

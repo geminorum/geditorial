@@ -204,7 +204,7 @@ class NamesInPersian extends Core\Base
 
 		if ( is_array( $value ) ) {
 
-			$part = array_map( function( $value ) {
+			$part = array_map( function ( $value ) {
 
 				if ( 'ZWNJ' == $value )
 					return $value;

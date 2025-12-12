@@ -46,77 +46,78 @@ trait CoreCapabilities
 		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
-		add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+		add_filter( 'map_meta_cap',
+			function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
 
-			switch ( $cap ) {
+				switch ( $cap ) {
 
-				case 'edit_post':
-				case 'edit_page':
-				case 'delete_post':
-				case 'delete_page':
-				case 'publish_post':
+					case 'edit_post':
+					case 'edit_page':
+					case 'delete_post':
+					case 'delete_page':
+					case 'publish_post':
 
-					$locking = $this->get_setting( sprintf( 'taxonomy_%s_locking_terms', $taxonomy[0] ), [] );
+						$locking = $this->get_setting( sprintf( 'taxonomy_%s_locking_terms', $taxonomy[0] ), [] );
 
-					if ( empty( $locking ) )
-						return $caps;
+						if ( empty( $locking ) )
+							return $caps;
 
-					if ( ! $post = WordPress\Post::get( $args[0] ) )
-						return $caps;
+						if ( ! $post = WordPress\Post::get( $args[0] ) )
+							return $caps;
 
-					if ( ! $this->posttype_supported( $post->post_type ) )
-						return $caps;
+						if ( ! $this->posttype_supported( $post->post_type ) )
+							return $caps;
 
-					foreach ( $locking as $term_id )
-						if ( is_object_in_term( $post->ID, $taxonomy[0], (int) $term_id ) )
-							return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
-								? $caps
-								: [ 'do_not_allow' ];
+						foreach ( $locking as $term_id )
+							if ( is_object_in_term( $post->ID, $taxonomy[0], (int) $term_id ) )
+								return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
+									? $caps
+									: [ 'do_not_allow' ];
 
-					break;
+						break;
 
-				case 'manage_'.$taxonomy[0]:  // NOTE: DEPRECATED
-				case 'edit_'.$taxonomy[0]:    // NOTE: DEPRECATED
-				case 'delete_'.$taxonomy[0]:  // NOTE: DEPRECATED
+					case 'manage_'.$taxonomy[0]:  // NOTE: DEPRECATED
+					case 'edit_'.$taxonomy[0]:    // NOTE: DEPRECATED
+					case 'delete_'.$taxonomy[0]:  // NOTE: DEPRECATED
 
-				case 'manage_'.$taxonomy[1]:
-				case 'edit_'.$taxonomy[1]:
-				case 'delete_'.$taxonomy[1]:
+					case 'manage_'.$taxonomy[1]:
+					case 'edit_'.$taxonomy[1]:
+					case 'delete_'.$taxonomy[1]:
 
-					return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
-						? [ 'exist' ]
-						: [ 'do_not_allow' ];
+						return $this->corecaps_taxonomy_role_can( $constant, 'manage', $user_id )
+							? [ 'exist' ]
+							: [ 'do_not_allow' ];
 
-					break;
+						break;
 
-				case 'assign_'.$taxonomy[0]:  // NOTE: DEPRECATED
-				case 'assign_'.$taxonomy[1]:
+					case 'assign_'.$taxonomy[0]:  // NOTE: DEPRECATED
+					case 'assign_'.$taxonomy[1]:
 
-					return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
-						? [ 'exist' ]
-						: [ 'do_not_allow' ];
+						return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
+							? [ 'exist' ]
+							: [ 'do_not_allow' ];
 
-					break;
+						break;
 
-				case 'assign_term':
+					case 'assign_term':
 
-					$term = get_term( (int) $args[0] );
+						$term = get_term( (int) $args[0] );
 
-					if ( ! $term || is_wp_error( $term ) )
-						return $caps;
+						if ( ! $term || is_wp_error( $term ) )
+							return $caps;
 
-					if ( $taxonomy != $term->taxonomy )
-						return $caps;
+						if ( $taxonomy != $term->taxonomy )
+							return $caps;
 
-					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-						return $caps;
+						if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+							return $caps;
 
-					if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-						return [ 'do_not_allow' ];
-			}
+						if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+							return [ 'do_not_allow' ];
+				}
 
-			return $caps;
-		}, 10, 4 );
+				return $caps;
+			}, 10, 4 );
 
 		return TRUE;
 	}

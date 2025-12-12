@@ -29,17 +29,26 @@ trait PairedRowActions
 		$label = $this->get_posttype_label( $constants[0], 'add_new_item' );
 		$key   = sprintf( 'paired_add_new_%s', $paired_posttype );
 
-		add_filter( 'gnetwork_taxonomy_bulk_actions', static function ( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
-			return $taxonomy === $taxonomy_origin ? array_merge( $actions, [ $key => $label ] ) : $actions;
-		}, 20, 2 );
+		add_filter( 'gnetwork_taxonomy_bulk_actions',
+			static function ( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
+				return $taxonomy === $taxonomy_origin
+					? array_merge( $actions, [ $key => $label ] )
+					: $actions;
+			}, 20, 2 );
 
-		add_filter( 'gnetwork_taxonomy_bulk_input', function ( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
-			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_input_add_new_item' ] : $callback;
-		}, 20, 3 );
+		add_filter( 'gnetwork_taxonomy_bulk_input',
+			function ( $callback, $action, $taxonomy ) use ( $taxonomy_origin, $key ) {
+				return ( $taxonomy === $taxonomy_origin && $action === $key )
+					? [ $this, 'paired_bulk_input_add_new_item' ]
+					: $callback;
+			}, 20, 3 );
 
-		add_filter( 'gnetwork_taxonomy_bulk_callback', function ( $callback, $action, $taxonomy )  use ( $taxonomy_origin, $key ) {
-			return ( $taxonomy === $taxonomy_origin && $action === $key ) ? [ $this, 'paired_bulk_action_add_new_item' ] : $callback;
-		}, 20, 3 );
+		add_filter( 'gnetwork_taxonomy_bulk_callback',
+			function ( $callback, $action, $taxonomy ) use ( $taxonomy_origin, $key ) {
+				return ( $taxonomy === $taxonomy_origin && $action === $key )
+					? [ $this, 'paired_bulk_action_add_new_item' ]
+					: $callback;
+			}, 20, 3 );
 
 		return $key;
 	}

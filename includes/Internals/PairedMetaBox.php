@@ -198,14 +198,15 @@ trait PairedMetaBox
 			'high'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], $extra );
+			} );
 	}
 
 	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = NULL, $extra = [] )
@@ -260,14 +261,15 @@ trait PairedMetaBox
 			'low'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], $extra );
+			} );
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
 			Scripts::enqueueColorBox();
@@ -360,23 +362,25 @@ trait PairedMetaBox
 			'side'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], $extra );
+			} );
 
-		add_action( $this->hook( $action ), function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+		add_action( $this->hook( $action ),
+			function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
-			if ( ( $newpost = $this->get_setting( 'quick_newpost' ) ) && method_exists( $this, 'do_render_thickbox_newpostbutton' ) )
-				$this->do_render_thickbox_newpostbutton( $post, $constants[0], 'newpost', [ 'target' => 'paired' ] );
+				if ( ( $newpost = $this->get_setting( 'quick_newpost' ) ) && method_exists( $this, 'do_render_thickbox_newpostbutton' ) )
+					$this->do_render_thickbox_newpostbutton( $post, $constants[0], 'newpost', [ 'target' => 'paired' ] );
 
-			$this->paired_do_render_metabox( $post, $constants[0], $constants[1], $constants[2], $newpost );
+				$this->paired_do_render_metabox( $post, $constants[0], $constants[1], $constants[2], $newpost );
 
-		}, 10, 4 );
+			}, 10, 4 );
 
 		if ( $this->get_setting( 'quick_newpost' ) )
 			Scripts::enqueueThickBox();
@@ -391,14 +395,15 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( sprintf( 'save_post_%s', $posttype ), function ( $post_id, $post, $update ) use ( $constants ) {
+		add_action( sprintf( 'save_post_%s', $posttype ),
+			function ( $post_id, $post, $update ) use ( $constants ) {
 
-			if ( ! $this->is_save_post( $post, $this->posttypes() ) )
-				return;
+				if ( ! $this->is_save_post( $post, $this->posttypes() ) )
+					return;
 
-			$this->paired_do_store_metabox( $post, $constants[0], $constants[1], $constants[2] );
+				$this->paired_do_store_metabox( $post, $constants[0], $constants[1], $constants[2] );
 
-		}, 20, 3 );
+			}, 20, 3 );
 
 		return TRUE;
 	}
@@ -517,32 +522,34 @@ trait PairedMetaBox
 			'advanced'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], $extra );
+			} );
 
-		add_action( $this->hook( $action ), function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+		add_action( $this->hook( $action ),
+			function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
 
-			if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
-				return Core\HTML::desc( $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ), TRUE, 'field-wrap -empty' );
+				if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
+					return Core\HTML::desc( $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ), TRUE, 'field-wrap -empty' );
 
-			echo $this->wrap_open( 'field-wrap -list' ).'<ol>';
+				echo $this->wrap_open( 'field-wrap -list' ).'<ol>';
 
-			$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
-			// $before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
-			$after  = '</li>';
+				$before = $this->wrap_open_row( $this->constant( $constants[1] ), '-paired-row' );
+				// $before.= $this->get_column_icon( FALSE, NULL, NULL, $constants[1] );
+				$after  = '</li>';
 
-			foreach ( $items as $item )
-				echo $before.WordPress\Post::fullTitle( $item, 'overview' ).$after;
+				foreach ( $items as $item )
+					echo $before.WordPress\Post::fullTitle( $item, 'overview' ).$after;
 
-			echo '</ol></div>';
+				echo '</ol></div>';
 
-		}, 10, 4 );
+			}, 10, 4 );
 	}
 
 	// NOTE: alternative to `listbox`
@@ -613,14 +620,15 @@ trait PairedMetaBox
 			'low'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ), function ( $classes ) use ( $context, $extra ) {
-			return array_merge( $classes, [
-				$this->base.'-wrap',
-				'-admin-postbox',
-				'-'.$this->key,
-				'-'.$this->key.'-'.$context,
-			], (array) $extra );
-		} );
+		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+			function ( $classes ) use ( $context, $extra ) {
+				return Core\Arraay::prepString( $classes, [
+					$this->base.'-wrap',
+					'-admin-postbox',
+					'-'.$this->key,
+					'-'.$this->key.'-'.$context,
+				], $extra );
+			} );
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
 			Scripts::enqueueColorBox();

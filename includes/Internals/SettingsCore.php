@@ -107,18 +107,15 @@ trait SettingsCore
 			$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial-admin' ), 'danger' );
 
 		foreach ( $this->get_module_links() as $link )
-			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'customs', 'listtable' ] ) )
+			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'customs', 'listtable' ], TRUE ) )
 				$this->register_button( $link['url'], $link['title'], 'link' );
 	}
 
 	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
 	{
-		if ( is_null( $value ) )
-			$value = $this->get_string( $key, 'buttons', 'settings', NULL );
-
 		$this->buttons[] = [
 			'key'   => $key,
-			'value' => $value,
+			'value' => $value ?? $this->get_string( $key, 'buttons', 'settings', NULL ),
 			'type'  => $type,
 			'atts'  => $atts,
 		];
@@ -129,11 +126,13 @@ trait SettingsCore
 		if ( FALSE !== $wrap )
 			echo $this->wrap_open_buttons( $wrap );
 
-		if ( is_null( $buttons ) )
-			$buttons = $this->buttons;
-
-		foreach ( $buttons as $button )
-			gEditorial\Settings::submitButton( $button['key'], $button['value'], $button['type'], $button['atts'] );
+		foreach ( $buttons ?? $this->buttons as $button )
+			gEditorial\Settings::submitButton(
+				$button['key'],
+				$button['value'],
+				$button['type'],
+				$button['atts']
+			);
 
 		if ( FALSE !== $wrap )
 			echo '</p>';
@@ -141,9 +140,7 @@ trait SettingsCore
 
 	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = FALSE )
 	{
-		if ( is_null( $sub ) )
-			$sub = $this->module->name;
-
+		$sub   = $sub ?? $this->module->name;
 		$class = [
 			$this->base.'-form',
 			'-form',
@@ -156,7 +153,7 @@ trait SettingsCore
 
 		echo '<form enctype="multipart/form-data" class="'.Core\HTML::prepClass( $class ).'" method="post" action="">';
 
-			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports', 'customs' ] ) )
+			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports', 'customs' ], TRUE ) )
 				$this->render_form_fields( $sub, $action, $context );
 
 			if ( $check && $sidebox ) {

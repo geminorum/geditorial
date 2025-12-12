@@ -17,35 +17,36 @@ trait PairedRest
 		if ( empty( $object ) || empty( $object->show_in_rest ) )
 			return FALSE;
 
-		add_action( 'rest_api_init', function () use ( $object ) {
-			register_rest_route( $object->rest_namespace,
-				'/'.$object->rest_base.'/(?P<parent>[\d]+)/'.Services\Paired::PAIRED_REST_FROM,
-				[
-					'args' => [
-						'parent' => Services\RestAPI::defineArgument_postid( _x( 'The ID for the parent of the paired.', 'Internal: PairedRest', 'geditorial' ) ),
-					],
+		add_action( 'rest_api_init',
+			function () use ( $object ) {
+				register_rest_route( $object->rest_namespace,
+					'/'.$object->rest_base.'/(?P<parent>[\d]+)/'.Services\Paired::PAIRED_REST_FROM,
 					[
-						'methods'             => \WP_REST_Server::READABLE,
-						'callback'            => [ $this, 'pairedrest_get_posts' ],
-						'permission_callback' => [ $this, 'pairedrest_get_posts_permissions_check' ],
-						// 'args'                => $this->pairedrest_get_collection_params(), // TODO
-					],
-					[
-						'methods'             => \WP_REST_Server::CREATABLE,
-						'callback'            => [ $this, 'pairedrest_connect_post' ],
-						'permission_callback' => [ $this, 'pairedrest_connect_post_permissions_check' ],
-						// 'args'                => $this->pairedrest_get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
-					],
-					[
-						'methods'             => \WP_REST_Server::DELETABLE,
-						'callback'            => [ $this, 'pairedrest_disconnect_post' ],
-						'permission_callback' => [ $this, 'pairedrest_disconnect_post_permissions_check' ],
-						// 'args'                => $this->pairedrest_get_endpoint_args_for_item_schema( WP_REST_Server::DELETABLE ),
-					],
-					// 'schema' => [ $this, 'pairedrest_get_public_item_schema' ], // TODO
-				]
-			);
-		}, 999 );
+						'args' => [
+							'parent' => Services\RestAPI::defineArgument_postid( _x( 'The ID for the parent of the paired.', 'Internal: PairedRest', 'geditorial' ) ),
+						],
+						[
+							'methods'             => \WP_REST_Server::READABLE,
+							'callback'            => [ $this, 'pairedrest_get_posts' ],
+							'permission_callback' => [ $this, 'pairedrest_get_posts_permissions_check' ],
+							// 'args'                => $this->pairedrest_get_collection_params(), // TODO
+						],
+						[
+							'methods'             => \WP_REST_Server::CREATABLE,
+							'callback'            => [ $this, 'pairedrest_connect_post' ],
+							'permission_callback' => [ $this, 'pairedrest_connect_post_permissions_check' ],
+							// 'args'                => $this->pairedrest_get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ),
+						],
+						[
+							'methods'             => \WP_REST_Server::DELETABLE,
+							'callback'            => [ $this, 'pairedrest_disconnect_post' ],
+							'permission_callback' => [ $this, 'pairedrest_disconnect_post_permissions_check' ],
+							// 'args'                => $this->pairedrest_get_endpoint_args_for_item_schema( WP_REST_Server::DELETABLE ),
+						],
+						// 'schema' => [ $this, 'pairedrest_get_public_item_schema' ], // TODO
+					]
+				);
+			}, 999 );
 	}
 
 	public function pairedrest_get_posts_permissions_check( $request )

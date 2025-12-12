@@ -63,8 +63,11 @@ class Dashboard extends gEditorial\Module
 	{
 		parent::default_buttons( $module );
 
-		$this->register_button( $this->_get_dashboard_permalink(),
-			_x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ), 'link' );
+		$this->register_button(
+			$this->_get_dashboard_permalink(),
+			_x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ),
+			'link'
+		);
 	}
 
 	public function setup_disabled()
@@ -87,7 +90,7 @@ class Dashboard extends gEditorial\Module
 
 		if ( is_admin() ) {
 
-			// FIXME: move to current_screen for pages
+			// FIXME: move this to `current_screen` for pages
 			$this->filter( 'display_post_states', 2, 12 );
 
 		} else {

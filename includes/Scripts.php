@@ -181,12 +181,12 @@ class Scripts extends WordPress\Main
 (function () {
 	const clipboard = new ClipboardJS('{$selector}');
 
-	clipboard.on('success', function(e) {
+	clipboard.on('success', function (e) {
 		console.info(e.action + ':', e.text);
 		e.clearSelection();
 	});
 
-	clipboard.on('error', function(e) {
+	clipboard.on('error', function (e) {
 		console.error('Action:', e.action);
 		console.error('Trigger:', e.trigger);
 	});
