@@ -66,6 +66,32 @@ class Remoted extends gEditorial\Module
 					'default'     => $this->_generate_token(),
 				],
 			],
+			'_config' => [
+				[
+					'field'       => 'mimetype_extensions',
+					'type'        => 'text',
+					'title'       => _x( 'Mime-type Extensions', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the list of extensions for accepted mime-types. Separate with latin comma.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'regular-text', 'code-text' ],
+					'placeholder' => 'mp3,mp4,pdf,jpg,png',
+				],
+				[
+					'field'       => 'chunk_size',
+					'type'        => 'text',
+					'title'       => _x( 'Chunk Size', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Slices the file into number of bytes. Supports b, kb, mb, gb, tb suffixes also.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => '200kb',
+				],
+				[
+					'field'       => 'max_file_size',
+					'type'        => 'text',
+					'title'       => _x( 'Max File Size', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the maximum file size in bytes. Supports b, kb, mb, gb, tb suffixes also.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'medium-text', 'code-text' ],
+					'placeholder' => '150mb',
+				],
+			],
 			'_roles' => [
 				'uploads_roles' => [ NULL, $this->get_settings_default_roles() ],
 			],
@@ -136,17 +162,13 @@ class Remoted extends gEditorial\Module
 				'wrong' => gEditorial\Plugin::wrong(),
 			],
 			'config' => [
-				'chunk'   => '200kb',   // '1mb' // TODO: setting
-				'maxsize' => '150mb',   // TODO: setting
-
 				'remote'    => $remote,
-				'mimetypes' => [
-					// NOTE: must be js compatible array
-					[
-						'title'      => 'Audio files',   // TODO: setting
-						'extensions' => 'mp3,mp4,pdf',   // TODO: setting
-					],
-				],
+				'chunk'     => $this->get_setting( 'chunk_size' ) ?: '200kb',
+				'maxsize'   => $this->get_setting( 'max_file_size' ) ?: '150mb',
+				'mimetypes' => [ [
+					'title'      => _x( 'Supported Extensions', 'Filter Title', 'geditorial-remoted' ),
+					'extensions' => $this->get_setting( 'mimetype_extensions' ) ?: 'mp3,mp4,pdf,jpg,png',
+				] ],
 			],
 		], 'remote-uploads', [
 			'jquery',
