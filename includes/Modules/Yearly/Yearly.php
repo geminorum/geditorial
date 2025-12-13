@@ -68,6 +68,15 @@ class Yearly extends gEditorial\Module
 				'show_in_navmenus',
 				'archive_override',
 			],
+			'_misc' => [
+				[
+					'field'       => 'append_posttypes',
+					'type'        => 'posttypes',
+					'title'       => _x( 'Append to Titles', 'Setting Title', 'geditorial-yearly' ),
+					'description' => _x( 'Automatically adds a suffix of assigned year to the title of the selected post-types.', 'Settings', 'geditorial-yearly' ),
+					'values'      => $this->list_posttypes(),
+				],
+			],
 		];
 	}
 
@@ -125,6 +134,8 @@ class Yearly extends gEditorial\Module
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
+		$this->_init_append_to_title();
+
 		if ( is_admin() )
 			return;
 
@@ -162,6 +173,47 @@ class Yearly extends gEditorial\Module
 					);
 			}
 		}
+	}
+
+	private function _init_append_to_title()
+	{
+		if ( ! $posttypes = $this->get_setting_posttypes( 'append' ) )
+			return FALSE;
+
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		foreach ( $posttypes as $posttype ) {
+
+			if ( ! $this->posttype_supported( $posttype ) )
+				continue;
+
+			add_filter( 'the_title',
+				function ( $post_title, $post_id = NULL ) use ( $posttype, $taxonomy ) {
+
+					if ( ! $post = WordPress\Post::get( $post_id ) )
+						return $post_title;
+
+					if ( $posttype !== $post->post_type )
+						return $post_title;
+
+					if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
+						return $post_title;
+
+					foreach ( $terms as $term ) {
+
+						if ( ! $name = WordPress\Term::title( $term, FALSE ) )
+							continue;
+
+						// TODO: customize the template
+						$post_title.= sprintf( ' [%s]', apply_filters( 'string_format_i18n', $name ) );
+					}
+
+					return $post_title;
+
+				}, 8, 2 );
+		}
+
+		return $posttypes;
 	}
 
 	public function admin_menu()
