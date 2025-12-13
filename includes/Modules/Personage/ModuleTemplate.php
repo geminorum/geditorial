@@ -79,19 +79,16 @@ class ModuleTemplate extends gEditorial\Template
 
 		if ( $home = self::getMetaField( 'home_address', $field, FALSE ) )
 			/**
-			 * Add address
+			 * Adds the address.
 			 *
-			 * @param  string [optional] $name
-			 * @param  string [optional] $extended
-			 * @param  string [optional] $street
-			 * @param  string [optional] $city
-			 * @param  string [optional] $region
-			 * @param  string [optional] $zip
-			 * @param  string [optional] $country
-			 * @param  string [optional] $type
-			 *                                     $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK
-			 *                                     or any combination of these: e.g. "WORK;PARCEL;POSTAL"
-			 * @return $this
+			 * @param string [optional] $name
+			 * @param string [optional] $extended
+			 * @param string [optional] $street
+			 * @param string [optional] $city
+			 * @param string [optional] $region
+			 * @param string [optional] $zip
+			 * @param string [optional] $country
+			 * @param string [optional] $type: may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
 			 */
 			$vcard->addAddress(
 				WordPress\Strings::prepAddress( $home, 'vcard', $home ),

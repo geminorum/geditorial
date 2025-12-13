@@ -98,7 +98,7 @@ trait SettingsCore
 			self::dump( $this->options );
 	}
 
-	public function default_buttons( $module = FALSE )
+	public function register_settings_default_buttons( $module = FALSE )
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
@@ -626,8 +626,8 @@ trait SettingsCore
 			}
 		}
 
-		$this->default_buttons( $module );
 		$this->register_help_tabs();
+		$this->register_settings_default_buttons( $module );
 
 		// Registers settings on the settings page only.
 		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );

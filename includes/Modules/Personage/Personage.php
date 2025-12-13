@@ -686,7 +686,7 @@ class Personage extends gEditorial\Module
 		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
 			$data['source']['rendered']['familyfirst'] = $familyfirst;
 
-		// NOTE: must be raw, the filtred is available on `metadata.identity_number`
+		// NOTE: must be raw, the filtered is available on `metadata.identity_number`
 		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
 			$data['source']['rendered']['identity'] = $identity;
 
@@ -713,7 +713,7 @@ class Personage extends gEditorial\Module
 		if ( $familyfirst = $this->make_human_title( $post, 'familyfirst' ) )
 			$row['rendered']['familyfirst'] = $familyfirst;
 
-		// NOTE: must be raw, the filtred is available on `metadata.identity_number`
+		// NOTE: must be raw, the filtered is available on `metadata.identity_number`
 		if ( $identity = ModuleTemplate::getMetaFieldRaw( 'identity_number', $post->ID ) )
 			$row['rendered']['identity'] = $identity;
 

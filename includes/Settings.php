@@ -2283,6 +2283,8 @@ class Settings extends WordPress\Main
 	{
 		switch ( $suffix ) {
 			case '_general'    : return [ _x( 'General', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_setup'      : return [ _x( 'Setup', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_config'     : return [ _x( 'Configuration', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_defaults'   : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_misc'       : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_archives'   : return [ _x( 'Archives', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

@@ -703,24 +703,24 @@ class Calendars extends gEditorial\Service
 
 	public static function sanitizeContextForLink( $context = NULL, $target = NULL, $object = NULL )
 	{
-		$filtred = apply_filters( static::BASE.'_calendars_sanitize_ical_context',
+		$filtered = apply_filters( static::BASE.'_calendars_sanitize_ical_context',
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
 			$target,
 			$object
 		);
 
-		if ( ! $filtred || static::ICAL_DEFAULT_CONTEXT === $filtred )
+		if ( ! $filtered || static::ICAL_DEFAULT_CONTEXT === $filtered )
 			return NULL;
 
-		$filtred = Core\Text::trim( $filtred );
+		$filtered = Core\Text::trim( $filtered );
 
-		if ( ! in_array( $filtred, [
+		if ( ! in_array( $filtered, [
 			static::ICAL_TIMESPAN_CONTEXT,
 			// 'woocommerce', // MAYBE: for products
 		], TRUE ) )
 			return NULL;
 
-		return $filtred;
+		return $filtered;
 	}
 
 	public static function linkPostCalendar( $post = NULL, $context = NULL )

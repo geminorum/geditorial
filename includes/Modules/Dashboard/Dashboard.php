@@ -50,7 +50,7 @@ class Dashboard extends gEditorial\Module
 					_x( 'Adds %s before contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
 					Core\HTML::code( 'HTML' )
 				),
-				'after_content'  => sprintf(
+				'after_content' => sprintf(
 					/* translators: `%s`: HTML word */
 					_x( 'Adds %s after contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
 					Core\HTML::code( 'HTML' )
@@ -59,10 +59,8 @@ class Dashboard extends gEditorial\Module
 		];
 	}
 
-	public function default_buttons( $module = FALSE )
+	protected function register_settings_extra_buttons( $module )
 	{
-		parent::default_buttons( $module );
-
 		$this->register_button(
 			$this->_get_dashboard_permalink(),
 			_x( 'Dashboard Page', 'Setting Button', 'geditorial-dashboard' ),
@@ -185,8 +183,10 @@ class Dashboard extends gEditorial\Module
 
 	private function _init_hooks()
 	{
-		nocache_headers();
-		// WordPress\Site::doNotCache();
+		WordPress\Theme::resetQueryExtras( [
+			'disable_robots' => TRUE,
+			'disable_cache'  => TRUE,
+		] );
 
 		$page = get_query_var( $this->classs(), FALSE );
 
@@ -237,7 +237,7 @@ class Dashboard extends gEditorial\Module
 		}
 	}
 
-	// hides dashboard title for active theme
+	// Hides dashboard title for active theme
 	public function the_title( $title, $post_id )
 	{
 		if ( $post_id == $this->get_setting( 'dashboard_page_id', 0 ) )
@@ -246,7 +246,7 @@ class Dashboard extends gEditorial\Module
 		return $title;
 	}
 
-	// prevents dashboard page empty title on menu
+	// Prevents dashboard page empty title on menu
 	public function nav_menu_item_title( $title, $menu_item, $args, $depth )
 	{
 		return $menu_item->object_id == $this->get_setting( 'dashboard_page_id', 0 )

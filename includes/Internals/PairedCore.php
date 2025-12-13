@@ -1221,7 +1221,7 @@ trait PairedCore
 		return $single ? reset( $sorted ) : $sorted;
 	}
 
-	// NOTE: currentry support: `Personage` module only
+	// NOTE: currently supports `Personage` module only
 	protected function pairedcore__hook_append_identifier_code( $fieldkey, $optionkey = NULL )
 	{
 		if ( ! $this->get_setting( $optionkey ?? 'append_identifier_code' ) )
@@ -1247,7 +1247,8 @@ trait PairedCore
 						continue;
 
 					// TODO: maybe `prepIdentifier()`
-					$fullname.= ' ['.apply_filters( 'string_format_i18n', $code ).']';
+					// TODO: customize the template
+					$fullname.= sprintf( ' [%s]', apply_filters( 'string_format_i18n', $code ) );
 				}
 
 				return $fullname;

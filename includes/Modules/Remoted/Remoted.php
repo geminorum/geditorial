@@ -35,7 +35,7 @@ class Remoted extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'_general' => [
+			'_setup' => [
 				[
 					'field'       => 'remote_base',
 					'type'        => 'url',

@@ -52,14 +52,25 @@ trait SettingsHelp
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		/* translators: `%s`: taxonomy object label */
-		$title  = sprintf( _x( 'Default Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
-		/* translators: `%s`: taxonomy object label */
-		$edit   = sprintf( _x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ), $object->label );
+		$title = sprintf(
+			/* translators: `%s`: taxonomy object label */
+			_x( 'Default Terms for %s', 'Module', 'geditorial-admin' ),
+			$object->label
+		);
+
+		$edit = sprintf(
+			/* translators: `%s`: taxonomy object label */
+			_x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ),
+			$object->label
+		);
+
 		$link   = WordPress\Taxonomy::edit( $object );
 		$before = Core\HTML::tag( 'p', $title );
 		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
-		$args   = [ 'title' => $object->label, 'id' => $this->classs( 'help-default-terms', '-'.$object->name ) ];
+		$args   = [
+			'title' => $object->label,
+			'id'    => $this->classs( 'help-default-terms', '-'.$object->name ),
+		];
 
 		if ( empty( $terms ) )
 			$args['content'] = $before.Core\HTML::wrap( _x( 'No Default Terms', 'Module', 'geditorial-admin' ), '-info' ).$after;
