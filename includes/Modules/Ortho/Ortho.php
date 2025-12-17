@@ -337,7 +337,7 @@ class Ortho extends gEditorial\Module
 			'type'         => 'text',
 			'field'        => 'sandbox-identity',
 			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code' ],
+			'field_class'  => [ 'large-text', 'code-text' ],
 			'option_group' => 'tools',
 			'placeholder' => 'xxxxxxxxxx',
 			'data' => [
@@ -352,7 +352,7 @@ class Ortho extends gEditorial\Module
 			'type'         => 'text',
 			'field'        => 'sandbox-iban',
 			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code' ],
+			'field_class'  => [ 'large-text', 'code-text' ],
 			'option_group' => 'tools',
 			'placeholder' => 'IRxxxxxxxxxxxxxxxxxxxxxxx',
 			'data' => [
@@ -367,7 +367,7 @@ class Ortho extends gEditorial\Module
 			'type'         => 'text',
 			'field'        => 'sandbox-vin',
 			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code' ],
+			'field_class'  => [ 'large-text', 'code-text' ],
 			'option_group' => 'tools',
 			'placeholder' => 'IRXXXXXXXXXXXXXXX',
 			'data' => [
@@ -382,7 +382,7 @@ class Ortho extends gEditorial\Module
 			'type'         => 'text',
 			'field'        => 'sandbox-plate',
 			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code' ],
+			'field_class'  => [ 'large-text', 'code-text' ],
 			'option_group' => 'tools',
 			// 'placeholder' => '',
 			'data' => [

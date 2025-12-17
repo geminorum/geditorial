@@ -60,9 +60,9 @@ class Home extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Featured Term', 'Setting Title', 'geditorial-home' ),
 					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Setting Description', 'geditorial-home' ),
-					'field_class' => [ 'medium-text', 'code' ],
+					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'featured-slug',
-					'dir'         => 'ltr',
+					'ortho'       => 'slug',
 				],
 				[
 					'field'       => 'featured_max',

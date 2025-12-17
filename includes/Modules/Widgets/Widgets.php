@@ -55,7 +55,6 @@ class Widgets extends gEditorial\Module
 							'title'       => _x( 'Action', 'Setting Title', 'geditorial-widgets' ),
 							'description' => _x( 'Action hook where the widget appears on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 							'ortho'       => 'hook',
 						],
 						[
@@ -77,7 +76,6 @@ class Widgets extends gEditorial\Module
 							'title'       => _x( 'Before Widget', 'Setting Title', 'geditorial-widgets' ),
 							'description' => _x( 'HTML opening before each widget markup on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'after_widget',
@@ -85,7 +83,6 @@ class Widgets extends gEditorial\Module
 							'title'       => _x( 'After Widget', 'Setting Title', 'geditorial-widgets' ),
 							'description' => _x( 'HTML closing after each widget markup on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'before_title',
@@ -93,7 +90,6 @@ class Widgets extends gEditorial\Module
 							'title'       => _x( 'Before Title', 'Setting Title', 'geditorial-widgets' ),
 							'description' => _x( 'HTML opening before each widget title on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'after_title',
@@ -101,7 +97,6 @@ class Widgets extends gEditorial\Module
 							'title'       => _x( 'After Title', 'Setting Title', 'geditorial-widgets' ),
 							'description' => _x( 'HTML closing after each widget title on front-end.', 'Setting Description', 'geditorial-widgets' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 					],
 				],

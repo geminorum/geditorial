@@ -22,6 +22,7 @@ class Terms extends gEditorial\Module
 		'contact',
 		'venue',
 		'image',
+		// 'icon', // TODO
 		'author',
 		'color',
 		'role',
@@ -1699,7 +1700,7 @@ class Terms extends gEditorial\Module
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
-					'class' => [ 'small-text', 'code' ],
+					'class' => [ 'small-text', 'code-text' ],
 					'data'  => [ 'ortho' => 'color' ],
 					'style' => 'width:85px;', // to override forced width within the quickedit
 				] );
@@ -1733,7 +1734,7 @@ class Terms extends gEditorial\Module
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
-					'class' => [ 'ptitle', 'code' ],
+					'class' => [ 'ptitle', 'code-text' ],
 				] );
 
 				break;
@@ -1769,7 +1770,7 @@ class Terms extends gEditorial\Module
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => '',
-					'class' => [ 'ptitle', 'code' ],
+					'class' => [ 'ptitle', 'code-text' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
 
@@ -1784,7 +1785,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'url',
 					'value' => '',
 					'style' => 'width:100%;',
-					'class' => [ 'ptitle', 'code' ],
+					'class' => [ 'ptitle', 'code-text' ],
 				] );
 
 				break;

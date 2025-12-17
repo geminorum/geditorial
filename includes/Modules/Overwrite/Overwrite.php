@@ -143,7 +143,7 @@ class Overwrite extends gEditorial\Module
 				'type'        => 'text',
 				'title'       => _x( 'Source', 'Setting Title', 'geditorial-overwrite' ),
 				'description' => _x( 'Checks against the original string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
-				'dir'         => 'ltr',
+				'field_class' => [ 'regular-text', 'code-text' ],
 			],
 			[
 				'field'       => 'context',
@@ -151,7 +151,6 @@ class Overwrite extends gEditorial\Module
 				'title'       => _x( 'Context', 'Setting Title', 'geditorial-overwrite' ),
 				'description' => _x( 'Checks against the context of the string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
-				'dir'         => 'ltr',
 			],
 			[
 				'field'       => 'domain',
@@ -160,7 +159,6 @@ class Overwrite extends gEditorial\Module
 				'description' => _x( 'Checks against the domain of the string on the filter. Leave empty to disable checks', 'Setting Description', 'geditorial-overwrite' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'default'     => 'default',
-				'dir'         => 'ltr',
 			],
 		];
 

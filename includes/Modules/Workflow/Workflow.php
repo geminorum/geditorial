@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
@@ -288,8 +287,10 @@ class Workflow extends gEditorial\Module
 				'color'     => '',
 				'posttype'  => '',
 				'posttypes' => $supported,
-				'viewable'  => '0', // NOTE: `0`: Undefined, `1`: Non-Viewable, `2`: Viewable
+				'viewable'  => '0',          // NOTE: `0`: Undefined, `1`: Non-Viewable, `2`: Viewable
 				'roles'     => FALSE,
+				'plural'    => FALSE,
+				'icon'      => FALSE,
 			] );
 
 			$status = [
@@ -301,8 +302,8 @@ class Workflow extends gEditorial\Module
 				'post_type' => $metas['posttypes'],
 				'viewable'  => $metas['viewable'],
 				'disabled'  => FALSE,
-				'plural'    => FALSE, // FIXME
-				'icon'      => FALSE, // FIXME
+				'plural'    => $metas['plural'],
+				'icon'      => $metas['icon'],
 			];
 
 			if ( $metas['posttype'] && in_array( $metas['posttype'], $supported, TRUE ) )
@@ -459,7 +460,7 @@ class Workflow extends gEditorial\Module
 					'class' => [ 'button', 'button-small', 'hide-if-no-js', '-browse-revisions' ],
 				], __( 'Browse revisions' ) );
 
-			echo Ajax::spinner();
+			echo gEditorial\Ajax::spinner();
 
 		echo '</div>';
 
@@ -584,7 +585,7 @@ class Workflow extends gEditorial\Module
 
 		echo '</div><div id="publishing-action">';
 
-			echo Ajax::spinner();
+			echo gEditorial\Ajax::spinner();
 
 			submit_button( __( 'Submit' ), 'primary large', 'save', FALSE, [ 'id' => 'publish' ] );
 

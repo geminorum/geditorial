@@ -657,7 +657,7 @@ class MetaBox extends WordPress\Main
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'        => 'number',
-			'dir'         => 'ltr',
+			// 'dir'         => 'ltr',
 			'step'        => '1',
 			'size'        => '4',
 			'name'        => 'menu_order',

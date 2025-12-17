@@ -56,8 +56,8 @@ class Socialite extends gEditorial\Module
 							'type'        => 'text',
 							'title'       => _x( 'URL', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'Sets as URL of the social icon.', 'Setting Description', 'geditorial-socialite' ),
-							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
+							'field_class' => [ 'regular-text', 'url-text' ],
+							'ortho'       => 'slug',
 						],
 						[
 							'field'       => 'icon',
@@ -65,7 +65,6 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'Icon', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'Sets the icon image of the social icon.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'priority',
@@ -86,7 +85,6 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'Before Link', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'HTML opening before each social icon link.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'after_link',
@@ -94,7 +92,6 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'After Link', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'HTML closing after each social icon link.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'before_image',
@@ -102,7 +99,6 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'Before Image', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'HTML opening before each social icon image.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'after_image',
@@ -110,7 +106,6 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'After Image', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'HTML closing after each social icon image.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 					],
 				],

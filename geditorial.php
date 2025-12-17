@@ -39,6 +39,7 @@ if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 	return FALSE;
 
 } else if ( file_exists( GEDITORIAL_DIR.'assets/vendor/autoload.php' ) ) {
+
 	require_once GEDITORIAL_DIR.'assets/vendor/autoload.php';
 
 	function gEditorial() {

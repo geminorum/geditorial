@@ -618,12 +618,11 @@ class Widget extends \WP_Widget
 			$label = _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' );
 
 		$html = Core\HTML::tag( 'input', [
-			'type'  => 'text', // `url` will not work on relatives
-			'class' => [ 'widefat', 'code' ],
+			'type'  => 'text', // `url` will not work on relative URLs
+			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
 		] );
 
 		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
@@ -636,7 +635,7 @@ class Widget extends \WP_Widget
 
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
-			'class' => [ 'widefat', 'code' ],
+			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
 			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,

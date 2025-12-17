@@ -41,7 +41,7 @@ class WcUnits extends gEditorial\Module
 					'description' => _x( 'Formats decimal point in units with a custom character.', 'Setting Description', 'geditorial-wc-units' ),
 					'default'     => _x( '.', 'Setting Default: Decimal Point', 'geditorial-wc-units' ),
 					'placeholder' => Core\L10n::localeconv( 'decimal_point', '.' ),
-					'field_class' => [ 'small-text', 'code' ],
+					'field_class' => [ 'small-text', 'code-text' ],
 				],
 				[
 					'field'       => 'multiplication_sign',
@@ -49,7 +49,7 @@ class WcUnits extends gEditorial\Module
 					'title'       => _x( 'Multiplication Sign', 'Setting Title', 'geditorial-wc-units' ),
 					'description' => _x( 'Joins dimension units with a custom string.', 'Setting Description', 'geditorial-wc-units' ),
 					'default'     => _x( '&nbsp;&times;&nbsp;', 'Setting Default: Multiplication Sign', 'geditorial-wc-units' ),
-					'field_class' => [ 'medium-text', 'code' ],
+					'field_class' => [ 'medium-text', 'code-text' ],
 				],
 			],
 			'_weight' => [

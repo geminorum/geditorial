@@ -71,9 +71,9 @@ class Attachments extends gEditorial\Module
 					'type'        => 'text',
 					'title'       => _x( 'Prefix Permalinks', 'Setting Title', 'geditorial-attachments' ),
 					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Setting Description', 'geditorial-attachments' ),
-					'field_class' => [ 'medium-text', 'code' ],
+					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'media',
-					'dir'         => 'ltr',
+					'ortho'       => 'slug',
 				],
 			],
 			'_editlist' => [

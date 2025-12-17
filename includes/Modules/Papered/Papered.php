@@ -750,7 +750,7 @@ class Papered extends gEditorial\Module
 		$html    = Core\HTML::tag( 'input', [
 			'title'       => _x( 'Row per Sheet', 'Input Title', 'geditorial-papered' ),
 			'type'        => 'number',
-			'dir'         => 'ltr',
+			// 'dir'         => 'ltr',
 			'name'        => $this->classs( $context, $field ),
 			'value'       => $this->fetch_postmeta( $object->ID, $default, $this->get_postmeta_key( $field ) ) ?: '',
 			'placeholder' => $default,

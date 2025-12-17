@@ -23,8 +23,8 @@ class Uploader extends gEditorial\Module
 			'access'   => 'beta',
 			'frontend' => FALSE,
 			'keywords' => [
-				'upload',
-				'adminwidget',
+				'file-upload',
+				'admin-widget',
 			],
 		];
 	}

@@ -87,7 +87,6 @@ class WcRelated extends gEditorial\Module
 							'title'       => _x( 'Taxonomy', 'Setting Title', 'geditorial-wc-related' ),
 							'description' => _x( 'Target taxonomy for related products.', 'Setting Description', 'geditorial-wc-related' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 						],
 						[
 							'field'       => 'heading',

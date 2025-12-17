@@ -26,8 +26,8 @@ class Remoted extends gEditorial\Module
 			'access'   => 'beta',
 			'frontend' => FALSE,
 			'keywords' => [
-				'upload',
-				'adminwidget',
+				'file-upload',
+				'admin-widget',
 			],
 		];
 	}
@@ -73,7 +73,7 @@ class Remoted extends gEditorial\Module
 					'title'       => _x( 'Mime-type Extensions', 'Setting Title', 'geditorial-remoted' ),
 					'description' => _x( 'Defines the list of extensions for accepted mime-types. Separate with latin comma.', 'Setting Description', 'geditorial-remoted' ),
 					'field_class' => [ 'regular-text', 'code-text' ],
-					'placeholder' => 'mp3,mp4,pdf,jpg,png',
+					'placeholder' => 'mp3,mp4,pdf,jpg,png,zip',
 				],
 				[
 					'field'       => 'chunk_size',
@@ -167,7 +167,7 @@ class Remoted extends gEditorial\Module
 				'maxsize'   => $this->get_setting( 'max_file_size' ) ?: '150mb',
 				'mimetypes' => [ [
 					'title'      => _x( 'Supported Extensions', 'Filter Title', 'geditorial-remoted' ),
-					'extensions' => $this->get_setting( 'mimetype_extensions' ) ?: 'mp3,mp4,pdf,jpg,png',
+					'extensions' => $this->get_setting( 'mimetype_extensions' ) ?: 'mp3,mp4,pdf,jpg,png,zip',
 				] ],
 			],
 		], 'remote-uploads', [

@@ -37,7 +37,6 @@ class Grouping extends gEditorial\Module
 							'title'       => _x( 'Taxonomy Name', 'Setting Title', 'geditorial-grouping' ),
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 							'ortho'       => 'hook',
 						],
 						[
@@ -46,7 +45,6 @@ class Grouping extends gEditorial\Module
 							'title'       => _x( 'Taxonomy Slug', 'Setting Title', 'geditorial-grouping' ),
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 							'ortho'       => 'slug',
 						],
 						[
@@ -73,7 +71,6 @@ class Grouping extends gEditorial\Module
 							'title'       => _x( 'Icon', 'Setting Title', 'geditorial-grouping' ),
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'dir'         => 'ltr',
 							'placeholder' => is_array( $this->module->icon ) ? '' : $this->module->icon,
 						],
 					],
