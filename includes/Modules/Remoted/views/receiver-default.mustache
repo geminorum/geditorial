@@ -2,8 +2,10 @@
 
 class {{{identifier}}} {
 
-	const DIR   = '{{{target}}}';
-	const TOKEN = '{{{token}}}';
+	const DIR       = '{{{target}}}';
+	const TOKEN     = '{{{token}}}';
+	const HOME      = '{{{home}}}';
+	const OVERWRITE = {{{overwrite}}};
 
 	public static function setup()
 	{
@@ -26,16 +28,20 @@ class {{{identifier}}} {
 		if ( empty( $_FILES ) || $_FILES['file']['error'] )
 			self::jsonrpc( 103, 'Failed to move uploaded file.' );
 
-		$filePath = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.static::DIR;
+		$destination = empty( $_REQUEST['dest'] ) ? '' : self::sanitize( $_REQUEST['dest'] );
+		$fileDir     = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.static::DIR;
 
-		if ( ! file_exists( $filePath ) ) {
-			if ( ! mkdir( $filePath, 0777, TRUE ) ) {
-				self::jsonrpc( 100, 'Failed to open target directory.' );
-			}
-		}
+		if ( $destination )
+			$fileDir.= DIRECTORY_SEPARATOR.$destination;
+
+		if ( ! file_exists( $fileDir ) && ! mkdir( $fileDir, 0777, TRUE ) )
+			self::jsonrpc( 100, 'Failed to open target directory.' );
 
 		$fileName = isset( $_REQUEST['name'] ) ? $_REQUEST['name'] : $_FILES['file']['name'];
-		$filePath = $filePath.DIRECTORY_SEPARATOR.$fileName;
+		$filePath = $fileDir.DIRECTORY_SEPARATOR.$fileName;
+
+		if ( ! static::OVERWRITE && file_exists( $filePath ) )
+			self::jsonrpc( 100, 'File already exists on target directory.' );
 
 		$chunk  = isset( $_REQUEST['chunk'] )  ? intval( $_REQUEST['chunk'] )  : 0;
 		$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
@@ -90,9 +96,13 @@ class {{{identifier}}} {
 
 		// 5 minutes execution time
 		@set_time_limit( 5 * 60 );
+	}
 
 		if ( isset( $_GET['ready'] ) )
 			self::jsonrpc( FALSE );
+	public static function sanitize( $text )
+	{
+		return trim( strtolower( strip_tags( $text ) ) );
 	}
 
 	public static function jsonrpc( $error = FALSE, $message = NULL )

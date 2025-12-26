@@ -65,6 +65,18 @@ class Remoted extends gEditorial\Module
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'default'     => $this->_generate_token(),
 				],
+				[
+					'field'       => 'remote_home',
+					'type'        => 'url',
+					'title'       => _x( 'Remote Home', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the full URL of the home of uploads.', 'Setting Description', 'geditorial-remoted' ),
+					'default'     => Core\URL::home(),
+				],
+				[
+					'field'       => 'remote_overwrite',
+					'title'       => _x( 'Remote Overwrite', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Whether to replace already existing file with the uploaded.', 'Setting Description', 'geditorial-remoted' ),
+				],
 			],
 			'_config' => [
 				[
@@ -300,6 +312,8 @@ class Remoted extends gEditorial\Module
 			'identifier' => $this->get_setting( 'remote_identifier', '' ),
 			'token'      => $this->get_setting( 'remote_token', '' ),
 			'target'     => $this->get_setting( 'remote_target', '' ),
+			'home'       => $this->get_setting( 'remote_home', Core\URL::home() ),
+			'overwrite'  => $this->get_setting( 'remote_overwrite' ) ? 'TRUE' : 'FALSE',
 		];
 
 		if ( ! $html = $this->viewengine__render( $view, $data, FALSE ) )
