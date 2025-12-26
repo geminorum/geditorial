@@ -7,6 +7,7 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Scripts;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Remoted extends gEditorial\Module
@@ -356,6 +357,13 @@ class Remoted extends gEditorial\Module
 			'target'     => $this->get_setting( 'remote_target', '' ),
 			'home'       => $this->get_setting( 'remote_home', Core\URL::home() ),
 			'overwrite'  => $this->get_setting( 'remote_overwrite' ) ? 'TRUE' : 'FALSE',
+
+			'lang'      => Core\L10n::getISO639(),
+			'locale'    => Core\L10n::locale( TRUE ),
+			'direction' => Core\L10n::rtl() ? 'rtl' : 'ltr',
+			'logo'      => Services\ContentBrand::siteIcon(),
+			'name'      => $this->get_setting_fallback( 'redirect_title', get_option( 'blogname' ) ),
+			'message'   => $this->get_setting_fallback( 'redirect_message', _x( 'You will be returned to the main site.', 'Setting Default', 'geditorial-remoted' ) ),
 		];
 
 		if ( ! $html = $this->viewengine__render( $view, $data, FALSE ) )
@@ -383,8 +391,20 @@ class Remoted extends gEditorial\Module
 		$htaccess.= '# END PROTECT DIR'."\n";
 
 		Core\File::putContents( '.htaccess', $htaccess, $path, FALSE );
-		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
 		Core\File::putDoNotBackup( $path );
+
+		if ( $view = $this->viewengine__view_by_template( $template ?? 'default', 'index' ) ) {
+
+			if ( $index = $this->viewengine__render( $view, $data, FALSE ) )
+				Core\File::putContents( 'index.html', $index, $path, FALSE );
+
+			else
+				Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+
+		} else {
+
+			Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+		}
 
 		$zipped = Core\File::join(
 			$destination ?? WP_CONTENT_DIR,

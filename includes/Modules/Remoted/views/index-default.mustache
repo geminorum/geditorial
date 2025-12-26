@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="{{direction}}" lang="{{lang}}">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>{{name}}</title>
+
+	<meta name="" http-equiv="refresh" content="0;url={{{home}}}">
+
+	<style>
+html, body, .wrap {
+  height: 100%;
+  margin: 0;
+}
+body {
+	direction: {{direction}};
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	color: #333;
+	background: #f7f7f7;
+}
+.wrap {
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+p {
+	font-size: smaller;
+}
+	</style>
+</head><body>
+
+<div class="wrap"><div>
+{{#logo}}<h1><img src="{{{logo}}}" alt="{{name}}" loading="lazy" /></h1>{{/logo}}
+{{#message}}<p>{{{message}}}</p>{{/message}}
+</div>
+</div>
+
+</body></html>
