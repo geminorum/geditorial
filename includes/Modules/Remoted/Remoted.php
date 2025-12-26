@@ -104,6 +104,36 @@ class Remoted extends gEditorial\Module
 					'placeholder' => '150mb',
 				],
 			],
+			'_tweaks' => [
+				[
+					'field'  => 'destinations',
+					'type'   => 'object',
+					'title'  => _x( 'Destinetions', 'Setting Title', 'geditorial-remoted' ),
+					'values' => [
+						[
+							'field'       => 'title',
+							'type'        => 'text',
+							'title'       => _x( 'Option Title', 'Setting Title', 'geditorial-remoted' ),
+							'description' => _x( 'Defines the title on the widget drop-down.', 'Setting Description', 'geditorial-remoted' ),
+						],
+						[
+							'field'       => 'path',
+							'type'        => 'text',
+							'title'       => _x( 'Relative Path', 'Setting Title', 'geditorial-remoted' ),
+							'description' => _x( 'Defines the path relative to the base directory.', 'Setting Description', 'geditorial-remoted' ),
+							'field_class' => [ 'regular-text', 'code-text' ],
+							'ortho'       => 'slug',
+						],
+					],
+				],
+				[
+					'field'       => 'root_title',
+					'type'        => 'text',
+					'title'       => _x( 'Root Title', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Displays as title of the root destination on the widget select.', 'Setting Description', 'geditorial-remoted' ),
+					'placeholder' => _x( 'Root Destination', 'Setting Default', 'geditorial-remoted' ),
+				],
+			],
 			'_roles' => [
 				'uploads_roles' => [ NULL, $this->get_settings_default_roles() ],
 			],
@@ -167,6 +197,18 @@ class Remoted extends gEditorial\Module
 				'container'
 			)
 		);
+
+			if ( $dest = $this->get_setting( 'destinations', [] ) )
+				echo Core\HTML::dropdown( Core\Arraay::pluck( $dest, 'title', 'path' ), [
+					'id'          => $this->classs( $box['args']['context'], 'destination' ),
+					'class'       => [ 'upload-destination', 'gnetwork-do-chosen' ],
+					'none_title'  => $this->get_setting_fallback( 'root_title', _x( 'Root Destination', 'Setting Default', 'geditorial-remoted' ) ),
+					'none_value'  => '',
+					'value_title' => TRUE,
+				] );
+
+			else
+				Core\HTML::inputHidden( $this->classs( $box['args']['context'], 'destination' ) );
 
 			echo Core\HTML::tag( 'button', [
 				'id'    => $this->classs( $box['args']['context'], 'pickfiles' ),
