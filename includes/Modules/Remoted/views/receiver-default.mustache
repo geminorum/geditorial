@@ -9,18 +9,34 @@ class {{{identifier}}} {
 
 	public static function setup()
 	{
-		self::auth();
 		self::init();
+		self::auth();
 		self::handle();
 	}
 
 	public static function auth()
 	{
-		if ( empty( $_REQUEST['token'] ) )
-			self::jsonrpc( -32600, 'Authentication Failed.' );
+		if ( $_SERVER['REQUEST_METHOD'] === 'POST' || isset( $_GET['ready'] ) ) {
 
-		if ( static::TOKEN !== trim( $_REQUEST['token'] ) )
-			self::jsonrpc( -32600, 'Authentication Failed.' );
+			if ( empty( $_REQUEST['token'] ) )
+				self::jsonrpc( -32600, 'Authentication Failed.' );
+
+			if ( static::TOKEN !== self::sanitize( $_REQUEST['token'] ) )
+				self::jsonrpc( -32600, 'Authentication Failed.' );
+
+			if ( isset( $_GET['ready'] ) )
+				self::jsonrpc( FALSE );
+
+		} else if ( static::HOME ) {
+
+			header( 'HTTP/1.1 303 See Other' );
+			header( 'Location: '.static::HOME );
+			exit;
+
+		} else {
+
+			exit; // silence is golden!
+		}
 	}
 
 	public static function handle()
@@ -98,8 +114,6 @@ class {{{identifier}}} {
 		@set_time_limit( 5 * 60 );
 	}
 
-		if ( isset( $_GET['ready'] ) )
-			self::jsonrpc( FALSE );
 	public static function sanitize( $text )
 	{
 		return trim( strtolower( strip_tags( $text ) ) );
