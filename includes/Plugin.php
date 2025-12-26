@@ -186,6 +186,7 @@ class Plugin extends WordPress\Plugin
 			'Barcodes',
 			'Calendars',
 			'ContentActions',
+			'ContentBrand',
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',
