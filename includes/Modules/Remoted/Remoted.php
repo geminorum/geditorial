@@ -119,31 +119,45 @@ class Remoted extends gEditorial\Module
 		if ( ! $this->role_can( 'uploads' ) )
 			return;
 
-		$remote = $this->_get_remote_upload_url();
+		$context = 'upload';
+		$remote  = $this->_get_remote_upload_url();
 
 		$this->add_dashboard_widget(
-			'remote-uploads',
+			$context,
 			_x( 'Remote Uploads', 'Dashboard Widget Title', 'geditorial-remoted' ),
 			Core\HTTP::htmlStatus(
 				Core\HTTP::getStatus( add_query_arg( 'ready', '', $remote ), ! WordPress\IsIt::dev() ),
 				NULL,
 				'<code class="postbox-title-action -status" title="%s" style="color:%s">%s</code>'
-			)
+			), [
+				'context' => $context,
+				'remote'  => $remote,
+			]
 		);
 	}
 
-	public function render_widget_remote_uploads( $object, $box )
+	public function render_widget_upload( $object, $box )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( ! $remote = $this->_get_remote_upload_url() )
+		if ( empty( $box['args']['remote'] ) || empty( $box['args']['context'] ) )
 			return Info::renderSomethingIsWrong();
 
-		echo $this->wrap_open( [ '-admin-widget', '-remote-uploads' ], TRUE, $this->classs( 'container' ) );
+		echo $this->wrap_open(
+			[
+				'-admin-widget',
+				'-remote-uploads',
+			],
+			TRUE,
+			$this->classs(
+				$box['args']['context'],
+				'container'
+			)
+		);
 
 			echo Core\HTML::tag( 'button', [
-				'id'    => $this->classs( 'pickfiles' ),
+				'id'    => $this->classs( $box['args']['context'], 'pickfiles' ),
 				'type'  => 'button',
 				'class' => [ 'upload-button', 'button-add-media' ],
 			], _x( 'Upload Files', 'Button', 'geditorial-remoted' ) );
@@ -152,7 +166,7 @@ class Remoted extends gEditorial\Module
 				_x( 'Your browser does not support HTML5 upload.', 'Notice', 'geditorial-remoted' ),
 				'-file-queue',
 				TRUE,
-				$this->classs( 'filequeue' )
+				$this->classs( $box['args']['context'], 'filequeue' )
 			);
 
 		echo '</div>';
@@ -162,15 +176,17 @@ class Remoted extends gEditorial\Module
 				'wrong' => gEditorial\Plugin::wrong(),
 			],
 			'config' => [
-				'remote'    => $remote,
-				'chunk'     => $this->get_setting( 'chunk_size' ) ?: '200kb',
+				'remote'    => $box['args']['remote'],
+				'chunk'     => $this->get_setting( 'chunk_size' )    ?: '200kb',
 				'maxsize'   => $this->get_setting( 'max_file_size' ) ?: '150mb',
-				'mimetypes' => [ [
-					'title'      => _x( 'Supported Extensions', 'Filter Title', 'geditorial-remoted' ),
-					'extensions' => $this->get_setting( 'mimetype_extensions' ) ?: 'mp3,mp4,pdf,jpg,png,zip',
-				] ],
+				'mimetypes' => [
+					[
+						'title'      => _x( 'Supported Extensions', 'Filter Title', 'geditorial-remoted' ),
+						'extensions' => $this->get_setting( 'mimetype_extensions' ) ?: 'mp3,mp4,pdf,jpg,png,zip',
+					],
+				],
 			],
-		], 'remote-uploads', [
+		], $this->dotted( $box['args']['context'] ), [
 			'jquery',
 			Scripts::pkgPlupload(),
 		] );
