@@ -786,15 +786,13 @@ JS;
 			'_restNonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 
-	?><script type="text/javascript">
-/* <![CDATA[ */
+	?><script>
 	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo Core\HTML::encode( $props ); ?>;
 	<?php if ( WordPress\IsIt::dev() ) {
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 		echo "\t".'jQuery(document).on("gEditorial:Module:Loaded", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 	} ?>
-/* ]]> */
 </script><?php
 	}
 }

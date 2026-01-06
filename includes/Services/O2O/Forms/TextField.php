@@ -8,16 +8,14 @@ use geminorum\gEditorial\Services\O2O;
 class TextField extends FormField
 {
 	/**
-	 * Sanitizes value.
+	 * Sanitizes the given value.
 	 *
 	 * @param string $value
 	 * @return string
 	 */
 	public function validate( $value )
 	{
-		$sanitize = isset( $this->sanitize ) ? $this->sanitize : 'wp_kses_data';
-
-		return call_user_func( $sanitize, $value, $this );
+		return call_user_func( $this->sanitize ?? 'wp_kses_data', $value, $this );
 	}
 
 	/**
@@ -43,7 +41,7 @@ class TextField extends FormField
 	/**
 	 * Sets value using a reference.
 	 *
-	 * @param array  $args
+	 * @param array $args
 	 * @param string $value
 	 * @return void
 	 */

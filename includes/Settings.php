@@ -2286,6 +2286,7 @@ class Settings extends WordPress\Main
 			case '_setup'      : return [ _x( 'Setup', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_config'     : return [ _x( 'Configuration', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_defaults'   : return [ _x( 'Defaults', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_tweaks'     : return [ _x( 'Tweaks', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_misc'       : return [ _x( 'Miscellaneous', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_archives'   : return [ _x( 'Archives', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_frontend'   : return [ _x( 'Front-end', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
@@ -2562,8 +2563,7 @@ class Settings extends WordPress\Main
 			),
 		], $module->title ).$access, '-title' );
 
-		if ( isset( $module->desc ) )
-			Core\HTML::desc( Core\Text::wordWrap( $module->desc ) );
+		Core\HTML::desc( Core\Text::wordWrap( $module->desc ?? '' ) );
 
 		// list.js filters
 		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';
@@ -2605,7 +2605,7 @@ class Settings extends WordPress\Main
 		echo '</div>';
 	}
 
-	public static function settingsSignature()
+	public static function settingsSignature( $context = NULL )
 	{
 		if ( GEDITORIAL_DISABLE_CREDITS )
 			return;
@@ -2947,7 +2947,7 @@ class Settings extends WordPress\Main
 							'type'        => 'text',
 							'id'          => $id.'-'.$value_name,
 							'name'        => $name.'['.$value_name.']',
-							'value'       => isset( $value[$value_name] ) ? $value[$value_name] : '',
+							'value'       => $value[$value_name] ?? '',
 							'class'       => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
 							'placeholder' => $args['placeholder'],
 							'disabled'    => Core\HTML::attrBoolean( $args['disabled'], $value_name ),

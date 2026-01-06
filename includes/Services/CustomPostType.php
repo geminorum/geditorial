@@ -181,28 +181,46 @@ class CustomPostType extends gEditorial\Service
 				break; // go to fall-backs
 
 			case 'paired_no_items':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'There are no items available!', 'CustomPostType: Label for `paired_no_items`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'There are no items available!', 'CustomPostType: Label for `paired_no_items`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'paired_has_items':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'The %2$s has %5$s.', 'CustomPostType: Label for `paired_has_items`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'The %2$s has %5$s.', 'CustomPostType: Label for `paired_has_items`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'paired_connected_to':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'Connected to %5$s', 'CustomPostType: Label for `paired_connected_to`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'Connected to %5$s', 'CustomPostType: Label for `paired_connected_to`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'paired_mean_age':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'The %2$s Mean-age is %5$s.', 'CustomPostType: Label for `paired_mean_age`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'The %2$s Mean-age is %5$s.', 'CustomPostType: Label for `paired_mean_age`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'show_option_no_items':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( '(No %3$s)', 'CustomPostType: Label for `show_option_no_items`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( '(No %3$s)', 'CustomPostType: Label for `show_option_no_items`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'show_option_select':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( '&ndash; Select %2$s &ndash;', 'CustomPostType: Label for `show_option_select`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( '&ndash; Select %2$s &ndash;', 'CustomPostType: Label for `show_option_select`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'show_option_all':
 				return $object->labels->all_items;
@@ -214,8 +232,11 @@ class CustomPostType extends gEditorial\Service
 				return sprintf( '&ndash; %s &ndash;', trim( $object->labels->parent_item_colon, ':' ) );
 
 			case 'import_items':
-				/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'Import %1$s', 'CustomPostType: Label for `import_items`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'Import %1$s', 'CustomPostType: Label for `import_items`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 		}
 
 		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )

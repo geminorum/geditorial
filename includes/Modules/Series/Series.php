@@ -117,6 +117,7 @@ class Series extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->class_metabox( $screen, 'supportedbox' );
+
 				add_meta_box( $this->classs( 'supportedbox' ),
 					// $this->get_meta_box_title_taxonomy( 'main_taxonomy', $screen->post_type ),
 					$this->strings_metabox_title_via_taxonomy( $this->constant( 'main_taxonomy' ), 'supportedbox' ),
@@ -168,9 +169,15 @@ class Series extends gEditorial\Module
 			if ( $term_id && '-1' != $term_id )
 				$pre_terms[$offset] = (int) $term_id;
 
-		wp_set_object_terms( $post_id, Core\Arraay::prepNumeral( $pre_terms ), $this->constant( 'main_taxonomy' ), FALSE );
+		wp_set_object_terms(
+			$post_id,
+			Core\Arraay::prepNumeral( $pre_terms ),
+			$this->constant( 'main_taxonomy' ),
+			FALSE
+		);
 
 		foreach ( $pre_terms as $offset => $pre_term ) {
+
 			foreach ( $fields as $field ) {
 
 				switch ( $field ) {
@@ -183,7 +190,8 @@ class Series extends gEditorial\Module
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
 
-					break;
+						break;
+
 					case 'in_series_title':
 					case 'in_series_desc':
 
@@ -194,7 +202,6 @@ class Series extends gEditorial\Module
 
 						else if ( isset( $postmeta[$pre_term][$field] ) && isset( $_POST[$prefix.$field][$offset] ) )
 							unset( $postmeta[$pre_term][$field] );
-
 				}
 			}
 		}
@@ -301,7 +308,7 @@ class Series extends gEditorial\Module
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
-				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
+				'value'        => $meta[$field] ?? '',
 				'title'        => $title,
 				'placeholder'  => $title,
 				'autocomplete' => 'off',
@@ -322,7 +329,7 @@ class Series extends gEditorial\Module
 				'type'         => 'text',
 				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
 				'id'           => 'geditorial-series-'.$field.'-'.$counter,
-				'value'        => isset( $meta[$field] ) ? $meta[$field] : '',
+				'value'        => $meta[$field] ?? '',
 				'title'        => $title,
 				'placeholder'  => $title,
 				'autocomplete' => 'off',
@@ -420,11 +427,11 @@ class Series extends gEditorial\Module
 				$args['item_after'] = '<h6>%1$s</h6><div class="summary">%3$s</div>';
 
 			$title = empty( $post->series_meta['in_series_title'] )
-				? '' // no need to duplicate title
+				? '' // no need to duplicate the title
 				: WordPress\Strings::prepTitle( $post->series_meta['in_series_title'], $post->ID );
 
 			$desc = empty( $post->series_meta['in_series_desc'] )
-				? '' // no need to use excerpt as desc
+				? '' // no need to use the excerpt as description
 				: WordPress\Strings::prepDescription( $post->series_meta['in_series_desc'] );
 
 			$args['item_after'] = sprintf( $args['item_after'], $title, '%2$s', $desc, '%4$s' );

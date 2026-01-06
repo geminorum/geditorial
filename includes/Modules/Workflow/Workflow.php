@@ -154,9 +154,7 @@ class Workflow extends gEditorial\Module
 
 				$list = $this->get_statuses( $user_id );
 
-				$disabled = isset( $list[$post->post_status]->disabled )
-					? $list[$post->post_status]->disabled
-					: FALSE;
+				$disabled = $list[$post->post_status]->disabled ?? FALSE;
 
 				return $disabled ? [ 'do_not_allow' ] : $caps;
 		}

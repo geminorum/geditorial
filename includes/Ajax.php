@@ -70,9 +70,9 @@ class Ajax extends WordPress\Main
 
 	// @REF: https://make.wordpress.org/core/?p=12799
 	// @REF: https://austin.passy.co/2014/native-wordpress-loading-gifs/
-	public static function spinner()
+	public static function spinner( $admin = NULL )
 	{
-		return is_admin()
+		return ( $admin ?? is_admin() )
 			? '<span class="-loading spinner"></span>'
 			: '<span class="-loading '.static::BASE.'-spinner"></span>';
 	}

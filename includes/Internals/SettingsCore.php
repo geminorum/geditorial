@@ -22,7 +22,7 @@ trait SettingsCore
 	// NOTE: features are `TRUE` by default
 	public function get_feature( $field, $fallback = TRUE )
 	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+		$settings = $this->options->settings ?? [];
 
 		if ( array_key_exists( $field, $settings ) )
 			return $settings[$field];
@@ -35,7 +35,7 @@ trait SettingsCore
 
 	public function get_setting( $field, $fallback = NULL )
 	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+		$settings = $this->options->settings ?? [];
 
 		if ( array_key_exists( $field, $settings ) )
 			return $settings[$field];
@@ -48,7 +48,7 @@ trait SettingsCore
 
 	public function get_setting_fallback( $field, $fallback, $empty = '' )
 	{
-		$settings = isset( $this->options->settings ) ? $this->options->settings : [];
+		$settings = $this->options->settings ?? [];
 
 		if ( array_key_exists( $field, $settings ) ) {
 
@@ -663,12 +663,12 @@ trait SettingsCore
 				echo Core\HTML::warning( _x( 'You need to flush rewrite rules!', 'Module', 'geditorial-admin' ), FALSE );
 
 			echo '<div class="-header">';
-
-			if ( isset( $this->module->desc ) && $this->module->desc )
-				echo '<h4>'.$this->module->desc.'</h4>';
+			Core\HTML::h4( $this->module->desc ?? '' );
 
 			if ( method_exists( $this, 'settings_intro' ) )
 				$this->settings_intro();
+
+			echo '</div>';
 
 		gEditorial\Settings::wrapClose();
 	}
@@ -684,7 +684,7 @@ trait SettingsCore
 
 	protected function settings_signature( $context = 'settings' )
 	{
-		gEditorial\Settings::settingsSignature();
+		gEditorial\Settings::settingsSignature( $context );
 	}
 
 	public function add_settings_field( $r = [] )
@@ -725,7 +725,7 @@ trait SettingsCore
 	public function do_settings_field( $atts = [] )
 	{
 		$args = array_merge( [
-			'options'      => isset( $this->options->settings ) ? $this->options->settings : [],
+			'options'      => $this->options->settings ?? [],
 			'option_base'  => $this->hook_base( $this->module->name ),
 			'option_group' => 'settings',
 			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],

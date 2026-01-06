@@ -116,7 +116,7 @@ SQL;
 			return FALSE;
 
 		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
-		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
+		$selected  = $_GET[$query_var] ?? '';
 
 		// selected is `term_id` instead of term `slug`
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
@@ -173,7 +173,7 @@ SQL;
 			return;
 
 		$query_var = WordPress\Taxonomy::queryVar( $object );
-		$selected  = isset( $_GET[$query_var] ) ? $_GET[$query_var] : '';
+		$selected  = $_GET[$query_var] ?? '';
 
 		// if selected is term_id instead of term slug
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
@@ -240,9 +240,7 @@ SQL;
 		if ( ! $selected = self::req( $metakey ) )
 			return;
 
-		$meta_query = isset( $query->query_vars['meta_query'] )
-			? $query->query_vars['meta_query']
-			: [];
+		$meta_query = $query->query_vars['meta_query'] ?? [];
 
 		$meta_query[] = [
 			'key'     => $metakey,

@@ -31,7 +31,7 @@ class Views extends gEditorial\Module
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_general'         => [
 				'excluded_roles' => [ NULL, $this->get_settings_default_roles( [], 'subscriber' ) ],
 				'adminbar_summary',
 			],
@@ -109,7 +109,7 @@ class Views extends gEditorial\Module
 	public function do_ajax_public()
 	{
 		$post = self::unslash( $_POST );
-		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
+		$what = $post['what'] ?? 'nothing';
 
 		if ( empty( $post['post_id'] ) )
 			Ajax::errorMessage();

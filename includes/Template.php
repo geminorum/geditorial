@@ -104,10 +104,10 @@ class Template extends WordPress\Main
 			$module = static::MODULE;
 
 		$args = self::atts( [
-			'field'        => NULL,                                 // null for `image`
+			'field'        => NULL,                                 // NULL for `image`
 			'id'           => NULL,
 			'size'         => NULL,
-			'alt'          => NULL,                                 // null for `$args['title']`
+			'alt'          => NULL,                                 // NULL for `$args['title']`
 			'class'        => '-term-image img-fluid',
 			'taxonomy'     => '',
 			'link'         => 'archive',

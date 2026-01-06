@@ -43,7 +43,7 @@ abstract class FormField implements FormFieldInterface
 			'wrap_each' => API::TOKEN,
 		] );
 
-		// depends on $args['desc']
+		// depends on `$args['desc']`
 		if ( isset( $args['choices'] ) )
 			self::_expand_choices( $args );
 
@@ -112,13 +112,13 @@ abstract class FormField implements FormFieldInterface
 	 */
 	public function render( $value = NULL )
 	{
-		if ( null === $value && isset( $this->default ) ) {
+		if ( NULL === $value && isset( $this->default ) ) {
 			$value = $this->default;
 		}
 
 		$args = $this->args;
 
-		if ( null !== $value ) {
+		if ( NULL !== $value ) {
 			$this->_set_value( $args, $value );
 		}
 

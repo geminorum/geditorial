@@ -4,9 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -41,20 +39,20 @@ class Remoted extends gEditorial\Module
 					'field'       => 'remote_base',
 					'type'        => 'url',
 					'title'       => _x( 'Remote Base', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Full URL into the remote base of receiving uploads.', 'Setting Description', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the full URL of the remote base for receiving uploads.', 'Setting Description', 'geditorial-remoted' ),
 				],
 				[
 					'field'       => 'remote_target',
 					'type'        => 'text',
 					'title'       => _x( 'Remote Target', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Relative path for the receiving uploads. Leave empty for the base.', 'Setting Description', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the relative path for the receiving uploads. Leave empty for the base.', 'Setting Description', 'geditorial-remoted' ),
 					'field_class' => [ 'regular-text', 'code-text' ],
 				],
 				[
 					'field'       => 'remote_identifier',
 					'type'        => 'text',
 					'title'       => _x( 'Remote Identifier', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Unique string for the receiver. Must start with a letter.', 'Setting Description', 'geditorial-remoted' ),
+					'description' => _x( 'Defines a unique string for the receiver. Must start with a letter.', 'Setting Description', 'geditorial-remoted' ),
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'default'     => $this->_generate_identifier(),
 				],
@@ -62,7 +60,7 @@ class Remoted extends gEditorial\Module
 					'field'       => 'remote_token',
 					'type'        => 'text',
 					'title'       => _x( 'Remote Token', 'Setting Title', 'geditorial-remoted' ),
-					'description' => _x( 'Communication key for the receiver. Only letters and numbers.', 'Setting Description', 'geditorial-remoted' ),
+					'description' => _x( 'Defines the communication key for the receiver. Only letters and numbers.', 'Setting Description', 'geditorial-remoted' ),
 					'field_class' => [ 'regular-text', 'code-text' ],
 					'default'     => $this->_generate_token(),
 				],
@@ -185,7 +183,7 @@ class Remoted extends gEditorial\Module
 			return;
 
 		if ( empty( $box['args']['remote'] ) || empty( $box['args']['context'] ) )
-			return Info::renderSomethingIsWrong();
+			return gEditorial\Info::renderSomethingIsWrong();
 
 		echo $this->wrap_open(
 			[
@@ -243,7 +241,7 @@ class Remoted extends gEditorial\Module
 			],
 		], $this->dotted( $box['args']['context'] ), [
 			'jquery',
-			Scripts::pkgPlupload(),
+			gEditorial\Scripts::pkgPlupload(),
 		] );
 	}
 
@@ -380,17 +378,7 @@ class Remoted extends gEditorial\Module
 		if ( ! copy( $filename, Core\File::join( $path, sprintf( '%s.php', $data['identifier'] ) ) ) )
 			WordPress\Redirect::doReferer( 'error' );
 
-		// MAYBE: move-up!
-		$htaccess = '# BEGIN PROTECT DIR'."\n";
-		$htaccess.= 'Options -Indexes'."\n";
-		$htaccess.= "\n";
-		$htaccess.= '<FilesMatch "debug\.log|error_log">'."\n";
-  		$htaccess.= "\t".'Order allow,deny'."\n";
-  		$htaccess.= "\t".'Deny from all'."\n";
-		$htaccess.= '</FilesMatch>'."\n";
-		$htaccess.= '# END PROTECT DIR'."\n";
-
-		Core\File::putContents( '.htaccess', $htaccess, $path, FALSE );
+		Core\File::putContents( '.htaccess', Core\File::htaccessProtectLogs(), $path, FALSE );
 		Core\File::putDoNotBackup( $path );
 
 		if ( $view = $this->viewengine__view_by_template( $template ?? 'default', 'index' ) ) {

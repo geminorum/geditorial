@@ -321,7 +321,7 @@ class WcRelated extends gEditorial\Module
 		$transient        = get_transient( $transient_name );
 		$related_products = $transient && isset( $transient[$query_args] ) ? $transient[$query_args] : FALSE;
 
-		// we want to query related posts if they are not cached, or we don't have enough
+		// We want to query related posts if they are not cached, or we don't have enough.
 		if ( FALSE === $related_products || count( $related_products ) < $limit ) {
 
 			$related_products   = [];

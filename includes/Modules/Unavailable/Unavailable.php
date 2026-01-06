@@ -129,7 +129,7 @@ class Unavailable extends gEditorial\Module
 		global $comment_type;
 
 		$args   = [ 'comment_status' => $this->constant( 'comment_status' ) ];
-		$status = isset( $_REQUEST['comment_status'] ) ? $_REQUEST['comment_status'] : 'all';
+		$status = self::req( 'comment_status', 'all' );
 
 		if ( ! empty( $comment_type ) && 'all' != $comment_type )
 			$args['comment_type'] = $comment_type;
@@ -212,7 +212,7 @@ class Unavailable extends gEditorial\Module
 	{
 		global $wpdb;
 
-		// unarchived comments must be moderated
+		// NOTE: un-archived comments must be moderated
 		$status = $archive ? $this->constant( 'comment_status' ) : '0';
 		$old    = clone WordPress\Comment::get( $comment_id );
 

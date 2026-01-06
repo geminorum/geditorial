@@ -63,7 +63,7 @@ class {{{identifier}}} {
 		$chunks = isset( $_REQUEST['chunks'] ) ? intval( $_REQUEST['chunks'] ) : 0;
 		$out    = @fopen( $filePath.'.part', $chunk == 0 ? 'wb' : 'ab' );
 
-		if ($out) {
+		if ( $out ) {
 
 			$in = @fopen( $_FILES['file']['tmp_name'], 'rb' );
 
@@ -86,7 +86,7 @@ class {{{identifier}}} {
 			self::jsonrpc( 102, 'Failed to open output stream.' );
 		}
 
-		if ( ! $chunks || $chunk == $chunks - 1 )
+		if ( ! $chunks || $chunk == ( $chunks - 1 ) )
 			rename( $filePath.'.part', $filePath );
 
 		self::jsonrpc( FALSE );
@@ -116,9 +116,10 @@ class {{{identifier}}} {
 
 	public static function sanitize( $text )
 	{
-		return trim( strtolower( strip_tags( $text ) ) );
+		return trim( strip_tags( $text ) );
 	}
 
+	// https://www.jsonrpc.org/specification
 	public static function jsonrpc( $error = FALSE, $message = NULL )
 	{
 		$response = [
@@ -129,6 +130,7 @@ class {{{identifier}}} {
 		if ( $error ) {
 
 			http_response_code( 400 );
+
 			$response['error'] = [
 				'code'    => $error ?: '100',
 				'message' => $message ?: NULL,
@@ -137,11 +139,13 @@ class {{{identifier}}} {
 		} else {
 
 			http_response_code( 200 );
+
 			$response['result'] = $message ?: NULL;
 		}
 
 		header( 'Content-Type: application/json; charset=utf-8' );
-		die( json_encode( $response ) );
+		echo json_encode( $response );
+		exit;
 	}
 }
 

@@ -262,8 +262,8 @@ class DirectedConnectionType
 		] ) );
 	}
 
-	// transforms $this->getConnections( ... )
-	// into API::getConnections( $this->name, ... ) etc.
+	// transforms `$this->getConnections( ... )`
+	// into `API::getConnections( $this->name, ... )` etc.
 	public function __call( $method, $argv )
 	{
 		list( $args ) = $argv;

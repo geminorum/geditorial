@@ -279,13 +279,18 @@ class Widget extends \WP_Widget
 
 	public function get_images_sizes( $posttype )
 	{
-		$images = [];
-		$sizes  = gEditorial()->module( $this->parent_module )->get_image_sizes_for_posttype( $posttype );
+		$images   = [];
+		$sizes    = gEditorial()->module( $this->parent_module )->get_image_sizes_for_posttype( $posttype );
+		$template = '%s (%s&nbsp;&times;&nbsp;%s)';
 
 		if ( count( $sizes ) ) {
 
 			foreach ( $sizes as $name => $size )
-				$images[$name] = $size['n'].' ('.Core\Number::localize( $size['w'] ).'&nbsp;&times;&nbsp;'.Core\Number::localize( $size['h'] ).')';
+				$images[$name] = vsprintf( $template, [
+					$size['n'],
+					Core\Number::localize( $size['w'] ),
+					Core\Number::localize( $size['h'] ),
+				] );
 
 		} else {
 
@@ -294,10 +299,11 @@ class Widget extends \WP_Widget
 			if ( count( $sizes ) ) {
 
 				foreach ( $sizes as $name => $size )
-					$images[$name] = ( isset( $size['title'] ) ? $size['title'] : $name )
-						.' ('.Core\Number::localize( $size['width'] )
-						.'&nbsp;&times;&nbsp;'
-						.Core\Number::localize( $size['height'] ).')';
+					$images[$name] = vsprintf( $template, [
+						$size['title'] ?? $name,
+						Core\Number::localize( $size['width'] ),
+						Core\Number::localize( $size['height'] ),
+					] );
 
 			} else {
 				// foreach ( WordPress\Media::defaultImageSizes() as $name => $size ) {
@@ -358,144 +364,152 @@ class Widget extends \WP_Widget
 
 	public function form_content( $instance, $default = '', $field = 'content', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom HTML:', 'Widget Core', 'geditorial-admin' );
-
 		echo '<p>';
 
-		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label(
+			$label ?? _x( 'Custom HTML:', 'Widget Core', 'geditorial-admin' ),
+			$this->get_field_id( $field ),
+			FALSE
+		);
 
 		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '3',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'class' => 'widefat code textarea-autosize',
-		], isset( $instance[$field] ) ? $instance[$field] : $default );
+			'class' => [ 'widefat', 'code', 'textarea-autosize' ],
+		], $instance[$field] ?? $default );
 
 		echo '</p>';
 	}
 
 	public function form_open_widget( $instance, $default = '', $field = 'open_widget_html', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom HTML for Opening Widget:', 'Widget Core', 'geditorial-admin' );
-
 		echo '<p>';
 
-		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label(
+			$label ?? _x( 'Custom HTML for Opening Widget:', 'Widget Core', 'geditorial-admin' ),
+			$this->get_field_id( $field ),
+			FALSE
+		);
 
 		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'class' => 'widefat code textarea-autosize',
-		], isset( $instance[$field] ) ? $instance[$field] : $default );
+			'class' => [ 'widefat', 'code', 'textarea-autosize' ],
+		], $instance[$field] ?? $default );
 
 		echo '</p>';
 	}
 
 	public function form_close_widget( $instance, $default = '', $field = 'close_widget_html', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom HTML for Closing Widget:', 'Widget Core', 'geditorial-admin' );
-
 		echo '<p>';
 
-		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label(
+			$label ?? _x( 'Custom HTML for Closing Widget:', 'Widget Core', 'geditorial-admin' ),
+			$this->get_field_id( $field ),
+			FALSE
+		);
 
 		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'class' => 'widefat code textarea-autosize',
-		], isset( $instance[$field] ) ? $instance[$field] : $default );
+			'class' => [ 'widefat', 'code', 'textarea-autosize' ],
+		], $instance[$field] ?? $default );
 
 		echo '</p>';
 	}
 
 	public function form_after_title( $instance, $default = '', $field = 'after_title_html', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom HTML for After Title:', 'Widget Core', 'geditorial-admin' );
-
 		echo '<p>';
 
-		Core\HTML::label( $label, $this->get_field_id( $field ), FALSE );
+		Core\HTML::label(
+			$label ?? _x( 'Custom HTML for After Title:', 'Widget Core', 'geditorial-admin' ),
+			$this->get_field_id( $field ),
+			FALSE
+		);
 
 		echo Core\HTML::tag( 'textarea', [
 			'rows'  => '1',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'class' => 'widefat code textarea-autosize',
-		], isset( $instance[$field] ) ? $instance[$field] : $default );
+			'class' => [ 'widefat', 'code', 'textarea-autosize' ],
+		], $instance[$field] ?? $default );
 
 		echo '</p>';
 	}
 
 	public function form_number( $instance, $default = '10', $field = 'number', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Number of posts to show:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Number of posts to show:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_trim_chars( $instance, $default = '', $field = 'trim_chars', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Trim Characters:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.' '.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Trim Characters:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_context( $instance, $default = '', $field = 'context' )
+	public function form_context( $instance, $default = '', $field = 'context', $label = NULL )
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
-			'class' => 'widefat',
+			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( _x( 'Context:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Context:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_class( $instance, $default = '', $field = 'class' )
+	public function form_class( $instance, $default = '', $field = 'class', $label = NULL )
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
-			'class' => 'widefat',
+			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( _x( 'Class:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Class:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE )
+	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE, $label = NULL )
 	{
 		$html = '';
-		$type = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$type = $instance[$field] ?? $default;
 
 		if ( $any )
 			$html.= Core\HTML::tag( 'option', [
@@ -515,18 +529,21 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( _x( 'PostType:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'PostType:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any' )
+	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any', $label = NULL )
 	{
-		$type  = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
-		$taxes = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$type  = $instance[$posttype_field] ?? $posttype_default;
+		$taxes = $instance[$field] ?? $default;
 
 		$name = $this->get_field_name( $field );
 		$id   = $this->get_field_id( $field );
 
-		echo '<div class="-label">'._x( 'Taxonomies:', 'Widget Core', 'geditorial-admin' ).'</div>';
+		printf( '<div class="-label">%s</div>', $label ?? _x( 'Taxonomies:', 'Widget Core', 'geditorial-admin' ) );
 		echo Settings::tabPanelOpen();
 
 		foreach ( WordPress\Taxonomy::get( 0, [], $type ) as $value_name => $value_title ) {
@@ -539,17 +556,21 @@ class Widget extends \WP_Widget
 				'value'   => '1',
 			] );
 
-			Core\HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
+			Core\HTML::label(
+				$html.'&nbsp;'.$value_title,
+				$id.'-'.$value_name,
+				'li'
+			);
 		}
 
 		echo '</ul></div>';
 	}
 
-	public function form_taxonomy( $instance, $default = 'all', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'any', $option_all = 'all' )
+	public function form_taxonomy( $instance, $default = 'all', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'any', $option_all = 'all', $label = NULL )
 	{
 		$html = '';
-		$type = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
-		$tax  = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$type = $instance[$posttype_field] ?? $posttype_default;
+		$tax  = $instance[$field] ?? $default;
 
 		if ( $option_all )
 			$html.= Core\HTML::tag( 'option', [
@@ -568,114 +589,122 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( _x( 'Taxonomy:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Taxonomy:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_title( $instance, $default = '', $field = 'title' )
+	public function form_title( $instance, $default = '', $field = 'title', $label = NULL )
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => 'widefat',
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( _x( 'Title:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Title:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
-	public function form_title_link( $instance, $default = '', $field = 'title_link' )
+	public function form_title_link( $instance, $default = '', $field = 'title_link', $label = NULL )
 	{
-		$html = Core\HTML::tag( 'input', [
-			'type'  => 'url',
-			'class' => 'widefat',
-			'name'  => $this->get_field_name( $field ),
-			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
-		] );
-
-		Core\HTML::label( _x( 'Title Link:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
-	}
-
-	public function form_title_image( $instance, $default = '', $field = 'title_image' )
-	{
-		$html = Core\HTML::tag( 'input', [
-			'type'  => 'url',
-			'class' => 'widefat',
-			'name'  => $this->get_field_name( $field ),
-			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
-		] );
-
-		Core\HTML::label( _x( 'Title Image:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
-	}
-
-	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
-	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text', // `url` will not work on relative URLs
 			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Title Link:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
+	}
+
+	public function form_title_image( $instance, $default = '', $field = 'title_image', $label = NULL )
+	{
+		$html = Core\HTML::tag( 'input', [
+			'type'  => 'url',
+			'class' => [ 'widefat', 'code-text' ],
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => $instance[$field] ?? $default,
+		] );
+
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Title Image:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
+	}
+
+	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
+	{
+		$html = Core\HTML::tag( 'input', [
+			'type'  => 'text', // `url` will not work on relative URLs
+			'class' => [ 'widefat', 'code-text' ],
+			'name'  => $this->get_field_name( $field ),
+			'id'    => $this->get_field_id( $field ),
+			'value' => $instance[$field] ?? $default,
+		] );
+
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom Code:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat', 'code-text' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Custom Code:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_custom_title( $instance, $default = '', $field = 'custom_title', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Custom Title:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
-			'dir'   => 'ltr',
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Custom Title:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Empty Message:', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'class' => [ 'widefat' ],
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? _x( 'Empty Message:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
@@ -685,22 +714,23 @@ class Widget extends \WP_Widget
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( _x( 'Avatar Size:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', _x( 'Avatar Size:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_image_size( $instance, $default = NULL, $field = 'image_size', $posttype = 'post' )
 	{
-		$sizes = $this->get_images_sizes( $posttype );
-
-		if ( is_null( $default ) )
-			$default = WordPress\Media::getAttachmentImageDefaultSize( $posttype );
+		$sizes   = $this->get_images_sizes( $posttype );
+		$default = $default ?? WordPress\Media::getAttachmentImageDefaultSize( $posttype );
 
 		if ( count( $sizes ) ) {
 
-			$selected = isset( $instance[$field] ) ? $instance[$field] : $default;
+			$selected = $instance[$field] ?? $default;
 			$html     = '';
 
 			foreach ( $sizes as $size => $title )
@@ -715,7 +745,10 @@ class Widget extends \WP_Widget
 				'id'    => $this->get_field_id( $field ),
 			], $html );
 
-			Core\HTML::label( _x( 'Image Size:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+			Core\HTML::label(
+				sprintf( '%s %s', _x( 'Image Size:', 'Widget Core', 'geditorial-admin' ), $html ),
+				$this->get_field_id( $field )
+			);
 
 		} else {
 
@@ -725,45 +758,40 @@ class Widget extends \WP_Widget
 
 	public function form_dropdown( $instance, $values, $default = '', $field = 'selected', $label = NULL )
 	{
-		$selected = isset( $instance[$field] ) ? $instance[$field] : $default;
-
-		if ( is_null( $label ) )
-			$label = '';
-
 		$html = Core\HTML::dropdown( $values, [
 			'class'      => 'widefat',
 			'name'       => $this->get_field_name( $field ),
 			'id'         => $this->get_field_id( $field ),
 			'none_title' => _x( '&ndash; Select &ndash;', 'Widget Core', 'geditorial-admin' ),
-			'selected'   => $selected,
+			'selected'   => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', $label ?? '', $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Checked', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'    => $this->get_field_name( $field ),
 			'id'      => $this->get_field_id( $field ),
-			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Checked', 'Widget Core', 'geditorial-admin' ) ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	// only works on hierarchical
 	public function form_page_id( $instance, $default = '0', $field = 'page_id', $posttype_field = 'posttype', $posttype_default = 'page', $label = NULL )
 	{
-		$posttype = isset( $instance[$posttype_field] ) ? $instance[$posttype_field] : $posttype_default;
-		$page_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
-
-		if ( is_null( $label ) )
-			$label = _x( 'Page:', 'Widget Core', 'geditorial-admin' );
+		$posttype = $instance[$posttype_field] ?? $posttype_default;
+		$page_id  = $instance[$field] ?? $default;
 
 		$html = wp_dropdown_pages( [
 			'post_type'        => $posttype,
@@ -781,13 +809,16 @@ class Widget extends \WP_Widget
 			Core\HTML::inputHidden( $this->get_field_name( $field ), $page_id );
 		}
 
-		Core\HTML::label( $label.$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', _x( 'Page:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
 	{
-		$taxonomy = isset( $instance[$taxonomy_field] ) ? $instance[$taxonomy_field] : $taxonomy_default;
-		$term_id  = isset( $instance[$field] ) ? $instance[$field] : $default;
+		$taxonomy = $instance[$taxonomy_field] ?? $taxonomy_default;
+		$term_id  = $instance[$field] ?? $default;
 
 		if ( 'all' == $taxonomy )
 			return Core\HTML::desc( '<br />'._x( 'Select taxonomy first!', 'Widget Core', 'geditorial-admin' ), TRUE, '-empty' );
@@ -820,36 +851,39 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( _x( 'Term:', 'Widget Core', 'geditorial-admin' ).$html, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s %s', _x( 'Term:', 'Widget Core', 'geditorial-admin' ), $html ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_has_thumbnail( $instance, $default = FALSE, $field = 'has_thumbnail', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
-			'name'  => $this->get_field_name( $field ),
-			'id'    => $this->get_field_id( $field ),
-			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'name'    => $this->get_field_name( $field ),
+			'id'      => $this->get_field_id( $field ),
+			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' ) ),
+			$this->get_field_id( $field )
+		);
 	}
 
 	public function form_wrap_as_items( $instance, $default = TRUE, $field = 'wrap_as_items', $label = NULL )
 	{
-		if ( is_null( $label ) )
-			$label = _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' );
-
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
-			'name'  => $this->get_field_name( $field ),
-			'id'    => $this->get_field_id( $field ),
-			'checked' => isset( $instance[$field] ) ? $instance[$field] : $default,
+			'name'    => $this->get_field_name( $field ),
+			'id'      => $this->get_field_id( $field ),
+			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( $html.'&nbsp;'.$label, $this->get_field_id( $field ) );
+		Core\HTML::label(
+			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' ) ),
+			$this->get_field_id( $field )
+		);
 	}
 }

@@ -488,10 +488,7 @@ class Drafts extends gEditorial\Module
 
 				if ( '1' === self::req( $this->constant( 'admin_queryvar' ) ) ) {
 
-					$meta_query = isset( $query->query_vars['meta_query'] )
-						? $query->query_vars['meta_query']
-						: [];
-
+					$meta_query = $query->query_vars['meta_query'] ?? [];
 					$meta_query[] = [
 						'key'     => $this->constant( 'metakey_secret' ),
 						'compare' => 'EXISTS'

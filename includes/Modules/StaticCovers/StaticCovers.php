@@ -934,8 +934,8 @@ class StaticCovers extends gEditorial\Module
 			'style'     => FALSE,
 			'img_class' => FALSE,
 			'figure'    => TRUE,     // TODO: add settings for default
-			'caption'   => NULL,     // null for getting from queried object
-			'alt'       => NULL,     // null for getting from queried object
+			'caption'   => NULL,     // NULL for getting from queried object
+			'alt'       => NULL,     // NULL for getting from queried object
 			'load'      => 'lazy',
 			'context'   => NULL,
 			'wrap'      => TRUE,
@@ -1010,8 +1010,8 @@ class StaticCovers extends gEditorial\Module
 			'style'     => FALSE,
 			'img_class' => FALSE,
 			'figure'    => TRUE,     // TODO: add settings for default
-			'caption'   => NULL,     // null for getting from queried object
-			'alt'       => NULL,     // null for getting from queried object
+			'caption'   => NULL,     // NULL for getting from queried object
+			'alt'       => NULL,     // NULL for getting from queried object
 			'load'      => 'lazy',
 			'context'   => NULL,
 			'wrap'      => TRUE,

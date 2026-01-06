@@ -140,13 +140,13 @@ class API extends Core\Base
 			case 'o2o_to':
 
 				$sql_field = $args['fields'];
+				break;
 
-			break;
 			case 'count':
 
 				$sql_field = 'COUNT(*)';
+				break;
 
-			break;
 			default:
 
 				$sql_field = '*';
@@ -312,7 +312,7 @@ class API extends Core\Base
 		return ListRenderer::render( $list, $args );
 	}
 
-	// given a list of objects and another list of connected items,
+	// Given a list of objects and another list of connected items,
 	// distribute each connected item to it's respective counterpart
 	// `p2p_distribute_connected()`
 	public static function distributeConnected( $items, $connected, $prop_name )

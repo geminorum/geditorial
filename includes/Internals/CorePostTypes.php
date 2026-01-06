@@ -15,9 +15,7 @@ trait CorePostTypes
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
 
 		$args = self::recursiveParseArgs( $atts, [
-			'description' => isset( $this->strings['labels'][$constant]['description'] )
-				? $this->strings['labels'][$constant]['description'] : '',
-
+			'description'   => $this->strings['labels'][$constant]['description'] ?? '',
 			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
 			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
 
@@ -500,12 +498,8 @@ trait CorePostTypes
 		if ( empty( $posttype ) || empty( $feature ) )
 			return FALSE;
 
-		$supported = isset( $_wp_post_type_features[$posttype][$feature] )
-			? $_wp_post_type_features[$posttype][$feature]
-			: $fallback;
-
 		return $this->filters( sprintf( 'posttype_%s_supports_%s', $posttype, $feature ),
-			$supported,
+			$_wp_post_type_features[$posttype][$feature] ?? $fallback,
 			$posttype,
 			$feature,
 			$fallback

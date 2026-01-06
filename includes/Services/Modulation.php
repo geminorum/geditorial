@@ -31,7 +31,7 @@ class Modulation extends gEditorial\Service
 			'configure' => TRUE,              // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
 			'i18n'      => TRUE,              // or `FALSE`, `adminonly`, `frontonly`, `restonly`
 			'frontend'  => TRUE,              // Whether or not the module should be loaded on the frontend
-			'autoload'  => FALSE,             // Auto-loading a module will remove the ability to enable/disable it
+			'autoload'  => FALSE,             // Autoloading a module will remove the ability to enable/disable it
 			'disabled'  => FALSE,             // FALSE or string explaining why the module is not available
 			'access'    => 'unknown',         // or `private`, `stable`, `beta`, `alpha`, `beta`, `deprecated`, `planned`
 			'keywords'  => [],
@@ -87,7 +87,7 @@ class Modulation extends gEditorial\Service
 
 	public static function moduleEnabled( $options )
 	{
-		$enabled = isset( $options->enabled ) ? $options->enabled : FALSE;
+		$enabled = $options->enabled ?? FALSE;
 
 		if ( 'off' === $enabled )
 			return FALSE;

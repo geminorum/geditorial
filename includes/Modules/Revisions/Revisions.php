@@ -264,7 +264,7 @@ class Revisions extends gEditorial\Module
 
 			echo Core\HTML::tag( 'a', [
 				'id'    => $this->hook( 'purge' ),
-				'class' => 'button button-small -purge hide-if-no-js', // works with no js but need for style
+				'class' => 'button button-small -purge hide-if-no-js', // Works with no JS but need for style
 				'title' => _x( 'Purge all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'data'  => [ 'parent' => $post->ID ],
 				'href'  => WordPress\URL::adminPOST( $this->hook( 'purge' ), [
@@ -280,9 +280,11 @@ class Revisions extends gEditorial\Module
 				'class' => 'button button-small -browse hide-if-no-js',
 				'title' => _x( 'Browse all revisions', 'Title Attr', 'geditorial-revisions' ),
 				'href'  => get_edit_post_link( $last ),
-			/* translators: `%s`: revisions count */
-		], sprintf( _x( 'Browse %s Revisions', 'Button', 'geditorial-revisions' ),
-				'<b>'.Core\Number::format( $count ).'</b>' ) );
+			], sprintf(
+				/* translators: `%s`: revisions count */
+				_x( 'Browse %s Revisions', 'Button', 'geditorial-revisions' ),
+				'<b>'.Core\Number::format( $count ).'</b>'
+			) );
 
 		echo '</div>';
 	}
@@ -301,7 +303,7 @@ class Revisions extends gEditorial\Module
 	// @SEE: `wp_{$post->post_type}_revisions_to_keep` filter
 	public function wp_revisions_to_keep( $num, $post )
 	{
-		// if not supported then no revisions
+		// If not supported then no revisions
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return 0;
 

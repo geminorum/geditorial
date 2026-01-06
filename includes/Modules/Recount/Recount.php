@@ -132,7 +132,7 @@ class Recount extends gEditorial\Module
 		if ( isset( $query_vars['orderby'] ) && $this->key === $query_vars['orderby'] ) {
 			$query_vars = array_merge( $query_vars, [
 				'meta_key' => 'count',
-				'orderby'  => 'meta_value_num'
+				'orderby'  => 'meta_value_num',
 			] );
 		}
 
@@ -162,7 +162,7 @@ class Recount extends gEditorial\Module
 			self::req( 'taxonomy', '' )
 		);
 
-		// WTF: must print here, wierd bug on category tax!
+		// WTF: must print here, weird bug on category tax!
 		echo ( $edit ? Core\HTML::link( $html, $edit, TRUE ) : $html );
 	}
 
@@ -210,7 +210,11 @@ class Recount extends gEditorial\Module
 				$this->nonce_field( 'do-recount-items' );
 
 				echo $this->wrap_open_buttons( '-toolbox-buttons' );
-					gEditorial\Settings::submitButton( $this->classs( 'do-recount-items' ), _x( 'Re-count Items for all Terms', 'Tab Tools', 'geditorial-recount' ), 'small button-primary' );
+					gEditorial\Settings::submitButton(
+						$this->classs( 'do-recount-items' ),
+						_x( 'Re-count Items for all Terms', 'Tab Tools', 'geditorial-recount' ),
+						'small button-primary'
+					);
 				echo '</p>';
 
 			$this->render_form_end( NULL, 'recount-items', 'maintenance', 'tabs' );

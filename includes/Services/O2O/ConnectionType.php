@@ -137,7 +137,7 @@ class ConnectionType extends Core\Base
 			return FALSE;
 		}
 
-		// replace the first argument with the normalized one, to avoid having to do it again
+		// Replace the first argument with the normalized one, to avoid having to do it again
 		list( $direction, $args[0] ) = $r;
 
 		return call_user_func_array( [ $this->set_direction( $direction ), $method ], $args );
@@ -157,7 +157,7 @@ class ConnectionType extends Core\Base
 		return $direction;
 	}
 
-	// attempt to guess direction based on a parameter
+	// Attempt to guess direction based on a parameter
 	public function find_direction( $arg, $instantiate = TRUE, $object_type = NULL )
 	{
 		if ( $object_type ) {
@@ -239,25 +239,25 @@ class ConnectionType extends Core\Base
 		return FALSE;
 	}
 
-	// alias for get_prev()
+	// alias for `get_prev()`
 	public function get_previous( $from, $to )
 	{
 		return $this->get_prev( $from, $to );
 	}
 
-	// get the previous post in an ordered connection
+	// Get the previous post in an ordered connection
 	public function get_prev( $from, $to )
 	{
 		return $this->get_adjacent( $from, $to, -1 );
 	}
 
-	// get the next post in an ordered connection
+	// Get the next post in an ordered connection
 	public function get_next( $from, $to )
 	{
 		return $this->get_adjacent( $from, $to, +1 );
 	}
 
-	// get another post in an ordered connection
+	// Get another post in an ordered connection
 	public function get_adjacent( $from, $to, $which )
 	{
 		// The direction needs to be based on the second parameter,
@@ -292,7 +292,7 @@ class ConnectionType extends Core\Base
 		return $item->get_object();
 	}
 
-	// get the previous, next and parent items, in an ordered connection type
+	// Get the previous, next, and parent items, in an ordered connection type.
 	public function get_adjacent_items( $item )
 	{
 		$result = [
@@ -323,8 +323,8 @@ class ConnectionType extends Core\Base
 		return $result;
 	}
 
-	// optimized inner query, after the outer query was executed
-	// populates each of the outer querie's $post objects with
+	// Optimized inner query, after the outer query was executed
+	// populates each of the outer query's $post objects with
 	// a 'connected' property, containing a list of connected posts
 	public function each_connected( $items, $extra_qv = [], $prop_name = 'connected' )
 	{

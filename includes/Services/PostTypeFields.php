@@ -353,7 +353,7 @@ class PostTypeFields extends gEditorial\Service
 			$meta = call_user_func( $args['filter'], $meta );
 
 		if ( $args['prefix'] )
-			$meta = sprintf( '%s: %s', isset( $field[$args['prefix']] ) ? $field[$args['prefix']] : $args['prefix'], $meta );
+			$meta = sprintf( '%s: %s', $field[$args['prefix']] ?? $args['prefix'], $meta );
 
 		if ( $meta )
 			return $args['before'].( $args['trim'] ? WordPress\Strings::trimChars( $meta, $args['trim'] ) : $meta ).$args['after'];

@@ -70,11 +70,11 @@ trait CoreMenuPage
 		$this->screens[$context] = add_submenu_page(
 			$parent_slug,
 			$page_title,
-			( is_null( $menu_title ) ? $page_title : $menu_title ),
-			( is_null( $capability ) ? ( isset( $this->caps[$context] ) ? $this->caps[$context] : 'manage_options' ) : $capability ),
+			( $menu_title ?? $page_title ),
+			( $capability ?? ( $this->caps[$context] ?? 'manage_options' ) ),
 			( empty( $menu_slug ) ? $this->classs_base( $context ) : $menu_slug ),
 			( empty( $callback ) ? ( is_callable( $default_callback ) ? $default_callback : '' ) : $callback ),
-			( is_null( $position ) ? ( isset( $this->positions[$context] ) ? $this->positions[$context] : NULL ) : $position )
+			( $position ?? ( $this->positions[$context] ?? NULL ) )
 		);
 
 		if ( $this->screens[$context] )

@@ -99,35 +99,47 @@ class CustomTaxonomy extends gEditorial\Service
 			$pre['menu_name'] = $strings[0];
 
 		if ( ! array_key_exists( 'most_used', $pre ) )
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			$pre['most_used'] = vsprintf( _x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ), $strings );
+			$pre['most_used'] = vsprintf(
+				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+				_x( 'Most Used', 'Helper: Tax Generator', 'geditorial' ),
+				$strings
+			);
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		// WTF: better to be dynamic
 		// if ( ! array_key_exists( 'extended_label', $pre ) )
 		// 	$pre['extended_label'] = $pre['name'];
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		if ( ! array_key_exists( 'column_title', $pre ) )
 			$pre['column_title'] = $strings[0];
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		if ( ! array_key_exists( 'metabox_title', $pre ) )
 			$pre['metabox_title'] = $strings[0];
 
 		if ( ! array_key_exists( 'desc_field_title', $pre ) )
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			$pre['desc_field_title'] = vsprintf( _x( 'Description', 'CustomTaxonomy: Label for `desc_field_title`', 'geditorial' ), $strings );
+			$pre['desc_field_title'] = vsprintf(
+				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+				_x( 'Description', 'CustomTaxonomy: Label for `desc_field_title`', 'geditorial' ),
+				$strings
+			);
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		if ( ! array_key_exists( 'uncategorized', $pre ) )
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			$pre['uncategorized'] = vsprintf( _x( 'Uncategorized', 'CustomTaxonomy: Label for `uncategorized`', 'geditorial' ), $strings );
+			$pre['uncategorized'] = vsprintf(
+				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+				_x( 'Uncategorized', 'CustomTaxonomy: Label for `uncategorized`', 'geditorial' ),
+				$strings
+			);
 
-		// NOTE: this is plugin custom
+		// NOTE: this is the plugin custom
 		if ( ! array_key_exists( 'no_items_available', $pre ) )
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			$pre['no_items_available'] = vsprintf( _x( 'There are no %3$s available!', 'CustomTaxonomy: Label for `no_items_available`', 'geditorial' ), $strings );
+			$pre['no_items_available'] = vsprintf(
+				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+				_x( 'There are no %3$s available!', 'CustomTaxonomy: Label for `no_items_available`', 'geditorial' ),
+				$strings
+			);
 
 		return $pre;
 	}
@@ -191,8 +203,11 @@ class CustomTaxonomy extends gEditorial\Service
 				return sprintf( '(%s)', $object->labels->no_terms );
 
 			case 'show_option_select':
-				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( '&ndash; Select %2$s &ndash;', 'CustomTaxonomy: Label for `show_option_select`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+					_x( '&ndash; Select %2$s &ndash;', 'CustomTaxonomy: Label for `show_option_select`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'show_option_all':
 				return $object->labels->all_items;
@@ -204,8 +219,11 @@ class CustomTaxonomy extends gEditorial\Service
 				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
 
 			case 'import_items':
-				/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-				return vsprintf( _x( 'Import %1$s', 'CustomTaxonomy: Label for `import_items`', 'geditorial' ), WordPress\Strings::getNameForms( $name ) );
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+					_x( 'Import %1$s', 'CustomTaxonomy: Label for `import_items`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 		}
 
 		if ( $fallback_key && isset( $object->labels->{$fallback_key} ) )

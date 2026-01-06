@@ -373,7 +373,7 @@ class Uncategorized extends gEditorial\Module
 					'type'         => 'select',
 					'field'        => 'dead_tax',
 					'values'       => $dead_taxes,
-					'default'      => ( isset( $post['dead_tax'] ) ? $post['dead_tax'] : 'post_tag' ),
+					'default'      => $post['dead_tax'] ?? 'post_tag',
 					'option_group' => 'tools',
 				] );
 
@@ -381,7 +381,7 @@ class Uncategorized extends gEditorial\Module
 					'type'         => 'select',
 					'field'        => 'live_tax',
 					'values'       => $live_taxes,
-					'default'      => ( isset( $post['live_tax'] ) ? $post['live_tax'] : 'post_tag' ),
+					'default'      => $post['live_tax'] ?? 'post_tag',
 					'option_group' => 'tools',
 				] );
 
@@ -513,7 +513,7 @@ class Uncategorized extends gEditorial\Module
 		return $this->hash( 'uncategorizedcount', $taxonomies );
 	}
 
-	// NOTE: only for `post` posttype
+	// NOTE: only for `post` post-type
 	private function _get_post_count()
 	{
 		$taxonomies = $this->taxonomies();

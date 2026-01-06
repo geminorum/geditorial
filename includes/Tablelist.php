@@ -325,9 +325,7 @@ class Tablelist extends WordPress\Main
 				if ( ! $post = WordPress\Post::get( $post_id_prop ? $row->{$post_id_prop} : $row ) )
 					return Helper::htmlEmpty();
 
-				return isset( $column['args']['types'][$post->post_type] )
-					? $column['args']['types'][$post->post_type]
-					: $post->post_type;
+				return $column['args']['types'][$post->post_type] ?? $post->post_type;
 			},
 		];
 	}

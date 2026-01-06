@@ -307,10 +307,7 @@ class WasBorn extends gEditorial\Module
 
 		if ( '-1' == $query->query_vars[$query_var] ) {
 
-			$meta_query = isset( $query->query_vars['meta_query'] )
-				? $query->query_vars['meta_query']
-				: [];
-
+			$meta_query = $query->query_vars['meta_query'] ?? [];
 			$meta_query[] = [
 				'key'     => $this->_get_posttype_dob_metakey( $posttype ),
 				'compare' => 'NOT EXISTS',
@@ -329,11 +326,9 @@ class WasBorn extends gEditorial\Module
 
 				if ( $group = $this->_get_age_group_metaquery( $term, $metakey ) ) {
 
-					$meta_query = isset( $query->query_vars['meta_query'] )
-					? $query->query_vars['meta_query']
-					: [];
-
+					$meta_query = $query->query_vars['meta_query'] ?? [];
 					$meta_query[] = [ $group['meta'] ];
+
 					$query->set( 'meta_query', $meta_query );
 				}
 			}

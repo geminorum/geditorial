@@ -898,6 +898,7 @@ class Tweaks extends gEditorial\Module
 
 		if ( isset( $this->_post_statuses[$post->post_status] ) )
 			$status = Core\HTML::escape( $this->_post_statuses[$post->post_status] );
+
 		else
 			$status = $post->post_status;
 

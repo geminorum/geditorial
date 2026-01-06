@@ -36,7 +36,7 @@ class ModuleHelper extends gEditorial\Helper
 				'between_last' => _x( ' and ', 'Walker: Default: Between Last Delimiter', 'geditorial-byline' ),
 				'pre'          => _x( 'Written by', 'Walker: Default: Pre', 'geditorial-byline' ),
 			],
-		], $list, isset( $atts['post'] ) ? $atts['post'] : NULL ), $atts );
+		], $list, $atts['post'] ?? NULL ), $atts );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
@@ -122,7 +122,7 @@ class ModuleHelper extends gEditorial\Helper
 				'hint'       => _x( 'View full profile', 'Walker: Default: Hint', 'geditorial-byline' ),
 				'norelation' => _x( '[Unrelated]', 'Walker: Default: No-Relation', 'geditorial-byline' ),
 			],
-		], $list, isset( $atts['post'] ) ? $atts['post'] : NULL ), $atts );
+		], $list, $atts['post'] ?? NULL ), $atts );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
@@ -197,7 +197,7 @@ class ModuleHelper extends gEditorial\Helper
 			'_legacy'    => [],
 			'_extra'     => [],   // intro arguments
 			'_strings'   => [],
-		], $list, isset( $atts['post'] ) ? $atts['post'] : NULL ), $atts );
+		], $list, $atts['post'] ?? NULL ), $atts );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];

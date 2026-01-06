@@ -223,7 +223,7 @@ class API extends Core\Base
 	 */
 	public static function validate_post_data( $fields, $data = NULL, $to_update = [] )
 	{
-		if ( null === $data )
+		if ( NULL === $data )
 			$data = stripslashes_deep( $_POST );
 
 		foreach ( $fields as $field ) {
@@ -234,7 +234,7 @@ class API extends Core\Base
 
 			$value = $fieldObj->validate( $value );
 
-			if ( null !== $value )
+			if ( NULL !== $value )
 				self::set_value( $to_update, $field['name'], $value );
 		}
 

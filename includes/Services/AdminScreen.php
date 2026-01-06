@@ -20,6 +20,9 @@ class AdminScreen extends gEditorial\Service
 
 	public static function init_late_admin()
 	{
+		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
+			return;
+
 		add_filter( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ], 9, 2 );
 		add_filter( 'screen_settings', [ __CLASS__, 'screen_settings' ], 12, 2 );
 		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen_option' ], 12, 3 );
@@ -63,6 +66,8 @@ class AdminScreen extends gEditorial\Service
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/369713
+	// @SEE: https://github.com/WordPress/gutenberg/blob/trunk/packages/components/src/utils/theme-variables.scss
+	// @SEE: https://make.wordpress.org/core/2021/01/29/introducing-css-custom-properties/
 	private static function _print_user_colors()
 	{
 		global $_wp_admin_css_colors;

@@ -176,7 +176,7 @@ class Socialite extends gEditorial\Module
 
 	protected function get_global_fields()
 	{
-		// bail if no post-type supported
+		// Bail if no post-type supported.
 		if ( empty( $this->posttypes() ) )
 			return [];
 
@@ -186,8 +186,8 @@ class Socialite extends gEditorial\Module
 
 		foreach ( $this->supported as $field )
 			$supported[$field] = [
-				'title'       => isset( $strings['titles'][$field] ) ? $strings['titles'][$field] : $field,
-				'description' => isset( $strings['descriptions'][$field] ) ? $strings['descriptions'][$field] : '',
+				'title'       => $strings['titles'][$field] ?? $field,
+				'description' => $strings['descriptions'][$field] ?? '',
 				'icon'        => $this->_get_field_icon( $field, '_supported' ),
 				'type'        => 'code',
 				'order'       => 1800,
@@ -523,6 +523,10 @@ class Socialite extends gEditorial\Module
 		if ( empty( $list ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( Core\HTML::rows( $list ), $tag, $args );
+		return gEditorial\ShortCode::wrap(
+			Core\HTML::rows( $list ),
+			$tag,
+			$args
+		);
 	}
 }

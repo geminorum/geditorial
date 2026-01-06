@@ -15,7 +15,7 @@ abstract class SingleChoiceField extends FormField
 	 */
 	public function validate( $value )
 	{
-		if ( isset( $this->choices[ $value ] ) )
+		if ( isset( $this->choices[$value] ) )
 			return $value;
 
 		return NULL;

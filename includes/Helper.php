@@ -184,12 +184,10 @@ class Helper extends WordPress\Main
 
 			if ( 'publish' != $post->post_status ) {
 
-				if ( 'inherit' == $post->post_status && 'attachment' == $post->post_type )
+				if ( 'inherit' == $post->post_status && 'attachment' === $post->post_type )
 					$status = '';
-				else if ( isset( $statuses[$post->post_status] ) )
-					$status = $statuses[$post->post_status];
 				else
-					$status = $post->post_status;
+					$status = $statuses[$post->post_status] ?? $post->post_status;
 
 				if ( $status )
 					$after = ' <small class="-status" title="'.Core\HTML::escape( $post->post_status ).'">('.$status.')</small>';

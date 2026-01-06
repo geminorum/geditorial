@@ -544,7 +544,7 @@ class Module extends WordPress\Module
 			return $title;
 
 		if ( is_null( $edit_cap ) )
-			$edit_cap = isset( $this->caps['settings'] ) ? $this->caps['settings'] : 'manage_options';
+			$edit_cap = $this->caps['settings'] ?? 'manage_options';
 
 		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
 

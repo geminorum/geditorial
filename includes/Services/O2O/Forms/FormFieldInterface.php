@@ -11,7 +11,6 @@ interface FormFieldInterface {
 	 * Generate the corresponding HTML for a field.
 	 *
 	 * @param mixed $value (optional) The value to use.
-	 *
 	 * @return string
 	 */
 	function render( $value = NULL );
@@ -20,8 +19,7 @@ interface FormFieldInterface {
 	 * Validates a value against a field.
 	 *
 	 * @param mixed $value The value to check.
-	 *
-	 * @return mixed null if the validation failed, sanitized value otherwise.
+	 * @return mixed NULL if the validation failed, sanitized value otherwise.
 	 */
 	function validate( $value );
 }

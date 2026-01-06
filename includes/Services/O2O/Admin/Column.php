@@ -49,7 +49,7 @@ abstract class Column
 
 	public function styles()
 	{
-?><style type="text/css">
+?><style>
 .column-<?php echo $this->column_id; ?> ul {
 	margin-top: 0;
 	margin-bottom: 0;

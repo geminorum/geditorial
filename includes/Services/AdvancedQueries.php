@@ -222,7 +222,8 @@ class AdvancedQueries extends gEditorial\Service
 		if ( is_admin() )
 			return;
 
-		if ( isset( $query->query['post_type'] ) && $query->query['post_type'] === 'event' ) {
+		if ( isset( $query->query['post_type'] )
+			&& 'event' === $query->query['post_type'] ) {
 
 			$query->set( 'orderby', 'meta_value' );
 			$query->set( 'order', 'ASC' );
@@ -240,25 +241,25 @@ class AdvancedQueries extends gEditorial\Service
 						[
 							'key'     => 'start_date',
 							'value'   => '',
-							'compare' => '='
+							'compare' => '=',
 						],
 						[
 							'key'     => 'start_date',
-							'compare' => 'NOT EXISTS'
-						]
+							'compare' => 'NOT EXISTS',
+						],
 					],
 					[
 						'relation' => 'OR',
 						[
 							'key'     => 'end_date',
 							'value'   => '',
-							'compare' => '='
+							'compare' => '=',
 						],
 						[
 							'key'     => 'end_date',
 							'compare' => 'NOT EXISTS',
-						]
-					]
+						],
+					],
 				],
 				[
 					// Start date >= today and end date empty
@@ -267,13 +268,13 @@ class AdvancedQueries extends gEditorial\Service
 						'key'     => 'start_date',
 						'value'   => date( 'Y-m-d' ),
 						'compare' => '>=',
-						'type'    => 'DATE'
+						'type'    => 'DATE',
 					],
 					[
 						'key'     => 'end_date',
 						'value'   => '',
-						'compare' => '='
-					]
+						'compare' => '=',
+					],
 				],
 				[
 					// Start date <= today and end date >= today
@@ -282,15 +283,15 @@ class AdvancedQueries extends gEditorial\Service
 						'key'     => 'start_date',
 						'value'   => date( 'Y-m-d' ),
 						'compare' => '<=',
-						'type'    => 'DATE'
+						'type'    => 'DATE',
 					],
 					[
 						'key'     => 'end_date',
 						'value'   => date( 'Y-m-d' ),
 						'compare' => '>=',
-						'type'    => 'DATE'
-					]
-				]
+						'type'    => 'DATE',
+					],
+				],
 			];
 
 			$query->set( 'meta_query', $meta_query );

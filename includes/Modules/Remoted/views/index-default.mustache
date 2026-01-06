@@ -31,7 +31,8 @@ p {
 </head><body>
 
 <div class="wrap"><div>
-{{#logo}}<h1><img src="{{{logo}}}" alt="{{name}}" loading="lazy" /></h1>{{/logo}}
+{{#logo}}<img src="{{{logo}}}" alt="{{name}}" loading="lazy" />{{/logo}}
+{{^logo}}<h1>{{name}}</h1>{{/logo}}
 {{#message}}<p>{{{message}}}</p>{{/message}}
 </div>
 </div>

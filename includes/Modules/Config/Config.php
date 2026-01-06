@@ -953,6 +953,7 @@ class Config extends gEditorial\Module
 
 				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
 					gEditorial\Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-admin' ) );
+
 				else
 					gEditorial\Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-admin' ) );
 		}

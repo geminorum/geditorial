@@ -222,14 +222,14 @@ class Schedule extends gEditorial\Module
 	{
 		$html = Core\HTML::tag( 'input', [ 'type' => 'text', 'name' => 'post_title', 'data-field' => 'title', 'class' => 'regular-text' ] );
 
-		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'post_type', 'data-field' => 'type' ] );
-		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_day', 'data-field' => 'day' ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'post_type',  'data-field' => 'type'  ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_day',   'data-field' => 'day'   ] );
 		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_month', 'data-field' => 'month' ] );
-		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_year', 'data-field' => 'year' ] );
-		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal', 'data-field' => 'cal', 'value' => $calendar ] );
-		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce', 'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_year',  'data-field' => 'year'  ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal',   'data-field' => 'cal',   'value' => $calendar ] );
+		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce',      'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = Core\HTML::button( Core\HTML::getDashicon( 'yes' ), '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'save' ] );
+		$actions = Core\HTML::button( Core\HTML::getDashicon( 'yes' ),    '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ),   TRUE, [ 'action' => 'save'  ] );
 		$actions.= Core\HTML::button( Core\HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
 
 		$html.= Core\HTML::wrap( $actions, '-actions' );
