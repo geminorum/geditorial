@@ -148,14 +148,16 @@ class Text extends Base
 	 * Splits string by new-line characters.
 	 *
 	 * @param string $text
+	 * @param bool $normalize
 	 * @return array
 	 */
-	public static function splitLines( $text )
+	public static function splitLines( $text, $normalize = TRUE )
 	{
 		if ( empty( $text ) )
 			return [];
 
-		$text = self::normalizeWhitespace( $text, TRUE );
+		if ( $normalize )
+			$text = self::normalizeWhitespace( $text, TRUE );
 
 		return array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) );
 	}
@@ -175,6 +177,7 @@ class Text extends Base
 		return self::trim( str_ireplace( [ '_', '.' ], '-', $text ) );
 	}
 
+	// @SEE: `sanitize_title_with_dashes()`
 	public static function formatSlug( $text )
 	{
 		$text = (string) $text;
@@ -1473,12 +1476,12 @@ class Text extends Base
 	 * @source https://stackoverflow.com/a/15193543
 	 *
 	 * Allow you to create a unique hash with a maximum value of 32.
-	 * Hash Gen uses php's `substr`, `md5`, `uniqid`, and rand to generate a unique
+	 * Hash Gen uses PHP `substr`, `md5`, `uniqid`, and rand to generate a unique
 	 * id or hash and allow you to have some added functionality.
 	 *
 	 * You can also supply a hash to be prefixed or appended
-	 * to the hash. hash[optional] is by default appended to the hash
-	 * unless the param prefix[optional] is set to prefix[true].
+	 * to the hash. `hash` is by default appended to the hash
+	 * unless the param `prefix` is set to prefix[true].
 	 *
 	 * @param int $start
 	 * @param int $end

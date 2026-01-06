@@ -271,7 +271,7 @@ class HTML extends Base
 				return $atts.$sep;
 
 			if ( $content )
-				return $content.$sep;
+				return ( (string) $content ).$sep;
 
 			return '';
 		}
@@ -300,7 +300,7 @@ class HTML extends Base
 		if ( is_null( $content ) )
 			return $html.'</'.$tag.'>'.$sep;
 
-		return $html.$content.'</'.$tag.'>'.$sep;
+		return $html.( (string) $content ).'</'.$tag.'>'.$sep;
 	}
 
 	public static function attrBoolean( $value, $current = NULL, $fallback = FALSE )
@@ -401,7 +401,7 @@ class HTML extends Base
 				$sanitized = TRUE;
 			}
 
-			if ( in_array( $key, [ 'selected', 'checked', 'readonly', 'disabled', 'default', 'required', 'multiple' ], TRUE ) )
+			if ( in_array( $key, [ 'selected', 'checked', 'readonly', 'disabled', 'default', 'required', 'multiple', 'async' ], TRUE ) )
 				$att = $att ? $key : FALSE;
 
 			else if ( in_array( $key, [ 'autocomplete' ], TRUE ) )
@@ -750,7 +750,7 @@ class HTML extends Base
 		$html = self::tag( 'link', [
 			'rel'   => 'stylesheet',
 			'href'  => $url,
-			'type'  => 'text/css',
+			// 'type'  => 'text/css', // @REF: https://core.trac.wordpress.org/ticket/64428
 			'media' => $media,
 		] )."\n";
 
@@ -1371,9 +1371,9 @@ class HTML extends Base
 		if ( ! $code )
 			return '';
 
-		$script = '<script type="text/javascript">'."\n".'/* <![CDATA[ */';
+		$script = '<script>'."\n";
 		$script.= "\n".$code."\n";
-		$script.= '/* ]]> */'."\n".'</script>'."\n";
+		$script.= '</script>'."\n";
 
 		if ( ! $verbose )
 			return $script;
@@ -1387,9 +1387,9 @@ class HTML extends Base
 		if ( ! $code )
 			return '';
 
-		$script = '<script type="text/javascript">'."\n".'/* <![CDATA[ */'."\n";
+		$script = '<script>'."\n";
 		$script.= 'jQuery(function($){'."\n".$code.'});'."\n";
-		$script.= '/* ]]> */'."\n".'</script>'."\n";
+		$script.= '</script>'."\n";
 
 		if ( ! $verbose )
 			return $script;
@@ -1449,20 +1449,21 @@ class HTML extends Base
 			return $html;
 
 		$args = self::atts( [
-			'id'         => FALSE,
-			'name'       => '',
-			'title'      => FALSE,
-			'none_title' => NULL,
-			'none_value' => 0,
-			'class'      => FALSE,
-			'style'      => FALSE,
-			'selected'   => 0,
-			'disabled'   => FALSE,
-			'dir'        => FALSE,
-			'prop'       => FALSE,
-			'value'      => FALSE,
-			'exclude'    => [],
-			'data'       => [],
+			'id'          => FALSE,
+			'name'        => '',
+			'title'       => FALSE,
+			'none_title'  => NULL,
+			'none_value'  => 0,
+			'value_title' => TRUE,    // Displays value as the title of the option.
+			'class'       => FALSE,
+			'style'       => FALSE,
+			'selected'    => 0,
+			'disabled'    => FALSE,
+			'dir'         => FALSE,
+			'prop'        => FALSE,
+			'value'       => FALSE,
+			'exclude'     => [],
+			'data'        => [],
 		], $atts );
 
 		if ( ! is_null( $args['none_title'] ) )
@@ -1490,9 +1491,10 @@ class HTML extends Base
 				$title = $value;
 
 			$html.= self::tag( 'option', [
-				'value'    => $key,
 				// NOTE: WTF: apparently `none` and `0` are the same via `==`
-				'selected' => empty( $key ) ? ( $args['selected'] === $key ) : ( $args['selected'] == $key )
+				'selected' => empty( $key ) ? ( $args['selected'] === $key ) : ( $args['selected'] == $key ),
+				'title'    => $args['value_title'] ? $key : FALSE,
+				'value'    => $key,
 			], $title );
 		}
 

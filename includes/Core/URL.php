@@ -35,7 +35,7 @@ class URL extends Base
 		$port = ( ( ! $ssl && '80' == $port ) || ( $ssl && '443' == $port ) ) ? '' : ':'.$port;
 
 		$host = ( $forwarded_host && isset( $_SERVER['HTTP_X_FORWARDED_HOST'] ) ) ? $_SERVER['HTTP_X_FORWARDED_HOST'] : ( isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : NULL );
-		$host = isset( $host ) ? $host : $_SERVER['SERVER_NAME'].$port;
+		$host = $host ?? $_SERVER['SERVER_NAME'].$port;
 
 		$current = $protocol.'://'.$host.$_SERVER['REQUEST_URI'];
 		return $trailingslashit ? self::trail( $current ) : $current;
@@ -179,6 +179,7 @@ class URL extends Base
 			File::normalize( $base ),
 			self::trail( get_option( 'siteurl' ) ),
 			File::normalize( $path )
+			// File::normalize( File::join( $base, $path ) )
 		);
 	}
 

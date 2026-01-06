@@ -124,6 +124,47 @@ class File extends Base
 	}
 
 	/**
+	 * Returns canonicalized absolute pathname.
+	 *
+	 * It replaces (consecutive) occurrences of `/` and `\\` with
+	 * whatever is in DIRECTORY_SEPARATOR, and processes `/.` and `/..` fine.
+	 * Paths returned contain no (back)slash at position `0` (beginning of the string) or
+	 * position `-1` (ending).
+	 *
+	 * NOTE: Alternative to `realpath()` with support of `.`/`..`
+	 * NOTE: `realpath()` does not work on files that do not exist.
+	 *
+	 * @source https://www.php.net/manual/en/function.realpath.php#84012
+	 *
+	 * @param string $path
+	 * @param string $separator
+	 * @return string
+	 */
+	public static function absolutePath( $path, $separator = NULL )
+	{
+		$separator = $separator ?? DIRECTORY_SEPARATOR;
+
+		$path      = preg_replace( '/[\/\]+/', '/', $path );
+		$path      = str_replace( [ '/', '\\' ], $separator, $path );
+		$parts     = array_filter( explode( $separator, $path ), 'strlen' );
+		$absolutes = [];
+
+		foreach ( $parts as $part ) {
+
+			if ( '.' === $part )
+				continue;
+
+			if ( '..' === $part )
+				array_pop( $absolutes );
+
+			else
+				$absolutes[] = $part;
+		}
+
+		return implode( $separator, $absolutes );
+	}
+
+	/**
 	 * Returns trailing name component of path.
 	 * I18N friendly version of `basename()`
 	 * if the filename ends in suffix this will also be cut off
@@ -325,9 +366,13 @@ class File extends Base
 		if ( ! $force_overwrite && self::exists( '.donotbackup', $path ) )
 			return TRUE;
 
-		$content = 'This directory (and its sub-directories) will be excluded from the backup.';
-
-		return self::putContents( '.donotbackup', $content, $path, FALSE, $check_folder );
+		return self::putContents(
+			'.donotbackup',
+			'This directory (and its sub-directories) will be excluded from the backup.',
+			$path,
+			FALSE,
+			$check_folder
+		);
 	}
 
 	/**
@@ -343,21 +388,13 @@ class File extends Base
 		if ( ! $force_overwrite && self::exists( '.htaccess', $path ) )
 			return TRUE;
 
-		$content = '<Files ~ ".*\..*">'.PHP_EOL.
-				'<IfModule mod_access.c>'.PHP_EOL.
-					'Deny from all'.PHP_EOL.
-				'</IfModule>'.PHP_EOL.
-				'<IfModule !mod_access_compat>'.PHP_EOL.
-					'<IfModule mod_authz_host.c>'.PHP_EOL.
-						'Deny from all'.PHP_EOL.
-					'</IfModule>'.PHP_EOL.
-				'</IfModule>'.PHP_EOL.
-				'<IfModule mod_access_compat>'.PHP_EOL.
-					'Deny from all'.PHP_EOL.
-				'</IfModule>'.PHP_EOL.
-			'</Files>';
-
-		return self::putContents( '.htaccess', $content, $path, FALSE, $check_folder );
+		return self::putContents(
+			'.htaccess',
+			self::htaccessProtect(),
+			$path,
+			FALSE,
+			$check_folder
+		);
 	}
 
 	/**
@@ -924,9 +961,6 @@ class File extends Base
 		if ( ! is_file( $path ) )
 			return FALSE;
 
-		if ( is_null( $name ) )
-			$name = basename( $path );
-
 		// @ini_set( 'zlib.output_compression', 'Off' );
 		// @ini_set( 'zlib.output_handler', '' );
 		// @ini_set( 'output_buffering', 'Off' );
@@ -939,7 +973,7 @@ class File extends Base
 		header( 'Cache-Control: private', FALSE );
 		header( 'Content-Type: '.$mime );
 		header( 'Content-Length: '.self::size( $path ) );
-		header( 'Content-Disposition: attachment; filename="'.$name.'"' );
+		header( 'Content-Disposition: attachment; filename="'.( $name ?? basename( $path ) ).'"' );
 		header( 'Content-Transfer-Encoding: binary' );
 		header( 'Connection: close' );
 
@@ -1079,4 +1113,64 @@ class File extends Base
 
 		return TRUE;
     }
+
+	// @REF: https://htaccessbook.com/access-control-apache-2-4/
+	// @SEE: https://httpd.apache.org/docs/current/howto/access.html
+	public static function htaccessProtect()
+	{
+		return <<<HTACCESS
+<Files ~ ".*\..*">
+	<IfModule mod_version.c>
+		<IfVersion < 2.4>
+			Order Deny,Allow
+			Deny from All
+		</IfVersion>
+		<IfVersion >= 2.4>
+			Require all denied
+		</IfVersion>
+	</IfModule>
+
+	<IfModule !mod_version.c>
+		<IfModule !mod_authz_core.c>
+			Order Deny,Allow
+			Deny from All
+		</IfModule>
+		<IfModule mod_authz_core.c>
+			Require all denied
+		</IfModule>
+	</IfModule>
+</Files>
+HTACCESS;
+	}
+
+	public static function htaccessProtectLogs()
+	{
+		return <<<HTACCESS
+# BEGIN PROTECT DIR
+Options -Indexes
+
+<FilesMatch "\.htaccess|debug\.log|error_log">
+	<IfModule mod_version.c>
+		<IfVersion < 2.4>
+			Order Deny,Allow
+			Deny from All
+		</IfVersion>
+		<IfVersion >= 2.4>
+			Require all denied
+		</IfVersion>
+	</IfModule>
+
+	<IfModule !mod_version.c>
+		<IfModule !mod_authz_core.c>
+			Order Deny,Allow
+			Deny from All
+		</IfModule>
+		<IfModule mod_authz_core.c>
+			Require all denied
+		</IfModule>
+	</IfModule>
+</FilesMatch>
+# END PROTECT DIR
+HTACCESS;
+	}
 }
