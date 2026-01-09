@@ -287,15 +287,15 @@ class Byline extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
+			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 
 		if ( $this->role_can( [ 'manage' ] ) )
 			$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 	}
 
-	public function load_submenu_adminpage( $context = 'framepage' )
+	public function load_overview_adminpage()
 	{
-		$this->_load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'overview' );
 
 		$target = self::req( 'target', 'mainapp' );
 
@@ -372,7 +372,7 @@ class Byline extends gEditorial\Module
 		], $args['asset'] );
 	}
 
-	public function render_framepage_adminpage( $context )
+	public function render_submenu_adminpage()
 	{
 		if ( ! $post = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
@@ -387,7 +387,7 @@ class Byline extends gEditorial\Module
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Byline Dock for %s', 'Page Title', 'geditorial-byline' );
 
-			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( 'overview', $this->key, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				gEditorial\Scripts::renderAppMounter( static::APP_NAME, $this->key );
 				gEditorial\Scripts::noScriptMessage();
@@ -399,7 +399,7 @@ class Byline extends gEditorial\Module
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Byline Overview for %s', 'Page Title', 'geditorial-byline' );
 
-			gEditorial\Settings::wrapOpen( $this->key, $context, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			gEditorial\Settings::wrapOpen( 'overview', $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
 					'default'  => $this->get_notice_for_empty( $target, 'empty', FALSE ),
@@ -412,8 +412,10 @@ class Byline extends gEditorial\Module
 
 		} else {
 
-			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
+			gEditorial\Settings::wrapOpen( 'overview', $this->key, gEditorial\Plugin::denied( FALSE ) );
+
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
+
 			gEditorial\Settings::wrapClose( FALSE );
 		}
 	}
@@ -448,10 +450,11 @@ class Byline extends gEditorial\Module
 
 		if ( $this->role_can( 'assign' ) )
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
-				'context'  => 'mainbutton',
-				'target'   => 'mainapp', // OR: `summaryreport`
-				'maxwidth' => '800px',
-				'refresh'  => $this->constant( 'restapi_attribute' ),
+				'context'      => 'mainbutton',
+				'link_context' => 'overview',
+				'target'       => 'mainapp', // OR: `summaryreport`
+				'maxwidth'     => '800px',
+				'refresh'      => $this->constant( 'restapi_attribute' ),
 			] ), 'field-wrap -buttons' );
 	}
 
@@ -720,7 +723,7 @@ class Byline extends gEditorial\Module
 		$button = Services\HeaderButtons::register( $this->key, [
 			'text'     => _x( 'Byline Report', 'Header Button', 'geditorial-byline' ),
 			'title'    => $this->strings_metabox_title_via_posttype( $post->post_type, 'heading', NULL, $post ),
-			'link'     => $this->framepage_get_mainlink_url( $post->ID, $target ?? 'summaryreport' ),
+			'link'     => $this->framepage_get_mainlink_url( $post->ID, $target ?? 'summaryreport', 'overview' ),
 			'icon'     => $this->module->icon,
 			'priority' => 79,
 			'newtab'   => TRUE,
@@ -745,10 +748,10 @@ class Byline extends gEditorial\Module
 			function ( $post, $before, $after, $module ) {
 
 				if ( $this->role_can_post( $post, 'assign' ) )
-					$edit = $this->framepage_get_mainlink_url( $post->ID, 'mainapp' );
+					$edit = $this->framepage_get_mainlink_url( $post->ID, 'mainapp', 'overview' );
 
 				else if ( $this->role_can_post( $post, 'reports' ) )
-					$edit = $this->framepage_get_mainlink_url( $post->ID, 'summaryreport' );
+					$edit = $this->framepage_get_mainlink_url( $post->ID, 'summaryreport', 'overview' );
 
 				else if ( ! WordPress\Post::can( $post, 'read_post' ) )
 					return;
@@ -804,7 +807,7 @@ class Byline extends gEditorial\Module
 			'parent' => $classs,
 			'id'     => $classs.'-rendered',
 			'title'  => $this->get_byline_for_post( $post, [ 'link' => FALSE ], gEditorial\Helper::htmlEmpty() ),
-			'href'   => $this->framepage_get_mainlink_url( $post->ID, $assign ? 'mainapp' : 'summaryreport' ),
+			'href'   => $this->framepage_get_mainlink_url( $post->ID, $assign ? 'mainapp' : 'summaryreport', 'overview' ),
 			'meta' => [
 				'class' => 'do-colorbox-iframe-for-child',
 				'title' => _x( 'Byline', 'Adminbar', 'geditorial-byline' ),
