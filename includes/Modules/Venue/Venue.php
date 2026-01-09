@@ -397,19 +397,19 @@ class Venue extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->get_setting( 'assignment_dock' ) && $this->role_can( 'paired' ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
+			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
-	public function load_submenu_adminpage( $context = 'framepage' )
+	public function load_submenu_adminpage()
 	{
-		$this->_load_submenu_adminpage( $context );
-		$this->paired_assignment__load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'overview' );
+		$this->paired_assignment__load_submenu_adminpage( 'overview' );
 	}
 
-	public function render_framepage_adminpage()
+	public function render_submenu_adminpage()
 	{
 		$this->paired_assignment__do_render_iframe_content(
-			'framepage',
+			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Location Dock for %s', 'Page Title', 'geditorial-venue' ),
 			/* translators: `%s`: post title */
