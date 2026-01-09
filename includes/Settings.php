@@ -459,8 +459,11 @@ class Settings extends WordPress\Main
 	public static function showRadioNone( $string = NULL )
 	{
 		if ( $string )
-			/* translators: `%s`: options */
-			return sprintf( _x( 'None %s', 'Settings: Radio Select Option None', 'geditorial-admin' ), $string );
+			return sprintf(
+				/* translators: `%s`: options */
+				_x( 'None %s', 'Settings: Radio Select Option None', 'geditorial-admin' ),
+				$string
+			);
 
 		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial-admin' );
 	}
@@ -468,8 +471,11 @@ class Settings extends WordPress\Main
 	public static function showOptionAll( $string = NULL )
 	{
 		if ( $string )
-			/* translators: `%s`: options */
-			return sprintf( _x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' ), $string );
+			return sprintf(
+				/* translators: `%s`: options */
+				_x( '&ndash; All %s &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' ),
+				$string
+			);
 
 		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' );
 	}
@@ -858,8 +864,11 @@ class Settings extends WordPress\Main
 			'field'       => 'before_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Before Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			/* translators: `%s`: code placeholder */
-			'description' => $description ?: sprintf( _x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
+			'description' => $description ?? sprintf(
+				/* translators: `%s`: code placeholder */
+				_x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( 'HTML' )
+			),
 		];
 	}
 
@@ -869,8 +878,11 @@ class Settings extends WordPress\Main
 			'field'       => 'after_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'After Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			/* translators: `%s`: code placeholder */
-			'description' => $description ?: sprintf( _x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ), '<code>HTML</code>' ),
+			'description' => $description ?? sprintf(
+				/* translators: `%s`: code placeholder */
+				_x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( 'HTML' )
+			),
 		];
 	}
 
@@ -1445,9 +1457,12 @@ class Settings extends WordPress\Main
 			'field'       => 'archive_title',
 			'type'        => 'text',
 			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial-admin' ),
-			/* translators: `%s`: zero placeholder */
-			'description' => $description ?: sprintf( _x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ), Core\HTML::code( '0' ) ),
 			'placeholder' => $placeholder,
+			'description' => $description ?? sprintf(
+				/* translators: `%s`: zero placeholder */
+				_x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( '0' )
+			),
 		];
 	}
 
@@ -1458,7 +1473,7 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'New-post Title', 'Setting: Setting Title', 'geditorial-admin' ),
 			'placeholder' => $placeholder,
-			'description' => $description ?: sprintf(
+			'description' => $description ?? sprintf(
 				/* translators: `%s`: zero placeholder */
 				_x( 'Displays as new-post title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
 				Core\HTML::code( '0' )
@@ -1472,7 +1487,7 @@ class Settings extends WordPress\Main
 			'field'       => 'archive_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: sprintf(
+			'description' => $description ?? sprintf(
 				/* translators: `%s`: zero placeholder */
 				_x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
 				Core\HTML::code( '0' )
@@ -2612,10 +2627,12 @@ class Settings extends WordPress\Main
 			return;
 
 		echo '<div class="signature clear"><p>';
-			/* translators: `%1$s`: plugin url, `%2$s`: author url */
-			printf( _x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial-admin' ),
+			printf(
+				/* translators: `%1$s`: plugin url, `%2$s`: author url */
+				_x( '<a href="%1$s">gEditorial</a> is a <a href="%2$s">geminorum</a> project.', 'Settings: Signature', 'geditorial-admin' ),
 				'https://github.com/geminorum/geditorial',
-				'https://geminorum.ir/' );
+				'https://geminorum.ir/'
+			);
 		echo '</p></div>';
 	}
 
@@ -2644,21 +2661,24 @@ class Settings extends WordPress\Main
 			return [];
 
 		$wikihome = [
-			'id'       => 'geditorial-wikihome',
-			'title'    => _x( 'Editorial Wiki', 'Settings: Help Content Title', 'geditorial-admin' ),
-			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
 			'module'   => $module,
+			'id'       => 'geditorial-wikihome',
+			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
+			'title'    => _x( 'Editorial Wiki', 'Settings: Help Content Title', 'geditorial-admin' ),
 		];
 
 		if ( FALSE === $module || 'config' === $module->name )
 			return [ $wikihome ];
 
 		$wikimodule = [
-			'id'       => 'geditorial-'.$module->name.'-wikihome',
-			/* translators: `%s`: module title */
-			'title'    => sprintf( _x( '%s Wiki', 'Settings: Help Content Title', 'geditorial-admin' ), $module->title ),
-			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
 			'module'   => $module,
+			'id'       => 'geditorial-'.$module->name.'-wikihome',
+			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
+			'title'    => sprintf(
+				/* translators: `%s`: module title */
+				_x( '%s Wiki', 'Settings: Help Content Title', 'geditorial-admin' ),
+				$module->title
+			),
 		];
 
 		return [ $wikimodule, $wikihome ];

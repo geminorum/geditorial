@@ -1722,8 +1722,12 @@ class MetaBox extends WordPress\Main
 				'selected' => TRUE,
 				'value'    => $value,
 			], WordPress\User::getTitleRow( (int) $value,
-				/* translators: `%s`: user id number */
-				sprintf( _x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ), $value ) ) );
+				sprintf(
+					/* translators: `%s`: user id number */
+					_x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ),
+					$value
+				) )
+			);
 
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),

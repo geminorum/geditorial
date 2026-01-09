@@ -24,8 +24,11 @@ class ModuleSettings extends gEditorial\Settings
 			self::submitButton( add_query_arg( [
 				'action' => static::ACTION_REATTACH_THUMBNAILS,
 				'type'   => $posttype,
-			/* translators: `%s`: post-type label */
-			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
+			] ), sprintf(
+				/* translators: `%s`: post-type label */
+				_x( 'On %s', 'Button', 'geditorial-attachments' ),
+				$label
+			), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to re-attach un-parented via thumbnail meta-data.', 'Button Description', 'geditorial-attachments' ) );
 		echo '</div></div>';
@@ -39,8 +42,11 @@ class ModuleSettings extends gEditorial\Settings
 				self::submitButton( add_query_arg( [
 					'action' => static::ACTION_EMPTY_RAW_METADATA,
 					'type'   => $posttype,
-				/* translators: `%s`: post-type label */
-				] ), sprintf( _x( 'On %s', 'Button', 'geditorial-attachments' ), $label ), 'link-small' );
+				] ), sprintf(
+					/* translators: `%s`: post-type label */
+					_x( 'On %s', 'Button', 'geditorial-attachments' ),
+					$label
+				), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to clean attachemnt raw meta-data.', 'Button Description', 'geditorial-attachments' ) );
 		echo '</div></div>';

@@ -159,11 +159,14 @@ class ModuleSettings extends gEditorial\Settings
 		$posts = ModuleHelper::getPostsEmpty( $for, $attribute, $posttypes, FALSE );
 		$count = WordPress\Taxonomy::countTermObjects( $attribute, $taxonomy );
 
-		/* translators: `%1$s`: empty post count, `%2$s`: assigned term count */
-		Core\HTML::desc( vsprintf( _x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ), [
-			FALSE === $posts ? gEditorial()->na() : Core\Number::format( count( $posts ) ),
-			FALSE === $count ? gEditorial()->na() : Core\Number::format( $count ),
-		] ) );
+		Core\HTML::desc( vsprintf(
+			/* translators: `%1$s`: empty post count, `%2$s`: assigned term count */
+			_x( 'Currently found %1$s empty posts and %2$s assigned to the attribute.', 'Card: Description', 'geditorial-audit' ),
+			[
+				FALSE === $posts ? gEditorial()->na() : Core\Number::format( count( $posts ) ),
+				FALSE === $count ? gEditorial()->na() : Core\Number::format( $count ),
+			]
+		) );
 	}
 
 	public static function handleToolsEmptyFields( $action, $taxonomy )

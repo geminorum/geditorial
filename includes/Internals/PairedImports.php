@@ -38,17 +38,22 @@ trait PairedImports
 
 		add_action( 'admin_footer',
 			function () use ( $post ) {
-				/* translators: `%s`: post title */
-				$label  = sprintf( _x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ), WordPress\Post::title( $post ) );
+				$label  = sprintf(
+					/* translators: `%s`: post title */
+					_x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ),
+					WordPress\Post::title( $post )
+				);
+
 				$button = $this->pairedimports_get_import_buttons( $post, 'importitems', 'NULL', $label, 'page-title-action' );
 				$id     = $this->classs( 'hidden-importbutton' );
+
 				echo $this->wrap( $button, 'hidden', TRUE, $id, TRUE );
 				Core\HTML::wrapjQueryReady( '$($("#'.$id.'").html()).insertBefore($("#wpbody-content div.wrap hr.wp-header-end"));' );
 			} );
 
 		gEditorial\Scripts::enqueueColorBox();
 
-		// TODO: add row action to remove from paired via AJAX
+		// TODO: add row action to remove from paired via Ajax
 		// TODO: add bulk action to remove from paired
 		$this->current_queried = $post->ID;
 
@@ -84,7 +89,7 @@ trait PairedImports
 		], $label );
 	}
 
-	// NOTE: on strings api: `$strings['import_types']['pairedimports']`
+	// NOTE: on strings API: `$strings['import_types']['pairedimports']`
 	protected function pairedimports_define_import_types( $linked = FALSE, $posttypes = NULL )
 	{
 		return apply_filters( $this->hook_base( 'pairedimports', 'import_types' ),

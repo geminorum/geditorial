@@ -81,8 +81,11 @@ class GCalEvents extends gEditorial\Widget
 		$this->form_custom_code( $instance, '', 'calendar_id', _x( 'Calendar ID:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 		$this->form_custom_code( $instance, '', 'api_key', _x( 'Your API key:', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 
-		/* translators: `%s`: documents url */
-		Core\HTML::desc( sprintf( _x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Widget: Google Calendar', 'geditorial-widgets' ), 'https://console.developers.google.com/' ) );
+		Core\HTML::desc( sprintf(
+			/* translators: `%s`: documents URL */
+			_x( 'Get your API key <a href="%s" target="_blank">here</a>.', 'Widget: Google Calendar', 'geditorial-widgets' ),
+			'https://console.developers.google.com/'
+		) );
 
 		$this->form_custom_code( $instance, '', 'time_min', _x( 'Start from (YYYY-MM-DD):', 'Widget: Google Calendar', 'geditorial-widgets' ) );
 		$this->form_number( $instance, 5, 'max_results', _x( 'Max results:', 'Widget: Google Calendar', 'geditorial-widgets' ) );

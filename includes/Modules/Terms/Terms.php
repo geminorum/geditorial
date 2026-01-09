@@ -1868,9 +1868,11 @@ class Terms extends gEditorial\Module
 				$node = [
 					'id'     => $this->classs( $field ),
 					'parent' => $this->classs(),
-					/* translators: `%s`: meta title */
-					'title'  => sprintf( _x( 'Meta: %s', 'Adminbar', 'geditorial-terms' ),
-						$this->get_string( $field, $term->taxonomy, 'titles', $field ) ),
+					'title'  => sprintf(
+						/* translators: `%s`: meta title */
+						_x( 'Meta: %s', 'Adminbar', 'geditorial-terms' ),
+						$this->get_string( $field, $term->taxonomy, 'titles', $field )
+					),
 				];
 
 				$child = [

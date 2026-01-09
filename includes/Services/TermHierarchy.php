@@ -158,6 +158,7 @@ class TermHierarchy extends gEditorial\Service
 				'hide_empty'        => FALSE,
 				'hide_if_empty'     => TRUE,
 				'echo'              => FALSE,
+				'orderby'           => 'name',
 			];
 
 			if ( ! $dropdown = wp_dropdown_categories( $args ) )

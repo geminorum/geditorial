@@ -55,10 +55,12 @@ trait PairedRowActions
 
 	public function paired_bulk_input_add_new_item( $taxonomy, $action )
 	{
-		/* translators: `%s`: clone into input */
-		printf( _x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial-admin' ),
+		printf(
+			/* translators: `%s`: clone into input */
+			_x( 'as: %s', 'Module: Taxonomy Bulk Input Label', 'geditorial-admin' ),
 			'<input name="'.$this->classs( 'paired-add-new-item-target' ).'" type="text" placeholder="'
-			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial-admin' ).'" /> ' );
+			._x( 'New Item Title', 'Module: Taxonomy Bulk Input PlaceHolder', 'geditorial-admin' ).'" /> '
+		);
 
 		echo Core\HTML::dropdown( [
 			'separeted-terms' => _x( 'Separeted Terms', 'Module: Taxonomy Bulk Input Option', 'geditorial-admin' ),

@@ -536,20 +536,26 @@ class Archives extends gEditorial\Module
 	{
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label )
 			$items[] = [
-				/* translators: `%s`: supported object label */
-				'name' => sprintf( _x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ), $posttype_label ),
 				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
 				'slug' => sprintf( 'custom-%s_archives', $posttype_name ),
 				'link' => $this->get_posttype_archive_link( $posttype_name ),
+				'name' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ),
+					$posttype_label
+				),
 			];
 
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label )
 			$items[] = [
-				/* translators: `%s`: supported object label */
-				'name' => sprintf( _x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ), $taxonomy_label ),
 				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
 				'slug' => sprintf( 'custom-%s_archives', $taxonomy_name ),
 				'link' => $this->get_taxonomy_archive_link( $taxonomy_name ),
+				'name' => sprintf(
+					/* translators: `%s`: supported object label */
+					_x( '%s Archives', 'Navigation MetaBox', 'geditorial-archives' ),
+					$taxonomy_label
+				),
 			];
 
 		return $items;

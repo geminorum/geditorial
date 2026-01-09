@@ -752,7 +752,7 @@ trait CoreTaxonomies
 
 		add_meta_box(
 			sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
-			$taxonomy->labels->name,
+			empty( $taxonomy->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ? $taxonomy->labels->name : $taxonomy->labels->singular_name,
 			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE, $taxonomy->hierarchical ),
 			NULL,
 			'side',

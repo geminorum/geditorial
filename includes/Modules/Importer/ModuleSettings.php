@@ -22,8 +22,11 @@ class ModuleSettings extends gEditorial\Settings
 			self::submitButton( add_query_arg( [
 				'action' => static::ACTION_CLEANUP_RAW_DATA,
 				'type'   => $posttype,
-			/* translators: `%s`: post-type label */
-			] ), sprintf( _x( 'On %s', 'Button', 'geditorial-importer' ), $label ), 'link-small' );
+			] ), sprintf(
+				/* translators: `%s`: post-type label */
+				_x( 'On %s', 'Button', 'geditorial-importer' ),
+				$label
+			), 'link-small' );
 
 			Core\HTML::desc( _x( 'Tries to clean imported raw meta-data.', 'Button Description', 'geditorial-importer' ) );
 		echo '</div></div>';

@@ -151,7 +151,11 @@ class Estimated extends gEditorial\Module
 				.')</span>';
 
 			$avgtime = $this->get_setting( 'average', 250 );
-			$title   = sprintf( _x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ), Core\Number::format( $avgtime ) );
+			$title   = sprintf(
+				/* translators: `%s`: average word count */
+				_x( 'If you try to read %s words per minute.', 'Title Attr', 'geditorial-estimated' ),
+				Core\Number::format( $avgtime )
+			);
 
 			$nodes[] = [
 				'id'     => $this->classs(),
@@ -234,8 +238,8 @@ class Estimated extends gEditorial\Module
 
 		if ( $info )
 			return '<span data-toggle="tooltip" title="'.Core\HTML::escape( sprintf(
-				/* translators: `%s`: words count */
-				_x( 'If you try to read %s words per minute', 'Title Attr', 'geditorial-estimated' ),
+				/* translators: `%s`: average word count */
+				_x( 'If you try to read %s words per minute.', 'Title Attr', 'geditorial-estimated' ),
 				Core\Number::format( $avgtime )
 			) ).'">'.$estimated.'</span>';
 

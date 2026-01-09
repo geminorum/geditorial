@@ -919,9 +919,11 @@ class Config extends gEditorial\Module
 			$name = get_userdata( $user )->display_name;
 			$edit = WordPress\User::edit( $user );
 
-			/* translators: `%s`: user link placeholder */
-			Core\HTML::desc( sprintf( _x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
-				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name ) );
+			Core\HTML::desc( sprintf(
+				/* translators: `%s`: user link placeholder */
+				_x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
+				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name
+			) );
 
 		} else {
 

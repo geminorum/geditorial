@@ -152,8 +152,11 @@ class RestAPI extends gEditorial\Service
 	{
 		$message = is_null( $key )
 			? _x( 'The argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' )
-			/* translators: `%s`: argument key */
-			: sprintf( _x( 'The `%s` argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' ), $key );
+			: sprintf(
+				/* translators: `%s`: argument key */
+				_x( 'The `%s` argument must not be empty.', 'Service: RestAPI: Error Arg Not Empty', 'geditorial' ),
+				$key
+			);
 
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
@@ -211,8 +214,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! WordPress\Post::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
-				/* translators: `%s`: argument key */
-				sprintf( _x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ), $key )
+				sprintf(
+					/* translators: `%s`: argument key */
+					_x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ),
+					$key
+				)
 			);
 
 		return TRUE;
@@ -236,8 +242,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! WordPress\Comment::get( (int) $param ) )
 			return new \WP_Error(
 				'rest_invalid_param',
-				/* translators: `%s`: argument key */
-				sprintf( _x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ), $key )
+				sprintf(
+					/* translators: `%s`: argument key */
+					_x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ),
+					$key
+				)
 			);
 
 		return TRUE;

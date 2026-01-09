@@ -53,8 +53,12 @@ trait AdminPage
 		foreach ( $subs as $sub => $submenu )
 			add_submenu_page(
 				$slug,
-				/* translators: `%1$s`: menu title, `%2$s`: sub-menu title */
-				sprintf( _x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial-admin' ), $submenu, $menu ), // FIXME: only shows the first sub
+				sprintf(
+					/* translators: `%1$s`: menu title, `%2$s`: sub-menu title */
+					_x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial-admin' ),
+					$submenu, // FIXME: only shows the first sub
+					$menu
+				),
 				$submenu,
 				$cap,
 				$slug.( $sub == $default ? '' : '&sub='.$sub ),

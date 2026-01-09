@@ -1704,8 +1704,11 @@ class Importer extends gEditorial\Module
 		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
 
 		if ( $dups = Core\Arraay::duplicates( $parsed['headers'] ) )
-			/* translators: `%s`: joined duplicate keys */
-			echo Core\HTML::warning( sprintf( _x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ), WordPress\Strings::getJoined( $dups ) ), FALSE, 'inline' );
+			echo Core\HTML::warning( sprintf(
+				/* translators: `%s`: joined duplicate keys */
+				_x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ),
+				WordPress\Strings::getJoined( $dups )
+			), FALSE, 'inline' );
 
 		echo '<table class="base-table-raw"><tbody>';
 

@@ -312,15 +312,19 @@ class Helper extends WordPress\Main
 
 			echo '<div data-target="'.$target.'" class="-status-count hide-if-no-js">';
 
-				/* translators: `%s`: words count */
-				printf( _x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="word-count">'.Core\Number::format( '0' ).'</span>' );
+				printf(
+					/* translators: `%s`: words count */
+					_x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
+					'<span class="word-count">'.Core\Number::format( '0' ).'</span>'
+				);
 
 				echo '&nbsp;|&nbsp;';
 
-				/* translators: `%s`: chars count */
-				printf( _x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="char-count">'.Core\Number::format( '0' ).'</span>' );
+				printf(
+					/* translators: `%s`: chars count */
+					_x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
+					'<span class="char-count">'.Core\Number::format( '0' ).'</span>'
+				);
 
 			echo '</div>';
 

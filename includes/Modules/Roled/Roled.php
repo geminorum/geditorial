@@ -331,8 +331,11 @@ class Roled extends gEditorial\Module
 				continue;
 
 			if ( ! $name = $this->get_setting( 'role_name_'.$core, FALSE ) )
-				/* translators: `%s`: role name */
-				$name = sprintf( _x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ), translate_user_role( $roles[$core] ) );
+				$name = sprintf(
+					/* translators: `%s`: role name */
+					_x( 'Editorial: %s', 'Setting Default', 'geditorial-roled' ),
+					translate_user_role( $roles[$core] )
+				);
 
 			$role = add_role( $prefix.$core, $name );
 

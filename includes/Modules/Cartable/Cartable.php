@@ -571,16 +571,19 @@ class Cartable extends gEditorial\Module
 
 			$title = _x( 'Your Personal Cartable', 'Dashboard Widget Title', 'geditorial-cartable' );
 			$title.= WordPress\MetaBox::markupTitleAction( [
-				'url'   => $this->get_adminpage_url( TRUE, [], 'adminemnu' ),
 				'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 				'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+				'url'   => $this->get_adminpage_url( TRUE, [], 'adminemnu' ),
 			] );
 
 			$this->add_dashboard_widget(
 				'user-cartable',
 				$title,
 				'refresh',
-				[ 'context' => 'user', 'slug' => get_user_by( 'id', $user_id )->user_login ],
+				[
+					'context' => 'user',
+					'slug'    => get_user_by( 'id', $user_id )->user_login,
+				],
 				[ $this, 'render_widget_summary' ]
 			);
 		}
@@ -589,19 +592,30 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_user_groups( $user_id ) as $term ) {
 
-				/* translators: `%s`: term name placeholder */
-				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
+				$title = sprintf(
+					/* translators: `%s`: term name placeholder */
+					_x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ),
+					$term->name
+				);
+
 				$title.= WordPress\MetaBox::markupTitleAction( [
-					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'group', 'slug' => $term->slug, 'sub' => 'group-'.$term->slug ], 'adminmenu' ),
 					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+					'url'   => $this->get_adminpage_url( TRUE, [
+						'context' => 'group',
+						'sub'     => 'group-'.$term->slug,
+						'slug'    => $term->slug,
+					], 'adminmenu' ),
 				] );
 
 				$this->add_dashboard_widget(
 					sprintf( 'group-cartable-%s', $term->term_id ),
 					$title,
 					'refresh',
-					[ 'context' => 'group', 'slug' => $term->slug ],
+					[
+						'context' => 'group',
+						'slug'    => $term->slug,
+					],
 					[ $this, 'render_widget_summary' ]
 				);
 			}
@@ -611,19 +625,30 @@ class Cartable extends gEditorial\Module
 
 			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
 
-				/* translators: `%s`: term name placeholder */
-				$title = sprintf( _x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ), $term->name );
+				$title = sprintf(
+					/* translators: `%s`: term name placeholder */
+					_x( 'Cartable: %s', 'Dashboard Widget Title', 'geditorial-cartable' ),
+					$term->name
+				);
+
 				$title.= WordPress\MetaBox::markupTitleAction( [
-					'url'   => $this->get_adminpage_url( TRUE, [ 'context' => 'type', 'slug' => $term->slug, 'sub' => 'type-'.$term->slug ], 'adminmenu' ),
 					'title' => _x( 'Click to view all items in this cartable', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
 					'link'  => _x( 'All Items', 'Dashboard Widget Title Action', 'geditorial-cartable' ),
+					'url'   => $this->get_adminpage_url( TRUE, [
+						'context' => 'type',
+						'sub'     => 'type-'.$term->slug,
+						'slug'    => $term->slug,
+					], 'adminmenu' ),
 				] );
 
 				$this->add_dashboard_widget(
 					sprintf( 'type-cartable-%s', $term->term_id ),
 					$title,
 					'refresh',
-					[ 'context' => 'type', 'slug' => $term->slug ],
+					[
+						'context' => 'type',
+						'slug'    => $term->slug,
+					],
 					[ $this, 'render_widget_summary' ]
 				);
 			}
@@ -882,8 +907,11 @@ class Cartable extends gEditorial\Module
 		if ( 'user' == $context )
 			$title = _x( 'Your Cartable', 'Page Title', 'geditorial-cartable' );
 		else
-		/* translators: `%s`: term name placeholder */
-			$title = sprintf( _x( 'Cartable: %s', 'Menu Title', 'geditorial-cartable' ), $term->name );
+			$title = sprintf(
+				/* translators: `%s`: term name placeholder */
+				_x( 'Cartable: %s', 'Menu Title', 'geditorial-cartable' ),
+				$term->name
+			);
 
 		Core\HTML::h3( $title );
 

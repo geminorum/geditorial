@@ -757,8 +757,11 @@ class Template extends WordPress\Main
 			$args['link'] = WordPress\URL::search( $meta );
 
 			if ( is_null( $args['description'] ) )
-				/* translators: `%s`: search query */
-				$args['description'] = sprintf( _x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ), $meta );
+				$args['description'] = sprintf(
+					/* translators: `%s`: search query */
+					_x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ),
+					$meta
+				);
 		}
 
 		if ( ! $meta )
@@ -1113,14 +1116,22 @@ class Template extends WordPress\Main
 			foreach ( $posts as $post )
 				$list[] = Helper::getPostTitleRow( $post, $link, FALSE, $title_attr );
 
-			/* translators: `%s`: post-type name */
-			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			Core\HTML::h3( sprintf(
+				/* translators: `%s`: post-type name */
+				_x( 'Recent %s', 'Template: Recents', 'geditorial' ),
+				$object->labels->name
+			) );
+
 			echo Core\HTML::rows( $list );
 
 		} else if ( is_null( $empty ) ) {
 
-			/* translators: `%s`: post-type name */
-			Core\HTML::h3( sprintf( _x( 'Recent %s', 'Template: Recents', 'geditorial' ), $object->labels->name ) );
+			Core\HTML::h3( sprintf(
+				/* translators: `%s`: post-type name */
+				_x( 'Recent %s', 'Template: Recents', 'geditorial' ),
+				$object->labels->name
+			) );
+
 			Core\HTML::desc( $object->labels->not_found, TRUE, '-empty -empty-posttype-'.$object->name );
 
 		} else if ( $empty ) {

@@ -290,11 +290,14 @@ class Quotation extends gEditorial\Module
 			return $title;
 
 		if ( $post->post_parent && $this->is_posttype( 'main_posttype', $post ) )
-			/* translators: `%1$s`: post parent, `%2$s`: menu order */
-			return vsprintf( _x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ), [
-				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
-				Core\Number::format( $post->menu_order ),
-			] );
+			return vsprintf(
+				/* translators: `%1$s`: post parent, `%2$s`: menu order */
+				_x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ),
+				[
+					WordPress\Post::title( $post->post_parent, NULL, FALSE ),
+					Core\Number::format( $post->menu_order ),
+				]
+			);
 
 		return $title;
 	}

@@ -120,9 +120,11 @@ class ConnectionType extends Core\Base
 
 		$other_key = 'from' == $key ? 'to' : 'from';
 
-		/* translators: `%s`: title */
-		return sprintf( _x( 'Connected %s', 'O2O', 'geditorial' ),
-			$this->side[ $other_key ]->get_title() );
+		return sprintf(
+			/* translators: `%s`: title */
+			_x( 'Connected %s', 'O2O', 'geditorial' ),
+			$this->side[$other_key]->get_title()
+		);
 	}
 
 	public function __call( $method, $args )

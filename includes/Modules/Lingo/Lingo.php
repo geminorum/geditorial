@@ -60,8 +60,11 @@ class Lingo extends gEditorial\Module
 
 	protected function tool_box_content()
 	{
-		/* translators: `%s`: iso code */
-		Core\HTML::desc( sprintf( _x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ) );
+		Core\HTML::desc( sprintf(
+			/* translators: `%s`: ISO code */
+			_x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ),
+			Core\HTML::code( 'ISO 639-1' )
+		) );
 	}
 
 	protected function get_global_strings()
@@ -93,10 +96,13 @@ class Lingo extends gEditorial\Module
 		$strings['misc'] = [
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
-				/* translators: `%s`: ISO code */
-				'description' => sprintf( _x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ), Core\HTML::code( 'ISO 639-1' ) ),
+				'description' => sprintf(
+					/* translators: `%s`: ISO code */
+					_x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ),
+					Core\HTML::code( 'ISO 639-1' )
+				),
 				/* translators: `%s`: redirect URL */
-				'redirect'    => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
+				'redirect' => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
 			],
 		];
 
@@ -188,6 +194,7 @@ class Lingo extends gEditorial\Module
 					);
 
 			} else if ( 'edit' == $screen->base ) {
+
 				$this->corerestrictposts__hook_screen_taxonomies( 'language_taxonomy', 'reports' );
 			}
 		}
