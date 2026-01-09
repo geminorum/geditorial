@@ -319,19 +319,19 @@ class Chronicles extends gEditorial\Module
 	public function admin_menu()
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
-			$this->_hook_submenu_adminpage( 'framepage', 'exist' );
+			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
-	public function load_submenu_adminpage( $context = 'framepage' )
+	public function load_submenu_adminpage()
 	{
-		$this->_load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'overview' );
 		$this->subcontent_do_enqueue_app();
 	}
 
-	public function render_framepage_adminpage()
+	public function render_submenu_adminpage()
 	{
 		$this->subcontent_do_render_iframe_content(
-			'framepage',
+			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Timeline Grid for %s', 'Page Title', 'geditorial-chronicles' ),
 			/* translators: `%s`: post title */

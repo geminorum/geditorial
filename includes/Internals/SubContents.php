@@ -1305,8 +1305,9 @@ trait SubContents
 				echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
 
 			echo $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'columnrow',
-				'text'    => $thrift ? '%1$s' : NULL,
+				'context'      => 'columnrow',
+				'link_context' => 'overview',
+				'text'         => $thrift ? '%1$s' : NULL,
 			] );
 
 			if ( ! $thrift && ( $count = $this->subcontent_get_data_count( $post ) ) )
@@ -1322,7 +1323,8 @@ trait SubContents
 
 		return [
 			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'rowaction',
+				'context'      => 'rowaction',
+				'link_context' => 'overview',
 			] ),
 		];
 	}
@@ -1333,11 +1335,12 @@ trait SubContents
 
 		if ( $this->role_can_post( $post, 'assign' ) )
 			echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $post, [
-				'context' => 'mainbutton',
-				'target'  => 'grid',
-				'route'   => $this->restapi_get_route( 'markup', $post->ID ),
-				'pot'     => '#'.$this->classs( 'data-grid' ),
-				'refresh' => 'html',
+				'context'      => 'mainbutton',
+				'link_context' => 'overview',
+				'target'       => 'grid',
+				'route'        => $this->restapi_get_route( 'markup', $post->ID ),
+				'pot'          => '#'.$this->classs( 'data-grid' ),
+				'refresh'      => 'html',
 			] ), 'field-wrap -buttons' );
 
 		else
