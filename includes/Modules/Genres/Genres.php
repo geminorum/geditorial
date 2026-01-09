@@ -49,6 +49,7 @@ class Genres extends gEditorial\Module
 			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
 			'_editpost' => [
 				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
 				'auto_term_parents',
@@ -125,10 +126,11 @@ class Genres extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical' => TRUE,
 			'show_in_menu' => FALSE,
-			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
+			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'data_length'  => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-genres' ),
 		], NULL, [
-			'auto_parents' => $this->get_setting( 'auto_term_parents', TRUE ),
+			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -154,6 +156,17 @@ class Genres extends gEditorial\Module
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'main_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term', TRUE )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 			}
 		}
 	}
