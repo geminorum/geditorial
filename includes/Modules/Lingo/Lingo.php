@@ -45,6 +45,7 @@ class Lingo extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_editpost' => [
 				'metabox_advanced',
+				'selectmultiple_term',
 			],
 			'_roles' => $this->corecaps_taxonomy_get_roles_settings( 'language_taxonomy', TRUE ),
 		];
@@ -126,11 +127,12 @@ class Lingo extends gEditorial\Module
 			'show_in_nav_menus'  => TRUE,
 			'show_in_menu'       => FALSE,
 			'default_term'       => NULL,
-			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 		], NULL, [
-			'custom_captype' => TRUE,
-			'custom_icon'    => $this->module->icon,
-			'admin_managed'  => TRUE,
+			'custom_captype'  => TRUE,
+			'custom_icon'     => $this->module->icon,
+			'admin_managed'   => TRUE,
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
@@ -175,6 +177,15 @@ class Lingo extends gEditorial\Module
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' == $screen->base ) {
+
+				if ( ! $this->get_setting( 'metabox_advanced' ) )
+					$this->hook_taxonomy_metabox_mainbox(
+						'language_taxonomy',
+						$screen->post_type,
+						$this->get_setting( 'selectmultiple_term' )
+							? '__checklist_restricted_terms_callback'
+							: '__singleselect_restricted_terms_callback'
+					);
 
 			} else if ( 'edit' == $screen->base ) {
 				$this->corerestrictposts__hook_screen_taxonomies( 'language_taxonomy', 'reports' );
