@@ -155,9 +155,9 @@ trait AdminPage
 		return $slug;
 	}
 
-	public function load_submenu_adminpage( $context = 'subpage' )
+	public function load_submenu_adminpage()
 	{
-		$this->_load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'subpage' );
 	}
 
 	protected function _load_submenu_adminpage( $context = 'subpage' )

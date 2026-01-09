@@ -1039,26 +1039,30 @@ class Tweaks extends gEditorial\Module
 		if ( ! $this->filters( 'metabox_commentstatus', TRUE, $posttype->name, $post ) )
 			return;
 
-		echo '<input name="advanced_view" type="hidden" value="1" />'; // FIXME: check this
-
+		echo '<div class="-wrap field-wrap -checkbox">';
 		echo '<label for="comment_status" class="selectit">';
 		echo '<input name="comment_status" type="checkbox" id="comment_status" value="open" ';
 		checked( $post->comment_status, 'open' );
 		echo ' /> '.__( 'Allow comments' );
-		echo '</label><br />';
+		echo '</label>';
+		echo '</div>';
 
+		echo '<div class="-wrap field-wrap -checkbox">';
 		echo '<label for="ping_status" class="selectit">';
 		echo '<input name="ping_status" type="checkbox" id="ping_status" value="open" ';
 		checked( $post->ping_status, 'open' );
 		echo ' /> ';
 		printf(
-			/* translators: `%s`: codex url */
+			/* translators: `%s`: codex URL */
 			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'MainBox', 'geditorial-tweaks' ),
 			__( 'https://wordpress.org/support/article/introduction-to-blogging/#managing-comments' )
 		);
 		echo '</label>';
+		echo '</div>';
 
 		do_action( 'post_comment_status_meta_box-options', $post );
+
+		echo '<input name="advanced_view" type="hidden" value="1" />'; // FIXME: check this
 	}
 
 	private function do_mainbox_templates( $post, $posttype )

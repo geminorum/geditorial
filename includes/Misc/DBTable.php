@@ -242,7 +242,7 @@ class DBTable extends Core\Base
 
 		// Site
 		} else {
-			$prefix                  = $this->db->get_blog_prefix( null );
+			$prefix                  = $this->db->get_blog_prefix( NULL );
 			$this->db->{$this->name} = "{$prefix}{$this->name}";
 			$this->db->tables[]      = $this->name;
 		}

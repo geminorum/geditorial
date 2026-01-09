@@ -522,7 +522,7 @@ class Positions extends gEditorial\Module
 			} else {
 
 				$args = [
-					'frozen' => TRUE,  // expanding only for primary post-types
+					'frozen' => TRUE,  // Expanding only for primary post-types.
 				];
 			}
 		}

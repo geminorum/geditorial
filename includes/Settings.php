@@ -1944,6 +1944,7 @@ class Settings extends WordPress\Main
 		echo '<div id="'.static::BASE.'-'.$context.'" class="'.Core\HTML::prepClass(
 			'wrap',
 			'-settings-wrap',
+			self::req( 'noheader' ) ? '-iframe-wrap' : '',
 			static::BASE.'-admin-wrap',
 			static::BASE.'-'.$context,
 			static::BASE.'-'.$context.'-'.$sub,

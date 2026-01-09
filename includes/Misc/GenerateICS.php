@@ -70,14 +70,14 @@ class GenerateICS extends Core\Base
 
 	public function set( $key, $val = FALSE )
 	{
-		if ( is_array( $key )) {
+		if ( is_array( $key ) ) {
 
 			foreach ( $key as $k => $v )
 				$this->set( $k, $v );
 
 		} else {
 
-			if ( in_array($key, $this->available_properties ) )
+			if ( in_array( $key, $this->available_properties ) )
 				$this->properties[$key] = $this->sanitize_val( $val, $key );
 		}
 	}
@@ -106,7 +106,7 @@ class GenerateICS extends Core\Base
 
 			// Don't handle `htmldescription`, set a special key for that
 			if ( $k !== 'htmldescription' )
-				$props[strtoupper($k.($k === 'url' ? ';VALUE=URI' : ''))] = $v;
+				$props[strtoupper( $k.( $k === 'url' ? ';VALUE=URI' : '' ) )] = $v;
 
 			else
 				$props['X-ALT-DESC;FMTTYPE=text/html'] = '<!DOCTYPE HTML PUBLIC ""-//W3C//DTD HTML 3.2//EN""><HTML><BODY>'.$v.'</BODY></HTML>';
@@ -114,12 +114,11 @@ class GenerateICS extends Core\Base
 
 		// Set some default values
 		$props['DTSTAMP'] = $this->format_timestamp( 'now' );
-		$props['UID'] = uniqid();
+		$props['UID']     = uniqid();
 
 		// Append properties
-		foreach ($props as $k => $v) {
+		foreach ( $props as $k => $v )
 			$ics_props[] = "$k:$v";
-		}
 
 		// Build `ICS` properties - add footer
 		$ics_props[] = 'END:VEVENT';
@@ -149,7 +148,7 @@ class GenerateICS extends Core\Base
 
 	private function format_timestamp( $timestamp )
 	{
-		$dt = new \DateTime($timestamp);
+		$dt = new \DateTime( $timestamp );
 		return $dt->format( self::DT_FORMAT );
 	}
 
