@@ -125,6 +125,14 @@ class Modulation extends gEditorial\Service
 		return gEditorial()->module( 'ortho' )->enqueueVirastar();
 	}
 
+	public static function hasByline( $post, $context = NULL )
+	{
+		if ( ! gEditorial()->enabled( 'byline' ) )
+			return FALSE;
+
+		return (bool) gEditorial()->module( 'byline' )->has_content_for_post( $post, $context );
+	}
+
 	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )
 	{
 		return $taxonomy === gEditorial()->constant( 'genres', 'main_taxonomy', $fallback );

@@ -923,6 +923,7 @@ class Template extends WordPress\Main
 			'after'    => '',
 			'echo'     => TRUE,
 			'render'   => NULL,
+			'context'  => NULL,
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -938,7 +939,6 @@ class Template extends WordPress\Main
 		$excludes = is_null( $args['excludes'] ) ? [
 			'over_title',
 			'sub_title',
-			// 'byline',
 			'highlight',
 			'dashboard',
 			'abstract',
@@ -958,6 +958,13 @@ class Template extends WordPress\Main
 			'geo_latitude',   // NOTE: DEPRECATED
 			'geo_longitude',  // NOTE: DEPRECATED
 		] : (array) $args['excludes'];
+
+		if ( Services\Modulation::hasByline( $post, $args['context'] ?? 'metasummary' ) )
+			$excludes = array_merge( $excludes, [
+				'publication_byline',
+				'featured_people',
+				'byline',
+			] );
 
 		foreach ( $list as $key => $title ) {
 
