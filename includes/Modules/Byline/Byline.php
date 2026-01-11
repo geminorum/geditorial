@@ -189,6 +189,7 @@ class Byline extends gEditorial\Module
 
 		$this->filter( 'searchselect_result_extra_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'termrelations_supported', 4, 9, FALSE, $this->base );
+		$this->filter( 'meta_summary_rows', 4, 12, FALSE, $this->base );
 
 		if ( $this->get_setting( 'tabs_support', TRUE ) )
 			$this->_init_post_tabs();
@@ -471,6 +472,49 @@ class Byline extends gEditorial\Module
 			return WordPress\Term::summary( $term );
 
 		return $data;
+	}
+
+	public function meta_summary_rows( $rows, $list, $post, $args )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $rows;
+
+		$raw = $this->get_byline_for_post( $post, [
+			'context' => 'rawdata',
+			'default'  => FALSE,
+			'hidden'   => TRUE,
+			'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
+		], FALSE );
+
+		if ( empty( $raw ) )
+			return $rows;
+
+		$data = [];
+
+		foreach ( $raw as $order => $row ) {
+
+			$key = vsprintf( '<span class="-%s" data-order="%d">%s</span>', [
+				$row['rel'],
+				$order,
+				$row['relation'],
+			] );
+
+			$value = Core\HTML::tag( 'a', [
+				'class' => '-person',
+				'href'  => $row['link'],
+				'title' => Core\Text::stripTags( $row['desc'] ),
+				'data' => [
+					'taxonomy' => $row['tax'] ?: FALSE,
+				],
+			], $row['label'] );
+
+			if ( ! empty( $row['notes'] ) )
+				$value.= sprintf( ': <span class="-notes">%s</span>', $row['notes'] );
+
+			$data[$key] = $value;
+		}
+
+		return $data + $rows;
 	}
 
 	public function termrelations_supported( $fields, $taxonomy, $context, $posttype )
