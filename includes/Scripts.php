@@ -115,9 +115,7 @@ class Scripts extends WordPress\Main
 
 	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
-		if ( is_null( $package ) )
-			$package = $asset.'/'.$asset;
-
+		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -130,9 +128,7 @@ class Scripts extends WordPress\Main
 
 	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
-		if ( is_null( $package ) )
-			$package = $asset.'/'.$asset;
-
+		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
 		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -143,7 +139,12 @@ class Scripts extends WordPress\Main
 
 	public static function getPrintStylesURL( $name = 'general', $base = NULL, $path = 'assets/css' )
 	{
-		return sprintf( '%s%s/print.%s%s.css', $base ?? static::URL, $path, $name, Core\HTML::rtl() ? '-rtl' : '' );
+		return sprintf( '%s%s/print.%s%s.css',
+			$base ?? static::URL,
+			$path,
+			$name,
+			Core\HTML::rtl() ? '-rtl' : ''
+		);
 	}
 
 	// TODO: support all kinds of check-boxes!

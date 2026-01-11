@@ -154,24 +154,18 @@ class Datetime extends WordPress\Main
 
 	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )
 	{
-		if ( is_null( $now ) )
-			$now = current_time( 'timestamp', FALSE );
+		$now = $now ?? current_time( 'timestamp', FALSE );
 
 		if ( FALSE === $round )
 			return self::humanTimeAgo( $local, $now );
 
-		if ( is_null( $round ) )
-			$round = Core\Date::DAY_IN_SECONDS;
-
-		$diff = $now - $local;
+		$round = $round ?? Core\Date::DAY_IN_SECONDS;
+		$diff  = $now - $local;
 
 		if ( $diff > 0 && $diff < $round )
 			return self::humanTimeAgo( $local, $now );
 
-		if ( is_null( $format ) )
-			$format = self::dateFormats( 'default' );
-
-		return Core\Date::get( $format, $local );
+		return Core\Date::get( $format ?? self::dateFormats( 'default' ), $local );
 	}
 
 	public static function humanTimeDiff( $timestamp, $now = '' )

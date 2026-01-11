@@ -15,7 +15,6 @@ class Form extends Core\Base
 	 *
 	 * @param array $data
 	 * @param string|boolean $prefix (optional)
-	 *
 	 * @return void
 	 */
 	public function __construct( $data, $prefix = FALSE )
@@ -31,7 +30,6 @@ class Form extends Core\Base
 	 * Traverses the form.
 	 *
 	 * @param string $path
-	 *
 	 * @return object A Forms\Form
 	 */
 	public function traverse_to( $path )
@@ -47,7 +45,6 @@ class Form extends Core\Base
 	 * Generates form field.
 	 *
 	 * @param array $args
-	 *
 	 * @return string
 	 */
 	public function input( $args )

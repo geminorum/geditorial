@@ -64,8 +64,7 @@ class Settings extends WordPress\Main
 
 	public static function isScreenContext( $context, $screen = NULL )
 	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::classs( $context ) ) )
 			return TRUE;
@@ -182,8 +181,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::REPORTS ) )
 			return TRUE;
@@ -196,8 +194,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::SETTINGS ) )
 			return TRUE;
@@ -210,8 +207,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::TOOLS ) )
 			return TRUE;
@@ -224,8 +220,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::ROLES ) )
 			return TRUE;
@@ -238,8 +233,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::IMPORTS ) )
 			return TRUE;
@@ -252,8 +246,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::CUSTOMS ) )
 			return TRUE;
@@ -266,8 +259,7 @@ class Settings extends WordPress\Main
 	{
 		self::_dep( 'Settings::isScreenContext()' );
 
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, 'dashboard' ) )
 			return TRUE;
@@ -2133,8 +2125,7 @@ class Settings extends WordPress\Main
 	// @SEE: https://core.trac.wordpress.org/ticket/57791
 	public static function message( $messages = NULL )
 	{
-		if ( is_null( $messages ) )
-			$messages = self::messages();
+		$messages = $messages ?? self::messages();
 
 		if ( isset( $_GET['message'] ) ) {
 
@@ -2228,10 +2219,10 @@ class Settings extends WordPress\Main
 
 	public static function getButtonConfirm( $message = NULL )
 	{
-		if ( is_null( $message ) )
-			$message = _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', 'geditorial-admin' );
-
-		return [ 'onclick' => sprintf( 'return confirm(\'%s\')', Core\HTML::escape( $message ) ) ];
+		return [ 'onclick' => sprintf(
+			'return confirm(\'%s\')',
+			Core\HTML::escape( $message ?? _x( 'Are you sure? This operation can not be undone.', 'Settings: Confirm', 'geditorial-admin' ) )
+		) ];
 	}
 
 	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $after = '' )
@@ -3466,14 +3457,7 @@ class Settings extends WordPress\Main
 
 			case 'page':
 
-				if ( ! $args['values'] )
-					$args['values'] = 'page';
-
-				if ( is_null( $args['none_title'] ) )
-					$args['none_title'] = $args['string_select'];
-
-				if ( is_null( $args['none_value'] ) )
-					$args['none_value'] = '0';
+				$args['values'] = $args['values'] ?: 'page';
 
 				$query = array_merge( [
 					'post_type'   => $args['values'],
@@ -3489,8 +3473,8 @@ class Settings extends WordPress\Main
 				if ( ! empty( $pages ) ) {
 
 					$html.= Core\HTML::tag( 'option', [
-						'value' => $args['none_value'],
-					], $args['none_title'] );
+						'value' => $args['none_value'] ?? '0',
+					], $args['none_title'] ?? $args['string_select'] );
 
 					$html.= walk_page_dropdown_tree( $pages, ( isset( $query['depth'] ) ? $query['depth'] : 0 ), $query );
 
@@ -3522,17 +3506,13 @@ class Settings extends WordPress\Main
 
 				if ( ! empty( $args['values'] ) ) {
 
-					if ( is_null( $args['none_title'] ) )
-						$args['none_title'] = $args['string_select'];
-
-					if ( is_null( $args['none_value'] ) )
-						$args['none_value'] = '0';
+					$args['none_value'] = $args['none_value'] ?? '0';
 
 					$html.= Core\HTML::tag( 'option', [
 						'value'    => $args['none_value'],
 						'selected' => $value == $args['none_value'],
 						'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
-					], $args['none_title'] );
+					], $args['none_title'] ?? $args['string_select'] );
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -3575,17 +3555,13 @@ class Settings extends WordPress\Main
 				if ( ! $args['values'] )
 					$args['values'] = array_reverse( get_editable_roles() );
 
-				if ( is_null( $args['none_title'] ) )
-					$args['none_title'] = $args['string_select'];
-
-				if ( is_null( $args['none_value'] ) )
-					$args['none_value'] = '0';
+				$args['none_value'] = $args['none_value'] ?? '0';
 
 				$html.= Core\HTML::tag( 'option', [
 					'value'    => $args['none_value'],
 					'selected' => $value == $args['none_value'],
 					'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
-				], $args['none_title'] );
+				], $args['none_title'] ?? $args['string_select'] );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -3622,8 +3598,7 @@ class Settings extends WordPress\Main
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
-					if ( is_null( $args['none_value'] ) )
-						$args['none_value'] = FALSE;
+					$args['none_value'] = $args['none_value'] ?? FALSE;
 
 					$html.= Core\HTML::tag( 'option', [
 						'value'    => $args['none_value'],
@@ -3928,12 +3903,6 @@ class Settings extends WordPress\Main
 
 					if ( FALSE !== $values ) {
 
-						if ( empty( $field['field_class'] ) )
-							$field['field_class'] = '';
-
-						if ( empty( $field['dir'] ) )
-							$field['dir'] = FALSE;
-
 						foreach ( $values as $value_name => $value_title ) {
 
 							$html.= Core\HTML::tag( 'option', [
@@ -3944,8 +3913,8 @@ class Settings extends WordPress\Main
 
 						$html = Core\HTML::tag( 'select', [
 							'name'  => $name,
-							'class' => Core\HTML::attrClass( $field['field_class'], '-type-select' ),
-							'dir'   => $field['dir'],
+							'class' => Core\HTML::attrClass( $field['field_class'] ?? '', '-type-select' ),
+							'dir'   => $field['dir'] ?? FALSE,
 						], $html );
 
 						$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
@@ -3955,20 +3924,14 @@ class Settings extends WordPress\Main
 
 				case 'number':
 
-					if ( empty( $field['field_class'] ) )
-						$field['field_class'] = 'small-text';
-
-					if ( empty( $field['dir'] ) )
-						$field['dir'] = 'ltr';
-
 					$html = Core\HTML::tag( 'input', [
 						'type'        => 'text',
 						'name'        => $name,
 						'placeholder' => $placeholder,
 						'title'       => $description,
 						'value'       => $value,
-						'class'       => Core\HTML::attrClass( $field['field_class'], '-type-number' ),
-						'dir'         => $field['dir'],
+						'class'       => Core\HTML::attrClass( $field['field_class'] ?? 'small-text', '-type-number' ),
+						'dir'         => $field['dir'] ?? 'ltr',
 						'data-ortho'  => $ortho,
 					] );
 
@@ -3979,17 +3942,14 @@ class Settings extends WordPress\Main
 				case 'text':
 				default:
 
-					if ( empty( $field['field_class'] ) )
-						$field['field_class'] = 'regular-text';
-
 					$html = Core\HTML::tag( 'input', [
 						'type'        => 'text',
 						'name'        => $name,
 						'placeholder' => $placeholder,
 						'title'       => $description,
 						'value'       => $value,
-						'class'       => Core\HTML::attrClass( $field['field_class'], '-type-text' ),
-						'dir'         => empty( $field['dir'] ) ? FALSE : $field['dir'],
+						'class'       => Core\HTML::attrClass( $field['field_class'] ?? 'regular-text', '-type-text' ),
+						'dir'         => $field['dir'] ?? FALSE,
 						'data-ortho'  => $ortho,
 					] );
 

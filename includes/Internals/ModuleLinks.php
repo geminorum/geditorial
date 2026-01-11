@@ -24,7 +24,7 @@ trait ModuleLinks
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
 					'title'   => sprintf(
-						/* translators: `%s`: sub title */
+						/* translators: `%s`: subtitle */
 						_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
 					),
@@ -38,7 +38,7 @@ trait ModuleLinks
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
 					'title'   => sprintf(
-						/* translators: `%s`: sub title */
+						/* translators: `%s`: subtitle */
 						_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
 					),
@@ -52,7 +52,7 @@ trait ModuleLinks
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'roles', $sub ),
 					'title'   => sprintf(
-						/* translators: `%s`: sub title */
+						/* translators: `%s`: subtitle */
 						_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
 					),
@@ -66,7 +66,7 @@ trait ModuleLinks
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'imports', $sub ),
 					'title'   => sprintf(
-						/* translators: `%s`: sub title */
+						/* translators: `%s`: subtitle */
 						_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
 					),
@@ -115,11 +115,8 @@ trait ModuleLinks
 
 	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
 	{
-		if ( is_null( $sub ) )
-			$sub = $this->key;
-
-		if ( is_null( $context ) )
-			$context = 'reports'; // TODO get from module class static: this is the default module link!
+		$sub     = $sub     ?? $this->key;
+		$context = $context ?? 'reports';  // TODO get from module class static: this is the default module link!
 
 		switch ( $context ) {
 			case 'tools'    :

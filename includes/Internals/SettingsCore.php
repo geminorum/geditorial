@@ -668,8 +668,6 @@ trait SettingsCore
 			if ( method_exists( $this, 'settings_intro' ) )
 				$this->settings_intro();
 
-			echo '</div>';
-
 		gEditorial\Settings::wrapClose();
 	}
 

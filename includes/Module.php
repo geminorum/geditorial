@@ -132,14 +132,12 @@ class Module extends WordPress\Module
 		if ( 'frontonly' === $this->module->i18n && is_admin() )
 			return FALSE;
 
-		if ( is_null( $domain ) )
-			$domain = $this->get_textdomain();
+		$domain = $domain ?? $this->get_textdomain();
 
 		if ( ! $domain )
 			return FALSE;
 
-		if ( is_null( $locale ) )
-			$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
+		$locale = $locale ?? apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
 
 		$path = GEDITORIAL_DIR."languages/{$this->module->folder}";
 		$wp_textdomain_registry->set_custom_path( $domain, $path );
@@ -661,11 +659,8 @@ class Module extends WordPress\Module
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post', $extra = [] )
 	{
-		if ( is_null( $icon ) )
-			$icon = $this->module->icon;
-
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
+		$icon  = $icon  ?? $this->module->icon;
+		$title = $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
 
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,

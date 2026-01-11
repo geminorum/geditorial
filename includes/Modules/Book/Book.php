@@ -601,6 +601,7 @@ class Book extends gEditorial\Module
 				if ( $this->_p2p )
 					$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_to' );
 
+				$this->modulelinks__register_headerbuttons();
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );

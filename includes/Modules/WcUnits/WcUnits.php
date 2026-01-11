@@ -268,22 +268,22 @@ class WcUnits extends gEditorial\Module
 
 	public function product_get_weight( $value, $product )
 	{
-		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_weight', $value ) : $value;
+		return $value ?: $this->get_setting_fallback( 'fallback_empty_weight', $value );
 	}
 
 	public function product_get_length( $value, $product )
 	{
-		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_length', $value ) : $value;
+		return $value ?: $this->get_setting_fallback( 'fallback_empty_length', $value );
 	}
 
 	public function product_get_width( $value, $product )
 	{
-		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_width', $value ) : $value;
+		return $value ?: $this->get_setting_fallback( 'fallback_empty_width', $value );
 	}
 
 	public function product_get_height( $value, $product )
 	{
-		return empty( $value ) ? $this->get_setting_fallback( 'fallback_empty_height', $value ) : $value;
+		return $value ?: $this->get_setting_fallback( 'fallback_empty_height', $value );
 	}
 
 	public function format_weight( $string, $weight, $unit = NULL )
@@ -293,8 +293,12 @@ class WcUnits extends gEditorial\Module
 		if ( empty( $formatted ) )
 			return $this->get_setting( 'weight_custom_na' ) ?: '';
 
-		$unit     = $unit ?: get_option( 'woocommerce_weight_unit' );
-		$template = $this->get_setting( 'weight_template__'.$unit, '%s '.$unit );
+		$unit = $unit ?? get_option( 'woocommerce_weight_unit' );
+
+		$template = $this->get_setting(
+			sprintf( 'weight_template__%s', $unit ),
+			sprintf( '%s %s', '%s', $unit )
+		);
 
 		return sprintf( $template, Core\Number::localize( $formatted ) );
 	}
@@ -307,8 +311,12 @@ class WcUnits extends gEditorial\Module
 		if ( empty( $formatted ) )
 			return $this->get_setting( 'dimensions_custom_na' ) ?: '';
 
-		$unit     = $unit ?: get_option( 'woocommerce_dimension_unit' );
-		$template = $this->get_setting( 'dimensions_template__'.$unit, '%s '.$unit );
+		$unit = $unit ?? get_option( 'woocommerce_dimension_unit' );
+
+		$template = $this->get_setting(
+			sprintf( 'dimensions_template__%s', $unit ),
+			sprintf( '%s %s', '%s', $unit )
+		);
 
 		return sprintf( $template, Core\Number::localize( $formatted ) );
 	}
@@ -350,13 +358,21 @@ class WcUnits extends gEditorial\Module
 
 				foreach ( [ 'kg', 'g', 'lbs', 'oz' ] as $weight_unit )
 					if ( array_key_exists( $weight_unit, $setting['options'] ) )
-						$setting['options'][$weight_unit] = sprintf( '%s &mdash; (%s)', $setting['options'][$weight_unit], $this->format_weight( NULL, 1, $weight_unit ) );
+						$setting['options'][$weight_unit] = sprintf(
+							'%s &mdash; (%s)',
+							$setting['options'][$weight_unit],
+							$this->format_weight( NULL, 1, $weight_unit )
+						);
 
 			} else if ( 'woocommerce_dimension_unit' === $setting['id'] ) {
 
 				foreach ( [ 'm', 'cm', 'mm', 'in', 'yd' ] as $dimension_unit )
 					if ( array_key_exists( $dimension_unit, $setting['options'] ) )
-						$setting['options'][$dimension_unit] = sprintf( '%s &mdash; (%s)', $setting['options'][$dimension_unit], $this->format_dimensions( NULL, [ 1, 1, 1 ], $dimension_unit ) );
+						$setting['options'][$dimension_unit] = sprintf(
+							'%s &mdash; (%s)',
+							$setting['options'][$dimension_unit],
+							$this->format_dimensions( NULL, [ 1, 1, 1 ], $dimension_unit )
+						);
 			}
 		}
 

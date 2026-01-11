@@ -325,8 +325,7 @@ class Parser extends WordPress\Main
 		if ( $user = gEditorial()->user() )
 			$writer->setAuthor( get_userdata( $user )->display_name );
 
-		if ( is_null( $sheet ) )
-			$sheet = 'Sheet1';
+		$sheet = $sheet ?? 'Sheet1';
 
 		if ( is_null( $options ) )
 			$options = [

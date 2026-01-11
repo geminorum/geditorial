@@ -164,8 +164,8 @@ class Genres extends gEditorial\Module
 						'main_taxonomy',
 						$screen->post_type,
 						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
+							? '__checklist_terms_callback'
+							: '__singleselect_terms_callback'
 					);
 			}
 		}

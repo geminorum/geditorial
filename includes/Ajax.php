@@ -33,8 +33,7 @@ class Ajax extends WordPress\Main
 
 	public static function successMessage( $message = NULL )
 	{
-		if ( is_null( $message ) )
-			$message = _x( 'Successful!', 'Ajax: Ajax Notice', 'geditorial' );
+		$message = $message ?? _x( 'Successful!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
 			self::success( Core\HTML::success( $message ) );
@@ -49,8 +48,7 @@ class Ajax extends WordPress\Main
 
 	public static function errorMessage( $message = NULL )
 	{
-		if ( is_null( $message ) )
-			$message = _x( 'Error!', 'Ajax: Ajax Notice', 'geditorial' );
+		$message = $message ?? _x( 'Error!', 'Ajax: Ajax Notice', 'geditorial' );
 
 		if ( $message )
 			self::error( Core\HTML::error( $message ) );

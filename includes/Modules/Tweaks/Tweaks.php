@@ -248,7 +248,7 @@ class Tweaks extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		$excludes = [
-			'product', // NOTE: maybe all `Woo-Commerce` related must use `WC Tweaks`
+			WordPress\WooCommerce::PRODUCT_POSTTYPE, // NOTE: maybe all `Woo-Commerce` related must use `WC Tweaks`
 		];
 
 		return $this->filters( 'posttypes_excluded',
