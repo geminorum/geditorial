@@ -89,14 +89,14 @@ class Duration extends Base
 		return FALSE; // FIXME!
 	}
 
-	// Converts a time string (`hh:mm:ss`) to an integer for the total seconds
+	// Converts a time string (`hh:mm:ss`) to an integer for the total seconds.
 	public static function timeToSeconds( $time )
 	{
 		list( $hours, $minutes, $seconds ) = explode( ':', $time );
 		return ( $hours * 3600 ) + ( $minutes * 60 ) + $seconds;
 	}
 
-	// Converts an integer of seconds to time format
+	// Converts an integer of seconds to time format.
 	// @SEE: `Misc\MP3File::formatTime()`
 	// FIXME: WTF: test this
 	public static function secondsToTime( $secondsInt )
@@ -117,7 +117,7 @@ class Duration extends Base
 			self::timeToSeconds( '08:20:15' ) +
 			self::timeToSeconds( '06:15:05' );
 
-		// convert the total seconds back to a time format
+		// Converts the total seconds back to a time format.
 		$formatted = self::secondsToTime( $total );
 
 		echo "Total seconds: {$total}";    // `96655`
