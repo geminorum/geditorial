@@ -89,7 +89,10 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $count )
 			return $args['default'];
 
-		else if ( $count > 1 )
+		if ( 'rawdata' === $args['context'] )
+			return $parts;
+
+		if ( $count > 1 )
 			$html = WordPress\Strings::joinWithLast( $parts, $args['_strings']['between'], $args['_strings']['between_last'] );
 
 		else
@@ -127,9 +130,6 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
 
-		if ( ! $view = static::factory()->module( static::MODULE )->viewengine__view_by_template( $args['template'] ?? 'default', $args['context'] ?? 'walker' ) )
-			return $args['default'];
-
 		$data = [];
 
 		foreach ( $list as $item ) {
@@ -144,6 +144,7 @@ class ModuleHelper extends gEditorial\Helper
 				continue;
 
 			$row = [
+				'tax'   => WordPress\Term::taxonomy( $item['term'] ),
 				'name'  => WordPress\Term::title( $item['term'], '' ),
 				'link'  => WordPress\Term::link( $item['term'], '' ),
 				'edit'  => WordPress\Term::edit( $item['term'], [], '' ),
@@ -165,6 +166,12 @@ class ModuleHelper extends gEditorial\Helper
 		}
 
 		if ( empty( $data ) )
+			return $args['default'];
+
+		if ( 'rawdata' === $args['context'] )
+			return $data;
+
+		if ( ! $view = static::factory()->module( static::MODULE )->viewengine__view_by_template( $args['template'] ?? 'default', $args['context'] ?? 'walker' ) )
 			return $args['default'];
 
 		if ( ! $html = static::factory()->module( static::MODULE )->viewengine__render( $view, [ 'data' => $data, 'args' => $args ], FALSE ) )
@@ -221,6 +228,9 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( ! $html )
 			return $args['default'];
+
+		if ( 'rawdata' === $args['context'] )
+			return $html;
 
 		return $args['before'].$html.$args['after'];
 	}
