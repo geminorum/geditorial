@@ -361,7 +361,7 @@ class Settings extends WordPress\Main
 	 * @param string $context
 	 * @return array $excluded
 	 */
-	public static function posttypesExcluded( $extra = [], $context = 'settings' )
+	public static function posttypesExcluded( $extra = [], $keeps = [], $context = 'settings' )
 	{
 		$list = [
 			'attachment',          // WP Core
@@ -377,13 +377,14 @@ class Settings extends WordPress\Main
 			'user_request',        // WP Core
 			'oembed_cache',        // WP Core
 
-			'bp-email',          // BuddyPress
-			// 'product',           // WooCommerce
-			'shop_order',        // WooCommerce
-			'shop_coupon',       // WooCommerce
-			'guest-author',      // Co-Authors Plus
-			'amp_validated_url', // AMP
-			'inbound_message',
+			'bp-email'         ,  // BuddyPress
+			// 'product'          ,  // WooCommerce
+			'shop_order'       ,  // WooCommerce
+			'shop_coupon'      ,  // WooCommerce
+			'guest-author'     ,  // Co-Authors Plus
+			'amp_validated_url',  // AMP
+			'inbound_message'  ,  // Flamingo
+			'table'            ,  // TablePress
 		];
 
 		if ( class_exists( 'bbPress' ) )
@@ -393,10 +394,17 @@ class Settings extends WordPress\Main
 				'reply',
 			] );
 
-		return Core\Arraay::prepString( apply_filters( static::BASE.'_posttypes_excluded', array_merge( $list, (array) $extra ), $context ) );
+		// @hook: `geditorial_posttypes_excluded`
+		return apply_filters(
+			implode( '_', [ static::BASE, 'posttypes', 'excluded' ] ),
+			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
+			$context,
+			(array) $extra,
+			(array) $keeps
+		);
 	}
 
-	public static function taxonomiesExcluded( $extra = [], $context = 'settings' )
+	public static function taxonomiesExcluded( $extra = [], $keeps = [], $context = 'settings' )
 	{
 		$list = [
 			'nav_menu',               // WP Core
@@ -413,6 +421,15 @@ class Settings extends WordPress\Main
 			'bp_member_type',         // BuddyPress
 			'bp_group_type',          // BuddyPress
 
+			'ef_editorial_meta',  // EditFlow
+			'ef_usergroup'     ,  // EditFlow
+			'following_users'  ,  // EditFlow ?!
+
+			'table_category', // TablePress
+
+			'flamingo_contact_tag'    ,  // Flamingo
+			'flamingo_inbound_channel',  // Flamingo
+
 			'audit_attribute' ,   // Editorial: Audit
 			'affiliation'     ,   // Editorial: People
 			// 'relation'        ,   // Editorial: Byline
@@ -420,6 +437,12 @@ class Settings extends WordPress\Main
 			'user_type'       ,   // Editorial: Users
 			// 'event_calendar'  ,   // Editorial: Happening
 			// 'event_type'      ,   // Editorial: Happening
+			'redundant', // Editorial: Redundancy
+
+			'cartable_user' ,  // Editorial
+			'cartable_group',  // Editorial
+			'follow_users'  ,  // Editorial
+			'follow_groups' ,  // Editorial
 		];
 
 		if ( class_exists( 'bbPress' ) )
@@ -427,10 +450,17 @@ class Settings extends WordPress\Main
 				'topic-tag',
 			] );
 
-		return Core\Arraay::prepString( apply_filters( static::BASE.'_taxonomies_excluded', array_merge( $list, (array) $extra ), $context ) );
+		// @hook: `geditorial_taxonomies_excluded`
+		return apply_filters(
+			implode( '_', [ static::BASE, 'taxonomies', 'excluded' ] ),
+			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
+			$context,
+			(array) $extra,
+			(array) $keeps
+		);
 	}
 
-	public static function rolesExcluded( $extra = [], $context = 'settings' )
+	public static function rolesExcluded( $extra = [], $keeps = [], $context = 'settings' )
 	{
 		$list = [
 			'administrator',  // WP Core
@@ -441,7 +471,14 @@ class Settings extends WordPress\Main
 			'backwpup_helper',
 		];
 
-		return Core\Arraay::prepString( apply_filters( static::BASE.'_roles_excluded', array_merge( $list, (array) $extra ), $context ) );
+		// @hook: `geditorial_roles_excluded`
+		return apply_filters(
+			implode( '_', [ static::BASE, 'roles', 'excluded' ] ),
+			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
+			$context,
+			(array) $extra,
+			(array) $keeps
+		);
 	}
 
 	public static function showOptionNone( $string = NULL )

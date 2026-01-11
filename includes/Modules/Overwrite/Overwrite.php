@@ -185,9 +185,11 @@ class Overwrite extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
-			Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,   // NOTE: gEditorial prop
-		], 'names', 'or' ) + $extra ) );
+		return $this->filters( 'taxonomies_excluded',
+			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
+				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,   // NOTE: gEditorial prop
+			], 'names', 'or' ) + $extra, $this->keep_taxonomies )
+		);
 	}
 
 	private function _skip_gettext_hook()

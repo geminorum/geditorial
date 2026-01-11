@@ -270,32 +270,10 @@ class Terms extends gEditorial\Module
 		];
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
-	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-			'cartable_user',
-			'cartable_group',
-			'follow_users',
-			'follow_groups',
-		] + $extra ) );
-	}
-
 	protected function get_taxonomies_support( $field )
 	{
 		$supported = WordPress\Taxonomy::get();
-		$excluded  = $this->taxonomies_excluded();
+		$excluded  = Core\Arraay::prepString( $this->taxonomies_excluded() );
 
 		switch ( $field ) {
 			case 'role'     : $excluded = array_merge( $excluded, [ 'audit_attribute' ] ); break;

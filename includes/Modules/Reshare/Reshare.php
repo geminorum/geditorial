@@ -65,7 +65,11 @@ class Reshare extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'primary_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded( $extra + [
+				$this->constant( 'primary_posttype' ),
+			], $this->keep_posttypes )
+		);
 	}
 
 	public function after_setup_theme()

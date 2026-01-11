@@ -129,23 +129,19 @@ class Tabs extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded',
-			gEditorial\Settings::posttypesExcluded(
-				get_post_types( [
-					'public' => FALSE,
-				], 'names', 'or' ) + $extra
-			)
+			gEditorial\Settings::posttypesExcluded( get_post_types( [
+				'public' => FALSE,
+			], 'names', 'or' ) + $extra, $this->keep_posttypes )
 		);
 	}
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded',
-			gEditorial\Settings::taxonomiesExcluded(
-				get_taxonomies( [
-					'public'                              => FALSE,
-					Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
-				], 'names', 'or' ) + $extra
-			)
+			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
+				'public'                              => FALSE,
+				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
+			], 'names', 'or' ) + $extra, $this->keep_taxonomies )
 		);
 	}
 

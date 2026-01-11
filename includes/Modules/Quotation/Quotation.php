@@ -166,7 +166,11 @@ class Quotation extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [ $this->constant( 'main_posttype' ) ] ) );
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded( $extra + [
+				$this->constant( 'main_posttype' ),
+			], $this->keep_posttypes )
+		);
 	}
 
 	public function after_setup_theme()

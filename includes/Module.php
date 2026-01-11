@@ -58,6 +58,10 @@ class Module extends WordPress\Module
 	protected $disable_no_posttypes  = FALSE; // Avoids hooking module if has no post-types
 	protected $disable_no_taxonomies = FALSE; // Avoids hooking module if has no taxonomies
 
+	protected $keep_posttypes  = [];  // keeps from excludes
+	protected $keep_taxonomies = [];  // keeps from excludes
+	protected $keep_roles      = [];  // keeps from excludes
+
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
 

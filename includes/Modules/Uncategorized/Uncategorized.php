@@ -46,23 +46,19 @@ class Uncategorized extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-			'affiliation',
-			'specs',
-		] + $extra ) );
+		return $this->filters( 'taxonomies_excluded',
+			gEditorial\Settings::taxonomiesExcluded( [
+				'blood_type'     ,   // `Abo` Module
+				'custom_status'  ,   // `Statuses` Module
+				'human_status'   ,   // `Personage` Module
+				'marital_status' ,   // `NextOfKin` Module
+				'people'         ,   // `People` Module
+				'specs'          ,   // `Specs` Module
+				'gender'         ,   // `WasBorn` Module
+				'age_group'      ,   // `WasBorn` Module
+				'year_of_birth'  ,   // `WasBorn` Module
+			] + $extra, $this->keep_taxonomies )
+		);
 	}
 
 	public function current_screen( $screen )

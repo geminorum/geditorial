@@ -181,9 +181,12 @@ trait SettingsPostTypes
 				$extra[] = $this->constant( $paired[0] );
 		}
 
-		return Core\Arraay::prepString(
-			$this->filters( 'posttypes_excluded',
-				gEditorial\Settings::posttypesExcluded( $extra ) ) );
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded(
+				$extra,
+				$this->keep_posttypes
+			)
+		);
 	}
 
 	// DEFAULT METHOD

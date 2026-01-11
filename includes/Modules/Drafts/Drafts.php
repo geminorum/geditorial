@@ -87,7 +87,7 @@ class Drafts extends gEditorial\Module
 	public function all_posttypes( $exclude = TRUE, $args = [ 'show_ui' => TRUE ] )
 	{
 		$posttypes = WordPress\PostType::get( 0, $args );
-		$excluded  = $this->posttypes_excluded();
+		$excluded  = Core\Arraay::prepString( $this->posttypes_excluded() );
 		$viewables = [];
 
 		if ( ! empty( $excluded ) )

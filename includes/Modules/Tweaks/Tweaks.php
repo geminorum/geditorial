@@ -213,45 +213,30 @@ class Tweaks extends gEditorial\Module
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
-			'link_category',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'flamingo_contact_tag',
-			'flamingo_inbound_channel',
-			'people',
-			'rel_people',
-			'rel_post',
-			'affiliation',
-			'entry_section',
-			'specs',
-			'label',
-			'user_group',
-			'cartable_user',
-			'cartable_group',
-			'follow_users',
-			'follow_groups',
-			'status',
-
-			'checklist_item' ,  // has it's own overview
-			'audit_attribute',  // `Audit` Module: has it's own overview
-			'year_of_birth'  ,  // `WasBorn` Module
-			'gender'         ,  // `WasBorn` Module
-			'age_group'      ,  // `WasBorn` Module
-			'marital_status' ,  // `NextOfKin` Module
-			'blood_type'     ,  // `Abo` Module
-			'equipment'      ,  // `Equipped` Module
-			'human_status'   ,  // `Personage` Module
-		] + $extra ) );
+		return $this->filters( 'taxonomies_excluded',
+			gEditorial\Settings::taxonomiesExcluded( [
+				'blood_type'     ,   // `Abo` Module
+				'custom_status'  ,   // `Statuses` Module
+				'entry_section'  ,   // `Entry` Module
+				'equipment'      ,   // `Equipped` Module
+				'human_status'   ,   // `Personage` Module
+				'label'          ,   // `Labeled` Module
+				'marital_status' ,   // `NextOfKin` Module
+				'people'         ,   // `People` Module
+				'specs'          ,   // `Specs` Module
+				'gender'         ,   // `WasBorn` Module
+				'age_group'      ,   // `WasBorn` Module
+				'year_of_birth'  ,   // `WasBorn` Module
+				'checklist_item' ,   // has it's own overview
+			] + $extra, $this->keep_taxonomies )
+		);
 	}
 
 	private function _get_posttypes_support_feature( $feature, $extra_excludes = [] )
 	{
 		$posttypes = [];
 		$supported = get_post_types_by_support( $feature );
-		$excluded  = gEditorial\Settings::posttypesExcluded( $extra_excludes );
+		$excluded  = gEditorial\Settings::posttypesExcluded( $extra_excludes, $this->keep_posttypes );
 
 		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported ) && ! in_array( $posttype, $excluded ) )
@@ -266,9 +251,12 @@ class Tweaks extends gEditorial\Module
 			'product', // NOTE: maybe all `Woo-Commerce` related must use `WC Tweaks`
 		];
 
-		return Core\Arraay::prepString(
-			$this->filters( 'posttypes_excluded',
-				gEditorial\Settings::posttypesExcluded( $excludes + (array) $extra ) ) );
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded(
+				$excludes + (array) $extra,
+				$this->keep_posttypes
+			)
+		);
 	}
 
 	// internal helper
@@ -276,7 +264,7 @@ class Tweaks extends gEditorial\Module
 	{
 		$excludes  = [];
 		$supported = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = $this->posttypes_excluded( $excludes + (array) $extra_excludes );
+		$excluded  = Core\Arraay::prepString( $this->posttypes_excluded( $excludes + (array) $extra_excludes ) );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}

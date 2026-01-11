@@ -146,7 +146,10 @@ class Isbn extends gEditorial\Module
 	protected function posttypes_excluded( $extra = [] )
 	{
 		return $this->filters( 'posttypes_excluded',
-			gEditorial\Settings::posttypesExcluded( $extra + [ WordPress\WooCommerce::PRODUCT_POSTTYPE ] ) );
+			gEditorial\Settings::posttypesExcluded( $extra + [
+				WordPress\WooCommerce::PRODUCT_POSTTYPE,
+			], $this->keep_posttypes )
+		);
 	}
 
 	public function meta_init()

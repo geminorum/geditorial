@@ -65,13 +65,6 @@ class Wysiwyg extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
-	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
-			'redundant', // Editorial Redundancy
-		] + $extra ) );
-	}
-
 	public function current_screen( $screen )
 	{
 		if ( ( 'edit-tags' == $screen->base || 'term' == $screen->base )

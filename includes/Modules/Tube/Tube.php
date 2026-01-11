@@ -191,10 +191,12 @@ class Tube extends gEditorial\Module
 
 	protected function posttypes_excluded( $extra = [] )
 	{
-		return $this->filters( 'posttypes_excluded', gEditorial\Settings::posttypesExcluded( $extra + [
-			$this->constant( 'primary_posttype' ),
-			$this->constant( 'secondary_posttype' ),
-		] ) );
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded( $extra + [
+				$this->constant( 'primary_posttype' ),
+				$this->constant( 'secondary_posttype' ),
+			], $this->keep_posttypes )
+		);
 	}
 
 	public function after_setup_theme()

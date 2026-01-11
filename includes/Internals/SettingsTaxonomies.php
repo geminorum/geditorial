@@ -153,14 +153,22 @@ trait SettingsTaxonomies
 
 	public function all_taxonomies( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
 	{
-		return Core\Arraay::stripByKeys( WordPress\Taxonomy::get( 0, $args ), Core\Arraay::prepString( $this->taxonomies_excluded( $exclude_extra ) ) );
+		return Core\Arraay::stripByKeys(
+			WordPress\Taxonomy::get( 0, $args ),
+			Core\Arraay::prepString(
+				$this->taxonomies_excluded( $exclude_extra )
+			)
+		);
 	}
 
 	protected function taxonomies_excluded( $extra = [] )
 	{
-		return Core\Arraay::prepString(
-			$this->filters( 'taxonomies_excluded',
-				gEditorial\Settings::taxonomiesExcluded( $extra ) ) );
+		return $this->filters( 'taxonomies_excluded',
+			gEditorial\Settings::taxonomiesExcluded(
+				$extra,
+				$this->keep_taxonomies
+			)
+		);
 	}
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )

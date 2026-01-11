@@ -19,7 +19,12 @@ trait SettingsRoles
 	protected function get_settings_default_roles( $extra_excludes = [], $force_include = [], $filtered = TRUE )
 	{
 		$supported = WordPress\Role::get( 0, [], FALSE, $filtered );
-		$excluded  = gEditorial\Settings::rolesExcluded( $extra_excludes );
+		$excluded  = Core\Arraay::prepString(
+			gEditorial\Settings::rolesExcluded(
+				$extra_excludes,
+				$this->keep_roles
+			)
+		);
 
 		return array_merge( array_diff_key( $supported, array_flip( $excluded ), (array) $force_include ) );
 	}

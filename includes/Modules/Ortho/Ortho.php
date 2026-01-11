@@ -19,6 +19,10 @@ class Ortho extends gEditorial\Module
 	private $virastar_enqueued     = FALSE;
 	private $persiantools_enqueued = FALSE;
 
+	protected $keep_posttypes = [
+		'attachment',
+	];
+
 	public static function module()
 	{
 		return [
@@ -159,25 +163,6 @@ class Ortho extends gEditorial\Module
 				],
 			],
 		];
-	}
-
-	protected function taxonomies_excluded( $extra = [] )
-	{
-		return $this->filters( 'taxonomies_excluded', gEditorial\Settings::taxonomiesExcluded( [
-			'system_tags',
-			'nav_menu',
-			'post_format',
-			'link_category',
-			'bp_member_type',
-			'bp_group_type',
-			'bp-email-type',
-			'ef_editorial_meta',
-			'following_users',
-			'ef_usergroup',
-			'post_status',
-			'rel_people',
-			'rel_post',
-		] + $extra ) );
 	}
 
 	public function init()
