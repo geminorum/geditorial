@@ -192,6 +192,9 @@ class Home extends gEditorial\Module
 			|| ( $wp_query->is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
 			return;
 
+		if ( $wp_query->is_tax() || $wp_query->is_tag() || $wp_query->is_category() )
+			return;
+
 		$posttypes = $this->posttypes();
 		$excluded  = $this->get_setting( 'exclude_search', [] );
 
