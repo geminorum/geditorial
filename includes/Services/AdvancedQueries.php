@@ -10,6 +10,7 @@ class AdvancedQueries extends gEditorial\Service
 {
 	const SEARCH_OPERATOR_OR  = '|';
 	const SEARCH_OPERATOR_NOT = '!';
+	const TAXONOMY_PROP       = 'search_titles';
 
 	public static function setup()
 	{
@@ -21,6 +22,16 @@ class AdvancedQueries extends gEditorial\Service
 		// add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );
 
 		// add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts_empty_compare' ] );
+
+		if ( is_admin() )
+			return;
+
+		add_action( 'init', [ __CLASS__, 'init_late' ], 999 );
+	}
+
+	public static function init_late()
+	{
+		self::_init_term_search();
 	}
 
 	public static function pre_get_posts( $query )
@@ -247,5 +258,112 @@ class AdvancedQueries extends gEditorial\Service
 				}
 			}
 		}
+	}
+
+	private static function _init_term_search()
+	{
+		if ( ! $taxonomies = self::getTaxonomies() )
+			return FALSE;
+
+		add_filter( 'posts_join',
+			// @REF: https://stackoverflow.com/a/13493126
+			static function ( $join, $wp_query ) use ( $taxonomies ) {
+
+				global $wpdb;
+
+				if ( $wp_query->is_search() ) {
+					$join.= " INNER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id ";
+					$join.= " INNER JOIN {$wpdb->term_taxonomy} ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id ";
+					$join.= " INNER JOIN {$wpdb->terms} ON {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id ";
+				}
+
+				return $join;
+			}, 99, 2 );
+
+		add_filter( 'posts_where',
+			static function ( $where, $wp_query ) use ( $taxonomies ) {
+
+				global $wpdb;
+
+				if ( $wp_query->is_search() ) {
+
+					foreach ( $taxonomies as $taxonomy ) {
+
+						$taxonomy = $wpdb->prepare( '%s', $taxonomy );
+						$clause   = $sep = '';
+
+						foreach ( self::parseCriteria( $wp_query ) as $searched ) {
+							$escaped = $wpdb->prepare( '%s', empty( $wp_query->query_vars['exact'] ) ? '%'.$searched.'%' : $searched );
+							$clause.= $sep."( ( {$wpdb->term_taxonomy}.taxonomy LIKE {$taxonomy} ) AND ( {$wpdb->terms}.name LIKE {$escaped} ) ) ";
+							$sep = ' AND ';
+						}
+
+						if ( ! empty( $clause ) )
+							$where.= " OR ( {$clause} ) ";
+					}
+				}
+
+				return $where;
+			}, 99, 2 );
+
+		add_filter( 'posts_groupby',
+			// @REF: https://wordpress.stackexchange.com/a/5404
+			static function ( $groupby, $wp_query ) use ( $taxonomies ) {
+
+				global $wpdb;
+
+				$bypostid = "{$wpdb->posts}.ID";
+
+				if ( ! $wp_query->is_search() || Core\Text::has( $groupby, $bypostid ) )
+					return $groupby;
+
+				return empty( trim( $groupby ) )
+					? $bypostid
+					: $groupby.', '.$bypostid;
+			}, 99, 2 );
+
+		return TRUE;
+	}
+
+	public static function getTaxonomies()
+	{
+		return WordPress\Taxonomy::get( -1, [
+			// 'show_ui'      => TRUE,
+			// 'show_in_rest' => TRUE,
+			'public'       => TRUE,
+			'_builtin'     => FALSE,   // WTF?!
+
+			self::TAXONOMY_PROP => TRUE,
+		] );
+	}
+
+	/**
+	 * Retrieves the list of search keywords from the `s` parameter.
+	 * @source `se_get_search_terms()`
+	 *
+	 * @param object $wp_query
+	 * @return array
+	 */
+	public static function parseCriteria( $wp_query )
+	{
+		if ( empty( $wp_query->query_vars['s'] ) )
+			return [];
+
+		// Added slashes screw with quote grouping when done early, so done later.
+		$criteria = stripslashes( $wp_query->query_vars['s'] );
+
+		if ( ! empty( $wp_query->query_vars['sentence'] ) )
+			return [ $criteria ];
+
+		// preg_match_all( '/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $criteria, $matches );
+		preg_match_all( '/(".*?)("|$)|((?<=[\s",+])|^)[^\s",+]+/', $criteria, $matches );
+
+		return array_filter( array_map(
+			static function ( $value ) {
+				// return trim( $value, "\"\'\n\r " );
+				return Core\Text::trimQuotes( $value );
+			},
+			$matches[0]
+		) );
 	}
 }

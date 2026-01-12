@@ -115,12 +115,14 @@ class People extends gEditorial\Module
 		parent::init();
 
 		$taxonomy = $this->constant( 'main_taxonomy' );
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
 
 		$this->register_taxonomy( 'main_taxonomy', [
 			'show_in_menu' => FALSE,
 			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 		], NULL, [
-			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'is_viewable'     => $viewable,
+			'search_titles'   => $viewable,
 			'terms_related'   => TRUE,
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,
