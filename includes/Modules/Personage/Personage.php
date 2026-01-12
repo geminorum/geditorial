@@ -1063,8 +1063,9 @@ class Personage extends gEditorial\Module
 
 		$available = FALSE;
 		$fullname  = Services\PostTypeFields::isAvailable( 'fullname', $this->constant( 'main_posttype' ), 'meta' );
+		$parser    = Services\Individuals::isParserAvailable();
 
-		if ( $fullname ) {
+		if ( $fullname && $parser ) {
 
 			ModuleSettings::renderCard_from_fullname( $fullname );
 
