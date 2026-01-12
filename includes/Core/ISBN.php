@@ -185,7 +185,7 @@ class ISBN extends Base
 
 		$code = substr( $input, 3, 9 );
 
-        return sprintf( '%s%d', $code, self::checksumForISBN10( $code ) );
+		return sprintf( '%s%d', $code, self::checksumForISBN10( $code ) );
 	}
 
 	/**
@@ -197,13 +197,13 @@ class ISBN extends Base
 	public static function checksumForISBN10( $input )
 	{
 		for ( $sum = 0, $i = 0; $i < 9; $i++ ) {
-            $digit = (int) $input[$i];
-            $sum += $digit * (1 + $i);
-        }
+			$digit = (int) $input[$i];
+			$sum += $digit * (1 + $i);
+		}
 
-        $sum %= 11;
+		$sum %= 11;
 
-        return $sum === 10 ? 'X' : (string) $sum;
+		return $sum === 10 ? 'X' : (string) $sum;
 	}
 
 	/**
@@ -220,7 +220,7 @@ class ISBN extends Base
 
 		$code = sprintf( '978%s', substr( $input, 0, 9 ) );
 
-        return sprintf( '%s%d', $code, self::checksumForISBN13( $code ) );
+		return sprintf( '%s%d', $code, self::checksumForISBN13( $code ) );
 	}
 
 	/**
@@ -232,9 +232,9 @@ class ISBN extends Base
 	public static function checksumForISBN13( $input )
 	{
 		for ( $sum = 0, $i = 0; $i < 12; $i++ ) {
-            $digit = (int) $input[$i];
-            $sum += $digit * ( 1 + 2 * ( $i % 2 ) );
-        }
+			$digit = (int) $input[$i];
+			$sum += $digit * ( 1 + 2 * ( $i % 2 ) );
+		}
 
 		return ( ( 10 - ( $sum % 10 ) ) % 10 );
 	}

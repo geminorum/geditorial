@@ -354,7 +354,7 @@ class LatLng extends Base
 		 * @package `yocto/yoclib-openlocationcode`
 		 * @link https://github.com/yocto/yoclib-openlocationcode-php
 		 */
-		if ( ! class_exists( '\YOCLIB\\OpenLocationCode\\OpenLocationCode' ) )
+		if ( ! @class_exists( '\YOCLIB\\OpenLocationCode\\OpenLocationCode' ) )
 			return $fallback;
 
 		if ( ! \YOCLIB\OpenLocationCode\OpenLocationCode::isValidCode( $data ) )
@@ -540,8 +540,8 @@ class LatLng extends Base
 			: FALSE;
 	}
 
-    /**
-     * Get distance between two coordinates
+	/**
+	 * Get distance between two coordinates
 	 *
 	 * Calculate distance between two or multiple locations
 	 * using Mathematics functions.
@@ -550,39 +550,39 @@ class LatLng extends Base
 	 * @link https://github.com/jeroendesloovere/distance
 	 * @author Jeroen Desloovere <info@jeroendesloovere.be>
 	 * @source https://www.geodatasource.com/developers/php
-     *
-     * @param float $latitude1
-     * @param float $longitude1
-     * @param float $latitude2
-     * @param float $longitude2
-     * @param int $decimals: The amount of decimals
-     * @param string $unit: `km`, `n`, `m`
+	 *
+	 * @param float $latitude1
+	 * @param float $longitude1
+	 * @param float $latitude2
+	 * @param float $longitude2
+	 * @param int $decimals: The amount of decimals
+	 * @param string $unit: `km`, `n`, `m`
 	 * @return float
-     */
-    public static function distanceBetween( $latitude1, $longitude1, $latitude2, $longitude2, $decimals = 1, $unit = 'km' )
+	 */
+	public static function distanceBetween( $latitude1, $longitude1, $latitude2, $longitude2, $decimals = 1, $unit = 'km' )
 	{
-        // define calculation variables
-        $theta    = $longitude1 - $longitude2;
-        $distance = ( sin( deg2rad ($latitude1 ) ) * sin( deg2rad( $latitude2 ) ) )
-            + ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
-        $distance = acos( $distance );
-        $distance = rad2deg( $distance );
-        $distance = $distance * 60 * 1.1515;
+		// define calculation variables
+		$theta    = $longitude1 - $longitude2;
+		$distance = ( sin( deg2rad ($latitude1 ) ) * sin( deg2rad( $latitude2 ) ) )
+			+ ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
+		$distance = acos( $distance );
+		$distance = rad2deg( $distance );
+		$distance = $distance * 60 * 1.1515;
 
 		// Kilometers
-        if ( 'km' === $unit )
-            $distance = $distance * 1.609344; // redefine distance
+		if ( 'km' === $unit )
+			$distance = $distance * 1.609344; // redefine distance
 
 		// Nautical Miles
 		else if ( 'n' === $unit )
 			return $distance * 0.8684;
 
 		// Miles
-        return round( $distance, $decimals ); // return with one decimal
-    }
+		return round( $distance, $decimals ); // return with one decimal
+	}
 
-    /**
-     * Get closest location from all locations
+	/**
+	 * Get closest location from all locations
 	 *
 	 * Calculate distance between two or multiple locations
 	 * using Mathematics functions.
@@ -590,38 +590,38 @@ class LatLng extends Base
 	 * @source `JeroenDesloovere\Distance::getClosest()`
 	 * @link https://github.com/jeroendesloovere/distance
 	 * @author Jeroen Desloovere <info@jeroendesloovere.be>
-     *
+	 *
 	 * @param float $latitude
 	 * @param float $longitude
 	 * @param array $items = `[ [ 'latitude' => 'x', 'longitude' => 'x' ], [...] ]`
 	 * @param int $decimals The amount of decimals
 	 * @param string $unit
-     * @return array The item which is the closest + 'distance' to it.
-     */
-    public static function distanceGetClosest( $latitude, $longitude, $items, $decimals = 1, $unit = 'km' )
+	 * @return array The item which is the closest + 'distance' to it.
+	 */
+	public static function distanceGetClosest( $latitude, $longitude, $items, $decimals = 1, $unit = 'km' )
 	{
-        $distances = [];
+		$distances = [];
 
-        foreach ( $items as $key => $item ) {
+		foreach ( $items as $key => $item ) {
 
-            $distance = self::distanceBetween(
-                $latitude,
-                $longitude,
-                $item['latitude'],
-                $item['longitude'],
-                10,
-                $unit
-            );
+			$distance = self::distanceBetween(
+				$latitude,
+				$longitude,
+				$item['latitude'],
+				$item['longitude'],
+				10,
+				$unit
+			);
 
-            $distances[$distance] = $key;
+			$distances[$distance] = $key;
 
-            // adds rounded distance to array
-            $items[$key]['distance'] = round( $distance, $decimals );
-        }
+			// adds rounded distance to array
+			$items[$key]['distance'] = round( $distance, $decimals );
+		}
 
-        // Returns the item with the closest distance
-        return $items[$distances[min( array_keys( $distances ) )]];
-    }
+		// Returns the item with the closest distance
+		return $items[$distances[min( array_keys( $distances ) )]];
+	}
 
 	// @REF: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 	// @REF: https://stackoverflow.com/a/46218890

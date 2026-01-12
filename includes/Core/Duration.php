@@ -8,6 +8,9 @@ class Duration extends Base
 	// TODO: must convert to `DataType`
 	// @SEE: `Timespan` DataType
 
+
+	// @SEE: `human_readable_duration()`
+
 	public static function is( $text )
 	{
 		if ( self::empty( $text ) )
