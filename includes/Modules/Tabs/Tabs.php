@@ -175,6 +175,9 @@ class Tabs extends gEditorial\Module
 
 	public function render_post_tabs( $post = NULL )
 	{
+		if ( WordPress\Theme::compatActive() )
+			return;
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
