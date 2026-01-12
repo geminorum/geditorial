@@ -15,7 +15,7 @@ class Template extends WordPress\Main
 	public static function perPageItems( $default = NULL )
 	{
 		if ( WordPress\WooCommerce::isActive() )
-			return WordPress\WooCommerce::getDefaultColumns() * WordPress\WooCommercegetDefaultRows();
+			return WordPress\WooCommerce::getDefaultColumns() * WordPress\WooCommerce::getDefaultRows();
 
 		return get_option( 'posts_per_page', $default ?? 10 );
 	}

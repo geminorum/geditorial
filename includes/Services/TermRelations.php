@@ -128,7 +128,12 @@ class TermRelations extends gEditorial\Service
 				continue;
 			}
 
-			$result = wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, TRUE );
+			$result = wp_set_object_terms(
+				$post->ID,
+				$term->term_id,
+				$term->taxonomy,
+				TRUE
+			);
 
 			if ( is_wp_error( $result ) )
 				continue;
@@ -137,8 +142,6 @@ class TermRelations extends gEditorial\Service
 				$supported[$term->taxonomy] = self::get_supported( $term->taxonomy, 'edit', $post->post_type );
 
 			foreach ( $supported[$term->taxonomy] as $field => $args ) {
-
-				$metakey = self::getMetakey( $field, $post->ID );
 
 				if ( array_key_exists( $field, $raw ) ) {
 
@@ -166,6 +169,8 @@ class TermRelations extends gEditorial\Service
 
 					continue;
 				}
+
+				$metakey = self::getMetakey( $field, $post->ID );
 
 				if ( static::FIELD_USERID === $field )
 					$result = update_term_meta( $term->term_id, $metakey, get_current_user_id() );

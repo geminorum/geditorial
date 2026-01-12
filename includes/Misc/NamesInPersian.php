@@ -497,4 +497,15 @@ class NamesInPersian extends Core\Base
 
 		return FALSE;
 	}
+
+	public static function listRelationPrefix()
+	{
+		return [
+			'author'       => '',
+			'illustrator'  => 'طراح',
+			'photographer' => 'عکاس',
+			'translator'   => 'ترجمه',
+			'proofreader'  => 'ویراسته',
+		];
+	}
 }

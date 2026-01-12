@@ -1092,8 +1092,6 @@ class Meta extends gEditorial\Module
 			'option_group' => 'imports',
 		] );
 
-		echo '&nbsp;&nbsp;';
-
 		gEditorial\Settings::submitButton( 'custom_fields_check',
 			_x( 'Check', 'Button', 'geditorial-meta' ), TRUE );
 

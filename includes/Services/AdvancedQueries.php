@@ -43,8 +43,11 @@ class AdvancedQueries extends gEditorial\Service
 		if ( ! $query->is_search() || WordPress\Strings::isEmpty( $query->query_vars['s'] ) )
 			return $search;
 
-		$meta   = [];
+		// NOTE: filter value iterates on the entire data!
+		// @hook `geditorial_posts_search_append_meta_backend`
+		// @hook `geditorial_posts_search_append_meta_frontend`
 		$filter = sprintf( '%s_posts_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+		$meta   = [];
 
 		foreach ( WordPress\Strings::getSeparated( $query->query_vars['s'], static::SEARCH_OPERATOR_OR ) as $criteria )
 			if ( ! WordPress\Strings::isEmpty( $criteria ) )
@@ -60,17 +63,30 @@ class AdvancedQueries extends gEditorial\Service
 		$query = "SELECT post_id FROM {$wpdb->postmeta} WHERE ";
 		$where = [];
 
-		foreach ( $meta as $pair )
-			if ( empty( $pair[2] ) )
-				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
-			else
-				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value LIKE %s)", $pair[0], '%'.$wpdb->esc_like( $pair[1] ).'%' );
+		foreach ( $meta as $parts )
+			// NOTE: Must check the exact string, if no third part available.
+			if ( empty( $parts[2] ) )
+				$where[] = $wpdb->prepare(
+					"(meta_key = '%s' AND meta_value = '%s')",
+					$parts[0],
+					$parts[1]
+				);
 
+			else
+				$where[] = $wpdb->prepare(
+					"(meta_key = '%s' AND meta_value LIKE %s)",
+					$parts[0],
+					'%'.$wpdb->esc_like( $parts[1] ).'%'
+				);
 
 		$posts = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
 
 		if ( ! empty( $posts ) )
-			$search = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $posts ) . "))))", $search );
+			$search = str_replace(
+				')))',
+				") OR ({$wpdb->posts}.ID IN (".implode( ',', $posts )."))))",
+				$search
+			);
 
 		return $search;
 	}
@@ -85,8 +101,11 @@ class AdvancedQueries extends gEditorial\Service
 		if ( WordPress\Strings::isEmpty( $args['search'] ) )
 			return $clauses;
 
-		$meta   = [];
+		// NOTE: filter value iterates on the entire data!
+		// @hook `geditorial_terms_search_append_meta_backend`
+		// @hook `geditorial_terms_search_append_meta_frontend`
 		$filter = sprintf( '%s_terms_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+		$meta   = [];
 
 		foreach ( WordPress\Strings::getSeparated( $args['search'], static::SEARCH_OPERATOR_OR ) as $criteria )
 			if ( ! WordPress\Strings::isEmpty( $criteria ) )
@@ -103,16 +122,30 @@ class AdvancedQueries extends gEditorial\Service
 		$query = "SELECT term_id FROM {$wpdb->termmeta} WHERE ";
 		$where = [];
 
-		foreach ( $meta as $pair )
-			if ( empty( $pair[2] ) )
-				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value = '%s')", $pair[0], $pair[1] );
+		foreach ( $meta as $parts )
+			// NOTE: Must check the exact string, if no third part available.
+			if ( empty( $parts[2] ) )
+				$where[] = $wpdb->prepare(
+					"(meta_key = '%s' AND meta_value = '%s')",
+					$parts[0],
+					$parts[1]
+				);
+
 			else
-				$where[] = $wpdb->prepare( "(meta_key = '%s' AND meta_value LIKE %s)", $pair[0], '%'.$wpdb->esc_like( $pair[1] ).'%' );
+				$where[] = $wpdb->prepare(
+					"(meta_key = '%s' AND meta_value LIKE %s)",
+					$parts[0],
+					'%'.$wpdb->esc_like( $parts[1] ).'%'
+				);
 
 		$terms = Core\Arraay::prepNumeral( $wpdb->get_col( $query.implode( ' OR ', $where ) ) );
 
 		if ( ! empty( $terms ) )
-			$clauses['where'] = str_replace( '))', ") OR (t.term_id IN (" . implode( ',', $terms ) . ")))", $clauses['where'] );
+			$clauses['where'] = str_replace(
+				'))',
+				") OR (t.term_id IN (".implode( ',', $terms ).")))",
+				$clauses['where']
+			);
 
 		return $clauses;
 	}
@@ -157,7 +190,8 @@ class AdvancedQueries extends gEditorial\Service
 	 *
 	 *
 	 * @param string $search
-	 * @param WP_Query $wp_query
+	 * @param \WP_Query $wp_query
+	 * @return string
 	 */
 	public static function posts_search_posttitle_only( $search, $wp_query )
 	{
@@ -212,98 +246,6 @@ class AdvancedQueries extends gEditorial\Service
 					}
 				}
 			}
-		}
-	}
-
-	/**
-	 * Complex WordPress meta query by start and end date (custom meta fields)
-	 * Intended for use on the `pre_get_posts` hook.
-	 * Caution; this makes the query very slow - several seconds - so should be
-	 * implemented with some form of caching.
-	 *
-	 * `add_action( 'pre_get_posts', [ __CLASS__, 'onlyFutureEntries' ] );`
-	 *
-	 * @author mark@sayhello.ch 22.10.2019, based on code from 201 onwards
-	 * @source https://gist.github.com/markhowellsmead/2bb4abdc8b718ee3e20c7cc4cf58be6b
-	 */
-	public static function onlyFutureEntries( $query )
-	{
-		if ( is_admin() )
-			return;
-
-		if ( isset( $query->query['post_type'] )
-			&& 'event' === $query->query['post_type'] ) {
-
-			$query->set( 'orderby', 'meta_value' );
-			$query->set( 'order', 'ASC' );
-			$query->set( 'meta_key', 'start_date' );
-
-			$meta_query = (array) $query->get( 'meta_query' );
-
-			$meta_query[] = [
-				'relation' => 'OR',
-				[
-					// Start date and end date are empty
-					'relation' => 'AND',
-					[
-						'relation' => 'OR',
-						[
-							'key'     => 'start_date',
-							'value'   => '',
-							'compare' => '=',
-						],
-						[
-							'key'     => 'start_date',
-							'compare' => 'NOT EXISTS',
-						],
-					],
-					[
-						'relation' => 'OR',
-						[
-							'key'     => 'end_date',
-							'value'   => '',
-							'compare' => '=',
-						],
-						[
-							'key'     => 'end_date',
-							'compare' => 'NOT EXISTS',
-						],
-					],
-				],
-				[
-					// Start date >= today and end date empty
-					'relation' => 'AND',
-					[
-						'key'     => 'start_date',
-						'value'   => date( 'Y-m-d' ),
-						'compare' => '>=',
-						'type'    => 'DATE',
-					],
-					[
-						'key'     => 'end_date',
-						'value'   => '',
-						'compare' => '=',
-					],
-				],
-				[
-					// Start date <= today and end date >= today
-					'relation' => 'AND',
-					[
-						'key'     => 'start_date',
-						'value'   => date( 'Y-m-d' ),
-						'compare' => '<=',
-						'type'    => 'DATE',
-					],
-					[
-						'key'     => 'end_date',
-						'value'   => date( 'Y-m-d' ),
-						'compare' => '>=',
-						'type'    => 'DATE',
-					],
-				],
-			];
-
-			$query->set( 'meta_query', $meta_query );
 		}
 	}
 }

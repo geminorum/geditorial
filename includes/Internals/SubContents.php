@@ -400,7 +400,11 @@ trait SubContents
 
 		// fallback to manual mode!
 		// NOTE: core tries to validate `comment_author_email`
-		$data['comment_author_url'] = Core\Text::stripPrefix( $data['comment_author_url'], 'http://' );
+		$data['comment_author_url'] = Core\Text::stripPrefix(
+			$data['comment_author_url'],
+			[ 'http://', 'https://' ]
+		);
+
 		return $data;
 	}
 
@@ -410,6 +414,8 @@ trait SubContents
 
 		remove_filter( 'comment_save_pre', 'convert_invalid_entities' );
 		remove_filter( 'comment_save_pre', 'balanceTags', 50 );
+		remove_filter( 'pre_comment_author_url', 'sanitize_url' );
+		remove_filter( 'pre_comment_author_email', 'sanitize_email' );
 
 		add_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
 	}
@@ -418,6 +424,8 @@ trait SubContents
 	{
 		add_filter( 'comment_save_pre', 'convert_invalid_entities' );
 		add_filter( 'comment_save_pre', 'balanceTags', 50 );
+		add_filter( 'pre_comment_author_url', 'sanitize_url' );
+		add_filter( 'pre_comment_author_email', 'sanitize_email' );
 
 		remove_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
 

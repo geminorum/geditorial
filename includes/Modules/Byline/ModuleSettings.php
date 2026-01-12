@@ -14,7 +14,7 @@ class ModuleSettings extends gEditorial\Settings
 
 	const ACTION_FROM_PEOPLE_PLUGIN   = 'do_import_from_people_plugin';
 	const METAKEY_FROM_PEOPLE_PLUGIN  = '_gpeople_remote';
-	const TAXONOMY_FROM_PEOPLE_PLUGIN = 'people';
+	const TAXONOMY_FROM_PEOPLE_PLUGIN = 'people';                        // NOTE: as set on the old `People` plugin
 
 	public static function renderCard_import_from_people_plugin( $posttypes )
 	{

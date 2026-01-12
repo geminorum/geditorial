@@ -2302,7 +2302,7 @@ class Terms extends gEditorial\Module
 					case 'code':
 					case 'barcode':
 
-						// NOTE: search must not be exact!
+						// NOTE: search must *not* be exact!
 						$meta[] = [ $metakey, $search, TRUE ];
 				}
 			}

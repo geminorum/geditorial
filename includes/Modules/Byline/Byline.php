@@ -500,16 +500,21 @@ class Byline extends gEditorial\Module
 			] );
 
 			$value = Core\HTML::tag( 'a', [
-				'class' => '-person',
+				'class' => '-byline-item',
 				'href'  => $row['link'],
 				'title' => Core\Text::stripTags( $row['desc'] ),
 				'data' => [
 					'taxonomy' => $row['tax'] ?: FALSE,
+					'relation' => $row['rel'] ?: FALSE,
 				],
 			], $row['label'] );
 
 			if ( ! empty( $row['notes'] ) )
-				$value.= sprintf( ': <span class="-notes">%s</span>', $row['notes'] );
+				$value.= sprintf(
+					' %s <span class="-byline-notes text-muted">%s</span>',
+					'<span class="-separator">&mdash;</span>',
+					WordPress\Strings::prepDescription( $row['notes'], FALSE, FALSE )
+				);
 
 			$data[$key] = $value;
 		}
@@ -525,14 +530,15 @@ class Byline extends gEditorial\Module
 		return $fields;
 	}
 
-	private function _get_registered_relations()
+	private function _get_registered_relations( $context = NULL )
 	{
 		return $this->filters( 'registered_relations',
 			Core\Arraay::pluck(
 				WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ), 'all', [], FALSE ),
 				'name',
 				'slug'
-			)
+			),
+			$context
 		);
 	}
 

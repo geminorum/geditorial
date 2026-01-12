@@ -46,7 +46,7 @@ class Base64ImageUploader extends Core\Base
 	];
 
 	/**
-	 * Make a new `Base64ImageUploader` instance.
+	 * Constructs a new `Base64ImageUploader` instance.
 	 *
 	 * @param string $data
 	 * @param string $title
@@ -63,7 +63,7 @@ class Base64ImageUploader extends Core\Base
 	}
 
 	/**
-	 * Upload the image.
+	 * Uploads the image.
 	 *
 	 * @return int $attachment_id
 	 */
@@ -72,12 +72,11 @@ class Base64ImageUploader extends Core\Base
 		if ( ! $this->isBase64Image() )
 			return new \WP_Error( 'image_type_invalid', 'The given file is not an image.' );
 
-
 		$upload_dir      = wp_upload_dir();
 		$upload_path     = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ).DIRECTORY_SEPARATOR;
 		$decoded         = base64_decode($this->strippedData());
 		$filename        = 'upload.'.$this->extension;
-		$hashed_filename = md5( $filename . microtime() ).'_'.$filename;
+		$hashed_filename = md5( $filename.microtime() ).'_'.$filename;
 		$image_upload    = file_put_contents( $upload_path.$hashed_filename, $decoded );
 
 		// HANDLE UPLOADED FILE
@@ -85,7 +84,7 @@ class Base64ImageUploader extends Core\Base
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 
 		// Without that I'm getting a debug error!?
-		if ( !function_exists( 'wp_get_current_user' ) )
+		if ( ! function_exists( 'wp_get_current_user' ) )
 			require_once( ABSPATH . 'wp-includes/pluggable.php' );
 
 		$file             = [];
@@ -120,7 +119,7 @@ class Base64ImageUploader extends Core\Base
 	}
 
 	/**
-	 * Check if the data is Base-64 image.
+	 * Checks if the data is Base-64 image.
 	 *
 	 * @return boolean
 	 */
@@ -130,7 +129,7 @@ class Base64ImageUploader extends Core\Base
 	}
 
 	/**
-	 * Check if the data is of the given file-type.
+	 * Checks if the data is of the given file-type.
 	 *
 	 * @param string $type
 	 * @return boolean
@@ -141,7 +140,7 @@ class Base64ImageUploader extends Core\Base
 	}
 
 	/**
-	 * Find the type and extension from the payload.
+	 * Finds the type and extension from the payload.
 	 *
 	 * @return array
 	 */
@@ -151,16 +150,27 @@ class Base64ImageUploader extends Core\Base
 			if ( $this->isOfType($type ) )
 				return compact( 'type', 'extension' );
 
-		return [ 'type' => '', 'extension' => '' ];
+		return [
+			'type'      => '',
+			'extension' => '',
+		];
 	}
 
 	/**
-	 * Return the base 64 data stripped.
+	 * Returns the base 64 data stripped.
 	 *
 	 * @return string
 	 */
 	public function strippedData()
 	{
-		return str_replace( ' ', '+', str_replace( "data:{$this->type};base64,", '', $this->data ) );
+		return str_replace(
+			' ',
+			'+',
+			str_replace(
+				"data:{$this->type};base64,",
+				'',
+				$this->data
+			)
+		);
 	}
 }

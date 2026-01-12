@@ -256,6 +256,7 @@ class WcShortcodes extends gEditorial\Module
 		$count = 0;
 
 		foreach ( WordPress\Strings::getSeparated( $args['status'] ) as $status ) {
+
 			if ( ! Core\Text::starts( $status, 'wc-' ) )
 				$status = sprintf( 'wc-%s', $status );
 
