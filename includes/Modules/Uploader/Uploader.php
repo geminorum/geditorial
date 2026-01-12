@@ -91,7 +91,7 @@ class Uploader extends gEditorial\Module
 			'type'     => 'submit',
 			'id'       => $this->classs( 'largefile', 'submit' ),
 			'value'    => _x( 'Upload', 'Button', 'geditorial-uploader' ),
-			'class'    => [ 'button', 'button-small', 'button-primary' ],
+			'class'    => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 			'data'     => [
 				'nonce'    => wp_create_nonce( $this->classs( 'largefile' ) ),
 				'locale'   => Core\L10n::locale(),

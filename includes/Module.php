@@ -418,7 +418,7 @@ class Module extends WordPress\Module
 		$html = Core\HTML::tag( 'a', [
 			'href'  => $link,
 			'id'    => $this->classs( 'mainbutton', $context ),
-			'class' => [ 'button', '-button', '-button-full', '-button-icon', '-mainbutton', 'thickbox' ],
+			'class' => Core\HTML::buttonClass( FALSE, [ '-button-full', '-button-icon', '-mainbutton', 'thickbox' ] ),
 			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Services\Icons::get( $this->module->icon ), $name ) );
 

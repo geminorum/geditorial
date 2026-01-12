@@ -75,21 +75,19 @@ trait RawImports
 
 	protected function render_imports_toolbox_card( $imports_url = NULL )
 	{
-		if ( is_null( $imports_url ) )
-			$imports_url = $this->get_imports_page_url();
+		$buttons = [];
 
 		echo $this->wrap_open( 'card -toolbox-card' );
 
 			Core\HTML::h4( $this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ), 'title' );
 			Core\HTML::desc( $this->get_string( 'description', 'wp_importer', 'misc', '' ) );
 
-			$link = Core\HTML::tag( 'a', [
-				'href'  => $imports_url,
-				'class' => [ 'button', '-button' ],
-			], $this->get_string( 'button', 'wp_importer', 'misc',
-				_x( 'Go to Imports', 'Module: Importer Button', 'geditorial' ) ) );
+			$buttons[] = Core\HTML::button(
+				$this->get_string( 'button', 'wp_importer', 'misc', _x( 'Go to Imports', 'Module: Importer Button', 'geditorial' ) ),
+				$imports_url ?? $this->get_imports_page_url(),
+			);
 
-			echo Core\HTML::wrap( Core\HTML::rows( (array) $link ), '-toolbox-links' );
+			echo Core\HTML::wrap( Core\HTML::rows( $buttons ), '-toolbox-links' );
 
 		echo '</div>';
 	}

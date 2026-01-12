@@ -393,7 +393,7 @@ class Positions extends gEditorial\Module
 
 				$buttons[] = Core\HTML::tag( 'a', [
 					'href'  => $this->_get_mount_link( $object, $profile, $context ),
-					'class' => [ 'button', '-button', '-button-icon', '-mountbutton' ],
+					'class' => Core\HTML::buttonClass( FALSE, '-button-icon' ),
 					'title' => _x( 'Click to Mount the Position Profile', 'Button Title', 'geditorial-positions' ),
 				], $label );
 			}
@@ -409,7 +409,7 @@ class Positions extends gEditorial\Module
 
 				$buttons[] = Core\HTML::tag( 'a', array_merge( [
 					'href'  => $this->_get_clear_link( $object, $profile, $context ),
-					'class' => [ 'button', '-button', '-button-icon', '-mountbutton', '-button-danger' ],
+					'class' => Core\HTML::buttonClass( FALSE, [ '-button-icon', '-button-danger' ] ),
 					'title' => _x( 'Click to Clear the Position Profile', 'Button Title', 'geditorial-positions' ),
 				], gEditorial\Settings::getButtonConfirm() ), $label );
 			}

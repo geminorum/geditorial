@@ -45,6 +45,8 @@ trait TemplatePostType
 
 			do_action( $this->hook_base( 'template', 'posttype', '404', 'init' ), $posttype );
 
+			$this->current_queried = $posttype;
+
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templateposttype_get_empty_title( $posttype ),
@@ -58,8 +60,7 @@ trait TemplatePostType
 
 			$this->filter_append( 'post_class', [ 'empty-posttype', 'empty-'.$posttype ] );
 
-			// $template = get_singular_template();
-			$template = get_single_template();
+			$template = get_page_template();
 
 		} else if ( isset( $_GET['newpost'] ) ) {
 
@@ -68,6 +69,8 @@ trait TemplatePostType
 				return $template;
 
 			do_action( $this->hook_base( 'template', 'newpost', 'init' ), $posttype );
+
+			$this->current_queried = $posttype;
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
@@ -89,7 +92,7 @@ trait TemplatePostType
 			$this->enqueue_asset_js( [
 				'strings' => $this->get_strings( 'newpost_template', 'js_strings', [
 					'notarget' => _x( 'Cannot handle the target window!', 'Internal: Template Post-Type', 'geditorial' ),
-					'willgo'   => _x( 'Your Draft save successfully. will redirect you in moments &hellip;', 'Internal: Template Post-Type', 'geditorial' ),
+					'willgo'   => _x( 'Your Data saved successfully. will redirect you in moments &hellip;', 'Internal: Template Post-Type', 'geditorial' ),
 				] ),
 				'config' => [
 					'posttype' => $posttype,
@@ -219,7 +222,7 @@ trait TemplatePostType
 	{
 		$object = WordPress\PostType::object( $posttype );
 
-		if ( ! current_user_can( $object->cap->create_posts ) )
+		if ( ! WordPress\PostType::can( $object, 'create_posts' ) )
 			return '';
 
 		// FIXME: must check if post is unpublished
@@ -234,12 +237,10 @@ trait TemplatePostType
 			$this->key
 		);
 
-		return Core\HTML::tag( 'a', [
-			'href'          => WordPress\PostType::newLink( $object->name, $extra ),
-			'class'         => [ 'button', '-add-posttype', '-add-posttype-'.$object->name ],
-			'target'        => '_blank',
-			'data-posttype' => $object->name,
-		], $label ?: $object->labels->add_new_item );
+		return Core\HTML::button(
+			$label ?? Services\CustomPostType::getLabel( $object, 'add_new_item' ),
+			WordPress\PostType::newLink( $object->name, $extra )
+		);
 	}
 
 	// will hook to `the_content` filter on 404
@@ -289,7 +290,7 @@ trait TemplatePostType
 		$object = WordPress\PostType::object( $posttype );
 		$post   = WordPress\Post::defaultToEdit( $posttype );
 
-		if ( ! current_user_can( $object->cap->create_posts ) )
+		if ( ! WordPress\PostType::can( $object, 'create_posts' ) )
 			return Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 
 		ob_start();
@@ -439,7 +440,7 @@ trait TemplatePostType
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => [ 'btn', 'btn-primary', 'button', '-form-save-draft', 'disabled' ],
+			'class' => Core\HTML::buttonClass( FALSE, [ '-form-save-draft', 'disabled' ] ),
 			'data'  => [
 				'target'   => $target,
 				'type'     => $posttype,

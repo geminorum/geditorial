@@ -2525,7 +2525,7 @@ class Settings extends WordPress\Main
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Settings: Button', 'geditorial-admin' ),
 			'style' => $enabled ? 'display:none' : FALSE,
-			'class' => [ 'hide-if-no-js', 'button-primary', 'button', 'button-small', '-button' ],
+			'class' => Core\HTML::buttonClass( TRUE, [ 'button-primary', 'hide-if-no-js' ] ),
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'enable',
@@ -2536,7 +2536,7 @@ class Settings extends WordPress\Main
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Settings: Button', 'geditorial-admin' ),
 			'style' => $enabled ? FALSE : 'display:none',
-			'class' => [ 'hide-if-no-js', 'button-secondary', 'button', 'button-small', '-button', '-button-danger' ],
+			'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-button-danger' ] ),
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'disable',
@@ -2557,7 +2557,7 @@ class Settings extends WordPress\Main
 			echo Core\HTML::tag( 'a', [
 				'href'  => Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',
@@ -2569,7 +2569,7 @@ class Settings extends WordPress\Main
 			echo Core\HTML::tag( 'a', [
 				'href'  => Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',
@@ -2580,7 +2580,7 @@ class Settings extends WordPress\Main
 			echo Core\HTML::tag( 'a', [
 				'href'  => Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => [ 'button-primary', 'button', 'button-small', '-button' ],
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',

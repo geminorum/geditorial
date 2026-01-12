@@ -314,7 +314,7 @@ class Drafts extends gEditorial\Module
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => [ 'button', 'button-small', '-button', '-action', '-after-private' ],
+			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-private' ] ),
 			'style' => $public ? 'display:none;' : FALSE,
 			'data'  => [
 				'id'     => $post->ID,
@@ -325,7 +325,7 @@ class Drafts extends gEditorial\Module
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => [ 'button', 'button-small', '-button', '-action', '-after-public' ],
+			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-public' ] ),
 			'style' => $public ? FALSE : 'display:none;',
 			'data'  => [
 				'id'     => $post->ID,

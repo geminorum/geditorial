@@ -13,21 +13,17 @@ trait BulkExports
 	{
 		$html = '';
 
-		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
-
-			$label = sprintf(
-				/* translators: `%1$s`: icon markup, `%2$s`: export type title */
-				_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
-				Services\Icons::get( 'download' ),
-				$type_args['title']
+		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args )
+			$html.= Core\HTML::button(
+				sprintf(
+					/* translators: `%1$s`: icon markup, `%2$s`: export type title */
+					_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),
+					Services\Icons::get( 'download' ),
+					$type_args['title']
+				),
+				$this->exports_get_type_download_link( $reference, $type, $context, $type_args['target'], $type_args['format'] ),
+				_x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' )
 			);
-
-			$html.= Core\HTML::tag( 'a', [
-				'href'  => $this->exports_get_type_download_link( $reference, $type, $context, $type_args['target'], $type_args['format'] ),
-				'class' => [ 'button', 'button-small', '-button', '-button-icon', '-exportbutton', '-button-download' ],
-				'title' => _x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
-			], $label );
-		}
 
 		return $html;
 	}

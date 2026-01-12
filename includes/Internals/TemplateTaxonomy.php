@@ -81,6 +81,8 @@ trait TemplateTaxonomy
 
 			do_action( $this->hook_base( 'template', 'taxonomy', '404', 'init' ), $taxonomy );
 
+			$this->current_queried = $taxonomy;
+
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
 				'post_title' => $this->templatetaxonomy_get_empty_title( $taxonomy ),
@@ -95,8 +97,7 @@ trait TemplateTaxonomy
 
 			$this->filter_append( 'post_class', [ 'empty-term', 'empty-term-'.$taxonomy ] );
 
-			// $template = get_singular_template();
-			$template = get_single_template();
+			$template = get_page_template();
 
 		} else {
 
@@ -225,27 +226,25 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: button for overridden empty/archive page
 	public function templatetaxonomy_get_add_new( $taxonomy, $title = FALSE, $label = NULL )
 	{
+		$object = WordPress\Taxonomy::object( $taxonomy );
+
+		if ( ! WordPress\Taxonomy::can( $object, 'manage_terms' ) )
+			return '';
+
 		$extra = apply_filters(
 			$this->hook_base( 'template', 'taxonomy', 'addnew', 'extra' ),
 			[
 				'name' => $title,
 			],
-			$taxonomy,
+			$object->name,
 			$title,
 			$this->key
 		);
 
-		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy, $extra ) )
-			return '';
-
-		$object = WordPress\Taxonomy::object( $taxonomy );
-
-		return Core\HTML::tag( 'a', [
-			'href'          => $edit,
-			'class'         => [ 'button', '-add-term', '-add-term-'.$object->name ],
-			'target'        => '_blank',
-			'data-taxonomy' => $object->name,
-		], $label ?: $object->labels->add_new_item );
+		return Core\HTML::button(
+			$label ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'add_new_item' ),
+			WordPress\Taxonomy::edit( $object, $extra )
+		);
 	}
 
 	// will hook to `the_content` filter on 404

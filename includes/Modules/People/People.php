@@ -126,7 +126,7 @@ class People extends gEditorial\Module
 			'terms_related'   => TRUE,
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,
-			'reverse_ordered' => 'id', // latest first
+			'reverse_ordered' => 'id',        // latest first
 		] );
 
 		$this->register_taxonomy( 'category_taxonomy', [

@@ -1385,11 +1385,11 @@ class Terms extends gEditorial\Module
 				] );
 
 				$html.= Core\HTML::tag( 'a', [
-					'class' => [ 'button', 'button-small', 'button-secondary', '-modal' ],
+					'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', '-modal' ] ),
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
-					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove' ],
+					'class' => Core\HTML::buttonClass( TRUE, [ 'button-link-delete', '-remove' ] ),
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
 
@@ -1627,12 +1627,12 @@ class Terms extends gEditorial\Module
 				$html.= '<input type="hidden" name="term-'.$field.'" value="" />';
 
 				$html.= Core\HTML::tag( 'button', [
-					'class' => [ 'button', 'button-small', 'button-secondary', '-modal', '-quick' ],
+					'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', '-modal', '-quick' ] ),
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
 					'href'  => '',
-					'class' => [ 'button', 'button-small', 'button-link-delete', '-remove', '-quick' ],
+					'class' => Core\HTML::buttonClass( TRUE, [ 'button-link-delete', '-remove', '-quick' ] ),
 					'style' => 'display:none',
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) ).'&nbsp;';
 

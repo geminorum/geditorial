@@ -498,7 +498,7 @@ class NamesInPersian extends Core\Base
 		return FALSE;
 	}
 
-	public static function listRelationPrefix()
+	public static function mapRelationPrefixes()
 	{
 		return [
 			'author'       => '',

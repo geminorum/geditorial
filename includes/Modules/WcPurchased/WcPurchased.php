@@ -105,13 +105,23 @@ class WcPurchased extends gEditorial\Module
 			return Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( isset( $_GET['export'] ) )
-			Core\Text::download( $this->get_product_purchased( $orders ), Core\File::prepName( sprintf( 'product-%s.csv', $product->get_sku() ) ) );
+			Core\Text::download(
+				$this->get_product_purchased( $orders ),
+				Core\File::prepName( sprintf(
+					'product-%s.csv',
+					$product->get_sku() ?: $product->get_id()
+				) )
+			);
 
 		echo $this->wrap_open( '-header' );
 
 			echo Core\HTML::tag( 'a', [
-				'href'    => $this->get_adminpage_url( TRUE, [ 'post' => $product_id, 'noheader' => 1, 'export' => '' ], 'reports' ),
-				'class'   => [ 'button', 'button-small' ],
+				'class' => Core\HTML::buttonClass(),
+				'href'  => $this->get_adminpage_url( TRUE, [
+					'post'     => $product_id,
+					'noheader' => 1,
+					'export'   => '',
+				], 'reports' ),
 			], _x( 'Export CSV', 'Button', 'geditorial-wc-purchased' ) );
 
 			$sku   = $product->get_sku();

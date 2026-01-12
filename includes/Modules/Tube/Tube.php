@@ -382,27 +382,27 @@ class Tube extends gEditorial\Module
 
 		if ( ! empty( $attr['date'] ) )
 			$html.= Core\HTML::tag( 'button', [
-				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+				'class' => Core\HTML::buttonClass(),
 				'title' => _x( 'The date of this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'calendar', 'gridicons' ).' '.$attr['date'] );
 
 		if ( ! empty( $attr['time'] ) )
 			$html.= Core\HTML::tag( 'button', [
-				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+				'class' => Core\HTML::buttonClass(),
 				'title' => _x( 'Total time of this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'time' ).' '.Core\Number::localize( $attr['time'] ) );
 
 		if ( ! empty( $attr['src'] ) )
 			$html.= Core\HTML::tag( 'a', [
 				'href'  => $attr['src'],
-				'class' => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+				'class' => Core\HTML::buttonClass(),
 				'title' => _x( 'Download this video', 'Button', 'geditorial-tube' ),
 			], $this->icon( 'download' ).' '._x( 'Download', 'Button', 'geditorial-tube' ) );
 
 		if ( ! empty( $attr['youtube'] ) )
 			$html.= Core\HTML::tag( 'a', [
 				'href'   => $attr['youtube'],
-				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+				'class'  => Core\HTML::buttonClass(),
 				'title'  => _x( 'View this video on YouTube', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
 			], $this->icon( 'youtube', 'social-logos' ).' '._x( 'YouTube', 'Button', 'geditorial-tube' ) );
@@ -410,7 +410,7 @@ class Tube extends gEditorial\Module
 		if ( ! empty( $attr['aparat'] ) )
 			$html.= Core\HTML::tag( 'a', [
 				'href'   => $attr['aparat'],
-				'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+				'class'  => Core\HTML::buttonClass(),
 				'title'  => _x( 'View this video on Aparat', 'Button', 'geditorial-tube' ),
 				'target' => '_blank',
 			], $this->icon( 'gorbeh-aparat', 'misc-512' ).' '._x( 'Aparat', 'Button', 'geditorial-tube' ) );
@@ -419,28 +419,28 @@ class Tube extends gEditorial\Module
 
 		$html.= Core\HTML::tag( 'a', [
 			'href'   => $link,
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs' ],
+			'class'  => Core\HTML::buttonClass(),
 			'title'  => _x( 'Shortlink to this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'link' ).' '._x( 'Shortlink', 'Button', 'geditorial-tube' ) );
 
 		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://telegram.me/share/url?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
+			'class'  => Core\HTML::buttonClass( TRUE, '-button-icon' ),
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'telegram', 'social-logos' ) );
 
 		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://twitter.com/intent/tweet?url=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
+			'class'  => Core\HTML::buttonClass( TRUE, '-button-icon' ),
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'twitter-alt', 'social-logos' ) );
 
 		$html.= Core\HTML::tag( 'a', [
 			'href'   => sprintf( 'https://www.facebook.com/sharer/sharer.php?u=%s', urlencode( $link ) ),
-			'class'  => [ '-button', 'btn', 'btn-default', 'btn-xs', '-button-icon' ],
+			'class'  => Core\HTML::buttonClass( TRUE, '-button-icon' ),
 			'title'  => _x( 'Share this video', 'Button', 'geditorial-tube' ),
 			'target' => '_blank',
 		], $this->icon( 'facebook', 'social-logos' ) );

@@ -211,7 +211,7 @@ class WcTracking extends gEditorial\Module
 			echo Core\HTML::tag( 'a', [
 				'href'   => $this->_service_url( $tracking ),
 				'title'  => $this->get_setting_fallback( 'admin_button_title', _x( 'Tracking Package', 'Setting Default', 'geditorial-wc-tracking' ) ),
-				'class'  => [ 'button', 'alt', $this->classs( 'tracking' ) ],
+				'class'  => Core\HTML::buttonClass( FALSE, [ 'alt', $this->classs( 'tracking' ) ] ),
 				'target' => '_blank',
 			], Core\HTML::img( $this->_service_icon() ) );
 	}

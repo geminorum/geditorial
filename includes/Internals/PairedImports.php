@@ -78,7 +78,13 @@ trait PairedImports
 
 		return Core\HTML::tag( 'a', [
 			'href'  => $link,
-			'class' => Core\HTML::attrClass( $button_class ?? [ 'button', 'button-small', '-button', '-button-icon' ], [ '-importbutton', 'do-colorbox-iframe' ] ),
+			'class' => Core\HTML::attrClass(
+				$button_class ?? Core\HTML::buttonClass( TRUE, '-button-icon' ),
+				[
+					'-import-button',
+					'do-colorbox-iframe',
+				]
+			),
 			'title' => $title,
 			'data'  => [
 				'target'    => $target ?? 'paired',

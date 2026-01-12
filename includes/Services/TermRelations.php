@@ -28,9 +28,7 @@ class TermRelations extends gEditorial\Service
 	// @SEE `rest_{$this->taxonomy}_query` filter
 	public static function rest_api_init()
 	{
-		$taxonomies = self::getTaxonomies();
-
-		if ( empty( $taxonomies ) )
+		if ( ! $taxonomies = self::getTaxonomies() )
 			return;
 
 		register_rest_field( self::getPostTypes( $taxonomies ), self::POSTTYPE_ATTR, [

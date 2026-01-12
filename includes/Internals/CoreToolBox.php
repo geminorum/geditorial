@@ -23,10 +23,7 @@ trait CoreToolBox
 				$links = [];
 
 				foreach ( $this->get_module_links() as $link )
-					$links[] = Core\HTML::tag( 'a', [
-						'href'  => $link['url'],
-						'class' => [ 'button', '-button' ],
-					], $link['title'] );
+					$links[] = Core\HTML::button( $link['title'], $link['url'] );
 
 				echo Core\HTML::wrap( Core\HTML::rows( $links ), '-toolbox-links' );
 			}
