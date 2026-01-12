@@ -48,7 +48,11 @@ class AdvancedQueries extends gEditorial\Service
 
 		foreach ( WordPress\Strings::getSeparated( $query->query_vars['s'], static::SEARCH_OPERATOR_OR ) as $criteria )
 			if ( ! WordPress\Strings::isEmpty( $criteria ) )
-				$meta = apply_filters( $filter, $meta, $criteria, $query->query_vars['post_type'] );
+				$meta = apply_filters( $filter,
+					$meta,
+					Core\Text::trimQuotes( $criteria ),
+					$query->query_vars['post_type']
+				);
 
 		if ( ! count( $meta ) )
 			return $search;
@@ -86,7 +90,12 @@ class AdvancedQueries extends gEditorial\Service
 
 		foreach ( WordPress\Strings::getSeparated( $args['search'], static::SEARCH_OPERATOR_OR ) as $criteria )
 			if ( ! WordPress\Strings::isEmpty( $criteria ) )
-				$meta = apply_filters( $filter, $meta, $criteria, $taxonomies, $args );
+				$meta = apply_filters( $filter,
+					$meta,
+					Core\Text::trimQuotes( $criteria ),
+					$taxonomies,
+					$args
+				);
 
 		if ( ! count( $meta ) )
 			return $clauses;
