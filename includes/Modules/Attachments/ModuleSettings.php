@@ -20,17 +20,18 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		echo self::toolboxCardOpen( _x( 'Re-attach Un-Parented', 'Card Title', 'geditorial-attachments' ) );
 
-		foreach ( $posttypes as $posttype => $label )
-			self::submitButton( add_query_arg( [
-				'action' => static::ACTION_REATTACH_THUMBNAILS,
-				'type'   => $posttype,
-			] ), sprintf(
-				/* translators: `%s`: post-type label */
-				_x( 'On %s', 'Button', 'geditorial-attachments' ),
-				$label
-			), 'link-small' );
+			foreach ( $posttypes as $posttype => $label )
+				echo Core\HTML::button( sprintf(
+					/* translators: `%s`: post-type label */
+					_x( 'On %s', 'Button', 'geditorial-attachments' ),
+					$label
+				), add_query_arg( [
+					'action' => static::ACTION_REATTACH_THUMBNAILS,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to re-attach un-parented via thumbnail meta-data.', 'Button Description', 'geditorial-attachments' ) );
+
 		echo '</div></div>';
 	}
 
@@ -39,16 +40,17 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Empty Meta-data', 'Card Title', 'geditorial-attachments' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_EMPTY_RAW_METADATA,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-attachments' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_EMPTY_RAW_METADATA,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to clean attachemnt raw meta-data.', 'Button Description', 'geditorial-attachments' ) );
+
 		echo '</div></div>';
 	}
 
@@ -57,12 +59,16 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Deletion by MIME', 'Card Title', 'geditorial-attachments' ) );
 
 			foreach ( $mimetypes as $mimetype )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_DELETION_BY_MIME,
-					'mime'   => $mimetype,
-				] ), WordPress\Media::getExtension( $mimetype, $extensions ) ?: $mimetype, 'link-small', TRUE );
+				echo Core\HTML::button(
+					WordPress\Media::getExtension( $mimetype, $extensions ) ?: $mimetype,
+					add_query_arg( [
+						'action' => static::ACTION_DELETION_BY_MIME,
+						'mime'   => $mimetype,
+					] )
+				);
 
 			Core\HTML::desc( _x( 'Tries to delete attachemnts by MIME types.', 'Button Description', 'geditorial-attachments' ) );
+
 		echo '</div></div>';
 	}
 

@@ -47,7 +47,7 @@ class ModuleSettings extends gEditorial\Settings
 			'dir'          => 'ltr',
 			'autocomplete' => 'off',
 			'placeholder'  => _x( 'One ISBN per line', 'Placeholder', 'geditorial-national-library' ),
-		], NULL ), 'textarea-wrap' );
+		], NULL ), 'field-wrap -textarea' );
 
 		echo '<div class="-wrap -wrap-button-row">';
 			self::submitButton( static::ACTION_SCRAPE_POOL,

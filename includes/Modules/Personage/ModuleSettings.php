@@ -23,23 +23,33 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		echo self::toolboxCardOpen( _x( 'Full-name Operations', 'Card Title', 'geditorial-personage' ) );
 
-			self::submitButton( add_query_arg( [
+			echo Core\HTML::button(
+				_x( 'From Full-name', 'Button', 'geditorial-personage' ),
+				add_query_arg( [
 					'action' => static::ACTION_FROM_FULLNAME,
-				] ), _x( 'From Full-name', 'Button', 'geditorial-personage' ), 'link' );
+				] )
+			);
 
-			self::submitButton( add_query_arg( [
+			echo Core\HTML::button(
+				_x( 'Parse Full-name', 'Button', 'geditorial-personage' ),
+				add_query_arg( [
 					'action' => static::ACTION_PARSE_FULLNAME,
-				] ), _x( 'Parse Full-name', 'Button', 'geditorial-personage' ), 'link' );
+				] )
+			);
 
-			self::submitButton( add_query_arg( [
+			echo Core\HTML::button(
+				_x( 'Delete Full-name', 'Button', 'geditorial-personage' ),
+				add_query_arg( [
 					'action' => static::ACTION_DELETE_FULLNAME,
-				] ), _x( 'Delete Full-name', 'Button', 'geditorial-personage' ), 'link' );
+				] )
+			);
 
 			Core\HTML::desc( sprintf(
 				/* translators: `%s`: field key placeholder */
 				_x( 'Tries to fill the name fields base on %s field data.', 'Message', 'geditorial-personage' ),
 				Core\HTML::code( $field['name'] )
 			) );
+
 		echo '</div></div>';
 	}
 
@@ -392,7 +402,7 @@ class ModuleSettings extends gEditorial\Settings
 			'style'        => 'width:100%;',
 			'autocomplete' => 'off',
 			'placeholder'  => _x( 'One person per line', 'Placeholder', 'geditorial-personage' ),
-		], NULL ), 'textarea-wrap' );
+		], NULL ), 'field-wrap -textarea' );
 
 		echo '<div class="-wrap -wrap-button-row">';
 			self::submitButton( static::ACTION_PARSE_POOL,

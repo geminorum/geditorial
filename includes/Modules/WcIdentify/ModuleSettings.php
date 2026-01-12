@@ -18,9 +18,12 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		echo self::toolboxCardOpen( _x( 'Attribute to GTIN', 'Card Title', 'geditorial-wc-identify' ) );
 
-			self::submitButton( add_query_arg( [
+			echo Core\HTML::button(
+				_x( 'Migrate Data', 'Button', 'geditorial-wc-identify' ),
+				add_query_arg( [
 					'action' => static::ACTION_MIGRATE_GTIN,
-				] ), _x( 'Migrate Data', 'Button', 'geditorial-wc-identify' ), 'link' );
+				] )
+			);
 
 			Core\HTML::desc( _x( 'Imports GTIN product attributes into built-in global unique ID fields.', 'Message', 'geditorial-wc-identify' ), FALSE );
 

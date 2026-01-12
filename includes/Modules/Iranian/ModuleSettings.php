@@ -25,14 +25,14 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_IDENTITY_CERTIFICATE,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_IDENTITY_CERTIFICATE,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to un-set the certificate duplicated from identity data.', 'Button Description', 'geditorial-iranian' ) );
 		echo '</div></div>';
@@ -135,16 +135,17 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_LOCATION_BY_IDENTITY,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_LOCATION_BY_IDENTITY,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to set the location based on identity data.', 'Button Description', 'geditorial-iranian' ) );
+
 		echo '</div></div>';
 
 		return TRUE;
@@ -246,18 +247,18 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Country Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_COUNTRY_SUMMARY,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_COUNTRY_SUMMARY,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to summarize the country info based on the raw meta-data.', 'Button Description', 'geditorial-iranian' ) );
 
-		echo '</div></div>'; // buttons + wrap closed
+		echo '</div></div>';
 
 		return TRUE;
 	}
@@ -270,18 +271,18 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'City Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_CITY_SUMMARY,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_CITY_SUMMARY,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to summarize the city info based on the raw meta-data.', 'Button Description', 'geditorial-iranian' ) );
 
-		echo '</div></div>'; // buttons + wrap closed
+		echo '</div></div>';
 
 		return TRUE;
 	}
@@ -328,11 +329,14 @@ class ModuleSettings extends gEditorial\Settings
 
 			echo self::toolboxAfterOpen( '', TRUE );
 
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_CITY_SUMMARY,
-					'type'   => $posttype,
-					'paged'  => self::paged() + 1,
-				] ), _x( 'Next Batch', 'Button', 'geditorial-iranian' ), 'link' );
+				echo Core\HTML::button(
+					_x( 'Next Batch', 'Button', 'geditorial-iranian' ),
+					add_query_arg( [
+						'action' => static::ACTION_CITY_SUMMARY,
+						'type'   => $posttype,
+						'paged'  => self::paged() + 1,
+					] )
+				);
 
 			echo '</div>';
 		echo '</div>';

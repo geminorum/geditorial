@@ -22,15 +22,17 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
+				echo Core\HTML::button( sprintf(
+					/* translators: `%s`: post-type label */
+					_x( 'On %s', 'Button', 'geditorial-audit' ),
+					$label
+				), add_query_arg( [
 					'action' => static::ACTION_FORCE_AUTO_AUDIT,
 					'type'   => $posttype,
-				] ), sprintf(
-					/* translators: `%s`: post-type label */
-					_x( 'On %s', 'Button', 'geditorial-audit' ), $label ),
-				'link-small' );
+				] ) );
 
 			Core\HTML::desc( _x( 'Tries to auto-set the attributes on supported posts.', 'Button Description', 'geditorial-audit' ) );
+
 		echo '</div></div>';
 
 		return TRUE;

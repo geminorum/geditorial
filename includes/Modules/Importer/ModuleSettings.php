@@ -19,16 +19,17 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Clean-up Raw Data', 'Card Title', 'geditorial-importer' ) );
 
 		foreach ( $posttypes as $posttype => $label )
-			self::submitButton( add_query_arg( [
-				'action' => static::ACTION_CLEANUP_RAW_DATA,
-				'type'   => $posttype,
-			] ), sprintf(
+			echo Core\HTML::button( sprintf(
 				/* translators: `%s`: post-type label */
 				_x( 'On %s', 'Button', 'geditorial-importer' ),
 				$label
-			), 'link-small' );
+			), add_query_arg( [
+				'action' => static::ACTION_CLEANUP_RAW_DATA,
+				'type'   => $posttype,
+			] ) );
 
 			Core\HTML::desc( _x( 'Tries to clean imported raw meta-data.', 'Button Description', 'geditorial-importer' ) );
+
 		echo '</div></div>';
 	}
 

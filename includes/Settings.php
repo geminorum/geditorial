@@ -4052,12 +4052,15 @@ class Settings extends WordPress\Main
 		echo self::toolboxColumnOpen( Plugin::done( FALSE ) );
 		echo self::toolboxAfterOpen();
 
-			self::submitButton( remove_query_arg( $remove ?? [
-				'action',
-				'type',
-				'mime',
-				'paged',
-			] ), _x( 'Go-back &larr;', 'Settings: Button', 'geditorial-admin' ), 'link' );
+			echo Core\HTML::button(
+				_x( 'Go-back &larr;', 'Settings: Button', 'geditorial-admin' ),
+				remove_query_arg( $remove ?? [
+					'action',
+					'type',
+					'mime',
+					'paged',
+				] )
+			);
 
 		echo '</div></div>';
 

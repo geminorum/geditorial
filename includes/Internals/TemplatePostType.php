@@ -35,7 +35,7 @@ trait TemplatePostType
 
 		if ( $wp_query->is_404() ) {
 
-			// if new post-type disabled
+			// if empty template disabled
 			if ( FALSE === $empty_callback )
 				return $template;
 

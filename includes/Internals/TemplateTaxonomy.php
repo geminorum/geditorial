@@ -71,7 +71,7 @@ trait TemplateTaxonomy
 
 		if ( $wp_query->is_404() ) {
 
-			// if new term disabled
+			// if empty template disabled
 			if ( FALSE === $empty_callback )
 				return $template;
 

@@ -27,14 +27,14 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'From People Plugin', 'Card Title', 'geditorial-byline' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				self::submitButton( add_query_arg( [
-					'action' => static::ACTION_FROM_PEOPLE_PLUGIN,
-					'type'   => $posttype,
-				] ), sprintf(
+				echo Core\HTML::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-byline' ),
 					$label
-				), 'link-small' );
+				), add_query_arg( [
+					'action' => static::ACTION_FROM_PEOPLE_PLUGIN,
+					'type'   => $posttype,
+				] ) );
 
 			Core\HTML::desc( sprintf(
 				/* translators: `%s`: number of rows found */
