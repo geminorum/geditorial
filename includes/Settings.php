@@ -4064,6 +4064,13 @@ class Settings extends WordPress\Main
 		return TRUE;
 	}
 
+	public static function processingErrorOpen( $title = NULL )
+	{
+		return
+			self::toolboxColumnOpen( $title ?? Plugin::wrong( FALSE ) ).
+			self::toolboxAfterOpen();
+	}
+
 	public static function toolboxCardOpen( $title = '', $buttons = TRUE )
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap card -toolbox-card">'

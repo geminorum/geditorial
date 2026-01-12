@@ -24,10 +24,12 @@ trait PostDate
 	public function postdate__do_override_dates( $supported, $metakeys, $limit = 25 )
 	{
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! in_array( $posttype, (array) $supported, TRUE ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources( $limit );
 

@@ -1595,10 +1595,12 @@ class Importer extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources();
 

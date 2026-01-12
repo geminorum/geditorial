@@ -253,13 +253,16 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $data = $this->get_imports_raw_data( 'identity-locations', 'json' ) )
-			return gEditorial\Info::renderNoDataAvailable();
+			return ! gEditorial\Info::renderNoDataAvailable(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources();
 
@@ -309,10 +312,12 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->in_setting( $posttype, 'parent_posttypes' ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources();
 
@@ -450,10 +455,12 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources();
 
@@ -471,10 +478,12 @@ class Iranian extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources();
 

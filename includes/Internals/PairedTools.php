@@ -554,13 +554,16 @@ trait PairedTools
 			$posttype = Core\Arraay::keyFirst( $posttype );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $movefrom = self::req( 'movefrom' ) )
-			return gEditorial\Info::renderSomethingIsWrong();
+			return ! gEditorial\Info::renderSomethingIsWrong(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $moveto = self::req( 'moveto' ) )
-			return gEditorial\Info::renderSomethingIsWrong();
+			return ! gEditorial\Info::renderSomethingIsWrong(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		$taxonomy = $this->constant( $constants[1] );
 		$movefrom = Core\Arraay::prepNumeral( is_array( $movefrom ) ? $movefrom : explode( ',', $movefrom ) );
@@ -639,10 +642,12 @@ trait PairedTools
 	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
 	{
 		if ( ! $posttype = self::req( 'type' ) )
-			return gEditorial\Info::renderEmptyPosttype();
+			return ! gEditorial\Info::renderEmptyPosttype(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		if ( ! $this->posttype_supported( $posttype ) )
-			return gEditorial\Info::renderNotSupportedPosttype();
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
 
 		$this->raise_resources( $limit );
 
