@@ -902,6 +902,17 @@ class Byline extends gEditorial\Module
 		);
 	}
 
+	private function _get_supported_simple_metakeys( $context = NULL )
+	{
+		return $this->filters( 'supported_simple_metakeys',
+			array_merge(
+				$this->_get_registered_relations( $context ),
+				$this->define_default_terms()['main_taxonomy']
+			),
+			$context
+		);
+	}
+
 	public function imports_settings( $sub )
 	{
 		$this->check_settings( $sub, 'imports', 'per_page' );
@@ -911,10 +922,15 @@ class Byline extends gEditorial\Module
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Byline Imports', 'Header', 'geditorial-byline' ) );
 
-		$available = FALSE;
-		$posttypes = $this->list_posttypes();
+		$available  = FALSE;
+		$posttypes  = $this->list_posttypes();
+		$taxonomies = $this->list_taxonomies();
+		$metakeys   = $this->_get_supported_simple_metakeys( 'imports' );
 
 		if ( ModuleSettings::renderCard_import_from_people_plugin( $posttypes ) )
+			$available = TRUE;
+
+		if ( ModuleSettings::renderCard_import_from_simple_meta( $posttypes, $taxonomies, $metakeys ) )
 			$available = TRUE;
 
 		if ( ! $available )
@@ -925,8 +941,54 @@ class Byline extends gEditorial\Module
 
 	protected function render_imports_html_before( $uri, $sub )
 	{
-		if ( $this->_do_import_from_people_plugin( $sub ) )
+		if ( $this->_do_import_from_simple_meta( $sub ) )
 			return FALSE; // avoid further UI
+
+		else if ( $this->_do_import_from_people_plugin( $sub ) )
+			return FALSE; // avoid further UI
+	}
+
+	private function _do_import_from_simple_meta( $sub )
+	{
+		if ( ! self::do( ModuleSettings::ACTION_FROM_SIMPLE_META ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $metakey = self::req( 'metakey' ) )
+			return ! gEditorial\Info::renderNoDataAvailable(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $taxonomy = self::req( 'taxonomy' ) )
+			return ! gEditorial\Info::renderEmptyTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $this->taxonomy_supported( $taxonomy ) )
+			return ! gEditorial\Info::renderNotSupportedTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! in_array( $taxonomy, WordPress\PostType::taxonomies( $posttype ), TRUE ) )
+			return ! gEditorial\Info::renderNotSupportedTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! array_key_exists( $metakey, $this->_get_supported_simple_metakeys( 'imports' ) ) )
+			return ! gEditorial\Info::renderNotSupportedField(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		$this->raise_resources();
+
+		return ModuleSettings::handleImport_from_simple_meta(
+			$posttype,
+			$taxonomy,
+			$metakey,
+			$this->get_sub_limit_option( $sub, 'imports' )
+		);
 	}
 
 	private function _do_import_from_people_plugin( $sub )

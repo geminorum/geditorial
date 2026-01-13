@@ -12,6 +12,8 @@ class ModuleSettings extends gEditorial\Settings
 {
 	const MODULE = 'byline';
 
+	const ACTION_FROM_SIMPLE_META     = 'do_import_from_simple_meta';
+	const SELECTOR_FROM_SIMPLE_META   = 'fromsimplemeta';
 	const ACTION_FROM_PEOPLE_PLUGIN   = 'do_import_from_people_plugin';
 	const METAKEY_FROM_PEOPLE_PLUGIN  = '_gpeople_remote';
 	const TAXONOMY_FROM_PEOPLE_PLUGIN = 'people';                        // NOTE: as set on the old `People` plugin
@@ -147,6 +149,191 @@ class ModuleSettings extends gEditorial\Settings
 				] );
 
 		if ( ! delete_post_meta( $post->ID, static::METAKEY_FROM_PEOPLE_PLUGIN ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'There is problem removing byline meta-data for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		return self::processingListItem( $verbose,
+			/* translators: `%1$s`: byline string, `%2$s`: post title */
+			_x( 'Byline %1$s migrated for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+				ModuleTemplate::renderDefault( [ 'echo' => FALSE ], $post ),
+				WordPress\Post::title( $post ),
+			], TRUE );
+	}
+
+	public static function renderCard_import_from_simple_meta( $posttypes, $taxonomies, $metakeys )
+	{
+		if ( empty( $posttypes ) || empty( $taxonomies ) || empty( $metakeys ) )
+			return FALSE;
+
+		if ( ! $count = WordPress\Database::countPostMetaByKey( array_keys( $metakeys ) ) )
+			return FALSE;
+
+		// WTF
+		$defaults = [
+			'metakey'  => 'author',
+			'taxonomy' => 'people',
+		];
+
+		echo self::toolboxCardOpen( _x( 'From Simple Meta', 'Card Title', 'geditorial-byline' ), FALSE );
+
+			echo Core\HTML::wrap( Core\HTML::dropdown( $metakeys, [
+				'name'       => 'metakey',
+				'selected'   => self::req( 'metakey', $defaults['metakey'] ) ?: '',
+				'none_title' => self::showOptionNone(),
+				'class'      => 'do-dynamicsubmit',
+				'data'       => [
+					'dynamicsubmit-modifier' => static::SELECTOR_FROM_SIMPLE_META,
+				],
+			] ), 'field-wrap -select' );
+
+			echo Core\HTML::wrap( Core\HTML::dropdown( $taxonomies, [
+				'name'       => 'taxonomy',
+				'selected'   => self::req( 'taxonomy', $defaults['taxonomy'] ) ?: '',
+				'none_title' => self::showOptionNone(),
+				'class'      => 'do-dynamicsubmit',
+				'data'       => [
+					'dynamicsubmit-modifier' => static::SELECTOR_FROM_SIMPLE_META,
+				],
+			] ), 'field-wrap -select' );
+
+			echo '<div class="-wrap -wrap-button-row">';
+
+			foreach ( $posttypes as $posttype => $label )
+				echo Core\HTML::button( sprintf(
+					/* translators: `%s`: post-type label */
+					_x( 'On %s', 'Button', 'geditorial-byline' ),
+					$label
+				), add_query_arg( [
+					'action'   => static::ACTION_FROM_SIMPLE_META,
+					'type'     => $posttype,
+					'metakey'  => $defaults['metakey'],
+					'taxonomy' => $defaults['taxonomy'],
+				] ), FALSE, FALSE, [
+					'dynamicsubmit-target' => static::SELECTOR_FROM_SIMPLE_META,
+				] );
+
+			echo gEditorial\Ajax::spinner( TRUE, [
+				'dynamicsubmit-loading' => static::SELECTOR_FROM_SIMPLE_META,
+			] );
+
+			Core\HTML::desc( sprintf(
+				/* translators: `%s`: number of rows found */
+				_x( 'Migrate meta-data of found %s rows into current module system.', 'Message', 'geditorial-byline' ),
+				Core\Number::format( $count )
+			) );
+
+		echo '</div></div></div>';
+
+		gEditorial\Scripts::enqueueDynamicSubmit();
+
+		return TRUE;
+	}
+
+	public static function handleImport_from_simple_meta( $posttype, $taxonomy, $metakey, $limit = 25 )
+	{
+		if ( empty( $metakey ) || empty( $taxonomy ) )
+			return self::processingAllDone();
+
+		$query = [
+			'meta_query' => [ [
+				'key'     => $metakey,
+				'compare' => 'EXISTS',
+			] ],
+		];
+
+		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			return self::processingAllDone();
+
+		if ( Services\Individuals::isParserAvailable() )
+			$filters = gEditorial\Misc\NamesInPersian::mapRelationPrefixes();
+
+		echo self::processingListOpen();
+
+		foreach ( $posts as $post )
+			self::post_set_byline_from_simple_meta(
+				$post,
+				$taxonomy,
+				$metakey,
+				$filters ?? FALSE,
+				TRUE
+			);
+
+		echo '</ul></div>';
+
+		return WordPress\Redirect::doJS( add_query_arg( [
+			'action'   => static::ACTION_FROM_SIMPLE_META,
+			'type'     => $posttype,
+			'taxonomy' => $taxonomy,
+			'metakey'  => $metakey,
+			'paged'    => self::paged() + 1,
+		] ) );
+	}
+
+	public static function post_set_byline_from_simple_meta( $post, $taxonomy, $metakey, $filters, $verbose = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+
+		if ( ! $legacy = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+
+		if ( WordPress\Strings::isEmpty( $legacy ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );
+
+		$data     = [];
+		$count    = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
+		$prefixes = $filters ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
+
+		foreach ( Services\Markup::getSeparated( $legacy ) as $offset => $raw ) {
+
+			if ( $filters && ! gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
+				continue;
+
+			else if ( ! $filters && WordPress\Strings::isEmpty( $raw ) )
+				continue;
+
+			$fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $raw, $prefixes ) );
+
+			if ( ! $term = WordPress\Taxonomy::getTargetTerm( $fullname, $taxonomy ) )
+				continue;
+
+			$relation = [
+				'id'       => $term->term_id,
+				'relation' => $metakey,
+			];
+
+			// NOTE: first one is empty
+			if ( $count )
+				$relation[Services\TermRelations::FIELD_ORDER] = $count;
+
+			// NOTE: only for the first one with offset `0`
+			if ( ! $offset && $filters && ! empty( $filters[$metakey] ) )
+				$relation['filter'] = $filters[$metakey];
+
+			$data[] = $relation;
+			$count++;
+		}
+
+		if ( ! count( $data ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'No byline meta-data available for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		if ( ! Services\TermRelations::updatePostData( $post, $data ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'There is problem updating byline meta-data for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		if ( ! delete_post_meta( $post->ID, $metakey ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%s`: post title */
 				_x( 'There is problem removing byline meta-data for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
