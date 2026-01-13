@@ -146,7 +146,7 @@ trait TemplatePostType
 	public function templateposttype_get_empty_content( $posttype, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'empty_content' ) )
-			return Core\Text::autoP( trim( $content ) );
+			return $this->templateposttype_process_empty_content( $content, $posttype );
 
 		return '';
 	}
@@ -181,17 +181,48 @@ trait TemplatePostType
 			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $name ) );
 	}
 
+	protected function templateposttype_process_empty_content( $content, $queried, $wrap = FALSE )
+	{
+		if ( ! $content )
+			return $content;
+
+		$html = $content;
+
+		if ( $data = WordPress\PostType::object( $queried ) )
+			$html = Core\Text::replaceTokens( $html, $data );
+
+		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
+		$html = Core\Text::autoP( $html );
+
+		return $wrap ? Core\HTML::wrap( $html, '-posttype-empty-content' ) : $html;
+	}
+
+	protected function templateposttype_process_archive_content( $content, $queried, $wrap = FALSE )
+	{
+		if ( ! $content )
+			return $content;
+
+		$html = $content;
+
+		if ( $data = WordPress\PostType::object( $queried ) )
+			$html = Core\Text::replaceTokens( $html, $data );
+
+		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
+
+		return $wrap ? Core\HTML::wrap( $html, '-posttype-archives-content' ) : $html;
+	}
+
 	// DEFAULT METHOD: content for overridden archive page
 	public function templateposttype_get_archive_content( $posttype )
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL );
 
-		if ( ! is_null( $setting ) )
-			return $setting; // might be empty string
+		if ( ! is_null( $setting ) ) // might be empty string
+			return $this->templateposttype_process_archive_content( $setting, $posttype );
 
 		// NOTE: here to avoid further process
 		if ( $default = $this->templateposttype_get_archive_content_default( $posttype ) )
-			return $default;
+			return $this->templateposttype_process_archive_content( $default, $posttype );
 
 		// TODO: add widget area
 
