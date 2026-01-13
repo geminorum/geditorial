@@ -269,7 +269,7 @@ class Identified extends gEditorial\Module
 				'href'  => Services\Barcodes::binaryEyeLink( $type, Core\URL::home() ),
 				'title' => '<span class="ab-icon dashicons dashicons-camera" style="margin:2px 0 0 0;"></span>',
 				'meta'  => [
-					'class' => sprintf( 'geditorial-adminbar-node -%s', $this->key ),
+					'class' => $this->get_adminbar_node_class( [ '-binary-eye', '-'.$type ] ),
 					'title' => sprintf(
 						/* translators: `%s`: identifier type */
 						_x( 'Scan %s', 'Node Title', 'geditorial-identified' ),
