@@ -208,6 +208,7 @@ class Archives extends gEditorial\Module
 		}
 	}
 
+	// FIXME: must use `replaceTokens()` with post-type object
 	private function _get_default_posttype_content( $posttype = NULL )
 	{
 		$default = '';
@@ -218,6 +219,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'default_posttype_content', $default, $posttype );
 	}
 
+	// FIXME: must use `replaceTokens()` with taxonomy object
 	private function _get_default_taxonomy_content( $taxonomy = NULL )
 	{
 		$default = '';
@@ -447,7 +449,11 @@ class Archives extends gEditorial\Module
 
 	private function _get_term_archive_title( $term, $taxonomy = NULL )
 	{
-		return $this->filters( 'term_archive_title', WordPress\Term::title( $term ), $term, $taxonomy ?? $term->taxonomy );
+		return $this->filters( 'term_archive_title',
+			WordPress\Term::title( $term ),
+			$term,
+			$taxonomy ?? $term->taxonomy
+		);
 	}
 
 	public function template_term_archives( $content )

@@ -313,7 +313,7 @@ class TermHierarchy extends gEditorial\Service
 	 * Filters the terms query default arguments.
 	 *
 	 * @param array $defaults
-	 * @param array $taxonomies
+	 * @param null|array $taxonomies
 	 * @return array
 	 */
 	public static function get_terms_defaults( $defaults, $taxonomies )

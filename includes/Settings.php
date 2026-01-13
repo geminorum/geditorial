@@ -4026,8 +4026,7 @@ class Settings extends WordPress\Main
 
 		return '<div class="'
 			.Core\HTML::prepClass( 'wp-tab-panel', '-with-select-all', $class ).'"'
-			.Core\HTML::propData( $data )
-			.'"><ul>';
+			.Core\HTML::propData( $data ).'><ul>';
 	}
 
 	public static function processingListOpen()
@@ -4058,7 +4057,11 @@ class Settings extends WordPress\Main
 					'action',
 					'type',
 					'mime',
+					// 'taxonomy', // NOTE: passing back will help the dropdown on default selected
+					// 'metakey',  // NOTE: passing back will help the dropdown on default selected
+					'message',
 					'paged',
+					'count',
 				] )
 			);
 

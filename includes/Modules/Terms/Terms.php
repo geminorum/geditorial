@@ -2656,6 +2656,7 @@ class Terms extends gEditorial\Module
 		return FALSE;
 	}
 
+	// TODO: also add anniversary events. (apparently `eluceo/ical` does not support reoccurring)
 	// NOTE: applies only if the context is `timespan` e.g. `?ical=timespan`
 	public function calendars_term_events( $null, $term, $context )
 	{

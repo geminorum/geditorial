@@ -41,7 +41,7 @@ class People extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy' ),
-			'_general'         => [
+			'_editpost'        => [
 				'metabox_advanced', // NOTE: by default no meta-box for this taxonomy
 				'selectmultiple_term' => [ _x( 'Whether to assign multiple affiliations in edit panel.', 'Setting Description', 'geditorial-people' ), TRUE ],
 			],

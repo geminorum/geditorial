@@ -227,7 +227,7 @@ trait TemplatePostType
 		// TODO: add widget area
 
 		if ( is_post_type_archive() )
-			return gEditorial\ShortCode::listPosts( 'assigned',
+			return gEditorial\ShortCode::listPosts( 'assigned', // TODO: maybe a general type for all posts!
 				$posttype,
 				'',
 				[

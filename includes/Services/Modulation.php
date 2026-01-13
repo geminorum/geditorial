@@ -103,7 +103,7 @@ class Modulation extends gEditorial\Service
 	{
 		return WordPress\WooCommerce::isActive()
 			? FALSE
-			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Services: Modulation', 'geditorial-admin' ) : $message );
+			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Service: Modulation', 'geditorial-admin' ) : $message );
 	}
 
 	public static function moduleCheckLocale( $locale, $message = NULL )
@@ -114,7 +114,7 @@ class Modulation extends gEditorial\Service
 			if ( $current === $code )
 				return FALSE;
 
-		return $message ?? _x( 'Not Available on Current Locale', 'Services: Modulation', 'geditorial-admin' );
+		return $message ?? _x( 'Not Available on Current Locale', 'Service: Modulation', 'geditorial-admin' );
 	}
 
 	public static function enqueueVirastar()

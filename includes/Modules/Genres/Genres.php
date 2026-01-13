@@ -46,8 +46,8 @@ class Genres extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'    => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
-			'_editpost' => [
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
+			'_editpost'        => [
 				'metabox_advanced',
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],

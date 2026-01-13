@@ -15,6 +15,7 @@ class Scripts extends WordPress\Main
 		return gEditorial();
 	}
 
+	// TODO: move to `Services\Markup`
 	public static function noScriptMessage( $verbose = TRUE )
 	{
 		$html = Core\HTML::tag( 'noscript',
@@ -29,6 +30,7 @@ class Scripts extends WordPress\Main
 		echo $html;
 	}
 
+	// TODO: move to `Services\Markup`
 	public static function renderAppMounter( $name, $module = FALSE, $verbose = TRUE, $message = NULL )
 	{
 		$html = Core\HTML::tag( 'div', [
@@ -81,7 +83,7 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
-	// NOTE: for inline scripts without deps
+	// NOTE: for inline scripts without dependencies
 	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
 	{
 		if ( empty( $script ) )
@@ -384,6 +386,7 @@ JS;
 			: self::registerPackage( 'listjs', 'list.js/list', [], $ver );
 	}
 
+	// TODO: move to `Services\Barcodes`
 	public static function markupJSBarcode( $data, $atts = [] )
 	{
 		$args = self::atts( [
@@ -646,6 +649,7 @@ JS;
 			: self::registerPackage( 'chartjs', 'chart.js/chart.umd', [], $ver );
 	}
 
+	// TODO: move to `Services\Markup`
 	public static function markupChartJS( $name, $module = FALSE )
 	{
 		return Core\HTML::wrap( Core\HTML::tag( 'canvas', [

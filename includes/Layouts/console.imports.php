@@ -23,6 +23,7 @@ $files = [
 	// 'Test_HTML',
 	// 'Test_Barcode_1',
 	// 'Test_Color_1',
+	// 'Test_circle-progress',
 ];
 
 foreach ( $files as $file )

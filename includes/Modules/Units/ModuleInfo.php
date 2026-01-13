@@ -30,12 +30,12 @@ class ModuleInfo extends gEditorial\Info
 	public static function getBookCovers( $context = NULL )
 	{
 		return [
-			'octavo'      => _x( 'Octavo', 'Book Cover', 'geditorial-units' ), // vaziri
-			'folio'       => _x( 'Folio', 'Book Cover', 'geditorial-units' ), // soltani
-			'medium'      => _x( 'Medium Octavo', 'Book Cover', 'geditorial-units' ), // roghee
-			'quatro'      => _x( 'Quatro', 'Book Cover', 'geditorial-units' ), // rahli
-			'duodecimo'   => _x( 'Duodecimo', 'Book Cover', 'geditorial-units' ), // paltoyee
-			'sextodecimo' => _x( 'Sextodecimo', 'Book Cover', 'geditorial-units' ), // jibi
+			'octavo'      => _x( 'Octavo', 'Book Cover', 'geditorial-units' ),          // vaziri
+			'folio'       => _x( 'Folio', 'Book Cover', 'geditorial-units' ),           // soltani
+			'medium'      => _x( 'Medium Octavo', 'Book Cover', 'geditorial-units' ),   // roghee
+			'quatro'      => _x( 'Quatro', 'Book Cover', 'geditorial-units' ),          // rahli
+			'duodecimo'   => _x( 'Duodecimo', 'Book Cover', 'geditorial-units' ),       // paltoyee
+			'sextodecimo' => _x( 'Sextodecimo', 'Book Cover', 'geditorial-units' ),     // jibi
 		];
 	}
 
