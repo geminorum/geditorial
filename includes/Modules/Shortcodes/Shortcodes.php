@@ -59,18 +59,20 @@ class Shortcodes extends gEditorial\Module
 	private function _list_shortcodes()
 	{
 		return [
-			'display-terms'  => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
-			'term-tiles'     => _x( 'Term Tiles', 'Shortcode Name', 'geditorial-shortcodes' ),
-			'posts-assigned' => _x( 'Posts Assigned', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'display-terms'   => _x( 'Display Terms', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'term-tiles'      => _x( 'Term Tiles', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'posts-assigned'  => _x( 'Posts Assigned', 'Shortcode Name', 'geditorial-shortcodes' ),
+			'circle-progress' => _x( 'Circle Progress', 'Shortcode Name', 'geditorial-shortcodes' ),
 		];
 	}
 
 	protected function get_global_constants()
 	{
 		return [
-			'display_terms_shortcode'  => 'display-terms',
-			'term_tiles_shortcode'     => 'term-tiles',
-			'posts_assigned_shortcode' => 'posts-assigned',
+			'display_terms_shortcode'   => 'display-terms',
+			'term_tiles_shortcode'      => 'term-tiles',
+			'posts_assigned_shortcode'  => 'posts-assigned',
+			'circle_progress_shortcode' => 'circle-progress',
 		];
 	}
 
@@ -304,6 +306,41 @@ class Shortcodes extends gEditorial\Module
 			$content,
 			$this->constant( 'posts_assigned_shortcode', $tag ),
 			$this->key
+		);
+	}
+
+	public function circle_progress_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		$args = shortcode_atts( [
+			'completed' => FALSE,
+			'total'     => FALSE,
+			'hint'      => FALSE,
+			'template'  => NULL,
+			'context'   => NULL,
+			'wrap'      => TRUE,
+			'class'     => '',
+			'before'    => '',
+			'after'     => '',
+		], $atts, $tag ?: $this->constant( 'circle_progress_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $args['completed'] || ! $args['total'] )
+			return $content;
+
+		$html = self::buffer( [ 'geminorum\\gEditorial\\Services\\Markup', 'renderCircleProgress' ], [
+			$args['completed'],
+			$args['total'],
+			$args['hint'] ?: FALSE,
+			$args['template'] ?: NULL
+		] );
+
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'circle_progress_shortcode' ),
+			$args,
+			FALSE
 		);
 	}
 }
