@@ -183,7 +183,7 @@ trait TemplateTaxonomy
 	public function templatetaxonomy_get_empty_content( $taxonomy, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'empty_content' ) )
-			return Core\Text::autoP( trim( $content ) );
+			return $this->templatetaxonomy_process_empty_content( $content, $taxonomy );
 
 		return '';
 	}
@@ -201,7 +201,7 @@ trait TemplateTaxonomy
 	public function templatetaxonomy_get_empty_items( $taxonomy, $atts = [] )
 	{
 		if ( $content = $this->get_setting( 'archive_empty_items' ) )
-			return Core\Text::autoP( trim( $content ) );
+			return $this->templatetaxonomy_process_empty_content( $content, $taxonomy );
 
 		return '';
 	}
@@ -218,17 +218,48 @@ trait TemplateTaxonomy
 			WordPress\Term::title( $this->current_queried ) );
 	}
 
+	protected function templatetaxonomy_process_empty_content( $content, $queried, $wrap = FALSE )
+	{
+		if ( ! $content )
+			return $content;
+
+		$html = $content;
+
+		if ( $data = WordPress\Taxonomy::object( $queried ) )
+			$html = Core\Text::replaceTokens( $html, $data );
+
+		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
+		$html = Core\Text::autoP( $html );
+
+		return $wrap ? Core\HTML::wrap( $html, '-taxonomy-empty-content' ) : $html;
+	}
+
+	protected function templatetaxonomy_process_archive_content( $content, $queried, $wrap = FALSE )
+	{
+		if ( ! $content )
+			return $content;
+
+		$html = $content;
+
+		if ( $term = WordPress\Term::get( $queried ) )
+			$html = Core\Text::replaceTokens( $html, WordPress\Term::summary( $term ) );
+
+		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
+
+		return $wrap ? Core\HTML::wrap( $html, '-taxonomy-archives-content' ) : $html;
+	}
+
 	// DEFAULT METHOD: content for overridden archive page
 	public function templatetaxonomy_get_archive_content( $taxonomy )
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL );
 
-		if ( ! is_null( $setting ) )
-			return $setting; // might be empty string
+		if ( ! is_null( $setting ) ) // might be empty string
+			return $this->templatetaxonomy_process_archive_content( $setting, $this->current_queried );
 
 		// NOTE: here to avoid further process
 		if ( $default = $this->templatetaxonomy_get_archive_content_default( $taxonomy ) )
-			return $default;
+			return $this->templatetaxonomy_process_archive_content( $default, $this->current_queried );
 
 		if ( ! is_tax() )
 			return '';
