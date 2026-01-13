@@ -165,6 +165,7 @@ class People extends gEditorial\Module
 
 		} else {
 
+			$this->filter( 'get_terms_defaults', 2, 99 );
 			$this->filter( 'single_term_title', 1, 8 );
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
 		}
@@ -286,6 +287,21 @@ class People extends gEditorial\Module
 		return $term->taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familylast( $name, $term )
 			: $name;
+	}
+
+	// NOTE: front only
+	public function get_terms_defaults( $defaults, $taxonomies )
+	{
+		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
+			return $defaults;
+
+		if ( $this->constant( 'main_taxonomy' ) !== reset( $taxonomies ) )
+			return $defaults;
+
+		$defaults['orderby'] = 'name';
+		$defaults['order']   = 'ASC';
+
+		return $defaults;
 	}
 
 	public function single_term_title( $title )
