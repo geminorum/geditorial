@@ -36,11 +36,15 @@ trait PairedTools
 			echo $this->wrap_open( '-wrap-button-row' );
 
 			foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-				gEditorial\Settings::submitButton( self::$pairedtools__action_move_from_to.'['.$posttype.']', sprintf(
-					/* translators: `%s`: post-type label */
-					_x( 'On %s', 'Button', 'geditorial-admin' ),
-					$label
-				), 'small' );
+				gEditorial\Settings::submitButton(
+					self::$pairedtools__action_move_from_to.'['.$posttype.']',
+					sprintf(
+						/* translators: `%s`: post-type label */
+						_x( 'On %s', 'Button', 'geditorial-admin' ),
+						$label
+					),
+					'small'
+				);
 
 			Core\HTML::desc( _x( 'Tries to move supported posts from selected to another main post.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
 
@@ -71,18 +75,17 @@ trait PairedTools
 			echo gEditorial\Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial-admin' ) );
 
 				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-					gEditorial\Settings::submitButton( add_query_arg( [
+					echo Core\HTML::button( sprintf(
+						/* translators: `%s`: post-type label */
+						_x( 'On %s', 'Button', 'geditorial-admin' ),
+						$label
+					), add_query_arg( [
 						'action' => 'force_assign_parents',
 						'type'   => $posttype,
-						] ), sprintf(
-							/* translators: `%s`: post-type label */
-							_x( 'On %s', 'Button', 'geditorial-admin' ),
-							$label
-						),
-						'link-small'
-					);
+					] ) );
 
 				Core\HTML::desc( _x( 'Forces assignment of parents to supported posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ) );
+
 			echo '</div></div>';
 		}
 	}

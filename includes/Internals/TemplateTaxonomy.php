@@ -242,7 +242,7 @@ trait TemplateTaxonomy
 		);
 
 		return Core\HTML::button(
-			$label ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'add_new_item' ),
+			$label ?? Services\CustomTaxonomy::getLabel( $object, 'add_new_item' ),
 			WordPress\Taxonomy::edit( $object, $extra )
 		);
 	}

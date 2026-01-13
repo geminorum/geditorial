@@ -1470,13 +1470,13 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_archive_override( $description = NULL )
+	public static function getSetting_archive_override( $description = NULL, $default = NULL )
 	{
 		return [
 			'field'       => 'archive_override',
 			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => '1',
+			'default'     => $default ?? '1',
 		];
 	}
 

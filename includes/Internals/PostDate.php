@@ -79,7 +79,7 @@ trait PostDate
 
 		if ( ! $updated || self::isError( $updated ) )
 			return gEditorial\Settings::processingListItem( $verbose,
-				/* translators: `%1$s`: post date, `%2$s`: post title */
+				/* translators: `%1$s`: postdate, `%2$s`: post title */
 				_x( 'There is problem updating post date (%1$s) for &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 					Core\HTML::code( $data['post_date'] ),
 					WordPress\Post::title( $post ),
@@ -88,7 +88,7 @@ trait PostDate
 		$this->actions( 'postdate_after_post_override_date', $updated, $data['post_date'], $metakeys, $verbose );
 
 		return gEditorial\Settings::processingListItem( $verbose,
-			/* translators: `%1$s`: post date, `%2$s`: post title */
+			/* translators: `%1$s`: postdate, `%2$s`: post title */
 			_x( '&ldquo;%1$s&rdquo; date is set on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-admin' ), [
 				Core\HTML::code( gEditorial\Datetime::prepForDisplay( $data['post_date'], NULL, $this->default_calendar() ) ),
 				WordPress\Post::title( $post ),
@@ -105,36 +105,40 @@ trait PostDate
 
 			else if ( is_array( $supported_list ) && Core\Arraay::isAssoc( $supported_list ) )
 				foreach ( $supported_list as $posttype => $label )
-					gEditorial\Settings::submitButton( add_query_arg( [
-						'sub'    => $sub,
-						'action' => self::$postdate__action_override_dates,
-						'type'   => $posttype,
-					] ), sprintf(
+					echo Core\HTML::button( sprintf(
 						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						$label
-					), 'link-small' );
-
-			else if ( is_array( $supported_list ) )
-				foreach ( $supported_list as $posttype )
-					gEditorial\Settings::submitButton( add_query_arg( [
+					), add_query_arg( [
 						'sub'    => $sub,
 						'action' => self::$postdate__action_override_dates,
 						'type'   => $posttype,
-					] ), sprintf(
+					], $uri ) );
+
+			else if ( is_array( $supported_list ) )
+				foreach ( $supported_list as $posttype )
+					echo Core\HTML::button( sprintf(
 						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						Services\CustomPostType::getLabel( $posttype, 'name' )
-					), 'link-small' );
+					), add_query_arg( [
+						'sub'    => $sub,
+						'action' => self::$postdate__action_override_dates,
+						'type'   => $posttype,
+					], $uri ) );
 
 			else if ( is_string( $supported_list ) )
-				gEditorial\Settings::submitButton( add_query_arg( [
-					'sub'    => $sub,
-					'action' => self::$postdate__action_override_dates,
-					'type'   => $supported_list,
-				], $uri ), _x( 'Set Post-Date', 'Button', 'geditorial-admin' ), 'link-small' );
+				echo Core\HTML::button(
+					_x( 'Set Post-Date', 'Button', 'geditorial-admin' ),
+					add_query_arg( [
+						'sub'    => $sub,
+						'action' => self::$postdate__action_override_dates,
+						'type'   => $supported_list,
+					], $uri )
+				);
 
 			Core\HTML::desc( _x( 'Tries to set the post-date form meta field data for all the main posts.', 'Internal: PostDate: Button Description', 'geditorial-admin' ), FALSE );
+
 		echo '</div></div>';
 
 		return TRUE;
