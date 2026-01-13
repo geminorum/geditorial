@@ -278,8 +278,11 @@ trait TemplateTaxonomy
 				'orderby' => 'menu_order',             // WTF: must apply to `assigned`
 				'term_id' => $this->current_queried,
 				'future'  => 'off',
-				'title'   => FALSE,
 				'wrap'    => FALSE,
+
+				// NOTE: `renderTermIntro` absent!
+				'title'      => $html ? FALSE : NULL,
+				'title_link' => $html ? FALSE : WordPress\Taxonomy::link( $taxonomy, FALSE ),
 			]
 		);
 
