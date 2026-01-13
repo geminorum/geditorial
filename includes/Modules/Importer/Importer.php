@@ -1097,6 +1097,10 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
+			echo $this->wrap_open( '-step-hints' );
+				Services\Markup::renderCircleProgress( 3, 4, _x( 'Import', 'Step', 'geditorial-importer' ) );
+			echo '<br /><br /></div>';
+
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHiddenArray( $terms_all, 'terms_all' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -1120,6 +1124,10 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
+			echo $this->wrap_open( '-step-hints' );
+				Services\Markup::renderCircleProgress( 2, 4, _x( 'Terms', 'Step', 'geditorial-importer' ) );
+			echo '</div>';
+
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
@@ -1137,7 +1145,7 @@ class Importer extends gEditorial\Module
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else if ( self::step( 'posts_step_two' ) ) {
@@ -1147,6 +1155,10 @@ class Importer extends gEditorial\Module
 
 			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+
+			echo $this->wrap_open( '-step-hints' );
+				Services\Markup::renderCircleProgress( 1, 4, _x( 'Map', 'Step', 'geditorial-importer' ) );
+			echo '</div>';
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
@@ -1162,15 +1174,20 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_map( $attach_id, $posttype );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+			gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 
 		} else {
 
+			echo $this->wrap_open( '-step-hints' );
+				Services\Markup::renderCircleProgress( 0, 4, _x( 'Attachment', 'Step', 'geditorial-importer' ) );
+			echo '</div>';
+
 			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 1: Attachment', 'Button', 'geditorial-importer' ), TRUE );
+
+			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 		}
 
