@@ -152,6 +152,7 @@ class People extends gEditorial\Module
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
 		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'type_taxonomy' );

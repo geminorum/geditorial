@@ -9,6 +9,45 @@ use geminorum\gEditorial\WordPress;
 
 trait TemplateTaxonomy
 {
+
+	// NOTE: since we override the archive, there are no admin-bar edit link available on the archives!
+	protected function templatetaxonomy__hook_adminbar( $constant, $option = 'archive_override' )
+	{
+		if ( is_admin() )
+			return FALSE;
+
+		if ( ! $this->get_setting( $option, TRUE ) )
+			return FALSE;
+
+		if ( ! $taxonomy = $this->constant( $constant ) )
+			return FALSE;
+
+		// NOTE: WTF: here `is_tax()`/`get_query_var()` are not available!
+
+		add_action( $this->hook_base( 'adminbar' ),
+			function ( &$nodes, $parent ) use ( $taxonomy ) {
+
+				if ( ! $term = WordPress\Term::get( get_queried_object_id() ) )
+					return;
+
+				if ( $taxonomy !== WordPress\Term::taxonomy( $term ) )
+					return;
+
+				if ( ! $edit = WordPress\Term::edit( $term ) )
+					return;
+
+				$nodes[] = [
+					'id'     => 'edit', // NOTE: will convert to `wp-admin-bar-edit` to use the core icon
+					'href'   => $edit,
+					'title'  => Services\CustomTaxonomy::getLabel( $term, 'edit_item' ),
+					'meta'   => [ 'class' => $this->get_adminbar_node_class( '-edit-item' ) ],
+				];
+
+			}, 99, 2 );
+
+		return TRUE;
+	}
+
 	/**
 	 * Hooks override mechanism for custom *main* archives page of
 	 * given taxonomy.
