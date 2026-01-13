@@ -1675,7 +1675,8 @@ class ShortCode extends WordPress\Main
 		if ( FALSE !== $cache )
 			return $cache;
 
-		$html = $ref = $parent = '';
+		$query = [];
+		$html  = $ref = $parent = '';
 
 		if ( is_null( $args['module'] ) && static::MODULE )
 			$args['module'] = static::MODULE;
@@ -1683,23 +1684,24 @@ class ShortCode extends WordPress\Main
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
 
-		$query = [
-			'order'   => $args['order'],
-			'orderby' => $args['orderby'] ?: 'name',
-		];
-
-		// FIXME: support sort by meta
-		if ( 'order' == $args['orderby'] )
-			$query['orderby'] = 'none'; // later sorting
-
 		if ( ! empty( $args['taxonomy'] ) ) {
 
-			$query['taxonomy']   = $args['taxonomy'];
+			if ( ! $ref = WordPress\Taxonomy::object( $args['taxonomy'] ) )
+				return $content;
+
+			// NOTE: core filter on term queries
+			$filtered = apply_filters( 'get_terms_defaults', [], [ $args['taxonomy'] ] );
+
+			if ( ! empty( $filtered['order'] ) )
+				$query['order'] = $filtered['order'];
+
+			if ( ! empty( $filtered['orderby'] ) )
+				$query['orderby'] = $filtered['orderby'];
+
+			$query['taxonomy']   = $ref->name;
 			$query['hide_empty'] = FALSE;
 
 			// $query['update_term_meta_cache'] = FALSE;
-
-			$ref = WordPress\Taxonomy::object( $args['taxonomy'] );
 
 		} else if ( 'allitems' === $list ) {
 
@@ -1723,6 +1725,13 @@ class ShortCode extends WordPress\Main
 				'compare' => 'EXISTS'
 			] ];
 		}
+
+		$query['order']   = $query['order']   ?? $args['order'];
+		$query['orderby'] = $query['orderby'] ?? ( $args['orderby'] ?: 'name' );
+
+		// FIXME: support sort by meta
+		if ( 'order' === $args['orderby'] )
+			$query['orderby'] = 'none'; // later sorting
 
 		$class = new \WP_Term_Query( $query );
 		$items = $class->terms;
