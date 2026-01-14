@@ -54,17 +54,31 @@ class SearchTerms extends gEditorial\Widget
 			'hide_empty' => ! empty( $instance['include_empty'] ),
 		] );
 
-		if ( empty( $query->terms ) )
+		// @hook: `geditorial_search_terms_widget_results`
+		$terms = self::filters( 'widget_results',
+			$query->terms,
+			$criteria,
+			$taxonomies,
+			$args,
+			$instance
+		);
+
+		if ( empty( $terms ) )
 			return;
 
-		$names = [];
+		$names = $displayed = [];
 		$title = count( $taxonomies ) > 1;
 
 		$this->before_widget( $args, $instance );
 		$this->widget_title( $args, $instance );
 		echo '<div class="-list-wrap search-terms"><ul class="-items">';
 
-		foreach ( $query->terms as $term ) {
+		foreach ( $terms as $term ) {
+
+			// The filter may add duplicated results!
+			if ( in_array( $term->term_id, $displayed, TRUE ) )
+				continue;
+
 			echo '<li>';
 
 			if ( empty( $names[$term->taxonomy] ) )
@@ -83,6 +97,8 @@ class SearchTerms extends gEditorial\Widget
 				printf( '&nbsp;(%s)', $names[$term->taxonomy] );
 
 			echo '</li>';
+
+			$displayed[] = $term->term_id;
 		}
 
 		echo '</ul></div>';
