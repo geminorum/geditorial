@@ -167,6 +167,7 @@ class People extends gEditorial\Module
 
 			$this->filter( 'get_terms_defaults', 2, 99 );
 			$this->filter( 'single_term_title', 1, 8 );
+			$this->filter( 'search_terms_widget_results', 5, 12, FALSE, $this->base );
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
 		}
 
@@ -326,6 +327,42 @@ class People extends gEditorial\Module
 		$defaults['order']   = 'ASC';
 
 		return $defaults;
+	}
+
+	// @hook: `geditorial_search_terms_widget_results`
+	public function search_terms_widget_results( $terms, $criteria, $taxonomies, $args, $instance )
+	{
+		if ( ! in_array( $this->constant( 'main_taxonomy' ), $taxonomies ) )
+			return $terms;
+
+		$familyfirst = $this->get_name_familyfirst( $criteria );
+		$familylast  = $this->get_name_familylast( $criteria );
+
+		// only if different
+		if ( $familylast === $familyfirst )
+			return $terms;
+
+		else if ( $criteria === $familyfirst )
+			$target = $familylast;
+
+		else if ( $criteria === $familylast )
+			$target = $familyfirst;
+
+		else
+			return $terms;
+
+		$query = new \WP_Term_Query( [
+			// 'search'     => $target,
+			'name__like' => $target,
+			'taxonomy'   => $this->constant( 'main_taxonomy' ),
+			'orderby'    => 'name',
+			'hide_empty' => ! empty( $instance['include_empty'] ),
+		] );
+
+		if ( ! empty( $query->terms ) )
+			return array_merge( $terms, $query->terms );
+
+		return $terms;
 	}
 
 	public function single_term_title( $title )
