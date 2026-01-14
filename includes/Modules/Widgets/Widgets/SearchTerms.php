@@ -25,7 +25,7 @@ class SearchTerms extends gEditorial\Widget
 		if ( ! is_search() || ( ! empty( $instance['hide_on_paged'] ) && is_paged() ) )
 			return;
 
-		$criteria = trim( get_query_var( 's' ) ); // avoid core filtering
+		$criteria = Core\Text::trim( get_query_var( 's' ) ); // avoid core filtering
 		$criteria = static::filters( 'criteria', $criteria, $instance, $args );
 
 		if ( ! $criteria )
@@ -36,9 +36,7 @@ class SearchTerms extends gEditorial\Widget
 			: (array) $instance['taxonomies'];
 
 		if ( ! empty( $instance['strip_hashtags'] ) )
-			$criteria = preg_replace_callback( "/^#(.*)$/mu", function ( $matches ) {
-				return str_replace( '_', ' ', $matches[1] );
-			}, $criteria );
+			$criteria = Core\Text::stripHashtags( $criteria );
 
 		$exclude = [];
 

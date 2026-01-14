@@ -414,8 +414,10 @@ trait SubContents
 
 		remove_filter( 'comment_save_pre', 'convert_invalid_entities' );
 		remove_filter( 'comment_save_pre', 'balanceTags', 50 );
-		remove_filter( 'pre_comment_author_url', 'sanitize_url' );
+		remove_filter( 'pre_comment_author_name', 'sanitize_text_field' );
+		remove_filter( 'pre_comment_author_email', 'trim' );
 		remove_filter( 'pre_comment_author_email', 'sanitize_email' );
+		remove_filter( 'pre_comment_author_url', 'sanitize_url' );
 
 		add_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
 	}
@@ -424,8 +426,10 @@ trait SubContents
 	{
 		add_filter( 'comment_save_pre', 'convert_invalid_entities' );
 		add_filter( 'comment_save_pre', 'balanceTags', 50 );
-		add_filter( 'pre_comment_author_url', 'sanitize_url' );
+		add_filter( 'pre_comment_author_name', 'sanitize_text_field' );
+		add_filter( 'pre_comment_author_email', 'trim' );
 		add_filter( 'pre_comment_author_email', 'sanitize_email' );
+		add_filter( 'pre_comment_author_url', 'sanitize_url' );
 
 		remove_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
 
@@ -1404,7 +1408,7 @@ trait SubContents
 			return $args['default'];
 		}
 
-		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', $args['context'] ?? 'subcontent' ) )
+		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', 'subcontent' ) )
 			return $args['default'];
 
 		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )

@@ -24,9 +24,10 @@ trait PairedThumbnail
 			$posttypes = $this->posttypes();
 
 		// NOTE: this is a core filter @since WP 5.9.0
-		add_filter( 'post_thumbnail_id', function ( $thumbnail_id, $post ) use ( $posttypes ) {
-			return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
-		}, 8, 2 );
+		add_filter( 'post_thumbnail_id',
+			function ( $thumbnail_id, $post ) use ( $posttypes ) {
+				return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
+			}, 8, 2 );
 	}
 
 	protected function get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes = NULL )

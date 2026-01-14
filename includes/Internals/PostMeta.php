@@ -11,7 +11,7 @@ trait PostMeta
 {
 	public function get_postmeta_key( $field, $prefix = NULL )
 	{
-		return sprintf( '_%s_%s', ( is_null( $prefix ) ? $this->key : $prefix ), $field );
+		return sprintf( '_%s_%s', $prefix ?? $this->key, $field );
 	}
 
 	public function get_postmeta_field( $post_id, $field, $default = FALSE, $prefix = NULL, $metakey = NULL )

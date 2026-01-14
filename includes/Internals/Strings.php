@@ -210,23 +210,25 @@ trait Strings
 
 	protected function _hook_post_updated_messages( $constant )
 	{
-		add_filter( 'post_updated_messages', function ( $messages ) use ( $constant ) {
+		add_filter( 'post_updated_messages',
+			function ( $messages ) use ( $constant ) {
 
-			$posttype  = $this->constant( $constant, $constant );
-			$generated = Services\CustomPostType::generateMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $posttype );
+				$posttype  = $this->constant( $constant, $constant );
+				$generated = Services\CustomPostType::generateMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $posttype );
 
-			return array_merge( $messages, [ $posttype => $generated ] );
-		} );
+				return array_merge( $messages, [ $posttype => $generated ] );
+			} );
 	}
 
 	protected function _hook_bulk_post_updated_messages( $constant )
 	{
-		add_filter( 'bulk_post_updated_messages', function ( $messages, $counts ) use ( $constant ) {
+		add_filter( 'bulk_post_updated_messages',
+			function ( $messages, $counts ) use ( $constant ) {
 
-			$posttype  = $this->constant( $constant, $constant );
-			$generated = Services\CustomPostType::generateBulkMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $counts, $posttype );
+				$posttype  = $this->constant( $constant, $constant );
+				$generated = Services\CustomPostType::generateBulkMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $counts, $posttype );
 
-			return array_merge( $messages, [ $posttype => $generated ] );
-		}, 10, 2 );
+				return array_merge( $messages, [ $posttype => $generated ] );
+			}, 10, 2 );
 	}
 }

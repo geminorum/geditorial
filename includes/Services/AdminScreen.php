@@ -20,15 +20,16 @@ class AdminScreen extends gEditorial\Service
 
 	public static function init_late_admin()
 	{
-		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
-			return;
-
-		add_filter( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ], 9, 2 );
 		add_filter( 'screen_settings', [ __CLASS__, 'screen_settings' ], 12, 2 );
 		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen_option' ], 12, 3 );
 
 		if ( $posttype = self::req( 'post_type', 'post' ) )
 			self::_handle_set_screen_options( $posttype );
+
+		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
+			return;
+
+		add_filter( 'add_meta_boxes', [ __CLASS__, 'add_meta_boxes' ], 9, 2 );
 	}
 
 	// @REF: https://wpartisan.me/?p=434

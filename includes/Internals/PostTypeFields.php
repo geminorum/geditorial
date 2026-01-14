@@ -220,7 +220,7 @@ trait PostTypeFields
 				'bulkedit'    => NULL, // NULL to fallback to `quickedit`
 
 				'import'         => TRUE,    // FALSE to hide on imports
-				'import_ignored' => FALSE,   // TRUE to make duplicate one that will ignored on import
+				'import_ignored' => FALSE,   // TRUE to make duplicate one that will be ignored on import
 				'export_title'   => NULL,    // the export column title
 				'data_unit'      => NULL,    // The unit which in the data is stored
 				'data_length'    => NULL,    // Typical length of the data // FIXME: implement this!
@@ -845,7 +845,7 @@ trait PostTypeFields
 
 		foreach ( $fields as $field => $args ) {
 
-			// Skips for fields that are auto-saved on admin edit-post page
+			// Skips for fields that are autosaved on admin edit-post page
 			if ( in_array( $field, [ 'parent_post' ], TRUE ) )
 				continue;
 
@@ -857,7 +857,7 @@ trait PostTypeFields
 			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
 				$this->posttypefields_do_import_field( $data, $args, $post, $override );
 
-			// passing not enabled legacy data
+			// Passing *not* enabled legacy data.
 			// No need to check for key variations since data is not from database.
 			else if ( $legacy && array_key_exists( $field, $legacies ) )
 				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacies[$field], $args, $post ) );
