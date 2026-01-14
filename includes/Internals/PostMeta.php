@@ -87,9 +87,22 @@ trait PostMeta
 		return $this->store_postmeta( $post_id, array_filter( $legacy ), $metakey );
 	}
 
+	public function sanitize_postmeta_field_key_map()
+	{
+		return [];
+	}
+
 	public function sanitize_postmeta_field_key( $field_key )
 	{
-		return (array) $field_key;
+		if ( is_array( $field_key ) )
+			return $field_key;
+
+		$key_map = $this->sanitize_postmeta_field_key_map();
+
+		if ( isset( $key_map[$field_key] ) )
+			return $key_map[$field_key];
+
+		return [ $field_key ];
 	}
 
 	public function store_postmeta( $post_id, $data, $metakey = NULL )

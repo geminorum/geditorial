@@ -347,19 +347,11 @@ class Units extends gEditorial\Module
 	}
 
 	// TODO: Move to `ModuleHelper`
-	public function sanitize_postmeta_field_key( $field_key )
+	public function sanitize_postmeta_field_key_map()
 	{
-		if ( is_array( $field_key ) )
-			return $field_key;
-
-		$fields = [
+		return [
 			'distance_in_metres' => [ 'distance_in_metres', 'distance_in_meter' ],
 		];
-
-		if ( isset( $fields[$field_key] ) )
-			return $fields[$field_key];
-
-		return [ $field_key ];
 	}
 
 	public function reports_settings( $sub )

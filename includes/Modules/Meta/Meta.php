@@ -515,79 +515,9 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	// TODO: Move to `ModuleHelper`
-	public function sanitize_postmeta_field_key( $field_key )
+	public function sanitize_postmeta_field_key_map()
 	{
-		if ( is_array( $field_key ) )
-			return $field_key;
-
-		$fields = [
-			// meta currents
-			'over_title'   => [ 'over_title', 'ot' ],
-			'sub_title'    => [ 'sub_title', 'st' ],
-			'byline'       => [ 'byline', 'author', 'as' ],
-			'lead'         => [ 'lead', 'le' ],
-			'start'        => [ 'start', 'in_issue_page_start' ], // general
-			'order'        => [ 'order', 'in_issue_order', 'in_collection_order', 'in_series_order' ], // general
-			'number_line'  => [ 'number_line', 'issue_number_line', 'number' ],
-			'total_pages'  => [ 'total_pages', 'issue_total_pages', 'pages' ],
-			'source_title' => [ 'source_title', 'reshare_source_title' ],
-			'source_url'   => [ 'source_url', 'reshare_source_url', 'es', 'ol' ],
-
-			// meta oldies
-			'ot' => [ 'over_title', 'ot' ],
-			'st' => [ 'sub_title', 'st' ],
-			'le' => [ 'lead', 'le' ],
-			'as' => [ 'byline', 'author', 'as' ],
-			'es' => [ 'source_url', 'es' ],
-			'ol' => [ 'source_url', 'ol' ],
-
-			// Labeled: Currents
-			'label_string'   => [ 'label_string', 'label', 'ch', 'column_header' ],
-			'label_taxonomy' => [ 'label_taxonomy', 'label_tax', 'ct' ],
-
-			// Labeled: DEPRECATED
-			'label'     => [ 'label_string', 'label', 'ch', 'column_header' ],
-			'label_tax' => [ 'label_taxonomy', 'label_tax', 'ct' ],
-			'ch'        => [ 'label_string', 'label', 'ch', 'column_header' ],
-			'ct'        => [ 'label_taxonomy', 'label_tax', 'ct' ],
-
-			// book currents
-			'publication_edition'   => [ 'publication_edition', 'edition' ],
-			'publication_print'     => [ 'publication_print', 'print' ],
-			// 'publication_reference' => [ 'publication_reference', 'reference' ],
-			'total_volumes'         => [ 'total_volumes', 'volumes' ],
-			'publication_size'      => [ 'publication_size', 'size' ],             // term type
-
-			// book oldies
-			'edition'          => [ 'publication_edition', 'edition' ],
-			'print'            => [ 'publication_print', 'print' ],
-			// 'reference'        => [ 'publication_reference', 'reference' ],
-			'volumes'          => [ 'total_volumes', 'volumes' ],
-			'size'             => [ 'publication_size', 'size' ],             // term type
-			'publication_isbn' => [ 'isbn' ],
-
-			// `ISBN` Module
-			'isbn'          => [ 'isbn', 'publication_isbn' ],
-			'bibliographic' => [ 'bibliographic', 'publication_bib' ],
-
-			// other oldies
-			'issue_number_line'    => [ 'number_line', 'issue_number_line' ],
-			'issue_total_pages'    => [ 'total_pages', 'issue_total_pages' ],
-			'reshare_source_title' => [ 'source_title', 'reshare_source_title' ],
-			'reshare_source_url'   => [ 'source_url', 'reshare_source_url' ],
-
-			// fall-backs
-			'over-title' => [ 'over_title', 'ot' ],
-			'sub-title'  => [ 'sub_title', 'st' ],
-			'pages'      => [ 'total_pages', 'pages' ],
-			'number'     => [ 'number_line', 'issue_number_line', 'number' ],
-		];
-
-		if ( isset( $fields[$field_key] ) )
-			return $fields[$field_key];
-
-		return [ $field_key ];
+		return ModuleHelper::getPostTypeFieldKeyMap();
 	}
 
 	public function column_row_extra( $post, $before, $after, $module, $fields, $excludes )
