@@ -612,6 +612,8 @@ class Plugin extends WordPress\Plugin
 	// TODO: Move to `AdminbarRegistry` Service
 	public function admin_bar_menu( $wp_admin_bar )
 	{
+		do_action_ref_array( 'geditorial_adminbar_lastcall', [ &$this->adminbar_nodes, $this->base ] );
+
 		if ( empty( $this->adminbar_nodes ) )
 			return;
 
