@@ -250,8 +250,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( empty( $posts ) )
 			return self::processingAllDone();
 
-		if ( Services\Individuals::isParserAvailable() )
-			$filters = gEditorial\Misc\NamesInPersian::mapRelationPrefixes();
+		$parser = Services\Individuals::isParserAvailable();
 
 		echo self::processingListOpen();
 
@@ -260,7 +259,7 @@ class ModuleSettings extends gEditorial\Settings
 				$post,
 				$taxonomy,
 				$metakey,
-				$filters ?? FALSE,
+				$parser,
 				TRUE
 			);
 
@@ -275,7 +274,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function post_set_byline_from_simple_meta( $post, $taxonomy, $metakey, $filters, $verbose = FALSE )
+	public static function post_set_byline_from_simple_meta( $post, $taxonomy, $metakey, $parser, $verbose = FALSE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
@@ -287,16 +286,22 @@ class ModuleSettings extends gEditorial\Settings
 			return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );
 
 		$data     = [];
-		$count    = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
-		$prefixes = $filters ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
+		$currents = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
+		$filters  = $parser ? gEditorial\Misc\NamesInPersian::mapRelationPrefixes() : [];
+		$prefixes = $parser ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
 
 		foreach ( Services\Markup::getSeparated( $legacy ) as $offset => $raw ) {
 
-			if ( $filters && ! gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
-				continue;
+			if ( $parser ) {
 
-			else if ( ! $filters && WordPress\Strings::isEmpty( $raw ) )
-				continue;
+				if ( gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
+					continue;
+
+			} else {
+
+				if ( WordPress\Strings::isEmpty( $raw ) )
+					continue;
+			}
 
 			$fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $raw, $prefixes ) );
 
@@ -309,15 +314,15 @@ class ModuleSettings extends gEditorial\Settings
 			];
 
 			// NOTE: first one is empty
-			if ( $count )
-				$relation[Services\TermRelations::FIELD_ORDER] = $count;
+			if ( $currents )
+				$relation[Services\TermRelations::FIELD_ORDER] = $currents;
 
 			// NOTE: only for the first one with offset `0`
-			if ( ! $offset && $filters && ! empty( $filters[$metakey] ) )
+			if ( ! $offset && $parser && ! empty( $filters[$metakey] ) )
 				$relation['filter'] = $filters[$metakey];
 
 			$data[] = $relation;
-			$count++;
+			$currents++;
 		}
 
 		if ( ! count( $data ) )
