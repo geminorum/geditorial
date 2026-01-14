@@ -9,8 +9,6 @@ class Duration extends Base
 	// @SEE: `Timespan` DataType
 
 
-	// @SEE: `human_readable_duration()`
-
 	public static function is( $text )
 	{
 		if ( self::empty( $text ) )
@@ -64,13 +62,13 @@ class Duration extends Base
 			return '';
 
 		$raw   = $value;
-		$title = empty( $field['title'] ) ? NULL : $field['title'];
+		$title = empty( $field['title'] ) ? FALSE : $field['title'];
 
 		// tries to sanitize with fallback
-		if ( ! $value = self::sanitize( $value ) )
+		if ( ! $value = self::sanitize( $value, 0 ) )
 			$value = $raw;
 
-		$value = self::secondsToTime( (int) $value );
+		$value = $copy = self::secondsToTime( (int) $value );
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			$value = Number::localize( $value );
@@ -81,7 +79,16 @@ class Duration extends Base
 			case 'print' : return $value;
 			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
-				 default : return HTML::tag( 'span', [ 'title' => $title ?: FALSE, 'class' => self::is( $raw ) ? '-is-valid' : '-is-not-valid' ], $value );
+				 default : return HTML::tag( 'span', [
+					'title' => self::humanReadable( $copy ) ?: $title,
+					'class' => [
+						self::is( $raw ) ? '-is-valid' : '-is-not-valid',
+						'do-clicktoclip',
+					],
+					'data' => [
+						'clipboard-text' => $copy,
+					],
+				], $value );
 		}
 
 		return $value;
@@ -90,6 +97,78 @@ class Duration extends Base
 	public static function getHTMLPattern()
 	{
 		return FALSE; // FIXME!
+	}
+
+	/**
+	 * Converts a duration to human readable format.
+	 *
+	 * Duration input will be in string format `HH:ii:ss` or `ii:ss`,
+	 * with a possible prepended negative sign `-`.
+	 *
+	 * NOTE: avoids zero seconds/localized
+	 * @source `human_readable_duration()`
+	 *
+	 * @param string $duration
+	 * @return string|false
+	 */
+	public static function humanReadable( $duration )
+	{
+		if ( ( empty( $duration ) || ! is_string( $duration ) ) )
+			return FALSE;
+
+		$duration = Text::trim( $duration );
+
+		// Removes prepended negative sign.
+		if ( Text::starts( $duration, '-' ) )
+			$duration = substr( $duration, 1 );
+
+		$parts = array_reverse( explode( ':', $duration ) );
+		$count = count( $parts );
+
+		$hour = $minute = $second = NULL;
+
+		if ( 3 === $count ) {
+
+			// validates `HH:ii:ss` duration format
+			if ( ! preg_match( '/^([0-9]+):([0-5]?[0-9]):([0-5]?[0-9])$/', $duration ) )
+				return FALSE;
+
+			list( $second, $minute, $hour ) = $parts;
+
+		} else if ( 2 === $count ) {
+
+			// validates `ii:ss` duration format
+			if ( ! preg_match( '/^([0-5]?[0-9]):([0-5]?[0-9])$/', $duration ) )
+				return FALSE;
+
+			list( $second, $minute ) = $parts;
+
+		} else {
+
+			return FALSE;
+		}
+
+		$readable = [];
+
+		if ( ( (int) $hour ) && is_numeric( $hour ) )
+			$readable[] = sprintf(
+				_n( '%s hour', '%s hours', $hour ),
+				Number::localize( (int) $hour )
+			);
+
+		if ( ( (int) $minute ) && is_numeric( $minute ) )
+			$readable[] = sprintf(
+				_n( '%s minute', '%s minutes', $minute ),
+				Number::localize( (int) $minute )
+			);
+
+		if ( ( (int) $second ) && is_numeric( $second ) )
+			$readable[] = sprintf(
+				_n( '%s second', '%s seconds', $second ),
+				Number::localize( (int) $second )
+			);
+
+		return implode( wp_get_list_item_separator(), $readable );
 	}
 
 	// Converts a time string (`hh:mm:ss`) to an integer for the total seconds.
@@ -104,9 +183,9 @@ class Duration extends Base
 	// FIXME: WTF: test this
 	public static function secondsToTime( $secondsInt )
 	{
-		$hours   = floor( $secondsInt / 3600 );
-		$minutes = floor( ( $secondsInt / 60 ) % 60 );
-		$seconds = floor( $secondsInt % 60 );
+		$hours   = @floor( $secondsInt / 3600 );
+		$minutes = @floor( ( $secondsInt / 60 ) % 60 );
+		$seconds = @floor( $secondsInt % 60 );
 
 		return sprintf( '%02d:%02d:%02d', $hours, $minutes, $seconds );
 	}

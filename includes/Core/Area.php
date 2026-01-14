@@ -69,11 +69,13 @@ class Area extends Base
 			return '';
 
 		$raw   = $value;
-		$title = empty( $field['title'] ) ? NULL : $field['title'];
+		$title = empty( $field['title'] ) ? FALSE : $field['title'];
 
 		// tries to sanitize with fallback
 		if ( ! $value = self::sanitize( $value ) )
 			$value = $raw;
+
+		$copy = $value;
 
 		if ( 'fa_IR' === self::const( 'GNETWORK_WPLANG' ) )
 			$value = Number::localize( $value );
@@ -84,7 +86,16 @@ class Area extends Base
 			case 'print' : return $value;
 			case 'input' : return Number::translate( $value );
 			case 'export': return Number::translate( $value );
-				 default : return HTML::tag( 'span', [ 'title' => $title ?: FALSE, 'class' => self::is( $raw ) ? '-is-valid' : '-is-not-valid' ], $value );
+				 default : return HTML::tag( 'span', [
+					'title' => $title,
+					'class' => [
+						self::is( $raw ) ? '-is-valid' : '-is-not-valid',
+						'do-clicktoclip',
+					],
+					'data' => [
+						'clipboard-text' => $copy,
+					],
+				], $value );
 		}
 
 		return $value;
