@@ -858,6 +858,7 @@ trait PostTypeFields
 				$this->posttypefields_do_import_field( $data, $args, $post, $override );
 
 			// passing not enabled legacy data
+			// No need to check for key variations since data is not from database.
 			else if ( $legacy && array_key_exists( $field, $legacies ) )
 				$this->set_postmeta_field( $post->ID, $field, $this->sanitize_posttype_field( $legacies[$field], $args, $post ) );
 		}
@@ -1715,10 +1716,63 @@ trait PostTypeFields
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
+		if ( ! $data = $this->get_postmeta_legacy( $post->ID ) )
+			return $this->clean_postmeta_legacy( $post->ID, [], [] ); // Cleans empty array.
+
 		if ( empty( $this->cache['fields'][$post->post_type] ) )
 			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
 
-		return $this->clean_postmeta_legacy( $post->ID, $this->cache['fields'][$post->post_type] );
+		$map  = $this->sanitize_postmeta_field_key_map();
+		$meta = [];
+
+		foreach ( $data as $key => $value ) {
+
+			if ( WordPress\Strings::isEmpty( $value ) )
+				continue;
+
+			$exists = FALSE;
+
+			foreach ( $map as $field => $variations ) {
+
+				if ( ! in_array( $key, $variations, TRUE ) )
+					continue;
+
+				$meta[$field][] = $value;
+				$exists         = TRUE;
+
+				break; // If not, the old keys will show up!
+			}
+
+			if ( ! $exists )
+				$meta[$key][] = $value;
+		}
+
+		foreach ( $meta as $field => $raw ) {
+
+			// NOTE: here we use low level API to avoid unnecessary checks.
+
+			// The field already has data!
+			if ( FALSE !== $this->fetch_postmeta( $post->ID, FALSE, $this->get_postmeta_key( $field ) ) )
+				continue;
+
+			$sanitized = WordPress\Strings::getPiped( Core\Arraay::prepString( $raw ) ) ;
+
+			if ( array_key_exists( $field, $this->cache['fields'][$post->post_type] ) )
+				$sanitized = $this->sanitize_posttype_field(
+					$sanitized,
+					$this->cache['fields'][$post->post_type][$field],
+					$post
+				);
+
+			// Bail if something is wrong!
+			if ( ! $this->store_postmeta( $post->ID, $sanitized, $this->get_postmeta_key( $field ) ) )
+				return FALSE;
+
+			// NOTE: unchanged data will be falsy but already checked for existing data.
+		}
+
+		// Passing empty fields/legacies to clear all up!
+		return $this->clean_postmeta_legacy( $post->ID, [], [] );
 	}
 
 	protected function posttypefields__do_sanitize_fields( $post )
