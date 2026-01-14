@@ -247,10 +247,10 @@ class Tabs extends gEditorial\Module
 
 		$fields = Services\PostTypeFields::getEnabled( $post->post_type, 'meta' );
 
-		if ( ! count( $fields ) )
-			return FALSE;
-
-		return TRUE;
+		return (bool) $this->filters( 'post_meta_summary_viewable',
+			(bool) count( $fields ),
+			$post
+		);
 	}
 
 	public function callback_post_meta_summary( $post = NULL, $item_name = '', $item_args = [] )
