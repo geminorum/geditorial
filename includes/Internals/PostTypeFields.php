@@ -1719,6 +1719,10 @@ trait PostTypeFields
 		if ( ! $data = $this->get_postmeta_legacy( $post->ID ) )
 			return $this->clean_postmeta_legacy( $post->ID, [], [] ); // Cleans empty array.
 
+		// `array( 0 => '' )`
+		if ( ! array_filter( $data ) )
+			return $this->clean_postmeta_legacy( $post->ID, [], [] ); // Cleans empty array.
+
 		if ( empty( $this->cache['fields'][$post->post_type] ) )
 			$this->cache['fields'][$post->post_type] = $this->get_posttype_fields( $post->post_type );
 
@@ -1726,6 +1730,10 @@ trait PostTypeFields
 		$meta = [];
 
 		foreach ( $data as $key => $value ) {
+
+			// no key nowhere to go!
+			if ( ! $key )
+				continue;
 
 			if ( WordPress\Strings::isEmpty( $value ) )
 				continue;
