@@ -640,15 +640,9 @@ class Byline extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		foreach ( $this->taxonomies() as $supported ) {
-
-			// hits the cache
-			if ( ! $terms = get_the_terms( $post, $supported ) )
-				continue;
-
-			if ( count( $terms ) && ! self::isError( $terms ) )
+		foreach ( $this->taxonomies() as $supported )
+			if ( WordPress\Taxonomy::theTermCount( $supported, $post ) )
 				return TRUE;
-		}
 
 		return FALSE;
 	}
@@ -925,12 +919,12 @@ class Byline extends gEditorial\Module
 		$available  = FALSE;
 		$posttypes  = $this->list_posttypes();
 		$taxonomies = $this->list_taxonomies();
-		$metakeys   = $this->_get_supported_simple_metakeys( 'imports' );
+		$simples    = $this->_get_supported_simple_metakeys( 'imports' );
 
 		if ( ModuleSettings::renderCard_import_from_people_plugin( $posttypes ) )
 			$available = TRUE;
 
-		if ( ModuleSettings::renderCard_import_from_simple_meta( $posttypes, $taxonomies, $metakeys ) )
+		if ( ModuleSettings::renderCard_import_from_simple_meta( $posttypes, $taxonomies, $simples ) )
 			$available = TRUE;
 
 		if ( ! $available )

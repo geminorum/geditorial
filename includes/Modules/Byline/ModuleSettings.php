@@ -99,7 +99,8 @@ class ModuleSettings extends gEditorial\Settings
 
 		foreach ( $legacy as $row ) {
 
-			if ( ! empty( $row['id'] ) )
+			// NOTE: cannot trust data on imported dev environment!
+			if ( ! empty( $row['id'] ) && ! WordPress\IsIt::dev() )
 				$term = WordPress\Term::get( (int) $row['id'] );
 
 			else if ( ! empty( $row['temp'] ) && ! WordPress\Strings::isEmpty( $row['temp'] ) )

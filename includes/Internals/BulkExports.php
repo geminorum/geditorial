@@ -22,7 +22,8 @@ trait BulkExports
 					$type_args['title']
 				),
 				$this->exports_get_type_download_link( $reference, $type, $context, $type_args['target'], $type_args['format'] ),
-				_x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' )
+				_x( 'Click to Download the Generated File', 'Internal: Exports: Button Title', 'geditorial-admin' ),
+				TRUE
 			);
 
 		return $html;

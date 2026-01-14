@@ -491,7 +491,7 @@ class Drafts extends gEditorial\Module
 					$meta_query = $query->query_vars['meta_query'] ?? [];
 					$meta_query[] = [
 						'key'     => $this->constant( 'metakey_secret' ),
-						'compare' => 'EXISTS'
+						'compare' => 'EXISTS',
 					];
 
 					$query->set( 'meta_query', $meta_query );

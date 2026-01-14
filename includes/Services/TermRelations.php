@@ -226,7 +226,10 @@ class TermRelations extends gEditorial\Service
 		foreach ( $terms as $term ) {
 
 			$meta = get_term_meta( $term->term_id );
-			$data = [ 'id' => $term->term_id, 'taxonomy' => $term->taxonomy ];
+			$data = [
+				'id'       => $term->term_id,
+				'taxonomy' => $term->taxonomy,
+			];
 
 			if ( 'edit' === $context ) {
 				// NOTE: must comp with `SearchSelect`

@@ -60,7 +60,10 @@ class Listtable extends WordPress\Main
 				? $terms[0]->name
 				: WordPress\Strings::getJoined( Core\Arraay::pluck( $terms, 'name' ) );
 
-		return Helper::htmlEmpty( 'column-term-empty', $title_attr ?? _x( 'No Term', 'Listtable: No Count Term Attribute', 'geditorial' ) );
+		return Helper::htmlEmpty(
+			'column-term-empty',
+			$title_attr ?? _x( 'No Term', 'Listtable: No Count Term Attribute', 'geditorial' )
+		);
 	}
 
 	public static function parseQueryTaxonomy( &$query, $taxonomy )

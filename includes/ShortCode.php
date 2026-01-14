@@ -633,7 +633,8 @@ class ShortCode extends WordPress\Main
 			if ( TRUE === $args['item_link'] ) {
 
 				// Avoid linking to the same page.
-				if ( is_singular() && ( $current = WordPress\Post::get() ) )
+				// NOTE: `setup_postdata()` maybe used!
+				if ( is_singular() && ( $current = WordPress\Post::get( get_queried_object_id() ) ) )
 					$args['item_link'] = $current->ID !== $post->ID;
 			}
 
@@ -1242,7 +1243,7 @@ class ShortCode extends WordPress\Main
 
 			$query['meta_query'][] = [
 				'key'     => $args['item_image_metakey'], // '_thumbnail_id',
-				'compare' => 'EXISTS'
+				'compare' => 'EXISTS',
 			];
 		}
 
@@ -1434,7 +1435,7 @@ class ShortCode extends WordPress\Main
 		if ( $args['cover'] )
 			$query_args['meta_query'] = [ [
 				'key'     => '_thumbnail_id',
-				'compare' => 'EXISTS'
+				'compare' => 'EXISTS',
 			] ];
 
 		$query = new \WP_Query();
@@ -1500,7 +1501,7 @@ class ShortCode extends WordPress\Main
 			return NULL;
 
 		$html = $term = $tax_query = $meta_query = '';
-		$post = WordPress\Post::get();
+		$post = WordPress\Post::get( get_queried_object_id() );
 
 		$key   = md5( serialize( $args ) );
 		$cache = wp_cache_get( $key, $posttype );
@@ -1517,7 +1518,7 @@ class ShortCode extends WordPress\Main
 
 		if ( 'all' == $args['id'] ) {
 
-			// do nothing, will collect all posttype: e.g. all entries of all sections
+			// Do nothing, will collect all post-types: e.g. all entries of all sections.
 
 		} else if ( $args['id'] ) {
 
@@ -1580,7 +1581,7 @@ class ShortCode extends WordPress\Main
 		if ( $args['cover'] )
 			$meta_query = [ [
 				'key'     => '_thumbnail_id',
-				'compare' => 'EXISTS'
+				'compare' => 'EXISTS',
 			] ];
 
 		$args['title'] = self::postTitle( $post, $args );
@@ -1722,7 +1723,7 @@ class ShortCode extends WordPress\Main
 
 			$query['meta_query'] = [ [
 				'key'     => $args['item_image_metakey'], // 'image',
-				'compare' => 'EXISTS'
+				'compare' => 'EXISTS',
 			] ];
 		}
 

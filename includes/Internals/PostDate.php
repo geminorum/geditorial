@@ -45,7 +45,7 @@ trait PostDate
 		foreach ( (array) $metakeys as $metakey )
 			$query['meta_query'][] = [
 				'key'     => $metakey,
-				'compare' => 'EXISTS'
+				'compare' => 'EXISTS',
 			];
 
 		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
