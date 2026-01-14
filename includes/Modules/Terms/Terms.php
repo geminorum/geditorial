@@ -2649,9 +2649,13 @@ class Terms extends gEditorial\Module
 		if ( ! Core\Arraay::exists( $fields, $supported ) )
 			return FALSE;
 
-		foreach ( $fields as $field )
-			if ( get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE ) )
+		foreach ( $fields as $field ) {
+
+			$data = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $taxonomy ), TRUE );
+
+			if ( $data && strlen( $data ) > 4 )
 				return $url;
+		}
 
 		return FALSE;
 	}
@@ -2696,6 +2700,12 @@ class Terms extends gEditorial\Module
 
 	private function _calendars_term_event( $term, $field, $context, $default_calendar = NULL )
 	{
+		$data = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE );
+
+		// avoid year only
+		if ( ! $data || strlen( $data ) < 5 )
+			return FALSE;
+
 		$date = Services\TaxonomyFields::getFieldDate(
 			$field,
 			$term->term_id,
