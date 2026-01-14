@@ -115,6 +115,18 @@ trait PostTypeFieldsReports
 				},
 			],
 
+			'legacy' => [
+				'title'    => _x( 'Legacy', 'Internal: PostTypeFieldsReports: Table Column', 'geditorial-admin' ),
+				'class'    => '-meta-legacies -has-count',
+				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+
+					if ( ! $legacies = $this->get_postmeta_legacy( $row->ID ) )
+						return gEditorial\Helper::htmlEmpty();
+
+					return gEditorial\Helper::htmlCount( count( $legacies ) );
+				},
+			],
+
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',
