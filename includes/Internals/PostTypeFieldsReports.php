@@ -123,6 +123,10 @@ trait PostTypeFieldsReports
 					if ( ! $legacies = $this->get_postmeta_legacy( $row->ID ) )
 						return gEditorial\Helper::htmlEmpty();
 
+					// empty: `array( 0 => '' )`
+					if ( ! array_filter( $legacies ) )
+						return Core\HTML::code( Core\HTML::sanitizeDisplay( $legacies ) );
+
 					return gEditorial\Helper::htmlCount( count( $legacies ) );
 				},
 			],
