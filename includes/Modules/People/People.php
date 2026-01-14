@@ -159,6 +159,7 @@ class People extends gEditorial\Module
 
 		if ( is_admin() ) {
 
+			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
 			$this->filter( 'taxonomy_exclude_empty', 1, 10, FALSE, 'gnetwork' );
 			$this->filter( 'taxonomy_term_rewrite_slug', 3, 8, FALSE, 'gnetwork' );
 			$this->filter_module( 'terms', 'sanitize_name', 3, 12 );
@@ -286,6 +287,14 @@ class People extends gEditorial\Module
 		return $taxonomy === $this->constant( 'main_taxonomy' )
 			? Core\Text::nameFamilyFirst( $value )
 			: $value;
+	}
+
+	public function prep_individual_admin( $individual, $raw, $value )
+	{
+		if ( $link = WordPress\URL::searchAdminTerm( $individual, $this->constant( 'main_taxonomy' ) ) )
+			return Core\HTML::link( $individual, $link, TRUE );
+
+		return $individual;
 	}
 
 	// @FILTER: `gnetwork_taxonomy_exclude_empty`
