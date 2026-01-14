@@ -171,6 +171,7 @@ class People extends gEditorial\Module
 		}
 
 		add_filter( $taxonomy.'_name', [ $this, 'people_term_name' ], 8, 3 );
+		$this->filter( 'pre_term_slug', 2, 12 );
 		$this->filter( 'pre_term_name', 2, 12 );
 		$this->filter( 'insert_term_data', 3, 9, FALSE, 'wp' );
 	}
@@ -256,11 +257,34 @@ class People extends gEditorial\Module
 		);
 	}
 
-	public function pre_term_name( $field, $taxonomy )
+	/**
+	 * Filters a term field value before it is sanitized.
+	 * NOTE: context is `db`
+	 *
+	 * @param mixed $value
+	 * @param string $taxonomy
+	 * @return mixed
+	 */
+	public function pre_term_slug( $value, $taxonomy )
 	{
-		return $taxonomy == $this->constant( 'main_taxonomy' )
-			? $this->get_name_familyfirst( $field )
-			: $field;
+		return $taxonomy === $this->constant( 'main_taxonomy' )
+			? Core\Text::formatSlug( Core\Text::nameFamilyLast( $value ) )
+			: $value;
+	}
+
+	/**
+	 * Filters a term field value before it is sanitized.
+	 * NOTE: context is `db`
+	 *
+	 * @param mixed $value
+	 * @param string $taxonomy
+	 * @return mixed
+	 */
+	public function pre_term_name( $value, $taxonomy )
+	{
+		return $taxonomy === $this->constant( 'main_taxonomy' )
+			? Core\Text::nameFamilyFirst( $value )
+			: $value;
 	}
 
 	// @FILTER: `gnetwork_taxonomy_exclude_empty`
@@ -276,8 +300,8 @@ class People extends gEditorial\Module
 	// @FILTER: `gnetwork_taxonomy_term_rewrite_slug`
 	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
 	{
-		return $taxonomy == $this->constant( 'main_taxonomy' )
-			? $this->get_name_familylast( $name, $term )
+		return $taxonomy === $this->constant( 'main_taxonomy' )
+			? Core\Text::formatSlug( Core\Text::nameFamilyLast( $term->name ) )
 			: $name;
 	}
 
