@@ -17,6 +17,19 @@ class ModuleSettings extends gEditorial\Settings
 	const ACTION_FROM_PEOPLE_PLUGIN   = 'do_import_from_people_plugin';
 	const METAKEY_FROM_PEOPLE_PLUGIN  = '_gpeople_remote';
 	const TAXONOMY_FROM_PEOPLE_PLUGIN = 'people';                        // NOTE: as set on the old `People` plugin
+	const FULLNAME_DELIMITERS         = [
+		'/',
+		'،',
+		'؛',
+		';',
+		',',
+		// '-',
+		// '_',
+		' - ', // with padding spaces
+		'—',
+		'–',
+		'|',
+	];
 
 	public static function renderCard_import_from_people_plugin( $posttypes )
 	{
@@ -289,8 +302,9 @@ class ModuleSettings extends gEditorial\Settings
 		$currents = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
 		$filters  = $parser ? gEditorial\Misc\NamesInPersian::mapRelationPrefixes() : [];
 		$prefixes = $parser ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
+		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS   : static::FULLNAME_DELIMITERS;
 
-		foreach ( Services\Markup::getSeparated( $legacy ) as $offset => $raw ) {
+		foreach ( Services\Markup::getSeparated( $legacy, $delimiters ) as $offset => $raw ) {
 
 			if ( $parser ) {
 
