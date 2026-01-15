@@ -256,7 +256,14 @@ $spacer: 1rem !default;
       }
     }
 
-    // &.-checkbox {}
+    &.-checkbox {
+      padding: ($spacer * .125) 0 0;
+
+      input[type="checkbox"] {
+        // vertical-align: unset;
+        margin: 0;
+      }
+    }
 
     &.-buttons {
       margin-top: $spacer * .25;

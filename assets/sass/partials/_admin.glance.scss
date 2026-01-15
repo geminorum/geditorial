@@ -12,16 +12,13 @@
     content: "\f105" !important;
   }
 
-  // &.-tax::before {}
-
+  &.-tax::before,
   &.-term::before {
     content: "\f323" !important; // tag
   }
 
   &.-not-in::before {
     content: "\f534" !important; // warning
-    // content: "\f223" !important; // question
-    // color: color.adjust($brand-danger, $lightness: -10%) !important; // we use `warning` class
   }
 
   &.-posttype-issue::before {
@@ -67,10 +64,8 @@
   &.-taxonomy-language::before {
     content: "\f326" !important;
   }
-}
 
-.gpeople-glance-item {
-  &.-people::before {
+  &.-taxonomy-people::before {
     content: "\f110" !important;
   }
 }

@@ -8,7 +8,7 @@ $spacer: 1rem !default;
 
 ////////////////////////////////////////////////////////////////////////////////
 .o2o-placeholder {
-  color: #AAA;
+  color: #aaa;
 }
 
 .o2o-box {
@@ -26,7 +26,8 @@ $spacer: 1rem !default;
   }
 
   .tabs-panel {
-    border: 1px solid #DFDFDF;
+    border: 1px solid #dfdfdf;
+    border-radius: 0 3px 3px 3px;
     display: none;
     padding: 10px;
 
@@ -49,6 +50,38 @@ $spacer: 1rem !default;
   .post-state {
     font-style: italic;
   }
+
+  td.o2o-col-create .o2o-icon {
+    padding-top: 3px !important;
+
+    /*rtl:begin:ignore*/
+    body.rtl & {
+      float: right;
+      margin: 0 0 0 6px;
+    }
+
+    /*rtl:end:ignore*/
+  }
+
+  .o2o-search input {
+    width: 100%;
+
+    body.rtl & {
+
+      /*rtl:ignore*/
+      padding-right: 5px;
+    }
+  }
+
+  .o2o-connections {
+    th {
+      body.rtl & {
+
+        /*rtl:ignore*/
+        text-align: right;
+      }
+    }
+  }
 }
 
 .o2o-toggle-tabs {
@@ -58,15 +91,27 @@ $spacer: 1rem !default;
   + div {
     margin-top: $spacer;
   }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:focus {
+    box-shadow: none;
+  }
 }
 
-.tabs-panel {
-  border-radius: 0 3px 3px 3px;
+.o2o-create-connections-tabs {
+  margin-top: $spacer;
+
+  .wp-tab-bar {
+    margin-bottom: 6px;
+  }
 }
 
 .o2o-results {
-  background-color: #F9F9F9;
-  border-color: #DFDFDF;
+  background-color: #f9f9f9;
+  border-color: #dfdfdf;
   border-radius: 3px;
   border-spacing: 0;
   border-style: solid;
@@ -78,7 +123,7 @@ $spacer: 1rem !default;
   }
 
   td {
-    border-top: 1px solid #DFDFDF;
+    border-top: 1px solid #dfdfdf;
     padding: 3px 6px;
   }
 
@@ -92,8 +137,8 @@ $spacer: 1rem !default;
 }
 
 .o2o-connections {
-  background-color: #F9F9F9;
-  border-color: #DFDFDF;
+  background-color: #f9f9f9;
+  border-color: #dfdfdf;
   border-radius: 3px;
   border-spacing: 0;
   border-style: solid;
@@ -101,7 +146,7 @@ $spacer: 1rem !default;
   width: 100%;
 
   td {
-    border-top: 1px solid #DFDFDF;
+    border-top: 1px solid #dfdfdf;
     padding: 3px 6px;
 
     input[type="text"] {
@@ -111,7 +156,7 @@ $spacer: 1rem !default;
 
   th {
     padding: 3px 6px;
-    background-color: #F1F1F1;
+    background-color: #f1f1f1;
     text-align: left;
   }
 }

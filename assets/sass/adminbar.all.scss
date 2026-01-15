@@ -7,59 +7,15 @@
 @import "partials/base";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-@import "partials/icon.all";
-@import "partials/spinner.all";
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 @import "partials/drafts.adminbar.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-
-#wp-admin-bar-geditorial {
-  > a {
-    padding: 0 5px !important;
-  }
-
-  span.-count {
-    background: $gray-lighter;
-    color: $gray-dark;
-    margin: 0;
-    border-radius: 10px;
-
-    display: inline;
-    padding: 2px 5px;
-    font-size: 10px;
-    font-weight: 700;
-    text-shadow: none;
-  }
-
-  code {
-    background: $gray-lighter;
-    color: $gray-dark;
-  }
-
-  // ajax responses
-  div.notice p {
-    padding: 0 10px;
-    margin: 0;
-    line-height: 26px;
-  }
-
-  // .ab-submenu .ab-item {
-  //   > .geditorial-spinner {}
-  // }
-
-  li.-danger .ab-item {
-    color: $brand-danger !important;
-
-    &:hover {
-      color: color.adjust($brand-danger, $lightness: -20%) !important;
-    }
-  }
-}
-
-////////////////////////////////////////////////////////////////////////////////
 #wpadminbar {
+
+  // here must be restricted to adminbar only
+  @import "partials/icon.all";
+  @import "partials/spinner.all";
+
   .geditorial-adminbar-node {
     > a.ab-item {
       position: relative;
@@ -128,6 +84,50 @@
     img {
       max-width: 100%;
       height: auto;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+#wp-admin-bar-geditorial {
+  > a {
+    padding: 0 5px !important;
+  }
+
+  span.-count {
+    background: $gray-lighter;
+    color: $gray-dark;
+    margin: 0;
+    border-radius: 10px;
+
+    display: inline;
+    padding: 2px 5px;
+    font-size: 10px;
+    font-weight: 700;
+    text-shadow: none;
+  }
+
+  code {
+    background: $gray-lighter;
+    color: $gray-dark;
+  }
+
+  // ajax responses
+  div.notice p {
+    padding: 0 10px;
+    margin: 0;
+    line-height: 26px;
+  }
+
+  // .ab-submenu .ab-item {
+  //   > .geditorial-spinner {}
+  // }
+
+  li.-danger .ab-item {
+    color: $brand-danger !important;
+
+    &:hover {
+      color: color.adjust($brand-danger, $lightness: -20%) !important;
     }
   }
 }

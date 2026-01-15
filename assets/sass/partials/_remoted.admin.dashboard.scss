@@ -15,7 +15,7 @@
 
   .-file-queue {
     width: 100%;
-    padding: 0 $spacer * .25;
+    // padding: 0 $spacer * .25;
     font-size: smaller;
     text-align: center;
 
@@ -32,6 +32,21 @@
         &:hover {
           color: color.adjust($brand-danger, $lightness: -20%);
         }
+      }
+    }
+
+    div.-added {
+      /*rtl:ignore*/
+      direction: ltr;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      span.-loading,
+      span.-filename,
+      span.-filesize,
+      strong {
+        margin-right: $spacer * .25;
       }
     }
   }

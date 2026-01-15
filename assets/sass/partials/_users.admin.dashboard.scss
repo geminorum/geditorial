@@ -15,4 +15,16 @@
       border-radius: 50%;
     }
   }
+
+  ul.-rows {
+    .-row {
+      font-size: $spacer * .75;
+      line-height: $spacer;
+      margin-bottom: $spacer * .5;
+
+      .-icon {
+        margin-right: $spacer * .5;
+      }
+    }
+  }
 }

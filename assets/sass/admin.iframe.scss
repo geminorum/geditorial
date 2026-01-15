@@ -43,6 +43,13 @@ body.admin_page_geditorial-dead-drops-signal {
 .geditorial-admin-wrap {
   margin: 0 !important;
 
+  > p.-description.-empty {
+    margin: ($spacer * 3) ($spacer * 2);
+    text-align: center;
+    font-size: larger;
+    color: $gray-light;
+  }
+
   .wrap-title {
     .-title {
       margin: .75rem 0;
