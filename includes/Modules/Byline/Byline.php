@@ -907,6 +907,19 @@ class Byline extends gEditorial\Module
 		);
 	}
 
+	private function _get_supported_byline_metakeys( $context = NULL )
+	{
+		return $this->filters( 'supported_byline_metakeys',
+			[
+				'_meta_byline'             => _x( 'Meta Byline', 'Metakey', 'geditorial-byline' ),
+				'_meta_publication_byline' => _x( 'Publication Byline', 'Metakey', 'geditorial-byline' ),
+				'_meta_featured_people'    => _x( 'Featured People', 'Metakey', 'geditorial-byline' ),
+				'byline'                   => _x( 'Custom Meta Byline', 'Metakey', 'geditorial-byline' ),
+			],
+			$context
+		);
+	}
+
 	public function imports_settings( $sub )
 	{
 		$this->check_settings( $sub, 'imports', 'per_page' );
@@ -920,11 +933,15 @@ class Byline extends gEditorial\Module
 		$posttypes  = $this->list_posttypes();
 		$taxonomies = $this->list_taxonomies();
 		$simples    = $this->_get_supported_simple_metakeys( 'imports' );
+		$bylines    = $this->_get_supported_byline_metakeys( 'imports' );
 
 		if ( ModuleSettings::renderCard_import_from_people_plugin( $posttypes ) )
 			$available = TRUE;
 
 		if ( ModuleSettings::renderCard_import_from_simple_meta( $posttypes, $taxonomies, $simples ) )
+			$available = TRUE;
+
+		if ( ModuleSettings::renderCard_import_from_byline_meta( $posttypes, $taxonomies, $bylines ) )
 			$available = TRUE;
 
 		if ( ! $available )
@@ -935,11 +952,57 @@ class Byline extends gEditorial\Module
 
 	protected function render_imports_html_before( $uri, $sub )
 	{
-		if ( $this->_do_import_from_simple_meta( $sub ) )
+		if ( $this->_do_import_from_byline_meta( $sub ) )
+			return FALSE; // avoid further UI
+
+		else if ( $this->_do_import_from_simple_meta( $sub ) )
 			return FALSE; // avoid further UI
 
 		else if ( $this->_do_import_from_people_plugin( $sub ) )
 			return FALSE; // avoid further UI
+	}
+
+	private function _do_import_from_byline_meta( $sub )
+	{
+		if ( ! self::do( ModuleSettings::ACTION_FROM_BYLINE_META ) )
+			return FALSE;
+
+		if ( ! $posttype = self::req( 'type' ) )
+			return ! gEditorial\Info::renderEmptyPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $metakey = self::req( 'metakey' ) )
+			return ! gEditorial\Info::renderNoDataAvailable(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $taxonomy = self::req( 'taxonomy' ) )
+			return ! gEditorial\Info::renderEmptyTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return ! gEditorial\Info::renderNotSupportedPosttype(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! $this->taxonomy_supported( $taxonomy ) )
+			return ! gEditorial\Info::renderNotSupportedTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! in_array( $taxonomy, WordPress\PostType::taxonomies( $posttype ), TRUE ) )
+			return ! gEditorial\Info::renderNotSupportedTaxonomy(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		if ( ! array_key_exists( $metakey, $this->_get_supported_byline_metakeys( 'imports' ) ) )
+			return ! gEditorial\Info::renderNotSupportedField(
+				ModuleSettings::processingErrorOpen(), '</div></div>' );
+
+		$this->raise_resources();
+
+		return ModuleSettings::handleImport_from_byline_meta(
+			$posttype,
+			$taxonomy,
+			$metakey,
+			$this->get_sub_limit_option( $sub, 'imports' )
+		);
 	}
 
 	private function _do_import_from_simple_meta( $sub )

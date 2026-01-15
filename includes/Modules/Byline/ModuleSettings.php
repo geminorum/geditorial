@@ -367,4 +367,267 @@ class ModuleSettings extends gEditorial\Settings
 				WordPress\Post::title( $post ),
 			], TRUE );
 	}
+
+	public static function renderCard_import_from_byline_meta( $posttypes, $taxonomies, $metakeys )
+	{
+		if ( empty( $posttypes ) || empty( $taxonomies ) || empty( $metakeys ) )
+			return FALSE;
+
+		if ( ! $count = WordPress\Database::countPostMetaByKey( array_keys( $metakeys ) ) )
+			return FALSE;
+
+		// WTF
+		$defaults = [
+			'metakey'  => '_meta_byline',
+			'taxonomy' => 'people',
+			'mode'     => 'avoid',
+		];
+
+		$modes = [
+			'avoid'  => _x( '<b>Avoid</b> import if the post already have any byline terms.', 'Option', 'geditorial-byline' ),
+			'append' => _x( '<b>Append</b> import even if the post already have byline terms.', 'Option', 'geditorial-byline' ),
+		];
+
+		echo self::toolboxCardOpen( _x( 'From Byline Meta', 'Card Title', 'geditorial-byline' ), FALSE );
+
+			echo Core\HTML::wrap( Core\HTML::dropdown( $metakeys, [
+				'name'       => 'metakey',
+				'selected'   => self::req( 'metakey', $defaults['metakey'] ) ?: '',
+				'none_title' => self::showOptionNone(),
+				'class'      => 'do-dynamicsubmit',
+				'data'       => [
+					'dynamicsubmit-modifier' => static::SELECTOR_FROM_BYLINE_META,
+				],
+			] ), 'field-wrap -select' );
+
+			echo Core\HTML::wrap( Core\HTML::dropdown( $taxonomies, [
+				'name'       => 'taxonomy',
+				'selected'   => self::req( 'taxonomy', $defaults['taxonomy'] ) ?: '',
+				'none_title' => self::showOptionNone(),
+				'class'      => 'do-dynamicsubmit',
+				'data'       => [
+					'dynamicsubmit-modifier' => static::SELECTOR_FROM_BYLINE_META,
+				],
+			] ), 'field-wrap -select' );
+
+			echo Core\HTML::wrap( Core\HTML::radioSelect( $modes, [
+				'id'       => implode( '-', [ static::BASE, static::MODULE, 'mode' ] ),
+				'name'     => 'mode',
+				'selected' => self::req( 'mode', $defaults['mode'] ) ?: '',
+				'class'    => 'do-dynamicsubmit',
+				'data'     => [
+					'dynamicsubmit-modifier' => static::SELECTOR_FROM_BYLINE_META,
+				],
+			] ), 'field-wrap -radio' );
+
+			echo '<div class="-wrap -wrap-button-row">';
+
+			foreach ( $posttypes as $posttype => $label )
+				echo Core\HTML::button( sprintf(
+					/* translators: `%s`: post-type label */
+					_x( 'On %s', 'Button', 'geditorial-byline' ),
+					$label
+				), add_query_arg( [
+					'action'   => static::ACTION_FROM_BYLINE_META,
+					'type'     => $posttype,
+					'metakey'  => $defaults['metakey'],
+					'taxonomy' => $defaults['taxonomy'],
+					'mode'     => $defaults['mode'],
+				] ), FALSE, FALSE, [
+					'dynamicsubmit-target' => static::SELECTOR_FROM_BYLINE_META,
+				] );
+
+			echo gEditorial\Ajax::spinner( TRUE, [
+				'dynamicsubmit-loading' => static::SELECTOR_FROM_BYLINE_META,
+			] );
+
+			Core\HTML::desc( sprintf(
+				/* translators: `%s`: number of rows found */
+				_x( 'Migrate meta-data of found %s rows into current module system.', 'Message', 'geditorial-byline' ),
+				Core\Number::format( $count )
+			) );
+
+			echo '</div>';
+
+			if ( WordPress\IsIt::dev() ) {
+
+				$data = $query = [];
+
+				if ( 'avoid' === self::req( 'mode', $defaults['mode'] ) )
+					$query['tax_query'] = [ [
+						'taxonomy' => self::req( 'taxonomy', $defaults['taxonomy'] ),
+						'operator' => 'NOT EXISTS',
+					] ];
+
+				foreach ( $metakeys as $metakey => $label ) {
+
+					$list = WordPress\PostType::getIDListByMetakey(
+						$metakey,
+						array_keys( $posttypes ),
+						$query
+					);
+
+					if ( count( $list ) )
+						$data[$metakey] = $list;
+				}
+
+				if ( $data ) {
+					echo '<br />';
+					// NOTE: the `.card` supports dumping!
+					self::dump( $data );
+				}
+			}
+
+		echo '</div>';
+
+		gEditorial\Scripts::enqueueDynamicSubmit();
+
+		return TRUE;
+	}
+
+	public static function handleImport_from_byline_meta( $posttype, $taxonomy, $metakey, $limit = 25 )
+	{
+		if ( empty( $metakey ) || empty( $taxonomy ) )
+			return self::processingAllDone();
+
+		$query = [
+			'meta_query' => [ [
+				'key'     => $metakey,
+				'compare' => 'EXISTS',
+			] ],
+		];
+
+		if ( 'avoid' === self::req( 'mode', 'avoid' ) )
+			$query['tax_query'] = [ [
+				'taxonomy' => $taxonomy,
+				'operator' => 'NOT EXISTS',
+			] ];
+
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+
+		if ( empty( $posts ) )
+			return self::processingAllDone();
+
+		$parser = Services\Individuals::isParserAvailable();
+
+		echo self::processingListOpen();
+
+		foreach ( $posts as $post )
+			self::post_set_byline_from_byline_meta(
+				$post,
+				$taxonomy,
+				$metakey,
+				$parser,
+				TRUE
+			);
+
+		echo '</ul></div>';
+
+		return WordPress\Redirect::doJS( add_query_arg( [
+			'action'   => static::ACTION_FROM_BYLINE_META,
+			'type'     => $posttype,
+			'taxonomy' => $taxonomy,
+			'metakey'  => $metakey,
+			'paged'    => self::paged() + 1,
+		] ) );
+	}
+
+	public static function post_set_byline_from_byline_meta( $post, $taxonomy, $metakey, $parser, $verbose = FALSE )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+
+		if ( ! $legacy = get_post_meta( $post->ID, $metakey, TRUE ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
+
+		if ( WordPress\Strings::isEmpty( $legacy ) )
+			return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );
+
+		$data     = [];
+		$currents = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
+
+		if ( $parser ) {
+
+			$parsed = Misc\NamesInPersian::parseByline( $legacy );
+
+			if ( empty( $parsed ) )
+				return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );
+
+			foreach ( $parsed as $offset => $row ) {
+
+				if ( ! empty( $row['id'] ) )
+					$term = WordPress\Term::get( (int) $row['id'] );
+
+				else if ( ! empty( $row['name'] ) )
+					$term = WordPress\Taxonomy::getTargetTerm( $row['name'], $taxonomy );
+
+				else
+					continue;
+
+				if ( ! $term )
+					continue;
+
+				$relation = array_filter( $row );
+				$order    = $relation['order'] ?? $currents;
+				unset( $relation['name'], $relation['order'] );
+
+				$relation['id'] = $term->term_id;
+				$relation[Services\TermRelations::FIELD_ORDER] = $order;
+
+				$data[] = $relation;
+				$currents++;
+			}
+
+		} else {
+
+			foreach ( Services\Markup::getSeparated( $legacy, static::FULLNAME_DELIMITERS ) as $offset => $raw ) {
+
+				if ( WordPress\Strings::isEmpty( $raw ) )
+					continue;
+
+				if ( ! $term = WordPress\Taxonomy::getTargetTerm( $raw, $taxonomy ) )
+					continue;
+
+				$relation = [
+					'id'       => $term->term_id,
+					'relation' => $metakey,
+				];
+
+				// NOTE: first one is empty
+				if ( $currents )
+					$relation[Services\TermRelations::FIELD_ORDER] = $currents;
+
+				$data[] = $relation;
+				$currents++;
+			}
+		}
+
+		if ( ! count( $data ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'No byline meta-data available for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		if ( ! Services\TermRelations::updatePostData( $post, $data ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'There is problem updating byline meta-data for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		if ( ! delete_post_meta( $post->ID, $metakey ) )
+			return self::processingListItem( $verbose,
+				/* translators: `%s`: post title */
+				_x( 'There is problem removing byline meta-data for &ldquo;%s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+					WordPress\Post::title( $post ),
+				] );
+
+		return self::processingListItem( $verbose,
+			/* translators: `%1$s`: byline string, `%2$s`: post title */
+			_x( 'Byline %1$s migrated for &ldquo;%2$s&rdquo;.', 'Notice', 'geditorial-byline' ), [
+				ModuleTemplate::renderDefault( [ 'echo' => FALSE ], $post ),
+				WordPress\Post::title( $post ),
+			], TRUE );
+	}
 }
