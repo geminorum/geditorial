@@ -106,6 +106,13 @@ class Modulation extends gEditorial\Service
 			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Service: Modulation', 'geditorial-admin' ) : $message );
 	}
 
+	public static function moduleCheckPersianDate( $message = NULL )
+	{
+		return self::const( 'GPERSIANDATE_VERSION' )
+			? FALSE
+			: _x( 'Needs gPersianDate', 'Modules: Calendar', 'geditorial-admin' );
+	}
+
 	public static function moduleCheckLocale( $locale, $message = NULL )
 	{
 		$current = Core\L10n::locale( TRUE );

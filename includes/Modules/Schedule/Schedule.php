@@ -23,7 +23,7 @@ class Schedule extends gEditorial\Module
 			'icon'     => 'calendar-alt',
 			'access'   => 'beta',
 			'frontend' => FALSE,
-			'disabled' => defined( 'GPERSIANDATE_VERSION' ) ? FALSE : _x( 'Needs gPersianDate', 'Modules: Schedule', 'geditorial-admin' ),
+			'disabled' => Services\Modulation::moduleCheckPersianDate(),
 			'keywords' => [
 				'calendar',
 			],
