@@ -9,8 +9,21 @@ use geminorum\gEditorial\WordPress;
 
 class Individuals extends gEditorial\Service
 {
-	const FORMAT_TEMPLATE    = '%2$s, %1$s';
-	const SEPARATOR_TEMPLATE = ', ';
+	const FORMAT_TEMPLATE     = '%2$s, %1$s';
+	const SEPARATOR_TEMPLATE  = ', ';
+	const FULLNAME_DELIMITERS = [
+		'/',
+		'،',
+		'؛',
+		';',
+		',',
+		// '-',
+		// '_',
+		' - ', // with padding spaces
+		'—',
+		'–',
+		'|',
+	];
 
 	public static function setup()
 	{

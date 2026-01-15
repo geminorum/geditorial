@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -40,6 +41,9 @@ class ModuleHelper extends gEditorial\Helper
 			)
 		);
 
+		$parser     = Services\Individuals::isParserAvailable();
+		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS : Service\Individuals::FULLNAME_DELIMITERS;
+
 		// if ( ! $overview = WordPress\Post::overview( $post, 'hints' ) )
 		// 	$overview = WordPress\Post::edit( $post );
 
@@ -50,12 +54,15 @@ class ModuleHelper extends gEditorial\Helper
 
 			$meta = ModuleTemplate::getMetaField( $field, [
 				'id'      => $post,
-				'context' => $context,   // maybe `FALSE`
+				'context' => 'view',
 			], FALSE, static::MODULE );
 
-			if ( $meta )
+			if ( WordPress\Strings::isEmpty( $meta ) )
+				continue;
+
+			foreach ( Services\Markup::getSeparated( $meta, $delimiters ) as $hint )
 				$hints[] = [
-					'text'     => $meta,
+					'text'     => $hint,
 					// 'link'     => $overview ?: '',
 					'title'    => sprintf( '%s :: %s', $field['title'] ?: $field['name'], $field['description'] ?: '' ),
 					'class'    => static::classs( $field_key ),
