@@ -11,6 +11,7 @@ trait TemplateTaxonomy
 {
 
 	// NOTE: since we override the archive, there are no admin-bar edit link available on the archives!
+	// NOTE: using on `init` since hooking on `template_include` is too late for `admin_bar_init`.
 	protected function templatetaxonomy__hook_adminbar( $constant, $option = 'archive_override' )
 	{
 		if ( is_admin() )

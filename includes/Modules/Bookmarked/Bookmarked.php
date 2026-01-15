@@ -358,7 +358,7 @@ class Bookmarked extends gEditorial\Module
 
 	public function prepped_data( $data, $context, $post, $raw, $types )
 	{
-		if ( in_array( $context, [ 'summary' ] ) )
+		if ( in_array( $context, [ 'summary', 'tabs' ] ) )
 			return ModuleHelper::prepDataForSummary(
 				$data,
 				Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),

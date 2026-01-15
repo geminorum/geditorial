@@ -69,10 +69,10 @@ trait CoreRoles
 			return TRUE;
 
 		// NOTE: can't read the post!
-		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+		if ( ! WordPress\Post::can( $post, 'read_post', $user_id  ) )
 			return $fallback;
 
-		$edit = WordPress\Post::can( $post, 'edit_post' );
+		$edit = WordPress\Post::can( $post, 'edit_post', $user_id  );
 
 		foreach ( (array) $whats as $what ) {
 

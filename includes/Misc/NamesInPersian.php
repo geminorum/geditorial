@@ -23,6 +23,9 @@ class NamesInPersian extends Core\Base
 		// already cleaned!
 		// $text = WordPress\Strings::cleanupChars( $text );
 
+		if ( Core\Text::strLen( $nospace ) < 4 )
+			return FALSE;
+
 		if ( in_array( $nospace, self::getBlacklistStrings(), TRUE ) )
 			return FALSE;
 
@@ -277,6 +280,19 @@ class NamesInPersian extends Core\Base
 	public static function getBlacklistStrings()
 	{
 		return [
+			'مؤلف',
+			'مولف',
+			'مؤلفآزمایشی',
+			'آزمایشمؤلف',
+			'آزمایشمولف',
+			'مؤلفتخیلی',
+			'مولفتخیلی',
+			'مترجمتخیلی',
+			'ترجمهمترجمتخیلی',
+			'خودش',
+			'خود',
+			'نویسنده',
+			'آقاینویسنده',
 			'نامونامخانوادگی',
 			'خالی',
 			'دکتر',
@@ -388,14 +404,16 @@ class NamesInPersian extends Core\Base
 	public static function parseByline( $raw )
 	{
 		$same = [
-			':'       => '',
-			// '/' => '| برگردان ', this is norm on firooze.net
+			':'   => '',
 			'/'   => '|',
 			'،'   => '|',
 			'؛'   => '|',
 			';'   => '|',
 			','   => '|',
 			' و ' => '|',
+			' - ' => '|',
+			'—'   => '|',
+			'–'   => '|',
 		];
 
 		$map = [
@@ -406,6 +424,7 @@ class NamesInPersian extends Core\Base
 			'ترجمهٔ'          => 'translator',
 			'ترجمه از'        => 'translator',
 			'ترجمه'           => 'translator',
+			// 'ت‍رج‍م‍ه'           => 'translator',
 			'برگردان از'      => 'translator',
 			'برگردان'         => 'translator',
 			'گفت‌و‌گو'        => 'interviewer',
@@ -416,9 +435,11 @@ class NamesInPersian extends Core\Base
 			'عکس'             => 'photographer',
 			'متن‌ها'          => 'commentator',
 			'متن'             => 'commentator',
+			'به کوشش'         => 'collector',
 		];
 
 		$people = [];
+		$prefixes = self::getFullnamePrefixes();
 
 		foreach ( (array) $raw as $string ) {
 
@@ -435,8 +456,18 @@ class NamesInPersian extends Core\Base
 			foreach ( $parts as $part ) {
 
 				$passed = FALSE;
+				$notes  = '';
+				$filter = '';
 
-				if ( $person = trim( $part ) ) {
+				if ( $normalized = Core\Text::normalizeWhitespace( $part ) ) {
+
+					if ( ! self::isValidFullname( $normalized ) ) {
+						$passed = TRUE;
+						continue;
+					}
+
+					list( $person, $notes )  = Core\Text::extractSuffix( $normalized );
+					list( $person, $filter ) = self::extractFullnamePrefix( $person );
 
 					foreach ( $map as $look => $into ) {
 
@@ -444,10 +475,14 @@ class NamesInPersian extends Core\Base
 
 							if ( $name = trim( str_ireplace( $look, '', $person ) ) ) {
 
+								$fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $name, $prefixes ) );
+
 								$people[] = [
-									'name'   => apply_filters( 'string_format_i18n', $name ),
-									'rel'    => $into,
-									'filter' => self::getRelationFilter( $into, $name ),
+									'order'    => count( $people ),
+									'name'     => $fullname, // apply_filters( 'string_format_i18n', $name ),
+									'relation' => $into,
+									'notes'    => $notes,
+									'filter'   => $filter ?: self::getRelationFilter( $into, $name ),
 								];
 							}
 
@@ -458,10 +493,14 @@ class NamesInPersian extends Core\Base
 
 					if ( ! $passed && $person ) {
 
+						$fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $person, $prefixes ) );
+
 						$people[] = [
-							'name'   => apply_filters( 'string_format_i18n', $person ),
-							'rel'    => 'author',
-							'filter' => self::getRelationFilter( 'author', $person ),
+							'order'  => count( $people ),
+							'name'   => $fullname, // apply_filters( 'string_format_i18n', $person ),
+							'notes'  => $notes,
+							// 'relation' => 'author',
+							'filter'   => $filter, // self::getRelationFilter( 'author', $person ),
 						];
 					}
 				}
@@ -478,22 +517,25 @@ class NamesInPersian extends Core\Base
 			return FALSE;
 
 		if ( 'translator' == $rel )
-			return 'ترجمه:';
+			return 'ترجمه';
 
 		if ( 'illustrator' == $rel )
-			return 'طرح‌ها:';
+			return 'طراح';
 
 		if ( 'selector' == $rel )
-			return 'انتخاب:';
+			return 'انتخاب';
 
 		if ( 'interviewer' == $rel )
 			return 'گفت‌وگو:';
 
 		if ( 'photographer' == $rel )
-			return 'عکس‌ها:';
+			return 'عکاس:';
 
 		if ( 'commentator' == $rel )
 			return 'متن:';
+
+		if ( 'collector' == $rel )
+			return 'به کوشش';
 
 		return FALSE;
 	}
@@ -506,7 +548,57 @@ class NamesInPersian extends Core\Base
 			'photographer' => 'عکاس',
 			'translator'   => 'ترجمه',
 			'proofreader'  => 'ویراسته',
+			'collector'    => 'به کوشش',
 		];
+	}
+
+	public static function getFullnamePrefixes_NEW()
+	{
+		return [
+			'حجت‌الاسلام' => [
+				'حجت‌الاسلام',
+				'حجت الاسلام',
+				'حضرت حجت‌الاسلام',
+				'حضرت حجت الاسلام',
+				],
+			'آیت‌الله' => [
+				'آیت‌الله',
+				'آیت الله',
+				'حضرت آیت‌الله',
+				'حضرت آیت الله',
+			],
+			'دکتر' => [
+				'دکتر',
+				'آقای دکتر',
+				'خانم دکتر',
+				'سرکار خانم دکتر',
+				'سرکار دکتر',
+			],
+			'مهندس' => [
+				'مهندس',
+				'آقای مهندس',
+				'جناب مهندس',
+			],
+			'استاد' => [
+				'استاد',
+				'حضرت استاد',
+			],
+			// '' => [],
+			// '' => [],
+			// '' => [],
+		];
+	}
+
+	public static function extractFullnamePrefix( $text )
+	{
+		foreach ( self::getFullnamePrefixes_NEW() as $filter => $prefixes )
+			if ( Core\Text::starts( $text, $prefixes ) )
+				return [
+					Core\Text::trim( Core\Text::stripPrefix( $text, $prefixes ) ),
+					$filter,
+				];
+
+		return [ $text, '' ];
 	}
 
 	// NOTE: must use with `Core\Text::trimQuotes()` to strip `:`
@@ -519,6 +611,15 @@ class NamesInPersian extends Core\Base
 			'مترجم',
 			'ترجمه',
 			'برگردان',
+			'برگردان به انگلیسی',
+			'به انگلیسی',
+			'برگردان به فارسی',
+			'به فارسی',
+			'برگردان از انگلیسی',
+			'از انگلیسی',
+			'به قلم',
+			'به تقریر',
+			'تقریر',
 			'ویرایش',
 			'ویراسته',
 			'به کوشش',

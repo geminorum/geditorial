@@ -471,7 +471,7 @@ trait TemplatePostType
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => Core\HTML::buttonClass( FALSE, [ '-form-save-draft', 'disabled' ] ),
+			'class' => Core\HTML::buttonClass( FALSE, [ '-form-save-data', 'disabled' ] ),
 			'data'  => [
 				'target'   => $target,
 				'type'     => $posttype,

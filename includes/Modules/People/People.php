@@ -166,7 +166,7 @@ class People extends gEditorial\Module
 
 		} else {
 
-			$this->filter( 'get_terms_defaults', 2, 99 );
+			$this->filter( 'get_terms_defaults', 2, 99, 'front' );
 			$this->filter( 'single_term_title', 1, 8 );
 			$this->filter( 'search_terms_widget_results', 5, 12, FALSE, $this->base );
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
@@ -323,8 +323,7 @@ class People extends gEditorial\Module
 			: $name;
 	}
 
-	// NOTE: front only
-	public function get_terms_defaults( $defaults, $taxonomies )
+	public function get_terms_defaults_front( $defaults, $taxonomies )
 	{
 		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
 			return $defaults;
@@ -364,6 +363,7 @@ class People extends gEditorial\Module
 			// 'search'     => $target,
 			'name__like' => $target,
 			'taxonomy'   => $this->constant( 'main_taxonomy' ),
+			'exclude'    => Core\Arraay::pluck( $terms, 'term_id' ),
 			'orderby'    => 'name',
 			'hide_empty' => ! empty( $instance['include_empty'] ),
 		] );

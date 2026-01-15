@@ -382,7 +382,7 @@ class Socialite extends gEditorial\Module
 				return Core\Third::getHandleURL( $meta, $field );
 
 			// Extra support for front-end only.
-			case '_contact':
+			case 'contact':
 				return Core\Text::trim( $meta );
 		}
 

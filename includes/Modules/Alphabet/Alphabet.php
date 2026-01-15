@@ -432,6 +432,7 @@ class Alphabet extends gEditorial\Module
 		return '<li>'.implode( '</li><li>', $list ).'</li>';
 	}
 
+	// TODO: Move to `Core\HTML`
 	private function _get_alphabet_list_mode( $mode, $defaults )
 	{
 		$args = self::atts( [

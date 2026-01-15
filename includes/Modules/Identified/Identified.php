@@ -23,7 +23,7 @@ class Identified extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'identifier',
-				'publicapi',
+				'has-public-api',
 			],
 		];
 	}

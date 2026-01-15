@@ -25,7 +25,7 @@ class NationalLibrary extends gEditorial\Module
 			'keywords' => [
 				'book',
 				'publication',
-				'publicapi',
+				'has-public-api',
 				'persian',
 				'woocommerce',
 				'tabmodule',

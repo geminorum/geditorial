@@ -30,7 +30,7 @@ class Iranian extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckLocale( 'fa_IR' ),
 			'keywords' => [
-				'publicapi',
+				'has-public-api',
 				'persian',
 			],
 		];

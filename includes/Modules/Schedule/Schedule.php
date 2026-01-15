@@ -26,6 +26,7 @@ class Schedule extends gEditorial\Module
 			'disabled' => Services\Modulation::moduleCheckPersianDate(),
 			'keywords' => [
 				'calendar',
+				'needs-persian-date',
 			],
 		];
 	}
