@@ -21,6 +21,9 @@
     alphabet: '[data-' + module + '=\'alphabet\']', // example: warehouse partials values (UpperCase)
     slug: '[data-' + module + '=\'slug\']', // example: warehouse partials names (LowerCase)
     hook: '[data-' + module + '=\'hook\']',
+    // path: '[data-' + module + '=\'path\']', // TODO!
+    // pattern: '[data-' + module + '=\'pattern\']', // TODO!
+    // url: '[data-' + module + '=\'url\']', // TODO!: support relative paths
     identity: '[data-' + module + '=\'identity\']',
     phone: '[data-' + module + '=\'phone\']',
     isbn: '[data-' + module + '=\'isbn\']',
@@ -497,7 +500,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\]/g, '').trim());
-        // TODO: check for pattern/validate year in persian
+        // TODO: check for pattern/validate year in Persian
       });
     },
 
@@ -508,7 +511,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\]/g, '').trim());
-        // TODO: check for pattern/validate date in persian
+        // TODO: check for pattern/validate date in Persian
       });
     },
 
@@ -519,7 +522,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\: ]/g, '').trim());
-        // TODO: check for pattern/validate datetime in persian
+        // TODO: check for pattern/validate datetime in Persian
       });
     },
 
@@ -533,7 +536,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\ ]/g, '').trim());
-        // TODO: check for pattern/validate distance in persian
+        // TODO: check for pattern/validate distance in Persian
       });
     },
 
@@ -544,7 +547,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\: ]/g, '').trim());
-        // TODO: check for pattern/validate duration in persian
+        // TODO: check for pattern/validate duration in Persian
       });
     },
 
@@ -555,7 +558,7 @@
       } catch (e) {}
       $el.on('change', function () {
         $el.val(toEnglish(sanitizeDashes($el.val())).replace(/[^\d.\-/\\ ]/g, '').trim());
-        // TODO: check for pattern/validate duration in persian
+        // TODO: check for pattern/validate duration in Persian
       });
     }
 
@@ -615,7 +618,7 @@
         if (text) metadata = metadata + $(this).data('meta-title') + ': ' + text + '\n';
       });
 
-      // Frontmatter
+      // `Frontmatter`
       if (metadata) metadata = '---\n' + metadata + '---\n\n';
 
       downloadText(filename + '.md', metadata + '## ' + filename + '\n' + $(c).val());
@@ -623,7 +626,7 @@
   };
 
   $(function () {
-    for (var type in types) { // eslint-disable-line no-var
+    for (const type in types) {
       $(types[type]).each(function () {
         $(this).data(module, type)
           .addClass('target-' + module)
@@ -648,14 +651,14 @@
       }
     }
 
-    for (var input in inputs) { // eslint-disable-line no-var
+    for (const input in inputs) {
       $(inputs[input]).each(function () {
         inputCallbacks[input].call(this);
       });
     }
 
     if (typeof QTags !== 'undefined') {
-      for (var button in quickButtons) { // eslint-disable-line no-var
+      for (const button in quickButtons) {
         QTags.addButton(
           button,
           strings['qtag_' + button],

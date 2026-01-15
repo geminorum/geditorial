@@ -1,20 +1,43 @@
 /* global FileReader */
 
-(function ($, plugin, module, section) {
+(function ($, plugin, mainkey, context) {
   const sliceSize = 1000 * 1024;
   let reader = {};
   let file = {};
 
   const s = {
-    action: [plugin._base, module].join('_'),
-    classs: [plugin._base, module].join('-'),
-    input: '#' + [plugin._base, module, section, 'input'].join('-'),
-    name: '#' + [plugin._base, module, section, 'name'].join('-'),
-    submit: '#' + [plugin._base, module, section, 'submit'].join('-'),
-    progress: '#' + [plugin._base, module, section, 'progress'].join('-')
+    action: [plugin._base, mainkey].join('_'),
+    classs: [plugin._base, mainkey].join('-'),
+    input: '#' + [plugin._base, mainkey, context, 'input'].join('-'),
+    name: '#' + [plugin._base, mainkey, context, 'name'].join('-'),
+    submit: '#' + [plugin._base, mainkey, context, 'submit'].join('-'),
+    progress: '#' + [plugin._base, mainkey, context, 'progress'].join('-')
   };
 
   const app = {
+    init: function () {
+      $(s.input).on('change', function () {
+        const filename = $(this).val();
+        if (filename !== '') {
+          $(s.name).html(u.baseName(filename) + ' (' + u.formatBytes(this.files[0].size) + ')').show();
+          $(s.submit).prop('disabled', false);
+        } else {
+          $(s.name).html('').hide();
+          $(s.submit).prop('disabled', true);
+        }
+      });
+
+      $(s.submit).on('click', function (event) {
+        event.preventDefault();
+        $(this).prop('disabled', true);
+
+        reader = new FileReader();
+        file = document.querySelector(s.input).files[0];
+
+        app.check();
+      });
+    },
+
     check: function () {
       const $submit = $(s.submit);
       const $spinner = $(s.progress).prev('.spinner');
@@ -157,6 +180,7 @@
         return a[i++];
       });
     },
+
     tP: function (n) {
       const p = '۰'.charCodeAt(0);
       return n.toString().replace(/\d+/g, function (m) {
@@ -165,6 +189,7 @@
         }).join('');
       });
     },
+
     io: function (s, h) {
       $(s).fadeOut('fast', function () {
         $(this).html(h).fadeIn();
@@ -173,27 +198,11 @@
   };
 
   $(function () {
-    $(s.input).on('change', function () {
-      const filename = $(this).val();
-      if (filename !== '') {
-        $(s.name).html(u.baseName(filename) + ' (' + u.formatBytes(this.files[0].size) + ')').show();
-        $(s.submit).prop('disabled', false);
-      } else {
-        $(s.name).html('').hide();
-        $(s.submit).prop('disabled', true);
-      }
-    });
-
-    $(s.submit).on('click', function (event) {
-      event.preventDefault();
-      $(this).prop('disabled', true);
-
-      reader = new FileReader();
-      file = document.querySelector(s.input).files[0];
-
-      app.check();
-    });
-
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'uploader', 'largefile'));

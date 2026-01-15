@@ -1,11 +1,11 @@
-(function ($, plugin, module, section) {
+(function ($, plugin, mainkey, context) {
   const s = {
-    overlay: '#cboxOverlay', // colorbox.js selector
-    trigger: 'a.do-' + module + '-iframe, .do-' + module + '-iframe-for-child > a',
-    parent: 'do-' + module + '-iframe-for-child',
-    before: 'do-' + module + '-iframe',
-    after: 'hooked-' + module + '-iframe',
-    pot: '.' + plugin._base + '-' + module + '-pot'
+    overlay: '#cboxOverlay', // `colorbox.js` selector
+    trigger: 'a.do-' + mainkey + '-iframe, .do-' + mainkey + '-iframe-for-child > a',
+    parent: 'do-' + mainkey + '-iframe-for-child',
+    before: 'do-' + mainkey + '-iframe',
+    after: 'hooked-' + mainkey + '-iframe',
+    pot: '.' + plugin._base + '-' + mainkey + '-pot'
   };
 
   const u = {
@@ -44,7 +44,7 @@
         });
     },
 
-    hook: function (mobile) {
+    init: function (mobile) {
       $(s.trigger).each(function () {
         const $instance = $(this);
 
@@ -97,9 +97,12 @@
   };
 
   $(window).load(function () {
-    app.hook(u.mobile());
-
-    $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).on('gEditorial:ColorBox:Hook', function () { app.init(); });
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init(u.mobile())
+    ]);
   });
 }(jQuery, gEditorial, 'colorbox', 'all'));

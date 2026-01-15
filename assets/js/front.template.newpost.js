@@ -6,7 +6,7 @@
     // classs: plugin._base + '-' + module
     wrap: 'div.' + plugin._base + '-wrap.-newpost-layout',
     form: 'div.' + plugin._base + '-wrap.-newpost-layout form.-form-form',
-    save: 'a.button.-form-save-draft'
+    save: 'a.button.-form-save-data'
   };
 
   const app = {
