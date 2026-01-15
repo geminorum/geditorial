@@ -189,6 +189,7 @@ class Byline extends gEditorial\Module
 
 		$this->filter( 'searchselect_result_extra_for_term', 3, 12, FALSE, $this->base );
 		$this->filter( 'termrelations_supported', 4, 9, FALSE, $this->base );
+		$this->filter( 'objecthints_tips_for_post', 5, 12, FALSE, $this->base );
 		$this->filter( 'meta_summary_rows', 4, 12, FALSE, $this->base );
 
 		if ( $this->get_setting( 'tabs_support', TRUE ) )
@@ -528,6 +529,22 @@ class Byline extends gEditorial\Module
 			return array_merge( $fields, $this->_get_supported_fields( $context, $posttype ) );
 
 		return $fields;
+	}
+
+	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $tips;
+
+		return array_merge( $tips,
+			ModuleHelper::generateHints(
+				$post,
+				$extend,
+				$context,
+				$queried,
+				$this->_get_supported_simple_metakeys( 'objecthints' )
+			)
+		);
 	}
 
 	private function _get_registered_relations( $context = NULL )

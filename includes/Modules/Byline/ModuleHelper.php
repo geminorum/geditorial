@@ -4,11 +4,21 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Misc;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
 	const MODULE = 'byline';
+
+	const HINT_EXTENDS = [
+		'default',
+		'byline',
+		'author',
+		'translator',
+		'subject',
+	];
 
 	// EXAMPLE: `Pam Durban, Mary Hood (Foreword)`
 	// EXAMPLE: `John Updike (Editor, Contributor), Katrina Kenison (Editor)`
@@ -233,5 +243,53 @@ class ModuleHelper extends gEditorial\Helper
 			return $html;
 
 		return $args['before'].$html.$args['after'];
+	}
+
+	public static function generateHints( $post, $extend, $context, $queried, $metakeys )
+	{
+		$hints = [];
+
+		if ( ! $extend || ! in_array( $extend, static::HINT_EXTENDS, TRUE ) )
+			return $hints;
+
+		if ( ! $metas  = WordPress\Post::getMeta( $post ) )
+			return $hints;
+
+		$parser     = Services\Individuals::isParserAvailable();
+		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS   : Service\Individuals::FULLNAME_DELIMITERS;
+		$prefixes   = $parser ? Misc\NamesInPersian::getFullnamePrefixes() : [];
+
+		foreach ( $metakeys as $metakey => $label ) {
+
+			if ( empty( $metas[$metakey] ) )
+				continue;
+
+			foreach ( Services\Markup::getSeparated( $metas[$metakey], $delimiters ) as $offset => $raw ) {
+
+				if ( $parser ) {
+
+					if ( ! Misc\NamesInPersian::isValidFullname( $raw ) )
+						continue;
+
+				} else {
+
+					if ( WordPress\Strings::isEmpty( $raw ) )
+						continue;
+				}
+
+				if ( ! $fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $raw, $prefixes ) ) )
+					continue;
+
+				$hints[] = [
+					'text'     => $fullname,
+					'title'    => sprintf( '%s :: %s', $label, $metakey ),
+					'class'    => static::classs( $metakey ),
+					'source'   => static::MODULE,
+					'priority' => 20,
+				];
+			}
+		}
+
+		return $hints;
 	}
 }
