@@ -12,6 +12,21 @@ class NamesInPersian extends Core\Base
 		'fa_IR',
 	];
 
+	const FULLNAME_DELIMITERS = [
+		// '/',
+		'،',
+		'؛',
+		';',
+		',',
+		// '-',
+		// '_',
+		' و ', // with padding spaces
+		' - ', // with padding spaces
+		'—',
+		'–',
+		'|',
+	];
+
 	public static function isValidFullname( $text )
 	{
 		if ( WordPress\Strings::isEmpty( $text ) )

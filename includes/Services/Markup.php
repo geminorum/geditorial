@@ -147,32 +147,28 @@ class Markup extends gEditorial\Service
 	 *
 	 * @param int $completed
 	 * @param int $total
+	 * @param false|string $hint
+	 * @param string $template
 	 * @return void
 	 */
 	public static function renderCircleProgress( $completed, $total, $hint = FALSE, $template = NULL )
 	{
-		$step_number = $completed + 1;
+		$step = $completed + 1;
 
 		// Given 'r' (circle element's r attr), `dashoffset` = ((100-$desired_percentage)/100) * PI * (r*2).
-		$percentage = ( $completed / $total ) * 100;
 		$circle_r   = 6.5;
+		$percentage = ( $completed / $total ) * 100;
 		$dashoffset = ( ( 100 - $percentage ) / 100 ) * ( pi() * ( $circle_r * 2 ) );
 
-		$text = sprintf(
+		$caption = sprintf(
 			/* translators: `%1$s`: step number, `%2$s`: total tasks */
 			_x( 'Step %1$s of %2$s', 'Service: Markup', 'geditorial' ),
-			Core\Number::localize( $step_number ),
+			Core\Number::localize( $step ),
 			Core\Number::localize( $total ),
 		);
 
 		if ( $hint )
-			$text = sprintf( $template ?? '%s: %s', $text, $hint );
-
-		$data = [
-			'percentage'   => $percentage,
-			'total-steps'  => $total,
-			'current-step' => $step_number - 1,
-		];
+			$caption = sprintf( $template ?? '%s: %s', $caption, $hint );
 
 		$markup = <<<MARKUP
 <span class='progress-wrapper'>
@@ -180,10 +176,19 @@ class Markup extends gEditorial\Service
 		<circle r="6.5" cx="10" cy="10" fill="transparent" stroke-dasharray="40.859" stroke-dashoffset="0"></circle>
 		<circle class="bar" r="6.5" cx="190" cy="10" fill="transparent" stroke-dasharray="40.859" stroke-dashoffset="{$dashoffset}" transform='rotate(-90 100 100)'></circle>
 	</svg>
-	<span>{$text}</span>
+	<span>{$caption}</span>
 </span>
 MARKUP;
 
-		echo Core\HTML::wrap( $markup, 'markup-circle-progress', FALSE, $data );
+		echo Core\HTML::wrap(
+			$markup,
+			'markup-circle-progress',
+			FALSE,
+			[
+				'percentage'   => $percentage,
+				'total-steps'  => $total,
+				'current-step' => $step - 1,
+			]
+		);
 	}
 }

@@ -9,9 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 class Individuals extends gEditorial\Service
 {
-	// TODO: support: `Byline` Module
-	// TODO: support: `byline` field from meta-data
-
 	const FORMAT_TEMPLATE    = '%2$s, %1$s';
 	const SEPARATOR_TEMPLATE = ', ';
 
@@ -63,6 +60,10 @@ class Individuals extends gEditorial\Service
 
 	public static function filter_prep_individual_front( $individual, $raw, $value )
 	{
+		// late check for REST-API
+		if ( WordPress\IsIt::rest() )
+			return $individual;
+
 		if ( $link = WordPress\URL::search( $individual ) )
 			return Core\HTML::link( $individual, $link );
 

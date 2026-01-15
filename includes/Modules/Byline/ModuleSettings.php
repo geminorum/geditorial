@@ -4,14 +4,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
 {
 	const MODULE = 'byline';
 
+	const ACTION_FROM_BYLINE_META     = 'do_import_from_byline_meta';
+	const SELECTOR_FROM_BYLINE_META   = 'frombylinemeta';
 	const ACTION_FROM_SIMPLE_META     = 'do_import_from_simple_meta';
 	const SELECTOR_FROM_SIMPLE_META   = 'fromsimplemeta';
 	const ACTION_FROM_PEOPLE_PLUGIN   = 'do_import_from_people_plugin';
@@ -73,7 +75,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -239,7 +241,7 @@ class ModuleSettings extends gEditorial\Settings
 				Core\Number::format( $count )
 			) );
 
-		echo '</div></div></div>';
+		echo '</div></div>';
 
 		gEditorial\Scripts::enqueueDynamicSubmit();
 
@@ -258,7 +260,7 @@ class ModuleSettings extends gEditorial\Settings
 			] ],
 		];
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -298,17 +300,17 @@ class ModuleSettings extends gEditorial\Settings
 		if ( WordPress\Strings::isEmpty( $legacy ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );
 
-		$data     = [];
-		$currents = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
-		$filters  = $parser ? gEditorial\Misc\NamesInPersian::mapRelationPrefixes() : [];
-		$prefixes = $parser ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
+		$data       = [];
+		$currents   = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
+		$filters    = $parser ? Misc\NamesInPersian::mapRelationPrefixes() : [];
+		$prefixes   = $parser ? Misc\NamesInPersian::getFullnamePrefixes() : [];
 		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS   : static::FULLNAME_DELIMITERS;
 
 		foreach ( Services\Markup::getSeparated( $legacy, $delimiters ) as $offset => $raw ) {
 
 			if ( $parser ) {
 
-				if ( gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
+				if ( ! Misc\NamesInPersian::isValidFullname( $raw ) )
 					continue;
 
 			} else {
@@ -317,7 +319,8 @@ class ModuleSettings extends gEditorial\Settings
 					continue;
 			}
 
-			$fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $raw, $prefixes ) );
+			if ( ! $fullname = Core\Text::trimQuotes( Core\Text::stripPrefix( $raw, $prefixes ) ) )
+				continue;
 
 			if ( ! $term = WordPress\Taxonomy::getTargetTerm( $fullname, $taxonomy ) )
 				continue;
