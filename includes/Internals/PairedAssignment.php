@@ -56,7 +56,7 @@ trait PairedAssignment
 
 		} else {
 
-			// FIXME: shoud report empty
+			// FIXME: should report empty
 			$html = $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) );
 		}
 
@@ -227,12 +227,12 @@ trait PairedAssignment
 	{
 		return $this->filters( 'paired_supported_fields', [
 
-			// 'overwrite' => [
-			// 	'title'   => _x( 'Overwrite', 'Paired Assignment: Field Title', 'geditorial-admin' ),
-			// 	'desc'    => _x( 'String to override the title.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
-			// 	'type'    => 'string',
-			// 	'default' => '',
-			// ],
+			'overwrite' => [
+				'title'   => _x( 'Overwrite', 'Paired Assignment: Field Title', 'geditorial-admin' ),
+				'desc'    => _x( 'String to override the title.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
+				'type'    => 'string',
+				'default' => '',
+			],
 
 			'notes' => [
 				'title'   => _x( 'Notes', 'Paired Assignment: Field Title', 'geditorial-admin' ),

@@ -374,7 +374,7 @@ class Meta extends gEditorial\Module
 
 			$fields = $this->get_posttype_fields( $screen->post_type );
 
-			// bail if no fields enabled for this post-type
+			// Bail if no fields enabled for this post-type!
 			if ( ! count( $fields ) )
 				return;
 
@@ -422,6 +422,10 @@ class Meta extends gEditorial\Module
 
 			case WordPress\WooCommerce::PRODUCT_POSTTYPE:
 				return [ 'name', 'after' ];
+
+			// NOTE: not supported yet!
+			case WordPress\WooCommerce::ORDER_POSTTYPE:
+				return [ 'order_number', 'after' ];
 		}
 
 		return [ 'title', 'after' ];

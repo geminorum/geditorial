@@ -369,14 +369,15 @@ class Settings extends WordPress\Main
 			'user_request',        // WP Core
 			'oembed_cache',        // WP Core
 
-			'bp-email'         ,  // BuddyPress
-			// 'product'          ,  // WooCommerce
-			'shop_order'       ,  // WooCommerce
-			'shop_coupon'      ,  // WooCommerce
-			'guest-author'     ,  // Co-Authors Plus
-			'amp_validated_url',  // AMP
-			'inbound_message'  ,  // Flamingo
-			'table'            ,  // TablePress
+			'bp-email'          ,   // BuddyPress
+			// 'product'           ,   // WooCommerce
+			'shop_order'        ,   // WooCommerce
+			'shop_coupon'       ,   // WooCommerce
+			'guest-author'      ,   // Co-Authors Plus
+			'amp_validated_url' ,   // AMP
+			'inbound_message'   ,   // Flamingo
+			'table'             ,   // TablePress
+			'wafs'              ,   // Advanced Free Shipping for WooCommerce
 		];
 
 		if ( class_exists( 'bbPress' ) )

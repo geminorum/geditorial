@@ -111,9 +111,7 @@ class Roled extends gEditorial\Module
 	{
 		$posttypes = [];
 		$supported = get_post_types_by_support( 'editorial-roles' );
-		$excludes  = [
-			'profile', // gPeople
-		];
+		$excludes  = [];
 
 		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported )

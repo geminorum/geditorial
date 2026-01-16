@@ -122,7 +122,6 @@ class Tweaks extends gEditorial\Module
 					'values'      => $this->_get_posttypes_support_exclude( [
 						'publication',
 						'day',
-						'profile', // gPeople
 					] ),
 				],
 				[
@@ -133,7 +132,6 @@ class Tweaks extends gEditorial\Module
 					'values'      => $this->_get_posttypes_support_feature( 'thumbnail', [
 						'attachment:audio',
 						'attachment:video',
-						'profile', // gPeople
 					] ),
 				],
 			],
@@ -346,7 +344,7 @@ class Tweaks extends gEditorial\Module
 
 	private function _edit_screen( $posttype )
 	{
-		$this->filter_unset( 'manage_taxonomies_for_'.$posttype.'_columns', $this->taxonomies() );
+		$this->filter_unset( 'manage_taxonomies_for_'.$posttype.'_columns', $this->taxonomies(), 12 );
 
 		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 1, 2 );
 		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 1, 1 );

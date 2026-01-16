@@ -179,21 +179,22 @@ class Isbn extends gEditorial\Module
 		if ( $this->get_setting( 'frontend_search', TRUE ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
+		if ( $this->get_setting( 'woocommerce_support' ) )
+			$this->_init_woocommerce();
+
 		$this->register_shortcode( 'main_shortcode' );
-
-		if ( ! $this->get_setting( 'woocommerce_support' ) )
-			return;
-
-		$this->_add_posttype_fields_woocommerce();
-		$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
 	}
 
-	private function _add_posttype_fields_woocommerce()
+	private function _init_woocommerce()
 	{
 		$fields = $this->fields['meta']['_supported'];
 		unset( $fields['isbn'] ); // default on wc is `_global_unique_id`
 
 		$this->add_posttype_fields( WordPress\WooCommerce::PRODUCT_POSTTYPE, $fields );
+
+		if ( ! is_admin() ) {
+			$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
+		}
 	}
 
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
