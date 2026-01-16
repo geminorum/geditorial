@@ -901,8 +901,11 @@ trait PostTypeFields
 		}
 
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );
-		$this->filter( 'manage_posts_columns', 2, 15, 'posttypefields' );
-		$this->filter( 'manage_pages_columns', 1, 15, 'posttypefields' );
+
+		add_filter( 'manage_'.$posttype.'_posts_columns',
+			function ( $columns ) use ( $posttype ) {
+				return $this->manage_posts_columns_posttypefields( $columns, $posttype );
+			}, 99, 1 );
 
 		add_action( 'manage_'.$posttype.'_posts_custom_column',
 			[ $this, 'posts_custom_column_posttypefields' ], 10, 2 );
@@ -977,18 +980,16 @@ trait PostTypeFields
 		$this->nonce_field( $bulkedit ? 'bulkbox' : 'nobox' );
 	}
 
-	public function manage_pages_columns_posttypefields( $columns )
-	{
-		return $this->manage_posts_columns_posttypefields( $columns, 'page' );
-	}
-
+	// @hook `manage_posts_columns`
+	// @hook `manage_pages_columns`
+	// @hook `manage_{$posttype}_posts_columns`
 	public function manage_posts_columns_posttypefields( $columns, $posttype )
 	{
 		// meta only
 		// if ( in_array( 'byline', $this->posttype_fields( $posttype ) ) )
 		// 	unset( $columns['author'] );
 
-		$position = $this->posttypefields_custom_column_position();
+		$position = $this->posttypefields_custom_column_position( $posttype );
 
 		return Core\Arraay::insert( $columns, [
 			$this->classs() => $this->get_column_title( $this->module->name, $posttype ),
@@ -1060,7 +1061,7 @@ trait PostTypeFields
 		return $value;
 	}
 
-	protected function posttypefields_custom_column_position()
+	protected function posttypefields_custom_column_position( $posttype )
 	{
 		return [ 'comments', 'before' ];
 	}

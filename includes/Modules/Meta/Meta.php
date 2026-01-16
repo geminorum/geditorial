@@ -416,8 +416,14 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	protected function posttypefields_custom_column_position()
+	protected function posttypefields_custom_column_position( $posttype )
 	{
+		switch ( $posttype ) {
+
+			case WordPress\WooCommerce::PRODUCT_POSTTYPE:
+				return [ 'name', 'after' ];
+		}
+
 		return [ 'title', 'after' ];
 	}
 
