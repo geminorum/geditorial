@@ -89,7 +89,9 @@ class Tweaks extends gEditorial\Module
 					'type'        => 'posttypes',
 					'title'       => _x( 'Page Template', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays the template used for the post.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->_get_posttypes_support_exclude(),
+					'values'      => $this->_get_posttypes_support_exclude( [
+						WordPress\WooCommerce::PRODUCT_POSTTYPE,
+					] ),
 				],
 				[
 					'field'       => 'comment_status',
@@ -103,7 +105,9 @@ class Tweaks extends gEditorial\Module
 					'type'        => 'posttypes',
 					'title'       => _x( 'Search Meta', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Extends admin search to include custom fields.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->_get_posttypes_support_exclude( 'day' ),
+					'values'      => $this->_get_posttypes_support_exclude( [
+						'day',
+					] ),
 				],
 			],
 			'_columns' => [
@@ -112,7 +116,9 @@ class Tweaks extends gEditorial\Module
 					'type'        => 'posttypes',
 					'title'       => _x( 'ID Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays ID Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
-					'values'      => $this->_get_posttypes_support_exclude(),
+					'values'      => $this->_get_posttypes_support_exclude( [
+						WordPress\WooCommerce::PRODUCT_POSTTYPE,
+					] ),
 				],
 				[
 					'field'       => 'column_order',
@@ -120,6 +126,7 @@ class Tweaks extends gEditorial\Module
 					'title'       => _x( 'Order Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays Order Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
 					'values'      => $this->_get_posttypes_support_exclude( [
+						WordPress\WooCommerce::PRODUCT_POSTTYPE,
 						'publication',
 						'day',
 					] ),
@@ -130,6 +137,7 @@ class Tweaks extends gEditorial\Module
 					'title'       => _x( 'Thumbnail Column', 'Setting Title', 'geditorial-tweaks' ),
 					'description' => _x( 'Displays Thumbnail Column on the post list table.', 'Setting Description', 'geditorial-tweaks' ),
 					'values'      => $this->_get_posttypes_support_feature( 'thumbnail', [
+						WordPress\WooCommerce::PRODUCT_POSTTYPE,
 						'attachment:audio',
 						'attachment:video',
 					] ),
@@ -243,26 +251,11 @@ class Tweaks extends gEditorial\Module
 		return $posttypes;
 	}
 
-	protected function posttypes_excluded( $extra = [] )
-	{
-		$excludes = [
-			WordPress\WooCommerce::PRODUCT_POSTTYPE, // NOTE: maybe all `Woo-Commerce` related must use `WC Tweaks`
-		];
-
-		return $this->filters( 'posttypes_excluded',
-			gEditorial\Settings::posttypesExcluded(
-				$excludes + (array) $extra,
-				$this->keep_posttypes
-			)
-		);
-	}
-
 	// internal helper
-	private function _get_posttypes_support_exclude( $extra_excludes = [] )
+	private function _get_posttypes_support_exclude( $extra = [] )
 	{
-		$excludes  = [];
 		$supported = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
-		$excluded  = Core\Arraay::prepString( $this->posttypes_excluded( $excludes + (array) $extra_excludes ) );
+		$excluded  = Core\Arraay::prepString( $this->posttypes_excluded( $extra ) );
 
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
@@ -346,8 +339,11 @@ class Tweaks extends gEditorial\Module
 	{
 		$this->filter_unset( 'manage_taxonomies_for_'.$posttype.'_columns', $this->taxonomies(), 12 );
 
-		add_filter( 'manage_posts_columns', [ $this, 'manage_posts_columns' ], 1, 2 );
-		add_filter( 'manage_pages_columns', [ $this, 'manage_pages_columns' ], 1, 1 );
+		add_filter( sprintf( 'manage_%s_posts_columns', $posttype ),
+			function ( $columns ) use ( $posttype ) {
+				return $this->manage_posts_columns( $columns, $posttype );
+			}, WordPress\WooCommerce::PRODUCT_POSTTYPE === $posttype ? 11 : 1, 1 );
+
 		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 		add_action( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 
@@ -378,6 +374,22 @@ class Tweaks extends gEditorial\Module
 
 		if ( $this->in_setting( $posttype, 'comment_status' ) && $this->is_posttype_support( $posttype, 'comments' ) )
 			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_comment_status' ], 15, 3 );
+
+		if ( WordPress\WooCommerce::PRODUCT_POSTTYPE !== $posttype )
+			return;
+
+		if ( WordPress\WooCommerce::skuEnabled() )
+			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_sku' ], 99, 4 );
+
+		if ( WordPress\WooCommerce::manageStock() )
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_stock' ], -10, 3 );
+
+		if ( WordPress\WooCommerce::featureEnabled( 'cost_of_goods_sold' ) )
+			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_cogs_value' ], -8, 3 );
+
+		// Avoid error notice from woo-commerce
+		if ( ! empty( $GLOBALS['WC_Brands_Admin'] ) )
+			remove_filter( 'manage_product_posts_columns', [ $GLOBALS['WC_Brands_Admin'], 'product_columns' ], 20, 1 );
 	}
 
 	// Using this hook to early control `current_screen` on other modules
@@ -457,34 +469,39 @@ class Tweaks extends gEditorial\Module
 		return $wp_query->is_search() ? "DISTINCT" : $distinct;
 	}
 
-	public function manage_pages_columns( $columns )
-	{
-		return $this->manage_posts_columns( $columns, 'page' );
-	}
-
 	public function manage_posts_columns( $columns, $posttype )
 	{
-		$new   = [];
-		$added = FALSE;
-
+		$new  = [];
 		$rows = has_action( $this->hook( 'column_row', $posttype ) ) ? $this->get_column_title( 'rows', $posttype ) : FALSE;
 		$atts = has_action( $this->hook( 'column_attr', $posttype ) ) ? $this->get_column_title( 'atts', $posttype ) : FALSE;
 
+		// simplify the logic!
+		$rows_added = ! $rows;
+		$atts_added = ! $atts;
+
+		if ( WordPress\WooCommerce::PRODUCT_POSTTYPE === $posttype ) {
+			$columns = Core\Arraay::stripByKeys( $columns, $this->taxonomies() ); // lately added by woo-commerce
+			unset(
+				$columns['is_in_stock'],
+				$columns['cogs_value'],
+				$columns['sku']
+			);
+		}
+
 		foreach ( $columns as $key => $value ) {
 
-			if ( 'title' == $key && $this->in_setting( $posttype, 'column_thumb' ) )
-				$new[$this->classs( 'thumb' )] = $this->get_column_title_icon( 'thumb', $posttype );
+			if ( in_array( $key, [ 'title', 'name' ], TRUE )
+				&& $this->in_setting( $posttype, 'column_thumb' ) )
+					$new[$this->classs( 'thumb' )] = $this->get_column_title_icon( 'thumb', $posttype );
 
-			if ( ( 'comments' == $key && ! $added )
-				|| ( 'date' == $key && ! $added ) ) {
+			// last resort checks
+			if ( in_array( $key, [ 'comments', 'date' ], TRUE ) ) {
 
-					if ( $rows )
-						$new['geditorial-tweaks-rows'] = $rows;
+				if ( ! $rows_added )
+					$rows_added = $new['geditorial-tweaks-rows'] = $rows;
 
-					if ( $atts )
-						$new['geditorial-tweaks-atts'] = $atts;
-
-					$added = TRUE;
+				if ( ! $atts_added )
+					$atts_added = $new['geditorial-tweaks-atts'] = $atts;
 			}
 
 			if ( 'author' == $key && $atts && $this->in_setting( $posttype, 'author_attribute' ) )
@@ -494,20 +511,33 @@ class Tweaks extends gEditorial\Module
 
 			if ( 'cb' == $key && $this->in_setting( $posttype, 'column_order' ) )
 				$new[$this->classs( 'order' )] = $this->get_column_title_icon( 'order', $posttype );
+
+			if ( WordPress\WooCommerce::PRODUCT_POSTTYPE === $posttype ) {
+
+				if ( ! $rows_added && in_array( $key, [ 'title', 'name' ], TRUE ) )
+					$rows_added = $new['geditorial-tweaks-rows'] = $rows;
+
+				// in case we keep the `cogs_value` column
+				// first check for `cogs_value` then `price`
+				// since they came before each other.
+				if ( ! $atts_added && 'cogs_value' === $key )
+					$atts_added = $new['geditorial-tweaks-atts'] = $atts;
+
+				else if ( ! $atts_added && 'price' === $key
+					&& ! array_key_exists( 'cogs_value', $columns ) )
+						$atts_added = $new['geditorial-tweaks-atts'] = $atts;
+			}
 		}
 
 		if ( $this->in_setting( $posttype, 'group_attributes' )
 			|| ! $this->is_posttype_support( $posttype, 'date' ) )
 				unset( $new['date'] );
 
-		if ( ! $added ) {
+		if ( ! $rows_added )
+			$new['geditorial-tweaks-rows'] = $rows;
 
-			if ( $rows )
-				$new['geditorial-tweaks-rows'] = $rows;
-
-			if ( $atts )
-				$new['geditorial-tweaks-atts'] = $atts;
-		}
+		if ( ! $atts_added )
+			$new['geditorial-tweaks-atts'] = $atts;
 
 		if ( $this->in_setting( $posttype, 'column_id' ) )
 			$new['geditorial-tweaks-id'] = $this->get_column_title_icon( 'id', $posttype );
@@ -917,6 +947,72 @@ class Tweaks extends gEditorial\Module
 				echo gEditorial\Helper::getModifiedEditRow( $post, '-edit' );
 			echo $after;
 		}
+	}
+
+	public function column_row_sku( $post, $before, $after, $module )
+	{
+		global $product;
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return;
+
+		if ( ! $html = $product->get_sku() )
+			return;
+
+		printf( $before, '-product-sku' );
+			echo $this->get_column_icon( FALSE, 'store', __( 'SKU', 'woocommerce' ), $post->post_type ); // TODO: better icon
+			echo Core\HTML::code( $html, '-sku', TRUE );
+		echo $after;
+	}
+
+	public function column_attr_stock( $post, $before, $after )
+	{
+		global $product;
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return;
+
+		printf( $before, '-product-stock' );
+
+			if ( $product->is_on_backorder() ) {
+
+				$html = Core\HTML::mark( __( 'On backorder', 'woocommerce' ), 'onbackorder' );
+				$icon = 'archive'; // TODO: better icon
+
+			} else if ( $product->is_in_stock() ) {
+
+				$html = Core\HTML::mark( __( 'In stock', 'woocommerce' ), 'instock' );
+				$icon = 'archive'; // TODO: better icon
+
+			} else {
+
+				$html = Core\HTML::mark( __( 'Out of stock', 'woocommerce' ), 'outofstock' );
+				$icon = 'archive'; // TODO: better icon
+			}
+
+			if ( $product->managing_stock() )
+				$html.= sprintf( ' (%s)', wc_stock_amount( $product->get_stock_quantity() ) );
+
+			echo $this->get_column_icon( FALSE, $icon, __( 'Stock', 'woocommerce' ), $post->post_type );
+			echo wp_kses_post( apply_filters( 'woocommerce_admin_stock_html', $html, $product ) );
+
+		echo $after;
+	}
+
+	public function column_attr_cogs_value( $post, $before, $after )
+	{
+		global $product;
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return;
+
+		if ( ! $html = $product->get_cogs_value_html() )
+			return;
+
+		printf( $before, '-product-cost' );
+			echo $this->get_column_icon( FALSE, 'store', __( 'Cost', 'woocommerce' ), $post->post_type ); // TODO: better icon
+			echo wp_kses_post( $html );
+		echo $after;
 	}
 
 	public function column_user_default( $user, $before, $after )
