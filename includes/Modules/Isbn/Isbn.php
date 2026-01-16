@@ -192,8 +192,123 @@ class Isbn extends gEditorial\Module
 
 		$this->add_posttype_fields( WordPress\WooCommerce::PRODUCT_POSTTYPE, $fields );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() ) {
+
+			$this->action( 'current_screen', 1, 10, 'woocommerce' );
+
+		} else {
+
 			$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
+		}
+	}
+
+	public function current_screen_woocommerce( $screen )
+	{
+		if ( 'edit' === $screen->base
+			&& $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {
+
+			add_filter( sprintf( 'manage_edit-%s_sortable_columns', $screen->post_type ),
+				[ $this, 'manage_sortable_columns' ], 20, 1 );
+
+			add_filter( sprintf( 'manage_%s_posts_columns', $screen->post_type ),
+				[ $this, 'manage_products_columns' ], 20, 1 ); // after `Tweaks` Module
+
+			add_action( sprintf( 'manage_%s_posts_custom_column', $screen->post_type ),
+				[ $this, 'manage_custom_column' ], 10, 2 );
+
+			add_action( $this->hook( 'column_row', $screen->post_type ),
+				[ $this, 'column_row_global_unique_id' ], 5, 4 );
+
+			add_action( $this->hook( 'column_row', $screen->post_type ),
+				[ $this, 'column_row_posttype_fields' ], 9, 4 );
+		}
+	}
+
+	public function manage_sortable_columns( $columns )
+	{
+		return array_merge( $columns, [
+			$this->classs() => 'global_unique_id',
+		] );
+	}
+
+	public function manage_products_columns( $columns )
+	{
+		unset( $columns['global_unique_id'] );
+
+		return Core\Arraay::insert( $columns, [
+			$this->classs() => $this->get_column_title(
+				$this->module->name,
+				WordPress\WooCommerce::PRODUCT_POSTTYPE,
+				_x( 'ISBN', 'Column Title', 'geditorial-isbn' )
+			),
+		], 'price', 'before' ); // `featured`
+	}
+
+	// NOTE: maybe double used (in future!)
+	public function manage_custom_column( $column, $post_id )
+	{
+		global $post;
+
+		if ( $this->classs() != $column )
+			return;
+
+		if ( $this->check_hidden_column( $column ) )
+			return;
+
+		echo '<div class="geditorial-admin-wrap-column -isbn -rows"><ul class="-rows">'; //  -flex-rows
+
+			do_action( $this->hook( 'column_row', $post->post_type ),
+				$post,
+				$this->wrap_open_row( 'row', [
+					'-column-row',
+					'-type-'.$post->post_type,
+					'%s',
+				] ),
+				'</li>',
+				$this->module->name
+			);
+
+		echo '</ul></div>';
+	}
+
+	public function column_row_global_unique_id( $post, $before, $after, $module )
+	{
+		global $product;
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return;
+
+		if ( ! $gtin = $product->get_global_unique_id() )
+			return;
+
+		printf( $before, '-product-gtin' );
+			echo $this->get_column_icon( FALSE, $this->module->icon, __( 'GTIN, UPC, EAN, or ISBN', 'woocommerce' ), $post->post_type );
+			echo Core\HTML::code( $gtin, '-gtin', Core\ISBN::sanitize( $gtin ) );
+		echo $after;
+	}
+
+	public function column_row_posttype_fields( $post, $before, $after, $module )
+	{
+		$title  = _x( 'ISBN', 'Row Icon Title', 'geditorial-isbn' );
+		$fields = [
+			'isbn',
+			'isbn2',
+			'isbn3',
+			'isbn4',
+			'isbn5',
+		];
+
+		foreach ( $fields as $field ) {
+
+			if ( ! $data = Services\PostTypeFields::getField( $field, [ 'id' => $post ] ) )
+				continue;
+
+			$label = Services\PostTypeFields::getFieldRaw( sprintf( '%s_label', $field ), $post->ID, 'meta', FALSE, $title );
+
+			printf( $before, '-product-isbn -'.$field );
+				echo $this->get_column_icon( FALSE, $this->module->icon, $label ?: $title, $post->post_type );
+				echo Core\HTML::code( $data, '-gtin', TRUE );
+			echo $after;
 		}
 	}
 
