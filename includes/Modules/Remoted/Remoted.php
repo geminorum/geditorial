@@ -123,6 +123,12 @@ class Remoted extends gEditorial\Module
 							'field_class' => [ 'regular-text', 'code-text' ],
 							'ortho'       => 'slug',
 						],
+						[
+							'field'       => 'priority',
+							'type'        => 'number',
+							'title'       => _x( 'Sort Priority', 'Setting Title', 'geditorial-remoted' ),
+							'description' => _x( 'Sets as the priority where the path display on the list.', 'Setting Description', 'geditorial-remoted' ),
+						],
 					],
 				],
 				[
@@ -131,6 +137,14 @@ class Remoted extends gEditorial\Module
 					'title'       => _x( 'Root Title', 'Setting Title', 'geditorial-remoted' ),
 					'description' => _x( 'Displays as title of the root destination on the widget select.', 'Setting Description', 'geditorial-remoted' ),
 					'placeholder' => _x( 'Root Destination', 'Setting Default', 'geditorial-remoted' ),
+				],
+				[
+					'field'       => 'default_dest',
+					'type'        => 'text',
+					'title'       => _x( 'Default Destination', 'Setting Title', 'geditorial-remoted' ),
+					'description' => _x( 'Sets as the default path option on the list. Leave empty for the root.', 'Setting Description', 'geditorial-remoted' ),
+					'field_class' => [ 'regular-text', 'code-text' ],
+					'ortho'       => 'slug',
 				],
 			],
 			'_roles' => [
@@ -197,14 +211,18 @@ class Remoted extends gEditorial\Module
 			)
 		);
 
-			if ( $dest = $this->get_setting( 'destinations', [] ) )
-				echo Core\HTML::dropdown( Core\Arraay::pluck( $dest, 'title', 'path' ), [
-					'id'          => $this->classs( $box['args']['context'], 'destination' ),
-					'class'       => [ 'upload-destination', 'gnetwork-do-chosen' ],
-					'none_title'  => $this->get_setting_fallback( 'root_title', _x( 'Root Destination', 'Setting Default', 'geditorial-remoted' ) ),
-					'none_value'  => '',
-					'value_title' => TRUE,
-				] );
+			if ( $data = $this->get_setting( 'destinations', [] ) )
+				echo Core\HTML::dropdown(
+					Core\Arraay::pluck( Core\Arraay::sortByPriority( $data, 'priority' ), 'title', 'path' ),
+					[
+						'id'          => $this->classs( $box['args']['context'], 'destination' ),
+						'class'       => [ 'upload-destination', 'gnetwork-do-chosen' ],
+						'selected'    => $this->get_setting( 'default_dest' ) ?: '',
+						'none_title'  => $this->get_setting_fallback( 'root_title', _x( 'Root Destination', 'Setting Default', 'geditorial-remoted' ) ),
+						'none_value'  => '',
+						'value_title' => TRUE,
+					]
+				);
 
 			else
 				Core\HTML::inputHidden( $this->classs( $box['args']['context'], 'destination' ) );
