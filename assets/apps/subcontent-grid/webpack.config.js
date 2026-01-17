@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader');
@@ -83,8 +84,17 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: 'true',
+        __VUE_PROD_DEVTOOLS__: argv.mode === 'development' ? 'true' : 'false',
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
+      }),
+
       new DependencyExtractionWebpackPlugin(),
+
       new VueLoaderPlugin(),
+
+      // https://webpack.js.org/plugins/mini-css-extract-plugin/
       new MiniCssExtractPlugin({
         filename: '[name].css'
       }),

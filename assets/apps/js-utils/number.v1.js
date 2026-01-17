@@ -158,7 +158,11 @@ const factorial = (number) => {
  * @param {Int} input
  * @returns {Bool}
  */
-const repeated = (input) => /^(\d)\1{9}$/.test(input);
+// const repeated = (input) => /^(\d)\1{9}$/.test(input);
+const repeated = (input, times) => {
+  const regex = new RegExp('^(\d)\1{' + times + '}$');
+  return regex.exec(input);
+};
 
 export {
   toInt,

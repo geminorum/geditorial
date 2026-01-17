@@ -200,7 +200,7 @@ task('i18n:module', function (done) {
     return done();
   }
 
-  return src(conf.input.modules + args.name)
+  return src(conf.input.module + args.name)
     .pipe(gulpexec(function (file) {
       const module = i18nModule(file);
       log.info('Make pot for Module: ' + module.folder);
@@ -223,7 +223,7 @@ task('i18n:module', function (done) {
 task('i18n:modules', function () {
   const extra = i18nExtra(conf.i18n.modules);
 
-  return src(conf.input.modules + '*')
+  return src(conf.input.modules)
     .pipe(gulpexec(function (file) {
       const module = i18nModule(file);
       log.info('Make pot for Module: ' + module.folder);

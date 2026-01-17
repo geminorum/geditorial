@@ -1486,7 +1486,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * module/wc-purchased: :new: module
 * module/widgets: :new: custom widget areas by action hooks
 * module/widgets: rest posts: trim chars option
-* module/widgets: search terms: avoid filtred search query
+* module/widgets: search terms: avoid filtered search query
 * module/widgets: search terms: display empty terms
 * module/widgets: search terms: prefix with name
 * module/widgets: search terms: search names and slugs

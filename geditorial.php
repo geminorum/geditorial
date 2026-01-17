@@ -19,7 +19,7 @@ Release Asset: true
 Requires WP: 5.9.0
 Requires at least: 5.9.0
 Requires PHP: 7.4
-Tested up to: 6.7
+Tested up to: 6.9
 */
 
 define( 'GEDITORIAL_VERSION', '3.33.0' );
