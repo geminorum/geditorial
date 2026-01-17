@@ -200,6 +200,7 @@ class Plugin extends WordPress\Plugin
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',
+			'FrontSettings',
 			'HeaderButtons',
 			'Icons',
 			'Individuals',
