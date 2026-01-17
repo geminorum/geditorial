@@ -102,6 +102,8 @@ class Plugin extends WordPress\Plugin
 	protected function late_constants()
 	{
 		return [
+			'GEDITORIAL_SYSTEM_TITLE'      => NULL,
+			'GEDITORIAL_SYSTEM_DESC'       => NULL,
 			'GEDITORIAL_BETA_FEATURES'     => TRUE,
 			'GEDITORIAL_LOAD_PRIVATES'     => FALSE,
 			'GEDITORIAL_DEBUG_MODE'        => FALSE,
@@ -684,6 +686,12 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: move following into Info!
+	public static function system( $wrap = FALSE, $fallback = '' )
+	{
+		if ( ! $message = self::const( 'GEDITORIAL_SYSTEM_TITLE', NULL ) ?? _x( 'Editorial', 'Plugin: System Title', 'geditorial' ) ) return $fallback;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-system', 'title' => self::const( 'GEDITORIAL_SYSTEM_DESC', NULL ) ?? _x( 'Our Editorial in WordPress', 'Plugin: System Description', 'geditorial' ) ], $message ) : $message;
+	}
+
 	public static function na( $wrap = 'code' )
 	{
 		$message = __( 'N/A', 'geditorial' );
