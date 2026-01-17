@@ -44,6 +44,7 @@ class {{{identifier}}} {
 		if ( empty( $_FILES ) || $_FILES['file']['error'] )
 			self::jsonrpc( 103, 'Failed to move uploaded file.' );
 
+		// TODO: sanitize
 		$destination = empty( $_REQUEST['dest'] ) ? '' : self::sanitize( $_REQUEST['dest'] );
 		$fileDir     = __DIR__.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.static::DIR;
 
@@ -92,6 +93,7 @@ class {{{identifier}}} {
 		self::jsonrpc( FALSE );
 	}
 
+	// @REF: https://github.com/moxiecode/plupload/blob/2.2.x/examples/upload.php
 	public static function init()
 	{
 		error_reporting( E_ALL );

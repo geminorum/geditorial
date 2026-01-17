@@ -298,6 +298,7 @@ trait SubContents
 		];
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL )
 	{
 		return [
@@ -327,6 +328,7 @@ trait SubContents
 		return $this->subcontent_base_data_mapping( $context, $posttype );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_update_sort( $raw = [], $post = FALSE, $mapping = NULL )
 	{
 		foreach ( $raw as $offset => $comment_id )
@@ -335,6 +337,7 @@ trait SubContents
 		return count( $raw );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_insert_data_row( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL )
 	{
 		$data = $this->subcontent_sanitize_data( $raw, $context, $post, $mapping );
@@ -390,6 +393,7 @@ trait SubContents
 		return $comment_id;
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	// NOTE: overrides the modifications by core
 	public function subcontent_wp_update_comment_data( $data, $comment, $commentarr )
 	{
@@ -408,6 +412,7 @@ trait SubContents
 		return $data;
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_insert_data_before( $data = [], $comment_id = FALSE )
 	{
 		$this->cache['subcontent_data'][( $comment_id ?: 'new' )] = $data;
@@ -422,6 +427,7 @@ trait SubContents
 		add_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_insert_data_after( $data = [], $comment_id = FALSE )
 	{
 		add_filter( 'comment_save_pre', 'convert_invalid_entities' );
@@ -436,11 +442,13 @@ trait SubContents
 		unset( $this->cache['subcontent_data'][( $comment_id ?: 'new' )] );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_delete_data_row( $id, $post = FALSE )
 	{
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	// NOTE: Does final preparations and additions into data before saving.
 	protected function subcontent_prep_data_for_save( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
@@ -475,6 +483,7 @@ trait SubContents
 		return $data;
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_prep_data_from_query( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $order = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -506,6 +515,7 @@ trait SubContents
 		return $this->filters( 'subcontent_after_prep_data', $data, $context, $post, $mapping, $metas );
 	}
 
+	// FIXME: **partially** Move to `DeepContents` internal
 	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
 	// TODO: support for auto-fill fields with tokens: `date: '{{now}}'`
 	protected function subcontent_sanitize_data( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
@@ -603,6 +613,7 @@ trait SubContents
 		return $this->filters( 'subcontent_sanitize_data', $data, $context, $post, $raw, $mapping, $metas, $allowed_raw );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_get_data_mapped( $items, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
 	{
 		if ( is_null( $mapping ) )
@@ -619,6 +630,7 @@ trait SubContents
 		return $this->filters( 'subcontent_data_mapped', $data, $context, $post, $items, $mapping, $metas );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_get_data_all( $parent = NULL, $context = NULL, $map = TRUE, $extra = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $parent ) )
@@ -651,6 +663,7 @@ trait SubContents
 		return $this->subcontent_query_data_count( $parent, $extra );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_query_data_count( $parent = NULL, $extra = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $parent ) )
@@ -866,6 +879,7 @@ trait SubContents
 		return $this->filters( 'subcontent_prep_data_from_import', $data, $raw, $field, $post, $column_title, $source_title );
 	}
 
+	// FIXME: **partially** Move to `DeepContents` internal
 	// TODO: `total`: count with HTML markup
 	protected function subcontent_restapi_register_routes()
 	{
@@ -1267,6 +1281,7 @@ trait SubContents
 		], $this->get_notice_for_empty( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_delete_data_all( $post, $force_delete = TRUE )
 	{
 		$data = $this->subcontent_get_data_all( $post, 'delete', FALSE );
@@ -1278,6 +1293,7 @@ trait SubContents
 		return count( $data );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_clone_data_all( $from, $to, $fresh = FALSE )
 	{
 		$data = $this->subcontent_get_data_all( $from, 'clone' );
@@ -1292,6 +1308,7 @@ trait SubContents
 		return count( $data );
 	}
 
+	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_copy_data_row( $data )
 	{
 		return Core\Arraay::stripByKeys( $data, [

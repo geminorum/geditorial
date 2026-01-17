@@ -902,12 +902,12 @@ trait PostTypeFields
 
 		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );
 
-		add_filter( 'manage_'.$posttype.'_posts_columns',
+		add_filter( sprintf( 'manage_%s_posts_columns', $posttype ),
 			function ( $columns ) use ( $posttype ) {
 				return $this->manage_posts_columns_posttypefields( $columns, $posttype );
 			}, 99, 1 );
 
-		add_action( 'manage_'.$posttype.'_posts_custom_column',
+		add_action( sprintf( 'manage_%s_posts_custom_column', $posttype ),
 			[ $this, 'posts_custom_column_posttypefields' ], 10, 2 );
 
 		$this->posttypefields__hook_default_rows( $posttype );

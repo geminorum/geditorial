@@ -123,7 +123,7 @@ class Plugin extends WordPress\Plugin
 	{
 		foreach ( scandir( $this->_path ) as $module ) {
 
-			if ( in_array( $module, [ '.', '..' ] ) )
+			if ( in_array( $module, [ '.', '..', 'index.html' ] ) )
 				continue;
 
 			if ( ! file_exists( $this->_path.$module.'/'.$module.'.php' ) )

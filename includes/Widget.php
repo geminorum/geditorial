@@ -14,14 +14,23 @@ class Widget extends \WP_Widget
 		return gEditorial();
 	}
 
-	protected static function constant( $key, $default = FALSE )
+	protected static function constant( $key, $default = FALSE, $module = NULL )
 	{
-		return gEditorial()->constant( static::MODULE, $key, $default );
+		return static::factory()->constant( $module ?? static::MODULE, $key, $default );
 	}
 
 	protected static function filters( $hook, ...$args )
 	{
 		return apply_filters( sprintf( '%s_%s_%s',
+			static::BASE,
+			static::WIDGET, // NOTE: usually the widget name also contain the module name
+			$hook
+		), ...$args );
+	}
+
+	protected static function actions( $hook, ...$args )
+	{
+		return do_action( sprintf( '%s_%s_%s',
 			static::BASE,
 			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook

@@ -120,7 +120,10 @@ class Specs extends gEditorial\Module
 				'high'
 			);
 
-			$this->enqueue_asset_js( [], $screen, [ 'jquery', gEditorial\Scripts::pkgSortable() ] );
+			$this->enqueue_asset_js( [], $screen, [
+				'jquery',
+				gEditorial\Scripts::pkgSortable(),
+			] );
 
 			$this->_hook_store_metabox( $screen->post_type );
 			add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );

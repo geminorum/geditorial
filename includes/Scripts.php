@@ -249,7 +249,11 @@ JS;
 		// NOTE: since we need `gEditorial` object on this script!
 		gEditorial()->enqueue_asset_config();
 
-		return self::enqueue( 'all.colorbox', [ 'jquery', self::pkgColorBox( TRUE ) ] );
+		return self::enqueue( 'all.colorbox', [
+			'jquery',
+			'wp-api-request',
+			self::pkgColorBox( TRUE ),
+		] );
 	}
 
 	// @REF: https://www.jacklmoore.com/colorbox/

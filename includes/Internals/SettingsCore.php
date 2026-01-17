@@ -95,7 +95,7 @@ trait SettingsCore
 		echo '</form>';
 
 		if ( WordPress\IsIt::dev() )
-			self::dump( $this->options );
+			echo Core\HTML::wrap( self::dump( $this->options, TRUE, FALSE ), '-debug-wrap' );
 	}
 
 	public function register_settings_default_buttons( $module = FALSE )

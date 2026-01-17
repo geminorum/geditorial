@@ -562,8 +562,17 @@ class Module extends WordPress\Module
 
 	public function get_column_title( $column, $constant = NULL, $fallback = NULL )
 	{
-		$title = $this->get_string( $column.'_column_title', $constant, 'misc', ( is_null( $fallback ) ? $column : $fallback ) );
-		return $this->filters( 'column_title', $title, $column, $constant, $fallback );
+		return $this->filters( 'column_title',
+			$this->get_string(
+				sprintf( '%s_column_title', $column ),
+				$constant,
+				'misc',
+				$fallback ?? $column
+			),
+			$column,
+			$constant,
+			$fallback
+		);
 	}
 
 	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
