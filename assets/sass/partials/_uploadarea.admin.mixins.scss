@@ -23,6 +23,14 @@
     &:hover {
       background: #fff;
     }
+
+    position: relative;
+    .spinner {
+      position: absolute;
+      float: none;
+      margin: 0;
+      right: $spacer * .5;
+    }
   }
 
   select.upload-destination + .chosen-container a.chosen-single,

@@ -42,11 +42,19 @@
       align-items: center;
       justify-content: center;
 
-      span.-loading,
+      // span.-loading {}
+
       span.-filename,
       span.-filesize,
       strong {
         margin-right: $spacer * .25;
+      }
+
+      button {
+        display: none;
+        background-color: transparent;
+        width: $spacer;
+        height: $spacer;
       }
     }
   }

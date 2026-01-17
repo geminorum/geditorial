@@ -11,16 +11,16 @@
 @import "partials/icon.all";
 @import "partials/spinner.all";
 @import "partials/today.all.mixins";
-// @import "partials/ortho.admin.all";
+// @import "partials/ortho.admin.all"; // TODO: support ortho on `edit` screens
+@import "partials/tweaks.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import "partials/book.admin.edit";
 @import "partials/drafts.admin.edit";
-@import "partials/event.admin.edit";
 @import "partials/magazine.admin.edit";
 @import "partials/today.admin.edit";
 @import "partials/tweaks.admin.edit";
-@import "partials/tweaks.admin.all";
+@import "partials/meta.admin.edit";
 @import "partials/users.admin.edit";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -40,24 +40,27 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
 ////////////////////////////////////////////////////////////////////////////////
 .wp-list-table {
 
-  // Module: Units
+  // Module: `Meta`
+  th.column-geditorial-meta {
+    width: auto; // default is auto
+  }
+
+  // Module: `ISBN`
+  th.column-geditorial-isbn {
+    width: 25ch; // default for gtin is `20ch`
+  }
+
+  // Module: `Units`
   th.column-geditorial-units {
     width: 95px;
   }
 
-  // Module: Entry
+  // Module: `Entry`
   .column-taxonomy-entry_section {
     width: 8%;
   }
 
-  // Module: Event
-  .column-event_starts,
-  .column-event_ends {
-    width: 12%;
-    color: $gray-light;
-  }
-
-  // Module: Magazine
+  // Module: `Magazine`
   .column-taxonomy-issue_span {
     width: 72px;
   }
@@ -67,6 +70,19 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
   }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+body.woocommerce-admin-page {
+  // only if `Tweaks` not enabled and we have product cat/tag/brand columns.
+  &.post-type-product:not(.geditorial-tweaks-enabled) {
+    .wp-list-table {
+      th.column-geditorial-meta {
+        width: 20ch; // default only on products
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 @media screen and ( max-width: 782px ) {
   .wp-list-table tr {
 
