@@ -18,6 +18,14 @@ class Plugin extends WordPress\Plugin
 	private $_options;
 	private $_modules;
 
+	const CAPABILITY_CUSTOMS  = 'editorial_customs';
+	const CAPABILITY_IMPORTS  = 'editorial_imports';
+	const CAPABILITY_REPORTS  = 'editorial_reports';
+	const CAPABILITY_ROLES    = 'editorial_roles';
+	const CAPABILITY_SETTINGS = 'editorial_settings';
+	const CAPABILITY_TESTS    = 'editorial_tests';
+	const CAPABILITY_TOOLS    = 'editorial_tools';
+
 	protected function setup_check()
 	{
 		if ( is_network_admin() || is_user_admin() )

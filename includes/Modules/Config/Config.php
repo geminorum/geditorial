@@ -64,13 +64,13 @@ class Config extends gEditorial\Module
 			 * @source https://wpmayor.com/roles-capabilities-wordpress/
 			 */
 
-			case 'editorial_reports':
-			case 'editorial_settings':
-			case 'editorial_tools':
-			case 'editorial_roles':
-			case 'editorial_tests':
-			case 'editorial_imports':
-			case 'editorial_customs':
+			case gEditorial\Plugin::CAPABILITY_CUSTOMS:
+			case gEditorial\Plugin::CAPABILITY_IMPORTS:
+			case gEditorial\Plugin::CAPABILITY_REPORTS:
+			case gEditorial\Plugin::CAPABILITY_ROLES:
+			case gEditorial\Plugin::CAPABILITY_SETTINGS:
+			case gEditorial\Plugin::CAPABILITY_TESTS:
+			case gEditorial\Plugin::CAPABILITY_TOOLS:
 
 				if ( WordPress\User::isSuperAdmin() )
 					return [ 'exist' ];
@@ -116,7 +116,7 @@ class Config extends gEditorial\Module
 			'index.php',
 			_x( 'Editorial Reports', 'Menu Title', 'geditorial-admin' ),
 			_x( 'My Reports', 'Menu Title', 'geditorial-admin' ),
-			'editorial_reports',
+			gEditorial\Plugin::CAPABILITY_REPORTS,
 			$this->classs_base( 'reports' ),
 			[ $this, 'admin_reports_page' ]
 		);
@@ -125,7 +125,7 @@ class Config extends gEditorial\Module
 		$this->screens['settings'] = add_menu_page(
 			$this->module->title,
 			$this->module->title,
-			'editorial_settings',
+			gEditorial\Plugin::CAPABILITY_SETTINGS,
 			$slug,
 			[ $this, 'admin_settings_page' ],
 			Services\Icons::menu( $this->module->icon ),
@@ -139,7 +139,7 @@ class Config extends gEditorial\Module
 				? _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
 				: _x( 'Tools', 'Menu Title', 'geditorial-admin' )
 			),
-			'editorial_tools',
+			gEditorial\Plugin::CAPABILITY_TOOLS,
 			$this->classs_base( 'tools' ),
 			[ $this, 'admin_tools_page' ]
 		);
@@ -147,17 +147,17 @@ class Config extends gEditorial\Module
 		$this->_hook_wp_submenu_page( 'roles',
 			current_user_can( 'list_users' ) ? 'users.php' : $slug,
 			_x( 'Editorial Roles', 'Menu Title', 'geditorial-admin' ),
-			NULL, 'editorial_roles' );
+			NULL, gEditorial\Plugin::CAPABILITY_ROLES );
 
 		$this->_hook_wp_submenu_page( 'imports',
 			$edit ? 'tools.php' : $slug,
 			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
-			NULL, 'editorial_imports' );
+			NULL, gEditorial\Plugin::CAPABILITY_IMPORTS );
 
 		$this->_hook_wp_submenu_page( 'customs',
 			current_user_can( 'edit_theme_options' ) ? 'themes.php' : $slug,
 			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
-			NULL, 'editorial_customs' );
+			NULL, gEditorial\Plugin::CAPABILITY_CUSTOMS );
 
 		add_action( sprintf( 'load-%s', $this->screens['reports'] ), [ $this, 'admin_reports_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['settings'] ), [ $this, 'admin_settings_load' ] );
@@ -184,7 +184,7 @@ class Config extends gEditorial\Module
 				$slug,
 				$module->title,
 				$module->title,
-				'editorial_settings',
+				gEditorial\Plugin::CAPABILITY_SETTINGS,
 				sprintf( '%s&module=%s', $slug, $module->name ),
 				[ $this, 'admin_settings_page' ]
 			);
