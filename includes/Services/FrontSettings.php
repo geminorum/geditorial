@@ -9,6 +9,10 @@ use geminorum\gEditorial\WordPress;
 
 class FrontSettings extends gEditorial\Service
 {
+	const MAIN_PANEL   = 'geditorial';
+	const MAIN_SECTION = 'geditorial_general';
+	const MORE_SECTION = 'geditorial_andmore';
+
 	public static function setup()
 	{
 		add_action( 'customize_register', [ __CLASS__, 'customize_register' ] );
@@ -32,9 +36,9 @@ class FrontSettings extends gEditorial\Service
 	 */
 	public static function customize_register( $manager )
 	{
-		$manager->add_panel( static::BASE, [
 		$system = gEditorial\Plugin::system();
 
+		$manager->add_panel( static::MAIN_PANEL, [
 			'title'          => $system ?: _x( 'Editorial', 'Customizer: Panel Title', 'geditorial-admin' ),
 			'description'    => self::filters( 'front_settings_description', '', $system ),
 			'capability'     => 'edit_theme_options',
@@ -44,17 +48,23 @@ class FrontSettings extends gEditorial\Service
 			'auto_expand_sole_section' => ! WordPress\IsIt::Dev(),
 		] );
 
-		$general = self::hook( 'general' );
-		$welcome = self::hook( 'general', 'welcome' );
-
-		$manager->add_section( $general, [
-			'panel'              => static::BASE,
+		$manager->add_section( static::MAIN_SECTION, [
+			'panel'              => static::MAIN_PANEL,
 			'title'              => _x( 'General', 'Customizer: Section Title', 'geditorial-admin' ),
 			'description'        => _x( 'Editorial General Customizations', 'Customizer: Section Description', 'geditorial-admin' ),
 			'description_hidden' => TRUE,
 			'priority'           => 10,
 		] );
 
+		$manager->add_section( static::MORE_SECTION, [
+			'panel'              => static::MAIN_PANEL,
+			'title'              => _x( 'And More', 'Customizer: Section Title', 'geditorial-admin' ),
+			'description'        => _x( 'More info about Editorial System', 'Customizer: Section Description', 'geditorial-admin' ),
+			'description_hidden' => ! WordPress\IsIt::Dev(),
+			'priority'           => 99,
+		] );
+
+		$welcome = self::hook( 'more', 'welcome' );
 		$manager->add_setting( $welcome, [
 			'default'           => NULL,
 			'sanitize_callback' => 'sanitize_text_field',
@@ -67,17 +77,22 @@ class FrontSettings extends gEditorial\Service
 				$welcome,
 				[
 					'label'    => _x( 'Looking for more options?', 'Customizer: Control label', 'geditorial-admin' ),
-					'section'  => $general,
+					'section'  => static::MORE_SECTION,
 					'settings' => $welcome,
 					'priority' => 1,
 				]
 			)
 		);
 
-		self::actions( 'front_settings_customize',
-			static::BASE,  // panel
-			$general    ,  // section
-			$welcome    ,  // cotrol
+		do_action_ref_array(
+			implode( '_', [ static::BASE, 'front_settings', 'customize' ] ),
+			[
+				&$manager,
+				static::MAIN_PANEL   ,   // $main_panel
+				static::MAIN_SECTION ,   // $main_section
+				static::MORE_SECTION ,   // $more_section
+				$welcome             ,   // $welcome_control
+			]
 		);
 	}
 }
