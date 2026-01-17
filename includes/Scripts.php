@@ -275,6 +275,14 @@ JS;
 		return $handle;
 	}
 
+	public static function enqueueDynamicSubmit()
+	{
+		// NOTE: since we need `gEditorial` object on this script!
+		gEditorial()->enqueue_asset_config();
+
+		return self::enqueue( 'all.dynamicsubmit', [ 'jquery', 'wp-url' ] );
+	}
+
 	/**
 	 * Enqueues and or registers `SheetJS` package.
 	 *
