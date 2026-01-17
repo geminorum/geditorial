@@ -1,17 +1,19 @@
-(function ($, plugin, module, section) {
+(function ($, plugin, mainkey, context) {
   if (plugin === 'undefined') return;
 
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module
     table: '#the-list',
     single: 'singleselect', // data prop
     raw: 'raw-value', // data prop
-    hidden: 'div.hidden[data-' + module + ']',
+    hidden: 'div.hidden[data-' + mainkey + ']',
     checkbox: ':input[type=checkbox]'
   };
 
   const app = {
+    init: function () {
+      $(s.table).on('click', '.editinline', app.clicked);
+    },
+
     clicked: function (event) {
       const tag = $(this).parents('tr').attr('id');
       $(s.hidden, '#' + tag).each(function () {
@@ -37,9 +39,12 @@
   };
 
   $(function () {
-    $(s.table).on('click', '.editinline', app.clicked);
-
-    // $(document).trigger('gEditorialReady', [module, app]);
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    // $(document).trigger('gEditorialReady', [mainkey, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'taxtax', 'edit'));
