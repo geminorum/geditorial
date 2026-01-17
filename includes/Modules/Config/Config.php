@@ -107,9 +107,10 @@ class Config extends gEditorial\Module
 
 	public function admin_menu()
 	{
-		// $can  = $this->cuc( 'settings' );
-		$slug = $this->classs_base( 'settings' );
-		$edit = current_user_can( 'edit_posts' );
+		// $can    = $this->cuc( 'settings' );
+		$slug   = $this->classs_base( 'settings' );
+		$edit   = current_user_can( 'edit_posts' );
+		$system = gEditorial\Plugin::system();
 
 		// `dashboard_page_geditorial-reports`
 		$this->screens['reports'] = add_submenu_page(
@@ -123,8 +124,8 @@ class Config extends gEditorial\Module
 
 		// `toplevel_page_geditorial-settings`
 		$this->screens['settings'] = add_menu_page(
-			$this->module->title,
-			$this->module->title,
+			$system ?: $this->module->title,
+			$system ?: $this->module->title,
 			gEditorial\Plugin::CAPABILITY_SETTINGS,
 			$slug,
 			[ $this, 'admin_settings_page' ],

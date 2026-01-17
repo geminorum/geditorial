@@ -33,7 +33,10 @@ class FrontSettings extends gEditorial\Service
 	public static function customize_register( $manager )
 	{
 		$manager->add_panel( static::BASE, [
-			'title'          => _x( 'Editorial', 'Customizer: Panel Title', 'geditorial-admin' ),
+		$system = gEditorial\Plugin::system();
+
+			'title'          => $system ?: _x( 'Editorial', 'Customizer: Panel Title', 'geditorial-admin' ),
+			'description'    => self::filters( 'front_settings_description', '', $system ),
 			'capability'     => 'edit_theme_options',
 			'priority'       => 400,
 			'theme_supports' => '',

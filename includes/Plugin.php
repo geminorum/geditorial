@@ -647,7 +647,7 @@ class Plugin extends WordPress\Plugin
 				'title'  => Services\Icons::adminBarMarkup(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
-				'meta'   => [ 'title' => _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],
+				'meta'   => [ 'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],
 			] );
 		}
 

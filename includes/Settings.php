@@ -2021,17 +2021,24 @@ class Settings extends WordPress\Main
 	// @REF: `get_admin_page_title()`
 	public static function headerTitle( $context = NULL, $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
 	{
+		$system = gEditorial\Plugin::system();
 		$before = $class = '';
 
 		if ( is_null( $title ) )
-			$title = _x( 'Editorial', 'Settings', 'geditorial-admin' );
+			$title = $system ?: _x( 'Editorial', 'Settings', 'geditorial-admin' );
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
 			$back = self::getURLbyContext( $context ?? 'settings' );
 
 		if ( is_null( $to ) )
-			$to = _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
+			$to = $system
+				? sprintf(
+					/* translators: `%s`: system string */
+					_x( 'Back to %s', 'Settings', 'geditorial-admin' ),
+					$system
+					)
+				: _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
 
 		if ( is_array( $icon ) )
 			$before = gEditorial()->icon( $icon[1], $icon[0] );
@@ -2087,9 +2094,11 @@ class Settings extends WordPress\Main
 
 	public static function sideOpen( $title = NULL, $uri = '', $active = '', $subs = [], $heading = NULL )
 	{
+		$system = gEditorial\Plugin::system();
+
 		echo '<div class="side-nav-wrap">';
 
-		Core\HTML::h2( $title ?? _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ), '-title' );
+		Core\HTML::h2( $title ?? ( $system ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) ), '-title' );
 		Core\HTML::headerNav( $uri, $active, $subs, 'side-nav', 'ul', 'li' );
 
 		echo '<div class="side-nav-content">';
