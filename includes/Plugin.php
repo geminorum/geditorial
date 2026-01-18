@@ -7,6 +7,7 @@ class Plugin extends WordPress\Plugin
 {
 	public $base = 'geditorial';
 
+	private $asset_adminbar = FALSE;
 	private $asset_styles   = FALSE;
 	private $asset_config   = FALSE;
 	private $asset_jsargs   = [];
@@ -478,6 +479,10 @@ class Plugin extends WordPress\Plugin
 					break;
 				}
 		}
+
+		// Always add admin-bar styles to admin
+		if ( is_admin_bar_showing() )
+			Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
 	}
 
 	// TODO: Move to `ClassicEditor` Service
@@ -522,6 +527,12 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
+	// NOTE: `enqueue` means just the styles non admin-bar itself!
+	public function enqueue_adminbar( $value = NULL )
+	{
+		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
+	}
+
 	public function enqueue_styles()
 	{
 		$this->asset_styles = TRUE;
@@ -530,10 +541,7 @@ class Plugin extends WordPress\Plugin
 	// TODO: Move to `AssetRegistry` Service
 	public function wp_enqueue_scripts()
 	{
-		if ( count( $this->adminbar_nodes ) && is_admin_bar_showing() ) {
-			wp_enqueue_style( $this->base.'-adminbar', GEDITORIAL_URL.'assets/css/adminbar.all.css', [], GEDITORIAL_VERSION );
-			wp_style_add_data( $this->base.'-adminbar', 'rtl', 'replace' );
-		}
+		$this->enqueue_asset_adminbar();
 
 		if ( ! $this->asset_styles )
 			return;
@@ -554,6 +562,24 @@ class Plugin extends WordPress\Plugin
 
 		wp_enqueue_style( 'gnetwork-front', GEDITORIAL_URL.'assets/css/front.gnetwork.css', [], GEDITORIAL_VERSION );
 		wp_style_add_data( 'gnetwork-front', 'rtl', 'replace' );
+	}
+
+	// TODO: Move to `AssetRegistry` Service
+	public function enqueue_asset_adminbar()
+	{
+		if ( ! is_admin_bar_showing() )
+			return FALSE;
+
+		if ( ! $this->asset_adminbar && ! count( $this->adminbar_nodes ) )
+			return FALSE;
+
+		$handle = sprintf( '%s-%s', $this->base, 'adminbar' );
+		$source = sprintf( '%sassets/css/%s.all.css', $this->get_url(), 'adminbar' );
+
+		wp_enqueue_style( $handle, $source, [], $this->get_ver() );
+		wp_style_add_data( $handle, 'rtl', 'replace' );
+
+		return $handle;
 	}
 
 	// TODO: Move to `AssetRegistry` Service
