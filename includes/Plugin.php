@@ -528,14 +528,14 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	// NOTE: `enqueue` means just the styles non admin-bar itself!
+	// NOTE: `enqueue` means just the styles, not the admin-bar itself!
 	public function enqueue_adminbar( $value = NULL )
 	{
 		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	// NOTE: passing `NULL` will returns the current state.
+	// NOTE: passing `NULL` returns the current state.
 	// FIXME: default must be `NULL` / caller must pass the intended value!
 	public function enqueue_styles( $value = TRUE )
 	{
@@ -679,9 +679,9 @@ class Plugin extends WordPress\Plugin
 				$link = FALSE;
 
 			$wp_admin_bar->add_node( [
+				// 'parent' => 'top-secondary',
 				'id'     => $this->base,
 				'title'  => Services\Icons::adminBarMarkup(),
-				// 'parent' => 'top-secondary',
 				'href'   => $link,
 				'meta'   => [
 					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),

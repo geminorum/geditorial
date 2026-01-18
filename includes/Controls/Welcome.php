@@ -19,7 +19,7 @@ class Welcome extends gEditorial\Control
 			echo Core\HTML::span( $this->label, static::BASE.'-customize-control-title customize-control-title' );
 
 			Core\HTML::desc( Core\Text::wordWrap( sprintf(
-				/* translators: 1: Storefront, 2: start <a> tag, 3: Storefront, 4: end <a> tag */
+				/* translators: `%1$s`: editorial system title, `%2$s`: start `<a>` tag, `%3$s`: editorial system title, `%4$s`: end `<a>` tag */
 				_x( 'There\'s a range of %1$s modules available to put additional power in your hands. Check out the %2$s%3$s%4$s page in your dashboard for more information.', 'Control: Welcome', 'geditorial-admin' ),
 				$system,
 				'<a href="'.Core\HTML::escapeURL( gEditorial\Settings::getURLbyContext( 'settings', TRUE ) ).'">',
@@ -30,7 +30,7 @@ class Welcome extends gEditorial\Control
 			self::actions( 'moreinfo', $system );
 
 			echo Core\HTML::span( sprintf(
-				/* translators: `%s`: Editorial System Title */
+				/* translators: `%s`: editorial system title */
 				_x( 'Enjoying %s?', 'Control: Welcome', 'geditorial-admin' ),
 				$system
 			), 'customize-control-title' );

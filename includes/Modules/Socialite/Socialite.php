@@ -36,7 +36,8 @@ class Socialite extends gEditorial\Module
 			'icon'     => 'money',
 			'access'   => 'beta',
 			'keywords' => [
-				'social',
+				'social-network',
+				'site-identity',
 				'termmeta',
 			],
 		];

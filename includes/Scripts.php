@@ -744,7 +744,13 @@ JS;
 })();
 JS;
 
-		return self::inlineScript( sprintf( '%s-chartjs-%s', static::BASE, $name ), $script, [ self::pkgChartJS( TRUE ) ] );
+		return self::inlineScript(
+			sprintf( '%s-chartjs-%s', static::BASE, $name ),
+			$script,
+			[
+				self::pkgChartJS( TRUE ),
+			]
+		);
 	}
 
 	// @REF: https://github.com/select2/select2/

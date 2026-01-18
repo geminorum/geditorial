@@ -2021,7 +2021,7 @@ class Settings extends WordPress\Main
 	// @REF: `get_admin_page_title()`
 	public static function headerTitle( $context = NULL, $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
 	{
-		$system = gEditorial\Plugin::system();
+		$system = Plugin::system();
 		$before = $class = '';
 
 		if ( is_null( $title ) )
@@ -2094,11 +2094,9 @@ class Settings extends WordPress\Main
 
 	public static function sideOpen( $title = NULL, $uri = '', $active = '', $subs = [], $heading = NULL )
 	{
-		$system = gEditorial\Plugin::system();
-
 		echo '<div class="side-nav-wrap">';
 
-		Core\HTML::h2( $title ?? ( $system ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) ), '-title' );
+		Core\HTML::h2( $title ?? ( Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) ), '-title' );
 		Core\HTML::headerNav( $uri, $active, $subs, 'side-nav', 'ul', 'li' );
 
 		echo '<div class="side-nav-content">';
@@ -3949,6 +3947,7 @@ class Settings extends WordPress\Main
 
 					break;
 
+				case 'textarea': // FIXME: make this a `textarea`
 				case 'text':
 				default:
 

@@ -7,6 +7,18 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Controls;
 use geminorum\gEditorial\WordPress;
 
+/**
+	Site Title & Tagline (title_tagline): 20
+	Colors (`colors`): 40
+	Header Image (`header_image`): 60
+	Background Image (`background_image`): 80
+	Menus (Panel) (`nav_menus`): 100
+	Widgets (Panel) (`widgets`): 110
+	Static Front Page (`static_front_page`): 120
+	default: 160
+	Additional CSS (`custom_css`): 200
+**/
+
 class FrontSettings extends gEditorial\Service
 {
 	const MAIN_PANEL   = 'geditorial';
@@ -19,17 +31,12 @@ class FrontSettings extends gEditorial\Service
 	}
 
 	/**
-	 * Registers `Customizer` setting.
+	 * Registers `Customizer` main panel and sections for this service.
 	 *
 	 * Core controls include `text`, `checkbox`, `textarea`, `radio`, `select`,
 	 * and `dropdown-pages`. Additional input types such as `email`, `url`,
 	 * `number`, `hidden`, and `date` are supported implicitly. Default is `text`.
-	 *
-	 * @see https://developer.wordpress.org/themes/customize-api/customizer-objects/
-	 * @see https://developer.wordpress.org/reference/classes/wp_customize_control/
-	 * @see https://developer.wordpress.org/themes/customize-api/
-	 *
-	 * @source https://www.billerickson.net/code/customizer-setting/
+	 * @link https://developer.wordpress.org/themes/customize-api/
 	 *
 	 * @param object $manager
 	 * @return void
@@ -52,7 +59,7 @@ class FrontSettings extends gEditorial\Service
 			'panel'              => static::MAIN_PANEL,
 			'title'              => _x( 'General', 'Customizer: Section Title', 'geditorial-admin' ),
 			'description'        => _x( 'Editorial General Customizations', 'Customizer: Section Description', 'geditorial-admin' ),
-			'description_hidden' => TRUE,
+			'description_hidden' => ! WordPress\IsIt::Dev(),
 			'priority'           => 10,
 		] );
 
@@ -66,9 +73,8 @@ class FrontSettings extends gEditorial\Service
 
 		$welcome = self::hook( 'more', 'welcome' );
 		$manager->add_setting( $welcome, [
-			'default'           => NULL,
-			'sanitize_callback' => 'sanitize_text_field',
-			'capability'        => gEditorial\Plugin::CAPABILITY_CUSTOMS,
+			'default'    => NULL,
+			'capability' => 'edit_theme_options',
 		] );
 
 		$manager->add_control(
