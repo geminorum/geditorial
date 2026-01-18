@@ -41,7 +41,9 @@ trait TemplateTaxonomy
 					'id'     => 'edit', // NOTE: will convert to `wp-admin-bar-edit` to use the core icon
 					'href'   => $edit,
 					'title'  => Services\CustomTaxonomy::getLabel( $term, 'edit_item' ),
-					'meta'   => [ 'class' => $this->get_adminbar_node_class( '-edit-item' ) ],
+					'meta'   => [
+						'class' => $this->class_for_adminbar_node( '-edit-item' ),
+					],
 				];
 
 			}, 99, 2 );

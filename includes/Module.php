@@ -856,15 +856,6 @@ class Module extends WordPress\Module
 			}, 12, 4 );
 	}
 
-	protected function get_adminbar_node_class( $extra = [] )
-	{
-		return Core\HTML::prepClass(
-			$this->classs_base( 'adminbar', 'node' ),
-			sprintf( '-%s', $this->key ),
-			$extra
-		);
-	}
-
 	protected function log( $level, $message = '', $context = [] )
 	{
 		return Helper::log( $message, $this->classs(), $level, $context );

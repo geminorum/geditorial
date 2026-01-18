@@ -270,7 +270,7 @@ class Identified extends gEditorial\Module
 				'href'   => Services\Barcodes::binaryEyeLink( $type, Core\URL::home() ),
 				'title'  => Services\Icons::adminBarMarkup( 'camera' ),
 				'meta'   => [
-					'class' => Core\HTML::prepClass( $this->classs_base( 'adminbar', 'node', 'icononly' ), '-binary-eye', '-'.$type ),
+					'class' => $this->class_for_adminbar_node( [ '-binary-eye', '-'.$type ], TRUE ),
 					'title' => sprintf(
 						/* translators: `%s`: identifier type */
 						_x( 'Scan %s', 'Node Title', 'geditorial-identified' ),

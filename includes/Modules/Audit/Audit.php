@@ -323,7 +323,7 @@ class Audit extends gEditorial\Module
 			'href'  => $this->get_module_url(),
 			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).gEditorial\Ajax::spinner(),
 			'meta'  => [
-				'class' => $this->get_adminbar_node_class( [ '-action', 'quick-assign-action', $this->classs() ] ),
+				'class' => $this->class_for_adminbar_node( [ '-action', 'quick-assign-action', $this->classs() ] ),
 				// working but not implemented on js yet!
 				// 'html'  => Core\HTML::tag( 'span', [
 				// 	'class' => 'quick-assign-data',

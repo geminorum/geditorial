@@ -160,7 +160,9 @@ class Drafts extends gEditorial\Module
 			'id'    => $this->classs(),
 			'href'  => '#',
 			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).gEditorial\Ajax::spinner(),
-			'meta'  => [ 'class' => $this->get_adminbar_node_class( $this->classs() ) ],
+			'meta'  => [
+				'class' => $this->class_for_adminbar_node( $this->classs() ),
+			],
 		];
 
 		$this->enqueue_asset_js();
