@@ -533,9 +533,12 @@ class Plugin extends WordPress\Plugin
 		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
 	}
 
-	public function enqueue_styles()
+	// TODO: Move to `AssetRegistry` Service
+	// NOTE: passing `NULL` will returns the current state.
+	// FIXME: default must be `NULL` / caller must pass the intended value!
+	public function enqueue_styles( $value = TRUE )
 	{
-		$this->asset_styles = TRUE;
+		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
 	}
 
 	// TODO: Move to `AssetRegistry` Service
@@ -549,19 +552,27 @@ class Plugin extends WordPress\Plugin
 		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
 			return;
 
-		wp_enqueue_style( $this->base.'-front', GEDITORIAL_URL.'assets/css/front.all.css', [], GEDITORIAL_VERSION );
-		wp_style_add_data( $this->base.'-front', 'rtl', 'replace' );
+		Scripts::enqueueStyleSrc(
+			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'all' ),
+			implode( '-', [ $this->base, 'front' ] ),
+			$this->get_ver()
+		);
 
-		if ( WordPress\WooCommerce::isActive() ) {
-			wp_enqueue_style( $this->base.'-woocommerce-front', GEDITORIAL_URL.'assets/css/front.woocommerce.css', [], GEDITORIAL_VERSION );
-			wp_style_add_data( $this->base.'-woocommerce-front', 'rtl', 'replace' );
-		}
+		if ( WordPress\WooCommerce::isActive() )
+			Scripts::enqueueStyleSrc(
+				sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'woocommerce' ),
+				implode( '-', [ $this->base, 'woocommerce', 'front' ] ),
+				$this->get_ver()
+			);
 
 		if ( defined( 'GNETWORK_VERSION' ) )
 			return;
 
-		wp_enqueue_style( 'gnetwork-front', GEDITORIAL_URL.'assets/css/front.gnetwork.css', [], GEDITORIAL_VERSION );
-		wp_style_add_data( 'gnetwork-front', 'rtl', 'replace' );
+		Scripts::enqueueStyleSrc(
+			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'gnetwork' ),
+			implode( '-', [ $this->base, 'gnetwork', 'front' ] ),
+			$this->get_ver()
+		);
 	}
 
 	// TODO: Move to `AssetRegistry` Service
@@ -573,13 +584,11 @@ class Plugin extends WordPress\Plugin
 		if ( ! $this->asset_adminbar && ! count( $this->adminbar_nodes ) )
 			return FALSE;
 
-		$handle = sprintf( '%s-%s', $this->base, 'adminbar' );
-		$source = sprintf( '%sassets/css/%s.all.css', $this->get_url(), 'adminbar' );
-
-		wp_enqueue_style( $handle, $source, [], $this->get_ver() );
-		wp_style_add_data( $handle, 'rtl', 'replace' );
-
-		return $handle;
+		return Scripts::enqueueStyleSrc(
+			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'adminbar', 'all' ),
+			implode( '-', [ $this->base, 'adminbar' ] ),
+			$this->get_ver()
+		);
 	}
 
 	// TODO: Move to `AssetRegistry` Service

@@ -83,6 +83,14 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
+	public static function enqueueStyleSrc( $source, $handle, $version = NULL, $rtl_data = NULL )
+	{
+		wp_enqueue_style( $handle, $source, [], $version ?? static::VERSION );
+		wp_style_add_data( $handle, 'rtl', $rtl_data ?? 'replace' );
+
+		return $handle;
+	}
+
 	// NOTE: for inline scripts without dependencies
 	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
 	{
