@@ -48,8 +48,13 @@ class SystemHeartbeat extends gEditorial\Service
 		$GLOBALS['wp_admin_bar']->add_menu( [
 			'parent' => 'top-secondary',
 			'id'     => self::classs( static::HEARTBEAT_KEY ),
-			'title'  => '<span class="ab-icon"></span>',
-			'href'   => '#'
+			'title'  => Icons::adminBarMarkup( 'heart' ),
+			'href'   => '#',
+			'meta' => [
+				// NOTE: heartbeat intervals by default will be determined on the client side.
+				'title' => _x( 'Current System Heartbeat ❤', 'Service: System Heartbeat', 'geditorial' ),
+				'class' => self::classs( 'adminbar', 'node', 'icononly' ),
+			],
 		] );
 	}
 

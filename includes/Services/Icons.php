@@ -128,7 +128,8 @@ class Icons extends gEditorial\Service
 	}
 
 	// OLD: `Visual::getAdminBarIconMarkup()`
-	public static function adminBarMarkup( $icon = 'screenoptions', $style = 'margin:2px 1px 0 1px;' )
+	// NOTE: must use in parent with `.geditorial-adminbar-node-icononly`
+	public static function adminBarMarkup( $icon = 'screenoptions', $style = FALSE )
 	{
 		return Core\HTML::tag( 'span', [
 			'class' => [

@@ -683,7 +683,10 @@ class Plugin extends WordPress\Plugin
 				'title'  => Services\Icons::adminBarMarkup(),
 				// 'parent' => 'top-secondary',
 				'href'   => $link,
-				'meta'   => [ 'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ) ],
+				'meta'   => [
+					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),
+					'class' => implode( '-', [ $this->base, 'adminbar', 'node', 'icononly' ] ),
+				],
 			] );
 		}
 
