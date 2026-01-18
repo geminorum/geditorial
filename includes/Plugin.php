@@ -217,6 +217,7 @@ class Plugin extends WordPress\Plugin
 			'RestAPI',
 			'SearchSelect',
 			'Sitemaps',
+			'SystemHeartbeat',
 			'TaxonomyFields',
 			'TaxonomyTaxonomy',
 			'TermHierarchy',

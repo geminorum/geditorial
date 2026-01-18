@@ -1,0 +1,67 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Service: System Heartbeat: Admin-bar: All
+
+////////////////////////////////////////////////////////////////////////////////
+/// Adopted from: `WP Heart Throb` by `John James Jacoby` v1.0.1 - 2026-01-18
+/// @link http://wordpress.org/plugins/wp-heart-throb/
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+#wp-admin-bar-geditorial-systemheartbeat {
+  .ab-icon {
+    position: relative;
+    /* stylelint-disable-next-line font-weight-notation */
+    /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+    font: 400 20px/1 dashicons;
+    speak: none;
+    float: left;
+    padding: 0;
+    margin: 6px 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: none !important;
+
+    &::before {
+      content: "\f487";
+    }
+
+    &:not(.beat) {
+      animation: beat 1s infinite;
+    }
+
+    &.beat {
+      animation: pound 0.5s infinite;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+@keyframes beat {
+  from {
+    transform: none;
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes pound {
+  from {
+    transform: none;
+  }
+
+  50% {
+    transform: scale(1.4);
+  }
+
+  to {
+    transform: none;
+  }
+}
