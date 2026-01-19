@@ -340,16 +340,14 @@ class Uncategorized extends gEditorial\Module
 							] );
 					}
 
-				} else {
-
-					WordPress\Redirect::doReferer( 'huh' );
+					// NOTE: maybe `dead_tax_check` posted!
 				}
 			}
 		}
 	}
 
 	// TODO: option to delete orphaned terms
-	// TODO: convert to `.card` UI: @SEE Audit module
+	// TODO: avoid `table>tr` extravaganza: first a `.card` then full width table-list
 	protected function render_tools_html( $uri, $sub )
 	{
 		$available  = FALSE;
@@ -363,13 +361,18 @@ class Uncategorized extends gEditorial\Module
 
 		if ( count( $dead_taxes ) ) {
 
+			$post = $this->get_current_form( [
+				'dead_tax' => $dead_taxes[0] ?? '',
+				'live_tax' => '',
+			], 'tools' );
+
 			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Tools', 'geditorial-uncategorized' ).'</th><td>';
 
 				$this->do_settings_field( [
 					'type'         => 'select',
 					'field'        => 'dead_tax',
 					'values'       => $dead_taxes,
-					'default'      => $post['dead_tax'] ?? 'post_tag',
+					'default'      => $post['dead_tax'],
 					'option_group' => 'tools',
 				] );
 
@@ -377,15 +380,47 @@ class Uncategorized extends gEditorial\Module
 					'type'         => 'select',
 					'field'        => 'live_tax',
 					'values'       => $live_taxes,
-					'default'      => $post['live_tax'] ?? 'post_tag',
+					'default'      => $post['live_tax'],
 					'option_group' => 'tools',
+					'none_title'   => gEditorial\Settings::showOptionNone(),
 				] );
 
 				echo '&nbsp;&nbsp;';
 
-				gEditorial\Settings::submitButton( 'orphaned_terms', _x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
+				gEditorial\Settings::submitButton( 'dead_tax_check',
+					_x( 'Check', 'Button', 'geditorial-uncategorized' ), TRUE );
+
+				gEditorial\Settings::submitButton( 'orphaned_terms',
+					_x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
 
 				Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
+
+				if ( isset( $_POST['dead_tax_check'] )
+					&& $post['dead_tax'] ) {
+
+					// NOTE: temporarily registering the dead taxonomy so the query works!
+					register_taxonomy( $post['dead_tax'], [] );
+
+					echo '<br />';
+					Core\HTML::tableList( [
+						'term_id'     => gEditorial\Tablelist::columnTermID(),
+						'taxonomy'    => gEditorial\Tablelist::columnTermTaxonomyCode( FALSE ),
+						'slug'        => gEditorial\Tablelist::columnTermSlug( FALSE ),
+						'name'        => gEditorial\Tablelist::columnTermName( [] ),
+						'meta'        => gEditorial\Tablelist::columnTermMetaList(),
+						'description' => gEditorial\Tablelist::columnTermDesc(),
+					], get_terms( [
+						'taxonomy'               => $post['dead_tax'],
+						'orderby'                => 'none',
+						'hide_empty'             => FALSE,
+						'update_term_meta_cache' => FALSE,
+						'suppress_filter'        => TRUE,
+					] ), [
+						'empty' => Core\HTML::warning( _x( 'There are no term-data available!', 'Table Empty', 'geditorial-uncategorized' ), FALSE ),
+					] );
+
+					gEditorial\Scripts::enqueueClickToClip();
+				}
 
 			echo '</td></tr>';
 
