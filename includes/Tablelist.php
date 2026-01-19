@@ -468,6 +468,21 @@ class Tablelist extends WordPress\Main
 		return _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
+	public static function columnTermTaxonomyCode( $link = TRUE, $title = NULL )
+	{
+		return [
+			'title'    => $title ?? _x( 'Taxonomy', 'Tablelist: Column Title', 'geditorial' ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $link ) {
+				if ( ! taxonomy_exists( $row->taxonomy ) )
+					return Core\HTML::code( $row->taxonomy, FALSE, TRUE );
+
+				return $link
+					? Core\HTML::link( Core\Text::code( $row->taxonomy ), WordPress\URL::editTaxonomy( $row->taxonomy ), TRUE )
+					: Core\HTML::code( $row->taxonomy, FALSE, TRUE );
+			}
+		];
+	}
+
 	public static function columnTermName( $actions = NULL, $description = FALSE, $custom = [], $title = NULL )
 	{
 		return [
@@ -533,9 +548,19 @@ class Tablelist extends WordPress\Main
 		return $list;
 	}
 
-	public static function columnTermSlug()
+	public static function columnTermSlug( $link = FALSE, $title = NULL )
 	{
-		return _x( 'Slug', 'Tablelist: Column: Term Slug', 'geditorial' );
+		return [
+			'title'    => $title ?? _x( 'Slug', 'Tablelist: Column Title', 'geditorial' ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $link ) {
+				if ( ! taxonomy_exists( $row->taxonomy ) )
+					return Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
+
+				return $link
+					? Core\HTML::link( Core\Text::code( urldecode( $row->slug ) ), WordPress\Term::edit( $row ), TRUE )
+					: Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
+			}
+		];
 	}
 
 	public static function columnTermDesc()
@@ -547,6 +572,19 @@ class Tablelist extends WordPress\Main
 				return empty( $row->description )
 					? Helper::htmlEmpty()
 					: WordPress\Strings::prepDescription( $row->description );
+			},
+		];
+	}
+
+	public static function columnTermMetaList( $title = NULL )
+	{
+		return [
+			'title'    => $title ?? _x( 'Meta', 'Tablelist: Column: Term Desc', 'geditorial' ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				if ( ! $meta = WordPress\Term::getMeta( $row ) )
+					return Helper::htmlEmpty();
+
+				return Core\HTML::wrap( self::dump( $meta, TRUE, FALSE ), '-debug-wrap' );
 			},
 		];
 	}
