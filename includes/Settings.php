@@ -2032,13 +2032,11 @@ class Settings extends WordPress\Main
 			$back = self::getURLbyContext( $context ?? 'settings' );
 
 		if ( is_null( $to ) )
-			$to = $system
-				? sprintf(
-					/* translators: `%s`: system string */
-					_x( 'Back to %s', 'Settings', 'geditorial-admin' ),
-					$system
-					)
-				: _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
+			$to = $system ? sprintf(
+				/* translators: `%s`: system string */
+				_x( 'Back to %s', 'Settings', 'geditorial-admin' ),
+				$system
+			) : _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
 
 		if ( is_array( $icon ) )
 			$before = gEditorial()->icon( $icon[1], $icon[0] );

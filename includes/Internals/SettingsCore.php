@@ -648,8 +648,9 @@ trait SettingsCore
 
 			$back  = gEditorial\Settings::getURLbyContext( 'settings' );
 			$title = sprintf(
-				/* translators: `%s`: module title */
-				_x( 'Editorial: %s', 'Module', 'geditorial-admin' ),
+				/* translators: `%1$s`: system title, `%2$s`: module title */
+				_x( '%1$s: %2$s', 'Module', 'geditorial-admin' ),
+				gEditorial\Plugin::system(),
 				$this->module->title
 			);
 		}

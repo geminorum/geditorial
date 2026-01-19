@@ -111,8 +111,12 @@ class Dashboard extends gEditorial\Module
 		$name = $this->classs();
 
 		register_sidebar( $this->filters( 'sidebar_args', [
-			'id'             => $name,
-			'name'           => _x( 'Editorial: Dashboard', 'Widget Area', 'geditorial-dashboard' ),
+			'id'   => $name,
+			'name' => sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s: Dashboard', 'Widget Area', 'geditorial-dashboard' ),
+				gEditorial\Plugin::system()
+			),
 			'description'    => _x( 'Widgets appear on Front-end Dashboard', 'Widget Area', 'geditorial-dashboard' ),
 			'before_widget'  => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'   => '</section>',
