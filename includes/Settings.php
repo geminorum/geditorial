@@ -3166,7 +3166,10 @@ class Settings extends WordPress\Main
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
-					echo '<div'.Core\HTML::propData( $args['data'] ).'>';
+					$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+					echo '<div class="'.Core\HTML::prepClass( $wrap_class )
+						.'"'.Core\HTML::propData( $args['data'] ).'>';
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -3229,7 +3232,9 @@ class Settings extends WordPress\Main
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
-					echo self::tabPanelOpen( $args['data'] );
+					$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+					echo self::tabPanelOpen( $args['data'], $wrap_class );
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
@@ -3718,7 +3723,9 @@ class Settings extends WordPress\Main
 					break;
 				}
 
-				echo self::tabPanelOpen( $args['data'] );
+				$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+				echo self::tabPanelOpen( $args['data'], $wrap_class );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
@@ -3759,7 +3766,9 @@ class Settings extends WordPress\Main
 					break;
 				}
 
-				echo self::tabPanelOpen( $args['data'] );
+				$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+				echo self::tabPanelOpen( $args['data'], $wrap_class );
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
 
