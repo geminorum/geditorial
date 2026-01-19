@@ -28,6 +28,11 @@ class FrontSettings extends gEditorial\Service
 	public static function setup()
 	{
 		add_action( 'customize_register', [ __CLASS__, 'customize_register' ] );
+
+		if ( is_admin() )
+			return;
+
+		add_action( 'admin_bar_menu', [ __CLASS__, 'admin_bar_menu' ], 9999, 1 );
 	}
 
 	/**
@@ -100,5 +105,28 @@ class FrontSettings extends gEditorial\Service
 				$welcome             ,   // $welcome_control
 			]
 		);
+	}
+
+	public static function admin_bar_menu( $wp_admin_bar )
+	{
+		if ( ! is_user_logged_in() )
+			return;
+
+		if ( ! current_user_can( gEditorial\Plugin::CAPABILITY_SETTINGS ) )
+			return;
+
+		$wp_admin_bar->add_menu( [
+			'parent' => 'site-name',
+			'id'     => self::classs( 'settings' ),
+			'href'   => gEditorial\Settings::getURLbyContext( 'settings', TRUE ),
+			'title'  => sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Settings', 'Service: Front Settings', 'geditorial-admin' ),
+				gEditorial\Plugin::system()
+			),
+			'meta' => [
+				'class' => self::classs( 'adminbar', 'node' ),
+			],
+		] );
 	}
 }
