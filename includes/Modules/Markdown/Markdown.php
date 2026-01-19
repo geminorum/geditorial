@@ -97,7 +97,10 @@ class Markdown extends gEditorial\Module
 				'parent' => $classs,
 				'title'  => _x( 'Markdown: Convert', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'convert', 'class' => '-action '.$classs ],
+				'meta'   => [
+					'rel'   => 'convert',
+					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
+				],
 			];
 
 		} else {
@@ -107,7 +110,10 @@ class Markdown extends gEditorial\Module
 				'parent' => $classs,
 				'title'  => _x( 'Markdown: Process', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'process', 'class' => '-action '.$classs ],
+				'meta'   => [
+					'rel'   => 'process',
+					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
+				],
 			];
 
 			$nodes[] = [
@@ -115,7 +121,10 @@ class Markdown extends gEditorial\Module
 				'parent' => $classs,
 				'title'  => _x( 'Markdown: Cleanup', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'cleanup', 'class' => '-action '.$classs ],
+				'meta'   => [
+					'rel'   => 'cleanup',
+					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
+				],
 			];
 
 			$nodes[] = [
@@ -123,7 +132,10 @@ class Markdown extends gEditorial\Module
 				'parent' => $classs,
 				'title'  => _x( 'Markdown: Discard', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
 				'href'   => '#',
-				'meta'   => [ 'rel' => 'discard', 'class' => '-action -danger '.$classs ],
+				'meta'   => [
+					'rel'   => 'discard',
+					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', '-danger', $classs ] ),
+				],
 			];
 		}
 

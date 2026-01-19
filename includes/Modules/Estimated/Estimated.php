@@ -162,7 +162,10 @@ class Estimated extends gEditorial\Module
 				'title'  => $html,
 				'parent' => $parent,
 				'href'   => FALSE, // $this->get_module_url(),
-				'meta'   => [ 'title' => $title ],
+				'meta'   => [
+					'title' => $title,
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
 		}
 	}

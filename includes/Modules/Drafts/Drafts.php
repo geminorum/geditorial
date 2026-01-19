@@ -159,9 +159,9 @@ class Drafts extends gEditorial\Module
 		$nodes[] = [
 			'id'    => $this->classs(),
 			'href'  => '#',
-			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).gEditorial\Ajax::spinner(),
+			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] ),
 			'meta'  => [
-				'class' => $this->class_for_adminbar_node( $this->classs() ),
+				'class' => $this->class_for_adminbar_node( [ '-has-loading', $this->classs() ] ),
 			],
 		];
 

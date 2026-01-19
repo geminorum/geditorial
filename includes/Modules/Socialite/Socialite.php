@@ -147,7 +147,7 @@ class Socialite extends gEditorial\Module
 				'goodreads' => _x( 'Goodreads', 'Title', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Wikipedia', 'Title', 'geditorial-socialite' ),
-				'_ical'      => _x( 'iCal', 'Title', 'geditorial-socialite' ),
+				'_ical'     => _x( 'iCal', 'Title', 'geditorial-socialite' ),
 			],
 			'descriptions' => [
 				'twitter'   => _x( 'Handle or URL to a Twitter account.', 'Description', 'geditorial-socialite' ),

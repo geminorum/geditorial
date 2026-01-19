@@ -37,8 +37,8 @@ class Welcome extends gEditorial\Control
 
 			Core\HTML::desc( Core\Text::wordWrap( sprintf(
 				/* translators: `%1$s`: start `<a>` tag, `%2$s`: end `<a>` tag */
-				_x( 'Why not leave us a review on %1$sWordPress.org%2$s?  We\'d really appreciate it!', 'Control: Welcome', 'geditorial-admin' ),
-				'<a href="https://wordpress.org/plugins/geditorial">',
+				_x( 'Why not leave us a review on %1$sGitHub%2$s?  We\'d really appreciate it!', 'Control: Welcome', 'geditorial-admin' ),
+				'<a href="https://github.com/geminorum/geditorial">',
 				'</a>'
 			) ) );
 

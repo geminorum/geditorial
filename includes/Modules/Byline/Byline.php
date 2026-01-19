@@ -848,7 +848,7 @@ class Byline extends gEditorial\Module
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return;
 
-		$classs  = $this->classs();
+		$classs  = $this->classs( 'summary' );
 		$assign  = $this->role_can_post( $post, 'assign' );
 		$reports = $this->role_can_post( $post, 'reports' );
 
@@ -868,7 +868,7 @@ class Byline extends gEditorial\Module
 			'title'  => $this->get_byline_for_post( $post, [ 'link' => FALSE ], gEditorial\Helper::htmlEmpty() ),
 			'href'   => $this->framepage_get_mainlink_url( $post->ID, $assign ? 'mainapp' : 'summaryreport', 'overview' ),
 			'meta' => [
-				'class' => 'do-colorbox-iframe-for-child',
+				'class' => $this->class_for_adminbar_node( 'do-colorbox-iframe-for-child' ),
 				'title' => _x( 'Byline', 'Adminbar', 'geditorial-byline' ),
 			],
 		];

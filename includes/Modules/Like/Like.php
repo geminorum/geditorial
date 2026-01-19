@@ -193,7 +193,10 @@ class Like extends gEditorial\Module
 					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
 					'parent' => $this->classs( 'users' ),
 					'href'   => $cap ? WordPress\User::edit( $user_id ) : FALSE,
-					'meta'   => [ 'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [
+						'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ),
+						'class' => $this->class_for_adminbar_node(),
+					],
 				];
 		}
 
@@ -213,7 +216,10 @@ class Like extends gEditorial\Module
 					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.$ip,
 					'parent' => $this->classs( 'guests' ),
 					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ),
-					'meta'   => [ 'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ) ],
+					'meta'   => [
+						'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ),
+						'class' => $this->class_for_adminbar_node(),
+					],
 				];
 		}
 	}

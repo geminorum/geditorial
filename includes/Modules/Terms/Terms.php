@@ -62,6 +62,8 @@ class Terms extends gEditorial\Module
 		// 'plate',     // TODO
 	];
 
+	const FORCE_SORT_KEY = 'force_menu_order_sort';
+
 	public static function module()
 	{
 		return [
@@ -310,9 +312,9 @@ class Terms extends gEditorial\Module
 
 		if ( $this->get_setting( 'apply_ordering' ) ) {
 
+			$this->filter( 'get_terms_defaults', 2, 10, 'ordering' );
 			$this->action( 'pre_get_terms', 1, 10, 'ordering' );
 			$this->filter( 'terms_clauses', 3, 99, 'ordering' );
-			$this->filter( 'get_terms_defaults', 2, 10, 'ordering' );
 
 		} else {
 
@@ -2330,7 +2332,7 @@ class Terms extends gEditorial\Module
 		if ( in_array( 'order', $this->get_supported( $taxonomy, TRUE ) ) )
 			$orderby = 'menu_order';
 
-		// Change defaults. Invalid values will be changed later @see `pre_get_terms_ordering()`.
+		// Change defaults. Invalid values will be changed later @see `self::pre_get_terms_ordering()`.
 		// These are in place so we know if a specific order was requested.
 		switch ( $orderby ) {
 			case 'menu_order':
@@ -2355,8 +2357,8 @@ class Terms extends gEditorial\Module
 
 		// Put back valid `orderby` values.
 		if ( 'menu_order' === $args['orderby'] ) {
-			$args['orderby']               = 'name';
-			$args['force_menu_order_sort'] = TRUE;
+			$args['orderby']              = 'name';
+			$args[static::FORCE_SORT_KEY] = TRUE;
 		}
 
 		// if ( 'name_num' === $args['orderby'] ) {
@@ -2368,13 +2370,13 @@ class Terms extends gEditorial\Module
 		if ( 'count' === $args['fields'] )
 			return;
 
-		// Support menu_order arg used in previous versions.
+		// // Support menu_order argument used in previous versions.
 		// if ( ! empty( $args['menu_order'] ) ) {
-		// 	$args['order']                 = 'DESC' === strtoupper( $args['menu_order'] ) ? 'DESC' : 'ASC';
-		// 	$args['force_menu_order_sort'] = TRUE;
+		// 	$args['order']                = 'DESC' === strtoupper( $args['menu_order'] ) ? 'DESC' : 'ASC';
+		// 	$args[static::FORCE_SORT_KEY] = TRUE;
 		// }
 
-		if ( ! empty( $args['force_menu_order_sort'] )
+		if ( ! empty( $args[static::FORCE_SORT_KEY] )
 			&& ( $metakey = $this->get_supported_metakey( 'order', $args['taxonomy'] ) ) ) {
 
 			$args['meta_key'] = $metakey;
@@ -2406,7 +2408,7 @@ class Terms extends gEditorial\Module
 		// 	$clauses['orderby'] = str_replace( 'ORDER BY t.name', 'ORDER BY t.name+0', $clauses['orderby'] );
 
 		// For sorting, force left join in case order meta is missing.
-		if ( ! empty( $args['force_menu_order_sort'] )
+		if ( ! empty( $args[static::FORCE_SORT_KEY] )
 			&& ( $metakey = $this->get_supported_metakey( 'order', $args['taxonomy'] ) ) ) {
 
 			$clauses['join'] = str_replace(

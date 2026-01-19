@@ -79,7 +79,7 @@ class FrontSettings extends gEditorial\Service
 		$welcome = self::hook( 'more', 'welcome' );
 		$manager->add_setting( $welcome, [
 			'default'    => NULL,
-			'capability' => 'edit_theme_options',
+			'capability' => gEditorial\Plugin::CAPABILITY_SETTINGS,
 		] );
 
 		$manager->add_control(

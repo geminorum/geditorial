@@ -16,11 +16,14 @@ class Dashboard extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'dashboard',
-			'title'  => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
-			'desc'   => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
-			'icon'   => 'dashboard',
-			'access' => 'beta',
+			'name'     => 'dashboard',
+			'title'    => _x( 'Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
+			'desc'     => _x( 'Front-end Editorial Dashboard', 'Modules: Dashboard', 'geditorial-admin' ),
+			'icon'     => 'dashboard',
+			'access'   => 'beta',
+			'keywords' => [
+
+			],
 		];
 	}
 
@@ -329,7 +332,7 @@ class Dashboard extends gEditorial\Module
 	{
 		foreach ( $this->_get_pages() as $page => $title )
 			$items[] = [
-				// NOTE: must have `custom-` prefix to whitelist in gNetwork Navigation
+				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
 				'slug' => sprintf( 'custom-dashboard-%s', $page ),
 				'link' => $this->_get_dashboard_permalink( $page ),
 				'name' => $title,

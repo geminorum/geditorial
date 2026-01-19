@@ -276,6 +276,9 @@ class Attachments extends gEditorial\Module
 				'title'  => '<div dir="ltr" style="text-align:left">'.$title.'</div>',
 				'parent' => $this->classs(),
 				'href'   => wp_get_attachment_url( $attachment->ID ),
+				'meta'   => [
+					'class' => $this->class_for_adminbar_node( '-attachment' ),
+				],
 			];
 		}
 	}

@@ -582,7 +582,10 @@ class Plugin extends WordPress\Plugin
 		if ( ! is_admin_bar_showing() )
 			return FALSE;
 
-		if ( ! $this->asset_adminbar && ! count( $this->adminbar_nodes ) )
+		if ( count( $this->adminbar_nodes ) )
+			$this->asset_adminbar = TRUE;
+
+		if ( ! $this->asset_adminbar )
 			return FALSE;
 
 		return Scripts::enqueueStyleSrc(
@@ -647,7 +650,7 @@ class Plugin extends WordPress\Plugin
 	// TODO: Move to `ClassicEditor` Service
 	public function register_editor_button( $button, $filepath )
 	{
-		$this->editor_buttons[$button] = GEDITORIAL_URL.$filepath;
+		$this->editor_buttons[$button] = sprintf( '%s%S', $this->get_url(), $filepath );
 	}
 
 	// TODO: Move to `AdminbarRegistry` Service

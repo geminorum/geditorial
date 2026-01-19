@@ -15,18 +15,18 @@ class SystemHeartbeat extends gEditorial\Service
 	{
 		add_filter( 'heartbeat_received', [ __CLASS__, 'heartbeat_received' ], 10, 2 );
 
-		add_action( 'admin_bar_menu', [ __CLASS__, 'admin_bar_menu' ], 99, 1 );
+		add_action( 'admin_bar_menu', [ __CLASS__, 'admin_bar_menu' ], -999, 1 );
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'enqueue_scripts' ], -99 );
 		add_action( 'wp_enqueue_scripts',    [ __CLASS__, 'enqueue_scripts' ], -99 );
 	}
 
 	public static function enqueue_scripts()
 	{
-		if ( ! is_admin_bar_showing() )
+		if ( ! is_admin_bar_showing() || ! is_user_logged_in() )
 			return;
 
-		// NOTE: since we need `gEditorial` object on this script!
-		gEditorial()->enqueue_asset_config();
+		gEditorial()->enqueue_asset_config();    // NOTE: since we need `gEditorial` object on this script!
+		gEditorial()->enqueue_adminbar( TRUE );  // NOTE: `admin_bar_menu` is too late for this!
 
 		gEditorial\Scripts::enqueue(
 			'all.systemheartbeat',
@@ -37,15 +37,18 @@ class SystemHeartbeat extends gEditorial\Service
 		);
 	}
 
+	/**
+	 * Adds the top-level admin-bar button.
+	 *
+	 * @param object $wp_admin_bar
+	 * @return void
+	 */
 	public static function admin_bar_menu( $wp_admin_bar )
 	{
 		if ( ! is_user_logged_in() )
 			return;
 
-		gEditorial()->enqueue_adminbar( TRUE );
-
-		// Add the top-level Notifications button.
-		$GLOBALS['wp_admin_bar']->add_menu( [
+		$wp_admin_bar->add_menu( [
 			'parent' => 'top-secondary',
 			'id'     => self::classs( static::HEARTBEAT_KEY ),
 			'title'  => Icons::adminBarMarkup( 'heart' ),

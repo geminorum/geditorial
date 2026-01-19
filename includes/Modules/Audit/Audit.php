@@ -321,9 +321,9 @@ class Audit extends gEditorial\Module
 		$wp_admin_bar->add_node( [
 			'id'    => $this->classs( 'attributes' ),
 			'href'  => $this->get_module_url(),
-			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).gEditorial\Ajax::spinner(),
+			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] ),
 			'meta'  => [
-				'class' => $this->class_for_adminbar_node( [ '-action', 'quick-assign-action', $this->classs() ] ),
+				'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', 'quick-assign-action', $this->classs() ] ),
 				// working but not implemented on js yet!
 				// 'html'  => Core\HTML::tag( 'span', [
 				// 	'class' => 'quick-assign-data',
@@ -340,7 +340,9 @@ class Audit extends gEditorial\Module
 			'id'     => $this->classs( 'box' ),
 			'parent' => $this->classs( 'attributes' ),
 			'title'  => _x( 'Click to load attributes &hellip;', 'Adminbar: Title Attr', 'geditorial-audit' ),
-			'meta'   => [ 'class' => 'geditorial-adminbar-wrap -wrap quick-assign-box '.$this->classs() ],
+			'meta'   => [
+				'class' => 'geditorial-adminbar-wrap -wrap quick-assign-box '.$this->classs(),
+			],
 		] );
 	}
 
