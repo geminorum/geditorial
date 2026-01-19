@@ -63,7 +63,7 @@ trait SettingsPostTypes
 		if ( $before = $this->get_string( 'post_types_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
-		echo gEditorial\Settings::tabPanelOpen();
+		echo gEditorial\Settings::tabPanelOpen( FALSE, '-panel-expanded' );
 
 		foreach ( $this->all_posttypes() as $posttype => $label ) {
 

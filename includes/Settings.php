@@ -3228,11 +3228,16 @@ class Settings extends WordPress\Main
 				break;
 
 			case 'checkbox-panel':
-			case 'checkboxs-panel':
+			case 'checkboxs-panel': // TYPO: DEPRECATED
+			case 'checkboxes-panel':
+			case 'checkboxes-panel-expanded':
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
 					$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+					if ( 'checkboxes-panel-expanded' === $args['type'] )
+						$wrap_class = Core\HTML::attrClass( $wrap_class, '-panel-expanded' );
 
 					echo self::tabPanelOpen( $args['data'], $wrap_class );
 
@@ -3711,6 +3716,7 @@ class Settings extends WordPress\Main
 				break;
 
 			case 'posttypes':
+			case 'posttypes-expanded':
 
 				// FIXME: false to disable
 				if ( ! $args['values'] )
@@ -3724,6 +3730,9 @@ class Settings extends WordPress\Main
 				}
 
 				$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+				if ( 'posttypes-expanded' === $args['type'] )
+					$wrap_class = Core\HTML::attrClass( $wrap_class, '-panel-expanded' );
 
 				echo self::tabPanelOpen( $args['data'], $wrap_class );
 
@@ -3756,6 +3765,7 @@ class Settings extends WordPress\Main
 				break;
 
 			case 'taxonomies':
+			case 'taxonomies-expanded':
 
 				if ( ! $args['values'] )
 					$args['values'] = WordPress\Taxonomy::get( 0, $args['extra'] );
@@ -3767,6 +3777,9 @@ class Settings extends WordPress\Main
 				}
 
 				$wrap_class = $args['wrap'] ? '' : $args['class'];
+
+				if ( 'taxonomies-expanded' === $args['type'] )
+					$wrap_class = Core\HTML::attrClass( $wrap_class, '-panel-expanded' );
 
 				echo self::tabPanelOpen( $args['data'], $wrap_class );
 

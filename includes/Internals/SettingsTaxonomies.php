@@ -61,7 +61,7 @@ trait SettingsTaxonomies
 		if ( $before = $this->get_string( 'taxonomies_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
 
-		echo gEditorial\Settings::tabPanelOpen();
+		echo gEditorial\Settings::tabPanelOpen( FALSE, '-panel-expanded' );
 
 		foreach ( $this->all_taxonomies() as $taxonomy => $label ) {
 
