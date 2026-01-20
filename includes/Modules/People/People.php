@@ -157,6 +157,8 @@ class People extends gEditorial\Module
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'type_taxonomy' );
 
+		$this->filter( 'searchselect_pre_query_terms', 3, 20, FALSE, $this->base );
+
 		if ( is_admin() ) {
 
 			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
@@ -287,6 +289,41 @@ class People extends gEditorial\Module
 		return $taxonomy === $this->constant( 'main_taxonomy' )
 			? Core\Text::nameFamilyFirst( $value )
 			: $value;
+	}
+
+	public function searchselect_pre_query_terms( $pre, $args, $queried )
+	{
+		if ( empty( $queried['search'] ) )
+			return $pre;
+
+		$results  = NULL;
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		if ( ! in_array( $taxonomy, $queried['taxonomy'] ) )
+			return $pre;
+
+		// Runs default query to get results for the queried `search`.
+		if ( is_null( $pre ) ) {
+			$query   = new \WP_Term_Query();
+			$results = $query->query( $args );
+		}
+
+		// Bail if target is no different than the criteria and let the Service decide.
+		if ( FALSE === ( $target = ModuleHelper::getCriteria( $queried['search'] ) ) )
+			return $results ?: $pre; // Already `WP_Term_Query` used, so not let it waste!
+
+		$query = new \WP_Term_Query();
+		$terms = $query->query( array_merge( $args, [
+			'name__like' => $target,     // clear the `search`
+			'taxonomy'   => $taxonomy,   // force ours only
+		] ) );
+
+		// NOTE: `SearchSelect` will handle duplicates
+		return array_merge(
+			$pre ?? [],
+			$results ?? [],
+			$terms ?: []
+		);
 	}
 
 	public function prep_individual_admin( $individual, $raw, $value )
