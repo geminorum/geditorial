@@ -227,7 +227,8 @@ class SearchSelect extends gEditorial\Service
 		if ( ! empty( $queried['exclude'] ) )
 			$args['exclude'] = self::ids( $queried['exclude'] );
 
-		// NOTE: must return single or array of term ids
+		// NOTE: Must return single or array of term objects/ids.
+		// NOTE: If it's array, will handle duplicates.
 		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_terms', static::BASE ), NULL, $args, $queried );
 
 		if ( is_wp_error( $pre ) )
@@ -251,11 +252,16 @@ class SearchSelect extends gEditorial\Service
 					'image' => self::getImageForTerm( $term, $queried ),
 				];
 
-		} else if ( is_numeric( $pre ) ) {
+		} else if ( empty( $pre ) ) {
+
+			$results = [];
+			$found   = 0;
+
+		} else if ( is_numeric( $pre ) || $pre instanceof \WP_Term ) {
 
 			$found   = 1;
 			$results = [ (object) [
-				'id'    => $pre,
+				'id'    => is_object( $pre ) ? $pre->term_id : $pre,
 				'text'  => WordPress\Term::title( $pre ),
 				'extra' => self::getExtraForTerm( $pre, $queried ),
 				'image' => self::getImageForTerm( $pre, $queried ),
@@ -267,17 +273,33 @@ class SearchSelect extends gEditorial\Service
 			// TODO: apply `page` on results
 
 			$results = [];
-			$found   = count( $pre );
+			$added   = [];
 
-			foreach ( $pre as $term )
-				$results[] = (object) [
-					'id'    => $term,
+			foreach ( $pre as $term ) {
+
+				$term_id = is_object( $term ) ? $term->term_id : $term;
+
+				// avoid duplicates
+				if ( in_array( $term_id, $added, TRUE ) )
+					continue;
+
+				$result = [
+					'id'    => $term_id,
 					'text'  => WordPress\Term::title( $term ),
 					'extra' => self::getExtraForTerm( $term, $queried ),
 					'image' => self::getImageForTerm( $term, $queried ),
 				];
 
+				$added[]   = $term_id;
+				$results[] = (object) $result;
+			}
+
+			// WTF?!: count must be all not paged results.
+			$found = count( $added );
+
 		} else {
+
+			// WTF?!: `$pre` is `string`/`object`
 
 			$results = [];
 			$found   = 0;
