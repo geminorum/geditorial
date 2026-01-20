@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
@@ -46,7 +45,7 @@ class ModuleHelper extends gEditorial\Helper
 			return $fallback;
 
 		return [
-			'today' => Datetime::dateFormat( 'now', 'print' ),
+			'today' => gEditorial\Datetime::dateFormat( 'now', 'print' ),
 		];
 	}
 

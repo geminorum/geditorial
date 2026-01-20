@@ -116,7 +116,7 @@ class FrontSettings extends gEditorial\Service
 			return;
 
 		$wp_admin_bar->add_menu( [
-			'parent' => 'site-name',
+			'parent' => 'appearance', // 'site-name',
 			'id'     => self::classs( 'settings' ),
 			'href'   => gEditorial\Settings::getURLbyContext( 'settings', TRUE ),
 			'title'  => sprintf(

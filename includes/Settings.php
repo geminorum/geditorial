@@ -3166,8 +3166,8 @@ class Settings extends WordPress\Main
 
 					$wrap_class = $args['wrap'] ? '' : $args['class'];
 
-					echo '<div class="'.Core\HTML::prepClass( $wrap_class )
-						.'"'.Core\HTML::propData( $args['data'] ).'>';
+					echo '<div class="'.Core\HTML::prepClass( $wrap_class ).'"'
+						.Core\HTML::propData( $args['data'] ).'>';
 
 					if ( ! is_null( $args['none_title'] ) ) {
 

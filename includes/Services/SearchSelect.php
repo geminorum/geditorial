@@ -153,7 +153,7 @@ class SearchSelect extends gEditorial\Service
 
 		if ( is_null( $pre ) ) {
 
-			if ( ! empty( $args['s'] ) && ! WordPress\IsIt::compatWP( '6.2.0' ) )
+			if ( ! empty( $args['s'] ) && ! WordPress\IsIt::compatWP( '6.2.0' ) ) // @since WP 6.2.0
 				AdvancedQueries::hookSearchPostTitleOnly();
 
 			$query = new \WP_Query();

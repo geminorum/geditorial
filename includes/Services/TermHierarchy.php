@@ -93,7 +93,7 @@ class TermHierarchy extends gEditorial\Service
 
 		gEditorial\Scripts::enqueue( 'admin.singleselect.edit' );
 
-		if ( ! WordPress\IsIt::compatWP( '6.3.0' ) )
+		if ( ! WordPress\IsIt::compatWP( '6.3.0' ) ) // @since WP 6.3.0
 			return;
 
 		add_action( 'bulk_edit_posts',

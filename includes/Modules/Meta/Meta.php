@@ -968,6 +968,7 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
+	// TODO: avoid `table>tr` extravaganza: first a `.card` then full width table-list
 	protected function render_imports_html( $uri, $sub )
 	{
 		$na   = TRUE;

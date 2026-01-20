@@ -263,7 +263,7 @@ class People extends gEditorial\Module
 
 	/**
 	 * Filters a term field value before it is sanitized.
-	 * NOTE: context is `db`
+	 * NOTE: The filter is running on `db` context.
 	 *
 	 * @param mixed $value
 	 * @param string $taxonomy
@@ -278,7 +278,7 @@ class People extends gEditorial\Module
 
 	/**
 	 * Filters a term field value before it is sanitized.
-	 * NOTE: context is `db`
+	 * NOTE: The filter is running on `db` context.
 	 *
 	 * @param mixed $value
 	 * @param string $taxonomy
@@ -326,6 +326,7 @@ class People extends gEditorial\Module
 		);
 	}
 
+	// @hook: `geditorial_prep_individual`
 	public function prep_individual_admin( $individual, $raw, $value )
 	{
 		if ( $link = WordPress\URL::searchAdminTerm( $individual, $this->constant( 'main_taxonomy' ) ) )
@@ -334,7 +335,7 @@ class People extends gEditorial\Module
 		return $individual;
 	}
 
-	// @FILTER: `gnetwork_taxonomy_exclude_empty`
+	// @hook: `gnetwork_taxonomy_exclude_empty`
 	public function taxonomy_exclude_empty( $excludes )
 	{
 		return array_merge( $excludes, [
@@ -344,7 +345,7 @@ class People extends gEditorial\Module
 		] );
 	}
 
-	// @FILTER: `gnetwork_taxonomy_term_rewrite_slug`
+	// @hook: `gnetwork_taxonomy_term_rewrite_slug`
 	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
@@ -352,7 +353,7 @@ class People extends gEditorial\Module
 			: $name;
 	}
 
-	// @FILTER: `geditorial_terms_sanitize_name`
+	// @hook: `geditorial_terms_sanitize_name`
 	public function terms_sanitize_name( $name, $term, $action )
 	{
 		return $term->taxonomy == $this->constant( 'main_taxonomy' )
@@ -394,10 +395,10 @@ class People extends gEditorial\Module
 			'hide_empty' => ! empty( $instance['include_empty'] ),
 		] );
 
-		if ( ! empty( $query->terms ) )
-			return array_merge( $terms, $query->terms );
+		if ( empty( $query->terms ) )
+			return $terms;
 
-		return $terms;
+		return array_merge( $terms, $query->terms );
 	}
 
 	public function single_term_title( $title )
@@ -441,7 +442,7 @@ class People extends gEditorial\Module
 		$slug = Core\Text::formatSlug( $slug );
 		$slug = sanitize_title( $slug );
 
-		// Avoids DB queries if the same
+		// Avoids db queries if it's the same
 		if ( $data['slug'] !== $slug )
 			$data['slug'] = wp_unique_term_slug( $slug, (object) $args );
 

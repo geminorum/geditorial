@@ -895,7 +895,7 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_edit_screen( $posttype )
 	{
-		if ( WordPress\IsIt::compatWP( '6.3.0' ) ) {
+		if ( WordPress\IsIt::compatWP( '6.3.0' ) ) { // @since WP 6.3.0
 			$this->action( 'bulk_edit_posts', 2, 12, 'posttypefields' );
 			$this->action( 'bulk_edit_custom_box', 2, 12, 'posttypefields' );
 		}

@@ -855,7 +855,9 @@ trait CoreTaxonomies
 	}
 
 	// NOTE: check for not-admin before calling
-	protected function hook_adminbar_node_for_taxonomy( $constant, $parent = NULL )
+	// NOTE: links to taxonomy management
+	// @SEE: `templatetaxonomy__hook_adminbar()` for admin term edit
+	protected function hook_adminbar_node_for_taxonomy( $constant, $parent = NULL, $priority = NULL )
 	{
 		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
 			return FALSE;
@@ -879,7 +881,7 @@ trait CoreTaxonomies
 					'href'   => $edit,
 				] );
 
-			}, 32, 1 );
+			}, $priority ?? 32, 1 );
 
 		return TRUE;
 	}
