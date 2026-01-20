@@ -340,29 +340,18 @@ class People extends gEditorial\Module
 	// @hook: `geditorial_search_terms_widget_results`
 	public function search_terms_widget_results( $terms, $criteria, $taxonomies, $args, $instance )
 	{
-		if ( ! in_array( $this->constant( 'main_taxonomy' ), $taxonomies ) )
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		if ( ! in_array( $taxonomy, $taxonomies ) )
 			return $terms;
 
-		$familyfirst = $this->get_name_familyfirst( $criteria );
-		$familylast  = $this->get_name_familylast( $criteria );
-
-		// only if different
-		if ( $familylast === $familyfirst )
-			return $terms;
-
-		else if ( $criteria === $familyfirst )
-			$target = $familylast;
-
-		else if ( $criteria === $familylast )
-			$target = $familyfirst;
-
-		else
+		if ( FALSE === ( $target = ModuleHelper::getCriteria( $criteria ) ) )
 			return $terms;
 
 		$query = new \WP_Term_Query( [
 			// 'search'     => $target,
 			'name__like' => $target,
-			'taxonomy'   => $this->constant( 'main_taxonomy' ),
+			'taxonomy'   => $taxonomy,
 			'exclude'    => Core\Arraay::pluck( $terms, 'term_id' ),
 			'orderby'    => 'name',
 			'hide_empty' => ! empty( $instance['include_empty'] ),
