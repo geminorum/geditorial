@@ -962,12 +962,13 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_adminbar_summary( $description = NULL )
+	public static function getSetting_adminbar_summary( $description = NULL, $default = NULL )
 	{
 		return [
 			'field'       => 'adminbar_summary',
 			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?? _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '1',
 		];
 	}
 
