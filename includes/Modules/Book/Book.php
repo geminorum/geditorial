@@ -588,7 +588,7 @@ class Book extends gEditorial\Module
 					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );
 
 				$this->comments__handle_default_status( $screen->post_type );
-				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();

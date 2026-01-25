@@ -430,7 +430,7 @@ class Trained extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
+				$this->posttypes__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->pairedmetabox__hook_megabox( $screen );

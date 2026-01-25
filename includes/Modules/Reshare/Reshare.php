@@ -114,7 +114,7 @@ class Reshare extends gEditorial\Module
 			if ( 'post' == $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
+				$this->posttypes__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {

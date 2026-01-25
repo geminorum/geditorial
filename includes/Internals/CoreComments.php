@@ -12,7 +12,8 @@ trait CoreComments
 	protected function comments__handle_default_status( $posttype, $fallback = NULL, $comment_type = NULL, $setting = NULL )
 	{
 		add_filter( 'get_default_comment_status',
-			function ( $status, $_posttype, $_comment_type ) use ( $posttype, $comment_type, $fallback, $setting ) {
+			function ( $status, $_posttype, $_comment_type )
+				use ( $posttype, $comment_type, $fallback, $setting ) {
 
 				if ( $posttype !== $_posttype )
 					return $status;

@@ -111,7 +111,7 @@ class Pitches extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->posttype__media_register_headerbutton( 'primary_posttype' );
+				$this->posttypes__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {

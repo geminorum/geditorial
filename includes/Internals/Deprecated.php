@@ -607,6 +607,7 @@ trait Deprecated
 	}
 
 	// NOTE: DEPRECATED: use `comments__handle_default_status()`
+	// USAGE: `$this->filter( 'get_default_comment_status', 3 );`
 	public function get_default_comment_status( $status, $posttype, $comment_type )
 	{
 		self::_dep( '$this->comments__handle_default_status()' );

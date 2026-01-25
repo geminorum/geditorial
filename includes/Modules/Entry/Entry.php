@@ -241,7 +241,7 @@ class Entry extends gEditorial\Module
 				$this->filter_module( 'markdown', 'linking', 8, 8 );
 
 				$this->comments__handle_default_status( $screen->post_type );
-				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {

@@ -564,7 +564,7 @@ trait CorePostTypes
 
 	// TODO: must add meta-box to list the attachments: maybe on `Attachments` Module
 	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
-	public function posttype__media_register_headerbutton( $constant, $post = NULL, $editor_check = TRUE )
+	public function posttypes__media_register_headerbutton( $constant, $post = NULL, $editor_check = TRUE )
 	{
 		// already handled!
 		if ( $editor_check && post_type_supports( $this->constant( $constant, $constant ), 'editor' ) )
@@ -594,7 +594,7 @@ trait CorePostTypes
 	protected function posttypes__increase_menu_order( $posttype )
 	{
 		add_filter( 'wp_insert_post_data',
-			function ( $data, $postarr )
+			static function ( $data, $postarr )
 				use ( $posttype ) {
 
 				if ( ! empty( $data['menu_order'] ) )

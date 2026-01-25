@@ -184,7 +184,7 @@ class Inquire extends gEditorial\Module
 					);
 				}
 
-				$this->posttype__media_register_headerbutton( 'main_posttype' );
+				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'edit' == $screen->base ) {
