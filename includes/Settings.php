@@ -972,6 +972,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_adminbar_tools( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'adminbar_tools',
+			'title'       => _x( 'Adminbar Tools', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Enabeles enhancement tools on the admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_dashboard_widgets( $description = NULL )
 	{
 		return [
