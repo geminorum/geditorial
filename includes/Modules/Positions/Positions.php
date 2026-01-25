@@ -270,8 +270,7 @@ class Positions extends gEditorial\Module
 
 				$this->filter_string( 'parent_file', 'options-general.php' );
 
-				$this->filter( 'get_default_comment_status', 3 );
-
+				$this->comments__handle_default_status( $screen->post_type );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );

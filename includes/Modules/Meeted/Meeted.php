@@ -408,8 +408,7 @@ class Meeted extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'get_default_comment_status', 3 );
-
+				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );

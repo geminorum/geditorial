@@ -425,8 +425,6 @@ class Personage extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'get_default_comment_status', 3 );
-
 				$this->_hook_editform_meta_summary( [
 					'first_name'      => NULL,
 					'last_name'       => NULL,
@@ -434,11 +432,11 @@ class Personage extends gEditorial\Module
 					'identity_number' => NULL,
 				] );
 
-				$this->_hook_editform_globalsummary();
-
+				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttype__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 				$this->_hook_general_mainbox( $screen, 'main_posttype' );
+				$this->_hook_editform_globalsummary();
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );

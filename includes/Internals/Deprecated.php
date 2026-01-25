@@ -605,4 +605,12 @@ trait Deprecated
 				return $post->post_type === $posttype ? TRUE : $viewable;
 			}, 12, 2 );
 	}
+
+	// NOTE: DEPRECATED: use `comments__handle_default_status()`
+	public function get_default_comment_status( $status, $posttype, $comment_type )
+	{
+		self::_dep( '$this->comments__handle_default_status()' );
+
+		return $this->get_setting( 'comment_status', $status );
+	}
 }

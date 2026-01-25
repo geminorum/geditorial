@@ -10,6 +10,7 @@ class Module extends WordPress\Module
 	use Internals\CorePostTypes;
 	use Internals\CoreRoles;
 	use Internals\CoreTaxonomies;
+	use Internals\CoreComments;
 	use Internals\DefaultTerms;
 	use Internals\ModuleLinks;
 	use Internals\SettingsCore;
@@ -731,12 +732,6 @@ class Module extends WordPress\Module
 		);
 
 		return TRUE;
-	}
-
-	// DEFAULT FILTER
-	public function get_default_comment_status( $status, $posttype, $comment_type )
-	{
-		return $this->get_setting( 'comment_status', $status );
 	}
 
 	// TODO: DEPRECATE
