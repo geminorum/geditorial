@@ -272,7 +272,7 @@ class People extends gEditorial\Module
 	public function pre_term_slug( $value, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
-			? Core\Text::formatSlug( Core\Text::nameFamilyLast( $value ) )
+			? Core\Text::formatSlug( $this->get_name_familylast( $value ) )
 			: $value;
 	}
 
@@ -287,7 +287,7 @@ class People extends gEditorial\Module
 	public function pre_term_name( $value, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
-			? Core\Text::nameFamilyFirst( $value )
+			? $this->get_name_familyfirst( $value )
 			: $value;
 	}
 
@@ -349,7 +349,7 @@ class People extends gEditorial\Module
 	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
-			? Core\Text::formatSlug( Core\Text::nameFamilyLast( $term->name ) )
+			? Core\Text::formatSlug( $this->get_name_familylast( $term->name ) )
 			: $name;
 	}
 
@@ -438,7 +438,7 @@ class People extends gEditorial\Module
 		if ( ! empty( $args['slug'] ) )
 			return $data;
 
-		$slug = Core\Text::nameFamilyLast( $data['name'] );
+		$slug = $this->get_name_familylast( $data['name'] );
 		$slug = Core\Text::formatSlug( $slug );
 		$slug = sanitize_title( $slug );
 

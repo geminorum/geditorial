@@ -19,8 +19,8 @@ class ModuleHelper extends gEditorial\Helper
 		$criteria = FALSE;  // Means no need the search again!
 
 		$sanitized   = Core\Text::trimQuotes( $string );
-		$familyfirst = Core\Text::nameFamilyFirst( $sanitized );
-		$familylast  = Core\Text::nameFamilyLast( $sanitized );
+		$familyfirst = self::filters( 'format_name', Core\Text::nameFamilyFirst( $sanitized ), $sanitized, NULL );
+		$familylast  = self::filters( 'display_name', Core\Text::nameFamilyLast( $sanitized ), $sanitized, NULL );
 
 		// only if different
 		if ( $familylast === $familyfirst )
