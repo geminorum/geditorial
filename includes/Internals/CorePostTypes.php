@@ -590,4 +590,26 @@ trait CorePostTypes
 			'priority' => 5,
 		] );
 	}
+
+	protected function posttypes__increase_menu_order( $posttype )
+	{
+		add_filter( 'wp_insert_post_data',
+			function ( $data, $postarr )
+				use ( $posttype ) {
+
+				if ( ! empty( $data['menu_order'] ) )
+					return $data;
+
+				if ( empty( $postarr['post_type'] ) || $posttype !== $postarr['post_type'] )
+					return $data;
+
+				$data['menu_order'] = WordPress\PostType::getLastMenuOrder(
+					$postarr['post_type'],
+					$postarr['ID'] ?? ''
+				) + 1;
+
+				return $data;
+
+			}, 9, 2 );
+	}
 }

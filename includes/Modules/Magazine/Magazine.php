@@ -300,9 +300,8 @@ class Magazine extends gEditorial\Module
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );
-
 				$this->comments__handle_default_status( $screen->post_type );
+				$this->posttypes__increase_menu_order( $screen->post_type );
 				$this->posttype__media_register_headerbutton( 'primary_posttype' );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
 				$this->_hook_paired_mainbox( $screen );

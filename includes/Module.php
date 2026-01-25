@@ -734,19 +734,6 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	// TODO: DEPRECATE
-	// DEFAULT FILTER
-	// increases last menu_order for new posts
-	// USAGE: `$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );`
-	public function wp_insert_post_data_menu_order( $data, $postarr )
-	{
-		if ( ! $data['menu_order'] && $postarr['post_type'] )
-			$data['menu_order'] = WordPress\PostType::getLastMenuOrder( $postarr['post_type'],
-				( isset( $postarr['ID'] ) ? $postarr['ID'] : '' ) ) + 1;
-
-		return $data;
-	}
-
 	public function icon( $name, $group = NULL )
 	{
 		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );

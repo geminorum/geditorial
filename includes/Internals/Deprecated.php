@@ -613,4 +613,17 @@ trait Deprecated
 
 		return $this->get_setting( 'comment_status', $status );
 	}
+
+	// NOTE: DEPRECATED: increases last menu_order for new posts
+	// USAGE: `$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );`
+	public function wp_insert_post_data_menu_order( $data, $postarr )
+	{
+		if ( ! $data['menu_order'] && $postarr['post_type'] )
+			$data['menu_order'] = WordPress\PostType::getLastMenuOrder(
+				$postarr['post_type'],
+				$postarr['ID'] ?? ''
+			) + 1;
+
+		return $data;
+	}
 }
