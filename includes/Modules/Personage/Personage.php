@@ -694,7 +694,7 @@ class Personage extends gEditorial\Module
 			$data['source']['rendered']['vcarddata'] = $vcard;
 
 		if ( in_array( 'needs-securitytoken', $data['profile']['flags'], TRUE ) )
-			$data['tokens'][] = gEditorial\Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
+			$data['tokens'][] = Services\SemiSecure::generateToken( $post->post_type, $identity, $fullname );
 
 		return $data;
 	}
@@ -721,7 +721,7 @@ class Personage extends gEditorial\Module
 			$row['rendered']['vcarddata'] = $vcard;
 
 		if ( in_array( 'needs-securitytoken', $row['flags'], TRUE ) )
-			$row['tokens'][] = gEditorial\Helper::generateSecurityToken( $post->post_type, $identity, $fullname );
+			$row['tokens'][] = Services\SemiSecure::generateToken( $post->post_type, $identity, $fullname );
 
 		return $row;
 	}

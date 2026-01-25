@@ -216,6 +216,7 @@ class Plugin extends WordPress\Plugin
 			'PrimaryTaxonomy',
 			'RestAPI',
 			'SearchSelect',
+			'SemiSecure',
 			'Sitemaps',
 			'SystemHeartbeat',
 			'TaxonomyFields',

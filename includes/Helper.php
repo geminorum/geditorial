@@ -442,45 +442,6 @@ class Helper extends WordPress\Main
 	}
 
 	/**
-	 * Generates a Security Token for authorization.
-	 * TODO: move to services
-	 *
-	 * @param string $context
-	 * @param string $subject
-	 * @param string $fullname
-	 * @param int $expires
-	 * @param mixed $fallback
-	 * @return string
-	 */
-	public static function generateSecurityToken( $context, $subject, $fullname, $expires = NULL, $fallback = FALSE )
-	{
-		if ( ! $subject || ! $fullname )
-			return $fallback;
-
-		$algo = apply_filters( static::BASE.'_securitytoken_algorithm', 'RS256', $context );
-		$rsa  = apply_filters( static::BASE.'_securitytoken_rsakey_path', NULL, $context );
-		$age  = apply_filters( static::BASE.'_securitytoken_expires', $expires ?? Core\Date::YEAR_IN_SECONDS, $context );
-
-		if ( ! $algo || ! $rsa )
-			return $fallback;
-
-		/**
-		 * @package `adhocore/jwt`
-		 * @link https://github.com/adhocore/php-jwt
-		 */
-		$jwt = new \Ahc\Jwt\JWT(
-			$rsa,
-			$algo,
-			$age ?: Core\Date::YEAR_IN_SECONDS
-		);
-
-		return $jwt->encode( [
-			'name' => $fullname,
-			'sub'  => $subject,
-		] );
-	}
-
-	/**
 	 * Logs a message given agent, level, and context.
 	 *
 	 * @param string $message
