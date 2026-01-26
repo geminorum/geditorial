@@ -1787,8 +1787,10 @@ class Terms extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() )
+		if ( is_admin() || WordPress\IsIt::mobile() )
 			return;
+
+		$node_id = $this->classs();
 
 		if ( is_tax() || is_tag() || is_category() ) {
 
@@ -1798,29 +1800,115 @@ class Terms extends gEditorial\Module
 			if ( ! current_user_can( 'assign_term', $term->term_id ) )
 				return;
 
+			$taxonomy = WordPress\Taxonomy::object( $term );
+			$singular = Services\CustomTaxonomy::getLabel( $taxonomy, 'singular_name' );
+			// $reports  = $this->role_can_term( $term, 'reports' ); // TODO!
+			$reports  = $this->role_can( 'reports' );
+
 			$nodes[] = [
-				'id'     => $this->classs(),
-				'title'  => _x( 'Term Summary', 'Adminbar', 'geditorial-terms' ),
 				'parent' => $parent,
-				'href'   => $this->get_module_url( 'reports' ),
+				'id'     => $node_id,
+				'title'  => _x( 'Term Summary', 'Node: Title', 'geditorial-terms' ),
+				'href'   => $this->get_module_url( 'reports', NULL, [ 'term' => $term->term_id ] ),
+				'meta'   => [
+					'class' => $this->class_for_adminbar_node(),
+					'title' => $reports ? sprintf(
+						/* translators: `%s`: singular taxonomy label */
+						_x( 'View Term Reports for this %s', 'Node: Title: Taxonomy', 'geditorial-terms' ),
+						$singular
+					) : '',
+				],
 			];
 
 			$nodes[] = [
-				'id'     => $this->classs( 'count' ),
-				'title'  => _x( 'Post Count', 'Adminbar', 'geditorial-terms' ).': '.WordPress\Strings::getCounted( $term->count ),
-				'parent' => $this->classs(),
-				'href'   => FALSE,
+				'parent' => $node_id,
+				'id'     => $this->classs( 'taxonomy' ),
+				'title'  => $singular,
+				'href'   => WordPress\Taxonomy::link( $taxonomy, FALSE ),
+				'meta'   => [
+					'title' => $taxonomy->name, // raw
+					'class' => $this->class_for_adminbar_node( '-term-taxonomy' ),
+				],
 			];
 
-			// TODO: display `$term->parent`
-
-			if ( trim( $term->description ) ) {
+			if ( $parent_term = WordPress\Term::get( $term->parent ?: FALSE ) ) {
 
 				$nodes[] = [
+					'parent' => $node_id,
+					'id'     => $this->classs( 'parent' ),
+					'title'  => _x( 'Parent', 'Node: Title', 'geditorial-terms' ),
+					'href'   => WordPress\Term::edit( $parent_term ),
+					'meta'   => [
+						'class' => $this->class_for_adminbar_node( '-term-parent' ),
+					],
+				];
+
+				$nodes[] = [
+					'parent' => $this->classs( 'parent' ),
+					'id'     => $this->classs( 'parent', 'link' ),
+					'title'  => WordPress\Term::title( $parent_term ),
+					'href'   => WordPress\Term::link( $parent_term ),
+					'meta'   => [
+						'title' => $term->name, // raw
+						'class' => $this->class_for_adminbar_node( '-term-parent' ),
+					],
+				];
+			}
+
+			$nodes[] = [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'count' ),
+				'href'   => WordPress\Term::shortlink( $term ),
+				'title'  => sprintf( '%s %s',
+					_x( 'Assigned', 'Node: Title', 'geditorial-terms' ),
+					WordPress\Strings::getCounted(
+						$term->count,
+						NULL,
+						Services\CustomTaxonomy::getLabel( $taxonomy, 'post_count' )
+					)
+				),
+				'meta' => [
+					'title' => _x( 'Term Short-link', 'Node: Title', 'geditorial-terms' ),
+					'class' => $this->class_for_adminbar_node( '-count' ),
+				],
+			];
+
+			foreach ( WordPress\Taxonomy::types( $taxonomy ) as $posttype ) {
+
+				$nodes[] = [
+					'parent' => $this->classs( 'count' ),
+					'id'     => $this->classs( $posttype ),
+					'href'   => WordPress\PostType::edit( $posttype, [ $taxonomy->query_var => rawurldecode( $term->slug ) ] ),
+					'title'  => sprintf(
+						/* translators: `%s`: post-type menu label */
+						_x( 'View in %s', 'Node: Title', 'geditorial-terms' ),
+						Services\CustomPostType::getLabel( $posttype, 'menu_name' )
+					),
+					'meta' => [
+						'title' => $posttype, // raw
+						'class' => $this->class_for_adminbar_node( '-posttype' ),
+					],
+				];
+			}
+
+			if ( ! WordPress\Strings::isEmpty( $term->description ) ) {
+
+				$nodes[] = [
+					'parent' => $node_id,
 					'id'     => $this->classs( 'desc' ),
-					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ),
-					'parent' => $this->classs(),
 					'href'   => WordPress\Term::edit( $term ),
+					'title'  => sprintf( '%s %s',
+						_x( 'Description', 'Node: Title', 'geditorial-terms' ),
+						WordPress\Strings::getCounted(
+							Core\Text::wordCount( $term->description ),
+							NULL,
+							_x( 'Description Word Count', 'Node: Title', 'geditorial-terms' )
+						)
+					),
+					'meta' => [
+						'title' => Services\CustomTaxonomy::getLabel( $taxonomy, 'edit_item' ),
+						'class' => $this->class_for_adminbar_node( '-description' ),
+					],
 				];
 
 				$nodes[] = [
@@ -1829,45 +1917,46 @@ class Terms extends gEditorial\Module
 					'href'   => FALSE,
 					'meta'   => [
 						'html'  => WordPress\Strings::prepDescription( $term->description ),
-						'class' => 'geditorial-adminbar-desc-wrap -wrap '.$this->classs(),
+						'class' => $this->class_for_adminbar_node( '-has-description' ),
 					],
-				];
-
-			} else {
-
-				$nodes[] = [
-					'id'     => $this->classs( 'desc', 'empty' ),
-					'title'  => _x( 'Description', 'Adminbar', 'geditorial-terms' ).': '.gEditorial\Plugin::na(),
-					'parent' => $this->classs(),
-					'href'   => WordPress\Term::edit( $term ),
 				];
 			}
 
 			foreach ( $this->get_supported( $term->taxonomy ) as $field ) {
 
+				$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
+
+				if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+					continue;
+
 				$node = [
+					'parent' => $node_id,
 					'id'     => $this->classs( $field ),
-					'parent' => $this->classs(),
 					'title'  => sprintf(
 						/* translators: `%s`: meta title */
-						_x( 'Meta: %s', 'Adminbar', 'geditorial-terms' ),
-						$this->get_string( $field, $term->taxonomy, 'titles', $field )
+						_x( 'Meta: %s', 'Node: Title', 'geditorial-terms' ),
+						$this->get_supported_field_title( $field, $term->taxonomy, $term )
 					),
+					'meta' => [
+						'title' => $this->get_supported_field_desc( $field, $term->taxonomy, $term ),
+						'class' => $this->class_for_adminbar_node( '-field-'.$field ),
+					],
 				];
 
 				$child = [
-					'id'     => $this->classs( $field, 'html' ),
+					'id'     => $this->classs( $field, 'value' ),
 					'parent' => $node['id'],
+					'meta'   => [
+						'title' => $field, // raw
+						'class' => $this->class_for_adminbar_node(),
+					],
 				];
 
-				$metakey  = $this->get_supported_metakey( $field, $term->taxonomy );
-				$metatype = $this->get_supported_field_metatype( $field, $term->taxonomy );
-
-				switch ( $metatype ) {
+				switch ( $this->get_supported_field_metatype( $field, $term->taxonomy ) ) {
 
 					case 'order':
 
-						$node['title'].= ': '.gEditorial\Helper::htmlOrder( get_term_meta( $term->term_id, $metakey, TRUE ) );
+						$child['title'] = gEditorial\Helper::htmlOrder( $meta );
 						break;
 
 					case 'days':
@@ -1877,48 +1966,39 @@ class Terms extends gEditorial\Module
 					case 'min':
 					case 'max':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.Core\Number::format( $meta );
-						else
-							$node['title'].= ': &mdash;';
-
+						$child['title'] = Core\Number::format( $meta );
 						break;
 
 					case 'image':
 
 						$image = WordPress\Taxonomy::htmlFeaturedImage( $term->term_id, [ 45, 72 ], TRUE, $metakey );
 
-						$child['meta'] = [
-							'html'  => $image ?: gEditorial()->na( FALSE ),
-							'class' => 'geditorial-adminbar-image-wrap',
-						];
+						if ( ! $image )
+							continue 2;
 
-					break;
+						$node['href']           = WordPress\Attachment::edit( $meta );
+						$node['meta']['title']  = _x( 'Edit Image', 'Node: Title', 'geditorial-terms' );
+						$child['meta']['html']  = $image;
+						$child['meta']['class'] = $this->class_for_adminbar_node( '-has-image' );
+						// NOTE: `$child['meta']['title']` has no effect here!
+
+						break;
+
 					case 'parent':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.WordPress\Term::title( (int) $meta );
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
-
+						$child['title'] = WordPress\Term::title( (int) $meta );
 						break;
 
 					case 'author':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.get_user_by( 'id', $meta )->display_name;
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['title'] = get_user_by( 'id', (int) $meta )->display_name;
+						break;
 
-					break;
 					case 'color':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.'<i class="field-color" style="background-color:'.Core\HTML::escape( $meta ).'"></i>';
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['title'] = '<i class="field-color" style="background-color:'.Core\HTML::escape( $meta ).'"></i>';
+						break;
 
-					break;
 					case 'plural':
 					case 'overwrite':
 					case 'fullname':
@@ -1926,18 +2006,14 @@ class Terms extends gEditorial\Module
 					case 'subtitle':
 					case 'venue':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.WordPress\Strings::prepTitle( $meta );
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['title'] = WordPress\Strings::prepTitle( $meta );
+						break;
 
-					break;
 					case 'contact':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.gEditorial\Helper::prepContact( $meta );
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['meta']['html']  = Core\HTML::wrap( gEditorial\Helper::prepContact( $meta ), '-contact' );
+						$child['meta']['class'] = $this->class_for_adminbar_node( '-has-description' );
+						// NOTE: `$child['meta']['title']` has no effect here!
 
 						break;
 
@@ -1947,10 +2023,11 @@ class Terms extends gEditorial\Module
 					case 'establish':
 					case 'abolish':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $this->default_calendar() );
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['title'] = gEditorial\Datetime::prepForDisplay(
+							$meta,
+							'Y/m/d',
+							$this->default_calendar()
+						);
 
 						break;
 
@@ -1958,10 +2035,11 @@ class Terms extends gEditorial\Module
 					case 'datestart':
 					case 'dateend':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-							$node['title'].= ': '.gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $this->default_calendar() );
-						else
-							$node['title'].= ': '.gEditorial\Plugin::na();
+						$child['title'] = gEditorial\Datetime::prepForDisplay(
+							$meta,
+							'Y/m/d H:i',
+							$this->default_calendar()
+						);
 
 						break;
 
@@ -1969,30 +2047,18 @@ class Terms extends gEditorial\Module
 					case 'embed':
 					case 'url':
 
-						if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
-
-							$node['title'].= ': '.Core\URL::prepTitle( $meta );
-							$node['href'] = $meta;
-
-						} else {
-
-							$node['title'].= ': '.gEditorial\Plugin::na();
-						}
-
+						$child['title'] = Core\URL::prepTitle( $meta );
+						$node['href']   = $meta;
 						break;
 
-					// TODO: add the rest!
-
+					case 'code':
 					default:
 
-						$node['title'] = _x( 'Meta: Uknonwn', 'Adminbar', 'geditorial-terms' );
-						break;
+						$child['title'] = Core\HTML::code( $meta );
 				}
 
 				$nodes[] = $node;
-
-				if ( in_array( $field, [ 'image' ] ) )
-					$nodes[] = $child;
+				$nodes[] = $child;
 			}
 
 			return;
@@ -2001,42 +2067,58 @@ class Terms extends gEditorial\Module
 		if ( ! is_singular() )
 			return;
 
-		$post_id = get_queried_object_id();
-		$node_id = $this->classs();
-
-		if ( ! current_user_can( 'edit_post', $post_id ) )
+		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
 			return;
+
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
+			return;
+
+		$reports = $this->role_can_post( $post, 'reports' );
+		$prefix  = Core\L10n::rtl() ? '&#8629;' : '&#8627;';  // `carriage-return-arrow`
 
 		$nodes[] = [
 			'id'     => $node_id,
-			'title'  => _x( 'Summary of Terms', 'Adminbar', 'geditorial-terms' ),
+			'title'  => _x( 'Summary of Terms', 'Node: Title', 'geditorial-terms' ),
 			'parent' => $parent,
-			'href'   => $this->get_module_url( 'reports' ),
+			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'linked' => $post->ID ] ) : FALSE,
+			'meta'   => [
+				'class' => $this->class_for_adminbar_node(),
+				'title' => $reports ? sprintf(
+					/* translators: `%s`: singular post-type label */
+					_x( 'View Term Reports for this %s', 'Node: Title: Post-Type', 'geditorial-terms' ),
+					Services\CustomPostType::getLabel( $post, 'singular_name' )
+				) : '',
+			],
 		];
 
 		foreach ( $this->taxonomies() as $taxonomy ) {
 
-			if ( ! $object = get_taxonomy( $taxonomy ) )
-				continue;
+			$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post );
 
-			$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id );
-
-			if ( ! $terms || is_wp_error( $terms ) )
+			if ( ! $terms || self::isError( $terms ) )
 				continue;
 
 			$nodes[] = [
 				'parent' => $node_id,
-				'id'     => $this->classs( 'tax', $taxonomy ),
-				'title'  => $object->labels->name.':',
+				'id'     => $this->classs( 'taxonomy', $taxonomy ),
+				'title'  => sprintf( '&mdash; %s &mdash;', Services\CustomTaxonomy::getLabel( $taxonomy, 'menu_name', 'name' ) ),
 				'href'   => WordPress\Taxonomy::edit( $taxonomy ),
+				'meta'   => [
+					'title' => $taxonomy, // raw
+					'class' => $this->class_for_adminbar_node( '-taxonomy -align-center' ),
+				],
 			];
 
 			foreach ( $terms as $term )
 				$nodes[] = [
 					'parent' => $node_id,
 					'id'     => $this->classs( 'term', $term->term_id ),
-					'title'  => '&ndash; '.WordPress\Term::title( $term ),
+					'title'  => sprintf( '%s %s', $prefix, WordPress\Term::title( $term ) ),
 					'href'   => WordPress\Term::link( $term ),
+					'meta'   => [
+						'title' => rawurldecode( $term->slug ),
+						'class' => $this->class_for_adminbar_node( '-term' ),
+					],
 				];
 		}
 	}
