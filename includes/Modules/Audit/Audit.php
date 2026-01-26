@@ -20,7 +20,8 @@ class Audit extends gEditorial\Module
 	use Internals\FramePage;
 	use Internals\ViewEngines;
 
-	protected $disable_no_posttypes = TRUE;
+	protected $disable_no_posttypes   = TRUE;
+	protected $priority_adminbar_init = 8;
 
 	public static function module()
 	{
@@ -70,6 +71,7 @@ class Audit extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
+				'adminbar_tools',
 			],
 		];
 	}
@@ -204,7 +206,7 @@ class Audit extends gEditorial\Module
 			'echo'          => FALSE,
 		] );
 
-		return Core\HTML::wrap( '<ul>'.$html.'</ul>', 'geditorial-adminbar-box-wrap' );
+		return Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), '-assignnbox' );
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
@@ -261,11 +263,11 @@ class Audit extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		$post_id  = get_queried_object_id();
-		$classs   = $this->classs();
+		$node_id  = $this->classs();
 		$taxonomy = $this->constant( 'main_taxonomy' );
 		$terms    = [];
 
@@ -273,75 +275,77 @@ class Audit extends gEditorial\Module
 			|| current_user_can( 'edit_post', $post_id ) ) {
 
 			$nodes[] = [
-				'id'     => $classs,
-				'title'  => _x( 'Audit Attributes', 'Adminbar', 'geditorial-audit' ),
 				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => _x( 'Audit Attributes', 'Node: Title', 'geditorial-audit' ),
 				'href'   => $this->get_module_url(),
+				'meta'   => [
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
 
 			if ( $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id ) )
 				foreach ( $terms as $term )
 					$nodes[] = [
+						'parent' => $node_id,
 						'id'     => $this->classs( 'attribute', $term->term_id ),
-						'parent' => $classs,
 						'title'  => WordPress\Term::title( $term ),
 						'href'   => WordPress\Term::link( $term ),
+						'meta'   => [
+							'class' => $this->class_for_adminbar_node(),
+						],
 					];
 
 			else
 				$nodes[] = [
+					'parent' => $node_id,
 					'id'     => $this->classs( 'attribute', 0 ),
-					'parent' => $classs,
 					'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' ),
 					'href'   => FALSE,
-					'meta'   => [ 'class' => '-danger '.$classs ],
+					'meta'   => [
+						'class' => $this->class_for_adminbar_node( '-danger' ),
+					],
 				];
 		}
+
+		if ( ! $this->get_setting( 'adminbar_tools' ) )
+			return;
 
 		if ( ! $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'assign' ) )
 			return;
 
-		if ( empty( $terms ) && ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
 			return;
 
-		$this->action( 'admin_bar_menu', 1, 699 );
+		$this->action( 'admin_bar_menu', 1, 1001 );
 
-		$this->enqueue_styles();
 		$this->enqueue_asset_js( [
 			'post_id' => $post_id,
 			'_nonce'  => wp_create_nonce( $this->hook( $post_id ) ),
-		] );
+		], $this->dotted( 'adminbar' ) );
 	}
 
-	// @SEE: https://core.trac.wordpress.org/ticket/38636
 	public function admin_bar_menu( $wp_admin_bar )
 	{
-		// $post_id = get_queried_object_id();
+		$node_id = $this->classs( 'assignbox' );
+		$spinner = gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] );
 
 		$wp_admin_bar->add_node( [
-			'id'    => $this->classs( 'attributes' ),
+			'id'    => $node_id,
 			'href'  => $this->get_module_url(),
-			'title' => _x( 'Auditing', 'Adminbar: Title Attr', 'geditorial-audit' ).gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] ),
+			'title' => _x( 'Auditing', 'Node: Title', 'geditorial-audit' ).$spinner,
 			'meta'  => [
-				'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', 'quick-assign-action', $this->classs() ] ),
-				// working but not implemented on js yet!
-				// 'html'  => Core\HTML::tag( 'span', [
-				// 	'class' => 'quick-assign-data',
-				// 	'data'  => [
-				// 		'post'     => $post_id,
-				// 		'taxonomy' => $this->constant( 'main_taxonomy' ),
-				// 		'nonce'    => wp_create_nonce( $this->hook( $post_id ) ),
-				// 	],
-				// ] ),
+				'rel'   => $this->constant( 'main_taxonomy' ),
+				'class' => $this->class_for_adminbar_node( '-has-loading' ),
 			],
 		] );
 
 		$wp_admin_bar->add_node( [
-			'id'     => $this->classs( 'box' ),
-			'parent' => $this->classs( 'attributes' ),
-			'title'  => _x( 'Click to load attributes &hellip;', 'Adminbar: Title Attr', 'geditorial-audit' ),
+			'parent' => $node_id,
+			'id'     => $this->classs( 'assignbox', 'content' ),
+			'title'  => _x( 'Click to load attributes &hellip;', 'Node: Title', 'geditorial-audit' ),
 			'meta'   => [
-				'class' => 'geditorial-adminbar-wrap -wrap quick-assign-box '.$this->classs(),
+				'class' => $this->class_for_adminbar_node( '-has-assignbox' ),
 			],
 		] );
 	}

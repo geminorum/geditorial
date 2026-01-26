@@ -1,15 +1,37 @@
-(function ($, plugin, module) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   const s = {
-    action: plugin._base + '_' + module,
-    wrap: '#wpadminbar .' + plugin._base + '-' + module + '.-wrap',
-    button: '#wpadminbar .' + plugin._base + '-' + module + '.-action a.ab-item',
+    action: plugin._base + '_' + mainkey,
+    button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + '-assignbox > a.ab-item',
+    wrap: '#wp-admin-bar-' + plugin._base + '-' + mainkey + '-assignbox-content',
     spinner: '.geditorial-spinner'
+  };
+
+  const utils = {
+    // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
+    // @OLD: https://stackoverflow.com/a/9424784
+    debounce: function (fn, delay) {
+      let timer = null;
+      return function () {
+        // const context = this;
+        const context = app;
+        const args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          fn.apply(context, args);
+        }, delay);
+      };
+    }
   };
 
   const app = {
     empty: true,
+
+    init: function () {
+      $(s.button).on('click', function (event) {
+        event.preventDefault();
+        app.populate();
+      });
+    },
 
     watch: function () {
       $(':input', s.wrap).on('change', utils.debounce(function () {
@@ -27,8 +49,8 @@
         data: {
           action: s.action,
           what: 'store',
-          post_id: plugin[module].post_id,
-          nonce: plugin[module]._nonce,
+          post_id: plugin[mainkey].post_id,
+          nonce: plugin[mainkey]._nonce,
           data: form
         },
         beforeSend: function (xhr) {
@@ -56,8 +78,8 @@
         data: {
           action: s.action,
           what: 'list',
-          post_id: plugin[module].post_id,
-          nonce: plugin[module]._nonce
+          post_id: plugin[mainkey].post_id,
+          nonce: plugin[mainkey]._nonce
         },
         beforeSend: function (xhr) {
           spinner.addClass('is-active');
@@ -75,29 +97,13 @@
     }
   };
 
-  const utils = {
-    // @REF: https://remysharp.com/2010/07/21/throttling-function-calls
-    // @OLD: https://stackoverflow.com/a/9424784
-    debounce: function (fn, delay) {
-      let timer = null;
-      return function () {
-        // const context = this;
-        const context = app;
-        const args = arguments;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          fn.apply(context, args);
-        }, delay);
-      };
-    }
-  };
-
   $(function () {
-    $(s.button).on('click', function (event) {
-      event.preventDefault();
-      app.populate();
-    });
-
-    $(document).trigger('gEditorialReady', [module, app]);
+    // $(document).trigger('gEditorialReady', [mainkey, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
-}(jQuery, gEditorial, 'audit'));
+}(jQuery, gEditorial, 'audit', 'adminbar'));
