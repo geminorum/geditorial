@@ -95,6 +95,8 @@ class Module extends WordPress\Module
 	protected $scripts_printed = FALSE;
 	protected $current_queried = NULL; // usually contains `get_queried_object_id()`
 
+	protected $default_link_context = 'reports'; // default context for module link
+
 	public function __construct( &$module, &$options, $root, $locale = NULL )
 	{
 		$this->base = 'geditorial';

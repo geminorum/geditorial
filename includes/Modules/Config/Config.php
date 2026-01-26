@@ -30,6 +30,8 @@ class Config extends gEditorial\Module
 		'roles'   => 2,
 	];
 
+	protected $default_link_context = 'settings';
+
 	public static function module()
 	{
 		return [

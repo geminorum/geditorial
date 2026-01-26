@@ -166,7 +166,7 @@ class Uncategorized extends gEditorial\Module
 		$can   = $this->role_can( 'reports' );
 
 		$items[] = Core\HTML::tag( $can ? 'a' : 'span', [
-			'href'  => $can ? $this->get_module_url( 'reports' ) : FALSE,
+			'href'  => $can ? $this->get_module_url() : FALSE,
 			'title' => _x( 'You need to assign categories to some posts!', 'Title Attr', 'geditorial-uncategorized' ),
 			'class' => '-uncategorized-count',
 		], sprintf( gEditorial\Helper::noopedCount( $count, $noopd ), Core\Number::format( $count ) ) );

@@ -116,7 +116,7 @@ trait ModuleLinks
 	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
 	{
 		$sub     = $sub     ?? $this->key;
-		$context = $context ?? 'reports';  // TODO get from module class static: this is the default module link!
+		$context = $context ?? $this->default_link_context;
 
 		switch ( $context ) {
 			case 'tools'    :
