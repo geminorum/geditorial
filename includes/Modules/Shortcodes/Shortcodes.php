@@ -95,7 +95,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		if ( ! $post = get_queried_object() )
@@ -109,21 +109,61 @@ class Shortcodes extends gEditorial\Module
 		if ( ! preg_match_all( '/'.$pattern.'/s', $post->post_content, $matches ) )
 			return;
 
+		$node_id = $this->classs();
+		$reports = $this->role_can( 'reports' );
+		$niches  = [];
+
 		$nodes[] = [
-			'id'     => $this->classs(),
-			'title'  => _x( 'Shortcodes', 'Title Attr', 'geditorial-shortcodes' ),
 			'parent' => $parent,
-			'href'   => $this->get_module_url(),
+			'id'     => $node_id,
+			'title'  => _x( 'Short-codes', 'Node: Title', 'geditorial-shortcodes' ),
+			'href'   => $reports ? $this->get_module_url( 'reports' ) : FALSE,
+			'meta'   => [
+				'class' => $this->class_for_adminbar_node(),
+				'title' => $reports ? sprintf(
+					/* translators: `%s`: singular post-type label */
+					_x( 'View Short-code Reports for this %s', 'Node: Title', 'geditorial-shortcodes' ),
+					Services\CustomPostType::getLabel( $post, 'singular_name' )
+				) : '',
+			],
 		];
 
-		// TODO: niche for each short-code tag
-		foreach ( $matches[0] as $offset => $shortcode )
+		foreach ( $matches[0] as $offset => $matched ) {
+
+			if ( ! $shortcode = $matches[2][$offset] )
+				continue;
+
+			if ( ! array_key_exists( $shortcode, $niches ) ) {
+
+				$niches[$shortcode] = $this->classs( 'shortcode', $shortcode );
+
+				$nodes[] = [
+					'parent' => $node_id,
+					'id'     => $niches[$shortcode],
+					'title'  => $shortcode,
+					'href'   => FALSE,
+					'meta'   => [
+						'dir'   => 'ltr',
+						'rel'   => $shortcode,
+						'class' => $this->class_for_adminbar_node(),
+					],
+				];
+			}
+
+
 			$nodes[] = [
-				'id'     => $this->classs( 'shortcode', $offset ),
-				'title'  => '<span dir="ltr">'.$matches[2][$offset].': '.WordPress\Strings::trimChars( Core\Text::stripTags( $shortcode ), 125 ).'</span>',
-				'parent' => $this->classs(),
+				'parent' => $niches[$shortcode],
+				'id'     => $this->classs( 'matched', $offset ),
+				'title'  => WordPress\Strings::trimChars( Core\Text::stripTags( $matched ), 125 ),
 				'href'   => FALSE,
+				'meta'   => [
+					'dir'   => 'ltr',
+					'rel'   => $shortcode,
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
+
+		}
 	}
 
 	public function reports_settings( $sub )
