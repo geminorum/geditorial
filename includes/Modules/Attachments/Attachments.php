@@ -323,13 +323,13 @@ class Attachments extends gEditorial\Module
 		return $query;
 	}
 
-	// TODO: add sub-menu for: title/caption/description/sizes
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		$post_id = get_queried_object_id();
+		$node_id = $this->classs();
 
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
@@ -340,10 +340,13 @@ class Attachments extends gEditorial\Module
 			return;
 
 		$nodes[] = [
-			'id'     => $this->classs(),
-			'title'  => _x( 'Attachment Summary', 'Adminbar', 'geditorial-attachments' ),
 			'parent' => $parent,
+			'id'     => $node_id,
+			'title'  => _x( 'Attachment Summary', 'Adminbar', 'geditorial-attachments' ),
 			'href'   => WordPress\Post::mediaLink( $post_id ),
+			'meta'   => [
+				'class' => $this->class_for_adminbar_node(),
+			],
 		];
 
 		$thumbnail_id  = get_post_meta( $post_id, '_thumbnail_id', TRUE );
@@ -355,20 +358,22 @@ class Attachments extends gEditorial\Module
 			$title = get_post_meta( $attachment->ID, '_wp_attached_file', TRUE );
 
 			if ( $thumbnail_id == $attachment->ID )
-				$title.= ' &ndash; <b>thumbnail</b>';
+				$title.= ' &ndash; [thumbnail]';
 
-			if ( $gtheme_images && in_array( $attachment->ID, $gtheme_images ) )
-				$title.= ' &ndash; tagged: '.array_search( $attachment->ID, $gtheme_images );
+			if ( $gtheme_images && in_array( $attachment->ID, $gtheme_images, TRUE ) )
+				$title.= ' &ndash; [tagged: '.array_search( $attachment->ID, $gtheme_images ).']';
 
-			if ( $gtheme_terms && in_array( $attachment->ID, $gtheme_terms ) )
-				$title.= ' &ndash; for term: '.array_search( $attachment->ID, $gtheme_terms );
+			if ( $gtheme_terms && in_array( $attachment->ID, $gtheme_terms, TRUE ) )
+				$title.= ' &ndash; [for term: '.array_search( $attachment->ID, $gtheme_terms ).']';
 
 			$nodes[] = [
+				'parent' => $node_id,
 				'id'     => $this->classs( 'attachment', $attachment->ID ),
-				'title'  => '<div dir="ltr" style="text-align:left">'.$title.'</div>',
-				'parent' => $this->classs(),
+				'title'  => $title,
 				'href'   => wp_get_attachment_url( $attachment->ID ),
 				'meta'   => [
+					'dir'   => 'ltr',
+					'title' => WordPress\Attachment::title( $attachment ),
 					'class' => $this->class_for_adminbar_node( '-attachment' ),
 				],
 			];
