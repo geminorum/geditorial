@@ -198,6 +198,7 @@ class CustomTaxonomy extends gEditorial\Service
 			// case 'assign_description': // TODO: display on meta-box after hook
 			// case 'manage_description': // TODO
 			// case 'extended_description': // TODO
+			// case 'archives_description': // TODO
 
 			case 'show_option_no_items':
 				return sprintf( '(%s)', $object->labels->no_terms );

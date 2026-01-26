@@ -903,6 +903,23 @@ trait CoreTaxonomies
 		] );
 	}
 
+	protected function register_headerbutton_for_taxonomy_archives( $constant, $priority = NULL )
+	{
+		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
+			return FALSE;
+
+		if ( ! $edit = WordPress\Taxonomy::link( $taxonomy ) )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $this->classs( $taxonomy ), [
+			'text'     => Services\CustomTaxonomy::getLabel( $taxonomy, 'template_name' ),
+			'title'    => Services\CustomTaxonomy::getLabel( $taxonomy, 'archives_description' ),
+			'icon'     => 'archive',
+			'link'     => $edit,
+			'priority' => $priority ?? 99,
+		] );
+	}
+
 	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )

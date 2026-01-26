@@ -188,6 +188,7 @@ class People extends gEditorial\Module
 			$this->modulelinks__register_headerbuttons();
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
+			$this->register_headerbutton_for_taxonomy_archives( 'main_taxonomy' );
 			$this->register_headerbutton_for_taxonomy( 'category_taxonomy' );
 			$this->register_headerbutton_for_taxonomy( 'type_taxonomy' );
 			$this->taxtax__hook_screen( $screen, 'category_taxonomy' );
