@@ -40,6 +40,12 @@ class Attachments extends gEditorial\Module
 	{
 		return [
 			'_general' => [
+				'comment_status' => [ _x( 'Determines the default status of the new attachment comments.', 'Setting Description', 'geditorial-attachments' ) ],
+				[
+					'field'       => 'comment_control',
+					'title'       => _x( 'Comment Control', 'Setting Title', 'geditorial-attachments' ),
+					'description' => _x( 'Displays comments status check-box for each attachment.', 'Setting Description', 'geditorial-attachments' ),
+				],
 				[
 					'field'       => 'auto_rotation',
 					'title'       => _x( 'Auto Rotation', 'Setting Title', 'geditorial-attachments' ),
@@ -121,6 +127,13 @@ class Attachments extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->filter( 'get_default_comment_status', 3, 12 );
+
+		if ( $this->get_setting( 'comment_control' ) ) {
+			$this->filter( 'attachment_fields_to_edit', 2, 8 );
+			$this->filter( 'attachment_fields_to_save', 2, 8 );
+		}
+
 		if ( $this->get_setting( 'auto_rotation' ) )
 			$this->action( 'add_attachment', 1, 4, 'auto_rotation' );
 
@@ -163,6 +176,85 @@ class Attachments extends gEditorial\Module
 
 			$this->corerestrictposts__hook_screen_authors();
 		}
+	}
+
+	/**
+	 * Filters the default comment status for the attachment post-type.
+	 *
+	 * @param string $status
+	 * @param string $posttype
+	 * @param string $comment_type
+	 * @return string
+	 */
+	public function get_default_comment_status( $status, $posttype, $comment_type )
+	{
+		if ( 'attachment' !== $posttype )
+			return $status;
+
+		if ( ! in_array( $comment_type, [ 'comment', 'pingback', 'trackback' ], TRUE ) )
+			return $status;
+
+		return $this->get_setting( 'comment_status', 'closed' );
+	}
+
+	/**
+	 * Filters the attachment fields to edit.
+	 *
+	 * @param array $form_fields
+	 * @param object $post
+	 * @return array
+	 */
+	public function attachment_fields_to_edit( $form_fields, $post )
+	{
+		$html = '';
+
+		$name  = sprintf( 'attachments[%d][comment_status]', $post->ID );
+		$field = '<label for="'.$name.'" class="selectit">';
+		$field.= '<input type="checkbox" value="open" '.checked( $post->comment_status, 'open', FALSE ).' id="'.$name.'" name="'.$name.'" />';
+		$field.= '&nbsp;'.__( 'Allow comments' );
+		$field.= '</label>';
+		$html .= Core\HTML::wrap( $field, 'field-wrap -checkbox' );
+
+		$name  = sprintf( 'attachments[%d][ping_status]', $post->ID );
+		$field = '<label for="'.$name.'" class="selectit">';
+		$field.= '<input type="checkbox" value="open" '.checked( $post->ping_status, 'open', FALSE ).' id="'.$name.'" name="'.$name.'" />';
+		$field.= '&nbsp;'.sprintf(
+			/* translators: `%s`: Documentation URL */
+			__( 'Allow <a href="%s">trackbacks and pingbacks</a>' ),
+			__( 'https://wordpress.org/support/article/introduction-to-blogging/#comments' )
+		);
+		$field.= '</label>';
+		$html .= Core\HTML::wrap( $field, 'field-wrap -checkbox' );
+
+		$form_fields['comment_control'] = [
+			'label' => _x( 'Comment Control', 'Field Label', 'geditorial-attachments' ), // cannot be empty, will be hidden via CSS
+			'helps' => _x( 'Applies to the attachment page associated with this media.', 'Field Help', 'geditorial-attachments' ),
+			'input' => 'html',
+			'html'  => $html,
+
+			'show_in_modal' => TRUE,
+			'show_in_edit'  => FALSE, // already has a meta-box
+		];
+
+		return $form_fields;
+	}
+
+	/**
+	 * Filters the attachment fields to be saved.
+	 *
+	 * @param array $post
+	 * @param array $attachment
+	 * @return array
+	 */
+	public function attachment_fields_to_save( $post, $attachment )
+	{
+		if ( ! empty( $attachment['comment_status'] ) )
+			$post['comment_status'] = 'open' === $attachment['comment_status'] ? 'open' : 'closed';
+
+		if ( ! empty( $attachment['ping_status'] ) )
+			$post['ping_status'] = 'open' === $attachment['ping_status'] ? 'open' : 'closed';
+
+		return $post;
 	}
 
 	/**
@@ -463,6 +555,8 @@ class Attachments extends gEditorial\Module
 			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
 			'empty_metadata'     => _x( 'Empty Meta-data', 'Table Action', 'geditorial-attachments' ),
 			'delete_sizes'       => _x( 'Delete Sizes', 'Table Action', 'geditorial-attachments' ),
+			// TODO: bulk comment status: open/closed
+			// TODO: bulk ping status: open/closed
 		];
 
 		$actions = [
