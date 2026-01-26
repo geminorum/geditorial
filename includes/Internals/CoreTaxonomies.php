@@ -886,7 +886,7 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	protected function register_headerbutton_for_taxonomy( $constant )
+	protected function register_headerbutton_for_taxonomy( $constant, $priority = NULL )
 	{
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
 			return FALSE;
@@ -899,7 +899,7 @@ trait CoreTaxonomies
 			'title'    => Services\CustomTaxonomy::getLabel( $taxonomy, 'manage_description' ),
 			'icon'     => Services\Icons::taxonomyMarkup( $taxonomy, NULL, TRUE ),
 			'link'     => $edit,
-			'priority' => 12,
+			'priority' => $priority ?? 12,
 		] );
 	}
 

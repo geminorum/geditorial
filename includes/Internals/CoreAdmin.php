@@ -191,7 +191,7 @@ trait CoreAdmin
 		add_filter( sprintf( 'manage_edit-%s_columns', $object->name ),
 			function ( $columns ) use ( $object ) {
 				return Core\Arraay::insert( $columns, [
-					// NOTE: globalized: since no-way to pass CSS class for the column header!
+					// NOTE: using `base` since no-way to pass CSS class for the column header!
 					$this->hook_base( 'multiplesupported' )
 						=> $this->get_column_title_icon( 'posts', $object->name, _x( 'Connected', 'Internal: CoreAdmin: Column', 'geditorial-admin' ) ),
 				], 'posts', 'before' );

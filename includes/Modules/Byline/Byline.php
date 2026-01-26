@@ -918,7 +918,7 @@ class Byline extends gEditorial\Module
 		$nodes[] = [
 			'parent' => $parent,
 			'id'     => $classs,
-			'title'  => _x( 'Byline', 'Adminbar', 'geditorial-byline' ),
+			'title'  => _x( 'Byline', 'Node: Title', 'geditorial-byline' ),
 			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'linked' => $post->ID ] ) : FALSE,
 			'meta' => [
 				'class' => $this->class_for_adminbar_node( '-byline' ),

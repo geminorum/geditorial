@@ -7,6 +7,8 @@ use geminorum\gEditorial\WordPress;
 WordPress\User::superAdminOnly();
 
 $files = [
+	//'Test_Array-Merge',
+
 	// 'Test_Address',
 	// 'Test_Country',
 	// 'Test_CSV',

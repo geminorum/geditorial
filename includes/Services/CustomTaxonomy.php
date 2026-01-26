@@ -219,6 +219,13 @@ class CustomTaxonomy extends gEditorial\Service
 			case 'show_option_parent':
 				return sprintf( '&ndash; %s &ndash;', $object->labels->parent_item );
 
+			case 'post_count':
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+					_x( 'Post Count', 'CustomTaxonomy: Label for `post_count`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
+
 			case 'import_items':
 				return vsprintf(
 					/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */

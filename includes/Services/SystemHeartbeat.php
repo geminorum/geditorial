@@ -59,6 +59,8 @@ class SystemHeartbeat extends gEditorial\Service
 				'class' => self::classs( 'adminbar', 'node', 'icononly' ),
 			],
 		] );
+
+		// TODO: add subnode with datetime of loading of current page / enhance with time-ago
 	}
 
 	/**

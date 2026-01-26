@@ -422,10 +422,8 @@ class Datetime extends WordPress\Main
 
 	public static function prepYearOnly( $data, $localize = TRUE, $fallback = '' )
 	{
-		if ( ! $data )
+		if ( ! $sanitized = Core\Text::trim( Core\Number::translate( $data ) ) )
 			return $fallback;
-
-		$sanitized = Core\Text::trim( Core\Number::translate( $data ) );
 
 		if ( strlen( $sanitized ) > 4 )
 			return $fallback;

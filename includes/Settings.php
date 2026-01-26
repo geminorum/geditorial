@@ -378,6 +378,7 @@ class Settings extends WordPress\Main
 			'inbound_message'   ,   // Flamingo
 			'table'             ,   // TablePress
 			'wafs'              ,   // Advanced Free Shipping for WooCommerce
+			'csp-report'        ,   // HTTPS Mixed Content Detector
 		];
 
 		if ( class_exists( 'bbPress' ) )
@@ -4062,6 +4063,9 @@ class Settings extends WordPress\Main
 	// @REF: https://codepen.io/geminorum/pen/RwEPyWJ
 	public static function tabPanelOpen( $data = [], $class = '' )
 	{
+		if ( empty( $data ) )
+			$data = [];
+
 		$data['select-all-label'] = _x( 'Select All', 'Settings: Tab Panel', 'geditorial-admin' );
 
 		return '<div class="'

@@ -18,7 +18,9 @@ trait CoreComments
 				if ( $posttype !== $_posttype )
 					return $status;
 
-				if ( ! in_array( $_comment_type, $comment_types ?? [ 'comment', 'pingback', 'trackback' ], TRUE ) )
+				$checking = (array) $comment_types ?? [ 'comment', 'pingback', 'trackback' ];
+
+				if ( ! in_array( $_comment_type, $checking, TRUE ) )
 					return $status;
 
 				return $this->get_setting(
