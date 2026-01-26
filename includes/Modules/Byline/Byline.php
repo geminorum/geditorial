@@ -62,9 +62,9 @@ class Byline extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
-				'adminbar_tools',
-				'tab_title'    => [ NULL, _x( 'People', 'Setting Default', 'geditorial-byline' ) ],
-				'tab_priority' => [ NULL, 20 ],
+				'adminbar_tools' => [ NULL, TRUE ],
+				'tab_title'      => [ NULL, _x( 'People', 'Setting Default', 'geditorial-byline' ) ],
+				'tab_priority'   => [ NULL, 20 ],
 			],
 			'_constants' => [
 				'main_taxonomy_constant'  => [ NULL, 'relation' ],
@@ -205,7 +205,7 @@ class Byline extends gEditorial\Module
 
 		} else {
 
-			if ( $this->get_setting( 'adminbar_tools', FALSE ) )
+			if ( $this->get_setting( 'adminbar_tools', TRUE ) )
 				$this->action( 'admin_bar_menu', 1, -999 );
 		}
 	}
@@ -231,7 +231,7 @@ class Byline extends gEditorial\Module
 						'callback' => function ( $post ) {
 
 							ModuleTemplate::renderDefault( [
-								'default'  => $this->get_notice_for_empty( 'tabs', 'empty', FALSE ),
+								'default'  => $this->get_notice_for_empty( 'tabs', NULL, FALSE ),
 								'template' => 'featuredcards',
 								'hidden'   => TRUE,
 								'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -408,7 +408,7 @@ class Byline extends gEditorial\Module
 			gEditorial\Settings::wrapOpen( 'overview', $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
-					'default'  => $this->get_notice_for_empty( $target, 'empty', FALSE ),
+					'default'  => $this->get_notice_for_empty( $target, NULL, FALSE ),
 					'template' => 'adminoverview',
 					'hidden'   => TRUE,
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -769,7 +769,7 @@ class Byline extends gEditorial\Module
 				'priority' => $this->get_setting( 'tab_priority', 20 ), // NOTE: `priority` does not applied on this filter!
 				'callback' => function () use ( $post_id ) {
 					ModuleTemplate::renderDefault( [
-						'default'  => $this->get_notice_for_empty( 'woocommerce', 'empty', FALSE ),
+						'default'  => $this->get_notice_for_empty( 'woocommerce', NULL, FALSE ),
 						'template' => 'featuredcards',
 						'hidden'   => TRUE,
 						'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
@@ -845,7 +845,7 @@ class Byline extends gEditorial\Module
 
 	public function admin_bar_menu( $wp_admin_bar )
 	{
-		if ( ! is_singular( $this->posttypes() ) )
+		if ( ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
@@ -899,7 +899,7 @@ class Byline extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
@@ -936,7 +936,7 @@ class Byline extends gEditorial\Module
 
 			$nodes[] = [
 				'parent' => $classs,
-				'id'     => sprintf( '%s-empty', $classs ),
+				'id'     => $this->classs( 'empty' ),
 				'title'  => gEditorial\Plugin::na( FALSE ),
 				'meta' => [
 					'class' => $this->class_for_adminbar_node( '-empty' ),
@@ -953,7 +953,7 @@ class Byline extends gEditorial\Module
 			if ( FALSE !== ( $relation = $this->get_term_relations( $term, $post, $fields ) ) )
 				$nodes[] = [
 					'parent' => $classs,
-					'id'     => sprintf( '%s-term-%d', $classs, $term->term_id ),
+					'id'     => $this->classs( 'term', $term->term_id ),
 					'title'  => $term->name, // NOTE: raw name
 					'href'   => WordPress\Term::edit( $term ),
 					'meta' => [

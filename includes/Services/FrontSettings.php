@@ -121,7 +121,7 @@ class FrontSettings extends gEditorial\Service
 			'href'   => gEditorial\Settings::getURLbyContext( 'settings', TRUE ),
 			'title'  => sprintf(
 				/* translators: `%s`: system string */
-				_x( '%s Settings', 'Service: Front Settings', 'geditorial-admin' ),
+				_x( '%s Settings', 'Service: Front Settings', 'geditorial' ),
 				gEditorial\Plugin::system()
 			),
 			'meta' => [

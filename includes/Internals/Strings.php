@@ -85,6 +85,7 @@ trait Strings
 	protected function strings_metabox_noitems_via_posttype( $posttype, $context = 'default', $default = NULL, $post = NULL, $prop = 'empty', $group = 'metabox' )
 	{
 		if ( is_null( $default ) ) {
+
 			switch ( $context ) {
 
 				case 'listbox':
@@ -164,6 +165,7 @@ trait Strings
 	protected function strings_metabox_title_via_taxonomy( $taxonomy, $context = 'default', $default = NULL, $term = NULL, $prop = 'title', $group = 'metabox' )
 	{
 		if ( is_null( $default ) ) {
+
 			switch ( $context ) {
 
 				case 'supportedbox':
@@ -188,47 +190,60 @@ trait Strings
 	}
 
 	// OLD: `subcontent_get_empty_notice()`
-	protected function get_notice_for_empty( $context = 'display', $string_key = 'empty', $check_thrift = TRUE )
+	protected function get_notice_for_empty( $context = 'display', $string_key = NULL, $check_thrift = TRUE )
 	{
 		if ( $check_thrift && $this->is_thrift_mode() )
 			return '<div class="-placeholder-empty"></div>';
 
 		return Core\HTML::tag( 'p', [
 			'class' => [ 'description', '-description', '-empty' ],
-		], $this->get_string( $string_key, $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ) );
+		], $this->get_string( $string_key ?? 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ) );
 	}
 
 	// OLD: `subcontent_get_noaccess_notice()`
-	protected function get_notice_for_noaccess( $context = 'display', $string_key = 'noaccess', $check_thrift = TRUE )
+	protected function get_notice_for_noaccess( $context = 'display', $string_key = NULL, $check_thrift = TRUE )
 	{
 		$default = _x( 'You do not have the necessary permission to manage the information.', 'Internal: Strings: No-Access Notice', 'geditorial' );
 
 		return Core\HTML::tag( 'p', [
 			'class' => [ 'description', '-description', '-noaccess' ],
-		], $this->get_string( $string_key, $context, 'notices', $default ) );
+		], $this->get_string( $string_key ?? 'noaccess', $context, 'notices', $default ) );
 	}
 
 	protected function _hook_post_updated_messages( $constant )
 	{
 		add_filter( 'post_updated_messages',
-			function ( $messages ) use ( $constant ) {
+			function ( $messages )
+				use ( $constant ) {
 
 				$posttype  = $this->constant( $constant, $constant );
-				$generated = Services\CustomPostType::generateMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $posttype );
+				$generated = Services\CustomPostType::generateMessages(
+					Services\CustomPostType::getLabel( $posttype, 'noop' ),
+					$posttype
+				);
 
-				return array_merge( $messages, [ $posttype => $generated ] );
+				return array_merge( $messages, [
+					$posttype => $generated,
+				] );
 			} );
 	}
 
 	protected function _hook_bulk_post_updated_messages( $constant )
 	{
 		add_filter( 'bulk_post_updated_messages',
-			function ( $messages, $counts ) use ( $constant ) {
+			function ( $messages, $counts )
+				use ( $constant ) {
 
 				$posttype  = $this->constant( $constant, $constant );
-				$generated = Services\CustomPostType::generateBulkMessages( Services\CustomPostType::getLabel( $posttype, 'noop' ), $counts, $posttype );
+				$generated = Services\CustomPostType::generateBulkMessages(
+					Services\CustomPostType::getLabel( $posttype, 'noop' ),
+					$counts,
+					$posttype
+				);
 
-				return array_merge( $messages, [ $posttype => $generated ] );
+				return array_merge( $messages, [
+					$posttype => $generated,
+				] );
 			}, 10, 2 );
 	}
 }

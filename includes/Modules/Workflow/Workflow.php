@@ -438,7 +438,7 @@ class Workflow extends gEditorial\Module
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
-			// 		'class' => [ 'button', 'button-small' ],
+			// 		'class' => Core\HTML::buttonClass(),
 			// 		'value' => __( 'Save Draft' ),
 			// 	] );
 
@@ -447,7 +447,7 @@ class Workflow extends gEditorial\Module
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
-			// 		'class' => [ 'button', 'button-small' ],
+			// 		'class' => Core\HTML::buttonClass(),
 			// 		'value' => __( 'Save as Pending' ),
 			// 	] );
 
@@ -455,7 +455,7 @@ class Workflow extends gEditorial\Module
 				echo Core\HTML::tag( 'a', [
 					'href'  => get_edit_post_link( $GLOBALS['publish_callback_args']['revision_id'] ),
 					'id'    => $this->classs( 'browse-revisions' ),
-					'class' => [ 'button', 'button-small', 'hide-if-no-js', '-browse-revisions' ],
+					'class' => Core\HTML::buttonClass( TRUE, [ 'hide-if-no-js', '-browse-revisions' ] ),
 				], __( 'Browse revisions' ) );
 
 			echo gEditorial\Ajax::spinner();

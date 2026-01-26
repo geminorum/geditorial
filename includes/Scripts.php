@@ -153,7 +153,7 @@ class Scripts extends WordPress\Main
 			$base ?? static::URL,
 			$path,
 			$name,
-			Core\HTML::rtl() ? '-rtl' : ''
+			Core\L10n::rtl() ? '-rtl' : ''
 		);
 	}
 
@@ -758,7 +758,7 @@ JS;
 	public static function pkgSelect2( $enqueue = FALSE, $ver = '4.1.0-rc.0' )
 	{
 		$handle    = 'select2';
-		$dir       = Core\HTML::rtl() ? '-rtl' : '';
+		$dir       = Core\L10n::rtl() ? '-rtl' : '';
 		$wooselect = WordPress\WooCommerce::isActive();
 
 		if ( $enqueue ) {
@@ -782,7 +782,7 @@ JS;
 	public static function linkBootstrap5( $ver = '5.3.8', $screen = 'all' )
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
-		$dir = Core\HTML::rtl() ? '.rtl' : '';
+		$dir = Core\L10n::rtl() ? '.rtl' : '';
 
 		return Core\HTML::linkStyleSheet(
 			GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css',

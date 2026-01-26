@@ -1135,9 +1135,9 @@ class Tweaks extends gEditorial\Module
 		checked( $post->ping_status, 'open' );
 		echo ' /> ';
 		printf(
-			/* translators: `%s`: codex URL */
+			/* translators: `%s`: Documentation URL */
 			_x( 'Allow <a href="%s">trackbacks and pingbacks</a>', 'MainBox', 'geditorial-tweaks' ),
-			__( 'https://wordpress.org/support/article/introduction-to-blogging/#managing-comments' )
+			__( 'https://wordpress.org/support/article/introduction-to-blogging/#comments' )
 		);
 		echo '</label>';
 		echo '</div>';

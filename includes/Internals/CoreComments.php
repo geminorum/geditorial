@@ -9,16 +9,16 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreComments
 {
-	protected function comments__handle_default_status( $posttype, $fallback = NULL, $comment_type = NULL, $setting = NULL )
+	protected function comments__handle_default_status( $posttype, $fallback = NULL, $comment_types = NULL, $setting = NULL )
 	{
 		add_filter( 'get_default_comment_status',
 			function ( $status, $_posttype, $_comment_type )
-				use ( $posttype, $comment_type, $fallback, $setting ) {
+				use ( $posttype, $comment_types, $fallback, $setting ) {
 
 				if ( $posttype !== $_posttype )
 					return $status;
 
-				if ( ( $comment_type ?? 'comments' ) !== $_comment_type )
+				if ( ! in_array( $_comment_type, $comment_types ?? [ 'comment', 'pingback', 'trackback' ], TRUE ) )
 					return $status;
 
 				return $this->get_setting(

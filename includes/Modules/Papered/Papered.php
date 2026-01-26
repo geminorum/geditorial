@@ -854,7 +854,7 @@ class Papered extends gEditorial\Module
 			$selectors[] = sprintf( '#qt_geditorial-papered-lonebox-%s_textdirection', str_replace( '_', '-', $field ) );
 		}
 
-		if ( ! Core\HTML::rtl() )
+		if ( ! Core\L10n::rtl() )
 			return;
 
 		$selectors[] = '#qt_content_textdirection'; // default content editor

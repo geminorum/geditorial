@@ -1010,14 +1010,16 @@ class Config extends gEditorial\Module
 
 			if ( FALSE === $module->disabled ) {
 
-				echo '<p class="actions">';
+				echo '<div class="-wrap -actions">';
 					gEditorial\Settings::moduleConfigure( $module, $enabled );
 					gEditorial\Settings::moduleButtons( $module, $enabled );
-				echo '</p>';
+				echo '</div>';
 
 			} else if ( $module->disabled ) {
 
-				echo Core\HTML::wrap( $module->disabled, 'actions -danger' );
+				echo Core\HTML::wrap( $module->disabled, '-message -danger', TRUE, [
+					'tooltip' => _x( 'The module is disabled!', 'Config: Message', 'geditorial-admin' ),
+				] );
 			}
 
 			echo '</div>';

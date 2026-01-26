@@ -100,7 +100,7 @@ class Quotation extends gEditorial\Module
 
 	public function get_global_fields()
 	{
-		$rtl = Core\HTML::rtl();
+		$rtl = Core\L10n::rtl();
 
 		return [
 			'meta' => [

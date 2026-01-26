@@ -313,7 +313,7 @@ class Parser extends WordPress\Main
 		$writer = new \XLSXWriter();
 		$writer->setTempDir( get_temp_dir() );
 
-		if ( Core\HTML::rtl() )
+		if ( Core\L10n::rtl() )
 			$writer->setRightToLeft( TRUE );
 
 		if ( ! is_null( $title ) )

@@ -484,7 +484,7 @@ class Datetime extends WordPress\Main
 		if ( ! $born && ! $dead )
 			return '';
 
-		$template = Core\HTML::rtl()
+		$template = Core\L10n::rtl()
 			? '(<span class="-dead" title="%4$s">%2$s</span><span class="-sep">%5$s</span><span class="-born" title="%3$s">%1$s</span>)'
 			: '(<span class="-born" title="%3$s">%1$s</span><span class="sep">%5$s</span><span class="-dead" title="%4$s">%2$s</span>)';
 

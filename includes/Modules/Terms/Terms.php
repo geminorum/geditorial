@@ -1221,7 +1221,7 @@ class Terms extends gEditorial\Module
 			return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
 				.'<span class="-field field-'.$field.'" data-'.$field.'="'.$value.'"></span>';
 
-		return gEditorial()->na();
+		return gEditorial\Plugin::na();
 	}
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )

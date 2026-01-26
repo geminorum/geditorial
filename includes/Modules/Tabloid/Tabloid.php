@@ -383,7 +383,7 @@ class Tabloid extends gEditorial\Module
 		$data = ModuleHelper::stripEmptyValues( $data, 'meta_rendered' );
 		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 
-		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__direction']  = Core\L10n::rtl() ? 'rtl' : 'ltr';
 		$data['__can_edit']   = WordPress\Post::edit( $post );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
@@ -444,7 +444,7 @@ class Tabloid extends gEditorial\Module
 		$data = ModuleHelper::stripEmptyValues( $data, 'meta_rendered' );
 		$data = ModuleHelper::stripEmptyValues( $data, 'terms_rendered' );
 
-		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__direction']  = Core\L10n::rtl() ? 'rtl' : 'ltr';
 		$data['__can_edit']   = WordPress\Term::edit( $term );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );

@@ -652,7 +652,7 @@ class Audit extends gEditorial\Module
 			unset( $term['_links'] );
 		}
 
-		$data['__direction']  = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__direction']  = Core\L10n::rtl() ? 'rtl' : 'ltr';
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 

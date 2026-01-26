@@ -68,7 +68,10 @@ class Individuals extends gEditorial\Service
 			|| WordPress\Strings::isEmpty( $parsed['last_name'] ) )
 				return $formatted;
 
-		return sprintf( static::FORMAT_TEMPLATE, $parsed['first_name'], $parsed['last_name'] );
+		return sprintf( static::FORMAT_TEMPLATE,
+			$parsed['first_name'],
+			$parsed['last_name']
+		);
 	}
 
 	public static function filter_prep_individual_front( $individual, $raw, $value )

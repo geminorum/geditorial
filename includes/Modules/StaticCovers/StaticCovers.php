@@ -395,7 +395,7 @@ class StaticCovers extends gEditorial\Module
 				'headers'  => @get_headers( $image, TRUE ),
 			];
 
-		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__direction'] = Core\L10n::rtl() ? 'rtl' : 'ltr';
 		$data['___hooks']    = array_fill_keys( [
 			'after-actions',
 			'after-post',
@@ -464,7 +464,7 @@ class StaticCovers extends gEditorial\Module
 		}
 
 		$data['i18n']        = $this->get_strings( 'post', 'i18n' );
-		$data['__direction'] = Core\HTML::rtl() ? 'rtl' : 'ltr';
+		$data['__direction'] = Core\L10n::rtl() ? 'rtl' : 'ltr';
 		$data['__summaries'] = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___hooks']    = array_fill_keys( [
 			'after-actions',

@@ -639,6 +639,9 @@ class Attachments extends gEditorial\Module
 						foreach ( $meta['sizes'] as $size_name => $size_args )
 							$sizes[$size_name] = sprintf( '<span title="%s">%s&times;%s</span>', $size_args['file'], $size_args['width'], $size_args['height'] );
 
+					if ( ! empty( $meta['original_image'] ) )
+						$sizes['CONVERTED'] = Core\HTML::small( $meta['original_image'] );
+
 					return Core\HTML::tableCode( $sizes, TRUE );
 				},
 			],

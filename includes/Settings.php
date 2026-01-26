@@ -552,7 +552,7 @@ class Settings extends WordPress\Main
 			'rel'    => 'noreferrer',
 			'data'   => [
 				'tooltip'     => $title ?? _x( 'See More Information', 'Settings', 'geditorial-admin' ),
-				'tooltip-pos' => Core\HTML::rtl() ? 'left' : 'right',
+				'tooltip-pos' => Core\L10n::rtl() ? 'left' : 'right',
 			],
 		], Core\HTML::getDashicon( $icon ) );
 
@@ -2561,7 +2561,7 @@ class Settings extends WordPress\Main
 		] );
 
 		echo Core\HTML::tag( 'span', [
-			'class' => [ 'button', 'hide-if-js' ],
+			'class' => Core\HTML::buttonClass( TRUE, [ '-danger', 'hide-if-js' ] ),
 		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial-admin' ) );
 	}
 
@@ -3409,7 +3409,7 @@ class Settings extends WordPress\Main
 
 					$args['field_class'] = Core\HTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
 
-					if ( ! $args['dir'] && Core\HTML::rtl() )
+					if ( ! $args['dir'] && Core\L10n::rtl() )
 						$args['field_class'][] = 'quicktags-rtl';
 
 					if ( ! $args['values'] )
@@ -3427,7 +3427,7 @@ class Settings extends WordPress\Main
 
 					$args['field_class'] = Core\HTML::attrClass( $args['field_class'], 'textarea-quicktags', 'code' );
 
-					if ( ! $args['dir'] && Core\HTML::rtl() )
+					if ( ! $args['dir'] && Core\L10n::rtl() )
 						$args['field_class'][] = 'quicktags-rtl';
 
 					if ( ! $args['values'] )
