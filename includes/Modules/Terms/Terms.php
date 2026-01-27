@@ -1141,10 +1141,11 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$cal   = $this->default_calendar();
-					$date  = gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d', $cal );
-					$input = gEditorial\Datetime::prepForInput( trim( $meta ), 'Y/m/d', $cal );
-					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+					$cal    = $this->default_calendar();
+					$format = gEditorial\Datetime::dateFormats( 'default' );
+					$date   = gEditorial\Datetime::prepForDisplay( trim( $meta ), $format, $cal );
+					$input  = gEditorial\Datetime::prepForInput( trim( $meta ), $format, $cal );
+					$html   = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
 
@@ -1159,10 +1160,11 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$cal   = $this->default_calendar();
-					$date  = gEditorial\Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $cal );
-					$input = gEditorial\Datetime::prepForInput( trim( $meta ), 'Y/m/d H:i', $cal );
-					$html  = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
+					$cal    = $this->default_calendar();
+					$format = gEditorial\Datetime::dateFormats( 'datetime' );
+					$date   = gEditorial\Datetime::prepForDisplay( trim( $meta ), $format, $cal );
+					$input  = gEditorial\Datetime::prepForInput( trim( $meta ), $format, $cal );
+					$html   = '<span class="-field field-'.$field.'" data-'.$field.'="'.$input.'">'.$date.'</span>';
 
 				} else {
 
@@ -1562,11 +1564,24 @@ class Terms extends gEditorial\Module
 			case 'establish':
 			case 'abolish':
 
+				if ( empty( $meta ) )
+					$value = '';
+
+				else if ( strlen( $meta ) > 4 )
+					$value = gEditorial\Datetime::prepForInput(
+						$meta,
+						gEditorial\Datetime::dateFormats( 'default' ),
+						$this->default_calendar()
+					);
+
+				else
+					$value = $meta;
+
 				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : ( strlen( $meta ) > 4 ? gEditorial\Datetime::prepForInput( $meta, 'Y/m/d', $this->default_calendar() ) : $meta ),
+					'value' => $value,
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -1577,11 +1592,21 @@ class Terms extends gEditorial\Module
 			case 'datestart':
 			case 'dateend':
 
+				if ( empty( $meta ) )
+					$value = '';
+
+				else
+					$value = gEditorial\Datetime::prepForInput(
+						$meta,
+						gEditorial\Datetime::dateFormats( 'datetime' ),
+						$this->default_calendar()
+					);
+
 				$html.= Core\HTML::tag( 'input', [
 					'id'    => $this->classs( $field, 'id' ),
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
-					'value' => empty( $meta ) ? '' : gEditorial\Datetime::prepForInput( $meta, 'Y/m/d H:i', $this->default_calendar() ),
+					'value' => $value,
 					'class' => [ 'code' ],
 					'data'  => [ 'ortho' => 'date' ],
 				] );
@@ -2025,7 +2050,7 @@ class Terms extends gEditorial\Module
 
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
-							'Y/m/d',
+							gEditorial\Datetime::dateFormats( 'default' ),
 							$this->default_calendar()
 						);
 
@@ -2037,7 +2062,7 @@ class Terms extends gEditorial\Module
 
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
-							'Y/m/d H:i',
+							gEditorial\Datetime::dateFormats( 'datetime' ),
 							$this->default_calendar()
 						);
 

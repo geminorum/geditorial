@@ -650,14 +650,14 @@ class Meta extends gEditorial\Module
 				if ( 'print' === $context )
 					return gEditorial\Datetime::prepForDisplay(
 						trim( $raw ),
-						'Y/n/j',
+						gEditorial\Datetime::dateFormats( 'printdate' ),
 						$this->default_calendar()
 					);
 
 				if ( 'export' === $context )
 					return gEditorial\Datetime::prepForInput(
 						trim( $raw ),
-						'Y/m/d',
+						gEditorial\Datetime::dateFormats( 'default' ),
 						$this->default_calendar()
 					);
 
@@ -809,13 +809,13 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return gEditorial\Datetime::prepForInput(
 						trim( $raw ),
-						'Y/m/d',
+						gEditorial\Datetime::dateFormats( 'default' ),
 						$this->default_calendar()
 					);
 
 				return gEditorial\Datetime::prepForDisplay(
 					trim( $raw ),
-					$context == 'print' ? 'Y/n/j' : 'Y/m/d',
+					gEditorial\Datetime::dateFormats( 'print' === $context ? 'printdate' : 'default' ),
 					$this->default_calendar()
 				);
 
@@ -824,20 +824,26 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return gEditorial\Datetime::prepForInput(
 						trim( $raw ),
-						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
+						gEditorial\Datetime::isDateOnly( trim( $raw ) )
+							? gEditorial\Datetime::dateFormats( 'printdate' )
+							: gEditorial\Datetime::dateFormats( 'printtime' ),
 						$this->default_calendar()
 					);
 
 				if ( 'print' === $context )
 					return gEditorial\Datetime::prepForDisplay(
 						trim( $raw ),
-						gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/n/j' : 'Y/n/j H:i',
+						gEditorial\Datetime::isDateOnly( trim( $raw ) )
+							? gEditorial\Datetime::dateFormats( 'printdate' )
+							: gEditorial\Datetime::dateFormats( 'printtime' ),
 						$this->default_calendar()
 					);
 
 				return gEditorial\Datetime::prepForDisplay(
 					trim( $raw ),
-					gEditorial\Datetime::isDateOnly( trim( $raw ) ) ? 'Y/m/d' : 'Y/m/d H:i',
+					gEditorial\Datetime::isDateOnly( trim( $raw ) )
+						? gEditorial\Datetime::dateFormats( 'default' )
+						: gEditorial\Datetime::dateFormats( 'datetime' ),
 					$this->default_calendar()
 				);
 

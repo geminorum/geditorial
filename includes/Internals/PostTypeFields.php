@@ -1051,11 +1051,12 @@ trait PostTypeFields
 			return $value;
 
 		switch ( $field['type'] ) {
-			case 'date'    : return $value ? gEditorial\Datetime::prepForInput( $value, 'Y/m/d', $this->default_calendar() )     : $value;
-			case 'datetime': return $value ? gEditorial\Datetime::prepForInput( $value, 'Y/m/d H:i', $this->default_calendar() ) : $value;
-			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' )                                      : $value;
-			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' )                                      : $value;
-			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )                                          : $value;
+			case 'date'    : return $value ? gEditorial\Datetime::prepForInput( $value, gEditorial\Datetime::dateFormats( 'default' ),  $this->default_calendar() ) : $value;
+			case 'datetime': return $value ? gEditorial\Datetime::prepForInput( $value, gEditorial\Datetime::dateFormats( 'datetime' ), $this->default_calendar() ) : $value;
+
+			case 'distance': return $value ? Core\Distance::prep( $value, $field, 'input' ): $value;
+			case 'duration': return $value ? Core\Duration::prep( $value, $field, 'input' ): $value;
+			case 'area'    : return $value ? Core\Area::prep( $value, $field, 'input' )    : $value;
 		}
 
 		return $value;

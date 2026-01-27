@@ -388,7 +388,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
-		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'print' );
+		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'printdate' );
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
 		$data['___sides']     = array_fill_keys( [ 'post', 'meta', 'terms', 'custom', 'comments' ], '' );
@@ -449,7 +449,7 @@ class Tabloid extends gEditorial\Module
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
 		$data['__can_export'] = $this->role_can( 'reports' );
-		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'print' );
+		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'printdate' );
 		$data['__summaries']  = $this->filters( 'term_summaries', [], $data, $term, $context );
 		$data['___flags']     = $this->filters( 'term_flags', [], $data, $term, $context );
 		$data['___sides']     = array_fill_keys( [ 'term', 'meta', 'terms', 'custom' ], '' );

@@ -1134,7 +1134,11 @@ class MetaBox extends WordPress\Main
 				$wrap[] = '-inputdate';
 
 				if ( $value )
-					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d', $field['calendar_type'] );
+					$atts['value'] = Datetime::prepForInput(
+						$value,
+						Datetime::dateFormats( 'default' ),
+						$field['calendar_type']
+					);
 
 				break;
 
@@ -1148,7 +1152,11 @@ class MetaBox extends WordPress\Main
 				$wrap[] = '-inputdate';
 
 				if ( $value )
-					$atts['value'] = Datetime::prepForInput( $value, 'Y/m/d H:i', $field['calendar_type'] );
+					$atts['value'] = Datetime::prepForInput(
+						$value,
+						Datetime::dateFormats( 'datetime' ),
+						$field['calendar_type']
+					);
 
 				break;
 

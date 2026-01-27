@@ -549,14 +549,16 @@ class PostTypeFields extends gEditorial\Service
 				case 'date':
 					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
-						'Y/m/d',
+						gEditorial\Datetime::dateFormats( 'default' ),
 						self::getDefaultCalendar( $module )
 					);
 
 				case 'datetime':
 					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
-						gEditorial\Datetime::isDateOnly( $raw ?: $value ) ? 'Y/m/d' : 'Y/m/d H:i',
+						gEditorial\Datetime::isDateOnly( $raw ?: $value )
+							? gEditorial\Datetime::dateFormats( 'default' )
+							: gEditorial\Datetime::dateFormats( 'datetime' ),
 						self::getDefaultCalendar( $module )
 					);
 

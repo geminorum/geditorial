@@ -45,7 +45,7 @@ class ModuleHelper extends gEditorial\Helper
 			return $fallback;
 
 		return [
-			'today' => gEditorial\Datetime::dateFormat( 'now', 'print' ),
+			'today' => gEditorial\Datetime::dateFormat( 'now', 'printdate' ),
 		];
 	}
 

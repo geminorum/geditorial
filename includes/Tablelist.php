@@ -598,7 +598,7 @@ class Tablelist extends WordPress\Main
 				$html = '';
 
 				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'datestart', TRUE ) )
-					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $calendar );
+					$html = Datetime::prepForDisplay( trim( $meta ), Datetime::dateFormats( 'datetime' ), $calendar );
 
 				return $html ?: Helper::htmlEmpty();
 			},
@@ -614,7 +614,7 @@ class Tablelist extends WordPress\Main
 				$html = '';
 
 				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'dateend', TRUE ) )
-					$html = Datetime::prepForDisplay( trim( $meta ), 'Y/m/d H:i', $calendar );
+					$html = Datetime::prepForDisplay( trim( $meta ), Datetime::dateFormats( 'datetime' ), $calendar );
 
 				return $html ?: Helper::htmlEmpty();
 			},

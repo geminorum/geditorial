@@ -16,7 +16,7 @@ class Datetime extends WordPress\Main
 	{
 		$html = self::htmlDateTime(
 			'now',
-			$format ?? self::dateFormats( 'datetime' ),
+			$format ?? self::dateFormats( 'current' ),
 			$title,
 			$calendar_type,
 			$timezone_string,
@@ -80,18 +80,20 @@ class Datetime extends WordPress\Main
 
 		if ( empty( $formats ) )
 			$formats = apply_filters( static::BASE.'_custom_date_formats', [
-				'age'      => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
-				'birthday' => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
-				'yearonly' => _x( 'Y', 'Date Format: `yearonly`', 'geditorial' ),
-				'dateonly' => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
-				'datetime' => _x( 'M j, Y @ G:i', 'Date Format: `datetime`', 'geditorial' ),
-				'default'  => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
-				'fulltime' => _x( 'l, M j, Y @ H:i', 'Date Format: `fulltime`', 'geditorial' ),
-				'monthday' => _x( 'n/j', 'Date Format: `monthday`', 'geditorial' ),
-				'print'    => _x( 'j/n/Y', 'Date Format: `print`', 'geditorial' ),
-				'timeampm' => _x( 'g:i a', 'Date Format: `timeampm`', 'geditorial' ),
-				'timedate' => _x( 'H:i - F j, Y', 'Date Format: `timedate`', 'geditorial' ),
-				'timeonly' => _x( 'H:i', 'Date Format: `timeonly`', 'geditorial' ),
+				'age'       => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
+				'birthday'  => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
+				'current'   => _x( 'M j, Y @ G:i', 'Date Format: `current`', 'geditorial' ),
+				'dateonly'  => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
+				'datetime'  => _x( 'm/d/Y G:i', 'Date Format: `datetime`', 'geditorial' ),
+				'default'   => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
+				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format: `fulltime`', 'geditorial' ),
+				'monthday'  => _x( 'n/j', 'Date Format: `monthday`', 'geditorial' ),
+				'printdate' => _x( 'j/n/Y', 'Date Format: `printdate`', 'geditorial' ),
+				'printtime' => _x( 'j/n/Y G:i', 'Date Format: `printtime`', 'geditorial' ),
+				'timeampm'  => _x( 'g:i a', 'Date Format: `timeampm`', 'geditorial' ),
+				'timedate'  => _x( 'H:i - F j, Y', 'Date Format: `timedate`', 'geditorial' ),
+				'timeonly'  => _x( 'H:i', 'Date Format: `timeonly`', 'geditorial' ),
+				'yearonly'  => _x( 'Y', 'Date Format: `yearonly`', 'geditorial' ),
 
 				'wordpress' => get_option( 'date_format' ),
 			] );

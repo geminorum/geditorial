@@ -320,7 +320,9 @@ trait BulkExports
 	protected function exports_generate_date_value( $data, $prop )
 	{
 		return gEditorial\Datetime::prepForInput( $data,
-			gEditorial\Datetime::isDateOnly( $data ) ? 'Y/n/j' : 'Y/n/j H:i',
+			gEditorial\Datetime::isDateOnly( $data )
+				? gEditorial\Datetime::dateFormats( 'printdate' )
+				: gEditorial\Datetime::dateFormats( 'printtime' ),
 			$this->default_calendar()
 		);
 	}
