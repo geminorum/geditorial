@@ -50,7 +50,6 @@ class Entry extends gEditorial\Module
 					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
 					$this->get_taxonomy_label( 'category_taxonomy' )
 				), '1' ],
-				'adminbar_summary',
 				[
 					'field'       => 'autolink_terms',
 					'title'       => _x( 'Auto-link Terms', 'Settings', 'geditorial-entry' ),
@@ -181,35 +180,6 @@ class Entry extends gEditorial\Module
 			$this->_edit_screen( $posttype );
 
 		$this->filter_module( 'markdown', 'linking', 8, 8 );
-	}
-
-	public function adminbar_init( &$nodes, $parent )
-	{
-		if ( is_admin() || ! is_singular( $this->constant( 'main_posttype' ) ) )
-			return;
-
-		$post_id = get_queried_object_id();
-
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
-
-		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $this->constant( 'category_taxonomy' ), $post_id ) )
-			return;
-
-		$nodes[] = [
-			'id'     => $this->classs(),
-			'title'  => _x( 'Entry Sections', 'Adminbar', 'geditorial-entry' ),
-			'parent' => $parent,
-			'href'   => WordPress\PostType::link( $this->constant( 'main_posttype' ) ),
-		];
-
-		foreach ( $terms as $term )
-			$nodes[] = [
-				'id'     => $this->classs( 'section', $term->term_id ),
-				'parent' => $this->classs(),
-				'title'  => WordPress\Term::title( $term ),
-				'href'   => WordPress\Term::link( $term ), // FIXME: link to the admin list of other posts in this post-type
-			];
 	}
 
 	public function register_shortcode_ui()
