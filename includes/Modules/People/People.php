@@ -213,6 +213,7 @@ class People extends gEditorial\Module
 			} else if ( 'edit' === $screen->base ) {
 
 				$this->register_headerbutton_for_taxonomy( 'main_taxonomy' );
+				$this->register_headerbutton_for_taxonomy_queried( 'main_taxonomy' );
 			}
 		}
 	}

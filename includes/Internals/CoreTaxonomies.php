@@ -903,6 +903,40 @@ trait CoreTaxonomies
 		] );
 	}
 
+	protected function register_headerbutton_for_taxonomy_queried( $constant, $priority = NULL )
+	{
+		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
+			return FALSE;
+
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return FALSE;
+
+		if ( ! WordPress\Taxonomy::can( $object, 'manage_terms' ) )
+			return FALSE;
+
+		if ( ! $queried = self::req( WordPress\Taxonomy::queryVar( $object ), FALSE ) )
+			return FALSE;
+
+		if ( '-1' == $queried )
+			return FALSE;
+
+		if ( is_numeric( $queried ) )
+			$term = get_term_by( 'id', $queried, $object->name );
+		else
+			$term = get_term_by( 'slug', $queried, $object->name );
+
+		if ( ! $edit = WordPress\Term::edit( $term ) )
+			return FALSE;
+
+		return Services\HeaderButtons::register( $this->classs( $term->term_id ), [
+			'text'     => WordPress\Term::title( $term ),
+			'title'    => Services\CustomTaxonomy::getLabel( $object, 'edit_item' ),
+			'icon'     => Services\Icons::taxonomyMarkup( $object, NULL, TRUE ),
+			'link'     => $edit,
+			'priority' => $priority ?? 99,
+		] );
+	}
+
 	protected function register_headerbutton_for_taxonomy_archives( $constant, $priority = NULL )
 	{
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
