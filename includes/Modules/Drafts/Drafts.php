@@ -17,11 +17,14 @@ class Drafts extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'drafts',
-			'title'  => _x( 'Drafts', 'Modules: Drafts', 'geditorial-admin' ),
-			'desc'   => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial-admin' ),
-			'icon'   => 'admin-post',
-			'access' => 'stable',
+			'name'     => 'drafts',
+			'title'    => _x( 'Drafts', 'Modules: Drafts', 'geditorial-admin' ),
+			'desc'     => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial-admin' ),
+			'icon'     => 'admin-post',
+			'access'   => 'stable',
+			'keywords' => [
+				'has-adminbar',
+			],
 		];
 	}
 
@@ -150,23 +153,25 @@ class Drafts extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() )
+		if ( is_admin() || WordPress\IsIt::mobile() )
 			return;
 
 		if ( ! $this->role_can( 'adminbar' ) )
 			return;
 
+		$node_id = $this->classs();
+		$spinner = gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] );
+
 		$nodes[] = [
-			'id'    => $this->classs(),
+			'id'    => $node_id,
 			'href'  => '#',
-			'title' => _x( 'Drafts', 'Adminbar', 'geditorial-drafts' ).gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] ),
+			'title' => _x( 'Drafts', 'Node: Title', 'geditorial-drafts' ).$spinner,
 			'meta'  => [
-				'class' => $this->class_for_adminbar_node( [ '-has-loading', $this->classs() ] ),
+				'class' => $this->class_for_adminbar_node( '-has-loading' ),
 			],
 		];
 
-		$this->enqueue_asset_js();
-		$this->enqueue_styles();
+		$this->enqueue_asset_js( [], $this->dotted( 'adminbar' ) );
 	}
 
 	public function do_ajax()

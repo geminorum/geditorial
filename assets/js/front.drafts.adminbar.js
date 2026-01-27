@@ -1,16 +1,21 @@
-(function ($, plugin, module) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   const s = {
-    action: plugin._base + '_' + module,
-    wrap: '#' + plugin._base + '-' + module + '-wrap',
-    button: '#wpadminbar .' + plugin._base + '-' + module + ' a.ab-item',
+    action: plugin._base + '_' + mainkey,
+    wrap: '#' + plugin._base + '-' + mainkey + '-wrap',
+    button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + ' > a.ab-item',
     spinner: '.' + plugin._base + '-spinner'
   };
 
   const app = {
     empty: true,
-    wrap: '<div id="' + plugin._base + '-' + module + '-wrap" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>',
+    wrap: '<div id="' + plugin._base + '-' + mainkey + '-wrap" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>',
+
+    init: function () {
+      $(s.button).on('click', function (e) {
+        e.preventDefault();
+        app.populate();
+      });
+    },
 
     toggle: function () {
       if ($(s.wrap).is(':visible')) {
@@ -38,7 +43,7 @@
         data: {
           action: s.action,
           what: 'list',
-          nonce: plugin[module]._nonce
+          nonce: plugin[mainkey]._nonce
         },
         beforeSend: function (xhr) {
           spinner.addClass('is-active');
@@ -57,10 +62,11 @@
   };
 
   $(function () {
-    $(s.button).on('click', function (e) {
-      e.preventDefault();
-      app.populate();
-    });
-    $(document).trigger('gEditorialReady', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
-}(jQuery, gEditorial, 'drafts'));
+}(jQuery, gEditorial, 'drafts', 'adminbar'));
