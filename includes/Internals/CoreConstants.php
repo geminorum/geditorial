@@ -11,7 +11,7 @@ trait CoreConstants
 {
 	public function constant( $key, $default = FALSE )
 	{
-		if ( ! $key )
+		if ( ! $key || ! is_string( $key ) )
 			return $default;
 
 		if ( isset( $this->constants[$key] ) )

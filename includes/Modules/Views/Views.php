@@ -19,6 +19,9 @@ class Views extends gEditorial\Module
 			'desc'   => _x( 'Customized Page Views', 'Modules: Views', 'geditorial-admin' ),
 			'icon'   => 'admin-views',
 			'access' => 'beta',
+			'keywords' => [
+				'has-adminbar',
+			],
 		];
 	}
 
@@ -59,7 +62,7 @@ class Views extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		$post_id = get_queried_object_id();
@@ -72,6 +75,9 @@ class Views extends gEditorial\Module
 			'title'  => _x( 'View Summary', 'Title Attr', 'geditorial-views' ),
 			'parent' => $parent,
 			'href'   => $this->get_module_url( 'reports', NULL, [ 'id' => $post_id ] ),
+			'meta'   => [
+				'class' => $this->class_for_adminbar_node(),
+			],
 		];
 
 		foreach ( $this->events() as $event => $title )
@@ -80,6 +86,9 @@ class Views extends gEditorial\Module
 				'title'  => WordPress\Strings::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
 				'parent' => $this->classs(),
 				'href'   => FALSE,
+				'meta'   => [
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
 	}
 

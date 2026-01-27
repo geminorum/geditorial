@@ -74,6 +74,7 @@ class Terms extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'termmeta',
+				'has-adminbar',
 			],
 		];
 	}
@@ -1834,7 +1835,7 @@ class Terms extends gEditorial\Module
 				'parent' => $parent,
 				'id'     => $node_id,
 				'title'  => _x( 'Term Summary', 'Node: Title', 'geditorial-terms' ),
-				'href'   => $this->get_module_url( 'reports', NULL, [ 'term' => $term->term_id ] ),
+				'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'term' => $term->term_id ] ) : FALSE,
 				'meta'   => [
 					'class' => $this->class_for_adminbar_node(),
 					'title' => $reports ? sprintf(

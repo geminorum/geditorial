@@ -163,7 +163,7 @@ class Like extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		$post_id = get_queried_object_id();
@@ -185,6 +185,9 @@ class Like extends gEditorial\Module
 				'title'  => WordPress\Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
 				'href'   => $this->get_module_url(),
+				'meta'   => [
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
 
 			foreach ( $users as $timestamp => $user_id )
@@ -203,11 +206,17 @@ class Like extends gEditorial\Module
 		if ( count( $guests ) ) {
 
 			$nodes[] = [
-				'id'     => $this->classs( 'guests' ),
-				/* translators: `%s`: count placeholder */
-				'title'  => WordPress\Strings::getCounted( count( $guests ), _x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
-				'href'   => $this->get_module_url(),
+				'id'     => $this->classs( 'guests' ),
+				'title'  => WordPress\Strings::getCounted(
+					count( $guests ),
+					/* translators: `%s`: count placeholder */
+					_x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' )
+				),
+				'href' => $this->get_module_url(),
+				'meta' => [
+					'class' => $this->class_for_adminbar_node(),
+				],
 			];
 
 			foreach ( $guests as $timestamp => $ip )

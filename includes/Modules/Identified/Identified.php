@@ -24,6 +24,7 @@ class Identified extends gEditorial\Module
 			'keywords' => [
 				'identifier',
 				'has-public-api',
+				'has-adminbar',
 			],
 		];
 	}
@@ -251,7 +252,7 @@ class Identified extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() )
+		if ( is_admin() ) // NOTE: also optimized for mobile!
 			return;
 
 		$types = $this->get_strings( 'types', 'fields' );
@@ -778,10 +779,10 @@ class Identified extends gEditorial\Module
 
 	private function _hook_not_found_posts( $posttype )
 	{
-		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
+		if ( ! $criteria = self::req( 's' ) )
 			return FALSE;
 
-		if ( ! $criteria = self::req( 's' ) )
+		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return FALSE;
 
 		add_filter( 'the_posts',

@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 class Shortcodes extends gEditorial\Module
 {
+	protected $priority_adminbar_init = 20;
 
 	public static function module()
 	{
@@ -22,6 +23,7 @@ class Shortcodes extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'shortcode',
+				'has-adminbar',
 			],
 		];
 	}
@@ -273,7 +275,7 @@ class Shortcodes extends gEditorial\Module
 	 * @source https://wordpress.org/plugins/remove-orphan-shortcodes/
 	 *
 	 * @param string $content
-	 * @return string $content
+	 * @return string
 	 */
 	public function the_content_orphaned( $content )
 	{
@@ -286,7 +288,7 @@ class Shortcodes extends gEditorial\Module
 		$active_shortcodes = ( is_array( $shortcode_tags ) && ! empty( $shortcode_tags ) )
 			? array_keys( $shortcode_tags ) : [];
 
-		// Avoid "/" chars in content breaks `preg_replace`
+		// Avoid `/` chars in content breaks `preg_replace`
 		$hack1   = md5( microtime( TRUE ) );
 		$content = str_replace( '[/', $hack1, $content );
 		$hack2   = md5( microtime( TRUE ) + 1 );
@@ -305,7 +307,7 @@ class Shortcodes extends gEditorial\Module
 			$content = preg_replace( "~(?:\[/?)[^/\]]+/?\]~s", '', $content );
 		}
 
-		// Set "/" back to its place
+		// Set `/` back to its place
 		return str_replace( $hack2, "/", $content );
 	}
 

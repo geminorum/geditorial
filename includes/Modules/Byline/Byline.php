@@ -19,7 +19,8 @@ class Byline extends gEditorial\Module
 	const APP_NAME  = 'assignment-dock';
 	const APP_ASSET = '_assignment';
 
-	protected $disable_no_taxonomies = TRUE;
+	protected $disable_no_taxonomies  = TRUE;
+	protected $priority_adminbar_init = 6;
 
 	public static function module()
 	{
@@ -35,6 +36,7 @@ class Byline extends gEditorial\Module
 				'individual',
 				'literature',
 				'woocommerce',
+				'has-adminbar',
 				'tabmodule',
 			],
 		];
@@ -857,14 +859,14 @@ class Byline extends gEditorial\Module
 		if ( ! $this->role_can_post( $post, 'assign' ) )
 			return;
 
-		$parent = $this->classs();
-		$label  = Services\CustomPostType::getLabel( $post, 'singular_name' );
-		$byline = $this->get_byline_for_post( $post );
-		$link   = $this->framepage_get_mainlink_url( $post->ID, 'mainapp', 'overview' );
+		$node_id = $this->classs();
+		$label   = Services\CustomPostType::getLabel( $post, 'singular_name' );
+		$byline  = $this->get_byline_for_post( $post );
+		$link    = $this->framepage_get_mainlink_url( $post->ID, 'mainapp', 'overview' );
 
 		$wp_admin_bar->add_menu( [
 			'parent' => 'top-secondary',
-			'id'     => $parent,
+			'id'     => $node_id,
 			'href'   => $link,
 			'title'  => Services\Icons::adminBarMarkup( 'edit' ),
 			'meta'   => [
@@ -879,7 +881,7 @@ class Byline extends gEditorial\Module
 		] );
 
 		$wp_admin_bar->add_node( [
-			'parent' => $parent,
+			'parent' => $node_id,
 			'id'     => $this->classs( 'box' ),
 			'title'  => sprintf(
 				/* translators: `%s`: singular post-type label */

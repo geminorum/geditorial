@@ -18,11 +18,14 @@ class Estimated extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'estimated',
-			'title'  => _x( 'Estimated', 'Modules: Estimated', 'geditorial-admin' ),
-			'desc'   => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial-admin' ),
-			'icon'   => 'clock',
-			'access' => 'beta',
+			'name'     => 'estimated',
+			'title'    => _x( 'Estimated', 'Modules: Estimated', 'geditorial-admin' ),
+			'desc'     => _x( 'Average Required Reading Time', 'Modules: Estimated', 'geditorial-admin' ),
+			'icon'     => 'clock',
+			'access'   => 'beta',
+			'keywords' => [
+				'has-adminbar',
+			],
 		];
 	}
 
@@ -132,10 +135,11 @@ class Estimated extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
 			return;
 
 		$post_id = get_queried_object_id();
+		$node_id = $this->classs();
 
 		if ( ! current_user_can( 'edit_post', $post_id ) )
 			return;
@@ -158,9 +162,9 @@ class Estimated extends gEditorial\Module
 			);
 
 			$nodes[] = [
-				'id'     => $this->classs(),
-				'title'  => $html,
 				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => $html,
 				'href'   => FALSE, // $this->get_module_url(),
 				'meta'   => [
 					'title' => $title,

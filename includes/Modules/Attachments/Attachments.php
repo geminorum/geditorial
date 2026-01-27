@@ -22,7 +22,8 @@ class Attachments extends gEditorial\Module
 			'icon'     => 'paperclip',
 			'access'   => 'stable',
 			'keywords' => [
-				'attachment',
+				'media',
+				'has-adminbar',
 				'has-shortcodes',
 			],
 		];

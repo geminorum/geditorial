@@ -33,6 +33,7 @@ class Audit extends gEditorial\Module
 			'access'   => 'stable',
 			'keywords' => [
 				'content-report',
+				'has-adminbar',
 				'taxmodule',
 			],
 		];
