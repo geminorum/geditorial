@@ -1819,7 +1819,7 @@ class Terms extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || WordPress\IsIt::mobile() )
+		if ( ! $this->adminbar__check_general( FALSE ) )
 			return;
 
 		$node_id = $this->classs();
@@ -1832,6 +1832,7 @@ class Terms extends gEditorial\Module
 			if ( ! current_user_can( 'assign_term', $term->term_id ) )
 				return;
 
+			$icon     = $this->adminbar__get_icon();
 			$taxonomy = WordPress\Taxonomy::object( $term );
 			$singular = Services\CustomTaxonomy::getLabel( $taxonomy, 'singular_name' );
 			// $reports  = $this->role_can_term( $term, 'reports' ); // TODO!
@@ -1840,10 +1841,10 @@ class Terms extends gEditorial\Module
 			$nodes[] = [
 				'parent' => $parent,
 				'id'     => $node_id,
-				'title'  => _x( 'Term Summary', 'Node: Title', 'geditorial-terms' ),
+				'title'  => $icon._x( 'Term Summary', 'Node: Title', 'geditorial-terms' ),
 				'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'term' => $term->term_id ] ) : FALSE,
 				'meta'   => [
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class(),
 					'title' => $reports ? sprintf(
 						/* translators: `%s`: singular taxonomy label */
 						_x( 'View Term Reports for this %s', 'Node: Title: Taxonomy', 'geditorial-terms' ),
@@ -1859,7 +1860,7 @@ class Terms extends gEditorial\Module
 				'href'   => WordPress\Taxonomy::link( $taxonomy, FALSE ),
 				'meta'   => [
 					'title' => $taxonomy->name, // raw
-					'class' => $this->class_for_adminbar_node( '-term-taxonomy' ),
+					'class' => $this->adminbar__get_css_class( '-term-taxonomy' ),
 				],
 			];
 
@@ -1871,7 +1872,7 @@ class Terms extends gEditorial\Module
 					'title'  => _x( 'Parent', 'Node: Title', 'geditorial-terms' ),
 					'href'   => WordPress\Term::edit( $parent_term ),
 					'meta'   => [
-						'class' => $this->class_for_adminbar_node( '-term-parent' ),
+						'class' => $this->adminbar__get_css_class( '-term-parent' ),
 					],
 				];
 
@@ -1882,7 +1883,7 @@ class Terms extends gEditorial\Module
 					'href'   => WordPress\Term::link( $parent_term ),
 					'meta'   => [
 						'title' => $term->name, // raw
-						'class' => $this->class_for_adminbar_node( '-term-parent' ),
+						'class' => $this->adminbar__get_css_class( '-term-parent' ),
 					],
 				];
 			}
@@ -1901,7 +1902,7 @@ class Terms extends gEditorial\Module
 				),
 				'meta' => [
 					'title' => _x( 'Term Short-link', 'Node: Title', 'geditorial-terms' ),
-					'class' => $this->class_for_adminbar_node( '-count' ),
+					'class' => $this->adminbar__get_css_class( '-count' ),
 				],
 			];
 
@@ -1918,7 +1919,7 @@ class Terms extends gEditorial\Module
 					),
 					'meta' => [
 						'title' => $posttype, // raw
-						'class' => $this->class_for_adminbar_node( '-posttype' ),
+						'class' => $this->adminbar__get_css_class( '-posttype' ),
 					],
 				];
 			}
@@ -1939,7 +1940,7 @@ class Terms extends gEditorial\Module
 					),
 					'meta' => [
 						'title' => Services\CustomTaxonomy::getLabel( $taxonomy, 'edit_item' ),
-						'class' => $this->class_for_adminbar_node( '-description' ),
+						'class' => $this->adminbar__get_css_class( '-description' ),
 					],
 				];
 
@@ -1949,7 +1950,7 @@ class Terms extends gEditorial\Module
 					'href'   => FALSE,
 					'meta'   => [
 						'html'  => WordPress\Strings::prepDescription( $term->description ),
-						'class' => $this->class_for_adminbar_node( '-has-description' ),
+						'class' => $this->adminbar__get_css_class( '-has-description' ),
 					],
 				];
 			}
@@ -1971,7 +1972,7 @@ class Terms extends gEditorial\Module
 					),
 					'meta' => [
 						'title' => $this->get_supported_field_desc( $field, $term->taxonomy, $term ),
-						'class' => $this->class_for_adminbar_node( '-field-'.$field ),
+						'class' => $this->adminbar__get_css_class( '-field-'.$field ),
 					],
 				];
 
@@ -1980,7 +1981,7 @@ class Terms extends gEditorial\Module
 					'parent' => $node['id'],
 					'meta'   => [
 						'title' => $field, // raw
-						'class' => $this->class_for_adminbar_node(),
+						'class' => $this->adminbar__get_css_class(),
 					],
 				];
 
@@ -2011,7 +2012,7 @@ class Terms extends gEditorial\Module
 						$node['href']           = WordPress\Attachment::edit( $meta );
 						$node['meta']['title']  = _x( 'Edit Image', 'Node: Title', 'geditorial-terms' );
 						$child['meta']['html']  = $image;
-						$child['meta']['class'] = $this->class_for_adminbar_node( '-has-image' );
+						$child['meta']['class'] = $this->adminbar__get_css_class( '-has-image' );
 						// NOTE: `$child['meta']['title']` has no effect here!
 
 						break;
@@ -2044,7 +2045,7 @@ class Terms extends gEditorial\Module
 					case 'contact':
 
 						$child['meta']['html']  = Core\HTML::wrap( gEditorial\Helper::prepContact( $meta ), '-contact' );
-						$child['meta']['class'] = $this->class_for_adminbar_node( '-has-description' );
+						$child['meta']['class'] = $this->adminbar__get_css_class( '-has-description' );
 						// NOTE: `$child['meta']['title']` has no effect here!
 
 						break;
@@ -2096,25 +2097,20 @@ class Terms extends gEditorial\Module
 			return;
 		}
 
-		if ( ! is_singular() )
+		if ( ! $post = $this->adminbar__check_singular_post( '', 'edit_post' ) )
 			return;
 
-		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
-			return;
-
-		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
-			return;
-
+		$icon    = $this->adminbar__get_icon();
 		$reports = $this->role_can_post( $post, 'reports' );
 		$prefix  = Core\L10n::rtl() ? '&#8629;' : '&#8627;';  // `carriage-return-arrow`
 
 		$nodes[] = [
 			'id'     => $node_id,
-			'title'  => _x( 'Summary of Terms', 'Node: Title', 'geditorial-terms' ),
+			'title'  => $icon._x( 'Summary of Terms', 'Node: Title', 'geditorial-terms' ),
 			'parent' => $parent,
-			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'linked' => $post->ID ] ) : FALSE,
+			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
 			'meta'   => [
-				'class' => $this->class_for_adminbar_node(),
+				'class' => $this->adminbar__get_css_class(),
 				'title' => $reports ? sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'View Term Reports for this %s', 'Node: Title: Post-Type', 'geditorial-terms' ),
@@ -2137,7 +2133,7 @@ class Terms extends gEditorial\Module
 				'href'   => WordPress\Taxonomy::edit( $taxonomy ),
 				'meta'   => [
 					'title' => $taxonomy, // raw
-					'class' => $this->class_for_adminbar_node( '-taxonomy -align-center' ),
+					'class' => $this->adminbar__get_css_class( '-taxonomy -align-center' ),
 				],
 			];
 
@@ -2149,7 +2145,7 @@ class Terms extends gEditorial\Module
 					'href'   => WordPress\Term::link( $term ),
 					'meta'   => [
 						'title' => rawurldecode( $term->slug ),
-						'class' => $this->class_for_adminbar_node( '-term' ),
+						'class' => $this->adminbar__get_css_class( '-term' ),
 					],
 				];
 		}
