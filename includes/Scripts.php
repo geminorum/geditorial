@@ -457,7 +457,7 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $version = '3.12.1' )
+	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $version = '3.12.3' )
 	{
 		switch ( strtolower( $barcode ) ) {
 			case    'all':        $filepath = 'all';        break;  // All the barcodes!
