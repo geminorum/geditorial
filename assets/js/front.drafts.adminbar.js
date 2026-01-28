@@ -2,7 +2,7 @@
   const s = {
     action: plugin._base + '_' + mainkey,
     wrap: '#' + plugin._base + '-' + mainkey + '-wrap',
-    button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + ' > a.ab-item',
+    button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + ' > .ab-item',
     spinner: '.' + plugin._base + '-spinner'
   };
 

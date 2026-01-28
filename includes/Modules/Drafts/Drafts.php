@@ -153,21 +153,19 @@ class Drafts extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || WordPress\IsIt::mobile() )
-			return;
-
-		if ( ! $this->role_can( 'adminbar' ) )
+		if ( ! $this->adminbar__check_general() )
 			return;
 
 		$node_id = $this->classs();
-		$spinner = gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] );
+		$spinner = $this->adminbar__get_spinner();
+		$icon    = Services\Icons::adminBarMarkup( 'editor-paragraph' );  // better visuals than `adminbar__get_icon()`
 
 		$nodes[] = [
 			'id'    => $node_id,
-			'href'  => '#',
-			'title' => _x( 'Drafts', 'Node: Title', 'geditorial-drafts' ).$spinner,
+			'title' => $icon._x( 'Drafts', 'Node: Title', 'geditorial-drafts' ).$spinner,
 			'meta'  => [
-				'class' => $this->class_for_adminbar_node( '-has-loading' ),
+				'class' => $this->adminbar__get_css_class( [ '-has-icon', '-has-loading' ] ),
+				'title' => _x( 'Quickly access all of your drafts.', 'Node: Title', 'geditorial-drafts' ),
 			],
 		];
 
