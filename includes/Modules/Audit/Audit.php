@@ -264,28 +264,28 @@ class Audit extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
-		$post_id  = get_queried_object_id();
 		$node_id  = $this->classs();
+		$icon     = $this->adminbar__get_icon();
 		$taxonomy = $this->constant( 'main_taxonomy' );
+		$reports  = $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' );
 		$terms    = [];
 
-		if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' )
-			|| current_user_can( 'edit_post', $post_id ) ) {
+		if ( $reports ) {
 
 			$nodes[] = [
 				'parent' => $parent,
 				'id'     => $node_id,
-				'title'  => _x( 'Audit Attributes', 'Node: Title', 'geditorial-audit' ),
+				'title'  => $icon._x( 'Audit Attributes', 'Node: Title', 'geditorial-audit' ),
 				'href'   => $this->get_module_url(),
 				'meta'   => [
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class(),
 				],
 			];
 
-			if ( $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id ) )
+			if ( $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
 				foreach ( $terms as $term )
 					$nodes[] = [
 						'parent' => $node_id,
@@ -293,7 +293,7 @@ class Audit extends gEditorial\Module
 						'title'  => WordPress\Term::title( $term ),
 						'href'   => WordPress\Term::link( $term ),
 						'meta'   => [
-							'class' => $this->class_for_adminbar_node(),
+							'class' => $this->adminbar__get_css_class(),
 						],
 					];
 
@@ -304,7 +304,7 @@ class Audit extends gEditorial\Module
 					'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' ),
 					'href'   => FALSE,
 					'meta'   => [
-						'class' => $this->class_for_adminbar_node( '-danger' ),
+						'class' => $this->adminbar__get_css_class( [ '-not-linked', '-danger' ] ),
 					],
 				];
 		}
@@ -321,23 +321,24 @@ class Audit extends gEditorial\Module
 		$this->action( 'admin_bar_menu', 1, 1001 );
 
 		$this->enqueue_asset_js( [
-			'post_id' => $post_id,
-			'_nonce'  => wp_create_nonce( $this->hook( $post_id ) ),
+			'post_id' => $post->ID,
+			'_nonce'  => wp_create_nonce( $this->hook( $post->ID ) ),
 		], $this->dotted( 'adminbar' ) );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )
 	{
 		$node_id = $this->classs( 'assignbox' );
-		$spinner = gEditorial\Ajax::spinner( FALSE, [ 'spinner' => 'fade-stagger-squares' ] );
+		$spinner = $this->adminbar__get_spinner();
+		$icon    = Services\Icons::adminBarMarkup( 'visibility' );  // better visuals than `adminbar__get_icon()`
 
 		$wp_admin_bar->add_node( [
 			'id'    => $node_id,
 			'href'  => $this->get_module_url(),
-			'title' => _x( 'Auditing', 'Node: Title', 'geditorial-audit' ).$spinner,
+			'title' => $icon._x( 'Auditing', 'Node: Title', 'geditorial-audit' ).$spinner,
 			'meta'  => [
 				'rel'   => $this->constant( 'main_taxonomy' ),
-				'class' => $this->class_for_adminbar_node( '-has-loading' ),
+				'class' => $this->adminbar__get_css_class( [ '-has-icon', '-has-loading' ] ),
 			],
 		] );
 
@@ -346,7 +347,7 @@ class Audit extends gEditorial\Module
 			'id'     => $this->classs( 'assignbox', 'content' ),
 			'title'  => _x( 'Click to load attributes &hellip;', 'Node: Title', 'geditorial-audit' ),
 			'meta'   => [
-				'class' => $this->class_for_adminbar_node( '-has-assignbox' ),
+				'class' => $this->adminbar__get_css_class( '-has-assignbox' ),
 			],
 		] );
 	}

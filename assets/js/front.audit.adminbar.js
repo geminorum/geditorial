@@ -3,7 +3,7 @@
     action: plugin._base + '_' + mainkey,
     button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + '-assignbox > a.ab-item',
     wrap: '#wp-admin-bar-' + plugin._base + '-' + mainkey + '-assignbox-content',
-    spinner: '.geditorial-spinner'
+    spinner: '.' + plugin._base + '-spinner'
   };
 
   const utils = {
@@ -98,7 +98,6 @@
   };
 
   $(function () {
-    // $(document).trigger('gEditorialReady', [mainkey, app]);
     $(document).trigger('gEditorial:Module:Loaded', [
       mainkey,
       context,
