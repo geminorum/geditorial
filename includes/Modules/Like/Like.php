@@ -175,42 +175,42 @@ class Like extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
-		$post_id = get_queried_object_id();
-
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
-
-		$users  = $this->get_liked_users( $post_id );
-		$guests = $this->get_liked_guests( $post_id );
-		// $total  = $this->get_liked_total( $post_id ); // FIXME: display total
+		$icon    = $this->adminbar__get_icon();
+		$reports = $this->role_can_post( $post, 'reports' );
+		$users   = $this->get_liked_users( $post->ID );
+		$guests  = $this->get_liked_guests( $post->ID );
+		// $total   = $this->get_liked_total( $post->ID );       // FIXME: display total
 
 		if ( count( $users ) ) {
 
 			$cap = current_user_can( 'edit_users' );
 
 			$nodes[] = [
-				'id'     => $this->classs( 'users' ),
-				/* translators: `%s`: count placeholder */
-				'title'  => WordPress\Strings::getCounted( count( $users ), _x( 'Like Summary: Users %s', 'Adminbar', 'geditorial-like' ) ),
 				'parent' => $parent,
-				'href'   => $this->get_module_url(),
-				'meta'   => [
-					'class' => $this->class_for_adminbar_node(),
+				'id'     => $this->classs( 'users' ),
+				'title'  => $icon.WordPress\Strings::getCounted(
+					count( $users ),
+					/* translators: `%s`: count placeholder */
+					_x( 'Like Summary: Users %s', 'Node: Title', 'geditorial-like' )
+				),
+				'href' => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
+				'meta' => [
+					'class' => $this->adminbar__get_css_class(),
 				],
 			];
 
 			foreach ( $users as $timestamp => $user_id )
 				$nodes[] = [
+					'parent' => $this->classs( 'users' ),
 					'id'     => $this->classs( 'user', $user_id ),
 					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.get_the_author_meta( 'display_name', $user_id ),
-					'parent' => $this->classs( 'users' ),
 					'href'   => $cap ? WordPress\User::edit( $user_id ) : FALSE,
 					'meta'   => [
 						'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ),
-						'class' => $this->class_for_adminbar_node(),
+						'class' => $this->adminbar__get_css_class(),
 					],
 				];
 		}
@@ -220,26 +220,26 @@ class Like extends gEditorial\Module
 			$nodes[] = [
 				'parent' => $parent,
 				'id'     => $this->classs( 'guests' ),
-				'title'  => WordPress\Strings::getCounted(
+				'title'  => $icon.WordPress\Strings::getCounted(
 					count( $guests ),
 					/* translators: `%s`: count placeholder */
-					_x( 'Like Summary: Guests %s', 'Adminbar', 'geditorial-like' )
+					_x( 'Like Summary: Guests %s', 'Node: Title', 'geditorial-like' )
 				),
-				'href' => $this->get_module_url(),
+				'href' => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
 				'meta' => [
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class(),
 				],
 			];
 
 			foreach ( $guests as $timestamp => $ip )
 				$nodes[] = [
+					'parent' => $this->classs( 'guests' ),
 					'id'     => $this->classs( 'guest', $timestamp ),
 					'title'  => gEditorial\Datetime::humanTimeDiffRound( (int) $timestamp ).' &ndash; '.$ip,
-					'parent' => $this->classs( 'guests' ),
-					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ),
+					'href'   => sprintf( 'https://redirect.li/map/?ip=%s', $ip ), // TODO: use Services
 					'meta'   => [
 						'title' => gEditorial\Datetime::humanTimeAgo( (int) $timestamp, current_time( 'timestamp', FALSE ) ),
-						'class' => $this->class_for_adminbar_node(),
+						'class' => $this->adminbar__get_css_class(),
 					],
 				];
 		}
