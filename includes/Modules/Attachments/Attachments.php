@@ -13,6 +13,8 @@ class Attachments extends gEditorial\Module
 	use Internals\CoreAdmin;
 	use Internals\CoreRestrictPosts;
 
+	protected $priority_adminbar_init = 110;
+
 	public static function module()
 	{
 		return [
@@ -350,56 +352,71 @@ class Attachments extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
-		$post_id = get_queried_object_id();
 		$node_id = $this->classs();
 
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
+		if ( $attachments = WordPress\Attachment::list( $post, '' ) ) {
 
-		$attachments = WordPress\Attachment::list( $post_id, '' );
-
-		if ( empty( $attachments ) )
-			return;
-
-		$nodes[] = [
-			'parent' => $parent,
-			'id'     => $node_id,
-			'title'  => _x( 'Attachment Summary', 'Adminbar', 'geditorial-attachments' ),
-			'href'   => WordPress\Post::mediaLink( $post_id ),
-			'meta'   => [
-				'class' => $this->class_for_adminbar_node(),
-			],
-		];
-
-		$thumbnail_id  = get_post_meta( $post_id, '_thumbnail_id', TRUE );
-		$gtheme_images = get_post_meta( $post_id, '_gtheme_images', TRUE );
-		$gtheme_terms  = get_post_meta( $post_id, '_gtheme_images_terms', TRUE );
-
-		foreach ( $attachments as $attachment ) {
-
-			$title = get_post_meta( $attachment->ID, '_wp_attached_file', TRUE );
-
-			if ( $thumbnail_id == $attachment->ID )
-				$title.= ' &ndash; [thumbnail]';
-
-			if ( $gtheme_images && in_array( $attachment->ID, $gtheme_images, TRUE ) )
-				$title.= ' &ndash; [tagged: '.array_search( $attachment->ID, $gtheme_images ).']';
-
-			if ( $gtheme_terms && in_array( $attachment->ID, $gtheme_terms, TRUE ) )
-				$title.= ' &ndash; [for term: '.array_search( $attachment->ID, $gtheme_terms ).']';
+			$icon = $this->adminbar__get_icon();
 
 			$nodes[] = [
-				'parent' => $node_id,
-				'id'     => $this->classs( 'attachment', $attachment->ID ),
-				'title'  => $title,
-				'href'   => wp_get_attachment_url( $attachment->ID ),
+				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => $icon._x( 'Attachments Summary', 'Node: Title', 'geditorial-attachments' ),
+				'href'   => WordPress\Post::mediaURL( $post ) ?: FALSE,
 				'meta'   => [
-					'dir'   => 'ltr',
-					'title' => WordPress\Attachment::title( $attachment ),
-					'class' => $this->class_for_adminbar_node( '-attachment' ),
+					'class' => $this->adminbar__get_css_class(),
+				],
+			];
+
+			$thumbnail_id  = get_post_meta( $post->ID, '_thumbnail_id', TRUE );
+			$gtheme_images = get_post_meta( $post->ID, '_gtheme_images', TRUE );
+			$gtheme_terms  = get_post_meta( $post->ID, '_gtheme_images_terms', TRUE );
+
+			foreach ( $attachments as $attachment ) {
+
+				$title = get_post_meta( $attachment->ID, '_wp_attached_file', TRUE );
+
+				if ( $thumbnail_id == $attachment->ID )
+					$title.= ' &ndash; [thumbnail]';
+
+				if ( $gtheme_images && in_array( $attachment->ID, $gtheme_images, TRUE ) )
+					$title.= ' &ndash; [tagged: '.array_search( $attachment->ID, $gtheme_images ).']';
+
+				if ( $gtheme_terms && in_array( $attachment->ID, $gtheme_terms, TRUE ) )
+					$title.= ' &ndash; [for term: '.array_search( $attachment->ID, $gtheme_terms ).']';
+
+				$nodes[] = [
+					'parent' => $node_id,
+					'id'     => $this->classs( 'attachment', $attachment->ID ),
+					'title'  => $title,
+					'href'   => wp_get_attachment_url( $attachment->ID ),
+					'meta'   => [
+						'dir'   => 'ltr',
+						'title' => WordPress\Attachment::title( $attachment ),
+						'class' => $this->adminbar__get_css_class( '-attachment' ),
+					],
+				];
+			}
+
+		} else if ( $upload = WordPress\Post::mediaUploadURL( $post ) ) {
+
+			$icon = $this->adminbar__get_icon( 'upload' );
+
+			$nodes[] = [
+				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => $icon._x( 'Upload Attachments', 'Node: Title', 'geditorial-attachments' ),
+				'href'   => $upload,
+				'meta'   => [
+					'class' => $this->adminbar__get_css_class(),
+					'title' => sprintf(
+						/* translators: `%s`: singular post-type label */
+						_x( 'Upload Attachments for this %s.', 'Node: Title', 'geditorial-attachments' ),
+						Services\CustomPostType::getLabel( $post, 'singular_name' )
+					),
 				],
 			];
 		}
