@@ -22,16 +22,16 @@
         const $spinner = $instance.parents().find(s.spinner);
 
         $instance.on('change', function (event) {
-          const value = $instance.val();
-          if (!value || value === '0') return;
+          let value = $instance.val();
+          if (!value || value === '0') value = false;
           $spinner.addClass('is-active');
           $(s.link).each(function () {
             const $link = $(this);
             const to = $link.data(s.target);
             if (to !== from) return;
-            const args = {};
-            args[name] = value; // WTF?!
-            $link.prop('href', wp.url.addQueryArgs($link.prop('href'), args));
+            const url = $link.prop('href');
+            const args = Object.fromEntries([[name, value]]);
+            $link.prop('href', wp.url.addQueryArgs(url, args));
           });
 
           $spinner.removeClass('is-active'); // WTF: must wait for the loop to finish!

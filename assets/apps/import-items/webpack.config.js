@@ -2,8 +2,8 @@ const webpack = require('webpack');
 const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // https://webpack.js.org/plugins/mini-css-extract-plugin/
-const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin'); // https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 const RtlCssPluginWebpack = require('rtl-css-plugin-webpack');
 
 module.exports = (env, argv) => {
@@ -92,7 +92,7 @@ module.exports = (env, argv) => {
       new DependencyExtractionWebpackPlugin({
 
         // Handle imports like `import myModule from 'my-module'`
-        // Expect to find `my-module` as myModule in the global scope:
+        // Expect to find `my-module` as `myModule` in the global scope:
         // With modules, use `requestToExternalModule`
         // @REF: https://www.npmjs.com/package/@wordpress/dependency-extraction-webpack-plugin
         // @REF: https://github.com/WordPress/gutenberg/tree/trunk/packages/dependency-extraction-webpack-plugin
@@ -105,6 +105,7 @@ module.exports = (env, argv) => {
 
       new VueLoaderPlugin(),
 
+      // https://webpack.js.org/plugins/mini-css-extract-plugin/
       new MiniCssExtractPlugin({
         filename: '[name].css'
       }),
