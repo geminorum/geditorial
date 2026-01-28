@@ -81,7 +81,9 @@ class Terms extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$fields   = $this->_get_supported_raw();
+		$roles  = $this->get_settings_default_roles();
+		$fields = $this->_get_supported_raw();
+
 		$settings = [
 			'_general' => [
 				[
@@ -112,6 +114,10 @@ class Terms extends gEditorial\Module
 				],
 				'calendar_type',
 				// 'calendar_list',
+			],
+			'_roles' => [
+				'reports_roles' => [ NULL, $roles ],
+				'reports_post_edit',
 			],
 		];
 
@@ -2837,5 +2843,10 @@ class Terms extends gEditorial\Module
 			);
 
 		return FALSE;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback );
 	}
 }

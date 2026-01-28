@@ -9,6 +9,23 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreAdminBar
 {
+	/**
+	 * Retrieves the default CSS class for module with extra additions.
+	 * @OLD: `get_adminbar_node_class()`
+	 * @OLD: `class_for_adminbar_node()`
+	 *
+	 * @param string|array $extra
+	 * @param bool $icon_only
+	 * @return string
+	 */
+	protected function adminbar__get_css_class( $extra = [], $icon_only = FALSE )
+	{
+		return Core\HTML::prepClass(
+			$this->classs_base( 'adminbar', 'node', $icon_only ? 'icononly' : '' ),
+			sprintf( '-%s', $this->key ),
+			$extra
+		);
+	}
 
 	/**
 	 * Checks for required conditions for adding admin-bar nodes.
@@ -133,7 +150,7 @@ trait CoreAdminBar
 			'href'   => WordPress\Taxonomy::link( $taxonomy ),
 			'meta'   => [
 				'rel'   => $taxonomy,
-				'class' => $this->class_for_adminbar_node(),
+				'class' => $this->adminbar__get_css_class(),
 			],
 		];
 
@@ -150,7 +167,7 @@ trait CoreAdminBar
 					: WordPress\PostType::edit( $posttype, [ $query => rawurldecode( $term->slug ) ] ),
 				'meta' => [
 					'rel'   => $term->term_id,
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class(),
 				],
 			];
 

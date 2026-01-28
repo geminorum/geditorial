@@ -43,7 +43,7 @@ trait TemplateTaxonomy
 					'href'   => $edit,
 					'title'  => Services\CustomTaxonomy::getLabel( $term, 'edit_item' ),
 					'meta'   => [
-						'class' => $this->class_for_adminbar_node( '-edit-item' ),
+						'class' => $this->adminbar__get_css_class( '-edit-item' ),
 					],
 				];
 

@@ -3,8 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Views extends gEditorial\Module
@@ -14,11 +15,11 @@ class Views extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'views',
-			'title'  => _x( 'Views', 'Modules: Views', 'geditorial-admin' ),
-			'desc'   => _x( 'Customized Page Views', 'Modules: Views', 'geditorial-admin' ),
-			'icon'   => 'admin-views',
-			'access' => 'beta',
+			'name'     => 'views',
+			'title'    => _x( 'Views', 'Modules: Views', 'geditorial-admin' ),
+			'desc'     => _x( 'Customized Page Views', 'Modules: Views', 'geditorial-admin' ),
+			'icon'     => 'admin-views',
+			'access'   => 'beta',
 			'keywords' => [
 				'has-adminbar',
 			],
@@ -32,10 +33,17 @@ class Views extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general'         => [
+			'_roles'           => [
 				'excluded_roles' => [ NULL, $this->get_settings_default_roles( [], 'subscriber' ) ],
+				// 'manage_roles'   => [ NULL, $roles ], // TODO!
+				'reports_roles'  => [ NULL, $roles ],
+				'reports_post_edit',
+			],
+			'_frontend'         => [
 				'adminbar_summary',
 			],
 		];
@@ -121,21 +129,21 @@ class Views extends gEditorial\Module
 		$what = $post['what'] ?? 'nothing';
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorMessage();
+			gEditorial\Ajax::errorMessage();
 
-		Ajax::checkReferer( $this->classs( $post['post_id'] ) );
+		gEditorial\Ajax::checkReferer( $this->classs( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'entryview':
 
 				if ( $this->update( $post['post_id'], $what ) )
-					Ajax::successMessage();
+					gEditorial\Ajax::successMessage();
 				else
-					Ajax::errorMessage();
+					gEditorial\Ajax::errorMessage();
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	private function update( $post_id, $event )
@@ -153,5 +161,10 @@ class Views extends gEditorial\Module
 	private function report( $post_id, $event )
 	{
 		return (int) get_post_meta( $post_id, sprintf( $this->constant( 'metakey_post_template' ), $event ), TRUE );
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback );
 	}
 }

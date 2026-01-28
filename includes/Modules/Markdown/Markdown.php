@@ -20,27 +20,34 @@ class Markdown extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'markdown',
-			'title'  => _x( 'Markdown', 'Modules: Markdown', 'geditorial-admin' ),
-			'desc'   => _x( 'Write Posts in Markdown', 'Modules: Markdown', 'geditorial-admin' ),
-			'icon'   => [ 'misc-32', 'markdown' ],
-			'access' => 'beta',
+			'name'     => 'markdown',
+			'title'    => _x( 'Markdown', 'Modules: Markdown', 'geditorial-admin' ),
+			'desc'     => _x( 'Write Posts in Markdown', 'Modules: Markdown', 'geditorial-admin' ),
+			'icon'     => [ 'misc-32', 'markdown' ],
+			'access'   => 'beta',
+			'keywords' => [
+				'has-adminbar',
+			],
 		];
 	}
 
 	protected function get_global_settings()
 	{
+		$roles  = $this->get_settings_default_roles();
+
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
+			'_roles'           => [
+				'reports_roles' => [ NULL, $roles ],
+				'reports_post_edit',
+			],
+			'_frontend' => [
+				'adminbar_summary',
 				[
 					'field'       => 'wiki_linking',
 					'title'       => _x( 'Wiki Linking', 'Setting Title', 'geditorial-markdown' ),
 					'description' => _x( 'Converts wiki like markup into internal links.', 'Setting Description', 'geditorial-markdown' ),
 				],
-			],
-			'_frontend' => [
-				'adminbar_summary',
 			],
 		];
 	}
@@ -408,6 +415,11 @@ class Markdown extends gEditorial\Module
 			return $post->post_content_filtered;
 
 		return $value;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback );
 	}
 
 	public function reports_settings( $sub )

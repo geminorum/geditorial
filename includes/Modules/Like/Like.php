@@ -19,20 +19,24 @@ class Like extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'like',
-			'title'  => _x( 'Like', 'Modules: Like', 'geditorial-admin' ),
-			'desc'   => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial-admin' ),
-			'icon'   => 'heart',
-			'access' => 'stable',
+			'name'     => 'like',
+			'title'    => _x( 'Like', 'Modules: Like', 'geditorial-admin' ),
+			'desc'     => _x( 'Like Button for Guests and Users', 'Modules: Like', 'geditorial-admin' ),
+			'icon'     => 'heart',
+			'access'   => 'stable',
+			'keywords' => [
+				'has-adminbar',
+			],
 		];
 	}
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles();
+
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general' => [
-				'adminbar_summary',
 				[
 					'field'       => 'display_avatars',
 					'title'       => _x( 'Display Avatars', 'Setting Title', 'geditorial-like' ),
@@ -46,12 +50,20 @@ class Like extends gEditorial\Module
 					'default'     => 12,
 				],
 			],
+			'_roles'           => [
+				// 'manage_roles'   => [ NULL, $roles ], // TODO!
+				'reports_roles'  => [ NULL, $roles ],
+				'reports_post_edit',
+			],
 			'_editlist' => [
 				[
 					'field'       => 'like_count',
 					'title'       => _x( 'Like Count', 'Setting Title', 'geditorial-like' ),
 					'description' => _x( 'Displays likes summary of the post.', 'Setting Description', 'geditorial-like' ),
 				],
+			],
+			'_frontend'         => [
+				'adminbar_summary',
 			],
 			'_strings' => [
 				[
@@ -414,7 +426,7 @@ class Like extends gEditorial\Module
 			if ( ! empty( $query->results ) ) {
 				foreach ( $query->results as $user ) {
 
-					// FIXME: needs internal API
+					// TODO: handle via `WordPress\BuddyPress`
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
@@ -482,24 +494,38 @@ class Like extends gEditorial\Module
 
 			echo $this->get_column_icon( FALSE, 'heart', _x( 'Likes', 'Row Icon Title', 'geditorial-like' ) );
 
-			/* translators: `%s`: likes count */
-			printf( _nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ), Core\Number::format( $total ) );
+			printf(
+				/* translators: `%s`: likes count */
+				_nx( '%s Like', '%s Likes', $total, 'Noop', 'geditorial-like' ),
+				Core\Number::format( $total )
+			);
 
 			$list   = [];
 			$users  = $this->get_liked_users( $post->ID );
 			$guests = $this->get_liked_guests( $post->ID );
 
 			if ( ! empty( $users ) )
-				/* translators: `%s`: users count */
-				$list[] = sprintf( _nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $users ) ) );
+				$list[] = sprintf(
+					/* translators: `%s`: users count */
+					_nx( '%s User', '%s Users', count( $users ), 'Noop', 'geditorial-like' ),
+					Core\Number::format( count( $users ) )
+				);
 
 			if ( ! empty( $guests ) )
-				/* translators: `%s`: guests count */
-				$list[] = sprintf( _nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ), Core\Number::format( count( $guests ) ) );
+				$list[] = sprintf(
+					/* translators: `%s`: guests count */
+					_nx( '%s Guest', '%s Guests', count( $guests ), 'Noop', 'geditorial-like' ),
+					Core\Number::format( count( $guests ) )
+				);
 
 			echo WordPress\Strings::getJoined( $list, ' <span class="-like-counts">(', ')</span>' );
 
 		echo $after;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback );
 	}
 
 	public function reports_settings( $sub )

@@ -736,9 +736,13 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	public function icon( $name, $group = NULL )
+	public function icon( $name, $group = NULL, $extra = [] )
 	{
-		return gEditorial()->icon( $name, ( is_null( $group ) ? $this->icon_group : $group ) );
+		return gEditorial()->icon(
+			$name,
+			$group ?? $this->icon_group,
+			$extra
+		);
 	}
 
 	// Checks to bail early if meta-box/widget is hidden

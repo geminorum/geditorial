@@ -12,6 +12,8 @@ class Info extends WordPress\Main
 	}
 
 	// `https://db-ip.com/xxx.xxx.xx.xxx`
+	// TODO: customize for this plugin
+	// MAYBE: `Services\InternetProtocol`
 	public static function lookupIP( $ip )
 	{
 		if ( function_exists( 'gnetwork_ip_lookup' ) )

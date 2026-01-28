@@ -20,7 +20,7 @@ class Drafts extends gEditorial\Module
 			'name'     => 'drafts',
 			'title'    => _x( 'Drafts', 'Modules: Drafts', 'geditorial-admin' ),
 			'desc'     => _x( 'Tools to Work With Drafts', 'Modules: Drafts', 'geditorial-admin' ),
-			'icon'     => 'admin-post',
+			'icon'     => 'editor-paragraph',
 			'access'   => 'stable',
 			'keywords' => [
 				'has-adminbar',

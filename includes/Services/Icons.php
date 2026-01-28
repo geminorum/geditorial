@@ -18,30 +18,31 @@ class Icons extends gEditorial\Service
 	 * The URL to the icon to be used for `add_menu_page()`
 	 * - Pass a `base64-encoded` SVG using a data URI, which will be colored to match the color scheme. This should begin with `data:image/svg+xml;base64,`.
 	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
-	 * - Pass 'none' to leave div.wp-menu-image empty so an icon can be added via CSS.
+	 * - Pass `none` to leave `div.wp-menu-image` empty so an icon can be added via CSS.
 	 *
 	 * @param string|array $icon
 	 * @param string $fallback
-	 * @return string $markup
+	 * @param string|array $extra
+	 * @return string
 	 */
-	public static function get( $icon, $fallback = 'admin-post' )
+	public static function get( $icon, $fallback = 'admin-post', $extra = [] )
 	{
 		if ( ! $icon || 'none' === $icon )
-			return Core\HTML::getDashicon( $fallback );
+			return Core\HTML::getDashicon( $fallback, FALSE, $extra );
 
 		if ( is_array( $icon ) )
-			return gEditorial()->icon( $icon[1], $icon[0] );
+			return gEditorial()->icon( $icon[1], $icon[0], $extra );
 
 		if ( Core\Text::starts( $icon, 'data:image/' ) )
-			return Core\HTML::img( $icon, [ '-icon', '-encoded' ] );
+			return Core\HTML::img( $icon, Core\HTML::attrClass( '-icon', '-encoded', $extra ) );
 
 		if ( Core\Text::starts( $icon, 'dashicons-' ) )
 			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
 
 		else if ( Core\URL::isValid( $icon ) )
-			return Core\Icon::wrapURL( esc_url( $icon ) );
+			return Core\Icon::wrapURL( Core\HTML::escapeURL( $icon ), $extra );
 
-		return Core\HTML::getDashicon( $icon );
+		return Core\HTML::getDashicon( $icon, FALSE, $extra );
 	}
 
 	// OLD: `Visual::getMenuIcon()`
@@ -128,7 +129,9 @@ class Icons extends gEditorial\Service
 	}
 
 	// OLD: `Visual::getAdminBarIconMarkup()`
-	// NOTE: must use in parent with `.geditorial-adminbar-node-icononly`
+	// NOTE: for `dashicons` only, not supporting SVG!
+	// NOTE: must use in parent with `.geditorial-adminbar-node-icononly` for icon only
+	// NOTE: must use in parent with `.geditorial-adminbar-node.-has-icon` for icon + label
 	public static function adminBarMarkup( $icon = 'screenoptions', $style = FALSE )
 	{
 		return Core\HTML::tag( 'span', [

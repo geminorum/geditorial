@@ -441,10 +441,10 @@ class Attachments extends gEditorial\Module
 				Core\Number::format( $count )
 			);
 
-			if ( current_user_can( 'upload_files' ) )
+			if ( $media = WordPress\Post::mediaURL( $post ) )
 				echo Core\HTML::tag( 'a', [
-					'href'   => WordPress\Post::mediaLink( $post ),
 					'title'  => _x( 'View the list of attachments', 'Title Attr', 'geditorial-attachments' ),
+					'href'   => $media,
 					'target' => '_blank',
 				], $title );
 			else

@@ -308,7 +308,7 @@ trait SettingsCore
 	}
 
 	// DEFAULT METHOD
-	// `$extra` arg is for extending in modules
+	// NOTE: `$extra` argument is for extending in modules.
 	public function append_sub( $subs, $context = 'settings', $extra = [] )
 	{
 		if ( ! $this->cuc( $context ) )

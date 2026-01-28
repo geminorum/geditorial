@@ -250,6 +250,7 @@ class Uploader extends gEditorial\Module
 		return base64_decode( $parts[1] ) ?: FALSE;
 	}
 
+	// @hook: `post-plupload-upload-ui`
 	public function post_plupload_upload_ui()
 	{
 		if ( ! $this->role_can( 'uploads' ) )
@@ -258,7 +259,8 @@ class Uploader extends gEditorial\Module
 		Core\HTML::desc( sprintf(
 			/* translators: `%1$s`: link markup start, `%2$s`: link markup end */
 			_x( 'Alternatively, you can use %1$sLarge File Uploader%2$s widget on the dashoard.', 'Message', 'geditorial-uploader' ),
-			'<a href="'.Core\HTML::escapeURL( get_dashboard_url() ).'">', '</a>'
+			'<a href="'.Core\HTML::escapeURL( get_dashboard_url() ).'">',
+			'</a>'
 		) );
 	}
 }

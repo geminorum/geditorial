@@ -627,9 +627,9 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	public function icon( $name, $group, $enqueue = TRUE )
+	public function icon( $name, $group, $extra = [], $enqueue = TRUE )
 	{
-		if ( $icon = Core\Icon::get( $name, $group ) ) {
+		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {
 
 			if ( ! $enqueue )
 				return $icon;

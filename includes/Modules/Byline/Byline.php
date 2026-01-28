@@ -28,7 +28,7 @@ class Byline extends gEditorial\Module
 			'name'     => 'byline',
 			'title'    => _x( 'Byline', 'Modules: Byline', 'geditorial-admin' ),
 			'desc'     => _x( 'Indicating the Authors', 'Modules: Byline', 'geditorial-admin' ),
-			'icon'     => 'edit',
+			'icon'     => 'welcome-write-blog',
 			'access'   => 'beta',
 			'keywords' => [
 				'author',
@@ -51,6 +51,7 @@ class Byline extends gEditorial\Module
 			'taxonomies_option' => 'taxonomies_option',
 			'_roles'            => [
 				'manage_roles'  => [ _x( 'Roles that can manage, edit and delete <strong>relations</strong>.', 'Setting Description', 'geditorial-byline' ), $roles ],
+				'imports_roles' => [ NULL, $roles ],
 				'reports_roles' => [ NULL, $roles ],
 				'reports_post_edit',
 				'assign_roles'  => [ NULL, $roles ],
@@ -1024,6 +1025,11 @@ class Byline extends gEditorial\Module
 			],
 			$context
 		);
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'imports' ] );
 	}
 
 	public function imports_settings( $sub )
