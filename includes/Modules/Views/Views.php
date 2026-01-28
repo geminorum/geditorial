@@ -70,32 +70,30 @@ class Views extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
-		$post_id = get_queried_object_id();
-
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
+		$node_id = $this->classs();
+		$icon    = $this->adminbar__get_icon();
+		$reports = $this->role_can_post( $post, 'reports' );
 
 		$nodes[] = [
-			'id'     => $this->classs(),
-			'title'  => _x( 'View Summary', 'Title Attr', 'geditorial-views' ),
 			'parent' => $parent,
-			'href'   => $this->get_module_url( 'reports', NULL, [ 'id' => $post_id ] ),
+			'id'     => $node_id,
+			'title'  => $icon._x( 'View Summary', 'Node: Title', 'geditorial-views' ),
+			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
 			'meta'   => [
-				'class' => $this->class_for_adminbar_node(),
+				'class' => $this->adminbar__get_css_class(),
 			],
 		];
 
 		foreach ( $this->events() as $event => $title )
 			$nodes[] = [
+				'parent' => $node_id,
 				'id'     => $this->classs( 'event', $event ),
-				'title'  => WordPress\Strings::getCounted( $this->report( $post_id, $event ), $title.' %s' ),
-				'parent' => $this->classs(),
-				'href'   => FALSE,
+				'title'  => WordPress\Strings::getCounted( $this->report( $post->ID, $event ), $title.' %s' ),
 				'meta'   => [
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class(),
 				],
 			];
 	}
