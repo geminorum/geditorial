@@ -13,6 +13,7 @@ class Markdown extends gEditorial\Module
 {
 
 	protected $disable_no_posttypes = TRUE;
+	protected $priority_adminbar_init = 210;
 
 	private $parser;
 	private $convertor;
@@ -43,6 +44,7 @@ class Markdown extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
+				'adminbar_tools',
 				[
 					'field'       => 'wiki_linking',
 					'title'       => _x( 'Wiki Linking', 'Setting Title', 'geditorial-markdown' ),
@@ -65,6 +67,9 @@ class Markdown extends gEditorial\Module
 
 		foreach ( $this->posttypes() as $posttype )
 			add_post_type_support( $posttype, 'editorial-markdown' );
+
+		if ( $this->get_setting( 'adminbar_tools' ) )
+			$this->action( 'admin_bar_menu', 1, 1200 );
 	}
 
 	public function current_screen( $screen )
@@ -79,77 +84,149 @@ class Markdown extends gEditorial\Module
 		}
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function admin_bar_menu( $wp_admin_bar )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
-		$post_id = get_queried_object_id();
-		$classs  = $this->classs();
+		$node_id = $this->classs( 'toolbox' );
+		$icon    = $this->adminbar__get_icon();
+		$spinner = $this->adminbar__get_spinner();
 
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
+		$wp_admin_bar->add_menu( [
+			'id'    => $node_id,
+			'href'  => $this->get_module_url(),
+			'title' => $icon,
+			'meta'  => [
+				'class' => $this->adminbar__get_css_class( [], TRUE ),
+				'title' => _x( 'Markdown Syntax', 'Node: Title', 'geditorial-markdown' ),
+			],
+		] );
 
-		$nodes[] = [
-			'id'     => $classs,
-			'parent' => $parent,
-			'title'  => _x( 'Markdown Summary', 'Adminbar', 'geditorial-markdown' ),
-			'href'   => $this->get_module_url(),
-		];
 
-		if ( ! $this->is_markdown( $post_id ) ) {
+		if ( ! $this->is_markdown( $post->ID ) ) {
 
-			$nodes[] = [
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'pot' ),
+				'title'  => _x( 'This content is written in HTML.', 'Node: Notice', 'geditorial-markdown' ),
+				'meta'   => [
+					'class' => $this->adminbar__get_css_class( '-notice-pot' ),
+				],
+			] );
+
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
 				'id'     => $this->classs( 'convert' ),
-				'parent' => $classs,
-				'title'  => _x( 'Markdown: Convert', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
-				'href'   => '#',
+				'title'  => $this->adminbar__get_icon( 'update-alt' ).
+					_x( 'Convert Markdown to HTML', 'Node: Title', 'geditorial-markdown' ).$spinner,
 				'meta'   => [
 					'rel'   => 'convert',
-					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
+					'class' => $this->adminbar__get_css_class( [ '-has-loading', '-do-action' ] ),
+					'title' => _x( 'Tries to convert Markdown to HTML from raw content.', 'Node: Title', 'geditorial-markdown' ),
+				],
+			] );
+
+		} else {
+
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'pot' ),
+				'title'  => _x( 'This content is written in Markdown.', 'Node: Notice', 'geditorial-markdown' ),
+				'meta'   => [
+					'class' => $this->adminbar__get_css_class( '-notice-pot' ),
+				],
+			] );
+
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'cleanup' ),
+				'href'   => '#', // better to be linked
+				'title'  => $this->adminbar__get_icon( 'admin-appearance' ).
+					_x( 'Clean-up Content', 'Node: Title', 'geditorial-markdown' ).$spinner,
+				'meta'   => [
+					'rel'   => 'cleanup',
+					'class' => $this->adminbar__get_css_class( [ '-has-loading', '-do-action' ] ),
+					'title' => _x( 'Tries to clean-up and convert from raw content.', 'Node: Title', 'geditorial-markdown' ),
+				],
+			] );
+
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'process' ),
+				'href'   => '#', // better to be linked
+				'title'  => $this->adminbar__get_icon( 'redo' ).
+					_x( 'Process Content Again', 'Node: Title', 'geditorial-markdown' ).$spinner,
+				'meta'   => [
+					'rel'   => 'process',
+					'class' => $this->adminbar__get_css_class( [ '-has-loading', '-do-action' ] ),
+					'title' => _x( 'Tries to re-process Markdown to HTML from raw content.', 'Node: Title', 'geditorial-markdown' ),
+				],
+			] );
+
+			$wp_admin_bar->add_menu( [
+				'parent' => $node_id,
+				'id'     => $this->classs( 'discard' ),
+				'href'   => '#', // better to be linked
+				'title'  => $this->adminbar__get_icon( 'undo' ).
+					_x( 'Discard Converted HTML', 'Node: Title', 'geditorial-markdown' ).$spinner,
+				'meta'   => [
+					'rel'   => 'discard',
+					'class' => $this->adminbar__get_css_class( [ '-has-loading', '-do-action', '-danger' ] ),
+					'title' => _x( 'Tries to discard processed Markdown and restore raw content.', 'Node: Title', 'geditorial-markdown' ),
+				],
+			] );
+		}
+
+		$this->enqueue_asset_js( [
+			'post_id' => $post->ID,
+			'_nonce'  => wp_create_nonce( $this->hook( $post->ID ) ),
+		], $this->dotted( 'adminbar' ) );
+	}
+
+	public function adminbar_init( &$nodes, $parent )
+	{
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
+			return;
+
+		$node_id = $this->classs();
+		$icon    = $this->adminbar__get_icon();
+		$reports = $this->role_can_post( $post, 'reports' );
+
+		if ( ! $this->is_markdown( $post->ID ) ) {
+
+			$nodes[] = [
+				'parent' => $parent,
+				'id'     => $node_id,
+				'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
+				'title'  => $icon._x( 'Written in HTML', 'Node: Notice', 'geditorial-markdown' ),
+				'meta'   => [
+					'class' => $this->adminbar__get_css_class( $reports ? [] : '-not-linked' ),
+					'title' => sprintf(
+						/* translators: `%s`: singular post-type label */
+						_x( 'The content of this %s is written in conventional HTML.', 'Node: Title', 'geditorial-markdown' ),
+						Services\CustomPostType::getLabel( $post, 'singular_name' )
+					),
 				],
 			];
 
 		} else {
 
 			$nodes[] = [
-				'id'     => $this->classs( 'process' ),
-				'parent' => $classs,
-				'title'  => _x( 'Markdown: Process', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
-				'href'   => '#',
+				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => $icon._x( 'Written in Markdown', 'Node: Notice', 'geditorial-markdown' ),
+				'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
 				'meta'   => [
-					'rel'   => 'process',
-					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
-				],
-			];
-
-			$nodes[] = [
-				'id'     => $this->classs( 'cleanup' ),
-				'parent' => $classs,
-				'title'  => _x( 'Markdown: Cleanup', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
-				'href'   => '#',
-				'meta'   => [
-					'rel'   => 'cleanup',
-					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', $classs ] ),
-				],
-			];
-
-			$nodes[] = [
-				'id'     => $this->classs( 'discard' ),
-				'parent' => $classs,
-				'title'  => _x( 'Markdown: Discard', 'Adminbar', 'geditorial-markdown' ).Ajax::spinner(),
-				'href'   => '#',
-				'meta'   => [
-					'rel'   => 'discard',
-					'class' => $this->class_for_adminbar_node( [ '-has-loading', '-action', '-danger', $classs ] ),
+					'class' => $this->adminbar__get_css_class( $reports ? [] : '-not-linked' ),
+					'title' => sprintf(
+						/* translators: `%s`: singular post-type label */
+						_x( 'The content of this %s is written in Markdown syntax.', 'Node: Title', 'geditorial-markdown' ),
+						Services\CustomPostType::getLabel( $post, 'singular_name' )
+					),
 				],
 			];
 		}
-
-		$this->enqueue_asset_js( [
-			'post_id' => $post_id,
-			'_nonce'  => wp_create_nonce( $this->hook( $post_id ) ),
-		] );
 	}
 
 	public function do_ajax()
@@ -170,33 +247,33 @@ class Markdown extends gEditorial\Module
 			case 'process':
 
 				if ( ! $this->process_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage();
+				Ajax::successMessage( _x( 'Processed successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 				break;
 
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to convert content into Markdown. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to convert content into Markdown!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage();
+				Ajax::successMessage( _x( 'Converted successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 				break;
 
 			case 'cleanup':
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to cleanup Markdown content. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to cleanup Markdown content!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage();
+				Ajax::successMessage( _x( 'Cleaned-up successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 				break;
 
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML. Please try again.', 'Message', 'geditorial-markdown' ) );
+					Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage();
+				Ajax::successMessage( _x( 'Discarded successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 		}
 
 		Ajax::errorWhat();
