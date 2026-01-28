@@ -173,10 +173,34 @@ class Attachments extends gEditorial\Module
 			if ( $this->get_setting( 'attachment_count' ) )
 				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20 );
 
+		} else if ( 'media' === $screen->base && 'add' === $screen->action ) {
+
+			$this->action( 'post-plupload-upload-ui', 0, 8 );
+
 		} else if ( 'upload' === $screen->base ) {
 
 			$this->corerestrictposts__hook_screen_authors();
 		}
+	}
+
+	public function post_plupload_upload_ui()
+	{
+		if ( ! $parent = self::req( 'post_id' ) )
+			return;
+
+		if ( ! $post = WordPress\Post::get( (int) $parent ) )
+			return;
+
+		$edit = WordPress\Post::edit( $post );
+
+		echo Core\HTML::warning( sprintf(
+			/* translators: `%1$s`: mark-up start, `%2$s`: mark-up end, `%3$s`: post title, `%4$s`: post-type singular label */
+			_x( 'You are about to upload attachments into %1$s%3$s%2$s %4$s.', 'Message', 'geditorial-attachments' ),
+			$edit ? '<a href="'.Core\HTML::escapeURL( $edit ).'"><strong>' : '<strong>',
+			$edit ? '</strong></a>' : '</strong>',
+			WordPress\Post::title( $post ),
+			Services\CustomPostType::getLabel( $post, 'singular_name' )
+		) );
 	}
 
 	/**
