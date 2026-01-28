@@ -14,7 +14,7 @@ class Estimated extends gEditorial\Module
 	use Internals\PostMeta;
 
 	protected $disable_no_posttypes   = TRUE;
-	protected $priority_adminbar_init = 90;
+	protected $priority_adminbar_init = 310;
 
 	public static function module()
 	{
@@ -136,40 +136,30 @@ class Estimated extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
 
-		$post_id = get_queried_object_id();
-		$node_id = $this->classs();
+		if ( $wordcount = $this->_fetch_postmeta( $post->ID ) ) {
 
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return;
+			$node_id = $this->classs();
+			$icon    = $this->adminbar__get_icon();
 
-		if ( $wordcount = $this->fetch_postmeta( $post_id ) ) {
-
-			$html = '<span class="-wordcount">'
-				.$this->nooped_count( 'word', $wordcount )
-				.'</span>';
-
-			$html.= ' <span class="-estimated-time">('
-				.$this->get_time_estimated( $wordcount, FALSE )
-				.')</span>';
-
-			$avgtime = $this->get_setting( 'average', 250 );
-			$title   = sprintf(
-				/* translators: `%s`: average word count */
-				_x( 'If you try to read %s words per minute.', 'Title Attr', 'geditorial-estimated' ),
-				Core\Number::format( $avgtime )
-			);
+			$title = Core\HTML::span( $this->nooped_count( 'word', $wordcount ), [ '-wordcount', '-label' ] );
+			$title.= '&nbsp;';
+			$title.= Core\HTML::span( sprintf( '(%s)', $this->get_time_estimated( $wordcount, FALSE ) ), [ '-estimated-time', '-label' ] );
 
 			$nodes[] = [
 				'parent' => $parent,
 				'id'     => $node_id,
-				'title'  => $html,
+				'title'  => $icon.$title,
 				'href'   => FALSE, // $this->get_module_url(),
 				'meta'   => [
-					'title' => $title,
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class( '-not-linked' ),
+					'title' => sprintf(
+						/* translators: `%s`: average word count */
+						_x( 'If you try to read %s words per minute.', 'Title Attr', 'geditorial-estimated' ),
+						Core\Number::format( $this->get_setting( 'average', 250 ) )
+					),
 				],
 			];
 		}
