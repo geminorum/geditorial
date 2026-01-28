@@ -97,13 +97,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
-			return;
-
-		if ( ! $post = get_queried_object() )
-			return;
-
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
 
 		$pattern = get_shortcode_regex();
@@ -112,16 +106,17 @@ class Shortcodes extends gEditorial\Module
 			return;
 
 		$node_id = $this->classs();
+		$icon    = $this->adminbar__get_icon();
 		$reports = $this->role_can( 'reports' );
 		$niches  = [];
 
 		$nodes[] = [
 			'parent' => $parent,
 			'id'     => $node_id,
-			'title'  => _x( 'Short-codes', 'Node: Title', 'geditorial-shortcodes' ),
+			'title'  => $icon._x( 'Short-codes', 'Node: Title', 'geditorial-shortcodes' ),
 			'href'   => $reports ? $this->get_module_url( 'reports' ) : FALSE,
 			'meta'   => [
-				'class' => $this->class_for_adminbar_node(),
+				'class' => $this->adminbar__get_css_class(),
 				'title' => $reports ? sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'View Short-code Reports for this %s', 'Node: Title', 'geditorial-shortcodes' ),
@@ -147,7 +142,7 @@ class Shortcodes extends gEditorial\Module
 					'meta'   => [
 						'dir'   => 'ltr',
 						'rel'   => $shortcode,
-						'class' => $this->class_for_adminbar_node(),
+						'class' => $this->adminbar__get_css_class( '-not-linked' ),
 					],
 				];
 			}
@@ -161,7 +156,7 @@ class Shortcodes extends gEditorial\Module
 				'meta'   => [
 					'dir'   => 'ltr',
 					'rel'   => $shortcode,
-					'class' => $this->class_for_adminbar_node(),
+					'class' => $this->adminbar__get_css_class( '-not-linked' ),
 				],
 			];
 
