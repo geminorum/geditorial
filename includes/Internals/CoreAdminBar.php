@@ -9,6 +9,96 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreAdminBar
 {
+
+	/**
+	 * Checks for required conditions for adding admin-bar nodes.
+	 *
+	 * @param false|string $context
+	 * @param bool $check_for_mobile
+	 * @return bool
+	 */
+	protected function adminbar__check_general( $context = NULL, $check_for_mobile = NULL )
+	{
+		if ( is_admin() )
+			return FALSE;
+
+		if ( ( $check_for_mobile ?? TRUE ) && WordPress\IsIt::mobile() )
+			return FALSE;
+
+		if ( FALSE === $context )
+			return TRUE;
+
+		if ( ! $this->role_can( $context ?? 'adminbar' ) )
+			return FALSE;
+
+		return TRUE;
+	}
+
+	/**
+	 * Checks for required conditions for adding admin-bar nodes on singular posts.
+	 *
+	 * @param string|array $posttypes
+	 * @param string $capability
+	 * @param bool $check_for_mobile
+	 * @return false|object
+	 */
+	protected function adminbar__check_singular_post( $posttypes = NULL, $capability = NULL, $check_for_mobile = NULL )
+	{
+		if ( is_admin() )
+			return FALSE;
+
+		if ( ( $check_for_mobile ?? TRUE ) && WordPress\IsIt::mobile() )
+			return FALSE;
+
+		if ( ! is_singular( $posttypes ?? $this->posttypes() ) )
+			return FALSE;
+
+		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
+			return FALSE;
+
+		if ( ! WordPress\Post::can( $post, $capability ) )
+			return FALSE;
+
+		return $post;
+	}
+
+	/**
+	 * Retrieves mark-up for given icon or module default.
+	 * NOTE: used before menu texts with `.blavatar`
+	 * NOTE: for icon only use `Services\Icons::adminBarMarkup()`
+	 *
+	 * @param false|string|array $icon
+	 * @param string|array $extra
+	 * @return string
+	 */
+	protected function adminbar__get_icon( $icon = NULL, $extra = [] )
+	{
+		if ( FALSE === $icon )
+			return '';
+
+		return Services\Icons::get(
+			$icon ?? $this->module->icon,
+			'admin-site',
+			Core\HTML::attrClass( 'blavatar', $extra )
+		);
+	}
+
+	/**
+	 * Retrieves mark-up for given spinner or default.
+	 *
+	 * @param false|string $spinner
+	 * @return string
+	 */
+	protected function adminbar__get_spinner( $spinner = NULL )
+	{
+		if ( FALSE === $spinner )
+			return '';
+
+		return gEditorial\Ajax::spinner( FALSE, [
+			'spinner' => $spinner ?? 'fade-stagger-squares',
+		] );
+	}
+
 	/**
 	 * Registers admin-bar nodes for assigned terms on a post.
 	 * NOTE: NOT USED YET!
@@ -17,31 +107,29 @@ trait CoreAdminBar
 	 * @param string $taxonomy
 	 * @param string $parent
 	 * @param bool $link_to_edit
+	 * @param false|string|array $icon
 	 * @return array
 	 */
-	protected function adminbar__get_posttype_primary_taxonomy_nodes( $posttype, $taxonomy, $parent = NULL, $link_to_edit = FALSE )
+	protected function adminbar__get_posttype_primary_taxonomy_nodes( $posttype, $taxonomy, $parent = NULL, $link_to_edit = FALSE, $icon = NULL )
 	{
 		$nodes    = [];
 		$posttype = $this->constant( $posttype, $posttype );  // NOTE: can be array of post-types
 		$taxonomy = $this->constant( $taxonomy, $taxonomy );  // NOTE: must be single taxonomy
 
-		if ( is_admin() || ! is_singular( $posttype ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return $nodes;
 
-		$post_id = get_queried_object_id();
+		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
+			return $nodes;
+
 		$node_id = $this->classs();
+		$icon    = $this->adminbar__get_icon( $icon );
 		$query   = FALSE;
-
-		if ( ! current_user_can( 'edit_post', $post_id ) )
-			return $nodes;
-
-		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post_id ) )
-			return $nodes;
 
 		$nodes[] = [
 			'parent' => $parent ?? $this->base,
 			'id'     => $node_id,
-			'title'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
+			'title'  => $icon.Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ),
 			'href'   => WordPress\Taxonomy::link( $taxonomy ),
 			'meta'   => [
 				'rel'   => $taxonomy,
