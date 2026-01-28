@@ -1,0 +1,304 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Partial: Admin-bar: ALL
+
+// NOTE: will be loaded inside `#wpadminbar`
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+@use "sass:color";
+
+////////////////////////////////////////////////////////////////////////////////
+$spacer: 1rem !default;
+$adminbar-maxwidth: 210px !default;
+
+////////////////////////////////////////////////////////////////////////////////
+/// General Node
+.geditorial-adminbar-node {
+  @include theme-clearfix;
+
+  &.-notice-pot {
+    width: $adminbar-maxwidth;
+    > div.ab-empty-item {
+      cursor: help;
+      height: auto !important;
+      font-size: smaller;
+      white-space: normal !important;
+      line-height: 1.85 !important;
+      padding-bottom: 2.5px;
+      margin-bottom: 1.5px;
+      border-bottom: 1px dotted $gray-light;
+    }
+
+    // ajax responses
+    div.notice,
+    div.notice p {
+      display: inline-block;
+      height: auto !important;
+      font-size: inherit;
+      white-space: normal !important;
+      line-height: 1.85 !important;
+    }
+  }
+
+  &.-not-linked {
+    > div.ab-empty-item {
+      cursor: help;
+    }
+  }
+
+  &.-do-action {
+    > div.ab-empty-item { // used as action button
+      cursor: pointer;
+      &:hover {
+        color: #fefefe;
+      }
+    }
+  }
+
+  &.-has-loading {
+    > a.ab-item,
+    > div.ab-empty-item {
+      position: relative;
+      cursor: pointer;
+
+      > .geditorial-spinner {
+        margin: 0 auto !important;
+        height: 100% !important;
+        position: absolute;
+        bottom: 0;
+        left: auto;
+        right: 10px;
+        top: 0;
+      }
+    }
+  }
+
+  // for top-level only: icon + text
+  &.-has-icon {
+    span.ab-icon {
+      margin-top: 2px;
+      margin-left: -4px;
+    }
+
+    // top level: icon + text + loading
+    &.-has-loading {
+      > a.ab-item,
+      > div.ab-empty-item {
+        > .geditorial-spinner { // spinner over icon
+          right: auto;
+          left: 10px;
+        }
+      }
+    }
+  }
+
+  // node with title + html
+  &.-has-infobox {
+    > div.ab-empty-item { // used as box title
+      cursor: help;
+      height: auto !important;
+      font-size: smaller;
+      white-space: normal;
+      line-height: 1.85;
+      padding-bottom: 2.5px;
+      margin-bottom: 1.5px;
+      border-bottom: 1px dotted $gray-light;
+    }
+
+    > p:not([class]),
+    > div.-wrap {
+      padding: 0 10px;
+      line-height: 1.85;
+
+      a {
+        line-height: inherit;
+        display: inline;
+        height: unset;
+        padding: 0;
+        margin: 0;
+      }
+    }
+
+    > p.-empty {
+      color: $gray-light;
+      font-size: smaller;
+      padding: 0 6px;
+    }
+  }
+
+  // node with html only
+  &.-has-description {
+    width: $adminbar-maxwidth;
+    margin: 0;
+    padding: 0 10px;
+
+    > p,
+    > div.-wrap {
+      height: auto;
+      white-space: normal;
+      line-height: 1.6;
+      font-size: smaller;
+    }
+
+    div.ab-empty-item {
+      display: none;
+    }
+  }
+
+  // node with image only
+  &.-has-image {
+    width: $adminbar-maxwidth;
+    margin: -6px auto -6px; // the parent `ul` has `6px` top/bottom padding
+    padding: 0;
+
+    > a {
+      height: auto;
+      padding: 0;
+      display: inline-block;
+    }
+
+    img {
+      max-width: 100%;
+      vertical-align: middle; // very much important!
+      height: auto;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    div.ab-empty-item {
+      display: none;
+    }
+  }
+
+  // OLD: `.geditorial-adminbar-wrap`
+  &.-has-assignbox {
+    > div.ab-empty-item { // used as empty placeholder
+      color: $gray-light;
+      font-size: smaller;
+    }
+
+    // @OLD: `.geditorial-adminbar-box-wrap`
+    .-wrap.-assignnbox {
+      width: $adminbar-maxwidth;
+
+      ul {
+        padding: 0 10px;
+        margin: 0;
+      }
+
+      @include theme-form-checkbox-radio;
+
+      input[type="checkbox"] {
+        background-color: #464b50;
+      }
+    }
+  }
+
+  &.-align-center {
+    > div.ab-empty-item,
+    > a.ab-item {
+      text-align: center;
+    }
+  }
+
+  &.-danger {
+    > .ab-item,
+    > div.ab-empty-item {
+      color: $brand-danger !important;
+
+      &:hover {
+        color: color.adjust($brand-danger, $lightness: -20%) !important;
+      }
+    }
+  }
+
+  > a.ab-item,
+  > div.ab-empty-item {
+
+    // NOTE: node text if wrapped, needed to have `.-label`
+    > span.-label {
+      display: inline-block;
+      height: 26px;
+      line-height: 2;
+      font-size: inherit;
+    }
+
+    // NOTE: all icons must have `.blavatar` class form core!
+    // NOTE: apply to our icons only
+    span.blavatar {
+      margin-right: 10px;
+    }
+
+    // span.dashicons {}
+    span.geditorial-icon {
+      // margin-top: -4px;
+      // margin-left: -1px;
+
+      svg {
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    span.-count {
+      background: $gray-lighter;
+      color: $gray-dark;
+      margin: 0;
+      border-radius: 10px;
+
+      display: inline;
+      padding: 2px 5px;
+      font-size: 10px;
+      font-weight: 700;
+      text-shadow: none;
+    }
+
+    code {
+      background: $gray-light;
+      color: $gray-dark;
+    }
+
+    div.notice {
+      &-success {
+        color: #79ba49;
+      }
+
+      &-error {
+        color: #a00;
+      }
+    }
+  }
+
+  div.ab-sub-wrapper {
+    span.ab-icon {
+      margin: 10px 6px 4px -2px !important;
+      padding: 0 !important;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/// Icon-Only Node
+.geditorial-adminbar-node-icononly {
+  .ab-icon { // may or not with `.dashicons`
+    padding: 0 !important;
+    margin: 6px -1px 6px 0 !important;
+  }
+
+  > a.ab-item,
+  > div.ab-empty-item {
+
+    span.geditorial-icon {
+      margin-top: -4px;
+      height: 20px;
+      width: 20px;
+
+      svg {
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Attachments: Admin Post
+
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+body.post-type-attachment,
+.media-frame {
+
+  table.compat-attachment-fields {
+    margin-bottom: 0;
+
+    tr.compat-field-comment_control {
+      th {
+        display: none;
+      }
+
+      td.field {
+        width: 100%;
+        float: none;
+      }
+
+      p.help {
+        margin-top: ($spacer * .25);
+      }
+    }
+
+    .-wrap.field-wrap {
+      &.-checkbox {
+        padding: ($spacer * .125) 0 0;
+
+        input[type="checkbox"] {
+          // vertical-align: unset;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
