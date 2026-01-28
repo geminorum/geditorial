@@ -252,7 +252,8 @@ class Identified extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() ) // NOTE: also optimized for mobile!
+		// NOTE: also optimized for mobile!
+		if ( ! $this->adminbar__check_general( FALSE, FALSE ) )
 			return;
 
 		$types = $this->get_strings( 'types', 'fields' );
@@ -271,7 +272,7 @@ class Identified extends gEditorial\Module
 				'href'   => Services\Barcodes::binaryEyeLink( $type, Core\URL::home() ),
 				'title'  => Services\Icons::adminBarMarkup( 'camera' ),
 				'meta'   => [
-					'class' => $this->class_for_adminbar_node( [ '-binary-eye', '-'.$type ], TRUE ),
+					'class' => $this->adminbar__get_css_class( [ '-binary-eye', '-'.$type ], TRUE ),
 					'title' => sprintf(
 						/* translators: `%s`: identifier type */
 						_x( 'Scan %s', 'Node Title', 'geditorial-identified' ),
