@@ -316,6 +316,7 @@ trait SettingsCore
 
 		return array_merge( $subs, [ $this->module->name => [
 			'title' => $this->module->title,
+			'hint'  => $this->module->desc,
 			'icon'  => Services\Icons::get( $this->module->icon ),
 		] ], $extra );
 	}

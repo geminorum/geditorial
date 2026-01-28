@@ -200,13 +200,28 @@ class Config extends gEditorial\Module
 		$uri = gEditorial\Settings::getURLbyContext( 'reports' );
 		$sub = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Reports Sub', 'geditorial-admin' ) ];
+		$subs = [
+			'overview' => [
+				'title' => _x( 'Overview', 'Reports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'dashboard' ),
+			],
+		];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Reports Sub', 'geditorial-admin' );
+			$subs['general'] = [
+				'title' => _x( 'General', 'Reports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( $this->module->icon ),
+			];
 
 		$subs     = apply_filters( $this->hook_base( 'reports', 'subs' ), $subs, 'reports', $can );
 		$messages = apply_filters( $this->hook_base( 'reports', 'messages' ), gEditorial\Settings::messages(), $sub. $can );
+
+		if ( WordPress\User::isSuperAdmin() ) {
+			$subs['console'] = [
+				'title' => _x( 'Console', 'Reports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'admin-generic' ),
+			];
+		}
 
 		gEditorial\Settings::wrapOpen( $sub, 'reports' );
 
@@ -248,17 +263,33 @@ class Config extends gEditorial\Module
 		$uri = gEditorial\Settings::getURLbyContext( 'tools' );
 		$sub = gEditorial\Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Tools Sub', 'geditorial-admin' ) ];
+		$subs = [
+			'overview' => [
+				'title' => _x( 'Overview', 'Tools Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'dashboard' ),
+			],
+		];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Tools Sub', 'geditorial-admin' );
+			$subs['general'] = [
+				'title' => _x( 'General', 'Tools Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( $this->module->icon ),
+			];
 
 		$subs     = apply_filters( $this->hook_base( 'tools', 'subs' ), $subs, 'tools', $can );
 		$messages = apply_filters( $this->hook_base( 'tools', 'messages' ), gEditorial\Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['options'] = _x( 'Options', 'Tools Sub', 'geditorial-admin' );
-			$subs['console'] = _x( 'Console', 'Tools Sub', 'geditorial-admin' );
+
+			$subs['options'] = [
+				'title' => _x( 'Options', 'Tools Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'screenoptions' ),
+			];
+
+			$subs['console'] = [
+				'title' => _x( 'Console', 'Tools Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'admin-generic' ),
+			];
 		}
 
 		gEditorial\Settings::wrapOpen( $sub, 'tools' );
@@ -324,16 +355,27 @@ class Config extends gEditorial\Module
 		$uri = gEditorial\Settings::getURLbyContext( 'roles' );
 		$sub = gEditorial\Settings::sub( ( $can ? 'general' : 'overview' ) );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Roles Sub', 'geditorial-admin' ) ];
+		$subs = [
+			'overview' => [
+				'title' => _x( 'Overview', 'Roles Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'dashboard' ),
+			],
+		];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Roles Sub', 'geditorial-admin' );
+			$subs['general'] = [
+				'title' => _x( 'General', 'Roles Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( $this->module->icon ),
+			];
 
 		$subs     = apply_filters( $this->hook_base( 'roles', 'subs' ), $subs, 'roles', $can );
 		$messages = apply_filters( $this->hook_base( 'roles', 'messages' ), gEditorial\Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = _x( 'Console', 'Roles Sub', 'geditorial-admin' );
+			$subs['console'] = [
+				'title' => _x( 'Console', 'Roles Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'admin-generic' ),
+			];
 		}
 
 		gEditorial\Settings::wrapOpen( $sub, 'roles' );
@@ -762,10 +804,18 @@ class Config extends gEditorial\Module
 		$uri = gEditorial\Settings::getURLbyContext( 'imports' );
 		$sub = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Imports Sub', 'geditorial-admin' ) ];
+		$subs = [
+			'overview' => [
+				'title' => _x( 'Overview', 'Imports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'dashboard' ),
+			],
+		];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Imports Sub', 'geditorial-admin' );
+			$subs['general'] = [
+				'title' => _x( 'General', 'Imports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( $this->module->icon ),
+			];
 
 		$subs     = apply_filters( $this->hook_base( 'imports', 'subs' ), $subs, 'imports', $can );
 		$messages = apply_filters( $this->hook_base( 'imports', 'messages' ), gEditorial\Settings::messages(), $sub, $can );
@@ -774,7 +824,10 @@ class Config extends gEditorial\Module
 			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-admin' );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = _x( 'Console', 'Imports Sub', 'geditorial-admin' );
+			$subs['console'] = [
+				'title' => _x( 'Console', 'Imports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'admin-generic' ),
+			];
 		}
 
 		gEditorial\Settings::wrapOpen( $sub, 'imports' );
@@ -875,16 +928,27 @@ class Config extends gEditorial\Module
 		$uri = gEditorial\Settings::getURLbyContext( 'customs' );
 		$sub = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
 
-		$subs = [ 'overview' => _x( 'Overview', 'Customs Sub', 'geditorial-admin' ) ];
+		$subs = [
+			'overview' => [
+				'title' => _x( 'Overview', 'Customs Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'dashboard' ),
+			],
+		];
 
 		if ( $can )
-			$subs['general'] = _x( 'General', 'Customs Sub', 'geditorial-admin' );
+			$subs['general'] = [
+				'title' => _x( 'General', 'Customs Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( $this->module->icon ),
+			];
 
 		$subs     = apply_filters( $this->hook_base( 'customs', 'subs' ), $subs, 'customs', $can );
 		$messages = apply_filters( $this->hook_base( 'customs', 'messages' ), gEditorial\Settings::messages(), $sub, $can );
 
 		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = _x( 'Console', 'Customs Sub', 'geditorial-admin' );
+			$subs['console'] = [
+				'title' => _x( 'Console', 'Customs Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'admin-generic' ),
+			];
 		}
 
 		gEditorial\Settings::wrapOpen( $sub, 'customs' );
