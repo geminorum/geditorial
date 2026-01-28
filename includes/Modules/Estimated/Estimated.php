@@ -114,7 +114,7 @@ class Estimated extends gEditorial\Module
 
 	public function tweaks_column_attr( $post, $before, $after )
 	{
-		if ( $wordcount = $this->fetch_postmeta( $post->ID ) ) {
+		if ( $wordcount = $this->_fetch_postmeta( $post->ID ) ) {
 
 			printf( $before, '-estimated-wordcount' );
 
@@ -177,7 +177,7 @@ class Estimated extends gEditorial\Module
 	public function store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( $this->is_save_post( $post, $this->posttypes() ) )
-			$this->get_post_wordcount( $post_id, TRUE );
+			$this->_get_post_wordcount( $post_id, TRUE );
 	}
 
 	public function insert_content( $content )
@@ -192,7 +192,7 @@ class Estimated extends gEditorial\Module
 			echo $this->wrap( $html, '-before' );
 	}
 
-	protected function get_post_wordcount( $post_id, $update = FALSE )
+	private function _get_post_wordcount( $post_id, $update = FALSE )
 	{
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
 
@@ -213,10 +213,15 @@ class Estimated extends gEditorial\Module
 		return $wordcount;
 	}
 
+	private function _fetch_postmeta( $post_id, $fallback = FALSE )
+	{
+		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_post_wordcount' ) );
+	}
+
 	public function get_estimated( $post_id, $prefix = NULL )
 	{
-		if ( ! $wordcount = $this->fetch_postmeta( $post_id, FALSE, $this->constant( 'metakey_post_wordcount' ) ) )
-			$wordcount = $this->get_post_wordcount( $post_id, TRUE );
+		if ( ! $wordcount = $this->_fetch_postmeta( $post_id ) )
+			$wordcount = $this->_get_post_wordcount( $post_id, TRUE );
 
 		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
 			return FALSE;
