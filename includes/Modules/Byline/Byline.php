@@ -65,7 +65,7 @@ class Byline extends gEditorial\Module
 			],
 			'_frontend' => [
 				'adminbar_summary',
-				'adminbar_tools' => [ NULL, TRUE ],
+				'adminbar_tools',
 				'tab_title'      => [ NULL, _x( 'People', 'Setting Default', 'geditorial-byline' ) ],
 				'tab_priority'   => [ NULL, 20 ],
 			],
@@ -208,8 +208,8 @@ class Byline extends gEditorial\Module
 
 		} else {
 
-			if ( $this->get_setting( 'adminbar_tools', TRUE ) )
-				$this->action( 'admin_bar_menu', 1, -999 );
+			if ( $this->get_setting( 'adminbar_tools' ) )
+				$this->action( 'admin_bar_menu', 1, 84 );
 		}
 	}
 
@@ -848,13 +848,7 @@ class Byline extends gEditorial\Module
 
 	public function admin_bar_menu( $wp_admin_bar )
 	{
-		if ( ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
-			return;
-
-		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
-			return;
-
-		if ( ! WordPress\Post::can( $post, 'read_post' ) )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
 
 		if ( ! $this->role_can_post( $post, 'assign' ) )
@@ -866,18 +860,17 @@ class Byline extends gEditorial\Module
 		$link    = $this->framepage_get_mainlink_url( $post->ID, 'mainapp', 'overview' );
 
 		$wp_admin_bar->add_menu( [
-			'parent' => 'top-secondary',
-			'id'     => $node_id,
-			'href'   => $link,
-			'title'  => Services\Icons::adminBarMarkup( 'edit' ),
-			'meta'   => [
+			'id'    => $node_id,
+			'href'  => $link,
+			'title' => Services\Icons::adminBarMarkup( 'businessperson' ),
+			'meta'  => [
+				'class' => $this->adminbar__get_css_class( 'do-colorbox-iframe-for-child', TRUE ),
 				// NOTE: appears as color-box title / `mainbutton_title` not available on front.
 				'title' => sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'Manage byline for this %s', 'Node: Title', 'geditorial-byline' ),
 					$label
 				),
-				'class' => $this->class_for_adminbar_node( 'do-colorbox-iframe-for-child', TRUE ),
 			],
 		] );
 
@@ -890,7 +883,7 @@ class Byline extends gEditorial\Module
 				$label
 			),
 			'meta' => [
-				'class' => $this->class_for_adminbar_node( '-has-infobox' ),
+				'class' => $this->adminbar__get_css_class( '-has-infobox' ),
 				'html'  => $byline
 					? Core\HTML::wrap( $byline, '-byline' )
 					: $this->get_notice_for_empty( 'adminbar', NULL, FALSE ),
@@ -902,29 +895,25 @@ class Byline extends gEditorial\Module
 
 	public function adminbar_init( &$nodes, $parent )
 	{
-		if ( is_admin() || ! is_singular( $this->posttypes() ) || WordPress\IsIt::mobile() )
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
 
-		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )
-			return;
-
-		if ( ! WordPress\Post::can( $post, 'read_post' ) )
-			return;
-
-		$classs  = $this->classs( 'summary' );
 		$assign  = $this->role_can_post( $post, 'assign' );
 		$reports = $this->role_can_post( $post, 'reports' );
 
 		if ( ! $reports && ! $assign )
 			return;
 
+		$node_id = $this->classs( 'summary' );
+		$icon    = $this->adminbar__get_icon();
+
 		$nodes[] = [
 			'parent' => $parent,
-			'id'     => $classs,
-			'title'  => _x( 'Byline', 'Node: Title', 'geditorial-byline' ),
-			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'linked' => $post->ID ] ) : FALSE,
+			'id'     => $node_id,
+			'title'  => $icon._x( 'Byline', 'Node: Title', 'geditorial-byline' ),
+			'href'   => $reports ? $this->get_module_url( 'reports', NULL, [ 'id' => $post->ID ] ) : FALSE,
 			'meta' => [
-				'class' => $this->class_for_adminbar_node( '-byline' ),
+				'class' => $this->adminbar__get_css_class( '-byline' ),
 				'title' => $reports ? sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'View Byline Reports for this %s', 'Node: Title', 'geditorial-byline' ),
@@ -938,11 +927,11 @@ class Byline extends gEditorial\Module
 		if ( empty( $terms ) || self::isError( $terms ) ) {
 
 			$nodes[] = [
-				'parent' => $classs,
+				'parent' => $node_id,
 				'id'     => $this->classs( 'empty' ),
 				'title'  => gEditorial\Plugin::na( FALSE ),
 				'meta' => [
-					'class' => $this->class_for_adminbar_node( '-empty' ),
+					'class' => $this->adminbar__get_css_class( '-empty' ),
 					'title' => $this->get_string( 'empty', 'adminbar', 'notices', gEditorial\Plugin::noinfo( FALSE ) ),
 				],
 			];
@@ -955,12 +944,12 @@ class Byline extends gEditorial\Module
 		foreach ( $terms as $term )
 			if ( FALSE !== ( $relation = $this->get_term_relations( $term, $post, $fields ) ) )
 				$nodes[] = [
-					'parent' => $classs,
+					'parent' => $node_id,
 					'id'     => $this->classs( 'term', $term->term_id ),
 					'title'  => $term->name, // NOTE: raw name
 					'href'   => WordPress\Term::edit( $term ),
 					'meta' => [
-						'class' => $this->class_for_adminbar_node( '-term' ),
+						'class' => $this->adminbar__get_css_class( '-term' ),
 						'title' => empty( $relation['relation'] )
 							? _x( '[Unrelated]', 'Node: Title', 'geditorial-byline' )
 							: $fields['relation']['options'][$relation['relation']],
