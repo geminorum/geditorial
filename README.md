@@ -3,16 +3,20 @@
 Our Editorial in [WordPress](https://wordpress.org/)!
 
 [![Travis (.com)](https://img.shields.io/travis/com/geminorum/geditorial?style=for-the-badge)](https://app.travis-ci.com/github/geminorum/geditorial/)
-[![GitHub releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/releases)
-[![GitHub issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/issues)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](http://makeapullrequest.com)
-[![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=for-the-badge)](https://github.com/Flet/semistandard)
-[![GitHub license](https://img.shields.io/badge/license-GPLv3+-blue.svg?style=for-the-badge)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
+[![GitHub Releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/releases)
+[![GitHub Issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/pulls)
+[![GitHub License](https://img.shields.io/github/license/geminorum/geditorial?style=for-the-badge)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
+[![GitHub Insights](https://img.shields.io/github/downloads/geminorum/geditorial/total?style=for-the-badge)](https://github.com/geminorum/geditorial/pulse)
+
 
 gEditorial is a fork in structure of [EditFlow](http://editflow.org/).
 
 ### Included Modules
 See [wiki/Modules](https://github.com/geminorum/geditorial/wiki/Modules).
+
+### Included Packages
+See [assets/packages](https://github.com/geminorum/geditorial/tree/master/assets/packages).
 
 ### Installation
 Grab the latest release from [here](https://github.com/geminorum/geditorial/releases).

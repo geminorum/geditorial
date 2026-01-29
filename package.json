@@ -45,9 +45,9 @@
     "git:gc": "git gc --prune=now"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^8.37.0",
-    "@wordpress/browserslist-config": "^6.37.0",
-    "@wordpress/stylelint-config": "^23.29.0",
+    "@wordpress/babel-preset-default": "^8.39.0",
+    "@wordpress/browserslist-config": "^6.39.0",
+    "@wordpress/stylelint-config": "^23.31.0",
     "autoprefixer": "^10.4.23",
     "browserslist": "^4.28.1",
     "cssnano": "^7.1.2",
@@ -76,8 +76,8 @@
     "postcss": "^8.5.6",
     "rtlcss": "^4.3.0",
     "semistandard": "^17.0.0",
-    "stylelint": "^16.26.1",
-    "stylelint-scss": "^6.14.0",
+    "stylelint": "^17.0.0",
+    "stylelint-scss": "^7.0.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
@@ -88,10 +88,10 @@
     "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
     "dropzone": "^6.0.0-beta.2",
-    "jqtree": "^1.8.10",
-    "jquery": "^3.7.1",
+    "jqtree": "^1.8.11",
+    "jquery": "^4.0.0",
     "jquery-mask-plugin": "^1.14.16",
-    "jsbarcode": "^3.12.1",
+    "jsbarcode": "^3.12.3",
     "list.js": "^2.3.1",
     "modern-normalize": "^3.0.1",
     "mustache": "^4.2.0",
