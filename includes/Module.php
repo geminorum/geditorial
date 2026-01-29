@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Module extends WordPress\Module
 {
 	use Internals\Assets;
+	use Internals\CoreAdminBar;
 	use Internals\CoreConstants;
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;

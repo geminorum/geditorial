@@ -1424,7 +1424,8 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'number' ],
 				] );
 
-			break;
+				break;
+
 			case 'author':
 
 				// Selected value on add new term form
@@ -1436,7 +1437,8 @@ class Terms extends gEditorial\Module
 					'show_option_all' => gEditorial\Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
 			case 'role':
 
 				$html.= Core\HTML::dropdown( $this->get_settings_default_roles(), [
@@ -1446,7 +1448,8 @@ class Terms extends gEditorial\Module
 					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
 			case 'roles':
 
 				$html.= gEditorial\Settings::tabPanelOpen();
@@ -1468,7 +1471,8 @@ class Terms extends gEditorial\Module
 
 				$html.= '</ul></div>';
 
-			break;
+				break;
+
 			case 'posttype':
 
 				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ), [
@@ -1478,7 +1482,8 @@ class Terms extends gEditorial\Module
 					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
 			case 'posttypes':
 
 				$html.= gEditorial\Settings::tabPanelOpen();
@@ -1500,7 +1505,8 @@ class Terms extends gEditorial\Module
 
 				$html.= '</ul></div>';
 
-			break;
+				break;
+
 			case 'color':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -1511,7 +1517,8 @@ class Terms extends gEditorial\Module
 					'data'  => [ 'ortho' => 'color' ],
 				] );
 
-			break;
+				break;
+
 			case 'plural':
 			case 'overwrite':
 			case 'fullname':

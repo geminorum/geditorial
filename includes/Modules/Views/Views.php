@@ -28,7 +28,7 @@ class Views extends gEditorial\Module
 
 	public function settings_intro()
 	{
-		Core\HTML::desc( _x( 'Note that the logget-out users count by default.', 'Message', 'geditorial-views' ) );
+		Core\HTML::desc( _x( 'Note that the logged-out users are counted by default.', 'Message', 'geditorial-views' ) );
 	}
 
 	protected function get_global_settings()
@@ -91,8 +91,11 @@ class Views extends gEditorial\Module
 			$nodes[] = [
 				'parent' => $node_id,
 				'id'     => $this->classs( 'event', $event ),
-				'title'  => WordPress\Strings::getCounted( $this->report( $post->ID, $event ), $title.' %s' ),
-				'meta'   => [
+				'title'  => WordPress\Strings::getCounted(
+					$this->_report_views_for_post( $post->ID, $event ),
+					$title.' %s'
+				),
+				'meta' => [
 					'class' => $this->adminbar__get_css_class(),
 				],
 			];
@@ -135,7 +138,7 @@ class Views extends gEditorial\Module
 
 			case 'entryview':
 
-				if ( $this->update( $post['post_id'], $what ) )
+				if ( $this->_update_views_for_post( $post['post_id'], $what ) )
 					gEditorial\Ajax::successMessage();
 				else
 					gEditorial\Ajax::errorMessage();
@@ -144,7 +147,7 @@ class Views extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	private function update( $post_id, $event )
+	private function _update_views_for_post( $post_id, $event )
 	{
 		if ( ! $post_id )
 			return FALSE;
@@ -156,7 +159,7 @@ class Views extends gEditorial\Module
 		return update_post_meta( $post_id, $key, $new, $old );
 	}
 
-	private function report( $post_id, $event )
+	private function _report_views_for_post( $post_id, $event )
 	{
 		return (int) get_post_meta( $post_id, sprintf( $this->constant( 'metakey_post_template' ), $event ), TRUE );
 	}
