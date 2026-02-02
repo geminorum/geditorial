@@ -3324,6 +3324,7 @@ class Settings extends WordPress\Main
 				break;
 
 			case 'radio':
+			case 'radio-values':
 
 				if ( $args['values'] && count( $args['values'] ) ) {
 
@@ -3363,7 +3364,12 @@ class Settings extends WordPress\Main
 							'dir'      => $args['dir'],
 						] );
 
-						Core\HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name );
+						$html.= '&nbsp;'.$value_title;
+
+						if ( 'radio-values' == $args['type'] )
+							$html.= ' &mdash; <code>'.sprintf( $args['template_value'], $value_name ).'</code>';
+
+						Core\HTML::label( $html, $id.'-'.$value_name );
 					}
 				}
 
