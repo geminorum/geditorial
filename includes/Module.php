@@ -5,6 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Module extends WordPress\Module
 {
 	use Internals\Assets;
+	use Internals\ContentInsert;
 	use Internals\CoreAdminBar;
 	use Internals\CoreConstants;
 	use Internals\CoreIncludes;
@@ -690,51 +691,6 @@ class Module extends WordPress\Module
 			function ( $classes ) use ( $extra ) {
 				return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
 			} );
-	}
-
-	// Should we insert content?
-	public function is_content_insert( $posttypes = '', $first_page = TRUE, $embed = FALSE )
-	{
-		if ( ! $embed && is_embed() )
-			return FALSE;
-
-		if ( ! is_main_query() )
-			return FALSE;
-
-		if ( ! in_the_loop() )
-			return FALSE;
-
-		if ( $first_page && 1 != $GLOBALS['page'] )
-			return FALSE;
-
-		if ( FALSE === $posttypes )
-			return TRUE;
-
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
-
-		else if ( $posttypes && ! is_array( $posttypes ) )
-			$posttypes = $this->constant( $posttypes );
-
-		if ( ! is_singular( $posttypes ) )
-			return FALSE;
-
-		return TRUE;
-	}
-
-	protected function hook_insert_content( $default_priority = 50 )
-	{
-		$insert = $this->get_setting( 'insert_content', 'none' );
-
-		if ( 'none' == $insert )
-			return FALSE;
-
-		add_action( $this->hook_base( 'content', $insert ),
-			[ $this, 'insert_content' ],
-			$this->get_setting( 'insert_priority', $default_priority )
-		);
-
-		return TRUE;
 	}
 
 	public function icon( $name, $group = NULL, $extra = [] )
