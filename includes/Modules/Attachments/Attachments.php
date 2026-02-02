@@ -182,6 +182,7 @@ class Attachments extends gEditorial\Module
 		} else if ( 'upload' === $screen->base ) {
 
 			$this->corerestrictposts__hook_screen_authors();
+			$this->_hook_header_buttons();
 		}
 	}
 
@@ -203,6 +204,27 @@ class Attachments extends gEditorial\Module
 			WordPress\Post::title( $post ),
 			Services\CustomPostType::getLabel( $post, 'singular_name' )
 		) );
+	}
+
+	private function _hook_header_buttons()
+	{
+		if ( ! $parent = self::req( 'post_parent' ) )
+			return;
+
+		if ( ! $post = WordPress\Post::get( (int) $parent ) )
+			return;
+
+		if ( ! $upload = WordPress\Post::mediaUploadURL( $post ) )
+			return;
+
+		Services\HeaderButtons::register( $this->key, [
+			'link' => $upload,
+			'text' => sprintf(
+				/* translators: `%s`: parent post title */
+				_x( 'Add Media File for &#8220;%s&#8221;', 'Header Button', 'geditorial-attachments' ),
+				WordPress\Post::title( $post )
+			),
+		] );
 	}
 
 	/**
