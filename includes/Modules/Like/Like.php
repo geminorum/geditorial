@@ -38,6 +38,7 @@ class Like extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_avatars' => [
 				'avatar_support' => [ _x( 'Displays avatars next to the like button.', 'Setting Description', 'geditorial-like' ), TRUE ],
+				'buddybress_support',
 				[
 					'field'       => 'max_avatars',
 					'type'        => 'number',
@@ -408,6 +409,7 @@ class Like extends gEditorial\Module
 	{
 		$html  = '';
 		$users = $this->get_liked_users( $post_id );
+		$bp    = $this->get_setting( 'buddybress_support' ) && function_exists( 'bp_core_get_userlink' ) ;
 
 		if ( count( $users ) ) {
 
@@ -426,7 +428,7 @@ class Like extends gEditorial\Module
 				foreach ( $query->results as $user ) {
 
 					// TODO: handle via `WordPress\BuddyPress`
-					if ( function_exists( 'bp_core_get_userlink' ) ) {
+					if ( $bp ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
 						$html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
