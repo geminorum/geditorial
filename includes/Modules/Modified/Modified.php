@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Modified extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\ViewEngines;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -21,7 +22,6 @@ class Modified extends gEditorial\Module
 			'title'    => _x( 'Modified', 'Modules: Modified', 'geditorial-admin' ),
 			'desc'     => _x( 'Last Modification of Contents', 'Modules: Modified', 'geditorial-admin' ),
 			'icon'     => 'update',
-			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'keywords' => [
 				'shortcodemodule',
@@ -101,8 +101,9 @@ class Modified extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'post_modified_shortcode' => 'post-modified',
-			'site_modified_shortcode' => 'site-modified',
+			'entry_modified_shortcode' => 'entry-modified',
+			'post_modified_shortcode'  => 'post-modified',
+			'site_modified_shortcode'  => 'site-modified',
 		];
 	}
 
@@ -110,6 +111,7 @@ class Modified extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->register_shortcode( 'entry_modified_shortcode' );
 		$this->register_shortcode( 'post_modified_shortcode' );
 		$this->register_shortcode( 'site_modified_shortcode' );
 
@@ -184,6 +186,13 @@ class Modified extends gEditorial\Module
 		echo $this->wrap( '<small>'.$modified.'</small>', '-'.$this->get_setting( 'insert_content', 'none' ) );
 
 		gEditorial\Scripts::enqueueTimeAgo();
+	}
+
+	public function entry_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
+	{
+		return $this->modified_data_summary( array_merge( [
+			'echo' => FALSE,
+		], (array) $atts ) );
 	}
 
 	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
@@ -357,5 +366,88 @@ class Modified extends gEditorial\Module
 			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
 
 		return Core\Date::get( $format, strtotime( $results[0]->{$date} ) );
+	}
+
+	// @source https://make.wordpress.org/core/handbook/tutorials/installing-wordpress-locally/
+	// @template https://codepen.io/geminorum/pen/yyJjaaP
+	public function modified_data_summary( $atts = [], $post = NULL )
+	{
+		$args = $this->filters( 'data_summary_args', self::atts( [
+			'id'       => $post,
+			'fields'   => NULL,
+			'context'  => NULL,
+			'template' => NULL,
+			'default'  => FALSE,
+			'before'   => '',
+			'after'    => '',
+			'echo'     => TRUE,
+			'render'   => NULL,
+		], $atts ), $post );
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $args['default'];
+
+		if ( ! $data = $this->modified_get_data_for_post( $post, $args['context'] ?? 'summary' ) )
+			return $args['default'];
+
+		if ( ! method_exists( $this, 'viewengine__render' ) ) {
+			$this->log( 'CRITICAL', 'VIEW ENGINE NOT AVAILABLE' );
+			return $args['default'];
+		}
+
+		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', 'post' ) )
+			return $args['default'];
+
+		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
+		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
+			return $args['default'];
+
+		$html = $args['before'].$html.$args['after'];
+
+		if ( ! $args['echo'] )
+			return $html;
+
+		echo $html;
+		return TRUE;
+	}
+
+	public function modified_get_data_for_post( $post = NULL, $context = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$data = [
+			'texts' => [
+				'published' => _x( 'First published', 'View Text', 'geditorial-modified' ),   // `Created on`
+				'updated'   => _x( 'Last updated', 'View Text', 'geditorial-modified' ),      // `Updated on`
+			],
+			'titles' => [
+				'published' => _x( 'Publicly accessed on', 'View Title', 'geditorial-modified' ),
+				'updated'   => _x( 'Lastly edited on', 'View Title', 'geditorial-modified' ),
+			],
+			'dates' => [
+				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'dateonly' ),
+				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'dateonly' ),
+			],
+			'times' => [
+				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'timeonly' ),
+				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'timeonly' ),
+			],
+			'datetimes' => [
+				'published' => wp_date( 'c', strtotime( $post->post_date ) ),
+				'updated'   => wp_date( 'c', strtotime( $post->post_modified ) ),
+			],
+			'actions' => [],
+		];
+
+		if ( $edit = WordPress\Post::edit( $post ) )
+			$data['actions'][] = [
+				'link'  => $edit,
+				'text'  => Services\CustomPostType::getLabel( $post, 'edit_item' ),
+				'title' => Services\CustomPostType::getLabel( $post, 'extended_label' ),
+				'class' => 'text-bg-dark', // `text-bg-danger`
+			];
+
+		return $this->filters( 'data_summary', $data, $post, $context );
 	}
 }

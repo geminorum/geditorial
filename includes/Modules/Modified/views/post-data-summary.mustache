@@ -1,0 +1,27 @@
+<div class="entry-modified d-flex flex-nowrap justify-content-start align-items-start my-5 py-4 gap-5 border-top border-bottom border-secondary-subtle">
+
+	<div class="-published">
+		<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
+			title="{{{data.titles.published}}}">{{data.texts.published}}</h6>
+		<div class="-time fs-5 text-secondary-emphasis"><time
+			class="do-timeago"
+			title="{{data.times.published}}"
+			datetime="{{data.datetimes.published}}">{{data.dates.published}}</time></div>
+	</div>
+
+	<div class="-updated">
+		<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
+			title="{{{data.titles.updated}}}">{{data.texts.updated}}</h6>
+		<div class="-time fs-5 text-secondary-emphasis"><time
+			class="do-timeago"
+			title="{{data.times.updated}}"
+			datetime="{{data.datetimes.updated}}">{{data.dates.updated}}</time></div>
+	</div>
+
+	<div class="-actions ms-auto d-flex flex-column align-items-end">
+		{{#data.actions}}
+			<a href="{{link}}"><span class="badge {{class}}" title="{{title}}">{{text}}</span></a>
+		{{/data.actions}}
+	</div>
+
+</div>
