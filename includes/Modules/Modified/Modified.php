@@ -55,10 +55,10 @@ class Modified extends gEditorial\Module
 				],
 				[
 					'field'       => 'insert_format',
-					'type'        => 'text',
+					'type'        => 'date-format',
 					'title'       => _x( 'Insert Format', 'Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Displays the date in this format on the content.', 'Setting Description', 'geditorial-modified' ),
-					'default'     => get_option( 'date_format' ), // TODO: add new setting type to select format
+					'default'     => 'dateonly',
 				],
 				'insert_priority',
 				[
@@ -267,7 +267,7 @@ class Modified extends gEditorial\Module
 			Core\Date::htmlDateTime(
 				$local,
 				$gmt,
-				$format ?? $this->get_setting( 'insert_format', get_option( 'date_format' ) ),
+				$format ?? gEditorial\Datetime::dateFormats( $this->get_setting( 'insert_format', 'dateonly' ) ),
 				gEditorial\Datetime::humanTimeDiffRound( $local, FALSE )
 				// gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' )
 			)

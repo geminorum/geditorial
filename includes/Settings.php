@@ -3369,6 +3369,58 @@ class Settings extends WordPress\Main
 
 				break;
 
+			case 'date-format':
+
+				if ( ! $args['values'] )
+					$args['values'] = Datetime::dateFormats( FALSE );
+
+				if ( ! is_null( $args['none_title'] ) ) {
+
+					$html = Core\HTML::tag( 'input', [
+						'type'     => 'radio',
+						'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+						'name'     => $name,
+						'value'    => $args['none_value'] ?? FALSE,
+						'checked'  => in_array( $args['none_value'], (array) $value ),
+						'class'    => Core\HTML::attrClass( $args['field_class'], '-type-radio', '-type-date-format', '-option-none' ),
+						'disabled' => Core\HTML::attrBoolean( $args['disabled'], $args['none_value'] ),
+						'readonly' => Core\HTML::attrBoolean( $args['readonly'], $args['none_value'] ),
+						'dir'      => $args['dir'],
+					] );
+
+					$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
+
+					Core\HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
+				}
+
+				foreach ( $args['values'] as $value_name => $value_title ) {
+
+					if ( in_array( $value_name, $exclude ) )
+						continue;
+
+					$html = Core\HTML::tag( 'input', [
+						'type'     => 'radio',
+						'id'       => $id.'-'.$value_name,
+						'name'     => $name,
+						'value'    => $value_name,
+						'checked'  => in_array( $value_name, (array) $value ),
+						'class'    => Core\HTML::attrClass( $args['field_class'], '-type-radio', '-type-date-format' ),
+						'disabled' => Core\HTML::attrBoolean( $args['disabled'], $value_name ),
+						'readonly' => Core\HTML::attrBoolean( $args['readonly'], $value_name ),
+						'dir'      => $args['dir'],
+					] );
+
+					$html.= sprintf( '&nbsp;<span title="%s">&#8206;%s&#8207; &mdash; %s</span>',
+						Core\HTML::escapeAttr( $value_name ),
+						Core\HTML::code( $value_title ),  // click-to-copy not working on label
+						Core\Date::get( $value_title )
+					);
+
+					Core\HTML::label( $html, $id.'-'.$value_name );
+				}
+
+				break;
+
 			case 'select':
 
 				if ( FALSE !== $args['values'] ) {
