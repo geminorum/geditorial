@@ -1196,7 +1196,11 @@ class Today extends gEditorial\Module
 		if ( ! $html = $this->the_day_content_callback( '', $the_day, $args['posttypes'] ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html, 'the-day', $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 
 	public function title_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -1226,7 +1230,11 @@ class Today extends gEditorial\Module
 		if ( ! $html = trim( ModuleHelper::titleTheDay( $the_day, '[]', FALSE ), '[]' ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html, 'the-day-title', $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'title_shortcode' ),
+			$args
+		);
 	}
 
 	public function buttons_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -1281,7 +1289,11 @@ class Today extends gEditorial\Module
 		if ( ! $html )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html, 'the-day-title', $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'buttons_shortcode' ),
+			$args
+		);
 	}
 
 	public function reports_settings( $sub )

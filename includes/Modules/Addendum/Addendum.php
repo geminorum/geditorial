@@ -470,7 +470,11 @@ class Addendum extends gEditorial\Module
 		if ( empty( $html ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 
 	public function tools_settings( $sub )

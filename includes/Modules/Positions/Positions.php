@@ -557,7 +557,7 @@ class Positions extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	// NOTE: refines count based on subcontent rows that contain `fullname` aka `comment_author`
+	// NOTE: refines count based on sub-content rows that contain `fullname` aka `comment_author`
 	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
 	{
 		global $wpdb;

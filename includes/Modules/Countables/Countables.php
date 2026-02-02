@@ -107,7 +107,11 @@ class Countables extends gEditorial\Module
 			$html.= $args['wrap_class'] ? Core\HTML::wrap( $box, $args['wrap_class'] ) : $box;
 		}
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'posttype_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'posttype_shortcode' ),
+			$args
+		);
 	}
 
 	public function taxonomy_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -154,6 +158,10 @@ class Countables extends gEditorial\Module
 			$html.= $args['wrap_class'] ? Core\HTML::wrap( $box, $args['wrap_class'] ) : $box;
 		}
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'taxonomy_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'taxonomy_shortcode' ),
+			$args
+		);
 	}
 }

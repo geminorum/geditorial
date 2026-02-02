@@ -36,12 +36,8 @@ class Like extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_general' => [
-				[
-					'field'       => 'display_avatars',
-					'title'       => _x( 'Display Avatars', 'Setting Title', 'geditorial-like' ),
-					'description' => _x( 'Displays avatars next to the like button.', 'Setting Description', 'geditorial-like' ),
-				],
+			'_avatars' => [
+				'avatar_support' => [ _x( 'Displays avatars next to the like button.', 'Setting Description', 'geditorial-like' ), TRUE ],
 				[
 					'field'       => 'max_avatars',
 					'type'        => 'number',
@@ -152,7 +148,7 @@ class Like extends gEditorial\Module
 		if ( ! in_array( $post->post_type, $this->posttypes() ) )
 			return FALSE;
 
-		$avatars = $this->get_setting( 'display_avatars', FALSE );
+		$avatars = $this->get_setting( 'avatar_support', TRUE );
 
 		$title = $this->get_setting( 'string_loading', _x( 'Loading &hellip;', 'Setting Default', 'geditorial-like' ) );
 		$title = $this->filters( 'loading', $title, $post );
@@ -264,10 +260,11 @@ class Like extends gEditorial\Module
 					'add'     => $check ? 'unlike' : 'dolike',
 					'nonce'   => wp_create_nonce( 'geditorial_like_ajax-'.$post['id'] ),
 					'count'   => Core\Number::format( $count ),
-					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
+					'avatars' => $this->get_setting( 'avatar_support', TRUE ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
-			break;
+				break;
+
 			case 'dolike':
 
 				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
@@ -280,10 +277,11 @@ class Like extends gEditorial\Module
 					'remove'  => 'dolike',
 					'add'     => 'unlike',
 					'count'   => Core\Number::format( $count ),
-					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
+					'avatars' => $this->get_setting( 'avatar_support', TRUE ) ? $this->avatars( $post['id'] ) : '',
 				] );
 
-			break;
+				break;
+
 			case 'unlike':
 
 				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
@@ -296,7 +294,7 @@ class Like extends gEditorial\Module
 					'remove'  => 'unlike',
 					'add'     => 'dolike',
 					'count'   => Core\Number::format( $count ),
-					'avatars' => $this->get_setting( 'display_avatars' ) ? $this->avatars( $post['id'] ) : '',
+					'avatars' => $this->get_setting( 'avatar_support', TRUE ) ? $this->avatars( $post['id'] ) : '',
 				] );
 		}
 
@@ -424,13 +422,14 @@ class Like extends gEditorial\Module
 			] );
 
 			if ( ! empty( $query->results ) ) {
+
 				foreach ( $query->results as $user ) {
 
 					// TODO: handle via `WordPress\BuddyPress`
 					if ( function_exists( 'bp_core_get_userlink' ) ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
-						$html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'" >'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
+						$html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					}
 				}
 			}

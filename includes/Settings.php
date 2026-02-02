@@ -698,6 +698,26 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_buddybress_support( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'buddybress_support',
+			'title'       => _x( 'BuddyPress Support', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? '',
+			'default'     => $default ?? '0',
+		];
+	}
+
+	public static function getSetting_avatar_support( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'avatar_support',
+			'title'       => _x( 'Avatar Support', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? '',
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_thumbnail_support( $description = NULL )
 	{
 		return [
@@ -2368,6 +2388,7 @@ class Settings extends WordPress\Main
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_shortcode'  : return [ _x( 'ShortCode Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_avatars'    : return [ _x( 'User Avatars', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_tabs'       : return [ _x( 'Content Tabs', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_fields'     : return [ _x( 'Data Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_constants'  : return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];

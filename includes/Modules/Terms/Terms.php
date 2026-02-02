@@ -332,7 +332,7 @@ class Terms extends gEditorial\Module
 			$this->filter( 'woocommerce_sortable_taxonomies' );
 		}
 
-		// fills current user as term author if not set for supported taxonomy
+		// Sets the current user as term author if not set for supported taxonomy.
 		if ( ! empty( $this->get_setting( 'term_author', [] ) )
 			&& $this->get_setting( 'auto_current_author' ) )
 			$this->filter_self( 'supported_field_edit', 4, 8, 'author' );
@@ -1409,7 +1409,7 @@ class Terms extends gEditorial\Module
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
 
-			break;
+				break;
 
 			case 'parent': // Must input the `term_id`, due to different parent taxonomy support!
 			case 'days':
@@ -1689,7 +1689,7 @@ class Terms extends gEditorial\Module
 					'style' => 'display:none',
 				] );
 
-			break;
+				break;
 
 			case 'parent':
 			case 'days':
@@ -1708,7 +1708,8 @@ class Terms extends gEditorial\Module
 					// 'data'  => [ 'ortho' => 'number' ],
 				] );
 
-			break;
+				break;
+
 			case 'user':
 			case 'author':
 
@@ -1717,7 +1718,8 @@ class Terms extends gEditorial\Module
 					'show_option_all' => gEditorial\Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
 			case 'color':
 
 				// NOTE: better not to use `input[typ=color]` since there is noway to leave it empty!
@@ -1731,7 +1733,8 @@ class Terms extends gEditorial\Module
 					'style' => 'width:85px;', // to override forced width within the quickedit
 				] );
 
-			break;
+				break;
+
 			case 'role':
 
 				$html.= Core\HTML::dropdown( $this->get_settings_default_roles(), [
@@ -1740,7 +1743,8 @@ class Terms extends gEditorial\Module
 					'none_title' => gEditorial\Settings::showOptionNone(),
 				] );
 
-			break;
+				break;
+
 			case 'posttype':
 
 				$html.= Core\HTML::dropdown( WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ), [
@@ -1816,6 +1820,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			default:
 			case 'label':
 			case 'plural':
 			case 'overwrite':
@@ -1824,7 +1829,6 @@ class Terms extends gEditorial\Module
 			case 'subtitle':
 			case 'period':
 			case 'venue':
-			default:
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
 

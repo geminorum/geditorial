@@ -180,10 +180,18 @@ class Modified extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
 
+		// echo $this->wrap(
+		// 	$this->modified_data_summary( [ 'echo' => FALSE ] ),
+		// 	'-'.$this->get_setting( 'insert_content', 'none' )
+		// );
+
 		if ( ! $modified = $this->get_post_modified() )
 			return;
 
-		echo $this->wrap( '<small>'.$modified.'</small>', '-'.$this->get_setting( 'insert_content', 'none' ) );
+		echo $this->wrap(
+			Core\HTML::small( $modified ),
+			'-'.$this->get_setting( 'insert_content', 'none' )
+		);
 
 		gEditorial\Scripts::enqueueTimeAgo();
 	}
@@ -200,7 +208,7 @@ class Modified extends gEditorial\Module
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
-			'format'   => gEditorial\Datetime::dateFormats( 'dateonly' ),
+			'format'   => NULL,
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -226,12 +234,19 @@ class Modified extends gEditorial\Module
 		else
 			$title = $args['title'];
 
-		$html = Core\Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+		$html = Core\Date::htmlDateTime(
+			$local,
+			$gmt,
+			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
+			$title
+		);
 
-		if ( $args['link'] )
-			$html = Core\HTML::link( $html, $args['link'] );
-
-		return gEditorial\ShortCode::wrap( $html, 'post-modified', $args, FALSE );
+		return gEditorial\ShortCode::wrap(
+			$args['link'] ? Core\HTML::link( $html, $args['link'] ) : $html,
+			$this->constant( 'post_modified_shortcode' ),
+			$args,
+			FALSE
+		);
 	}
 
 	public function get_post_modified( $format = NULL, $post = NULL )
@@ -242,18 +257,21 @@ class Modified extends gEditorial\Module
 		$gmt     = strtotime( $post->post_modified_gmt );
 		$local   = strtotime( $post->post_modified );
 		$publish = strtotime( $post->post_date_gmt );
-
-		if ( is_null( $format ) )
-			$format = $this->get_setting( 'insert_format', get_option( 'date_format' ) );
-
 		$minutes = $this->get_setting( 'display_after', '60' );
-		$prefix  = $this->get_setting( 'insert_prefix', '' );
 
-		if ( $gmt >= $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) )
-			return $prefix.' '.Core\Date::htmlDateTime( $local, $gmt, $format,
-				gEditorial\Datetime::humanTimeDiffRound( $local, FALSE ) );
+		if ( $minutes && ( $gmt < $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) ) )
+			return FALSE;
 
-		return FALSE;
+		return trim( sprintf( '%s %s',
+			$this->get_setting( 'insert_prefix' ) ?: '',
+			Core\Date::htmlDateTime(
+				$local,
+				$gmt,
+				$format ?? $this->get_setting( 'insert_format', get_option( 'date_format' ) ),
+				gEditorial\Datetime::humanTimeDiffRound( $local, FALSE )
+				// gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' )
+			)
+		) );
 	}
 
 	// just put {SITE_LAST_MODIFIED} on a menu item text!
@@ -273,7 +291,7 @@ class Modified extends gEditorial\Module
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'format'   => gEditorial\Datetime::dateFormats( 'dateonly' ),
+			'format'   => NULL,
 			'title'    => 'timeago',
 			'round'    => FALSE,
 			'link'     => FALSE,
@@ -295,24 +313,29 @@ class Modified extends gEditorial\Module
 		if ( 'timeago' == $args['title'] )
 			$title = gEditorial\Scripts::enqueueTimeAgo()
 				? FALSE
+				// ? gEditorial\Datetime::dateFormat( $site[1], 'fulltime' )
 				: gEditorial\Datetime::humanTimeDiffRound( $local, $args['round'] );
 		else
 			$title = $args['title'];
 
-		$html = Core\Date::htmlDateTime( $local, $gmt, $args['format'], $title );
+		$html = Core\Date::htmlDateTime(
+			$local,
+			$gmt,
+			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
+			$title
+		);
 
-		if ( $args['link'] )
-			$html = Core\HTML::link( $html, $args['link'] );
-
-		return gEditorial\ShortCode::wrap( $html, 'site-modified', $args, FALSE );
+		return gEditorial\ShortCode::wrap(
+			$args['link'] ? Core\HTML::link( $html, $args['link'] ) : $html,
+			$this->constant( 'site_modified_shortcode' ),
+			$args,
+			FALSE
+		);
 	}
 
 	public function get_site_modified( $format = NULL, $posttypes = NULL, $published = NULL )
 	{
 		global $wpdb;
-
-		if ( is_null( $format ) )
-			$format = get_option( 'date_format' );
 
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -323,10 +346,7 @@ class Modified extends gEditorial\Module
 		else if ( ! is_array( $posttypes ) )
 			$posttypes = [ $posttypes ];
 
-		if ( is_null( $published ) )
-			$published = $this->get_setting( 'last_published', FALSE );
-
-		if ( $published ) {
+		if ( $published ?? $this->get_setting( 'last_published', FALSE ) ) {
 			$date = 'post_date';
 			$gmt  = 'post_date_gmt';
 		} else {
@@ -365,7 +385,10 @@ class Modified extends gEditorial\Module
 		if ( TRUE === $format )
 			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
 
-		return Core\Date::get( $format, strtotime( $results[0]->{$date} ) );
+		return Core\Date::get(
+			$format ?? get_option( 'date_format' ),
+			strtotime( $results[0]->{$date} )
+		);
 	}
 
 	// @source https://make.wordpress.org/core/handbook/tutorials/installing-wordpress-locally/

@@ -35,7 +35,7 @@ class Datetime extends WordPress\Main
 			'title'    => $title,
 			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
 		], self::formatByCalendar(
-			$format ?? self::dateFormats( 'dateonly' ),
+			$format ?? self::dateFormats( 'daydate' ),
 			$datetime_string,
 			$calendar_type,
 			$timezone_string,
@@ -83,7 +83,8 @@ class Datetime extends WordPress\Main
 				'age'       => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
 				'birthday'  => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
 				'current'   => _x( 'M j, Y @ G:i', 'Date Format: `current`', 'geditorial' ),
-				'dateonly'  => _x( 'l, F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
+				'dateonly'  => _x( 'F j, Y', 'Date Format: `dateonly`', 'geditorial' ),
+				'daydate'   => _x( 'l, F j, Y', 'Date Format: `daydate`', 'geditorial' ),
 				'datetime'  => _x( 'm/d/Y G:i', 'Date Format: `datetime`', 'geditorial' ),
 				'default'   => _x( 'm/d/Y', 'Date Format: `default`', 'geditorial' ),
 				'fulltime'  => _x( 'l, M j, Y @ H:i', 'Date Format: `fulltime`', 'geditorial' ),
@@ -114,9 +115,9 @@ class Datetime extends WordPress\Main
 		$gmt   = strtotime( $post->post_modified_gmt );
 		$local = strtotime( $post->post_modified );
 
-		$format = self::dateFormats( 'dateonly' );
 		/* translators: `%s`: date string */
 		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' );
+		$format = self::dateFormats( 'daydate' );
 
 		return $attr
 			? sprintf( $title, Core\Date::get( $format, $local ) )

@@ -220,18 +220,18 @@ class Drafts extends gEditorial\Module
 				if ( ! $this->role_can( 'adminbar' ) )
 					gEditorial\Ajax::errorUserCant();
 
-				gEditorial\Ajax::success( $this->drafts_list() );
+				gEditorial\Ajax::success( $this->_drafts_list_markup( 'adminbar' ) );
 		}
 
 		gEditorial\Ajax::errorWhat();
 	}
 
-	private function drafts_list()
+	private function _drafts_list_markup( $context = NULL )
 	{
-		$html = '';
 		/* translators: `%s`: drafts count */
 		$all  = _x( 'View all %s drafts', 'Header', 'geditorial-drafts' );
-		$user = 'all' == $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
+		$user = 'all' === $this->get_setting( 'summary_scope', 'all' ) ? 0 : get_current_user_id();
+		$html = '';
 
 		foreach ( $this->posttypes() as $posttype ) {
 
@@ -261,7 +261,7 @@ class Drafts extends gEditorial\Module
 			$html.= '<div class="-block"><h3>'.$link.'</h3><ul>'.$block.'</ul></div>';
 		}
 
-		return $html ?:'<div class="-empty"><p>'._x( '(none)', 'Empty', 'geditorial-drafts' ).'</p></div>';
+		return $html ?: $this->get_notice_for_empty( $context, NULL, FALSE );
 	}
 
 	private function get_drafts( $posttype = 'post', $user = 0 )

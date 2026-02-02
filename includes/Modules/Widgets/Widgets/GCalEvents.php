@@ -51,7 +51,7 @@ class GCalEvents extends gEditorial\Widget
 					echo '<div class="event-wrapper" itemscope itemtype="http://schema.org/Event">';
 
 					echo '<div class="event-date" itemprop="startDate" content="'.date( 'c', $timestamp ).'">'
-						.Core\Date::get( $formats['dateonly'], $timestamp ).'</div>';
+						.Core\Date::get( $formats['daydate'], $timestamp ).'</div>';
 
 					echo '<div class="event-title" itemprop="name">'.WordPress\Strings::prepTitle( $item->summary ).'</div>';
 
