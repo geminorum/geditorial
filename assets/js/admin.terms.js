@@ -147,6 +147,7 @@
       app.inlineText('contact', tag, event); // TODO convert to code
       app.inlineText('venue', tag, event);
       app.inlineImage(tag, event);
+      app.inlineSelect('user', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineColor(tag, event);
       app.inlineSelect('role', tag, event);

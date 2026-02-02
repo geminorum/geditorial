@@ -23,7 +23,8 @@ class Terms extends gEditorial\Module
 		'venue',
 		'image',
 		// 'icon', // TODO
-		'author',
+		'user'  ,  // one-to-one
+		'author',  // one-to-many
 		'color',
 		'role',
 		'roles',
@@ -177,6 +178,7 @@ class Terms extends gEditorial\Module
 				'contact'   => _x( 'Contact', 'Titles', 'geditorial-terms' ),
 				'venue'     => _x( 'Venue', 'Titles', 'geditorial-terms' ),
 				'image'     => _x( 'Image', 'Titles', 'geditorial-terms' ),
+				'user'      => _x( 'User', 'Titles', 'geditorial-terms' ),
 				'author'    => _x( 'Author', 'Titles', 'geditorial-terms' ),
 				'color'     => _x( 'Color', 'Titles', 'geditorial-terms' ),
 				'role'      => _x( 'Role', 'Titles', 'geditorial-terms' ),
@@ -219,6 +221,7 @@ class Terms extends gEditorial\Module
 				'contact'   => _x( 'Adds a way to contact someone about the term, by url, email or phone.', 'Descriptions', 'geditorial-terms' ),
 				'venue'     => _x( 'Defines a string as venue for the term.', 'Descriptions', 'geditorial-terms' ),
 				'image'     => _x( 'Assigns a custom image to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
+				'user'      => _x( 'Connects a user to the term to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Descriptions', 'geditorial-terms' ),
 				'color'     => _x( 'Assigns a custom color to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
 				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
@@ -619,7 +622,7 @@ class Terms extends gEditorial\Module
 			$prepare = 'register_prepare_callback_'.$field;
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'parent', 'order', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
+			if ( in_array( $field, [ 'parent', 'order', 'user', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
 				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
 
 			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
@@ -719,6 +722,7 @@ class Terms extends gEditorial\Module
 			'contact',
 			'venue',
 			'image',
+			'user',
 			'author',
 			'color',
 			'role',
@@ -1033,6 +1037,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'user':
 			case 'author':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -1426,6 +1431,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'user':
 			case 'author':
 
 				// Selected value on add new term form
@@ -1703,6 +1709,7 @@ class Terms extends gEditorial\Module
 				] );
 
 			break;
+			case 'user':
 			case 'author':
 
 				$html.= gEditorial\Listtable::restrictByAuthor( 0, 'term-'.$field, [
@@ -2029,6 +2036,7 @@ class Terms extends gEditorial\Module
 						$child['title'] = WordPress\Term::title( (int) $meta );
 						break;
 
+					case 'user':
 					case 'author':
 
 						$child['title'] = get_user_by( 'id', (int) $meta )->display_name;
