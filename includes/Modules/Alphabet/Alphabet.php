@@ -33,26 +33,15 @@ class Alphabet extends gEditorial\Module
 			'posttypes_option'  => 'posttypes_option',
 			'taxonomies_option' => 'taxonomies_option',
 			'_constants'        => [
-				[
-					'field'       => 'shortcode_posts_constant',
-					'type'        => 'text',
-					'title'       => _x( 'Posts Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
-					'description' => _x( 'Customizes the alphabet list of posts short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
-					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
-					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-					'field_class' => [ 'medium-text', 'code-text' ],
-					'placeholder' => 'alphabet-posts',
-				],
-				[
-					'field'       => 'shortcode_terms_constant',
-					'type'        => 'text',
-					'title'       => _x( 'Terms Shortcode Tag', 'Setting: Setting Title', 'geditorial-alphabet' ),
-					'description' => _x( 'Customizes the alphabet list of terms short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-alphabet' ),
-					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
-					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-					'field_class' => [ 'medium-text', 'code-text' ],
-					'placeholder' => 'alphabet-terms',
-				],
+				$this->settings_shortcode_constant(
+					'shortcode_posts',
+					_x( 'Posts', 'Setting: Short-code Title', 'geditorial-alphabet' )
+				),
+
+				$this->settings_shortcode_constant(
+					'shortcode_terms',
+					_x( 'Terms', 'Setting: Short-code Title', 'geditorial-alphabet' )
+				),
 			],
 		];
 	}

@@ -95,26 +95,18 @@ class Modified extends gEditorial\Module
 				'adminbar_summary',
 			],
 			'_constants' => [
-				[
-					'field'       => 'post_modified_shortcode_constant',
-					'type'        => 'text',
-					'title'       => _x( 'Post Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Customizes the post modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
-					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
-					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-					'field_class' => [ 'medium-text', 'code-text' ],
-					'placeholder' => 'post-modified',
-				],
-				[
-					'field'       => 'site_modified_shortcode_constant',
-					'type'        => 'text',
-					'title'       => _x( 'Site Shortcode Tag', 'Setting: Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Customizes the site modified short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-modified' ),
-					'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
-					'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-					'field_class' => [ 'medium-text', 'code-text' ],
-					'placeholder' => 'site-modified',
-				],
+				$this->settings_shortcode_constant(
+					'entry_modified_shortcode',
+					_x( 'Entry Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+				),
+				$this->settings_shortcode_constant(
+					'post_modified_shortcode',
+					_x( 'Post Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+				),
+				$this->settings_shortcode_constant(
+					'site_modified_shortcode',
+					_x( 'Site Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+				),
 			],
 		];
 	}

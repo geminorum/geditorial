@@ -19,6 +19,34 @@ trait SettingsCore
 		];
 	}
 
+	protected function settings_shortcode_constant( $constant, $title = NULL, $extended = NULL )
+	{
+		$unfiltered = $this->get_global_constants();
+		$name       = $title ?? str_ireplace( '_', ' ', trim( Core\Text::removeStartEnd( $constant, 'shortcode' ), '_' ) );
+
+		return [
+			'field' => sprintf( '%s_constant', $constant ),
+			'type'  => 'text',
+			'title' => sprintf(
+				/* translators: `%s`: short-code name */
+				_x( '%s Shortcode', 'Settings: Setting Title', 'geditorial-admin' ),
+				$title ?? Core\Text::titleCase( $name )
+			),
+			'description' => sprintf(
+				/* translators: `%s`: short-code name extended */
+				_x( 'Customizes the %s short-code tag. Leave blank for default.', 'Settings: Setting Description', 'geditorial-admin' ),
+				Core\HTML::strong( $extended ?? Core\Text::strToLower( $name ) )
+			),
+			'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
+			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+			'placeholder' => $unfiltered[$constant],
+			'field_class' => [
+				'medium-text',
+				'code-text',
+			],
+		];
+	}
+
 	// NOTE: features are `TRUE` by default
 	public function get_feature( $field, $fallback = TRUE )
 	{
