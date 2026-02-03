@@ -1042,8 +1042,19 @@ class Terms extends gEditorial\Module
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
-					$user = get_user_by( 'id', $meta );
-					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.$user->display_name.'</span>';
+					if ( $user = get_user_by( 'id', (int) $meta ) ) {
+
+						$html = $user->display_name ?: $user->user_login;
+
+						if ( $edit = WordPress\User::edit( $user->ID ) )
+							$html = Core\HTML::link( $html, $edit, TRUE );
+
+					} else {
+
+						$html = gEditorial\Plugin::na();
+					}
+
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.$html.'</span>';
 
 				} else {
 
@@ -2043,7 +2054,12 @@ class Terms extends gEditorial\Module
 					case 'user':
 					case 'author':
 
-						$child['title'] = get_user_by( 'id', (int) $meta )->display_name;
+							if ( $user = get_user_by( 'id', (int) $meta ) )
+								$child['title'] = $user->display_name ?: $user->user_login;
+
+							else
+								$child['title'] = gEditorial\Plugin::na();
+
 						break;
 
 					case 'color':
