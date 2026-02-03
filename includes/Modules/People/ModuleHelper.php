@@ -18,7 +18,10 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		$criteria = FALSE;  // Means no need the search again!
 
-		$sanitized   = Core\Text::trimQuotes( $string );
+		if ( ! $sanitized = Core\Text::trimQuotes( $string ) )
+			return $criteria;
+
+		$sanitized   = str_ireplace( '،', ',', $sanitized ); // corrects the Arabic comma
 		$familyfirst = self::filters( 'format_name', Core\Text::nameFamilyFirst( $sanitized ), $sanitized, NULL );
 		$familylast  = self::filters( 'display_name', Core\Text::nameFamilyLast( $sanitized ), $sanitized, NULL );
 
