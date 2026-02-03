@@ -461,10 +461,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Number of posts to show:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Number of posts to show:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_trim_chars( $instance, $default = '', $field = 'trim_chars', $label = NULL )
@@ -477,10 +477,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Trim Characters:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Trim Characters:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_context( $instance, $default = '', $field = 'context', $label = NULL )
@@ -493,10 +493,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Context:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Context:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_class( $instance, $default = '', $field = 'class', $label = NULL )
@@ -509,10 +509,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Class:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Class:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE, $label = NULL )
@@ -538,10 +538,10 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'PostType:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'PostType:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any', $label = NULL )
@@ -598,10 +598,10 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Taxonomy:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Taxonomy:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_title( $instance, $default = '', $field = 'title', $label = NULL )
@@ -614,10 +614,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Title:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Title:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_title_link( $instance, $default = '', $field = 'title_link', $label = NULL )
@@ -630,10 +630,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Title Link:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Title Link:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_title_image( $instance, $default = '', $field = 'title_image', $label = NULL )
@@ -646,10 +646,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Title Image:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Title Image:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
@@ -662,10 +662,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
@@ -678,10 +678,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Custom Code:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Custom Code:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_title( $instance, $default = '', $field = 'custom_title', $label = NULL )
@@ -694,10 +694,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Custom Title:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Custom Title:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
@@ -710,10 +710,10 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? _x( 'Empty Message:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Empty Message:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
@@ -723,13 +723,13 @@ class Widget extends \WP_Widget
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => $instance[$field] ?? $default,
+			'value' => $instance[$field] ?? $default, // TODO: use default form `Services\Avatars`
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', _x( 'Avatar Size:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Avatar Size:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_image_size( $instance, $default = NULL, $field = 'image_size', $posttype = 'post' )
@@ -754,10 +754,10 @@ class Widget extends \WP_Widget
 				'id'    => $this->get_field_id( $field ),
 			], $html );
 
-			Core\HTML::label(
-				sprintf( '%s %s', _x( 'Image Size:', 'Widget Core', 'geditorial-admin' ), $html ),
-				$this->get_field_id( $field )
-			);
+			Core\HTML::label( Core\Text::spaced(
+				$label ?? _x( 'Image Size:', 'Widget Core', 'geditorial-admin' ),
+				$html
+			), $this->get_field_id( $field ) );
 
 		} else {
 
@@ -775,10 +775,10 @@ class Widget extends \WP_Widget
 			'selected'   => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s %s', $label ?? '', $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label,
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
@@ -790,10 +790,10 @@ class Widget extends \WP_Widget
 			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Checked', 'Widget Core', 'geditorial-admin' ) ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::gluedNBSP(
+			$label ?? _x( 'Checked:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	// only works on hierarchical
@@ -818,10 +818,10 @@ class Widget extends \WP_Widget
 			Core\HTML::inputHidden( $this->get_field_name( $field ), $page_id );
 		}
 
-		Core\HTML::label(
-			sprintf( '%s %s', _x( 'Page:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Page:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
@@ -860,10 +860,10 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label(
-			sprintf( '%s %s', _x( 'Term:', 'Widget Core', 'geditorial-admin' ), $html ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::spaced(
+			$label ?? _x( 'Term:', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_has_thumbnail( $instance, $default = FALSE, $field = 'has_thumbnail', $label = NULL )
@@ -875,10 +875,10 @@ class Widget extends \WP_Widget
 			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' ) ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::gluedNBSP(
+			$label ?? _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 
 	public function form_wrap_as_items( $instance, $default = TRUE, $field = 'wrap_as_items', $label = NULL )
@@ -890,9 +890,9 @@ class Widget extends \WP_Widget
 			'checked' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label(
-			sprintf( '%s&nbsp;%s', $html, $label ?? _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' ) ),
-			$this->get_field_id( $field )
-		);
+		Core\HTML::label( Core\Text::gluedNBSP(
+			$label ?? _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' ),
+			$html
+		), $this->get_field_id( $field ) );
 	}
 }

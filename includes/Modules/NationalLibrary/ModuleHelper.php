@@ -346,7 +346,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				$flags = [ 'has-name' ];
 				$data  = [
-					'fullname'   => sprintf( '%s %s', $parts[1], $parts[0] ),
+					'fullname'   => Core\Text::spaced( $parts[1], $parts[0] ),
 					'first_name' => $parts[1],
 					'last_name'  => $parts[0],
 				];

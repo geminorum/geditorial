@@ -28,12 +28,23 @@ class Datetime extends WordPress\Main
 			: $html;
 	}
 
+	// FIXME: WTF?!
+	// - `rmm5t/jquery-timeago` not working without title!
+	// - replaces title attribute with HTML text
+	// - the title must be use for full-time info
+	// `2022-03-25 21:49:58`: `post_modified`
+	// `2022-03-25 17:19:58`: `post_modified_gmt`
+	// `2022-03-25T17:19:58+00:00`
+	// `2022-03-25T21:49:58+00:00`
+	// `<time datetime="2022-03-25T21:49:58+00:00" title="۴ سال پیش" class="do-timeago">۵ فروردین ۱۴۰۱</time>`
+	// `<time datetime="2022-03-25T17:19:58+00:00" title="۴ سال پیش" class="do-timeago">۶ فروردین ۱۴۰۱</time>`
 	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		return Core\HTML::tag( 'time', [
-			'datetime' => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
-			'title'    => $title,
-			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
+			'datetime'       => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
+			'title'          => $title,
+			'data-bs-toggle' => $title ? 'tooltip' : FALSE,
+			'class'          => 'do-timeago', // @SEE: http://timeago.yarp.com/
 		], self::formatByCalendar(
 			$format ?? self::dateFormats( 'daydate' ),
 			$datetime_string,

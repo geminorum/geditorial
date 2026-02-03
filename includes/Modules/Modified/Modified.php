@@ -46,7 +46,8 @@ class Modified extends gEditorial\Module
 				'dashboard_authors',
 				'dashboard_count',
 			],
-			'_frontend' => [
+			'_content' => [
+				'insert_content',
 				[
 					'field'       => 'insert_context',
 					'type'        => 'radio',
@@ -58,20 +59,12 @@ class Modified extends gEditorial\Module
 						'delayed' => _x( 'Delayed', 'Setting Option', 'geditorial-modified' ),
 					],
 				],
-				'insert_content',
 				[
 					'field'       => 'insert_prefix',
 					'type'        => 'text',
 					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Custom string before the modified time on the content.', 'Setting Description', 'geditorial-modified' ),
 					'default'     => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
-				],
-				[
-					'field'       => 'insert_format',
-					'type'        => 'date-format',
-					'title'       => _x( 'Insert Format', 'Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Displays the date in this format on the content.', 'Setting Description', 'geditorial-modified' ),
-					'default'     => 'dateonly',
 				],
 				'insert_priority',
 				[
@@ -81,6 +74,13 @@ class Modified extends gEditorial\Module
 					'description' => _x( 'Skips displaying modified since the original content published time.', 'Setting Description', 'geditorial-modified' ),
 					'default'     => '60',
 					'values'      => gEditorial\Settings::minutesOptions(),
+				],
+				[
+					'field'       => 'insert_format',
+					'type'        => 'date-format',
+					'title'       => _x( 'Insert Format', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Displays the date in this format on the content.', 'Setting Description', 'geditorial-modified' ),
+					'default'     => 'dateonly',
 				],
 			],
 			'_supports' => [
@@ -133,7 +133,7 @@ class Modified extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		add_action( 'gnetwork_navigation_help_placeholders', [ $this, 'help_placeholders' ], 10, 2 );
+		$this->filter( 'navigation_help_placeholders', 2, 10, FALSE, 'gnetwork' );
 	}
 
 	public function template_redirect()
@@ -141,8 +141,7 @@ class Modified extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		if ( $this->hook_insert_content( 30 ) )
-			$this->enqueue_styles(); // widget must add this itself!
+		$this->hook_insert_content( 30 );
 	}
 
 	public function dashboard_widgets()
@@ -217,7 +216,7 @@ class Modified extends gEditorial\Module
 		], (array) $atts ) );
 	}
 
-	// `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
+	// TODO: `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
 	public function post_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
@@ -269,26 +268,24 @@ class Modified extends gEditorial\Module
 			return FALSE;
 
 		$gmt     = strtotime( $post->post_modified_gmt );
-		$local   = strtotime( $post->post_modified );
 		$publish = strtotime( $post->post_date_gmt );
 		$minutes = $this->get_setting( 'display_after', '60' );
 
 		if ( $minutes && ( $gmt < $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) ) )
 			return FALSE;
 
-		return trim( sprintf( '%s %s',
+		return Core\Text::spaced(
 			$this->get_setting( 'insert_prefix' ) ?: '',
-			Core\Date::htmlDateTime(
-				$local,
-				$gmt,
+			gEditorial\Datetime::htmlDateTime(
+				$post->post_modified,
 				$format ?? gEditorial\Datetime::dateFormats( $this->get_setting( 'insert_format', 'dateonly' ) ),
-				gEditorial\Datetime::humanTimeDiffRound( $local, FALSE )
-				// gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' )
+				gEditorial\Datetime::humanTimeDiffRound( strtotime( $post->post_modified ), FALSE )
+				// gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' )
 			)
-		) );
+		);
 	}
 
-	// just put {SITE_LAST_MODIFIED} on a menu item text!
+	// NOTE: just put `{SITE_LAST_MODIFIED}` on a menu item text!
 	public function wp_nav_menu_items( $items, $args )
 	{
 		if ( ! Core\Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
@@ -297,9 +294,10 @@ class Modified extends gEditorial\Module
 		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->get_site_modified() ?: '', $items );
 	}
 
-	public function help_placeholders( $before, $after )
+	//@hook: `gnetwork_navigation_help_placeholders`
+	public function navigation_help_placeholders( $before, $after )
 	{
-		echo $before.'<code>{SITE_LAST_MODIFIED}</code>'.$after;
+		echo $before.Core\HTML::code( '{SITE_LAST_MODIFIED}', FALSE, TRUE ).$after;
 	}
 
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -400,7 +398,7 @@ class Modified extends gEditorial\Module
 			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
 
 		return Core\Date::get(
-			$format ?? get_option( 'date_format' ),
+			$format ?? gEditorial\Datetime::dateFormats( 'daydate' ),
 			strtotime( $results[0]->{$date} )
 		);
 	}
@@ -448,27 +446,32 @@ class Modified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function modified_get_data_for_post( $post = NULL, $context = NULL )
+	public function modified_get_data_for_post( $post = NULL, $context = NULL, $format = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
+		$context = $context ?? 'summary';
+		$format  = $format  ?? $this->get_setting( 'insert_format', 'dateonly' );
+
 		$data = [
+			'context' => $context,
+
 			'texts' => [
-				'published' => _x( 'First published', 'View Text', 'geditorial-modified' ),   // `Created on`
-				'updated'   => _x( 'Last updated', 'View Text', 'geditorial-modified' ),      // `Updated on`
+				'published' => _x( 'First published', 'View Text', 'geditorial-modified' ),   // `Created on` // TODO: Optional Customization
+				'updated'   => _x( 'Last updated', 'View Text', 'geditorial-modified' ),      // `Updated on` // TODO: Optional Customization
 			],
 			'titles' => [
 				'published' => _x( 'Publicly accessed on', 'View Title', 'geditorial-modified' ),
 				'updated'   => _x( 'Lastly edited on', 'View Title', 'geditorial-modified' ),
 			],
 			'dates' => [
-				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'dateonly' ),
-				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'dateonly' ),
+				'published' => gEditorial\Datetime::dateFormat( $post->post_date, $format ),
+				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, $format ),
 			],
-			'times' => [
-				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'timeonly' ),
-				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'timeonly' ),
+			'fulltimes' => [
+				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' ),
+				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' ),
 			],
 			'datetimes' => [
 				'published' => wp_date( 'c', strtotime( $post->post_date ) ),
@@ -485,6 +488,6 @@ class Modified extends gEditorial\Module
 				'class' => 'text-bg-dark', // `text-bg-danger`
 			];
 
-		return $this->filters( 'data_summary', $data, $post, $context );
+		return $this->filters( 'data_summary', $data, $post, $context, $format );
 	}
 }

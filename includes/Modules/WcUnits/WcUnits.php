@@ -297,7 +297,7 @@ class WcUnits extends gEditorial\Module
 
 		$template = $this->get_setting(
 			sprintf( 'weight_template__%s', $unit ),
-			sprintf( '%s %s', '%s', $unit )
+			Core\Text::spaced( '%s', $unit )
 		);
 
 		return sprintf( $template, Core\Number::localize( $formatted ) );
@@ -315,7 +315,7 @@ class WcUnits extends gEditorial\Module
 
 		$template = $this->get_setting(
 			sprintf( 'dimensions_template__%s', $unit ),
-			sprintf( '%s %s', '%s', $unit )
+			Core\Text::spaced( '%s', $unit )
 		);
 
 		return sprintf( $template, Core\Number::localize( $formatted ) );

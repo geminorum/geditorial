@@ -31,29 +31,24 @@ trait ContentInsert
 			$posttypes = $this->posttypes();
 
 		else if ( $posttypes && ! is_array( $posttypes ) )
-			$posttypes = $this->constant( $posttypes );
+			$posttypes = $this->constant( $posttypes, $posttypes );
 
-		if ( ! is_singular( $posttypes ) )
-			return FALSE;
-
-		return TRUE;
+		return is_singular( $posttypes );
 	}
 
-	protected function hook_insert_content( $default_priority = 50 )
+	protected function hook_insert_content( $default_priority = NULL, $setting_default = NULL )
 	{
-		$insert = $this->get_setting( 'insert_content', 'none' );
-
-		if ( 'none' == $insert )
+		if ( 'none' === ( $insert = $this->get_setting( 'insert_content', $setting_default ?? 'none' ) ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'content', $insert ),
+		return add_action(
+			$this->hook_base( 'content', $insert ),
 			[ $this, 'insert_content' ],
-			$this->get_setting( 'insert_priority', $default_priority )
+			$this->get_setting( 'insert_priority', $default_priority ?? 50 )
 		);
-
-		return TRUE;
 	}
 
+	// TODO: insert content settings for each post-type
 	// NOTE: Example Usage
 	/***
 	public function insert_content( $content )
@@ -66,7 +61,22 @@ trait ContentInsert
 
 		$html = '';
 
-		echo $this->wrap( $html, '-before' );
+		$this->wrap_content_insert( $html, 'before' );
 	}
 	***/
+
+	protected function wrap_content_insert( $html, $extra = [], $insert = NULL )
+	{
+		if ( ! $html )
+			return;
+
+		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
+		$margin = 'none' !== $insert ? ( 'after' === $insert ? 'mt-3' : 'mb-3' ) : 'm-0'; // NOTE: BS compatible CSS classes
+
+		echo $this->wrap( $html, Core\HTML::attrClass(
+			sprintf( '-%s', $insert ),
+			$margin,
+			$extra
+		) );
+	}
 }

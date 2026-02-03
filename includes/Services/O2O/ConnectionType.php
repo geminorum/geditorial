@@ -382,7 +382,7 @@ class ConnectionType extends Core\Base
 		foreach ( [ 'from', 'to' ] as $key )
 			$desc[$key] = $this->side[$key]->get_desc();
 
-		$label = sprintf( '%s %s %s', $desc['from'], $this->strategy->get_arrow(), $desc['to'] );
+		$label = Core\Text::spaced( $desc['from'], $this->strategy->get_arrow(), $desc['to'] );
 		$title = $this->get_field( 'title', 'from' );
 
 		if ( $title )

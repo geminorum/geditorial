@@ -261,13 +261,13 @@ trait QuickPosts
 		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
-		/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial-admin' ) );
-		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', sprintf( '%s %s', '%1$s', $object->labels->add_new_item ) );
+		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', Core\Text::spaced( '%1$s', $object->labels->add_new_item ) );
 		$name  = $object->labels->singular_name;
 
 		if ( $inline )
-			// NOTE: WTF: thick-box bug: does not process the arg after `TB_inline`!
+			// NOTE: WTF: thick-box bug: does not process the argument after `TB_inline`!
 			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
 		else
 			// NOTE: WTF: thick-box bug: does not pass the args after `TB_iframe`!

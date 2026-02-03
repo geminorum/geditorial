@@ -7,12 +7,12 @@ class Module extends WordPress\Module
 	use Internals\Assets;
 	use Internals\ContentInsert;
 	use Internals\CoreAdminBar;
+	use Internals\CoreComments;
 	use Internals\CoreConstants;
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
 	use Internals\CoreRoles;
 	use Internals\CoreTaxonomies;
-	use Internals\CoreComments;
 	use Internals\DefaultTerms;
 	use Internals\ModuleLinks;
 	use Internals\SettingsCore;

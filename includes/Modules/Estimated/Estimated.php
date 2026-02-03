@@ -42,11 +42,11 @@ class Estimated extends gEditorial\Module
 					'default'     => 250,
 				],
 				[
-					'field'       => 'prefix',
-					'type'        => 'text',
-					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-estimated' ),
-					'description' => _x( 'Custom string before the estimated time on the content.', 'Setting Description', 'geditorial-estimated' ),
-					'default'     => _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ),
+					'field'       => 'min_words',
+					'type'        => 'number',
+					'title'       => _x( 'Minimum Words', 'Setting Title', 'geditorial-estimated' ),
+					'description' => _x( 'And above this number of words will show the notice', 'Setting Description', 'geditorial-estimated' ),
+					'default'     => 1000,
 				],
 				[
 					'field'       => 'teaser',
@@ -59,18 +59,26 @@ class Estimated extends gEditorial\Module
 						'include' => _x( 'Include', 'Content Teaser Option', 'geditorial-estimated' ),
 					],
 				],
-				'insert_content',
-				'insert_priority',
 				[
-					'field'       => 'min_words',
-					'type'        => 'number',
-					'title'       => _x( 'Minimum Words', 'Setting Title', 'geditorial-estimated' ),
-					'description' => _x( 'And above this number of words will show the notice', 'Setting Description', 'geditorial-estimated' ),
-					'default'     => 1000,
+					'field'       => 'prefix',
+					'type'        => 'text',
+					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-estimated' ),
+					'description' => sprintf(
+						/* translators: `%s`: zero placeholder */
+						_x( 'Custom string before the estimated time on the content. Leave blank for default or %s to disable.', 'Setting Description', 'geditorial-estimated' ),
+						Core\HTML::code( '0' )
+					),
+					'placeholder' => _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ),
 				],
-				'adminbar_summary',
 			],
 			'posttypes_option' => 'posttypes_option',
+			'_content' => [
+				'insert_content',
+				'insert_priority',
+			],
+			'_frontend' => [
+				'adminbar_summary',
+			],
 		];
 	}
 
@@ -86,8 +94,7 @@ class Estimated extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		if ( $this->hook_insert_content( 22 ) )
-			$this->enqueue_styles(); // widget must add this itself!
+		$this->hook_insert_content( 22 );
 	}
 
 	public function setup_ajax()
@@ -176,11 +183,12 @@ class Estimated extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
 
-		if ( ! $post = WordPress\Post::get() )
+		if ( ! $html = $this->get_estimated_for_post() )
 			return;
 
-		if ( $html = $this->get_estimated( $post->ID ) )
-			echo $this->wrap( $html, '-before' );
+		$this->wrap_content_insert(
+			Core\HTML::small( $html, 'text-muted' )
+		);
 	}
 
 	private function _get_post_wordcount( $post_id, $update = FALSE )
@@ -209,20 +217,29 @@ class Estimated extends gEditorial\Module
 		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_post_wordcount' ) );
 	}
 
+	// NOTE: DEPRECATED
 	public function get_estimated( $post_id, $prefix = NULL )
 	{
-		if ( ! $wordcount = $this->_fetch_postmeta( $post_id ) )
-			$wordcount = $this->_get_post_wordcount( $post_id, TRUE );
+		self::_dep( 'get_estimated_for_post()' );
+
+		return $this->get_estimated_for_post( $post_id, $prefix );
+	}
+
+	public function get_estimated_for_post( $post = NULL, $prefix = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $wordcount = $this->_fetch_postmeta( $post->ID ) )
+			$wordcount = $this->_get_post_wordcount( $post->ID, TRUE );
 
 		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
 			return FALSE;
 
-		if ( is_null( $prefix ) )
-			$prefix = $this->get_setting( 'prefix', _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ) );
-
-		$html = ( $prefix ? $prefix.' ' : '' ).$this->get_time_estimated( $wordcount, TRUE );
-
-		return $html;
+		return Core\Text::spaced(
+			$prefix ?? $this->get_setting_fallback( 'prefix', _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ) ),
+			$this->get_time_estimated( $wordcount, TRUE )
+		);
 	}
 
 	public function get_time_estimated( $wordcount = 0, $info = TRUE )
@@ -240,7 +257,7 @@ class Estimated extends gEditorial\Module
 			);
 
 		if ( $info )
-			return '<span data-toggle="tooltip" title="'.Core\HTML::escape( sprintf(
+			return '<span data-bs-toggle="tooltip" title="'.Core\HTML::escape( sprintf(
 				/* translators: `%s`: average word count */
 				_x( 'If you try to read %s words per minute.', 'Title Attr', 'geditorial-estimated' ),
 				Core\Number::format( $avgtime )

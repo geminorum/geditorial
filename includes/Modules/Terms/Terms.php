@@ -1910,7 +1910,7 @@ class Terms extends gEditorial\Module
 				'parent' => $node_id,
 				'id'     => $this->classs( 'count' ),
 				'href'   => WordPress\Term::shortlink( $term ),
-				'title'  => sprintf( '%s %s',
+				'title'  => Core\Text::spaced(
 					_x( 'Assigned', 'Node: Title', 'geditorial-terms' ),
 					WordPress\Strings::getCounted(
 						$term->count,
@@ -1948,7 +1948,7 @@ class Terms extends gEditorial\Module
 					'parent' => $node_id,
 					'id'     => $this->classs( 'desc' ),
 					'href'   => WordPress\Term::edit( $term ),
-					'title'  => sprintf( '%s %s',
+					'title'  => Core\Text::spaced(
 						_x( 'Description', 'Node: Title', 'geditorial-terms' ),
 						WordPress\Strings::getCounted(
 							Core\Text::wordCount( $term->description ),
@@ -2160,7 +2160,7 @@ class Terms extends gEditorial\Module
 				$nodes[] = [
 					'parent' => $node_id,
 					'id'     => $this->classs( 'term', $term->term_id ),
-					'title'  => sprintf( '%s %s', $prefix, WordPress\Term::title( $term ) ),
+					'title'  => Core\Text::spaced( $prefix, WordPress\Term::title( $term ) ),
 					'href'   => WordPress\Term::link( $term ),
 					'meta'   => [
 						'title' => rawurldecode( $term->slug ),
@@ -2675,7 +2675,7 @@ class Terms extends gEditorial\Module
 				$this->default_calendar()
 			);
 
-			return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;
+			return $html ? Core\Text::spaced( $suffix, $html ) : $suffix;
 
 		} else if ( in_array( 'establish', $supported, TRUE )
 			&& in_array( 'abolish', $supported, TRUE ) ) {
@@ -2687,7 +2687,7 @@ class Terms extends gEditorial\Module
 				$this->default_calendar()
 			);
 
-			return $html ? sprintf( '%s %s', $suffix, $html ) : $suffix;
+			return $html ? Core\Text::spaced( $suffix, $html ) : $suffix;
 		}
 
 		return $suffix;

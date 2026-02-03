@@ -199,9 +199,9 @@ class ModuleSettings extends gEditorial\Settings
 				] );
 
 		$_fullname = Core\Text::normalizeWhitespace(
-			sprintf( '%s %s %s',
+			Core\Text::spaced(
 				$_first_name,
-				$_middle_name ?: '',
+				$_middle_name,
 				$_last_name
 			)
 		);

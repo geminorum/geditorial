@@ -3245,7 +3245,7 @@ class Settings extends WordPress\Main
 						if ( 'checkboxes-values' == $args['type'] )
 							$html.= ' &mdash; <code>'.sprintf( $args['template_value'], $value_name ).'</code>';
 
-							Core\HTML::label( $html, $id.'-'.$value_name );
+						Core\HTML::label( $html, $id.'-'.$value_name );
 					}
 
 					echo '</div>';

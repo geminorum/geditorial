@@ -89,7 +89,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( ! empty( $item['relation']['filter'] ) )
 				$part = Core\Text::has( $item['relation']['filter'], '%s' )
 					? Core\Text::trim( sprintf( $item['relation']['filter'], $part ) )
-					: Core\Text::trim( sprintf( '%s %s', $item['relation']['filter'], $part ) );
+					: Core\Text::spaced( $item['relation']['filter'], $part );
 
 			$parts[] = $part;
 		}
