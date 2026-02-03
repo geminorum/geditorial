@@ -1446,7 +1446,7 @@ class Terms extends gEditorial\Module
 			case 'author':
 
 				// Selected value on add new term form
-				if ( FALSE === $term )
+				if ( FALSE === $term && in_array( $field, [ 'author' ], TRUE ))
 					$meta = get_current_user_id();
 
 				$html.= gEditorial\Listtable::restrictByAuthor( empty( $meta ) ? '0' : $meta, 'term-'.$field, [
