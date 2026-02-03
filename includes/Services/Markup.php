@@ -11,6 +11,7 @@ class Markup extends gEditorial\Service
 	public static function setup()
 	{
 		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdown_to_html' ], 10, 3 );
+		add_filter( static::BASE.'_html_to_markdown', [ __CLASS__, 'markdownFromHTML' ], 10, 2 );
 		add_filter( 'kses_allowed_protocols', [ __CLASS__, 'kses_allowed_protocols' ], 20, 1 );
 	}
 
@@ -18,6 +19,24 @@ class Markup extends gEditorial\Service
 	public static function markdown_to_html( $raw, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
 		return self::mdExtra( Core\Text::trim( $raw ), $autop, $strip_frontmatter );
+	}
+
+	// @hook `geditorial_html_to_markdown`
+	public static function markdownFromHTML( $raw, $autop = TRUE )
+	{
+		static $convertor;
+
+		if ( empty( $convertor ))
+			/**
+			 * @package `league/html-to-markdown`
+			 * @source https://github.com/thephpleague/html-to-markdown
+			 */
+			$convertor = new \League\HTMLToMarkdown\HtmlConverter();
+
+		if ( $autop )
+			$raw = wpautop( $raw );
+
+		return @$convertor->convert( $raw );
 	}
 
 	/**

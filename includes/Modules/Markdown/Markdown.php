@@ -302,13 +302,9 @@ class Markdown extends gEditorial\Module
 		return addslashes( $content );
 	}
 
-	// @REF: https://github.com/thephpleague/html-to-markdown
 	private function convert_content( $content, $id )
 	{
-		if ( ! $this->convertor )
-			$this->convertor = new \League\HTMLToMarkdown\HtmlConverter();
-
-		return $this->convertor->convert( wpautop( $content ) );
+		return Services\Markup::markdownFromHTML( $content, TRUE );
 	}
 
 	// FIXME: do the cleanup!
