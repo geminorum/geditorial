@@ -6,11 +6,13 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Tablelist;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Markdown extends gEditorial\Module
 {
+	use Internals\RestAPI;
 
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_adminbar_init = 210;
@@ -27,6 +29,7 @@ class Markdown extends gEditorial\Module
 			'icon'     => [ 'misc-32', 'markdown' ],
 			'access'   => 'beta',
 			'keywords' => [
+				'has-public-api',
 				'has-adminbar',
 			],
 		];
@@ -50,6 +53,7 @@ class Markdown extends gEditorial\Module
 					'title'       => _x( 'Wiki Linking', 'Setting Title', 'geditorial-markdown' ),
 					'description' => _x( 'Converts wiki like markup into internal links.', 'Setting Description', 'geditorial-markdown' ),
 				],
+				'restapi_restricted',
 			],
 		];
 	}
@@ -82,6 +86,50 @@ class Markdown extends gEditorial\Module
 				$this->filter( 'edit_post_content', 2 );
 			}
 		}
+	}
+
+	public function setup_restapi()
+	{
+		$this->restapi_register_route( 'from', 'POST' );  // HTML to Markdown
+		$this->restapi_register_route( 'to', 'POST' );    // Markdown to HTML
+	}
+
+	public function restapi_from_post_callback( $request )
+	{
+		$data = '';
+		$type = $request->get_content_type();
+
+		if ( in_array( $type['value'], [ 'text/html', 'text/plain', 'text/markdown' ], TRUE ) )
+			$data = $request->get_body();
+
+		else if ( in_array( $type['value'], [ 'application/json' ], TRUE ) )
+			$data = $request['data'];
+
+		else if ( WordPress\IsIt::dev() )
+			self::_log( $type );
+
+		$response = Services\Markup::markdownFromHTML( $data, TRUE );
+
+		return rest_ensure_response( $response );
+	}
+
+	public function restapi_to_post_callback( $request )
+	{
+		$data = '';
+		$type = $request->get_content_type();
+
+		if ( in_array( $type['value'], [ 'text/html', 'text/plain', 'text/markdown' ], TRUE ) )
+			$data = $request->get_body();
+
+		else if ( in_array( $type['value'], [ 'application/json' ], TRUE ) )
+			$data = $request['data'];
+
+		else if ( WordPress\IsIt::dev() )
+			self::_log( $type );
+
+		$response = Services\Markup::mdExtra( $data, TRUE, FALSE );
+
+		return rest_ensure_response( $response );
 	}
 
 	public function admin_bar_menu( $wp_admin_bar )
