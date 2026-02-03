@@ -13,7 +13,8 @@ class Modified extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\ViewEngines;
 
-	protected $disable_no_posttypes = TRUE;
+	protected $disable_no_posttypes   = TRUE;
+	protected $priority_adminbar_init = 910;
 
 	public static function module()
 	{
@@ -86,6 +87,9 @@ class Modified extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 			],
+			'_frontend' => [
+				'adminbar_summary',
+			],
 			'_constants' => [
 				[
 					'field'       => 'post_modified_shortcode_constant',
@@ -142,6 +146,34 @@ class Modified extends gEditorial\Module
 			return;
 
 		$this->hook_insert_content( 30 );
+	}
+
+	public function adminbar_init( &$nodes, $parent )
+	{
+		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
+			return;
+
+		if ( $modified = $this->get_post_modified( gEditorial\Datetime::dateFormats( 'datetime' ), $post ) ) {
+
+			$node_id = $this->classs();
+			$icon    = $this->adminbar__get_icon( 'edit' );
+
+			$nodes[] = [
+				'parent' => $parent,
+				'id'     => $node_id,
+				'title'  => $icon.$modified,
+				'href'   => FALSE, // $this->get_module_url(),
+				'meta'   => [
+					'class' => $this->adminbar__get_css_class( '-not-linked' ),
+					'title' => sprintf(
+						/* translators: `%1$s`: singular post-type label, `%2$s`: published date */
+						_x( 'This %1$s was published on %2$s.', 'Node: Title', 'geditorial-modified' ),
+						Services\CustomPostType::getLabel( $post, 'singular_name' ),
+						gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' )
+					),
+				],
+			];
+		}
 	}
 
 	public function dashboard_widgets()
