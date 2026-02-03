@@ -194,6 +194,8 @@ class People extends gEditorial\Module
 			$this->taxtax__hook_screen( $screen, 'category_taxonomy' );
 			$this->taxtax__hook_screen( $screen, 'type_taxonomy' );
 
+			$this->action( 'pre_get_terms', 1, 99, 'admin' );
+
 		} else if ( $this->constant( 'category_taxonomy' ) === $screen->taxonomy ) {
 
 			$this->filter_string( 'parent_file', 'users.php' );
@@ -243,6 +245,48 @@ class People extends gEditorial\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
+	}
+
+	public function pre_get_terms_admin( &$query )
+	{
+		if ( empty( $query->query_vars['search'] ) )
+			return;
+
+		$taxonomy = $this->constant( 'main_taxonomy' );
+
+		if ( ! in_array( $taxonomy, (array) $query->query_vars['taxonomy'], TRUE ) )
+			return;
+
+		// Corrects the Arabic comma, here in case no target found for this search.
+		if ( Core\Text::has( $query->query_vars['search'], '،' ) )
+			$query->query_vars['search'] = str_ireplace( '،', ',', $query->query_vars['search'] );
+
+		// Bail if target is no different than the criteria and let the Service decide.
+		if ( FALSE === ( $target = ModuleHelper::getCriteria( $query->query_vars['search'] ) ) )
+			return;
+
+		// Avoids the infinite loop!
+		remove_action( 'pre_get_terms', [ $this, 'pre_get_terms_admin' ], 99, 1 );
+
+		$side  = new \WP_Term_Query();
+		$terms = $side->query( [
+			'name__like' => $target,
+			'taxonomy'   => $taxonomy,
+			'orderby'    => 'none',
+			'fields'     => 'ids',
+
+			'hide_empty'             => FALSE,
+			'update_term_meta_cache' => FALSE,
+			'suppress_filters'       => TRUE,
+		] );
+
+		add_action( 'pre_get_terms', [ $this, 'pre_get_terms_admin' ], 99, 1 );
+
+		if ( ! $terms )
+			return;
+
+		$query->query_vars['include'] = $terms;
+		$query->query_vars['search']  = ''; // Turned out it's very important to clear the search!
 	}
 
 	public function get_name_familyfirst( $string, $term = NULL )
