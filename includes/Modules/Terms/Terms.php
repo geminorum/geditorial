@@ -139,6 +139,18 @@ class Terms extends gEditorial\Module
 				'description' => _x( 'Exempts the terms with meta-data from bulk empty deletions.', 'Setting Description', 'geditorial-terms' ),
 				'default'     => TRUE,
 			],
+			[
+				'field'       => 'user_roles',
+				'type'        => 'checkboxes',
+				'title'       => _x( 'User Roles', 'Settings: Setting Title', 'geditorial-terms' ),
+				'description' => _x( 'Users within selected roles will be available on fields.', 'Setting Description', 'geditorial-terms' ),
+				'values'      => $this->get_settings_default_roles( [], [ 'administrator' ] ),
+				'default'     => [
+					'contributor',
+					'author',
+					'editor',
+				],
+			],
 		];
 
 		$settings['_frontend'] = [
@@ -380,7 +392,7 @@ class Terms extends gEditorial\Module
 						$this->add_form_field( $field, $taxonomy );
 					}, 8, 1 );
 
-				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) ) {
+				if ( ! in_array( $field, [ 'roles', 'posttypes', 'user', 'author' ] ) ) {
 
 					// TODO: see `taxtax__hook_screen()` for multiple checkbox support
 
@@ -722,8 +734,8 @@ class Terms extends gEditorial\Module
 			'contact',
 			'venue',
 			'image',
-			'user',
-			'author',
+			// 'user',
+			// 'author',
 			'color',
 			'role',
 			'roles',
@@ -1443,16 +1455,25 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'user':
+
+				$html.= ModuleHelper::htmlFieldUser( [
+					'name' => $field,
+					'type' => $metatype,
+					'role' => $this->get_setting( 'user_roles', [] ),
+				], $meta );
+
+				break;
+
 			case 'author':
 
 				// Selected value on add new term form
 				if ( FALSE === $term && in_array( $field, [ 'author' ], TRUE ))
 					$meta = get_current_user_id();
 
-				$html.= gEditorial\Listtable::restrictByAuthor( empty( $meta ) ? '0' : $meta, 'term-'.$field, [
-					'echo'            => FALSE,
-					'show_option_all' => gEditorial\Settings::showOptionNone(),
-				] );
+				$html.= ModuleHelper::htmlFieldAuthor( [
+					'name' => $field,
+					'type' => $metatype,
+				], $meta );
 
 				break;
 
@@ -1722,11 +1743,24 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'user':
+
+				// NOTE!: currently `user` is excluded on quick-edit!
+
+				$html.= ModuleHelper::htmlFieldUser( [
+					'name' => $field,
+					'type' => $metatype,
+					'role' => $this->get_setting( 'user_roles', [] ),
+				] );
+
+				break;
+
 			case 'author':
 
-				$html.= gEditorial\Listtable::restrictByAuthor( 0, 'term-'.$field, [
-					'echo'            => FALSE,
-					'show_option_all' => gEditorial\Settings::showOptionNone(),
+				// NOTE!: currently `author` is excluded on quick-edit!
+
+				$html.= ModuleHelper::htmlFieldAuthor( [
+					'name' => $field,
+					'type' => $metatype,
 				] );
 
 				break;
