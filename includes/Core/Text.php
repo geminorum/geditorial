@@ -5,6 +5,48 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Text extends Base
 {
 
+	public static function spaced()
+	{
+		return self::glued( func_get_args(), ' ' );
+	}
+
+	public static function dotted()
+	{
+		return self::glued( func_get_args(), '.' );
+	}
+
+	public static function dashed()
+	{
+		return self::glued( func_get_args(), '-' );
+	}
+
+	public static function underlined()
+	{
+		return self::glued( func_get_args(), '_' );
+	}
+
+	public static function gluedNBSP()
+	{
+		return self::removeStartEnd( self::glued( func_get_args(), '&nbsp;' ), '&nbsp;' );
+	}
+
+	public static function glued( $args, $with = ' ' )
+	{
+		$parts = [];
+
+		foreach ( $args as $arg )
+
+			if ( is_array( $arg ) )
+				$parts = array_merge( $parts, $arg );
+
+			else if ( $arg && TRUE !== $arg )
+				$parts[] = trim( $arg );
+
+		return $with === ' ' || 1 !== strlen( $with )
+			? self::trim( implode( $with, $parts ) )
+			: self::trim( implode( $with, $parts ), $with );
+	}
+
 	/**
 	 * Strips whitespace (or other characters) from the beginning and end of a string.
 	 *
@@ -150,6 +192,17 @@ class Text extends Base
 		return preg_replace( '/'.preg_quote( $needle, '/' ).'$/', '', $text );
 	}
 
+	public static function removeStartEnd( $text, $needle )
+	{
+		if ( empty( $text ) || empty( $needle ) )
+			return $text;
+
+		$text = self::removeFromstart( $text, $needle );
+		$text = self::removeFromEnd( $text, $needle );
+
+		return self::trim( $text );
+	}
+
 	public static function stripAllSpaces( $text )
 	{
 		if ( empty( $text ) )
@@ -219,7 +272,7 @@ class Text extends Base
 		$text = strtolower( $text );
 		$text = Number::translate( $text );
 
-		// remove arabic/persian accents
+		// remove Arabic/Persian accents
 		$text = preg_replace( "/[\x{0618}-\x{061A}\x{064B}-\x{065F}]+/u", '', $text );
 
 		$text = self::normalizeZWNJ( $text );
@@ -265,6 +318,21 @@ class Text extends Base
 		$text = trim( $text, '.-_' );
 
 		return self::trim( $text );
+	}
+
+	// NOTE: Hex-encoded octets are case-insensitive.
+	public static function prepOctets( $text )
+	{
+		if ( ! $text )
+			return $text;
+
+		if ( ! str_contains( $text, '%' ) )
+			return $text;
+
+		return preg_replace_callback( '|%[a-fA-F0-9][a-fA-F0-9]|',
+			static function ( $matches ) {
+				return self::strToLower( $matches[0] );
+			}, $text );
 	}
 
 	public static function nameFamilyFirst( $text, $separator = ', ' )

@@ -29,7 +29,7 @@ class HTML extends Base
 	{
 		return '<a class="'.self::prepClass( '-mailto', $class ).'"'
 			.' href="mailto:'.trim( $email ).'"'
-			.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+			.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
 			.'>'.( $content ?? self::wrapLTR( trim( $email ) ) )
 		.'</a>';
 	}
@@ -39,7 +39,7 @@ class HTML extends Base
 		return '<a class="'.self::prepClass( '-tel', $class ).'"'
 			.' href="'.self::prepURLforTel( $number ).'"'
 			.' data-tel-number="'.self::escape( $number ).'"'
-			.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+			.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
 			.'>'.( $content ?? self::wrapLTR( Number::localize( $number ) ) )
 		.'</a>';
 	}
@@ -51,7 +51,7 @@ class HTML extends Base
 
 		return '<a class="'.self::prepClass( '-geo', $class )
 			.'" href="'.self::prepURLforGeo( $data )
-			.'"'.( $title ? ' data-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
+			.'"'.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
 			.' data-geo-data="'.self::escape( $data ).'">'
 			.self::wrapLTR( $content ).'</a>';
 	}
@@ -1459,31 +1459,38 @@ class HTML extends Base
 
 	// TODO: Move to `WordPress\Screen`
 	// TODO: migrate to `wp_get_admin_notice()` @since WP 6.4.0
-	// @REF: https://codex.wordpress.org/Plugin_API/Action_Reference/admin_notices
-	// CLASSES: `notice-error`, `notice-warning`, `notice-success`, `notice-info`, `is-dismissible`, `fade`, `inline`
-	public static function notice( $notice, $class = 'notice-success fade', $dismissible = TRUE )
+	// @SEE: https://make.wordpress.org/core/2023/10/16/introducing-admin-notice-functions-in-wordpress-6-4/
+	// @REF: https://developer.wordpress.org/reference/hooks/admin_notices/
+	public static function notice( $notice, $class = NULL, $dismissible = TRUE )
 	{
-		return sprintf( '<div class="notice %s%s -notice">%s</div>', $class, ( $dismissible ? ' is-dismissible' : '' ), Text::autoP( $notice ) );
+		return self::tag( 'div', [
+			'class' => self::attrClass(
+				'notice',
+				$class ?? 'notice-success',
+				$dismissible ? 'is-dismissible' : '',
+				'-notice',
+			),
+		], Text::autoP( $notice ) );
 	}
 
-	public static function error( $notice, $dismissible = TRUE, $extra = '' )
+	public static function error( $notice, $dismissible = TRUE, $extra = [] )
 	{
-		return self::notice( $notice, 'notice-error fade '.self::prepClass( $extra ), $dismissible );
+		return self::notice( $notice, self::attrClass( 'notice-error', $extra ), $dismissible );
 	}
 
-	public static function success( $notice, $dismissible = TRUE, $extra = '' )
+	public static function success( $notice, $dismissible = TRUE, $extra = [] )
 	{
-		return self::notice( $notice, 'notice-success fade '.self::prepClass( $extra ), $dismissible );
+		return self::notice( $notice, self::attrClass( 'notice-success', $extra ), $dismissible );
 	}
 
-	public static function warning( $notice, $dismissible = TRUE, $extra = '' )
+	public static function warning( $notice, $dismissible = TRUE, $extra = [] )
 	{
-		return self::notice( $notice, 'notice-warning fade '.self::prepClass( $extra ), $dismissible );
+		return self::notice( $notice, self::attrClass( 'notice-warning', $extra ), $dismissible );
 	}
 
-	public static function info( $notice, $dismissible = TRUE, $extra = '' )
+	public static function info( $notice, $dismissible = TRUE, $extra = [] )
 	{
-		return self::notice( $notice, 'notice-info fade '.self::prepClass( $extra ), $dismissible );
+		return self::notice( $notice, self::attrClass( 'notice-info', $extra ), $dismissible );
 	}
 
 	// @REF: https://developer.wordpress.org/resource/dashicons/
@@ -1839,6 +1846,7 @@ class HTML extends Base
 
 					if ( $is_open )
 						$grab_open = FALSE;
+
 					else
 						$stripped++;
 
@@ -1853,6 +1861,7 @@ class HTML extends Base
 						$tag = '';
 
 					} else if ( $is_close ) {
+
 						$is_close = FALSE;
 						array_pop( $tags );
 						$tag = '';
@@ -1873,7 +1882,7 @@ class HTML extends Base
 		}
 
 		while ( $tags )
-			$result.= '</'.array_pop($tags).'>';
+			$result.= '</'.array_pop( $tags ).'>';
 
 		return $result;
 	}

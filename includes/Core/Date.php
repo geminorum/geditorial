@@ -457,7 +457,8 @@ class Date extends Base
 
 		try {
 
-			$datetime = new \DateTime( $date, new \DateTimeZone( $timezone_string ?? 'UTC' ) );
+			// $datetime = new \DateTime( $date, new \DateTimeZone( $timezone_string ?? 'UTC' ) );
+			$datetime = new \DateTime( $date, new \DateTimeZone( 'UTC' ) );
 
 		} catch ( \Exception $e ) {
 
@@ -477,9 +478,10 @@ class Date extends Base
 	public static function htmlDateTime( $time, $gmt = NULL, $format = 'l, F j, Y', $title = FALSE )
 	{
 		return HTML::tag( 'time', [
-			'datetime' => date( 'c', ( $gmt ?: $time ) ),
-			'title'    => $title,
-			'class'    => 'do-timeago', // @SEE: http://timeago.yarp.com/
+			'datetime'       => date( 'c', ( $gmt ?: $time ) ),
+			'title'          => $title,
+			'data-bs-toggle' => $title ? 'tooltip' : FALSE,
+			'class'          => 'do-timeago', // @SEE: http://timeago.yarp.com/
 		], self::get( $format, $time ) );
 	}
 
