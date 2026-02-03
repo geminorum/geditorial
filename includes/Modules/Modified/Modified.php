@@ -39,6 +39,17 @@ class Modified extends gEditorial\Module
 					'title'       => _x( 'Last Published', 'Setting Title', 'geditorial-modified' ),
 					'description' => _x( 'Displays last published instead of modified date for site.', 'Setting Description', 'geditorial-modified' ),
 				],
+				[
+					'field'       => 'prefix',
+					'type'        => 'text',
+					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-modified' ),
+					'description' => sprintf(
+						/* translators: `%s`: zero placeholder */
+						_x( 'Custom string before the modified time on the content. Leave blank for default or %s to disable.', 'Setting Description', 'geditorial-modified' ),
+						Core\HTML::code( '0' )
+					),
+					'placeholder' => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
@@ -59,13 +70,6 @@ class Modified extends gEditorial\Module
 						'summary' => _x( 'Summary', 'Setting Option', 'geditorial-modified' ),
 						'delayed' => _x( 'Delayed', 'Setting Option', 'geditorial-modified' ),
 					],
-				],
-				[
-					'field'       => 'insert_prefix',
-					'type'        => 'text',
-					'title'       => _x( 'Content Prefix', 'Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Custom string before the modified time on the content.', 'Setting Description', 'geditorial-modified' ),
-					'default'     => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
 				],
 				'insert_priority',
 				[
@@ -294,7 +298,7 @@ class Modified extends gEditorial\Module
 		);
 	}
 
-	public function get_post_modified( $format = NULL, $post = NULL )
+	public function get_post_modified( $format = NULL, $post = NULL, $prefix = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -307,7 +311,7 @@ class Modified extends gEditorial\Module
 			return FALSE;
 
 		return Core\Text::spaced(
-			$this->get_setting( 'insert_prefix' ) ?: '',
+			$prefix ?? $this->get_setting_fallback( 'prefix', _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ) ),
 			gEditorial\Datetime::htmlDateTime(
 				$post->post_modified,
 				$format ?? gEditorial\Datetime::dateFormats( $this->get_setting( 'insert_format', 'dateonly' ) ),
