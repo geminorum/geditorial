@@ -32,6 +32,13 @@ class Modified extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_general' => [
+				[
+					'field'       => 'last_published',
+					'title'       => _x( 'Last Published', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Displays last published instead of modified date for site.', 'Setting Description', 'geditorial-modified' ),
+				],
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
 				'dashboard_widgets',
@@ -41,9 +48,15 @@ class Modified extends gEditorial\Module
 			],
 			'_frontend' => [
 				[
-					'field'       => 'last_published',
-					'title'       => _x( 'Last Published', 'Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Displays last published instead of modified date.', 'Setting Description', 'geditorial-modified' ),
+					'field'       => 'insert_context',
+					'type'        => 'radio',
+					'title'       => _x( 'Content Context', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Which context the modified information must be rendered.', 'Setting Description', 'geditorial-modified' ),
+					'default'     => 'delayed',
+					'values'      => [
+						'summary' => _x( 'Summary', 'Setting Option', 'geditorial-modified' ),
+						'delayed' => _x( 'Delayed', 'Setting Option', 'geditorial-modified' ),
+					],
 				],
 				'insert_content',
 				[
@@ -180,20 +193,21 @@ class Modified extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
 
-		// echo $this->wrap(
-		// 	$this->modified_data_summary( [ 'echo' => FALSE ] ),
-		// 	'-'.$this->get_setting( 'insert_content', 'none' )
-		// );
+		if ( 'summary' === $this->get_setting( 'insert_context', 'delayed' ) ) {
 
-		if ( ! $modified = $this->get_post_modified() )
-			return;
+			if ( ! $html = $this->modified_data_summary( [ 'echo' => FALSE ] ) )
+				return;
 
-		echo $this->wrap(
-			Core\HTML::small( $modified ),
-			'-'.$this->get_setting( 'insert_content', 'none' )
-		);
+		} else {
 
-		gEditorial\Scripts::enqueueTimeAgo();
+			if ( ! $modified = $this->get_post_modified() )
+				return;
+
+			$html = Core\HTML::small( $modified, 'text-muted' );
+			gEditorial\Scripts::enqueueTimeAgo();
+		}
+
+		$this->wrap_content_insert( $html );
 	}
 
 	public function entry_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
