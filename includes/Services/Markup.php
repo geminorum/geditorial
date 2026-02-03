@@ -10,13 +10,13 @@ class Markup extends gEditorial\Service
 {
 	public static function setup()
 	{
-		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdown_to_html' ], 10, 3 );
+		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdownToHTML' ], 10, 3 );
 		add_filter( static::BASE.'_html_to_markdown', [ __CLASS__, 'markdownFromHTML' ], 10, 2 );
 		add_filter( 'kses_allowed_protocols', [ __CLASS__, 'kses_allowed_protocols' ], 20, 1 );
 	}
 
 	// @hook `geditorial_markdown_to_html`
-	public static function markdown_to_html( $raw, $autop = TRUE, $strip_frontmatter = TRUE )
+	public static function markdownToHTML( $raw, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
 		return self::mdExtra( Core\Text::trim( $raw ), $autop, $strip_frontmatter );
 	}
@@ -24,19 +24,23 @@ class Markup extends gEditorial\Service
 	// @hook `geditorial_html_to_markdown`
 	public static function markdownFromHTML( $raw, $autop = TRUE )
 	{
-		static $convertor;
+		static $instance;
 
-		if ( empty( $convertor ))
+		if ( empty( $raw ) )
+			return $raw;
+
+		if ( empty( $instance ) )
 			/**
 			 * @package `league/html-to-markdown`
 			 * @source https://github.com/thephpleague/html-to-markdown
 			 */
-			$convertor = new \League\HTMLToMarkdown\HtmlConverter();
+			$instance = new \League\HTMLToMarkdown\HtmlConverter();
 
-		if ( $autop )
+		if ( $autop && is_string( $raw ) )
+			// NOTE: usually needed for WordPress contents
 			$raw = wpautop( $raw );
 
-		return @$convertor->convert( $raw );
+		return $instance->convert( $raw );
 	}
 
 	/**
@@ -57,23 +61,23 @@ class Markup extends gEditorial\Service
 
 	public static function mdExtra( $markdown, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
-		global $gEditorialMarkdownExtra;
+		static $instance;
 
 		if ( empty( $markdown ) || ! class_exists( '\Michelf\MarkdownExtra' ) )
 			return $strip_frontmatter ? self::stripFrontMatter( $markdown ) : $markdown;
 
-		if ( empty( $gEditorialMarkdownExtra ) )
+		if ( empty( $instance ) )
 			/**
 			 * @package `michelf/php-markdown`
 			 * @source https://github.com/michelf/php-markdown
 			 * @docs https://michelf.ca/projects/php-markdown/reference/
 			 */
-			$gEditorialMarkdownExtra = new \Michelf\MarkdownExtra();
+			$instance = new \Michelf\MarkdownExtra();
 
 		if ( $strip_frontmatter )
 			$markdown = self::stripFrontMatter( $markdown );
 
-		$markdown = $gEditorialMarkdownExtra->defaultTransform( $markdown );
+		$markdown = $instance->defaultTransform( $markdown );
 
 		return $autop ? $markdown : Core\Text::removeP( $markdown );
 	}
@@ -133,8 +137,8 @@ class Markup extends gEditorial\Service
 	 * NOTE: applies the plugin filter on default delimiters
 	 *
 	 * @param string $string
-	 * @param null|string|array $delimiters
-	 * @param null|int $limit
+	 * @param string|array $delimiters
+	 * @param int $limit
 	 * @param string $delimiter
 	 * @return array
 	 */

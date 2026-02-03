@@ -50,6 +50,14 @@ class Modified extends gEditorial\Module
 					),
 					'placeholder' => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
 				],
+				[
+					'field'       => 'display_after',
+					'type'        => 'select',
+					'title'       => _x( 'Display After', 'Setting Title', 'geditorial-modified' ),
+					'description' => _x( 'Skips displaying modified since the original content published time.', 'Setting Description', 'geditorial-modified' ),
+					'default'     => '60',
+					'values'      => gEditorial\Settings::minutesOptions(),
+				],
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_dashboard' => [
@@ -60,6 +68,7 @@ class Modified extends gEditorial\Module
 			],
 			'_content' => [
 				'insert_content',
+				'insert_priority',
 				[
 					'field'       => 'insert_context',
 					'type'        => 'radio',
@@ -70,15 +79,6 @@ class Modified extends gEditorial\Module
 						'summary' => _x( 'Summary', 'Setting Option', 'geditorial-modified' ),
 						'delayed' => _x( 'Delayed', 'Setting Option', 'geditorial-modified' ),
 					],
-				],
-				'insert_priority',
-				[
-					'field'       => 'display_after',
-					'type'        => 'select',
-					'title'       => _x( 'Display After', 'Setting Title', 'geditorial-modified' ),
-					'description' => _x( 'Skips displaying modified since the original content published time.', 'Setting Description', 'geditorial-modified' ),
-					'default'     => '60',
-					'values'      => gEditorial\Settings::minutesOptions(),
 				],
 				[
 					'field'       => 'insert_format',

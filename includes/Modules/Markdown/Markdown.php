@@ -5,9 +5,9 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
+use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Markdown extends gEditorial\Module
@@ -16,9 +16,6 @@ class Markdown extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_adminbar_init = 210;
-
-	private $parser;
-	private $convertor;
 
 	public static function module()
 	{
@@ -332,18 +329,13 @@ class Markdown extends gEditorial\Module
 	{
 		// `$content` is slashed, but Markdown parser hates it precious.
 		$content = stripslashes( $content );
-
-		if ( ! $this->parser )
-			$this->parser = new \Michelf\MarkdownExtra();
-
-		$content = $this->parser->defaultTransform( $content );
+		$content = Services\Markup::mdExtra( $content, TRUE, FALSE );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->linking( $content, WordPress\Post::get( $id ) );
+			$content = $this->_do_wiki_linking( $content, WordPress\Post::get( $id ) );
 
 		// Reference the `post_id` to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
-
 		$content = Core\Text::removeP( $content );
 
 		// WordPress expects slashed data. Put needed ones back.
@@ -362,7 +354,7 @@ class Markdown extends gEditorial\Module
 	}
 
 	// @REF: https://en.wikipedia.org/wiki/Help:Wiki_markup#Links_and_URLs
-	private function linking( $content, $post )
+	private function _do_wiki_linking( $content, $post )
 	{
 		// $pattern = '/\[\[(.+?)\]\]/u';
 		$pattern = '/\[\[(.*?)\]\]/u';
@@ -370,7 +362,8 @@ class Markdown extends gEditorial\Module
 		return preg_replace_callback( $pattern,
 			function ( $match ) use ( $content, $post ) {
 
-				list( $text, $link, $slug, $post_id ) = $this->make_link( $match[1], $post, $content );
+				list( $text, $link, $slug, $post_id ) = $this->_make_the_link( $match[1], $post, $content );
+
 				$html = '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound' ).'">'.$text.'</a>';
 
 				return $this->filters( 'linking', $html, $text, $link, $slug, $post_id, $match, $post, $content );
@@ -378,7 +371,7 @@ class Markdown extends gEditorial\Module
 	}
 
 	// TODO: name-space with `:` for taxonomies
-	public function make_link( $text, $post, $content )
+	public function _make_the_link( $text, $post, $content )
 	{
 		$slug = $text;
 		$link = $post_id = FALSE;

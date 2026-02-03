@@ -14,7 +14,7 @@ trait SettingsCore
 		return [
 			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
 			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Module: Setting Title', 'geditorial-admin' ),
+			'title'   => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial-admin' ),
 			'default' => $default,
 		];
 	}

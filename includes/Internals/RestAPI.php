@@ -61,11 +61,11 @@ trait RestAPI
 
 			switch ( $method ) {
 
-				// `READABLE`   = 'GET'; // Alias for GET transport method
-				// `CREATABLE`  = 'POST'; // Alias for POST transport method
-				// `EDITABLE`   = 'POST, PUT, PATCH'; // Alias for POST, PUT, PATCH transport methods together
-				// `DELETABLE`  = 'DELETE'; // Alias for DELETE transport method
-				// `ALLMETHODS` = 'GET, POST, PUT, PATCH, DELETE'; // Alias for GET, POST, PUT, PATCH & DELETE transport methods together
+				// `READABLE`   = 'GET'; // Alias for GET transport method.
+				// `CREATABLE`  = 'POST'; // Alias for POST transport method.
+				// `EDITABLE`   = 'POST, PUT, PATCH'; // Alias for POST, PUT, PATCH transport methods together.
+				// `DELETABLE`  = 'DELETE'; // Alias for DELETE transport method.
+				// `ALLMETHODS` = 'GET, POST, PUT, PATCH, DELETE'; // Alias for GET, POST, PUT, PATCH & DELETE transport methods together.
 
 				case 'post':
 
