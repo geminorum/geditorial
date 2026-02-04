@@ -330,7 +330,7 @@ class SearchSelect extends gEditorial\Service
 	{
 		$args = [
 			'login__not_in'  => get_super_admins(),
-			'role__not_in '  => [ 'administrator', 'subscriber' ],
+			'role__not_in'   => [ 'administrator', 'subscriber' ],
 			'search_columns' => [
 				'user_login',
 				'user_email',
@@ -376,7 +376,7 @@ class SearchSelect extends gEditorial\Service
 					'text' => WordPress\User::getTitleRow( $user ),
 				];
 
-			$found = $query->found_posts;
+			$found = $query->get_total();
 
 		} else if ( is_numeric( $pre ) ) {
 

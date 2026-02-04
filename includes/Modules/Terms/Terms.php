@@ -854,7 +854,7 @@ class Terms extends gEditorial\Module
 			if ( $this->classs( $field ) != $column )
 				continue;
 
-			$this->display_form_field( $field, $taxonomy, $term, TRUE );
+			$this->_display_form_field( $field, $taxonomy, $term, TRUE );
 			break;
 		}
 
@@ -866,7 +866,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// TODO: use read-only inputs on non-columns
-	private function display_form_field( $field, $taxonomy, $term, $column = TRUE )
+	private function _display_form_field( $field, $taxonomy, $term, $column = TRUE )
 	{
 		$html     = $meta = '';
 		$metakey  = $this->get_supported_metakey( $field, $taxonomy );
@@ -1363,7 +1363,7 @@ class Terms extends gEditorial\Module
 
 		echo '</span><span class="input-text-wrap">';
 
-			$this->quickedit_field( $field, $taxonomy );
+			$this->_render_quickedit_field( $field, $taxonomy );
 
 		echo '</span></label></div></fieldset>';
 	}
@@ -1377,7 +1377,7 @@ class Terms extends gEditorial\Module
 
 		echo '</label>';
 
-			$this->form_field( $field, $taxonomy, $term );
+			$this->_render_form_field( $field, $taxonomy, $term );
 			Core\HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
 		echo '</div>';
@@ -1393,9 +1393,9 @@ class Terms extends gEditorial\Module
 		echo '</label></th><td>';
 
 			if ( $disabled )
-				$this->display_form_field( $field, $taxonomy, $term, FALSE );
+				$this->_display_form_field( $field, $taxonomy, $term, FALSE );
 			else
-				$this->form_field( $field, $taxonomy, $term );
+				$this->_render_form_field( $field, $taxonomy, $term );
 
 			Core\HTML::desc( $this->get_supported_field_desc( $field, $taxonomy, $term ) );
 
@@ -1410,7 +1410,7 @@ class Terms extends gEditorial\Module
 	 * @param mixed $term
 	 * @return void
 	 */
-	private function form_field( $field, $taxonomy, $term = FALSE )
+	private function _render_form_field( $field, $taxonomy, $term = FALSE )
 	{
 		$html     = '';
 		$term_id  = empty( $term->term_id ) ? 0 : $term->term_id;
@@ -1709,7 +1709,7 @@ class Terms extends gEditorial\Module
 		echo $this->filters( 'supported_field_form', $html, $field, $taxonomy, $term_id, $meta );
 	}
 
-	private function quickedit_field( $field, $taxonomy )
+	private function _render_quickedit_field( $field, $taxonomy )
 	{
 		$html     = '';
 		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );

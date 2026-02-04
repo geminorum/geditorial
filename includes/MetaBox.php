@@ -1676,7 +1676,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'term',
-				'query-exclude'  => FALSE, // NOTE: `exclude` in porttype-fields are only for posts
+				'query-exclude'  => FALSE, // NOTE: `exclude` in post-type-fields are only for posts
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,
@@ -1714,7 +1714,7 @@ class MetaBox extends WordPress\Main
 			], WordPress\User::getTitleRow( (int) $value,
 				sprintf(
 					/* translators: `%s`: user id number */
-					_x( 'Unknown User #%s', 'MetaBox: Title Attr', 'geditorial' ),
+					_x( 'Unknown User #%s', 'MetaBox: Option', 'geditorial' ),
 					$value
 				) )
 			);
@@ -1734,7 +1734,7 @@ class MetaBox extends WordPress\Main
 				'meta-desc'  => $args['description'],
 
 				'query-target'   => 'user',
-				'query-exclude'  => FALSE, // NOTE: `exclude` in porttype-fields are only for posts
+				'query-exclude'  => FALSE, // NOTE: `exclude` in post-type-fields are only for posts
 				'query-posttype' => $args['posttype'] ? implode( ',', (array) $args['posttype'] ) : FALSE,
 				'query-taxonomy' => $args['taxonomy'] ? implode( ',', (array) $args['taxonomy'] ) : FALSE,
 				'query-role'     => $args['role']     ? implode( ',', (array) $args['role'] )     : FALSE,

@@ -431,10 +431,25 @@ class Like extends gEditorial\Module
 					if ( $bp ) {
 						$html.= '<li><a href="'.bp_core_get_user_domain( $user->ID ).'" title="'.bp_core_get_user_displayname( $user->ID ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
 					} else {
-						$html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
+						// $html.= '<li><a title="'.Core\HTML::escape( $user->display_name ).'">'.get_avatar( $user->user_email, 40, '', 'avatar' ).'</a></li>';
+
+						$row = Core\HTML::tag( 'a', [
+							'title' => $user->display_name,
+							'href' => '#',
+						], Services\Avatars::getByUser( $user ) );
+
+						$html.= Core\HTML::tag( 'li', $row );
 					}
 				}
 			}
+
+		} else if ( WordPress\IsIt::dev() ) {
+
+			// $count = wp_rand( 10, 150 );
+			$count = wp_rand( 1, $this->get_setting( 'max_avatars', 12 ) );
+
+			for ( $i = 0; $i <= $count; $i++ )
+				$html.= '<li><a title=""><img src="https://avatar.iran.liara.run/public" alt="" /></a></li>';
 		}
 
 		return $html;

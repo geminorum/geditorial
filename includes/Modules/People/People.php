@@ -127,6 +127,15 @@ class People extends gEditorial\Module
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,
 			'reverse_ordered' => 'id',        // latest first
+			'suitable_metas'  => [
+				'fullname' => NULL,
+				'tagline'  => NULL,
+				'contact'  => NULL,
+				'image'    => NULL,
+				'user'     => NULL,
+				'born'     => NULL,
+				'dead'     => NULL,
+			],
 		] );
 
 		$this->register_taxonomy( 'category_taxonomy', [
@@ -358,8 +367,8 @@ class People extends gEditorial\Module
 		if ( FALSE === ( $target = ModuleHelper::getCriteria( $queried['search'] ) ) )
 			return $results ?: $pre; // Already `WP_Term_Query` used, so not let it waste!
 
-		$query = new \WP_Term_Query();
-		$terms = $query->query( array_merge( $args, [
+		$side = new \WP_Term_Query();
+		$terms = $side->query( array_merge( $args, [
 			'name__like' => $target,     // clear the `search`
 			'taxonomy'   => $taxonomy,   // force ours only
 		] ) );
