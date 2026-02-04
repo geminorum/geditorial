@@ -585,6 +585,8 @@ class Terms extends gEditorial\Module
 				$position = [ 'cb', 'after' ];
 				break;
 
+			case 'user':
+			case 'author':
 			case 'image':
 			case 'color':
 			case 'role':
@@ -734,8 +736,8 @@ class Terms extends gEditorial\Module
 			'contact',
 			'venue',
 			'image',
-			// 'user',
-			// 'author',
+			'user',
+			'author',
 			'color',
 			'role',
 			'roles',
@@ -1056,17 +1058,30 @@ class Terms extends gEditorial\Module
 
 					if ( $user = get_user_by( 'id', (int) $meta ) ) {
 
+						$edit = WordPress\User::edit( $user->ID );
 						$html = $user->display_name ?: $user->user_login;
 
-						if ( $edit = WordPress\User::edit( $user->ID ) )
-							$html = Core\HTML::link( $html, $edit, TRUE );
+						if ( $avatar = Services\Avatars::getByUser( $user ) )
+							$html = $avatar;
+
+						$html = Core\HTML::tag( $edit ? 'a' : 'span', [
+							'href'   => $edit,
+							'target' => $edit ? '_blank' : FALSE,
+							'title'  => $user->display_name ?: $user->user_login,
+							'class'  => [
+								'-field-type-'.$metatype,
+								'-field-name-'.$field,
+								$avatar ? '-with-avatar' : '-without-avatar',
+							]
+						], $html );
+
+						$html.= '<span class="hidden -field field-'.$field.'" data-'.$field.'="'.$meta.'"></span>';
 
 					} else {
 
 						$html = gEditorial\Plugin::na();
+						$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.$html.'</span>';
 					}
-
-					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.$meta.'">'.$html.'</span>';
 
 				} else {
 
