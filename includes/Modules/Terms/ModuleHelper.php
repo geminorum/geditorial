@@ -22,7 +22,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $field['name'] ) )
 			return '';
 
-		return gEditorial\Listtable::restrictByAuthor(
+		$html = gEditorial\Listtable::restrictByAuthor(
 			empty( $meta ) ? 0 : (int) $meta,
 			Core\Text::dashed( 'term', $field['name'] ),
 			[
@@ -30,6 +30,14 @@ class ModuleHelper extends gEditorial\Helper
 				'show_option_all' => gEditorial\Settings::showOptionNone(),
 			]
 		);
+
+		if ( ! $html )
+			return $html;
+
+		// fallback to search-select if `isLargeCount()`
+		$field['role'] = 'author';
+
+		return self::htmlFieldUser( $field, $meta, $module );
 	}
 
 	public static function htmlFieldUser( $field, $meta = FALSE, $module = NULL )
