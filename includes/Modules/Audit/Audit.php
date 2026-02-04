@@ -356,7 +356,7 @@ class Audit extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
 			if ( 'edit-tags' == $screen->base ) {

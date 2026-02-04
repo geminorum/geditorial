@@ -346,7 +346,7 @@ class Cartable extends gEditorial\Module
 	{
 		if ( $this->constant( 'type_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 

@@ -227,17 +227,17 @@ class WasBorn extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->constant( 'year_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->constant( 'group_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->in_setting_posttypes( $screen->post_type, 'parent' ) ) {

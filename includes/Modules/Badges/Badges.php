@@ -119,7 +119,7 @@ class Badges extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {

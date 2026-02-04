@@ -220,7 +220,7 @@ class Users extends gEditorial\Module
 
 			} else if ( $screen->taxonomy == $this->constant( 'group_taxonomy' ) ) {
 
-				$this->filter_string( 'parent_file', 'users.php' );
+				$this->_hook_parentfile_for_usersphp();
 				$this->modulelinks__register_headerbuttons();
 
 				if ( 'edit-tags' == $screen->base ) {
@@ -230,7 +230,7 @@ class Users extends gEditorial\Module
 
 			} else if ( $screen->taxonomy == $this->constant( 'type_taxonomy' ) ) {
 
-				$this->filter_string( 'parent_file', 'users.php' );
+				$this->_hook_parentfile_for_usersphp();
 				$this->modulelinks__register_headerbuttons();
 
 				if ( 'edit-tags' == $screen->base ) {

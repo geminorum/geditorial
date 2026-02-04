@@ -175,7 +175,7 @@ class Lingo extends gEditorial\Module
 
 			}
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 			$this->bulkexports__hook_supportedbox_for_term( 'language_taxonomy', $screen );
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );

@@ -43,7 +43,8 @@ trait CoreMenuPage
 	}
 
 	// $parent_slug options: `options-general.php`, `users.php`
-	// also set `$this->filter_string( 'parent_file', $parent_slug );`
+	// also: `$this->_hook_parentfile_for_optionsgeneralphp();`
+	// also: `$this->_hook_parentfile_for_usersphp();`
 	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
 	{
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
@@ -104,6 +105,16 @@ trait CoreMenuPage
 					'post' == $posttype ? 'edit.php' : 'edit.php?post_type='.$posttype,
 					'post' == $posttype ? 'edit-tags.php?taxonomy='.$taxonomy : 'edit-tags.php?taxonomy='.$taxonomy.'&amp;post_type='.$posttype
 				);
+	}
+
+	protected function _hook_parentfile_for_usersphp()
+	{
+		$this->filter_string( 'parent_file', current_user_can( 'list_users' ) ? 'users.php' : 'profile.php' );
+	}
+
+	protected function _hook_parentfile_for_optionsgeneralphp()
+	{
+		$this->filter_string( 'parent_file', current_user_can( 'manage_options' ) ? 'options-general.php' : 'tools.php' );
 	}
 
 	/**

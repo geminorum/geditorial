@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Grouping extends gEditorial\Module
 {
+	use Internals\CoreMenuPage;
 
 	public static function module()
 	{
@@ -145,7 +146,7 @@ class Grouping extends gEditorial\Module
 
 		} else if ( array_key_exists( $screen->taxonomy, $customs ) ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
 			if ( 'edit-tags' == $screen->base )

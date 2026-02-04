@@ -210,7 +210,7 @@ class Workflow extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 
 			if ( 'edit-tags' == $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );

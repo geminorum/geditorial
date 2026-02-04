@@ -193,7 +193,7 @@ class People extends gEditorial\Module
 	{
 		if ( $this->constant( 'main_taxonomy' ) === $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
@@ -207,13 +207,13 @@ class People extends gEditorial\Module
 
 		} else if ( $this->constant( 'category_taxonomy' ) === $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 			$this->register_headerbutton_for_taxonomy( 'main_taxonomy' );
 
 		} else if ( $this->constant( 'type_taxonomy' ) === $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'users.php' );
+			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 			$this->register_headerbutton_for_taxonomy( 'main_taxonomy' );
 

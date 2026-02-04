@@ -258,17 +258,17 @@ class Positions extends gEditorial\Module
 
 		if ( $this->constant( 'primary_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 
 		} else if ( $this->constant( 'flag_taxonomy' ) == $screen->taxonomy ) {
 
-			$this->filter_string( 'parent_file', 'options-general.php' );
+			$this->_hook_parentfile_for_optionsgeneralphp();
 
 		} else if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
 
 			if ( 'post' == $screen->base ) {
 
-				$this->filter_string( 'parent_file', 'options-general.php' );
+				$this->_hook_parentfile_for_optionsgeneralphp();
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->_hook_post_updated_messages( 'primary_posttype' );
