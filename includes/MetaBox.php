@@ -948,8 +948,9 @@ class MetaBox extends WordPress\Main
 			'order'        => 1000,
 
 			/// render settings
-			'name_for_rest' => ! is_admin(), // Determines the `name` format of the tag
-			'calendar_type' => Core\L10n::calendar(),
+			'name_for_rest'    => ! is_admin(),           // Determines the `name` attribute format of the HTML tag.
+			'custom_name_attr' => NULL,                   // Overrides the `name` attribute for the HTML tag.
+			'calendar_type'    => Core\L10n::calendar(),
 		];
 	}
 
@@ -1774,6 +1775,9 @@ class MetaBox extends WordPress\Main
 
 	private static function _getNameAttr( $field, $module )
 	{
+		if ( ! empty( $field['custom_name_attr'] ) )
+			return $field['custom_name_attr'];
+
 		return vsprintf( $field['name_for_rest'] ? 'meta[_%2$s_%3$s]' : '%1$s-%2$s-%3$s', [
 			static::BASE,
 			$module,
