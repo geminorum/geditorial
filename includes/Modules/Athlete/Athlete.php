@@ -114,7 +114,7 @@ class Athlete extends gEditorial\Module
 			'main_taxonomy' => [
 				'acrobatic'    => _x( 'Acrobatic', 'Default Term: Sports Field', 'geditorial-athlete' ),      // حرکتی
 				'air'          => _x( 'Air', 'Default Term: Sports Field', 'geditorial-athlete' ),            // هوایی
-				'performance ' => _x( 'Performance', 'Default Term: Sports Field', 'geditorial-athlete' ),    // نمایشی
+				'performance'  => _x( 'Performance', 'Default Term: Sports Field', 'geditorial-athlete' ),    // نمایشی
 				'martial-arts' => _x( 'Martial Arts', 'Default Term: Sports Field', 'geditorial-athlete' ),   // رزمی
 				'strength'     => _x( 'Strength', 'Default Term: Sports Field', 'geditorial-athlete' ),       // قدرتی
 				'adventure'    => _x( 'Adventure', 'Default Term: Sports Field', 'geditorial-athlete' ),      // ماجراجویانه

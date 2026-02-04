@@ -110,6 +110,23 @@ class People extends gEditorial\Module
 		return $strings;
 	}
 
+	protected function define_default_terms()
+	{
+		return [
+			'type_taxonomy' => [
+				'clergy'    => _x( 'Clergy', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'doctor'    => _x( 'Doctor', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'sadat'     => _x( 'Sadat', 'Type Taxonomy: Default Term', 'geditorial-people' ),       // https://en.wikipedia.org/wiki/Sadat
+				'sayyid'    => _x( 'Sayyid', 'Type Taxonomy: Default Term', 'geditorial-people' ),      // https://en.wikipedia.org/wiki/Sayyid
+				'sayyidah'  => _x( 'Sayyidah', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'engineer'  => _x( 'Engineer', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'lawyer'    => _x( 'Lawyer', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'professor' => _x( 'Professor', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+				'ayatollah' => _x( 'Ayatollah', 'Type Taxonomy: Default Term', 'geditorial-people' ),
+			],
+		];
+	}
+
 	public function init()
 	{
 		parent::init();

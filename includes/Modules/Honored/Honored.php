@@ -120,6 +120,11 @@ class Honored extends gEditorial\Module
 		];
 	}
 
+	public function after_setup_theme()
+	{
+		$this->filter_module( 'people', 'get_default_terms', 2 );
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -181,6 +186,17 @@ class Honored extends gEditorial\Module
 	public function dashboard_widgets()
 	{
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
+	}
+
+	public function people_get_default_terms( $terms, $taxonomy )
+	{
+		return $taxonomy === 'people_honorific' ? array_merge( $terms,
+			Core\Arraay::pluck(
+				WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ), 'all', [], FALSE ),
+				'name',
+				'slug'
+			)
+		) : $terms;
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
