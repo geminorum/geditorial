@@ -336,6 +336,7 @@ class Meta extends gEditorial\Module
 		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
 		$this->filter( 'objecthints_tips_for_post', 5, 8, FALSE, $this->base );
 		$this->filter( 'calendars_post_summary', 4, 8, FALSE, $this->base );
+		$this->filter_module( 'modified', 'data_summary', 4, 8 );
 	}
 
 	public function importer_init()
@@ -632,6 +633,65 @@ class Meta extends gEditorial\Module
 			return $meta;
 
 		return $summary;
+	}
+
+	public function modified_data_summary( $data, $post, $context, $format )
+	{
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $data;
+
+		if ( ! $fields = $this->get_posttype_fields( $post->post_type ) )
+			return $data;
+
+		$calendar   = $this->default_calendar();
+		$link_field = 'source_url';
+		$actions    = [];
+		$supported  = [
+			'published',
+			'released',
+			'publication_date',
+			'creation_date',
+		];
+
+		foreach ( $supported as $field_key ) {
+
+			if ( ! array_key_exists( $field_key, $fields ) )
+				continue;
+
+			if ( ! $raw = ModuleTemplate::getMetaFieldRaw( $field_key, $post->ID ) )
+				continue;
+
+			if ( $parsed = gEditorial\Misc\DateParser::parse( $raw, $calendar ) ) {
+
+				$actions[] = [
+					'text'     => gEditorial\Datetime::dateFormat( $parsed, $format ),
+					'link'     => ModuleTemplate::getMetaFieldRaw( $link_field, $post->ID ),
+					'title'    => _x( 'The Original Date for this Entry', 'Title Attribute', 'geditorial-meta' ),
+					'class'    => 'do-timeago text-bg-secondary',
+					'datetime' => Core\Date::getISO8601( $parsed ),
+				];
+
+			} else {
+
+				$field = $fields[$field_key];
+
+				if ( $meta = ModuleTemplate::getMetaField( $field, [ 'id' => $post ], FALSE ) )
+					$actions[] = [
+						'text'  => $meta,
+						'link'  => ModuleTemplate::getMetaFieldRaw( $link_field, $post->ID ),
+						'title' => _x( 'The Original Date for this Entry', 'Title Attribute', 'geditorial-meta' ),
+						'class' => 'text-bg-secondary',
+					];
+			}
+		}
+
+		if ( empty( $actions ) )
+			return $data;
+
+		// NOTE: prepend the actions
+		$data['actions'] = array_merge( $actions, $data['actions'] );
+
+		return $data;
 	}
 
 	// @REF: `Template::getMetaField()`
