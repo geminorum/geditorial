@@ -362,16 +362,13 @@ class Helper extends WordPress\Main
 
 	public static function getDateEditRow( $timestamp, $class = FALSE )
 	{
-		if ( empty( $timestamp ) )
+		if ( ! $timestamp = Core\Date::timestamp( $timestamp ) )
 			return self::htmlEmpty();
-
-		if ( ! Core\Date::isTimestamp( $timestamp ) )
-			$timestamp = strtotime( $timestamp );
 
 		$formats = Datetime::dateFormats( FALSE );
 
 		$html = '<span class="-date-date" title="'.Core\HTML::escape( Core\Date::get( $formats['timeonly'], $timestamp ) );
-		$html.= '" data-time="'.date( 'c', $timestamp ).'">'.Core\Date::get( $formats['default'], $timestamp ).'</span>';
+		$html.= '" datetime="'.Core\Date::getISO8601( $timestamp ).'">'.Core\Date::get( $formats['default'], $timestamp ).'</span>';
 
 		$html.= '&nbsp;(<span class="-date-diff" title="';
 		$html.= Core\HTML::escape( Core\Date::get( $formats['fulltime'], $timestamp ) ).'">';
@@ -382,11 +379,11 @@ class Helper extends WordPress\Main
 
 	public static function getModifiedEditRow( $post, $class = FALSE )
 	{
-		$timestamp = strtotime( $post->post_modified );
+		$timestamp = Core\Date::timestamp( $post->post_modified );
 		$formats   = Datetime::dateFormats( FALSE );
 
 		$html = '<span class="-date-modified" title="'.Core\HTML::escape( Core\Date::get( $formats['default'], $timestamp ) );
-		$html.='" data-time="'.date( 'c', $timestamp ).'">'.Datetime::humanTimeDiff( $timestamp ).'</span>';
+		$html.='" datetime="'.Core\Date::getISO8601( $timestamp ).'">'.Datetime::humanTimeDiff( $timestamp ).'</span>';
 
 		$edit_last = get_post_meta( $post->ID, '_edit_last', TRUE );
 

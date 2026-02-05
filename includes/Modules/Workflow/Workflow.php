@@ -549,7 +549,7 @@ class Workflow extends gEditorial\Module
 	public function do_time_publishing( $post, $current = '' )
 	{
 		$html = '<span id="timestamp">';
-		$html.= Core\Date::get( __( 'M j, Y @ H:i' ), strtotime( $post->post_date ) );
+		$html.= Core\Date::get( __( 'M j, Y @ H:i' ), $post->post_date );
 		$html.= '</span>';
 
 		echo Core\HTML::wrap( $html, 'field-wrap -select misc-pub-section curtime misc-pub-curtime' );

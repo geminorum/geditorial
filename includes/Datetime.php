@@ -12,6 +12,7 @@ class Datetime extends WordPress\Main
 		return gEditorial();
 	}
 
+	// NOTE: Here the signature is different: supporting the calendar-type and locale with using `Intl` methods.
 	public static function htmlCurrent( $format = NULL, $class = FALSE, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		$html = self::htmlDateTime(
@@ -23,28 +24,17 @@ class Datetime extends WordPress\Main
 			$locale
 		);
 
-		return $class
-			? '<span class="'.$class.'">'.$html.'</span>'
-			: $html;
+		return $class ? Core\HTML::span( $html, $class ) : $html;
 	}
 
-	// FIXME: WTF?!
-	// - `rmm5t/jquery-timeago` not working without title!
-	// - replaces title attribute with HTML text
-	// - the title must be use for full-time info
-	// `2022-03-25 21:49:58`: `post_modified`
-	// `2022-03-25 17:19:58`: `post_modified_gmt`
-	// `2022-03-25T17:19:58+00:00`
-	// `2022-03-25T21:49:58+00:00`
-	// `<time datetime="2022-03-25T21:49:58+00:00" title="۴ سال پیش" class="do-timeago">۵ فروردین ۱۴۰۱</time>`
-	// `<time datetime="2022-03-25T17:19:58+00:00" title="۴ سال پیش" class="do-timeago">۶ فروردین ۱۴۰۱</time>`
+	// NOTE: Here the signature is different: supporting the calendar-type and locale with using `Intl` methods.
 	public static function htmlDateTime( $datetime_string = NULL, $format = NULL, $title = FALSE, $calendar_type = NULL, $timezone_string = NULL, $locale = NULL )
 	{
 		return Core\HTML::tag( 'time', [
 			'datetime'       => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
 			'title'          => $title,
 			'data-bs-toggle' => $title ? 'tooltip' : FALSE,
-			'class'          => 'do-timeago', // @SEE: http://timeago.yarp.com/
+			'class'          => 'do-timeago', // @SEE: https://github.com/rmm5t/jquery-timeago
 		], self::formatByCalendar(
 			$format ?? self::dateFormats( 'daydate' ),
 			$datetime_string,
@@ -76,12 +66,13 @@ class Datetime extends WordPress\Main
 		return Core\Text::ends( $date_string, '00:00:00' );
 	}
 
-	public static function dateFormat( $timestamp, $context = 'default' )
+	public static function dateFormat( $datetime, $context = 'default', $timezone_string = NULL )
 	{
-		if ( ! Core\Date::isTimestamp( $timestamp ) )
-			$timestamp = strtotime( $timestamp );
-
-		return Core\Date::get( self::dateFormats( $context ), $timestamp );
+		return Core\Date::get(
+			self::dateFormats( $context ),
+			$datetime,
+			$timezone_string
+		);
 	}
 
 	// @SEE: http://www.phpformatdate.com/
@@ -118,42 +109,43 @@ class Datetime extends WordPress\Main
 			: $formats[$context];
 	}
 
-	public static function postModified( $post = NULL, $attr = FALSE )
+	public static function postModified( $post = NULL, $attr = FALSE, $format = NULL )
 	{
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		$gmt   = strtotime( $post->post_modified_gmt );
-		$local = strtotime( $post->post_modified );
-
-		/* translators: `%s`: date string */
-		$title  = _x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' );
-		$format = self::dateFormats( 'daydate' );
-
 		return $attr
-			? sprintf( $title, Core\Date::get( $format, $local ) )
-			: Core\Date::htmlDateTime( $local, $gmt, $format, self::humanTimeDiffRound( $local, FALSE ) );
+			? sprintf(
+				/* translators: `%s`: date string */
+				_x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' ),
+				Core\Date::get(
+					$format ?? self::dateFormats( 'daydate' ),
+					$post->post_modified
+				)
+			)
+			: Core\Date::htmlDateTime(
+				$post->post_modified,
+				$format ?? self::dateFormats( 'daydate' ),
+				self::humanTimeDiffRound( $post->post_modified, FALSE )
+			);
 	}
 
-	public static function htmlHumanTime( $timestamp, $flip = FALSE )
+	public static function htmlHumanTime( $datetime, $flip = FALSE, $timezone_string = NULL )
 	{
-		if ( ! $timestamp )
+		if ( ! $timestamp = Core\Date::timestamp( $datetime, $timezone_string ) )
 			return $timestamp;
 
-		if ( ! Core\Date::isTimestamp( $timestamp ) )
-			$timestamp = strtotime( $timestamp );
-
-		$now = current_time( 'timestamp', FALSE );
+		$now = Core\Date::timestamp( NULL, $timezone_string );
 
 		if ( $flip )
 			return '<span class="-date-diff" title="'
-					.Core\HTML::escape( self::dateFormat( $timestamp, 'fulltime' ) ).'">'
-					.self::humanTimeDiff( $timestamp, $now )
+					.Core\HTML::escape( self::dateFormat( $timestamp, 'fulltime', $timezone_string ) ).'">'
+					.self::humanTimeDiff( $timestamp, $now, $timezone_string )
 				.'</span>';
 
 		return '<span class="-time" title="'
 			.Core\HTML::escape( self::humanTimeAgo( $timestamp, $now ) ).'">'
-			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now )
+			.self::humanTimeDiffRound( $timestamp, NULL, self::dateFormats( 'default' ), $now, $timezone_string )
 		.'</span>';
 	}
 
@@ -166,23 +158,28 @@ class Datetime extends WordPress\Main
 		);
 	}
 
-	public static function humanTimeDiffRound( $local, $round = NULL, $format = NULL, $now = NULL )
+	public static function humanTimeDiffRound( $datetime, $round = NULL, $format = NULL, $now = NULL, $timezone_string = NULL )
 	{
-		$now = $now ?? current_time( 'timestamp', FALSE );
+		$timestamp = Core\Date::timestamp( $datetime, $timezone_string );
+		$right_now = $now ?? Core\Date::timestamp( NULL, $timezone_string );
 
 		if ( FALSE === $round )
-			return self::humanTimeAgo( $local, $now );
+			return self::humanTimeAgo( $timestamp, $right_now );
 
 		$round = $round ?? Core\Date::DAY_IN_SECONDS;
-		$diff  = $now - $local;
+		$diff  = $right_now - $timestamp;
 
 		if ( $diff > 0 && $diff < $round )
-			return self::humanTimeAgo( $local, $now );
+			return self::humanTimeAgo( $timestamp, $right_now );
 
-		return Core\Date::get( $format ?? self::dateFormats( 'default' ), $local );
+		return Core\Date::get(
+			$format ?? self::dateFormats( 'default' ),
+			$timestamp,
+			$timezone_string
+		);
 	}
 
-	public static function humanTimeDiff( $timestamp, $now = '' )
+	public static function humanTimeDiff( $datetime, $now = '', $timezone_string = NULL )
 	{
 		static $strings = NULL;
 
@@ -208,10 +205,12 @@ class Datetime extends WordPress\Main
 				'noop_years'   => _nx_noop( '%s year', '%s years', 'Datetime: Human Time Diff: Noop', 'geditorial' ),
 			];
 
-		if ( empty( $now ) )
-			$now = current_time( 'timestamp', FALSE );
-
-		return Core\Date::humanTimeDiff( $timestamp, $now, $strings );
+		return Core\Date::humanTimeDiff(
+			$datetime,
+			$now,
+			$strings,
+			$timezone_string
+		);
 	}
 
 	public static function htmlFromSeconds( $seconds, $round = FALSE )
@@ -236,7 +235,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// not used yet!
-	public static function moment( $timestamp, $now = '' )
+	public static function moment( $timestamp, $now = '', $timezone_string = NULL )
 	{
 		static $strings = NULL;
 
@@ -272,10 +271,7 @@ class Datetime extends WordPress\Main
 				'format_f_y'     => _x( 'F Y', 'Datetime: Date: Moment', 'geditorial' ),
 			];
 
-		if ( empty( $now ) )
-			$now = current_time( 'timestamp', FALSE );
-
-		return Core\Date::moment( $timestamp, $now, $strings );
+		return Core\Date::moment( $timestamp, $now, $strings, $timezone_string );
 	}
 
 	public static function getPostTypeMonths( $calendar_type, $posttype = 'post', $args = [], $user_id = 0 )
@@ -410,7 +406,7 @@ class Datetime extends WordPress\Main
 		if ( ! $sanitized = Core\Number::translate( Core\Text::trim( $input ) ) )
 			return FALSE;
 
-		// NOTE: year-onlies stored in targeted calendar
+		// NOTE: year-only data is stored in the targeted calendar!
 		if ( 4 === strlen( $sanitized ) )
 			$datetime = self::makeMySQLFromInput(
 				sprintf( '%s-01-01', $sanitized ),
@@ -454,7 +450,7 @@ class Datetime extends WordPress\Main
 			return self::htmlDateTime(
 				$datetime_string,
 				$format ?? self::dateFormats( 'default' ),
-				self::humanTimeDiffRound( strtotime( $datetime_string ), FALSE ),
+				self::humanTimeDiffRound( $datetime_string, FALSE, NULL, NULL, $timezone_string ),
 				$calendar_type,
 				$timezone_string
 			);

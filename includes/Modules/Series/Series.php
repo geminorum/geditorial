@@ -401,7 +401,7 @@ class Series extends gEditorial\Module
 				&& $post->series_meta['in_series_order'] )
 					$key = ( (int) $post->series_meta['in_series_order'] ) * $i;
 			else
-				$key = strtotime( $post->post_date );
+				$key = strtotime( $post->post_date_gmt );
 
 			++$i;
 			// $post->menu_order = $key;

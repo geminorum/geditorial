@@ -218,10 +218,10 @@ class Revisions extends gEditorial\Module
 		$author = $this->author( $revision->post_author );
 		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
 
-		$time = strtotime( $revision->post_modified );
-		$date = gEditorial\Datetime::dateFormat( $time, 'datetime' );
+		$date = gEditorial\Datetime::dateFormat( $revision->post_modified, 'datetime' );
+		$diff = gEditorial\Datetime::humanTimeDiffRound( $revision->post_modified, FALSE );
 
-		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', gEditorial\Datetime::humanTimeDiffRound( $time, FALSE ), $date );
+		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', $diff, $date );
 		$parts['datetime'] = sprintf( '<span class="-datetime">(<small>%s</small>)</span>', $date );
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
@@ -426,7 +426,7 @@ class Revisions extends gEditorial\Module
 
 						$block = '<input type="checkbox" name="_cb[]" value="'.$revision->ID.'" title="'.$revision->ID.'" />';
 						$block.= ' '.self::wordCount( $revision );
-						$block.= ' &ndash; '.gEditorial\Datetime::humanTimeDiffRound( strtotime( $revision->post_modified ), FALSE );
+						$block.= ' &ndash; '.gEditorial\Datetime::humanTimeDiffRound( $revision->post_modified, FALSE );
 						$block.= ' &ndash; '.get_the_author_meta( 'display_name', $revision->post_author );
 
 						$html.= '<div>'.$block.'</div>';

@@ -300,7 +300,7 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-				return Datetime::humanTimeDiffRound( strtotime( $row->post_date ) );
+				return Datetime::humanTimeDiffRound( $row->post_date );
 			},
 		];
 	}

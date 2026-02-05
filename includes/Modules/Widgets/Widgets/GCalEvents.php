@@ -45,18 +45,16 @@ class GCalEvents extends gEditorial\Widget
 
 			foreach ( $data->items as $item ) {
 
-				$timestamp = strtotime( $item->start->date );
-
 				echo '<li>';
 					echo '<div class="event-wrapper" itemscope itemtype="http://schema.org/Event">';
 
-					echo '<div class="event-date" itemprop="startDate" content="'.date( 'c', $timestamp ).'">'
-						.Core\Date::get( $formats['daydate'], $timestamp ).'</div>';
+					echo '<div class="event-date" itemprop="startDate" content="'.Core\Date::getISO8601( $item->start->date ).'">'
+						.Core\Date::get( $formats['daydate'], $item->start->date ).'</div>';
 
 					echo '<div class="event-title" itemprop="name">'.WordPress\Strings::prepTitle( $item->summary ).'</div>';
 
 					if ( ! empty( $instance['display_time'] ) )
-						echo '<div class="event-time">'.Core\Date::get( $formats['timeampm'], $timestamp ).'</div>';
+						echo '<div class="event-time">'.Core\Date::get( $formats['timeampm'], $item->start->date ).'</div>';
 
 					echo '</div>';
 				echo '</li>';

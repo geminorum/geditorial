@@ -1036,7 +1036,7 @@ trait SubContents
 		if ( ! empty( $item['_date'] ) ) {
 			$datetime = gEditorial\Datetime::dateFormat( $item['_date'], $context );
 			// $timeago  = human_time_diff( strtotime( $item['_date'] ) );
-			$timeago  = gEditorial\Datetime::moment( strtotime( $item['_date'] ) );
+			$timeago  = gEditorial\Datetime::moment( $item['_date'] );
 		}
 
 		// NOTE: like `WordPress\Post::summary()`

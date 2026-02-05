@@ -705,7 +705,7 @@ class ShortCode extends WordPress\Main
 		return Core\HTML::tag( $args['item_tag'], [
 			'id'       => $args['item_anchor'] ? sprintf( $args['item_anchor'], $post->ID, $post->post_name ) : FALSE,
 			'class'    => $args['item_class'],
-			'datetime' => 'publish' == $post->post_status ? date( 'c', strtotime( $post->post_date_gmt ) ) : FALSE,
+			'datetime' => in_array( $post->post_status, [ 'publish' ], TRUE ) ? Core\Date::getISO8601( $post->post_date ) : FALSE,
 		], $before.$item.( $args['item_dummy'] ?: '' ).$after );
 	}
 

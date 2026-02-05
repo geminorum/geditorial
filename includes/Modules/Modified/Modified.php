@@ -265,19 +265,15 @@ class Modified extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		$gmt   = strtotime( $post->post_modified_gmt );
-		$local = strtotime( $post->post_modified );
-
 		if ( 'timeago' == $args['title'] )
 			$title = gEditorial\Scripts::enqueueTimeAgo()
-				? FALSE
-				: gEditorial\Datetime::humanTimeDiffRound( $local, $args['round'] );
+				? gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' )
+				: gEditorial\Datetime::humanTimeDiffRound( $post->post_modified, $args['round'] );
 		else
 			$title = $args['title'];
 
 		$html = Core\Date::htmlDateTime(
-			$local,
-			$gmt,
+			$post->post_modified,
 			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
 			$title
 		);
@@ -295,20 +291,17 @@ class Modified extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$gmt     = strtotime( $post->post_modified_gmt );
-		$publish = strtotime( $post->post_date_gmt );
-		$minutes = $this->get_setting( 'display_after', '60' );
+		$threshold = $this->get_setting( 'display_after', '60' );
 
-		if ( $minutes && ( $gmt < $publish + ( absint( $minutes ) * MINUTE_IN_SECONDS ) ) )
+		if ( WordPress\Post::publishedInLast( $post, $threshold, MINUTE_IN_SECONDS ) )
 			return FALSE;
 
 		return Core\Text::spaced(
 			$prefix ?? $this->get_setting_fallback( 'prefix', _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ) ),
-			gEditorial\Datetime::htmlDateTime(
+			Core\Date::htmlDateTime(
 				$post->post_modified,
 				$format ?? gEditorial\Datetime::dateFormats( $this->get_setting( 'insert_format', 'dateonly' ) ),
-				gEditorial\Datetime::humanTimeDiffRound( strtotime( $post->post_modified ), FALSE )
-				// gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' )
+				gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' )
 			)
 		);
 	}
@@ -347,20 +340,15 @@ class Modified extends gEditorial\Module
 		if ( FALSE === ( $site = $this->get_site_modified( TRUE ) ) )
 			return NULL;
 
-		$gmt   = strtotime( $site[1] );
-		$local = strtotime( $site[0] );
-
 		if ( 'timeago' == $args['title'] )
 			$title = gEditorial\Scripts::enqueueTimeAgo()
-				? FALSE
-				// ? gEditorial\Datetime::dateFormat( $site[1], 'fulltime' )
-				: gEditorial\Datetime::humanTimeDiffRound( $local, $args['round'] );
+				? gEditorial\Datetime::dateFormat( $site[0], 'fulltime' )
+				: gEditorial\Datetime::humanTimeDiffRound( $site[0], $args['round'] );
 		else
 			$title = $args['title'];
 
 		$html = Core\Date::htmlDateTime(
-			$local,
-			$gmt,
+			$site[0],
 			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
 			$title
 		);
@@ -427,7 +415,7 @@ class Modified extends gEditorial\Module
 
 		return Core\Date::get(
 			$format ?? gEditorial\Datetime::dateFormats( 'daydate' ),
-			strtotime( $results[0]->{$date} )
+			$results[0]->{$date}
 		);
 	}
 
@@ -502,8 +490,8 @@ class Modified extends gEditorial\Module
 				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' ),
 			],
 			'datetimes' => [
-				'published' => wp_date( 'c', strtotime( $post->post_date ) ),
-				'updated'   => wp_date( 'c', strtotime( $post->post_modified ) ),
+				'published' => Core\Date::getISO8601( $post->post_date ),
+				'updated'   => Core\Date::getISO8601( $post->post_modified ),
 			],
 			'actions' => [],
 		];
