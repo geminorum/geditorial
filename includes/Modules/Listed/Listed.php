@@ -45,6 +45,7 @@ class Listed extends gEditorial\Module
 			'keywords' => [
 				'listing',
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

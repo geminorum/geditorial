@@ -43,6 +43,7 @@ class Execution extends gEditorial\Module
 				'taxmodule',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

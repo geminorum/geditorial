@@ -45,6 +45,7 @@ class Ranged extends gEditorial\Module
 			'keywords' => [
 				'shooting',
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

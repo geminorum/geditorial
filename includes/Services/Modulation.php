@@ -74,6 +74,9 @@ class Modulation extends gEditorial\Service
 		if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
 			return FALSE;
 
+		if ( ! GEDITORIAL_CRM_FEATURES && in_array( 'crm-feature', $module->keywords, TRUE ) )
+			return FALSE;
+
 		$stage = $stage ?? self::const( 'WP_STAGE', 'production' ); // 'development'
 
 		if ( 'production' !== $stage )

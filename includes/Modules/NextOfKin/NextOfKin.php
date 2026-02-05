@@ -36,6 +36,7 @@ class NextOfKin extends gEditorial\Module
 				'family',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

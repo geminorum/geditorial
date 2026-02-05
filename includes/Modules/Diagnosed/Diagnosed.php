@@ -42,6 +42,7 @@ class Diagnosed extends gEditorial\Module
 				'taxmodule',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

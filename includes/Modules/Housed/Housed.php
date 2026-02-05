@@ -39,6 +39,7 @@ class Housed extends gEditorial\Module
 				'taxmodule',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

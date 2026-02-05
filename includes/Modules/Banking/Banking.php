@@ -30,6 +30,7 @@ class Banking extends gEditorial\Module
 				'account',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

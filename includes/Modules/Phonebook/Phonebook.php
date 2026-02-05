@@ -33,6 +33,7 @@ class Phonebook extends gEditorial\Module
 				'contact',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

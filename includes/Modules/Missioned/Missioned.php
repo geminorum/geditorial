@@ -44,6 +44,7 @@ class Missioned extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

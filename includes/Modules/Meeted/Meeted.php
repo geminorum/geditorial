@@ -44,6 +44,7 @@ class Meeted extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

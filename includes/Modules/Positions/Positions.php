@@ -39,6 +39,7 @@ class Positions extends gEditorial\Module
 			'keywords' => [
 				'paired',
 				'subcontent',
+				'crm-feature',
 			],
 		];
 	}

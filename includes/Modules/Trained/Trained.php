@@ -45,6 +45,7 @@ class Trained extends gEditorial\Module
 			'keywords' => [
 				'training',
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

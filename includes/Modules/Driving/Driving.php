@@ -31,6 +31,7 @@ class Driving extends gEditorial\Module
 				'vehicle',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

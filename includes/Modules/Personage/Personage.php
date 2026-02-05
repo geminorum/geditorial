@@ -39,6 +39,7 @@ class Personage extends gEditorial\Module
 				'human',
 				'people',
 				'cptmodule',
+				'crm-feature',
 			],
 		];
 	}

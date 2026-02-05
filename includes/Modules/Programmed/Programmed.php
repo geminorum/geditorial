@@ -44,6 +44,7 @@ class Programmed extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'multipaired',
+				'crm-feature',
 			],
 		];
 	}

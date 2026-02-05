@@ -31,6 +31,7 @@ class Chronicles extends gEditorial\Module
 				'timeline',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}

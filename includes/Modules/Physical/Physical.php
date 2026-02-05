@@ -35,6 +35,7 @@ class Physical extends gEditorial\Module
 				'has-shortcodes',
 				'subcontent',
 				'tabmodule',
+				'crm-feature',
 			],
 		];
 	}
