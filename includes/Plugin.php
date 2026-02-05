@@ -18,6 +18,8 @@ class Plugin extends WordPress\Plugin
 	private $_path;
 	private $_options;
 	private $_modules;
+	private $_active    = 0;
+	private $_available = 0;
 
 	const CAPABILITY_CUSTOMS  = 'editorial_customs';
 	const CAPABILITY_IMPORTS  = 'editorial_imports';
@@ -179,7 +181,11 @@ class Plugin extends WordPress\Plugin
 
 				$class = $module->class;
 				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path, $locale );
+
+				$this->_active++;
 			}
+
+			$this->_available++;
 		}
 
 		// unloading memory!
@@ -305,9 +311,19 @@ class Plugin extends WordPress\Plugin
 		return $this->{$module}->disable_process( $context );
 	}
 
-	public function count()
+	public function count_registered_modules()
 	{
 		return empty( $this->_modules ) ? 0 : count( get_object_vars( $this->_modules ) );
+	}
+
+	public function count_available_modules()
+	{
+		return $this->_available ?: 0;
+	}
+
+	public function count_active_modules()
+	{
+		return $this->_active ?: 0;
 	}
 
 	public function modules( $orderby = FALSE )

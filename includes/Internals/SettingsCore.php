@@ -669,7 +669,7 @@ trait SettingsCore
 		if ( 'config' == $this->module->name ) {
 
 			$title   = NULL;
-			$count   = gEditorial()->count();
+			$count   = gEditorial()->count_active_modules();
 			$flush   = WordPress\URL::maybeFlushRules();
 			$filters = TRUE;
 
