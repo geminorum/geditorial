@@ -143,7 +143,7 @@ class WcConnected extends gEditorial\Module
 			return;
 
 		$metakey = $this->constant( 'metakey_connected' );
-		$request = sprintf( '%s-%s-%s', $this->base, $this->key, $metakey );
+		$request = $this->classs( $metakey );
 
 		if ( FALSE === ( $data = self::req( $request, FALSE ) ) )
 			return;
@@ -185,7 +185,7 @@ class WcConnected extends gEditorial\Module
 				], wp_strip_all_tags( $product->get_formatted_name() ) );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s[]', $this->base, $this->key, $metakey ),
+			'name'  => sprintf( '%s[]', $this->classs( $metakey ) ),
 			'class' => [
 				'wc-product-search',
 			],

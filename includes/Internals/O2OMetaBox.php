@@ -143,7 +143,7 @@ trait O2OMetaBox
 				if ( ! current_user_can( 'edit_post', $post->ID ) )
 					return;
 
-				$request = sprintf( '%s-%s-%s', $this->base, $this->key, $type->name );
+				$request = $this->classs( $type->name );
 
 				if ( FALSE === ( $data = self::req( $request, FALSE ) ) )
 					return;
@@ -204,11 +204,11 @@ trait O2OMetaBox
 			], $item->get_title() );
 
 		$atts = [
-			'name'  => sprintf( '%s-%s-%s[]', $this->base, $module, $args['name'] ),
+			'name'  => sprintf( '%s[]', $this->classs_base( $module, $args['name'] ) ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-searchselect-select2', $this->base ),
-				sprintf( '%s-%s-o2o-%s', $this->base, $module, $args['name'] ),
+				Core\Text::dashed( $this->base, 'searchselect', 'select2' ),
+				Core\Text::dashed( $this->base, $module, 'o2o', $args['name'] ),
 			],
 			'data' => [
 				'o2o-type'  => $type->name,

@@ -106,8 +106,8 @@ trait ViewEngines
 	public function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
 	{
 		$view     = FALSE;
-		$target   = sprintf( '%s-%s', $context, $template );
-		$fallback = sprintf( '%s-%s', $default, $template );
+		$target   = Core\Text::dashed( $context, $template );
+		$fallback = Core\Text::dashed( $default, $template );
 		$roots    = $this->viewengine__roots( $path );
 
 		foreach ( $roots as $root ) {
@@ -129,11 +129,11 @@ trait ViewEngines
 	public function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
-		$fallback = sprintf( '%s-type-%s', $context, $default );
+		$fallback = Core\Text::dashed( $context, 'type', $default );
 		$roots    = $this->viewengine__roots( $path );
 
 		if ( $post = WordPress\Post::get( $post ) )
-			$target = sprintf( '%s-type-%s', $context, $post->post_type );
+			$target = Core\Text::dashed( $context, 'type', $post->post_type );
 
 		foreach ( $roots as $root ) {
 
@@ -154,11 +154,11 @@ trait ViewEngines
 	public function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
-		$fallback = sprintf( '%s-tax-%s', $context, $default );
+		$fallback = Core\Text::dashed( $context, 'tax', $default );
 		$roots    = $this->viewengine__roots( $path );
 
 		if ( $term = WordPress\Term::get( $term ) )
-			$target = sprintf( '%s-tax-%s', $context, $term->taxonomy );
+			$target = Core\Text::dashed( $context, 'tax', $term->taxonomy );
 
 		foreach ( $roots as $root ) {
 
@@ -176,6 +176,7 @@ trait ViewEngines
 		return $this->filters( 'view_by_term', $view, $term, $context, $fallback, $roots, $target );
 	}
 
+	// NOTE: DEPRECATED
 	protected function get_view_part_by_post( $post, $context, $default = 'default' )
 	{
 		self::_dep();
@@ -191,6 +192,7 @@ trait ViewEngines
 		return $this->filters( 'view_part_by_post', $part, $post, $context, $fallback );
 	}
 
+	// NOTE: DEPRECATED
 	protected function get_view_part_by_term( $term, $context, $default = 'default' )
 	{
 		self::_dep();

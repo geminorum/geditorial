@@ -244,7 +244,6 @@ class Modified extends gEditorial\Module
 		], (array) $atts ) );
 	}
 
-	// TODO: `Posted on 22nd May 2014 This post was last updated on 23rd April 2016`
 	public function post_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
@@ -411,7 +410,10 @@ class Modified extends gEditorial\Module
 			return $results[0]->{$date};
 
 		if ( TRUE === $format )
-			return [ $results[0]->{$date}, $results[0]->{$gmt} ];
+			return [
+				$results[0]->{$date},
+				$results[0]->{$gmt},
+			];
 
 		return Core\Date::get(
 			$format ?? gEditorial\Datetime::dateFormats( 'daydate' ),

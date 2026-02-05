@@ -235,9 +235,24 @@ class Revisions extends gEditorial\Module
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
-			$parts['edit']   = sprintf( '<a class="button button-small" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', get_edit_post_link( $revision->ID ), Core\HTML::getDashicon( 'backup' ), _x( 'Browse', 'Title Attr', 'geditorial-revisions' ) );
-			$parts['delete'] = sprintf( '<a class="button button-small -delete" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s<span class="-text"> %4$s</span></a>', $revision->ID, $revision->post_parent, Core\HTML::getDashicon( 'trash' ), _x( 'Delete', 'Title Attr', 'geditorial-revisions' ) );
+
+			$parts['edit'] = vsprintf( '<a class="%4$s" href="%1$s" title="%3$s">%2$s <span class="-text">%3$s</span></a>', [
+				get_edit_post_link( $revision->ID ),
+				Core\HTML::getDashicon( 'backup' ),
+				_x( 'Browse', 'Title Attr', 'geditorial-revisions' ),
+				Core\HTML::buttonClass( TRUE ),
+			] );
+
+			$parts['delete'] = vsprintf( '<a class="%5$s" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s <span class="-text">%4$s</span></a>', [
+				$revision->ID,
+				$revision->post_parent,
+				Core\HTML::getDashicon( 'trash' ),
+				_x( 'Delete', 'Title Attr', 'geditorial-revisions' ),
+				Core\HTML::buttonClass( TRUE, '-delete' ),
+			] );
+
 		} else {
+
 			$link = FALSE;
 		}
 
@@ -247,7 +262,7 @@ class Revisions extends gEditorial\Module
 		if ( $link )
 			$parts['loading'] = gEditorial\Ajax::spinner();
 
-		return sprintf( '<span class="geditorial-admin-wrap-inline -revisions">%s</span>', implode( ' ', $parts ) );
+		return Core\HTML::span( implode( ' ', $parts ), [ 'geditorial-admin-wrap-inline',  '-revisions' ] );
 	}
 
 	public function post_submitbox_misc_actions( $post )

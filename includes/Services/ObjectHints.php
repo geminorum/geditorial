@@ -80,7 +80,8 @@ class ObjectHints extends gEditorial\Service
 
 	private static function _get_tips_posts( $post, $queried )
 	{
-		$hints = apply_filters( sprintf( '%s_objecthints_tips_for_post', static::BASE ),
+		//@hook: `geditorial_objecthints_tips_for_post`
+		$hints = apply_filters( self::hook( 'objecthints', 'tips_for_post' ),
 			[],
 			$post,
 			$queried['extend'],
@@ -96,7 +97,7 @@ class ObjectHints extends gEditorial\Service
 					'title'    => '',
 					'link'     => '#',
 					'data'     => [],
-					'class'    => sprintf( '%s-%s', static::BASE, static::REST_ENDPOINT_MAIN_ROUTE ),
+					'class'    => self::classs( static::REST_ENDPOINT_MAIN_ROUTE ),
 					'source'   => static::REST_ENDPOINT_MAIN_ROUTE,
 					'priority' => 10,
 				], $hint );

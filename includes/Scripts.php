@@ -307,7 +307,7 @@ JS;
 	 */
 	public static function pkgSheetJS( $enqueue = FALSE, $version = '0.20.3' )
 	{
-		$handle = 'xlsx'; // NOTE: no prefix to use as dependency for apps.
+		$handle = 'xlsx'; // NOTE: **no** prefix to use as dependency for apps.
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, static::URL.'assets/packages/sheetjs/xlsx.full.min.js', [], $version, TRUE );
@@ -323,7 +323,7 @@ JS;
 
 	public static function pkgMustache( $enqueue = FALSE, $version = '4.2.0' )
 	{
-		$handle = 'mustache';  // NOTE: no prefix to use as dependency for apps.
+		$handle = 'mustache';  // NOTE: **no** prefix to use as dependency for apps.
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, static::URL.'assets/packages/mustache.js/mustache.min.js', [], $version, TRUE );
@@ -380,16 +380,14 @@ JS;
 		return $handle;
 	}
 
-	// NOTE: wp/npm version is behind!
+	// NOTE: WordPress/NPM version is behind!
 	// @REF: https://github.com/moxiecode/plupload
 	// @REF: https://www.plupload.com/
 	public static function pkgPlupload( $enqueue = FALSE, $ver = '3.1.5' )
 	{
-		$handle = sprintf( '%s-%s', static::BASE, 'plupload' );
-
 		return $enqueue
-			? self::enqueuePackage( $handle, 'plupload/plupload.full', [], $ver )
-			: self::registerPackage( $handle, 'plupload/plupload.full', [], $ver );
+			? self::enqueuePackage( 'plupload', 'plupload/plupload.full', [], $ver )
+			: self::registerPackage( 'plupload', 'plupload/plupload.full', [], $ver );
 	}
 
 	public static function pkgSortable( $enqueue = FALSE, $ver = '0.9.13' )

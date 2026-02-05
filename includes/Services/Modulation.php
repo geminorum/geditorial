@@ -25,7 +25,7 @@ class Modulation extends gEditorial\Service
 		$defaults = [
 			'folder'     => $folder,
 			'class'      => $class ?: self::moduleClass( $args['name'], FALSE ),
-			'textdomain' => sprintf( '%s-%s', static::BASE, Core\Text::sanitizeBase( $args['name'] ) ),   // or `NULL` for plugin base
+			'textdomain' => Core\Text::dashed( static::BASE, Core\Text::sanitizeBase( $args['name'] ) ),   // or `NULL` for plugin base
 
 			'icon'      => 'screenoptions',   // `dashicons` class / SVG icon array
 			'configure' => TRUE,              // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
