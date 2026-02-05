@@ -42,8 +42,8 @@ class Countables extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_shortcode( 'posttype_shortcode', NULL, TRUE );
-		$this->register_shortcode( 'taxonomy_shortcode', NULL, TRUE );
+		$this->register_shortcode( 'posttype_shortcode', TRUE );
+		$this->register_shortcode( 'taxonomy_shortcode', TRUE );
 	}
 
 	// TODO: add setting

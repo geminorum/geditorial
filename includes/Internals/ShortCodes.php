@@ -9,10 +9,10 @@ use geminorum\gEditorial\WordPress;
 
 trait ShortCodes
 {
-	protected function register_shortcode( $constant, $callback = NULL, $force = FALSE )
+	protected function register_shortcode( $constant, $force = FALSE, $aliases = NULL, $callback = NULL )
 	{
 		if ( ! $force && ! $this->get_setting( 'shortcode_support', FALSE ) )
-			return;
+			return FALSE;
 
 		if ( is_null( $callback ) && method_exists( $this, $constant ) )
 			$callback = [ $this, $constant ];
@@ -23,5 +23,15 @@ trait ShortCodes
 		add_shortcode( $shortcode, $callback );
 
 		add_filter( $this->hook_base( 'shortcode', $shortcode ), $callback, 10, 3 );
+
+		if ( empty( $aliases ) )
+			return $shortcode;
+
+		foreach ( $aliases as $alias ) {
+			remove_shortcode( $alias );
+			add_shortcode( $alias, $callback );
+		}
+
+		return $shortcode;
 	}
 }

@@ -58,8 +58,8 @@ class Alphabet extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_shortcode( 'shortcode_posts', NULL, TRUE );
-		$this->register_shortcode( 'shortcode_terms', NULL, TRUE );
+		$this->register_shortcode( 'shortcode_posts', TRUE );
+		$this->register_shortcode( 'shortcode_terms', TRUE );
 	}
 
 	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )

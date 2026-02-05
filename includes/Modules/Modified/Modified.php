@@ -125,7 +125,7 @@ class Modified extends gEditorial\Module
 		parent::init();
 
 		$this->register_shortcode( 'entry_modified_shortcode' );
-		$this->register_shortcode( 'post_modified_shortcode' );
+		$this->register_shortcode( 'post_modified_shortcode', FALSE, [ 'last-edited', 'lastupdate' ] );
 		$this->register_shortcode( 'site_modified_shortcode' );
 
 		$this->filter( 'wp_nav_menu_items', 2 );
