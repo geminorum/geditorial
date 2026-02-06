@@ -466,8 +466,6 @@ class Modified extends gEditorial\Module
 		return TRUE;
 	}
 
-	// TODO: must be filterable Date Blocks!
-	// TODO: support links on Date Blocks
 	public function modified_get_data_for_post( $post = NULL, $context = NULL, $format = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -478,28 +476,32 @@ class Modified extends gEditorial\Module
 
 		$data = [
 			'context' => $context,
-
-			'texts' => [
-				'published' => _x( 'First published', 'View Text', 'geditorial-modified' ),   // `Created on` // TODO: Optional Customization
-				'updated'   => _x( 'Last updated', 'View Text', 'geditorial-modified' ),      // `Updated on` // TODO: Optional Customization
-			],
-			'titles' => [
-				'published' => _x( 'Publicly accessed on', 'View Title', 'geditorial-modified' ),
-				'updated'   => _x( 'Lastly edited on', 'View Title', 'geditorial-modified' ),
-			],
-			'dates' => [
-				'published' => gEditorial\Datetime::dateFormat( $post->post_date, $format ),
-				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, $format ),
-			],
-			'fulltimes' => [
-				'published' => gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' ),
-				'updated'   => gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' ),
-			],
-			'datetimes' => [
-				'published' => Core\Date::getISO8601( $post->post_date ),
-				'updated'   => Core\Date::getISO8601( $post->post_modified ),
-			],
+			'blocks'  => [],
 			'actions' => [],
+		];
+
+		$data['blocks'][] = [
+			'context'   => 'published',
+			'text'      => _x( 'First published', 'View Text', 'geditorial-modified' ),         // `Created on` // TODO: Optional Customization
+			'title'     => _x( 'Publicly accessed on', 'View Title', 'geditorial-modified' ),
+			'date'      => gEditorial\Datetime::dateFormat( $post->post_date, $format ),
+			'fulltime'  => gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' ),
+			'datetime'  => Core\Date::getISO8601( $post->post_date ),
+			'titlelink' => FALSE,
+			'datelink'  => FALSE,
+			'wrapclass' => '-post_date',
+		];
+
+		$data['blocks'][] = [
+			'context'   => 'updated',
+			'text'      => _x( 'Last updated', 'View Text', 'geditorial-modified' ),              // `Updated on` // TODO: Optional Customization
+			'title'     => _x( 'Lastly edited on', 'View Title', 'geditorial-modified' ),
+			'date'      => gEditorial\Datetime::dateFormat( $post->post_modified, $format ),
+			'fulltime'  => gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' ),
+			'datetime'  => Core\Date::getISO8601( $post->post_modified ),
+			'titlelink' => FALSE,
+			'datelink'  => FALSE,
+			'wrapclass' => '-post_modified',
 		];
 
 		if ( $edit = WordPress\Post::edit( $post ) )

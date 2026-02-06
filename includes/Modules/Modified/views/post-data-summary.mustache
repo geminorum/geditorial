@@ -1,22 +1,22 @@
 <div class="entry-modified d-flex flex-nowrap justify-content-start align-items-start mt-5 mb-3 py-4 gap-5 border-top border-bottom border-secondary-subtle">
 
-	<div class="-published">
-		<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
-			title="{{{data.titles.published}}}">{{data.texts.published}}</h6>
-		<div class="-time fs-5 text-secondary-emphasis"><time
-			class="do-timeago"
-			title="{{data.fulltimes.published}}"
-			datetime="{{data.datetimes.published}}">{{data.dates.published}}</time></div>
-	</div>
-
-	<div class="-updated">
-		<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
-			title="{{{data.titles.updated}}}">{{data.texts.updated}}</h6>
-		<div class="-time fs-5 text-secondary-emphasis"><time
-			class="do-timeago"
-			title="{{data.fulltimes.updated}}"
-			datetime="{{data.datetimes.updated}}">{{data.dates.updated}}</time></div>
-	</div>
+	{{#data.blocks}}
+		<div class="block-{{context}} {{wrapclass}}">
+		{{#text}}
+			<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
+				title="{{title}}"
+				>{{{text}}}</h6>
+		{{/text}}
+		{{#date}}
+			<div class="-date fs-5 text-secondary-emphasis">
+				<time
+				class="do-timeago"
+				title="{{fulltime}}"
+				datetime="{{datetime}}"
+				>{{date}}</time></div>
+		{{/date}}
+		</div>
+	{{/data.blocks}}
 
 	<div class="-actions ms-auto d-flex flex-column align-items-end">
 		{{#data.actions}}
