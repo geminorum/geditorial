@@ -184,7 +184,7 @@ class Revisions extends gEditorial\Module
 		}
 	}
 
-	protected function author( $user_id )
+	private function _get_author( $user_id )
 	{
 		if ( empty( $this->cache['authors'] ) )
 			$this->cache['authors'] = [];
@@ -194,61 +194,67 @@ class Revisions extends gEditorial\Module
 
 		return $this->cache['authors'][$user_id] = [
 			'name'   => get_the_author_meta( 'display_name', $user_id ),
-			'avatar' => get_avatar( $user_id, 24 ),
-			// FIXME: add link to user profile
+			'avatar' => Services\Avatars::getByUser( $user_id ),
+			// 'edit'   => WordPress\User::edit( $user_id ), // NOT USED YET
 		];
 	}
 
 	public static function wordCount( $revision )
 	{
-		return vsprintf( '[<span class="-wordcount" title="%4$s">%1$s/%2$s/%3$s</span>]', [
+		return vsprintf( '<span class="-wordcount" title="%4$s">[%1$s|%2$s|%3$s]</span>', [
 			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
 			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_content ), NULL, '&ndash;' ),
 			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_excerpt ), NULL, '&ndash;' ),
-			_x( 'Title/Content/Excerpt Word Count', 'Title Attr', 'geditorial-revisions' ),
+			_x( '[Title|Content|Excerpt] Word Counts', 'Title Attribute', 'geditorial-revisions' ),
 		] );
 	}
 
-	// @SEE: `wp_get_post_revisions_url()` @since WP 5.9
 	public function wp_post_revision_title_expanded( $revision_date_author, $revision, $link )
 	{
-		$parts = [];
 		$autosave = FALSE;
+		$author   = $this->_get_author( $revision->post_author );
+		$parts    = [];
 
-		$author = $this->author( $revision->post_author );
-		$parts['author'] = sprintf( '%1$s %2$s &ndash;', $author['avatar'], $author['name'] );
+		$parts['avatar'] = Core\HTML::span( $author['avatar'], '-user-avatar', FALSE, $author['name'] );
+		$parts['author'] = Core\HTML::span( $author['name'], '-display-name' );
+		$parts['sep']    = Core\HTML::span( '&ndash;', '-sep' );
 
-		$date = gEditorial\Datetime::dateFormat( $revision->post_modified, 'datetime' );
+		$date = gEditorial\Datetime::dateFormat( $revision->post_modified, 'daydate' );
 		$diff = gEditorial\Datetime::humanTimeDiffRound( $revision->post_modified, FALSE );
 
-		$parts['timediff'] = sprintf( '<span class="-timediff" title="%2$s">%1$s</span>', $diff, $date );
-		$parts['datetime'] = sprintf( '<span class="-datetime">(<small>%s</small>)</span>', $date );
+		$parts['timediff'] = Core\HTML::span( $diff, '-timediff', $date, $date );
+		$parts['timediff'] = Core\HTML::span( sprintf( '(<small>%s</small>)', $date ), '-datetime' );
 
 		if ( $this->get_setting( 'revision_wordcount', FALSE ) )
 			$parts['wordcount'] = self::wordCount( $revision );
 
 		if ( ! wp_is_post_revision( $revision ) ) {
+
 			$parts['current'] = _x( '[Current]', 'Indicator', 'geditorial-revisions' );
 			$link = FALSE;
+
 		} else if ( wp_is_post_autosave( $revision ) ) {
+
 			$autosave = TRUE;
 		}
 
 		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
 
-			$parts['edit'] = vsprintf( '<a class="%4$s" href="%1$s" title="%3$s">%2$s <span class="-text">%3$s</span></a>', [
+			// NOTE: `.-text` will hide if meta-box is on the side
+			$parts['edit'] = vsprintf( '<a class="%4$s" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', [
 				get_edit_post_link( $revision->ID ),
 				Core\HTML::getDashicon( 'backup' ),
 				_x( 'Browse', 'Title Attr', 'geditorial-revisions' ),
-				Core\HTML::buttonClass( TRUE ),
+				implode( ' ', Core\HTML::buttonClass() ), // No need for `.-button-icon`
 			] );
 
-			$parts['delete'] = vsprintf( '<a class="%5$s" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s <span class="-text">%4$s</span></a>', [
+			// NOTE: `.-text` will hide if meta-box is on the side
+			$parts['delete'] = vsprintf( '<a class="%5$s" href="#" data-id="%1$s" data-parent="%2$s" title="%4$s">%3$s<span class="-text"> %4$s</span></a>', [
 				$revision->ID,
 				$revision->post_parent,
 				Core\HTML::getDashicon( 'trash' ),
 				_x( 'Delete', 'Title Attr', 'geditorial-revisions' ),
-				Core\HTML::buttonClass( TRUE, '-delete' ),
+				implode( ' ', Core\HTML::buttonClass( TRUE, '-delete' ) ), // No need for `.-button-icon`
 			] );
 
 		} else {

@@ -234,7 +234,7 @@ class Modified extends gEditorial\Module
 			gEditorial\Scripts::enqueueTimeAgo();
 		}
 
-		$this->wrap_content_insert( $html );
+		$this->wrap_content_insert( $html, 'clearfix' );
 	}
 
 	public function entry_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -247,15 +247,16 @@ class Modified extends gEditorial\Module
 	public function post_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'id'       => get_queried_object_id(),
-			'format'   => NULL,
-			'title'    => 'timeago',
-			'round'    => FALSE,
-			'link'     => FALSE,
-			'context'  => NULL,
-			'wrap'     => TRUE,
-			'before'   => '',
-			'after'    => '',
+			'id'             => get_queried_object_id(),
+			'format'         => NULL,
+			'format_context' => NULL,
+			'title'          => 'timeago',
+			'round'          => FALSE,
+			'link'           => FALSE,
+			'context'        => NULL,
+			'wrap'           => TRUE,
+			'before'         => '',
+			'after'          => '',
 		], $atts, $tag ?: $this->constant( 'post_modified_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
@@ -273,7 +274,7 @@ class Modified extends gEditorial\Module
 
 		$html = Core\Date::htmlDateTime(
 			$post->post_modified,
-			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
+			$args['format'] ?? gEditorial\Datetime::dateFormats( $args['format_context'] ?? 'daydate' ),
 			$title
 		);
 
@@ -323,14 +324,15 @@ class Modified extends gEditorial\Module
 	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		$args = shortcode_atts( [
-			'format'   => NULL,
-			'title'    => 'timeago',
-			'round'    => FALSE,
-			'link'     => FALSE,
-			'context'  => NULL,
-			'wrap'     => TRUE,
-			'before'   => '',
-			'after'    => '',
+			'format'         => NULL,
+			'format_context' => NULL,
+			'title'          => 'timeago',
+			'round'          => FALSE,
+			'link'           => FALSE,
+			'context'        => NULL,
+			'wrap'           => TRUE,
+			'before'         => '',
+			'after'          => '',
 		], $atts, $tag ?: $this->constant( 'site_modified_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
@@ -348,7 +350,7 @@ class Modified extends gEditorial\Module
 
 		$html = Core\Date::htmlDateTime(
 			$site[0],
-			$args['format'] ?? gEditorial\Datetime::dateFormats( 'daydate' ),
+			$args['format'] ?? gEditorial\Datetime::dateFormats( $args['format_context'] ?? 'daydate' ),
 			$title
 		);
 
@@ -464,6 +466,8 @@ class Modified extends gEditorial\Module
 		return TRUE;
 	}
 
+	// TODO: must be filterable Date Blocks!
+	// TODO: support links on Date Blocks
 	public function modified_get_data_for_post( $post = NULL, $context = NULL, $format = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )

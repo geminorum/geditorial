@@ -210,7 +210,8 @@ class Shortcodes extends gEditorial\Module
 						return $html.'&mdash;</div>';
 
 					foreach ( $matches[0] as $offset => $shortcode )
-						$html.= Core\HTML::wrap( Core\HTML::code( $matches[2][$offset] ).' '.WordPress\Strings::trimChars( $shortcode, 145 ) );
+						// $html.= Core\HTML::wrap( Core\HTML::code( $matches[2][$offset] ).' '.WordPress\Strings::trimChars( $shortcode, 145 ) );
+						$html.= Core\HTML::wrap( Core\HTML::code( WordPress\Strings::trimChars( $shortcode, 185 ) ) );
 
 					return $html.'</div>';
 				},

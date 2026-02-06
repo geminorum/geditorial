@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class Avatars extends gEditorial\Service
 {
-	const DEFAULT_SIZE  = 96;           // hardcoded on WordPress core!
+	const DEFAULT_SIZE  = 96;           // It is hardcoded on WordPress core. // NOTE: Less HTTP requests with fixed sizes!
 	const DEFAULT_VALUE = 'mysteryman';
 
 	public static function isDisabled()
@@ -18,13 +18,19 @@ class Avatars extends gEditorial\Service
 
 	public static function getByUser( $user, $fallback = '', $extra = [] )
 	{
-		return self::getByEmail( $user->ID, $fallback, $extra ); // WTF?!
+		// WTF?!
+		return self::getByEmail(
+			is_object( $user ) ? $user->ID : $user,
+			$fallback,
+			$extra
+		);
 	}
 
 	public static function getByEmail( $email, $fallback = '', $extra = [] )
 	{
 		$args = array_merge( [
-			'class'         => self::classs( 'avatar' ),
+			'class' => self::classs( 'avatar' ),
+
 			'force_display' => TRUE,
 		], $extra );
 

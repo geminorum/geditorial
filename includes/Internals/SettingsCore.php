@@ -349,6 +349,7 @@ trait SettingsCore
 		] ], $extra );
 	}
 
+	// TODO: must avoid storing the defaults!
 	public function settings_validate( $options, $context = 'settings' )
 	{
 		if ( 'settings' === $context ) {
@@ -703,7 +704,7 @@ trait SettingsCore
 
 	protected function settings_footer()
 	{
-		if ( 'config' == $this->module->name )
+		if ( 'config' === $this->module->name )
 			gEditorial\Settings::settingsCredits();
 
 		else

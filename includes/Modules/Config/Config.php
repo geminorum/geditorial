@@ -821,7 +821,10 @@ class Config extends gEditorial\Module
 		$messages = apply_filters( $this->hook_base( 'imports', 'messages' ), gEditorial\Settings::messages(), $sub, $can );
 
 		if ( $can )
-			$subs['data'] = _x( 'Data', 'Imports Sub', 'geditorial-admin' );
+			$subs['data'] = [
+				'title' => _x( 'Data', 'Imports Sub', 'geditorial-admin' ),
+				'icon'  => Services\Icons::get( 'database' ),
+			];
 
 		if ( WordPress\User::isSuperAdmin() ) {
 			$subs['console'] = [

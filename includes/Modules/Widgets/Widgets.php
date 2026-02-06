@@ -39,7 +39,7 @@ class Widgets extends gEditorial\Module
 				[
 					'field'  => 'widgets',
 					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-widgets' ),
-					'type'   => 'checkboxes',
+					'type'   => 'checkboxes-panel-expanded',
 					'values' => $this->_list_widgets(),
 				],
 			],

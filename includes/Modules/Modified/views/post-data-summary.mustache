@@ -20,7 +20,22 @@
 
 	<div class="-actions ms-auto d-flex flex-column align-items-end">
 		{{#data.actions}}
-			<a href="{{link}}"><span class="badge {{class}}" title="{{title}}">{{text}}</span></a>
+			{{#link}}
+				{{#datetime}}
+					<a href="{{link}}" rel="nofollow"><span class="badge {{class}}"><time title="{{title}}" datetime={{{datetime}}}>{{text}}</time></span></a>
+				{{/datetime}}
+				{{^datetime}}
+					<a href="{{link}}" rel="nofollow"><span class="badge {{class}}" title="{{title}}">{{text}}</span></a>
+				{{/datetime}}
+			{{/link}}
+			{{^link}}
+				{{#datetime}}
+					<span class="badge {{class}}"><time title="{{title}}" datetime={{{datetime}}}>{{text}}</time></span>
+				{{/datetime}}
+				{{^datetime}}
+					<span class="badge {{class}}" title="{{title}}">{{text}}</span>
+				{{/datetime}}
+			{{/link}}
 		{{/data.actions}}
 	</div>
 

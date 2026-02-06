@@ -187,7 +187,8 @@ class Estimated extends gEditorial\Module
 			return;
 
 		$this->wrap_content_insert(
-			Core\HTML::small( $html, 'text-muted' )
+			Core\HTML::small( $html, 'text-muted' ),
+			'clearfix'
 		);
 	}
 

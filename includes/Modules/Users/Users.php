@@ -564,7 +564,8 @@ class Users extends gEditorial\Module
 
 		echo '<div class="geditorial-wrap -admin-widget -users -contacts">';
 
-		echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
+		// echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
+		echo Core\HTML::wrap( Services\Avatars::getByUser( $user ), '-avatar' );
 
 		echo '<ul class="-rows">';
 
@@ -810,7 +811,8 @@ class Users extends gEditorial\Module
 				echo '<div class="user-entry">';
 
 					// FIXME: use custom Avatar
-					echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
+					// echo get_avatar( get_the_author_meta( 'email', $user_id ), '96' );
+					echo Services\Avatars::getByUser( $user_id );
 
 					echo '<h2 class="user-title">'.Core\HTML::tag( 'a', [
 						'href'  => get_author_posts_url( $user_id ),
