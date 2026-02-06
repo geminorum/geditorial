@@ -104,7 +104,7 @@ class Estimated extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		$this->hook_insert_content( 22 );
+		$this->hook_content_insert( 22 );
 	}
 
 	public function setup_ajax()

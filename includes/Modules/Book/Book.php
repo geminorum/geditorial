@@ -553,7 +553,7 @@ class Book extends gEditorial\Module
 
 		} else if ( $this->_paired && is_singular( $this->posttypes() ) ) {
 
-			$this->hook_insert_content();
+			$this->hook_content_insert();
 		}
 	}
 

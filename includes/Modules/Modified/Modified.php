@@ -143,7 +143,7 @@ class Modified extends gEditorial\Module
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
-		$this->hook_insert_content( 30 );
+		$this->hook_content_insert( 30 );
 	}
 
 	public function adminbar_init( &$nodes, $parent )

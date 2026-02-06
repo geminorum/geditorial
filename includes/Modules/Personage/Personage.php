@@ -470,7 +470,7 @@ class Personage extends gEditorial\Module
 					$this->get_setting( 'insert_priority', -50 )
 				);
 
-			$this->hook_insert_content();
+			$this->hook_content_insert();
 		}
 	}
 

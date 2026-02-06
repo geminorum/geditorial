@@ -5,15 +5,15 @@
 		{{#text}}
 			<h6 class="-label mt-0 fs-6 fw-bolder text-secondary"
 				title="{{title}}"
-				>{{{text}}}</h6>
+				>{{#titlelink}}<a href="{{titlelink}}">{{/titlelink}}{{{text}}}{{#titlelink}}</a>{{/titlelink}}</h6>
 		{{/text}}
 		{{#date}}
 			<div class="-date fs-5 text-secondary-emphasis">
-				<time
-				class="do-timeago"
-				title="{{fulltime}}"
-				datetime="{{datetime}}"
-				>{{date}}</time></div>
+				{{#datelink}}<a href="{{datelink}}">{{/datelink}}<time
+					class="do-timeago"
+					title="{{fulltime}}"
+					datetime="{{datetime}}">{{date}}</time>{{#datelink}}</a>{{/datelink}}
+			</div>
 		{{/date}}
 		</div>
 	{{/data.blocks}}

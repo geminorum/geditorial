@@ -71,7 +71,7 @@ class Headings extends gEditorial\Module
 
 		$this->filter( 'the_content' );
 
-		if ( $this->hook_insert_content( -25 ) )
+		if ( $this->hook_content_insert( -25 ) )
 			$this->enqueue_styles(); // widget must add this itself!
 	}
 

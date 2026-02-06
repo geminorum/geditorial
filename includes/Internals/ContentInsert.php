@@ -36,7 +36,7 @@ trait ContentInsert
 		return is_singular( $posttypes );
 	}
 
-	protected function hook_insert_content( $default_priority = NULL, $setting_default = NULL )
+	protected function hook_content_insert( $default_priority = NULL, $setting_default = NULL )
 	{
 		if ( 'none' === ( $insert = $this->get_setting( 'insert_content', $setting_default ?? 'none' ) ) )
 			return FALSE;
