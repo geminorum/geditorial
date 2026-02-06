@@ -914,8 +914,8 @@ class Template extends WordPress\Main
 		if ( ! array_key_exists( 'url_field', $atts ) )
 			$atts['url_field'] = 'action_url';
 
-		if ( ! array_key_exists( 'link_class', $atts ) && ! is_admin() )
-			$atts['link_class'] = 'button -button';
+		if ( ! array_key_exists( 'link_class', $atts ) )
+			$atts['link_class'] = Core\HTML::buttonClass( FALSE, '-button-action' );
 
 		return self::metaLink( $atts, 'meta', FALSE );
 	}
