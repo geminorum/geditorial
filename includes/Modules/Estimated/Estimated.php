@@ -89,6 +89,16 @@ class Estimated extends gEditorial\Module
 		];
 	}
 
+	public function init()
+	{
+		parent::init();
+
+		if ( ! is_admin() )
+			return;
+
+		$this->action_module( 'pointers', 'post', 5, 600 );
+	}
+
 	public function template_redirect()
 	{
 		if ( ! is_singular( $this->posttypes() ) )
@@ -178,6 +188,19 @@ class Estimated extends gEditorial\Module
 			$this->_get_post_wordcount( $post_id, TRUE );
 	}
 
+	public function pointers_post( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $html = $this->get_estimated_for_post( $post, NULL, FALSE ) )
+			return;
+
+		printf( $before, '-estimated' );
+			echo Core\Text::spaced(
+				$this->get_column_icon(),
+				$html
+			);
+		echo $after;
+	}
+
 	public function insert_content( $content )
 	{
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
@@ -229,7 +252,7 @@ class Estimated extends gEditorial\Module
 		return $this->get_estimated_for_post( $post_id, $prefix );
 	}
 
-	public function get_estimated_for_post( $post = NULL, $prefix = NULL )
+	public function get_estimated_for_post( $post = NULL, $prefix = NULL, $check = TRUE )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -237,7 +260,7 @@ class Estimated extends gEditorial\Module
 		if ( ! $wordcount = $this->_fetch_postmeta( $post->ID ) )
 			$wordcount = $this->_get_post_wordcount( $post->ID, TRUE );
 
-		if ( $this->get_setting( 'min_words', 250 ) > $wordcount )
+		if ( $check && ( $this->get_setting( 'min_words', 250 ) > $wordcount ) )
 			return FALSE;
 
 		return Core\Text::spaced(
