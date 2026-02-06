@@ -79,4 +79,16 @@ trait ContentInsert
 			$extra
 		) );
 	}
+
+	protected function is_page_content_insert( $insert = NULL )
+	{
+		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
+
+		switch ( $insert ) {
+			case 'before': return WordPress\Isit::contentFirstPage();
+			case 'after' : return WordPress\Isit::contentLastPage();
+		}
+
+		return FALSE;
+	}
 }

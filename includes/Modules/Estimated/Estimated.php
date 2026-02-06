@@ -180,7 +180,10 @@ class Estimated extends gEditorial\Module
 
 	public function insert_content( $content )
 	{
-		if ( ! $this->is_content_insert( FALSE ) )
+		if ( ! $this->is_content_insert( FALSE, FALSE ) )
+			return;
+
+		if ( ! $this->is_page_content_insert() )
 			return;
 
 		if ( ! $html = $this->get_estimated_for_post() )

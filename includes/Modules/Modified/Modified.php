@@ -220,6 +220,9 @@ class Modified extends gEditorial\Module
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
 
+		if ( ! $this->is_page_content_insert() )
+			return;
+
 		if ( 'summary' === $this->get_setting( 'insert_context', 'delayed' ) ) {
 
 			if ( ! $html = $this->modified_data_summary( [ 'echo' => FALSE ] ) )
