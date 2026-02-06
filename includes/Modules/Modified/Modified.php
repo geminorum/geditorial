@@ -133,6 +133,8 @@ class Modified extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		$this->action_module( 'pointers', 'post', 5, 120 );
+		$this->filter( 'dashboard_pointers', 1, 4, FALSE, 'gnetwork' );
 		$this->filter( 'navigation_help_placeholders', 2, 10, FALSE, 'gnetwork' );
 	}
 
@@ -213,6 +215,37 @@ class Modified extends gEditorial\Module
 		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => Services\CustomPostType::getLabel( 'post', 'not_found' ),
 		] );
+	}
+
+	public function pointers_post( $post, $before, $after, $context, $screen )
+	{
+		if ( ! $html = $this->get_post_modified( NULL, $post ) )
+			return;
+
+		printf( $before, '-modified' );
+			echo Core\Text::spaced(
+				$this->get_column_icon(),
+				$html
+			);
+		echo $after;
+	}
+
+	public function dashboard_pointers( $items )
+	{
+		if ( $content = $this->site_modified_shortcode( [ 'title' => NULL ] ) )
+			$items[] = Core\HTML::tag( 'span', [
+				// 'href'  => $this->get_module_url(), // TODO
+				'title' => $this->get_setting( 'last_published' )
+					? _x( 'This is the time of last published post is this site.', 'Pointer: Site', 'geditorial-modified' )
+					: _x( 'This is the time of last modified post is this site.', 'Pointer: Site', 'geditorial-modified' ),
+				'class' => '-site-modified',
+			], sprintf(
+				/* translators: `%s`: site modified */
+				_x( 'Last updated on %s', 'Pointer: Site', 'geditorial-modified' ),
+				$content
+			) );
+
+		return $items;
 	}
 
 	public function insert_content( $content )
