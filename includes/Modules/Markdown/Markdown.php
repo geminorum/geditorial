@@ -75,7 +75,7 @@ class Markdown extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->action_module( 'pointers', 'post', 5, 120 );
+		$this->action_module( 'pointers', 'post', 6, 120 );
 	}
 
 	public function current_screen( $screen )
@@ -536,18 +536,34 @@ class Markdown extends gEditorial\Module
 		return $value;
 	}
 
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
-		$markdown = $this->is_markdown( NULL, $post->ID );
+		if ( $new_post ) {
 
-		printf( $before, '-markdown '. ( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
-			echo Core\Text::spaced(
-				$this->get_column_icon(),
-				$markdown
-					? _x( 'The content is written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )
-					: _x( 'The content is written in <b>HTML</b>', 'Pointer', 'geditorial-markdown' )
-			);
-		echo $after;
+			printf( $before, '-markdown -auto-draft' );
+
+				echo Core\Text::spaced(
+					$this->get_column_icon(),
+					_x( 'The content can be written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )
+				);
+
+			echo $after;
+
+		} else {
+
+			$markdown = $this->is_markdown( NULL, $post->ID );
+
+			printf( $before, '-markdown '. ( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
+
+				echo Core\Text::spaced(
+					$this->get_column_icon(),
+					$markdown
+						? _x( 'The content is written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )
+						: _x( 'The content is written in <b>HTML</b>', 'Pointer', 'geditorial-markdown' )
+				);
+
+			echo $after;
+		}
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )

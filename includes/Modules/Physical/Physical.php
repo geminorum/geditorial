@@ -236,7 +236,7 @@ class Physical extends gEditorial\Module
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, TRUE, 'units' );
 
-		$this->action_module( 'pointers', 'post', 5, 500 );
+		$this->action_module( 'pointers', 'post', 6, 500 );
 	}
 
 	public function current_screen( $screen )
@@ -312,8 +312,11 @@ class Physical extends gEditorial\Module
 	}
 
 	// TODO: append data to `Papered`
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $this->in_setting_posttypes( $post->post_type, 'units' ) )
 			return;
 

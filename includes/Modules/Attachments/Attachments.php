@@ -145,7 +145,7 @@ class Attachments extends gEditorial\Module
 			$this->filter( 'attachment_link', 2, 20 );
 		}
 
-		$this->action_module( 'pointers', 'post', 5, 999 );
+		$this->action_module( 'pointers', 'post', 6, 999 );
 		$this->register_shortcode( 'main_shortcode' );
 
 		if ( is_admin() )
@@ -452,8 +452,11 @@ class Attachments extends gEditorial\Module
 		$this->_render_summary_row( $post, $before, $after );
 	}
 
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 

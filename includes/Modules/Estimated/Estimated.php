@@ -96,7 +96,7 @@ class Estimated extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->action_module( 'pointers', 'post', 5, 600 );
+		$this->action_module( 'pointers', 'post', 6, 600 );
 	}
 
 	public function template_redirect()
@@ -188,8 +188,11 @@ class Estimated extends gEditorial\Module
 			$this->_get_post_wordcount( $post_id, TRUE );
 	}
 
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $html = $this->get_estimated_for_post( $post, NULL, FALSE ) )
 			return;
 

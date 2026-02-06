@@ -133,7 +133,7 @@ class Modified extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->action_module( 'pointers', 'post', 5, 120 );
+		$this->action_module( 'pointers', 'post', 6, 120 );
 		$this->filter( 'dashboard_pointers', 1, 4, FALSE, 'gnetwork' );
 		$this->filter( 'navigation_help_placeholders', 2, 10, FALSE, 'gnetwork' );
 	}
@@ -217,8 +217,11 @@ class Modified extends gEditorial\Module
 		] );
 	}
 
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $html = $this->get_post_modified( NULL, $post ) )
 			return;
 

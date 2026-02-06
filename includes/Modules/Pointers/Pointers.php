@@ -96,6 +96,7 @@ class Pointers extends gEditorial\Module
 				'%s',
 			] ),
 			'</li>',
+			in_array( $post->post_status, [ 'auto-draft', ], TRUE ), // Is it a new post?!
 			$action_context,
 			$screen
 		);
@@ -126,6 +127,7 @@ class Pointers extends gEditorial\Module
 				'%s',
 			] ),
 			'</li>',
+			FALSE, // is it a new term?!
 			$action_context,
 			$screen
 		);

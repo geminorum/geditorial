@@ -218,7 +218,7 @@ class WasBorn extends gEditorial\Module
 		$this->filter( 'paired_post_summaries', 7, 90, FALSE, $this->base );
 
 		$this->filter_self( 'mean_age', 4 );
-		$this->action_module( 'pointers', 'post', 5, 100 );
+		$this->action_module( 'pointers', 'post', 6, 100 );
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 	}
@@ -939,8 +939,11 @@ class WasBorn extends gEditorial\Module
 		return $average;
 	}
 
-	public function pointers_post( $post, $before, $after, $context, $screen )
+	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) )
 			return;
 

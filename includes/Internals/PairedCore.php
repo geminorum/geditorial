@@ -278,7 +278,7 @@ trait PairedCore
 
 	/**
 	 * Renders pointers about given paired post-type.
-	 * @example `$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );`
+	 * @example `$this->action_module( 'pointers', 'post', 6, 201, 'paired_posttype' );`
 	 *
 	 * @param object $post
 	 * @param string $before
@@ -287,8 +287,11 @@ trait PairedCore
 	 * @param object $screen
 	 * @return void
 	 */
-	public function pointers_post_paired_posttype( $post, $before, $after, $context, $screen )
+	public function pointers_post_paired_posttype( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $constants = $this->paired_get_constants() )
 			return;
 
@@ -329,7 +332,7 @@ trait PairedCore
 
 	/**
 	 * Renders pointers about given supported posttype.
-	 * @example `$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );`
+	 * @example `$this->action_module( 'pointers', 'post', 6, 202, 'paired_supported' );`
 	 *
 	 * @param object $post
 	 * @param string $before
@@ -338,8 +341,11 @@ trait PairedCore
 	 * @param object $screen
 	 * @return void
 	 */
-	public function pointers_post_paired_supported( $post, $before, $after, $context, $screen )
+	public function pointers_post_paired_supported( $post, $before, $after, $new_post, $context, $screen )
 	{
+		if ( $new_post )
+			return;
+
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return;
 

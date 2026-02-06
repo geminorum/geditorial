@@ -338,8 +338,8 @@ class Organization extends gEditorial\Module
 		$this->hook_paired_static_covers_secondaries();
 		$this->hook_paired_tabloid_exclude_rendered();
 		$this->hook_paired_tabloid_post_summaries_by_paired();
-		$this->action_module( 'pointers', 'post', 5, 201, 'paired_posttype' );
-		$this->action_module( 'pointers', 'post', 5, 202, 'paired_supported' );
+		$this->action_module( 'pointers', 'post', 6, 201, 'paired_posttype' );
+		$this->action_module( 'pointers', 'post', 6, 202, 'paired_supported' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 120, 'paired_exports' );
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 220, 'paired_posttype' );
 		$this->filter_module( 'papered', 'view_list', 5, 9, 'paired_posttype' );
