@@ -71,6 +71,11 @@ class Markdown extends gEditorial\Module
 
 		if ( $this->get_setting( 'adminbar_tools' ) )
 			$this->action( 'admin_bar_menu', 1, 1200 );
+
+		if ( ! is_admin() )
+			return;
+
+		$this->action_module( 'pointers', 'post', 5, 120 );
 	}
 
 	public function current_screen( $screen )
@@ -529,6 +534,20 @@ class Markdown extends gEditorial\Module
 			return $post->post_content_filtered;
 
 		return $value;
+	}
+
+	public function pointers_post( $post, $before, $after, $context, $screen )
+	{
+		$markdown = $this->is_markdown( NULL, $post->ID );
+
+		printf( $before, '-markdown '. ( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
+			echo Core\Text::spaced(
+				$this->get_column_icon(),
+				$markdown
+					? _x( 'The content is written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )
+					: _x( 'The content is written in <b>HTML</b>', 'Pointer', 'geditorial-markdown' )
+			);
+		echo $after;
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
