@@ -812,6 +812,7 @@ class Template extends WordPress\Main
 			'before'        => '',
 			'after'         => '',
 			'echo'          => TRUE,
+			'check_paged'   => NULL,
 			'title_swap'    => FALSE,
 			'title_default' => '',
 			'title_attr'    => '',
@@ -828,6 +829,11 @@ class Template extends WordPress\Main
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
+
+		switch ( $args['check_paged'] ) {
+			case 'before': if ( ! WordPress\Isit::contentFirstPage() ) return ''; break;
+			case 'after' : if ( ! WordPress\Isit::contentLastPage() )  return ''; break;
+		}
 
 		if ( $args['url_field'] ) {
 
@@ -879,6 +885,9 @@ class Template extends WordPress\Main
 
 	public static function metaSource( $atts = [] )
 	{
+		if ( ! array_key_exists( 'check_paged', $atts ) )
+			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
+
 		if ( ! array_key_exists( 'title_field', $atts ) )
 			$atts['title_field'] = 'source_title';
 
@@ -896,6 +905,9 @@ class Template extends WordPress\Main
 
 	public static function metaAction( $atts = [] )
 	{
+		if ( ! array_key_exists( 'check_paged', $atts ) )
+			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
+
 		if ( ! array_key_exists( 'title_field', $atts ) )
 			$atts['title_field'] = 'action_title';
 
