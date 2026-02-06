@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Entry extends gEditorial\Module
 {
+	use Internals\ContentReplace;
 	use Internals\CoreAdmin;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
@@ -50,15 +51,11 @@ class Entry extends gEditorial\Module
 					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
 					$this->get_taxonomy_label( 'category_taxonomy' )
 				), '1' ],
-				[
-					'field'       => 'autolink_terms',
-					'title'       => _x( 'Auto-link Terms', 'Settings', 'geditorial-entry' ),
-					'description' => sprintf(
-						/* translators: `%s`: category taxonomy name */
-						_x( 'Tries to linkify the string of <strong>%s</strong> in the entry content.', 'Settings', 'geditorial-entry' ),
-						$this->get_taxonomy_label( 'category_taxonomy' )
-					),
-				],
+				'autolink_terms' => [ sprintf(
+					/* translators: `%s`: category taxonomy name */
+					_x( 'Tries to linkify the string of <strong>%s</strong> in the entry content.', 'Settings', 'geditorial-entry' ),
+					$this->get_taxonomy_label( 'category_taxonomy' )
+				) ],
 				'before_content',
 				'after_content',
 			],
@@ -170,8 +167,7 @@ class Entry extends gEditorial\Module
 
 				}, 1 );
 
-		if ( $this->get_setting( 'autolink_terms' ) )
-			$this->filter( 'the_content', 1, 9 );
+		$this->contentreplace__autolink_terms( 'category_taxonomy' );
 	}
 
 	public function setup_ajax()
@@ -255,25 +251,6 @@ class Entry extends gEditorial\Module
 			$items[] = $glance;
 
 		return $items;
-	}
-
-	public function the_content( $content )
-	{
-		$sections = WordPress\Taxonomy::prepTerms( $this->constant( 'category_taxonomy' ), [], NULL, 'name' );
-
-		return Core\Text::replaceWords(
-			Core\Arraay::pluck( $sections, 'name' ),
-			$content,
-			static function ( $matched ) use ( $sections ) {
-				return Core\HTML::tag( 'a', [
-					'href'  => $sections[$matched]->link,
-					'class' => '-entry-section',
-					'data'  => [
-						'desc' => Core\Text::stripTags( $sections[$matched]->description ),
-					],
-				], $matched );
-			}
-		);
 	}
 
 	public function template_include( $template )

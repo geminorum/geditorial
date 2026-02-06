@@ -788,6 +788,16 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_autolink_terms( $description = NULL, $default = NULL )
+	{
+		return [
+			'field'       => 'autolink_terms',
+			'title'       => _x( 'Auto-link Terms', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Tries to linkify the terms in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '0',
+		];
+	}
+
 	public static function getSetting_selectmultiple_term( $description = NULL, $default = NULL )
 	{
 		return [
