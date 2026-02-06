@@ -253,7 +253,7 @@ class Modified extends gEditorial\Module
 			'id'             => get_queried_object_id(),
 			'format'         => NULL,
 			'format_context' => NULL,
-			'title'          => 'timeago',
+			'title'          => 'timeago',                 // `FALSE` or `(string)` or `NULL` for full-time.
 			'round'          => FALSE,
 			'link'           => FALSE,
 			'context'        => NULL,
@@ -272,6 +272,10 @@ class Modified extends gEditorial\Module
 			$title = gEditorial\Scripts::enqueueTimeAgo()
 				? gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' )
 				: gEditorial\Datetime::humanTimeDiffRound( $post->post_modified, $args['round'] );
+
+		else if ( is_null( $args['title'] ) )
+			$title = gEditorial\Datetime::dateFormat( $post->post_modified, 'fulltime' );
+
 		else
 			$title = $args['title'];
 
@@ -329,7 +333,7 @@ class Modified extends gEditorial\Module
 		$args = shortcode_atts( [
 			'format'         => NULL,
 			'format_context' => NULL,
-			'title'          => 'timeago',
+			'title'          => 'timeago',   // `FALSE` or `(string)` or `NULL` for full-time.
 			'round'          => FALSE,
 			'link'           => FALSE,
 			'context'        => NULL,
@@ -348,6 +352,10 @@ class Modified extends gEditorial\Module
 			$title = gEditorial\Scripts::enqueueTimeAgo()
 				? gEditorial\Datetime::dateFormat( $site[0], 'fulltime' )
 				: gEditorial\Datetime::humanTimeDiffRound( $site[0], $args['round'] );
+
+		else if ( is_null( $args['title'] ) )
+			$title = gEditorial\Datetime::dateFormat( $site[0], 'fulltime' );
+
 		else
 			$title = $args['title'];
 
