@@ -1,0 +1,124 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial PagedContent\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-02-07 19:29+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../includes/Modules/PagedContent\n"
+"X-Domain: geditorial-paged-content\n"
+
+#: PagedContent.php:38
+msgctxt "Setting Title"
+msgid "View-All Link"
+msgstr "پیوند نمایش همه"
+
+#: PagedContent.php:39
+msgctxt "Setting Description"
+msgid "Enables the endpoint and filters for a view-all option on paginated contents."
+msgstr ""
+
+#: PagedContent.php:44
+msgctxt "Setting Title"
+msgid "View-All Label"
+msgstr "شاخص نمایش همه"
+
+#: PagedContent.php:45
+msgctxt "Setting Description"
+msgid "Custom string used on the view-all link on the front."
+msgstr "رشته سفارشی که قبل از پیوند نمایش همه در روی سایت افزوده خواهد شد."
+
+#: PagedContent.php:46 PagedContent.php:47 PagedContent.php:435
+msgctxt "Setting Default"
+msgid "View All"
+msgstr "نمایش همه"
+
+#: PagedContent.php:55
+msgctxt "Setting Title"
+msgid "Split Type"
+msgstr "شیوه جداسازی"
+
+#: PagedContent.php:58
+msgctxt "Setting Option"
+msgid "Single page with no Auto-split"
+msgstr "تک صفحه بدون جداسازی خودکار"
+
+#: PagedContent.php:59
+msgctxt "Setting Option"
+msgid "Approximate Words per Page"
+msgstr "میانگین واژگان برای هر صفحه"
+
+#: PagedContent.php:60
+msgctxt "Setting Option"
+msgid "Keep Total Number of Pages"
+msgstr "نگه‌داشتن مجموع تعداد صفحات"
+
+#: PagedContent.php:66
+msgctxt "Setting Title"
+msgid "Approximate Words"
+msgstr "میانگین واژگان"
+
+#: PagedContent.php:67
+msgctxt "Setting Description"
+msgid "Each page will contain approximately this many words, depending on paragraph lengths."
+msgstr ""
+
+#: PagedContent.php:72
+msgctxt "Setting Title"
+msgid "Total Pages"
+msgstr "تعداد صفحات"
+
+#: PagedContent.php:73
+msgctxt "Setting Description"
+msgid "If chosen, each page will contain approximately this many words, depending on paragraph lengths."
+msgstr ""
+
+#: PagedContent.php:78
+msgctxt "Settings: Setting Title"
+msgid "Supported Post-types"
+msgstr "نوع‌فرسته‌های پشتیبانی‌شده"
+
+#: PagedContent.php:79
+msgctxt "Settings: Setting Description"
+msgid "Auto-paging will be available for the selected post-type."
+msgstr "صفحه‌بندی خودکار برای نوع‌فرسته‌های انتخاب‌شده، در دسترس خواهد بود."
+
+#: PagedContent.php:86
+msgctxt "Setting Title"
+msgid "Control Term"
+msgstr "رده کنترل"
+
+#: PagedContent.php:87
+msgctxt "Setting Description"
+msgid "Enables the auto-paging if the term exists on the post. Leave blank to disable."
+msgstr ""
+
+#: PagedContent.php:99
+msgctxt "Setting Section Title"
+msgid "View All Pages"
+msgstr "نمایش همه صفحه‌ها"
+
+#. translators: `%s`: `nextpage` placeholder
+#: PagedContent.php:103
+#, php-format
+msgctxt "Setting Section Description"
+msgid "Provides a &#8220;view all&#8221; (single page) option for supported multipage post-types, using WordPress %s Quicktag."
+msgstr ""
+
+#: PagedContent.php:116
+msgctxt "Setting Section Title"
+msgid "Auto-paging Posts"
+msgstr "صفحه‌بندی خودکار فرسته‌ها"
+
+#. translators: `%s`: `nextpage` placeholder
+#: PagedContent.php:120
+#, php-format
+msgctxt "Setting Section Description"
+msgid "Automatically page posts by injecting %s Quick-tag."
+msgstr ""

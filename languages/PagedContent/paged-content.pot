@@ -1,0 +1,125 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial PagedContent\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/PagedContent\n"
+"X-Domain: geditorial-paged-content\n"
+
+#: PagedContent.php:38
+msgctxt "Setting Title"
+msgid "View-All Link"
+msgstr ""
+
+#: PagedContent.php:39
+msgctxt "Setting Description"
+msgid "Enables the endpoint and filters for a view-all option on paginated contents."
+msgstr ""
+
+#: PagedContent.php:44
+msgctxt "Setting Title"
+msgid "View-All Label"
+msgstr ""
+
+#: PagedContent.php:45
+msgctxt "Setting Description"
+msgid "Custom string used on the view-all link on the front."
+msgstr ""
+
+#: PagedContent.php:46
+#: PagedContent.php:47
+#: PagedContent.php:435
+msgctxt "Setting Default"
+msgid "View All"
+msgstr ""
+
+#: PagedContent.php:55
+msgctxt "Setting Title"
+msgid "Split Type"
+msgstr ""
+
+#: PagedContent.php:58
+msgctxt "Setting Option"
+msgid "Single page with no Auto-split"
+msgstr ""
+
+#: PagedContent.php:59
+msgctxt "Setting Option"
+msgid "Approximate Words per Page"
+msgstr ""
+
+#: PagedContent.php:60
+msgctxt "Setting Option"
+msgid "Keep Total Number of Pages"
+msgstr ""
+
+#: PagedContent.php:66
+msgctxt "Setting Title"
+msgid "Approximate Words"
+msgstr ""
+
+#: PagedContent.php:67
+msgctxt "Setting Description"
+msgid "Each page will contain approximately this many words, depending on paragraph lengths."
+msgstr ""
+
+#: PagedContent.php:72
+msgctxt "Setting Title"
+msgid "Total Pages"
+msgstr ""
+
+#: PagedContent.php:73
+msgctxt "Setting Description"
+msgid "If chosen, each page will contain approximately this many words, depending on paragraph lengths."
+msgstr ""
+
+#: PagedContent.php:78
+msgctxt "Settings: Setting Title"
+msgid "Supported Post-types"
+msgstr ""
+
+#: PagedContent.php:79
+msgctxt "Settings: Setting Description"
+msgid "Auto-paging will be available for the selected post-type."
+msgstr ""
+
+#: PagedContent.php:86
+msgctxt "Setting Title"
+msgid "Control Term"
+msgstr ""
+
+#: PagedContent.php:87
+msgctxt "Setting Description"
+msgid "Enables the auto-paging if the term exists on the post. Leave blank to disable."
+msgstr ""
+
+#: PagedContent.php:99
+msgctxt "Setting Section Title"
+msgid "View All Pages"
+msgstr ""
+
+#. translators: `%s`: `nextpage` placeholder
+#: PagedContent.php:103
+#, php-format
+msgctxt "Setting Section Description"
+msgid "Provides a &#8220;view all&#8221; (single page) option for supported multipage post-types, using WordPress %s Quicktag."
+msgstr ""
+
+#: PagedContent.php:116
+msgctxt "Setting Section Title"
+msgid "Auto-paging Posts"
+msgstr ""
+
+#. translators: `%s`: `nextpage` placeholder
+#: PagedContent.php:120
+#, php-format
+msgctxt "Setting Section Description"
+msgid "Automatically page posts by injecting %s Quick-tag."
+msgstr ""
