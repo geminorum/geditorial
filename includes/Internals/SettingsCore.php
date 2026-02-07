@@ -622,6 +622,7 @@ trait SettingsCore
 					'callback'      => $callback,
 					'title'         => empty( $title[0] ) ? gEditorial\Settings::makeModuleSectionTitle( $section_suffix ) : $title[0],
 					'description'   => empty( $title[1] ) ? FALSE : $title[1],
+					'link'          => empty( $title[2] ) ? FALSE : $title[2],
 					'section_class' => 'settings_section',
 				] );
 

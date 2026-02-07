@@ -530,11 +530,38 @@ class Settings extends WordPress\Main
 		printf( '%s<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>%s', $before, $string, $after );
 	}
 
-	public static function fieldSection( $title, $description = FALSE, $tag = 'h2' )
+	public static function fieldSection( $section, $tag = 'h2' )
 	{
-		echo Core\HTML::tag( $tag, $title );
+		echo Core\HTML::tag( $tag, ( $section['title'] ?? '' ).self::fieldAfterIcon( $section['link'] ?? '' ) );
 
-		Core\HTML::desc( $description );
+		Core\HTML::desc( ( $section['description'] ?? '' ) );
+	}
+
+	public static function fieldSectionAdopted( $source, $author = NULL, $link = NULL )
+	{
+		$template = $author
+			/* translators: `%1$s`: source name, `%2$s`: author name */
+			? _x( 'Adopted from %1$s by %2$s.', 'Settings: Section Description', 'geditorial-admin' )
+			/* translators: `%1$s`: source name */
+			: _x( 'Adopted from %1$s.', 'Settings: Section Description', 'geditorial-admin' );
+
+		$html = sprintf( $template,
+			Core\HTML::code( $source ),
+			Core\HTML::code( $author ?? '' )
+		);
+
+		if ( empty( $link ) )
+			return $html;
+
+		return Core\Text::spaced(
+			$html,
+			sprintf(
+				/* translators: `%1$s`: link start, `%2$s`: link end */
+				_x( 'Visit %1$shere%2$s for more information.', 'Settings: Section Description', 'geditorial-admin' ),
+				sprintf( '<a href="%s" target="_blank">', Core\HTML::escapeURL( $link ) ),
+				'</a>'
+			)
+		);
 	}
 
 	public static function fieldAfterText( $text, $wrap = 'span', $class = '-text-wrap' )
@@ -2437,6 +2464,7 @@ class Settings extends WordPress\Main
 			'id'            => FALSE,
 			'title'         => FALSE,
 			'description'   => FALSE,
+			'link'          => FALSE,
 			'callback'      => '__return_false',
 			'section_class' => '',
 		], $atts );
@@ -2473,7 +2501,7 @@ class Settings extends WordPress\Main
 					call_user_func( $section['callback'], $section );
 
 				else
-					self::fieldSection( $section['title'], $section['description'] );
+					self::fieldSection( $section );
 
 				if ( ! isset( $wp_settings_fields )
 					|| ! isset( $wp_settings_fields[$page] )
