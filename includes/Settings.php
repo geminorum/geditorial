@@ -1248,7 +1248,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_units_posttypes( $description = NULL, $values = [], $empty = NULL )
+	public static function getSetting_units_posttypes( $description = NULL, $values = NULL, $empty = NULL )
 	{
 		return [
 			'field'        => 'units_posttypes',
@@ -1256,7 +1256,7 @@ class Settings extends WordPress\Main
 			'title'        => _x( 'Units Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Unit Fields will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no unit post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
+			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
 		];
 	}
 
@@ -1456,7 +1456,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_subcontent_posttypes( $description = NULL, $values = [], $empty = NULL )
+	public static function getSetting_subcontent_posttypes( $description = NULL, $values = NULL, $empty = NULL )
 	{
 		return [
 			'field'        => 'subcontent_posttypes',
@@ -1464,7 +1464,7 @@ class Settings extends WordPress\Main
 			'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
+			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
 		];
 	}
 
@@ -1494,7 +1494,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function getSetting_parent_posttypes( $description = NULL, $values = [], $empty = NULL )
+	public static function getSetting_parent_posttypes( $description = NULL, $values = NULL, $empty = NULL )
 	{
 		return [
 			'field'        => 'parent_posttypes',
@@ -1502,7 +1502,7 @@ class Settings extends WordPress\Main
 			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
+			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
 		];
 	}
 

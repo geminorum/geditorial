@@ -10,6 +10,18 @@ use geminorum\gEditorial\WordPress;
 trait SettingsPostTypes
 {
 	/**
+	 * Retrieves settings key for the target post-types.
+	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
+	 *
+	 * @param string $target
+	 * @return string
+	 */
+	protected function get_setting_key_posttypes_for_target( $target )
+	{
+		return sprintf( '%s_posttypes', $target );
+	}
+
+	/**
 	 * Retrieves settings option for the target post-types.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
@@ -19,7 +31,9 @@ trait SettingsPostTypes
 	 */
 	public function get_setting_posttypes( $target, $fallback = [] )
 	{
-		return $target ? $this->get_setting( sprintf( '%s_posttypes', $target ), $fallback ) : $fallback;
+		return $target
+			? $this->get_setting( $this->get_setting_key_posttypes_for_target( $target ), $fallback )
+			: $fallback;
 	}
 
 	/**
@@ -195,6 +209,15 @@ trait SettingsPostTypes
 		return $this->filters( 'posttypes_parents', gEditorial\Settings::posttypesParents( $extra ) );
 	}
 
+	// DEFAULT METHOD
+	protected function posttypes_for_target( $target, $extra = [] )
+	{
+		return $this->filters( 'posttypes_for_target',
+			array_merge( array_keys( $this->all_posttypes() ), (array) $extra ),
+			$target
+		);
+	}
+
 	/**
 	 * Gets post-type parents for use in settings.
 	 *
@@ -208,6 +231,33 @@ trait SettingsPostTypes
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
 
 		foreach ( $this->posttypes_parents( $extra ) as $posttype ) {
+
+			if ( array_key_exists( $posttype, $posttypes ) )
+				$list[$posttype] = $posttypes[$posttype];
+
+			// only if no checks required
+			else if ( is_null( $capability ) && WordPress\PostType::exists( $posttype ) )
+				$list[$posttype] = $posttype;
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Gets target post-type for use in settings.
+	 *
+	 * @param string $target
+	 * @param array $extra
+	 * @param string $capability
+	 * @param string|array $supports
+	 * @return array
+	 */
+	protected function get_settings_posttypes_for_target( $target, $extra = [], $capability = NULL, $supports = NULL )
+	{
+		$list       = [];
+		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
+
+		foreach ( $this->posttypes_for_target( $target, $extra ) as $posttype ) {
 
 			if ( array_key_exists( $posttype, $posttypes ) )
 				$list[$posttype] = $posttypes[$posttype];
