@@ -34,6 +34,7 @@ class Equipped extends gEditorial\Module
 			'keywords' => [
 				'equipment',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

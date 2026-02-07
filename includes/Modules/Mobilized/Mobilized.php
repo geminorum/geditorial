@@ -33,6 +33,7 @@ class Mobilized extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

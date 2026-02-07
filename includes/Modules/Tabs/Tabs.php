@@ -147,10 +147,10 @@ class Tabs extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( ! $this->get_setting( 'insert_content' ) )
+		if ( is_robots() || is_favicon() || is_feed() )
 			return;
 
-		if ( is_embed() || is_search() )
+		if ( ! $this->get_setting( 'insert_content' ) )
 			return;
 
 		if ( ! is_singular( $this->posttypes() ) )

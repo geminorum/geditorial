@@ -34,6 +34,7 @@ class Honored extends gEditorial\Module
 			'keywords' => [
 				'honorific',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

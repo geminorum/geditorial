@@ -429,6 +429,9 @@ class Course extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( is_tax( $this->constant( 'course_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'course_posttype', 'course_paired' ) )

@@ -35,6 +35,7 @@ class Audit extends gEditorial\Module
 				'content-report',
 				'has-adminbar',
 				'taxmodule',
+				'analytics',
 			],
 		];
 	}

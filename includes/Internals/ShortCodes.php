@@ -27,7 +27,7 @@ trait ShortCodes
 		if ( empty( $aliases ) )
 			return $shortcode;
 
-		foreach ( $aliases as $alias ) {
+		foreach ( (array) $aliases as $alias ) {
 			remove_shortcode( $alias );
 			add_shortcode( $alias, $callback );
 		}

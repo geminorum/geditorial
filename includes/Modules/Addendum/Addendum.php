@@ -357,6 +357,9 @@ class Addendum extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( is_tax( $this->constant( 'primary_posttype' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'primary_posttype', 'primary_paired' ) )

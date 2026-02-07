@@ -103,7 +103,7 @@ class Views extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_embed() || is_search() )
+		if ( is_robots() || is_favicon() || is_feed() )
 			return;
 
 		if ( ! is_singular( $this->posttypes() ) )

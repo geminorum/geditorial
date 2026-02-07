@@ -35,6 +35,7 @@ class Athlete extends gEditorial\Module
 				'sport',
 				'has-shortcodes',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

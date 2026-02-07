@@ -66,6 +66,9 @@ class Headings extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 

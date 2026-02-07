@@ -551,9 +551,9 @@ class Markdown extends gEditorial\Module
 
 		} else {
 
-			$markdown = $this->is_markdown( NULL, $post->ID );
+			$markdown = $this->is_markdown( $post->ID );
 
-			printf( $before, '-markdown '. ( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
+			printf( $before, '-markdown '.( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
 
 				echo Core\Text::spaced(
 					$this->get_column_icon(),

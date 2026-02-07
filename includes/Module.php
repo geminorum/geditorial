@@ -673,15 +673,12 @@ class Module extends WordPress\Module
 
 	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post', $extra = [] )
 	{
-		$icon  = $icon  ?? $this->module->icon;
-		$title = $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc', '' );
-
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
-			'title'  => $title ?: FALSE,
+			'title'  => $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc' ),
 			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
 			'target' => $link ? '_blank' : FALSE,
-		], Services\Icons::get( $icon ) );
+		], Services\Icons::get( $icon ?? $this->module->icon ) );
 	}
 
 	// NOTE: adds the `{$module_key}-enabled` class to body in admin

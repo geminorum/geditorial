@@ -237,6 +237,9 @@ class Collect extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( is_tax( $this->constant( 'collection_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'collection_posttype', 'collection_paired' ) )

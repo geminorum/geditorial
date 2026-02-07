@@ -462,6 +462,9 @@ class Personage extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( is_singular( $this->constant( 'main_posttype' ) ) ) {
 
 			if ( $this->get_setting( 'insert_cover' ) )

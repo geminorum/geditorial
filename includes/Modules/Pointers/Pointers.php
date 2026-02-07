@@ -83,7 +83,8 @@ class Pointers extends gEditorial\Module
 	{
 		$action_context = sprintf( '%s_%s', $context, $post->post_type );
 
-		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-post-%s', $this->key ) ] ).'<ul class="-rows">';
+		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-post-%s', $this->key ) ] );
+		echo '<ul class="-rows">';
 
 		$fired = $this->actions(
 			'post',
@@ -96,7 +97,7 @@ class Pointers extends gEditorial\Module
 				'%s',
 			] ),
 			'</li>',
-			in_array( $post->post_status, [ 'auto-draft', ], TRUE ), // Is it a new post?!
+			in_array( $post->post_status, [ 'auto-draft' ], TRUE ), // Is it a new post?!
 			$action_context,
 			$screen
 		);
@@ -114,7 +115,8 @@ class Pointers extends gEditorial\Module
 	{
 		$action_context = sprintf( '%s_%s', $context, $term->taxonomy );
 
-		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-term-%s', $this->key ) ] ).'<ul class="-rows">';
+		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-term-%s', $this->key ) ] );
+		echo '<ul class="-rows">';
 
 		$fired = $this->actions(
 			'term',

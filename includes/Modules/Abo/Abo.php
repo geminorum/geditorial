@@ -31,6 +31,7 @@ class Abo extends gEditorial\Module
 				'blood',
 				'medical',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}
@@ -103,6 +104,8 @@ class Abo extends gEditorial\Module
 				'o-negative'  => _x( 'O&minus;', 'Main Taxonomy: Default Term', 'geditorial-abo' ),
 				'ab-positive' => _x( 'AB&plus;', 'Main Taxonomy: Default Term', 'geditorial-abo' ),
 				'ab-negative' => _x( 'AB&minus;', 'Main Taxonomy: Default Term', 'geditorial-abo' ),
+				'rh-positive' => _x( 'RH&plus;', 'Main Taxonomy: Default Term', 'geditorial-abo' ),
+				'rh-negative' => _x( 'RH&minus;', 'Main Taxonomy: Default Term', 'geditorial-abo' ),
 			],
 		];
 	}
@@ -121,6 +124,9 @@ class Abo extends gEditorial\Module
 			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'custom_captype'  => TRUE,
 			'single_selected' => TRUE,
+			'suitable_metas'  => [
+				'code',
+			],
 		] );
 
 		add_filter( sprintf( '%s_%s', $this->constant( 'main_taxonomy' ), 'name' ), [ $this, 'main_taxonomy_name_field' ], 20, 3 );

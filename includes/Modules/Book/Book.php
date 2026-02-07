@@ -538,6 +538,9 @@ class Book extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( $this->_paired && is_tax( $this->constant( 'main_paired' ) ) ) {
 
 			if ( $post_id = $this->paired_get_to_post_id( get_queried_object(), 'main_posttype', 'main_paired' ) )

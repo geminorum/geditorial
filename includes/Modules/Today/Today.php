@@ -228,6 +228,9 @@ class Today extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
 
@@ -237,7 +240,7 @@ class Today extends gEditorial\Module
 				$this->get_setting( 'insert_priority_theday', -20 )
 			);
 
-			$this->enqueue_styles(); // since no short-code available yet!
+			$this->enqueue_styles(); // WTF: since no short-code available yet!
 		}
 	}
 

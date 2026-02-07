@@ -34,6 +34,7 @@ class Educated extends gEditorial\Module
 			'keywords' => [
 				'education',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

@@ -35,6 +35,7 @@ class Licensed extends gEditorial\Module
 				'car',
 				'vehicle',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

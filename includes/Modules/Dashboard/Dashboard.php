@@ -216,6 +216,9 @@ class Dashboard extends gEditorial\Module
 
 	public function template_redirect()
 	{
+		if ( is_robots() || is_favicon() || is_feed() )
+			return;
+
 		if ( get_query_var( $this->classs(), FALSE ) )
 			remove_action( 'template_redirect', 'redirect_canonical' );
 	}

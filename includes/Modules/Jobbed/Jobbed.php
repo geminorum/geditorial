@@ -34,6 +34,7 @@ class Jobbed extends gEditorial\Module
 			'keywords' => [
 				'employment',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}

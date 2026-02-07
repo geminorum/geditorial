@@ -36,6 +36,7 @@ class Conscripted extends gEditorial\Module
 				'conscription',
 				'compulsory',
 				'taxmodule',
+				'crm-feature',
 			],
 		];
 	}
