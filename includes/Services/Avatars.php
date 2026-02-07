@@ -31,6 +31,7 @@ class Avatars extends gEditorial\Service
 		$args = array_merge( [
 			'class' => self::classs( 'avatar' ),
 
+			'extra_attr' => ' onmouseover="(function(e){e.style.cursor=\'url(\'+e.src+\'),auto\';}(this))" onmouseleave="this.style.cursor=\'auto\'"',
 			'force_display' => TRUE,
 		], $extra );
 
