@@ -1,0 +1,52 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Glossary\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-02-07 19:56+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.8\n"
+"X-Poedit-Basepath: ../../includes/Modules/Glossary\n"
+"X-Domain: geditorial-glossary\n"
+
+#: Glossary.php:50
+msgctxt "Settings"
+msgid "Tries to linkify the glossary elements in contents of supported post-types."
+msgstr "برای پیوند‌دهی عناصر واژه‌نامه در محتوای فرسته‌های پشتیبانی‌شده تلاش می‌کند."
+
+#: Glossary.php:101
+msgid "Glossary Element"
+msgid_plural "Glossary Elements"
+msgstr[0] "عنصر‌های واژه‌نامه"
+msgstr[1] "عنصر واژه‌نامه"
+
+#: Glossary.php:105
+msgctxt "Label: `extended_label`"
+msgid "Glossary of Words"
+msgstr "واژه‌نامه کلمات"
+
+#: Glossary.php:106
+msgctxt "Label: `menu_name`"
+msgid "Glossary"
+msgstr "واژه‌نامه"
+
+#: Glossary.php:107
+msgctxt "Label: `show_option_all`"
+msgid "Elements"
+msgstr "المان‌ها"
+
+#: Glossary.php:108
+msgctxt "Label: `show_option_no_items`"
+msgid "(Undefined)"
+msgstr "(تعریف‌نشده)"
+
+#: Glossary.php:131
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
