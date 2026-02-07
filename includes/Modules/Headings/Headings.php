@@ -35,7 +35,6 @@ class Headings extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'posttypes_option' => 'posttypes_option',
 			'_general'         => [
 				[
 					'field'       => 'toc_title',
@@ -58,6 +57,16 @@ class Headings extends gEditorial\Module
 					'description' => _x( 'Threshold to Display ToC', 'Setting Description', 'geditorial-headings' ),
 					'default'     => '2',
 				],
+				[
+					'field'       => 'control_termid',
+					'type'        => 'number',
+					'title'       => _x( 'Control Term', 'Setting Title', 'geditorial-headings' ),
+					'description' => _x( 'Enables the ToC generation if the term exists on the post. Leave blank to disable.', 'Setting Description', 'geditorial-headings' ),
+					'after'       => gEditorial\Settings::fieldAfterText( WordPress\Term::title( $this->get_setting( 'control_termid', 0 ) ), 'code' ),
+				],
+			],
+			'posttypes_option' => 'posttypes_option',
+			'_content' => [
 				'insert_content',
 				'insert_priority',
 			],
@@ -71,6 +80,12 @@ class Headings extends gEditorial\Module
 
 		if ( ! is_singular( $this->posttypes() ) )
 			return;
+
+		if ( $term = WordPress\Term::get( absint( $this->get_setting( 'control_termid', 0 ) ) ) ) {
+
+			if ( ! has_term( $term, $term->taxonomy ) )
+				return;
+		}
 
 		$this->filter( 'the_content' );
 
