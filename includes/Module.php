@@ -181,6 +181,9 @@ class Module extends WordPress\Module
 		if ( method_exists( $this, 'widgets_init' ) && $this->get_setting( 'widget_support' ) )
 			$this->action( 'widgets_init' );
 
+		if ( method_exists( $this, 'customize_setup' ) && $this->get_setting( 'customize_support', TRUE ) )
+			add_action( 'customize_register', [ $this, 'customize_setup' ] );
+
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
 			add_filter( $this->hook_base( 'tinymce_strings' ), [ $this, 'tinymce_strings' ] );
 
