@@ -100,8 +100,12 @@ class Individuals extends gEditorial\Service
 			'mother_name' => '',
 		], $data );
 
+		$parser = self::isParserAvailable();
+
 		foreach ( $parts as $key => $value )
-			$parts[$key] = Misc\NamesInPersian::replaceSplits( WordPress\Strings::cleanupChars( $value ) );
+			$parts[$key] = $parser
+				? Misc\NamesInPersian::replaceSplits( WordPress\Strings::cleanupChars( $value ) )
+				: WordPress\Strings::cleanupChars( $value );
 
 		if ( empty( $parts['last_name'] ) && empty( $parts['first_name'] ) )
 			return empty( $parts['fullname'] )
