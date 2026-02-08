@@ -280,11 +280,9 @@ class Color extends Base
 		return $hex;
 	}
 
-	// @REF: https://github.com/aristath/ariColor
-	// `composer require aristath/ari-color`
 	public static function get( $color = '#ffffff' )
 	{
-		return \ariColor::newColor( $color, 'auto' );
+		return \geminorum\gEditorial\Misc\ColorCalc::newColor( $color, 'auto' );
 	}
 
 	// returns a CSS value, using the auto-detected mode
@@ -296,7 +294,7 @@ class Color extends Base
 		if ( is_string( $color ) && 'transparent' == trim( $color ) )
 			return 'transparent';
 
-		$object = \ariColor::newColor( $color );
+		$object = \geminorum\gEditorial\Misc\ColorCalc::newColor( $color );
 
 		return $object->toCSS( $object->mode );
 	}
