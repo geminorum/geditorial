@@ -541,7 +541,7 @@ class PostTypeFields extends gEditorial\Service
 						$raw ?: $value, $raw ?: $value );
 
 				case 'address':
-					return WordPress\Strings::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
+					return Services\Locations::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
 
 				case 'year':
 					return Core\Number::localize( $raw ?: $value );

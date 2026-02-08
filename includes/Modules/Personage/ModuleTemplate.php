@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
@@ -91,7 +92,7 @@ class ModuleTemplate extends gEditorial\Template
 			 * @param string [optional] $type: may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
 			 */
 			$vcard->addAddress(
-				WordPress\Strings::prepAddress( $home, 'vcard', $home ),
+				Services\Locations::prepAddress( $home, 'vcard', $home ),
 				NULL,
 				NULL,
 				NULL,
@@ -103,7 +104,7 @@ class ModuleTemplate extends gEditorial\Template
 
 		if ( $work = self::getMetaField( 'work_address', $field, FALSE ) )
 			$vcard->addAddress(
-				WordPress\Strings::prepAddress( $work, 'vcard', $work ),
+				Services\Locations::prepAddress( $work, 'vcard', $work ),
 				NULL,
 				NULL,
 				NULL,

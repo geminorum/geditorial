@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
 class Locations extends gEditorial\Service
@@ -14,6 +15,38 @@ class Locations extends gEditorial\Service
 			return;
 
 		add_filter( static::BASE.'_prep_location', [ __CLASS__, 'filter_prep_location_front' ], 5, 3 );
+	}
+
+	public static function isParserAvailable()
+	{
+		return in_array(
+			Core\L10n::locale( TRUE ),
+			Misc\AddressInPersian::SUPPORTED_LOCALE,
+			TRUE
+		);
+	}
+
+	// OLD: `WordPress\Strings::prepAddress()`
+	public static function prepAddress( $data, $context = 'display', $fallback = FALSE )
+	{
+		if ( self::empty( $data ) )
+			return $fallback;
+
+		if ( ! $data = Core\Text::normalizeWhitespace( self::cleanupChars( $data ) ) )
+			return $fallback;
+
+		$data = trim( $data, '.-|…' );
+		$data = str_ireplace( [ '_', '|', '–', '—'  ], '-', $data );
+		$data = sprintf( ' %s ', $data ); // padding with space
+
+		if ( self::isParserAvailable() )
+			$data = Misc\AddressInPersian::prepExtra( $data, $context, '' );
+
+		$data = preg_replace( '/\s+([\,\،])/mu', '$1', $data );
+		$data = preg_replace( '/\s+([\-])/mu', '$1', $data );
+		$data = preg_replace( '/([\-])\s+/mu', '$1', $data );
+
+		return Core\Text::normalizeWhitespace( $data );
 	}
 
 	public static function prepVenue( $value, $empty = '', $separator = NULL )

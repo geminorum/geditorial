@@ -526,7 +526,7 @@ class Phonebook extends gEditorial\Module
 			return $data;
 
 		if ( array_key_exists( 'home_address', $data ) )
-			$data['address'] = WordPress\Strings::prepAddress( $data['home_address'], 'export', '' );
+			$data['address'] = Services\Locations::prepAddress( $data['home_address'], 'export', '' );
 
 		if ( empty( $data['phone'] ) ) {
 
