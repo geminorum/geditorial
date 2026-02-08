@@ -347,6 +347,22 @@ class Strings extends Core\Base
 		return $array;
 	}
 
+	/**
+	 * Balances tags of string using a modified stack.
+	 * NOTE: wrapper for `force_balance_tags()`
+	 * NOTE: ignores the `use_balanceTags` option
+	 *
+	 * @param string $html
+	 * @return string
+	 */
+	public static function balanceTags( $html )
+	{
+		if ( self::isEmpty( $html ) )
+			return $html;
+
+		return force_balance_tags( $html );
+	}
+
 	public static function prepTitle( $text, $post_id = 0 )
 	{
 		if ( ! $text )
@@ -367,6 +383,7 @@ class Strings extends Core\Base
 		if ( $shortcode )
 			$text = ShortCode::apply( $text, TRUE );
 
+		$text = self::balanceTags( $text );
 		$text = apply_filters( 'geditorial_markdown_to_html', $text, $autop );
 		$text = apply_filters( 'html_format_i18n', $text );
 		$text = apply_filters( 'gnetwork_typography', $text );

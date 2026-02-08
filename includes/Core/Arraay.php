@@ -189,7 +189,7 @@ class Arraay extends Base
 	 * based on the type and exact ordering of the keys.
 	 *
 	 * @source https://eddmann.com/posts/handling-array-equality-in-php/
-	 * @example `Arraay::identicalValues([1, 2, 3], [3, 2, 1])` // TRUE
+	 * @example `Arraay::identicalValues( [1, 2, 3], [3, 2, 1] )` // TRUE
 	 *
 	 * With the identical operator `===` you are able to check for equality
 	 * based on the type and exact ordering of the keys.

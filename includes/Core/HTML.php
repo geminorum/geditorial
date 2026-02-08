@@ -93,27 +93,38 @@ class HTML extends Base
 		if ( $html ) echo self::tag( 'h4', [ 'class' => $class ], ( $link ? self::link( $html, $link ) : $html ) );
 	}
 
-	public static function inline( $tag, $string, $class = FALSE, $click_to_copy = FALSE )
+	public static function inline( $tag, $string, $class = FALSE, $click_to_copy = FALSE, $title = FALSE )
 	{
 		return ( empty( $string ) && '0' !== $string ) ? '' : self::tag( $tag, [
+			'title' => $title,
 			'class' => self::attrClass( $class, $click_to_copy ? 'do-clicktoclip' : '' ),
 			'data'  => $click_to_copy ? [ 'clipboard-text' => TRUE === $click_to_copy ? $string : $click_to_copy ] : FALSE,
 		], $string );
 	}
 
-	public static function code( $string, $class = FALSE, $click_to_copy = FALSE )
+	public static function code( $string, $class = FALSE, $click_to_copy = FALSE, $title = FALSE )
 	{
-		return self::inline( 'code', $string, $class, $click_to_copy );
+		return self::inline( 'code', $string, $class, $click_to_copy, $title );
 	}
 
-	public static function span( $string, $class = FALSE, $click_to_copy = FALSE )
+	public static function span( $string, $class = FALSE, $click_to_copy = FALSE, $title = FALSE )
 	{
-		return self::inline( 'span', $string, $class, $click_to_copy );
+		return self::inline( 'span', $string, $class, $click_to_copy, $title );
 	}
 
-	public static function mark( $string, $class = FALSE, $click_to_copy = FALSE )
+	public static function mark( $string, $class = FALSE, $click_to_copy = FALSE, $title = FALSE )
 	{
-		return self::inline( 'mark', $string, $class, $click_to_copy );
+		return self::inline( 'mark', $string, $class, $click_to_copy, $title );
+	}
+
+	public static function em( $string, $class = FALSE, $space = FALSE )
+	{
+		return empty( $string ) ? '' : ( $space ? ' ' : '' ).self::tag( 'em', [ 'class' => $class ], $string );
+	}
+
+	public static function strong( $string, $class = FALSE, $space = FALSE )
+	{
+		return empty( $string ) ? '' : ( $space ? ' ' : '' ).self::tag( 'strong', [ 'class' => $class ], $string );
 	}
 
 	public static function small( $string, $class = FALSE, $space = FALSE )

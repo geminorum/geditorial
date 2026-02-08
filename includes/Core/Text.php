@@ -643,7 +643,7 @@ class Text extends Base
 	}
 
 	/**
-	 * String contains multi-byte (non-ASCII/non-single-byte) `UTF-8` characters.
+	 * String contains multibyte (non-ASCII/non-single-byte) `UTF-8` characters.
 	 *
 	 * @param string $text
 	 * @return bool
@@ -689,22 +689,22 @@ class Text extends Base
 		if ( 0 === strlen( $text ) )
 			return '';
 
-		// Removes all `ZWJ`
+		// Removes all `ZWJ`.
 		$text = preg_replace( '/\x{200D}+/u', '', $text );
 
-		// Converts all RIGHT-TO-LEFT MARK (&rlm;) into `ZWNJ`
+		// Converts all RIGHT-TO-LEFT MARK `&rlm;` into `ZWNJ`.
 		$text = preg_replace( '/\x{200F}+/u', '‌', $text );
 
-		// Converts all RIGHT-TO-LEFT EMBEDDING into `ZWNJ`
+		// Converts all RIGHT-TO-LEFT EMBEDDING into `ZWNJ`.
 		$text = preg_replace( '/\x{202B}+/u', '‌', $text );
 
-		// Converts all soft hyphens (&shy;) into `ZWNJ`
+		// Converts all soft hyphens `&shy;` into `ZWNJ`.
 		$text = preg_replace( '/\x{00AD}+/u', '‌', $text );
 
-		// Converts all angled dash (&not;) into `ZWNJ`
+		// Converts all angled dash `&not;` into `ZWNJ`.
 		$text = preg_replace( '/\x{00AC}+/u', '‌', $text );
 
-		// Removes more than one `ZWNJ`
+		// Removes more than one `ZWNJ`.
 		$text = preg_replace( '/\x{200C}{2,}/u', '‌', $text );
 
 		// Cleans `ZWNJ` before and after numbers, English words, spaces, and punctuation.
@@ -1489,11 +1489,14 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
-	// USAGE: `Text::replaceWords( $words, $text, static function ( $matched ) { return '<strong>{$matched}</strong>'; } );`
+	// USAGE: `Text::replaceWords( $text, $words, static function ( $matched ) { return '<strong>{$matched}</strong>'; } );`
 	// FIXME: maybe space before/after the words
-	public static function replaceWords( $words, $text, $callback, $skip_links = TRUE )
+	public static function replaceWords( $text, $words, $callback, $skip_links = TRUE )
 	{
-		$pattern = '(^|[^\\w\\-])('.implode( '|', array_map( 'preg_quote', $words ) ).')($|[^\\w\\-])';
+		if ( empty( $text ) || empty( $words ) )
+			return $text;
+
+		$pattern = '(^|[^\\w\\-])('.implode( '|', array_map( 'preg_quote', (array) $words ) ).')($|[^\\w\\-])';
 
 		if ( $skip_links )
 			$pattern = '<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|'.$pattern;
