@@ -109,6 +109,18 @@ class Config extends gEditorial\Module
 		);
 	}
 
+	/**
+	 * Retrieves the Editorial main icon.
+	 * NOTE: must be `public`
+	 *
+	 * @param string|array $extra
+	 * @return string
+	 */
+	public function _get_icon( $extra )
+	{
+		return $this->adminbar__get_icon( NULL, $extra );
+	}
+
 	public function admin_menu()
 	{
 		// $can    = $this->cuc( 'settings' );
@@ -298,7 +310,7 @@ class Config extends gEditorial\Module
 	{
 		Services\AdminScreen::renderLayout( 'reports',
 			function ( $context, $screen ) use ( $uri ) {
-				do_action( $this->hook_base( $context, 'overview' ), $uri );
+				do_action( $this->hook_base( $context, 'overview' ), $uri, $screen );
 			} );
 	}
 
@@ -483,7 +495,7 @@ class Config extends gEditorial\Module
 
 			// NOTE: Meta-Box @hook `add_meta_boxes_geditorial_reports`
 			Services\AdminScreen::loadLayout(
-				$this->hook_base( $context ),
+				$this->hook_base( $context, $sub ),
 				$context
 			);
 

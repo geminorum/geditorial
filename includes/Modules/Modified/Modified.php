@@ -267,16 +267,20 @@ class Modified extends gEditorial\Module
 			if ( ! $html = $this->modified_data_summary( [ 'echo' => FALSE ] ) )
 				return;
 
+			$extra = 'clearfix';
+
 		} else {
 
 			if ( ! $modified = $this->get_post_modified() )
 				return;
 
-			$html = Core\HTML::small( $modified, 'text-muted' );
+			$html  = Core\HTML::small( $modified, 'text-muted' );
+			$extra = 'd-inline-flex';
+
 			gEditorial\Scripts::enqueueTimeAgo();
 		}
 
-		$this->wrap_content_insert( $html, 'clearfix' );
+		$this->wrap_content_insert( $html, $extra );
 	}
 
 	public function entry_modified_shortcode( $atts = [], $content = NULL, $tag = '' )

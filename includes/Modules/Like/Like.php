@@ -444,9 +444,10 @@ class Like extends gEditorial\Module
 
 			// $count = wp_rand( 10, 150 );
 			$count = wp_rand( 1, $this->get_setting( 'max_avatars', 12 ) );
+			$attr  = Services\Markup::getImgCursorHover();
 
 			for ( $i = 0; $i <= $count; $i++ )
-				$html.= '<li><a title=""><img src="https://avatar.iran.liara.run/public" alt="" /></a></li>';
+				$html.= '<li><a title=""><img src="https://avatar.iran.liara.run/public" alt=""'.$attr.'/></a></li>';
 		}
 
 		return $html;

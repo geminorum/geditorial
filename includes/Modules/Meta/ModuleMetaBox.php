@@ -33,7 +33,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 	public static function setPostMetaField_HTML( &$postmeta, $field, $prefix = 'geditorial-meta-' )
 	{
 		if ( isset( $_POST[$prefix.$field] ) && strlen( $_POST[$prefix.$field] ) > 0 )
-			$postmeta[$field] = WordPress\Strings::kses( $_POST[$prefix.$field], 'html' );
+			$postmeta[$field] = WordPress\Strings::balanceTags( WordPress\Strings::kses( $_POST[$prefix.$field], 'html' ) );
 
 		else if ( isset( $postmeta[$field] ) && isset( $_POST[$prefix.$field] ) )
 			unset( $postmeta[$field] );

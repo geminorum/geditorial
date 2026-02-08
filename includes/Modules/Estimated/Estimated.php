@@ -220,7 +220,7 @@ class Estimated extends gEditorial\Module
 
 		$this->wrap_content_insert(
 			Core\HTML::small( $html, 'text-muted' ),
-			'clearfix'
+			'd-inline-flex', // 'clearfix'
 		);
 	}
 

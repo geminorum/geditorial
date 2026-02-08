@@ -214,4 +214,9 @@ MARKUP;
 			]
 		);
 	}
+
+	public static function getImgCursorHover()
+	{
+		return ' onmouseover="(function(e){e.style.cursor=\'url(\'+e.src+\'),auto\';}(this))" onmouseleave="this.style.cursor=\'auto\'"';
+	}
 }

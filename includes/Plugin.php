@@ -705,6 +705,7 @@ class Plugin extends WordPress\Plugin
 				// 'parent' => 'top-secondary',
 				'id'     => $this->base,
 				'title'  => Services\Icons::adminBarMarkup(),
+				// 'title'  => gEditorial()->module( 'config' )->_get_icon(), // WTF??!
 				'href'   => $link,
 				'meta'   => [
 					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),

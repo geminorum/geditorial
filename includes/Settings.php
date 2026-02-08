@@ -51,6 +51,7 @@ class Settings extends WordPress\Main
 
 			default:
 			case 'dashboard':
+			case 'kiosks':
 			case 'reports':
 
 				$url = sprintf( 'index.php?page=%s', self::classs( $context ) );
@@ -1460,7 +1461,7 @@ class Settings extends WordPress\Main
 	{
 		return [
 			'field'        => 'subcontent_posttypes',
-			'type'         => 'checkboxes-values',
+			'type'         => 'checkboxes-panel-expanded',
 			'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
@@ -1485,7 +1486,7 @@ class Settings extends WordPress\Main
 	{
 		return [
 			'field'        => 'subcontent_types',
-			'type'         => 'checkboxes-values',
+			'type'         => 'checkboxes-panel-expanded',
 			'title'        => _x( 'Supported Types', 'Settings: Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Determines the optional types for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
 			'string_empty' => $empty ?: _x( 'There are no supported types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),

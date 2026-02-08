@@ -583,6 +583,7 @@ trait PostTypeFields
 			case 'postbox_html':
 
 				$sanitized = WordPress\Strings::kses( $data, 'html' );
+				$sanitized = WordPress\Strings::balanceTags( $sanitized );
 		}
 
 		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );

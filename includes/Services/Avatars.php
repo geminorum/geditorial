@@ -29,9 +29,8 @@ class Avatars extends gEditorial\Service
 	public static function getByEmail( $email, $fallback = '', $extra = [] )
 	{
 		$args = array_merge( [
-			'class' => self::classs( 'avatar' ),
-
-			'extra_attr' => ' onmouseover="(function(e){e.style.cursor=\'url(\'+e.src+\'),auto\';}(this))" onmouseleave="this.style.cursor=\'auto\'"',
+			'class'         => self::classs( 'avatar' ),
+			'extra_attr'    => Markup::getImgCursorHover(),
 			'force_display' => TRUE,
 		], $extra );
 
