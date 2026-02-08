@@ -313,6 +313,43 @@ class AdminScreen extends gEditorial\Service
 		);
 	}
 
+	public static function loadDashboard( $dashboard_context, $context = NULL, $object = NULL )
+	{
+		require_once ABSPATH.'wp-admin/includes/dashboard.php';
+
+		// Trigger the add_meta_boxes hooks to allow meta boxes to be added.
+		do_action( sprintf( 'add_meta_boxes_%s', $dashboard_context ), $object );
+		do_action( 'add_meta_boxes', $dashboard_context, $object );
+
+		wp_enqueue_script( 'dashboard' );
+		wp_admin_css( 'dashboard' );
+
+		add_thickbox();
+
+		add_action( 'admin_print_styles',
+			static function () {
+				gEditorial\Helper::linkStyleSheetAdmin( 'dashboard' );
+			} );
+	}
+
+	public static function renderDashboard( $context, $header_callback = NULL, $after_callback = NULL, $object = NULL )
+	{
+		if ( ! $screen = get_current_screen() )
+			return FALSE;
+
+		if ( $header_callback && is_callable( $header_callback ) )
+			call_user_func_array( $header_callback, [ $context, $screen, $object ] );
+
+		echo '<div class="'.self::classs( 'dashboard', $context ).'" id="dashboard-widgets-wrap">';
+
+			wp_dashboard();
+
+			echo '<div class="clear"></div></div>';
+
+		if ( $after_callback && is_callable( $after_callback ) )
+			call_user_func_array( $after_callback, [ $context, $screen, $object ] );
+	}
+
 	// @source https://code.tutsplus.com/integrating-with-wordpress-ui-meta-boxes-on-custom-pages--wp-26843a
 	// @ref https://gist.github.com/stephenh1988/3676396
 	public static function loadLayout( $layout_context, $context = NULL, $object = NULL )

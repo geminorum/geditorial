@@ -16,13 +16,14 @@ class Config extends gEditorial\Module
 
 	protected $caps     = [];  // reset the default caps!
 	protected $caps_map = [
-		'reports'  => 'publish_posts',
-		'settings' => 'manage_options',
-		'tools'    => 'edit_posts',
-		'roles'    => 'edit_users',
-		'tests'    => 'manage_options', // TODO: add test pages
-		'imports'  => 'import',
-		'customs'  => 'edit_theme_options',
+		'customs'  => 'edit_theme_options',   // Note: `Administrator` role
+		'imports'  => 'import',               // Note: `Administrator` role
+		'kiosks'   => 'read',                 // NOTE: `Subscriber` role
+		'reports'  => 'publish_posts',        // NOTE: `Author` role
+		'roles'    => 'edit_users',           // Note: `Administrator` role
+		'settings' => 'manage_options',       // Note: `Administrator` role
+		'tests'    => 'manage_options',       // TODO: add test pages
+		'tools'    => 'edit_posts',           // NOTE: `Contributor` role
 	];
 
 	protected $positions = [
@@ -68,6 +69,7 @@ class Config extends gEditorial\Module
 
 			case gEditorial\Plugin::CAPABILITY_CUSTOMS:
 			case gEditorial\Plugin::CAPABILITY_IMPORTS:
+			case gEditorial\Plugin::CAPABILITY_KIOSKS:
 			case gEditorial\Plugin::CAPABILITY_REPORTS:
 			case gEditorial\Plugin::CAPABILITY_ROLES:
 			case gEditorial\Plugin::CAPABILITY_SETTINGS:
@@ -113,6 +115,16 @@ class Config extends gEditorial\Module
 		$slug   = $this->classs_base( 'settings' );
 		$edit   = current_user_can( 'edit_posts' );
 		$system = gEditorial\Plugin::system();
+
+		// `dashboard_page_geditorial-kiosks`
+		$this->screens['kiosks'] = add_submenu_page(
+			'index.php',
+			_x( 'Editorial Kiosks', 'Menu Title', 'geditorial-admin' ),
+			_x( 'My Kiosks', 'Menu Title', 'geditorial-admin' ),
+			gEditorial\Plugin::CAPABILITY_KIOSKS,
+			$this->classs_base( 'kiosks' ),
+			[ $this, 'admin_kiosks_page' ]
+		);
 
 		// `dashboard_page_geditorial-reports`
 		$this->screens['reports'] = add_submenu_page(
@@ -162,6 +174,7 @@ class Config extends gEditorial\Module
 			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
 			NULL, gEditorial\Plugin::CAPABILITY_CUSTOMS );
 
+		add_action( sprintf( 'load-%s', $this->screens['kiosks'] ), [ $this, 'admin_kiosks_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['reports'] ), [ $this, 'admin_reports_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['settings'] ), [ $this, 'admin_settings_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['tools'] ), [ $this, 'admin_tools_load' ] );
@@ -192,6 +205,38 @@ class Config extends gEditorial\Module
 				[ $this, 'admin_settings_page' ]
 			);
 		}
+	}
+
+	public function admin_kiosks_page()
+	{
+		$context = 'kiosks';
+
+		$can = $this->cuc( $context );
+		$uri = gEditorial\Settings::getURLbyContext( $context );
+		$sub = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
+
+		$subs = []; // NOTE: no default subs by default in `kiosks`
+		$subs = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
+
+		gEditorial\Settings::wrapOpen( $sub ?? '', $context );
+
+			Services\AdminScreen::renderDashboard( $context,
+
+				function ( $context, $screen ) use ( $uri, $sub, $subs ) {
+
+					gEditorial\Settings::headerTitle( $context, _x( 'Editorial Kiosks', 'Page Title', 'geditorial-admin' ) );
+					Core\HTML::headerNav( $uri, $sub, $subs ); // better not be side-navigation
+
+					do_action( $this->hook_base( $context, 'before' ), $uri, $screen );
+				},
+
+				function ( $context, $screen ) use ( $uri, $sub, $subs ) {
+
+					do_action( $this->hook_base( $context, 'after' ), $uri, $screen );
+				}
+			);
+
+		gEditorial\Settings::wrapClose();
 	}
 
 	public function admin_reports_page()
@@ -406,6 +451,27 @@ class Config extends gEditorial\Module
 	protected function roles_overview( $uri )
 	{
 		do_action( $this->hook_base( 'roles', 'overview' ), $uri );
+	}
+
+	public function admin_kiosks_load()
+	{
+		$context = 'kiosks';
+		$sub     = gEditorial\Settings::sub();
+
+		Services\AdminScreen::loadDashboard(
+			$this->hook_base( $context, $sub ),
+			$context
+		);
+
+		$this->register_help_tabs( NULL, $context );
+
+		do_action(
+			$this->hook_base( $context, 'settings' ),
+			$sub,
+			$context
+		);
+
+		Services\Modulation::enqueueVirastar();
 	}
 
 	public function admin_reports_load()

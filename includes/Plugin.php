@@ -23,6 +23,7 @@ class Plugin extends WordPress\Plugin
 
 	const CAPABILITY_CUSTOMS  = 'editorial_customs';
 	const CAPABILITY_IMPORTS  = 'editorial_imports';
+	const CAPABILITY_KIOSKS   = 'editorial_kiosks';
 	const CAPABILITY_REPORTS  = 'editorial_reports';
 	const CAPABILITY_ROLES    = 'editorial_roles';
 	const CAPABILITY_SETTINGS = 'editorial_settings';

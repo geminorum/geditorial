@@ -74,15 +74,15 @@ class Module extends WordPress\Module
 	protected $cache   = [];
 
 	protected $caps = [
-		'default'   => 'manage_options',
-		'settings'  => 'manage_options',
-		'imports'   => 'import',
-		'customs'   => 'edit_theme_options',
-		'reports'   => 'edit_others_posts',    // also used for `exports`
-		'tools'     => 'edit_others_posts',
-		'roles'     => 'edit_users',
 		'adminbar'  => 'edit_others_posts',
+		'customs'   => 'edit_theme_options',
 		'dashboard' => 'edit_others_posts',
+		'default'   => 'manage_options',
+		'imports'   => 'import',
+		'reports'   => 'edit_others_posts',    // also used for `exports`
+		'roles'     => 'edit_users',
+		'settings'  => 'manage_options',
+		'tools'     => 'edit_others_posts',
 		'uploads'   => 'upload_files',
 
 		// 'paired_create' => 'manage_options', // to restrict main post
@@ -226,6 +226,9 @@ class Module extends WordPress\Module
 			if ( $ui )
 				add_action( 'wp_dashboard_setup', [ $this, 'setup_dashboard' ] );
 
+			if ( $ui && method_exists( $this, 'dashboard_widgets' ) )
+				add_action( $this->hook_base( 'kiosks', 'settings' ), [ $this, 'dashboard_widgets' ], 10, 0 );
+
 			if ( ( $ui || $ajax ) && method_exists( $this, 'register_shortcode_ui' ) )
 				$this->action( 'register_shortcode_ui' );
 
@@ -306,6 +309,10 @@ class Module extends WordPress\Module
 	{
 		if ( method_exists( $this, 'dashboard_glance_items' ) )
 			$this->filter( 'dashboard_glance_items' );
+
+		// NOTE: dashboard widgets also accessible via kiosks page
+		if ( $this->is_thrift_mode() )
+			return;
 
 		if ( method_exists( $this, 'dashboard_widgets' )
 			&& $this->get_setting( 'dashboard_widgets', FALSE ) )
