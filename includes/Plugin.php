@@ -737,16 +737,9 @@ class Plugin extends WordPress\Plugin
 		return 0;
 	}
 
-	// TODO: Move to `Locations` Service / keep wrapper method on plugin object
 	public function base_country()
 	{
-		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
-			return $country;
-
-		if ( \function_exists( 'WC' ) )
-			return WC()->countries->get_base_country();
-
-		return 'IR';
+		return Services\Locations::baseCountry( 'IR' );
 	}
 
 	// TODO: move following into Info!

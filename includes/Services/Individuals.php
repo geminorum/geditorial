@@ -149,9 +149,10 @@ class Individuals extends gEditorial\Service
 
 				break;
 
-			case 'familyfirst':
-			case 'display':
 			default:
+			case 'display':
+			case 'address':
+			case 'familyfirst':
 
 				$fullname = vsprintf(
 					/* translators: `%1$s`: first name, `%2$s`: last name, `%3$s`: middle name, `%4$s`: father name, `%5$s`: mother name */
