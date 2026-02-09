@@ -244,6 +244,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'embed'     : return 'embed-generic';
 				case 'link'      : return 'admin-links';
 				case 'latlng'    : return 'location';
+				case 'color'     : return 'color-picker';
 
 				case 'text_source' : return 'media-text';
 				case 'audio_source': return 'media-audio';

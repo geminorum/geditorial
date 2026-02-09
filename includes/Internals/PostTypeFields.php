@@ -156,7 +156,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'plate', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'code', 'color', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'plate', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -435,6 +435,11 @@ trait PostTypeFields
 			case 'code':
 
 				$sanitized = trim( $data );
+				break;
+
+			case 'color':
+
+				$sanitized = Core\Color::sanitize( $data );
 				break;
 
 			case 'email':
@@ -716,6 +721,7 @@ trait PostTypeFields
 				case 'iban':
 				case 'bankcard':
 				case 'code':
+				case 'color':
 				case 'postcode':
 				case 'venue':
 				case 'people':

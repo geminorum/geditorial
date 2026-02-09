@@ -1242,6 +1242,18 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'color':
+
+				$atts['dir'] = 'ltr';
+
+				$wrap[] = '-inputcolor'; // 'color-text'
+
+				// NOTE: CAUTION: module must enqueue `wp-color-picker` styles/scripts
+				// @SEE: `Scripts::enqueueColorPicker()`
+				// $scripts[] = '$("#'.$id.'").wpColorPicker();';
+
+				break;
+
 			case 'email':
 
 				$atts['dir']     = 'ltr';

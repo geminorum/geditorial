@@ -143,6 +143,7 @@ class Meta extends gEditorial\Module
 				'itineraries' => _x( 'Itineraries', 'Titles', 'geditorial-meta' ),
 
 				'latlng' => _x( 'Coordinates', 'Titles', 'geditorial-meta' ),
+				'color'  => _x( 'Color', 'Titles', 'geditorial-meta' ),
 
 				// combined fields
 				'source' => _x( 'Source', 'Titles', 'geditorial-meta' ),
@@ -209,6 +210,7 @@ class Meta extends gEditorial\Module
 				'itineraries' => _x( 'Brief Itineraries of the Content', 'Descriptions: `itineraries`', 'geditorial-meta' ),
 
 				'latlng' => _x( 'Latitude and Longitude', 'Descriptions: `latlng`', 'geditorial-meta' ),
+				'color'  => _x( 'The Color Code about the Content', 'Descriptions: `color`', 'geditorial-meta' ),
 
 				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
 				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
@@ -297,6 +299,7 @@ class Meta extends gEditorial\Module
 					'itineraries' => [ 'type' => 'note' ],
 
 					'latlng' => [ 'type' => 'latlng' ],
+					'color'  => [ 'type' => 'color'  ],
 				],
 				'page' => [
 					'over_title' => [ 'type' => 'title_before' ],
@@ -978,6 +981,9 @@ class Meta extends gEditorial\Module
 
 				// return Core\LatLng::prep( trim( $raw ) );
 				return gEditorial\Info::lookupLatLng( trim( $raw ) );
+
+			case 'color':
+				return Core\Color::prep( $raw, $field_args, $context );
 		}
 
 		return $meta;
