@@ -10,13 +10,17 @@ use geminorum\gEditorial\WordPress;
 trait ModuleLinks
 {
 
+	// TODO: link to customizer
 	// TODO: get dashboard menu for the module
 	protected function get_module_links()
 	{
 		$links  = [];
 		$screen = get_current_screen();
 
-		if ( method_exists( $this, 'reports_settings' ) && ! gEditorial\Settings::isScreenContext( 'reports', $screen ) )
+		if ( method_exists( $this, 'reports_settings' )
+			&& ! gEditorial\Settings::isScreenContext( 'reports', $screen )
+			&& current_user_can( gEditorial\Plugin::CAPABILITY_REPORTS ) ) {
+
 			foreach ( $this->append_sub( [], 'reports' ) as $sub => $title )
 				$links[] = [
 					'context' => 'reports',
@@ -29,8 +33,12 @@ trait ModuleLinks
 						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
+		}
 
-		if ( method_exists( $this, 'tools_settings' ) && ! gEditorial\Settings::isScreenContext( 'tools', $screen ) )
+		if ( method_exists( $this, 'tools_settings' )
+			&& ! gEditorial\Settings::isScreenContext( 'tools', $screen )
+			&& current_user_can( gEditorial\Plugin::CAPABILITY_TOOLS ) ) {
+
 			foreach ( $this->append_sub( [], 'tools' ) as $sub => $title )
 				$links[] = [
 					'context' => 'tools',
@@ -43,8 +51,12 @@ trait ModuleLinks
 						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
+		}
 
-		if ( method_exists( $this, 'roles_settings' ) && ! gEditorial\Settings::isScreenContext( 'roles', $screen ) )
+		if ( method_exists( $this, 'roles_settings' )
+			&& ! gEditorial\Settings::isScreenContext( 'roles', $screen )
+			&& current_user_can( gEditorial\Plugin::CAPABILITY_ROLES ) ) {
+
 			foreach ( $this->append_sub( [], 'roles' ) as $sub => $title )
 				$links[] = [
 					'context' => 'roles',
@@ -58,7 +70,12 @@ trait ModuleLinks
 					),
 				];
 
-		if ( method_exists( $this, 'imports_settings' ) && ! gEditorial\Settings::isScreenContext( 'imports', $screen ) )
+		}
+
+		if ( method_exists( $this, 'imports_settings' )
+			&& ! gEditorial\Settings::isScreenContext( 'imports', $screen )
+			&& current_user_can( gEditorial\Plugin::CAPABILITY_IMPORTS ) ) {
+
 			foreach ( $this->append_sub( [], 'imports' ) as $sub => $title )
 				$links[] = [
 					'context' => 'imports',
@@ -71,8 +88,12 @@ trait ModuleLinks
 						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
+		}
 
-		if ( isset( $this->caps['settings'] ) && ! gEditorial\Settings::isScreenContext( 'settings', $screen ) && $this->cuc( 'settings' ) )
+		if ( isset( $this->caps['settings'] )
+			&& ! gEditorial\Settings::isScreenContext( 'settings', $screen )
+			// && current_user_can( gEditorial\Plugin::CAPABILITY_SETTINGS ) ) {
+			&& $this->cuc( 'settings' ) ) {
 			$links[] = [
 				'context' => 'settings',
 				'sub'     => $this->key,
@@ -84,6 +105,7 @@ trait ModuleLinks
 					$this->module->title
 				),
 			];
+		}
 
 		if ( GEDITORIAL_DISABLE_HELP_TABS )
 			return $links;
