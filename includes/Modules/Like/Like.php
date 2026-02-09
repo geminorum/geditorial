@@ -120,10 +120,7 @@ class Like extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
-			return;
-
-		if ( ! is_singular( $this->posttypes() ) )
+		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
 
 		$this->current_queried = get_queried_object_id();

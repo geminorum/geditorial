@@ -103,10 +103,7 @@ class Views extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
-			return;
-
-		if ( ! is_singular( $this->posttypes() ) )
+		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
 
 		if ( is_user_logged_in() && $this->role_can( 'excluded' ) )

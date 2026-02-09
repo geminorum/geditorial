@@ -75,7 +75,7 @@ class Headings extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
+		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
 
 		if ( ! $this->contentinsert__control_term_check() )

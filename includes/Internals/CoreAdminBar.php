@@ -39,6 +39,12 @@ trait CoreAdminBar
 		if ( is_admin() )
 			return FALSE;
 
+		if ( ! is_admin_bar_showing() )
+			return FALSE;
+
+		if ( ! WordPress\IsIt::singularUI( FALSE ) )
+			return FALSE;
+
 		if ( ( $check_for_mobile ?? TRUE ) && WordPress\IsIt::mobile() )
 			return FALSE;
 
@@ -64,10 +70,13 @@ trait CoreAdminBar
 		if ( is_admin() )
 			return FALSE;
 
+		if ( ! is_admin_bar_showing() )
+			return FALSE;
+
 		if ( ( $check_for_mobile ?? TRUE ) && WordPress\IsIt::mobile() )
 			return FALSE;
 
-		if ( ! is_singular( $posttypes ?? $this->posttypes() ) )
+		if ( ! WordPress\IsIt::singularUI( $posttypes ?? $this->posttypes() ) )
 			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( get_queried_object_id() ) )

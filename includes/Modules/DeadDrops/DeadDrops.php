@@ -200,7 +200,7 @@ class DeadDrops extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
+		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
 
 		if ( ! $secret = get_query_var( $this->constant( 'main_queryvar' ) ) )

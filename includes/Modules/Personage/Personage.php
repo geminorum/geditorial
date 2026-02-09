@@ -462,19 +462,16 @@ class Personage extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
+		if ( ! WordPress\IsIt::singularUI( $this->constant( 'main_posttype' ) ) )
 			return;
 
-		if ( is_singular( $this->constant( 'main_posttype' ) ) ) {
+		if ( $this->get_setting( 'insert_cover' ) )
+			add_action( $this->hook_base( 'content', 'before' ),
+				[ $this, 'insert_cover' ],
+				$this->get_setting( 'insert_priority', -50 )
+			);
 
-			if ( $this->get_setting( 'insert_cover' ) )
-				add_action( $this->hook_base( 'content', 'before' ),
-					[ $this, 'insert_cover' ],
-					$this->get_setting( 'insert_priority', -50 )
-				);
-
-			$this->hook_content_insert();
-		}
+		$this->hook_content_insert();
 	}
 
 	public function insert_cover( $content )

@@ -149,10 +149,7 @@ class WcTerms extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
-			return;
-
-		if ( is_embed() || is_search() )
+		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
 
 		$this->enqueue_styles();

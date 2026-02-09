@@ -429,7 +429,7 @@ class Course extends gEditorial\Module
 
 	public function template_redirect()
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
+		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
 
 		if ( is_tax( $this->constant( 'course_paired' ) ) ) {
