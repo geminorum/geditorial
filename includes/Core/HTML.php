@@ -11,6 +11,11 @@ class HTML extends Base
 		return L10n::rtl();
 	}
 
+	public static function dir()
+	{
+		return L10n::rtl() ? 'rtl' : 'ltr';
+	}
+
 	public static function link( $html, $link = '#', $target_blank = FALSE )
 	{
 		if ( is_null( $html ) )
@@ -1243,7 +1248,7 @@ class HTML extends Base
 			'all'      => FALSE,
 			'next'     => FALSE,
 			'previous' => FALSE,
-			'rtl'      => self::rtl(),
+			'rtl'      => L10n::rtl(),
 		], $pagination );
 
 		$icons = self::atts( [
@@ -1505,18 +1510,18 @@ class HTML extends Base
 	}
 
 	// @REF: https://developer.wordpress.org/resource/dashicons/
-	public static function getDashicon( $icon = NULL, $title = FALSE, $class = '' )
+	public static function getDashicon( $icon = NULL, $title = FALSE, $class = '', $atts = [] )
 	{
 		$icon = $icon ?? 'wordpress-alt';
 
 		if ( ! Text::starts( $icon, 'dashicons-' ) )
 			$icon = sprintf( 'dashicons-%s', $icon );
 
-		return self::tag( 'span', [
+		return self::tag( 'span', array_merge( [
 			'data-icon' => 'dashicons',
 			'title'     => $title,
 			'class'     => self::attrClass( 'dashicons', $icon, $class ),
-		], NULL );
+		], $atts ), NULL );
 	}
 
 	public static function radioSelect( $list, $atts = [] )

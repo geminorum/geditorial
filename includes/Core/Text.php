@@ -49,9 +49,10 @@ class Text extends Base
 
 	/**
 	 * Strips whitespace (or other characters) from the beginning and end of a string.
+	 * NOTE: additional chars will be quoted by `preg_quote()`
 	 *
 	 * @param string $text
-	 * @return string $additional
+	 * @return string|array $additional
 	 * @return string
 	 */
 	public static function trim( $text, $additional = NULL )
@@ -77,13 +78,17 @@ class Text extends Base
 		];
 
 		if ( $additional )
-			$chars = array_merge( $chars, array_map( 'preg_quote', preg_split( '//u', (string) $additional, -1, PREG_SPLIT_NO_EMPTY ) ) );
+			$chars = array_merge( $chars, array_map( 'preg_quote',
+				is_array( $additional )
+					? array_filter( $additional )
+					: preg_split( '//u', (string) $additional, -1, PREG_SPLIT_NO_EMPTY )
+			) );
 
 		$text = preg_replace(
 			// @REF: https://www.php.net/manual/en/ref.mbstring.php#113569
 			'/^['.implode( '', $chars ).']*(?U)(.*)['.implode( '', $chars ).']*$/u',
 			'\\1',
-			(string) $text
+			trim( (string) $text )
 		);
 
 		if ( 0 === strlen( $text ) )
@@ -92,13 +97,11 @@ class Text extends Base
 		return $text;
 	}
 
+	// NOTE: the list must **not** be quoted!
 	public static function trimQuotes( $text, $list = NULL )
 	{
-		if ( ! $text = self::trim( $text ) )
-			return '';
-
 		$list = $list ?? [
-			"\s",
+			",", "،", //  Arabic Comma
 			"'", "\"",
 			"*",
 			"<", ">",
@@ -109,27 +112,17 @@ class Text extends Base
 			":", ";",
 		];
 
-		$text = preg_replace(
-			// @REF: https://www.php.net/manual/en/ref.mbstring.php#113569
-			'/^['.implode( '', $list ).']*(?U)(.*)['.implode( '', $list ).']*$/u',
-			'\\1',
-			(string) $text
-		);
-
-		if ( 0 === strlen( $text ) )
-			return '';
-
-		return self::trim( $text );
+		return self::trim( $text, $list );
 	}
 
 	/**
-	 * right trim of a string
+	 * Trims the right side of a string given a needle.
 	 * @source https://stackoverflow.com/a/32739088
 	 *
-	 * @param string $text Original string
-	 * @param string $needle String to trim from the end of $text
-	 * @param bool|true $case_sensitive Perform case-sensitive matching, defaults to true
-	 * @return string Trimmed string
+	 * @param string $text
+	 * @param string $needle
+	 * @param bool $case_sensitive
+	 * @return string
 	 */
 	public static function rightTrim( $text, $needle, $case_sensitive = TRUE )
 	{
@@ -142,13 +135,13 @@ class Text extends Base
 	}
 
 	/**
-	 * left trim of a string
+	 * Trims the left side of a string given a needle.
 	 * @source https://stackoverflow.com/a/32739088
 	 *
-	 * @param string $text Original string
-	 * @param string $needle String to trim from the beginning of $text
-	 * @param bool|true $case_sensitive Perform case-sensitive matching, defaults to true
-	 * @return string Trimmed string
+	 * @param string $text
+	 * @param string $needle
+	 * @param bool $case_sensitive
+	 * @return string
 	 */
 	public static function leftTrim( $text, $needle, $case_sensitive = TRUE )
 	{
@@ -888,29 +881,57 @@ class Text extends Base
 	// @SEE: `mb_convert_case()`
 	public static function strToLower( $text, $encoding = 'UTF-8' )
 	{
-		return function_exists( 'mb_strtolower' ) ? mb_strtolower( $text, $encoding ) : strtolower( $text );
+		return function_exists( 'mb_strtolower' )
+			? mb_strtolower( $text ?? '', $encoding )
+			: strtolower( $text ?? '' );
+	}
+
+	public static function strToUpper( $text, $encoding = 'UTF-8' )
+	{
+		return function_exists( 'mb_strtoupper' )
+			? mb_strtoupper( $text ?? '', $encoding )
+			: strtoupper( $text ?? '' );
 	}
 
 	public static function strLen( $text, $encoding = 'UTF-8' )
 	{
-		return function_exists( 'mb_strlen' ) ? mb_strlen( $text, $encoding ) : strlen( $text );
+		return function_exists( 'mb_strlen' )
+			? mb_strlen( $text ?? '', $encoding )
+			: strlen( $text ?? '' );
 	}
 
 	public static function subStr( $text, $start = 0, $length = 1, $encoding = 'UTF-8' )
 	{
-		return function_exists( 'mb_substr' ) ? mb_substr( $text, $start, $length, $encoding ) : substr( $text, $start, $length );
+		return function_exists( 'mb_substr' )
+			? mb_substr( $text ?? '', $start, $length, $encoding )
+			: substr( $text ?? '', $start, $length );
 	}
 
 	// @SOURCE: https://github.com/alecgorge/PHP-String-Class
-	public static function strReplace( $search, $replace, $subject )
+	public static function strReplace( $search, $replace, $text )
 	{
-		return preg_replace( '@'.preg_quote( $search ).'@u', $replace, $subject );
+		if ( empty( $search ) || empty( $text ) )
+			return $text;
+
+		return preg_replace(
+			'@'.preg_quote( $search ).'@u',
+			$replace ?? '',
+			$text
+		);
 	}
 
 	// @SOURCE: https://github.com/alecgorge/PHP-String-Class
 	public static function strSplit( $text, $length = 1 )
 	{
-		preg_match_all( '/.{1,'.$length.'}/us', $text, $matches );
+		if ( empty( $text ) || $length < 1 )
+			return $text;
+
+		preg_match_all(
+			'/.{1,'.$length.'}/us',
+			$text,
+			$matches
+		);
+
 		return $matches[0];
 	}
 
@@ -918,16 +939,24 @@ class Text extends Base
 	 * Pads a string to a certain length with another string.
 	 * @source https://www.php.net/manual/en/ref.mbstring.php#90611
 	 *
-	 * @param string $input
+	 * @param string $text
 	 * @param int $pad_length
 	 * @param string $pad_string
 	 * @param int $pad_style
 	 * @param string $encoding
 	 * @return string
 	 */
-	public static function strPad( $input, $length, $pad_string, $pad_type, $encoding = 'UTF-8' )
+	public static function strPad( $text, $length, $pad_string, $pad_type, $encoding = 'UTF-8' )
 	{
-		return str_pad( $input, strlen( $input ) - mb_strlen( $input, $encoding ) + $length, $pad_string, $pad_type );
+		if ( empty( $text ) )
+			return $text;
+
+		return str_pad(
+			$text,
+			strlen( $text ) - mb_strlen( $text, $encoding ) + $length,
+			$pad_string,
+			$pad_type
+		);
 	}
 
 	public static function internalEncoding( $encoding = 'UTF-8' )

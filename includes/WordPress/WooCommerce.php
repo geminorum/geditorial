@@ -144,10 +144,21 @@ class WooCommerce extends Core\Base
 		return $statuses;
 	}
 
+	public static function getBaseCountry()
+	{
+		return WC()->countries->get_base_country();
+	}
+
+	public static function getBaseState()
+	{
+		return WC()->countries->get_base_state();
+	}
+
 	// @REF: https://wordpress.stackexchange.com/a/334608/93391
+	// $default = wc_get_base_location();
 	public static function getBaseAddress()
 	{
-		$country = WC()->countries->get_base_country();
+		$country = self::getBaseCountry();
 
 		return [
 			'address'      => WC()->countries->get_base_address(),

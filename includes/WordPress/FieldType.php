@@ -10,9 +10,12 @@ abstract class FieldType extends Core\Base
 	const BASE = 'geditorial';
 	const TYPE = 'undefined';
 
-	// Date Sub-Types: `datetime`/`date`/`time`
-	// Vcard Sub-Types: `Vcard4`/`Vcard3`
-	// Contact Sub-Types: `Email`/`URL`/`Phone`
+	// Date subtypes: `datetime`/`date`/`time`
+	// vCard subtypes: `Vcard4`/`Vcard3`
+	// Contact subtypes: `Email`/`URL`/`Phone`
+	// Color subtypes: `Hex`/`RGB`/`Name`/`RGBa`
+	// Identity subtypes: `country` of origin
+
 	protected $__sub_type = NULL;
 
 	protected $_value = '';
