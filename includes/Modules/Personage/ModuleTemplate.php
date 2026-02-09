@@ -82,14 +82,14 @@ class ModuleTemplate extends gEditorial\Template
 			/**
 			 * Adds the address.
 			 *
-			 * @param string [optional] $name
-			 * @param string [optional] $extended
-			 * @param string [optional] $street
-			 * @param string [optional] $city
-			 * @param string [optional] $region
-			 * @param string [optional] $zip
-			 * @param string [optional] $country
-			 * @param string [optional] $type: may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
+			 * @param string $name
+			 * @param string $extended
+			 * @param string $street
+			 * @param string $city
+			 * @param string $region
+			 * @param string $zip
+			 * @param string $country
+			 * @param string $type: may be `DOM`/`INTL`/`POSTAL`/`PARCEL`/`HOME`/`WORK` or any combination of these: e.g. `WORK;PARCEL;POSTAL`
 			 */
 			$vcard->addAddress(
 				Services\Locations::prepAddress( $home, 'vcard', $home ),

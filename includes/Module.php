@@ -27,6 +27,7 @@ class Module extends WordPress\Module
 	public $module;
 	public $options;
 	public $settings;
+	public $customs;
 
 	public $enabled  = FALSE;
 	public $meta_key = '_ge'; // TODO: DEPRECATE

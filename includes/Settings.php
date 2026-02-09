@@ -2426,8 +2426,10 @@ class Settings extends WordPress\Main
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_shortcode'  : return [ _x( 'ShortCode Preferences', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_strings'    : return [ _x( 'Custom Strings', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_formats'    : return [ _x( 'Custom Formats', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_avatars'    : return [ _x( 'User Avatars', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_tabs'       : return [ _x( 'Content Tabs', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
+			case '_types'      : return [ _x( 'Data Types', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_fields'     : return [ _x( 'Data Fields', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_constants'  : return [ _x( 'Custom Constants', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
 			case '_posttypes'  : return [ _x( 'Post-Types', 'Settings: Section Title', 'geditorial-admin' ), NULL ];
@@ -2614,7 +2616,7 @@ class Settings extends WordPress\Main
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Settings: Button', 'geditorial-admin' ),
 			'style' => $enabled ? FALSE : 'display:none',
-			'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-button-danger' ] ),
+			'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-danger' ] ),
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'disable',

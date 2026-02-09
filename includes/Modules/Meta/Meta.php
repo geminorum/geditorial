@@ -212,8 +212,8 @@ class Meta extends gEditorial\Module
 				'latlng' => _x( 'Latitude and Longitude', 'Descriptions: `latlng`', 'geditorial-meta' ),
 				'color'  => _x( 'The Color Code about the Content', 'Descriptions: `color`', 'geditorial-meta' ),
 
-				'source' => _x( 'Source of the content', 'Descriptions', 'geditorial-meta' ),
-				'action' => _x( 'Action of the content', 'Descriptions', 'geditorial-meta' ),
+				'source' => _x( 'Source of the content', 'Descriptions: `source`', 'geditorial-meta' ),
+				'action' => _x( 'Action of the content', 'Descriptions: `action`', 'geditorial-meta' ),
 			],
 		];
 

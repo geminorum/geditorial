@@ -7,6 +7,7 @@ use geminorum\gEditorial\WordPress;
 WordPress\User::superAdminOnly();
 
 $files = [
+	// 'Test_Array-Map',
 	//'Test_Array-Merge',
 
 	// 'Test_Avatars',

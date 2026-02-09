@@ -23,11 +23,11 @@ class Info extends WordPress\Main
 	}
 
 	// NOTE: must return HTML link tag
-	public static function lookupLatLng( $latlng )
+	public static function lookupLatLng( $latlng, $extra = [] )
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => self::lookupURLforLatLng( $latlng ),
-			'class'  => '-latlng-lookup',
+			'class'  => Core\HTML::attrClass( '-latlng-lookup', $extra ),
 			'target' => '_blank',
 			'rel'    => 'noreferrer',
 		], Core\LatLng::prep( $latlng, TRUE ) );

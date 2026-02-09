@@ -43,6 +43,7 @@ class Config extends gEditorial\Module
 			'frontend' => FALSE,
 			'autoload' => TRUE,
 			'access'   => 'stable',
+			'icon'     => [ 'misc-16', 'perekrestok' ],
 		];
 	}
 

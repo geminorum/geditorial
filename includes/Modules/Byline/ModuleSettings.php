@@ -439,7 +439,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			echo '</div>';
 
-			if ( WordPress\IsIt::dev() ) {
+			if ( WordPress\IsIt::dev() || WordPress\IsIt::debug() ) {
 
 				$data = $query = [];
 
@@ -462,9 +462,10 @@ class ModuleSettings extends gEditorial\Settings
 				}
 
 				if ( $data ) {
-					echo '<br />';
+					Core\HTML::h4( 'DEBUG: Raw Data', '-title-debug' );
 					// NOTE: the `.card` supports dumping!
 					self::dump( $data );
+					// Core\HTML::tableSide( $data );
 				}
 			}
 

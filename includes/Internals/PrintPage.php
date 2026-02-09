@@ -95,7 +95,7 @@ trait PrintPage
 			$list = [];
 
 		return $this->filters( 'printpage_layout_bodyclass',
-			Core\HTML::prepClass( 'printpage', ( is_rtl() ? 'rtl' : 'ltr' ), $list, $extra ), $profile );
+			Core\HTML::prepClass( 'printpage', Core\HTML::dir(), $list, $extra ), $profile );
 	}
 
 	// FIXME: handle padding

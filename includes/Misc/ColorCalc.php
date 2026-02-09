@@ -977,16 +977,17 @@ class ColorCalc extends Core\Base
 	 *
 	 * @access public
 	 * @since 1.1.0
-	 * @param string $name      The method name.
-	 * @param mixed  $arguments The method arguments.
+	 * @param string $name
+	 * @param mixed $arguments
 	 * @return mixed
 	 */
-	public function __call( $name, $arguments ) {
-		if ( method_exists( $this, $name ) ) {
-			call_user_func( array( $this, $name ), $arguments );
-		} else {
+	public function __call( $name, $arguments )
+	{
+		if ( method_exists( $this, $name ) )
+			call_user_func( [ $this, $name ], $arguments );
+
+		else
 			return $arguments;
-		}
 	}
 
 	/**

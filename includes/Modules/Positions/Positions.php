@@ -409,7 +409,7 @@ class Positions extends gEditorial\Module
 
 				$buttons[] = Core\HTML::tag( 'a', array_merge( [
 					'href'  => $this->_get_clear_link( $object, $profile, $context ),
-					'class' => Core\HTML::buttonClass( FALSE, [ '-button-icon', '-button-danger' ] ),
+					'class' => Core\HTML::buttonClass( FALSE, [ '-button-icon', '-danger' ] ),
 					'title' => _x( 'Click to Clear the Position Profile', 'Button Title', 'geditorial-positions' ),
 				], gEditorial\Settings::getButtonConfirm() ), $label );
 			}

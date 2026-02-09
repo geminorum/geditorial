@@ -73,6 +73,7 @@ class Revisions extends gEditorial\Module
 	public function admin_init()
 	{
 		add_action( 'admin_post_'.$this->hook( 'purge' ), [ $this, 'admin_post' ] );
+
 		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
@@ -331,7 +332,7 @@ class Revisions extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return 0;
 
-		return $this->get_setting( 'revision_maxcount', $num );
+		return $this->get_setting( 'revision_maxcount', $num ?: -1 );
 	}
 
 	// FIXME: use `bulk_post_updated_messages` for notices

@@ -30,17 +30,19 @@ class Widgets extends gEditorial\Module
 		return [
 			'_general' => [
 				[
+					'field'  => 'widgets',
+					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-widgets' ),
+					'type'   => 'checkboxes-panel-expanded',
+					'values' => $this->_list_widgets(),
+				],
+			],
+			'_roles' => [
+				[
 					'field'       => 'manage_roles',
 					'type'        => 'checkboxes',
 					'title'       => _x( 'Theme Options', 'Setting Title', 'geditorial-widgets' ),
 					'description' => _x( 'Enables &ldquo;Edit Theme Options&rdquo; capability for selected roles.', 'Setting Description', 'geditorial-widgets' ),
 					'values'      => $this->get_settings_default_roles( 'contributor' ),
-				],
-				[
-					'field'  => 'widgets',
-					'title'  => _x( 'Widgets', 'Setting Title', 'geditorial-widgets' ),
-					'type'   => 'checkboxes-panel-expanded',
-					'values' => $this->_list_widgets(),
 				],
 			],
 			'_frontend' => [
@@ -181,6 +183,7 @@ class Widgets extends gEditorial\Module
 		switch ( $cap ) {
 
 			case 'edit_theme_options':
+			case gEditorial\Plugin::CAPABILITY_CUSTOMS:
 
 				return $this->role_can( 'manage', $user_id )
 					? [ 'exist' ]

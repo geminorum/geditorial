@@ -38,7 +38,11 @@ class Individuals extends gEditorial\Service
 
 	public static function isParserAvailable()
 	{
-		return in_array( Core\L10n::locale( TRUE ), Misc\NamesInPersian::SUPPORTED_LOCALE, TRUE );
+		return in_array(
+			Core\L10n::locale( TRUE ),
+			Misc\NamesInPersian::SUPPORTED_LOCALE,
+			TRUE
+		);
 	}
 
 	public static function prepPeople( $value, $empty = '', $separator = NULL )

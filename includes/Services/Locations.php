@@ -124,19 +124,19 @@ class Locations extends gEditorial\Service
 
 	public static function baseCountry( $fallback = NULL, $filtered = TRUE )
 	{
-		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
-			return $filtered ? self::filters( 'locations_base_country',
-				$country,
-				'gnetwork',
-				$fallback
-			) : $country;
-
 		if ( WordPress\WooCommerce::available() )
 			return $filtered ? self::filters( 'locations_base_country',
 				WordPress\WooCommerce::getBaseCountry(),
 				'woocommerce',
 				$fallback
 			) : WordPress\WooCommerce::getBaseCountry();
+
+		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+			return $filtered ? self::filters( 'locations_base_country',
+				$country,
+				'gnetwork',
+				$fallback
+			) : $country;
 
 		return $filtered ? self::filters( 'locations_base_country',
 			$fallback,
@@ -155,7 +155,7 @@ class Locations extends gEditorial\Service
 				'IR' => _x( 'Iran', 'Country', 'geditorial' ),
 			] );
 
-		if ( ! $country )
+		if ( FALSE === $country )
 			return $data;
 
 		return empty( $data[$country] )
@@ -177,7 +177,7 @@ class Locations extends gEditorial\Service
 		if ( empty( $data[$country] ) )
 			$data = self::filters( 'locations_name_states', [], $country );
 
-		if ( ! $state )
+		if ( FALSE === $state )
 			return $data[$country];
 
 		return empty( $data[$country][$state] )
@@ -204,7 +204,7 @@ class Locations extends gEditorial\Service
 				'IR'      => "{{name}}\n{{company}}\n{{address_1}}\n{{address_2}}\n{{country}}، {{state}}، {{city}}\n{{postcode}}",
 			] );
 
-		if ( ! $country )
+		if ( FALSE === $country )
 			return $data;
 
 		return empty( $data[$country] )
@@ -225,6 +225,7 @@ class Locations extends gEditorial\Service
 	public static function formatAddress( $data = [], $atts = [] )
 	{
 		$args = self::atts( [
+			'format'    => NULL,
 			'separator' => NULL,
 			'context'   => NULL,
 		], $atts );
@@ -242,9 +243,9 @@ class Locations extends gEditorial\Service
 		], $data ), FALSE );
 
 		$name    = Individuals::makeFullname( $parsed, $args['context'] ?? 'address' );
-		$state   = self::nameState( $parsed['state'], $parsed['country'] );
-		$country = self::nameCountry( $parsed['country'] );
-		$format  = self::addressFormats( $parsed['country'] );
+		$state   = self::nameState( $parsed['state'], $parsed['country'], '' );
+		$country = self::nameCountry( $parsed['country'], '' );
+		$format  = $args['format'] ?? self::addressFormats( $parsed['country'] );
 
 		// Country is not needed if the same as base.
 		if ( $parsed['country'] === self::baseCountry() )
