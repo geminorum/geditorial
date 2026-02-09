@@ -15,6 +15,7 @@ class Importer extends gEditorial\Module
 	use Internals\RawImports;
 
 	protected $disable_no_posttypes = TRUE;
+	protected $capability_posttype  = 'import_posts'; // Retrieves the `edit_others_posts` on the target posttype.
 
 	public static function module()
 	{
@@ -73,6 +74,14 @@ class Importer extends gEditorial\Module
 				'post_status',
 				'comment_status',
 			],
+			'_roles' => [
+				'imports_roles' => [ NULL, $this->get_settings_default_roles( 'contributor' ) ],
+				[
+					'field'       => 'map_import_cap',
+					'title'       => _x( 'Import Capability', 'Setting Title', 'geditorial-importer' ),
+					'description' => _x( 'Also enables &ldquo;Import&rdquo; capability for the selected imports roles.', 'Setting Description', 'geditorial-importer' ),
+				],
+			]
 		];
 	}
 
@@ -106,23 +115,27 @@ class Importer extends gEditorial\Module
 		Core\HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
-	// public function init()
-	// {
-	// 	parent::init();
+	public function init()
+	{
+		parent::init();
 
-	// 	$this->action( 'imports_general_summary', 1, 10, FALSE, $this->base );
-	// }
+		if ( count( $this->get_setting( 'imports_roles', [] ) ) )
+			$this->filter( 'map_meta_cap', 4 );
+
+		// $this->action( 'imports_general_summary', 1, 10, FALSE, $this->base );
+	}
 
 	public function current_screen( $screen )
 	{
 		if ( 'edit' == $screen->base
-			&& $this->posttype_supported( $screen->post_type ) ) {
+			&& $this->posttype_supported( $screen->post_type )
+				&& current_user_can( gEditorial\Plugin::CAPABILITY_IMPORTS ) ) {
 
 			Services\HeaderButtons::register( $this->key, [
 				'text'      => Services\CustomPostType::getLabel( $screen->post_type, 'import_items', FALSE, _x( 'Import', 'Button', 'geditorial-importer' ) ),
 				'link'      => $this->get_imports_page_url( NULL, [ 'posttype' => $screen->post_type ] ), // also `'attachment' => 12`
 				'icon'      => $this->module->icon,
-				'cap_check' => WordPress\PostType::cap( $screen->post_type, 'import_posts' ),
+				'cap_check' => WordPress\PostType::cap( $screen->post_type, $this->capability_posttype ),
 			] );
 		}
 	}
@@ -133,6 +146,9 @@ class Importer extends gEditorial\Module
 		global $submenu;
 
 		if ( $this->is_thrift_mode() )
+			return;
+
+		if ( ! current_user_can( gEditorial\Plugin::CAPABILITY_IMPORTS ) )
 			return;
 
 		foreach ( $this->posttypes() as $posttype )
@@ -332,7 +348,7 @@ class Importer extends gEditorial\Module
 
 		gEditorial\Settings::fieldSeparate( 'into' );
 
-		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
+		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, $this->capability_posttype ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
@@ -1094,7 +1110,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open( '-step-hints' );
@@ -1121,7 +1137,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open( '-step-hints' );
@@ -1153,7 +1169,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open( '-step-hints' );
@@ -1212,7 +1228,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
@@ -1238,7 +1254,7 @@ class Importer extends gEditorial\Module
 			if ( 'none' === $source_offset )
 				return Core\HTML::desc( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
@@ -1265,7 +1281,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $posttype, 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			Core\HTML::h3( sprintf(
@@ -1316,7 +1332,7 @@ class Importer extends gEditorial\Module
 			if ( empty( $args['metakey'] ) )
 				return Core\HTML::desc( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( ! WordPress\PostType::can( $args['posttype'], 'edit_posts' ) )
+			if ( ! WordPress\PostType::can( $args['posttype'], $this->capability_posttype ) )
 				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
 
 			// Core\HTML::inputHidden( 'imports_for', 'images' );
@@ -1365,7 +1381,7 @@ class Importer extends gEditorial\Module
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'posttype',
-				'values'       => $this->list_posttypes( NULL, NULL, 'edit_posts' ),
+				'values'       => $this->list_posttypes( NULL, NULL, $this->capability_posttype ),
 				'default'      => $args['posttype'],
 				'option_group' => 'forimages',
 				'cap'          => TRUE, // already checked
@@ -1652,8 +1668,9 @@ class Importer extends gEditorial\Module
 
 	private function _can_change_user()
 	{
-		// return current_user_can( 'manage_option' );
-		return WordPress\User::isSuperAdmin();
+		return WordPress\User::isSuperAdmin()
+			// || current_user_can( 'manage_option' );
+			|| current_user_can( 'edit_users' );
 	}
 
 	private function _get_user_id()
@@ -1661,6 +1678,37 @@ class Importer extends gEditorial\Module
 		return $this->_can_change_user()
 			? gEditorial()->user( TRUE )
 			: get_current_user_id();
+	}
+
+	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	{
+		switch ( $cap ) {
+
+			case 'import':
+
+				// WTF: what is the point of this?
+				// we do not use the `import` anywere?
+
+				if ( ! $this->get_setting( 'map_import_cap' ) )
+					break;
+
+				// if not will fall to the next case
+
+			case gEditorial\Plugin::CAPABILITY_IMPORTS:
+
+				return $this->role_can( 'imports', $user_id )
+					? [ 'exist' ]
+					: [ 'do_not_allow' ];
+
+				break;
+		}
+
+		return $caps;
+	}
+
+	public function cuc( $context = 'settings', $fallback = '' )
+	{
+		return $this->_override_module_cuc( $context, $fallback, [ 'imports' ] );
 	}
 
 	public function imports_general_summary( $uri )
@@ -1697,7 +1745,7 @@ class Importer extends gEditorial\Module
 
 		gEditorial\Settings::fieldSeparate( 'into' );
 
-		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, 'edit_posts' ), [
+		echo Core\HTML::dropdown( $this->list_posttypes( NULL, NULL, $this->capability_posttype ), [
 			'selected' => $posttype,
 			'name'     => 'posttype',
 		] );
