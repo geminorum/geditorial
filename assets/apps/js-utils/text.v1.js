@@ -89,6 +89,14 @@ const convertCase = (str, toCase = 'camel') => {
   return finalTransform(words.map(transform).join(delimiter));
 };
 
+const titleCase = (input) =>
+  input.toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
+const capitalize = (input) => String(input).charAt(0).toUpperCase() + String(input).slice(1);
+
 /**
  * Find all Permutatoins of a String
  * @source https://github.com/fabiankaegy/practice-recursive-functions/blob/master/permutate.js
@@ -146,6 +154,8 @@ const reverse = (inputString) => {
 };
 
 export {
+  capitalize,
+  titleCase,
   convertCase,
   spacey,
   toHTLMLLineBreaks,

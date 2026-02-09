@@ -173,11 +173,11 @@ task('i18n:admin', function (cb) {
 });
 
 function i18nModule (file) {
-  const folder = file.path.split(path.sep).pop();
-  const domain = folder.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
-  // const module = folder.toLowerCase();
-  const module = folder.split(/(?=[A-Z])/).join('_').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document_revisions`
-  return { folder, domain, module };
+  const name = file.path.split(path.sep).pop();
+  const folder = capitalize(name); // EXAMPLE: `documentRevisions` >> `DocumentRevisions`
+  const domain = name.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
+  const module = name.split(/(?=[A-Z])/).join('_').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document_revisions`
+  return { name, folder, domain, module };
 }
 
 function i18nHeaders (module, tmpl) {

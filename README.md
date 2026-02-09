@@ -5,9 +5,8 @@ Our Editorial in [WordPress](https://wordpress.org/)!
 [![Travis (.com)](https://img.shields.io/travis/com/geminorum/geditorial?style=for-the-badge)](https://app.travis-ci.com/github/geminorum/geditorial/)
 [![GitHub Releases](https://img.shields.io/github/release/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/releases)
 [![GitHub Issues](https://img.shields.io/github/issues/geminorum/geditorial.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/issues)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://github.com/geminorum/geditorial/pulls)
-[![GitHub License](https://img.shields.io/github/license/geminorum/geditorial?style=for-the-badge)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
 [![GitHub Insights](https://img.shields.io/github/downloads/geminorum/geditorial/total?style=for-the-badge)](https://github.com/geminorum/geditorial/pulse)
+[![GitHub License](https://img.shields.io/github/license/geminorum/geditorial?style=for-the-badge)](https://raw.githubusercontent.com/geminorum/geditorial/master/LICENSE)
 
 
 gEditorial is a fork in structure of [EditFlow](http://editflow.org/).

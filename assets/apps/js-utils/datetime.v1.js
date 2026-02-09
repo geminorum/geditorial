@@ -193,6 +193,17 @@ const evalInput = (input) => {
     .reduce(adder, 0);
 };
 
+// @source https://github.com/rmm5t/jquery-timeago
+const parseISO8601 = (input) => {
+  let s = input.trim();
+  s = s.replace(/\.\d+/, ''); // remove milliseconds
+  s = s.replace(/-/, '/').replace(/-/, '/');
+  s = s.replace(/T/, ' ').replace(/Z/, ' UTC');
+  s = s.replace(/([+-]\d\d):?(\d\d)/, ' $1$2'); // -04:00 -> -0400
+  s = s.replace(/([+-]\d\d)$/, ' $100'); // +09 -> +0900
+  return new Date(s);
+};
+
 export {
   toDecimal,
   toHHMM,
@@ -205,5 +216,6 @@ export {
   getFormalDateTime,
   getFormalDate,
 
+  parseISO8601,
   readableTimestamp
 };

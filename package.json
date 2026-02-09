@@ -48,7 +48,7 @@
     "@wordpress/babel-preset-default": "^8.39.0",
     "@wordpress/browserslist-config": "^6.39.0",
     "@wordpress/stylelint-config": "^23.31.0",
-    "autoprefixer": "^10.4.23",
+    "autoprefixer": "^10.4.24",
     "browserslist": "^4.28.1",
     "cssnano": "^7.1.2",
     "del": "^8.0.1",
@@ -76,7 +76,7 @@
     "postcss": "^8.5.6",
     "rtlcss": "^4.3.0",
     "semistandard": "^17.0.0",
-    "stylelint": "^17.0.0",
+    "stylelint": "^17.1.1",
     "stylelint-scss": "^7.0.0",
     "xtend": "^4.0.2"
   },
