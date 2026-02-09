@@ -364,7 +364,7 @@ class Addressed extends gEditorial\Module
 
 	protected function render_reports_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Address Reports', 'Header', 'geditorial-addressed' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Address Reports', 'Header', 'geditorial-addressed' ) );
 
 		$available = FALSE;
 
@@ -376,7 +376,7 @@ class Addressed extends gEditorial\Module
 					? FALSE
 					: get_option( $this->_get_address_type_option( $type['hook'] ) );
 
-				if ( ! self::renderCard_address_type_report( $type, $data ) )
+				if ( ! ModuleSettings::renderCard_address_type_report( $type, $data ) )
 					continue;
 
 				$available = TRUE;
@@ -387,34 +387,5 @@ class Addressed extends gEditorial\Module
 			gEditorial\Info::renderNoReportsAvailable();
 
 		echo '</div>';
-	}
-
-	public static function renderCard_address_type_report( $type, $data = FALSE )
-	{
-		echo gEditorial\Settings::toolboxCardOpen( $type['title'] ?? _x( 'Untitled Address Type', 'Card Title', 'geditorial-addressed' ), FALSE );
-
-			Core\HTML::desc( $type['description'] ?? '' );
-
-			if ( empty( $data ) || ! ( $formatted = Services\Locations::formatAddress( $data ) ) )
-				$formatted = gEditorial\Plugin::noinfo();
-
-			echo Core\HTML::tag( 'pre', [
-				'style' => sprintf( 'margin-top:.5rem;direction:%s', Core\L10n::rtl() ? 'rtl' : 'ltr' ),
-			], $formatted );
-
-			// TODO: display additional fields: `latlng`/'site`/`embed`
-
-			if ( WordPress\IsIt::dev() ) {
-				echo '<br />';
-				Core\HTML::h4( 'DEBUG INFO', '-title -ltr' );
-				self::dump( [
-				// Core\HTML::tableSide( [
-					'type' => $type,
-					'data' => $data,
-				] );
-			}
-
-		echo '</div>';
-		return TRUE;
 	}
 }
