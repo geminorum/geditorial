@@ -64,7 +64,7 @@ class Addressed extends gEditorial\Module
 				[
 					'field'       => 'override_base_country',
 					'title'       => _x( 'Override Base Country', 'Setting Title', 'geditorial-addressed' ),
-					'description' => _x( 'Also overrides the format of the base country of site.', 'Setting Description', 'geditorial-addressed' ),
+					'description' => _x( 'Also overrides the address format of the base country of site.', 'Setting Description', 'geditorial-addressed' ),
 					'default'     => '1',
 				],
 				[
@@ -147,55 +147,55 @@ class Addressed extends gEditorial\Module
 			[
 				'key'         => 'address_1', // NOTE: WooCommerce standard
 				'label'       => _x( 'Address line 1', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The street address for the location.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The street address for the location.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'address_2', // NOTE: WooCommerce standard
 				'label'       => _x( 'Address Line 2', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'An additional, optional address line for the location.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'An additional, optional address line for the location.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'company',
 				'label'       => _x( 'Company', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The organization in which this address is located.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The organization in which this address is located.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'city',
 				'label'       => _x( 'City', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The city in which this address is located.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The city in which this address is located.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'state', // NOTE: WooCommerce standard
 				'label'       => _x( 'Province', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The state or province in which this address is located.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The state or province in which this address is located.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'country',
 				'label'       => _x( 'Country', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The country in which this address is located.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The country in which this address is located.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'latlng',
 				'label'       => _x( 'Coordinates', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The Latitude and Longitude to this address.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The Latitude and Longitude to this address.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'text',
 			],
 			[
 				'key'         => 'site',
 				'label'       => _x( 'Site URL', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'The site URL of this address.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'The site URL of this address.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'url',
 			],
 			[
 				'key'         => 'embed',
 				'label'       => _x( 'Embed URL', 'Control label', 'geditorial-addressed' ),
-				'description' => _x( 'An embeddable resource URL about this address.', 'Setting Description', 'geditorial-addressed' ),
+				'description' => _x( 'An embeddable resource URL about this address.', 'Control Description', 'geditorial-addressed' ),
 				'type'        => 'url',
 			],
 		], $context );

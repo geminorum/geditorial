@@ -112,7 +112,7 @@ class WcDashboard extends gEditorial\Module
 
 		if ( $this->get_setting( 'purchased_dashboard' ) ) {
 
-			// FIXME: WTF: must only append to my-account page, @SEE: Woo Commerce approach
+			// WTF: appends to all post-types, not only `my-account` page
 			add_rewrite_endpoint( $this->constant( 'endpoint_purchased' ), EP_PAGES );
 			$this->action( 'account_purchased-products_endpoint', 0, 10, FALSE, 'woocommerce' );
 		}

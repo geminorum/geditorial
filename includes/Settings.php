@@ -2164,8 +2164,11 @@ class Settings extends WordPress\Main
 	{
 		echo '<div class="side-nav-wrap">';
 
-		Core\HTML::h2( $title ?? ( Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) ), '-title' );
-		Core\HTML::headerNav( $uri, $active, $subs, 'side-nav', 'ul', 'li' );
+		$title = $title ?? ( Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) );
+		$extra = [ 'style' => sprintf( '--side-nav-title-length: %d', Core\Text::utf8Len( $title ) ) ];
+
+		Core\HTML::h2( $title, '-title' );
+		Core\HTML::headerNav( $uri, $active, $subs, $extra, 'side-nav', 'ul', 'li' );
 
 		echo '<div class="side-nav-content">';
 

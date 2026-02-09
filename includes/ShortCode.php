@@ -25,9 +25,9 @@ class ShortCode extends WordPress\Main
 	 * @param array $atts
 	 * @return string
 	 */
-	public static function termTitle( $term_or_id, $taxonomy = 'category', $atts = [] )
+	public static function termTitle( $term_or_id, $taxonomy = NULL, $atts = [] )
 	{
-		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ) )
+		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ?: '' ) )
 			return '';
 
 		$args = self::atts( [

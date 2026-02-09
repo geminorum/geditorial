@@ -12,12 +12,12 @@ trait Rewrites
 
 	protected function rewrites__get_queryvar( $constant_prefix = 'main' )
 	{
-		return $this->constant( $constant_prefix.'_queryvar' );
+		return $this->constant( Core\Text::underlined( $constant_prefix, 'queryvar' ) );
 	}
 
 	protected function rewrites__get_endpoint( $constant_prefix = 'main', $query = NULL )
 	{
-		return $this->constant( $constant_prefix.'_endpoint',
+		return $this->constant( Core\Text::underlined( $constant_prefix, 'endpoint' ),
 			$query ?? $this->rewrites__get_queryvar( $constant_prefix )
 		);
 	}
@@ -86,7 +86,7 @@ trait Rewrites
 
 	protected function rewrites__add_tag( $constant_prefix = 'main', $posttypes = NULL )
 	{
-		if ( ! $query = $this->constant( $constant_prefix.'_queryvar' ) )
+		if ( ! $query = $this->rewrites__get_queryvar( $constant_prefix ) )
 			return FALSE;
 
 		$this->filter_append( 'query_vars', $query );

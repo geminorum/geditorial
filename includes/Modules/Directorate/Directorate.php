@@ -434,7 +434,7 @@ class Directorate extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		$this->modulelinks__hook_calendar_linked_post( $screen );

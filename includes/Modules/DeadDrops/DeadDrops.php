@@ -203,7 +203,7 @@ class DeadDrops extends gEditorial\Module
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
 
-		if ( ! $secret = get_query_var( $this->constant( 'main_queryvar' ) ) )
+		if ( ! $secret = get_query_var( $this->rewrites__get_queryvar( 'main' ) ) )
 			return;
 
 		// NOTE: checks for `p` with fall-backs to wp-queried!

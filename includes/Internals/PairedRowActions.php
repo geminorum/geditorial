@@ -134,7 +134,7 @@ trait PairedRowActions
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
 				$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
-				if ( self::isError( $post_id ) )
+				if ( ! $post_id || self::isError( $post_id ) )
 					return FALSE;
 
 				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
@@ -188,7 +188,7 @@ trait PairedRowActions
 				$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
 				$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
-				if ( self::isError( $post_id ) )
+				if ( ! $post_id || self::isError( $post_id ) )
 					return FALSE;
 
 				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
@@ -239,7 +239,7 @@ trait PairedRowActions
 					$cloned  = get_term( $inserted['term_id'], $paired_taxonomy );
 					$post_id = WordPress\Post::newByTerm( $cloned, $paired_taxonomy, $paired_posttype );
 
-					if ( self::isError( $post_id ) )
+					if ( ! $post_id || self::isError( $post_id ) )
 						continue;
 
 					if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
