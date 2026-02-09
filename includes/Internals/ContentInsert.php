@@ -91,4 +91,35 @@ trait ContentInsert
 
 		return FALSE;
 	}
+
+	protected function contentinsert__control_term_field_after( $setting = NULL )
+	{
+		// NOTE: control term is no set!
+		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
+			return '';
+
+		return gEditorial\Settings::fieldAfterText(
+			WordPress\Term::title( absint( $setting ) ),
+			'code'
+		);
+	}
+
+	protected function contentinsert__control_term_check( $post = NULL, $setting = NULL )
+	{
+		// NOTE: control term is no set!
+		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
+			return TRUE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		// NOTE: control term is somehow deleted or missing!
+		if ( ! $term = WordPress\Term::get( absint( $setting ) ) )
+			return FALSE;
+
+		if ( ! has_term( $term, $term->taxonomy, $post ) )
+			return FALSE;
+
+		return TRUE;
+	}
 }

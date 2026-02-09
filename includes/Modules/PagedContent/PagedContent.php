@@ -85,7 +85,7 @@ class PagedContent extends gEditorial\Module
 					'type'        => 'number',
 					'title'       => _x( 'Control Term', 'Setting Title', 'geditorial-paged-content' ),
 					'description' => _x( 'Enables the auto-paging if the term exists on the post. Leave blank to disable.', 'Setting Description', 'geditorial-paged-content' ),
-					'after'       => gEditorial\Settings::fieldAfterText( WordPress\Term::title( $this->get_setting( 'control_termid', 0 ) ), 'code' ),
+					'after'       => $this->contentinsert__control_term_field_after( 'control_termid' ),
 				],
 			],
 		];

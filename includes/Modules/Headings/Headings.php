@@ -62,7 +62,7 @@ class Headings extends gEditorial\Module
 					'type'        => 'number',
 					'title'       => _x( 'Control Term', 'Setting Title', 'geditorial-headings' ),
 					'description' => _x( 'Enables the ToC generation if the term exists on the post. Leave blank to disable.', 'Setting Description', 'geditorial-headings' ),
-					'after'       => gEditorial\Settings::fieldAfterText( WordPress\Term::title( $this->get_setting( 'control_termid', 0 ) ), 'code' ),
+					'after'       => $this->contentinsert__control_term_field_after( 'control_termid' ),
 				],
 			],
 			'posttypes_option' => 'posttypes_option',
@@ -78,14 +78,8 @@ class Headings extends gEditorial\Module
 		if ( is_robots() || is_favicon() || is_feed() )
 			return;
 
-		if ( ! is_singular( $this->posttypes() ) )
+		if ( ! $this->contentinsert__control_term_check() )
 			return;
-
-		if ( $term = WordPress\Term::get( absint( $this->get_setting( 'control_termid', 0 ) ) ) ) {
-
-			if ( ! has_term( $term, $term->taxonomy ) )
-				return;
-		}
 
 		$this->filter( 'the_content' );
 
