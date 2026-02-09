@@ -163,6 +163,29 @@ class Locations extends gEditorial\Service
 			: $data[$country];
 	}
 
+	public static function baseState( $fallback = NULL, $filtered = TRUE )
+	{
+		if ( WordPress\WooCommerce::available() )
+			return $filtered ? self::filters( 'locations_base_state',
+				WordPress\WooCommerce::getBaseState(),
+				'woocommerce',
+				$fallback
+			) : WordPress\WooCommerce::getBaseState();
+
+		if ( FALSE !== ( $state = Core\Base::const( 'GCORE_DEFAULT_PROVINCE_CODE', FALSE ) ) )
+			return $filtered ? self::filters( 'locations_base_state',
+				$state,
+				'gnetwork',
+				$fallback
+			) : $state;
+
+		return $filtered ? self::filters( 'locations_base_state',
+			$fallback,
+			'fallback',
+			$fallback
+		) : $fallback;
+	}
+
 	// TODO: add `IR` states by default
 	// TODO: apply `Iranian` module data
 	// TODO: apply `Districted` module data

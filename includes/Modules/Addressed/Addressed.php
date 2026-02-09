@@ -43,6 +43,14 @@ class Addressed extends gEditorial\Module
 					'placeholder' => Services\Locations::baseCountry( 'IR', FALSE ),
 					'field_class' => [ 'small-text', 'code-text' ],
 				],
+				[
+					'field'       => 'base_state',
+					'type'        => 'text',
+					'title'       => _x( 'Base Province', 'Setting Title', 'geditorial-addressed' ),
+					'description' => _x( 'Defines the base state or province of site for supported contents.', 'Setting Description', 'geditorial-addressed' ),
+					'placeholder' => Services\Locations::baseState( 'TEH', FALSE ),
+					'field_class' => [ 'small-text', 'code-text' ],
+				],
 			],
 			'_formats' => [
 				[
@@ -200,6 +208,9 @@ class Addressed extends gEditorial\Module
 		if ( $this->get_setting( 'base_country' ) )
 			$this->filter( 'locations_base_country', 3, 9, FALSE, $this->base );
 
+		if ( $this->get_setting( 'base_state' ) )
+			$this->filter( 'locations_base_state', 3, 9, FALSE, $this->base );
+
 		if ( $this->get_setting( 'default_format' ) ) {
 			$this->filter( 'locations_address_formats', 1, 9, FALSE, $this->base );
 
@@ -294,6 +305,13 @@ class Addressed extends gEditorial\Module
 	{
 		// TODO: move up the sanitization!
 		return Core\Text::strToUpper( Core\Text::trim( $this->setting( 'base_country' ) ) ) ?: $country;
+	}
+
+	// @hook: `geditorial_locations_base_state`
+	public function locations_base_state( $state, $source, $fallback )
+	{
+		// TODO: move up the sanitization!
+		return Core\Text::strToUpper( Core\Text::trim( $this->setting( 'base_state' ) ) ) ?: $state;
 	}
 
 	// @hook: `geditorial_locations_address_formats`
