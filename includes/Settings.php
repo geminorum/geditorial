@@ -554,7 +554,7 @@ class Settings extends WordPress\Main
 		if ( empty( $link ) )
 			return $html;
 
-		return Core\Text::spaced(
+		return Core\Text::spc(
 			$html,
 			sprintf(
 				/* translators: `%1$s`: link start, `%2$s`: link end */

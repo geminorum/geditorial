@@ -197,7 +197,7 @@ class Estimated extends gEditorial\Module
 			return;
 
 		printf( $before, '-estimated' );
-			echo Core\Text::spaced(
+			echo self::spc(
 				$this->get_column_icon(),
 				$html
 			);
@@ -266,7 +266,7 @@ class Estimated extends gEditorial\Module
 		if ( $check && ( $this->get_setting( 'min_words', 250 ) > $wordcount ) )
 			return FALSE;
 
-		return Core\Text::spaced(
+		return self::spc(
 			$prefix ?? $this->get_setting_fallback( 'prefix', _x( 'Estimated read time:', 'Setting Default', 'geditorial-estimated' ) ),
 			$this->get_time_estimated( $wordcount, TRUE )
 		);

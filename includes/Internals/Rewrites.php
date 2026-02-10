@@ -12,12 +12,12 @@ trait Rewrites
 
 	protected function rewrites__get_queryvar( $constant_prefix = 'main' )
 	{
-		return $this->constant( Core\Text::underlined( $constant_prefix, 'queryvar' ) );
+		return $this->constant( self::und( $constant_prefix, 'queryvar' ) );
 	}
 
 	protected function rewrites__get_endpoint( $constant_prefix = 'main', $query = NULL )
 	{
-		return $this->constant( Core\Text::underlined( $constant_prefix, 'endpoint' ),
+		return $this->constant( self::und( $constant_prefix, 'endpoint' ),
 			$query ?? $this->rewrites__get_queryvar( $constant_prefix )
 		);
 	}

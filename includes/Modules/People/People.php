@@ -177,12 +177,9 @@ class People extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
-		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
-		$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
 		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'category_taxonomy' );
 		$this->taxtax__hook_init( $taxonomy, 'type_taxonomy' );
-
 		$this->filter( 'searchselect_pre_query_terms', 3, 20, FALSE, $this->base );
 
 		if ( is_admin() ) {
@@ -191,12 +188,14 @@ class People extends gEditorial\Module
 			$this->filter( 'taxonomy_exclude_empty', 1, 10, FALSE, 'gnetwork' );
 			$this->filter( 'taxonomy_term_rewrite_slug', 3, 8, FALSE, 'gnetwork' );
 			$this->filter_module( 'terms', 'sanitize_name', 3, 12 );
+			$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
 
 		} else {
 
 			$this->filter( 'get_terms_defaults', 2, 99, 'front' );
 			$this->filter( 'single_term_title', 1, 8 );
 			$this->filter( 'search_terms_widget_results', 5, 12, FALSE, $this->base );
+			$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
 		}
 

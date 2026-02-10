@@ -461,7 +461,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Number of posts to show:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -477,7 +477,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Trim Characters:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -493,7 +493,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Context:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -509,7 +509,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Class:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -538,7 +538,7 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'PostType:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -598,7 +598,7 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Taxonomy:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -614,7 +614,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Title:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -630,7 +630,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Title Link:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -646,7 +646,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Title Image:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -662,7 +662,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Custom Link:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -678,7 +678,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Custom Code:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -694,7 +694,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Custom Title:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -710,7 +710,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Empty Message:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -726,7 +726,7 @@ class Widget extends \WP_Widget
 			'value' => $instance[$field] ?? $default, // TODO: use default form `Services\Avatars`
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Avatar Size:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -754,7 +754,7 @@ class Widget extends \WP_Widget
 				'id'    => $this->get_field_id( $field ),
 			], $html );
 
-			Core\HTML::label( Core\Text::spaced(
+			Core\HTML::label( Template::spc(
 				$label ?? _x( 'Image Size:', 'Widget Core', 'geditorial-admin' ),
 				$html
 			), $this->get_field_id( $field ) );
@@ -775,7 +775,7 @@ class Widget extends \WP_Widget
 			'selected'   => $instance[$field] ?? $default,
 		] );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label,
 			$html
 		), $this->get_field_id( $field ) );
@@ -818,7 +818,7 @@ class Widget extends \WP_Widget
 			Core\HTML::inputHidden( $this->get_field_name( $field ), $page_id );
 		}
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Page:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );
@@ -860,7 +860,7 @@ class Widget extends \WP_Widget
 			'id'    => $this->get_field_id( $field ),
 		], $html );
 
-		Core\HTML::label( Core\Text::spaced(
+		Core\HTML::label( Template::spc(
 			$label ?? _x( 'Term:', 'Widget Core', 'geditorial-admin' ),
 			$html
 		), $this->get_field_id( $field ) );

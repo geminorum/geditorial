@@ -21,6 +21,8 @@ class Genres extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
+	protected $disable_no_posttypes = TRUE;
+
 	public static function module()
 	{
 		return [
@@ -34,6 +36,7 @@ class Genres extends gEditorial\Module
 				'movie',
 				'cinema',
 				'literature',
+				'has-shortcodes',
 				'taxmodule',
 			],
 		];
@@ -47,23 +50,32 @@ class Genres extends gEditorial\Module
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
-			'_editpost'        => [
-				'metabox_advanced',
-				'selectmultiple_term' => [ NULL, TRUE ],
-			],
-			'_editlist' => [
-				'auto_term_parents',
-			],
-			'_supports' => [
-				'shortcode_support',
-			],
-			'_dashboard' => [
+			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
 				'summary_excludes' => [ NULL, $terms, $empty ],
 				'summary_scope',
 				'summary_drafts',
 				'count_not',
+			],
+			'_editpost' => [
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
+			'_editlist' => [
+				'admin_restrict',
+				'auto_term_parents',
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'show_in_navmenus',
+				'archive_override',
+				'archive_empty_items',
+				'custom_archives',
+			],
+			'_supports' => [
+				'shortcode_support',
 			],
 			'_constants' => [
 				'main_taxonomy_constant'  => [ NULL, 'genre' ],
@@ -91,7 +103,7 @@ class Genres extends gEditorial\Module
 					'extended_label'       => _x( 'Content Genres', 'Label: `extended_label`', 'geditorial-genres' ),
 					'menu_name'            => _x( 'Content Genres', 'Label: `menu_name`', 'geditorial-genres' ),
 					'show_option_all'      => _x( 'Genres', 'Label: `show_option_all`', 'geditorial-genres' ),
-					'show_option_no_items' => _x( '(UnGenred)', 'Label: `show_option_no_items`', 'geditorial-genres' ),
+					'show_option_no_items' => _x( '(Ungenred)', 'Label: `show_option_no_items`', 'geditorial-genres' ),
 				],
 			],
 		];
@@ -124,19 +136,33 @@ class Genres extends gEditorial\Module
 		parent::init();
 
 		$this->register_taxonomy( 'main_taxonomy', [
-			'hierarchical' => TRUE,
-			'show_in_menu' => FALSE,
-			'meta_box_cb'  => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
-			'data_length'  => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-genres' ),
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'data_length'        => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-genres' ),
 		], NULL, [
+			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
+			'custom_captype'  => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
-		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		if ( is_admin() ) {
+
+			$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+
+		} else {
+
+			$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
+			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
+		}
 
 		$this->register_shortcode( 'main_shortcode' );
 	}

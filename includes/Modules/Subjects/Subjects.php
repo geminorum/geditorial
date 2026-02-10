@@ -45,7 +45,7 @@ class Subjects extends gEditorial\Module
 
 		return [
 			'posttypes_option' => 'posttypes_option',
-			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
 			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
@@ -68,6 +68,7 @@ class Subjects extends gEditorial\Module
 				'show_in_navmenus',
 				'archive_override',
 				'archive_empty_items',
+				'custom_archives',
 			],
 			'_supports' => [
 				'shortcode_support',
@@ -132,9 +133,19 @@ class Subjects extends gEditorial\Module
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
-		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		if ( is_admin() ) {
+
+			$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+
+		} else {
+
+			$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
+			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
+		}
 
 		$this->register_shortcode( 'main_shortcode' );
 	}
@@ -162,8 +173,8 @@ class Subjects extends gEditorial\Module
 						'main_taxonomy',
 						$screen->post_type,
 						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
+							? '__checklist_terms_callback'
+							: '__singleselect_terms_callback'
 					);
 			}
 		}

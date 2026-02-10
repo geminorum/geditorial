@@ -859,7 +859,7 @@ trait PostTypeFields
 			if ( ! $this->access_posttype_field( $args, $post, 'edit', $user_id ) )
 				continue;
 
-			$request = Core\Text::dashed( $this->base, $this->module->name, $field );
+			$request = self::dash( $this->base, $this->module->name, $field );
 
 			if ( FALSE !== ( $data = self::req( $request, FALSE ) ) )
 				$this->posttypefields_do_import_field( $data, $args, $post, $override );

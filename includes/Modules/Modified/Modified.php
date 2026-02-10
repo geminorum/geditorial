@@ -226,7 +226,7 @@ class Modified extends gEditorial\Module
 			return;
 
 		printf( $before, '-modified' );
-			echo Core\Text::spaced(
+			echo self::spc(
 				$this->get_column_icon(),
 				$html
 			);
@@ -235,7 +235,7 @@ class Modified extends gEditorial\Module
 
 	public function dashboard_pointers( $items )
 	{
-		if ( $content = $this->site_modified_shortcode( [ 'title' => NULL ] ) )
+		if ( $content = $this->site_modified_shortcode( [ 'title' => NULL, 'format_context' => 'printdate' ] ) )
 			$items[] = Core\HTML::tag( 'span', [
 				// 'href'  => $this->get_module_url(), // TODO
 				'title' => $this->get_setting( 'last_published' )
@@ -343,7 +343,7 @@ class Modified extends gEditorial\Module
 		if ( WordPress\Post::publishedInLast( $post, $threshold, MINUTE_IN_SECONDS ) )
 			return FALSE;
 
-		return Core\Text::spaced(
+		return self::spc(
 			$prefix ?? $this->get_setting_fallback( 'prefix', _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ) ),
 			Core\Date::htmlDateTime(
 				$post->post_modified,

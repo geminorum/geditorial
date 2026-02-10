@@ -207,8 +207,8 @@ trait O2OMetaBox
 			'name'  => sprintf( '%s[]', $this->classs_base( $module, $args['name'] ) ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				Core\Text::dashed( $this->base, 'searchselect', 'select2' ),
-				Core\Text::dashed( $this->base, $module, 'o2o', $args['name'] ),
+				self::dash( $this->base, 'searchselect', 'select2' ),
+				self::dash( $this->base, $module, 'o2o', $args['name'] ),
 			],
 			'data' => [
 				'o2o-type'  => $type->name,

@@ -263,7 +263,7 @@ trait QuickPosts
 
 		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$title = $this->get_string( 'mainbutton_title', $constant, 'newpost', _x( 'Quick New %2$s', 'Module: Button Title', 'geditorial-admin' ) );
-		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', Core\Text::spaced( '%1$s', $object->labels->add_new_item ) );
+		$text  = $this->get_string( 'mainbutton_text', $constant, 'newpost', self::spc( '%1$s', $object->labels->add_new_item ) );
 		$name  = $object->labels->singular_name;
 
 		if ( $inline )

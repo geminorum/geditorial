@@ -376,7 +376,7 @@ class Remoted extends gEditorial\Module
 
 			'lang'      => Core\L10n::getISO639(),
 			'locale'    => Core\L10n::locale( TRUE ),
-			'direction' => Core\L10n::rtl() ? 'rtl' : 'ltr',
+			'direction' => Core\HTML::dir(),
 			'logo'      => Services\ContentBrand::siteIcon(),
 			'name'      => $this->get_setting_fallback( 'redirect_title', get_option( 'blogname' ) ),
 			'message'   => $this->get_setting_fallback( 'redirect_message', _x( 'You will be returned to the main site.', 'Setting Default', 'geditorial-remoted' ) ),

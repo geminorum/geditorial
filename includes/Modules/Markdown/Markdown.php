@@ -542,7 +542,7 @@ class Markdown extends gEditorial\Module
 
 			printf( $before, '-markdown -auto-draft' );
 
-				echo Core\Text::spaced(
+				echo self::spc(
 					$this->get_column_icon(),
 					_x( 'The content can be written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )
 				);
@@ -555,7 +555,7 @@ class Markdown extends gEditorial\Module
 
 			printf( $before, '-markdown '.( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
 
-				echo Core\Text::spaced(
+				echo self::spc(
 					$this->get_column_icon(),
 					$markdown
 						? _x( 'The content is written in <b>Markdown</b>', 'Pointer', 'geditorial-markdown' )

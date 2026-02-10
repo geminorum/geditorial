@@ -199,7 +199,7 @@ class ModuleSettings extends gEditorial\Settings
 				] );
 
 		$_fullname = Core\Text::normalizeWhitespace(
-			Core\Text::spaced(
+			self::spc(
 				$_first_name,
 				$_middle_name,
 				$_last_name
