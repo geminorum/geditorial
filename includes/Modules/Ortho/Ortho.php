@@ -305,75 +305,87 @@ class Ortho extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Orthography Sandbox', 'Header', 'geditorial-ortho' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Orthography Tools', 'Header', 'geditorial-ortho' ) );
 
-		$this->do_settings_field( [
-			'type'         => 'textarea-quicktags',
-			'field'        => 'sandbox-text',
-			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'textarea-autosize' ],
-			'option_group' => 'tools',
-		] );
+			$this->renderCard_tools_sandbox();
 
-		echo '<br />';
-		echo '<br />';
+		echo '</div>';
+	}
 
-		$this->do_settings_field( [
-			'type'         => 'text',
-			'field'        => 'sandbox-identity',
-			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code-text' ],
-			'option_group' => 'tools',
-			'placeholder' => 'xxxxxxxxxx',
-			'data' => [
-				'ortho' => 'identity',
-			],
-		] );
+	private function renderCard_tools_sandbox()
+	{
+		echo gEditorial\Settings::toolboxCardOpen( _x( 'Data Sandbox', 'Card Title', 'geditorial-ortho' ), FALSE );
 
-		echo '<br />';
-		echo '<br />';
+			echo '<div class="-wrap -wrap-button-row">';
+				$this->do_settings_field( [
+					'type'         => 'textarea-quicktags',
+					'field'        => 'sandbox-text',
+					'dir'          => 'rtl',
+					'field_class'  => [ 'large-text', 'textarea-autosize' ],
+					'option_group' => 'tools',
+				] );
 
-		$this->do_settings_field( [
-			'type'         => 'text',
-			'field'        => 'sandbox-iban',
-			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code-text' ],
-			'option_group' => 'tools',
-			'placeholder' => 'IRxxxxxxxxxxxxxxxxxxxxxxx',
-			'data' => [
-				'ortho' => 'iban',
-			],
-		] );
+			echo '</div><div class="-wrap -wrap-button-row">';
+				$this->do_settings_field( [
+					'type'         => 'text',
+					'field'        => 'sandbox-identity',
+					'dir'          => 'rtl',
+					'field_class'  => [ 'large-text', 'code-text' ],
+					'option_group' => 'tools',
+					'placeholder'  => 'identity: `xxxxxxxxxx`',
+					'data'         => [
+						'ortho' => 'identity',
+					],
+				] );
 
-		echo '<br />';
-		echo '<br />';
+			echo '</div><div class="-wrap -wrap-button-row">';
+				$this->do_settings_field( [
+					'type'         => 'text',
+					'field'        => 'sandbox-iban',
+					'dir'          => 'rtl',
+					'field_class'  => [ 'large-text', 'code-text' ],
+					'option_group' => 'tools',
+					'placeholder'  => 'iban: `IRxxxxxxxxxxxxxxxxxxxxxxx`',
+					'data'         => [
+						'ortho' => 'iban',
+					],
+				] );
 
-		$this->do_settings_field( [
-			'type'         => 'text',
-			'field'        => 'sandbox-vin',
-			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code-text' ],
-			'option_group' => 'tools',
-			'placeholder' => 'IRXXXXXXXXXXXXXXX',
-			'data' => [
-				'ortho' => 'vin',
-			],
-		] );
+			echo '</div><div class="-wrap -wrap-button-row">';
+				$this->do_settings_field( [
+					'type'         => 'text',
+					'field'        => 'sandbox-vin',
+					'dir'          => 'rtl',
+					'field_class'  => [ 'large-text', 'code-text' ],
+					'option_group' => 'tools',
+					'placeholder'  => 'vin: `IRXXXXXXXXXXXXXXX`',
+					'data'         => [
+						'ortho' => 'vin',
+					],
+				] );
 
-		echo '<br />';
-		echo '<br />';
+			echo '</div><div class="-wrap -wrap-button-row">';
+				$this->do_settings_field( [
+					'type'         => 'text',
+					'field'        => 'sandbox-plate',
+					'dir'          => 'rtl',
+					'field_class'  => [ 'large-text', 'code-text' ],
+					'option_group' => 'tools',
+					'placeholder'  => 'plate',
+					'data'         => [
+						'ortho' => 'plate',
+					],
+				] );
 
-		$this->do_settings_field( [
-			'type'         => 'text',
-			'field'        => 'sandbox-plate',
-			'dir'          => 'rtl',
-			'field_class'  => [ 'large-text', 'code-text' ],
-			'option_group' => 'tools',
-			// 'placeholder' => '',
-			'data' => [
-				'ortho' => 'plate',
-			],
-		] );
+
+		echo '</div><br/></div>';
+
+		echo gEditorial\Settings::toolboxAfterOpen(
+			_x( 'Paste raw data and see how Orthography filters works!', 'Message', 'geditorial-ortho' ) );
+
+		echo '</div>';
+
+		return TRUE;
 	}
 
 	public function reports_settings( $sub )
