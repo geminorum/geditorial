@@ -254,14 +254,16 @@ class Config extends gEditorial\Module
 
 	private function _render_page_by_context( $context, $title = NULL, $extra_subs = NULL )
 	{
-		$can   = $this->cuc( $context );
-		$uri   = gEditorial\Settings::getURLbyContext( $context );
-		$sub   = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
-		$hook  = $this->hook_base( $context, 'sub', $sub );
-		$title = $title ?? _x( 'Configurations', 'Page Title', 'geditorial-admin' );
+		$title    = $title ?? _x( 'Configurations', 'Page Title', 'geditorial-admin' );
+		$can      = $this->cuc( $context );
+		$uri      = gEditorial\Settings::getURLbyContext( $context );
+		$overview = method_exists( $this, self::und( $context, 'overview' ) );
+		$sub      = gEditorial\Settings::sub( $can ? 'general' : ( $overview ? 'overview' : '' ) );
+		$hook     = $this->hook_base( $context, 'sub', $sub );
+		$subs     = [];
 
-		$subs = [
-			'overview' => [
+		if ( $overview )
+			$subs['overview'] = [
 				'title' => _x( 'Overview', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( 'dashboard' ),
 				'hint'  => sprintf(
@@ -269,8 +271,7 @@ class Config extends gEditorial\Module
 					_x( 'Overview of %s', 'Navigation Hint', 'geditorial-admin' ),
 					$title
 				),
-			],
-		];
+			];
 
 		if ( $can )
 			$subs['general'] = [
