@@ -310,20 +310,20 @@ class Uncategorized extends gEditorial\Module
 		] );
 	}
 
-	public function tools_settings( $sub )
+	public function imports_settings( $sub )
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		if ( $this->check_settings( $sub, 'imports' ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'tools', $sub );
+				$this->nonce_check( 'imports', $sub );
 
 				if ( gEditorial\Tablelist::isAction( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
 						'live_tax' => FALSE,
-					], 'tools' );
+					], 'imports' );
 
 					if ( $post['dead_tax'] && $post['live_tax'] ) {
 
@@ -346,91 +346,108 @@ class Uncategorized extends gEditorial\Module
 		}
 	}
 
-	// TODO: option to delete orphaned terms
-	// TODO: avoid `table>tr` extravaganza: first a `.card` then full width table-list
-	protected function render_tools_html( $uri, $sub )
+	protected function render_imports_html( $uri, $sub )
 	{
-		$available  = FALSE;
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Uncategorized Imports', 'Header', 'geditorial-uncategorized' ) );
+
+			$form = $this->get_current_form( [
+				'dead_tax' => '',
+				'live_tax' => '',
+			], 'imports' );
+
+			$available = FALSE;
+
+			if ( ! $this->renderCard_imports_dead_taxes( $form ) )
+				$available = TRUE;
+
+			if ( ! $available )
+				gEditorial\Info::renderNoImportsAvailable();
+
+		echo '</div>';
+	}
+
+	// TODO: option to delete orphaned terms
+	protected function renderCard_imports_dead_taxes( $form )
+	{
 		$db_taxes   = WordPress\Database::getTaxonomies( TRUE );
 		$live_taxes = WordPress\Taxonomy::get( 6 );
 		$dead_taxes = array_diff_key( $db_taxes, $live_taxes );
 
-		Core\HTML::h3( _x( 'Uncategorized Tools', 'Header', 'geditorial-uncategorized' ) );
+		if ( ! count( $dead_taxes ) )
+			return FALSE;
 
-		echo '<table class="form-table">';
+		if ( isset( $_POST['dead_tax_check'] )
+			&& $form['dead_tax'] ) {
 
-		if ( count( $dead_taxes ) ) {
+			echo gEditorial\Settings::toolboxCardOpen(
+				_x( 'Queried Dead Taxonomy', 'Card Title', 'geditorial-uncategorized' ).
+				Core\HTML::code( $form['dead_tax'], 'sub' ), FALSE, '-tablelist-card' );
 
-			$post = $this->get_current_form( [
-				'dead_tax' => $dead_taxes[0] ?? '',
-				'live_tax' => '',
-			], 'tools' );
+				// NOTE: temporarily registering the dead taxonomy so the query works!
+				register_taxonomy( $form['dead_tax'], [] );
 
-			echo '<tr><th scope="row">'._x( 'Orphaned Terms', 'Tools', 'geditorial-uncategorized' ).'</th><td>';
+				Core\HTML::tableList( [
+					'slug'        => gEditorial\Tablelist::columnTermSlug( FALSE ),
+					'name'        => gEditorial\Tablelist::columnTermName( [] ),
+					'meta'        => gEditorial\Tablelist::columnTermMetaList( NULL, [ 'hide_empty' => TRUE ] ),
+					'description' => gEditorial\Tablelist::columnTermDesc( NULL, [ 'hide_empty' => TRUE ] ),
+				], get_terms( [
+					'taxonomy'   => $form['dead_tax'],
+					'orderby'    => 'none',
+					'hide_empty' => FALSE,
 
-				$this->do_settings_field( [
-					'type'         => 'select',
-					'field'        => 'dead_tax',
-					'values'       => $dead_taxes,
-					'default'      => $post['dead_tax'],
-					'option_group' => 'tools',
+					'suppress_filter'        => TRUE,
+					'update_term_meta_cache' => FALSE,
+				] ), [
+					'empty' => Core\HTML::warning( _x( 'There are no term-data available!', 'Table Empty', 'geditorial-uncategorized' ), FALSE ),
 				] );
 
-				$this->do_settings_field( [
-					'type'         => 'select',
-					'field'        => 'live_tax',
-					'values'       => $live_taxes,
-					'default'      => $post['live_tax'],
-					'option_group' => 'tools',
-					'none_title'   => gEditorial\Settings::showOptionNone(),
-				] );
+				gEditorial\Scripts::enqueueClickToClip();
 
-				echo '&nbsp;&nbsp;';
-
-				gEditorial\Settings::submitButton( 'dead_tax_check',
-					_x( 'Check', 'Button', 'geditorial-uncategorized' ), TRUE );
-
-				gEditorial\Settings::submitButton( 'orphaned_terms',
-					_x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
-
-				Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
-
-				if ( isset( $_POST['dead_tax_check'] )
-					&& $post['dead_tax'] ) {
-
-					// NOTE: temporarily registering the dead taxonomy so the query works!
-					register_taxonomy( $post['dead_tax'], [] );
-
-					echo '<br />';
-					Core\HTML::tableList( [
-						'term_id'     => gEditorial\Tablelist::columnTermID(),
-						'taxonomy'    => gEditorial\Tablelist::columnTermTaxonomyCode( FALSE ),
-						'slug'        => gEditorial\Tablelist::columnTermSlug( FALSE ),
-						'name'        => gEditorial\Tablelist::columnTermName( [] ),
-						'meta'        => gEditorial\Tablelist::columnTermMetaList(),
-						'description' => gEditorial\Tablelist::columnTermDesc(),
-					], get_terms( [
-						'taxonomy'               => $post['dead_tax'],
-						'orderby'                => 'none',
-						'hide_empty'             => FALSE,
-						'update_term_meta_cache' => FALSE,
-						'suppress_filter'        => TRUE,
-					] ), [
-						'empty' => Core\HTML::warning( _x( 'There are no term-data available!', 'Table Empty', 'geditorial-uncategorized' ), FALSE ),
-					] );
-
-					gEditorial\Scripts::enqueueClickToClip();
-				}
-
-			echo '</td></tr>';
-
-			$available = TRUE;
+			echo '</div>';
 		}
 
-		if ( ! $available )
-			gEditorial\Info::renderNoToolsAvailable();
+		echo gEditorial\Settings::toolboxCardOpen(
+			_x( 'Convert Orphaned Terms', 'Card Title', 'geditorial-uncategorized' ), FALSE );
 
-		echo '</table>';
+			echo '<div class="-wrap -wrap-button-row">';
+
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'dead_tax',
+				'values'       => $dead_taxes,
+				'default'      => $form['dead_tax'],
+				'option_group' => 'imports',
+				'none_title'   => gEditorial\Settings::showOptionNone(),
+			] );
+
+			Core\HTML::desc( _x( 'Select from any of currently un-registered taxonomy terms.', 'Message', 'geditorial-uncategorized' ) );
+
+			echo '</div><div class="-wrap -wrap-button-row">';
+
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'live_tax',
+				'values'       => $live_taxes,
+				'default'      => $form['live_tax'],
+				'option_group' => 'imports',
+				'none_title'   => gEditorial\Settings::showOptionNone(),
+			] );
+
+			Core\HTML::desc( _x( 'Import to any of currently registered taxonomy.', 'Message', 'geditorial-uncategorized' ) );
+
+			echo '</div><div class="-wrap -wrap-button-row">';
+
+			gEditorial\Settings::submitButton( 'dead_tax_check',
+				_x( 'Check', 'Button', 'geditorial-uncategorized' ), TRUE );
+
+			gEditorial\Settings::submitButton( 'orphaned_terms',
+				_x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
+
+			Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
+
+		echo '</div></div>';
+		return TRUE;
 	}
 
 	private function _do_clean_unattached( $post, $taxonomies = NULL )
