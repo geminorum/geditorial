@@ -237,6 +237,14 @@ class Lingo extends gEditorial\Module
 		return $this->_override_module_cuc_by_taxonomy( 'language_taxonomy', $context, $fallback );
 	}
 
+	private function _get_supported_metakeys( $context = NULL )
+	{
+		return $this->filters( 'supported_metakeys', [
+			'native' => 'tagline',
+			'code'   => 'code',
+		], $context );
+	}
+
 	public function imports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
@@ -245,36 +253,61 @@ class Lingo extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'language_taxonomy_create', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CREATE_LANG_TAXONOMY, TRUE ) ) {
 
 					if ( ! $data = $this->get_imports_raw_data() )
 						WordPress\Redirect::doReferer( 'wrong' );
 
-					$count  = 0;
-					$terms  = [];
-					$data   = Core\Arraay::reKey( $data, 'code' );
-					$update = self::req( 'language_taxonomy_update', FALSE );
+					$count    = 0;
+					$terms    = [];
+					$data     = Core\Arraay::reKey( $data, 'code' );
+					$update   = self::req( ModuleSettings::ACTION_UPDATE_LANG_TAXONOMY, FALSE );
+					$term_ids = array_filter( self::req( 'term_id', [] ) );
+					$taxonomy = $this->constant( 'language_taxonomy' );
+					$metakeys = $this->_get_supported_metakeys( 'imports' );
 
 					foreach ( $_POST['_cb'] as $code ) {
 
 						if ( ! array_key_exists( $code, $data ) )
 							continue;
 
-						$term = [
-							'slug' => strtolower( $data[$code]['name'] ),
-							'name' => $data[$code]['name'],
-							'meta' => [
-								'code'    => $data[$code]['code'],
-								'tagline' => $data[$code]['native'],
-							],
-						];
+						if ( array_key_exists( $code, $term_ids ) ) {
 
-						$terms[] = $term;
+							if ( ! $update )
+								continue;
+
+							$existing =  [
+								// 'name' => $data[$code]['name'], // NOTE: avoid overriding the name
+								'slug' => strtolower( $data[$code]['name'] ),
+								'meta' => [
+									$metakeys['code']   => $data[$code]['code'],
+									$metakeys['native'] => $data[$code]['native'],
+								],
+							];
+
+							if ( ! WordPress\Term::update( (int) $term_ids[$code], $existing ) )
+								WordPress\Redirect::doReferer( 'wrong' );
+
+						} else {
+
+							$terms[] =  [
+								'name' => $data[$code]['name'],
+								'slug' => strtolower( $data[$code]['name'] ),
+								'meta' => [
+									$metakeys['code']   => $data[$code]['code'],
+									$metakeys['native'] => $data[$code]['native'],
+								],
+							];
+						}
+
 						++$count;
 					}
 
-					if ( ! WordPress\Taxonomy::insertDefaultTerms( $this->constant( 'language_taxonomy' ), $terms, ( $update ? 'not_name' : FALSE ) ) )
-						WordPress\Redirect::doReferer( 'noadded' );
+					if ( count( $terms ) ) {
+
+						if ( ! WordPress\Taxonomy::insertDefaultTerms( $taxonomy, $terms ) )
+							WordPress\Redirect::doReferer( 'noadded' );
+					}
 
 					WordPress\Redirect::doReferer( [
 						'message' => 'created',
@@ -287,70 +320,20 @@ class Lingo extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
-			$this->renderCard_imports_identifiers();
+			$data      = $this->get_imports_raw_data();
+			$taxonomy  = $this->constant( 'language_taxonomy' );
+			$metakeys  = $this->_get_supported_metakeys( 'imports' );
+			$available = FALSE;
 
-		echo '</div>';
-	}
+			if ( ModuleSettings::renderCard_imports_identifiers( $taxonomy, $data, $metakeys ) )
+				$available = TRUE;
 
-	protected function renderCard_imports_identifiers()
-	{
-		echo gEditorial\Settings::toolboxCardOpen(
-			_x( 'Language Identifiers', 'Card Title', 'geditorial-lingo' ).
-			Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
-
-			if ( $data = $this->get_imports_raw_data() ) {
-
-				Core\HTML::tableList( [
-					'_cb'  => 'code',
-					'term' => [
-						'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-term',
-						'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
-						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-
-							if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
-								return gEditorial\Helper::getTermTitleRow( $term );
-
-							return gEditorial\Helper::htmlEmpty();
-						}
-					],
-					'code' => [
-						'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-code -ltr',
-					],
-					'name' => [
-						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-english-name -ltr',
-					],
-					'native' => [
-						'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-native-name -ltr',
-					],
-
-				], $data, [
-					'empty' => Core\HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
-				] );
-
-			} else {
-
-				echo gEditorial\Plugin::wrong();
-			}
+			if ( ! $available )
+				gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
-
-		echo gEditorial\Settings::toolboxAfterOpen(
-			_x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ), TRUE );
-
-			gEditorial\Settings::submitButton( 'language_taxonomy_create',
-				_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
-
-			gEditorial\Settings::submitCheckBox( 'language_taxonomy_update',
-				_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
-
-		echo '</div>';
-		return TRUE;
 	}
 
 	public function terms_column_title( $title, $field, $taxonomy, $fallback )
