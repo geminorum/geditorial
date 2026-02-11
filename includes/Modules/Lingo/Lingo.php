@@ -287,66 +287,70 @@ class Lingo extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Import Language Identifiers', 'Header', 'geditorial-lingo' ) );
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
-		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'.Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'description' ).'</th><td>';
+			$this->renderCard_imports_identifiers();
 
-		if ( $data = $this->get_imports_raw_data() ) {
+		echo '</div>';
+	}
 
-			Core\HTML::tableList( [
-				'_cb'  => 'code',
-				'code' => [
-					'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
-					'class' => '-ltr',
-				],
-				'term' => [
-					'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
-					'class'    => '-ltr',
-					'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+	protected function renderCard_imports_identifiers()
+	{
+		echo gEditorial\Settings::toolboxCardOpen(
+			_x( 'Language Identifiers', 'Card Title', 'geditorial-lingo' ).
+			Core\HTML::small( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub code' ), FALSE, '-tablelist-card' );
 
-						if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
-							return gEditorial\Helper::getTermTitleRow( $term );
+			if ( $data = $this->get_imports_raw_data() ) {
 
-						return gEditorial\Helper::htmlEmpty();
-					}
-				],
-				'name' => [
-					'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
-					'class' => '-ltr',
-				],
-				'native' => [
-					'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
-					'class' => '-ltr',
-				],
+				Core\HTML::tableList( [
+					'_cb'  => 'code',
+					'term' => [
+						'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-term',
+						'args'     => [ 'taxonomy' => $this->constant( 'language_taxonomy' ) ],
+						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
-			], $data, [
-				'empty' => Core\HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
-			] );
+							if ( $term = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
+								return gEditorial\Helper::getTermTitleRow( $term );
 
-		} else {
+							return gEditorial\Helper::htmlEmpty();
+						}
+					],
+					'code' => [
+						'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-code -ltr',
+					],
+					'name' => [
+						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-english-name -ltr',
+					],
+					'native' => [
+						'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-native-name -ltr',
+					],
 
-			echo gEditorial\Plugin::wrong();
-		}
+				], $data, [
+					'empty' => Core\HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
+				] );
 
-		echo '</td></tr>';
-		echo '<tr><th scope="row">&nbsp;</th><td>';
-		echo $this->wrap_open_buttons( '-imports' );
+			} else {
 
-		gEditorial\Settings::submitButton( 'language_taxonomy_create',
-			_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
+				echo gEditorial\Plugin::wrong();
+			}
 
-		gEditorial\Settings::submitCheckBox( 'language_taxonomy_update',
-			_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
+		echo '</div>';
 
-		echo '</p>';
+		echo gEditorial\Settings::toolboxAfterOpen(
+			_x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ), TRUE );
 
-		Core\HTML::desc( _x( 'Check for available language identifiers and create corresponding terms.', 'Message', 'geditorial-lingo' ) );
+			gEditorial\Settings::submitButton( 'language_taxonomy_create',
+				_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
 
-		echo '</td></tr>';
+			gEditorial\Settings::submitCheckBox( 'language_taxonomy_update',
+				_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
 
-		echo '</table>';
+		echo '</div>';
+		return TRUE;
 	}
 
 	public function terms_column_title( $title, $field, $taxonomy, $fallback )
