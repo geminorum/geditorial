@@ -608,163 +608,172 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
-		$post = $this->get_current_form( [
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'General Tools', 'Card Column Header', 'geditorial-admin' ) );
+
+		$system = gEditorial\Plugin::system();
+		$form   = $this->get_current_form( [
 			'empty_module' => 'meta',
 		], 'tools' );
 
-		$empty = TRUE;
+		$available = FALSE;
 
 		if ( current_user_can( 'manage_options' ) ) {
 
-			if ( $this->_render_tools_html_options( $post ) )
-				$empty = FALSE;
+			if ( $this->renderCard_tools_options( $form, $system ) )
+				$available = TRUE;
 		}
 
 		if ( current_user_can( 'edit_others_posts' ) ) {
 
-			if ( $this->_render_tools_html_maintenance( $post ) )
-				$empty = FALSE;
+			if ( $this->renderCard_tools_maintenance( $form, $system ) )
+				$available = TRUE;
 
-			if ( $this->_render_tools_html_o2o( $post ) )
-				$empty = FALSE;
+			if ( $this->renderCard_tools_o2o( $form, $system ) )
+				$available = TRUE;
 		}
 
-		if ( $empty )
+		if ( ! $available )
 			gEditorial\Info::renderNoToolsAvailable();
+
+		echo '</div>';
 	}
 
-	private function _render_tools_html_options( $post )
+	private function renderCard_tools_options( $form, $system = NULL )
 	{
-		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'Options', 'Tools', 'geditorial-admin' ).'</th><td>';
+		$system = $system ?? gEditorial\Plugin::system();
 
-			if ( $filesize = $this->settings_render_upload_field( '.json' ) ) {
-				echo $this->wrap_open_buttons( '-import-all-options' );
+		echo gEditorial\Settings::toolboxCardOpen( sprintf(
+			/* translators: `%s`: editorial system title */
+			_x( '%s Options', 'Card Title', 'geditorial-admin' ),
+			$system
+		), FALSE );
+
+			if ( $this->settings_render_upload_field( '.json' ) ) {
+				echo '<div class="-wrap -wrap-button-row">';
 					gEditorial\Settings::submitButton( 'import_all_options',
-						_x( 'Imports All Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+						_x( 'Restore Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
 
 					Core\HTML::desc( sprintf(
-						/* translators: `%1$s`: file ext-type, `%2$s`: file size */
-						_x( 'Imports all editorial option data in %1$s file from your computer. Maximum upload size: %2$s', 'Message', 'geditorial-admin' ),
-						Core\HTML::code( 'json' ),
-						Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
+						/* translators: `%s`: file ext-type */
+						_x( 'Imports all options in %s from your computer.', 'Message', 'geditorial-admin' ),
+						Core\HTML::code( 'json' )
 					), FALSE );
-
-				echo '</p>';
+				echo '</div>';
 			}
 
-			echo $this->wrap_open_buttons( '-download-active-options' );
-				gEditorial\Settings::submitButton( 'download_active_options',
-					_x( 'Download Active Module Options', 'Button', 'geditorial-admin' ) );
-
-				Core\HTML::desc( sprintf(
-					/*translators: `%s`: file ext-type */
-					_x( 'Exports active editorial module option data as %s file for you to download.', 'Message', 'geditorial-admin' ),
-					Core\HTML::code( 'json' )
-				), FALSE );
-			echo '</p>';
-
-			echo $this->wrap_open_buttons( '-download-all-options' );
-				gEditorial\Settings::submitButton( 'download_all_options',
-					_x( 'Download All Options', 'Button', 'geditorial-admin' ) );
-
-				Core\HTML::desc( sprintf(
-					/*translators: `%s`: file ext-type */
-					_x( 'Exports all editorial option data as %s file for you to download.', 'Message', 'geditorial-admin' ),
-					Core\HTML::code( 'json' )
-				), FALSE );
-			echo '</p>';
-
-			echo $this->wrap_open_buttons( '-upgrade-old-options' );
+			echo '<div class="-wrap -wrap-button-row">';
 				gEditorial\Settings::submitButton( 'upgrade_old_options',
-					_x( 'Upgrade Old Options', 'Button', 'geditorial-admin' ) );
+					_x( 'Upgrade Old Options', 'Button', 'geditorial-admin' ), 'small' );
 
-				Core\HTML::desc( _x( 'Checks for old options and upgrade them. Also deletes the old options.', 'Message', 'geditorial-admin' ), FALSE );
-			echo '</p>';
+				Core\HTML::desc( _x( 'Checks for old options and upgrade them.', 'Message', 'geditorial-admin' ), FALSE );
+			echo '</div>';
+
+			echo '<div class="-wrap -wrap-button-row">';
+				gEditorial\Settings::submitButton( 'download_active_options',
+					_x( 'Backup Active Module Options', 'Button', 'geditorial-admin' ), 'small' );
+
+				Core\HTML::desc( sprintf(
+					/*translators: `%s`: file ext-type */
+					_x( 'Exports active module options as %s download.', 'Message', 'geditorial-admin' ),
+					Core\HTML::code( 'json' )
+				), FALSE );
+			echo '</div>';
+
+			echo '<div class="-wrap -wrap-button-row">';
+				gEditorial\Settings::submitButton( 'download_all_options',
+					_x( 'Backup All Options', 'Button', 'geditorial-admin' ), 'small' );
+
+				Core\HTML::desc( sprintf(
+					/*translators: `%s`: file ext-type */
+					_x( 'Exports all saved options as %s for download.', 'Message', 'geditorial-admin' ),
+					Core\HTML::code( 'json' )
+				), FALSE );
+			echo '</div>';
 
 			if ( WordPress\IsIt::dev() || WordPress\User::isSuperAdmin() ) {
-				echo $this->wrap_open_buttons( '-delete-all-options' );
+				echo '<div class="-wrap -wrap-button-row">';
 					gEditorial\Settings::submitButton( 'delete_all_options',
-						_x( 'Delete All Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+						_x( 'Delete All Options', 'Button', 'geditorial-admin' ), 'danger button-small', TRUE );
 
 					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Message', 'geditorial-admin' ), FALSE );
-				echo '</p>';
+				echo '</div>';
 			}
 
-		echo '</td></tr></table>';
-
+		echo '</div>';
 		return TRUE;
 	}
 
-	private function _render_tools_html_maintenance( $post )
+	private function renderCard_tools_maintenance( $form, $system )
 	{
-		Core\HTML::h3( _x( 'Maintenance Tasks', 'Header', 'geditorial-admin' ) );
+		$system = $system ?? gEditorial\Plugin::system();
 
-		echo '<table class="form-table">';
-
-		echo '<tr><th scope="row">'._x( 'Empty Meta Fields', 'Tools', 'geditorial-admin' ).'</th><td>';
+		echo gEditorial\Settings::toolboxCardOpen( sprintf(
+			/* translators: `%s`: editorial system title */
+			_x( '%s Maintenance Tasks', 'Card Title', 'geditorial-admin' ),
+			$system
+		) );
 
 			$this->do_settings_field( [
 				'type'         => 'select',
 				'field'        => 'empty_module',
 				'values'       => gEditorial()->list_modules(),
-				'default'      => $post['empty_module'],
+				'default'      => $form['empty_module'],
 				'cap'          => 'edit_others_posts',
 				'option_group' => 'tools',
 			] );
 
-			gEditorial\Settings::submitButton( 'custom_fields_empty', _x( 'Empty', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+			gEditorial\Settings::submitButton( 'custom_fields_empty',
+				_x( 'Empty Meta Fields', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+
 			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-admin' ) );
 
-		echo '</td></tr></table>';
-
+		echo '</div></div>';
 		return TRUE;
 	}
 
-	private function _render_tools_html_o2o( $post )
+	private function renderCard_tools_o2o( $form, $system )
 	{
-		echo '<table class="form-table">';
-		echo '<tr><th scope="row">'._x( 'Orphan Connections', 'Tools', 'geditorial-admin' ).'</th><td>';
+		$system = $system ?? gEditorial\Plugin::system();
+		$counts = Services\O2O\API::getConnectionCounts();
 
-		// $counts = Services\O2O\API::getConnectionCounts();
+		if ( empty( $counts ) )
+			return FALSE;
 
-		if ( empty( $counts ) ) {
+		echo gEditorial\Settings::toolboxCardOpen( sprintf(
+			/* translators: `%s`: editorial system title */
+			_x( '%s Orphan Connections', 'Card Title', 'geditorial-admin' ),
+			$system
+		) );
 
-			Core\HTML::desc( _x( 'No connection types found.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
+		$types = Services\O2O\ConnectionTypeFactory::get_all_instances();
+		$empty = TRUE;
 
-		} else {
+		foreach ( $counts as $type => $count ) {
 
-			$types = Services\O2O\ConnectionTypeFactory::get_all_instances();
-			$empty = TRUE;
+			if ( Services\O2O\API::type( $type ) )
+				continue;
 
-			foreach ( $counts as $type => $count ) {
+			$empty = FALSE;
 
-				if ( Services\O2O\API::type( $type ) )
-					continue;
+			echo Core\HTML::wrapLTR( '<code>'.$type.'</code>' );
+			echo ' &mdash; ('.WordPress\Strings::getCounted( $count ).') &mdash; ';
 
-				$empty = FALSE;
+			$this->do_settings_field( [
+				'type'         => 'select',
+				'field'        => 'new_o2o_type',
+				'values'       => array_keys( $types ),
+				// 'default'      => $form['empty_module'],
+				'option_group' => 'tools',
+			] );
 
-				echo Core\HTML::wrapLTR( '<code>'.$type.'</code>' );
-				echo ' &mdash; ('.WordPress\Strings::getCounted( $count ).') &mdash; ';
-
-				$this->do_settings_field( [
-					'type'         => 'select',
-					'field'        => 'new_o2o_type',
-					'values'       => array_keys( $types ),
-					// 'default'      => $post['empty_module'],
-					'option_group' => 'tools',
-				] );
-
-				gEditorial\Settings::submitButton( 'convert_connection_type', _x( 'Convert', 'Button', 'geditorial-admin' ), 'danger', TRUE );
-			}
-
-			if ( $empty )
-				Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
+			gEditorial\Settings::submitButton( 'convert_connection_type',
+				_x( 'Convert', 'Button', 'geditorial-admin' ), 'danger button-small', TRUE );
 		}
 
-		echo '</td></tr></table>';
+		if ( $empty )
+			Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
 
-		return TRUE;
+		echo '</div></div>';
 	}
 
 	// TODO: add buttons to append `{$this->base}_{$context}` to current role

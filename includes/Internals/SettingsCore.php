@@ -788,7 +788,7 @@ trait SettingsCore
 	 * @param string $name
 	 * @return false|int
 	 */
-	protected function settings_render_upload_field( $mimes, $name = 'import' )
+	protected function settings_render_upload_field( $mimes, $size_after = TRUE, $name = 'import', $field_wrap = 'div' )
 	{
 		$wpupload = WordPress\Media::upload();
 
@@ -803,6 +803,11 @@ trait SettingsCore
 			return FALSE;
 		}
 
+		$filesize = Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+
+		if ( $field_wrap )
+			echo '<'.$field_wrap.' class="-wrap -settings-field -file">';
+
 		$this->do_settings_field( [
 			'type'      => 'file',
 			'field'     => 'import_users_file',
@@ -811,7 +816,18 @@ trait SettingsCore
 			'values'    => (array) $mimes,
 		] );
 
-		return Core\File::formatSize( apply_filters( 'import_upload_size_limit', wp_max_upload_size() ) );
+		// NOTE: here to avoid `NBSP` on `after` argument
+		if ( $size_after )
+			echo gEditorial\Settings::fieldAfterText( sprintf(
+				/* translators: `%s`: file size */
+				_x( 'Maximum upload size: %s', 'Internal: Settings Core: Message', 'geditorial-admin' ),
+				Core\HTML::code( Core\HTML::wrapLTR( $filesize ) )
+			) );
+
+		if ( $field_wrap )
+			echo '</'.$field_wrap.'>';
+
+		return $filesize;
 	}
 
 	protected function notice_settings_extra_buttons( $module ) {}

@@ -770,7 +770,7 @@ class Users extends gEditorial\Module
 		echo '</p></td></tr>';
 		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
-		if ( $filesize = $this->settings_render_upload_field( '.csv' ) ) {
+		if ( $filesize = $this->settings_render_upload_field( '.csv', FALSE, 'import', FALSE ) ) {
 			echo $this->wrap_open_buttons();
 				gEditorial\Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 
