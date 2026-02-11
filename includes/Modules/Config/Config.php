@@ -252,50 +252,64 @@ class Config extends gEditorial\Module
 		gEditorial\Settings::wrapClose();
 	}
 
-	public function admin_reports_page()
+	private function _render_page_by_context( $context, $title = NULL, $extra_subs = NULL )
 	{
-
-		$context = 'reports';
-		$can     = $this->cuc( $context );
-		$uri     = gEditorial\Settings::getURLbyContext( $context );
-		$sub     = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
-		$hook    = $this->hook_base( $context, 'sub', $sub );
+		$can   = $this->cuc( $context );
+		$uri   = gEditorial\Settings::getURLbyContext( $context );
+		$sub   = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
+		$hook  = $this->hook_base( $context, 'sub', $sub );
+		$title = $title ?? _x( 'Configurations', 'Page Title', 'geditorial-admin' );
 
 		$subs = [
 			'overview' => [
-				'title' => _x( 'Overview', 'Reports Sub', 'geditorial-admin' ),
+				'title' => _x( 'Overview', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( 'dashboard' ),
+				'hint'  => sprintf(
+					/*translators: `%s`: context title */
+					_x( 'Overview of %s', 'Navigation Hint', 'geditorial-admin' ),
+					$title
+				),
 			],
 		];
 
 		if ( $can )
 			$subs['general'] = [
-				'title' => _x( 'General', 'Reports Sub', 'geditorial-admin' ),
+				'title' => _x( 'General', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( $this->module->icon ),
+				'hint'  => sprintf(
+					/*translators: `%s`: context title */
+					_x( 'General %s', 'Navigation Hint', 'geditorial-admin' ),
+					$title
+				),
 			];
 
 		$subs     = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
 		$messages = apply_filters( $this->hook_base( $context, 'messages' ), gEditorial\Settings::messages(), $sub. $can );
 
-		if ( WordPress\User::isSuperAdmin() ) {
+		if ( WordPress\User::isSuperAdmin() )
 			$subs['console'] = [
-				'title' => _x( 'Console', 'Reports Sub', 'geditorial-admin' ),
+				'title' => _x( 'Console', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( 'admin-generic' ),
+				'hint'  => sprintf(
+					/*translators: `%s`: context title */
+					_x( 'The Console for %s', 'Navigation Hint', 'geditorial-admin' ),
+					$title
+				),
 			];
-		}
 
 		gEditorial\Settings::wrapOpen( $sub, $context );
 
-			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Reports', 'Page Title', 'geditorial-admin' ) );
+			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Config', 'Page Title', 'geditorial-admin' ) );
 			// Core\HTML::headerNav( $uri, $sub, $subs );
-			gEditorial\Settings::sideOpen( _x( 'Reports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
+			gEditorial\Settings::sideOpen( $title, $uri, $sub, $subs, FALSE );
 			gEditorial\Settings::message( $messages );
 
-			if ( in_array( $sub, [ 'overview' ], TRUE )
+			if ( in_array( $sub, $extra_subs ?? [ 'overview', 'data', 'option' ], TRUE )
 				&& method_exists( $this, self::und( $context, $sub ) ) )
 					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
 
-			else if ( 'console' == $sub )
+			// NOTE: access must be check inside the console layout
+			else if ( 'console' === $sub )
 				gEditorial()->files( sprintf( 'Layouts/console.%s', $context ) );
 
 			else if ( has_action( $hook ) )
@@ -308,6 +322,13 @@ class Config extends gEditorial\Module
 
 			gEditorial\Settings::sideClose();
 		gEditorial\Settings::wrapClose();
+	}
+
+	public function admin_reports_page()
+	{
+		$this->_render_page_by_context( 'reports',
+			_x( 'Reports', 'Page Title', 'geditorial-admin' )
+		);
 	}
 
 	// NOTE: maybe using `wp_dashboard()` on overview
@@ -321,65 +342,9 @@ class Config extends gEditorial\Module
 
 	public function admin_tools_page()
 	{
-		$context = 'tools';
-		$can     = $this->cuc( $context );
-		$uri     = gEditorial\Settings::getURLbyContext( $context );
-		$sub     = gEditorial\Settings::sub( ( $can ? 'general' : 'overview' ) );
-		$hook    = $this->hook_base( $context, 'sub', $sub );
-
-		$subs = [
-			'overview' => [
-				'title' => _x( 'Overview', 'Tools Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'dashboard' ),
-			],
-		];
-
-		if ( $can )
-			$subs['general'] = [
-				'title' => _x( 'General', 'Tools Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( $this->module->icon ),
-			];
-
-		$subs     = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
-		$messages = apply_filters( $this->hook_base( $context, 'messages' ), gEditorial\Settings::messages(), $sub, $can );
-
-		if ( WordPress\User::isSuperAdmin() ) {
-
-			$subs['options'] = [
-				'title' => _x( 'Options', 'Tools Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'screenoptions' ),
-			];
-
-			$subs['console'] = [
-				'title' => _x( 'Console', 'Tools Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'admin-generic' ),
-			];
-		}
-
-		gEditorial\Settings::wrapOpen( $sub, $context );
-
-			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Tools', 'Page Title', 'geditorial-admin' ) );
-			// Core\HTML::headerNav( $uri, $sub, $subs );
-			gEditorial\Settings::sideOpen( _x( 'Tools', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
-			gEditorial\Settings::message( $messages );
-
-			if ( in_array( $sub, [ 'overview', 'options' ], TRUE )
-				&& method_exists( $this, self::und( $context, $sub ) ) )
-					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
-
-			else if ( 'console' == $sub )
-				gEditorial()->files( sprintf( 'Layouts/console.%s', $context ) );
-
-			else if ( has_action( $hook ) )
-				do_action( $hook, $uri, $sub );
-
-			else
-				gEditorial\Settings::cheatin();
-
-			$this->settings_signature( $context );
-
-			gEditorial\Settings::sideClose();
-		gEditorial\Settings::wrapClose();
+		$this->_render_page_by_context( 'tools',
+			_x( 'Tools', 'Page Title', 'geditorial-admin' )
+		);
 	}
 
 	protected function tools_overview( $uri )
@@ -414,59 +379,9 @@ class Config extends gEditorial\Module
 
 	public function admin_roles_page()
 	{
-		$context = 'roles';
-		$can     = $this->cuc( $context );
-		$uri     = gEditorial\Settings::getURLbyContext( $context );
-		$sub     = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
-		$hook    = $this->hook_base( $context, 'sub', $sub );
-
-		$subs = [
-			'overview' => [
-				'title' => _x( 'Overview', 'Roles Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'dashboard' ),
-			],
-		];
-
-		if ( $can )
-			$subs['general'] = [
-				'title' => _x( 'General', 'Roles Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( $this->module->icon ),
-			];
-
-		$subs     = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
-		$messages = apply_filters( $this->hook_base( $context, 'messages' ), gEditorial\Settings::messages(), $sub, $can );
-
-		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = [
-				'title' => _x( 'Console', 'Roles Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'admin-generic' ),
-			];
-		}
-
-		gEditorial\Settings::wrapOpen( $sub, $context );
-
-			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Roles', 'Page Title', 'geditorial-admin' ) );
-			// Core\HTML::headerNav( $uri, $sub, $subs );
-			gEditorial\Settings::sideOpen( _x( 'Roles', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
-			gEditorial\Settings::message( $messages );
-
-			if ( in_array( $sub, [ 'overview' ], TRUE )
-				&& method_exists( $this, self::und( $context, $sub ) ) )
-					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
-
-			else if ( 'console' == $sub )
-				gEditorial()->files( sprintf( 'Layouts/console.%s', $context ) );
-
-			else if ( has_action( $hook ) )
-				do_action( $hook, $uri, $sub );
-
-			else
-				gEditorial\Settings::cheatin();
-
-			$this->settings_signature( $context );
-
-			gEditorial\Settings::sideClose();
-		gEditorial\Settings::wrapClose();
+		$this->_render_page_by_context( 'roles',
+			_x( 'Roles', 'Page Title', 'geditorial-admin' )
+		);
 	}
 
 	protected function roles_overview( $uri )
@@ -887,65 +802,9 @@ class Config extends gEditorial\Module
 
 	public function admin_imports_page()
 	{
-		$context = 'imports';
-		$can     = $this->cuc( $context );
-		$uri     = gEditorial\Settings::getURLbyContext( $context );
-		$sub     = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
-		$hook    = $this->hook_base( $context, 'sub', $sub );
-
-		$subs = [
-			'overview' => [
-				'title' => _x( 'Overview', 'Imports Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'dashboard' ),
-			],
-		];
-
-		if ( $can )
-			$subs['general'] = [
-				'title' => _x( 'General', 'Imports Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( $this->module->icon ),
-			];
-
-		$subs     = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
-		$messages = apply_filters( $this->hook_base( $context, 'messages' ), gEditorial\Settings::messages(), $sub, $can );
-
-		if ( $can )
-			$subs['data'] = [
-				'title' => _x( 'Data', 'Imports Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'database' ),
-			];
-
-		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = [
-				'title' => _x( 'Console', 'Imports Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'admin-generic' ),
-			];
-		}
-
-		gEditorial\Settings::wrapOpen( $sub, $context );
-
-			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Imports', 'Page Title', 'geditorial-admin' ) );
-			// Core\HTML::headerNav( $uri, $sub, $subs );
-			gEditorial\Settings::sideOpen( _x( 'Imports', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
-			gEditorial\Settings::message( $messages );
-
-			if ( in_array( $sub, [ 'overview', 'data' ], TRUE )
-				&& method_exists( $this, self::und( $context, $sub ) ) )
-					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
-
-			else if ( 'console' == $sub )
-				gEditorial()->files( sprintf( 'Layouts/console.%s', $context ) );
-
-			else if ( has_action( $hook ) )
-				do_action( $hook, $uri, $sub );
-
-			else
-				gEditorial\Settings::cheatin();
-
-			$this->settings_signature( $context );
-
-			gEditorial\Settings::sideClose();
-		gEditorial\Settings::wrapClose();
+		$this->_render_page_by_context( 'imports',
+			_x( 'Imports', 'Page Title', 'geditorial-admin' )
+		);
 	}
 
 	protected function imports_overview( $uri )
@@ -1014,57 +873,9 @@ class Config extends gEditorial\Module
 
 	public function admin_customs_page()
 	{
-		$context = 'customs';
-		$can     = $this->cuc( $context );
-		$uri     = gEditorial\Settings::getURLbyContext( $context );
-		$sub     = gEditorial\Settings::sub( $can ? 'general' : 'overview' );
-		$hook    = $this->hook_base( $context, 'sub', $sub );
-
-		$subs = [
-			'overview' => [
-				'title' => _x( 'Overview', 'Customs Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'dashboard' ),
-			],
-		];
-
-		if ( $can )
-			$subs['general'] = [
-				'title' => _x( 'General', 'Customs Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( $this->module->icon ),
-			];
-
-		$subs     = apply_filters( $this->hook_base( $context, 'subs' ), $subs, $context, $can );
-		$messages = apply_filters( $this->hook_base( $context, 'messages' ), gEditorial\Settings::messages(), $sub, $can );
-
-		if ( WordPress\User::isSuperAdmin() ) {
-			$subs['console'] = [
-				'title' => _x( 'Console', 'Customs Sub', 'geditorial-admin' ),
-				'icon'  => Services\Icons::get( 'admin-generic' ),
-			];
-		}
-
-		gEditorial\Settings::wrapOpen( $sub, $context );
-
-			gEditorial\Settings::sideOpen( _x( 'Customs', 'Page Title', 'geditorial-admin' ), $uri, $sub, $subs, FALSE );
-			gEditorial\Settings::message( $messages );
-
-			if ( in_array( $sub, [ 'overview' ], TRUE )
-				&& method_exists( $this, self::und( $context, $sub ) ) )
-					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
-
-			else if ( 'console' == $sub )
-				gEditorial()->files( sprintf( 'Layouts/console.%s', $context ) );
-
-			else if ( has_action( $hook ) )
-				do_action( $hook, $uri, $sub );
-
-			else
-				gEditorial\Settings::cheatin();
-
-			$this->settings_signature( $context );
-
-			gEditorial\Settings::sideClose();
-		gEditorial\Settings::wrapClose();
+		$this->_render_page_by_context( 'customs',
+			_x( 'Customs', 'Page Title', 'geditorial-admin' )
+		);
 	}
 
 	protected function customs_overview( $uri )
