@@ -94,7 +94,7 @@ trait ContentInsert
 
 	protected function contentinsert__control_term_field_after( $setting = NULL )
 	{
-		// NOTE: control term is no set!
+		// NOTE: control term is not set!
 		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
 			return '';
 
@@ -106,7 +106,7 @@ trait ContentInsert
 
 	protected function contentinsert__control_term_check( $post = NULL, $setting = NULL )
 	{
-		// NOTE: control term is no set!
+		// NOTE: control term is not set!
 		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
 			return TRUE;
 

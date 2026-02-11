@@ -596,7 +596,7 @@ class Audit extends gEditorial\Module
 	// TODO: move to `ModuleSettings`
 	private function _render_reports_by_user_summary()
 	{
-		$args = $this->get_current_form( [
+		$form = $this->get_current_form( [
 			'user_id' => '0',
 		], 'reports' );
 
@@ -607,7 +607,7 @@ class Audit extends gEditorial\Module
 			'field'        => 'user_id',
 			'none_title'   => _x( 'All Users', 'Card: None-Title', 'geditorial-audit' ),
 			'none_value'   => '0',
-			'default'      => $args['user_id'],
+			'default'      => $form['user_id'],
 			'option_group' => 'reports',
 			'cap'          => TRUE,
 		] );
@@ -615,7 +615,7 @@ class Audit extends gEditorial\Module
 		gEditorial\Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
 		echo '</div>';
 
-		if ( $summary = $this->get_dashboard_term_summary( 'main_taxonomy', NULL, NULL, ( $args['user_id'] ? 'current' : 'all' ), $args['user_id'] ) )
+		if ( $summary = $this->get_dashboard_term_summary( 'main_taxonomy', NULL, NULL, ( $form['user_id'] ? 'current' : 'all' ), $form['user_id'] ) )
 			echo '<div><ul class="-wrap-list-items">'.$summary.'</ul></div>';
 
 		echo '</div>';

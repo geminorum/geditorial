@@ -298,7 +298,7 @@ class Lingo extends gEditorial\Module
 	{
 		echo gEditorial\Settings::toolboxCardOpen(
 			_x( 'Language Identifiers', 'Card Title', 'geditorial-lingo' ).
-			Core\HTML::small( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub code' ), FALSE, '-tablelist-card' );
+			Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
 
 			if ( $data = $this->get_imports_raw_data() ) {
 

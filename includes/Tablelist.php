@@ -563,22 +563,22 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnTermDesc()
+	public static function columnTermDesc( $title = NULL, $extra = [] )
 	{
-		return [
-			'title'    => _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
+		return array_merge( [
+			'title'    =>  $title ?? _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
 			'class'    => [ 'description', '-description' ],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return empty( $row->description )
 					? Helper::htmlEmpty()
 					: WordPress\Strings::prepDescription( $row->description );
 			},
-		];
+		], $extra );
 	}
 
-	public static function columnTermMetaList( $title = NULL )
+	public static function columnTermMetaList( $title = NULL, $extra = [] )
 	{
-		return [
+		return array_merge( [
 			'title'    => $title ?? _x( 'Meta', 'Tablelist: Column: Term Desc', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				if ( ! $meta = WordPress\Term::getMeta( $row ) )
@@ -586,7 +586,7 @@ class Tablelist extends WordPress\Main
 
 				return Core\HTML::wrap( self::dump( $meta, TRUE, FALSE ), '-debug-wrap' );
 			},
-		];
+		], $extra );
 	}
 
 	public static function columnTermMetaDateStart( $metakey = NULL, $calendar = NULL )

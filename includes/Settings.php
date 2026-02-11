@@ -2315,7 +2315,7 @@ class Settings extends WordPress\Main
 			'id'    => $id,
 		], $atts ) );
 
-		Core\HTML::label( $input.$text, $id, 'span' );
+		Core\HTML::label( $input.$text, $id, FALSE );
 
 		echo $after;
 	}
@@ -4244,9 +4244,10 @@ class Settings extends WordPress\Main
 			self::toolboxAfterOpen();
 	}
 
-	public static function toolboxCardOpen( $title = '', $buttons = TRUE )
+	// EXTRA: `.-tablelist-card`
+	public static function toolboxCardOpen( $title = '', $buttons = TRUE, $extra = [] )
 	{
-		return '<div class="-wrap '.static::BASE.'-wrap card -toolbox-card">'
+		return '<div class="'.Core\HTML::prepClass( '-wrap',  static::BASE.'-wrap', 'card', '-toolbox-card', $extra ).'">'
 			.( $title ? sprintf( '<h4 class="title -title">%s</h4>', $title ) : '' )
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
@@ -4254,7 +4255,7 @@ class Settings extends WordPress\Main
 	public static function toolboxAfterOpen( $desc = '', $buttons = FALSE )
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-after">'
-			.( $desc ? sprintf( '<p class="-description">%s</p>', nl2br( $desc ) ) : '' )
+			.( $desc ? sprintf( '<p class="description -description">%s</p>', nl2br( $desc ) ) : '' )
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
 

@@ -1040,109 +1040,6 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	// TODO: avoid `table>tr` extravaganza: first a `.card` then full width table-list
-	protected function render_imports_html( $uri, $sub )
-	{
-		$na   = TRUE;
-		$args = $this->get_current_form( [
-			'custom_field'       => '',
-			'custom_field_limit' => '',
-			'custom_field_type'  => 'post',
-			'custom_field_into'  => '',
-		], 'imports' );
-
-		Core\HTML::h3( _x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
-
-		echo '<table class="form-table">';
-
-		if ( $metakeys = WordPress\Database::getPostMetaKeys( TRUE ) ) {
-			echo '<tr><th scope="row">';
-				echo _x( 'Import Custom Fields', 'Header', 'geditorial-meta' );
-			echo '</th><td>';
-				$this->_render_imports_db_metakeys( $metakeys, $args );
-			echo '</td></tr>';
-			$na = FALSE;
-		}
-
-		echo '</table>';
-
-		if ( $na )
-			gEditorial\Info::renderNoImportsAvailable();
-	}
-
-	private function _render_imports_db_metakeys( $metakeys, $args )
-	{
-		$this->do_settings_field( [
-			'type'         => 'select',
-			'field'        => 'custom_field',
-			'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
-			'default'      => $args['custom_field'],
-			'option_group' => 'imports',
-		] );
-
-		$this->do_settings_field( [
-			'type'         => 'text',
-			'field'        => 'custom_field_limit',
-			'default'      => $args['custom_field_limit'],
-			'option_group' => 'imports',
-			'field_class'  => 'small-text',
-			'placeholder'  => 'limit',
-		] );
-
-		$this->do_settings_field( [
-			'type'         => 'select',
-			'field'        => 'custom_field_type',
-			'values'       => $this->list_posttypes(),
-			'default'      => $args['custom_field_type'],
-			'option_group' => 'imports',
-		] );
-
-		$this->do_settings_field( [
-			'type'         => 'select',
-			'field'        => 'custom_field_into',
-			'values'       => $this->posttype_fields_list( $args['custom_field_type'] ),
-			'default'      => $args['custom_field_into'],
-			'option_group' => 'imports',
-		] );
-
-		gEditorial\Settings::submitButton( 'custom_fields_check',
-			_x( 'Check', 'Button', 'geditorial-meta' ), TRUE );
-
-		gEditorial\Settings::submitButton( 'custom_fields_convert',
-			_x( 'Covert', 'Button', 'geditorial-meta' ) );
-
-		gEditorial\Settings::submitButton( 'custom_fields_delete',
-			_x( 'Delete', 'Button', 'geditorial-meta' ), 'danger', TRUE );
-
-		Core\HTML::desc( _x( 'Check for Custom Fields and import them into Meta', 'Message', 'geditorial-meta' ) );
-
-		if ( isset( $_POST['custom_fields_check'] )
-			&& $args['custom_field'] ) {
-
-			echo '<br />';
-			Core\HTML::tableList( [
-				'post_id' => gEditorial\Tablelist::columnPostID(),
-				'type'    => gEditorial\Tablelist::columnPostType( 'post_id' ),
-				'title'   => [
-					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-						return WordPress\Post::title( $row->post_id );
-					},
-				],
-				'meta' => sprintf(
-					/* translators: `%s`: title */
-					_x( 'Meta: %s', 'Table Column', 'geditorial-meta' ),
-					Core\HTML::code( $args['custom_field']
-				) ),
-			], WordPress\Database::getPostMetaRows(
-				stripslashes( $args['custom_field'] ),
-				stripslashes( $args['custom_field_limit'] )
-			), [
-				'empty' => Core\HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
-			] );
-		}
-	}
-
 	public function imports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
@@ -1199,6 +1096,124 @@ class Meta extends gEditorial\Module
 				}
 			}
 		}
+	}
+
+	protected function render_imports_html( $uri, $sub )
+	{
+		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
+
+			$form = $this->get_current_form( [
+				'custom_field'       => '',
+				'custom_field_limit' => '',
+				'custom_field_type'  => 'post',
+				'custom_field_into'  => '',
+			], 'imports' );
+
+			$available = FALSE;
+
+				if ( ! $this->renderCard_imports_custom_fields( $form ) )
+					$available = TRUE;
+
+			if ( ! $available )
+				gEditorial\Info::renderNoImportsAvailable();
+
+		echo '</div>';
+	}
+
+	protected function renderCard_imports_custom_fields( $form )
+	{
+		if ( isset( $_POST['custom_fields_check'] )
+			&& $form['custom_field'] ) {
+
+			echo gEditorial\Settings::toolboxCardOpen(
+				_x( 'Queried Custom Fields', 'Card Title', 'geditorial-meta' ).
+				Core\HTML::code( $form['custom_field'], 'sub' ), FALSE, '-tablelist-card' );
+
+			Core\HTML::tableList( [
+				'type'  => gEditorial\Tablelist::columnPostType( 'post_id' ),
+				'title' => [
+					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
+					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+						return Core\HTML::span( WordPress\Post::title( $row->post_id ), FALSE, $row->post_id, $row->post_id );
+					},
+				],
+				'meta' => [
+					'title' => _x( 'Raw Data', 'Table Column', 'geditorial-meta' ),
+					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+						return Core\HTML::sanitizeDisplay( $value );
+					},
+				],
+			], WordPress\Database::getPostMetaRows(
+				stripslashes( $form['custom_field'] ),
+				stripslashes( $form['custom_field_limit'] )
+			), [
+				'empty' => Core\HTML::warning( _x( 'There are no meta-data available!', 'Table Empty', 'geditorial-meta' ), FALSE ),
+			] );
+
+			echo '</div>';
+
+			gEditorial\Scripts::enqueueClickToClip();
+		}
+
+		echo gEditorial\Settings::toolboxCardOpen(
+			_x( 'Import Custom Fields', 'Card Title', 'geditorial-meta' ), FALSE );
+
+			echo '<div class="-wrap -wrap-button-row">';
+
+				$this->do_settings_field( [
+					'type'         => 'select',
+					'field'        => 'custom_field',
+					'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
+					'default'      => $form['custom_field'],
+					'option_group' => 'imports',
+				] );
+
+				$this->do_settings_field( [
+					'type'         => 'number',
+					'field'        => 'custom_field_limit',
+					'default'      => $form['custom_field_limit'],
+					'option_group' => 'imports',
+					'field_class'  => 'small-text',
+					'placeholder'  => 'limit',
+				] );
+
+				$this->do_settings_field( [
+					'type'         => 'select',
+					'field'        => 'custom_field_type',
+					'values'       => $this->list_posttypes(),
+					'default'      => $form['custom_field_type'],
+					'option_group' => 'imports',
+				] );
+
+				Core\HTML::desc( _x( 'Non-protect custom fields limited by post-type and total count.', 'Message', 'geditorial-meta' ) );
+
+			echo '</div><div class="-wrap -wrap-button-row">';
+
+				$this->do_settings_field( [
+					'type'         => 'select',
+					'field'        => 'custom_field_into',
+					'values'       => $this->posttype_fields_list( $form['custom_field_type'] ),
+					'default'      => $form['custom_field_into'],
+					'option_group' => 'imports',
+				] );
+
+				Core\HTML::desc( _x( 'Import into any of available meta fields.', 'Message', 'geditorial-meta' ) );
+
+			echo '</div><div class="-wrap -wrap-button-row">';
+
+				gEditorial\Settings::submitButton( 'custom_fields_check',
+					_x( 'Check', 'Button', 'geditorial-meta' ), TRUE );
+
+				gEditorial\Settings::submitButton( 'custom_fields_convert',
+					_x( 'Covert', 'Button', 'geditorial-meta' ) );
+
+				gEditorial\Settings::submitButton( 'custom_fields_delete',
+					_x( 'Delete', 'Button', 'geditorial-meta' ), 'danger', TRUE );
+
+				Core\HTML::desc( _x( 'Check for custom fields and import them into meta fields.', 'Message', 'geditorial-meta' ) );
+
+		echo '</div></div>';
+		return TRUE;
 	}
 
 	public function reports_settings( $sub )
