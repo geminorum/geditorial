@@ -4213,28 +4213,38 @@ class Settings extends WordPress\Main
 		return $returns;
 	}
 
-	public static function processingAllDone( $remove = NULL )
+	public static function processingAllDone( $message = NULL, $remove = NULL )
 	{
-		echo self::toolboxColumnOpen( Plugin::done( FALSE ) );
+		if ( FALSE !== $message )
+			echo self::toolboxColumnOpen( $message ?? Plugin::done( FALSE ) );
+
 		echo self::toolboxAfterOpen();
 
-			echo Core\HTML::button(
-				_x( 'Go-back &larr;', 'Settings: Button', 'geditorial-admin' ),
-				remove_query_arg( $remove ?? [
-					'action',
-					'type',
-					'mime',
-					// 'taxonomy', // NOTE: passing back will help the dropdown on default selected
-					// 'metakey',  // NOTE: passing back will help the dropdown on default selected
-					'message',
-					'paged',
-					'count',
-				] )
-			);
+			echo self::goBackButton( $remove );
 
-		echo '</div></div>';
+		echo '</div>';
+
+		if ( FALSE !== $message )
+			echo '</div>';
 
 		return TRUE;
+	}
+
+	public static function goBackButton( $remove = NULL )
+	{
+		return Core\HTML::button(
+			_x( '&larr; Go-back', 'Settings: Button', 'geditorial-admin' ),
+			remove_query_arg( $remove ?? [
+				'action',
+				'type',
+				'mime',
+				// 'taxonomy', // NOTE: passing back will help the dropdown on default selected
+				// 'metakey',  // NOTE: passing back will help the dropdown on default selected
+				'message',
+				'paged',
+				'count',
+			] )
+		);
 	}
 
 	public static function processingErrorOpen( $title = NULL )
