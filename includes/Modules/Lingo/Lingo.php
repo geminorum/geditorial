@@ -157,9 +157,15 @@ class Lingo extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
+		$metakeys = $this->_get_supported_metakeys( 'settings' );
+
+		$this->filter_module( 'terms', 'disable_field_edit', 3, 12 );
+
+		if ( 'tagline' !== $metakeys['native'] )
+			return;
+
 		$this->filter_module( 'terms', 'column_title', 4 );
 		$this->filter_module( 'terms', 'field_tagline_title', 4 );
-		$this->filter_module( 'terms', 'disable_field_edit', 3, 12 );
 	}
 
 	public function current_screen( $screen )
