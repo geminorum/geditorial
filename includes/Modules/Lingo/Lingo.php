@@ -248,6 +248,7 @@ class Lingo extends gEditorial\Module
 		return $this->filters( 'supported_metakeys', [
 			'endonym'    => 'tagline',
 			'alpha2code' => 'code',
+			'rtl'        => 'rtl',
 		], $context );
 	}
 
@@ -288,6 +289,7 @@ class Lingo extends gEditorial\Module
 								'meta' => [
 									$metakeys['alpha2code'] => $rawdata[$code]['alpha2code'],
 									$metakeys['endonym']    => $rawdata[$code]['endonym'],
+									$metakeys['rtl']        => ! empty( $rawdata[$code]['rtl'] ),
 								],
 							];
 

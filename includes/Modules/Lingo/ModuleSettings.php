@@ -55,6 +55,15 @@ class ModuleSettings extends gEditorial\Settings
 						'title' => _x( 'Alpha-2', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-alpha2code -ltr',
 					],
+					'rtl' => [
+						'title' => _x( '<abbr title="Direction">Dir</abbr>', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-direction',
+						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+							return $value
+								? Core\HTML::getDashicon( 'arrow-left-alt', _x( 'Right-to-Left', 'Table Column', 'geditorial-lingo' ), '-direction-icon' )
+								: Core\HTML::getDashicon( 'arrow-right-alt', _x( 'Left-to-Right', 'Table Column', 'geditorial-lingo' ), '-direction-icon' );
+						},
+					],
 					'en_name' => [
 						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-english-name -ltr',
