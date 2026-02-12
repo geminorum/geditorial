@@ -14,16 +14,14 @@ class ModuleSettings extends gEditorial\Settings
 	const ACTION_CREATE_LANG_TAXONOMY = 'do_import_language_taxonomy_create';
 	const ACTION_UPDATE_LANG_TAXONOMY = 'do_import_language_taxonomy_update';
 
-	public static function renderCard_imports_identifiers( $taxonomy, $data, $metakeys )
+	public static function renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys )
 	{
-		if ( empty( $data ) )
+		if ( empty( $rawdata ) )
 			return FALSE;
 
 		echo self::toolboxCardOpen(
 			_x( 'Language Identifiers', 'Card Title', 'geditorial-lingo' ).
 			Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
-
-			if ( $data ) {
 
 				Core\HTML::tableList( [
 					'_cb'  => 'code',
@@ -63,14 +61,9 @@ class ModuleSettings extends gEditorial\Settings
 						'class'    => '-language-native-name -ltr',
 					],
 
-				], $data, [
-					'empty' => Core\HTML::warning( _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ), FALSE ),
+				], $rawdata, [
+					'empty' => _x( 'There are no language identifiers available!', 'Message: Table Empty', 'geditorial-lingo' ),
 				] );
-
-			} else {
-
-				echo gEditorial\Plugin::wrong();
-			}
 
 		echo '</div>';
 
@@ -81,7 +74,7 @@ class ModuleSettings extends gEditorial\Settings
 				_x( 'Create Language Terms', 'Button', 'geditorial-lingo' ), TRUE );
 
 			self::submitCheckBox( static::ACTION_UPDATE_LANG_TAXONOMY,
-				_x( 'Update Existing Terms', 'Button', 'geditorial-lingo' ) );
+				_x( 'Update Existing Terms', 'CheckBox', 'geditorial-lingo' ) );
 
 		echo '</div>';
 		return TRUE;

@@ -1137,8 +1137,10 @@ class Meta extends gEditorial\Module
 
 	protected function renderCard_imports_custom_fields( $form, $metakeys )
 	{
-		if ( isset( $_POST['custom_fields_check'] )
-			&& $form['custom_field'] ) {
+		if ( isset( $_POST['custom_fields_check'] ) ) {
+
+			if ( empty( $form['custom_field'] ) )
+				return ! gEditorial\Info::renderNoDataAvailable( gEditorial\Settings::goBackButton() );
 
 			echo gEditorial\Settings::toolboxCardOpen(
 				_x( 'Queried Custom Fields', 'Card Title', 'geditorial-meta' ).

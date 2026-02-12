@@ -223,175 +223,187 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function renderSomethingIsWrong( $before = '', $after = '' )
+	public static function renderSomethingIsWrong( $before = '', $after = '', $block = NULL )
 	{
-		return Core\HTML::desc( $before.Plugin::wrong( FALSE ).$after, FALSE, '-empty -wrong' );
+		Core\HTML::desc(
+			$before.Plugin::wrong( FALSE ).$after,
+			$block ?? TRUE,
+			'-empty -wrong'
+		);
+
+		return FALSE;
 	}
 
-	public static function renderWaitForAMoment( $before = '', $after = '' )
+	public static function renderWaitForAMoment( $before = '', $after = '', $block = NULL )
 	{
-		return Core\HTML::desc( $before.Plugin::moment( FALSE ).$after, FALSE, '-empty -moment' );
+		Core\HTML::desc(
+			$before.Plugin::moment( FALSE ).$after,
+			$block ?? TRUE,
+			'-empty -moment'
+		);
+
+		return FALSE;
 	}
 
-	public static function renderNoReportsAvailable( $before = '', $after = '' )
+	public static function renderNoReportsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-reports'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoImportsAvailable( $before = '', $after = '' )
+	public static function renderNoImportsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-imports'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoExportsAvailable( $before = '', $after = '' )
+	public static function renderNoExportsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no exports available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-exports'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoCustomsAvailable( $before = '', $after = '' )
+	public static function renderNoCustomsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no customs available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-customs'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoToolsAvailable( $before = '', $after = '' )
+	public static function renderNoToolsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-tools'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoRolesAvailable( $before = '', $after = '' )
+	public static function renderNoRolesAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no roles available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-roles'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoPostsAvailable( $before = '', $after = '' )
+	public static function renderNoPostsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-posts'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoTermsAvailable( $before = '', $after = '' )
+	public static function renderNoTermsAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no terms available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-terms'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNoDataAvailable( $before = '', $after = '' )
+	public static function renderNoDataAvailable( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no data available!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -no-data'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderEmptyMIMEtype( $before = '', $after = '' )
+	public static function renderEmptyMIMEtype( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The MIME-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-empty-mimetype'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderEmptyPosttype( $before = '', $after = '' )
+	public static function renderEmptyPosttype( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-empty-posttype'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderEmptyTaxonomy( $before = '', $after = '' )
+	public static function renderEmptyTaxonomy( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-empty-taxonomy'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNotSupportedPosttype( $before = '', $after = '' )
+	public static function renderNotSupportedPosttype( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-supported-posttype'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNotSupportedTaxonomy( $before = '', $after = '' )
+	public static function renderNotSupportedTaxonomy( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-supported-taxonomy'
 		);
 
 		return FALSE;
 	}
 
-	public static function renderNotSupportedField( $before = '', $after = '' )
+	public static function renderNotSupportedField( $before = '', $after = '', $block = NULL )
 	{
 		Core\HTML::desc(
 			$before._x( 'The field is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
-			FALSE,
+			$block ?? TRUE,
 			'-empty -not-supported-field'
 		);
 
@@ -418,6 +430,7 @@ class Info extends WordPress\Main
 		], gEditorial()->icon( $icon[1], $icon[0] ) );
 	}
 
+	// FIXME: Migrate to `Icons` service: `Icons::renderByField()`
 	public static function renderIcon( $for, $text = NULL, $link = FALSE, $verbose = TRUE )
 	{
 		$html = '';

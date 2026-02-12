@@ -1070,31 +1070,31 @@ class Byline extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $metakey = self::req( 'metakey' ) )
 			return ! gEditorial\Info::renderNoDataAvailable(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return ! gEditorial\Info::renderEmptyTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->taxonomy_supported( $taxonomy ) )
 			return ! gEditorial\Info::renderNotSupportedTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! in_array( $taxonomy, WordPress\PostType::taxonomies( $posttype ), TRUE ) )
 			return ! gEditorial\Info::renderNotSupportedTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! array_key_exists( $metakey, $this->_get_supported_byline_metakeys( 'imports' ) ) )
 			return ! gEditorial\Info::renderNotSupportedField(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 
@@ -1113,31 +1113,31 @@ class Byline extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $metakey = self::req( 'metakey' ) )
 			return ! gEditorial\Info::renderNoDataAvailable(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return ! gEditorial\Info::renderEmptyTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->taxonomy_supported( $taxonomy ) )
 			return ! gEditorial\Info::renderNotSupportedTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! in_array( $taxonomy, WordPress\PostType::taxonomies( $posttype ), TRUE ) )
 			return ! gEditorial\Info::renderNotSupportedTaxonomy(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! array_key_exists( $metakey, $this->_get_supported_simple_metakeys( 'imports' ) ) )
 			return ! gEditorial\Info::renderNotSupportedField(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 
@@ -1156,11 +1156,11 @@ class Byline extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 

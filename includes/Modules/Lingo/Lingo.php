@@ -255,12 +255,12 @@ class Lingo extends gEditorial\Module
 
 				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CREATE_LANG_TAXONOMY, TRUE ) ) {
 
-					if ( ! $data = $this->get_imports_raw_data() )
+					if ( ! $rawdata = $this->get_imports_raw_data() )
 						WordPress\Redirect::doReferer( 'wrong' );
 
 					$count    = 0;
 					$terms    = [];
-					$data     = Core\Arraay::reKey( $data, 'code' );
+					$rawdata  = Core\Arraay::reKey( $rawdata, 'code' );
 					$update   = self::req( ModuleSettings::ACTION_UPDATE_LANG_TAXONOMY, FALSE );
 					$term_ids = array_filter( self::req( 'term_id', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
@@ -268,7 +268,7 @@ class Lingo extends gEditorial\Module
 
 					foreach ( $_POST['_cb'] as $code ) {
 
-						if ( ! array_key_exists( $code, $data ) )
+						if ( ! array_key_exists( $code, $rawdata ) )
 							continue;
 
 						if ( array_key_exists( $code, $term_ids ) ) {
@@ -278,10 +278,10 @@ class Lingo extends gEditorial\Module
 
 							$existing =  [
 								// 'name' => $data[$code]['name'], // NOTE: avoid overriding the name
-								'slug' => strtolower( $data[$code]['name'] ),
+								'slug' => strtolower( $rawdata[$code]['name'] ),
 								'meta' => [
-									$metakeys['code']   => $data[$code]['code'],
-									$metakeys['native'] => $data[$code]['native'],
+									$metakeys['code']   => $rawdata[$code]['code'],
+									$metakeys['native'] => $rawdata[$code]['native'],
 								],
 							];
 
@@ -291,11 +291,11 @@ class Lingo extends gEditorial\Module
 						} else {
 
 							$terms[] =  [
-								'name' => $data[$code]['name'],
-								'slug' => strtolower( $data[$code]['name'] ),
+								'name' => $rawdata[$code]['name'],
+								'slug' => strtolower( $rawdata[$code]['name'] ),
 								'meta' => [
-									$metakeys['code']   => $data[$code]['code'],
-									$metakeys['native'] => $data[$code]['native'],
+									$metakeys['code']   => $rawdata[$code]['code'],
+									$metakeys['native'] => $rawdata[$code]['native'],
 								],
 							];
 						}
@@ -322,12 +322,12 @@ class Lingo extends gEditorial\Module
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
-			$data      = $this->get_imports_raw_data();
+			$rawdata   = $this->get_imports_raw_data();
 			$taxonomy  = $this->constant( 'language_taxonomy' );
 			$metakeys  = $this->_get_supported_metakeys( 'imports' );
 			$available = FALSE;
 
-			if ( ModuleSettings::renderCard_imports_identifiers( $taxonomy, $data, $metakeys ) )
+			if ( ModuleSettings::renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys ) )
 				$available = TRUE;
 
 			if ( ! $available )

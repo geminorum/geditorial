@@ -25,11 +25,11 @@ trait PostDate
 	{
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! in_array( $posttype, (array) $supported, TRUE ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources( $limit );
 

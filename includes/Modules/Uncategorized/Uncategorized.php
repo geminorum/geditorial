@@ -338,9 +338,19 @@ class Uncategorized extends gEditorial\Module
 								'message' => 'changed',
 								'count'   => $result,
 							] );
+
+					} else {
+
+						WordPress\Redirect::doReferer( 'huh' );
 					}
 
-					// NOTE: maybe `dead_tax_check` posted!
+				} else if ( gEditorial\Tablelist::isAction( 'dead_tax_check' ) ) {
+
+					// Do nothing, the post will be handled on `ModuleSettngs`
+
+				} else {
+
+					WordPress\Redirect::doReferer( 'huh' );
 				}
 			}
 		}
@@ -357,7 +367,7 @@ class Uncategorized extends gEditorial\Module
 
 			$available = FALSE;
 
-			if ( ! $this->renderCard_imports_dead_taxes( $form ) )
+			if ( $this->renderCard_imports_dead_taxes( $form ) )
 				$available = TRUE;
 
 			if ( ! $available )
@@ -376,8 +386,10 @@ class Uncategorized extends gEditorial\Module
 		if ( ! count( $dead_taxes ) )
 			return FALSE;
 
-		if ( isset( $_POST['dead_tax_check'] )
-			&& $form['dead_tax'] ) {
+		if ( isset( $_POST['dead_tax_check'] ) ) {
+
+			if ( empty( $form['dead_tax'] ) )
+				return ! gEditorial\Info::renderEmptyTaxonomy( gEditorial\Settings::goBackButton() );
 
 			echo gEditorial\Settings::toolboxCardOpen(
 				_x( 'Queried Dead Taxonomy', 'Card Title', 'geditorial-uncategorized' ).
@@ -439,10 +451,10 @@ class Uncategorized extends gEditorial\Module
 			echo '</div><div class="-wrap -wrap-button-row">';
 
 			gEditorial\Settings::submitButton( 'dead_tax_check',
-				_x( 'Check', 'Button', 'geditorial-uncategorized' ), TRUE );
+				_x( 'Check Terms', 'Button', 'geditorial-uncategorized' ), TRUE );
 
 			gEditorial\Settings::submitButton( 'orphaned_terms',
-				_x( 'Convert', 'Button', 'geditorial-uncategorized' ) );
+				_x( 'Convert Terms', 'Button', 'geditorial-uncategorized' ) );
 
 			Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
 

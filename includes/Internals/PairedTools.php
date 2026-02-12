@@ -558,15 +558,15 @@ trait PairedTools
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $movefrom = self::req( 'movefrom' ) )
 			return ! gEditorial\Info::renderSomethingIsWrong(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $moveto = self::req( 'moveto' ) )
 			return ! gEditorial\Info::renderSomethingIsWrong(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$taxonomy = $this->constant( $constants[1] );
 		$movefrom = Core\Arraay::prepNumeral( is_array( $movefrom ) ? $movefrom : explode( ',', $movefrom ) );
@@ -588,7 +588,7 @@ trait PairedTools
 		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
-			return gEditorial\Settings::processingAllDone( [
+			return gEditorial\Settings::processingAllDone( NULL, [
 				self::$pairedtools__action_move_from_to,
 				'movefrom',
 				'moveto',
@@ -646,11 +646,11 @@ trait PairedTools
 	{
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				gEditorial\Settings::processingErrorOpen(), '</div></div>' );
+				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources( $limit );
 

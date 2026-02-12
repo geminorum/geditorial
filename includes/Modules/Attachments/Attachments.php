@@ -815,11 +815,11 @@ class Attachments extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 
@@ -836,11 +836,11 @@ class Attachments extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 

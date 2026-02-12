@@ -386,7 +386,7 @@ class Importer extends gEditorial\Module
 		list( $posts, ) = gEditorial\Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
 
 		return Core\HTML::tableList( [
-			'_cb'   => 'ID',
+			'_cb'          => 'ID',
 			'import_image' => [
 				'title'    => _x( 'Image', 'Table Column', 'geditorial-importer' ),
 				'args'     => $args,
@@ -417,9 +417,11 @@ class Importer extends gEditorial\Module
 				},
 			],
 		], $posts, [
-			/* translators: `%s`: count placeholder */
-			'title' => Core\HTML::tag( 'h3', WordPress\Strings::getCounted( count( $posts ), _x( '%s Records Found', 'Header', 'geditorial-importer' ) ) ),
 			'empty' => Services\CustomPostType::getLabel( $args['posttype'], 'not_found' ),
+			'title' => Core\HTML::tag( 'h3', WordPress\Strings::getCounted( count( $posts ),
+				/* translators: `%s`: count placeholder */
+				_x( '%s Records Found', 'Header', 'geditorial-importer' )
+			) ),
 		] );
 	}
 
@@ -1629,11 +1631,11 @@ class Importer extends gEditorial\Module
 
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return ! gEditorial\Info::renderNotSupportedPosttype(
-				ModuleSettings::processingErrorOpen(), '</div></div>' );
+				ModuleSettings::processingErrorOpen(), '</div></div>', FALSE );
 
 		$this->raise_resources();
 
