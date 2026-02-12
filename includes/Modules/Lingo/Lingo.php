@@ -21,7 +21,7 @@ class Lingo extends gEditorial\Module
 
 	protected $disable_no_customs = TRUE;
 	protected $imports_datafiles  = [
-		'default' => 'languages-20230325.json',
+		'default' => 'languages-ISO639.json', // @updated `2026-02-12`
 	];
 
 	public static function module()
@@ -161,7 +161,7 @@ class Lingo extends gEditorial\Module
 
 		$this->filter_module( 'terms', 'disable_field_edit', 3, 12 );
 
-		if ( 'tagline' !== $metakeys['native'] )
+		if ( 'tagline' !== $metakeys['endonym'] )
 			return;
 
 		$this->filter_module( 'terms', 'column_title', 4 );
@@ -223,13 +223,13 @@ class Lingo extends gEditorial\Module
 	public function imports_data_summary( $data )
 	{
 		$data[] = [
+			'updated'     => '2026-02-12',
 			'title'       => $this->imports_datafiles['default'],
-			'updated'     => '2023-03-25',
-			'description' => 'List of language identifiers with ISO 639-1 Alpha-2 codes in JSON.',
 			'path'        => $this->get_imports_datafile(),
-			'sources' => [
+			'description' => 'List of language identifiers with ISO 639-1 Alpha-2 codes in JSON.',
+			'sources'     => [
 				[
-					'link'  => 'https://gist.github.com/joshuabaker/d2775b5ada7d1601bcd7b31cb4081981',
+					'link'  => 'https://gist.github.com/geminorum/c22365243b20af8b2c558a90478d33e8',
 					'title' => 'GitHub Gist',
 				],
 			],
@@ -246,8 +246,8 @@ class Lingo extends gEditorial\Module
 	private function _get_supported_metakeys( $context = NULL )
 	{
 		return $this->filters( 'supported_metakeys', [
-			'native' => 'tagline',
-			'code'   => 'code',
+			'endonym'    => 'tagline',
+			'alpha2code' => 'code',
 		], $context );
 	}
 
@@ -266,9 +266,9 @@ class Lingo extends gEditorial\Module
 
 					$count    = 0;
 					$terms    = [];
-					$rawdata  = Core\Arraay::reKey( $rawdata, 'code' );
+					$rawdata  = Core\Arraay::reKey( $rawdata, 'alpha2code' );
 					$update   = self::req( ModuleSettings::ACTION_UPDATE_LANG_TAXONOMY, FALSE );
-					$term_ids = array_filter( self::req( 'term_id', [] ) );
+					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
 					$metakeys = $this->_get_supported_metakeys( 'imports' );
 
@@ -277,31 +277,31 @@ class Lingo extends gEditorial\Module
 						if ( ! array_key_exists( $code, $rawdata ) )
 							continue;
 
-						if ( array_key_exists( $code, $term_ids ) ) {
+						if ( array_key_exists( $code, $mapped ) ) {
 
 							if ( ! $update )
 								continue;
 
 							$existing =  [
-								// 'name' => $data[$code]['name'], // NOTE: avoid overriding the name
-								'slug' => strtolower( $rawdata[$code]['name'] ),
+								// 'name' => $data[$code]['en_name'], // NOTE: avoid overriding the name
+								'slug' => strtolower( $rawdata[$code]['en_name'] ),
 								'meta' => [
-									$metakeys['code']   => $rawdata[$code]['code'],
-									$metakeys['native'] => $rawdata[$code]['native'],
+									$metakeys['alpha2code'] => $rawdata[$code]['alpha2code'],
+									$metakeys['endonym']    => $rawdata[$code]['endonym'],
 								],
 							];
 
-							if ( ! WordPress\Term::update( (int) $term_ids[$code], $existing ) )
+							if ( ! WordPress\Term::update( (int) $mapped[$code], $existing ) )
 								WordPress\Redirect::doReferer( 'wrong' );
 
 						} else {
 
 							$terms[] =  [
-								'name' => $rawdata[$code]['name'],
-								'slug' => strtolower( $rawdata[$code]['name'] ),
+								'name' => $rawdata[$code]['en_name'],
+								'slug' => strtolower( $rawdata[$code]['en_name'] ),
 								'meta' => [
-									$metakeys['code']   => $rawdata[$code]['code'],
-									$metakeys['native'] => $rawdata[$code]['native'],
+									$metakeys['alpha2code'] => $rawdata[$code]['alpha2code'],
+									$metakeys['endonym']    => $rawdata[$code]['endonym'],
 								],
 							];
 						}
@@ -348,7 +348,7 @@ class Lingo extends gEditorial\Module
 			return $title;
 
 		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
+			? _x( 'Endonym', 'Table Column', 'geditorial-lingo' )
 			: $title;
 	}
 
@@ -358,7 +358,7 @@ class Lingo extends gEditorial\Module
 			return $title;
 
 		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Native Name', 'Table Column', 'geditorial-lingo' )
+			? _x( 'Endonym', 'Table Column', 'geditorial-lingo' )
 			: $title;
 	}
 

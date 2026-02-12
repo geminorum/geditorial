@@ -24,41 +24,44 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
 
 				Core\HTML::tableList( [
-					'_cb'  => 'code',
+					'_cb'  => 'alpha2code',
 					'term' => [
 						'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-term',
 						'args'     => [ 'taxonomy' => $taxonomy, 'metakeys' => $metakeys ],
 						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
-							if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $column['args']['metakeys']['code'], $row['code'] ) )
+							if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $column['args']['metakeys']['alpha2code'], $row['alpha2code'] ) )
 								$title = gEditorial\Helper::getTermTitleRow( $term_id );
 
-							else if ( $term_id = WordPress\Term::exists( $row['name'], $column['args']['taxonomy'] ) )
+							else if ( $term_id = WordPress\Term::exists( $row['en_name'], $column['args']['taxonomy'] ) )
 								$title = gEditorial\Helper::getTermTitleRow( $term_id );
 
-							else if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $column['args']['metakeys']['native'], $row['native'] ) )
+							else if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $column['args']['metakeys']['endonym'], $row['endonym'] ) )
 								$title = gEditorial\Helper::getTermTitleRow( $term_id );
 
 							if ( empty( $title ) )
 								return gEditorial\Helper::htmlEmpty();
 
-							Core\HTML::inputHidden( sprintf( 'term_id[%s]', $row['code'] ), $term_id );
+							Core\HTML::inputHidden(
+								sprintf( 'mapped[%s]', $row['alpha2code'] ),
+								$term_id
+							);
 
 							return $title;
 						}
 					],
-					'code' => [
-						'title' => _x( 'Code', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-code -ltr',
+					'alpha2code' => [
+						'title' => _x( 'Alpha-2', 'Table Column', 'geditorial-lingo' ),
+						'class'    => '-language-alpha2code -ltr',
 					],
-					'name' => [
+					'en_name' => [
 						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-english-name -ltr',
 					],
-					'native' => [
+					'endonym' => [
 						'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-native-name -ltr',
+						'class'    => '-language-endonym -ltr',
 					],
 
 				], $rawdata, [
