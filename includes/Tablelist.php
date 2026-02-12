@@ -620,4 +620,16 @@ class Tablelist extends WordPress\Main
 			},
 		];
 	}
+
+	public static function columnGeneralCode( $code, $title = NULL, $extra = [] )
+	{
+		return array_merge( [
+			'title'    => $title ?? Core\HTML::code( Core\Text::removeFromStart( $code, '_' ) ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				return $value
+					? Core\HTML::code( $value )
+					: Helper::htmlEmpty();
+			},
+		], $extra );
+	}
 }
