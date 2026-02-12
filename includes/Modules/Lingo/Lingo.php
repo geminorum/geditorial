@@ -42,8 +42,9 @@ class Lingo extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'posttypes_option' => 'posttypes_option',
-			'_editpost' => [
+			'posttypes_option'  => 'posttypes_option',
+			'taxonomies_option' => 'taxonomies_option',   // for conversion
+			'_editpost'         => [
 				'metabox_advanced',
 				'selectmultiple_term',
 			],
@@ -94,6 +95,10 @@ class Lingo extends gEditorial\Module
 			return $strings;
 
 		$strings['misc'] = [
+			'settings' => [
+				'taxonomies_title' => _x( 'Source Taxonomies', 'Setting Title', 'geditorial-lingo' ),
+				'taxonomies_after' => _x( 'Selected taxonomies will be available on conversion via tools.', 'Setting Description', 'geditorial-lingo' ),
+			],
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
 				'description' => sprintf(
@@ -243,6 +248,28 @@ class Lingo extends gEditorial\Module
 		return $this->_override_module_cuc_by_taxonomy( 'language_taxonomy', $context, $fallback );
 	}
 
+	protected function taxonomies_excluded( $extra = [] )
+	{
+		return $this->filters( 'taxonomies_excluded',
+			gEditorial\Settings::taxonomiesExcluded( [
+				$this->constant( 'language_taxonomy' ),
+
+				'blood_type'         ,   // `Abo` Module
+				'custom_status'      ,   // `Statuses` Module
+				'human_status'       ,   // `Personage` Module
+				'marital_status'     ,   // `NextOfKin` Module
+				'people'             ,   // `People` Module
+				'people_honorific'   ,   // `People` Module
+				'people_affiliation' ,   // `People` Module
+				'specs'              ,   // `Specs` Module
+				'gender'             ,   // `WasBorn` Module
+				'age_group'          ,   // `WasBorn` Module
+				'year_of_birth'      ,   // `WasBorn` Module
+				'system_tags'        ,   // `gTheme`
+			] + $extra, $this->keep_taxonomies )
+		);
+	}
+
 	private function _get_supported_metakeys( $context = NULL )
 	{
 		return $this->filters( 'supported_metakeys', [
@@ -250,6 +277,93 @@ class Lingo extends gEditorial\Module
 			'alpha2code' => 'code',
 			'rtl'        => 'rtl',
 		], $context );
+	}
+
+	public function tools_settings( $sub )
+	{
+		if ( $this->check_settings( $sub, 'tools' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( 'tools', $sub );
+
+				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CONVERT_INTO_LANG, TRUE ) ) {
+
+					if ( ! $rawdata = $this->get_imports_raw_data() )
+						WordPress\Redirect::doReferer( 'wrong' );
+
+					$count    = 0;
+					$rawdata  = Core\Arraay::reKey( $rawdata, 'alpha2code' );
+					$override = self::req( ModuleSettings::ACTION_CONVERT_OVERRIDE_LANG, FALSE );
+					$mapped   = array_filter( self::req( 'mapped', [] ) );
+					$taxonomy = $this->constant( 'language_taxonomy' );
+					$metakeys = $this->_get_supported_metakeys( 'imports' );
+
+					foreach ( $_POST['_cb'] as $term_id ) {
+
+						if ( ! $code = $mapped[$term_id] ?? FALSE )
+							continue;
+
+						if ( ! array_key_exists( $code, $rawdata ) )
+							continue;
+
+						if ( ! $term = WordPress\Term::get( $term_id ) )
+							WordPress\Redirect::doReferer( 'wrong' );
+
+						$update = [
+							'taxonomy' => $taxonomy,
+							'meta'     => [
+								$metakeys['alpha2code'] => $code,
+								$metakeys['endonym']    => $rawdata[$code]['endonym'],
+								$metakeys['rtl']        => ! empty( $rawdata[$code]['rtl'] ),
+							],
+						];
+
+						// NOTE: does not handle if double code exists
+
+						if ( $override )
+							$update['name'] = $rawdata[$code]['en_name'];
+
+						if ( ! WordPress\Term::update( $term, $update ) )
+							WordPress\Redirect::doReferer( 'wrong' );
+
+						$count++;
+					}
+
+					WordPress\Redirect::doReferer( [
+						'message' => 'converted',
+						'count'   => $count,
+					] );
+
+				} else if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_INVESTIGATE_TERMS ) ) {
+
+					// Do nothing, the post will be handled on `ModuleSettngs`
+
+				} else {
+
+					WordPress\Redirect::doReferer( 'huh' );
+				}
+			}
+		}
+	}
+
+	protected function render_tools_html( $uri, $sub )
+	{
+		$rawdata   = $this->get_imports_raw_data();
+		$taxonomy  = $this->constant( 'language_taxonomy' );
+		$metakeys  = $this->_get_supported_metakeys( 'imports' );
+		$supported = $this->list_taxonomies();
+		$available = FALSE;
+
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Tools', 'Header', 'geditorial-lingo' ) );
+
+			if ( ModuleSettings::renderCard_tool_convert_terms( $taxonomy, $rawdata, $metakeys, $supported ) )
+				$available = TRUE;
+
+			if ( ! $available )
+				gEditorial\Info::renderNoToolsAvailable();
+
+		echo '</div>';
 	}
 
 	public function imports_settings( $sub )
