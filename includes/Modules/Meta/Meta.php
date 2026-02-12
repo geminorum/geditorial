@@ -1040,6 +1040,20 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
+	private function _get_metakeys_for_imports( $context = NULL )
+	{
+		$excludes = [
+			'classic-editor-remember', // Classic Editor Plugin
+			'extra-disable-autop',
+		];
+
+		return $this->filters( 'metakeys_for_image',
+			Core\Arraay::stripByKeys( WordPress\Database::getPostMetaKeys( TRUE ), $excludes ),
+			$context,
+			$excludes
+		);
+	}
+
 	public function imports_settings( $sub )
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
@@ -1109,10 +1123,11 @@ class Meta extends gEditorial\Module
 				'custom_field_into'  => '',
 			], 'imports' );
 
+			$metakeys  = $this->_get_metakeys_for_imports( 'imports' );
 			$available = FALSE;
 
-				if ( ! $this->renderCard_imports_custom_fields( $form ) )
-					$available = TRUE;
+			if ( $this->renderCard_imports_custom_fields( $form, $metakeys ) )
+				$available = TRUE;
 
 			if ( ! $available )
 				gEditorial\Info::renderNoImportsAvailable();
@@ -1120,7 +1135,7 @@ class Meta extends gEditorial\Module
 		echo '</div>';
 	}
 
-	protected function renderCard_imports_custom_fields( $form )
+	protected function renderCard_imports_custom_fields( $form, $metakeys )
 	{
 		if ( isset( $_POST['custom_fields_check'] )
 			&& $form['custom_field'] ) {
@@ -1163,8 +1178,9 @@ class Meta extends gEditorial\Module
 				$this->do_settings_field( [
 					'type'         => 'select',
 					'field'        => 'custom_field',
-					'values'       => WordPress\Database::getPostMetaKeys( TRUE ),
+					'values'       => $metakeys,
 					'default'      => $form['custom_field'],
+					'none_title'   => gEditorial\Settings::showOptionNone(),
 					'option_group' => 'imports',
 				] );
 
