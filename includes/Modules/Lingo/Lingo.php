@@ -144,6 +144,20 @@ class Lingo extends gEditorial\Module
 			'custom_icon'     => $this->module->icon,
 			'admin_managed'   => TRUE,
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
+			'meta_tagline'    => TRUE,
+			'suitable_metas'  => [
+				'tagline' => [
+					_x( 'Endonym', 'Meta Field Title', 'geditorial-lingo' ),
+					_x( 'The native name for the language.', 'Meta Field Description', 'geditorial-lingo' ),
+					TRUE,
+				],
+				'code' => [
+					_x( 'Alpha-2 Code', 'Meta Field', 'geditorial-lingo' ),
+					_x( 'ISO 639-1/Alpha-2 Code for the language.', 'Meta Field Column', 'geditorial-lingo' ),
+					_x( 'Alpha-2', 'Meta Field Column', 'geditorial-lingo' ),
+				],
+				'rtl' => NULL,
+			],
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
@@ -162,15 +176,7 @@ class Lingo extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$metakeys = $this->_get_supported_metakeys( 'settings' );
-
 		$this->filter_module( 'terms', 'disable_field_edit', 3, 12 );
-
-		if ( 'tagline' !== $metakeys['endonym'] )
-			return;
-
-		$this->filter_module( 'terms', 'column_title', 4 );
-		$this->filter_module( 'terms', 'field_tagline_title', 4 );
 	}
 
 	public function current_screen( $screen )
@@ -456,26 +462,6 @@ class Lingo extends gEditorial\Module
 				gEditorial\Info::renderNoImportsAvailable();
 
 		echo '</div>';
-	}
-
-	public function terms_column_title( $title, $field, $taxonomy, $fallback )
-	{
-		if ( 'tagline' !== $field )
-			return $title;
-
-		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Endonym', 'Table Column', 'geditorial-lingo' )
-			: $title;
-	}
-
-	public function terms_field_tagline_title( $title, $taxonomy, $field, $term )
-	{
-		if ( 'tagline' !== $field )
-			return $title;
-
-		return $taxonomy === $this->constant( 'language_taxonomy' )
-			? _x( 'Endonym', 'Table Column', 'geditorial-lingo' )
-			: $title;
 	}
 
 	public function terms_disable_field_edit( $disabled, $field, $taxonomy )

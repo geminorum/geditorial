@@ -9,6 +9,48 @@ use geminorum\gEditorial\WordPress;
 class TaxonomyFields extends gEditorial\Service
 {
 
+	const SUITABLE_METAS_PROP = 'suitable_meta_fields';
+	const META_TAGLINE_PROP   = 'taxonomyfields_tagline'; // CAUTION: @SEE `WordPress\Term::summary()`
+
+	public static function getSuitableMetas( $taxonomy, $fallback = [] )
+	{
+		static $data = [];
+
+		if ( ! empty( $data[$taxonomy] ) )
+			return $data[$taxonomy];
+
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
+			return $fallback;
+
+		if ( empty( $object->{static::SUITABLE_METAS_PROP} ) )
+			return $fallback;
+
+		$suitables = [];
+
+		foreach ( $object->{static::SUITABLE_METAS_PROP} as $field => $args ) {
+			$args = $args ?? [];
+
+			// `NULL`: default
+			// `FALSE`: disable
+			// `TRUE`: fallback
+
+			$suitable = [
+				'title'       => $args[0] ?? NULL,
+				'description' => $args[1] ?? NULL,
+				'column'      => $args[2] ?? NULL,
+				'position'    => $args[3] ?? NULL,
+			];
+
+			// `TRUE` for `column` falls back to the provided `title`
+			if ( TRUE === $suitable['column'] )
+				$suitable['column'] = $suitable['title'];
+
+			$suitables[$field] = $suitable;
+		}
+
+		return $data[$taxonomy] = $suitables;
+	}
+
 	public static function getDefaultCalendar( $module = 'terms', $check = TRUE )
 	{
 		if ( $check && ! gEditorial()->enabled( $module ) )

@@ -139,6 +139,7 @@ class Metropolis extends gEditorial\Module
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,
+			'meta_tagline'    => TRUE,
 			'suitable_metas'  => [
 				'image'     => NULL,
 				'url'       => NULL,

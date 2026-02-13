@@ -144,6 +144,7 @@ class People extends gEditorial\Module
 			'custom_captype'  => TRUE,
 			'content_rich'    => TRUE,
 			'reverse_ordered' => 'id',        // latest first
+			'meta_tagline'    => TRUE,
 			'suitable_metas'  => [
 				'fullname' => NULL,
 				'tagline'  => NULL,

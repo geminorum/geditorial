@@ -127,6 +127,9 @@ class Yearly extends gEditorial\Module
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term' ),
 			'custom_captype'  => TRUE,
 			'reverse_ordered' => 'name',
+			'suitable_metas'  => [
+				'code' => [ _x( 'Year', 'Meta Field', 'geditorial-yearly' ), FALSE ],
+			],
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );

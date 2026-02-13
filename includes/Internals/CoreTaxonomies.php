@@ -103,8 +103,8 @@ trait CoreTaxonomies
 			'auto_assigned'   => NULL,
 			'terms_related'   => NULL,
 			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
-			'meta_tagline'    => NULL,     // FALSE, meta-key or `TRUE` for default `tagline` // TODO
-			'suitable_metas'  => NULL,     // list of meta suggested for this taxonomy: `field` => `title` / NULL // TODO
+			'meta_tagline'    => NULL,     // `FALSE`, meta-key or `TRUE` for default `tagline` // TODO
+			'suitable_metas'  => NULL,     // Optional list of meta suggested for this taxonomy.
 			'search_titles'   => NULL,
 			'ical_source'     => TRUE,     // `TRUE`/`FALSE`/`paired`
 		], $settings_atts );
@@ -379,6 +379,8 @@ trait CoreTaxonomies
 				case 'terms_related'   : $args[Services\TermRelations::TAXONOMY_PROP]         = $value; break;
 				case 'search_titles'   : $args[Services\AdvancedQueries::TAXONOMY_PROP]       = $value; break;
 				case 'ical_source'     : $args[Services\Calendars::TAXONOMY_ICAL_SOURCE]      = $value; break;
+				case 'suitable_metas'  : $args[Services\TaxonomyFields::SUITABLE_METAS_PROP]  = $value; break;
+				case 'meta_tagline'    : $args[Services\TaxonomyFields::META_TAGLINE_PROP]    = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms

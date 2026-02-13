@@ -558,8 +558,15 @@ class Terms extends gEditorial\Module
 
 	public function get_supported_field_title( $field, $taxonomy, $term = FALSE )
 	{
+		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
+		$suitable  = $suitables[$field]['title'] ?? NULL;
+		$title      = '';
+
+		if ( FALSE !== $suitable )
+			$title = $suitable ?? $this->get_string( $field, $taxonomy, 'titles', $field );
+
 		return $this->filters( 'field_'.$field.'_title',
-			$this->get_string( $field, $taxonomy, 'titles', $field ),
+			$title,
 			$taxonomy,
 			$field,
 			$term
@@ -568,8 +575,15 @@ class Terms extends gEditorial\Module
 
 	public function get_supported_field_desc( $field, $taxonomy, $term = FALSE )
 	{
+		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
+		$suitable  = $suitables[$field]['description'] ?? NULL;
+		$desc      = '';
+
+		if ( FALSE !== $suitable )
+			$desc = $suitable ?? $this->get_string( $field, $taxonomy, 'descriptions', '' );
+
 		return $this->filters( 'field_'.$field.'_desc',
-			$this->get_string( $field, $taxonomy, 'descriptions', '' ),
+			$desc,
 			$taxonomy,
 			$field,
 			$term
@@ -730,6 +744,7 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
 
+		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
 		$supported = $this->get_supported( $taxonomy );
 		$icons     = [
 			'order',
@@ -771,10 +786,17 @@ class Terms extends gEditorial\Module
 
 		foreach ( $supported as $field ) {
 
+			// $position = $suitables[$field]['position'] ?? NULL; // TODO!
+
 			if ( FALSE === ( $position = $this->get_supported_position( $field, $taxonomy ) ) )
 				continue;
 
-			$fallback = $this->get_supported_field_title( $field, $taxonomy );
+			$suitable = $suitables[$field]['column'] ?? NULL;
+
+			if ( FALSE === $suitable )
+				continue;
+
+			$fallback = $suitable ?? $this->get_supported_field_title( $field, $taxonomy );
 			$title    = in_array( $field, $icons, TRUE )
 				? $this->get_column_title_icon( $field, $taxonomy, $fallback )
 				: $this->get_column_title( $field, $taxonomy, $fallback );
