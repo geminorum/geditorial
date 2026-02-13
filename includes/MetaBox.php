@@ -744,7 +744,7 @@ class MetaBox extends WordPress\Main
 
 	public static function classEditorBox( $screen, $id = 'postexcerpt' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$id,
+		add_filter( self::und( 'postbox_classes', $screen->id, $id ),
 			static function ( $classes ) {
 				return Core\Arraay::prepString( $classes, [
 					static::BASE.'-wrap',

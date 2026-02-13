@@ -143,4 +143,22 @@ class Icons extends gEditorial\Service
 			'style' => $style,
 		], NULL );
 	}
+
+	public static function ltrMarkup( $icon = NULL, $extra = [] )
+	{
+		return Core\HTML::getDashicon(
+			$icon ?? 'arrow-right-alt',
+			_x( 'Left-to-Right', 'Service: Icons', 'geditorial' ),
+			Core\HTML::attrClass( '-direction-icon', $extra )
+		);
+	}
+
+	public static function rtlMarkup( $icon = NULL, $extra = [] )
+	{
+		return Core\HTML::getDashicon(
+			$icon ?? 'arrow-left-alt',
+			_x( 'Right-to-Left', 'Service: Icons', 'geditorial' ),
+			Core\HTML::attrClass( '-direction-icon', $extra )
+		);
+	}
 }

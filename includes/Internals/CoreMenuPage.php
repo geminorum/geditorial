@@ -114,7 +114,8 @@ trait CoreMenuPage
 
 	protected function _hook_parentfile_for_optionsgeneralphp()
 	{
-		$this->filter_string( 'parent_file', current_user_can( 'manage_options' ) ? 'options-general.php' : 'tools.php' );
+		// $this->filter_string( 'parent_file', current_user_can( 'manage_options' ) ? 'options-general.php' : 'tools.php' );
+		$this->filter_string( 'parent_file', 'options-general.php' ); // WTF: Working without cap?!
 	}
 
 	/**

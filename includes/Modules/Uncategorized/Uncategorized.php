@@ -44,19 +44,23 @@ class Uncategorized extends gEditorial\Module
 		];
 	}
 
+	// TODO: append `taxtax` taxonomies / @see `Archives` module for query
 	protected function taxonomies_excluded( $extra = [] )
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( [
-				'blood_type'     ,   // `Abo` Module
-				'custom_status'  ,   // `Statuses` Module
-				'human_status'   ,   // `Personage` Module
-				'marital_status' ,   // `NextOfKin` Module
-				'people'         ,   // `People` Module
-				'specs'          ,   // `Specs` Module
-				'gender'         ,   // `WasBorn` Module
-				'age_group'      ,   // `WasBorn` Module
-				'year_of_birth'  ,   // `WasBorn` Module
+				'blood_type'         ,   // `Abo` Module
+				'custom_status'      ,   // `Statuses` Module
+				'human_status'       ,   // `Personage` Module
+				'marital_status'     ,   // `NextOfKin` Module
+				'people'             ,   // `People` Module
+				'people_honorific'   ,   // `People` Module
+				'people_affiliation' ,   // `People` Module
+				'specs'              ,   // `Specs` Module
+				'gender'             ,   // `WasBorn` Module
+				'age_group'          ,   // `WasBorn` Module
+				'year_of_birth'      ,   // `WasBorn` Module
+				'system_tags'        ,   // `gTheme`
 			] + $extra, $this->keep_taxonomies )
 		);
 	}

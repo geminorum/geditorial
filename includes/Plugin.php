@@ -653,7 +653,7 @@ class Plugin extends WordPress\Plugin
 			if ( ! $enqueue )
 				return $icon;
 
-			$key = $group.'_'.$name;
+			$key = self::und( $group, $name );
 
 			if ( ! isset( $this->asset_icons[$key] ) )
 				$this->asset_icons[$key] = [

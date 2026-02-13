@@ -426,7 +426,7 @@ class Settings extends WordPress\Main
 			'flamingo_inbound_channel',  // Flamingo
 
 			'audit_attribute' ,   // Editorial: Audit
-			'affiliation'     ,   // Editorial: People
+			// 'affiliation'     ,   // Editorial: People
 			// 'relation'        ,   // Editorial: Byline
 			'user_group'      ,   // Editorial: Users
 			'user_type'       ,   // Editorial: Users

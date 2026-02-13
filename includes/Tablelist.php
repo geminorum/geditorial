@@ -548,19 +548,33 @@ class Tablelist extends WordPress\Main
 		return $list;
 	}
 
-	public static function columnTermSlug( $link = FALSE, $title = NULL )
+	/**
+	 * Retrieves column arguments for a term slug data.
+	 *
+	 * @param bool $linked
+	 * @param string $column_title
+	 * @param array $extra_arguments
+	 * @param string $empty_attribute
+	 * @return array
+	 */
+	public static function columnTermSlug( $linked = FALSE, $column_title = NULL, $extra_arguments = [], $empty_attribute = '' )
 	{
-		return [
-			'title'    => $title ?? _x( 'Slug', 'Tablelist: Column Title', 'geditorial' ),
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $link ) {
+		return array_merge( [
+			'title'    => $column_title ?? _x( 'Slug', 'Tablelist: Column Title', 'geditorial' ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $linked, $empty_attribute ) {
+
+				if ( empty( $row->slug ) )
+					return Helper::htmlEmpty( sprintf( '-empty-%s', $key ), $empty_attribute );
+
 				if ( ! taxonomy_exists( $row->taxonomy ) )
 					return Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
 
-				return $link
+				return $linked
 					? Core\HTML::link( Core\Text::code( urldecode( $row->slug ) ), WordPress\Term::edit( $row ), TRUE )
 					: Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
-			}
-		];
+			},
+		], $extra_arguments );
 	}
 
 	public static function columnTermDesc( $title = NULL, $extra = [] )
@@ -621,15 +635,66 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnGeneralCode( $code, $title = NULL, $extra = [] )
+	/**
+	 * Retrieves column arguments for a general-type code data.
+	 *
+	 * @param string $data_key
+	 * @param string $column_title
+	 * @param array $extra_arguments
+	 * @param string $empty_attribute
+	 * @return array
+	 */
+	public static function columnGeneralCode( $data_key, $column_title = NULL, $extra_arguments = [], $empty_attribute = '' )
 	{
 		return array_merge( [
-			'title'    => $title ?? Core\HTML::code( Core\Text::removeFromStart( $code, '_' ) ),
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+			'title'    => $column_title ?? Core\HTML::code( Core\Text::removeFromStart( $data_key, '_' ) ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $data_key, $empty_attribute ) {
+
+				if ( is_object( $row ) && property_exists( $row, $data_key ) )
+					return empty( $row->{$data_key} )
+						? Helper::htmlEmpty( sprintf( '-empty-%s', $data_key ), $empty_attribute )
+						: Core\HTML::code( $row->{$data_key} );
+
+				if ( is_array( $row ) && array_key_exists( $data_key, $row ) )
+					return empty( $row[$data_key] )
+						? Helper::htmlEmpty( sprintf( '-empty-%s', $data_key ), $empty_attribute )
+						: Core\HTML::code( $row[$data_key] );
+
 				return $value
 					? Core\HTML::code( $value )
-					: Helper::htmlEmpty();
+					: Helper::htmlEmpty( sprintf( '-empty-%s', $key ), $empty_attribute );
 			},
-		], $extra );
+		], $extra_arguments );
+	}
+
+	/**
+	 * Retrieves column arguments for a general-type direction data.
+	 *
+	 * @param string $column_title
+	 * @param array $extra_arguments
+	 * @return array
+	 */
+	public static function columnGeneralDirection( $column_title = NULL, $extra_arguments = [] )
+	{
+		return array_merge( [
+			'title'    => $column_title ?? _x( '<abbr title="Direction">Dir</abbr>', 'Tablelist: Column: Direction', 'geditorial' ),
+			'class'    => '-direction-data',
+			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+
+				if ( ! is_string( $value ) )
+					return $value
+						? Services\Icons::rtlMarkup()
+						: Services\Icons::ltrMarkup();
+
+				if ( in_array( $value, [ 'rtl', 'right', 'right-to-left' ], TRUE ) )
+					return Services\Icons::rtlMarkup();
+
+				if ( in_array( $value, [ 'ltr', 'left', 'left-to-right' ], TRUE ) )
+					return Services\Icons::ltrMarkup();
+
+				return Core\HTML::sanitizeDisplay( $value ); // fallback to raw data!
+			},
+		], $extra_arguments );
 	}
 }

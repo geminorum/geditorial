@@ -39,14 +39,19 @@ trait RestAPI
 		foreach ( (array) $methods as $method ) {
 
 			$method = strtolower( $method );
+			$hooks  = [
+				'callback'   => self::und( 'restapi', $hook, $method, 'callback' ),
+				'arguments'  => self::und( 'restapi', $hook, $method, 'arguments' ),
+				'permission' => self::und( 'restapi', $hook, $method, 'permission' ),
+			];
 
-			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_callback' ) )
-				$callback = [ $this, 'restapi_'.$hook.'_'.$method.'_callback' ];
+			if ( method_exists( $this, $hooks['callback'] ) )
+				$callback = [ $this, $hooks['callback'] ];
 			else
 				continue;
 
-			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_arguments' ) )
-				$arguments = call_user_func( [ $this, 'restapi_'.$hook.'_'.$method.'_arguments' ] );
+			if ( method_exists( $this, $hooks['arguments'] ) )
+				$arguments = call_user_func( [ $this, $hooks['arguments'] ] );
 
 			else if ( array_key_exists( '_'.$method, $extra ) )
 				$arguments = $extra['_'.$method];
@@ -54,8 +59,8 @@ trait RestAPI
 			else
 				$arguments = [];
 
-			if ( method_exists( $this, 'restapi_'.$hook.'_'.$method.'_permission' ) )
-				$permission = [ $this, 'restapi_'.$hook.'_'.$method.'_permission' ];
+			if ( method_exists( $this, $hooks['permission'] ) )
+				$permission = [ $this, $hooks['permission'] ];
 			else
 				$permission = [ $this, 'restapi_default_permission_callback' ];
 

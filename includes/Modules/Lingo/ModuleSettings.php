@@ -26,7 +26,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		echo self::toolboxCardOpen(
 			_x( 'Language Identifiers', 'Card Title', 'geditorial-lingo' ).
-			Core\HTML::code( _x( 'ISO 639-1 Alpha-2', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
+			Core\HTML::code( _x( 'ISO 639-1', 'Imports', 'geditorial-lingo' ), 'sub' ), FALSE, '-tablelist-card' );
 
 				Core\HTML::tableList( [
 					'_cb'  => 'alpha2code',
@@ -58,23 +58,15 @@ class ModuleSettings extends gEditorial\Settings
 					],
 					'alpha2code' => [
 						'title' => _x( 'Alpha-2', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-alpha2code -ltr',
+						'class'    => '-iso639-alpha2code',
 					],
-					'rtl' => [
-						'title' => _x( '<abbr title="Direction">Dir</abbr>', 'Table Column', 'geditorial-lingo' ),
-						'class'    => '-language-direction',
-						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
-							return $value
-								? Core\HTML::getDashicon( 'arrow-left-alt', _x( 'Right-to-Left', 'Table Column', 'geditorial-lingo' ), '-direction-icon' )
-								: Core\HTML::getDashicon( 'arrow-right-alt', _x( 'Left-to-Right', 'Table Column', 'geditorial-lingo' ), '-direction-icon' );
-						},
-					],
+					'rtl'     => gEditorial\Tablelist::columnGeneralDirection(),
 					'en_name' => [
 						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-english-name -ltr',
 					],
 					'endonym' => [
-						'title' => _x( 'Native Name', 'Table Column', 'geditorial-lingo' ),
+						'title' => _x( 'Endonym', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-endonym -ltr',
 					],
 

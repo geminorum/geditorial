@@ -32,6 +32,7 @@
   {
     "alpha2code": "ar",
     "en_name": "Arabic",
+    "fa_name": "عربی",
     "endonym": "العربية",
     "rtl": 1
   },
@@ -184,6 +185,7 @@
   {
     "alpha2code": "en",
     "en_name": "English",
+    "fa_name": "انگلیسی",
     "endonym": "English"
   },
   {
@@ -209,6 +211,7 @@
   {
     "alpha2code": "fa",
     "en_name": "Persian",
+    "fa_name": "فارسی",
     "endonym": "فارسی",
     "rtl": 1
   },
@@ -235,6 +238,7 @@
   {
     "alpha2code": "fr",
     "en_name": "French",
+    "fa_name": "فرانسه",
     "endonym": "Français"
   },
   {
@@ -372,6 +376,7 @@
   {
     "alpha2code": "ja",
     "en_name": "Japanese",
+    "fa_name": "ژاپنی",
     "endonym": "日本語"
   },
   {
@@ -422,6 +427,7 @@
   {
     "alpha2code": "ko",
     "en_name": "Korean",
+    "fa_name": "کره‌ای",
     "endonym": "한국어"
   },
   {
@@ -438,6 +444,7 @@
   {
     "alpha2code": "ku",
     "en_name": "Kurdish",
+    "fa_name": "کردی",
     "endonym": "Kurdî / كوردی",
     "rtl": 1
   },
@@ -459,6 +466,7 @@
   {
     "alpha2code": "la",
     "en_name": "Latin",
+    "fa_name": "لاتین",
     "endonym": "Latina"
   },
   {
@@ -529,6 +537,7 @@
   {
     "alpha2code": "mn",
     "en_name": "Mongolian",
+    "fa_name": "مغولی",
     "endonym": "Монгол"
   },
   {
@@ -594,6 +603,7 @@
   {
     "alpha2code": "no",
     "en_name": "Norwegian",
+    "fa_name": "نروژی",
     "endonym": "Norsk"
   },
   {
@@ -604,6 +614,7 @@
   {
     "alpha2code": "nv",
     "en_name": "Navajo",
+    "fa_name": "ناواهو",
     "endonym": "Diné bizaad"
   },
   {
@@ -649,17 +660,20 @@
   {
     "alpha2code": "pl",
     "en_name": "Polish",
+    "fa_name": "لهستانی",
     "endonym": "Polski"
   },
   {
     "alpha2code": "ps",
     "en_name": "Pashto",
+    "fa_name": "پشتو",
     "endonym": "پښتو",
     "rtl": 1
   },
   {
     "alpha2code": "pt",
     "en_name": "Portuguese",
+    "fa_name": "پرتغالی",
     "endonym": "Português"
   },
   {
@@ -680,11 +694,13 @@
   {
     "alpha2code": "ro",
     "en_name": "Romanian",
+    "fa_name": "رومانیایی",
     "endonym": "Română"
   },
   {
     "alpha2code": "ru",
     "en_name": "Russian",
+    "fa_name": "روسی",
     "endonym": "Русский"
   },
   {
@@ -815,6 +831,7 @@
   {
     "alpha2code": "tk",
     "en_name": "Turkmen",
+    "fa_name": "ترکمن",
     "endonym": "Туркмен / تركمن"
   },
   {
@@ -860,22 +877,26 @@
   {
     "alpha2code": "ug",
     "en_name": "Uyghur",
+    "fa_name": "اویغور",
     "endonym": "Uyƣurqə / ئۇيغۇرچە"
   },
   {
     "alpha2code": "uk",
     "en_name": "Ukrainian",
+    "fa_name": "اکراینی",
     "endonym": "Українська"
   },
   {
     "alpha2code": "ur",
     "en_name": "Urdu",
+    "fa_name": "اردو",
     "endonym": "اردو",
     "rtl": 1
   },
   {
     "alpha2code": "uz",
     "en_name": "Uzbek",
+    "fa_name": "ازبک",
     "endonym": "Ўзбек"
   },
   {
@@ -911,6 +932,7 @@
   {
     "alpha2code": "yi",
     "en_name": "Yiddish",
+    "fa_name": "ییدیش",
     "endonym": "ייִדיש",
     "rtl": 1
   },
@@ -927,11 +949,13 @@
   {
     "alpha2code": "zh",
     "en_name": "Chinese",
+    "fa_name": "چینی",
     "endonym": "中文"
   },
   {
     "alpha2code": "zu",
     "en_name": "Zulu",
+    "fa_name": "زولو",
     "endonym": "isiZulu"
   }
 ]

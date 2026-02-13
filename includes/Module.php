@@ -530,7 +530,7 @@ class Module extends WordPress\Module
 
 	protected function class_metabox( $screen, $context = 'mainbox' )
 	{
-		add_filter( 'postbox_classes_'.$screen->id.'_'.$this->classs( $context ),
+		add_filter( self::und( 'postbox_classes', $screen->id, $this->classs( $context ) ),
 			function ( $classes ) use ( $context ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',

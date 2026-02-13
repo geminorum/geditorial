@@ -64,7 +64,7 @@ class Lingo extends gEditorial\Module
 		Core\HTML::desc( sprintf(
 			/* translators: `%s`: ISO code */
 			_x( 'Helps with Importing Language Identifiers from %s into WordPress.', 'Tool Box', 'geditorial-lingo' ),
-			Core\HTML::code( 'ISO 639-1' )
+			Core\HTML::code( 'ISO 639-1/Alpha-2' )
 		) );
 	}
 
@@ -104,7 +104,7 @@ class Lingo extends gEditorial\Module
 				'description' => sprintf(
 					/* translators: `%s`: ISO code */
 					_x( 'Language Identifiers from %s into WordPress', 'Importer: Description', 'geditorial-lingo' ),
-					Core\HTML::code( 'ISO 639-1' )
+					Core\HTML::code( 'ISO 639-1/Alpha-2' )
 				),
 				/* translators: `%s`: redirect URL */
 				'redirect' => _x( 'If your browser doesn&#8217;t redirect automatically, <a href="%s">click here</a>.', 'Importer: Redirect', 'geditorial-lingo' ),
@@ -124,6 +124,7 @@ class Lingo extends gEditorial\Module
 				'persian' => _x( 'Farsi', 'Default Term: Language', 'geditorial-lingo' ),
 				'english' => _x( 'English', 'Default Term: Language', 'geditorial-lingo' ),
 				'french'  => _x( 'French', 'Default Term: Language', 'geditorial-lingo' ),
+				'russian' => _x( 'Russian', 'Default Term: Language', 'geditorial-lingo' ),
 			],
 		];
 	}
@@ -163,12 +164,15 @@ class Lingo extends gEditorial\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'language_taxonomy' );
 		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'language_taxonomy' );
 
-		if ( ! is_admin() )
-			return;
+		if ( is_admin() ) {
 
-		$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
+			$this->_hook_wp_register_importer();
+			$this->filter( 'imports_data_summary', 1, 10, FALSE, $this->base );
+			$this->filter( 'taxonomy_exclude_empty', 1, 10, FALSE, 'gnetwork' );
 
-		$this->_hook_wp_register_importer();
+		} else {
+
+		}
 	}
 
 	public function terms_init()
@@ -230,14 +234,13 @@ class Lingo extends gEditorial\Module
 		return $items;
 	}
 
-	// TODO: move to `ModuleInfo`
 	public function imports_data_summary( $data )
 	{
 		$data[] = [
 			'updated'     => '2026-02-12',
 			'title'       => $this->imports_datafiles['default'],
 			'path'        => $this->get_imports_datafile(),
-			'description' => 'List of language identifiers with ISO 639-1 Alpha-2 codes in JSON.',
+			'description' => 'List of language identifiers with ISO 639-1/Alpha-2 codes in JSON.',
 			'sources'     => [
 				[
 					'link'  => 'https://gist.github.com/geminorum/c22365243b20af8b2c558a90478d33e8',
@@ -247,6 +250,14 @@ class Lingo extends gEditorial\Module
 		];
 
 		return $data;
+	}
+
+	// @FILTER: `gnetwork_taxonomy_exclude_empty`
+	public function taxonomy_exclude_empty( $excludes )
+	{
+		return array_merge( $excludes, [
+			$this->constant( 'language_taxonomy' ),
+		] );
 	}
 
 	public function cuc( $context = 'settings', $fallback = '' )
@@ -304,6 +315,7 @@ class Lingo extends gEditorial\Module
 					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
 					$metakeys = $this->_get_supported_metakeys( 'imports' );
+					$name_key = sprintf( '%s_name', Core\L10n::available( [ 'en', 'fa' ] ) );
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
@@ -325,10 +337,12 @@ class Lingo extends gEditorial\Module
 							],
 						];
 
-						// NOTE: does not handle if double code exists
+						// NOTE: does not care if double code exists!
 
 						if ( $override )
-							$update['name'] = $rawdata[$code]['en_name'];
+							$update['name'] = empty( $rawdata[$code][$name_key] )
+								? $rawdata[$code]['en_name']
+								: $rawdata[$code][$name_key];
 
 						if ( ! WordPress\Term::update( $term, $update ) )
 							WordPress\Redirect::doReferer( 'wrong' );
@@ -392,6 +406,7 @@ class Lingo extends gEditorial\Module
 					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
 					$metakeys = $this->_get_supported_metakeys( 'imports' );
+					$name_key = sprintf( '%s_name', Core\L10n::available( [ 'en', 'fa' ] ) );
 
 					foreach ( $_POST['_cb'] as $code ) {
 
@@ -404,8 +419,10 @@ class Lingo extends gEditorial\Module
 								continue;
 
 							$existing =  [
-								// 'name' => $data[$code]['en_name'], // NOTE: avoid overriding the name
 								'slug' => strtolower( $rawdata[$code]['en_name'] ),
+								// 'name' => empty( $rawdata[$code][$name_key] ) // NOTE: avoid overriding the name
+								// 	? $rawdata[$code]['en_name']
+								// 	: $rawdata[$code][$name_key],
 								'meta' => [
 									$metakeys['alpha2code'] => $rawdata[$code]['alpha2code'],
 									$metakeys['endonym']    => $rawdata[$code]['endonym'],
@@ -419,8 +436,10 @@ class Lingo extends gEditorial\Module
 						} else {
 
 							$terms[] =  [
-								'name' => $rawdata[$code]['en_name'],
 								'slug' => strtolower( $rawdata[$code]['en_name'] ),
+								'name' => empty( $rawdata[$code][$name_key] )
+									? $rawdata[$code]['en_name']
+									: $rawdata[$code][$name_key],
 								'meta' => [
 									$metakeys['alpha2code'] => $rawdata[$code]['alpha2code'],
 									$metakeys['endonym']    => $rawdata[$code]['endonym'],
@@ -448,12 +467,12 @@ class Lingo extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
+		$rawdata   = $this->get_imports_raw_data();
+		$taxonomy  = $this->constant( 'language_taxonomy' );
+		$metakeys  = $this->_get_supported_metakeys( 'imports' );
+		$available = FALSE;
 
-			$rawdata   = $this->get_imports_raw_data();
-			$taxonomy  = $this->constant( 'language_taxonomy' );
-			$metakeys  = $this->_get_supported_metakeys( 'imports' );
-			$available = FALSE;
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
 			if ( ModuleSettings::renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys ) )
 				$available = TRUE;
@@ -464,6 +483,7 @@ class Lingo extends gEditorial\Module
 		echo '</div>';
 	}
 
+	// TODO: use Roles API for this!
 	public function terms_disable_field_edit( $disabled, $field, $taxonomy )
 	{
 		return $taxonomy === $this->constant( 'language_taxonomy' )
