@@ -33,7 +33,7 @@ class Arraay extends Base
 
 	public static function trimText( $input, $filter = TRUE, $additional = NULL )
 	{
-		if ( empty ( $input ) )
+		if ( empty( $input ) )
 			return $input;
 
 		$array = array_map(
@@ -48,7 +48,7 @@ class Arraay extends Base
 
 	public static function trimTextQuotes( $input, $filter = TRUE, $list = NULL )
 	{
-		if ( empty ( $input ) )
+		if ( empty( $input ) )
 			return $input;
 
 		$array = array_map(

@@ -4,6 +4,26 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Base
 {
+	public static function spc()
+	{
+		return Text::glued( func_get_args(), ' ' );
+	}
+
+	public static function dot()
+	{
+		return Text::glued( func_get_args(), '.' );
+	}
+
+	public static function dash()
+	{
+		return Text::glued( func_get_args(), '-' );
+	}
+
+	public static function und()
+	{
+		return Text::glued( func_get_args(), '_' );
+	}
+
 	// NOTE: pseudo magic method!
 	public function setVars( $args )
 	{
