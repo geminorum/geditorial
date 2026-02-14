@@ -366,9 +366,79 @@ class ModuleHelper extends gEditorial\Helper
 		return $query->query( $args );
 	}
 
-	// NOTE: we can query multiple days at once bu the DB takes forever to respond!
+	public static function getPostsList( $calendar_mode, $today, $posttypes, $default_type = NULL, $constants = NULL )
+	{
+		$query_args = [
+			'fields'              => 'ids',
+			'orderby'             => 'none',
+			'post_type'           => $posttypes,
+			'post_status'         => WordPress\Status::acceptable( $posttypes ),
+			'posts_per_page'      => -1,
+			'suppress_filters'    => TRUE,
+			'no_found_rows'       => TRUE,
+			'ignore_sticky_posts' => TRUE,
+		];
+
+		list( $query_args['meta_query'] ) = self::theDayMetaQuery( $today );
+
+		$query = new \WP_Query();
+
+		return self::sortPostsList(
+			$query->query( $query_args ),
+			$calendar_mode,
+			$default_type,
+			$constants
+		);
+	}
+
+	public static function sortPostsList( $ids, $calendar_mode, $default_type = NULL, $constants = NULL )
+	{
+		$list = [];
+
+		if ( empty( $ids ) || 1 === count( $ids ) )
+			return $ids;
+
+		foreach ( $ids as $id ) {
+
+			if ( ! $the_day = self::getTheDayFromPost( $id, $default_type, $constants ) )
+				continue;
+
+			$parts = self::atts( [
+				'month' => 0,
+				'day'   => 0,
+				'year'  => 0, // TODO: Use current year if it's empty
+			], $the_day );
+
+			// MAYBE: convert to Gregorian and combine all calendars
+
+			$list[] = [
+				'id'       => $id,
+				'cal'      => $the_day['cal'],
+				'priority' => vsprintf( '%s%s%s', [
+					Core\Number::zeroise( $parts['year'], 4 ),
+					Core\Number::zeroise( $parts['month'], 2 ),
+					Core\Number::zeroise( $parts['day'], 2 ),
+				] ),
+			];
+		}
+
+		// WTF: maybe multi-sort by priority then the postdate/time
+
+		return array_values(
+			Core\Arraay::pluck(
+				Core\Arraay::sortByPriority( $list, 'priority' ),
+				'id'
+			)
+		);
+	}
+
+	// NOTE: DEPRECATED: use `get_posts_connected()` on main module class
+	// NOTE: we can query multiple days at once but the db takes forever to respond!
+	// NOTE: does not handle sorting by the day data!
 	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
+		self::_dep( 'get_posts_connected()' );
+
 		$args = self::atts( [
 			'the_day' => [],
 			'today'   => [],

@@ -554,11 +554,11 @@ class Today extends gEditorial\Module
 	// NOT USED
 	protected function check_the_main_posttype( $the_day = [] )
 	{
-		return ModuleHelper::getPostsConnected( [
-			'type'    => $this->constant( 'main_posttype' ),
-			'the_day' => $the_day,
-			'all'     => TRUE,
-			'count'   => TRUE,
+		return $this->get_posts_connected( [
+			'type'  => $this->constant( 'main_posttype' ),
+			'today' => [ $the_day ],
+			'all'   => TRUE, // WTF?!
+			'count' => TRUE,
 		], $this->get_the_day_constants() );
 	}
 
@@ -576,10 +576,10 @@ class Today extends gEditorial\Module
 
 			$the_day = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar(), $constants );
 
-			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-				'type'    => $posttypes,
-				'the_day' => $the_day,
-				'all'     => TRUE,
+			$posts = $this->get_posts_connected( [
+				'type'  => $posttypes,
+				'today' => [ $the_day ],
+				'all'   => TRUE, // WTF?!
 			], $constants );
 
 			Core\HTML::tableList( [
@@ -851,12 +851,11 @@ class Today extends gEditorial\Module
 
 		foreach ( $this->__today as $calendar => $_the_day ) {
 
-			// NOTE: we can query multiple days at once bu the DB takes forever to respond!
-
-			list( $posts, $pagination ) = ModuleHelper::getPostsConnected( [
-				'type'    => $posttypes,
-				'the_day' => $_the_day,
-				'all'     => TRUE,
+			// NOTE: we can query multiple days at once but the db takes forever to respond!
+			$posts = $this->get_posts_connected( [
+				'type'  => $posttypes,
+				'today' => [ $_the_day ],
+				'all'   => TRUE, // WTF?!
 			], $this->get_the_day_constants() );
 
 			if ( ! empty( $posts ) )
@@ -1102,9 +1101,9 @@ class Today extends gEditorial\Module
 			if ( FALSE === ( $the_day = ModuleHelper::getTheDayFromPost( $post, $default, $constants ) ) )
 				return $null;
 
-			list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
-				'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
-				'the_day' => $the_day,
+			$items = $this->get_posts_connected( [
+				'type'  => get_query_var( 'day_posttype', $this->posttypes() ),
+				'today' => [ $the_day ],
 			], $constants );
 
 			foreach ( $items as $item )
@@ -1156,10 +1155,10 @@ class Today extends gEditorial\Module
 		if ( FALSE === ( $the_day = ModuleHelper::getTheDayFromQuery( FALSE, $default, $constants ) ) )
 			return $null;
 
-		list( $items, $pagination ) = ModuleHelper::getPostsConnected( [
-			'type'    => get_query_var( 'day_posttype', $this->posttypes() ),
-			'the_day' => $the_day,
-			'all'     => TRUE,
+		$items = $this->get_posts_connected( [
+			'type'  => get_query_var( 'day_posttype', $this->posttypes() ),
+			'today' => [ $the_day ],
+			'all'   => TRUE, // WTF?!
 		], $constants );
 
 		foreach ( $items as $item )
@@ -1507,5 +1506,67 @@ class Today extends gEditorial\Module
 
 		if ( count( $postmeta ) )
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
+	}
+
+	public function get_posts_connected( $arguments = [], $constants = NULL )
+	{
+		$parsed = self::parsed( [
+			'today'  => [],                   // array list of the days
+			'status' => NULL,                 // `post_status`
+			'count'  => FALSE,
+			'type'   => $this->posttypes(),
+			'query'  => [],
+		], $arguments );
+
+		$supported     = $this->posttypes();
+		$calendar_mode = $this->get_calendar_mode();
+
+		$key = $this->hash( $parsed['today'], $supported, $calendar_mode );
+
+		if ( WordPress\IsIt::flush( 'edit_others_posts' ) ) // TODO: check for edit roles
+			delete_transient( $key );
+
+		if ( FALSE === ( $sorted = get_transient( $key ) ) ) {
+
+			$sorted = ModuleHelper::getPostsList(
+				$calendar_mode,
+				$parsed['today'],
+				$supported,   // always sort all supported
+				$this->default_calendar(),
+				$constants
+			);
+
+			set_transient(
+				$key,
+				$sorted ?: '0',   // avoid double queries
+				12 * HOUR_IN_SECONDS
+			);
+		}
+
+		if ( empty( $sorted ) )
+			return $parsed['count'] ? 0 : []; // no pagination: single array
+
+		if ( is_null( $parsed['status'] ) )
+			$status = is_admin()
+				? WordPress\Status::acceptable( isset( $parsed['type'] ) ? $parsed['type'] : 'any' )
+				: 'publish';
+
+		else
+			$status = $parsed['status'] ?: 'publish';
+
+		$posts = gEditorial\Tablelist::getPosts(
+			array_merge( $parsed['query'], [
+				'post_status' => $status,
+				'post__in'    => $sorted,
+				'orderby'     => 'post__in',
+				'order'       => 'ASC',
+				'fields'      => $parsed['count'] ? 'ids' : '',
+			] ),
+			[],
+			$parsed['type'],
+			FALSE // TODO: add pagination on results: needs to rewrite an endpoint for pages
+		);
+
+		return $parsed['count'] ? count( $posts ) : $posts;
 	}
 }
