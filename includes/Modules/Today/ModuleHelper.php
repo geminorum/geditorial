@@ -184,11 +184,12 @@ class ModuleHelper extends gEditorial\Helper
 			if ( ! isset( $gEditorialTodayMonths[$the_day['cal']] ) )
 				$gEditorialTodayMonths[$the_day['cal']] = gEditorial\Datetime::getMonths( $the_day['cal'] );
 
+			// TODO: drop `span` wraps in favor of full block `a`
 			echo '<div class="-today -date-badge">';
 
 				if ( $the_day['day'] )
 					echo '<span class="-day" data-day="'.Core\HTML::escape( $the_day['day'] )
-						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'day' )
+						.'"><a href="'.self::getTheDayLink( $stored, 'day' )
 						.'">'.Core\Number::localize( $the_day['day'] ).'</a></span>';
 
 				if ( $the_day['month'] ) {
@@ -200,18 +201,18 @@ class ModuleHelper extends gEditorial\Helper
 						$the_day['month'] = $gEditorialTodayMonths[$the_day['cal']][$key];
 
 					echo '<span class="-month" data-month="'.Core\HTML::escape( $month )
-						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'monthly' )
+						.'"><a href="'.self::getTheDayLink( $stored, 'monthly' )
 						.'">'.$the_day['month'].'</a></span>';
 				}
 
 				if ( $the_day['year'] )
 					echo '<span class="-year" data-year="'.Core\HTML::escape( $the_day['year'] )
-						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'yearly' )
+						.'"><a href="'.self::getTheDayLink( $stored, 'yearly' )
 						.'">'.Core\Number::localize( $the_day['year'] ).'</a></span>';
 
 				if ( $the_day['cal'] )
 					echo '<span class="-cal" data-cal="'.Core\HTML::escape( $the_day['cal'] )
-						.'"><a target="_blank" href="'.self::getTheDayLink( $stored, 'cal' )
+						.'"><a href="'.self::getTheDayLink( $stored, 'cal' )
 						.'">'.( empty( $gEditorialTodayCalendars[$the_day['cal']] )
 							? $the_day['cal']
 							: $gEditorialTodayCalendars[$the_day['cal']] ).'</a></span>';
@@ -379,6 +380,7 @@ class ModuleHelper extends gEditorial\Helper
 			'ignore_sticky_posts' => TRUE,
 		];
 
+		// TODO: better to use direct SQL query
 		list( $query_args['meta_query'] ) = self::theDayMetaQuery( $today );
 
 		$query = new \WP_Query();
@@ -445,6 +447,7 @@ class ModuleHelper extends gEditorial\Helper
 			'type'    => 'any',
 			'all'     => FALSE,
 			'count'   => FALSE,
+			'ids'     => FALSE,
 			'limit'   => self::limit(),
 			'paged'   => self::paged(),
 			'orderby' => self::orderby( 'ID' ),
@@ -473,12 +476,12 @@ class ModuleHelper extends gEditorial\Helper
 		// 	// $query_args['meta_key'] = $constants['year'];
 		// 	$query_args['meta_key'] = array_values( $constants );
 
-		if ( ! $args['count'] && ! $args['all'] ) {
+		if ( ! $args['count'] && ! $args['all'] && ! $args['ids'] ) {
 			$query_args['posts_per_page'] = $args['limit'];
 			$query_args['offset'] = ( $args['paged'] - 1 ) * $args['limit'];
 		}
 
-		if ( $args['count'] )
+		if ( $args['count'] || $args['ids'] )
 			$query_args['fields'] = 'ids';
 
 		list( $query_args['meta_query'], $query_args['orderby'] ) = self::theDayMetaQuery( $args['today'], $constants );
@@ -491,6 +494,9 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( $args['count'] )
 			return count( $posts );
+
+		if ( $args['ids'] )
+			return $posts;
 
 		$pagination = Core\HTML::tablePagination(
 			$query->found_posts,
@@ -741,6 +747,8 @@ class ModuleHelper extends gEditorial\Helper
 		} else {
 
 			// full-date: `/{cal}/{month}/{day}/{year}`
+
+			// TODO: add current anniversaries: month + day / without year
 
 			$buttons['next'] = Core\HTML::button(
 				_x( 'Next Day', 'Button', 'geditorial-today' ),

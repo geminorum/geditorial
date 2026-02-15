@@ -19,6 +19,7 @@ class Terms extends gEditorial\Module
 		'fullname',
 		'tagline',
 		'subtitle',
+		// 'abbr', // TODO
 		'contact',
 		'venue',
 		'image',

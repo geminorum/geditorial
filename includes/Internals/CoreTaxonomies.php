@@ -371,6 +371,15 @@ trait CoreTaxonomies
 
 					break;
 
+				case 'meta_tagline':
+
+					if ( TRUE === $value )
+						$value = 'tagline';
+
+					$args[Services\TaxonomyFields::META_TAGLINE_PROP] = $value;
+
+					break;
+
 				case 'auto_parents'    : $args[Services\TermHierarchy::AUTO_SET_PARENT_TERMS] = $value; break;
 				case 'auto_children'   : $args[Services\TermHierarchy::AUTO_SET_CHILD_TERMS]  = $value; break;
 				case 'single_selected' : $args[Services\TermHierarchy::SINGLE_TERM_SELECT]    = $value; break;
@@ -380,7 +389,6 @@ trait CoreTaxonomies
 				case 'search_titles'   : $args[Services\AdvancedQueries::TAXONOMY_PROP]       = $value; break;
 				case 'ical_source'     : $args[Services\Calendars::TAXONOMY_ICAL_SOURCE]      = $value; break;
 				case 'suitable_metas'  : $args[Services\TaxonomyFields::SUITABLE_METAS_PROP]  = $value; break;
-				case 'meta_tagline'    : $args[Services\TaxonomyFields::META_TAGLINE_PROP]    = $value; break;
 
 				// TODO: support combination of settings:
 				// -- restricted terms
@@ -1045,6 +1053,27 @@ trait CoreTaxonomies
 		$this->filter_append(
 			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
 			$this->constants( $constants )
+		);
+	}
+
+	// @REF: `post_type_supports()`
+	protected function is_taxonomy_support( $taxonomy, $feature, $fallback = TRUE )
+	{
+		$taxonomy_features = [
+			'name'        => TRUE,
+			'slug'        => TRUE,
+			'description' => TRUE,
+			'editor'      => FALSE, // WTF?!
+		];
+
+		if ( empty( $taxonomy ) || empty( $feature ) )
+			return FALSE;
+
+		return $this->filters( sprintf( 'taxonomy_%s_supports_%s', $taxonomy, $feature ),
+			$taxonomy_features[$taxonomy][$feature] ?? $fallback,
+			$taxonomy,
+			$feature,
+			$fallback
 		);
 	}
 }

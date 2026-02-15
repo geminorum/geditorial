@@ -46,13 +46,10 @@ class Glossary extends gEditorial\Module
 
 		return [
 			'_general' => [
-				'autolink_terms' => [
-					_x( 'Tries to linkify the glossary elements in contents of supported post-types.', 'Settings', 'geditorial-glossary' ),
-					TRUE
-				],
+				'autolink_terms' => [ _x( 'Tries to linkify the glossary terms in contents of supported post-types.', 'Settings', 'geditorial-glossary' ), TRUE ],
 			],
 			'posttypes_option' => 'posttypes_option',
-			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
 			'_dashboard'       => [
 				'dashboard_widgets',
 				'summary_parents',
@@ -62,7 +59,7 @@ class Glossary extends gEditorial\Module
 				'count_not',
 			],
 			'_editpost' => [
-				'metabox_advanced', // NOTE: if no `metabox_advanced` then no assignments!
+				'metabox_advanced', // NOTE: no meta-box means no assignments!
 				'selectmultiple_term' => [ NULL, TRUE ],
 			],
 			'_editlist' => [
@@ -80,8 +77,8 @@ class Glossary extends gEditorial\Module
 				'shortcode_support',
 			],
 			'_constants' => [
-				'main_taxonomy_constant'  => [ NULL, 'glossary_elements' ],
-				'main_shortcode_constant' => [ NULL, 'glossary-elements' ],
+				'main_taxonomy_constant'  => [ NULL, 'glossary_term' ],
+				'main_shortcode_constant' => [ NULL, 'glossary-terms' ],
 			],
 		];
 	}
@@ -89,8 +86,8 @@ class Glossary extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy'  => 'glossary_elements',
-			'main_shortcode' => 'glossary-elements',
+			'main_taxonomy'  => 'glossary_term',
+			'main_shortcode' => 'glossary-terms',
 		];
 	}
 
@@ -98,22 +95,17 @@ class Glossary extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy' => _n_noop( 'Glossary Element', 'Glossary Elements', 'geditorial-glossary' ),
+				'main_taxonomy' => _n_noop( 'Glossary Term', 'Glossary Terms', 'geditorial-glossary' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'extended_label'       => _x( 'Glossary of Words', 'Label: `extended_label`', 'geditorial-glossary' ),
+					'extended_label'       => _x( 'Glossary of Terms', 'Label: `extended_label`', 'geditorial-glossary' ),
 					'menu_name'            => _x( 'Glossary', 'Label: `menu_name`', 'geditorial-glossary' ),
-					'show_option_all'      => _x( 'Elements', 'Label: `show_option_all`', 'geditorial-glossary' ),
+					'show_option_all'      => _x( 'Terms', 'Label: `show_option_all`', 'geditorial-glossary' ),
 					'show_option_no_items' => _x( '(Undefined)', 'Label: `show_option_no_items`', 'geditorial-glossary' ),
 				],
 			],
 		];
-
-		if ( ! is_admin() )
-			return $strings;
-
-		// $strings[''] = [];
 
 		return $strings;
 	}
@@ -125,7 +117,7 @@ class Glossary extends gEditorial\Module
 		$this->register_taxonomy( 'main_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_in_menu'       => FALSE,
-			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE, // NOTE: no meta-box means no assignments!
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
 			'data_length'        => _x( '20', 'Main Taxonomy Argument: `data_length`', 'geditorial-glossary' ),
@@ -134,6 +126,9 @@ class Glossary extends gEditorial\Module
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
+			'suitable_metas'  => [
+				'abbr' => NULL,
+			],
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -141,7 +136,7 @@ class Glossary extends gEditorial\Module
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
-		if ( ! is_admin() ) {
+		if ( is_admin() ) {
 
 			$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
 
@@ -172,15 +167,6 @@ class Glossary extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				// NOTE: if no `metabox_advanced` then no assignments!
-				// if ( ! $this->get_setting( 'metabox_advanced' ) )
-				// 	$this->hook_taxonomy_metabox_mainbox(
-				// 		'main_taxonomy',
-				// 		$screen->post_type,
-				// 		$this->get_setting( 'selectmultiple_term', TRUE )
-				// 			? '__checklist_restricted_terms_callback'
-				// 			: '__singleselect_restricted_terms_callback'
-				// 	);
 			}
 		}
 	}

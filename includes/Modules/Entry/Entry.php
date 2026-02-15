@@ -42,6 +42,7 @@ class Entry extends gEditorial\Module
 				'metabox_advanced',
 			],
 			'_editlist' => [
+				'admin_columns',
 				'admin_ordering',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'category_taxonomy' ), '1' ],
 			],
@@ -224,6 +225,9 @@ class Entry extends gEditorial\Module
 
 	private function _edit_screen( $posttype )
 	{
+		if ( ! $this->get_setting( 'admin_columns' ) )
+			return;
+
 		add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns' ] );
 	}
 

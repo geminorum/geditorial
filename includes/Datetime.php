@@ -720,7 +720,15 @@ class Datetime extends WordPress\Main
 		$calendar_type = $calendar_type ?? Core\L10n::calendar();
 		$the_day       = [ 'cal' => $calendar_type ];
 
-		if ( ! $the_date = self::formatByCalendar( 'Y-n-j', $datetime_string, $calendar_type, NULL, '' ) )
+		$the_date = self::formatByCalendar(
+			'Y-n-j',
+			$datetime_string,
+			$calendar_type,
+			NULL,
+			''
+		);
+
+		if ( ! $the_date )
 			return $the_day;
 
 		list(

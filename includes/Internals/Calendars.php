@@ -10,6 +10,11 @@ use geminorum\gEditorial\WordPress;
 trait Calendars
 {
 
+	public function get_calendar_mode( $default = NULL )
+	{
+		return 1 === count( $this->get_calendars( $default ) ) ? 'singular' : 'multiple';
+	}
+
 	public function get_calendars( $default = NULL )
 	{
 		return $this->get_setting( 'calendar_list', $default ?? [ Core\L10n::calendar() ] );

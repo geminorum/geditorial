@@ -771,11 +771,23 @@ class Today extends gEditorial\Module
 			$this->__today = [ $the_day['cal'] => $_the_day ];
 			$this->__home  = TRUE;
 
+		} else if ( 4 === $count ) {
+
+			// `/{base}/{calendar}/{month}/{day}/{year}`
+			// day in calendar with the year
+			// display the specific day this calendar
+
+			// NOTE: creates the day in this year, in lunar calendars (e.g. `islamic`) may shift a day or two!
+			$datetime = ModuleHelper::getTheDayDateMySQL( $the_day, $type );
+
+			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), FALSE, $datetime );
+			$this->__posts = ModuleHelper::getDayPost( $this->__today[$type], $constants );
+
 		} else if ( 3 === $count && empty( $the_day['year'] ) ) {
 
 			// `/{base}/{calendar}/{month}/{day}`
 			// day in calendar without the year
-			// display the day on all calendars
+			// display the day anniversaries this calendar
 
 			// NOTE: creates the day in this year, in lunar calendars (e.g. `islamic`) may shift a day or two!
 			$datetime = ModuleHelper::getTheDayDateMySQL( $the_day, $type );
@@ -937,7 +949,7 @@ class Today extends gEditorial\Module
 
 	public function get_the_date( $the_date, $d, $post, $the_day = NULL )
 	{
-		// theme-compt ID is `0`
+		// `theme-compt` ID is `0`
 		if ( $post->ID )
 			return $the_date;
 
@@ -997,11 +1009,12 @@ class Today extends gEditorial\Module
 			// `/{rest_base}/{cal}/{month}/{day}/{year}/{posttype}`
 			// `/{rest_base}/{cal}/year/{year}/{month}/{posttype}`
 			// TODO: support for week: `/{rest_base}/{cal}/week/{year}/{month}/{posttype}`
+			// TODO: support pagination!
 
 			/**
-			 * - Better to always prefix with calendar.
+			 * Better to always prefix with calendar:
 			 * - To keep the link history intact and SEO happy.
-			 * - The user may change his mind about multiple calendars.
+			 * - Later, the user may change his mind about multiple calendars.
 			 */
 			$prefix = '^'.$base.'/'.$calendar;
 
@@ -1481,7 +1494,7 @@ class Today extends gEditorial\Module
 		$default   = $this->default_calendar();
 		$calendars = $this->list_calendars();
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
-		$postmeta  = [ 'cal' => $default ]; // `set_today_meta()` needs cal
+		$postmeta  = [ 'cal' => $default ]; // NOTE: `set_today_meta()` needs cal
 
 		foreach ( $atts['map'] as $offset => $field ) {
 
@@ -1511,17 +1524,16 @@ class Today extends gEditorial\Module
 	public function get_posts_connected( $arguments = [], $constants = NULL )
 	{
 		$parsed = self::parsed( [
-			'today'  => [],                   // array list of the days
-			'status' => NULL,                 // `post_status`
+			'today'  => [], // list of the days
+			'status' => NULL,
 			'count'  => FALSE,
 			'type'   => $this->posttypes(),
 			'query'  => [],
 		], $arguments );
 
-		$supported     = $this->posttypes();
-		$calendar_mode = $this->get_calendar_mode();
-
-		$key = $this->hash( $parsed['today'], $supported, $calendar_mode );
+		$supported = $this->posttypes();
+		$mode      = $this->get_calendar_mode();
+		$key       = $this->hash( $parsed['today'], $supported, $mode );
 
 		if ( WordPress\IsIt::flush( 'edit_others_posts' ) ) // TODO: check for edit roles
 			delete_transient( $key );
@@ -1529,9 +1541,9 @@ class Today extends gEditorial\Module
 		if ( FALSE === ( $sorted = get_transient( $key ) ) ) {
 
 			$sorted = ModuleHelper::getPostsList(
-				$calendar_mode,
+				$mode,
 				$parsed['today'],
-				$supported,   // always sort all supported
+				$supported, // always sort all supported
 				$this->default_calendar(),
 				$constants
 			);
