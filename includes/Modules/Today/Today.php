@@ -15,6 +15,7 @@ class Today extends gEditorial\Module
 	use Internals\MetaBoxCustom;
 	use Internals\MetaBoxMain;
 	use Internals\MetaBoxSupported;
+	use Internals\ViewEngines;
 
 	protected $__today = [];
 	protected $__posts = [];
@@ -879,36 +880,11 @@ class Today extends gEditorial\Module
 		foreach ( $this->__posts as $post ) {
 
 			// has excerpt
-			if ( $post->post_excerpt ) {
-				$html = wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE );
-				echo Core\HTML::wrap( $html, $this->classs( 'theday-excerpt' ) );
-			}
-		}
-
-		if ( count( $blocks ) ) {
-
-			echo '<div class="row">';
-
-			foreach ( $blocks as $calendar => $posts ) {
-
-				echo '<div class="col" data-calendar="'.$calendar.'">';
-				echo '<ul class="-items">';
-
-				foreach ( $posts as $post )
-					echo gEditorial\ShortCode::postTitle( $post, [
-						'title_tag' => 'li',
-						'title_cb'  => [ $this, 'shortcode_posttitle_callback' ],
-					] );
-
-				echo '</ul>';
-				echo '</div>';
-			}
-
-			echo '</div>';
-
-		} else {
-
-			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
+			if ( $post->post_excerpt )
+				echo Core\HTML::wrap(
+					wpautop( WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ), FALSE ),
+					$this->classs( 'theday-excerpt' )
+				);
 		}
 
 		$_the_day   = Core\Arraay::getByKeyOrFirst( $this->__today, $type );
@@ -931,6 +907,40 @@ class Today extends gEditorial\Module
 					echo implode( '&nbsp;&nbsp;', $buttons );
 
 			echo $admin ? '</p>' : '</div>';
+		}
+
+		if ( count( $blocks ) ) {
+
+			if ( $admin ) {
+
+				echo '<div class="row">';
+
+				foreach ( $blocks as $calendar => $posts ) {
+
+					echo '<div class="col" data-calendar="'.$calendar.'">';
+					echo '<ul class="-items">';
+
+					foreach ( $posts as $post )
+						echo gEditorial\ShortCode::postTitle( $post, [
+							'title_link' => 'shortlink',
+							'title_tag'  => 'li',
+							'title_cb'   => [ $this, 'shortcode_posttitle_callback' ],
+						] );
+
+					echo '</ul>';
+					echo '</div>';
+				}
+
+				echo '</div>';
+
+			} else {
+
+				$this->render_today_items( $blocks );
+			}
+
+		} else {
+
+			Core\HTML::desc( _x( 'Nothing happened!', 'Message', 'geditorial-today' ) );
 		}
 
 		return Core\HTML::wrap( ob_get_clean(), $this->classs( 'theday-content' ) );
@@ -1580,5 +1590,84 @@ class Today extends gEditorial\Module
 		);
 
 		return $parsed['count'] ? count( $posts ) : $posts;
+	}
+
+	public function render_today_items( $columns, $context = NULL )
+	{
+		if ( empty( $columns ) )
+			return;
+
+		$context = $context ?? is_admin() ? 'backend' : 'frontend';
+
+		if ( ! $view = $this->viewengine__view_by_template( 'today-items', $context ) )
+			return FALSE;
+
+		$constants    = $this->get_the_day_constants();
+		$default_type = $this->default_calendar();
+		$mode         = $this->get_calendar_mode();
+		$callback     = $this->filters( 'render_today_items_callback', FALSE, $mode, $context );
+
+		if ( $callback && ! is_callable( $callback ) )
+			$callback = FALSE;
+
+		echo '<div class="row">';
+
+		foreach ( $columns as $calendar => $items ) {
+
+			echo '<div class="col" data-calendar="'.$calendar.'">';
+
+			$current = NULL;
+			$block   = [];
+			$data    = [
+				'context'  => $context,
+				'calendar' => $calendar,
+				'blocks'   => [],
+			];
+
+
+			foreach ( $items as $item ) {
+
+				if ( ! $post = WordPress\Post::get( $item ) )
+					continue;
+
+				$the_day = ModuleHelper::getTheDayFromPost( $post, $default_type, $constants );
+
+				if ( $current && ! Core\Arraay::equalValues( $current, $the_day ) ) {
+
+					$data['blocks'][] = [
+						'the_day' => ModuleHelper::prepTheDay( $current, $mode ),
+						'items'   => $block,
+					];
+
+					$block = [];
+				}
+
+				$current = $the_day;
+				$block[] = [
+					'html' => $callback
+						? call_user_func_array( $callback, [ $post, $the_day, $mode, $context ] )
+						: gEditorial\ShortCode::postTitle( $post, [
+							'title_link'       => 'shortlink',
+							'title_link_class' => 'stretched-link',
+							'title_tag'        => FALSE,
+							'title_anchor'     => FALSE,
+						] ),
+				];
+			}
+
+			// passing the last block
+			$data['blocks'][] = [
+				'the_day' => ModuleHelper::prepTheDay( $current, $mode ),
+				'items'   => $block,
+			];
+
+			echo $this->wrap_open( '-view -today-items -'.$context );
+				$this->viewengine__render( $view, [ 'data' => $data ] );
+			echo '</div>';
+
+			echo '</div>';
+		}
+
+		echo '</div>';
 	}
 }

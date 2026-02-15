@@ -160,6 +160,63 @@ class ModuleHelper extends gEditorial\Helper
 		return WordPress\Strings::getJoined( $parts, '[', ']', '', gEditorial\Datetime::dateSeparator() );
 	}
 
+	public static function prepTheDay( $data, $mode, $fallback = FALSE )
+	{
+		static $calendars, $months;
+
+		if ( empty( $data['cal'] ) )
+			return $fallback;
+
+		if ( empty( $calendars ) )
+			$calendars = Services\Calendars::getDefualts();
+
+		if ( empty( $months[$data['cal']] ) )
+			$months[$data['cal']] = gEditorial\Datetime::getMonths( $data['cal'] );
+
+		$the_day = [];
+
+		foreach ( $data as $key => $value ) {
+
+			if ( ! $value )
+				continue;
+
+			$text = Core\Number::translate( $value ); // in case store localized!
+
+			switch ( $key ) {
+
+				case 'cal':
+
+					if ( 'multiple' !== $mode )
+						continue 2;
+
+					$text = $calendars[$data['cal']] ?? $data['cal']; break;
+
+
+				case 'day':  $text = Core\Number::localize( $value ); break;
+				case 'year': $text = Core\Number::localize( $value ); break;
+
+				case 'month':
+					$month = Core\Number::zeroise( $text, 2 );
+					$text  = $months[$data['cal']][$month] ?? Core\Number::localize( $value );
+					break;
+			}
+
+			$the_day[$key] = [
+				'type' => $key,
+				'raw'  => $value,
+				'text' => $text,
+				'link' => self::getTheDayLink( $data, $key ),
+			];
+		}
+
+		return Core\Arraay::valuesByKeys( $the_day, [
+			'day',
+			'month',
+			'year',
+			'cal',
+		] );
+	}
+
 	public static function displayTheDay( $stored, $empty = '&mdash;' )
 	{
 		global $gEditorialTodayCalendars, $gEditorialTodayMonths;

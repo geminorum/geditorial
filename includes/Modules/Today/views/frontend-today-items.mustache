@@ -1,0 +1,19 @@
+{{#data.blocks}}
+	<div class="-wrap the-day-block d-flex align-items-start mb-3 pt-3 border-top border-last">
+		<div class="-wrap -badge flex-shrink-0 me-3 ms-3">
+			<div class="-wrap the-day-badge">
+				{{#the_day}}
+					<a class="-{{{type}}}" href="{{{link}}}" data-raw="{{{raw}}}">{{{text}}}</a>
+				{{/the_day}}
+			</div>
+		</div>
+
+		<div class="-wrap -list w-100">
+			<ul class="list-group list-group-flush">
+				{{#items}}
+					<li class="list-group-item position-relative">{{{html}}}</li>
+				{{/items}}
+			</ul>
+		</div>
+	</div>
+{{/data.blocks}}
