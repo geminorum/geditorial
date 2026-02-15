@@ -87,8 +87,6 @@ class CustomTaxonomy extends gEditorial\Service
 			// 'parent_field_description'   => _x( 'Assign a parent term to create a hierarchy. The term Jazz, for example, would be the parent of Bebop and Big Band.', 'CustomTaxonomy: Label for `parent_field_description`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
 			// 'desc_field_description'     => _x( 'The description is not prominent by default; however, some themes may show it.', 'CustomTaxonomy: Label for `desc_field_description`', 'geditorial' ),
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			'template_name'              => _x( '%2$s Archives', 'CustomTaxonomy: Label for `template_name`', 'geditorial' ),
 		], $taxonomy, $strings, $name );
 
 		foreach ( $templates as $key => $template )
@@ -194,6 +192,13 @@ class CustomTaxonomy extends gEditorial\Service
 					return $object->description;
 
 				break; // go to fall-backs
+
+			case 'template_name':
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
+					_x( '%2$s Archives', 'CustomTaxonomy: Label for `template_name`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			// case 'assign_description': // TODO: display on meta-box after hook
 			// case 'manage_description': // TODO

@@ -298,8 +298,10 @@ class Today extends gEditorial\Module
 				echo '<div id="postbox-container-1" class="postbox-container">';
 
 					if ( WordPress\IsIt::dev() ) {
-						self::dump( $this->__today );
-						self::dump( $this->__posts );
+						echo '<hr />';
+						Core\HTML::tableSide( $this->__posts, TRUE, 'POSTS' );
+						echo '<hr />';
+						Core\HTML::tableSide( $this->__today, TRUE, 'TODAY' );
 					}
 
 				echo '</div>';
@@ -426,7 +428,7 @@ class Today extends gEditorial\Module
 
 	public function get_the_day_admin_link( $the_day )
 	{
-		return $this->get_adminpage_url( TRUE, $the_day, 'adminmenu' );
+		return $this->get_adminpage_url( TRUE, array_filter( $the_day ), 'adminmenu' );
 	}
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
@@ -720,14 +722,18 @@ class Today extends gEditorial\Module
 			return $template;
 		}
 
-		WordPress\Theme::resetQuery( [
-			'ID'          => 0, // -9999, // WTF: must be `0` to avoid notices
-			'post_title'  => '&nbsp;', // avoid considering the `.-empty-title`
-			'post_author' => 0,
-			'post_type'   => $this->constant( 'main_posttype' ),
-			'is_single'   => TRUE,
-		], [], [ $this, 'the_day_content_callback' ],
-			[ $this, 'the_day_title_callback' ] );
+		WordPress\Theme::resetQuery(
+			[
+				'ID'          => 0,        // -9999, // WTF: must be `0` to avoid notices
+				'post_title'  => '&nbsp;', // avoid considering the `.-empty-title`
+				'post_author' => 0,
+				'post_type'   => $this->constant( 'main_posttype' ),
+				'is_single'   => TRUE,
+			],
+			[],
+			[ $this, 'the_day_content_callback' ],
+			[ $this, 'the_day_title_callback' ]
+		);
 
 		$this->enqueue_styles();
 		$this->filter( 'get_the_date', 3 );
@@ -781,7 +787,7 @@ class Today extends gEditorial\Module
 			// NOTE: creates the day in this year, in lunar calendars (e.g. `islamic`) may shift a day or two!
 			$datetime = ModuleHelper::getTheDayDateMySQL( $the_day, $type );
 
-			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), FALSE, $datetime );
+			$this->__today = ModuleHelper::getTheDayAllCalendars( $this->get_calendars(), TRUE, $datetime );
 			$this->__posts = ModuleHelper::getDayPost( $this->__today[$type], $constants );
 
 		} else if ( 3 === $count && empty( $the_day['year'] ) ) {
@@ -895,7 +901,7 @@ class Today extends gEditorial\Module
 
 			echo $admin
 				? $this->wrap_open_buttons()
-				: $this->wrap_open( [ '-buttons', '-navigation' ] );
+				: $this->wrap_open( [ '-buttons', '-navigation', 'mb-3', 'text-center' ] );
 
 				if ( $navigation )
 					echo implode( '&nbsp;&nbsp;', $navigation );
@@ -948,10 +954,10 @@ class Today extends gEditorial\Module
 
 	public function shortcode_posttitle_callback( $post, $atts, $text )
 	{
-		if ( ! $the_date = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar() ) )
+		if ( ! $the_day = ModuleHelper::getTheDayFromPost( $post, $this->default_calendar() ) )
 			return $text;
 
-		if ( ! $prefix = trim( ModuleHelper::titleTheDay( $the_date, '[]', FALSE ), '[]' ) )
+		if ( ! $prefix = trim( ModuleHelper::titleTheDay( $the_day, '[]', FALSE ), '[]' ) )
 			return $text;
 
 		return sprintf( '[%s]: %s', $prefix, $text );

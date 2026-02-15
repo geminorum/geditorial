@@ -492,15 +492,16 @@ class ShortCode extends WordPress\Main
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
 		$args = self::atts( [
-			'title'          => NULL,                             // `FALSE` to disable
-			'title_cb'       => FALSE,                            // Call-back for title
-			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
-			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // Call-back for title attribute
-			'title_tag'      => 'h3',
-			'title_anchor'   => 'post-%2$s',
-			'title_class'    => '-title',
-			'title_dummy'    => '<span class="-dummy"></span>',
+			'title'            => NULL,                             // `FALSE` to disable
+			'title_cb'         => FALSE,                            // Call-back for title
+			'title_link'       => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
+			'title_link_class' => FALSE,
+			'title_title'      => '',
+			'title_title_cb'   => FALSE,                            // Call-back for title attribute
+			'title_tag'        => 'h3',
+			'title_anchor'     => 'post-%2$s',
+			'title_class'      => '-title',
+			'title_dummy'      => '<span class="-dummy"></span>',
 		], $atts );
 
 		$text = WordPress\Post::title( $post, FALSE );
@@ -531,18 +532,28 @@ class ShortCode extends WordPress\Main
 				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $link,
 					'title' => $attr,
+					'class' => $args['title_link_class'],
+				], $args['title'] );
+
+			else if ( 'shortlink' === $args['title_link'] && $post )
+				$args['title'] = Core\HTML::tag( 'a', [
+					'href'  => WordPress\Post::shortlink( $post ) ?: $link,
+					'title' => $attr,
+					'class' => $args['title_link_class'],
 				], $args['title'] );
 
 			else if ( 'anchor' === $args['title_link'] && $post )
 				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => '#'.sprintf( $args['title_anchor'], $post->ID, $post->post_name ),
 					'title' => $attr,
+					'class' => $args['title_link_class'],
 				], $args['title'] );
 
 			else if ( $args['title_link'] )
 				$args['title'] = Core\HTML::tag( 'a', [
 					'href'  => $args['title_link'],
 					'title' => $attr,
+					'class' => $args['title_link_class'],
 				], $args['title'] );
 		}
 

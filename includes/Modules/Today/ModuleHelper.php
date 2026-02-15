@@ -295,13 +295,14 @@ class ModuleHelper extends gEditorial\Helper
 		switch ( $target ?? 'full' ) {
 
 			case 'cal'  : unset( $the_day['year'], $the_day['month'], $the_day['day'] ); break;
-			case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
-			case 'month': unset( $the_day['day'] ); break;
+			// case 'year' : unset( $the_day['month'], $the_day['day'] ); break;
+			// case 'month': unset( $the_day['day'] ); break;
 
 			case 'today'   : $path = sprintf( '%s/%s', $the_day['base'], $the_day['cal'] ); break;
 			case 'annual'  : unset( $the_day['year'] ); break;
 			case 'themonth': unset( $the_day['year'], $the_day['day'] ); break;
 
+			case 'year':
 			case 'yearly':
 
 				if ( $admin )
@@ -310,6 +311,7 @@ class ModuleHelper extends gEditorial\Helper
 				else
 					$path = sprintf( '%s/%s/year/%s', $the_day['base'], $the_day['cal'], $the_day['year'] ); break;
 
+			case 'month':
 			case 'monthly':
 
 				if ( $admin || empty( $the_day['year'] ) )
@@ -805,8 +807,6 @@ class ModuleHelper extends gEditorial\Helper
 
 			// full-date: `/{cal}/{month}/{day}/{year}`
 
-			// TODO: add current anniversaries: month + day / without year
-
 			$buttons['next'] = Core\HTML::button(
 				_x( 'Next Day', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 day' ), $the_day['cal'] ), 'full' ),
@@ -820,6 +820,12 @@ class ModuleHelper extends gEditorial\Helper
 			);
 
 			$current = gEditorial\Datetime::getTheDay( $datetime, $the_day['cal'] );
+
+			$buttons['day'] = Core\HTML::button(
+				_x( 'Anniversaries', 'Button', 'geditorial-today' ),
+				self::getTheDayLink( $current, 'annual' ),
+				_x( 'This Day in the Calendar', 'Title Attr', 'geditorial-today' )
+			);
 
 			$buttons['month'] = Core\HTML::button(
 				_x( 'This Month', 'Button', 'geditorial-today' ),

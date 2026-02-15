@@ -94,8 +94,6 @@ class CustomPostType extends gEditorial\Service
 			'item_link'                => _x( '%2$s Link', 'CustomPostType: Label for `item_link`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
 			'item_link_description'    => _x( 'A link to a %4$s.', 'CustomPostType: Label for `item_link_description`', 'geditorial' ),
-			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
-			'template_name'            => _x( 'Single item: %2$s', 'CustomPostType: Label for `template_name`', 'geditorial' ),
 		], $posttype, $strings, $name );
 
 		$featured_templates = apply_filters( static::BASE.'_posttype_labels_featured_templates', [
@@ -179,6 +177,13 @@ class CustomPostType extends gEditorial\Service
 					return $object->description;
 
 				break; // go to fall-backs
+
+			case 'template_name':
+				return vsprintf(
+					/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
+					_x( 'Single item: %2$s', 'CustomPostType: Label for `template_name`', 'geditorial' ),
+					WordPress\Strings::getNameForms( $name )
+				);
 
 			case 'paired_no_items':
 				return vsprintf(
