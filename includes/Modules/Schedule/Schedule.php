@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Schedule extends gEditorial\Module
 {
 	use Internals\Calendars;
+	use Internals\CoreMenuPage;
 
 	protected $disable_no_posttypes = TRUE;
 
@@ -119,23 +120,18 @@ class Schedule extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	// TODO: use `$this->_hook_wp_submenu_page()`
 	public function admin_menu()
 	{
-		$hook = add_submenu_page(
+		$this->_hook_wp_submenu_page( 'mainpage',
 			'index.php',
 			_x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ),
 			_x( 'My Calendar', 'Menu Title', 'geditorial-schedule' ),
 			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
-			[ $this, 'admin_calendar_page' ]
 		);
-
-		add_action( 'load-'.$hook, [ $this, 'admin_calendar_load' ] );
-		$this->screens['adminmenu'] = $hook;
 	}
 
-	public function admin_calendar_load()
+	public function admin_mainpage_load()
 	{
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );
@@ -171,7 +167,7 @@ class Schedule extends gEditorial\Module
 		return $actions;
 	}
 
-	public function admin_calendar_page()
+	public function admin_mainpage_page()
 	{
 		$cal = self::req( 'cal', $this->default_calendar() );
 

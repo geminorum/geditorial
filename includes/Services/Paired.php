@@ -34,7 +34,7 @@ class Paired extends gEditorial\Service
 		return empty( $posttype->{self::PAIRED_TAXONOMY_PROP} ) ? FALSE : $posttype->{self::PAIRED_TAXONOMY_PROP};
 	}
 
-	// returns the paired posttype, otherwise `FALSE`
+	// returns the paired post-type, otherwise `FALSE`
 	public static function isTaxonomy( $taxonomy )
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
@@ -68,7 +68,7 @@ class Paired extends gEditorial\Service
 
 	public static function getGlobalSummaryForPost( $post, $context = NULL, $fields = NULL )
 	{
-		// NOTE: must be $list['posttype'] = [ $items ];
+		// NOTE: must be `$list['posttype'] = [ $items ];`
 		$list = apply_filters( static::BASE.'_paired_globalsummary_for_post', [], $post, $context );
 
 		if ( empty( $list ) )

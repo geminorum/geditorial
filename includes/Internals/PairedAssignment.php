@@ -186,7 +186,7 @@ trait PairedAssignment
 		if ( ! $this->is_taxonomy( $paired[1], $term ) )
 			return $data;
 
-		$metakey    = $this->constant( 'metakey_term_image', 'image' );
+		$metakey    = Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
 		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
 
 		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )

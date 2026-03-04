@@ -24,7 +24,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		$html = gEditorial\Listtable::restrictByAuthor(
 			empty( $meta ) ? 0 : (int) $meta,
-			self::dash( 'term', $field['name'] ),
+			self::dsh( 'term', $field['name'] ),
 			[
 				'echo'            => FALSE,
 				'show_option_all' => gEditorial\Settings::showOptionNone(),
@@ -69,12 +69,12 @@ class ModuleHelper extends gEditorial\Helper
 
 		$atts = [
 			'id'   => self::classs( $args['name'], 'id' ),
-			'name' => self::dash( 'term', $args['name'] ),
+			'name' => self::dsh( 'term', $args['name'] ),
 
 			'class' => [
-				self::dash( static::BASE, 'searchselect', 'select2' ),
-				self::dash( static::BASE, $module, 'field', $args['name'] ),
-				self::dash( static::BASE, $module, 'type', $args['type'] ),
+				self::dsh( static::BASE, 'searchselect', 'select2' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 
 			'data' => [

@@ -1042,15 +1042,17 @@ class Meta extends gEditorial\Module
 
 	private function _get_metakeys_for_imports( $context = NULL )
 	{
-		$excludes = [
+		$available = WordPress\Database::getPostMetaKeys( TRUE );
+		$excludes  = [
 			'classic-editor-remember', // Classic Editor Plugin
 			'extra-disable-autop',
 		];
 
-		return $this->filters( 'metakeys_for_image',
-			Core\Arraay::stripByKeys( WordPress\Database::getPostMetaKeys( TRUE ), $excludes ),
+		return $this->filters( 'metakeys_for_imports',
+			Core\Arraay::stripByKeys( $available, $excludes ),
 			$context,
-			$excludes
+			$excludes,
+			$available
 		);
 	}
 

@@ -142,7 +142,7 @@ trait PairedTools
 
 		} else if ( gEditorial\Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
 
-			$meta_key = $this->constant( 'metakey_term_image', 'image' );
+			$meta_key = Services\TaxonomyFields::getTermMetaKey( 'image', $constants[1] ) ?: 'image';
 			$count    = 0;
 
 			foreach ( $_POST['_cb'] as $term_id ) {

@@ -35,8 +35,6 @@ class CustomTaxonomy extends gEditorial\Service
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
 			'name'                       => _x( '%1$s', 'CustomTaxonomy: Label for `name`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
-			// 'menu_name'                  => _x( '%1$s', 'CustomTaxonomy: Label for `menu_name`', 'geditorial' ),
-			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
 			'singular_name'              => _x( '%2$s', 'CustomTaxonomy: Label for `singular_name`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
 			'search_items'               => _x( 'Search %1$s', 'CustomTaxonomy: Label for `search_items`', 'geditorial' ),

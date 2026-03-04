@@ -67,6 +67,7 @@ trait CoreMenuPage
 			return FALSE;
 
 		$default_callback = [ $this, sprintf( 'admin_%s_page', $context ) ];
+		$default_loading  = [ $this, sprintf( 'admin_%s_load', $context ) ];
 
 		$this->screens[$context] = add_submenu_page(
 			$parent_slug,
@@ -78,10 +79,10 @@ trait CoreMenuPage
 			( $position ?? ( $this->positions[$context] ?? NULL ) )
 		);
 
-		if ( $this->screens[$context] )
+		if ( $this->screens[$context] && is_callable( $default_loading ) )
 			add_action(
-				sprintf( 'load-%s', $this->screens[$context] ),
-				[ $this, sprintf( 'admin_%s_load', $context ) ],
+				self::dsh( 'load', $this->screens[$context] ),
+				$default_loading,
 				10,
 				0
 			);

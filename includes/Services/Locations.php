@@ -32,7 +32,7 @@ class Locations extends gEditorial\Service
 		if ( self::empty( $data ) )
 			return $fallback;
 
-		if ( ! $data = Core\Text::normalizeWhitespace( self::cleanupChars( $data ) ) )
+		if ( ! $data = Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $data ) ) )
 			return $fallback;
 
 		$data = trim( $data, '.-|…' );

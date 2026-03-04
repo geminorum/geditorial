@@ -106,8 +106,8 @@ trait ViewEngines
 	public function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
 	{
 		$view     = FALSE;
-		$target   = self::dash( $context, $template );
-		$fallback = self::dash( $default, $template );
+		$target   = self::dsh( $context, $template );
+		$fallback = self::dsh( $default, $template );
 		$roots    = $this->viewengine__roots( $path );
 
 		foreach ( $roots as $root ) {
@@ -129,11 +129,11 @@ trait ViewEngines
 	public function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
-		$fallback = self::dash( $context, 'type', $default );
+		$fallback = self::dsh( $context, 'type', $default );
 		$roots    = $this->viewengine__roots( $path );
 
 		if ( $post = WordPress\Post::get( $post ) )
-			$target = self::dash( $context, 'type', $post->post_type );
+			$target = self::dsh( $context, 'type', $post->post_type );
 
 		foreach ( $roots as $root ) {
 
@@ -154,11 +154,11 @@ trait ViewEngines
 	public function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
 	{
 		$target   = $view = FALSE;
-		$fallback = self::dash( $context, 'tax', $default );
+		$fallback = self::dsh( $context, 'tax', $default );
 		$roots    = $this->viewengine__roots( $path );
 
 		if ( $term = WordPress\Term::get( $term ) )
-			$target = self::dash( $context, 'tax', $term->taxonomy );
+			$target = self::dsh( $context, 'tax', $term->taxonomy );
 
 		foreach ( $roots as $root ) {
 

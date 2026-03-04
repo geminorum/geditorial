@@ -991,7 +991,7 @@ trait CoreTaxonomies
 
 				foreach ( $terms as $term )
 					// TODO: prepend counts from `Recount` module
-					$views[self::dash( $taxonomy->name, $term->slug )] = Core\HTML::tag( 'a', [
+					$views[self::dsh( $taxonomy->name, $term->slug )] = Core\HTML::tag( 'a', [
 						'href'  => WordPress\PostType::edit( $screen->post_type, [ $query => $term->slug ] ),
 						'title' => sprintf( '%s: %s', $label, $term->name ),
 						'class' => $term->slug === self::req( $query ) ? 'current' : FALSE,

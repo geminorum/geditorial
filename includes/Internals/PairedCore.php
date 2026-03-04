@@ -1089,7 +1089,7 @@ trait PairedCore
 
 			if ( $this->get_setting( 'thumbnail_support' ) ) {
 
-				$image_metakey = $this->constant( 'metakey_term_image', 'image' );
+				$image_metakey = Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
 				$stored        = get_term_meta( $term->term_id, $image_metakey, TRUE );
 				$thumbnail     = get_post_thumbnail_id( $post->ID );
 
