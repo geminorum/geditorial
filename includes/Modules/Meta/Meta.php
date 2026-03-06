@@ -1174,6 +1174,9 @@ class Meta extends gEditorial\Module
 			gEditorial\Scripts::enqueueClickToClip();
 		}
 
+		if ( empty( $metakeys ) )
+			return FALSE;
+
 		echo gEditorial\Settings::toolboxCardOpen(
 			_x( 'Import Custom Fields', 'Card Title', 'geditorial-meta' ), FALSE );
 

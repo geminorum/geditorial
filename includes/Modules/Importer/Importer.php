@@ -1815,7 +1815,15 @@ class Importer extends gEditorial\Module
 
 		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
 
-		$this->_render_data_table_for_terms( $id, $parsed['items'], $parsed['headers'], $map, $posttype, $terms_all, $source_offset );
+		$this->_render_data_table_for_terms(
+			$id,
+			$parsed['items'],
+			$parsed['headers'],
+			$map,
+			$posttype,
+			$terms_all,
+			$source_offset
+		);
 	}
 
 	private function _render_data_table_for_terms( $id, $data, $headers, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )

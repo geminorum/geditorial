@@ -21,8 +21,11 @@ class Listtable extends WordPress\Main
 		if ( ! $column_id )
 			return FALSE;
 
+		if ( ! $screen = get_current_screen() )
+			return FALSE;
+
 		if ( is_null( $hidden ) )
-			$hidden = (array) get_hidden_columns( get_current_screen() );
+			$hidden = (array) get_hidden_columns( $screen );
 
 		if ( ! in_array( $column_id, $hidden, TRUE ) )
 			return FALSE;

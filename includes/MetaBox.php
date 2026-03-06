@@ -21,11 +21,14 @@ class MetaBox extends WordPress\Main
 		if ( ! $metabox_id )
 			return FALSE;
 
+		if ( ! $screen = get_current_screen() )
+			return FALSE;
+
 		if ( $posttype && WordPress\PostType::supportBlocks( $posttype ) )
 			return FALSE;
 
 		if ( is_null( $hidden ) )
-			$hidden = (array) get_hidden_meta_boxes( get_current_screen() );
+			$hidden = (array) get_hidden_meta_boxes( $screen );
 
 		if ( ! in_array( $metabox_id, $hidden, TRUE ) )
 			return FALSE;

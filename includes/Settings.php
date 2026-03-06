@@ -367,9 +367,15 @@ class Settings extends WordPress\Main
 			'wp_navigation',       // WP Core
 			'wp_template_part',    // WP Core
 			'wp_template',         // WP Core
+			'wp_font_face',        // WP Core
+			'wp_font_family',      // WP Core
 			'user_request',        // WP Core
 			'oembed_cache',        // WP Core
 
+			'fdentry' ,   // WTF?!
+			'adstxt'  ,   // WTF?!
+
+			'buddypress'        ,   // BuddyPress
 			'bp-email'          ,   // BuddyPress
 			// 'product'           ,   // WooCommerce
 			'shop_order'        ,   // WooCommerce
@@ -380,6 +386,13 @@ class Settings extends WordPress\Main
 			'table'             ,   // TablePress
 			'wafs'              ,   // Advanced Free Shipping for WooCommerce
 			'csp-report'        ,   // HTTPS Mixed Content Detector
+			'wpephpcompat_jobs' ,
+
+			'acf-ui-options-page' ,   // Advanced Custom Fields / Secure Custom Fields
+			'acf-field'           ,   // Advanced Custom Fields / Secure Custom Fields
+			'acf-field-group'     ,   // Advanced Custom Fields / Secure Custom Fields
+			'acf-taxonomy'        ,   // Advanced Custom Fields / Secure Custom Fields
+			'acf-post-type'       ,   // Advanced Custom Fields / Secure Custom Fields
 		];
 
 		if ( class_exists( 'bbPress' ) )
@@ -2134,8 +2147,9 @@ class Settings extends WordPress\Main
 
 		if ( $search )
 			echo Core\HTML::tag( 'input', [
+				'id'          => self::dsh( static::BASE, 'setting-search' ), // Browser needs `id` or `name` for an `input`
 				'type'        => 'search',
-				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ], // 'fuzzy-search' // fuzzy wont work persian
+				'class'       => [ 'settings-title-search', '-search', 'hide-if-no-js' ], // 'fuzzy-search' // fuzzy wont work on Persian
 				'placeholder' => _x( 'Search …', 'Settings: Search Placeholder', 'geditorial-admin' ),
 				'autofocus'   => 'autofocus',
 			] );

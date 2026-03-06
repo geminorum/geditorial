@@ -11,7 +11,7 @@ class Helper extends WordPress\Main
 		return gEditorial();
 	}
 
-	// override to use plugin version
+	// Override to use plugin version/hash
 	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheet( $url, $version = NULL, $media = FALSE, $verbose = TRUE )
 	{
@@ -421,7 +421,7 @@ class Helper extends WordPress\Main
 
 	public static function noopedCount( $count, $nooped )
 	{
-		/* translators: singular/plural */
+		/* translators: DO NOT TRANSLATE: `singular` or `plural` */
 		return 'plural' == _x( 'plural', 'Helper: Nooped Count', 'geditorial' )
 			? self::nooped( $count, $nooped )
 			: self::nooped( 1, $nooped );
@@ -449,17 +449,17 @@ class Helper extends WordPress\Main
 	}
 
 	/**
-	 * Logs a message given agent, level, and context.
+	 * Logs a message given agent, level, and context data.
 	 *
 	 * @param string $message
-	 * @param null|string $agent
-	 * @param null|string $level
+	 * @param string $agent
+	 * @param string $level
 	 * @param array $context
 	 * @return false
 	 */
-	public static function log( $message, $agent = NULL, $level = \null, $context = [] )
+	public static function log( $message, $agent = NULL, $level = NULL, $context = [] )
 	{
-		do_action( 'gnetwork_logger_site_'.strtolower( $level ?? 'NOTICE' ),
+		do_action( self::und( 'gnetwork_logger', 'site', strtolower( $level ?? 'NOTICE' ) ),
 			strtoupper( $agent ?? static::BASE ),
 			$message,
 			$context

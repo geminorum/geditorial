@@ -78,6 +78,7 @@ class Parser extends WordPress\Main
 		/**
 		 * @package `jwage/easy-csv`
 		 * @link https://github.com/jwage/easy-csv
+		 * NOTE: This package is abandoned and no longer maintained. No replacement package was suggested.
 		 */
 		$reader = new \EasyCSV\Reader( $data['file_path'] );
 

@@ -195,7 +195,8 @@ class Drafts extends gEditorial\Module
 
 				gEditorial\Ajax::success();
 
-			break;
+				break;
+
 			case 'public':
 
 				if ( empty( $post['post_id'] ) )
@@ -212,7 +213,8 @@ class Drafts extends gEditorial\Module
 
 				gEditorial\Ajax::success( $link );
 
-			break;
+				break;
+
 			case 'list':
 
 				gEditorial\Ajax::checkReferer( $this->hook() );
@@ -322,9 +324,9 @@ class Drafts extends gEditorial\Module
 			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-private' ] ),
 			'style' => $public ? 'display:none;' : FALSE,
 			'data'  => [
-				'id'     => $post->ID,
 				'action' => 'public',
 				'nonce'  => $nonce,
+				'id'     => $post->ID,
 			],
 		], _x( 'Make Preview Public', 'Button', 'geditorial-drafts' ) );
 
@@ -333,9 +335,9 @@ class Drafts extends gEditorial\Module
 			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-public' ] ),
 			'style' => $public ? FALSE : 'display:none;',
 			'data'  => [
-				'id'     => $post->ID,
 				'action' => 'private',
 				'nonce'  => $nonce,
+				'id'     => $post->ID,
 			],
 		], _x( 'Make Preview Private', 'Button', 'geditorial-drafts' ) );
 
@@ -391,6 +393,9 @@ class Drafts extends gEditorial\Module
 
 		add_filter( 'wp_robots', 'wp_robots_no_robots' );
 
+		// Allow this plugin to work with Restricted Site Access https://wordpress.org/plugins/restricted-site-access/
+		// add_filter( 'restricted_site_access_is_restricted', '__return_false' );
+
 		return $wpdb->get_results( $query->request );
 	}
 
@@ -409,11 +414,11 @@ class Drafts extends gEditorial\Module
 
 		$states[$query] = sprintf( '<span title="%2$s">%1$s</span>',
 			_x( 'Public Preview', 'State', 'geditorial-drafts' ),
-			sprintf(
+			Core\HTML::escapeAttr( sprintf(
 				/* translators: `%s`: post title */
 				_x( 'Open public preview of &#8220;%s&#8221;', 'State Title', 'geditorial-drafts' ),
 				_draft_or_post_title( $post )
-			)
+			) )
 		);
 
 		return $states;
