@@ -28,7 +28,7 @@ trait Assets
 
 		$prefix = is_admin() ? 'admin.' : 'front.';
 
-		wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/'.$prefix.$name.'.css', $deps, GEDITORIAL_VERSION, 'all' );
+		wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/'.$prefix.$name.'.css', $deps, GEDITORIAL_HASH, 'all' );
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 
 		return $handle;
@@ -68,7 +68,7 @@ trait Assets
 				$handle,
 				GEDITORIAL_URL.'assets/js/'.$prefix.$name.$suffix.'.js',
 				$deps,
-				GEDITORIAL_VERSION,
+				GEDITORIAL_HASH,
 				TRUE
 			);
 		}

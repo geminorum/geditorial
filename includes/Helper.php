@@ -13,15 +13,25 @@ class Helper extends WordPress\Main
 
 	// override to use plugin version
 	// TODO: Move to `AssetRegistry` Service
-	public static function linkStyleSheet( $url, $version = GEDITORIAL_VERSION, $media = FALSE, $verbose = TRUE )
+	public static function linkStyleSheet( $url, $version = NULL, $media = FALSE, $verbose = TRUE )
 	{
-		return Core\HTML::linkStyleSheet( $url, $version, $media, $verbose );
+		return Core\HTML::linkStyleSheet(
+			$url,
+			$version ?? GEDITORIAL_HASH,
+			$media,
+			$verbose
+		);
 	}
 
 	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheetAdmin( $page, $verbose = TRUE, $prefix = 'admin' )
 	{
-		return Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css', GEDITORIAL_VERSION, 'all', $verbose );
+		return Core\HTML::linkStyleSheet(
+			GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css',
+			GEDITORIAL_HASH,
+			'all',
+			$verbose
+		);
 	}
 
 	/**

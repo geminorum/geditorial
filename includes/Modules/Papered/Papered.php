@@ -507,7 +507,7 @@ class Papered extends gEditorial\Module
 
 	public function printpage_render_head( $profile = FALSE )
 	{
-		Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_VERSION, 'all' );
+		Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_HASH, 'all' );
 
 		if ( $post = WordPress\Post::get( $profile ) ) {
 

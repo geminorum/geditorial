@@ -9,6 +9,7 @@ class Scripts extends WordPress\Main
 	const PATH    = GEDITORIAL_DIR;
 	const URL     = GEDITORIAL_URL;
 	const VERSION = GEDITORIAL_VERSION;
+	const HASH    = GEDITORIAL_HASH;
 
 	public static function factory()
 	{

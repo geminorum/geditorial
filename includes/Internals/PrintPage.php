@@ -60,9 +60,9 @@ trait PrintPage
 		// https://github.com/graphicore/librebarcode
 		// https://graphicore.github.io/librebarcode/
 		if ( $this->get_setting( 'printpage_enqueue_librefonts' ) ) {
-			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-ean13-text/index.css', GEDITORIAL_VERSION, 'all' );
-			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128-text/index.css', GEDITORIAL_VERSION, 'all' );
-			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128/index.css', GEDITORIAL_VERSION, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-ean13-text/index.css', GEDITORIAL_HASH, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128-text/index.css', GEDITORIAL_HASH, 'all' );
+			Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/libre-barcode-128/index.css', GEDITORIAL_HASH, 'all' );
 		}
 
 		$this->actions( 'printpage_render_head', $profile );

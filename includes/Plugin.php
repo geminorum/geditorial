@@ -576,14 +576,14 @@ class Plugin extends WordPress\Plugin
 		Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'all' ),
 			implode( '-', [ $this->base, 'front' ] ),
-			$this->get_ver()
+			$this->get_hash()
 		);
 
 		if ( WordPress\WooCommerce::isActive() )
 			Scripts::enqueueStyleSrc(
 				sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'woocommerce' ),
 				implode( '-', [ $this->base, 'woocommerce', 'front' ] ),
-				$this->get_ver()
+				$this->get_hash()
 			);
 
 		if ( defined( 'GNETWORK_VERSION' ) )
@@ -592,7 +592,7 @@ class Plugin extends WordPress\Plugin
 		Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'gnetwork' ),
 			implode( '-', [ $this->base, 'gnetwork', 'front' ] ),
-			$this->get_ver()
+			$this->get_hash()
 		);
 	}
 
@@ -611,7 +611,7 @@ class Plugin extends WordPress\Plugin
 		return Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'adminbar', 'all' ),
 			implode( '-', [ $this->base, 'adminbar' ] ),
-			$this->get_ver()
+			$this->get_hash()
 		);
 	}
 
