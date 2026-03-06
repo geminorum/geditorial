@@ -380,7 +380,7 @@ class Term extends Core\Base
 			'ago'         => $timestamp ? human_time_diff( $timestamp ) : FALSE,
 			'image'       => self::image( $term, $context ),
 			'description' => wpautop( apply_filters( 'html_format_i18n', $term->description ) ),
-			'subtitle'    => $subtitle ? get_term_meta( $term->term_id, $subtitle, TRUE ) : '',
+			'subtitle'    => $subtitle ? get_term_meta( $term->term_id, $subtitle, TRUE ) : get_term_meta( $term->term_id, 'subtitle', TRUE ),
 		];
 	}
 

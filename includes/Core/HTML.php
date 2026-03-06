@@ -1335,13 +1335,16 @@ class HTML extends Base
 
 			echo '<div class="-controls">';
 
-			echo '&nbsp;';
-			echo '&nbsp;';
+			if ( $args['total'] ) {
 
-			vprintf( '<span class="-total-pages">%s / %s</span>', [
-				Number::format( $args['total'] ),
-				Number::format( $args['pages'] ),
-			] );
+				echo '&nbsp;';
+				echo '&nbsp;';
+
+				vprintf( '<span class="-total-pages">%s / %s</span>', [
+					Number::format( $args['total'] ),
+					Number::format( $args['pages'] ),
+				] );
+			}
 
 			echo '&nbsp;';
 			echo '&nbsp;';
@@ -1426,8 +1429,8 @@ class HTML extends Base
 			'pages'    => (int) $max,
 			'limit'    => (int) $limit,
 			'paged'    => (int) $paged,
-			'extra'    => $extra, // extra args to add to the links
-			'all'      => $all, // WTF?! (probably display all!)
+			'extra'    => $extra,         // Extra arguments to add to the links
+			'all'      => $all,           // WTF?! (probably display all!)
 			'next'     => FALSE,
 			'previous' => FALSE,
 		];

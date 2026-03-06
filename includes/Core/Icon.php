@@ -357,8 +357,10 @@ class Icon extends Base
 	{
 		if ( isset( self::$icons[$group][$icon] ) )
 			return 'data:image/svg+xml;base64,'.base64_encode(
-				'<svg width="20" height="20" viewBox="'.self::$viewboxes[$group].'" xmlns="http://www.w3.org/2000/svg">'
-				.str_replace( '<path d="', '<path fill="black" d="', self::$icons[$group][$icon] )
+				// '<svg width="20" height="20" fill="currentColor" viewBox="'.self::$viewboxes[$group].'" xmlns="http://www.w3.org/2000/svg">'
+				'<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="'.self::$viewboxes[$group].'">'
+				.self::$icons[$group][$icon]
+				// .str_replace( '<path d="', '<path fill="black" d="', self::$icons[$group][$icon] )
 				// .preg_replace( '/abc/', '', self::$icons[$group][$icon], 1 )
 				.'</svg>'
 			);
@@ -371,12 +373,14 @@ class Icon extends Base
 		if ( empty( $icons ) )
 			return;
 
-		echo '<svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs>';
+		// echo '<svg style="position: absolute; width: 0; height: 0; overflow: hidden" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs>';
+		echo '<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden"><defs>';
 
 		foreach ( $icons as $icon )
 			if ( isset( self::$icons[$icon['group']][$icon['icon']] ) )
 				// echo '<symbol id="icon-'.$icon['group'].'-'.$icon['icon'].'" viewBox="'.self::$viewboxes[$icon['group']].'"><title>'.$icon['icon'].'</title>'.self::$icons[$icon['group']][$icon['icon']].'</symbol>';
-				echo '<symbol id="icon-'.$icon['group'].'-'.$icon['icon'].'" viewBox="'.self::$viewboxes[$icon['group']].'">'.self::$icons[$icon['group']][$icon['icon']].'</symbol>';
+				// echo '<symbol id="icon-'.$icon['group'].'-'.$icon['icon'].'" viewBox="'.self::$viewboxes[$icon['group']].'">'.self::$icons[$icon['group']][$icon['icon']].'</symbol>';
+				echo '<symbol id="icon-'.$icon['group'].'-'.$icon['icon'].'" fill="currentColor" viewBox="'.self::$viewboxes[$icon['group']].'">'.self::$icons[$icon['group']][$icon['icon']].'</symbol>';
 
 		echo '</defs></svg>';
 	}

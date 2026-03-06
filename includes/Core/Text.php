@@ -214,7 +214,7 @@ class Text extends Base
 		if ( $normalize )
 			$text = self::normalizeWhitespace( $text, TRUE );
 
-		return array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) );
+		return array_values( array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) ) );
 	}
 
 	public static function stripNonNumeric( $text )
@@ -494,6 +494,7 @@ class Text extends Base
 
 		foreach ( [
 			'alignnone',
+			'alignfull',
 			'alignwide',
 			'aligncenter',
 			'alignleft',

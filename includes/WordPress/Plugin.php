@@ -11,16 +11,17 @@ class Plugin extends Core\Base
 	public $__url  = '';
 	public $__file = '';
 	public $__ver  = '';
+	public $__hash = '';
 
 	public function __construct() {}
 
-	public static function instance( $dir = NULL, $url = NULL, $file = NULL, $ver = NULL )
+	public static function instance( $dir = NULL, $url = NULL, $file = NULL, $ver = NULL, $hash = NULL )
 	{
 		static $instance = NULL;
 
 		if ( NULL === $instance ) {
 			$instance = new static();
-			$instance->setup( $dir, $url, $file, $ver );
+			$instance->setup( $dir, $url, $file, $ver, $hash );
 		}
 
 		return $instance;
@@ -32,6 +33,7 @@ class Plugin extends Core\Base
 		$this->__url  = $url  ?? '';
 		$this->__file = $file ?? '';
 		$this->__ver  = $ver  ?? '';
+		$this->__hash = $hash ?? '';
 
 		$this->defines( $this->early_constants() );
 
@@ -104,7 +106,8 @@ class Plugin extends Core\Base
 				$this->__dir,
 				$this->__url,
 				$this->__file,
-				$this->__ver
+				$this->__ver,
+				$this->__hash
 			);
 	}
 
@@ -119,4 +122,5 @@ class Plugin extends Core\Base
 	public function get_url()  { return $this->__url;  }
 	public function get_file() { return $this->__file; }
 	public function get_ver()  { return $this->__ver;  }
+	public function get_hash() { return $this->__hash; }
 }
