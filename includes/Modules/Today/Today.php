@@ -1415,21 +1415,40 @@ class Today extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		Core\HTML::h3( _x( 'Today Tools', 'Header', 'geditorial-today' ) );
-		echo '<table class="form-table">';
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Today Tools', 'Header', 'geditorial-today' ) );
 
-		echo '<tr><th scope="row">'._x( 'Re-schedule by Day', 'Header', 'geditorial-today' ).'</th><td>';
+			$posttypes = $this->list_posttypes();
+			$available = FALSE;
 
-		echo Core\HTML::dropdown( $this->list_posttypes(), [ 'name' => 'posttype' ] );
+			if ( $this->renderCard_tool_reschedule_by_day( $posttypes ) )
+				$available = TRUE;
 
-		echo '&nbsp;&nbsp;';
+			if ( ! $available )
+				gEditorial\Info::renderNoToolsAvailable();
 
-		gEditorial\Settings::submitButton( 'reschedule_by_day', _x( 'Schedule', 'Setting', 'geditorial-today' ) );
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
-		Core\HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Message', 'geditorial-today' ) );
+		echo '</div>';
+	}
 
-		echo '</td></tr>';
-		echo '</table>';
+	protected function renderCard_tool_reschedule_by_day( $posttypes )
+	{
+		echo gEditorial\Settings::toolboxCardOpen(
+			_x( 'Re-schedule by Day', 'Card Title', 'geditorial-today' ), TRUE );
+
+			echo Core\HTML::dropdown( $posttypes, [
+				'name' => 'posttype',
+			] );
+
+			gEditorial\Settings::submitButton( 'reschedule_by_day',
+				_x( 'Schedule', 'Setting', 'geditorial-today' )
+			);
+
+			Core\HTML::desc( _x( 'Tries to re-set the date of posts based on it\'s day data.', 'Message', 'geditorial-today' ) );
+
+		echo '</div></div>';
+		return TRUE;
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
