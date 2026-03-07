@@ -669,6 +669,8 @@ class Ranged extends gEditorial\Module
 					_x( 'Shooting Session Date from Meta-data', 'Card', 'geditorial-ranged' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

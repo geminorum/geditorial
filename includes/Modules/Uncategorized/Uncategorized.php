@@ -377,6 +377,8 @@ class Uncategorized extends gEditorial\Module
 			if ( ! $available )
 				gEditorial\Info::renderNoImportsAvailable();
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

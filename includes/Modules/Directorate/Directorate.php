@@ -705,6 +705,8 @@ class Directorate extends gEditorial\Module
 
 			$this->paired_tools_render_card( $uri, $sub );
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

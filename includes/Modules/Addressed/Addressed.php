@@ -404,6 +404,8 @@ class Addressed extends gEditorial\Module
 		if ( ! $available )
 			gEditorial\Info::renderNoReportsAvailable();
 
+		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 }

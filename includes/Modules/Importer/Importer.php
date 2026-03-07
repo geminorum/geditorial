@@ -1091,6 +1091,8 @@ class Importer extends gEditorial\Module
 			$this->_render_imports_for_images( $uri, $sub );
 		echo '</div>';
 
+		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 
@@ -1614,6 +1616,8 @@ class Importer extends gEditorial\Module
 
 		if ( ! $available )
 			gEditorial\Info::renderNoToolsAvailable();
+
+		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}

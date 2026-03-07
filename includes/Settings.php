@@ -4283,6 +4283,20 @@ class Settings extends WordPress\Main
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
 
+	public static function toolboxAfterLinks( $links, $desc = '' )
+	{
+		echo self::toolboxAfterOpen( $desc, TRUE );
+
+			$buttons = [];
+
+			foreach ( $links as $link )
+				$buttons[] = Core\HTML::button( $link['title'], $link['url'] );
+
+			echo Core\HTML::wrap( Core\HTML::rows( $buttons ), '-toolbox-links -centered' );
+
+		echo '</div></div>';
+	}
+
 	public static function toolboxColumnOpen( $title = '' )
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-column">'

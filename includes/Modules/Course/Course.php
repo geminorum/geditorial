@@ -553,6 +553,8 @@ class Course extends gEditorial\Module
 					_x( 'Course/Lesson Date from Meta-data', 'Card', 'geditorial-course' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

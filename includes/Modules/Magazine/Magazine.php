@@ -563,6 +563,7 @@ class Magazine extends gEditorial\Module
 					_x( 'Issue Date from Meta-data', 'Card', 'geditorial-magazine' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}

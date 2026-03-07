@@ -596,6 +596,8 @@ class Missioned extends gEditorial\Module
 					_x( 'Mission Date from Meta-data', 'Card', 'geditorial-missioned' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

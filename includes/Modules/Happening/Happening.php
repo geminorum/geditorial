@@ -334,6 +334,8 @@ class Happening extends gEditorial\Module
 		if ( ! $available )
 			gEditorial\Info::renderNoToolsAvailable();
 
+		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

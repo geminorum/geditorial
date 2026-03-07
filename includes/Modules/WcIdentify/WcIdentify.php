@@ -173,6 +173,8 @@ class WcIdentify extends gEditorial\Module
 		if ( ! $available )
 			gEditorial\Info::renderNoToolsAvailable();
 
+			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

@@ -1062,6 +1062,8 @@ class WasBorn extends gEditorial\Module
 		else
 			return gEditorial\Info::renderNoImportsAvailable();
 
+		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

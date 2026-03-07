@@ -618,6 +618,8 @@ class Trained extends gEditorial\Module
 					_x( 'Training Course Date from Meta-data', 'Card', 'geditorial-trained' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

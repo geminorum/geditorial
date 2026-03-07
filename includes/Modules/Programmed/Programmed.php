@@ -595,6 +595,8 @@ class Programmed extends gEditorial\Module
 					_x( 'Program Date from Meta-data', 'Card', 'geditorial-programmed' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

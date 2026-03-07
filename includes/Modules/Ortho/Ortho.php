@@ -309,6 +309,8 @@ class Ortho extends gEditorial\Module
 
 			$this->renderCard_tools_sandbox();
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

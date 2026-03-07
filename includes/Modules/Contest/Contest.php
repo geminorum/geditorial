@@ -482,6 +482,8 @@ class Contest extends gEditorial\Module
 					_x( 'Contest/Apply Date from Meta-data', 'Card', 'geditorial-contest' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

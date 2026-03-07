@@ -68,6 +68,7 @@ class Module extends WordPress\Module
 
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
+	protected $module_links = [];
 
 	protected $scripts = [];
 	protected $buttons = [];

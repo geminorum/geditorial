@@ -10,11 +10,10 @@ use geminorum\gEditorial\WordPress;
 trait ModuleLinks
 {
 
-	// TODO: link to customizer
-	// TODO: get dashboard menu for the module
-	protected function get_module_links()
+	// TODO: link to the `Customizer`
+	protected function get_module_links( $compact = FALSE )
 	{
-		$links  = [];
+		$links  = $this->module_links; // already registered links
 		$screen = get_current_screen();
 
 		if ( method_exists( $this, 'reports_settings' )
@@ -27,7 +26,9 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'reports', $sub ),
-					'title'   => sprintf(
+					'title'   => $compact
+						? _x( 'Reports', 'Module: Extra Link: Reports', 'geditorial-admin' )
+						: sprintf(
 						/* translators: `%s`: subtitle */
 						_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
@@ -45,7 +46,9 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'tools', $sub ),
-					'title'   => sprintf(
+					'title'   => $compact
+						? _x( 'Tools', 'Module: Extra Link: Tools', 'geditorial-admin' )
+						: sprintf(
 						/* translators: `%s`: subtitle */
 						_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
@@ -63,7 +66,9 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'roles', $sub ),
-					'title'   => sprintf(
+					'title'   => $compact
+						? _x( 'Roles', 'Module: Extra Link: Roles', 'geditorial-admin' )
+						: sprintf(
 						/* translators: `%s`: subtitle */
 						_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
@@ -82,7 +87,9 @@ trait ModuleLinks
 					'sub'     => $sub,
 					'text'    => $title,
 					'url'     => $this->get_module_url( 'imports', $sub ),
-					'title'   => sprintf(
+					'title'   => $compact
+						? _x( 'Imports', 'Module: Extra Link: Tools', 'geditorial-admin' )
+						: sprintf(
 						/* translators: `%s`: subtitle */
 						_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
 						is_array( $title ) ? $title['title'] : $title,
@@ -99,7 +106,9 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $this->get_module_url( 'settings' ),
-				'title'   => sprintf(
+				'title'   => $compact
+					? _x( 'Settings', 'Module: Extra Link: Settings', 'geditorial-admin' )
+					: sprintf(
 					/* translators: `%s`: module title */
 					_x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ),
 					$this->module->title
@@ -116,14 +125,16 @@ trait ModuleLinks
 				'sub'     => $this->key,
 				'text'    => $this->module->title,
 				'url'     => $docs,
-				'title'   => sprintf(
+				'title'   => $compact
+					? _x( 'Docs', 'Module: Extra Link: Documentation', 'geditorial-admin' )
+					: sprintf(
 					/* translators: `%s`: module title */
 					_x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
 					$this->module->title
 				),
 			];
 
-		if ( 'config' != $this->module->name )
+		if ( 'config' !== $this->module->name && ! $compact )
 			$links[] = [
 				'context' => 'docs',
 				'sub'     => FALSE,

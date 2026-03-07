@@ -603,6 +603,8 @@ class Listed extends gEditorial\Module
 					_x( 'Listing Date from Meta-data', 'Card', 'geditorial-listed' )
 				);
 
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 

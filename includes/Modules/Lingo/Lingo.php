@@ -383,6 +383,8 @@ class Lingo extends gEditorial\Module
 			if ( ! $available )
 				gEditorial\Info::renderNoToolsAvailable();
 
+			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
 		echo '</div>';
 	}
 
@@ -479,6 +481,8 @@ class Lingo extends gEditorial\Module
 
 			if ( ! $available )
 				gEditorial\Info::renderNoImportsAvailable();
+
+			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}
