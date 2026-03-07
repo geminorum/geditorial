@@ -493,7 +493,7 @@ class Importer extends gEditorial\Module
 				'post_type'     => $posttype,
 				'taxonomies'    => $taxonomies,
 				'source_offset' => $source_offset,
-				'source_key'    => $source_offset, // is the same for this CSV-Parser
+				'source_key'    => $source_offset, // is the same for this CSV-Parser?
 			],
 		] );
 	}
@@ -506,7 +506,7 @@ class Importer extends gEditorial\Module
 		if ( $row['___source_id'] )
 			$checks[] = sprintf(
 				/* translators: `%s`: source id */
-				_x( 'SourceID: %s', 'Checks', 'geditorial-importer' ),
+				_x( 'Source-ID: %s', 'Checks', 'geditorial-importer' ),
 				Core\HTML::code( $row['___source_id'] )
 			);
 
@@ -514,7 +514,7 @@ class Importer extends gEditorial\Module
 			$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
 
 		else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
-			$checks[] = _x( 'Skipped: No SourceID', 'Checks', 'geditorial-importer' );
+			$checks[] = _x( 'Skipped: No Source-ID', 'Checks', 'geditorial-importer' );
 
 		if ( $row['___matched'] )
 			$checks[] = sprintf(
@@ -1074,24 +1074,36 @@ class Importer extends gEditorial\Module
 
 	private function _render_imports_firstpage( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Content Imports', 'Header', 'geditorial-importer' ) );
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Content Imports', 'Header', 'geditorial-importer' ) );
 
-		if ( ! count( $this->posttypes() ) )
-			return gEditorial\Info::renderNoImportsAvailable( '', '</div>' );
+			if ( count( $this->posttypes() ) ) {
 
-		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
-			$this->_render_imports_for_posts( $uri, $sub );
-		echo '</div>';
+				echo gEditorial\Settings::toolboxCardOpen(
+					_x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
 
-		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
-			$this->_render_imports_for_terms( $uri, $sub );
-		echo '</div>';
+					$this->_render_imports_for_posts( $uri, $sub );
+				echo '</div>';
 
-		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
-			$this->_render_imports_for_images( $uri, $sub );
-		echo '</div>';
+				echo gEditorial\Settings::toolboxCardOpen(
+					_x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
 
-		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+					$this->_render_imports_for_terms( $uri, $sub );
+				echo '</div>';
+
+				echo gEditorial\Settings::toolboxCardOpen(
+					_x( 'Import Remote Files as Attachments', 'Header', 'geditorial-importer' ), FALSE );
+
+					$this->_render_imports_for_images( $uri, $sub );
+
+				echo '</div>';
+
+			} else {
+
+				gEditorial\Info::renderNoImportsAvailable();
+			}
+
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}

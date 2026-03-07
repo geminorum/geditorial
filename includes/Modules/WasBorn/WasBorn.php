@@ -1044,25 +1044,23 @@ class WasBorn extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
 
-		$posttypes = $this->get_setting_posttypes( 'parent' );
+			$posttypes = $this->get_setting_posttypes( 'parent' );
 
-		if ( ! count( $posttypes ) )
-			return gEditorial\Info::renderNoImportsAvailable( '', '</div>' );
+			if ( $this->get_setting( 'override_dates', TRUE ) && count( $posttypes ) )
+				$this->postdate__render_card_override_dates(
+					$uri,
+					$sub,
+					$posttypes,
+					_x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' )
+				);
 
-		if ( $this->get_setting( 'override_dates', TRUE ) )
-			$this->postdate__render_card_override_dates(
-				$uri,
-				$sub,
-				$posttypes,
-				_x( 'Post-Date by Birthday', 'Card Title', 'geditorial-was-born' )
-			);
+			else
+				return gEditorial\Info::renderNoImportsAvailable();
 
-		else
-			return gEditorial\Info::renderNoImportsAvailable();
-
-		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}
