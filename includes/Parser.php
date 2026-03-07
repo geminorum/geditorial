@@ -44,6 +44,7 @@ class Parser extends WordPress\Main
 	{
 		$args = self::atts( [
 			'headers'     => FALSE,   // headers only
+			'first_row'   => FALSE,   // first row only
 			'mapping'     => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => 0,       // starts @ `0`
@@ -82,20 +83,28 @@ class Parser extends WordPress\Main
 		 */
 		$reader = new \EasyCSV\Reader( $data['file_path'] );
 
-		$data['headers'] = $reader->getHeaders();
+		$data['headers'] = @$reader->getHeaders();
 
 		if ( $args['headers'] )
 			return $data;
 
-		if ( is_null( $args['mapping'] ) ) {
+		if ( $args['first_row'] ) {
 
-			$data['items'] = $reader->getAll();
+			$data['items'][1] = is_null( $args['mapping'] )
+				? $reader->getRow()
+				: Core\Arraay::reKeyByMap_ALT( $reader->getRow(), $args['mapping'] );
+
+		} else if ( is_null( $args['mapping'] ) ) {
+
+			$data['items'] = @$reader->getAll();
 
 		} else {
 
-			while ( $raw = $reader->getRow() )
+			while ( $raw = @$reader->getRow() )
 				$data['items'][$reader->getLineNumber()-1] = Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
 		}
+
+		$data['total'] = count( $data['items'] ); // WTF?!
 
 		// FIXME: close the file stream
 
@@ -155,9 +164,13 @@ class Parser extends WordPress\Main
 			'file_size'   => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => NULL,
-			'headers'     => NULL,
+			'total'       => 0,
+			'headers'     => [],
 			'items'       => [],      // starts @ `1`
 		];
+
+		if ( empty( $path ) )
+			return $data;
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return $data;

@@ -15,7 +15,7 @@ class Importer extends gEditorial\Module
 	use Internals\RawImports;
 
 	protected $disable_no_posttypes = TRUE;
-	protected $capability_posttype  = 'import_posts'; // Retrieves the `edit_others_posts` on the target posttype.
+	protected $capability_posttype  = 'import_posts'; // Retrieves the `edit_others_posts` on the target post-type.
 
 	public static function module()
 	{
@@ -555,7 +555,7 @@ class Importer extends gEditorial\Module
 	// CAUTION: used more than once!
 	public function form_posts_table_row_prep( $row, $index, $args )
 	{
-		// empty rows have only one empty cell
+		// NOTE: typically empty rows have only one cell that is empty!
 		if ( count( $row ) === 1 && empty( $row[0] ) )
 			return FALSE;
 
@@ -711,9 +711,9 @@ class Importer extends gEditorial\Module
 
 					$iterator = new \SplFileObject( Core\File::normalize( $file ) );
 					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
-					$parser   =@new \KzykHys\CsvParser\CsvParser( $iterator, $options );
+					$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, $options );
 					$items    = $parser->parse();
-					$headers  = array_pop( $items ); // used on maping cutom meta
+					$headers  = array_pop( $items ); // used on mapping custom meta
 
 					unset( $parser, $items );
 
@@ -1077,7 +1077,7 @@ class Importer extends gEditorial\Module
 		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Content Imports', 'Header', 'geditorial-importer' ) );
 
 		if ( ! count( $this->posttypes() ) )
-			return gEditorial\Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable( '', '</div>' );
 
 		echo gEditorial\Settings::toolboxCardOpen( _x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
 			$this->_render_imports_for_posts( $uri, $sub );
@@ -1602,7 +1602,7 @@ class Importer extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();

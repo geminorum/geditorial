@@ -1049,7 +1049,7 @@ class WasBorn extends gEditorial\Module
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
 		if ( ! count( $posttypes ) )
-			return gEditorial\Info::renderNoImportsAvailable();
+			return gEditorial\Info::renderNoImportsAvailable( '', '</div>' );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->postdate__render_card_override_dates(

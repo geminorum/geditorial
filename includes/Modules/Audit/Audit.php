@@ -508,7 +508,7 @@ class Audit extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
+		echo ModuleSettings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
 		$available = FALSE;
 		$taxonomy  = $this->constant( 'main_taxonomy' );
@@ -602,7 +602,7 @@ class Audit extends gEditorial\Module
 			'user_id' => '0',
 		], 'reports' );
 
-		echo gEditorial\Settings::toolboxCardOpen( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ) );
+		echo ModuleSettings::toolboxCardOpen( _x( 'Summary by User', 'Card Title', 'geditorial-audit' ) );
 
 		$this->do_settings_field( [
 			'type'         => 'user',
@@ -614,7 +614,7 @@ class Audit extends gEditorial\Module
 			'cap'          => TRUE,
 		] );
 
-		gEditorial\Settings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
+		ModuleSettings::submitButton( 'user_stats', _x( 'Apply Filter', 'Card: Button', 'geditorial-audit' ) );
 		echo '</div>';
 
 		if ( $summary = $this->get_dashboard_term_summary( 'main_taxonomy', NULL, NULL, ( $form['user_id'] ? 'current' : 'all' ), $form['user_id'] ) )

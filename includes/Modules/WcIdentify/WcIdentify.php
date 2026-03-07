@@ -165,13 +165,14 @@ class WcIdentify extends gEditorial\Module
 	protected function render_tools_html( $uri, $sub )
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Product Identification Tools', 'Header', 'geditorial-wc-identify' ) );
-		$available = FALSE;
 
-		if ( ModuleSettings::renderCard_tool_migrate_gtin() )
-			$available = TRUE;
+			$available = FALSE;
 
-		if ( ! $available )
-			gEditorial\Info::renderNoToolsAvailable();
+			if ( ModuleSettings::renderCard_tool_migrate_gtin() )
+				$available = TRUE;
+
+			if ( ! $available )
+				gEditorial\Info::renderNoToolsAvailable();
 
 			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 

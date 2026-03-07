@@ -609,7 +609,8 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
 
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'General Tools', 'Card Column Header', 'geditorial-admin' ) );
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'General Tools', 'Card Column Header', 'geditorial-admin' ) );
 
 		$system = gEditorial\Plugin::system();
 		$form   = $this->get_current_form( [

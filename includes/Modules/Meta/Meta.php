@@ -1116,7 +1116,8 @@ class Meta extends gEditorial\Module
 
 	protected function render_imports_html( $uri, $sub )
 	{
-		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
 
 			$form = $this->get_current_form( [
 				'custom_field'       => '',
