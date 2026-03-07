@@ -664,31 +664,47 @@ class Users extends gEditorial\Module
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						WordPress\Redirect::doReferer( 'wrong' );
 
-					$count = 0;
-					$role  = get_option( 'default_role' );
+					$rawdata = gEditorial\Parser::fromCSV( Core\File::normalize( $file['file'] ) );
 
-					$users    = WordPress\User::get( TRUE, TRUE, [], 'user_email' );
-					$currents = $wpdb->get_results( "SELECT post_author as user, GROUP_CONCAT( ID ) as posts FROM {$wpdb->posts} GROUP BY post_author", ARRAY_A );
+					if ( ! $rawdata['readable'] )
+						WordPress\Redirect::doReferer( 'wrong' );
 
-					// FIXME: use `Parser::fromCSV_Legacy()`
-					$iterator = new \SplFileObject( Core\File::normalize( $file['file'] ) );
-					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'limit' => 1 ] );
-					$header   = $parser->parse();
-					$parser   = new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8', 'offset' => 1, 'header' => $header[0] ] );
-					$old_map  = Core\Arraay::reKey( $parser->parse(), 'ID' );
+					if ( empty( $rawdata['items'] ) )
+						WordPress\Redirect::doReferer( 'nochange' );
+
+					$currents = $wpdb->get_results( "
+						SELECT post_author as user,
+						GROUP_CONCAT( ID ) as posts
+						FROM {$wpdb->posts}
+						GROUP BY post_author
+					", ARRAY_A );
+
+					if ( empty( $currents ) )
+						WordPress\Redirect::doReferer( 'nochange' );
+
+					$count   = 0;
+					$role    = get_option( 'default_role' );
+					$users   = WordPress\User::get( TRUE, TRUE, [], 'user_email' );
+					$mapping = Core\Arraay::pluck( $rawdata['items'], 'user_email', 'ID' );
 
 					foreach ( $currents as $current ) {
 
-						if ( isset( $old_map[$current['user']] )
-							&& isset( $users[$old_map[$current['user']]['user_email']] ) ) {
+						if ( ! array_key_exists( $current['user'], $mapping ) )
+							continue;
 
-							$user  = $users[$old_map[$current['user']]['user_email']];
-							$query = $wpdb->prepare( "UPDATE {$wpdb->posts} SET post_author = %d WHERE ID IN ( ".trim( $current['posts'], ',' )." )", $user->ID );
-							$count+= $wpdb->query( $query );
+						if ( ! array_key_exists( $users, $mapping[$current['user']] ) )
+							continue;
 
-							if ( ! is_user_member_of_blog( $user->ID, $this->site ) )
-								add_user_to_blog( $this->site, $user->ID, $role );
-						}
+						$user  = $users[$mapping[$current['user']]];
+						$count+= $wpdb->query(
+							$wpdb->prepare( "
+								UPDATE {$wpdb->posts}
+								SET post_author = %d
+								WHERE ID IN ( ".trim( $current['posts'], ',' )." )
+							", $user->ID ) );
+
+						if ( ! is_user_member_of_blog( $user->ID, $this->site ) )
+							add_user_to_blog( $this->site, $user->ID, $role );
 					}
 
 					WordPress\Redirect::doReferer( [
