@@ -295,6 +295,8 @@ class ModuleHelper extends gEditorial\Helper
 
 			} catch ( \Exception $e ) {
 
+				self::_log( 'Exception: `IBAN::createFromString()` :: '.$e->getMessage() );
+
 				return $fallback;
 			}
 		}

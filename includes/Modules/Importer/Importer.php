@@ -1620,22 +1620,19 @@ class Importer extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo ModuleSettings::toolboxColumnOpen( _x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
+		echo ModuleSettings::toolboxColumnOpen(
+			_x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
 
-		$available = FALSE;
-		$posttypes = $this->list_posttypes();
+			$posttypes = $this->list_posttypes();
+			$available = FALSE;
 
-		if ( count( $posttypes ) ) {
+			if ( ModuleSettings::renderCard_cleanup_raw_data( $posttypes ) )
+				$available = TRUE;
 
-			ModuleSettings::renderCard_cleanup_raw_data( $posttypes );
+			if ( ! $available )
+				gEditorial\Info::renderNoToolsAvailable();
 
-			$available = TRUE;
-		}
-
-		if ( ! $available )
-			gEditorial\Info::renderNoToolsAvailable();
-
-		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
 	}

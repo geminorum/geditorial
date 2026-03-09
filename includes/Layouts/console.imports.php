@@ -9,6 +9,7 @@ WordPress\User::superAdminOnly();
 $files = [
 	// 'Test_Composer',
 
+	// 'Test_Array-Keys',
 	// 'Test_Array-Map',
 	// 'Test_Array-Merge',
 
@@ -17,6 +18,8 @@ $files = [
 	// 'Test_Address',
 	// 'Test_Country',
 	// 'Test_CSV',
+	// 'Test_CSV2',
+
 	// 'Test_Date',
 	// 'Test_Date_2',
 	// 'Test_Date_3',

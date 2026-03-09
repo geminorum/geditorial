@@ -16,6 +16,9 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_cleanup_raw_data( $posttypes )
 	{
+		if ( empty( $posttypes ) )
+			return FALSE;
+
 		echo self::toolboxCardOpen( _x( 'Clean-up Raw Data', 'Card Title', 'geditorial-importer' ) );
 
 		foreach ( $posttypes as $posttype => $label )
@@ -31,6 +34,8 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to clean imported raw meta-data.', 'Button Description', 'geditorial-importer' ) );
 
 		echo '</div></div>';
+
+		return TRUE;
 	}
 
 	public static function handleTool_cleanup_raw_data( $posttype, $metakeys, $limit = 25 )

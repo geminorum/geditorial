@@ -69,6 +69,9 @@ trait CoreMenuPage
 		$default_callback = [ $this, sprintf( 'admin_%s_page', $context ) ];
 		$default_loading  = [ $this, sprintf( 'admin_%s_load', $context ) ];
 
+		if ( is_null( $capability ) )
+			$capability = $this->caps[$context] ?? 'manage_options';
+
 		if ( empty( $menu_slug ) )
 			$menu_slug = $this->classs_base( $context );
 
@@ -76,7 +79,7 @@ trait CoreMenuPage
 			$parent_slug,
 			$page_title,
 			( $menu_title ?? $page_title ),
-			( $capability ?? ( $this->caps[$context] ?? 'manage_options' ) ),
+			$capability,
 			$menu_slug,
 			( empty( $callback ) ? ( is_callable( $default_callback ) ? $default_callback : '' ) : $callback ),
 			( $position ?? ( $this->positions[$context] ?? NULL ) )
@@ -95,7 +98,10 @@ trait CoreMenuPage
 				'context' => $context,
 				'text'    => $menu_title ?? $page_title,
 				'title'   => $page_title,
-				'url'     => add_query_arg( [ 'page' => $menu_slug ], get_admin_url( NULL, $parent_slug ) ),
+				'cap'     => $capability,
+				'url'     => add_query_arg( [
+					'page' => $menu_slug
+				], get_admin_url( NULL, $parent_slug ) ),
 			];
 
 		return $this->screens[$context];

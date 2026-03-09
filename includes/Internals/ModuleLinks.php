@@ -13,8 +13,23 @@ trait ModuleLinks
 	// TODO: link to the `Customizer`
 	protected function get_module_links( $compact = FALSE )
 	{
-		$links  = $this->module_links; // already registered links
+		$links  = [];
 		$screen = get_current_screen();
+
+		// already registered links
+		foreach ( $this->module_links as $module_link ) {
+
+			if ( ! empty( $module_link['cap'] ) ) {
+
+				if ( TRUE === $module_link['cap']
+					|| current_user_can( $module_link['cap'] ) )
+						$links[] = $module_link;
+
+			} else {
+
+				$links[] = $module_link;
+			}
+		}
 
 		if ( method_exists( $this, 'reports_settings' )
 			&& ! gEditorial\Settings::isScreenContext( 'reports', $screen )
