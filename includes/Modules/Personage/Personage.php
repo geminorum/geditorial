@@ -102,7 +102,7 @@ class Personage extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'units' ) ],
 			],
-			'_importer' => [
+			'_import' => [
 				[
 					'field'       => 'import_check_identity_number',
 					'title'       => _x( 'Check Identity Number', 'Setting Title', 'geditorial-personage' ),

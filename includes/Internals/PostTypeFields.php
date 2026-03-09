@@ -1487,7 +1487,7 @@ trait PostTypeFields
 
 	public function importer_prepare_posttypefields( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
+		if ( ! $field || ! $this->posttype_supported( $posttype ) )
 			return $value;
 
 		$fields = $this->posttypefields_get_importer_fields( $posttype, TRUE );

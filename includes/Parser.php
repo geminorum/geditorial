@@ -36,8 +36,8 @@ class Parser extends WordPress\Main
 		return gEditorial();
 	}
 
-	// public static function attachment( $post, $mimetype = NULL ) {}
-	// public static function file( $path, $mimetype = NULL ) {}
+	// public static function fromFile( $filepath, $atts = NULL ) {}
+
 
 	// OLD: `Helper::parseCSV()`
 	public static function fromCSV( $path, $atts = [] )
@@ -104,14 +104,14 @@ class Parser extends WordPress\Main
 				$data['items'][$reader->getLineNumber()-1] = Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
 		}
 
-		$data['total'] = count( $data['items'] ); // WTF?!
+		$data['total'] = count( $data['items'] ); // TODO: must get from parser
 
-		// FIXME: close the file stream
+		// MAYBE: close the file stream
 
 		return $data;
 	}
 
-	// NOTE: DEPRECATED: migrate to: https://github.com/jwage/easy-csv
+	// NOTE: DEPRECATED
 	// OLD: `Helper::parseCSV_Legacy()`
 	public static function fromCSV_Legacy( $file_path, $limit = NULL )
 	{
@@ -156,26 +156,20 @@ class Parser extends WordPress\Main
 		], $atts );
 
 		$data = [
-			'file_path' => Core\File::normalize( $path ),
-			'file_ext'  => 'xlsx',
-
-			'readable'    => FALSE,   // initial
+			'file_path'   => Core\File::normalize( $path ),
+			'file_ext'    => 'xlsx', // FIXME: WTF: get from filepath
 			'file_url'    => NULL,
 			'file_size'   => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => NULL,
-			'total'       => 0,
-			'headers'     => [],
-			'items'       => [],      // starts @ `1`
-		];
 
-		if ( empty( $path ) )
-			return $data;
+			'error'   => FALSE,
+			'headers' => NULL,
+			'items'   => [],     // starts @ `1`
+		];
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return $data;
-
-		$data['readable'] = TRUE;
 
 		if ( $args['extra_url'] )
 			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
@@ -386,7 +380,7 @@ class Parser extends WordPress\Main
 		if ( $check_path && ! Core\Text::has( $file, '://' ) )
 			return FALSE;
 
-		$mimetypes = apply_filters( sprintf( '%s_%s_csv_valid_filetypes', static::BASE, 'parser' ), [
+		$mimetypes = apply_filters( self::und( static::BASE, 'parser', 'csv', 'valid_filetypes' ), [
 			'csv' => 'text/csv',
 			'txt' => 'text/plain',
 		] );
@@ -395,5 +389,4 @@ class Parser extends WordPress\Main
 
 		return in_array( $filetype['type'], $mimetypes, TRUE );
 	}
-
 }

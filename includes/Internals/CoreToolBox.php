@@ -22,7 +22,7 @@ trait CoreToolBox
 
 				$links = [];
 
-				foreach ( $this->get_module_links() as $link )
+				foreach ( $this->get_module_links( TRUE ) as $link )
 					$links[] = Core\HTML::button( $link['title'], $link['url'] );
 
 				echo Core\HTML::wrap( Core\HTML::rows( $links ), '-toolbox-links' );

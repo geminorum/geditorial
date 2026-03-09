@@ -509,7 +509,7 @@ class Attachments extends gEditorial\Module
 	public function get_attachment_image_attributes( $attr, $attachment, $size )
 	{
 		if ( is_array( $attr ) && array_key_exists( 'alt', $attr ) && '' == $attr['alt'] )
-			$attr['alt'] = get_the_title( $attachment );
+			$attr['alt'] = WordPress\Attachment::title( $attachment );
 
 		return $attr;
 	}

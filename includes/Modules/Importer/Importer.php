@@ -482,7 +482,7 @@ class Importer extends gEditorial\Module
 				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
 				Core\Number::format( count( $data ) ),
-				get_the_title( $id )
+				WordPress\Attachment::title( $id )
 			) ),
 			'callback' => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
@@ -865,7 +865,7 @@ class Importer extends gEditorial\Module
 								if ( $field != 'importer_tax_'.$taxonomy )
 									continue;
 
-								// allows to import multiple columns for one taxonomy
+								// Allows filters to import multiple columns for one taxonomy.
 								$already = array_key_exists( $taxonomy, $taxonomies ) ? $taxonomies[$taxonomy] : [];
 
 								if ( $taxonomy_object->hierarchical ) {
@@ -883,7 +883,7 @@ class Importer extends gEditorial\Module
 								continue 2;
 							}
 
-							// otherwise store prepared value
+							// Otherwise, store prepared-value
 							$prepared[$field] = $value;
 						}
 
@@ -1147,6 +1147,7 @@ class Importer extends gEditorial\Module
 			gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
 			gEditorial\Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else if ( self::step( 'posts_step_three' ) ) {
 
@@ -1163,7 +1164,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				get_the_title( $attach_id )
+				WordPress\Attachment::title( $attach_id )
 			) );
 
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
@@ -1179,6 +1180,7 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else if ( self::step( 'posts_step_two' ) ) {
 
@@ -1195,7 +1197,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				get_the_title( $attach_id )
+				WordPress\Attachment::title( $attach_id )
 			) );
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -1208,6 +1210,7 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else {
 
@@ -1217,13 +1220,12 @@ class Importer extends gEditorial\Module
 
 			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
-			echo $this->wrap_open_buttons();
+			echo $this->wrap_open( '-wrap-button-row' );
 
 			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</div>';
 		}
-
-		echo '</p>';
 	}
 
 	private function _render_imports_for_terms( $uri, $sub )
@@ -1261,6 +1263,7 @@ class Importer extends gEditorial\Module
 			gEditorial\Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
 			gEditorial\Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else if ( self::step( 'terms_step_three' ) ) {
 
@@ -1276,7 +1279,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				get_the_title( $attach_id )
+				WordPress\Attachment::title( $attach_id )
 			) );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
@@ -1291,6 +1294,7 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else if ( self::step( 'terms_step_two' ) ) {
 
@@ -1303,7 +1307,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				get_the_title( $attach_id )
+				WordPress\Attachment::title( $attach_id )
 			) );
 
 			$this->_form_terms_map( $attach_id, $posttype );
@@ -1315,14 +1319,16 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else {
 
 			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
-			echo $this->wrap_open_buttons();
+			echo $this->wrap_open( '-wrap-button-row' );
 			gEditorial\Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Upload or select a CSV file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</div>';
 		}
 	}
 
@@ -1360,6 +1366,7 @@ class Importer extends gEditorial\Module
 			gEditorial\Settings::submitButton( 'images_import_as_thumbnail', _x( 'Import & Set Thumbnail', 'Button', 'geditorial-importer' ), TRUE );
 			gEditorial\Settings::submitButton( 'images_import', _x( 'Import Only', 'Button', 'geditorial-importer' ) );
 			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</p>';
 
 		} else {
 
@@ -1414,12 +1421,11 @@ class Importer extends gEditorial\Module
 				'cap'          => TRUE, // already checked
 			] );
 
-			echo $this->wrap_open_buttons();
+			echo $this->wrap_open( '-wrap-button-row' );
 			gEditorial\Settings::actionButton( 'images_step_two', _x( 'Step 1: Meta-key', 'Button', 'geditorial-importer' ), TRUE );
 			Core\HTML::desc( _x( 'Select a meta-key for refrence on importing the attachments.', 'Message', 'geditorial-importer' ), FALSE );
+			echo '</div>';
 		}
-
-		echo '</p>';
 	}
 
 	public function import_memory_limit( $filtered_limit )

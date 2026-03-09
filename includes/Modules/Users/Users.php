@@ -666,11 +666,8 @@ class Users extends gEditorial\Module
 
 					$rawdata = gEditorial\Parser::fromCSV( Core\File::normalize( $file['file'] ) );
 
-					if ( ! $rawdata['readable'] )
-						WordPress\Redirect::doReferer( 'wrong' );
-
-					if ( empty( $rawdata['items'] ) )
-						WordPress\Redirect::doReferer( 'nochange' );
+					if ( $rawdata['error'] )
+						WordPress\Redirect::doReferer( 'wrong' ); // TODO: log error
 
 					$currents = $wpdb->get_results( "
 						SELECT post_author as user,
@@ -723,6 +720,7 @@ class Users extends gEditorial\Module
 
 	// FIXME: move to `Config`: `render_roles_html()`
 	// TODO: export/import/override roles via JSON list of caps // MAYBE: new Module
+	// TODO: migrate to column of cards
 	protected function render_tools_html( $uri, $sub )
 	{
 		$roles = WordPress\Role::get();
@@ -804,6 +802,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: move to `Config`: `roles_overview()` and display list of caps for each
+	// TODO: add reports page for summary if roles with cap list
 	public function tools_sidebox( $sub, $uri, $context )
 	{
 		echo Core\HTML::tableCode(

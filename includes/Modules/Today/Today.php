@@ -893,8 +893,9 @@ class Today extends gEditorial\Module
 				);
 		}
 
-		$_the_day   = Core\Arraay::getByKeyOrFirst( $this->__today, $type );
-		$navigation = ModuleHelper::theDayNavigation( $_the_day, $type, ! $this->__home );
+		$_type      = $admin ? self::req( 'cal', $type ) : get_query_var( 'day_cal', $type );
+		$_the_day   = Core\Arraay::getByKeyOrFirst( $this->__today, $_type );
+		$navigation = ModuleHelper::theDayNavigation( $_the_day, $_type, ! $this->__home );
 		$buttons    = ModuleHelper::theDayNewConnected( $posttypes, $_the_day, $this->__posts );
 
 		if ( $navigation || $buttons ) {

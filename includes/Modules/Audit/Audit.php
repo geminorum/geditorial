@@ -584,6 +584,7 @@ class Audit extends gEditorial\Module
 		$this->check_settings( $sub, 'reports' );
 	}
 
+	// TODO: migrate to column of cards
 	protected function render_reports_html( $uri, $sub )
 	{
 		Core\HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );

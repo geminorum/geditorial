@@ -137,7 +137,7 @@ trait PostDate
 					], $uri )
 				);
 
-			Core\HTML::desc( _x( 'Tries to set the post-date form meta field data for all the main posts.', 'Internal: PostDate: Button Description', 'geditorial-admin' ), FALSE );
+			Core\HTML::desc( _x( 'Tries to set the post-date form meta field data for all the main posts.', 'Internal: PostDate: Button Description', 'geditorial-admin' ) );
 
 		echo '</div></div>';
 

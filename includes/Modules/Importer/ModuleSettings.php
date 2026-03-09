@@ -71,7 +71,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			$keys = Core\Arraay::prepString(
 				$metakey, // original key
-				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', $metakey ) ) )
+				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', preg_quote( $metakey, '/' ) ) ) )
 			);
 
 			foreach ( $keys as $key )
