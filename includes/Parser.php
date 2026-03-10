@@ -36,6 +36,60 @@ class Parser extends WordPress\Main
 		return gEditorial();
 	}
 
+	public static function getDefaultArgs( $filepath = NULL )
+	{
+		return [
+			'headers'     => FALSE,   // headers only
+			'first_row'   => FALSE,   // first row only
+			'by_offset'   => FALSE,   // row by offset
+			'mapping'     => NULL,
+			'sheet_name'  => NULL,    // Excel
+			'sheet_index' => 0,       // Excel: starts @ `0`
+			'data_key'    => FALSE,   // JSON: the data key
+			'extra_url'   => FALSE,   // Returns full URL to the file.
+			'extra_size'  => FALSE,   // Returns file size of the file.
+			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
+			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries? // TODO!
+		];
+	}
+
+	public static function getInitialData( $args, $filepath = NULL )
+	{
+		return [
+			'file_path'   => Core\File::normalize( $filepath ),
+			'file_ext'    => NULL,
+			'file_mime'   => NULL,
+			'file_url'    => NULL,
+			'file_size'   => NULL,
+			'sheet_name'  => NULL,
+			'sheet_index' => NULL,
+
+			'error'   => FALSE,
+			'total'   => 0,
+			'headers' => [],
+			'items'   => [],      // starts @ `1`
+			'single'  => [],      // for single row queries
+		];
+	}
+
+	public static function getAdditionalData( $data, $args, $filepath = NULL )
+	{
+		if ( $args['extra_url'] )
+			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
+
+		if ( $args['extra_size'] )
+			$data['file_size'] = Core\File::getSize( $data['file_path'] );
+
+		if ( $args['extra_type'] ) {
+			$type = Core\File::type( $data['file_path'] );
+
+			$data['file_ext']  = $type['ext'];
+			$data['file_mime'] = $type['type'];
+		}
+
+		return $data;
+	}
+
 	// `public static function fromFile( $filepath, $arguments = NULL ) {}`
 
 	public static function fromAttachment( $attachment, $arguments = [] )
@@ -81,36 +135,10 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV( $path, $arguments = [] )
+	public static function fromCSV( $filepath, $arguments = [] )
 	{
-		$args = self::parsed( [
-			'headers'     => FALSE,   // headers only
-			'first_row'   => FALSE,   // first row only
-			'by_offset'   => FALSE,   // row by offset
-			'mapping'     => NULL,
-			'sheet_name'  => NULL,
-			'sheet_index' => 0,       // starts @ `0`
-			'extra_url'   => FALSE,   // Returns full URL to the file.
-			'extra_size'  => FALSE,   // Returns file size of the file.
-			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
-			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries? // TODO!
-		], $arguments );
-
-		$data = [
-			'file_path'   => Core\File::normalize( $path ),
-			'file_ext'    => NULL,
-			'file_mime'   => NULL,
-			'file_url'    => NULL,
-			'file_size'   => NULL,
-			'sheet_name'  => NULL,
-			'sheet_index' => NULL,
-
-			'error'   => FALSE,
-			'total'   => 0,
-			'headers' => [],
-			'items'   => [],      // starts @ `1`
-			'single'  => [],      // for single row queries
-		];
+		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -118,18 +146,7 @@ class Parser extends WordPress\Main
 				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
 			);
 
-		if ( $args['extra_url'] )
-			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
-
-		if ( $args['extra_size'] )
-			$data['file_size'] = Core\File::getSize( $data['file_path'] );
-
-		if ( $args['extra_type'] ) {
-			$type = Core\File::type( $data['file_path'] );
-
-			$data['file_ext']  = $type['ext'];
-			$data['file_mime'] = $type['type'];
-		}
+		$data = self::getAdditionalData( $data, $args, $filepath );
 
 		try {
 
@@ -220,6 +237,8 @@ class Parser extends WordPress\Main
 	// OLD: `Helper::parseCSV_Legacy()`
 	public static function fromCSV_Legacy( $file_path, $limit = NULL )
 	{
+		self::_dep( 'Parser::fromCSV()' );
+
 		if ( empty( $file_path ) )
 			return FALSE;
 
@@ -249,38 +268,18 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXLSX()`
-	public static function fromXLSX( $path, $atts = [] )
+	public static function fromXLSX( $filepath, $arguments = [] )
 	{
-		$args = self::atts( [
-			'headers'     => FALSE,   // headers only
-			'mapping'     => NULL,
-			'sheet_name'  => NULL,
-			'sheet_index' => 0,       // starts @ `0`
-			'extra_url'   => FALSE,   // Returns full URL to the file.
-			'extra_size'  => FALSE,   // Returns file size of the file.
-		], $atts );
-
-		$data = [
-			'file_path'   => Core\File::normalize( $path ),
-			'file_ext'    => 'xlsx', // FIXME: WTF: get from filepath
-			'file_url'    => NULL,
-			'file_size'   => NULL,
-			'sheet_name'  => NULL,
-			'sheet_index' => NULL,
-
-			'error'   => FALSE,
-			'headers' => NULL,
-			'items'   => [],     // starts @ `1`
-		];
+		$args = self::parsed( self::getDefaultArguments( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
-			return $data;
+			return self::bailWithError( $data,
+				'file_not_readable',
+				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+			);
 
-		if ( $args['extra_url'] )
-			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
-
-		if ( $args['extra_size'] )
-			$data['file_size'] = Core\File::getSize( $data['file_path'] );
+		$data = self::getAdditionalData( $data, $args, $filepath );
 
 		/**
 		 * @package `openspout/openspout`
@@ -332,35 +331,131 @@ class Parser extends WordPress\Main
 					);
 			}
 
-			break; // no need to do iterate through other sheets
+			break; // No need iterating through other sheets!
 		}
 
-		$parser->close();
+		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+
+		if ( ! $args['keep_alive'] ) {
+			$parser->close();
+			unset( $parser, $raw );
+		}
 
 		return $data;
 	}
 
-	// FIXME: migrate!
-	public static function fromTXT( $file_path, $atts = [] )
+	// FIXME: implement all!
+	public static function fromTXT( $filepath, $arguments = [] )
 	{
-		$data = [
-			'items' => self::fromTXT_Legacy( $file_path ),
-		];
+		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
+
+		if ( ! Core\File::readable( $data['file_path'] ) )
+			return self::bailWithError( $data,
+				'file_not_readable',
+				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+			);
+
+		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		$data['items'] = Core\Text::splitLines( Core\File::getContents( $filepath ) );
 
 		return $data;
 	}
 
 	public static function fromTXT_Legacy( $file_path )
 	{
+		self::_dep( 'Parser::fromTXT()' );
+
 		return Core\Text::splitLines( Core\File::getContents( $file_path ) );
 	}
 
-	// FIXME: migrate!
-	public static function fromJSON( $file_path, $atts = [] )
+	public static function fromJSON( $filepath, $arguments = [] )
 	{
-		$data = [
-			'items' => self::fromJSON_Legacy( $file_path ),
-		];
+		static $parsed = [];
+
+		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
+
+		if ( ! Core\File::readable( $data['file_path'] ) )
+			return self::bailWithError( $data,
+				'file_not_readable',
+				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+			);
+
+		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		if ( ! empty( $parsed[$filepath] ) )
+			$parser = $parsed[$filepath];
+
+		else
+			$parser = json_decode( Core\File::getContents( $data['file_path'] ), TRUE );
+
+		if ( $args['data_key'] ) {
+
+			// Overrides the data by `data_key` sub-data!
+
+			if ( array_key_exists( $args['data_key'], $parser ) )
+				$parser = $parser[$args['data_key']];
+
+			else
+				$parser = [];
+		}
+
+		if ( empty( $parser ) )
+			return self::bailWithError( $data,
+				'file_is_empty',
+				Plugin::noinfo( FALSE )
+			);
+
+		$data['headers'] = array_keys( Core\Arraay::valueFirst( $parser ) );
+
+		if ( $args['headers'] )
+			return $data;
+
+		if ( $args['by_offset'] ) {
+
+			$data['single'] = is_null( $args['mapping'] )
+				? $parser[( (int) $args['by_offset'] + 1 )]
+				: Core\Arraay::reKeyByMap_ALT( $parser[( (int) $args['by_offset'] + 1 )], $args['mapping'] );
+
+			if ( empty( $data['single'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE )
+				);
+
+		} else if ( $args['first_row'] ) {
+
+			$data['single'] = is_null( $args['mapping'] )
+				? $parser[0]
+				: Core\Arraay::reKeyByMap_ALT( $parser[0], $args['mapping'] );
+
+			if ( empty( $data['single'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE )
+				);
+
+		} else {
+
+			// starts at `1`
+			foreach ( $parser as $_index => $raw )
+				$data['items'][( $_index + 1 )] = is_null( $args['mapping'] )
+					? $raw
+					: Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+
+			if ( empty( $data['items'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE )
+				);
+		}
+
+		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+
+		if ( $args['keep_alive'] )
+			$parsed[$filepath] = $parser;
 
 		return $data;
 	}
@@ -368,18 +463,29 @@ class Parser extends WordPress\Main
 	// OLD: `Helper::parseJSON()`
 	public static function fromJSON_Legacy( $file_path )
 	{
+		self::_dep( 'Parser::fromJSON()' );
+
 		if ( empty( $file_path ) )
 			return FALSE;
 
 		return json_decode( Core\File::getContents( $file_path ), TRUE );
 	}
 
-	// FIXME: migrate!
-	public static function fromXML( $file_path, $atts = [] )
+	// FIXME: implement all!
+	public static function fromXML( $filepath, $arguments = [] )
 	{
-		$data = [
-			'items' => self::fromXML_Legacy( $file_path ),
-		];
+		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
+
+		if ( ! Core\File::readable( $data['file_path'] ) )
+			return self::bailWithError( $data,
+				'file_not_readable',
+				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+			);
+
+		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		$data['items'] = self::fromXML_Legacy( $filepath );
 
 		return $data;
 	}
@@ -387,6 +493,8 @@ class Parser extends WordPress\Main
 	// OLD: `Helper::parseXML()`
 	public static function fromXML_Legacy( $file_path )
 	{
+		self::_dep( 'Parser::fromXML()' );
+
 		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
 			return FALSE;
 
