@@ -81,35 +81,42 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV( $path, $atts = [] )
+	public static function fromCSV( $path, $arguments = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'headers'     => FALSE,   // headers only
 			'first_row'   => FALSE,   // first row only
+			'by_offset'   => FALSE,   // row by offset
 			'mapping'     => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => 0,       // starts @ `0`
 			'extra_url'   => FALSE,   // Returns full URL to the file.
 			'extra_size'  => FALSE,   // Returns file size of the file.
-		], $atts );
+			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
+			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries? // TODO!
+		], $arguments );
 
 		$data = [
-			'file_path' => Core\File::normalize( $path ),
-			'file_ext'  => 'csv',
-
-			'readable'    => FALSE,   // initial
+			'file_path'   => Core\File::normalize( $path ),
+			'file_ext'    => NULL,
+			'file_mime'   => NULL,
 			'file_url'    => NULL,
 			'file_size'   => NULL,
 			'sheet_name'  => NULL,
 			'sheet_index' => NULL,
-			'headers'     => NULL,
-			'items'       => [],      // starts @ `1`
+
+			'error'   => FALSE,
+			'total'   => 0,
+			'headers' => [],
+			'items'   => [],      // starts @ `1`
+			'single'  => [],      // for single row queries
 		];
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
-			return $data;
-
-		$data['readable'] = TRUE;
+			return self::bailWithError( $data,
+				'file_not_readable',
+				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+			);
 
 		if ( $args['extra_url'] )
 			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
@@ -117,37 +124,94 @@ class Parser extends WordPress\Main
 		if ( $args['extra_size'] )
 			$data['file_size'] = Core\File::getSize( $data['file_path'] );
 
-		/**
-		 * @package `jwage/easy-csv`
-		 * @link https://github.com/jwage/easy-csv
-		 * NOTE: This package is abandoned and no longer maintained. No replacement package was suggested.
-		 */
-		$reader = new \EasyCSV\Reader( $data['file_path'] );
+		if ( $args['extra_type'] ) {
+			$type = Core\File::type( $data['file_path'] );
 
-		$data['headers'] = @$reader->getHeaders();
-
-		if ( $args['headers'] )
-			return $data;
-
-		if ( $args['first_row'] ) {
-
-			$data['items'][1] = is_null( $args['mapping'] )
-				? $reader->getRow()
-				: Core\Arraay::reKeyByMap_ALT( $reader->getRow(), $args['mapping'] );
-
-		} else if ( is_null( $args['mapping'] ) ) {
-
-			$data['items'] = @$reader->getAll();
-
-		} else {
-
-			while ( $raw = @$reader->getRow() )
-				$data['items'][$reader->getLineNumber()-1] = Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+			$data['file_ext']  = $type['ext'];
+			$data['file_mime'] = $type['type'];
 		}
 
-		$data['total'] = count( $data['items'] ); // TODO: must get from parser
+		try {
 
-		// MAYBE: close the file stream
+			/**
+			 * @package `jwage/easy-csv`
+			 * @link https://github.com/jwage/easy-csv
+			 * NOTE: This package is abandoned and no longer maintained.
+			 * 	- No replacement package was suggested by the author.
+			 */
+			$parser = new \EasyCSV\Reader( $data['file_path'] );
+
+			$data['headers'] = @$parser->getHeaders();
+
+			if ( empty( $data['headers'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE )
+				);
+
+			if ( $args['headers'] )
+				return $data;
+
+			if ( $args['by_offset'] ) {
+
+				$parser->advanceTo( (int) $args['by_offset'] );
+
+				$data['single'] = is_null( $args['mapping'] )
+					? @$parser->getRow()
+					: Core\Arraay::reKeyByMap_ALT( @$parser->getRow(), $args['mapping'] );
+
+				if ( empty( $data['single'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
+
+			} else if ( $args['first_row'] ) {
+
+				$data['single'] = is_null( $args['mapping'] )
+					? @$parser->getRow()
+					: Core\Arraay::reKeyByMap_ALT( @$parser->getRow(), $args['mapping'] );
+
+				if ( empty( $data['single'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
+
+			} else if ( is_null( $args['mapping'] ) ) {
+
+				$data['items'] = @$parser->getAll();
+
+				if ( empty( $data['items'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
+
+			} else {
+
+				while ( $raw = @$parser->getRow() )
+					$data['items'][$parser->getLineNumber()-1] = Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+
+				if ( empty( $data['items'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
+			}
+
+		} catch ( \Exception | \Error $e ) {
+
+			return self::bailWithError( $data,
+				'exception_occurred',
+				$e->getMessage()
+			);
+		}
+
+		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+
+		if ( ! $args['keep_alive'] )
+			unset( $parser, $raw );
 
 		return $data;
 	}
