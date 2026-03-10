@@ -38,6 +38,47 @@ class Parser extends WordPress\Main
 
 	// `public static function fromFile( $filepath, $arguments = NULL ) {}`
 
+	public static function fromAttachment( $attachment, $arguments = [] )
+	{
+		if ( ! $post = WordPress\Post::get( $attachment ) )
+			return self::bailWithError( [],
+				'attachment_is_invalid',
+				Plugin::invalid( FALSE )
+			);
+
+		if ( ! $filepath = get_attached_file( $post->ID ) )
+			return self::bailWithError( [],
+				'filepath_is_empty',
+				Plugin::wrong( FALSE )
+			);
+
+		switch ( WordPress\Attachment::type( $post ) ) {
+
+			case 'text/csv':
+			case 'application/csv':
+			case 'text/comma-separated-values':
+				return self::fromCSV( $filepath, $arguments );
+
+			case 'application/vnd.ms-excel':
+			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+				return self::fromXLSX( $filepath, $arguments );
+
+			case 'text/json':
+			case 'application/json':
+				return self::fromJSON( $filepath, $arguments );
+
+			case 'application/xml':
+				return self::fromXML( $filepath, $arguments );
+
+			case 'text/plain':
+				return self::fromTXT( $filepath, $arguments );
+		}
+
+		return self::bailWithError( [],
+			'mimetype_is_not_supported',
+			Plugin::invalid( FALSE )
+		);
+	}
 
 	// OLD: `Helper::parseCSV()`
 	public static function fromCSV( $path, $atts = [] )
