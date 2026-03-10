@@ -88,8 +88,8 @@ class Importer extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'metakey_source_map'    => '_importer_source_map',
-			'metakey_source_offset' => '_importer_source_id_key',
+			'metakey_mapping_data'  => '_importer_source_map',
+			'metakey_source_column' => '_importer_source_id_key',
 			'metakey_source_data'   => '_import_source_data',
 			'metakey_prepared_data' => '_import_prepared_data',
 			'metakey_attach_id'     => '_import_attachment_id',
@@ -160,7 +160,40 @@ class Importer extends gEditorial\Module
 				];
 	}
 
-	private function _guess_fields_map( $headers, $attachment_id = NULL )
+	private function _guess_fields_map( $headers, $fields = [], $taxonomies = [], $attachment_id = NULL )
+	{
+		$mapped  = [];
+		$history = (array) get_option( $this->hook( 'fields_history' ), [] );
+
+		foreach ( $headers as $header ) {
+
+			if ( array_key_exists( $header, $history ) )
+				$mapped[$header] = $history[$header];
+
+			else if ( array_key_exists( $header, $taxonomies ) )
+				$mapped[$header] = self::und( $this->key, 'tax', $header );
+
+			else if ( array_key_exists( $header, $fields ) )
+				$mapped[$header] = $fields[$header];
+
+			else if ( $ends = Core\Arraay::getByKeyLike( $fields, sprintf( '/.+_%s$/', preg_quote( $header, '/' ) ) ) )
+				$mapped[$header] = Core\Arraay::keyFirst( $ends );
+
+			else if ( $starts = Core\Arraay::getByKeyLike( $fields, sprintf( '/^%s_.+/', preg_quote( $header, '/' ) ) ) )
+				$mapped[$header] = Core\Arraay::keyFirst( $starts );
+
+			else
+				$mapped[$header] = $header;
+		}
+
+		return $this->filters( 'guessed_fields_map',
+			$mapped,
+			$headers,
+			$attachment_id
+		);
+	}
+
+	private function _guess_fields_map_OLD( $headers, $attachment_id = NULL )
 	{
 		return $this->filters( 'guessed_fields_map',
 			Core\Arraay::keepByKeys(
@@ -172,15 +205,17 @@ class Importer extends gEditorial\Module
 		);
 	}
 
-	private function _record_fields_map( $map )
+	private function _record_fields_map( $map, $option_key = NULL )
 	{
-		$option = $this->hook( 'fields_history' );
+		$option_key = $option_key ?? $this->hook( 'fields_history' );
 
-		$filtered = array_filter( array_map( function ( $value ) {
-			return $value && 'none' !== $value ? $value : FALSE;
-		}, $map ) );
-
-		return update_option( $option, array_merge( (array) get_option( $option, [] ), $filtered ) );
+		return update_option(
+			$option_key,
+			array_merge(
+				(array) get_option( $option_key, [] ),
+				array_filter( $map )
+			)
+		);
 	}
 
 	private function _render_posttype_taxonomies( $posttype, $context )
@@ -250,28 +285,24 @@ class Importer extends gEditorial\Module
 
 	private function _form_posts_map( $id, $posttype = 'post' )
 	{
-		if ( ! $file = get_attached_file( $id ) )
-			return FALSE;
-
 		$this->raise_resources();
 
-		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
-		$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
-		$items    = $parser->parse();
-		$headers  = $items[0];
+		// NOTE: needs all items for counts
+		$rawdata = gEditorial\Parser::fromAttachment( $id );
 
-		unset( $items[0] );
+		if ( $rawdata['error'] )
+			return print Core\HTML::error( $rawdata['error'], FALSE );
 
 		$taxonomies    = $this->get_importer_taxonomies( $posttype );
 		$fields        = $this->get_importer_fields( $posttype, $taxonomies );
-		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
-		$map           = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_source_map' ) );
+		$source_column = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_column' ) );
+		$map           = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_mapping_data' ) );
+		$headers       = Core\Arraay::sameKey( array_unique( $rawdata['headers'] ) );
 
 		if ( empty( $map ) )
-			$map = $this->_guess_fields_map( $headers, $id );
+			$map = $this->_guess_fields_map( $rawdata['headers'], $fields, $taxonomies, $id );
 
-		if ( $dups = Core\Arraay::duplicates( $headers ) )
+		if ( $dups = Core\Arraay::duplicates( $rawdata['headers'] ) )
 			echo Core\HTML::warning( sprintf(
 				/* translators: `%s`: joined duplicate keys */
 				_x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ),
@@ -288,11 +319,10 @@ class Importer extends gEditorial\Module
 		echo '</td><td>';
 
 			echo Core\HTML::dropdown( $headers, [
-				'selected'   => $source_offset,
-				'name'       => 'source_offset',
-				'class'      => '-dropdown-source-key',
+				'selected'   => $source_column,
+				'name'       => 'source_column',
 				'none_title' => gEditorial\Settings::showOptionNone(),
-				'none_value' => 'none', // `0` is offset!
+				'none_value' => '',
 			] );
 
 		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
@@ -301,33 +331,33 @@ class Importer extends gEditorial\Module
 
 		echo '</td></tr>';
 
-		foreach ( $headers as $key => $title ) {
+		foreach ( $headers as $column ) {
 
 			echo '<tr><td class="-val"><code>'
-				.Core\HTML::escape( $title )
+				.Core\HTML::escape( $column )
 			.'</code></td><td class="-sep">';
 
 				gEditorial\Settings::fieldSeparate( 'into' );
 
 			echo '</td><td>'
 				.Core\HTML::dropdown( $fields, [
-					'selected'   => array_key_exists( $title, $map ) ? $map[$title] : 'none',
-					'name'       => 'field_map['.$key.']',
+					'name'       => 'field_map['.$column.']',
+					'selected'   => $map[$column] ?? '0',
 					'none_title' => gEditorial\Settings::showOptionNone(),
-					'none_value' => 'none',
+					'none_value' => '0',
 				] )
 			.'</td><td><td class="-sep">';
 
 				gEditorial\Settings::fieldSeparate( 'ex' );
 
 			echo '</td><td class="-val"><code>'
-				.Core\HTML::sanitizeDisplay( empty( $items[1][$key] ) ? '' : $items[1][$key] )
+				.Core\HTML::sanitizeDisplay( empty( $rawdata['items'][1][$column] ) ? '' : $rawdata['items'][1][$column] )
 			.'</code></td><td class="-sep">';
 
 				gEditorial\Settings::fieldSeparate( 'count' );
 
 			echo '</td><td class="-count"><code>'
-				.gEditorial\Helper::htmlCount( WordPress\Strings::filterEmpty( Core\Arraay::column( $items, $key ) ) )
+				.gEditorial\Helper::htmlCount( WordPress\Strings::filterEmpty( Core\Arraay::column( $rawdata['items'], $column ) ) )
 			.'</code></td></tr>';
 		}
 
@@ -437,75 +467,66 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _form_posts_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
+	private function _form_posts_table( $id, $mapped = [], $posttype = 'post', $terms_all = [], $source_column = '' )
 	{
-		if ( ! $file = get_attached_file( $id ) )
-			return FALSE;
-
 		$this->raise_resources();
 
-		// https://github.com/kzykhys/PHPCsvParser
-		$iterator = new \SplFileObject( Core\File::normalize( $file ) );
-		$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, [ 'encoding' => 'UTF-8' ] );
+		// NOTE: needs all items for counts
+		$rawdata = gEditorial\Parser::fromAttachment( $id );
 
-		$items   = $parser->parse();
-		$headers = $items[0];
+		if ( $rawdata['error'] )
+			return print Core\HTML::error( $rawdata['error'], FALSE );
 
-		unset( $iterator, $parser, $items[0] );
+		$this->store_postmeta( $id, $mapped, $this->constant( 'metakey_mapping_data' ) );
+		$this->store_postmeta( $id, $source_column, $this->constant( 'metakey_source_column' ) );
+		$this->_record_fields_map( $mapped );
 
-		$this->store_postmeta( $id, array_combine( $headers, $map ), $this->constant( 'metakey_source_map' ) );
-		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
-		$this->_record_fields_map( array_combine( $headers, $map ) );
-
-		$this->_render_data_table_for_posts( $id, $items, $headers, $map, $posttype, $terms_all, $source_offset );
-	}
-
-	private function _render_data_table_for_posts( $id, $data, $headers, $map = [], $posttype = 'post', $term_all = [], $source_offset = 'none' )
-	{
 		$taxonomies = $this->get_importer_taxonomies( $posttype );
 		$fields     = $this->get_importer_fields( $posttype, $taxonomies );
 
 		$columns = [
-			'_cb'           => '_index',
-			'_check_column' => [
+			'_cb'     => '_index',
+			'_checks' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
+				'class'    => '-column--data-checks',
 				'callback' => [ $this, 'form_posts_table_checks' ],
 			],
 		];
 
-		foreach ( $map as $key => $field ) {
+		foreach ( $mapped as $key => $field ) {
 
-			if ( 'none' == $field )
+			if ( ! $field )
 				continue;
 
-			if ( 'importer_custom_meta' == $field )
-				$columns[$headers[$key]] = sprintf(
+			$columns[$key] = [
+				'title' => $fields[$field],
+				'class' => self::dsh( 'importfield', $field ),
+			];
+
+			if ( 'importer_custom_meta' === $field )
+				$columns[$key]['title'] = sprintf(
 					/* translators: `%s`: custom meta-key */
 					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
-					Core\HTML::code( $headers[$key] )
+					Core\HTML::code( $key )
 				);
-
-			else
-				$columns[$headers[$key]] = $fields[$field];
 		}
 
-		Core\HTML::tableList( $columns, $data, [
+		Core\HTML::tableList( $columns, $rawdata['items'], [
 			'title' => Core\HTML::tag( 'h3', sprintf(
 				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
-				Core\Number::format( count( $data ) ),
+				Core\Number::format( $rawdata['total'] ),
 				WordPress\Attachment::title( $id )
 			) ),
 			'callback' => [ $this, 'form_posts_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'    => [
 				'na'            => gEditorial()->na(),
-				'mapped'        => array_combine( $headers, $map ),
-				'headers'       => $headers,
+				'mapped'        => $mapped,
+				'headers'       => $rawdata['headers'],
 				'post_type'     => $posttype,
 				'taxonomies'    => $taxonomies,
-				'source_offset' => $source_offset,
-				'source_key'    => $source_offset, // is the same for this CSV-Parser?
+				'source_column' => $source_column,
 			],
 		] );
 	}
@@ -525,7 +546,7 @@ class Importer extends gEditorial\Module
 		else if ( FALSE === $row['___source_id'] )
 			$checks[] = _x( 'Skipped: Filtered', 'Checks', 'geditorial-importer' );
 
-		else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
+		else if ( $this->get_setting( 'skip_no_source_id', TRUE ) && $args['extra']['source_column'] )
 			$checks[] = _x( 'Skipped: No Source-ID', 'Checks', 'geditorial-importer' );
 
 		if ( $row['___matched'] )
@@ -571,12 +592,12 @@ class Importer extends gEditorial\Module
 		if ( count( $row ) === 1 && empty( $row[0] ) )
 			return FALSE;
 
-		$raw       = Core\Arraay::combine( $args['extra']['headers'], $row );
+		$raw       = $row;
 		$source_id = NULL;
 
-		if ( 'none' !== $args['extra']['source_offset']
-			&& \array_key_exists( $args['extra']['source_key'], $row ) )
-				$source_id = $row[$args['extra']['source_key']];
+		if ( $args['extra']['source_column']
+			&& array_key_exists( $args['extra']['source_column'], $row ) )
+				$source_id = $row[$args['extra']['source_column']];
 
 		$raw['___source_id'] = $this->filters( 'source_id',
 			$source_id,
@@ -588,8 +609,8 @@ class Importer extends gEditorial\Module
 		if ( FALSE === $raw['___source_id'] )
 			$raw['___matched'] = 0;
 
-		// no source id provided in the row
-		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $args['extra']['source_offset'] )
+		// No source id provided in the row
+		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && $args['extra']['source_column'] )
 			$raw['___matched'] = 0;
 
 		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
@@ -709,43 +730,35 @@ class Importer extends gEditorial\Module
 					$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id     = self::req( 'attach_id', FALSE );
 					$user_id       = self::req( 'user_id', $this->_get_user_id() );
-					$source_offset = self::req( 'source_offset', 'none' );
+					$source_column = self::req( 'source_column', '' );
 					$override      = isset( $_POST['posts_import_override'] );
-
-					if ( ! $file = get_attached_file( $attach_id ) )
-						WordPress\Redirect::doReferer( 'wrong' );
-
-					$post_status    = $this->get_setting( 'post_status', 'pending' );
-					$comment_status = $this->get_setting( 'comment_status', 'closed' );
-					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all and must not be filtered
-					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 
 					$this->raise_resources();
 
-					$iterator = new \SplFileObject( Core\File::normalize( $file ) );
-					$options  = [ 'encoding' => 'UTF-8', 'limit' => 1 ];
-					$parser   = @new \KzykHys\CsvParser\CsvParser( $iterator, $options );
-					$items    = $parser->parse();
-					$headers  = array_pop( $items ); // used on mapping custom meta
+					$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'headers' => TRUE ] );
 
-					unset( $parser, $items );
+					if ( $rawdata['error'] )
+						WordPress\Redirect::doReferer( 'wrong' ); // TODO: log error
+
+					$post_status    = $this->filters( 'default_post_status', $this->get_setting( 'post_status', 'pending' ), $posttype, $override );
+					$comment_status = $this->filters( 'default_comment_status', $this->get_setting( 'comment_status', 'closed' ), $posttype, $override );
+					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all of them and must be unfiltered!
+					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
+					$headers        = $rawdata['headers'];
 
 					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
 					add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
 
 					$this->actions( 'posts_before', $posttype );
 
-					foreach ( $_POST['_cb'] as $offset ) {
+					foreach ( $_POST['_cb'] as $_index ) {
 
-						$options['offset'] = $offset;
+						$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index + 1 ] );
 
-						$parser = @new \KzykHys\CsvParser\CsvParser( $iterator, $options );
-						$items  = $parser->parse();
-						$row    = array_pop( $items );
+						if ( $rowdata['error'] )
+							continue; // TODO: log error
 
-						unset( $parser, $items );
-
-						$raw        = Core\Arraay::combine( $headers, $row );
+						$raw        = $rowdata['single'];
 						$data       = []; // [ 'tax_input' => [] ];
 						$prepared   = [];
 						$comments   = [];
@@ -754,8 +767,8 @@ class Importer extends gEditorial\Module
 
 						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
 						$source_id = $this->filters( 'source_id',
-							( 'none' !== $source_offset && array_key_exists( $source_offset, $row )
-								? $row[$source_offset]
+							( $source_column && array_key_exists( $source_column, $raw )
+								? $raw[$source_column]
 								: NULL
 							),
 							$posttype,
@@ -766,23 +779,23 @@ class Importer extends gEditorial\Module
 						if ( FALSE === $source_id )
 							continue;
 
-						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && 'none' !== $source_offset )
+						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && $source_column )
 							continue;
 
 						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
 							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
 								$data['ID'] = $oldpost->ID;
 
-						foreach ( $field_map as $offsetkey => $field ) {
+						foreach ( $field_map as $header => $field ) {
 
-							if ( 'none' == $field )
+							if ( ! $field )
 								continue;
 
 							$value = $this->filters( 'prepare',
-								Core\Text::trim( $row[$offsetkey] ),
+								Core\Text::trim( $raw[$header] ),
 								$posttype,
 								$field,
-								$headers[$offsetkey],
+								$header,
 								$raw,
 								$source_id,
 								$all_taxonomies
@@ -813,7 +826,7 @@ class Importer extends gEditorial\Module
 
 								case 'importer_custom_meta':
 
-									if ( $custom_metakey = $this->filters( 'custom_metakey', $headers[$offsetkey], $posttype, $field, $raw, $all_taxonomies ) )
+									if ( $custom_metakey = $this->filters( 'custom_metakey', $header, $posttype, $field, $raw, $all_taxonomies ) )
 										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = Core\Text::normalizeWhitespace( $value );
 
 									continue 2;
@@ -862,7 +875,7 @@ class Importer extends gEditorial\Module
 
 										$comments[] = [
 											// Prefixes the comment content with column name
-											'comment_content' => sprintf( '[%s]: %s', $headers[$offsetkey], $prepared[$field] ),
+											'comment_content' => sprintf( '[%s]: %s', $header, $prepared[$field] ),
 										];
 									}
 
@@ -1003,9 +1016,9 @@ class Importer extends gEditorial\Module
 							'updated'    => ( ! empty( $insert['ID'] ) ),
 							'data'       => $insert,
 							'prepared'   => $prepared,
-							'headers'    => $headers, // NOTE: used for getting the column title
+							'headers'    => $headers,
 							'raw'        => $raw,
-							'map'        => array_combine( $headers, $field_map ),
+							'map'        => $field_map,
 							'source_id'  => $source_id,
 							'attach_id'  => $attach_id,
 							'terms_all'  => $terms_all,
@@ -1131,7 +1144,7 @@ class Importer extends gEditorial\Module
 		$upload_id     = self::req( 'upload_id', FALSE );
 		$attach_id     = self::req( 'attach_id', FALSE );
 		$user_id       = self::req( 'user_id', $this->_get_user_id() );
-		$source_offset = self::req( 'source_offset', 'none' );
+		$source_column = self::req( 'source_column', '' );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;
@@ -1154,10 +1167,9 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_offset', $source_offset );
-			// Core\HTML::inputHidden( 'imports_for', 'posts' );
+			Core\HTML::inputHidden( 'source_column', $source_column );
 
-			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_offset );
+			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_column );
 
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
@@ -1187,8 +1199,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_offset', $source_offset );
-			// Core\HTML::inputHidden( 'imports_for', 'posts' );
+			Core\HTML::inputHidden( 'source_column', $source_column );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype, 'posts' ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
@@ -1253,7 +1264,7 @@ class Importer extends gEditorial\Module
 		$upload_id     = self::req( $this->classs( 'terms', 'attachment', 'uploaded' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ) );
 		$user_id       = self::req( 'user_id', $this->_get_user_id() );
-		$source_offset = self::req( 'source_offset', 'none' );
+		$source_column = self::req( 'source_column', '' );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;
@@ -1272,9 +1283,9 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_offset', $source_offset );
+			Core\HTML::inputHidden( 'source_column', $source_column );
 
-			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_offset );
+			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_column );
 
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
@@ -1288,7 +1299,7 @@ class Importer extends gEditorial\Module
 			if ( ! $attach_id )
 				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
 
-			if ( 'none' === $source_offset )
+			if ( ! $source_column )
 				return Core\HTML::desc( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ) );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
@@ -1307,7 +1318,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
-			Core\HTML::inputHidden( 'source_offset', $source_offset );
+			Core\HTML::inputHidden( 'source_column', $source_column );
 
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
@@ -1510,14 +1521,20 @@ class Importer extends gEditorial\Module
 			if ( $field !== self::und( $this->key, 'tax', $taxonomy ) )
 				continue;
 
-			// Translates truthy value to the default term for taxonomy
 			if ( in_array( $value, [ 'true', 'TRUE', 'True', '1' ], TRUE ) ) {
 
-				if ( $taxonomy_object->hierarchical )
-					return (array) WordPress\Taxonomy::getDefaultTermID( $taxonomy, $value );
+				// Translates truthy value to the default term for taxonomy
+				if ( $default_term = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
+					return (array) WordPress\Term::title(
+						(int) $default_term,
+						WordPress\Strings::kses( $value, 'none' ),
+						FALSE
+					);
 
-				else if ( $default_term = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
-					return (array) WordPress\Term::title( (int) $default_term, $value, FALSE );
+			} else if ( WordPress\Strings::isEmpty( $value ) ) {
+
+				// Bails saving this empty value as a term!
+				return FALSE;
 			}
 
 			return array_filter( WordPress\Strings::ksesArray( Services\Markup::getSeparated( $value ) ) );
@@ -1713,7 +1730,12 @@ class Importer extends gEditorial\Module
 	{
 		return [
 			'text/csv',
-			// 'application/vnd.ms-excel',
+			'application/csv',
+			'text/json',
+			'application/json',
+			'application/xml',
+			'application/vnd.ms-excel'                                         ,  // `xls`
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',  // `xlsx`
 		];
 	}
 
@@ -1813,15 +1835,17 @@ class Importer extends gEditorial\Module
 
 	private function _form_terms_map( $id, $posttype = 'post' )
 	{
-		if ( ! $file = get_attached_file( $id ) )
-			return FALSE;
-
 		$this->raise_resources();
 
-		$parsed        = gEditorial\Parser::fromCSV( $file, [ 'headers' => TRUE ] );
-		$source_offset = $this->fetch_postmeta( $id, 'none', $this->constant( 'metakey_source_offset' ) );
+		$rawdata = gEditorial\Parser::fromAttachment( $id, [ 'headers' => TRUE ] );
 
-		if ( $dups = Core\Arraay::duplicates( $parsed['headers'] ) )
+		if ( $rawdata['error'] )
+			return print Core\HTML::error( $rawdata['error'], FALSE );
+
+		$headers       = Core\Arraay::sameKey( array_unique( $rawdata['headers'] ) );
+		$source_column = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_column' ) );
+
+		if ( $dups = Core\Arraay::duplicates( $rawdata['headers'] ) )
 			echo Core\HTML::warning( sprintf(
 				/* translators: `%s`: joined duplicate keys */
 				_x( 'Found duplicate column headers: %s', 'Message', 'geditorial-importer' ),
@@ -1837,12 +1861,11 @@ class Importer extends gEditorial\Module
 
 		echo '</td><td>';
 
-			echo Core\HTML::dropdown( $parsed['headers'], [
-				'selected'   => $source_offset,
-				'name'       => 'source_offset',
-				'class'      => '-dropdown-source-key',
+			echo Core\HTML::dropdown( $headers, [
+				'selected'   => $source_column,
+				'name'       => 'source_column',
 				'none_title' => gEditorial\Settings::showOptionNone(),
-				'none_value' => 'none', // `0` is offset!
+				'none_value' => '',
 			] );
 
 		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
@@ -1855,35 +1878,36 @@ class Importer extends gEditorial\Module
 		echo '</table>';
 	}
 
-	private function _form_terms_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
+	private function _form_terms_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_column = '' )
 	{
-		if ( ! $file = get_attached_file( $id ) )
-			return FALSE;
-
 		$this->raise_resources();
 
-		$parsed = gEditorial\Parser::fromCSV( $file );
+		$rawdata = gEditorial\Parser::fromAttachment( $id );
 
-		$this->store_postmeta( $id, ( 'none' === $source_offset ? FALSE : $source_offset ), $this->constant( 'metakey_source_offset' ) );
+		if ( $rawdata['error'] )
+			return print Core\HTML::error( $rawdata['error'], FALSE );
+
+		$this->store_postmeta( $id, $source_column, $this->constant( 'metakey_source_column' ) );
 
 		$this->_render_data_table_for_terms(
 			$id,
-			$parsed['items'],
-			$parsed['headers'],
+			$rawdata['items'],
+			$rawdata['headers'],
 			$map,
 			$posttype,
 			$terms_all,
-			$source_offset
+			$source_column
 		);
 	}
 
-	private function _render_data_table_for_terms( $id, $data, $headers, $map = [], $posttype = 'post', $terms_all = [], $source_offset = 'none' )
+	private function _render_data_table_for_terms( $id, $data, $headers, $map = [], $posttype = 'post', $terms_all = [], $source_column = '' )
 	{
 		$taxonomies = WordPress\Taxonomy::get( 4, [], $posttype );  // NOTE: all and must not be filtered
 		$columns    = [
-			'_cb'           => '_index',
-			'_check_column' => [
+			'_cb'     => '_index',
+			'_checks' => [
 				'title'    => _x( '[Checks]', 'Table Column', 'geditorial-importer' ),
+				'class'    => '-column--data-checks',
 				'callback' => [ $this, 'form_posts_table_checks' ],
 			],
 		];
@@ -1919,13 +1943,11 @@ class Importer extends gEditorial\Module
 			'callback' => [ $this, 'form_terms_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
 			'extra'    => [
-				'na'            => gEditorial()->na(),
-				// 'mapped'        => array_combine( $headers, $map ),
+				'na'            => gEditorial\Plugin::na(),
 				'headers'       => $headers,
 				'post_type'     => $posttype,
 				'taxonomies'    => $taxonomies,
-				'source_offset' => $source_offset,
-				'source_key'    => $headers[$source_offset],
+				'source_column' => $source_column,
 			],
 		] );
 	}
@@ -1954,34 +1976,34 @@ class Importer extends gEditorial\Module
 		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
-		$user_id       = self::req( 'user_id', $this->_get_user_id() );
-		$source_offset = self::req( 'source_offset', 'none' );
+		// $user_id       = self::req( 'user_id', $this->_get_user_id() );
+		$source_column = self::req( 'source_column', '' );
 		$append        = isset( $_POST['terms_import_append'] );
 		$override      = isset( $_POST['terms_import_override'] );
 
-		if ( 'none' === $source_offset )
-			return FALSE;
-
-		if ( ! $file = get_attached_file( $attach_id ) )
+		if ( ! $source_column )
 			return FALSE;
 
 		$this->raise_resources();
 
-		$parsed     = gEditorial\Parser::fromCSV( $file );
+		$rawdata = gEditorial\Parser::fromAttachment( $attach_id );
+
+		if ( $rawdata['error'] )
+			return print Core\HTML::error( $rawdata['error'], FALSE );
+
 		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
-		$source_key = $parsed['headers'][$source_offset];
 
 		$this->actions( 'terms_before', $posttype );
 
 		foreach ( $_POST['_cb'] as $offset ) {
 
-			$row = $raw = $parsed['items'][$offset]; // this parser combines header data
+			$row = $raw = $rawdata['items'][($offset + 1)]; // this parser combines header data
 
 			$this->actions( 'terms_before_each', $posttype );
 
 			$source_id = $this->filters( 'source_id',
-				( 'none' !== $source_offset && array_key_exists( $source_key, $row )
-					? $row[$source_key]
+				( $source_column && array_key_exists( $source_column, $row )
+					? $row[$source_column]
 					: NULL
 				),
 				$posttype,
