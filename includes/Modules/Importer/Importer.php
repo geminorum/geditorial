@@ -183,7 +183,7 @@ class Importer extends gEditorial\Module
 		return update_option( $option, array_merge( (array) get_option( $option, [] ), $filtered ) );
 	}
 
-	private function _render_posttype_taxonomies( $posttype )
+	private function _render_posttype_taxonomies( $posttype, $context )
 	{
 		$template   = 'terms_all[%s]';
 		$taxonomies = $this->get_importer_taxonomies( $posttype );
@@ -196,7 +196,8 @@ class Importer extends gEditorial\Module
 				$template,
 				'<tr><td>',
 				'</td></tr>',
-				'</td><td>'
+				'</td><td>',
+				$context
 			);
 
 		foreach ( $taxonomies as $taxonomy => $object ) {
@@ -228,7 +229,18 @@ class Importer extends gEditorial\Module
 			$template,
 			'<tr><td>',
 			'</td></tr>',
-			'</td><td>'
+			'</td><td>',
+			$context
+		);
+
+		$this->actions( 'posttype_extra_all',
+			$posttype,
+			$taxonomies,
+			'extra_all[%s]',
+			'<tr><td>',
+			'</td></tr>',
+			'</td><td>',
+			$context
 		);
 
 		echo '</tbody></table>';
@@ -693,6 +705,7 @@ class Importer extends gEditorial\Module
 					$count         = 0;
 					$field_map     = self::req( 'field_map', [] );
 					$terms_all     = self::req( 'terms_all', [] );
+					$extra_all     = self::req( 'extra_all', [] );
 					$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 					$attach_id     = self::req( 'attach_id', FALSE );
 					$user_id       = self::req( 'user_id', $this->_get_user_id() );
@@ -996,6 +1009,7 @@ class Importer extends gEditorial\Module
 							'source_id'  => $source_id,
 							'attach_id'  => $attach_id,
 							'terms_all'  => $terms_all,
+							'extra_all'  => $extra_all,
 							'taxonomies' => $taxonomies,
 							'override'   => $override,
 							'oldpost'    => $oldpost,
@@ -1112,6 +1126,7 @@ class Importer extends gEditorial\Module
 	{
 		$field_map     = self::req( 'field_map', [] );
 		$terms_all     = self::req( 'terms_all', [] );
+		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id     = self::req( 'upload_id', FALSE );
 		$attach_id     = self::req( 'attach_id', FALSE );
@@ -1135,6 +1150,7 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHiddenArray( $terms_all, 'terms_all' );
+			Core\HTML::inputHiddenArray( $extra_all, 'extra_all' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
@@ -1174,7 +1190,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'source_offset', $source_offset );
 			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 
-			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
+			if ( ! $this->_render_posttype_taxonomies( $posttype, 'posts' ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open_buttons();
@@ -1232,6 +1248,7 @@ class Importer extends gEditorial\Module
 	{
 		// $field_map  = self::req( 'field_map', [] );
 		$terms_all     = self::req( 'terms_all', [] );
+		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$upload_id     = self::req( $this->classs( 'terms', 'attachment', 'uploaded' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ) );
@@ -1251,6 +1268,7 @@ class Importer extends gEditorial\Module
 
 			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHiddenArray( array_filter( $terms_all ), 'terms_all' );
+			Core\HTML::inputHiddenArray( $extra_all, 'extra_all' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
@@ -1282,8 +1300,8 @@ class Importer extends gEditorial\Module
 				WordPress\Attachment::title( $attach_id )
 			) );
 
-			if ( ! $this->_render_posttype_taxonomies( $posttype ) )
-				return Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
+			if ( ! $this->_render_posttype_taxonomies( $posttype, 'terms' ) )
+				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -1919,6 +1937,7 @@ class Importer extends gEditorial\Module
 	{
 		$count         = 0;
 		$terms_all     = self::req( 'terms_all', [] );
+		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
 		$user_id       = self::req( 'user_id', $this->_get_user_id() );
@@ -1974,6 +1993,17 @@ class Importer extends gEditorial\Module
 				$this->_set_terms_for_post( $post->ID, $taxonomies, $source_id, $post, FALSE, FALSE );
 
 			// TODO: log the changes with user id
+
+			$this->actions( 'terms_saved', $post, [
+				'append'     => $append,
+				'attach_id'  => $attach_id,
+				'extra_all'  => $extra_all,
+				'override'   => $override,
+				'raw'        => $raw,
+				'source_id'  => $source_id,
+				'taxonomies' => $taxonomies,
+				'terms_all'  => $terms_all,
+			] );
 
 			$this->actions( 'terms_after_each', $posttype );
 
