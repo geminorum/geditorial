@@ -1505,9 +1505,23 @@ class Importer extends gEditorial\Module
 			case 'importer_comment_content': return WordPress\Strings::balanceTags( WordPress\Strings::kses( $value, 'html' ) );
 		}
 
-		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
-			if ( $field === self::und( $this->key, 'tax', $taxonomy ) )
-				return array_filter( WordPress\Strings::ksesArray( Services\Markup::getSeparated( $value ) ) );
+		foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
+
+			if ( $field !== self::und( $this->key, 'tax', $taxonomy ) )
+				continue;
+
+			// Translates truthy value to the default term for taxonomy
+			if ( in_array( $value, [ 'true', 'TRUE', 'True', '1' ], TRUE ) ) {
+
+				if ( $taxonomy_object->hierarchical )
+					return (array) WordPress\Taxonomy::getDefaultTermID( $taxonomy, $value );
+
+				else if ( $default_term = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
+					return (array) WordPress\Term::title( (int) $default_term, $value, FALSE );
+			}
+
+			return array_filter( WordPress\Strings::ksesArray( Services\Markup::getSeparated( $value ) ) );
+		}
 
 		return $value;
 	}
