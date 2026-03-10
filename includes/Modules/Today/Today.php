@@ -344,6 +344,7 @@ class Today extends gEditorial\Module
 				if ( $this->get_setting( 'admin_rowactions' ) )
 					$this->filter( 'post_row_actions', 2 );
 
+				$this->modulelinks__register_headerbuttons();
 				$this->_save_meta_supported( $screen->post_type );
 				$this->_edit_screen_supported( $screen->post_type );
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );

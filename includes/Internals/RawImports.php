@@ -52,16 +52,32 @@ trait RawImports
 		}
 
 		switch ( $type ) {
-			case 'php' : $data = Core\File::requireData( $this->get_imports_datafile( $key ), [] );         break;
-			case 'json': $data = gEditorial\Parser::fromJSON_Legacy( $this->get_imports_datafile( $key ) ); break;
-			case 'xml' : $data = gEditorial\Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) );  break;
-			case 'txt' : $data = gEditorial\Parser::fromTXT_Legacy( $this->get_imports_datafile( $key ) );  break;
+
+			case 'xml':
+
+				$data = gEditorial\Parser::fromXML_Legacy( $this->get_imports_datafile( $key ) );
+				break;
+
+			case 'php':
+
+				$data = Core\File::requireData( $this->get_imports_datafile( $key ), [] );
+				break;
+
+			case 'txt':
+
+				$data = Core\Text::splitLines( Core\File::getContents( $this->get_imports_datafile( $key ) ) );
+				break;
+
+			case 'json':
+
+				$rawdata = gEditorial\Parser::fromJSON( $this->get_imports_datafile( $key ) );
+				$data    = $rawdata['items'];
+				break;
 
 			case 'csv':
 
 				$rawdata = gEditorial\Parser::fromCSV( $this->get_imports_datafile( $key ) );
 				$data    = $rawdata['items'];
-
 				break;
 		}
 

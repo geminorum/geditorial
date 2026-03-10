@@ -46,6 +46,7 @@ class Parser extends WordPress\Main
 			'sheet_name'  => NULL,    // Excel
 			'sheet_index' => 0,       // Excel: starts @ `0`
 			'data_key'    => FALSE,   // JSON: the data key
+			'delimiter'   => FALSE,   // CSV: custom delimiter
 			'extra_url'   => FALSE,   // Returns full URL to the file.
 			'extra_size'  => FALSE,   // Returns file size of the file.
 			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
@@ -134,6 +135,74 @@ class Parser extends WordPress\Main
 		);
 	}
 
+	public static function fromCSV_NEW( $filepath, $arguments = [] )
+	{
+		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
+		$data = self::getInitialData( $args, $filepath );
+
+		if ( ! Core\File::readable( $data['file_path'] ) )
+			return self::bailWithError( $data,
+				'file_not_readable',
+				Plugin::notreadable( FALSE )
+			);
+
+		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		try {
+
+			/**
+			 * @package `league/csv`
+			 * @source https://github.com/thephpleague/csv
+			 * @link https://csv.thephpleague.com
+			 */
+			$parser = \League\Csv\Reader::from( $data['file_path'], 'r' );
+
+			$parser->setHeaderOffset( 0 );   // Sets the CSV header offset.
+			$parser->setEscape( '' );        // Required in PHP 8.4+ to avoid deprecation notices.
+
+			if ( $args['delimiter'] )
+				$parser->setDelimiter( $args['delimiter'] );
+
+			if ( \League\Csv\Bom::tryFromSequence( $parser )->isUtf16() ?? FALSE )
+				$parser->appendStreamFilterOnRead( 'convert.iconv.UTF-16/UTF-8' );
+
+			$data['headers'] = $parser->getHeader();
+
+			if ( empty( $data['headers'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE )
+				);
+
+			if ( $args['headers'] )
+				return $data;
+
+			if ( $args['by_offset'] ) {
+
+			} else if ( $args['first_row'] ) {
+
+			} else if ( is_null( $args['mapping'] ) ) {
+
+			} else {
+
+			}
+
+		} catch ( \Exception | \Error | \RuntimeException $e ) {
+
+			return self::bailWithError( $data,
+				'exception_occurred',
+				$e->getMessage()
+			);
+		}
+
+		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+
+		if ( ! $args['keep_alive'] )
+			unset( $parser, $raw );
+
+		return $data;
+	}
+
 	// OLD: `Helper::parseCSV()`
 	public static function fromCSV( $filepath, $arguments = [] )
 	{
@@ -143,7 +212,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+				Plugin::notreadable( FALSE )
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
@@ -152,7 +221,7 @@ class Parser extends WordPress\Main
 
 			/**
 			 * @package `jwage/easy-csv`
-			 * @link https://github.com/jwage/easy-csv
+			 * @source https://github.com/jwage/easy-csv
 			 * NOTE: This package is abandoned and no longer maintained.
 			 * 	- No replacement package was suggested by the author.
 			 */
@@ -276,7 +345,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+				Plugin::notreadable( FALSE )
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
@@ -353,10 +422,12 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+				Plugin::notreadable( FALSE )
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		// `TXT` source has no headers!
 
 		$data['items'] = Core\Text::splitLines( Core\File::getContents( $filepath ) );
 
@@ -373,6 +444,7 @@ class Parser extends WordPress\Main
 	public static function fromJSON( $filepath, $arguments = [] )
 	{
 		static $parsed = [];
+		static $items  = [];
 
 		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
 		$data = self::getInitialData( $args, $filepath );
@@ -380,26 +452,30 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+				Plugin::notreadable( FALSE )
 			);
 
+		$hash = self::hash( $args ); // for items only
 		$data = self::getAdditionalData( $data, $args, $filepath );
 
-		if ( ! empty( $parsed[$filepath] ) )
+		if ( ! empty( $parsed[$filepath] ) ) {
+
 			$parser = $parsed[$filepath];
 
-		else
+		} else {
+
 			$parser = json_decode( Core\File::getContents( $data['file_path'] ), TRUE );
 
-		if ( $args['data_key'] ) {
+			if ( $args['data_key'] ) {
 
-			// Overrides the data by `data_key` sub-data!
+				// Overrides the data by `data_key` sub-data!
 
-			if ( array_key_exists( $args['data_key'], $parser ) )
-				$parser = $parser[$args['data_key']];
+				if ( array_key_exists( $args['data_key'], $parser ) )
+					$parser = $parser[$args['data_key']];
 
-			else
-				$parser = [];
+				else
+					$parser = [];
+			}
 		}
 
 		if ( empty( $parser ) )
@@ -413,10 +489,13 @@ class Parser extends WordPress\Main
 		if ( $args['headers'] )
 			return $data;
 
+		// Makes sure all keys are available for each row!
+		$empty = array_fill_keys( $args['headers'], '' );
+
 		if ( $args['by_offset'] ) {
 
 			$data['single'] = is_null( $args['mapping'] )
-				? $parser[( (int) $args['by_offset'] + 1 )]
+				? self::parsed( $empty, $parser[( (int) $args['by_offset'] + 1 )] )
 				: Core\Arraay::reKeyByMap_ALT( $parser[( (int) $args['by_offset'] + 1 )], $args['mapping'] );
 
 			if ( empty( $data['single'] ) )
@@ -428,7 +507,7 @@ class Parser extends WordPress\Main
 		} else if ( $args['first_row'] ) {
 
 			$data['single'] = is_null( $args['mapping'] )
-				? $parser[0]
+				? self::parsed( $empty, $parser[0] )
 				: Core\Arraay::reKeyByMap_ALT( $parser[0], $args['mapping'] );
 
 			if ( empty( $data['single'] ) )
@@ -439,11 +518,19 @@ class Parser extends WordPress\Main
 
 		} else {
 
-			// starts at `1`
-			foreach ( $parser as $_index => $raw )
-				$data['items'][( $_index + 1 )] = is_null( $args['mapping'] )
-					? $raw
-					: Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+			if ( ! empty( $items[$hash] ) ) {
+
+				$data['items'] = $items[$hash];
+
+			} else {
+
+				foreach ( $parser as $_index => $raw )
+					$data['items'][( $_index + 1 )] = is_null( $args['mapping'] ) // starts at `1`
+						? self::parsed( $empty, $raw )
+						: Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+
+				$items[$hash] = $data['items'];
+			}
 
 			if ( empty( $data['items'] ) )
 				return self::bailWithError( $data,
@@ -480,7 +567,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				_x( 'Data source is not readable!', 'Parser: Message', 'geditorial' )
+				Plugin::notreadable( FALSE )
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );

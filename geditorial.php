@@ -27,7 +27,7 @@ define( 'GEDITORIAL_MIN_PHP', '7.4' );
 define( 'GEDITORIAL_DIR', plugin_dir_path( __FILE__ ) );
 define( 'GEDITORIAL_URL', plugin_dir_url( __FILE__ ) );
 define( 'GEDITORIAL_FILE', basename( GEDITORIAL_DIR ).'/'.basename( __FILE__ ) );
-define( 'GEDITORIAL_HASH', md5( GEDITORIAL_VERSION.GEDITORIAL_URL ) );
+define( 'GEDITORIAL_HASH', hash( 'crc32b', GEDITORIAL_VERSION.GEDITORIAL_URL ) );
 
 if ( version_compare( GEDITORIAL_MIN_PHP, PHP_VERSION, '>=' ) ) {
 

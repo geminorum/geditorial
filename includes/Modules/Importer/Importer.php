@@ -404,7 +404,7 @@ class Importer extends gEditorial\Module
 			'disabled' => ! $this->_can_change_user(),
 		] );
 
-		// TODO: checkbox to only import if import_id found, e.g: not creating new posts!
+		// TODO: checkbox to only import if import_id found, e.g. not creating new posts!
 	}
 
 	private function _form_images_table( $args )
@@ -735,10 +735,13 @@ class Importer extends gEditorial\Module
 
 					$this->raise_resources();
 
-					$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'headers' => TRUE ] );
+					$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [
+						'headers'    => TRUE,
+						'keep_alive' => TRUE,
+					] );
 
 					if ( $rawdata['error'] )
-						WordPress\Redirect::doReferer( 'wrong' ); // TODO: log error
+						WordPress\Redirect::doRefererWithLog( $rawdata['error'], 'wrong' );
 
 					$post_status    = $this->filters( 'default_post_status', $this->get_setting( 'post_status', 'pending' ), $posttype, $override );
 					$comment_status = $this->filters( 'default_comment_status', $this->get_setting( 'comment_status', 'closed' ), $posttype, $override );
@@ -755,8 +758,10 @@ class Importer extends gEditorial\Module
 
 						$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index + 1 ] );
 
-						if ( $rowdata['error'] )
-							continue; // TODO: log error
+						if ( $rowdata['error'] ) {
+							self::_log_error( $rowdata['error'] );
+							continue;
+						}
 
 						$raw        = $rowdata['single'];
 						$data       = []; // [ 'tax_input' => [] ];
@@ -1152,10 +1157,10 @@ class Importer extends gEditorial\Module
 		if ( self::step( 'posts_step_four' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 3, 4, _x( 'Import', 'Step', 'geditorial-importer' ) );
@@ -1180,10 +1185,10 @@ class Importer extends gEditorial\Module
 		} else if ( self::step( 'posts_step_three' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 2, 4, _x( 'Terms', 'Step', 'geditorial-importer' ) );
@@ -1212,10 +1217,10 @@ class Importer extends gEditorial\Module
 		} else if ( self::step( 'posts_step_two' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 1, 4, _x( 'Map', 'Step', 'geditorial-importer' ) );
@@ -1229,7 +1234,6 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
-			// Core\HTML::inputHidden( 'imports_for', 'posts' );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			$this->_form_posts_map( $attach_id, $posttype );
@@ -1255,6 +1259,7 @@ class Importer extends gEditorial\Module
 		}
 	}
 
+	// NOTE: the difference is on not trying to create the posts!
 	private function _render_imports_for_terms( $uri, $sub )
 	{
 		// $field_map  = self::req( 'field_map', [] );
@@ -1272,10 +1277,10 @@ class Importer extends gEditorial\Module
 		if ( self::step( 'terms_step_four' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHiddenArray( array_filter( $terms_all ), 'terms_all' );
@@ -1297,13 +1302,13 @@ class Importer extends gEditorial\Module
 		} else if ( self::step( 'terms_step_three' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! $source_column )
-				return Core\HTML::desc( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
@@ -1328,10 +1333,10 @@ class Importer extends gEditorial\Module
 		} else if ( self::step( 'terms_step_two' ) ) {
 
 			if ( ! $attach_id )
-				return Core\HTML::desc( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
@@ -1374,19 +1379,17 @@ class Importer extends gEditorial\Module
 	private function _render_imports_for_images( $uri, $sub )
 	{
 		if ( ! current_user_can( 'upload_files' ) )
-			return Core\HTML::desc( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ) );
+			return print Core\HTML::error( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ), FALSE );
 
 		$args = $this->_get_current_form_images();
 
 		if ( self::step( 'images_step_two' ) ) {
 
 			if ( empty( $args['metakey'] ) )
-				return Core\HTML::desc( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ) );
+				return print Core\HTML::error( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
 			if ( ! WordPress\PostType::can( $args['posttype'], $this->capability_posttype ) )
-				return Core\HTML::desc( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ) );
-
-			// Core\HTML::inputHidden( 'imports_for', 'images' );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
 			$this->fields_current_form( $args, 'forimages' );
 			$this->_form_images_table( $args );
@@ -1760,12 +1763,12 @@ class Importer extends gEditorial\Module
 			case 'import':
 
 				// WTF: what is the point of this?
-				// we do not use the `import` anywhere?
+				// We do not use the `import` anywhere!?
 
 				if ( ! $this->get_setting( 'map_import_cap' ) )
 					break;
 
-				// if not will fall to the next case
+				// If not, will fall to the next case!
 
 			case gEditorial\Plugin::CAPABILITY_IMPORTS:
 

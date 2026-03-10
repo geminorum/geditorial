@@ -759,7 +759,7 @@ class Plugin extends WordPress\Plugin
 	public static function untitled( $wrap = 'span' )
 	{
 		$message = __( '(Untitled)', 'geditorial' );
-		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'No Title Available!', 'geditorial' ) ], $message ) : $message;
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'Title Undefined', 'geditorial' ) ], $message ) : $message;
 	}
 
 	public static function denied( $wrap = 'p' )
@@ -790,6 +790,12 @@ class Plugin extends WordPress\Plugin
 	{
 		$message = __( 'There is no information available!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
+	}
+
+	public static function notreadable( $wrap = 'p' )
+	{
+		$message = __( 'Data source is not readable!', 'geditorial' );
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-notreadable' ] ], $message ) : $message;
 	}
 
 	public static function done( $wrap = 'p' )

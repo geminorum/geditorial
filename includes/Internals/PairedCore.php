@@ -87,7 +87,7 @@ trait PairedCore
 
 				'public'       => ! $paired[5],
 				'rewrite'      => $paired[5] ? FALSE : NULL,
-				'show_ui'      => $this->is_debug_mode(),
+				'show_ui'      => FALSE, // $this->is_debug_mode(),
 				'hierarchical' => $paired[4],
 
 				'capabilities' => [
@@ -107,6 +107,12 @@ trait PairedCore
 			$this->_paired = $this->constant( $paired[1] );
 			$this->paired_handle_paired_metacaps_roles( $paired, $captype );
 			$this->filter_unset( 'wp_sitemaps_taxonomies', $this->_paired );
+
+			if ( $this->get_setting( 'paired_relation_type' ) ) {
+
+				// use main post-type + `_relation`
+				// register un-attached taxonomy
+			}
 		}
 
 		if ( $this->get_setting( 'paired_manage_restricted' )

@@ -667,7 +667,7 @@ class Users extends gEditorial\Module
 					$rawdata = gEditorial\Parser::fromCSV( Core\File::normalize( $file['file'] ) );
 
 					if ( $rawdata['error'] )
-						WordPress\Redirect::doReferer( 'wrong' ); // TODO: log error
+						WordPress\Redirect::doRefererWithLog( $rawdata['error'], 'wrong' );
 
 					$currents = $wpdb->get_results( "
 						SELECT post_author as user,

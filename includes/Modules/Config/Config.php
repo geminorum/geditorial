@@ -480,13 +480,15 @@ class Config extends gEditorial\Module
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						WordPress\Redirect::doReferer( 'wrong' );
 
-					if ( ! $data = gEditorial\Parser::fromJSON_Legacy( Core\File::normalize( $file['file'] ) ) )
-						WordPress\Redirect::doReferer( 'wrong' );
+					$rawdata = gEditorial\Parser::fromJSON( Core\File::normalize( $file['file'] ) );
+
+					if ( $rawdata['error'] )
+						WordPress\Redirect::doRefererWithLog( $rawdata['error'], 'wrong' );
 
 					$options = get_option( 'geditorial_options' );
 
 					// NOTE: Only overrides the options of imported modules
-					foreach ( $data as $module => $new_options )
+					foreach ( $rawdata['items'] as $module => $new_options )
 						$options[$module] = (object) $new_options;
 
 					if ( ! update_option( 'geditorial_options', $options, TRUE ) )
