@@ -134,9 +134,8 @@ trait SettingsCore
 		if ( ! $this->module->autoload )
 			$this->register_button( 'disable', _x( 'Disable Module', 'Module: Button', 'geditorial-admin' ), 'danger' );
 
-		foreach ( $this->get_module_links() as $link )
-			if ( ! empty( $link['context'] ) && in_array( $link['context'], [ 'tools', 'reports', 'imports', 'customs', 'listtable' ], TRUE ) )
-				$this->register_button( $link['url'], $link['title'], 'link' );
+		foreach ( $this->get_module_links( TRUE ) as $link )
+			$this->register_button( $link['url'], $link['title'], 'link' );
 
 		$this->register_settings_extra_buttons( $module );
 	}

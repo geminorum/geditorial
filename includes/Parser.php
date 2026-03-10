@@ -36,7 +36,7 @@ class Parser extends WordPress\Main
 		return gEditorial();
 	}
 
-	// public static function fromFile( $filepath, $atts = NULL ) {}
+	// `public static function fromFile( $filepath, $arguments = NULL ) {}`
 
 
 	// OLD: `Helper::parseCSV()`
@@ -182,10 +182,10 @@ class Parser extends WordPress\Main
 		 * @link https://opensource.box.com/spout/docs/
 		 * @link https://github.com/openspout/openspout/blob/3.x/docs/index.md
 		 */
-		$reader = \OpenSpout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
-		$reader->open( $data['file_path'] );
+		$parser = \OpenSpout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
+		$parser->open( $data['file_path'] );
 
-		foreach ( $reader->getSheetIterator() as $sheet ) {
+		foreach ( $parser->getSheetIterator() as $sheet ) {
 
 			$sheet_name  = $sheet->getName();
 			$sheet_index = $sheet->getIndex();
@@ -230,7 +230,7 @@ class Parser extends WordPress\Main
 			break; // no need to do iterate through other sheets
 		}
 
-		$reader->close();
+		$parser->close();
 
 		return $data;
 	}

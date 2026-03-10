@@ -651,6 +651,7 @@ class Organization extends gEditorial\Module
 		$this->do_force_assign_parents( $post, $this->constant( 'primary_paired' ) );
 	}
 
+	// TODO: move up!
 	public function importer_posttype_taxonomies_after( $posttype, $taxonomies, $name_template, $before, $after, $after_title )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )

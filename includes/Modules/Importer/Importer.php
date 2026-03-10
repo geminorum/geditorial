@@ -112,7 +112,7 @@ class Importer extends gEditorial\Module
 
 	protected function tool_box_content()
 	{
-		Core\HTML::desc( _x( 'Helps with Importing contents from CSV files into any post-type, with meta support.', 'Tool Box', 'geditorial-importer' ) );
+		Core\HTML::desc( _x( 'Helps with Importing contents from source files into any post-type, with meta support and more.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
 	public function init()
@@ -548,7 +548,7 @@ class Importer extends gEditorial\Module
 					$args['extra']['taxonomies']
 				);
 
-				if ( ( ! $title = trim( $title ) ) && ( $posts = WordPress\Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
+				if ( $title && ( $posts = WordPress\Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
 
 					$html = '<div class="-danger">'._x( 'Similar:', 'Checks', 'geditorial-importer' ).' ';
 
@@ -875,7 +875,7 @@ class Importer extends gEditorial\Module
 								if ( ! $value )
 									break;
 
-								if ( $field != 'importer_tax_'.$taxonomy )
+								if ( $field != self::und( $this->key, 'tax', $taxonomy ) )
 									continue;
 
 								// Allows filters to import multiple columns for one taxonomy.
@@ -1094,13 +1094,13 @@ class Importer extends gEditorial\Module
 			if ( count( $this->posttypes() ) ) {
 
 				echo gEditorial\Settings::toolboxCardOpen(
-					_x( 'Import Data from CSV into Posts', 'Header', 'geditorial-importer' ), FALSE );
+					_x( 'Import Data from Provided Source into Posts', 'Header', 'geditorial-importer' ), FALSE );
 
 					$this->_render_imports_for_posts( $uri, $sub );
 				echo '</div>';
 
 				echo gEditorial\Settings::toolboxCardOpen(
-					_x( 'Import Terms and Assign them to Posts', 'Header', 'geditorial-importer' ), FALSE );
+					_x( 'Assign Terms to Posts based on Provided Source', 'Header', 'geditorial-importer' ), FALSE );
 
 					$this->_render_imports_for_terms( $uri, $sub );
 				echo '</div>';
@@ -1239,7 +1239,7 @@ class Importer extends gEditorial\Module
 			echo $this->wrap_open( '-wrap-button-row' );
 
 			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Upload or select a CSV file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+			Core\HTML::desc( _x( 'Upload or select a source file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</div>';
 		}
 	}
@@ -1345,7 +1345,7 @@ class Importer extends gEditorial\Module
 
 			echo $this->wrap_open( '-wrap-button-row' );
 			gEditorial\Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Upload or select a CSV file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+			Core\HTML::desc( _x( 'Upload or select a source file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</div>';
 		}
 	}
@@ -1484,7 +1484,7 @@ class Importer extends gEditorial\Module
 		];
 
 		foreach ( (array) $taxonomies as $taxonomy => $taxonomy_object )
-			$fields['importer_tax_'.$taxonomy] = sprintf(
+			$fields[self::und( $this->key, 'tax', $taxonomy )] = sprintf(
 				/* translators: `%s`: taxonomy name placeholder */
 				_x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ),
 				$taxonomy_object->labels->singular_name
@@ -1506,13 +1506,12 @@ class Importer extends gEditorial\Module
 		}
 
 		foreach ( array_keys( $all_taxonomies ) as $taxonomy )
-			if ( $field == 'importer_tax_'.$taxonomy )
+			if ( $field === self::und( $this->key, 'tax', $taxonomy ) )
 				return array_filter( WordPress\Strings::ksesArray( Services\Markup::getSeparated( $value ) ) );
 
 		return $value;
 	}
 
-	// public function importer_saved( $post, $data, $prepared, $field_map, $source_id, $attach_id, $terms_all, $raw )
 	public function importer_saved( $post, $atts = [] )
 	{
 		if ( ! $post )
@@ -1696,7 +1695,6 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	// TODO: support for excel source!
 	private function _get_source_mimetypes()
 	{
 		return [
@@ -1726,7 +1724,7 @@ class Importer extends gEditorial\Module
 			case 'import':
 
 				// WTF: what is the point of this?
-				// we do not use the `import` anywere?
+				// we do not use the `import` anywhere?
 
 				if ( ! $this->get_setting( 'map_import_cap' ) )
 					break;
@@ -1835,6 +1833,8 @@ class Importer extends gEditorial\Module
 
 		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
 
+			// TODO: check box for `source_is_postid`
+
 			Core\HTML::desc( _x( 'Used as Identifider of each item.', 'Description', 'geditorial-importer' ) );
 
 		echo '</td></tr>';
@@ -1900,7 +1900,7 @@ class Importer extends gEditorial\Module
 				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
 				Core\Number::format( count( $data ) ),
-				get_the_title( $id )
+				WordPress\Attachment::title( $id )
 			) ),
 			'callback' => [ $this, 'form_terms_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],

@@ -138,6 +138,8 @@ class Info extends WordPress\Main
 
 		} catch ( \Exception $e ) {
 
+			self::_log( 'Exception: `Info::fromIBAN()` :: '.$e->getMessage() );
+
 			$info = FALSE;
 		}
 

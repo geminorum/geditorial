@@ -297,11 +297,14 @@ trait ModuleLinks
 	protected function modulelinks__get_context_icon( $context, $fallback = NULL )
 	{
 		switch ( $context ) {
-			case 'settings': return $this->module->icon;
-			case 'reports' : return 'chart-pie';
-			case 'tools'   : return 'admin-tools';
-			case 'roles'   : return 'groups';
+			case 'customs' : return 'admin-customizer';
 			case 'imports' : return 'upload';
+			case 'kiosks'  : return 'slides';
+			case 'reports' : return 'chart-pie';
+			case 'roles'   : return 'groups';
+			case 'settings': return $this->module->icon;
+			case 'tests'   : return 'code-standards';
+			case 'tools'   : return 'admin-tools';
 		}
 
 		return $fallback ?? 'screenoptions';

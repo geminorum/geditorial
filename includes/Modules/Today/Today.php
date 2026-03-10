@@ -603,29 +603,33 @@ class Today extends gEditorial\Module
 
 	public function set_today_meta( $post_id, $postmeta, $constants )
 	{
+		$data = array_filter( $postmeta );
+
 		foreach ( $constants as $field => $constant ) {
 
 			// if year with no cal
-			if ( 'year' == $field && ! array_key_exists( 'cal', $postmeta ) )
-				unset( $postmeta['year'] );
+			if ( 'year' == $field && ! array_key_exists( 'cal', $data ) )
+				unset( $data['year'] );
 
 			// if month with no cal
-			if ( 'month' == $field && ! array_key_exists( 'cal', $postmeta ) )
-				unset( $postmeta['month'] );
+			if ( 'month' == $field && ! array_key_exists( 'cal', $data ) )
+				unset( $data['month'] );
 
 			// if only day with no month
-			if ( 'day' == $field && ! array_key_exists( 'month', $postmeta ) )
-				unset( $postmeta['day'] );
+			if ( 'day' == $field && ! array_key_exists( 'month', $data ) )
+				unset( $data['day'] );
 
-			if ( array_key_exists( $field, $postmeta ) ) {
+			if ( array_key_exists( $field, $data ) ) {
 
 				// if only cal meta, delete all
-				if ( 'cal' == $field && 1 === count( $postmeta ) )
+				if ( 'cal' == $field && 1 === count( $data ) )
 					delete_post_meta( $post_id, $constant );
+
 				else
-					update_post_meta( $post_id, $constant, $postmeta[$field] );
+					update_post_meta( $post_id, $constant, $data[$field] );
 
 			} else {
+
 				delete_post_meta( $post_id, $constant );
 			}
 		}
@@ -1527,6 +1531,7 @@ class Today extends gEditorial\Module
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
+		$prefix    = sprintf( '%s__', $this->key );
 		$default   = $this->default_calendar();
 		$calendars = $this->list_calendars();
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
@@ -1540,7 +1545,7 @@ class Today extends gEditorial\Module
 			if ( ! $value = trim( $atts['raw'][$offset] ) )
 				continue;
 
-			$key = str_ireplace( 'today__', '', $field );
+			$key = Core\Text::stripPrefix( $field, $prefix );
 
 			// will override all data!
 			if ( 'full' == $key )
@@ -1553,7 +1558,7 @@ class Today extends gEditorial\Module
 				$postmeta[$key] = Core\Number::translate( $value );
 		}
 
-		if ( count( $postmeta ) )
+		if ( count( $postmeta ) ) // NOTE: `cal` only data will be ignored
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
 	}
 
