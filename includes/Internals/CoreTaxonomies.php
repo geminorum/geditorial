@@ -107,6 +107,7 @@ trait CoreTaxonomies
 			'suitable_metas'  => NULL,     // Optional list of meta suggested for this taxonomy.
 			'search_titles'   => NULL,
 			'ical_source'     => TRUE,     // `TRUE`/`FALSE`/`paired`
+			'module_link'     => NULL,     // after register
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';
@@ -408,7 +409,35 @@ trait CoreTaxonomies
 		if ( self::isError( $object ) )
 			return $this->log( 'CRITICAL', $object->get_error_message(), $args );
 
-		// TODO: `after_taxonomy_object_register()`
+		// NOTE: apply settings AFTER registration
+		foreach ( $settings as $setting => $value ) {
+
+			// NOTE: `NULL` means do not touch!
+			if ( is_null( $value ) )
+				continue;
+
+			switch ( $setting ) {
+
+				case 'module_link':
+
+					if ( ! $value )
+						break;
+
+					if ( TRUE === $value )
+						$value = $object->labels->menu_name;
+
+					$this->module_links[] = [
+						'context'  => $constant,
+						'taxonomy' => $taxonomy,
+						'text'     => $value,
+						'title'    => $object->labels->name,
+						'cap'      => $object->cap->manage_terms,
+						'url'      => WordPress\URL::editTaxonomy( $taxonomy ),
+					];
+
+					break;
+			}
+		}
 
 		return $object;
 	}

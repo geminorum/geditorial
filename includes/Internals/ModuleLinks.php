@@ -19,6 +19,14 @@ trait ModuleLinks
 		// already registered links
 		foreach ( $this->module_links as $module_link ) {
 
+			if ( ! empty( $module_link['posttype'] )
+				&& WordPress\Screen::isPosttype( $module_link['posttype'], $screen ) )
+					continue;
+
+			else if ( ! empty( $module_link['taxonomy'] )
+				&& WordPress\Screen::isTaxonomy( $module_link['taxonomy'], $screen ) )
+					continue;
+
 			if ( ! empty( $module_link['cap'] ) ) {
 
 				if ( TRUE === $module_link['cap']

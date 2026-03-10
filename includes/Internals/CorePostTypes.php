@@ -100,6 +100,7 @@ trait CorePostTypes
 			'password_disabled' => TRUE,
 			'ical_source'       => TRUE,         // `TRUE`/`FALSE`/`paired`
 			'no_autosave'       => NULL,         // after register
+			'module_link'       => NULL,         // after register
 		], $settings_atts );
 
 		// NOTE: apply settings BEFORE registration
@@ -363,6 +364,25 @@ trait CorePostTypes
 					 * @REF: https://core.trac.wordpress.org/changeset/58201
 					 */
 					remove_post_type_support( $posttype, 'autosave' );
+
+					break;
+
+				case 'module_link':
+
+					if ( ! $value )
+						break;
+
+					if ( TRUE === $value )
+						$value = $object->labels->menu_name;
+
+					$this->module_links[] = [
+						'context'  => $constant,
+						'posttype' => $posttype,
+						'text'     => $value,
+						'title'    => $object->labels->name,
+						'cap'      => $object->cap->edit_posts,
+						'url'      => WordPress\URL::editPostType( $posttype ),
+					];
 
 					break;
 			}
