@@ -172,8 +172,8 @@ task('i18n:admin', function (cb) {
   });
 });
 
-function i18nModule (file) {
-  const name = file.path.split(path.sep).pop();
+function i18nModule (filepath) {
+  const name = filepath.split(path.sep).pop();
   const folder = capitalize(name); // EXAMPLE: `documentRevisions` >> `DocumentRevisions`
   const domain = name.split(/(?=[A-Z])/).join('-').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document-revisions`
   const module = name.split(/(?=[A-Z])/).join('_').toLowerCase(); // EXAMPLE: `DocumentRevisions` >> `document_revisions`
@@ -202,7 +202,7 @@ task('i18n:module', function (done) {
 
   return src(conf.input.module + args.name)
     .pipe(gulpexec(function (file) {
-      const module = i18nModule(file);
+      const module = i18nModule(file.path);
       log.info('Make pot for Module: ' + module.folder);
       return 'wp i18n make-pot ' + file.path +
         ' ./languages/' + module.folder + '/' + module.domain + '.pot' +
@@ -225,7 +225,7 @@ task('i18n:modules', function () {
 
   return src(conf.input.modules)
     .pipe(gulpexec(function (file) {
-      const module = i18nModule(file);
+      const module = i18nModule(file.path);
       log.info('Make pot for Module: ' + module.folder);
       return 'wp i18n make-pot ' + file.path +
         ' ./languages/' + module.folder + '/' + module.domain + '.pot' +
@@ -480,5 +480,7 @@ task('ready', function (done) {
 task('default', function (done) {
   log.info('Hi, I\'m Gulp!');
   log.info('Sass is:\n' + compiler.default.info);
+  log.info('Args', args);
+  if ( 'name' in args ) log.info(i18nModule(args.name));
   done();
 });
