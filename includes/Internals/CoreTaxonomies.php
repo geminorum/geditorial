@@ -107,7 +107,9 @@ trait CoreTaxonomies
 			'suitable_metas'  => NULL,     // Optional list of meta suggested for this taxonomy.
 			'search_titles'   => NULL,
 			'ical_source'     => TRUE,     // `TRUE`/`FALSE`/`paired`
-			'module_link'     => NULL,     // after register
+
+			/// after register
+			'module_link' => (bool) in_array( $constant, [ 'main_taxonomy', 'primary_taxonomy' ], TRUE ),
 		], $settings_atts );
 
 		$target_object = $settings['target_object'] ?: 'post';
@@ -258,13 +260,13 @@ trait CoreTaxonomies
 						'rewrite'            => FALSE,   // WTF?!
 					] );
 
-					// makes `Tabloid` links visible for non-viewable taxonomies
+					// Makes `Tabloid` links visible for non-viewable taxonomies.
 					add_filter( $this->hook_base( 'tabloid', 'is_term_viewable' ),
 						static function ( $viewable, $term ) use ( $taxonomy ) {
 							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
 						}, 12, 2 );
 
-					// makes available on current module
+					// Makes available on current module.
 					add_filter( $this->hook_base( $this->key, 'is_term_viewable' ),
 						static function ( $viewable, $term ) use ( $taxonomy ) {
 							return $term->taxonomy === $taxonomy ? TRUE : $viewable;
@@ -367,7 +369,7 @@ trait CoreTaxonomies
 
 				case 'content_rich':
 
-					// even empty shows on sitemaps
+					// Even if empty shows on sitemaps!
 					$args[Services\Sitemaps::VIEWABLE_TAXONOMY_PROP] = TRUE;
 
 					break;

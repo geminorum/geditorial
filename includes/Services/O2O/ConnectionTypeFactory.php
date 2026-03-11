@@ -26,6 +26,8 @@ class ConnectionTypeFactory extends Core\Base
 			'from_labels'           => '',
 			'to_labels'             => '',
 			'reciprocal'            => FALSE,
+
+			// 'admin_column' => 'from',   // 'any', 'from', 'to', FALSE
 		], $atts );
 
 		if ( strlen( $args['name'] ) > 44 ) {

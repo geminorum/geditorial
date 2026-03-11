@@ -168,7 +168,6 @@ $("#addtag").on("mousedown","#submit",function () {
 			tinyMCE.activeEditor.setContent("");
 		}
 		$(document).off("ajaxSuccess.geditorial_wysiwyg_add_term",false);
-		console.log('here!!');
 	});
 });
 JS;

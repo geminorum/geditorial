@@ -10,43 +10,43 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class GenerateICS extends Core\Base
 {
 	/**
-	 * ICS.php
+	 * `ICS.php`
 	 * =======
-	 * Use this class to create an .ics file.
+	 * Use this class to create an `.ics` file.
 	 *
 	 * Usage
 	 * -----
-	 * Basic usage - generate ics file contents (see below for available properties):
-	 *   $ics = new ICS($props);
+	 * Basic usage - generate `.ics` file contents (see below for available properties):
+	 *   $ics = new ICS( $props );
 	 *   $ics_file_contents = $ics->to_string();
 	 *
 	 * Setting properties after instantiation
-	 *   $ics = new ICS();
-	 *   $ics->set('summary', 'My awesome event');
+	 *   ```$ics = new ICS();
+	 *   $ics->set( 'summary', 'My awesome event' );```
 	 *
 	 * You can also set multiple properties at the same time by using an array:
-	 *   $ics->set(array(
+	 *  ```$ics->set( [
 	 *     'dtstart' => 'now + 30 minutes',
-	 *     'dtend' => 'now + 1 hour'
-	 *   ));
+	 *     'dtend'   => 'now + 1 hour',
+	 *   ] );```
 	 *
 	 * Available properties
 	 * --------------------
-	 * description
+	 * `description`
 	 *   String description of the event.
-	 * dtend
+	 * `dtend`
 	 *   A date/time stamp designating the end of the event. You can use either a
-	 *   DateTime object or a PHP datetime format string (e.g. "now + 1 hour").
-	 * dtstart
+	 *   `DateTime` object or a PHP datetime format string (e.g. "now + 1 hour").
+	 * `dtstart`
 	 *   A date/time stamp designating the start of the event. You can use either a
-	 *   DateTime object or a PHP datetime format string (e.g. "now + 1 hour").
-	 * location
+	 *   `DateTime` object or a PHP datetime format string (e.g. "now + 1 hour").
+	 * `location`
 	 *   String address or description of the location of the event.
-	 * summary
+	 * `summary`
 	 *   String short summary of the event - usually used as the title.
-	 * url
-	 *   A url to attach to the the event. Make sure to add the protocol (http://
-	 *   or https://).
+	 * `url`
+	 *   A URL to attach to the event. Make sure to add the protocol (`http://`
+	 *   or `https://`).
 	 */
 
 	const DT_FORMAT = 'Ymd\THis\Z';

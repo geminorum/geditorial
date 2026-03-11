@@ -1085,6 +1085,7 @@ trait SubContents
 		$data   = $this->quantumcomments__get_data_mapped( $items, $context );
 		$data   = $this->subcontent_get_prepped_data( $data, $context, FALSE );
 		$fields = $this->subcontent_get_fields( $context );
+		$custom = []; // WTF?!
 
 		$columns = [
 			'_cb'     => '_id',
@@ -1095,7 +1096,15 @@ trait SubContents
 					if ( $value && ( $parent = WordPress\Post::title( (int) $value, FALSE ) ) )
 						return $parent;
 
-					return $value ?: gEditorial\Helper::htmlEmpty();
+					return Helper::getPostTitleRow( $row, 'edit' );
+				},
+				'actions' => static function ( $value, $row, $column, $index, $key, $args )
+					use ( $custom ) {
+
+					return array_merge(
+						gEditorial\Tablelist::getPostRowActions( (int) $value, NULL ),
+						$custom
+					);
 				},
 			],
 		];

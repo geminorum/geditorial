@@ -99,8 +99,10 @@ trait CorePostTypes
 			'author_disabled'   => NULL,
 			'password_disabled' => TRUE,
 			'ical_source'       => TRUE,         // `TRUE`/`FALSE`/`paired`
-			'no_autosave'       => NULL,         // after register
-			'module_link'       => NULL,         // after register
+
+			/// after register
+			'no_autosave' => NULL,
+			'module_link' => (bool) in_array( $constant, [ 'main_posttype', 'primary_posttype' ], TRUE ),
 		], $settings_atts );
 
 		// NOTE: apply settings BEFORE registration

@@ -367,6 +367,7 @@ class Personage extends gEditorial\Module
 			'password_disabled' => TRUE,
 		] );
 
+		$this->action( 'binarypond_personage_discovery', 2, 10, FALSE, $this->base );
 		$this->filter( 'the_title', 2, 8 );
 
 		if ( $this->get_setting( 'public_statuses' ) )
@@ -514,6 +515,11 @@ class Personage extends gEditorial\Module
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
+	}
+
+	public function binarypond_personage_discovery( $data, $request )
+	{
+		self::_log( $data ); // FIXME
 	}
 
 	public function the_title( $title, $post_id = NULL )
