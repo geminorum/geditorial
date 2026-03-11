@@ -57,7 +57,7 @@ class Parser extends WordPress\Main
 			'extra_url'   => FALSE,   // Returns full URL to the file.
 			'extra_size'  => FALSE,   // Returns file size of the file.
 			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
-			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries? // TODO!
+			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries?
 		];
 	}
 
@@ -345,7 +345,8 @@ class Parser extends WordPress\Main
 			);
 		}
 
-		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+		// $data['total'] = count( $data['items'] ); // TODO: better to get from parser
+		$data['total'] = $parser->getLastLineNumber();
 
 		if ( ! $args['keep_alive'] )
 			unset( $parser, $raw );
@@ -353,8 +354,8 @@ class Parser extends WordPress\Main
 		return $data;
 	}
 
-	// NOTE: DEPRECATED
 	// OLD: `Helper::parseCSV_Legacy()`
+	#[Deprecated(message:'use Parser::fromCSV() instead')]
 	public static function fromCSV_Legacy( $file_path, $limit = NULL )
 	{
 		self::_dep( 'Parser::fromCSV()' );

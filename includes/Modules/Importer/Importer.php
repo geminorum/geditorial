@@ -378,6 +378,8 @@ class Importer extends gEditorial\Module
 		}
 
 		echo '</tbody></table>';
+
+		return TRUE;
 	}
 
 	private function _form_posts_attached( $id = 0, $posttype = 'post', $user_id = NULL )
@@ -633,6 +635,7 @@ class Importer extends gEditorial\Module
 
 		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $args['extra']['source_postid'], $raw ) )
 			$raw['___matched'] = intval( $matched );
+
 		else
 			$raw['___matched'] = 0;
 
@@ -1177,14 +1180,16 @@ class Importer extends gEditorial\Module
 		if ( self::step( 'posts_step_four' ) ) {
 
 			if ( ! $attach_id )
-				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 3, 4, _x( 'Import', 'Step', 'geditorial-importer' ) );
 			echo '<br /><br /></div>';
+
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHiddenArray( $terms_all, 'terms_all' );
@@ -1205,18 +1210,18 @@ class Importer extends gEditorial\Module
 			);
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
-			gEditorial\Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
-			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+				gEditorial\Settings::submitButton( 'posts_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
+				Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else if ( self::step( 'posts_step_three' ) ) {
 
 			if ( ! $attach_id )
-				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 2, 4, _x( 'Terms', 'Step', 'geditorial-importer' ) );
@@ -1227,6 +1232,8 @@ class Importer extends gEditorial\Module
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				WordPress\Attachment::title( $attach_id )
 			) );
+
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 
 			Core\HTML::inputHiddenArray( $field_map, 'field_map' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -1239,17 +1246,17 @@ class Importer extends gEditorial\Module
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'posts_step_four', _x( 'Step 4: Import', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else if ( self::step( 'posts_step_two' ) ) {
 
 			if ( ! $attach_id )
-				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			echo $this->wrap_open( '-step-hints' );
 				Services\Markup::renderCircleProgress( 1, 4, _x( 'Map', 'Step', 'geditorial-importer' ) );
@@ -1261,15 +1268,18 @@ class Importer extends gEditorial\Module
 				WordPress\Attachment::title( $attach_id )
 			) );
 
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
+
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
-			$this->_form_posts_map( $attach_id, $posttype );
+			if ( TRUE !== $this->_form_posts_map( $attach_id, $posttype ) )
+				return;
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'posts_step_three', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else {
@@ -1281,9 +1291,8 @@ class Importer extends gEditorial\Module
 			$this->_form_posts_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open( '-wrap-button-row' );
-
-			gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Upload or select a source file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'posts_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Upload or select a source file, post-type and user to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</div>';
 		}
 	}
@@ -1305,6 +1314,8 @@ class Importer extends gEditorial\Module
 
 		if ( self::step( 'terms_step_four' ) ) {
 
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
+
 			if ( ! $attach_id )
 				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
 
@@ -1322,28 +1333,30 @@ class Importer extends gEditorial\Module
 			$this->_form_terms_table( $attach_id, $field_map ?? [], $posttype, $terms_all, $source_column );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
-			gEditorial\Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
-			gEditorial\Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
-			Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::submitButton( 'terms_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
+				gEditorial\Settings::submitButton( 'terms_import_append', _x( 'Import and Append', 'Button', 'geditorial-importer' ) );
+				gEditorial\Settings::submitButton( 'terms_import_override', _x( 'Import and Override', 'Button', 'geditorial-importer' ) );
+				Core\HTML::desc( _x( 'Select records to finally import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else if ( self::step( 'terms_step_three' ) ) {
 
 			if ( ! $attach_id )
-				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! $source_column )
-				return print Core\HTML::error( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source column is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				WordPress\Attachment::title( $attach_id )
 			) );
+
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype, 'terms' ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
@@ -1355,17 +1368,17 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'source_column', $source_column );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'terms_step_four', _x( 'Step 3: Terms', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Select a term from each post-type supported taxonomy to append all imported posts.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else if ( self::step( 'terms_step_two' ) ) {
 
 			if ( ! $attach_id )
-				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Import source is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
@@ -1373,15 +1386,18 @@ class Importer extends gEditorial\Module
 				WordPress\Attachment::title( $attach_id )
 			) );
 
-			$this->_form_terms_map( $attach_id, $posttype );
+			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
+
+			if ( TRUE !== $this->_form_terms_map( $attach_id, $posttype ) )
+				return;
 
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 
 			echo $this->wrap_open_buttons();
-			gEditorial\Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'terms_step_three', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Map the file fields to the post-type fields.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</p>';
 
 		} else {
@@ -1389,8 +1405,8 @@ class Importer extends gEditorial\Module
 			$this->_form_terms_attached( self::req( 'attachment', 0 ), $posttype, $user_id );
 
 			echo $this->wrap_open( '-wrap-button-row' );
-			gEditorial\Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
-			Core\HTML::desc( _x( 'Upload or select a source file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
+				gEditorial\Settings::actionButton( 'terms_step_two', _x( 'Step 2: Map', 'Button', 'geditorial-importer' ), TRUE );
+				Core\HTML::desc( _x( 'Upload or select a source file with post-type to map the import.', 'Message', 'geditorial-importer' ), FALSE );
 			echo '</div>';
 		}
 	}
@@ -1408,17 +1424,17 @@ class Importer extends gEditorial\Module
 	private function _render_imports_for_images( $uri, $sub )
 	{
 		if ( ! current_user_can( 'upload_files' ) )
-			return print Core\HTML::error( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ), FALSE );
+			return print Core\HTML::error( _x( 'You are not allowed to upload files!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 		$args = $this->_get_current_form_images();
 
 		if ( self::step( 'images_step_two' ) ) {
 
 			if ( empty( $args['metakey'] ) )
-				return print Core\HTML::error( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'Refrence meta-key is not defined!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			if ( ! WordPress\PostType::can( $args['posttype'], $this->capability_posttype ) )
-				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
+				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE, 'inline' );
 
 			$this->fields_current_form( $args, 'forimages' );
 			$this->_form_images_table( $args );
@@ -1929,6 +1945,8 @@ class Importer extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+
+		return TRUE;
 	}
 
 	private function _form_terms_table( $id, $map = [], $posttype = 'post', $terms_all = [], $source_column = '' )
@@ -2043,7 +2061,7 @@ class Importer extends gEditorial\Module
 		$rawdata = gEditorial\Parser::fromAttachment( $attach_id );
 
 		if ( $rawdata['error'] )
-			return print Core\HTML::error( $rawdata['error'], FALSE );
+			return self::_log_error( $rawdata['error'] );
 
 		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
 

@@ -2171,7 +2171,7 @@ class Settings extends WordPress\Main
 			echo '</div>';
 		}
 
-		echo '<hr class="wp-header-end">';
+		echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 	}
 
 	public static function sideOpen( $title = NULL, $uri = '', $active = '', $subs = [], $heading = NULL )
@@ -2205,7 +2205,7 @@ class Settings extends WordPress\Main
 			return;
 
 		Core\HTML::h2( $subtitle, 'wp-heading-inline settings-title' );
-		echo '<hr class="wp-header-end">';
+		// echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 	}
 
 	public static function sideClose()

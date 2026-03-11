@@ -1540,7 +1540,7 @@ class Today extends gEditorial\Module
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
 		$postmeta  = [ 'cal' => $default ]; // NOTE: `set_today_meta()` needs cal
 
-		foreach ( $atts['extra_all'] as $extra_key => $extra_data ) {
+		foreach ( $atts['extra_all'] ?? [] as $extra_key => $extra_data ) {
 
 			if ( ! in_array( $extra_key, $fields ) )
 				continue;
@@ -1553,7 +1553,7 @@ class Today extends gEditorial\Module
 			$postmeta[$key] = $extra_data;
 		}
 
-		foreach ( $atts['map'] as $offset => $field ) {
+		foreach ( $atts['map'] ?? [] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
 				continue;
