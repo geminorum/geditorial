@@ -36,6 +36,12 @@ class Parser extends WordPress\Main
 		return gEditorial();
 	}
 
+	public static function na( $wrap = 'p' )
+	{
+		$message = __( 'Data Parser is not available!', 'geditorial' );
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-na-parser' ] ], $message ) : $message;
+	}
+
 	public static function getDefaultArgs( $filepath = NULL )
 	{
 		return [
@@ -148,6 +154,12 @@ class Parser extends WordPress\Main
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
 
+		if ( ! class_exists( 'League\\Csv\\Reader' ) )
+			return self::bailWithError( $data,
+				'parser_not_available',
+				self::na( FALSE )
+			);
+
 		try {
 
 			/**
@@ -216,6 +228,12 @@ class Parser extends WordPress\Main
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		if ( ! class_exists( 'EasyCSV\\Reader' ) )
+			return self::bailWithError( $data,
+				'parser_not_available',
+				self::na( FALSE )
+			);
 
 		try {
 
@@ -350,6 +368,12 @@ class Parser extends WordPress\Main
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
 
+		if ( ! class_exists( 'OpenSpout\\Reader\\Common\\Creator\\ReaderEntityFactory' ) )
+			return self::bailWithError( $data,
+				'parser_not_available',
+				self::na( FALSE )
+			);
+
 		/**
 		 * @package `openspout/openspout`
 		 * @link https://opensource.box.com/spout/docs/
@@ -457,6 +481,12 @@ class Parser extends WordPress\Main
 
 		$hash = self::hash( $args ); // for items only
 		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		if ( ! extension_loaded( 'json' ) )
+			return self::bailWithError( $data,
+				'parser_not_available',
+				self::na( FALSE )
+			);
 
 		if ( ! empty( $parsed[$filepath] ) ) {
 
@@ -571,6 +601,12 @@ class Parser extends WordPress\Main
 			);
 
 		$data = self::getAdditionalData( $data, $args, $filepath );
+
+		if ( ! function_exists( 'xml_parser_create' ) )
+			return self::bailWithError( $data,
+				'parser_not_available',
+				self::na( FALSE )
+			);
 
 		$data['items'] = self::fromXML_Legacy( $filepath );
 
