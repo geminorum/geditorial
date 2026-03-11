@@ -12,7 +12,9 @@ class Switcher extends gEditorial\Module
 {
 	use Internals\CoreRowActions;
 
-	protected $deafults  = [ 'admin_bulkactions' => TRUE ];
+	protected $deafults = [
+		'admin_bulkactions' => TRUE,
+	];
 
 	public static function module()
 	{
@@ -32,8 +34,7 @@ class Switcher extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$posttypes = $this->all_posttypes();
-		$roles     = $this->get_settings_default_roles();
+		$roles = $this->get_settings_default_roles();
 
 		return [
 			'_bulkactions' => [
@@ -45,18 +46,18 @@ class Switcher extends gEditorial\Module
 					'values'      => $roles,
 				],
 				[
-					'field'       => 'bulk_posttypes_from',
-					'type'        => 'posttypes',
+					'field'       => $this->get_setting_key_posttypes_for_target( 'bulk_from' ),
+					'type'        => 'checkboxes-panel-expanded',
 					'title'       => _x( 'Bulk Action From', 'Setting Title', 'geditorial-switcher' ),
 					'description' => _x( 'Select post-types to be available for the switch.', 'Setting Description', 'geditorial-switcher' ),
-					'values'      => $posttypes,
+					'values'      => $this->get_settings_posttypes_for_target( 'bulk_from' ),
 				],
 				[
-					'field'       => 'bulk_posttypes_to',
-					'type'        => 'posttypes',
+					'field'       => $this->get_setting_key_posttypes_for_target( 'bulk_to' ),
+					'type'        => 'checkboxes-panel-expanded',
 					'title'       => _x( 'Bulk Action To', 'Setting Title', 'geditorial-switcher' ),
 					'description' => _x( 'Select post-types to be targeted for the switch.', 'Setting Description', 'geditorial-switcher' ),
-					'values'      => $posttypes,
+					'values'      => $this->get_settings_posttypes_for_target( 'bulk_to' ),
 				],
 			],
 		];
@@ -64,8 +65,8 @@ class Switcher extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
-			&& $this->in_setting( $screen->post_type, 'bulk_posttypes_from' ) ) {
+		if ( 'edit' === $screen->base
+			&& $this->in_setting_posttypes( $screen->post_type, 'bulk_from' ) ) {
 
 			$this->rowactions__hook_admin_bulkactions( $screen, (bool) $this->cuc( 'bulk' ) );
 		}
@@ -73,25 +74,32 @@ class Switcher extends gEditorial\Module
 
 	public function rowactions_bulk_actions( $actions )
 	{
-		$list      = [];
-		$current   = WordPress\PostType::current();
-		$posttypes = WordPress\PostType::get( 2, [
+		if ( ! $posttypes = $this->get_setting_posttypes( 'bulk_to' ) )
+			return $actions;
+
+		$list    = [];
+		$current = WordPress\PostType::current();
+		$labels  = WordPress\PostType::get( 2, [
 			// 'public'  => TRUE,
 			'show_ui' => TRUE,
 		], 'edit_others_posts' );
 
-		/* translators: `%1$s`: module title, `%2$s`: posttype label */
+		/* translators: `%1$s`: module title, `%2$s`: post-type label */
 		$template = _x( '[%1$s] Switch to %2$s', 'Bulk Action', 'geditorial-switcher' );
 
-		foreach ( $this->get_setting( 'bulk_posttypes_to', [] ) as $posttype ) {
+		foreach ( $posttypes as $posttype ) {
 
 			if ( $current === $posttype )
 				continue;
 
-			if ( ! array_key_exists( $posttype, $posttypes ) )
+			if ( ! array_key_exists( $posttype, $labels ) )
 				continue; // no access
 
-			$list['switch-to-'.$posttype] = sprintf( $template, $this->module->title, $posttypes[$posttype] );
+			$list[self::dsh( $this->key, 'to', $posttype )] = sprintf(
+				$template,
+				$this->module->title,
+				$labels[$posttype]
+			);
 		}
 
 		return array_merge( $actions, $list );
@@ -99,9 +107,9 @@ class Switcher extends gEditorial\Module
 
 	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
 	{
-		foreach ( $this->get_setting( 'bulk_posttypes_to', [] ) as $posttype ) {
+		foreach ( $this->get_setting_posttypes( 'bulk_to' ) as $posttype ) {
 
-			if ( $doaction !== ( 'switch-to-'.$posttype ) )
+			if ( $doaction !== self::dsh( $this->key, 'to', $posttype ) )
 				continue;
 
 			if ( ! WordPress\PostType::can( $posttype, 'edit_others_posts' ) )
@@ -127,13 +135,16 @@ class Switcher extends gEditorial\Module
 		if ( ! $switched = self::req( $this->hook( 'count' ) ) )
 			return;
 
-		$to  = self::req( $this->hook( 'to' ), 'post' );
-		$all = WordPress\PostType::get( 2, [ 'public' => TRUE, 'show_ui' => TRUE ] );
+		$_SERVER['REQUEST_URI'] = remove_query_arg( [
+			$this->hook( 'count' ),
+			$this->hook( 'to' ),
+		], $_SERVER['REQUEST_URI'] );
 
-		$_SERVER['REQUEST_URI'] = remove_query_arg( [ $this->hook( 'count' ), $this->hook( 'to' ) ], $_SERVER['REQUEST_URI'] );
-
-		/* translators: `%1$s`: count, `%2$s`: posttype */
-		$message = _x( '%1$s items(s) switched to %2$s!', 'Message', 'geditorial-switcher' );
-		echo Core\HTML::success( sprintf( $message, Core\Number::format( $switched ), $all[$to] ) );
+		echo Core\HTML::success( sprintf(
+			/* translators: `%1$s`: count, `%2$s`: post-type */
+			_x( '%1$s items(s) switched to %2$s!', 'Message', 'geditorial-switcher' ),
+			Core\Number::format( $switched ),
+			Services\CustomPostType::getLabel( self::req( $this->hook( 'to' ), 'post' ), 'singular_name' )
+		) );
 	}
 }

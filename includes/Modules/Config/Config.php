@@ -305,7 +305,7 @@ class Config extends gEditorial\Module
 			gEditorial\Settings::sideOpen( $title, $uri, $sub, $subs, FALSE );
 			gEditorial\Settings::message( $messages );
 
-			if ( in_array( $sub, $extra_subs ?? [ 'overview', 'data', 'option' ], TRUE )
+			if ( in_array( $sub, $extra_subs ?? [ 'overview', 'data', 'options' ], TRUE )
 				&& method_exists( $this, self::und( $context, $sub ) ) )
 					call_user_func_array( [ $this, self::und( $context, $sub ) ], [ $uri ] );
 

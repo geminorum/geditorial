@@ -184,7 +184,7 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: content for overridden empty page
 	public function templatetaxonomy_get_empty_content( $taxonomy, $atts = [] )
 	{
-		if ( $content = $this->get_setting( 'empty_content' ) )
+		if ( $content = $this->get_setting_fallback( 'empty_content' ) )
 			return $this->templatetaxonomy_process_empty_content( $content, $taxonomy );
 
 		return '';
@@ -254,9 +254,12 @@ trait TemplateTaxonomy
 	// DEFAULT METHOD: content for overridden archive page
 	public function templatetaxonomy_get_archive_content( $taxonomy )
 	{
-		$setting = $this->get_setting_fallback( 'archive_content', NULL );
+		$setting = $this->get_setting_fallback( 'archive_content', NULL, FALSE );
 
-		if ( ! is_null( $setting ) ) // might be empty string
+		if ( FALSE === $setting )
+			return '';
+
+		if ( $setting )
 			return $this->templatetaxonomy_process_archive_content( $setting, $this->current_queried );
 
 		// NOTE: here to avoid further process

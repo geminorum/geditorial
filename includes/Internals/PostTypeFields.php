@@ -1772,7 +1772,7 @@ trait PostTypeFields
 			if ( FALSE !== $this->fetch_postmeta( $post->ID, FALSE, $this->get_postmeta_key( $field ) ) )
 				continue;
 
-			$sanitized = WordPress\Strings::getPiped( Core\Arraay::prepString( $raw ) ) ;
+			$sanitized = WordPress\Strings::getPiped( Core\Arraay::prepString( $raw ) );
 
 			if ( array_key_exists( $field, $this->cache['fields'][$post->post_type] ) )
 				$sanitized = $this->sanitize_posttype_field(

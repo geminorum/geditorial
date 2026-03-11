@@ -1538,8 +1538,13 @@ class Settings extends WordPress\Main
 			'field'       => 'empty_content',
 			'type'        => 'textarea-quicktags',
 			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays as empty content placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
+			'placeholder' => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
+			'description' => $description ?? sprintf(
+				/* translators: `%s`: zero placeholder */
+				_x( 'Displays as empty content placeholder. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
+				Core\HTML::code( '0' )
+			),
 		];
 	}
 

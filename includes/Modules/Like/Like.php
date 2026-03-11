@@ -403,7 +403,7 @@ class Like extends gEditorial\Module
 	{
 		$html  = '';
 		$users = $this->get_liked_users( $post_id );
-		$bp    = $this->get_setting( 'buddybress_support' ) && function_exists( 'bp_core_get_userlink' ) ;
+		$bp    = $this->get_setting( 'buddybress_support' ) && function_exists( 'bp_core_get_userlink' );
 
 		if ( count( $users ) ) {
 

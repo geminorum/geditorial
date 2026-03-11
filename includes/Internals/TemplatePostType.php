@@ -145,7 +145,7 @@ trait TemplatePostType
 	// DEFAULT METHOD: content for overridden empty page
 	public function templateposttype_get_empty_content( $posttype, $atts = [] )
 	{
-		if ( $content = $this->get_setting( 'empty_content' ) )
+		if ( $content = $this->get_setting_fallback( 'empty_content' ) )
 			return $this->templateposttype_process_empty_content( $content, $posttype );
 
 		return '';
@@ -215,9 +215,12 @@ trait TemplatePostType
 	// DEFAULT METHOD: content for overridden archive page
 	public function templateposttype_get_archive_content( $posttype )
 	{
-		$setting = $this->get_setting_fallback( 'archive_content', NULL );
+		$setting = $this->get_setting_fallback( 'archive_content', NULL, FALSE );
 
-		if ( ! is_null( $setting ) ) // might be empty string
+		if ( FALSE === $setting )
+			return '';
+
+		if ( $setting )
 			return $this->templateposttype_process_archive_content( $setting, $posttype );
 
 		// NOTE: here to avoid further process

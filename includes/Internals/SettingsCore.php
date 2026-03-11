@@ -74,7 +74,7 @@ trait SettingsCore
 		return $fallback;
 	}
 
-	public function get_setting_fallback( $field, $fallback, $empty = '' )
+	public function get_setting_fallback( $field, $fallback = NULL, $empty = '' )
 	{
 		$settings = $this->options->settings ?? [];
 
@@ -89,6 +89,20 @@ trait SettingsCore
 
 		if ( array_key_exists( $field, $this->deafults ) )
 			return $this->deafults[$field];
+
+		if ( is_null( $fallback ) ) {
+
+			$callback = [ 'geminorum\\gEditorial\\Settings', sprintf( 'getSetting_%s', $field ) ];
+			$setting  = is_callable( $callback ) ? call_user_func( $callback ) : [];
+
+			if ( ! empty( $setting['default'] ) )
+				$fallback = $setting['default'];
+
+			else if ( ! empty( $setting['placeholder'] ) )
+				$fallback = $setting['placeholder'];
+
+			// keep the `NULL` as fallback
+		}
 
 		return $fallback;
 	}
