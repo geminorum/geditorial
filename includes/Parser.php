@@ -47,6 +47,7 @@ class Parser extends WordPress\Main
 		return [
 			'headers'     => FALSE,   // headers only
 			'first_row'   => FALSE,   // first row only
+			'last_row'    => FALSE,   // last row only
 			'by_offset'   => FALSE,   // row by offset
 			'mapping'     => NULL,
 			'sheet_name'  => NULL,    // Excel
@@ -141,7 +142,7 @@ class Parser extends WordPress\Main
 		);
 	}
 
-	public static function fromCSV_NEW( $filepath, $arguments = [] )
+	public static function fromCSV( $filepath, $arguments = [] )
 	{
 		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
 		$data = self::getInitialData( $args, $filepath );
@@ -167,18 +168,19 @@ class Parser extends WordPress\Main
 			 * @source https://github.com/thephpleague/csv
 			 * @link https://csv.thephpleague.com
 			 */
-			$parser = \League\Csv\Reader::from( $data['file_path'], 'r' );
+			$parser = @\League\Csv\Reader::from( $data['file_path'], 'r' );
+			// $parser = @\League\Csv\Reader::createFromPath( $data['file_path'], 'r' );
 
-			$parser->setHeaderOffset( 0 );   // Sets the CSV header offset.
-			$parser->setEscape( '' );        // Required in PHP 8.4+ to avoid deprecation notices.
+			@$parser->setHeaderOffset( 0 );   // Sets the CSV header offset.
+			@$parser->setEscape( '' );        // Required in PHP 8.4+ to avoid deprecation notices.
 
 			if ( $args['delimiter'] )
-				$parser->setDelimiter( $args['delimiter'] );
+				@$parser->setDelimiter( $args['delimiter'] );
 
-			if ( \League\Csv\Bom::tryFromSequence( $parser )->isUtf16() ?? FALSE )
-				$parser->appendStreamFilterOnRead( 'convert.iconv.UTF-16/UTF-8' );
+			if ( @\League\Csv\Bom::tryFromSequence( $parser )->isUtf16() ?? FALSE )
+				@$parser->appendStreamFilterOnRead( 'convert.iconv.UTF-16/UTF-8' );
 
-			$data['headers'] = $parser->getHeader();
+			$data['headers'] = @$parser->getHeader();
 
 			if ( empty( $data['headers'] ) )
 				return self::bailWithError( $data,
@@ -189,17 +191,48 @@ class Parser extends WordPress\Main
 			if ( $args['headers'] )
 				return $data;
 
-			if ( $args['by_offset'] ) {
+			if ( $args['by_offset'] || $args['first_row'] || $args['last_row'] ) {
 
-			} else if ( $args['first_row'] ) {
+				$row = [];
 
-			} else if ( is_null( $args['mapping'] ) ) {
+				if ( $args['first_row'] )
+					$row = @$parser->first();
+
+				else if ( $args['last_row'] )
+					$row = @$parser->last();
+
+				else if ( $args['by_offset'] )
+					$row = @$parser->nth( (int) $args['by_offset'] );
+
+				$data['single'] = is_null( $args['mapping'] )
+					? $row
+					: Core\Arraay::reKeyByMap_ALT( $row, $args['mapping'] );
+
+				if ( empty( $data['single'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
 
 			} else {
 
+				// iterator_to_array( $parser, TRUE );
+				// $data['items'] = $parser;
+
+				// NOTE: `League\Csv`: The record offset is always independent of the presence of empty records.
+				foreach ( @$parser->getRecords() as $offset => $raw )
+					$data['items'][( $offset )] = is_null( $args['mapping'] ) // starts at `1`
+						? $raw
+						: Core\Arraay::reKeyByMap_ALT( $raw, $args['mapping'] );
+
+				if ( empty( $data['items'] ) )
+					return self::bailWithError( $data,
+						'file_is_empty',
+						Plugin::noinfo( FALSE )
+					);
 			}
 
-		} catch ( \Exception | \Error | \RuntimeException $e ) {
+		} catch ( \Exception | \Error | \RuntimeException | \League\Csv\SyntaxError $e ) {
 
 			return self::bailWithError( $data,
 				'exception_occurred',
@@ -207,7 +240,7 @@ class Parser extends WordPress\Main
 			);
 		}
 
-		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
+		$data['total'] = count( $data['items'] );
 
 		if ( ! $args['keep_alive'] )
 			unset( $parser, $raw );
@@ -216,7 +249,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV( $filepath, $arguments = [] )
+	public static function fromCSV_OLD( $filepath, $arguments = [] )
 	{
 		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
 		$data = self::getInitialData( $args, $filepath );
