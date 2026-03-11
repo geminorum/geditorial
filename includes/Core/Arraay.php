@@ -247,7 +247,7 @@ class Arraay extends Base
 	// @REF: https://stackoverflow.com/a/56428184
 	public static function getByKeyLike( $array, $pattern )
 	{
-		return array_intersect_key( $array, array_flip( preg_grep( $pattern, array_keys( $array ) ) ) );
+		return array_intersect_key( $array, array_flip( array_filter( (array) preg_grep( $pattern, array_keys( $array ) ) ) ) );
 	}
 
 	// `$a == $b` TRUE if `$a` and `$b` have the same key/value pairs

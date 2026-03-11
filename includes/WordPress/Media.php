@@ -594,7 +594,7 @@ class Media extends Core\Base
 		return $link ? Core\HTML::tag( 'a', [
 			'href'   => wp_get_attachment_url( $attachment_id ),
 			'title'  => get_the_title( $attachment_id ),
-			'data'    => $data,
+			'data'   => $data,
 			'target' => '_blank',
 			'class'  => [ '-attachment', 'thickbox' ],
 		], $image ) : $image;

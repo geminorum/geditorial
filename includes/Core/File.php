@@ -101,8 +101,11 @@ class File extends Base
 	 *
 	 * On windows systems, replaces backslashes with forward slashes
 	 * and forces upper-case drive letters.
+	 *
 	 * Allows for two leading slashes for Windows network shares, but
 	 * ensures that all other duplicate slashes are reduced to a single.
+	 *
+	 * NOTE: has no `wp_is_stream()` checks
 	 *
 	 * @source: `wp_normalize_path()`
 	 *
@@ -111,12 +114,17 @@ class File extends Base
 	 */
 	public static function normalize( $path )
 	{
+		$path = (string) $path;
+
 		if ( empty( $path ) )
 			return '';
 
 		$path = str_replace( '\\', '/', $path );
-		$path = preg_replace( '|(?<=.)/+|', '/', $path );
 
+		// Replace multiple slashes down to a singular, allowing for network shares having two slashes.
+		$path = (string) preg_replace( '|(?<=.)/+|', '/', $path );
+
+		// Windows paths should uppercase the drive letter.
 		if ( ':' === substr( $path, 1, 1 ) )
 			$path = ucfirst( $path );
 
@@ -702,7 +710,7 @@ class File extends Base
 				if ( ! $file->isDot() )
 					unlink( $file->getPathname() );
 
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 
 			self::_log( $e->getMessage().': '.sprintf( '%s', $path ) );
 		}

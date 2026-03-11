@@ -237,6 +237,21 @@ class Base
 		return self::_log( $_REQUEST );
 	}
 
+	public static function _log_error()
+	{
+		foreach ( func_get_args() as $error )
+			if ( self::isError( $error ) )
+				self::_log( vsprintf( '%s :: %s', [
+					strtoupper( $error->get_error_code() ?: 'Error' ),
+					$error->get_error_message()
+				] ) );
+
+			else if ( $error )
+				self::_log( $error );
+
+		return FALSE; // help the caller
+	}
+
 	// INTERNAL
 	public static function _log()
 	{

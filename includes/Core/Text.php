@@ -251,19 +251,19 @@ class Text extends Base
 		$text = preg_replace( "/(\x{200C})/u", ' ', $text );
 
 		$text = str_ireplace( [
-			" ی ", // orphaned after zwnj conversion
+			" ی ", // orphaned after `ZWNJ` conversion
 		], ' ', $text );
 
 		$text = str_ireplace( [
-			"\xD8\x8C", // `،` // Arabic Comma
-			"\xD8\x9B", // `؛` // Arabic Semicolon
-			"\xD9\x94", // `ٔ`  // Arabic Hamza Above
-			"\xD9\xAC", // `٬` // Arabic Thousands Separator
-			"\xD8\x8D", // `؍` // Arabic Date Separator
+			"\xD8\x8C", // `،` // `Arabic Comma`
+			"\xD8\x9B", // `؛` // `Arabic Semicolon`
+			"\xD9\x94", // `ٔ`  // `Arabic Hamza Above`
+			"\xD9\xAC", // `٬` // `Arabic Thousands Separator`
+			"\xD8\x8D", // `؍` // `Arabic Date Separator`
 
 			"\xC2\xAB",     // `«`
 			"\xC2\xBB",     // `»`
-			"\xE2\x80\xA6", // `…` // Horizontal Ellipsis
+			"\xE2\x80\xA6", // `…` // `Horizontal Ellipsis`
 
 			"@",
 			"?",

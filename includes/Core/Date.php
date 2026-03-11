@@ -428,7 +428,8 @@ class Date extends Base
 
 		} catch ( \Exception $e ) {
 
-			// echo $e->getMessage();
+			self::_log( 'Exception: `Date::make()` :: '.$e->getMessage() );
+
 			return FALSE;
 		}
 	}
@@ -460,6 +461,8 @@ class Date extends Base
 			);
 
 		} catch ( \Exception $e ) {
+
+			self::_log( 'Exception: `Date::timestamp()` :: '.$e->getMessage() );
 
 			return $fallback;
 		}
@@ -511,6 +514,8 @@ class Date extends Base
 			);
 
 		} catch ( \Exception $e ) {
+
+			self::_log( 'Exception: `Date::getISO8601()` :: '.$e->getMessage() );
 
 			return $fallback;
 		}
@@ -920,7 +925,9 @@ class Date extends Base
 			// Convert it to a timestamp
 			return $datetime->getTimestamp();
 
-		} catch ( \Exception $ex ) {
+		} catch ( \Exception $e ) {
+
+			self::_log( 'Exception: `Date::midnight()` :: '.$e->getMessage() );
 
 			// If something went wrong with the above, return midnight `UTC`
 			$time = time();

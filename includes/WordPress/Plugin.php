@@ -90,7 +90,7 @@ class Plugin extends Core\Base
 
 				$this->{$slug} = new $class( $this->base, $slug );
 
-			} catch ( Core\Exception $e ) {
+			} catch ( \Exception $e ) {
 
 				// no need to do anything!
 

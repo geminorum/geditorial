@@ -25,7 +25,7 @@ class HTML extends Base
 			'class'  => '-link',
 			'href'   => $link,
 			'target' => $target_blank ? '_blank' : FALSE,
-			'dummy'  => 'wtf', // HACK: dummy attr to distract the `wordWrap()`!
+			'dummy'  => 'wtf', // HACK: dummy attribute to distract the `wordWrap()`!
 		], $html );
 	}
 
