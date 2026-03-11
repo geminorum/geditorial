@@ -90,6 +90,7 @@ class Importer extends gEditorial\Module
 		return [
 			'metakey_mapping_data'  => '_importer_source_map',
 			'metakey_source_column' => '_importer_source_id_key',
+			'metakey_source_postid' => '_importer_source_postid',
 			'metakey_source_data'   => '_import_source_data',
 			'metakey_prepared_data' => '_import_prepared_data',
 			'metakey_attach_id'     => '_import_attachment_id',
@@ -296,6 +297,7 @@ class Importer extends gEditorial\Module
 		$taxonomies    = $this->get_importer_taxonomies( $posttype );
 		$fields        = $this->get_importer_fields( $posttype, $taxonomies );
 		$source_column = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_column' ) );
+		$source_postid = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_postid' ) );
 		$map           = $this->fetch_postmeta( $id, [], $this->constant( 'metakey_mapping_data' ) );
 		$headers       = Core\Arraay::sameKey( array_unique( $rawdata['headers'] ) );
 
@@ -325,9 +327,23 @@ class Importer extends gEditorial\Module
 				'none_value' => '',
 			] );
 
-		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
+		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td colspan="3">';
 
-			Core\HTML::desc( _x( 'Used as Identifider of each item.', 'Description', 'geditorial-importer' ) );
+			$checkbox = Core\HTML::tag( 'input', [
+				'type'    => 'checkbox',
+				'name'    => 'source_postid',
+				'id'      => $this->classs( 'source_postid' ),
+				'checked' => (bool) $source_postid,
+				'value'   => '1',
+			] );
+
+			echo Core\HTML::tag( 'label', [
+				'for' => $this->classs( 'source_postid' ),
+			], $checkbox.'&nbsp;'._x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) );
+
+		echo '</td></tr><tr><td colspan="8" v-align="top">';
+
+			Core\HTML::desc( _x( 'Will be used as the identifier of each item.', 'Description', 'geditorial-importer' ) );
 
 		echo '</td></tr>';
 
@@ -467,7 +483,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _form_posts_table( $id, $mapped = [], $posttype = 'post', $terms_all = [], $source_column = '' )
+	private function _form_posts_table( $id, $mapped = [], $posttype = 'post', $terms_all = [], $source_column = '', $source_postid = FALSE )
 	{
 		$this->raise_resources();
 
@@ -479,6 +495,7 @@ class Importer extends gEditorial\Module
 
 		$this->store_postmeta( $id, $mapped, $this->constant( 'metakey_mapping_data' ) );
 		$this->store_postmeta( $id, $source_column, $this->constant( 'metakey_source_column' ) );
+		$this->store_postmeta( $id, $source_postid, $this->constant( 'metakey_source_postid' ) );
 		$this->_record_fields_map( $mapped );
 
 		$taxonomies = $this->get_importer_taxonomies( $posttype );
@@ -527,6 +544,7 @@ class Importer extends gEditorial\Module
 				'post_type'     => $posttype,
 				'taxonomies'    => $taxonomies,
 				'source_column' => $source_column,
+				'source_postid' => $source_postid,
 			],
 		] );
 	}
@@ -613,7 +631,7 @@ class Importer extends gEditorial\Module
 		else if ( ! $raw['___source_id'] && $this->get_setting( 'skip_no_source_id', TRUE ) && $args['extra']['source_column'] )
 			$raw['___matched'] = 0;
 
-		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $raw ) )
+		else if ( $matched = $this->_get_source_id_matched( $raw['___source_id'], $args['extra']['post_type'], $args['extra']['source_postid'], $raw ) )
 			$raw['___matched'] = intval( $matched );
 		else
 			$raw['___matched'] = 0;
@@ -731,6 +749,7 @@ class Importer extends gEditorial\Module
 					$attach_id     = self::req( 'attach_id', FALSE );
 					$user_id       = self::req( 'user_id', $this->_get_user_id() );
 					$source_column = self::req( 'source_column', '' );
+					$source_postid = self::req( 'source_postid', '' );
 					$override      = isset( $_POST['posts_import_override'] );
 
 					$this->raise_resources();
@@ -787,7 +806,7 @@ class Importer extends gEditorial\Module
 						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && $source_column )
 							continue;
 
-						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
+						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $source_postid, $raw ) )
 							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
 								$data['ID'] = $oldpost->ID;
 
@@ -943,7 +962,7 @@ class Importer extends gEditorial\Module
 								'post_author'    => $user_id,
 							], $insert );
 
-							if ( $source_id )
+							if ( $source_id && ! $source_postid )
 								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
 
 							$post_id = wp_insert_post( $insert, TRUE, FALSE );
@@ -1150,6 +1169,7 @@ class Importer extends gEditorial\Module
 		$attach_id     = self::req( 'attach_id', FALSE );
 		$user_id       = self::req( 'user_id', $this->_get_user_id() );
 		$source_column = self::req( 'source_column', '' );
+		$source_postid = self::req( 'source_postid', FALSE );
 
 		if ( $upload_id )
 			$attach_id = $upload_id;
@@ -1173,8 +1193,16 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_column', $source_column );
+			Core\HTML::inputHidden( 'source_postid', $source_postid );
 
-			$this->_form_posts_table( $attach_id, $field_map, $posttype, $terms_all, $source_column );
+			$this->_form_posts_table(
+				$attach_id,
+				$field_map,
+				$posttype,
+				$terms_all,
+				$source_column,
+				(bool) $source_postid
+			);
 
 			echo $this->wrap_open_buttons();
 			gEditorial\Settings::submitButton( 'posts_import_newonly', _x( 'Import New Data', 'Button', 'geditorial-importer' ), TRUE );
@@ -1205,6 +1233,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::inputHidden( 'attach_id', $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
 			Core\HTML::inputHidden( 'source_column', $source_column );
+			Core\HTML::inputHidden( 'source_postid', $source_postid );
 
 			if ( ! $this->_render_posttype_taxonomies( $posttype, 'posts' ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
@@ -1562,14 +1591,22 @@ class Importer extends gEditorial\Module
 			Services\Modulation::setTaxonomyAudit( $post, $this->constant( 'term_newpost_imported' ) );
 	}
 
-	private function _get_source_id_matched( $source_id, $posttype, $raw = [] )
+	private function _get_source_id_matched( $source_id, $posttype, $source_postid = FALSE, $raw = [] )
 	{
-		if ( ! $source_id || ! $this->get_setting( 'match_source_id', TRUE ) )
+		if ( ! $source_id )
 			return FALSE;
 
 		$matched = FALSE;
 
-		if ( $matches = WordPress\PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id, FALSE ) ) {
+		if ( $source_postid && ( $post = WordPress\Post::get( (int) $source_id ) ) ) {
+
+			$matched = $post->ID;
+
+		} else if ( ! $this->get_setting( 'match_source_id', TRUE ) ) {
+
+			// avoid the search
+
+		} else if ( $matches = WordPress\PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id, FALSE ) ) {
 
 			foreach ( $matches as $match ) {
 
@@ -1847,6 +1884,7 @@ class Importer extends gEditorial\Module
 
 		$headers       = Core\Arraay::sameKey( array_unique( $rawdata['headers'] ) );
 		$source_column = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_column' ) );
+		$source_postid = $this->fetch_postmeta( $id, '', $this->constant( 'metakey_source_postid' ) );
 
 		if ( $dups = Core\Arraay::duplicates( $rawdata['headers'] ) )
 			echo Core\HTML::warning( sprintf(
@@ -1871,11 +1909,23 @@ class Importer extends gEditorial\Module
 				'none_value' => '',
 			] );
 
-		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td>';
+		echo '</td><td>&nbsp;</td><td>&nbsp;</td><td colspan="3">';
 
-			// TODO: check box for `source_is_postid`
+			$checkbox = Core\HTML::tag( 'input', [
+				'type'    => 'checkbox',
+				'name'    => 'source_postid',
+				'id'      => $this->classs( 'source_postid' ),
+				'checked' => $source_postid,
+				'value'   => '1',
+			] );
 
-			Core\HTML::desc( _x( 'Used as Identifider of each item.', 'Description', 'geditorial-importer' ) );
+			echo Core\HTML::tag( 'label', [
+				'for' => $this->classs( 'source_postid' ),
+			], $checkbox.'&nbsp;'._x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) );
+
+		echo '</td></tr><tr><td colspan="8" v-align="top">';
+
+			Core\HTML::desc( _x( 'Will be used as the identifier of each item.', 'Description', 'geditorial-importer' ) );
 
 		echo '</td></tr>';
 		echo '</table>';
@@ -1981,6 +2031,7 @@ class Importer extends gEditorial\Module
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
 		// $user_id       = self::req( 'user_id', $this->_get_user_id() );
 		$source_column = self::req( 'source_column', '' );
+		$source_postid = self::req( 'source_postid', '' );
 		$append        = isset( $_POST['terms_import_append'] );
 		$override      = isset( $_POST['terms_import_override'] );
 
@@ -2016,7 +2067,7 @@ class Importer extends gEditorial\Module
 			if ( ! $source_id )
 				continue;
 
-			if ( ! $matched = $this->_get_source_id_matched( $source_id, $posttype, $raw ) )
+			if ( ! $matched = $this->_get_source_id_matched( $source_id, $posttype, $source_postid, $raw ) )
 				continue;
 
 			if ( ! $post = WordPress\Post::get( intval( $matched ) ) )
