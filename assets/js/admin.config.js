@@ -18,13 +18,13 @@ jQuery(function ($) {
 
   // https://github.com/javve/list.js/issues/366#issuecomment-274942284
   moduleList.on('updated', function (list) {
-    // also .clear container
+    // also `.clear` container
     if ((list.items.length - 1) === list.matchingItems.length) return;
 
-    // every updated item take animation with their id
+    // Every updated item take animation with their id
     list.matchingItems.forEach(function (element) {
       const id = element.elm.id;
-      $('#' + id).addClass('animated fadeIn');
+      if (id) $('#' + id).addClass('animated fadeIn');
     });
   });
 

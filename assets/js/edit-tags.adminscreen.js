@@ -1,4 +1,4 @@
-(function ($, plugin, mainkey, section) {
+(function ($, plugin, mainkey, context) {
   const s = {
     inputs: {
       name: 'input#tag-name',
@@ -23,7 +23,7 @@
   };
 
   const app = {
-    fillByQuery: () => {
+    init: () => {
       const inputs = $.extend({}, s.inputs, plugin[mainkey].settings.inputs || {});
 
       $.each(inputs, (name, selector) => {
@@ -48,10 +48,12 @@
     }
   };
 
-  $(window).load(function () {
-    app.fillByQuery();
-
-    $(document).on('gEditorial:ColorBox:Hook', function () { app.hook(); });
-    $(document).trigger('gEditorial:Module:Loaded', [mainkey, app]);
+  $(function () {
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'adminscreen', 'edit-tags'));

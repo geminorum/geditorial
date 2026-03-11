@@ -44,7 +44,18 @@
         });
     },
 
-    init: function (mobile) {
+    init: function () {
+      $(window).on('load', () => {
+        app.hook(u.mobile());
+      });
+
+      $(document).on('gEditorial:ColorBox:Hook', () => {
+        app.hook(u.mobile()); // fresh value!
+        console.log('gEditorial: `ColorBox:Hook` triggered!');
+      });
+    },
+
+    hook: function (mobile) {
       $(s.trigger).each(function () {
         const $instance = $(this);
 
@@ -96,13 +107,12 @@
     }
   };
 
-  $(window).load(function () {
-    $(document).on('gEditorial:ColorBox:Hook', function () { app.init(); });
+  $(function () {
     $(document).trigger('gEditorial:Module:Loaded', [
       mainkey,
       context,
       app,
-      app.init(u.mobile())
+      app.init()
     ]);
   });
 }(jQuery, gEditorial, 'colorbox', 'all'));

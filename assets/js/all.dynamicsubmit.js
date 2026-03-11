@@ -42,8 +42,8 @@
     }
   };
 
-  $(window).load(function () {
-    $(document).on('gEditorial:DynamicSubmit:Hook', function () { app.init(); });
+  // $(window).on('load', function () {
+  $(function () {
     $(document).trigger('gEditorial:Module:Loaded', [
       mainkey,
       context,
