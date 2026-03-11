@@ -373,7 +373,7 @@ class Positions extends gEditorial\Module
 			$buttons = [];
 			$manage  = $this->role_can( 'manage' );
 			$assign  = $this->role_can( 'assign' );
-			$count   = $this->subcontent_get_data_count( $object );
+			$count   = $this->quantumcomments__get_data_count( $object );
 			$profile = $this->get_linked_to_posts( $object, TRUE ); // single profile only
 
 			if ( $count && ( $manage || $assign ) )
@@ -461,7 +461,7 @@ class Positions extends gEditorial\Module
 
 				if ( $reference && $target ) {
 
-					if ( FALSE !== ( $count = $this->subcontent_clone_data_all( $reference, $target, TRUE ) ) )
+					if ( FALSE !== ( $count = $this->quantumcomments__clone_data_all( $reference, $target, TRUE ) ) )
 						WordPress\Redirect::doURL( WordPress\Post::edit( $target ), [
 							'message' => 'created',
 							'count'   => $count,
@@ -478,7 +478,7 @@ class Positions extends gEditorial\Module
 
 				if ( $target ) {
 
-					if ( FALSE !== ( $count = $this->subcontent_delete_data_all( $target, TRUE ) ) )
+					if ( FALSE !== ( $count = $this->quantumcomments__delete_data_all( $target, TRUE ) ) )
 						WordPress\Redirect::doURL( WordPress\Post::edit( $target ), [
 							'message' => 'deleted',
 							'count'   => $count,
@@ -559,7 +559,7 @@ class Positions extends gEditorial\Module
 	}
 
 	// NOTE: refines count based on sub-content rows that contain `fullname` aka `comment_author`
-	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
+	protected function quantumcomments__get_data_count( $parent = NULL, $context = NULL, $extra = [] )
 	{
 		global $wpdb;
 
@@ -567,7 +567,7 @@ class Positions extends gEditorial\Module
 			return FALSE;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )
-			return $this->subcontent_query_data_count( $post, $extra );
+			return $this->quantumcomments__query_data_count( $post, $extra );
 
 		$query = $wpdb->prepare(
 			"SELECT COUNT(*)
@@ -576,7 +576,7 @@ class Positions extends gEditorial\Module
 			AND comment_type IN ('%s')
 			AND comment_author != ''",
 			$post->ID,
-			$this->subcontent_get_comment_type()
+			$this->quantumcomments__get_comment_type()
 		);
 
 		return $wpdb->get_var( $query );

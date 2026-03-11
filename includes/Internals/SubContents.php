@@ -9,6 +9,44 @@ use geminorum\gEditorial\WordPress;
 
 trait SubContents
 {
+	use QuantumComments;
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__filter_prefix()
+	{
+		return 'subcontent';
+	}
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__get_comment_type()
+	{
+		return $this->subcontent_get_comment_type();
+	}
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__get_comment_status()
+	{
+		return $this->subcontent_get_comment_status();
+	}
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__define_fields()
+	{
+		return $this->subcontent_define_fields();
+	}
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__get_data_mapping( $context = NULL, $posttype = NULL )
+	{
+		return $this->subcontent_get_data_mapping( $context, $posttype );
+	}
+
+	// CAUTION: OVERRIDE
+	protected function quantumcomments__get_meta_mapping( $context = NULL, $posttype = NULL )
+	{
+		return $this->subcontent_get_meta_mapping( $context, $posttype );
+	}
+
 	protected function subcontent_get_strings_for_js( $extra = [] )
 	{
 		return array_merge( [
@@ -48,24 +86,12 @@ trait SubContents
 	// NOTE: Allows the sub-content types to have Avatar.
 	protected function subcontent__enable_comment_avatar()
 	{
-		$this->filter_append( 'get_avatar_comment_types',
-			$this->subcontent_get_comment_type() );
+		$this->quantumcomments__enable_comment_avatar();
 	}
 
 	protected function subcontent_is_comment_type( $data_or_comment, $type = NULL )
 	{
-		if ( is_null( $type ) )
-			$type = $this->subcontent_get_comment_type();
-
-		if ( is_object( $data_or_comment ) )
-			return property_exists( $data_or_comment, 'comment_type' )
-				&& $type === $data_or_comment->comment_type;
-
-		else if ( is_array( $data_or_comment ) )
-			return array_key_exists( '_type', $data_or_comment )
-				&& $type === $data_or_comment['_type'];
-
-		return FALSE;
+		return $this->quantumcomments__is_comment_type( $data_or_comment, $type );
 	}
 
 	protected function subcontent_get_comment_status()
@@ -299,10 +325,9 @@ trait SubContents
 		];
 	}
 
-	// FIXME: Move to `DeepContents` internal
 	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL )
 	{
-		return [
+		return array_merge( $this->quantumcomments__base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
 			'comment_agent'   => 'label',   // `varchar(255)`
 			'comment_karma'   => 'order',   // `int(11)` // WTF: must be fixed map!
@@ -311,411 +336,12 @@ trait SubContents
 			'comment_author_url'   => 'phone',      // `varchar(200)`
 			'comment_author_email' => 'email',      // `varchar(100)`
 			'comment_author_IP'    => 'date',       // `varchar(100)`
-
-			'comment_ID'       => '_id',         // `bigint(20)`
-			'comment_parent'   => '_parent',     // `bigint(20)`
-			'comment_post_ID'  => '_object',     // `bigint(20)`
-			'comment_type'     => '_type',       // `varchar(20)`
-			'comment_approved' => '_status',     // `varchar(20)`
-			'comment_date'     => '_date',       // `datetime`
-			'comment_date_gmt' => '_date_gmt',   // `datetime`
-			'user_id'          => '_user',       // `bigint(20)`
-			'comment_meta'     => '_meta',
-		];
+		] );
 	}
 
 	protected function subcontent_get_data_mapping( $context = NULL, $posttype = NULL )
 	{
 		return $this->subcontent_base_data_mapping( $context, $posttype );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_update_sort( $raw = [], $post = FALSE, $mapping = NULL )
-	{
-		foreach ( $raw as $offset => $comment_id )
-			WordPress\Comment::setKarma( $offset + 1, $comment_id );
-
-		return count( $raw );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_insert_data_row( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL )
-	{
-		$data = $this->subcontent_sanitize_data( $raw, $context, $post, $mapping );
-		$data = $this->subcontent_prep_data_for_save( $data, $context, $post, $mapping );
-		$meta = [];
-
-		if ( $post && ( $post = WordPress\Post::get( $post ) ) )
-			$data['comment_post_ID'] = $post->ID;
-
-		if ( ! array_key_exists( 'comment_ID', $data ) )
-			$data['comment_ID'] = '0';
-
-		if ( ! array_key_exists( 'user_id', $data ) )
-			$data['user_id'] = get_current_user_id();
-
-		// NOTE: always update the `comment_date` to current time/treat comment date as modified
-		if ( ! array_key_exists( 'comment_date', $data ) )
-			$data['comment_date'] = current_time( 'mysql' );
-
-		if ( ! array_key_exists( 'comment_type', $data ) && ( $type = $this->subcontent_get_comment_type() ) )
-			$data['comment_type'] = $type;
-
-		if ( ! array_key_exists( 'comment_approved', $data ) && ( $status = $this->subcontent_get_comment_status() ) )
-			$data['comment_approved'] = $status;
-
-		if ( FALSE === ( $filtered = $this->filters( 'subcontent_insert_data_row', $data, $context, $post, $mapping, $raw ) ) )
-			return $this->log( 'NOTICE', 'SUBCONTENT INSERT DATA SKIPPED BY FILTER ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
-
-		if ( array_key_exists( 'comment_meta', $data ) ) {
-			$meta = $data['comment_meta'];
-			unset( $data['comment_meta'] );
-		}
-
-		$this->subcontent_insert_data_before( $filtered, $filtered['comment_ID'] );
-
-		$result = $filtered['comment_ID']
-			? wp_update_comment( $filtered )
-			: wp_insert_comment( $filtered );
-
-		$this->subcontent_insert_data_after( $filtered, $filtered['comment_ID'] );
-
-		if ( empty( $meta ) || FALSE === $result || self::isError( $result ) )
-			return $result;
-
-		$comment_id = $filtered['comment_ID'] ?: $result;
-
-		foreach ( $meta as $meta_key => $meta_value )
-			if ( empty( $meta_value ) )
-				delete_comment_meta( $comment_id, $meta_key );
-			else
-				update_comment_meta( $comment_id, $meta_key, $meta_value );
-
-		return $comment_id;
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	// NOTE: overrides the modifications by core
-	public function subcontent_wp_update_comment_data( $data, $comment, $commentarr )
-	{
-		$key = $data['comment_ID'] ?: 'new';
-
-		if ( array_key_exists( $key, $this->cache['subcontent_data'] ) )
-			return $this->cache['subcontent_data'][$key];
-
-		// fallback to manual mode!
-		// NOTE: core tries to validate `comment_author_email`
-		$data['comment_author_url'] = Core\Text::stripPrefix(
-			$data['comment_author_url'],
-			[ 'http://', 'https://' ]
-		);
-
-		return $data;
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_insert_data_before( $data = [], $comment_id = FALSE )
-	{
-		$this->cache['subcontent_data'][( $comment_id ?: 'new' )] = $data;
-
-		remove_filter( 'comment_save_pre', 'convert_invalid_entities' );
-		remove_filter( 'comment_save_pre', 'balanceTags', 50 );
-		remove_filter( 'pre_comment_author_name', 'sanitize_text_field' );
-		remove_filter( 'pre_comment_author_email', 'trim' );
-		remove_filter( 'pre_comment_author_email', 'sanitize_email' );
-		remove_filter( 'pre_comment_author_url', 'sanitize_url' );
-
-		add_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_insert_data_after( $data = [], $comment_id = FALSE )
-	{
-		add_filter( 'comment_save_pre', 'convert_invalid_entities' );
-		add_filter( 'comment_save_pre', 'balanceTags', 50 );
-		add_filter( 'pre_comment_author_name', 'sanitize_text_field' );
-		add_filter( 'pre_comment_author_email', 'trim' );
-		add_filter( 'pre_comment_author_email', 'sanitize_email' );
-		add_filter( 'pre_comment_author_url', 'sanitize_url' );
-
-		remove_filter( 'wp_update_comment_data', [ $this, 'subcontent_wp_update_comment_data' ], 99, 3 );
-
-		unset( $this->cache['subcontent_data'][( $comment_id ?: 'new' )] );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_delete_data_row( $id, $post = FALSE )
-	{
-		return wp_delete_comment( intval( $id ), TRUE );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	// NOTE: Does final preparations and additions into data before saving.
-	protected function subcontent_prep_data_for_save( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
-	{
-		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping( $context, $post );
-
-		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping( $context, $post );
-
-		if ( is_object( $raw ) )
-			$raw = Core\Arraay::fromObject( $raw );
-
-		$raw  = $this->filters( 'subcontent_pre_prep_data', $raw, $context, $post, $mapping, $metas );
-		$data = [ 'comment_meta' => array_key_exists( '_meta', $raw ) ? $raw['_meta'] : [] ];
-		unset( $raw['_meta'] );
-
-		foreach ( $mapping as $map_from => $map_to )
-			if ( array_key_exists( $map_to, $raw ) )
-				$data[$map_from] = $raw[$map_to];
-
-		foreach ( $metas as $meta_from => $meta_to )
-			if ( array_key_exists( $meta_from, $raw ) )
-				$data['comment_meta'][$meta_to] = $raw[$meta_from];
-
-		if ( ! empty( $data['comment_karma'] ) )
-			return $data;
-
-		$data['comment_karma'] = empty( $raw['order'] )
-			? $this->subcontent_get_data_count( $post ) + 1
-			: $raw['order'];
-
-		return $data;
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_prep_data_from_query( $raw, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $order = NULL )
-	{
-		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping( $context, $post );
-
-		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping( $context, $post );
-
-		if ( is_object( $raw ) )
-			$raw = Core\Arraay::fromObject( $raw );
-
-		$data = [];
-
-		foreach ( $mapping as $map_from => $map_to )
-			if ( array_key_exists( $map_from, $raw ) )
-				$data[$map_to] = $raw[$map_from];
-
-		$meta = get_comment_meta( $data['_id'] );
-
-		foreach ( $metas as $meta_name => $meta_key )
-			if ( array_key_exists( $meta_key, $meta ) )
-				$data[$meta_name] = empty( $meta[$meta_key][0] ) ? '' : $meta[$meta_key][0];
-			else
-				$data[$meta_name] = '';
-
-		if ( empty( $data['order'] ) )
-			$data['order'] = $order ?? '1';
-
-		return $this->filters( 'subcontent_after_prep_data', $data, $context, $post, $mapping, $metas );
-	}
-
-	// FIXME: **partially** Move to `DeepContents` internal
-	// TODO: support for shorthand chars like `+`/`~` in date types to fill with today/now
-	// TODO: support for auto-fill fields with tokens: `date: '{{now}}'`
-	protected function subcontent_sanitize_data( $raw = [], $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL, $allowed_raw = NULL )
-	{
-		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping( $context, $post );
-
-		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping( $context, $post );
-
-		if ( is_null( $allowed_raw ) )
-			$allowed_raw = [ 'data', 'order' ];
-
-		$types = $this->subcontent_get_field_types( $context );
-		$data  = [];
-
-		foreach ( $raw as $raw_key => $raw_value ) {
-
-			if ( in_array( $raw_key, $allowed_raw, TRUE )
-				// @SEE: `is_protected_meta()`
-				|| Core\Text::starts( $raw_key, '_' ) ) {
-
-				$data[$raw_key] = $raw_value;
-				continue;
-			}
-
-			if ( WordPress\Strings::isEmpty( $raw_value ) ) {
-
-				if ( empty( $data[$raw_key] ) )
-					$data[$raw_key] = '';
-
-				continue;
-			}
-
-			$type = array_key_exists( $raw_key, $types ) ? $types[$raw_key] : $raw_key;
-
-			switch ( $type ) {
-				case 'phone':    $data[$raw_key] = Core\Phone::sanitize( $raw_value ); break;
-				case 'mobile':   $data[$raw_key] = Core\Phone::Mobile( $raw_value ); break;
-				case 'country':  $data[$raw_key] = Core\Validation::sanitizeCountry( $raw_value, TRUE ); break;   // NOTE: skips the base country
-				case 'vin':      $data[$raw_key] = Core\Validation::sanitizeVIN( $raw_value ); break;
-				case 'plate':    $data[$raw_key] = Core\Validation::sanitizePlateNumber( $raw_value ); break;
-				case 'iban':     $data[$raw_key] = Core\Validation::sanitizeIBAN( $raw_value ); break;
-				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
-				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
-				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
-				case 'distance': $data[$raw_key] = Core\Distance::sanitize( $raw_value ); break;
-				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
-				case 'area':     $data[$raw_key] = Core\Area::sanitize( $raw_value ); break;
-				case 'cssclass': $data[$raw_key] = Core\HTML::prepClass( $raw_value ); break;
-
-				case 'code'    : // WTF
-				case 'date'    : // WTF
-				case 'time'    : // WTF
-				case 'contact' : // WTF: maybe: phone/mobile/email/url
-				case 'stature' :
-				case 'mass'    :
-				case 'age'     : // WTF: maybe: year-only
-				case 'dob'     : // WTF: maybe: year-only
-				case 'year'    :
-				case 'grade'   :
-				case 'days'    :
-				case 'hours'   :
-				case 'account' :
-				case 'count'   :
-					$data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) );
-					break;
-
-				case 'location':
-				case 'people'  :
-					$data[$raw_key] = WordPress\Strings::getPiped( Services\Markup::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
-					break;
-
-				case 'bankname'  :
-				case 'label'     :
-				case 'topic'     :
-				case 'fullname'  :
-				case 'relation'  :
-				case 'evaluation':
-				case 'occupation':
-				case 'education' :
-				case 'address'   :
-					$data[$raw_key] = WordPress\Strings::cleanupChars( WordPress\Strings::kses( $raw_value, 'none' ), TRUE );
-					break;
-
-				case 'html':
-					$data[$raw_key] = Core\Text::normalizeWhitespace( WordPress\Strings::kses( $raw_value, 'text' ), TRUE );
-					break;
-
-				default:
-					$data[$raw_key] = WordPress\Strings::kses( $raw_value, 'none' );
-			}
-		}
-
-		return $this->filters( 'subcontent_sanitize_data', $data, $context, $post, $raw, $mapping, $metas, $allowed_raw );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_get_data_mapped( $items, $context = NULL, $post = FALSE, $mapping = NULL, $metas = NULL )
-	{
-		if ( is_null( $mapping ) )
-			$mapping = $this->subcontent_get_data_mapping( $context, $post );
-
-		if ( is_null( $metas ) )
-			$metas = $this->subcontent_get_meta_mapping( $context, $post );
-
-		$data = [];
-
-		foreach ( $items as $offset => $item )
-			$data[] = $this->subcontent_prep_data_from_query( $item, $context, $post, $mapping, $metas, $offset + 1 );
-
-		return $this->filters( 'subcontent_data_mapped', $data, $context, $post, $items, $mapping, $metas );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_get_data_all( $parent = NULL, $context = NULL, $map = TRUE, $extra = [] )
-	{
-		if ( ! $post = WordPress\Post::get( $parent ) )
-			return FALSE;
-
-		$args = array_merge( [
-			'post_id'   => $post->ID,
-			'post_type' => 'any', // $parent->post_type,
-			'status'    => 'any', // $this->subcontent_get_comment_status(),
-			'type'      => $this->subcontent_get_comment_type(),
-			'fields'    => '', // 'ids', // empty for all
-			'number'    => '', // empty for all comments
-			'order'     => 'ASC',
-			'orderby'   => 'comment_karma', // orders stored as karma!
-
-			'update_comment_meta_cache' => TRUE,
-			'update_comment_post_cache' => FALSE,
-			'no_found_rows'             => TRUE,
-		], $extra );
-
-		$query = new \WP_Comment_Query;
-		$items = $this->filters( 'pre_data_all', $query->query( $args ), $context, $post, $args );
-
-		return $map ? $this->subcontent_get_data_mapped( $items, $context, $post ) : $items;
-	}
-
-	// NOTE: wrapper method in case we had to override the count
-	protected function subcontent_get_data_count( $parent = NULL, $context = NULL, $extra = [] )
-	{
-		return $this->subcontent_query_data_count( $parent, $extra );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_query_data_count( $parent = NULL, $extra = [] )
-	{
-		if ( ! $post = WordPress\Post::get( $parent ) )
-			return FALSE;
-
-		$args = array_merge( [
-			'post_id'   => $post->ID,
-			'post_type' => 'any',
-			'status'    => 'any',
-			'type'      => $this->subcontent_get_comment_type(),
-			'fields'    => '', // 'ids', // empty for all
-			'number'    => '', // empty for all
-			'orderby'   => 'none',
-			'count'     => TRUE,
-
-			'update_comment_meta_cache' => FALSE,
-			'update_comment_post_cache' => FALSE,
-		], $extra );
-
-		$query = new \WP_Comment_Query;
-		return $query->query( $args );
-	}
-
-	protected function subcontent_defaine_field_types()
-	{
-		$types = Core\Arraay::sameKey( array_keys( $this->subcontent_define_fields() ) );
-
-		if ( array_key_exists( 'card', $types ) )
-			$types['card'] = 'bankcard';
-
-		if ( array_key_exists( 'desc', $types ) )
-			$types['desc'] = 'html';
-
-		if ( array_key_exists( 'datestart', $types ) )
-			$types['datestart'] = 'date';
-
-		if ( array_key_exists( 'dateend', $types ) )
-			$types['dateend'] = 'date';
-
-		if ( array_key_exists( 'timestart', $types ) )
-			$types['timestart'] = 'time';
-
-		if ( array_key_exists( 'timeend', $types ) )
-			$types['timeend'] = 'time';
-
-		return $types;
-	}
-
-	protected function subcontent_get_field_types( $context = 'display' )
-	{
-		return $this->filters( 'field_types', $this->subcontent_defaine_field_types(), $context );
 	}
 
 	/**
@@ -728,7 +354,7 @@ trait SubContents
 	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL )
 	{
 		$data        = [];
-		$types       = $this->subcontent_get_field_types( $context );
+		$types       = $this->quantumcomments__get_field_types( $context );
 		$selectable  = $this->subcontent_get_selectable_fields( $context );
 		$untouchable = $this->subcontent_get_meta_untouchable( $context );
 
@@ -819,7 +445,7 @@ trait SubContents
 		if ( WordPress\Strings::isEmpty( $value ) )
 			return gEditorial\Helper::htmlEmpty();
 
-		$types   = $this->subcontent_get_field_types( 'import' );
+		$types   = $this->quantumcomments__get_field_types( 'import' );
 		$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
 
 		return $this->prep_meta_row( $value, $current, [
@@ -833,7 +459,7 @@ trait SubContents
 			return;
 
 		$fields = $this->subcontent_get_importer_fields( $post->post_type );
-		$types  = $this->subcontent_get_field_types( 'import' );
+		$types  = $this->quantumcomments__get_field_types( 'import' );
 		$title  = WordPress\Post::title( (int) $atts['attach_id'] );
 
 		foreach ( $atts['map'] as $offset => $field ) {
@@ -853,7 +479,7 @@ trait SubContents
 			if ( FALSE === ( $data = $this->subcontent_prep_data_from_import( $prepped, $current, $post, $column, $title ) ) )
 				continue;
 
-			if ( FALSE === $this->subcontent_insert_data_row( $data, 'import', $post ) )
+			if ( FALSE === $this->quantumcomments__insert_data_row( $data, 'import', $post ) )
 				$this->log( 'NOTICE', 'SUBCONTENT INSERT DATA FAILED ON POST-ID:'.( $post ? $post->ID : 'UNKNOWN' ) );
 		}
 	}
@@ -880,7 +506,6 @@ trait SubContents
 		return $this->filters( 'subcontent_prep_data_from_import', $data, $raw, $field, $post, $column_title, $source_title );
 	}
 
-	// FIXME: **partially** Move to `DeepContents` internal
 	// TODO: `total`: count with HTML markup
 	protected function subcontent_restapi_register_routes()
 	{
@@ -918,10 +543,10 @@ trait SubContents
 				'callback' => function ( $request ) {
 					$post = WordPress\Post::get( (int) $request['linked'] );
 
-					if ( FALSE === $this->subcontent_insert_data_row( $request->get_json_params(), 'rest', $post ) )
+					if ( FALSE === $this->quantumcomments__insert_data_row( $request->get_json_params(), 'rest', $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
+					return rest_ensure_response( $this->quantumcomments__get_data_all( $post, 'rest' ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -934,10 +559,10 @@ trait SubContents
 					if ( empty( $request['_id'] ) )
 						return Services\RestAPI::getErrorArgNotEmpty( '_id' );
 
-					if ( ! $this->subcontent_delete_data_row( $request['_id'], $post ) )
+					if ( ! $this->quantumcomments__delete_data_row( $request['_id'], $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
+					return rest_ensure_response( $this->quantumcomments__get_data_all( $post, 'rest' ) );
 				},
 
 				'permission_callback' => $edit,
@@ -946,7 +571,7 @@ trait SubContents
 				'methods'  => \WP_REST_Server::READABLE,
 				'args'     => $arguments,
 				'callback' => function ( $request ) {
-					return rest_ensure_response( $this->subcontent_get_data_all( (int) $request['linked'], 'rest' ) );
+					return rest_ensure_response( $this->quantumcomments__get_data_all( (int) $request['linked'], 'rest' ) );
 				},
 				'permission_callback' => $read,
 			],
@@ -975,10 +600,10 @@ trait SubContents
 				'callback' => function ( $request ) {
 					$post = WordPress\Post::get( (int) $request['linked'] );
 
-					if ( FALSE === $this->subcontent_update_sort( $request->get_json_params(), $post ) )
+					if ( FALSE === $this->quantumcomments__update_sort( $request->get_json_params(), $post ) )
 						return Services\RestAPI::getErrorForbidden();
 
-					return rest_ensure_response( $this->subcontent_get_data_all( $post, 'rest' ) );
+					return rest_ensure_response( $this->quantumcomments__get_data_all( $post, 'rest' ) );
 				},
 				'permission_callback' => $edit,
 			],
@@ -1021,7 +646,7 @@ trait SubContents
 	{
 		$na     = gEditorial\Plugin::na( FALSE );
 		$parent = WordPress\Post::get( (int) $comment->comment_post_ID );
-		$item   = $this->subcontent_prep_data_from_query( $comment, $context, $parent );
+		$item   = $this->quantumcomments__prep_data_from_query( $comment, $context, $parent );
 		$data   = apply_filters( $this->hook_base( 'subcontent', 'provide_summary' ), NULL, $item, $parent, $context );
 		$author = $datetime = $timeago = '';
 
@@ -1092,7 +717,7 @@ trait SubContents
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		if ( ! $data = $this->subcontent_get_data_all( $post, $args['context'] ?? 'display' ) )
+		if ( ! $data = $this->quantumcomments__get_data_all( $post, $args['context'] ?? 'display' ) )
 			return $content;
 
 		if ( is_null( $args['fields'] ) )
@@ -1122,7 +747,7 @@ trait SubContents
 						'title' => $this->get_setting_fallback( 'tab_title', $this->get_string( 'tab_title', $posttype, 'frontend', $this->module->title ) ),
 
 						'viewable' => function ( $post ) {
-							return (bool) $this->subcontent_get_data_count( $post, 'tabs' );
+							return (bool) $this->quantumcomments__get_data_count( $post, 'tabs' );
 						},
 
 						'callback' => function ( $post ) {
@@ -1282,49 +907,6 @@ trait SubContents
 		], $this->get_notice_for_empty( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
 	}
 
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_delete_data_all( $post, $force_delete = TRUE )
-	{
-		$data = $this->subcontent_get_data_all( $post, 'delete', FALSE );
-
-		foreach ( $data as $comment )
-			if ( FALSE === wp_delete_comment( $comment, $force_delete ) )
-				return FALSE;
-
-		return count( $data );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_clone_data_all( $from, $to, $fresh = FALSE )
-	{
-		$data = $this->subcontent_get_data_all( $from, 'clone' );
-
-		if ( $fresh && ( FALSE === $this->subcontent_delete_data_all( $to ) ) )
-			return FALSE;
-
-		foreach ( $data as $row )
-			if ( FALSE === $this->subcontent_insert_data_row( $this->subcontent_copy_data_row( $row ), 'clone', $to ) )
-				return FALSE;
-
-		return count( $data );
-	}
-
-	// FIXME: Move to `DeepContents` internal
-	protected function subcontent_copy_data_row( $data )
-	{
-		return Core\Arraay::stripByKeys( $data, [
-			'_id',
-			// '_parent',  // parent comment
-			'_object',  // parent post
-			'_status',
-			'_date',
-			'_date_gmt',
-			'_user',
-			'_type',
-			'_meta',
-		] );
-	}
-
 	protected function tweaks_column_row_subcontent( $post, $before, $after, $module )
 	{
 		$thrift = $this->is_thrift_mode();
@@ -1345,7 +927,7 @@ trait SubContents
 				'text'         => $thrift ? '%1$s' : NULL,
 			] );
 
-			if ( ! $thrift && ( $count = $this->subcontent_get_data_count( $post ) ) )
+			if ( ! $thrift && ( $count = $this->quantumcomments__get_data_count( $post ) ) )
 				printf( ' <span class="count -counted">(%s)</span>', $this->nooped_count( 'row', $count ) );
 
 		echo $after;
@@ -1393,7 +975,7 @@ trait SubContents
 
 		if ( $exists = term_exists( $term, $taxonomy ) ) {
 
-			if ( $this->subcontent_get_data_count( $post ) )
+			if ( $this->quantumcomments__get_data_count( $post ) )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
 
 			else
@@ -1420,7 +1002,7 @@ trait SubContents
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $args['default'];
 
-		if ( ! $data = $this->subcontent_get_data_all( $post, $args['context'] ?? 'summary' ) )
+		if ( ! $data = $this->quantumcomments__get_data_all( $post, $args['context'] ?? 'summary' ) )
 			return $args['default'];
 
 		if ( ! $data = $this->subcontent_get_prepped_data( $data, $args['context'] ?? 'summary' ) )
@@ -1500,7 +1082,7 @@ trait SubContents
 
 		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
-		$data   = $this->subcontent_get_data_mapped( $items, $context );
+		$data   = $this->quantumcomments__get_data_mapped( $items, $context );
 		$data   = $this->subcontent_get_prepped_data( $data, $context, FALSE );
 		$fields = $this->subcontent_get_fields( $context );
 
