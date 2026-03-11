@@ -202,7 +202,7 @@ class Ortho extends gEditorial\Module
 			NULL, [], ModuleInfo::VIRASTAR_VERSION );
 
 		// cleanup
-		$settings = $this->options->settings;
+		$settings = $this->options->settings ?? [];
 		unset( $settings['virastar_options'] );
 
 		$this->enqueue_asset_js( [
@@ -229,13 +229,15 @@ class Ortho extends gEditorial\Module
 
 	private function prepare_virastar_options()
 	{
-		$saved   = $this->get_setting( 'virastar_options', [] );
-		$options = [];
+		$options  = $this->virastar_options();
+		$defaults = array_keys( array_filter( $options ) );
+		$saved    = $this->get_setting( 'virastar_options', $defaults );
+		$prepared = [];
 
-		foreach ( array_keys( $this->virastar_options() ) as $option )
-			$options[$option] = (bool) in_array( $option, $saved );
+		foreach ( array_keys( $options ) as $option )
+			$prepared[$option] = (bool) in_array( $option, $saved );
 
-		return $options;
+		return $prepared;
 	}
 
 	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )

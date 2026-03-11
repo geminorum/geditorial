@@ -125,7 +125,7 @@ trait SubContents
 	{
 		// Tries not to fire the filter hook twice!
 		$defined = Core\Arraay::pluck( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
-		$enabled = \array_merge( [ 'default' ], $this->get_setting( 'subcontent_types', [] ) );
+		$enabled = \array_merge( [ 'default' ], $this->get_setting( 'subcontent_types', $defined ) );
 
 		return Core\Arraay::stripByKeys(
 			Core\Arraay::reKey( $this->subcontent_get_type_options( $context, $posttype ), 'name' ),
@@ -1332,7 +1332,12 @@ trait SubContents
 		printf( $before, $this->classs( 'subcontent' ) );
 
 			if ( ! $thrift )
-				echo $this->get_column_icon( FALSE, NULL, NULL, $post->post_type );
+				echo $this->get_column_icon(
+					$this->get_module_url( NULL, NULL, [ 'id' => $post->ID ] ),
+					NULL,
+					$this->module->title,
+					$post->post_type
+				);
 
 			echo $this->framepage_get_mainlink_for_post( $post, [
 				'context'      => 'columnrow',

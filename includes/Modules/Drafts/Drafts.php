@@ -55,6 +55,7 @@ class Drafts extends gEditorial\Module
 					'type'        => 'number',
 					'title'       => _x( 'Max Posts', 'Setting Title', 'geditorial-drafts' ),
 					'description' => _x( 'Maximum number of posts for each post-type.', 'Setting Description', 'geditorial-drafts' ),
+					'placeholder' => 25,
 					'default'     => 25,
 				],
 			],
