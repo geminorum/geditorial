@@ -442,7 +442,14 @@ trait SettingsCore
 
 				if ( ! array_key_exists( 'type', $args ) || 'enabled' == $args['type'] ) {
 
-					$options[$context][$setting] = (bool) $option;
+					if ( isset( $args['default'] ) && ( (bool) $args['default'] === (bool) $option ) )
+						unset( $options[$context][$setting] );
+
+					else if ( (bool) $option )
+						$options[$context][$setting] = TRUE;
+
+					else
+						unset( $options[$context][$setting] );
 
 				} else if ( 'object' == $args['type'] ) {
 
@@ -505,15 +512,52 @@ trait SettingsCore
 							if ( $string = trim( self::unslash( $value ) ) )
 								$options[$context][$setting][sanitize_key( $key )] = $string;
 
+						// NOTE: Array keys are preserved in `array_filter()`
+						$options[$context][$setting] = array_filter( $options[$context][$setting] );
+
 					} else {
 
 						// multiple checkboxes
-						$options[$context][$setting] = array_keys( $option );
+						$options[$context][$setting] = array_filter( array_keys( $option ) );
+
+						if ( empty( $options[$context][$setting] ) )
+							unset( $options[$context][$setting] );
+
+						else if ( isset( $args['default'] ) && is_array( $args['default'] )
+							&& Core\Arraay::identicalValues( $args['default'], $options[$context][$setting] ) )
+								unset( $options[$context][$setting] );
+
+						// NOTE: `default` may set to `TRUE` for pre-select all options
+						else if ( isset( $args['default'] ) && TRUE === $args['default']
+							&& Core\Arraay::identicalValues( array_keys( $args['values'] ), $options[$context][$setting] ) )
+								unset( $options[$context][$setting] );
 					}
 
 				} else {
 
 					$options[$context][$setting] = trim( self::unslash( $option ) );
+
+					if ( isset( $args['default'] ) && $args['default'] === $options[$context][$setting] )
+						unset( $options[$context][$setting] );
+
+					else if ( isset( $args['default'] ) && in_array( $args['type'], [
+						'number',
+					], TRUE ) && (int) $args['default'] === (int) $options[$context][$setting] )
+						unset( $options[$context][$setting] );
+
+					else if ( in_array( $args['type'], [
+						'hidden',
+						'priority',
+						'url',
+						'color',
+						'email',
+						'text',
+						'textarea',
+						'textarea-quicktags',
+						'textarea-quicktags-tokens',
+						'textarea-code-editor',
+					], TRUE ) && '' === $options[$context][$setting] )
+						unset( $options[$context][$setting] );
 				}
 			}
 
