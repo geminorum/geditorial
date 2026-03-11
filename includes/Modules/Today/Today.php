@@ -201,6 +201,8 @@ class Today extends gEditorial\Module
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );
+
+		$this->action_module( 'importer', 'posttype_extra_all', 7 );
 	}
 
 	public function init()
@@ -1538,6 +1540,19 @@ class Today extends gEditorial\Module
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
 		$postmeta  = [ 'cal' => $default ]; // NOTE: `set_today_meta()` needs cal
 
+		foreach ( $atts['extra_all'] as $extra_key => $extra_data ) {
+
+			if ( ! in_array( $extra_key, $fields ) )
+				continue;
+
+			if ( ! $value = trim( $extra_data ) )
+				continue;
+
+			$key = Core\Text::stripPrefix( $extra_key, $prefix );
+
+			$postmeta[$key] = $extra_data;
+		}
+
 		foreach ( $atts['map'] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
@@ -1561,6 +1576,41 @@ class Today extends gEditorial\Module
 
 		if ( count( $postmeta ) ) // NOTE: `cal` only data will be ignored
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
+	}
+
+	public function importer_posttype_extra_all( $posttype, $taxonomies, $name_template, $before, $after, $after_title, $context )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		foreach ( $this->_get_importer_fields( $posttype ) as $field => $title ) {
+
+			if ( 'today__full' === $field )
+				continue; // no need here!
+
+			echo $before;
+				echo Core\HTML::escape( $title );
+			echo $after_title;
+
+			if ( 'today__cal' === $field )
+				$this->do_settings_field( [
+					'type'       => 'select',
+					'field'      => $field,
+					'values'     => $this->list_calendars(),
+					'default'    => $this->default_calendar(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
+					'name_attr'  => sprintf( $name_template, $field ),
+				] );
+
+			else
+				$this->do_settings_field( [
+					'type'      => 'number',
+					'field'     => $field,
+					'name_attr' => sprintf( $name_template, $field ),
+				] );
+
+			echo $after;
+		}
 	}
 
 	public function get_posts_connected( $arguments = [], $constants = NULL )
