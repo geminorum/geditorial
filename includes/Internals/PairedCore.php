@@ -875,7 +875,8 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		return $this->paired_set_to_term( $post, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		// return $this->paired_set_to_term( $post, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		return Services\Paired::doPair( $post, $the_term['term_id'] );
 	}
 
 	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
@@ -918,7 +919,8 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		return $this->paired_set_to_term( $after, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		// return $this->paired_set_to_term( $after, $the_term['term_id'], $posttype_key, $taxonomy_key );
+		return Services\Paired::doPair( $after, $the_term['term_id'] );
 	}
 
 	protected function paired_do_trash_to_post( $post_id, $posttype_key, $taxonomy_key )
@@ -1043,8 +1045,16 @@ trait PairedCore
 		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
 	}
 
+	// NOTE: DEPRECATED
 	// OLD: `set_linked_term()`
-	public function paired_set_to_term( $post, $term_or_id, $posttype_key, $taxonomy_key )
+	public function paired_set_to_term( $post, $term )
+	{
+		self::_dep( 'Services\Paired::doPair()' );
+		return Services\Paired::doPair( $post, $term );
+	}
+
+	// FIXME: DROP THIS!
+	public function paired_set_to_term_OLD( $post, $term_or_id, $posttype_key, $taxonomy_key )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

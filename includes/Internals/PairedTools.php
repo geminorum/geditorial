@@ -247,7 +247,7 @@ trait PairedTools
 				if ( ! $post_id = WordPress\Post::getIDbySlug( $terms[$term_id]->slug, $posttype ) )
 					continue;
 
-				if ( $this->paired_set_to_term( $post_id, $terms[$term_id], $constants[0], $constants[1] ) )
+				if ( Services\Paired::doPair( $post_id, $terms[$term_id] ) )
 					++$count;
 			}
 

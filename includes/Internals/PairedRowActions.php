@@ -137,7 +137,7 @@ trait PairedRowActions
 				if ( ! $post_id || self::isError( $post_id ) )
 					return FALSE;
 
-				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+				if ( ! Services\Paired::doPair( $post_id, $cloned ) )
 					return FALSE;
 
 				WordPress\Taxonomy::disableTermCounting();
@@ -191,7 +191,7 @@ trait PairedRowActions
 				if ( ! $post_id || self::isError( $post_id ) )
 					return FALSE;
 
-				if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+				if ( ! Services\Paired::doPair( $post_id, $cloned ) )
 					return FALSE;
 
 				WordPress\Taxonomy::disableTermCounting();
@@ -242,7 +242,7 @@ trait PairedRowActions
 					if ( ! $post_id || self::isError( $post_id ) )
 						continue;
 
-					if ( ! $this->paired_set_to_term( $post_id, $cloned, $constants[0], $constants[1] ) )
+					if ( ! Services\Paired::doPair( $post_id, $cloned ) )
 						continue;
 
 					foreach ( $current_objects as $current_object )

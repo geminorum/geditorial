@@ -25,6 +25,36 @@ class Paired extends gEditorial\Service
 			[ __CLASS__, 'papered_view_data_for_post' ], 99, 4 );
 	}
 
+	public static function doPair( $post, $term, $image_metakey = NULL )
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		update_post_meta( $post->ID, '_'.self::und( $post->post_type, 'term_id' ), $term->term_id );
+		update_term_meta( $term->term_id, self::und( $post->post_type, 'linked' ), $post->ID );
+
+		// NO NEED: we use the main postdate directly
+		// `update_term_meta( $term->term_id, $date_metakey ?? $this->constant( 'metakey_term_date', 'datetime' ), $post->post_date );`
+
+		wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, FALSE );
+
+		if ( $image_metakey ?? ( TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image' ) ) {
+
+			// Image from Post to Term
+			if ( $thumbnail = get_post_thumbnail_id( $post->ID ) )
+				update_term_meta( $term->term_id, $image_metakey, $thumbnail );
+
+			// Image from Term to Post
+			else if ( $image = get_term_meta( $term->term_id, $image_metakey, TRUE ) )
+				update_post_meta( $post->ID, '_thumbnail_id', $image );
+		}
+
+		return TRUE;
+	}
+
 	// returns the paired taxonomy, otherwise `FALSE`
 	public static function isPostType( $posttype )
 	{
