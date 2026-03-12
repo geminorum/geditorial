@@ -534,22 +534,28 @@ class Config extends gEditorial\Module
 							] );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'convert_connection_type' ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'do_o2o_conversion_types' ) ) {
 
-					if ( empty( $_POST['old_o2o_type'] )
-						|| empty( $_POST['new_o2o_type'] ) )
+					if ( empty( $_POST['o2o_conversion_types'] ) )
+						WordPress\Redirect::doReferer( 'nochange' );
+
+					if ( ! $conversion_types = array_filter( $_POST['o2o_conversion_types'] ) )
+						WordPress\Redirect::doReferer( 'nochange' );
+
+					$count = 0;
+
+					foreach ( $conversion_types as $o2o_from_type => $o2o_to_type ) {
+
+						if ( FALSE === ( $result = Services\O2O\API::convertConnection( $o2o_from_type, $o2o_to_type ) ) )
 							WordPress\Redirect::doReferer( 'wrong' );
 
-					$result = Services\O2O\API::convertConnection( $_POST['old_o2o_type'], $_POST['new_o2o_type'] );
+						$count+= $result;
+					}
 
-					if ( FALSE === $result )
-						WordPress\Redirect::doReferer( 'wrong' );
-
-					else
-						WordPress\Redirect::doReferer( [
-							'message' => 'converted',
-							'count'   => $result,
-						] );
+					WordPress\Redirect::doReferer( [
+						'message' => 'converted',
+						'count'   => $count,
+					] );
 
 				} else {
 
@@ -749,8 +755,10 @@ class Config extends gEditorial\Module
 			$system
 		) );
 
-		$types = Services\O2O\ConnectionTypeFactory::get_all_instances();
-		$empty = TRUE;
+		$types  = Services\O2O\ConnectionTypeFactory::get_all_instances();
+		$values = Core\Arraay::sameKey( array_keys( $types ) );
+		$none   = gEditorial\Settings::showOptionNone();
+		$empty  = TRUE;
 
 		foreach ( $counts as $type => $count ) {
 
@@ -763,19 +771,25 @@ class Config extends gEditorial\Module
 			echo ' &mdash; ('.WordPress\Strings::getCounted( $count ).') &mdash; ';
 
 			$this->do_settings_field( [
-				'type'         => 'select',
-				'field'        => 'new_o2o_type',
-				'values'       => array_keys( $types ),
-				// 'default'      => $form['empty_module'],
-				'option_group' => 'tools',
+				'type'       => 'select',
+				'field'      => 'o2o_conversion_types',
+				'name_attr'  => sprintf( 'o2o_conversion_types[%s]', $type ),
+				'values'     => $values,
+				'none_title' => $none,
 			] );
-
-			gEditorial\Settings::submitButton( 'convert_connection_type',
-				_x( 'Convert', 'Button', 'geditorial-admin' ), 'danger button-small', TRUE );
 		}
 
-		if ( $empty )
+		if ( ! $empty ) {
+
+			gEditorial\Settings::submitButton( 'do_o2o_conversion_types',
+				_x( 'Convert', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+
+			Core\HTML::desc( _x( 'Renames on the database to mathch the available connections.', 'Message', 'geditorial-admin' ), FALSE );
+
+		} else {
+
 			Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
+		}
 
 		echo '</div></div>';
 	}
