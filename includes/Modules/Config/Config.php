@@ -600,7 +600,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Reports', 'Header', 'geditorial-admin' ) );
+		Core\HTML::h3( _x( 'General Editorial Reports', 'Config: Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'reports', 'general_summary' );
 
@@ -618,7 +618,7 @@ class Config extends gEditorial\Module
 			self::cheatin();
 
 		echo gEditorial\Settings::toolboxColumnOpen(
-			_x( 'General Tools', 'Card Column Header', 'geditorial-admin' ) );
+			_x( 'General Tools', 'Config: Card Column Header', 'geditorial-admin' ) );
 
 		$system = gEditorial\Plugin::system();
 		$form   = $this->get_current_form( [
@@ -654,18 +654,18 @@ class Config extends gEditorial\Module
 
 		echo gEditorial\Settings::toolboxCardOpen( sprintf(
 			/* translators: `%s`: editorial system title */
-			_x( '%s Options', 'Card Title', 'geditorial-admin' ),
+			_x( '%s Options', 'Config: Card Title', 'geditorial-admin' ),
 			$system
 		), FALSE );
 
 			if ( $this->settings_render_upload_field( '.json' ) ) {
 				echo '<div class="-wrap -wrap-button-row">';
 					gEditorial\Settings::submitButton( 'import_all_options',
-						_x( 'Restore Options', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+						_x( 'Restore Options', 'Config: Button', 'geditorial-admin' ), 'danger', TRUE );
 
 					Core\HTML::desc( sprintf(
 						/* translators: `%s`: file ext-type */
-						_x( 'Imports all options in %s from your computer.', 'Message', 'geditorial-admin' ),
+						_x( 'Imports all options in %s from your computer.', 'Config: Message', 'geditorial-admin' ),
 						Core\HTML::code( 'json' )
 					), FALSE );
 				echo '</div>';
@@ -673,29 +673,29 @@ class Config extends gEditorial\Module
 
 			echo '<div class="-wrap -wrap-button-row">';
 				gEditorial\Settings::submitButton( 'upgrade_old_options',
-					_x( 'Upgrade Old Options', 'Button', 'geditorial-admin' ), 'small' );
+					_x( 'Upgrade Old Options', 'Config: Button', 'geditorial-admin' ), 'small' );
 
-				Core\HTML::desc( _x( 'Checks for old options and upgrade them.', 'Message', 'geditorial-admin' ), FALSE );
+				Core\HTML::desc( _x( 'Checks for old options and upgrade them.', 'Config: Message', 'geditorial-admin' ), FALSE );
 			echo '</div>';
 
 			echo '<div class="-wrap -wrap-button-row">';
 				gEditorial\Settings::submitButton( 'download_active_options',
-					_x( 'Backup Active Module Options', 'Button', 'geditorial-admin' ), 'small' );
+					_x( 'Backup Active Module Options', 'Config: Button', 'geditorial-admin' ), 'small' );
 
 				Core\HTML::desc( sprintf(
 					/*translators: `%s`: file ext-type */
-					_x( 'Exports active module options as %s download.', 'Message', 'geditorial-admin' ),
+					_x( 'Exports active module options as %s download.', 'Config: Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );
 			echo '</div>';
 
 			echo '<div class="-wrap -wrap-button-row">';
 				gEditorial\Settings::submitButton( 'download_all_options',
-					_x( 'Backup All Options', 'Button', 'geditorial-admin' ), 'small' );
+					_x( 'Backup All Options', 'Config: Button', 'geditorial-admin' ), 'small' );
 
 				Core\HTML::desc( sprintf(
 					/*translators: `%s`: file ext-type */
-					_x( 'Exports all saved options as %s for download.', 'Message', 'geditorial-admin' ),
+					_x( 'Exports all saved options as %s for download.', 'Config: Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );
 			echo '</div>';
@@ -703,9 +703,9 @@ class Config extends gEditorial\Module
 			if ( WordPress\IsIt::dev() || WordPress\User::isSuperAdmin() ) {
 				echo '<div class="-wrap -wrap-button-row">';
 					gEditorial\Settings::submitButton( 'delete_all_options',
-						_x( 'Delete All Options', 'Button', 'geditorial-admin' ), 'danger button-small', TRUE );
+						_x( 'Delete All Options', 'Config: Button', 'geditorial-admin' ), 'danger button-small', TRUE );
 
-					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Message', 'geditorial-admin' ), FALSE );
+					Core\HTML::desc( _x( 'Tries to delete all editorial options on the current site.', 'Config: Message', 'geditorial-admin' ), FALSE );
 				echo '</div>';
 			}
 
@@ -719,7 +719,7 @@ class Config extends gEditorial\Module
 
 		echo gEditorial\Settings::toolboxCardOpen( sprintf(
 			/* translators: `%s`: editorial system title */
-			_x( '%s Maintenance Tasks', 'Card Title', 'geditorial-admin' ),
+			_x( '%s Maintenance Tasks', 'Config: Card Title', 'geditorial-admin' ),
 			$system
 		) );
 
@@ -733,9 +733,9 @@ class Config extends gEditorial\Module
 			] );
 
 			gEditorial\Settings::submitButton( 'custom_fields_empty',
-				_x( 'Empty Meta Fields', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+				_x( 'Empty Meta Fields', 'Config: Button', 'geditorial-admin' ), 'danger', TRUE );
 
-			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Message', 'geditorial-admin' ) );
+			Core\HTML::desc( _x( 'Deletes empty meta values. This solves common problems with imported posts.', 'Config: Message', 'geditorial-admin' ) );
 
 		echo '</div></div>';
 		return TRUE;
@@ -751,7 +751,7 @@ class Config extends gEditorial\Module
 
 		echo gEditorial\Settings::toolboxCardOpen( sprintf(
 			/* translators: `%s`: editorial system title */
-			_x( '%s Orphan Connections', 'Card Title', 'geditorial-admin' ),
+			_x( '%s Orphan Connections', 'Config: Card Title', 'geditorial-admin' ),
 			$system
 		) );
 
@@ -782,13 +782,13 @@ class Config extends gEditorial\Module
 		if ( ! $empty ) {
 
 			gEditorial\Settings::submitButton( 'do_o2o_conversion_types',
-				_x( 'Convert', 'Button', 'geditorial-admin' ), 'danger', TRUE );
+				_x( 'Convert', 'Config: Button', 'geditorial-admin' ), 'danger', TRUE );
 
-			Core\HTML::desc( _x( 'Renames on the database to mathch the available connections.', 'Message', 'geditorial-admin' ), FALSE );
+			Core\HTML::desc( _x( 'Renames on the database to match the available connections.', 'Config: Message', 'geditorial-admin' ), FALSE );
 
 		} else {
 
-			Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Message', 'geditorial-admin' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'No orphaned connection types found in the database.', 'Config: Message', 'geditorial-admin' ), TRUE, '-empty' );
 		}
 
 		echo '</div></div>';
@@ -801,7 +801,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'roles' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Roles', 'Header', 'geditorial-admin' ) );
+		Core\HTML::h3( _x( 'General Editorial Roles', 'Config: Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'roles', 'general_summary' );
 
@@ -848,7 +848,7 @@ class Config extends gEditorial\Module
 				continue;
 
 			$data = self::atts( [
-				'title'       => _x( 'Untitled', 'Imports: Data Summary', 'geditorial-admin' ),
+				'title'       => gEditorial\Plugin::untitled( FALSE ),
 				'description' => '',
 				'path'        => '',
 				'updated'     => '',
@@ -872,7 +872,7 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'imports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Imports', 'Header', 'geditorial-admin' ) );
+		Core\HTML::h3( _x( 'General Editorial Imports', 'Config: Header', 'geditorial-admin' ) );
 
 		$action = $this->hook_base( 'imports', 'general_summary' );
 
@@ -919,13 +919,13 @@ class Config extends gEditorial\Module
 
 			Core\HTML::desc( sprintf(
 				/* translators: `%s`: user link placeholder */
-				_x( 'Editorial Site User Is %s', 'Sidebox: Message', 'geditorial-admin' ),
+				_x( 'Editorial Site User Is %s', 'Config: Message', 'geditorial-admin' ),
 				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name
 			) );
 
 		} else {
 
-			Core\HTML::desc( _x( 'Editorial Site User is not available!', 'Sidebox: Message', 'geditorial-admin' ), TRUE, '-empty' );
+			Core\HTML::desc( _x( 'Editorial Site User is not available!', 'Config: Message', 'geditorial-admin' ), TRUE, '-empty' );
 		}
 	}
 

@@ -22,6 +22,25 @@ trait SettingsPostTypes
 	}
 
 	/**
+	 * Retrieves settings field for the target post-types.
+	 *
+	 * @param string $target
+	 * @param string $title
+	 * @param string $description
+	 * @return array
+	 */
+	protected function settings_posttypes_for_target( $target, $title = NULL, $description = NULL )
+	{
+		return [
+			'type'        => 'checkboxes-panel-expanded',
+			'field'       => $this->get_setting_key_posttypes_for_target( $target ),
+			'values'      => $this->get_settings_posttypes_for_target( $target ),
+			'title'       => $title ?? _x( 'Supported Post-types', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? '',
+		];
+	}
+
+	/**
 	 * Retrieves settings option for the target post-types.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *

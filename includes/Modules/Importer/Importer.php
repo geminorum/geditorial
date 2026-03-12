@@ -758,8 +758,8 @@ class Importer extends gEditorial\Module
 					$this->raise_resources();
 
 					$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [
-						'headers'    => TRUE,
-						'keep_alive' => TRUE,
+						'headers_only' => TRUE,
+						'keep_alive'   => TRUE,
 					] );
 
 					if ( $rawdata['error'] )
@@ -1893,7 +1893,7 @@ class Importer extends gEditorial\Module
 	{
 		$this->raise_resources();
 
-		$rawdata = gEditorial\Parser::fromAttachment( $id, [ 'headers' => TRUE ] );
+		$rawdata = gEditorial\Parser::fromAttachment( $id, [ 'headers_only' => TRUE ] );
 
 		if ( $rawdata['error'] )
 			return print Core\HTML::error( $rawdata['error'], FALSE );

@@ -175,10 +175,7 @@ trait TemplateTaxonomy
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'term' ) ) )
 			return $title;
 
-		if ( is_null( $fallback ) )
-			return _x( '[Untitled]', 'Module: Template Title', 'geditorial' );
-
-		return $fallback;
+		return $fallback ?? gEditorial\Plugin::untitled( FALSE );
 	}
 
 	// DEFAULT METHOD: content for overridden empty page

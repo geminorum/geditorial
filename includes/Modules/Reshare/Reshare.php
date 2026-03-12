@@ -67,6 +67,9 @@ class Reshare extends gEditorial\Module
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
+				'publication',  // `Book` Module
+				'film'       ,  // `Cine` Module
+
 				$this->constant( 'primary_posttype' ),
 			], $this->keep_posttypes )
 		);
@@ -88,7 +91,7 @@ class Reshare extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 		], 'primary_posttype', [
-			'custom_icon' => $this->module->icon,
+
 		] );
 
 		$this->register_posttype( 'primary_posttype', [], [

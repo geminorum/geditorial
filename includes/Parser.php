@@ -45,19 +45,19 @@ class Parser extends WordPress\Main
 	public static function getDefaultArgs( $filepath = NULL )
 	{
 		return [
-			'headers'     => FALSE,   // headers only
-			'first_row'   => FALSE,   // first row only
-			'last_row'    => FALSE,   // last row only
-			'by_offset'   => FALSE,   // row by offset
-			'mapping'     => NULL,
-			'sheet_name'  => NULL,    // Excel
-			'sheet_index' => 0,       // Excel: starts @ `0`
-			'data_key'    => FALSE,   // JSON: the data key
-			'delimiter'   => FALSE,   // CSV: custom delimiter
-			'extra_url'   => FALSE,   // Returns full URL to the file.
-			'extra_size'  => FALSE,   // Returns file size of the file.
-			'extra_type'  => FALSE,   // Returns file ext/mime of the file.
-			'keep_alive'  => FALSE,   // Whether to keep parser open for further queries?
+			'headers_only' => FALSE,   // headers only
+			'first_row'    => FALSE,   // first row only
+			'last_row'     => FALSE,   // last row only
+			'by_offset'    => FALSE,   // row by offset
+			'mapping'      => NULL,
+			'sheet_name'   => NULL,    // Excel
+			'sheet_index'  => 0,       // Excel: starts @ `0`
+			'data_key'     => FALSE,   // JSON: the data key
+			'delimiter'    => FALSE,   // CSV: custom delimiter
+			'extra_url'    => FALSE,   // Returns full URL to the file.
+			'extra_size'   => FALSE,   // Returns file size of the file.
+			'extra_type'   => FALSE,   // Returns file ext/mime of the file.
+			'keep_alive'   => FALSE,   // Whether to keep parser open for further queries?
 		];
 	}
 
@@ -188,7 +188,7 @@ class Parser extends WordPress\Main
 					Plugin::noinfo( FALSE )
 				);
 
-			if ( $args['headers'] )
+			if ( $args['headers_only'] )
 				return $data;
 
 			if ( $args['by_offset'] || $args['first_row'] || $args['last_row'] ) {
@@ -286,7 +286,7 @@ class Parser extends WordPress\Main
 					Plugin::noinfo( FALSE )
 				);
 
-			if ( $args['headers'] )
+			if ( $args['headers_only'] )
 				return $data;
 
 			if ( $args['by_offset'] ) {
@@ -440,7 +440,7 @@ class Parser extends WordPress\Main
 				if ( 1 === $index ) {
 					$data['headers'] = $row->toArray();
 
-					if ( $args['headers'] )
+					if ( $args['headers_only'] )
 						break;
 
 					continue;
@@ -550,11 +550,11 @@ class Parser extends WordPress\Main
 
 		$data['headers'] = array_keys( Core\Arraay::valueFirst( $parser ) );
 
-		if ( $args['headers'] )
+		if ( $args['headers_only'] )
 			return $data;
 
 		// Makes sure all keys are available for each row!
-		$empty = array_fill_keys( $args['headers'], '' );
+		$empty = array_fill_keys( $data['headers'], '' );
 
 		if ( $args['by_offset'] ) {
 
