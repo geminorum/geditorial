@@ -292,7 +292,7 @@ class Entry extends gEditorial\Module
 				'post_id' => NULL,
 			], (array) $atts ),
 			$content,
-			$this->constant( 'main_shortcode', $tag ),
+			$tag ?: $this->constant( 'main_shortcode' ),
 			$this->key
 		);
 	}

@@ -211,7 +211,8 @@ class Glossary extends gEditorial\Module
 				'posttypes' => $this->posttypes(),
 			], (array) $atts ),
 			$content,
-			$this->constant( 'main_shortcode' )
+			$tag ?: $this->constant( 'main_shortcode' ),
+			$this->key
 		);
 	}
 

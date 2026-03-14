@@ -504,7 +504,8 @@ class Collect extends gEditorial\Module
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap(
+			$html,
 			$this->constant( 'poster_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);

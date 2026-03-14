@@ -839,13 +839,14 @@ class Book extends gEditorial\Module
 		else if ( is_singular( $this->posttypes() ) )
 			$args['id'] = 'paired';
 
-		else // no publication/no p2p
+		else // no publication/no `p2p`
 			return $content;
 
 		if ( ! $html = ModuleTemplate::postImage( array_merge( $args, (array) $atts ) ) )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html,
+		return gEditorial\ShortCode::wrap(
+			$html,
 			$this->constant( 'cover_shortcode' ),
 			array_merge( [ 'wrap' => TRUE ], (array) $atts )
 		);

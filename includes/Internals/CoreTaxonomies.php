@@ -434,7 +434,11 @@ trait CoreTaxonomies
 						'text'     => $value,
 						'title'    => $object->labels->name,
 						'cap'      => $object->cap->manage_terms,
-						'url'      => WordPress\URL::editTaxonomy( $taxonomy ),
+						'url'      => WordPress\URL::editTaxonomy( $taxonomy,
+							is_array( $targets ) && 1 === count( $targets ) ? [
+								'post_type' => Core\Arraay::valueFirst( $targets ),
+							] : []
+						),
 					];
 
 					break;

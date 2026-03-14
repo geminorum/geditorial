@@ -724,9 +724,12 @@ trait SubContents
 			$args['fields'] = $this->subcontent_get_fields( $args['context'] );
 
 		$data = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
-		$html = Core\HTML::tableSimple( $data, $args['fields'], FALSE );
 
-		return gEditorial\ShortCode::wrap( $html, $constant, $args );
+		return gEditorial\ShortCode::wrap(
+			Core\HTML::tableSimple( $data, $args['fields'], FALSE ),
+			$constant,
+			$args
+		);
 	}
 
 	protected function subcontent_hook__post_tabs( $priority = NULL )

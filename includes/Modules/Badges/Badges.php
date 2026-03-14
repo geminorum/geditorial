@@ -68,7 +68,8 @@ class Badges extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_taxonomy' => 'badge',
+			'main_taxonomy'      => 'badge',
+			'postclass_template' => 'badge-%s',
 		];
 	}
 
@@ -174,8 +175,17 @@ class Badges extends gEditorial\Module
 
 	public function post_class( $classes, $css_class, $post_id )
 	{
-		if ( $this->posttype_supported( WordPress\Post::type( $post_id ) ) )
-			$classes[] = $this->classs( 'supported' );
+		if ( ! $post = WordPress\Post::type( $post_id ) );
+			return $classes;
+
+		if ( ! $this->posttype_supported( $post ) )
+			return $classes;
+
+		$classes[] = $this->classs( 'supported' );
+		$template  = $this->constant( 'postclass_template', '%s' );
+
+		foreach ( WordPress\Taxonomy::getPostTerms( $this->constant( 'main_taxonomy' ), $post ) as $term )
+			$classes[] = Core\HTML::prepClass( sprintf( $template, $term->slug ) );
 
 		return $classes;
 	}

@@ -705,6 +705,7 @@ class Parser extends WordPress\Main
 
 		$sheet = $sheet ?? 'Sheet1';
 
+		// @SEE: https://github.com/maksimovic/PHP_XLSXWriter/blob/master/examples/ex13-multiple-sheets-properties.php
 		if ( is_null( $options ) )
 			$options = [
 				'border'      => 'left,right,top,bottom',

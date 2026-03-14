@@ -994,7 +994,11 @@ class StaticCovers extends gEditorial\Module
 			$html = '<figure class="'.Core\HTML::prepClass( 'figure', $args['figure'] ).'">'.$html.'</figure>';
 		}
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'post_cover_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'post_cover_shortcode' ),
+			$args
+		);
 	}
 
 	public function term_cover_shortcode( $atts = [], $content = NULL, $tag = '' )
@@ -1070,7 +1074,11 @@ class StaticCovers extends gEditorial\Module
 			$html = '<figure class="'.Core\HTML::prepClass( 'figure', $args['figure'] ).'">'.$html.'</figure>';
 		}
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'term_cover_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'term_cover_shortcode' ),
+			$args
+		);
 	}
 
 	private function _register_headerbuttons_for_post_secondary( $posttype, $post = NULL, $handle = NULL )

@@ -341,7 +341,11 @@ class Isbn extends gEditorial\Module
 		if ( ! $html )
 			return $content;
 
-		return gEditorial\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return gEditorial\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 
 	private function _get_main_isbn_metakey( $posttype, $fallback = FALSE )
