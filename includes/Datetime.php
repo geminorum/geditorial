@@ -519,7 +519,7 @@ class Datetime extends WordPress\Main
 			$decade      = $epoch + ( $i * 10 );
 			$decade_slug = sprintf( $slug, $decade );
 
-			$list[$decade_slug] =  [
+			$list[$decade_slug] = [
 				'slug' => $decade_slug,
 				'name' => sprintf( $name, Core\Number::localize( $decade ) ),
 				'meta' => [ $meta  => $decade ],

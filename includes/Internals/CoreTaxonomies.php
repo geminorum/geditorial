@@ -744,7 +744,7 @@ trait CoreTaxonomies
 	 * Makes available empty terms on sitemaps.
 	 *
 	 * @param string $constant
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function hook_taxonomy_sitemap_show_empty( $constant )
 	{
@@ -819,7 +819,7 @@ trait CoreTaxonomies
 	 * @param callable $callback
 	 * @param int $priority
 	 * @param string $context
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 80, $context = NULL )
 	{
@@ -1035,7 +1035,7 @@ trait CoreTaxonomies
 				if ( ! WordPress\Taxonomy::countPostsWithoutTerms( $taxonomy->name, $screen->post_type ) )
 					return $views;
 
-				$views[sprintf( '%s--none', $taxonomy->name )] =  Core\HTML::tag( 'a', [
+				$views[sprintf( '%s--none', $taxonomy->name )] = Core\HTML::tag( 'a', [
 					'href'  => WordPress\PostType::edit( $screen->post_type, [ $query => '-1' ] ),
 					'title' => $label,
 					'class' => '-1' === self::req( $query ) ? 'current' : FALSE,
@@ -1058,7 +1058,7 @@ trait CoreTaxonomies
 	 * @SEE: `pairedcore__hook_importer_term_parents()`
 	 *
 	 * @param bool|string $setting
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function hook_taxonomy_importer_term_parents( $taxonomy, $setting = 'force_parents' )
 	{

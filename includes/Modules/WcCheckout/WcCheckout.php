@@ -107,13 +107,13 @@ class WcCheckout extends gEditorial\Module
 		if ( ! is_checkout() && ! WordPress\IsIt::ajax() )
 			return;
 
-		// remove coupon forms since why would you want a coupon for a free cart??
+		// Removes coupon forms since why would you want a coupon for a free cart?
 		remove_action( 'woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10 );
 
-		// remove the "Additional Info" order notes
+		// Removes the "Additional Info" order notes.
 		$this->filter_false( 'woocommerce_enable_order_notes_field', 9999 );
 
-		// unset the fields we don't want in a free checkout
+		// Unset the fields we don't want in a free checkout.
 		$this->filter( 'checkout_fields', 1, 99, 'simplify', 'woocommerce' );
 	}
 
@@ -123,7 +123,7 @@ class WcCheckout extends gEditorial\Module
 	 * @filter `woocommerce_checkout_fields`
 	 *
 	 * @param array $fields
-	 * @return array $fields
+	 * @return array
 	 */
 	public function checkout_fields_simplify( $fields )
 	{

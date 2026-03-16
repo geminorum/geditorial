@@ -308,7 +308,7 @@ class Tablelist extends WordPress\Main
 	public static function columnPostDateModified( $title = NULL )
 	{
 		return [
-			'title'    => is_null( $title ) ? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ) : $title,
+			'title'    => $title ?? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},

@@ -352,7 +352,7 @@ class Settings extends WordPress\Main
 	 *
 	 * @param array $extra
 	 * @param string $context
-	 * @return array $excluded
+	 * @return array
 	 */
 	public static function posttypesExcluded( $extra = [], $keeps = [], $context = 'settings' )
 	{

@@ -67,7 +67,7 @@ class TaxonomyFields extends gEditorial\Service
 	 * @param string $taxonomy
 	 * @param string $module
 	 * @param bool $check
-	 * @return string $meta_key
+	 * @return string
 	 */
 	public static function getTermMetaKey( $field_key, $taxonomy = NULL, $module = 'terms', $check = TRUE )
 	{
@@ -101,8 +101,7 @@ class TaxonomyFields extends gEditorial\Service
 		], $atts );
 
 		// NOTE: may come from taxonomy field argument
-		if ( is_null( $args['default'] ) )
-			$args['default'] = '';
+		$args['default'] = $args['default'] ?? '';
 
 		if ( empty( $field_key ) )
 			return $args['default'];
@@ -147,7 +146,7 @@ class TaxonomyFields extends gEditorial\Service
 			$access = TRUE; // TODO
 
 			if ( ! $access )
-				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+				return $args['noaccess'] ?? $args['default'];
 		}
 
 		$meta = apply_filters( static::BASE.'_terms_field', $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );

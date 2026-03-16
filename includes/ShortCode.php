@@ -1690,8 +1690,7 @@ class ShortCode extends WordPress\Main
 		$query = [];
 		$html  = $ref = $parent = '';
 
-		if ( is_null( $args['module'] ) && static::MODULE )
-			$args['module'] = static::MODULE;
+		$args['module'] = $args['module'] ?? static::MODULE;
 
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;

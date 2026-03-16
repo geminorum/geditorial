@@ -98,11 +98,11 @@ class ProfileSummary extends gEditorial\Widget
 		// $this->form_content( $instance ); // TODO
 
 		$this->form_open_group( 'heading' );
-		$this->form_title( $instance );
-		$this->form_title_link( $instance );
-		$this->form_title_image( $instance );
-		$this->form_class( $instance );
-		// $this->form_context( $instance );
+			$this->form_title( $instance );
+			$this->form_title_link( $instance );
+			$this->form_title_image( $instance );
+			$this->form_class( $instance );
+			// $this->form_context( $instance );
 		$this->form_close_group();
 
 		// $this->form_open_group( 'config' );
@@ -110,9 +110,9 @@ class ProfileSummary extends gEditorial\Widget
 		// $this->form_close_group();
 
 		$this->form_open_group( 'customs' );
-		$this->form_open_widget( $instance );
-		$this->form_after_title( $instance );
-		$this->form_close_widget( $instance );
+			$this->form_open_widget( $instance );
+			$this->form_after_title( $instance );
+			$this->form_close_widget( $instance );
 		$this->form_close_group();
 
 		$this->after_form( $instance );

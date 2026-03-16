@@ -370,7 +370,7 @@ class Parser extends WordPress\Main
 		$args = [ 'encoding' => 'UTF-8' ];
 
 		if ( ! is_null( $limit ) )
-			$args['limit'] =  (int) $limit;
+			$args['limit'] = (int) $limit;
 
 		// @REF: https://github.com/kzykhys/PHPCsvParser
 		$parser  = \KzykHys\CsvParser\CsvParser::fromFile( Core\File::normalize( $file_path ), $args );

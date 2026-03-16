@@ -246,7 +246,7 @@ class ModuleHelper extends gEditorial\Helper
 	 * @param string $card
 	 * @param array $fallback
 	 * @param bool $check
-	 * @return array $info
+	 * @return array
 	 */
 	public static function infoFromCardNumber( $card, $fallback = [], $check = FALSE, $context = NULL, $path = NULL )
 	{
@@ -277,10 +277,10 @@ class ModuleHelper extends gEditorial\Helper
 	 * Tries to extract information based on given IBAN.
 	 * @source https://github.com/BaseMax/DetectIranianBankJS
 	 *
-	 * @param  string $iban
-	 * @param  array  $fallback
-	 * @param  bool   $check
-	 * @return array  $info
+	 * @param string $iban
+	 * @param array $fallback
+	 * @param bool $check
+	 * @return array
 	 */
 	public static function infoFromIBAN( $iban, $fallback = [], $check = FALSE, $context = NULL, $path = NULL )
 	{

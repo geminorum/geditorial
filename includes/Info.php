@@ -459,7 +459,7 @@ class Info extends WordPress\Main
 	 *
 	 * @param string $key
 	 * @param string $fallback
-	 * @return array $info
+	 * @return array
 	 */
 	public static function getUnit( $key, $fallback = NULL )
 	{
@@ -801,7 +801,7 @@ class Info extends WordPress\Main
 	 * @source: https://en.wikipedia.org/wiki/Demographic_profile
 	 *
 	 * @param bool $extended
-	 * @return array $data
+	 * @return array
 	 */
 	public static function getAgeStructure( $extended = FALSE )
 	{
@@ -862,7 +862,7 @@ class Info extends WordPress\Main
 	 * - Older adults (65 and older)
 	 *
 	 * @param bool $extended
-	 * @return array $data
+	 * @return array
 	 */
 	public static function getMedicalAge( $extended = FALSE )
 	{

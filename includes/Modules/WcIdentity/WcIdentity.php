@@ -113,7 +113,7 @@ class WcIdentity extends gEditorial\Module
 	}
 
 	// @REF: https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
-	// NOTE: wc auto-stores meta with `billing` or `shipping` prefixes, we use `customer` to prevent this
+	// NOTE: WooCommerce auto-stores meta with `billing` or `shipping` prefixes, we use `customer` to prevent this.
 	public function checkout_fields_numberfield( $fields )
 	{
 		$identity_number = is_user_logged_in()

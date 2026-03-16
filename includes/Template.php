@@ -36,16 +36,12 @@ class Template extends WordPress\Main
 		if ( ! $term_image_id = get_term_meta( $term->term_id, $metakey ?? 'image', TRUE ) )
 			return FALSE;
 
-		if ( is_null( $size ) )
-			$size = WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
+		$size = $size ?? WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
 
-		if ( isset( $image[0] ) )
-			return $image[0];
-
-		return FALSE;
+		return $image[0] ?? FALSE;
 	}
 
 	public static function getTermImageTag( $atts = [] )
@@ -100,10 +96,8 @@ class Template extends WordPress\Main
 
 	public static function termImage( $atts = [], $module = NULL )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'field'        => NULL,                                 // NULL for `image`
 			'id'           => NULL,
 			'size'         => NULL,
@@ -150,8 +144,7 @@ class Template extends WordPress\Main
 				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( (int) $meta ) : FALSE;
 		}
 
-		if ( is_null( $args['alt'] ) )
-			$args['alt'] = $title;
+		$args['alt'] = $args['alt'] ?? $title;
 
 		$html  = '';
 		$image = self::getTermImageTag( $args );
@@ -196,10 +189,8 @@ class Template extends WordPress\Main
 
 	public static function termContact( $atts = [], $module = NULL )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'field'    => 'contact',
 			'id'       => NULL,
 			'class'    => '-term-contact',
@@ -247,22 +238,15 @@ class Template extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
-		if ( is_null( $thumbnail_id ) )
-			$thumbnail_id = WordPress\PostType::getThumbnailID( $post->ID );
-
-		if ( ! $thumbnail_id )
+		if ( ! $thumbnail_id = $thumbnail_id ?? WordPress\PostType::getThumbnailID( $post->ID ) )
 			return FALSE;
 
-		if ( is_null( $size ) )
-			$size = WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
+		$size = $size ?? WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
 			return FALSE;
 
-		if ( isset( $image[0] ) )
-			return $image[0];
-
-		return FALSE;
+		return $image[0] ?? FALSE;
 	}
 
 	public static function getPostImageTag( $atts = [] )
@@ -322,12 +306,9 @@ class Template extends WordPress\Main
 
 	public static function postImage( $atts = [], $module = NULL )
 	{
-		$html = '';
-
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$html   = '';
+		$args   = self::atts( [
 			'id'           => NULL,
 			'thumbnail'    => NULL,
 			'size'         => NULL,
@@ -371,8 +352,7 @@ class Template extends WordPress\Main
 		$title  = self::getPostField( $args['title'], $post->ID, FALSE );
 		$status = get_post_status( $post );
 
-		if ( is_null( $args['thumbnail'] ) )
-			$args['thumbnail'] = WordPress\PostType::getThumbnailID( $post->ID );
+		$args['thumbnail'] = $args['thumbnail'] ?? WordPress\PostType::getThumbnailID( $post->ID );
 
 		if ( $args['link'] ) {
 
@@ -448,10 +428,7 @@ class Template extends WordPress\Main
 	// TODO: duplicate to `pairedList()`
 	public static function pairedLink( $atts = [], $module = NULL )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		if ( ! $module )
+		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
 
 		$args = self::atts( [
@@ -493,10 +470,7 @@ class Template extends WordPress\Main
 
 	public static function getTermField( $field = 'name', $term = NULL, $taxonomy = '', $default = '' )
 	{
-		if ( is_null( $term ) )
-			$term = WordPress\Term::get( $term, $taxonomy );
-
-		if ( ! $term )
+		if ( ! $term = $term ?? WordPress\Term::get( $term, $taxonomy ) )
 			return $default;
 
 		if ( in_array( $field, [ 'name', 'description', 'slug', 'count' ], TRUE ) )
@@ -556,7 +530,7 @@ class Template extends WordPress\Main
 	 * @source https://wordpress.stackexchange.com/a/23213/
 	 *
 	 * @param string $meta
-	 * @return string $html
+	 * @return string
 	 */
 	public static function doEmbedShortCode( $meta, $post = FALSE, $context = 'display' )
 	{
@@ -710,10 +684,8 @@ class Template extends WordPress\Main
 
 	public static function metaTermField( $atts = [], $module = NULL, $check = TRUE )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'id'          => NULL,
 			'default'     => FALSE,
 			'filter'      => FALSE,
@@ -743,25 +715,18 @@ class Template extends WordPress\Main
 
 		if ( $args['taxonomy'] && ( $term = WordPress\Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
 
-			if ( ! $meta )
-				$meta = WordPress\Term::title( $term );
-
-			if ( is_null( $args['link'] ) )
-				$args['link'] = WordPress\Term::link( $term );
-
-			if ( is_null( $args['description'] ) )
-				$args['description'] = Core\Text::stripTags( $term->description );
+			$meta                = $meta                ?: WordPress\Term::title( $term );
+			$args['link']        = $args['link']        ?? WordPress\Term::link( $term );
+			$args['description'] = $args['description'] ?? Core\Text::stripTags( $term->description );
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 
-			$args['link'] = WordPress\URL::search( $meta );
-
-			if ( is_null( $args['description'] ) )
-				$args['description'] = sprintf(
-					/* translators: `%s`: search query */
-					_x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ),
-					$meta
-				);
+			$args['link']        = WordPress\URL::search( $meta );
+			$args['description'] = $args['description'] ?? sprintf(
+				/* translators: `%s`: search query */
+				_x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ),
+				$meta
+			);
 		}
 
 		if ( ! $meta )
@@ -802,10 +767,8 @@ class Template extends WordPress\Main
 
 	public static function metaLink( $atts = [], $module = NULL, $check = TRUE )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'id'            => NULL,
 			'default'       => FALSE,
 			'filter'        => FALSE,
@@ -922,10 +885,8 @@ class Template extends WordPress\Main
 
 	public static function metaSummary( $atts = [], $module = NULL, $check = TRUE )
 	{
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'id'       => NULL,
 			'fields'   => NULL,
 			'excludes' => NULL,
@@ -997,8 +958,7 @@ class Template extends WordPress\Main
 					if ( ! $terms = WordPress\Taxonomy::getTheTermList( $key, $post ) )
 						continue;
 
-					if ( is_null( $title ) )
-						$title = Services\CustomTaxonomy::getLabel( $key, 'singular_name' );
+					$title = $title ?? Services\CustomTaxonomy::getLabel( $key, 'singular_name' );
 
 					$rows[$title] = WordPress\Strings::getJoined( $terms );
 				}
@@ -1007,9 +967,7 @@ class Template extends WordPress\Main
 			}
 
 			$field = $fields[$key];
-
-			if ( is_null( $title ) )
-				$title = $field['title'];
+			$title = $title ?? $field['title'];
 
 			if ( 'term' == $field['type'] )
 				$meta = self::metaTermField( [
@@ -1034,8 +992,7 @@ class Template extends WordPress\Main
 		if ( empty( $rows ) )
 			return $args['default'];
 
-		if ( is_null( $args['render'] ) )
-			$args['render'] = [ __CLASS__, 'metaSummary__render_callback' ];
+		$args['render'] = $args['render'] ?? [ __CLASS__, 'metaSummary__render_callback' ];
 
 		$callback_args = [
 			$rows,
@@ -1162,10 +1119,8 @@ class Template extends WordPress\Main
 	// @EXAMPLE: https://dastan.ourmag.ir/archives/issues/
 	public static function getSpanTiles( $atts = [], $module = NULL )
 	{
-		$html = '';
-
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
+		$html   = '';
+		$module = $module ?? static::MODULE;
 
 		$args = self::atts( [
 			'taxonomy' => NULL,
@@ -1219,10 +1174,8 @@ class Template extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return;
 
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'heading'     => '3',     // heading level or `FALSE` to disable
 			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
@@ -1282,10 +1235,8 @@ class Template extends WordPress\Main
 		if ( ! WordPress\Taxonomy::hierarchical( $term->taxonomy ) )
 			return;
 
-		if ( is_null( $module ) && static::MODULE )
-			$module = static::MODULE;
-
-		$args = self::atts( [
+		$module = $module ?? static::MODULE;
+		$args   = self::atts( [
 			'hide_empty' => TRUE,
 			'context'    => NULL,
 			'before'     => '',

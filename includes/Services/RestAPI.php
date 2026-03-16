@@ -29,15 +29,14 @@ class RestAPI extends gEditorial\Service
 			'attachment',
 			'inbound_message',
 			'amp_validated_url',
-			'guest-author',      // Co-Authors Plus
+			'guest-author',      // `Co-Authors Plus`
 			'bp-email',
 			'wp_block',
 			'shop_order',        // WooCommerce
 			'shop_coupon',       // WooCommerce
 		];
 
-		if ( is_null( $posttypes ) )
-			$posttypes = get_post_types( [ 'show_in_rest' => TRUE ] );
+		$posttypes = $posttypes ?? get_post_types( [ 'show_in_rest' => TRUE ] );
 
 		return apply_filters( static::BASE.'_restapi_supported_posttypes',
 			array_diff_key( $posttypes, array_flip( $excluded ) ),

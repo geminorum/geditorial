@@ -420,7 +420,7 @@ class Lingo extends gEditorial\Module
 							if ( ! $update )
 								continue;
 
-							$existing =  [
+							$existing = [
 								'slug' => strtolower( $rawdata[$code]['en_name'] ),
 								// 'name' => empty( $rawdata[$code][$name_key] ) // NOTE: avoid overriding the name
 								// 	? $rawdata[$code]['en_name']
@@ -437,7 +437,7 @@ class Lingo extends gEditorial\Module
 
 						} else {
 
-							$terms[] =  [
+							$terms[] = [
 								'slug' => strtolower( $rawdata[$code]['en_name'] ),
 								'name' => empty( $rawdata[$code][$name_key] )
 									? $rawdata[$code]['en_name']

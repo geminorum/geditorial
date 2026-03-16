@@ -17,7 +17,7 @@ trait PairedImports
 	 * TODO: migrate to `Services\HeaderButtons::register()`
 	 *
 	 * @param string $posttype
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function pairedimports__hook_append_import_button( $posttype )
 	{

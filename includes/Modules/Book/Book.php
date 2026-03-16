@@ -46,6 +46,7 @@ class Book extends gEditorial\Module
 				'has-widgets',
 				'pairedmodule',
 				'cptmodule',
+				'p2p',
 			],
 		];
 	}

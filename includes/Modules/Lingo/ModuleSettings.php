@@ -163,7 +163,7 @@ class ModuleSettings extends gEditorial\Settings
 			$lang = $row->_code;
 
 		else if ( FALSE !== ( $code = array_search( $term->name, $args['extra']['en_names'], FALSE ) ) )
-			$lang =  $code;
+			$lang = $code;
 
 		else if ( FALSE !== ( $code = array_search( $term->name, $args['extra']['endonyms'], FALSE ) ) )
 			$lang = $code;

@@ -574,7 +574,7 @@ class Archives extends gEditorial\Module
 	// TODO: check cap and link button for the module settings page
 	public function taxonomy_tab_extra_content( $taxonomy, $object )
 	{
-		$link =  $this->get_taxonomy_archive_link( $taxonomy );
+		$link = $this->get_taxonomy_archive_link( $taxonomy );
 
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 

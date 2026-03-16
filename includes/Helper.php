@@ -220,14 +220,14 @@ class Helper extends WordPress\Main
 				'href'   => WordPress\Post::edit( $post->ID ),
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'title'  => $title_attr ?? _x( 'Edit', 'Helper: Row Action', 'geditorial' ),
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], $title ).$after;
 
 		if ( 'view' == $link && ! $edit && 'publish' != get_post_status( $post ) )
 			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
-				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
+				'title' => $title_attr ?? FALSE,
 				// 'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], $title ).$after;
 
@@ -236,7 +236,7 @@ class Helper extends WordPress\Main
 				'href'   => WordPress\Post::shortlink( $post->ID ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'title'  => $title_attr ?? _x( 'View', 'Helper: Row Action', 'geditorial' ),
 				'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 			], $title ).$after;
 
@@ -244,7 +244,7 @@ class Helper extends WordPress\Main
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
-			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
+			'title'  => $title_attr ?? FALSE,
 			'data'   => [ 'post' => $post->ID, 'type' => $post->post_type ],
 		], $title ).$after;
 	}
@@ -278,14 +278,14 @@ class Helper extends WordPress\Main
 				'href'   => $edit,
 				'class'  => '-link -row-link -row-link-edit',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'Edit', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'title'  => $title_attr ?? _x( 'Edit', 'Helper: Row Action', 'geditorial' ),
 				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
 			], Core\HTML::escape( $title ) ).$after;
 
 		if ( 'view' == $link && ! $edit && ! WordPress\Taxonomy::viewable( $term->taxonomy ) )
 			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
-				'title' => is_null( $title_attr ) ? FALSE : $title_attr,
+				'title' => $title_attr ?? FALSE,
 				// 'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
 			], Core\HTML::escape( $title ) ).$after;
 
@@ -294,7 +294,7 @@ class Helper extends WordPress\Main
 				'href'   => WordPress\Term::shortlink( $term->term_id ),
 				'class'  => '-link -row-link -row-link-view',
 				'target' => '_blank',
-				'title'  => is_null( $title_attr ) ? _x( 'View', 'Helper: Row Action', 'geditorial' ) : $title_attr,
+				'title'  => $title_attr ?? _x( 'View', 'Helper: Row Action', 'geditorial' ),
 				'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
 			], Core\HTML::escape( $title ) ).$after;
 
@@ -302,7 +302,7 @@ class Helper extends WordPress\Main
 			'href'   => $link,
 			'class'  => '-link -row-link -row-link-custom',
 			'target' => '_blank',
-			'title'  => is_null( $title_attr ) ? FALSE : $title_attr,
+			'title'  => $title_attr ?? FALSE,
 			'data'   => [ 'term' => $term->term_id, 'taxonomy' => $term->taxonomy ],
 		], Core\HTML::escape( $title ) ).$after;
 	}

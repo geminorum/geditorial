@@ -65,7 +65,7 @@ class Base64ImageUploader extends Core\Base
 	/**
 	 * Uploads the image.
 	 *
-	 * @return int $attachment_id
+	 * @return int
 	 */
 	public function upload()
 	{
@@ -74,7 +74,7 @@ class Base64ImageUploader extends Core\Base
 
 		$upload_dir      = wp_upload_dir();
 		$upload_path     = str_replace( '/', DIRECTORY_SEPARATOR, $upload_dir['path'] ).DIRECTORY_SEPARATOR;
-		$decoded         = base64_decode($this->strippedData());
+		$decoded         = base64_decode( $this->strippedData() );
 		$filename        = 'upload.'.$this->extension;
 		$hashed_filename = md5( $filename.microtime() ).'_'.$filename;
 		$image_upload    = file_put_contents( $upload_path.$hashed_filename, $decoded );
@@ -104,7 +104,7 @@ class Base64ImageUploader extends Core\Base
 			'post_title'     => preg_replace('/\.[^.]+$/', '', basename( $filename ) ),
 			'post_content'   => '',
 			'post_status'    => 'inherit',
-			'guid'           => $upload_dir['url'].'/'.basename($filename)
+			'guid'           => $upload_dir['url'].'/'.basename( $filename )
 		];
 
 		$attach_id = wp_insert_attachment( $attachment, $filename, 289 );
@@ -147,7 +147,7 @@ class Base64ImageUploader extends Core\Base
 	public function findTypeAndExtension()
 	{
 		foreach ( $this->types as $type => $extension )
-			if ( $this->isOfType($type ) )
+			if ( $this->isOfType( $type ) )
 				return compact( 'type', 'extension' );
 
 		return [

@@ -56,7 +56,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $field_key
 	 * @param string $module
 	 * @param bool $check
-	 * @return string $meta_key
+	 * @return string
 	 */
 	public static function getPostMetaKey( $field_key, $module = 'meta', $check = TRUE )
 	{
@@ -95,7 +95,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $field_key
 	 * @param string $posttype
 	 * @param string $module
-	 * @return string $export_title
+	 * @return string
 	 */
 	public static function getExportTitle( $field_key, $posttype, $module = 'meta' )
 	{
@@ -114,7 +114,7 @@ class PostTypeFields extends gEditorial\Service
 	 *
 	 * @param string $field_key
 	 * @param string $module
-	 * @return array $supported
+	 * @return array
 	 */
 	public static function getSupported( $field_key, $module = 'meta' )
 	{
@@ -134,7 +134,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $module
 	 * @param array $filter
 	 * @param string $operator
-	 * @return array $enabled
+	 * @return array
 	 */
 	public static function getEnabled( $posttype, $module = 'meta', $filter = [], $operator = 'AND' )
 	{
@@ -157,7 +157,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $posttype
 	 * @param bool $sanitize
 	 * @param string $module
-	 * @return bool|int $post_id
+	 * @return bool|int
 	 */
 	public static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
 	{
@@ -297,8 +297,7 @@ class PostTypeFields extends gEditorial\Service
 		], $atts );
 
 		// NOTE: may come from post-type field argument
-		if ( is_null( $args['default'] ) )
-			$args['default'] = '';
+		$args['default'] = $args['default'] ?? '';
 
 		if ( empty( $field_key ) )
 			return $args['default'];
@@ -341,7 +340,7 @@ class PostTypeFields extends gEditorial\Service
 			$access = gEditorial()->module( $module )->access_posttype_field( $field, $post, $args['context'] );
 
 			if ( ! $access )
-				return is_null( $args['noaccess'] ) ? $args['default'] : $args['noaccess'];
+				return $args['noaccess'] ?? $args['default'];
 		}
 
 		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
@@ -404,6 +403,7 @@ class PostTypeFields extends gEditorial\Service
 
 		// NOTE: first priority: field key
 		switch ( $field_key ) {
+
 			case 'twitter'  : return Core\Third::htmlTwitterIntent( $raw ?: $value, TRUE );
 			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
 			case 'instagram': return Core\Third::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
@@ -414,21 +414,25 @@ class PostTypeFields extends gEditorial\Service
 
 			case 'items':
 			case 'total_items':
+
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'item' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'pages':
 			case 'total_pages':
+
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'page' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'volumes':
 			case 'total_volumes':
+
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'volume' ) ),
 					Core\Number::format( $raw ?: $value ) );
 
 			case 'discs':
 			case 'total_discs':
+
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'disc' ) ),
 					Core\Number::format( $raw ?: $value ) );
 		}
@@ -439,19 +443,23 @@ class PostTypeFields extends gEditorial\Service
 			switch ( $field['type'] ) {
 
 				case 'venue':
+
 					return Locations::prepVenue( $raw ?: $value );
 
 				case 'people':
+
 					return Individuals::prepPeople( $raw ?: $value );
 
 				case 'day':
 				case 'hour':
 				case 'member':
 				case 'person':
+
 					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( $field['type'] ) ),
 						Core\Number::format( $raw ?: $value ) );
 
 				case 'gram':
+
 					return sprintf(
 						/* translators: `%s`: number as gram */
 						_x( '%s g', 'Helper: Number as Gram', 'geditorial' ),
@@ -459,6 +467,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'kilogram':
+
 					return sprintf(
 						/* translators: `%s`: number as kilogram */
 						_x( '%s kg', 'Helper: Number as Kilogram', 'geditorial' ),
@@ -466,6 +475,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'millimetre':
+
 					return sprintf(
 						/* translators: `%s`: number as millimetre */
 						_x( '%s mm', 'Helper: Number as Millimetre', 'geditorial' ),
@@ -473,6 +483,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'centimetre':
+
 					return sprintf(
 						/* translators: `%s`: number as centimetre */
 						_x( '%s cm', 'Helper: Number as Centimetre', 'geditorial' ),
@@ -480,6 +491,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'km_per_hour':
+
 					return sprintf(
 						/* translators: `%s`: number as kilometres per hour */
 						_x( '%s kpm', 'Helper: Number as Kilometres per Hour', 'geditorial' ),
@@ -487,6 +499,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'identity':
+
 					return sprintf( '<span class="-identity %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
@@ -528,26 +541,32 @@ class PostTypeFields extends gEditorial\Service
 						);
 
 				case 'isbn':
+
 					// return gEditorial\Info::lookupISBN( $raw ?: $value );
 					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
 
 				case 'vin':
+
 					return gEditorial\Info::lookupVIN( $raw ?: $value );
 
 				case 'plate':
+
 					return sprintf( '<span class="-plate %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\Validation::isPlateNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
 
 				case 'address':
+
 					return Locations::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
 
 				case 'year':
+
 					return Core\Number::localize( $raw ?: $value );
 
 				case 'date':
+
 					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
 						gEditorial\Datetime::dateFormats( 'default' ),
@@ -555,6 +574,7 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'datetime':
+
 					return gEditorial\Datetime::prepForDisplay(
 						$raw ?: $value,
 						gEditorial\Datetime::isDateOnly( $raw ?: $value )
@@ -564,15 +584,19 @@ class PostTypeFields extends gEditorial\Service
 					);
 
 				case 'distance':
+
 					return Core\Distance::prep( $raw ?: $value, $field );
 
 				case 'duration':
+
 					return Core\Duration::prep( $raw ?: $value, $field );
 
 				case 'area':
+
 					return Core\Area::prep( $raw ?: $value, $field );
 
 				case 'contact_method':
+
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
 						: sprintf( '<span title="%s">@%s</span>',
@@ -581,21 +605,27 @@ class PostTypeFields extends gEditorial\Service
 						);
 
 				case 'email':
+
 					return Core\Email::prep( $raw ?: $value, $field, 'admin' );
 
 				case 'phone':
+
 					return Core\Phone::prep( $raw ?: $value, $field, 'admin' );
 
 				case 'mobile':
+
 					return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 
 				case 'embed':
+
 					return Core\HTML::link( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
 
 				case 'link':
+
 					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
 
 				case 'latlng':
+
 					return gEditorial\Info::lookupLatLng( $raw ?: $value );
 
 				case 'text_source':
@@ -603,6 +633,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'video_source':
 				case 'image_source':
 				case 'downloadable':
+
 					return Core\HTML::tag( 'a', [
 						'href'   => $raw ?: $value,
 						'title'  => Core\URL::getDomain( $raw ?: $value ),
@@ -613,6 +644,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'post':
 				case 'attachment':
 				case 'parent_post':
+
 					return gEditorial\Helper::getPostTitleRow( (int) $raw ?: $value );
 
 				// TODO
@@ -621,6 +653,7 @@ class PostTypeFields extends gEditorial\Service
 				// case 'term':
 
 				case 'user':
+
 					return gEditorial\Helper::getAuthorsEditRow(
 						(int) $raw ?: $value,
 						self::req( 'post_type', 'post' )
@@ -647,6 +680,7 @@ class PostTypeFields extends gEditorial\Service
 
 		// NOTE: fourth priority: general field
 		switch ( $field_key ) {
+
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
@@ -662,7 +696,7 @@ class PostTypeFields extends gEditorial\Service
 
 	public static function replaceTokens( $meta, $field, $post, $context = NULL )
 	{
-		// bail early if it has not have tokens!
+		// Do bail early if it has not have tokens!
 		if ( ! Core\Text::has( $meta, '{{' ) )
 			return $meta;
 

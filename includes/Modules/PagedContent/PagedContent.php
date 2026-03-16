@@ -344,19 +344,19 @@ class PagedContent extends gEditorial\Module
 
 			$link = get_permalink( $post_id );
 
-		} elseif ( is_home() || is_front_page() ) {
+		} else if ( is_home() || is_front_page() ) {
 
 			$link = home_url( '/' );
 
-		} elseif ( is_category() ) {
+		} else if ( is_category() ) {
 
 			$link = get_category_link( get_query_var( 'cat' ) );
 
-		} elseif ( is_tag() ) {
+		} else if ( is_tag() ) {
 
 			$link = get_tag_link( get_query_var( 'tag_id' ) );
 
-		} elseif ( is_tax() ) {
+		} else if ( is_tax() ) {
 
 			$queried_object = get_queried_object();
 

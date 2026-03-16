@@ -237,7 +237,8 @@ class ColorCalc extends Core\Base
 	 * @param string       $mode  Mode to be used.
 	 * @return ColorCalc (object)
 	 */
-	public static function new_color( $color, $mode = 'auto' ) {
+	public static function new_color( $color, $mode = 'auto' )
+	{
 		return self::newColor( $color, $mode );
 	}
 
@@ -258,45 +259,60 @@ class ColorCalc extends Core\Base
 	 * @param int|float|string $value      The new value.
 	 * @return ColorCalc|null
 	 */
-	public function getNew( $property = '', $value = '' ) {
+	public function getNew( $property = '', $value = '' )
+	{
+		if ( in_array( $property, [ 'red', 'green', 'blue', 'alpha' ], TRUE ) ) {
 
-		if ( in_array( $property, array( 'red', 'green', 'blue', 'alpha' ), true ) ) {
 			// Check if we're changing any of the rgba values.
 			$value = max( 0, min( 255, $value ) );
-			if ( 'red' === $property ) {
+
+			if ( 'red' === $property )
 				return self::new_color( 'rgba(' . $value . ',' . $this->green . ',' . $this->blue . ',' . $this->alpha . ')', 'rgba' );
-			} elseif ( 'green' === $property ) {
+
+			else if ( 'green' === $property )
 				return self::new_color( 'rgba(' . $this->red . ',' . $value . ',' . $this->blue . ',' . $this->alpha . ')', 'rgba' );
-			} elseif ( 'blue' === $property ) {
+
+			else if ( 'blue' === $property )
 				return self::new_color( 'rgba(' . $this->red . ',' . $this->green . ',' . $value . ',' . $this->alpha . ')', 'rgba' );
-			} elseif ( 'alpha' === $property ) {
+
+			else if ( 'alpha' === $property )
 				return self::new_color( 'rgba(' . $this->red . ',' . $this->green . ',' . $this->blue . ',' . $value . ')', 'rgba' );
-			}
-		} elseif ( in_array( $property, array( 'hue', 'saturation', 'lightness' ), true ) ) {
+
+		} else if ( in_array( $property, [ 'hue', 'saturation', 'lightness' ], true ) ) {
+
 			// Check if we're changing any of the hsl values.
 			$value = ( 'hue' === $property ) ? max( 0, min( 360, $value ) ) : max( 0, min( 100, $value ) );
 
-			if ( 'hue' === $property ) {
+			if ( 'hue' === $property )
 				return self::new_color( 'hsla(' . $value . ',' . $this->saturation . '%,' . $this->lightness . '%,' . $this->alpha . ')', 'hsla' );
-			} elseif ( 'saturation' === $property ) {
+
+			else if ( 'saturation' === $property )
 				return self::new_color( 'hsla(' . $this->hue . ',' . $value . '%,' . $this->lightness . '%,' . $this->alpha . ')', 'hsla' );
-			} elseif ( 'lightness' === $property ) {
+
+			else if ( 'lightness' === $property )
 				return self::new_color( 'hsla(' . $this->hue . ',' . $this->saturation . '%,' . $value . '%,' . $this->alpha . ')', 'hsla' );
-			}
-		} elseif ( 'brightness' === $property ) {
+
+		} else if ( 'brightness' === $property ) {
+
 			// Check if we're changing the brightness.
 			if ( $value < $this->brightness['total'] ) {
+
 				$red   = max( 0, min( 255, $this->red - ( $this->brightness['total'] - $value ) ) );
 				$green = max( 0, min( 255, $this->green - ( $this->brightness['total'] - $value ) ) );
 				$blue  = max( 0, min( 255, $this->blue - ( $this->brightness['total'] - $value ) ) );
-			} elseif ( $value > $this->brightness['total'] ) {
+
+			} else if ( $value > $this->brightness['total'] ) {
+
 				$red   = max( 0, min( 255, $this->red + ( $value - $this->brightness['total'] ) ) );
 				$green = max( 0, min( 255, $this->green + ( $value - $this->brightness['total'] ) ) );
 				$blue  = max( 0, min( 255, $this->blue + ( $value - $this->brightness['total'] ) ) );
+
 			} else {
+
 				// If it's not smaller and it's not greater, then it's equal.
 				return $this;
 			}
+
 			return self::new_color( 'rgba(' . $red . ',' . $green . ',' . $blue . ',' . $this->alpha . ')', 'rgba' );
 		}
 
@@ -333,34 +349,43 @@ class ColorCalc extends Core\Base
 	 * @param string|array $color The color we're querying.
 	 * @return string
 	 */
-	public function get_mode( $color ) {
-
+	public function get_mode( $color )
+	{
 		// Check if value is an array.
 		if ( is_array( $color ) ) {
+
 			// Does the array have an 'rgba' key?
 			if ( isset( $color['rgba'] ) ) {
+
 				$this->color = $color['rgba'];
 				return 'rgba';
-			} elseif ( isset( $color['color'] ) ) {
+
+			} else if ( isset( $color['color'] ) ) {
+
 				// Does the array have a 'color' key?
 				$this->color = $color['color'];
 				if ( is_string( $color['color'] ) && false !== strpos( $color['color'], 'rgba' ) ) {
 					return 'rgba';
 				}
+
 				return 'hex';
 			}
+
 			// Is this a simple array with 4 items?
 			if ( 4 === count( $color ) && isset( $color[0] ) && isset( $color[1] ) && isset( $color[2] ) && isset( $color[3] ) ) {
+
 				$this->color = 'rgba(' . intval( $color[0] ) . ',' . intval( $color[1] ) . ',' . intval( $color[2] ) . ',' . intval( $color[3] ) . ')';
 				return 'rgba';
-			} elseif ( 3 === count( $color ) && isset( $color[0] ) && isset( $color[1] ) && isset( $color[2] ) ) {
+
+			} else if ( 3 === count( $color ) && isset( $color[0] ) && isset( $color[1] ) && isset( $color[2] ) ) {
+
 				// Is this a simple array with 3 items?
 				$this->color = 'rgba(' . intval( $color[0] ) . ',' . intval( $color[1] ) . ',' . intval( $color[2] ) . ',1)';
 				return 'rgba';
 			}
 
 			// Check for other keys in the array and get values from there.
-			$finders_keepers = array(
+			$finders_keepers = [
 				'r'       => 'red',
 				'g'       => 'green',
 				'b'       => 'blue',
@@ -370,11 +395,13 @@ class ColorCalc extends Core\Base
 				'blue'    => 'blue',
 				'alpha'   => 'alpha',
 				'opacity' => 'alpha',
-			);
-			$found = false;
+			];
+
+			$found = FALSE;
+
 			foreach ( $finders_keepers as $finder => $keeper ) {
 				if ( isset( $color[ $finder ] ) ) {
-					$found = true;
+					$found = TRUE;
 					$this->$keeper = $color[ $finder ];
 				}
 			}
@@ -387,6 +414,7 @@ class ColorCalc extends Core\Base
 
 			// We did not fail, so use rgba values recovered above.
 			$this->color = 'rgba(' . $this->red . ',' . $this->green . ',' . $this->blue . ',' . $this->alpha . ')';
+
 			return 'rgba';
 		}
 
@@ -405,13 +433,14 @@ class ColorCalc extends Core\Base
 
 		// If we got this far, it's not an array.
 		// Check for key identifiers in the value.
-		$finders_keepers = array(
+		$finders_keepers = [
 			'#'    => 'hex',
 			'rgba' => 'rgba',
 			'rgb'  => 'rgb',
 			'hsla' => 'hsla',
 			'hsl'  => 'hsl',
-		);
+		];
+
 		foreach ( $finders_keepers as $finder => $keeper ) {
 			if ( false !== strrpos( $color, $finder ) ) {
 
@@ -441,15 +470,17 @@ class ColorCalc extends Core\Base
 	 * @param string $color The color we want to sanitize.
 	 * @return string
 	 */
-	protected function sanitize_hex_color( $color ) {
+	protected function sanitize_hex_color( $color )
+	{
 		$color = '#' . ltrim( $color, '#' );
-		if ( '#' === $color ) {
+
+		if ( '#' === $color )
 			return '';
-		}
+
 		// 3 or 6 hex digits, or the empty string.
-		if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
+		if ( preg_match('|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) )
 			return $color;
-		}
+
 		return '';
 	}
 
@@ -460,13 +491,14 @@ class ColorCalc extends Core\Base
 	 * @since 1.0.0
 	 * @return void
 	 */
-	protected function from_hex() {
-
+	protected function from_hex()
+	{
 		// Is this perhaps a word-color?
 		$word_colors = $this->get_word_colors();
-		if ( array_key_exists( $this->color, $word_colors ) ) {
+
+		if ( array_key_exists( $this->color, $word_colors ) )
 			$this->color = '#' . $word_colors[ $this->color ];
-		}
+
 		// Sanitize color.
 		$this->hex = $this->sanitize_hex_color( $this->color );
 		$hex = ltrim( $this->hex, '#' );
@@ -476,6 +508,7 @@ class ColorCalc extends Core\Base
 			$this->from_fallback();
 			return;
 		}
+
 		// Make sure we have 6 digits for the below calculations.
 		if ( 3 === strlen( $hex ) ) {
 			$hex = ltrim( $this->hex, '#' );
@@ -491,7 +524,6 @@ class ColorCalc extends Core\Base
 		$this->set_brightness();
 		$this->set_hsl();
 		$this->set_luminance();
-
 	}
 
 	/**
@@ -501,8 +533,9 @@ class ColorCalc extends Core\Base
 	 * @since 1.0.0
 	 * @return void
 	 */
-	protected function from_rgb() {
-		$value = explode( ',', str_replace( array( ' ', 'rgb', '(', ')' ), '', $this->color ) );
+	protected function from_rgb()
+	{
+		$value = explode( ',', str_replace( [ ' ', 'rgb', '(', ')' ], '', $this->color ) );
 		// Set red, green, blue.
 		$this->red   = ( isset( $value[0] ) ) ? intval( $value[0] ) : 255;
 		$this->green = ( isset( $value[1] ) ) ? intval( $value[1] ) : 255;
@@ -517,15 +550,16 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Starts with an RGBA color and calculates all other properties.
+	 * Starts with an `RGBA` color and calculates all other properties.
 	 *
 	 * @access protected
 	 * @since 1.0.0
 	 * @return void
 	 */
-	protected function from_rgba() {
+	protected function from_rgba()
+	{
 		// Set r, g, b, a properties.
-		$value = explode( ',', str_replace( array( ' ', 'rgba', '(', ')' ), '', $this->color ) );
+		$value = explode( ',', str_replace( [ ' ', 'rgba', '(', ')' ], '', $this->color ) );
 		$this->red   = ( isset( $value[0] ) ) ? intval( $value[0] ) : 255;
 		$this->green = ( isset( $value[1] ) ) ? intval( $value[1] ) : 255;
 		$this->blue  = ( isset( $value[2] ) ) ? intval( $value[2] ) : 255;
@@ -545,14 +579,15 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Starts with an HSL color and calculates all other properties.
+	 * Starts with an `HSL` color and calculates all other properties.
 	 *
 	 * @access protected
 	 * @since 1.0.0
 	 * @return void
 	 */
-	protected function from_hsl() {
-		$value = explode( ',', str_replace( array( ' ', 'hsl', '(', ')', '%' ), '', $this->color ) );
+	protected function from_hsl()
+	{
+		$value = explode( ',', str_replace( [ ' ', 'hsl', '(', ')', '%' ], '', $this->color ) );
 		$this->hue        = $value[0];
 		$this->saturation = $value[1];
 		$this->lightness  = $value[2];
@@ -560,14 +595,15 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Starts with an HSLA color and calculates all other properties.
+	 * Starts with an `HSLA` color and calculates all other properties.
 	 *
 	 * @access protected
 	 * @since 1.0.0
 	 * @return void
 	 */
-	protected function from_hsla() {
-		$value = explode( ',', str_replace( array( ' ', 'hsla', '(', ')', '%' ), '', $this->color ) );
+	protected function from_hsla()
+	{
+		$value = explode( ',', str_replace( [ ' ', 'hsla', '(', ')', '%' ], '', $this->color ) );
 		$this->hue        = $value[0];
 		$this->saturation = $value[1];
 		$this->lightness  = $value[2];
@@ -576,7 +612,7 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Generates the HEX value of a color given values for $red, $green, $blue.
+	 * Generates the `HEX` value of a color given values for $red, $green, $blue.
 	 *
 	 * @access protected
 	 * @since 1.0.0
@@ -585,7 +621,8 @@ class ColorCalc extends Core\Base
 	 * @param int|string $blue  The blue value of this color.
 	 * @return string
 	 */
-	protected function rgb_to_hex( $red, $green, $blue ) {
+	protected function rgb_to_hex( $red, $green, $blue )
+	{
 		// Get hex values properly formatted.
 		$hex_red   = $this->dexhex_double_digit( $red );
 		$hex_green = $this->dexhex_double_digit( $green );
@@ -601,7 +638,8 @@ class ColorCalc extends Core\Base
 	 * @param int|string $value The value to convert.
 	 * @return string
 	 */
-	protected function dexhex_double_digit( $value ) {
+	protected function dexhex_double_digit( $value )
+	{
 		$value = dechex( $value );
 		if ( 1 === strlen( $value ) ) {
 			$value = '0' . $value;
@@ -610,13 +648,14 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Calculates the red, green, blue values of an HSL color.
+	 * Calculates the red, green, blue values of an `HSL` color.
 	 *
 	 * @access protected
 	 * @since 1.0.0
 	 * @see https://gist.github.com/brandonheyer/5254516
 	 */
-	protected function from_hsl_array() {
+	protected function from_hsl_array()
+	{
 		$h = $this->hue / 360;
 		$s = $this->saturation / 100;
 		$l = $this->lightness / 100;
@@ -683,8 +722,8 @@ class ColorCalc extends Core\Base
 	 * @param string $mode The mode we're using.
 	 * @return string
 	 */
-	public function toCSS( $mode = 'hex' ) {
-
+	public function toCSS( $mode = 'hex' )
+	{
 		$value = '';
 
 		switch ( $mode ) {
@@ -708,24 +747,26 @@ class ColorCalc extends Core\Base
 	}
 
 	/**
-	 * Alias for the toCSS method.
+	 * Alias for the `toCSS` method.
 	 *
 	 * @access public
 	 * @since 1.1
 	 * @param string $mode The mode we're using.
 	 * @return string
 	 */
-	public function to_css( $mode = 'hex' ) {
+	public function to_css( $mode = 'hex' )
+	{
 		return $this->toCSS( $mode );
 	}
 
 	/**
-	 * Sets the HSL values of a color based on the values of red, green, blue.
+	 * Sets the `HSL` values of a color based on the values of red, green, blue.
 	 *
 	 * @access public
 	 * @since 1.0.0
 	 */
-	protected function set_hsl() {
+	protected function set_hsl()
+	{
 		$red   = $this->red / 255;
 		$green = $this->green / 255;
 		$blue  = $this->blue / 255;
@@ -767,13 +808,14 @@ class ColorCalc extends Core\Base
 	 * @access protected
 	 * @since 1.0.0
 	 */
-	protected function set_brightness() {
-		$this->brightness = array(
+	protected function set_brightness()
+	{
+		$this->brightness = [
 			'red'   => round( $this->red * .299 ),
 			'green' => round( $this->green * .587 ),
 			'blue'  => round( $this->blue * .114 ),
 			'total' => intval( ( $this->red * .299 ) + ( $this->green * .587 ) + ( $this->blue * .114 ) ),
-		);
+		];
 	}
 
 	/**
@@ -782,7 +824,8 @@ class ColorCalc extends Core\Base
 	 * @access protected
 	 * @since 1.0.0
 	 */
-	protected function set_luminance() {
+	protected function set_luminance()
+	{
 		$lum = ( 0.2126 * $this->red ) + ( 0.7152 * $this->green ) + ( 0.0722 * $this->blue );
 		$this->luminance = round( $lum );
 	}
@@ -794,8 +837,9 @@ class ColorCalc extends Core\Base
 	 * @since 1.0.0
 	 * @return array
 	 */
-	protected function get_word_colors() {
-		return array(
+	protected function get_word_colors()
+	{
+		return [
 			'aliceblue'            => 'F0F8FF',
 			'antiquewhite'         => 'FAEBD7',
 			'aqua'                 => '00FFFF',
@@ -943,8 +987,7 @@ class ColorCalc extends Core\Base
 			'whitesmoke'           => 'F5F5F5',
 			'yellow'               => 'FFFF00',
 			'yellowgreen'          => '9ACD32',
-		);
-
+		];
 	}
 
 	/**
@@ -953,12 +996,13 @@ class ColorCalc extends Core\Base
 	 * @access protected
 	 * @since 1.2.0
 	 */
-	protected function from_fallback() {
+	protected function from_fallback()
+	{
 		$this->color = $this->fallback;
 
-		if ( ! $this->fallback_obj ) {
+		if ( ! $this->fallback_obj )
 			$this->fallback_obj = self::newColor( $this->fallback );
-		}
+
 		$this->color      = $this->fallback_obj->color;
 		$this->mode       = $this->fallback_obj->mode;
 		$this->red        = $this->fallback_obj->red;
@@ -996,15 +1040,16 @@ class ColorCalc extends Core\Base
 	 * @static
 	 * @access public
 	 * @since 1.1.0
-	 * @param string $name      The method name.
-	 * @param mixed  $arguments The method arguments.
+	 * @param string $name
+	 * @param mixed $arguments
 	 * @return mixed
 	 */
-	public static function __callStatic( $name, $arguments ) {
-		if ( method_exists( __CLASS__, $name ) ) {
-			call_user_func( array( __CLASS__, $name ), $arguments );
-		} else {
+	public static function __callStatic( $name, $arguments )
+	{
+		if ( method_exists( __CLASS__, $name ) )
+			call_user_func( [ __CLASS__, $name ], $arguments );
+
+		else
 			return $arguments;
-		}
 	}
 }

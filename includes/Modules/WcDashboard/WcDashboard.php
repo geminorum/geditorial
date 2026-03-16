@@ -95,7 +95,7 @@ class WcDashboard extends gEditorial\Module
 	private function _default_main_message()
 	{
 		return sprintf(
-			/* translators: `%1$s`: user display name, `%2$s`: logout url */
+			/* translators: `%1$s`: user display name, `%2$s`: log out URL */
 			_x( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'Setting Default', 'geditorial-wc-dashboard' ),
 			'{{display_name}}',
 			'{{logout_url}}'
@@ -150,7 +150,7 @@ class WcDashboard extends gEditorial\Module
 
 		$user_id = get_current_user_id();
 
-		// This SQL query allows to get all the products purchased by the
+		// This SQL query allows getting all the products purchased by the
 		// current user in this example we sort products by date but you
 		// can reorder them another way.
 		$ids = $wpdb->get_col( $wpdb->prepare( "
@@ -192,6 +192,7 @@ class WcDashboard extends gEditorial\Module
 			woocommerce_product_loop_end();
 			woocommerce_reset_loop();
 			wp_reset_postdata();
+
 			echo '</div>';
 
 		} else {

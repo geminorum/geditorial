@@ -17,7 +17,7 @@ trait CoreAdmin
 	 * @param string $posttype
 	 * @param string $orderby
 	 * @param string $order
-	 * @return bool $hooked
+	 * @return bool
 	 */
 	protected function coreadmin__hook_admin_ordering( $posttype, $orderby = 'menu_order', $order = 'DESC' )
 	{

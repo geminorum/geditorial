@@ -246,7 +246,7 @@ class Yearly extends gEditorial\Module
 	 * @source https://gist.github.com/wpscholar/ef8fe292b469f59aa9dde644b960c690
 	 *
 	 * @param array $clauses The list of clauses for the query.
-	 * @param WP_Query $query The WP_Query instance.
+	 * @param \WP_Query $query The WP_Query instance.
 	 * @return array Modified clauses.
 	 */
 	public function posts_clauses_orderbyname( array $clauses, \WP_Query $query )
