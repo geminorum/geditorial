@@ -667,8 +667,8 @@ class Arraay extends Base
 	 * @see https://github.com/symfony/polyfill-php81/tree/main
 	 * @see https://php.watch/versions/8.1/array_is_list
 	 *
-	 * @param array $array The array being evaluated.
-	 * @return bool $list `TRUE` if array is a list, `FALSE` otherwise.
+	 * @param array $array
+	 * @return bool
 	 */
 	public static function isList( $array )
 	{
@@ -797,9 +797,9 @@ class Arraay extends Base
 	 *
 	 * @source https://stackoverflow.com/a/36435888
 	 *
-	 * @param  array $array
-	 * @param  array $map
-	 * @return array $array
+	 * @param array $array
+	 * @param array $map
+	 * @return array
 	 */
 	public static function reKeyByMap_ALT( $array, $map )
 	{
@@ -814,9 +814,9 @@ class Arraay extends Base
 	/**
 	 * Replaces keys in an array based on another mapping array.
 	 *
-	 * @param  array $array
-	 * @param  array $map
-	 * @return array $array
+	 * @param array $array
+	 * @param array $map
+	 * @return array
 	 */
 	public static function reKeyByMap( $array, $map )
 	{
@@ -1118,8 +1118,8 @@ class Arraay extends Base
 	 * Checks whether all array values are strings or not.
 	 * @source https://www.w3resource.com/php-exercises/php-array-exercise-46.php
 	 *
-	 * @param  array $array
-	 * @return bool $is_string
+	 * @param array $array
+	 * @return bool
 	 */
 	public static function allStringValues( $array )
 	{
@@ -1356,7 +1356,7 @@ class Arraay extends Base
 			return array_find_key( $array, $callback );
 
 		foreach ( $array as $key => $value )
-			if ( $callback($value, $key ) )
+			if ( $callback( $value, $key ) )
 				return $key;
 
 		return NULL;
@@ -1394,7 +1394,7 @@ class Arraay extends Base
 		$keys   = array_keys( $array );
 		$values = [];
 
-		foreach( $keys as $key )
+		foreach ( $keys as $key )
 			$values[] = $array[$key];
 
 		return [
@@ -1419,10 +1419,10 @@ class Arraay extends Base
 		if ( empty( $input ) || empty( $ordered_keys ) )
 			return $values;
 
-		foreach( $ordered_keys as $ordered_key )
+		foreach ( $ordered_keys as $ordered_key )
 			if ( array_key_exists( $ordered_key, $input ) )
-        		$values[] = $input[$ordered_key];
+				$values[] = $input[$ordered_key];
 
-    	return $values;
+		return $values;
 	}
 }

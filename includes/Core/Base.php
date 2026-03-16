@@ -641,8 +641,8 @@ class Base
 	 * NOTE: There isn't a built-in function!
 	 * @source https://stackoverflow.com/a/26549027
 	 *
-	 * @param  mixed $x
-	 * @param  mixed $y
+	 * @param mixed $x
+	 * @param mixed $y
 	 * @return void
 	 */
 	public static function swap( &$x, &$y )

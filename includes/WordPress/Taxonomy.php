@@ -1001,11 +1001,11 @@ class Taxonomy extends Core\Base
 			if ( ! empty( $taxonomy ) ) {
 
 				// phpcs:ignore WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
-				return $wpdb->get_row( $wpdb->prepare( $tax_select.$where. ' AND tt.taxonomy = %s', $term, $taxonomy ), ARRAY_A );
+				return $wpdb->get_row( $wpdb->prepare( $tax_select.$where.' AND tt.taxonomy = %s', $term, $taxonomy ), ARRAY_A );
 
 			} else {
 
-				return $wpdb->get_var( $wpdb->prepare( $select . $where, $term ) );
+				return $wpdb->get_var( $wpdb->prepare( $select.$where, $term ) );
 			}
 		}
 

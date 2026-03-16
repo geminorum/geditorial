@@ -27,7 +27,7 @@ class Plugin extends Core\Base
 		return $instance;
 	}
 
-	protected function setup( $dir, $url, $file, $ver )
+	protected function setup( $dir, $url, $file, $ver, $hash )
 	{
 		$this->__dir  = $dir  ?? '';
 		$this->__url  = $url  ?? '';

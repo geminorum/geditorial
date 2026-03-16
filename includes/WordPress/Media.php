@@ -295,7 +295,7 @@ class Media extends Core\Base
 		$extensions = apply_filters( 'image_sideload_extensions', [ 'jpg', 'jpeg', 'jpe', 'png', 'gif', 'webp', 'avif' ], $url );
 
 		// Sets variables for storage, fix file filename for query strings.
-		preg_match( '/[^\?]+\.(' . implode( '|', array_map( 'preg_quote', $extensions ) ) . ')\b/i', $url, $matches );
+		preg_match( '/[^\?]+\.('.implode( '|', array_map( 'preg_quote', $extensions ) ).')\b/i', $url, $matches );
 
 		if ( ! $matches )
 			return FALSE; // `new \WP_Error( 'image_sideload_failed', __( 'Invalid image URL.' ) );`
@@ -485,7 +485,7 @@ class Media extends Core\Base
 		$upload = self::upload();
 
 		// Is URL in uploads directory?
-		if ( FALSE === strpos( $url, $upload['baseurl'] . '/' ) )
+		if ( FALSE === strpos( $url, $upload['baseurl'].'/' ) )
 			return 0;
 
 		$file  = Core\File::basename( $url );
