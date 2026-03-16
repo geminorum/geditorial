@@ -78,7 +78,7 @@ class WalkerCategoryChecklist extends \Walker_Category_Checklist
 			if ( in_array( $term->term_id, $selected ) ) {
 				$inner_class.= ' selected -selected';
 				$aria_checked = 'true';
-				// $icon_after   = HTML::getDashicon( 'yes' ); // working but no need
+				// $icon_after   = Core\HTML::getDashicon( 'yes' ); // working but no need
 			}
 
 			$output.= '<li'.$class.'>'

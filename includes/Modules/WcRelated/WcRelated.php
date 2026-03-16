@@ -99,8 +99,8 @@ class WcRelated extends gEditorial\Module
 			],
 			'_misc' => [
 				'tabs_support' => [ _x( 'Displays Upsells and Related products on front-end product tabs.', 'Setting Description', 'geditorial-wc-related' ), FALSE ],
-				'tab_title'    => [ NULL , _x( 'Related Products', 'Setting Default', 'geditorial-wc-related' ) ],
-				'tab_priority' => [ NULL , 25 ],
+				'tab_title'    => [ NULL, _x( 'Related Products', 'Setting Default', 'geditorial-wc-related' ) ],
+				'tab_priority' => [ NULL, 25 ],
 			],
 		];
 	}

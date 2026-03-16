@@ -38,7 +38,7 @@ class WcConnected extends gEditorial\Module
 			'posttypes_option' => 'posttypes_option',
 			'_frontend' => [
 				'tabs_support' => [ _x( 'Displays connected posts on front-end product tabs.', 'Setting Description', 'geditorial-wc-connected' ) ],
-				'tab_title'    => [ NULL , _x( 'Related Posts', 'Setting Default', 'geditorial-wc-connected' ) ],
+				'tab_title'    => [ NULL, _x( 'Related Posts', 'Setting Default', 'geditorial-wc-connected' ) ],
 				'tab_priority' => [ NULL, 60 ],
 			],
 			'_supports' => [

@@ -36,7 +36,7 @@ class Locations extends gEditorial\Service
 			return $fallback;
 
 		$data = trim( $data, '.-|…' );
-		$data = str_ireplace( [ '_', '|', '–', '—'  ], '-', $data );
+		$data = str_ireplace( [ '_', '|', '–', '—' ], '-', $data );
 		$data = sprintf( ' %s ', $data ); // padding with space
 
 		if ( self::isParserAvailable() )

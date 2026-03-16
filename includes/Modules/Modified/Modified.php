@@ -25,7 +25,7 @@ class Modified extends gEditorial\Module
 			'icon'     => 'update',
 			'access'   => 'beta',
 			'keywords' => [
-				'shortcodemodule',
+				'shortcode-module',
 			],
 		];
 	}

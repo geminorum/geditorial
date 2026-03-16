@@ -22,7 +22,7 @@ class Alphabet extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'stable',
 			'keywords' => [
-				'shortcodemodule',
+				'shortcode-module',
 			],
 		];
 	}

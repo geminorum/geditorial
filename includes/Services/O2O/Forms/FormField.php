@@ -208,7 +208,7 @@ abstract class FormField implements FormFieldInterface
 		if ( empty( $desc ) )
 			return $input;
 
-		return Core\HTML::tag( 'label', self::add_desc( $input, $desc, $desc_pos ) ) . "\n";
+		return Core\HTML::tag( 'label', self::add_desc( $input, $desc, $desc_pos ) )."\n";
 	}
 
 	/**
@@ -225,9 +225,9 @@ abstract class FormField implements FormFieldInterface
 			return $input;
 
 		if ( 'before' == $desc_pos ) {
-			return $desc . ' ' . $input;
+			return $desc.' '.$input;
 		} else {
-			return $input . ' ' . $desc;
+			return $input.' '.$desc;
 		}
 	}
 

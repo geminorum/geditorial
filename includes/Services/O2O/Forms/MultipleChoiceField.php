@@ -40,7 +40,7 @@ class MultipleChoiceField extends FormField
 		foreach ( $args['choices'] as $value => $title ) {
 
 			$single_input = FormField::_checkbox( [
-				'name'     => $args['name'] . '[]',
+				'name'     => $args['name'].'[]',
 				'type'     => 'checkbox',
 				'value'    => $value,
 				'checked'  => in_array( $value, $args['checked'] ),

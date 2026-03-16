@@ -51,7 +51,8 @@ class ModuleQuery extends \WP_Query
 	public function posts_join( $sql )
 	{
 		global $wpdb;
-		return $sql . "
+
+		return $sql."
 			INNER JOIN {$wpdb->term_relationships} ON ( {$wpdb->posts}.ID = $wpdb->term_relationships.object_id )
 			INNER JOIN {$wpdb->term_taxonomy} ON ( {$wpdb->term_relationships}.term_taxonomy_id = {$wpdb->term_taxonomy}.term_taxonomy_id )
 			INNER JOIN {$wpdb->terms} ON ( {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id )

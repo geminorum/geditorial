@@ -186,7 +186,7 @@ class ColorCalc extends Core\Base
 			$this->fallback_obj = self::newColor( $this->fallback );
 		}
 
-		if ( ! method_exists( $this, 'from_' . $mode ) ) {
+		if ( ! method_exists( $this, 'from_'.$mode ) ) {
 			$mode = $this->get_mode( $color );
 		}
 
@@ -197,7 +197,8 @@ class ColorCalc extends Core\Base
 		}
 
 		$this->mode = $mode;
-		$method = 'from_' . $mode;
+		$method = 'from_'.$mode;
+
 		// Call the from_{$color_mode} method.
 		$this->$method();
 	}
@@ -212,19 +213,22 @@ class ColorCalc extends Core\Base
 	 * @access public
 	 * @since 1.0.0
 	 * @param string|array $color The color.
-	 * @param string       $mode  Mode to be used.
+	 * @param string $mode Mode to be used.
 	 * @return ColorCalc (object)
 	 */
 	public static function newColor( $color, $mode = 'auto' )
 	{
+		$hash = md5(
+			is_array( $color )
+				? ( json_encode( $color ).$mode )
+				: ( $color.$mode )
+		);
 
-		// Get an md5 for this color.
-		$color_md5 = ( is_array( $color ) ) ? md5( json_encode( $color ) . $mode ) : md5( $color . $mode );
 		// Set the instance if it does not already exist.
-		if ( ! isset( self::$instances[ $color_md5 ] ) ) {
-			self::$instances[ $color_md5 ] = new self( $color, $mode );
-		}
-		return self::$instances[ $color_md5 ];
+		if ( ! isset( self::$instances[$hash] ) )
+			self::$instances[$hash] = new self( $color, $mode );
+
+		return self::$instances[$hash];
 	}
 
 	/**
@@ -267,16 +271,16 @@ class ColorCalc extends Core\Base
 			$value = max( 0, min( 255, $value ) );
 
 			if ( 'red' === $property )
-				return self::new_color( 'rgba(' . $value . ',' . $this->green . ',' . $this->blue . ',' . $this->alpha . ')', 'rgba' );
+				return self::new_color( 'rgba('.$value.','.$this->green.','.$this->blue.','.$this->alpha.')', 'rgba' );
 
 			else if ( 'green' === $property )
-				return self::new_color( 'rgba(' . $this->red . ',' . $value . ',' . $this->blue . ',' . $this->alpha . ')', 'rgba' );
+				return self::new_color( 'rgba('.$this->red.','.$value.','.$this->blue.','.$this->alpha.')', 'rgba' );
 
 			else if ( 'blue' === $property )
-				return self::new_color( 'rgba(' . $this->red . ',' . $this->green . ',' . $value . ',' . $this->alpha . ')', 'rgba' );
+				return self::new_color( 'rgba('.$this->red.','.$this->green.','.$value.','.$this->alpha.')', 'rgba' );
 
 			else if ( 'alpha' === $property )
-				return self::new_color( 'rgba(' . $this->red . ',' . $this->green . ',' . $this->blue . ',' . $value . ')', 'rgba' );
+				return self::new_color( 'rgba('.$this->red.','.$this->green.','.$this->blue.','.$value.')', 'rgba' );
 
 		} else if ( in_array( $property, [ 'hue', 'saturation', 'lightness' ], true ) ) {
 
@@ -284,13 +288,13 @@ class ColorCalc extends Core\Base
 			$value = ( 'hue' === $property ) ? max( 0, min( 360, $value ) ) : max( 0, min( 100, $value ) );
 
 			if ( 'hue' === $property )
-				return self::new_color( 'hsla(' . $value . ',' . $this->saturation . '%,' . $this->lightness . '%,' . $this->alpha . ')', 'hsla' );
+				return self::new_color( 'hsla('.$value.','.$this->saturation.'%,'.$this->lightness.'%,'.$this->alpha.')', 'hsla' );
 
 			else if ( 'saturation' === $property )
-				return self::new_color( 'hsla(' . $this->hue . ',' . $value . '%,' . $this->lightness . '%,' . $this->alpha . ')', 'hsla' );
+				return self::new_color( 'hsla('.$this->hue.','.$value.'%,'.$this->lightness.'%,'.$this->alpha.')', 'hsla' );
 
 			else if ( 'lightness' === $property )
-				return self::new_color( 'hsla(' . $this->hue . ',' . $this->saturation . '%,' . $value . '%,' . $this->alpha . ')', 'hsla' );
+				return self::new_color( 'hsla('.$this->hue.','.$this->saturation.'%,'.$value.'%,'.$this->alpha.')', 'hsla' );
 
 		} else if ( 'brightness' === $property ) {
 
@@ -313,7 +317,7 @@ class ColorCalc extends Core\Base
 				return $this;
 			}
 
-			return self::new_color( 'rgba(' . $red . ',' . $green . ',' . $blue . ',' . $this->alpha . ')', 'rgba' );
+			return self::new_color( 'rgba('.$red.','.$green.','.$blue.','.$this->alpha.')', 'rgba' );
 		}
 
 		return NULL;
@@ -374,13 +378,13 @@ class ColorCalc extends Core\Base
 			// Is this a simple array with 4 items?
 			if ( 4 === count( $color ) && isset( $color[0] ) && isset( $color[1] ) && isset( $color[2] ) && isset( $color[3] ) ) {
 
-				$this->color = 'rgba(' . intval( $color[0] ) . ',' . intval( $color[1] ) . ',' . intval( $color[2] ) . ',' . intval( $color[3] ) . ')';
+				$this->color = 'rgba('.intval( $color[0] ).','.intval( $color[1] ).','.intval( $color[2] ).','.intval( $color[3] ).')';
 				return 'rgba';
 
 			} else if ( 3 === count( $color ) && isset( $color[0] ) && isset( $color[1] ) && isset( $color[2] ) ) {
 
 				// Is this a simple array with 3 items?
-				$this->color = 'rgba(' . intval( $color[0] ) . ',' . intval( $color[1] ) . ',' . intval( $color[2] ) . ',1)';
+				$this->color = 'rgba('.intval( $color[0] ).','.intval( $color[1] ).','.intval( $color[2] ).',1)';
 				return 'rgba';
 			}
 
@@ -413,7 +417,7 @@ class ColorCalc extends Core\Base
 			}
 
 			// We did not fail, so use rgba values recovered above.
-			$this->color = 'rgba(' . $this->red . ',' . $this->green . ',' . $this->blue . ',' . $this->alpha . ')';
+			$this->color = 'rgba('.$this->red.','.$this->green.','.$this->blue.','.$this->alpha.')';
 
 			return 'rgba';
 		}
@@ -427,7 +431,7 @@ class ColorCalc extends Core\Base
 
 		// If the color contains 3 or 6 hex numbers, prepend #.
 		if ( preg_match( '|^([0-9a-f]{3}){1,2}$|', $color ) ) {
-			$color = '#' . $color;
+			$color = '#'.$color;
 			$this->color = $color;
 		}
 
@@ -455,7 +459,7 @@ class ColorCalc extends Core\Base
 		// Perhaps we're using a word like "orange"?
 		$wordcolors = $this->get_word_colors();
 		if ( array_key_exists( $color, $wordcolors ) ) {
-			$this->color = '#' . $wordcolors[ $color ];
+			$this->color = '#'.$wordcolors[ $color ];
 			return 'hex';
 		}
 		// Fallback to hex.
@@ -472,7 +476,7 @@ class ColorCalc extends Core\Base
 	 */
 	protected function sanitize_hex_color( $color )
 	{
-		$color = '#' . ltrim( $color, '#' );
+		$color = '#'.ltrim( $color, '#' );
 
 		if ( '#' === $color )
 			return '';
@@ -497,7 +501,7 @@ class ColorCalc extends Core\Base
 		$word_colors = $this->get_word_colors();
 
 		if ( array_key_exists( $this->color, $word_colors ) )
-			$this->color = '#' . $word_colors[ $this->color ];
+			$this->color = '#'.$word_colors[ $this->color ];
 
 		// Sanitize color.
 		$this->hex = $this->sanitize_hex_color( $this->color );
@@ -512,7 +516,7 @@ class ColorCalc extends Core\Base
 		// Make sure we have 6 digits for the below calculations.
 		if ( 3 === strlen( $hex ) ) {
 			$hex = ltrim( $this->hex, '#' );
-			$hex = substr( $hex, 0, 1 ) . substr( $hex, 0, 1 ) . substr( $hex, 1, 1 ) . substr( $hex, 1, 1 ) . substr( $hex, 2, 1 ) . substr( $hex, 2, 1 );
+			$hex = substr( $hex, 0, 1 ).substr( $hex, 0, 1 ).substr( $hex, 1, 1 ).substr( $hex, 1, 1 ).substr( $hex, 2, 1 ).substr( $hex, 2, 1 );
 		}
 
 		// Set red, green, blue.
@@ -627,7 +631,7 @@ class ColorCalc extends Core\Base
 		$hex_red   = $this->dexhex_double_digit( $red );
 		$hex_green = $this->dexhex_double_digit( $green );
 		$hex_blue  = $this->dexhex_double_digit( $blue );
-		return '#' . $hex_red . $hex_green . $hex_blue;
+		return '#'.$hex_red.$hex_green.$hex_blue;
 	}
 
 	/**
@@ -642,7 +646,7 @@ class ColorCalc extends Core\Base
 	{
 		$value = dechex( $value );
 		if ( 1 === strlen( $value ) ) {
-			$value = '0' . $value;
+			$value = '0'.$value;
 		}
 		return $value;
 	}
@@ -731,16 +735,16 @@ class ColorCalc extends Core\Base
 				$value = strtolower( $this->hex );
 				break;
 			case 'rgba':
-				$value = 'rgba(' . $this->red . ',' . $this->green . ',' . $this->blue . ',' . $this->alpha . ')';
+				$value = 'rgba('.$this->red.','.$this->green.','.$this->blue.','.$this->alpha.')';
 				break;
 			case 'rgb':
-				$value = 'rgb(' . $this->red . ',' . $this->green . ',' . $this->blue . ')';
+				$value = 'rgb('.$this->red.','.$this->green.','.$this->blue.')';
 				break;
 			case 'hsl':
-				$value = 'hsl(' . $this->hue . ',' . round( $this->saturation ) . '%,' . round( $this->lightness ) . '%)';
+				$value = 'hsl('.$this->hue.','.round( $this->saturation ).'%,'.round( $this->lightness ).'%)';
 				break;
 			case 'hsla':
-				$value = 'hsla(' . $this->hue . ',' . round( $this->saturation ) . '%,' . round( $this->lightness ) . '%,' . $this->alpha . ')';
+				$value = 'hsla('.$this->hue.','.round( $this->saturation ).'%,'.round( $this->lightness ).'%,'.$this->alpha.')';
 				break;
 		}
 		return $value;

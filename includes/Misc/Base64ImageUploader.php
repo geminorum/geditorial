@@ -81,11 +81,11 @@ class Base64ImageUploader extends Core\Base
 
 		// HANDLE UPLOADED FILE
 		if ( ! function_exists( 'wp_handle_sideload' ) )
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			require_once( ABSPATH.'wp-admin/includes/file.php' );
 
 		// Without that I'm getting a debug error!?
 		if ( ! function_exists( 'wp_get_current_user' ) )
-			require_once( ABSPATH . 'wp-includes/pluggable.php' );
+			require_once( ABSPATH.'wp-includes/pluggable.php' );
 
 		$file             = [];
 		$file['error']    = '';

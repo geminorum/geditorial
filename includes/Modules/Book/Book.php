@@ -498,7 +498,7 @@ class Book extends gEditorial\Module
 		], 'main_posttype', [
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
-		]  );
+		] );
 
 		if ( count( $this->posttypes() ) ) {
 

@@ -98,8 +98,8 @@ class NationalLibrary extends gEditorial\Module
 
 		$settings['_frontend'] = [
 			'tabs_support',
-			'tab_title'       => [ NULL , _x( 'Fipa', 'Setting Default', 'geditorial-national-library' ) ],
-			'tab_priority'    => [ NULL , 90 ],
+			'tab_title'       => [ NULL, _x( 'Fipa', 'Setting Default', 'geditorial-national-library' ) ],
+			'tab_priority'    => [ NULL, 90 ],
 			'frontend_search' => [ _x( 'Adds results by Bibliographic information on front-end search.', 'Setting Description', 'geditorial-national-library' ), TRUE ],
 			[
 				'field'       => 'custom_queries',

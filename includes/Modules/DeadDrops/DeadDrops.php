@@ -180,7 +180,7 @@ class DeadDrops extends gEditorial\Module
 	// @SEE: https://en.wikipedia.org/wiki/Cryptographic_hash_function
 	private function _get_hash( $secret, $user_id, $post_id )
 	{
-		require_once ABSPATH . WPINC . '/class-phpass.php';
+		require_once ABSPATH.WPINC.'/class-phpass.php';
 		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
 		$wp_salt   = wp_salt();
 
@@ -189,7 +189,7 @@ class DeadDrops extends gEditorial\Module
 
 	private function _check_hash( $hash, $secret, $user_id, $post_id )
 	{
-		require_once ABSPATH . WPINC . '/class-phpass.php';
+		require_once ABSPATH.WPINC.'/class-phpass.php';
 		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
 		$wp_salt   = wp_salt();
 

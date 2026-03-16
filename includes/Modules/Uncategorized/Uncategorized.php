@@ -502,7 +502,7 @@ class Uncategorized extends gEditorial\Module
 			return FALSE;
 
 		$tt_ids   = Core\Arraay::pluck( $unregistered, 'term_taxonomy_id' );
-		$prepared = "'" . implode( "', '", $tt_ids ) . "'";
+		$prepared = "'".implode( "', '", $tt_ids )."'";
 
 		$query = $wpdb->prepare( "
 			DELETE FROM {$wpdb->term_relationships}

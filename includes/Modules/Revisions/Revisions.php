@@ -269,7 +269,7 @@ class Revisions extends gEditorial\Module
 		if ( $link )
 			$parts['loading'] = gEditorial\Ajax::spinner();
 
-		return Core\HTML::span( implode( ' ', $parts ), [ 'geditorial-admin-wrap-inline',  '-revisions' ] );
+		return Core\HTML::span( implode( ' ', $parts ), [ 'geditorial-admin-wrap-inline', '-revisions' ] );
 	}
 
 	public function post_submitbox_misc_actions( $post )

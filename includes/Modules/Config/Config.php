@@ -267,7 +267,7 @@ class Config extends gEditorial\Module
 				'title' => _x( 'Overview', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( 'dashboard' ),
 				'hint'  => sprintf(
-					/*translators: `%s`: context title */
+					/* translators: `%s`: context title */
 					_x( 'Overview of %s', 'Navigation Hint', 'geditorial-admin' ),
 					$title
 				),
@@ -278,7 +278,7 @@ class Config extends gEditorial\Module
 				'title' => _x( 'General', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( $this->module->icon ),
 				'hint'  => sprintf(
-					/*translators: `%s`: context title */
+					/* translators: `%s`: context title */
 					_x( 'General %s', 'Navigation Hint', 'geditorial-admin' ),
 					$title
 				),
@@ -292,7 +292,7 @@ class Config extends gEditorial\Module
 				'title' => _x( 'Console', 'Default Sub', 'geditorial-admin' ),
 				'icon'  => Services\Icons::get( 'admin-generic' ),
 				'hint'  => sprintf(
-					/*translators: `%s`: context title */
+					/* translators: `%s`: context title */
 					_x( 'The Console for %s', 'Navigation Hint', 'geditorial-admin' ),
 					$title
 				),
@@ -683,7 +683,7 @@ class Config extends gEditorial\Module
 					_x( 'Backup Active Module Options', 'Config: Button', 'geditorial-admin' ), 'small' );
 
 				Core\HTML::desc( sprintf(
-					/*translators: `%s`: file ext-type */
+					/* translators: `%s`: file ext-type */
 					_x( 'Exports active module options as %s download.', 'Config: Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );
@@ -694,7 +694,7 @@ class Config extends gEditorial\Module
 					_x( 'Backup All Options', 'Config: Button', 'geditorial-admin' ), 'small' );
 
 				Core\HTML::desc( sprintf(
-					/*translators: `%s`: file ext-type */
+					/* translators: `%s`: file ext-type */
 					_x( 'Exports all saved options as %s for download.', 'Config: Message', 'geditorial-admin' ),
 					Core\HTML::code( 'json' )
 				), FALSE );

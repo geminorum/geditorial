@@ -580,7 +580,7 @@ class Tablelist extends WordPress\Main
 	public static function columnTermDesc( $title = NULL, $extra = [] )
 	{
 		return array_merge( [
-			'title'    =>  $title ?? _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
+			'title'    => $title ?? _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
 			'class'    => [ 'description', '-description' ],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return empty( $row->description )

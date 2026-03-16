@@ -103,8 +103,8 @@ class DateParser extends Core\Base
 
 		$sanitized = Core\Text::trim( str_ireplace( static::WEEK_DAYS, '', $sanitized ) );
 		$sanitized = Core\Text::trim( str_ireplace( static::MONTH_STRING , '', $sanitized ) );
-		$sanitized = Core\Text::trim( str_ireplace( [ '\\', '/', '-', '،', ',', ';', '؛' ] , '|', $sanitized ) );
-		$sanitized = Core\Text::trim( str_ireplace( [ ' |', '| ', ' | ', '  |  ' ] , '|', $sanitized ) );
+		$sanitized = Core\Text::trim( str_ireplace( [ '\\', '/', '-', '،', ',', ';', '؛' ], '|', $sanitized ) );
+		$sanitized = Core\Text::trim( str_ireplace( [ ' |', '| ', ' | ', '  |  ' ], '|', $sanitized ) );
 		// $sanitized = Core\Text::trim( preg_replace( '/\s+[|]\s+/u', '|', $sanitized ) );
 
 		$sanitized = NumbersInPersian::textOrdinalToNumbers( $sanitized, 31 );

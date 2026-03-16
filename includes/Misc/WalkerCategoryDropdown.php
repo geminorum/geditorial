@@ -68,7 +68,7 @@ class WalkerCategoryDropdown extends \Walker_CategoryDropdown
 		$output.= apply_filters( 'list_cats', $name, $term );
 
 		if ( $args['show_count'] )
-			$output .= '&nbsp;&nbsp;(' . number_format_i18n( $term->count ) . ')';
+			$output .= '&nbsp;&nbsp;('.number_format_i18n( $term->count ).')';
 
 		$output .= "</option>\n";
 	}

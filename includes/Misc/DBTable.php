@@ -335,7 +335,7 @@ class DBTable extends Core\Base
 
 		// Include file with dbDelta() for create/upgrade usages
 		if ( ! function_exists( 'dbDelta' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+			require_once ABSPATH.'wp-admin/includes/upgrade.php';
 		}
 
 		// Bail if dbDelta() moved in WordPress core

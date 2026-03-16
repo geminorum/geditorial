@@ -662,7 +662,7 @@ class PostTypeFields extends gEditorial\Service
 		}
 
 		// NOTE: third priority: data unit
-		if ( ! empty( $field['data_unit']  ) ) {
+		if ( ! empty( $field['data_unit'] ) ) {
 
 			switch ( $field['data_unit'] ) {
 

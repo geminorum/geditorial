@@ -267,7 +267,8 @@ class AdvancedQueries extends gEditorial\Service
 
 		add_filter( 'posts_join',
 			// @REF: https://stackoverflow.com/a/13493126
-			static function ( $join, $wp_query ) use ( $taxonomies ) {
+			static function ( $join, $wp_query )
+				use ( $taxonomies ) {
 
 				global $wpdb;
 
@@ -281,7 +282,8 @@ class AdvancedQueries extends gEditorial\Service
 			}, 99, 2 );
 
 		add_filter( 'posts_where',
-			static function ( $where, $wp_query ) use ( $taxonomies ) {
+			static function ( $where, $wp_query )
+				use ( $taxonomies ) {
 
 				global $wpdb;
 

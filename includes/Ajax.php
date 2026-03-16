@@ -13,7 +13,7 @@ class Ajax extends WordPress\Main
 
 	public static function checkReferer( $action = NULL, $key = 'nonce' )
 	{
-		return check_ajax_referer( ( is_null( $action ) ? static::BASE : $action ), $key );
+		return check_ajax_referer( $action ?? static::BASE, $key );
 	}
 
 	public static function success( $data = NULL, $status_code = NULL )
