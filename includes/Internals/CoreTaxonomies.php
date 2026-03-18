@@ -240,7 +240,7 @@ trait CoreTaxonomies
 						$args['menu_icon'] = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 					else
-						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
+						$args['menu_icon'] = self::dsh( 'dashicons', $icon );
 
 					// NOTE: passing icon on the original format: string/array
 					$args[Services\Icons::MENUICON_PROP] = $icon;
@@ -284,10 +284,10 @@ trait CoreTaxonomies
 						$captype = $this->constant_plural( $constant );
 
 						$args['capabilities'] = [
-							'manage_terms' => sprintf( 'manage_%s', $captype[1] ),
-							'edit_terms'   => sprintf( 'edit_%s', $captype[1] ),
-							'delete_terms' => sprintf( 'delete_%s', $captype[1] ),
-							'assign_terms' => sprintf( 'assign_%s', $captype[1] ),
+							'manage_terms' => self::und( 'manage', $captype[1] ),
+							'edit_terms'   => self::und( 'edit',   $captype[1] ),
+							'delete_terms' => self::und( 'delete', $captype[1] ),
+							'assign_terms' => self::und( 'assign', $captype[1] ),
 						];
 
 					} else if ( self::bool( $value ) ) {
@@ -301,15 +301,15 @@ trait CoreTaxonomies
 								'manage_terms' => 'manage_options',
 								'edit_terms'   => 'manage_options',
 								'delete_terms' => 'manage_options',
-								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+								'assign_terms' => self::und( 'edit', $captype[1] ),
 							];
 
 						else
 							$args['capabilities'] = [
-								'manage_terms' => sprintf( 'manage_%s', $captype[1] ),
-								'edit_terms'   => sprintf( 'manage_%s', $captype[1] ),
-								'delete_terms' => sprintf( 'manage_%s', $captype[1] ),
-								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+								'manage_terms' => self::und( 'manage', $captype[1] ),
+								'edit_terms'   => self::und( 'manage', $captype[1] ),
+								'delete_terms' => self::und( 'manage', $captype[1] ),
+								'assign_terms' => self::und( 'edit',   $captype[1] ),
 							];
 
 					} else if ( 'comment' === $target_object ) {
@@ -339,10 +339,10 @@ trait CoreTaxonomies
 							$captype = gEditorial()->module( 'roled' )->constant( 'base_type' );
 
 							$args['capabilities'] = [
-								'manage_terms' => sprintf( 'edit_others_%s', $captype[1] ),
-								'edit_terms'   => sprintf( 'edit_others_%s', $captype[1] ),
-								'delete_terms' => sprintf( 'edit_others_%s', $captype[1] ),
-								'assign_terms' => sprintf( 'edit_%s', $captype[1] ),
+								'manage_terms' => self::und( 'edit_others', $captype[1] ),
+								'edit_terms'   => self::und( 'edit_others', $captype[1] ),
+								'delete_terms' => self::und( 'edit_others', $captype[1] ),
+								'assign_terms' => self::und( 'edit',        $captype[1] ),
 							];
 						}
 
@@ -585,8 +585,8 @@ trait CoreTaxonomies
 			'empty_link' => FALSE === $box ? FALSE : NULL,
 		];
 
-		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
-			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
+		if ( $this->role_can( self::und( 'taxonomy', $args['taxonomy'], 'locking_terms' ), NULL, FALSE, FALSE ) )
+			$args['restricted'] = $this->get_setting( self::und( 'taxonomy', $args['taxonomy'], 'restricted_visibility' ), 'disabled' );
 
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
@@ -668,8 +668,8 @@ trait CoreTaxonomies
 			$args['empty_link'] = FALSE;
 		}
 
-		if ( $this->role_can( sprintf( 'taxonomy_%s_locking_terms', $args['taxonomy'] ), NULL, FALSE, FALSE ) )
-			$args['restricted'] = $this->get_setting( sprintf( 'taxonomy_%s_restricted_visibility', $args['taxonomy'] ), 'disabled' );
+		if ( $this->role_can( self::und( 'taxonomy', $args['taxonomy'], 'locking_terms' ), NULL, FALSE, FALSE ) )
+			$args['restricted'] = $this->get_setting( self::und( 'taxonomy', $args['taxonomy'], 'restricted_visibility' ), 'disabled' );
 
 		if ( FALSE !== $box )
 			echo $this->wrap_open( '-admin-metabox' );
@@ -763,8 +763,8 @@ trait CoreTaxonomies
 
 	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL, $hierarchical = FALSE )
 	{
-		if ( ! $arg && method_exists( $this, 'meta_box_cb_'.$constant ) )
-			return [ $this, 'meta_box_cb_'.$constant ];
+		if ( ! $arg && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
+			return [ $this, self::und( 'meta_box_cb', $constant ) ];
 
 		if ( is_null( $arg ) )
 			return $hierarchical
@@ -797,8 +797,7 @@ trait CoreTaxonomies
 	{
 		$taxonomy = get_taxonomy( $this->constant( $constant, $constant ) );
 
-		add_meta_box(
-			sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
+		add_meta_box( sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
 			empty( $taxonomy->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ? $taxonomy->labels->name : $taxonomy->labels->singular_name,
 			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE, $taxonomy->hierarchical ),
 			NULL,
@@ -1104,7 +1103,7 @@ trait CoreTaxonomies
 		if ( empty( $taxonomy ) || empty( $feature ) )
 			return FALSE;
 
-		return $this->filters( sprintf( 'taxonomy_%s_supports_%s', $taxonomy, $feature ),
+		return $this->filters( self::und( 'taxonomy', $taxonomy, 'supports', $feature ),
 			$taxonomy_features[$taxonomy][$feature] ?? $fallback,
 			$taxonomy,
 			$feature,

@@ -91,10 +91,10 @@ trait PairedCore
 				'hierarchical' => $paired[4],
 
 				'capabilities' => [
-					'manage_terms' => sprintf( 'manage_paired_%s', $captype[1] ),
-					'edit_terms'   => sprintf( 'edit_paired_%s', $captype[1] ),
-					'delete_terms' => sprintf( 'delete_paired_%s', $captype[1] ),
-					'assign_terms' => sprintf( 'assign_paired_%s', $captype[1] ),
+					'manage_terms' => self::und( 'manage_paired', $captype[1] ),
+					'edit_terms'   => self::und( 'edit_paired', $captype[1] ),
+					'delete_terms' => self::und( 'delete_paired', $captype[1] ),
+					'assign_terms' => self::und( 'assign_paired', $captype[1] ),
 				],
 			];
 
@@ -320,8 +320,7 @@ trait PairedCore
 			$this->nooped_count( 'paired_item', $count )
 		).$after;
 
-		$average = apply_filters(
-			$this->hook_base( 'was_born', 'mean_age' ),
+		$average = apply_filters( $this->hook_base( 'was_born', 'mean_age' ),
 			NULL,
 			$post,
 			$connected,
@@ -697,7 +696,7 @@ trait PairedCore
 			return $posts;
 
 		$mapping = [];
-		$linked  = sprintf( '%s_linked', $this->constant( $constants[0] ) );
+		$linked  = self::und( $this->constant( $constants[0] ), 'linked' );
 		$metakey = Services\TermRelations::getMetakey( Services\TermRelations::FIELD_ORDER, $post->ID );
 
 		foreach ( $terms as $term_id ) {
@@ -1307,8 +1306,7 @@ trait PairedCore
 				if ( empty( $paired ) )
 					return $list;
 
-				$summaries = apply_filters(
-					$this->hook_base( 'paired', 'post_summaries' ),
+				$summaries = apply_filters( $this->hook_base( 'paired', 'post_summaries' ),
 					[],
 					reset( $paired ),
 					$this->constant( $constants[0] ),

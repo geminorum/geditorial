@@ -456,7 +456,7 @@ trait PairedTools
 	{
 		$count    = 0;
 		$taxonomy = $this->constant( $taxonomy_key );
-		$metakey  = sprintf( '%s_linked', $this->constant( $posttype_key ) );
+		$metakey  = self::und( $this->constant( $posttype_key ), 'linked' );
 
 		$terms = get_terms( [
 			'taxonomy'   => $taxonomy,
@@ -489,7 +489,7 @@ trait PairedTools
 	{
 		$count    = 0;
 		$taxonomy = $this->constant( $taxonomy_key );
-		$metakey  = sprintf( '%s_linked', $this->constant( $posttype_key ) );
+		$metakey  = self::und( $this->constant( $posttype_key ), 'linked' );
 		$datetime = $this->constant( 'metakey_term_date', 'datetime' );
 
 		$terms = get_terms( [

@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -37,7 +36,7 @@ class ProfileSummary extends gEditorial\Widget
 
 			if ( $user->first_name || $user->last_name ) {
 				echo '<li class="-row -name list-group-item">';
-					Info::renderIcon( 'fullname' );
+					gEditorial\Info::renderIcon( 'fullname' );
 					echo ' ';
 					echo "$user->first_name $user->last_name";
 				echo '</li>';
@@ -45,7 +44,7 @@ class ProfileSummary extends gEditorial\Widget
 
 			if ( $user->user_email ) {
 				echo '<li class="-row -email list-group-item">';
-					Info::renderIcon( 'email' );
+					gEditorial\Info::renderIcon( 'email' );
 					echo ' ';
 					echo Core\HTML::mailto( $user->user_email );
 				echo '</li>';
@@ -53,7 +52,7 @@ class ProfileSummary extends gEditorial\Widget
 
 			if ( $user->user_url ) {
 				echo '<li class="-row -url list-group-item">';
-					Info::renderIcon( 'url' );
+					gEditorial\Info::renderIcon( 'url' );
 					echo ' ';
 					echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
 				echo '</li>';
@@ -66,7 +65,7 @@ class ProfileSummary extends gEditorial\Widget
 					continue;
 
 				echo '<li class="-row -contact -contact-'.$method.' list-group-item">';
-					Info::renderIcon( $method, $title );
+					gEditorial\Info::renderIcon( $method, $title );
 					echo ' ';
 					echo Services\PostTypeFields::prepFieldRow( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
 				echo '</li>';
@@ -74,15 +73,15 @@ class ProfileSummary extends gEditorial\Widget
 
 			if ( $user->user_registered ) {
 				echo '<li class="-row -registered list-group-item">';
-					Info::renderIcon( 'registered' );
+					gEditorial\Info::renderIcon( 'registered' );
 					echo ' ';
-					Info::renderRegistered( $user->user_registered );
+					gEditorial\Info::renderRegistered( $user->user_registered );
 				echo '</li>';
 			}
 
 			// TODO: add option for display
 			echo WordPress\Strings::getJoined( WordPress\Role::get( 0, [], $user ),
-				'<li class="-row -roles list-group-item">'.Info::renderIcon( 'roles', NULL, FALSE, FALSE ).' ',
+				'<li class="-row -roles list-group-item">'.gEditorial\Info::renderIcon( 'roles', NULL, FALSE, FALSE ).' ',
 				'</li>'
 			);
 

@@ -363,9 +363,7 @@ class WcTerms extends gEditorial\Module
 
 		if ( $this->get_setting( 'tab_term_combined' ) ) {
 
-			$key = sprintf( 'taxonomy_%s', $row['taxonomy'] );
-
-			$tabs[$key] = [
+			$tabs[self::und( 'taxonomy', $row['taxonomy'] )] = [
 				'title'    => trim( sprintf( $row['heading'] ?: '%s', $name ) ),
 				'priority' => $row['priority'],
 				'callback' => function () use ( $terms, $heading ) {
@@ -389,9 +387,7 @@ class WcTerms extends gEditorial\Module
 			if ( empty( $term->description ) )
 				continue;
 
-			$key = sprintf( 'taxonomy_%s_%s', $term->taxonomy, $term->term_id );
-
-			$tabs[$key] = [
+			$tabs[self::und( 'taxonomy', $term->taxonomy, $term->term_id )] = [
 				'title'    => trim( sprintf( $row['heading'] ?: '%s', $term->name, $name ) ),
 				'priority' => $row['priority'],
 				'callback' => function () use ( $term, $heading ) {

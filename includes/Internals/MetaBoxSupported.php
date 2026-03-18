@@ -20,22 +20,20 @@ trait MetaBoxSupported
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox_before', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox', 'before' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $object->taxonomy )
+				self::und( $context, $object->taxonomy )
 			);
 
 			$this->_render_supportedbox_content( $object, $box, $context, $screen );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox_after', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox', 'after' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $object->taxonomy )
+				self::und( $context, $object->taxonomy )
 			);
 
 			echo '</div>';
@@ -43,8 +41,7 @@ trait MetaBoxSupported
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_taxonomy( $screen->taxonomy, $context ),
 			$callback,
 			$screen,
@@ -52,7 +49,7 @@ trait MetaBoxSupported
 			$metabox_priority ?? 'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -74,22 +71,20 @@ trait MetaBoxSupported
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox_before', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox', 'before' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $object->post_type )
+				self::und( $context, $object->post_type )
 			);
 
 			$this->_render_supportedbox_content( $object, $box, $context, $screen );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox_after', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox', 'after' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $object->post_type )
+				self::und( $context, $object->post_type )
 			);
 
 			echo '</div>';
@@ -97,8 +92,7 @@ trait MetaBoxSupported
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
@@ -106,7 +100,7 @@ trait MetaBoxSupported
 			$metabox_priority ?? 'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -124,16 +118,15 @@ trait MetaBoxSupported
 		$screen  = $screen  ?? get_current_screen();
 
 		if ( 'post' === $screen->base )
-			$action_context = sprintf( '%s_%s', $context, $object->post_type );
+			$action_context = self::und( $context, $object->post_type );
 
 		else if ( 'term' === $screen->base )
-			$action_context = sprintf( '%s_%s', $context, $object->taxonomy );
+			$action_context = self::und( $context, $object->taxonomy );
 
 		else
-			$action_context = sprintf( '%s_%s', $context, 'unknown' );
+			$action_context = self::und( $context, 'unknown' );
 
-		$this->actions(
-			sprintf( 'render_%s_metabox', $context ),
+		$this->actions( self::und( 'render', $context, 'metabox' ),
 			$object,
 			$box,
 			$screen,

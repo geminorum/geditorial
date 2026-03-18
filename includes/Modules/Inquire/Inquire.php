@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\MetaBox;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Inquire extends gEditorial\Module
@@ -174,7 +174,7 @@ class Inquire extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) ) {
 
 					remove_meta_box( 'postexcerpt', $screen, 'normal' );
-					MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
+					gEditorial\MetaBox::classEditorBox( $screen, $this->classs( 'question' ) );
 
 					add_meta_box( $this->classs( 'question' ),
 						$this->get_posttype_label( 'main_posttype', 'excerpt_label' ),
@@ -223,7 +223,7 @@ class Inquire extends gEditorial\Module
 			return;
 
 		if ( $this->role_can( 'excerpt' ) )
-			MetaBox::fieldEditorBox(
+			gEditorial\MetaBox::fieldEditorBox(
 				$post->post_excerpt,
 				'excerpt',
 				$this->get_posttype_label( 'main_posttype', 'excerpt_label' )

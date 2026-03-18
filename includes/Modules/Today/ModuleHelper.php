@@ -589,7 +589,7 @@ class ModuleHelper extends gEditorial\Helper
 				if ( empty( $the_day[$field] ) )
 					continue;
 
-				$clause = sprintf( 'the_day_%s_clause_%s', $field, $offset );
+				$clause = self::und( 'the_day', $field, 'clause', $offset );
 
 				if ( ! empty( $the_day[$field] ) )
 					$block[$clause] = [

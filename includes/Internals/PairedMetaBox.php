@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -140,7 +139,7 @@ trait PairedMetaBox
 		$context = $context ?? 'mainbox';
 
 		if ( method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
-			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
+			add_action( self::und( 'save_post', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
 
 		else if ( method_exists( $this, 'store_'.$context.'_metabox' ) )
 			add_action( 'save_post', [ $this, 'store_'.$context.'_metabox' ], 20, 3 );
@@ -161,23 +160,19 @@ trait PairedMetaBox
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-				$this->actions(
-					sprintf( 'render_%s_metabox', $context ),
+				$this->actions( self::und( 'render', $context, 'metabox' ),
 					$post,
 					$box,
 					NULL,
-					sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
+					self::und( $context, $this->constant( $constants[0] ) )
 				);
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
 
 				$this->_render_mainbox_content( $post, $box, $context, $screen );
 
-				do_action(
-					// // @HOOK: `geditorial_mainbox_{paired_posttype}_{current_posttype}`
-					// $this->hook_base( 'metabox', $context, $this->constant( $constants[0] ), $post->post_type ),
-					// @HOOK: `geditorial_metabox_mainbox_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $post->post_type ),
+				// @HOOK: `geditorial_metabox_mainbox_{current_posttype}`
+				do_action( $this->hook_base( 'metabox', $context, $post->post_type ),
 					$post,
 					$box,
 					$context,
@@ -189,8 +184,7 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
@@ -198,7 +192,7 @@ trait PairedMetaBox
 			'high'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -229,12 +223,11 @@ trait PairedMetaBox
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
+				self::und( $context, $this->constant( $constants[0] ) )
 			);
 
 			$term = $this->paired_get_to_term( $object->ID, $constants[0], $constants[1] );
@@ -252,8 +245,7 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
@@ -261,7 +253,7 @@ trait PairedMetaBox
 			'low'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -272,7 +264,7 @@ trait PairedMetaBox
 			} );
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
-			Scripts::enqueueColorBox();
+			gEditorial\Scripts::enqueueColorBox();
 	}
 
 	// DEFAULT METHOD
@@ -302,20 +294,20 @@ trait PairedMetaBox
 
 		$context  = $context ?? 'pairedbox';
 		$metabox  = $this->classs( $context );
-		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function ( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
+		$action   = self::und( 'render', $context, 'metabox' );
+		$callback = function ( $post, $box )
+			use ( $constants, $context, $action, $menuorder ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
 
-			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
+			$action_context = self::und( $context, $this->constant( $constants[0] ) );
 
 			echo $this->wrap_open( '-admin-metabox' );
 
 			if ( $this->get_setting( 'quick_newpost' ) ) {
 
-				$this->actions(
-					$action,
+				$this->actions( $action,
 					$post,
 					$box,
 					NULL,
@@ -329,8 +321,7 @@ trait PairedMetaBox
 					MetaBox::fieldEmptyPostType( $this->constant( $constants[0] ) );
 
 				else
-					$this->actions(
-						$action,
+					$this->actions( $action,
 						$post,
 						$box,
 						NULL,
@@ -338,8 +329,7 @@ trait PairedMetaBox
 					);
 			}
 
-			do_action(
-				$this->hook_base( 'meta', 'render_metabox' ),
+			do_action( $this->hook_base( 'meta', 'render_metabox' ),
 				$post,
 				$box,
 				NULL,
@@ -354,15 +344,14 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $this->constant( $constants[0] ), $context ),
 			$callback,
 			$screen,
 			'side'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -383,7 +372,7 @@ trait PairedMetaBox
 			}, 10, 4 );
 
 		if ( $this->get_setting( 'quick_newpost' ) )
-			Scripts::enqueueThickBox();
+			gEditorial\Scripts::enqueueThickBox();
 	}
 
 	// NOTE: logic separated for the use on edit screen
@@ -395,8 +384,9 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( sprintf( 'save_post_%s', $posttype ),
-			function ( $post_id, $post, $update ) use ( $constants ) {
+		add_action( self::und( 'save_post', $posttype ),
+			function ( $post_id, $post, $update )
+				use ( $constants ) {
 
 				if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 					return;
@@ -475,22 +465,20 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $context ) )
-			$context = 'overviewbox';
-
+		$context  = $context ?? 'overviewbox';
 		$metabox  = $this->classs( $context );
-		$action   = sprintf( 'render_%s_metabox', $context );
-		$callback = function ( $post, $box ) use ( $constants, $context, $action, $menuorder ) {
+		$action   = self::und( 'render', $context, 'metabox' );
+		$callback = function ( $post, $box )
+			use ( $constants, $context, $action, $menuorder ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
 
-			$action_context = sprintf( '%s_%s', $context, $this->constant( $constants[0] ) );
+			$action_context = self::und( $context, $this->constant( $constants[0] ) );
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions(
-				$action,
+			$this->actions( $action,
 				$post,
 				$box,
 				NULL,
@@ -498,8 +486,7 @@ trait PairedMetaBox
 			);
 
 			// action for `Meta` Module
-			do_action(
-				$this->hook_base( 'meta', 'render_metabox' ),
+			do_action( $this->hook_base( 'meta', 'render_metabox' ),
 				$post,
 				$box,
 				NULL,
@@ -514,15 +501,14 @@ trait PairedMetaBox
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $this->constant( $constants[0] ), $context ),
 			$callback,
 			$screen,
 			'advanced'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -533,7 +519,8 @@ trait PairedMetaBox
 			} );
 
 		add_action( $this->hook( $action ),
-			function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+			function ( $post, $box, $fields = NULL, $action_context = NULL )
+				use ( $constants, $context ) {
 
 				if ( ! $items = $this->paired_all_connected_from( $post, $context ) )
 					return Core\HTML::desc( $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ), TRUE, 'field-wrap -empty' );
@@ -561,18 +548,17 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $context ) )
-			$context = 'megabox';
-
-		$post_title    = WordPress\Post::title(); // NOTE: gets post from query-args in admin
+		$context       = $context ?? 'megabox';
+		$post_title    = WordPress\Post::title(); // NOTE: gets post from query arguments in admin
 		$singular_name = Services\CustomPostType::getLabel( $screen->post_type, 'singular_name' );
 
 		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$default = _x( 'No items connected to &ldquo;%1$s&rdquo; %2$s!', 'Internal: PairedMetaBox: MetaBox Empty: `megabox_empty`', 'geditorial' );
-		$empty   = $this->get_string( sprintf( '%s_empty', $context ), $constants[0], 'metabox', $default );
+		$empty   = $this->get_string( self::und( $context, 'empty' ), $constants[0], 'metabox', $default );
 		$noitems = sprintf( $empty, $post_title, $singular_name );
 
-		$callback = function ( $object, $box ) use ( $constants, $context, $screen, $noitems ) {
+		$callback = function ( $object, $box )
+			use ( $constants, $context, $screen, $noitems ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -582,12 +568,11 @@ trait PairedMetaBox
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-			$this->actions(
-				sprintf( 'render_%s_metabox', $context ),
+			$this->actions( self::und( 'render', $context, 'metabox' ),
 				$object,
 				$box,
 				NULL,
-				sprintf( '%s_%s', $context, $this->constant( $constants[0] ) )
+				self::und( $context, $this->constant( $constants[0] ) )
 			);
 
 			$term = $this->paired_get_to_term( $object->ID, $constants[0], $constants[1] );
@@ -608,11 +593,10 @@ trait PairedMetaBox
 
 		/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 		$default = _x( 'In &ldquo;%1$s&rdquo; %2$s', 'Internal: PairedMetaBox: MetaBox Title: `megabox_title`', 'geditorial' );
-		$title   = $this->get_string( sprintf( '%s_title', $context ), $constants[0], 'metabox', $default );
+		$title   = $this->get_string( self::und( $context, 'title' ), $constants[0], 'metabox', $default );
 		$metabox = $this->classs( $context );
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			sprintf( $title, $post_title ?: gEditorial\Plugin::untitled( FALSE ), $singular_name ),
 			$callback,
 			$screen,
@@ -620,7 +604,7 @@ trait PairedMetaBox
 			'low'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -631,7 +615,7 @@ trait PairedMetaBox
 			} );
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
-			Scripts::enqueueColorBox();
+			gEditorial\Scripts::enqueueColorBox();
 	}
 
 	// DEFAULT METHOD
@@ -639,8 +623,7 @@ trait PairedMetaBox
 	// NOTE: alternative to `listbox`
 	protected function _render_paired_megabox_extra( $post, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'megabox';
+		$context = $context ?? 'megabox';
 
 		$this->_render_paired_listbox_extra( $post, $box, $context, $screen );
 	}

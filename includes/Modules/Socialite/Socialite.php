@@ -334,16 +334,14 @@ class Socialite extends gEditorial\Module
 
 	private function _get_term_icons( $term, $context = NULL, $fields = NULL, $extra = [] )
 	{
-		$list = [];
-
-		if ( is_null( $fields ) )
-			$fields = array_merge( [
-				// adds before the list
-				'_contact',
-			], $this->supported, [
-				// adds after the list
-				'_ical',
-			] );
+		$list   = [];
+		$fields = $fields ?? array_merge( [
+			// adds before the list
+			'_contact',
+		], $this->supported, [
+			// adds after the list
+			'_ical',
+		] );
 
 		foreach ( $fields as $field )
 			if ( $url = $this->_get_field_url( $field, $term, $context ) )

@@ -281,7 +281,12 @@ class Settings extends WordPress\Main
 		if ( ! in_array( 'privacy', $include, TRUE ) )
 			$pages[] = get_option( 'wp_page_for_privacy_policy' );
 
-		return Core\Arraay::prepNumeral( apply_filters( static::BASE.'_page_excludes', $pages, $context ) );
+		return Core\Arraay::prepNumeral(
+			apply_filters( self::und( static::BASE, 'page_excludes' ),
+				$pages,
+				$context
+			)
+		);
 	}
 
 	public static function priorityOptions( $format = TRUE )
@@ -344,7 +349,15 @@ class Settings extends WordPress\Main
 			'entry',
 		];
 
-		return Core\Arraay::prepString( apply_filters( static::BASE.'_posttypes_parents', array_merge( $list, (array) $extra ), $context ) );
+		return Core\Arraay::prepString(
+			apply_filters( self::und( static::BASE, 'posttypes_parents' ),
+				array_merge(
+					$list,
+					(array) $extra
+				),
+				$context
+			)
+		);
 	}
 
 	/**
@@ -403,8 +416,7 @@ class Settings extends WordPress\Main
 			] );
 
 		// @hook: `geditorial_posttypes_excluded`
-		return apply_filters(
-			implode( '_', [ static::BASE, 'posttypes', 'excluded' ] ),
+		return apply_filters( self::und( static::BASE, 'posttypes', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
 			$context,
 			(array) $extra,
@@ -459,8 +471,7 @@ class Settings extends WordPress\Main
 			] );
 
 		// @hook: `geditorial_taxonomies_excluded`
-		return apply_filters(
-			implode( '_', [ static::BASE, 'taxonomies', 'excluded' ] ),
+		return apply_filters( self::und( static::BASE, 'taxonomies', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
 			$context,
 			(array) $extra,
@@ -480,8 +491,7 @@ class Settings extends WordPress\Main
 		];
 
 		// @hook: `geditorial_roles_excluded`
-		return apply_filters(
-			implode( '_', [ static::BASE, 'roles', 'excluded' ] ),
+		return apply_filters( self::und( static::BASE, 'roles', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
 			$context,
 			(array) $extra,
@@ -2074,14 +2084,14 @@ class Settings extends WordPress\Main
 			iframe_header( $iframe_title );
 		}
 
-		echo '<div id="'.static::BASE.'-'.$context.'" class="'.Core\HTML::prepClass(
+		echo '<div id="'.self::dsh( static::BASE, $context ).'" class="'.Core\HTML::prepClass(
 			'wrap',
 			'-settings-wrap',
 			self::req( 'noheader' ) ? '-iframe-wrap' : '',
-			static::BASE.'-admin-wrap',
-			static::BASE.'-'.$context,
-			static::BASE.'-'.$context.'-'.$sub,
-			'sub-'.$sub
+			self::dsh( static::BASE, 'admin-wrap' ),
+			self::dsh( static::BASE, $context ),
+			self::dsh( static::BASE, $context, $sub ),
+			self::dsh( 'sub', $sub )
 		).'">';
 	}
 

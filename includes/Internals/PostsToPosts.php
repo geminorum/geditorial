@@ -20,7 +20,7 @@ trait PostsToPosts
 			return FALSE;
 
 		$to  = $this->constant( $constant );
-		$p2p = $this->constant( sprintf( '%s_p2p', $constant ) );
+		$p2p = $this->constant( self::und( $constant, 'p2p' ) );
 		$pre = empty( $this->strings['p2p'][$constant] ) ? [] : $this->strings['p2p'][$constant];
 
 		$args = apply_filters( $this->hook( $to, 'p2p', 'args' ), array_merge( [
@@ -84,7 +84,7 @@ trait PostsToPosts
 		if ( ! $this->_p2p )
 			return FALSE;
 
-		$type = p2p_type( $this->constant( sprintf( '%s_p2p', $constant ) ) );
+		$type = p2p_type( $this->constant( self::und( $constant, 'p2p' ) ) );
 		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
 		$id   = $type->connect( $from, $to, $meta );
 
@@ -104,7 +104,7 @@ trait PostsToPosts
 		if ( ! $this->_p2p )
 			return;
 
-		$type  = $this->constant( sprintf( '%s_p2p', $constant ) );
+		$type  = $this->constant( self::und( $constant, 'p2p' ) );
 		$extra = [
 			'p2p:per_page' => -1,
 			'p2p:context'  => 'admin_column',

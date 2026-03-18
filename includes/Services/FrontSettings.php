@@ -95,8 +95,7 @@ class FrontSettings extends gEditorial\Service
 			)
 		);
 
-		do_action_ref_array(
-			implode( '_', [ static::BASE, 'front_settings', 'customize' ] ),
+		do_action_ref_array( self::und( static::BASE, 'front_settings', 'customize' ),
 			[
 				&$manager,
 				static::MAIN_PANEL   ,   // $main_panel

@@ -181,10 +181,10 @@ trait ViewEngines
 	{
 		self::_dep();
 
-		$part = $fallback = sprintf( '%s-type-%s', $context, $default );
+		$part = $fallback = self::dsh( $context, 'type', $default );
 
 		if ( $post = WordPress\Post::get( $post ) )
-			$part = sprintf( '%s-type-%s', $context, $post->post_type );
+			$part = self::dsh( $context, 'type', $post->post_type );
 
 		if ( ! Core\File::readable( $this->get_view_path( $part ) ) )
 			$part = $fallback;
@@ -197,10 +197,10 @@ trait ViewEngines
 	{
 		self::_dep();
 
-		$part = $fallback = sprintf( '%s-tax-%s', $context, $default );
+		$part = $fallback = self::dsh( $context, 'tax', $default );
 
 		if ( $term = WordPress\Term::get( $term ) )
-			$part = sprintf( '%s-tax-%s', $context, $term->taxonomy );
+			$part = self::dsh( $context, 'tax', $term->taxonomy );
 
 		if ( ! Core\File::readable( $this->get_view_path( $part ) ) )
 			$part = $fallback;

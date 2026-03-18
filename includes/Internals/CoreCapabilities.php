@@ -29,7 +29,7 @@ trait CoreCapabilities
 		$checks = [];
 
 		foreach ( (array) $whats as $what )
-			$checks[] = sprintf( 'taxonomy_%s_%s', $taxonomy, $what );
+			$checks[] = self::und( 'taxonomy', $taxonomy, $what );
 
 		return $this->role_can( $checks, $user_id, $fallback, $admins, $prefix );
 	}
@@ -57,7 +57,7 @@ trait CoreCapabilities
 					case 'delete_page':
 					case 'publish_post':
 
-						$locking = $this->get_setting( sprintf( 'taxonomy_%s_locking_terms', $taxonomy[0] ), [] );
+						$locking = $this->get_setting( self::und( 'taxonomy', $taxonomy[0], 'locking_terms' ), [] );
 
 						if ( empty( $locking ) )
 							return $caps;
@@ -194,7 +194,7 @@ trait CoreCapabilities
 
 		$settings = [
 			[
-				'field'       => sprintf( 'taxonomy_%s_manage_roles', $taxonomy ),
+				'field'       => self::und( 'taxonomy', $taxonomy, 'manage_roles' ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Manage Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
 				'description' => sprintf(
@@ -205,7 +205,7 @@ trait CoreCapabilities
 				'values' => $roles,
 			],
 			[
-				'field'       => sprintf( 'taxonomy_%s_assign_roles', $taxonomy ),
+				'field'       => self::und( 'taxonomy', $taxonomy, 'assign_roles' ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Assign Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
 				'description' => sprintf(
@@ -216,7 +216,7 @@ trait CoreCapabilities
 				'values' => $roles,
 			],
 			[
-				'field'       => sprintf( 'taxonomy_%s_reports_roles', $taxonomy ),
+				'field'       => self::und( 'taxonomy', $taxonomy, 'reports_roles' ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Reports Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
 				'description' => sprintf(
@@ -227,7 +227,7 @@ trait CoreCapabilities
 				'values' => $roles,
 			],
 			[
-				'field'       => sprintf( 'taxonomy_%s_tools_roles', $taxonomy ),
+				'field'       => self::und( 'taxonomy', $taxonomy, 'tools_roles' ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Tools Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
 				'description' => sprintf(
@@ -242,7 +242,7 @@ trait CoreCapabilities
 		if ( $restricted ) {
 
 			$settings[] = [
-				'field'       => sprintf( 'taxonomy_%s_restricted_roles', $taxonomy ),
+				'field'       => self::und( 'taxonomy', $taxonomy, 'restricted_roles' ),
 				'type'        => 'checkboxes',
 				'title'       => _x( 'Restricted Roles', 'Internal: CoreCapabilities: Setting Title', 'geditorial-admin' ),
 				'description' => sprintf(
@@ -254,7 +254,7 @@ trait CoreCapabilities
 			];
 
 			$settings[] = [
-				'field' => sprintf( 'taxonomy_%s_restricted_visibility', $taxonomy ),
+				'field' => self::und( 'taxonomy', $taxonomy, 'restricted_visibility' ),
 				'type'  => 'select',
 				'title' => sprintf(
 					/* translators: `%s`: taxonomy extended label */

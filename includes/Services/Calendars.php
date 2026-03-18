@@ -67,7 +67,7 @@ class Calendars extends gEditorial\Service
 			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $object->name )
 				return;
 
-			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_post_events', NULL, $post, $context ) ) )
+			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'post', 'events' ), NULL, $post, $context ) ) )
 				$events = $filtered;
 
 			else if ( 'post' !== $object->name && 'paired' === $object->{static::POSTTYPE_ICAL_SOURCE} )
@@ -76,7 +76,7 @@ class Calendars extends gEditorial\Service
 			else
 				$events = self::getPostEvent( $post, $context );
 
-			$filename = apply_filters( static::BASE.'_calendars_post_filename',
+			$filename = apply_filters( self::und( static::BASE, 'calendars', 'post', 'filename' ),
 				Core\File::prepName( $post->post_name, $context, FALSE ),
 				$post,
 				$context
@@ -95,13 +95,13 @@ class Calendars extends gEditorial\Service
 			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $posttype )
 				return;
 
-			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_posttype_events', NULL, $posttype->name, $context ) ) )
+			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'posttype', 'events' ), NULL, $posttype->name, $context ) ) )
 				$events = $filtered;
 
 			else
 				$events = self::getPostTypeEvents( $posttype, $context );
 
-			$filename = apply_filters( static::BASE.'_calendars_posttype_filename',
+			$filename = apply_filters( self::und( static::BASE, 'calendars', 'posttype', 'filename' ),
 				Core\File::prepName( $posttype->name, $context, FALSE ),
 				$posttype->name,
 				$context
@@ -123,13 +123,13 @@ class Calendars extends gEditorial\Service
 			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) && 'category' !== $object->name )
 				return;
 
-			if ( NULL !== ( $filtered = apply_filters( static::BASE.'_calendars_term_events', NULL, $term, $context ) ) )
+			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'term', 'events' ), NULL, $term, $context ) ) )
 				$events = $filtered;
 
 			else
 				$events = self::getTaxonomyEvents( $term, $context );
 
-			$filename = apply_filters( static::BASE.'_calendars_term_filename',
+			$filename = apply_filters( self::und( static::BASE, 'calendars', 'term', 'filename' ),
 				Core\File::prepName( $term->slug, $context, FALSE ),
 				$term,
 				$context
@@ -138,7 +138,7 @@ class Calendars extends gEditorial\Service
 			self::exitICS( $events, $filename, $context );
 		}
 
-		do_action( static::BASE.'_calendars_ical_notfound', $context );
+		do_action( self::und( static::BASE, 'calendars', 'ical', 'notfound' ), $context );
 
 		WordPress\Theme::set404();
 	}
@@ -185,7 +185,7 @@ class Calendars extends gEditorial\Service
 		if ( ! $object = WordPress\PostType::object( $post ) )
 			return FALSE;
 
-		$prop = sprintf( '%s_module', self::BASE );
+		$prop = self::und( self::BASE, 'module' );
 
 		if ( empty( $object->{$prop} ) )
 			return FALSE;
@@ -259,11 +259,11 @@ class Calendars extends gEditorial\Service
 		$final = $summary = $vanue = FALSE;
 
 		// @REF: https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.4.7
-		$uid = implode( '-', [
+		$uid = self::dsh(
 			WordPress\Site::name(),
 			$post->post_type,
 			$post->ID, $context ?? static::ICAL_DEFAULT_CONTEXT,
-		] );
+		);
 
 		/**
 		 * @package `eluceo/ical`
@@ -407,7 +407,7 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::fullTitle( $post );
 		}
 
-		if ( $summary = apply_filters( static::BASE.'_calendars_post_summary',
+		if ( $summary = apply_filters( self::und( static::BASE, 'calendars', 'post', 'summary' ),
 			$summary,
 			$post,
 			$context,
@@ -415,7 +415,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
-		if ( $link = apply_filters( static::BASE.'_calendars_post_url',
+		if ( $link = apply_filters( self::und( static::BASE, 'calendars', 'post', 'url' ),
 			WordPress\Post::shortlink( $post ),
 			$post,
 			$context,
@@ -423,7 +423,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
-		if ( $desc = apply_filters( static::BASE.'_calendars_post_description',
+		if ( $desc = apply_filters( self::und( static::BASE, 'calendars', 'post', 'description' ),
 			WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ),
 			$post,
 			$context,
@@ -505,12 +505,12 @@ class Calendars extends gEditorial\Service
 		$final = $summary = $venue = FALSE;
 
 		// @REF: https://datatracker.ietf.org/doc/html/rfc5545#section-3.8.4.7
-		$uid = implode( '-', [
+		$uid = self::dsh(
 			WordPress\Site::name(),
 			$term->taxonomy,
 			$term->term_id,
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
-		] );
+		);
 
 		/**
 		 * @package `eluceo/ical`
@@ -623,7 +623,7 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::title( $term );
 		}
 
-		if ( $summary = apply_filters( static::BASE.'_calendars_term_summary',
+		if ( $summary = apply_filters( self::und( static::BASE, 'calendars', 'term', 'summary' ),
 			$summary,
 			$term,
 			$context,
@@ -631,7 +631,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
-		if ( $link = apply_filters( static::BASE.'_calendars_term_url',
+		if ( $link = apply_filters( self::und( static::BASE, 'calendars', 'term', 'url' ),
 			WordPress\Term::shortlink( $term ),
 			$term,
 			$context,
@@ -639,7 +639,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
-		if ( $desc = apply_filters( static::BASE.'_calendars_term_description',
+		if ( $desc = apply_filters( self::und( static::BASE, 'calendars', 'term', 'description' ),
 			WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ),
 			$term,
 			$context,
@@ -703,7 +703,7 @@ class Calendars extends gEditorial\Service
 
 	public static function sanitizeContextForLink( $context = NULL, $target = NULL, $object = NULL )
 	{
-		$filtered = apply_filters( static::BASE.'_calendars_sanitize_ical_context',
+		$filtered = apply_filters( self::und( static::BASE, 'calendars', 'sanitize_ical_context' ),
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
 			$target,
 			$object
@@ -733,7 +733,7 @@ class Calendars extends gEditorial\Service
 
 		$sanitized = self::sanitizeContextForLink( $context, 'post', $post );
 
-		return apply_filters( static::BASE.'_calendars_post_link',
+		return apply_filters( self::und( static::BASE, 'calendars', 'post', 'link' ),
 			WordPress\Post::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$post,
@@ -754,7 +754,7 @@ class Calendars extends gEditorial\Service
 
 		$sanitized = self::sanitizeContextForLink( $context, 'term', $term );
 
-		return apply_filters( static::BASE.'_calendars_term_link',
+		return apply_filters( self::und( static::BASE, 'calendars', 'term', 'link' ),
 			WordPress\Term::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$term,
@@ -789,7 +789,7 @@ class Calendars extends gEditorial\Service
 			// 'ethiopic'      => _x( 'Ethiopic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
 		];
 
-		return $filtered ? apply_filters( static::BASE.'_default_calendars', $calendars ) : $calendars;
+		return $filtered ? apply_filters( self::und( static::BASE, 'default_calendars' ), $calendars ) : $calendars;
 	}
 
 	/**
@@ -829,6 +829,10 @@ class Calendars extends gEditorial\Service
 		else
 			$sanitized = $default;
 
-		return apply_filters( static::BASE.'_sanitize_calendar', $sanitized, $default, $calendar );
+		return apply_filters( self::und( static::BASE, 'sanitize_calendar' ),
+			$sanitized,
+			$default,
+			$calendar
+		);
 	}
 }

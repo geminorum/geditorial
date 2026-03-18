@@ -154,8 +154,7 @@ class TermRelations extends gEditorial\Service
 							$meta = Core\Text::trim( $raw[$field] );
 					}
 
-					$filtered = apply_filters(
-						sprintf( '%s_sanitize_field_data', static::BASE ),
+					$filtered = apply_filters( self::und( static::BASE, 'sanitize_field_data' ),
 						$meta, $field, $term, $post, $raw
 					);
 
@@ -250,7 +249,7 @@ class TermRelations extends gEditorial\Service
 				else if ( static::FIELD_ORDER == $field )
 					$data[$field] = 0;
 
-				if ( ! empty( $args['type'] ) )  {
+				if ( ! empty( $args['type'] ) ) {
 
 					if ( 'boolean' === $args['type'] )
 						$data[$field] = (bool) $data[$field];
@@ -309,7 +308,7 @@ class TermRelations extends gEditorial\Service
 
 	public static function get_supported( $taxonomy, $context = NULL, $posttype = FALSE )
 	{
-		return apply_filters( sprintf( '%s_termrelations_supported', static::BASE ), [
+		return apply_filters( self::und( static::BASE, 'termrelations', 'supported' ), [
 			static::FIELD_ORDER     => NULL,
 			// static::FIELD_USERID    => NULL,
 			// static::FIELD_TIMESTAMP => NULL,

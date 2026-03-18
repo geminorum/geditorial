@@ -609,7 +609,7 @@ class Cartable extends gEditorial\Module
 				] );
 
 				$this->add_dashboard_widget(
-					sprintf( 'group-cartable-%s', $term->term_id ),
+					self::dsh( 'group-cartable', $term->term_id ),
 					$title,
 					'refresh',
 					[
@@ -642,7 +642,7 @@ class Cartable extends gEditorial\Module
 				] );
 
 				$this->add_dashboard_widget(
-					sprintf( 'type-cartable-%s', $term->term_id ),
+					self::dsh( 'type-cartable', $term->term_id ),
 					$title,
 					'refresh',
 					[

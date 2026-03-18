@@ -242,7 +242,11 @@ trait PostTypeFields
 				'order' => 1000 + $i,
 			], $args );
 
-			$this->actions( sprintf( 'init_posttype_field_%s', $field ), $fields[$field], $field, $posttype );
+			$this->actions( self::und( 'init', 'posttype_field', $field ),
+				$fields[$field],
+				$field,
+				$posttype
+			);
 		}
 
 		return Core\Arraay::multiSort( $fields, [
@@ -596,17 +600,14 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_metabox( $screen, $fields = NULL, $context = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
-
-		if ( is_null( $context ) )
-			$fields = $this->get_posttype_fields( $screen->post_type );
+		$context = $context ?? 'mainbox';
+		$fields  = $fields  ?? $this->get_posttype_fields( $screen->post_type );
 
 		// Bail if no fields enabled for this post-type
 		if ( ! count( $fields ) )
 			return FALSE;
 
-		$callback = $this->filters( sprintf( '%s_callback', $context ),
+		$callback = $this->filters( self::und( $context, 'callback' ),
 			in_array( $context, Core\Arraay::column( $fields, 'context' ), TRUE ),
 			$screen->post_type
 		);
@@ -615,8 +616,7 @@ trait PostTypeFields
 			$callback = [ $this, 'render_metabox_posttypefields' ];
 
 		if ( $callback && is_callable( $callback ) )
-			add_meta_box(
-				$this->classs( $screen->post_type ),
+			add_meta_box( $this->classs( $screen->post_type ),
 				$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 				$callback,
 				$screen,
@@ -631,7 +631,7 @@ trait PostTypeFields
 			);
 
 		// NOTE: WARNING: also we have: `$this->_hook_store_metabox( $posttype, 'posttypefields' );`
-		add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_metabox_posttypefields' ], 20, 3 );
+		add_action( self::und( 'save_post', $screen->post_type ), [ $this, 'store_metabox_posttypefields' ], 20, 3 );
 		add_action( $this->hook( 'render_metabox' ), [ $this, 'render_posttype_fields' ], 10, 4 );
 	}
 
@@ -663,12 +663,8 @@ trait PostTypeFields
 	{
 		$user_id  = get_current_user_id();
 		$calendar = $this->default_calendar();
-
-		if ( is_null( $context ) )
-			$context = 'mainbox';
-
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $post->post_type );
+		$context  = $context ?? 'mainbox';
+		$fields   = $fields  ?? $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field ) {
 
@@ -880,8 +876,7 @@ trait PostTypeFields
 		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
 			return FALSE;
 
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $posttype );
+		$fields = $fields ?? $this->get_posttype_fields( $posttype );
 
 		if ( ! $quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) )
 			return FALSE;
@@ -1207,7 +1202,7 @@ trait PostTypeFields
 	protected function posttypefields_support_posttypes()
 	{
 		$posttypes = [ 'post' ];
-		$supported = get_post_types_by_support( sprintf( 'editorial-%s', $this->key ) );
+		$supported = get_post_types_by_support( self::dsh( 'editorial', $this->key ) );
 		$excludes  = [
 			'attachment',
 			'page',
@@ -1244,7 +1239,7 @@ trait PostTypeFields
 		$this->filter( 'pairedrest_prepped_post', 3, 9, 'posttypefields', $this->base );
 		$this->filter( 'pairedimports_import_types', 4, 5, 'posttypefields', $this->base );
 
-		$attribute = $this->constant( 'restapi_attribute', sprintf( '%s_rendered', $this->key ) );
+		$attribute = $this->constant( 'restapi_attribute', self::und( $this->key, 'rendered' ) );
 		$is_rest   = WordPress\IsIt::rest();
 
 		foreach ( $this->posttypes() as $posttype ) {
@@ -1336,7 +1331,7 @@ trait PostTypeFields
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $prepped;
 
-		$attribute = $this->constant( 'restapi_attribute', sprintf( '%s_rendered', $this->key ) );
+		$attribute = $this->constant( 'restapi_attribute', self::und( $this->key, 'rendered' ) );
 
 		return array_merge( $prepped, [
 			$attribute => $this->get_posttype_fields_data( $post, TRUE, 'rest' ),

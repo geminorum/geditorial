@@ -354,8 +354,7 @@ class Positions extends gEditorial\Module
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
+		$context = $context ?? 'supportedbox';
 
 		$this->subcontent_render_metabox_data_grid( $object, $context );
 

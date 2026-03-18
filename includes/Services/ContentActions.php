@@ -24,7 +24,7 @@ class ContentActions extends gEditorial\Service
 	// @example: `$this->filter( 'post_actions', 2, 10, FALSE, $this->base );`
 	public static function post_submitbox_start( $post )
 	{
-		if ( ! $actions = apply_filters( sprintf( '%s_post_actions', static::BASE ), [], $post ) )
+		if ( ! $actions = apply_filters( self::und( static::BASE, 'post_actions' ), [], $post ) )
 			return;
 
 		printf( '<div class="-wrap %s-wrap -post-actions">', static::BASE );
@@ -37,7 +37,7 @@ class ContentActions extends gEditorial\Service
 			// TODO: add `Do` button
 
 			wp_nonce_field(
-				sprintf( '%s_post_action', static::BASE ),
+				self::und( static::BASE, 'post_action' ),
 				sprintf( '_%s_post_action', static::BASE ),
 				FALSE,
 				TRUE
@@ -53,13 +53,13 @@ class ContentActions extends gEditorial\Service
 			return;
 
 		$action = sanitize_text_field( self::unslash( $action ) );
-		$hook   = sprintf( '%s_post_action_%s', static::BASE, $action );
+		$hook   = self::und( static::BASE, 'post_action', $action );
 
 		if ( did_action( $hook ) )
 			return;
 
 		check_admin_referer(
-			sprintf( '%s_post_action', static::BASE ),
+			self::und( static::BASE, 'post_action' ),
 			sprintf( '_%s_post_action', static::BASE )
 		);
 
@@ -74,18 +74,18 @@ class ContentActions extends gEditorial\Service
 
 		$before = $after = '';
 
-		if ( has_action( sprintf( '%s_content_before', static::BASE ) ) ) {
+		if ( has_action( self::und( static::BASE, 'content_before' ) ) ) {
 			ob_start();
-				do_action( sprintf( '%s_content_before', static::BASE ), $content );
+				do_action( self::und( static::BASE, 'content_before' ), $content );
 			$before = ob_get_clean();
 
 			if ( trim( $before ) )
 				$before = '<div class="'.static::BASE.'-wrap-actions content-before">'.$before.'</div>';
 		}
 
-		if ( has_action( sprintf( '%s_content_after', static::BASE ) ) ) {
+		if ( has_action( self::und( static::BASE, 'content_after' ) ) ) {
 			ob_start();
-				do_action( sprintf( '%s_content_after', static::BASE ), $content );
+				do_action( self::und( static::BASE, 'content_after' ), $content );
 			$after = ob_get_clean();
 
 			if ( trim( $after ) )

@@ -323,8 +323,7 @@ class NationalLibrary extends gEditorial\Module
 			}, 2, 8 );
 
 		if ( $this->get_setting( 'metabox_advanced' ) )
-			add_meta_box(
-				$this->classs(),
+			add_meta_box( $this->classs(),
 				// $this->strings_metabox_title_via_posttype( $screen->post_type, 'mainbox' ),
 				_x( 'Fipa', 'Meta-Box Title', 'geditorial-national-library' ),
 				[ $this, 'render_metabox_fipa' ],
@@ -740,7 +739,7 @@ class NationalLibrary extends gEditorial\Module
 			'base-table-double',  // WP ADMIN
 			'table'            ,  // BS CLASS
 			// 'table-bordered'   ,  // BS CLASS
-			sprintf( 'table-context-%s', $context ?? 'default' ),
+			self::dsh( 'table-context', $context ?? 'default' ),
 		], (array) $extra ), $context );
 	}
 

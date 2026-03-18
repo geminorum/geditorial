@@ -379,7 +379,7 @@ class Template extends WordPress\Main
 					: FALSE;
 		}
 
-		$args  = apply_filters( static::BASE.'_template_post_image_args', $args, $post, $module, $title );
+		$args  = apply_filters( self::und( static::BASE, 'template', 'post_image_args' ), $args, $post, $module, $title );
 		$image = self::getPostImageTag( $args );
 
 		if ( $args['callback'] && is_callable( $args['callback'] ) ) {
@@ -672,7 +672,12 @@ class Template extends WordPress\Main
 				break;
 		}
 
-		return apply_filters( static::BASE.'_media_shortcode', $html, $meta, $type, $context );
+		return apply_filters( self::und( static::BASE, 'media_shortcode' ),
+			$html,
+			$meta,
+			$type,
+			$context
+		);
 	}
 
 	// NOTE: DEPRECATED
@@ -987,7 +992,12 @@ class Template extends WordPress\Main
 				$rows[$title] = $meta;
 		}
 
-		$rows = apply_filters( static::BASE.'_meta_summary_rows', $rows, $list, $post, $args );
+		$rows = apply_filters( self::und( static::BASE, 'meta_summary_rows' ),
+			$rows,
+			$list,
+			$post,
+			$args
+		);
 
 		if ( empty( $rows ) )
 			return $args['default'];
@@ -1188,7 +1198,7 @@ class Template extends WordPress\Main
 
 		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$desc   = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
-		$suffix = $args['secondary'] ?? apply_filters( sprintf( '%s_term_intro_title_suffix', static::BASE ), '', $term, $desc, $args, $module );
+		$suffix = $args['secondary'] ?? apply_filters( self::und( static::BASE, 'term_intro_title_suffix' ), '', $term, $desc, $args, $module );
 
 		$image = self::termImage( [
 			'id'       => $term,
@@ -1208,19 +1218,19 @@ class Template extends WordPress\Main
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
-			do_action( sprintf( '%s_term_intro_title_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, 'term_intro', 'title', 'before' ), $term, $desc, (bool) $image, $args, $module );
 
 			if ( $args['heading'] )
 				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ).Core\HTML::small( $suffix, '-secondary', TRUE ) );
 
-			do_action( sprintf( '%s_term_intro_description_before', static::BASE ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, 'term_intro', 'description', 'before' ), $term, $desc, (bool) $image, $args, $module );
 
 			echo Core\HTML::wrap(
 				WordPress\Strings::prepDescription(
 					WordPress\Strings::kses( $desc, 'html' )
 				), 'term-description -term-description' );
 
-			do_action( sprintf( '%s_term_intro_description_after', static::BASE ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, 'term_intro', 'description', 'after' ), $term, $desc, (bool) $image, $args, $module );
 
 		echo '</div>'; // `.col`
 		echo '</div>'; // `.row`

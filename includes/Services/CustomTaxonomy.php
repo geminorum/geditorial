@@ -31,7 +31,7 @@ class CustomTaxonomy extends gEditorial\Service
 	{
 		$strings = WordPress\Strings::getNameForms( $name );
 
-		$templates = apply_filters( static::BASE.'_taxonomy_labels_templates', [
+		$templates = apply_filters( self::und( static::BASE, 'taxonomy', 'labels_templates' ), [
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */
 			'name'                       => _x( '%1$s', 'CustomTaxonomy: Label for `name`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural taxonomy, `%2$s`: camel case / singular taxonomy, `%3$s`: lower case / plural taxonomy, `%4$s`: lower case / singular taxonomy, `%5$s`: `%s` placeholder */

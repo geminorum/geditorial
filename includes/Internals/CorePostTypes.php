@@ -177,7 +177,7 @@ trait CorePostTypes
 						$args['menu_icon'] = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 					else
-						$args['menu_icon'] = sprintf( 'dashicons-%s', $icon );
+						$args['menu_icon'] = self::dsh( 'dashicons', $icon );
 
 					// NOTE: passing icon on the original format: string/array
 					$args[Services\Icons::MENUICON_PROP] = $icon;
@@ -250,14 +250,14 @@ trait CorePostTypes
 							];
 
 						if ( ! array_key_exists( 'capabilities', $args ) )
-							$args['capabilities'] = [ 'create_posts' => sprintf( 'create_%s', $args['capability_type'][1] ) ];
+							$args['capabilities'] = [ 'create_posts' => self::und( 'create', $args['capability_type'][1] ) ];
 
 						else if ( ! array_key_exists( 'create_posts', $args['capabilities'] ) )
-							$args['capabilities']['create_posts'] = sprintf( 'create_%s', $args['capability_type'][1] );
+							$args['capabilities']['create_posts'] = self::und( 'create', $args['capability_type'][1] );
 
 						// same as `edit_others_posts`
 						if ( ! array_key_exists( 'import_posts', $args['capabilities'] ) )
-							$args['capabilities']['import_posts'] = sprintf( 'edit_others_%s', $args['capability_type'][1] );
+							$args['capabilities']['import_posts'] = self::und( 'edit_others', $args['capability_type'][1] );
 
 						if ( in_array( 'comments', $args['supports'], TRUE ) )
 							add_filter( 'map_meta_cap',
@@ -275,7 +275,7 @@ trait CorePostTypes
 									if ( $posttype !== $post->post_type )
 										return $caps;
 
-									if ( user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
+									if ( user_can( $user_id, self::und( 'manage', $args['capability_type'][1] ) ) )
 										return [ 'exist' ];
 
 									return [ 'do_not_allow' ];
@@ -289,11 +289,11 @@ trait CorePostTypes
 										return $caps; // already cleared!
 
 									if ( 'assign_post_tags' === $cap
-										&& user_can( $user_id, sprintf( 'edit_%s', $args['capability_type'][1] ) ) )
+										&& user_can( $user_id, self::und( 'edit', $args['capability_type'][1] ) ) )
 											return [ 'exist' ];
 
 									if ( in_array( $cap, [ 'manage_post_tags', 'edit_post_tags', 'delete_post_tags' ], TRUE )
-										&& user_can( $user_id, sprintf( 'manage_%s', $args['capability_type'][1] ) ) )
+										&& user_can( $user_id, self::und( 'manage', $args['capability_type'][1] ) ) )
 											return [ 'exist' ];
 
 									return $caps;
@@ -308,11 +308,11 @@ trait CorePostTypes
 							// @SEE: https://core.trac.wordpress.org/ticket/22895
 							if ( ! array_key_exists( 'capabilities', $args ) )
 								$args['capabilities'] = [
-									'create_posts' => sprintf( 'create_%s',
+									'create_posts' => self::und( 'create',
 										is_array( $args['capability_type'] )
 											? $args['capability_type'][1]
 											: Core\L10n::pluralize( $args['capability_type'] ) ),
-									'import_posts' => sprintf( 'edit_others_%s',
+									'import_posts' => self::und( 'edit_others',
 										is_array( $args['capability_type'] )
 											? $args['capability_type'][1]
 											: Core\L10n::pluralize( $args['capability_type'] ) )
@@ -520,7 +520,7 @@ trait CorePostTypes
 		if ( empty( $posttype ) || empty( $feature ) )
 			return FALSE;
 
-		return $this->filters( sprintf( 'posttype_%s_supports_%s', $posttype, $feature ),
+		return $this->filters( self::und( 'posttype', $posttype, 'supports', $feature ),
 			$_wp_post_type_features[$posttype][$feature] ?? $fallback,
 			$posttype,
 			$feature,

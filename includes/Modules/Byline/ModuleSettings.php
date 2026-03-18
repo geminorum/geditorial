@@ -401,7 +401,7 @@ class ModuleSettings extends gEditorial\Settings
 			] ), 'field-wrap -select' );
 
 			echo Core\HTML::wrap( Core\HTML::radioSelect( $modes, [
-				'id'       => implode( '-', [ static::BASE, static::MODULE, 'mode' ] ),
+				'id'       => self::dsh( static::BASE, static::MODULE, 'mode' ),
 				'name'     => 'mode',
 				'selected' => self::req( 'mode', $defaults['mode'] ) ?: '',
 				'class'    => 'do-dynamicsubmit',

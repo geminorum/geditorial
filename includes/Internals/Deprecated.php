@@ -150,8 +150,7 @@ trait Deprecated
 	{
 		self::_dep();
 
-		if ( is_null( $fields ) )
-			$fields = $this->get_posttype_fields( $post->post_type );
+		$fields = $fields ?? $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -425,7 +424,7 @@ trait Deprecated
 				$html.' '.$info,
 				'-readonly-title',
 				TRUE,
-				sprintf( '%s-readonlytitle', $this->base )
+				self::dsh( $this->base, 'readonlytitle' )
 			);
 		}, 1, 1 );
 	}
@@ -532,7 +531,7 @@ trait Deprecated
 			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 		else if ( $icon )
-			$icon = sprintf( 'dashicons-%s', $icon );
+			$icon = self::dsh( 'dashicons', $icon );
 
 		return $icon ?: 'dashicons-'.$default;
 	}
@@ -550,7 +549,7 @@ trait Deprecated
 			$icon = Core\Icon::getBase64( $icon[1], $icon[0] );
 
 		else if ( $icon )
-			$icon = sprintf( 'dashicons-%s', $icon );
+			$icon = self::dsh( 'dashicons', $icon );
 
 		return $icon ?: 'dashicons-'.$default;
 	}

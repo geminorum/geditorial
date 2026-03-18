@@ -35,7 +35,7 @@ trait BulkExports
 
 		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
 
-			$name  = sprintf( 'export_%s', $type );
+			$name  = self::und( 'export', $type );
 			$label = sprintf(
 				/* translators: `%s`: export type title */
 				_x( 'Export: %s', 'Internal: Exports: Link Label', 'geditorial-admin' ),
@@ -167,20 +167,19 @@ trait BulkExports
 
 			case 'posttype':
 
-				return sprintf( '%s-%s-%s.%s', $reference, $context, $type, $ext );
+				return self::dot( self::dsh( $reference, $context, $type ), $ext );
 
 			case 'assigned':
 
 				if ( ! $term = WordPress\Term::get( (int) $reference ) )
 					break;
 
-				return vsprintf( '%s-%s-%s-%s.%s', [
+				return self::dot( self::dsh(
 					$term->taxonomy,
 					$term->slug ?: $term->name,
 					$context,
-					$type,
-					$ext,
-				] );
+					$type
+				), $ext );
 
 			case 'globalsummary':
 			case 'paired':
@@ -188,15 +187,14 @@ trait BulkExports
 				if ( ! $post = WordPress\Post::get( $reference ) )
 					break;
 
-				return vsprintf( '%s-%s-%s.%s', [
+				return self::dot( self::dsh(
 					$post->post_name ?: $post->post_title,
 					$context,
-					$type,
-					$ext,
-				] );
+					$type
+				), $ext );
 		}
 
-		return sprintf( '%s-%s.%s', $context, $type, $ext );
+		return self::dot( self::dsh( $context, $type ), $ext );
 	}
 
 	protected function exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )

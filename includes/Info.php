@@ -51,7 +51,10 @@ class Info extends WordPress\Main
 
 		$url = sprintf( 'geo:%s,%s', $latlng[0], $latlng[1] );
 
-		return apply_filters( static::BASE.'_lookup_latlng', $url, $latlng );
+		return apply_filters( self::und( static::BASE, 'lookup', 'latlng' ),
+			$url,
+			$latlng
+		);
 	}
 
 	public static function lookupCountry( $code )
@@ -97,7 +100,10 @@ class Info extends WordPress\Main
 			'vid' => urlencode( 'isbn'.Core\ISBN::sanitize( $isbn ) ),
 		], 'https://books.google.com/books' );
 
-		return apply_filters( static::BASE.'_lookup_isbn', $url, $isbn );
+		return apply_filters( self::und( static::BASE, 'lookup', 'isbn' ),
+			$url,
+			$isbn
+		);
 	}
 
 	// NOTE: must return HTML link tag
@@ -120,7 +126,10 @@ class Info extends WordPress\Main
 			Core\Validation::sanitizeVIN( $vin )
 		);
 
-		return apply_filters( static::BASE.'_lookup_vin', $url, $vin );
+		return apply_filters( self::und( static::BASE, 'lookup', 'vin' ),
+			$url,
+			$vin
+		);
 	}
 
 	public static function fromIBAN( $input, $pre = [] )
@@ -143,7 +152,12 @@ class Info extends WordPress\Main
 			$info = FALSE;
 		}
 
-		return apply_filters( static::BASE.'_info_from_iban', $info, $raw, $input, $pre );
+		return apply_filters( self::und( static::BASE, 'info', 'from_iban' ),
+			$info,
+			$raw,
+			$input,
+			$pre
+		);
 	}
 
 	public static function fromPostCode( $input, $pre = [] )
@@ -187,7 +201,12 @@ class Info extends WordPress\Main
 			$info = FALSE;
 		}
 
-		return apply_filters( static::BASE.'_info_from_postcode', $info, $raw, $input, $pre );
+		return apply_filters( self::und( static::BASE, 'info', 'from_postcode' ),
+			$info,
+			$raw,
+			$input,
+			$pre
+		);
 	}
 
 	public static function fromCardNumber( $input, $pre = [] )
@@ -199,7 +218,12 @@ class Info extends WordPress\Main
 		else
 			$info = FALSE;
 
-		return apply_filters( static::BASE.'_info_from_card_number', $info, $raw, $input, $pre );
+		return apply_filters( self::und( static::BASE, 'info', 'from_card_number' ),
+			$info,
+			$raw,
+			$input,
+			$pre
+		);
 	}
 
 	public static function renderNoticeP2P()
@@ -746,15 +770,18 @@ class Info extends WordPress\Main
 			case 'post_type'            : $title = _x( 'Type', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'post_mime_type'       : $title = _x( 'Mime-Type', 'Info: Posttype Prop Title', 'geditorial' ); break;
 			case 'comment_count'        : $title = _x( 'Comment Count', 'Info: Posttype Prop Title', 'geditorial' ); break;
-
 		}
 
-		return apply_filters( static::BASE.'_posttype_prop_title', $title, $prop, $context );
+		return apply_filters( self::und( static::BASE, 'posttype_prop_title' ),
+			$title,
+			$prop,
+			$context
+		);
 	}
 
 	public static function getDropzoneStrings()
 	{
-		return apply_filters( static::BASE.'_strings_dropzone', [
+		return apply_filters( self::und( static::BASE, 'strings_dropzone' ), [
 				/* translators: The text used before any files are dropped. */
 				'dictDefaultMessage' => _x( 'Drop files here to upload', 'Info: Dropzone: `dictDefaultMessage`', 'geditorial' ),
 
@@ -779,7 +806,7 @@ class Info extends WordPress\Main
 				/* translators: The text that is displayed if an upload was manually canceled. */
 				'dictUploadCanceled' => _x( 'Upload canceled.', 'Info: Dropzone: `dictUploadCanceled`', 'geditorial' ),
 
-				/* translators: If `addRemoveLinks` is true, the text to be used for confirmation when cancelling upload. */
+				/* translators: If `addRemoveLinks` is true, the text to be used for confirmation when canceling upload. */
 				'dictCancelUploadConfirmation' => _x( 'Are you sure you want to cancel this upload?', 'Info: Dropzone: `dictCancelUploadConfirmation`', 'geditorial' ),
 
 				/* translators: If `addRemoveLinks` is true, the text to be used to remove a file. */
@@ -789,7 +816,7 @@ class Info extends WordPress\Main
 				'dictMaxFilesExceeded' => _x( 'You can not upload any more files.', 'Info: Dropzone: `dictMaxFilesExceeded`', 'geditorial' ),
 
 				/* translators: Allows you to translate the different units. Starting with `tb` for terabytes and going down to `b` for bytes. */
-				// 'dictFileSizeUnits' => '', // { tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" }
+				// 'dictFileSizeUnits' => '', // `{ tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" }`
 
 				/* translators: If this is not null, then the user will be prompted before removing a file. */
 				// 'dictRemoveFileConfirmation => '', // NULL

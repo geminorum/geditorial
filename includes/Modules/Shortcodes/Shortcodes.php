@@ -83,7 +83,7 @@ class Shortcodes extends gEditorial\Module
 		parent::init();
 
 		foreach ( $this->get_setting( 'shortcodes', [] ) as $shortcode )
-			$this->register_shortcode( sprintf( '%s_shortcode', Core\Text::sanitizeHook( $shortcode ) ), TRUE );
+			$this->register_shortcode( self::und( Core\Text::sanitizeHook( $shortcode ), 'shortcode' ), TRUE );
 
 		if ( is_admin() )
 			return;

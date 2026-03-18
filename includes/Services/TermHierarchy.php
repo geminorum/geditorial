@@ -150,7 +150,7 @@ class TermHierarchy extends gEditorial\Service
 				'value'             => $taxonomy->hierarchical ? 'term_id' : 'slug',
 				'value_field'       => $taxonomy->hierarchical ? 'term_id' : 'slug',
 				'name'              => sprintf( '%s[%s][]', $bulkedit ? static::SINGLE_TERM_SELECT : 'tax_input', $taxonomy->name ),
-				'id'                => sprintf( '%s-singleselect-%s-%s', static::BASE, $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
+				'id'                => self::dsh( static::BASE, 'singleselect', $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
 				'option_none_value' => '0',
 				'show_option_none'  => CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
@@ -229,7 +229,7 @@ class TermHierarchy extends gEditorial\Service
 			return WordPress\Term::get( reset( $terms ) );
 
 		if ( TRUE === $object->{static::SINGLE_TERM_SELECT} )
-			return apply_filters( sprintf( '%s_singleselect_term_%s', static::BASE, $object->name ),
+			return apply_filters( self::und( static::BASE, 'singleselect', 'term', $object->name ),
 				WordPress\Term::get( reset( $terms ) ),
 				$terms,
 				$taxonomy,

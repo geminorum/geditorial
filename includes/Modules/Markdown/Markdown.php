@@ -3,11 +3,9 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Markdown extends gEditorial\Module
@@ -285,48 +283,51 @@ class Markdown extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			Ajax::errorMessage();
+			gEditorial\Ajax::errorMessage();
 
 		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
-			Ajax::errorUserCant();
+			gEditorial\Ajax::errorUserCant();
 
-		Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'process':
 
 				if ( ! $this->process_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML!', 'Message', 'geditorial-markdown' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage( _x( 'Processed successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				gEditorial\Ajax::successMessage( _x( 'Processed successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+
 				break;
 
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to convert content into Markdown!', 'Message', 'geditorial-markdown' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Unable to convert content into Markdown!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage( _x( 'Converted successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				gEditorial\Ajax::successMessage( _x( 'Converted successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+
 				break;
 
 			case 'cleanup':
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to cleanup Markdown content!', 'Message', 'geditorial-markdown' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Unable to cleanup Markdown content!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage( _x( 'Cleaned-up successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				gEditorial\Ajax::successMessage( _x( 'Cleaned-up successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+
 				break;
 
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML!', 'Message', 'geditorial-markdown' ) );
+					gEditorial\Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				Ajax::successMessage( _x( 'Discarded successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				gEditorial\Ajax::successMessage( _x( 'Discarded successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 		}
 
-		Ajax::errorWhat();
+		gEditorial\Ajax::errorWhat();
 	}
 
 	// @REF: https://github.com/michelf/php-markdown
@@ -581,7 +582,7 @@ class Markdown extends gEditorial\Module
 
 				$count = 0;
 
-				if ( Tablelist::isAction( 'convert_markdown', TRUE ) ) {
+				if ( gEditorial\Tablelist::isAction( 'convert_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->convert_post( $post_id ) )
@@ -593,7 +594,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( Tablelist::isAction( 'process_markdown', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'process_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->process_post( $post_id ) )
@@ -605,7 +606,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( Tablelist::isAction( 'cleanup_markdown', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'cleanup_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->cleanup_post( $post_id ) )
@@ -617,7 +618,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( Tablelist::isAction( 'discard_markdown', TRUE ) ) {
+				} else if ( gEditorial\Tablelist::isAction( 'discard_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->discard_post( $post_id ) )
@@ -637,21 +638,21 @@ class Markdown extends gEditorial\Module
 	{
 		$list = $this->list_posttypes();
 
-		list( $posts, $pagination ) = Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Table Action', 'geditorial-markdown' );
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'      => 'ID',
-			'ID'       => Tablelist::columnPostID(),
-			'date'     => Tablelist::columnPostDate(),
-			'type'     => Tablelist::columnPostType(),
+			'ID'       => gEditorial\Tablelist::columnPostID(),
+			'date'     => gEditorial\Tablelist::columnPostDate(),
+			'type'     => gEditorial\Tablelist::columnPostType(),
 			'markdown' => [
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
@@ -659,8 +660,8 @@ class Markdown extends gEditorial\Module
 					return $this->is_markdown( $row->ID ) ? Services\Icons::get( $this->module->icon ) : '';
 				},
 			],
-			'title' => Tablelist::columnPostTitle(),
-			'terms' => Tablelist::columnPostTerms(),
+			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'terms' => gEditorial\Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

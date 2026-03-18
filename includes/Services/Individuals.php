@@ -28,12 +28,12 @@ class Individuals extends gEditorial\Service
 	public static function setup()
 	{
 		if ( self::isParserAvailable() )
-			add_filter( static::BASE.'_people_format_name', [ __CLASS__, 'filter_people_format_name' ], 9, 3 );
+			add_filter( self::und( static::BASE, 'people_format_name' ), [ __CLASS__, 'filter_people_format_name' ], 9, 3 );
 
 		if ( is_admin() )
 			return;
 
-		add_filter( static::BASE.'_prep_individual', [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
+		add_filter( self::und( static::BASE, 'prep_individual' ), [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
 	}
 
 	public static function isParserAvailable()
@@ -53,7 +53,7 @@ class Individuals extends gEditorial\Service
 		$list = [];
 
 		foreach ( Markup::getSeparated( $value ) as $individual )
-			if ( $prepared = apply_filters( static::BASE.'_prep_individual', $individual, $individual, $value ) )
+			if ( $prepared = apply_filters( self::und( static::BASE, 'prep_individual' ), $individual, $individual, $value ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );

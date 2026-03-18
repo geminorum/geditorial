@@ -27,7 +27,7 @@ trait PairedRowActions
 			return FALSE;
 
 		$label = $this->get_posttype_label( $constants[0], 'add_new_item' );
-		$key   = sprintf( 'paired_add_new_%s', $paired_posttype );
+		$key   = self::und( 'paired', 'add_new', $paired_posttype );
 
 		add_filter( 'gnetwork_taxonomy_bulk_actions',
 			static function ( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
@@ -86,7 +86,7 @@ trait PairedRowActions
 		$paired_posttype = $this->constant( $constants[0] );
 		$paired_taxonomy = $this->constant( $constants[1] );
 
-		if ( $action !== sprintf( 'paired_add_new_%s', $paired_posttype ) )
+		if ( $action !== self::und( 'paired', 'add_new', $paired_posttype ) )
 			return FALSE;
 
 		$target    = self::req( $this->classs( 'paired-add-new-item-target' ) );

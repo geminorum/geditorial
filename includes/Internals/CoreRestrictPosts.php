@@ -128,7 +128,7 @@ trait CoreRestrictPosts
 					return $pieces;
 
 				foreach ( $taxonomies as $taxonomy )
-					if ( sprintf( 'taxonomy-%s', $taxonomy ) === $wp_query->query['orderby'] )
+					if ( self::dsh( 'taxonomy', $taxonomy ) === $wp_query->query['orderby'] )
 						return gEditorial\Listtable::orderClausesByTaxonomy( $pieces, $wp_query, $taxonomy );
 
 				return $pieces;
@@ -147,7 +147,7 @@ trait CoreRestrictPosts
 	protected function corerestrictposts__hook_parsequery_for_post_parent( $constant, $query_var = NULL )
 	{
 		$posttype  = $this->constant( $constant, $constant );
-		$query_var = $query_var ?? sprintf( '%s_parent', $posttype );
+		$query_var = $query_var ?? self::und( $posttype, 'parent' );
 
 		$this->filter_append( 'query_vars', $query_var );
 
@@ -203,10 +203,10 @@ trait CoreRestrictPosts
 				if ( $count = count( $children ) )
 					echo $edit.Core\HTML::tag( $can ? 'a' : 'span', [
 						'href'  => $can ? WordPress\PostType::edit( $posttype, [
-							sprintf( '%s_parent', $posttype ) => $post->ID,
+							self::und( $posttype, 'parent' ) => $post->ID,
 						] ) : FALSE,
 						'class' => '-counted',
-					], $this->nooped_count( sprintf( '%s_count', $constant ), $count ) );
+					], $this->nooped_count( self::und( $constant, 'count' ), $count ) );
 
 				else
 					echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );

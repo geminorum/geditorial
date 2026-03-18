@@ -18,7 +18,7 @@ trait SettingsTaxonomies
 	 */
 	public function get_setting_taxonomies( $target, $fallback = [] )
 	{
-		return $target ? $this->get_setting( sprintf( '%s_taxonomies', $target ), $fallback ): $fallback;
+		return $target ? $this->get_setting( self::und( $target, 'taxonomies' ), $fallback ): $fallback;
 	}
 
 	/**

@@ -15,15 +15,13 @@ trait CoreUsers
 
 	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
 	{
-		if ( is_null( $fields ) )
-			$fields = [
-				'ID',
-				'display_name',
-				'user_login',
-				'user_email',
-			];
-
 		$excludes = $this->get_setting( 'excluded_roles', [] );
+		$fields   = $fields ?? [
+			'ID',
+			'display_name',
+			'user_login',
+			'user_email',
+		];
 
 		if ( $admins )
 			$excludes[] = 'administrator';

@@ -436,18 +436,12 @@ class Today extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
-
-		$this->_render_day_input( $object, $context );
+		$this->_render_day_input( $object, $context ?? 'mainbox' );
 	}
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
-		$this->_render_day_input( $object, $context );
+		$this->_render_day_input( $object, $context ?? 'supportedbox' );
 	}
 
 	private function _render_day_input( $post, $context = NULL )

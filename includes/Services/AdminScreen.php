@@ -88,7 +88,7 @@ class AdminScreen extends gEditorial\Service
 				$colors[] = "\t".sprintf( '--%s-admin-color-icon-%s: %s;', static::BASE, $key, $color );
 
 		// @hook `geditorial_adminscreen_colors`
-		if ( ! $colors = apply_filters( implode( '_', [ static::BASE, 'adminscreen', 'colors' ] ), $colors, $scheme, static::BASE ) )
+		if ( ! $colors = apply_filters( self::und( static::BASE, 'adminscreen', 'colors' ), $colors, $scheme, static::BASE ) )
 			return FALSE;
 
         echo '<style id="'.static::BASE.'-admin-colors" data-scheme="'.$scheme.'">'."\n";
@@ -125,7 +125,7 @@ class AdminScreen extends gEditorial\Service
 		$taxonomy = $taxonomy ?? $screen->taxonomy;
 		$mainkey  = $mainkey  ?? 'adminscreen';
 
-		if ( ! apply_filters( static::BASE.'_'.$mainkey.'_enhancements', TRUE, $taxonomy, $mainkey, $screen ) )
+		if ( ! apply_filters( self::und( static::BASE, $mainkey, 'enhancements' ), TRUE, $taxonomy, $mainkey, $screen ) )
 			return FALSE;
 
 		if ( 'edit-tags' === $screen->base ) {
@@ -134,8 +134,8 @@ class AdminScreen extends gEditorial\Service
 				// '_nonce'   => wp_create_nonce( $mainkey ),
 				// 'strings'  => [],
 				'settings' => [
-					'inputs'  => apply_filters( implode( '_', [ static::BASE, $mainkey, 'fillbyquery', 'inputs' ] ), [], $taxonomy, $mainkey ),
-					'selects' => apply_filters( implode( '_', [ static::BASE, $mainkey, 'fillbyquery', 'selects' ] ), [], $taxonomy, $mainkey ),
+					'inputs'  => apply_filters( self::und( static::BASE, $mainkey, 'fillbyquery', 'inputs' ), [], $taxonomy, $mainkey ),
+					'selects' => apply_filters( self::und( static::BASE, $mainkey, 'fillbyquery', 'selects' ), [], $taxonomy, $mainkey ),
 				],
 			];
 
@@ -205,7 +205,7 @@ class AdminScreen extends gEditorial\Service
 					'-readonly-title',
 					TRUE,
 					[],
-					sprintf( '%s-readonlytitle', static::BASE )
+					self::dsh( static::BASE, 'readonlytitle' )
 				);
 			}, 1, 1 );
 	}
@@ -220,20 +220,25 @@ class AdminScreen extends gEditorial\Service
 	 */
 	public static function disableQuickEdit( $screen = NULL )
 	{
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$screen = $screen ?? get_current_screen();
 
 		add_filter( 'page_row_actions',
-			static function ( $actions, $post) use ( $screen ) {
+			static function ( $actions, $post)
+				use ( $screen ) {
+
 				if ( $post->post_type === $screen->post_type )
 					unset( $actions['inline hide-if-no-js'] );
+
 				return $actions;
 			}, 12, 2 );
 
 		add_filter( 'post_row_actions',
-			static function ( $actions, $post ) use ( $screen ) {
+			static function ( $actions, $post )
+				use ( $screen ) {
+
 				if ( $post->post_type === $screen->post_type )
 					unset( $actions['inline hide-if-no-js'] );
+
 				return $actions;
 			}, 12, 2 );
 
@@ -247,8 +252,7 @@ class AdminScreen extends gEditorial\Service
 	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
 	public static function screen_settings( $settings, $screen )
 	{
-		$taxonomies = apply_filters(
-			static::BASE.'_screen_restrict_taxonomies',
+		$taxonomies = apply_filters( self::und( static::BASE, 'screen_restrict_taxonomies' ),
 			[],
 			$screen
 		);
@@ -256,8 +260,8 @@ class AdminScreen extends gEditorial\Service
 		if ( empty( $taxonomies ) )
 			return $settings;
 
-		$name  = sprintf( '%s-restrict-%s', static::BASE, $screen->post_type );
-		$value = get_user_option( sprintf( '%s_restrict_%s', static::BASE, $screen->post_type ) );
+		$name  = self::dsh( static::BASE, 'restrict', $screen->post_type );
+		$value = get_user_option( self::und( static::BASE, 'restrict', $screen->post_type ) );
 
 		$html = '<fieldset>';
 		$html.= Core\HTML::tag( 'legend', _x( 'Restrictions', 'Service: AdminScreen: Screen Settings Title', 'geditorial-admin' ) );
@@ -266,7 +270,7 @@ class AdminScreen extends gEditorial\Service
 			'item_tag' => FALSE, // 'span',
 			'prop'     => 'label',
 			'value'    => 'name',
-			'id'       => static::BASE.'-tax-restrictions',
+			'id'       => self::dsh( static::BASE, 'tax-restrictions' ),
 			'name'     => $name,
 			'selected' => FALSE === $value ? $taxonomies : $value,
 		] );
@@ -299,7 +303,7 @@ class AdminScreen extends gEditorial\Service
 	// @SEE: https://webkul.com/blog/how-to-add-custom-screen-option-in-woocommerce/
 	private static function _handle_set_screen_options( $posttype )
 	{
-		$name = sprintf( '%s-restrict-%s', static::BASE, $posttype );
+		$name = self::dsh( static::BASE, 'restrict', $posttype );
 
 		if ( ! isset( $_POST[$name] ) )
 			return FALSE;
@@ -308,7 +312,7 @@ class AdminScreen extends gEditorial\Service
 
 		return update_user_option(
 			get_current_user_id(),
-			sprintf( '%s_restrict_%s', static::BASE, $posttype ),
+			self::und( static::BASE, 'restrict', $posttype ),
 			Core\Arraay::prepString( array_keys( $_POST[$name] ) )
 		);
 	}
@@ -318,7 +322,7 @@ class AdminScreen extends gEditorial\Service
 		require_once ABSPATH.'wp-admin/includes/dashboard.php';
 
 		// Trigger the add_meta_boxes hooks to allow meta boxes to be added.
-		do_action( sprintf( 'add_meta_boxes_%s', $dashboard_context ), $object );
+		do_action( self::und( 'add_meta_boxes', $dashboard_context ), $object );
 		do_action( 'add_meta_boxes', $dashboard_context, $object );
 
 		wp_enqueue_script( 'dashboard' );
@@ -355,7 +359,7 @@ class AdminScreen extends gEditorial\Service
 	public static function loadLayout( $layout_context, $context = NULL, $object = NULL )
 	{
 		// Trigger the add_meta_boxes hooks to allow meta boxes to be added.
-		do_action( sprintf( 'add_meta_boxes_%s', $layout_context ), $object );
+		do_action( self::und( 'add_meta_boxes', $layout_context ), $object );
 		do_action( 'add_meta_boxes', $layout_context, $object );
 
 		// Enqueue WordPress script for handling the meta boxes.

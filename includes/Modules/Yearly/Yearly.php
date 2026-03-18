@@ -4,9 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Yearly extends gEditorial\Module
@@ -107,7 +106,7 @@ class Yearly extends gEditorial\Module
 	protected function define_default_terms()
 	{
 		return [
-			'main_taxonomy' => Datetime::getYears( '-5 years' ),
+			'main_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
@@ -286,6 +285,6 @@ SQL;
 	protected function render_reports_html( $uri, $sub )
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
-			return Info::renderNoReportsAvailable();
+			return gEditorial\Info::renderNoReportsAvailable();
 	}
 }

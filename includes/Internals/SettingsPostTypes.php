@@ -18,7 +18,7 @@ trait SettingsPostTypes
 	 */
 	protected function get_setting_key_posttypes_for_target( $target )
 	{
-		return sprintf( '%s_posttypes', $target );
+		return self::und( $target, 'posttypes' );
 	}
 
 	/**

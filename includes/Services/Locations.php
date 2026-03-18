@@ -14,7 +14,7 @@ class Locations extends gEditorial\Service
 		if ( is_admin() )
 			return;
 
-		add_filter( static::BASE.'_prep_location', [ __CLASS__, 'filter_prep_location_front' ], 5, 3 );
+		add_filter( self::und( static::BASE, 'prep_location' ), [ __CLASS__, 'filter_prep_location_front' ], 5, 3 );
 	}
 
 	public static function isParserAvailable()
@@ -57,7 +57,7 @@ class Locations extends gEditorial\Service
 		$list = [];
 
 		foreach ( Markup::getSeparated( $value ) as $location )
-			if ( $prepared = apply_filters( static::BASE.'_prep_location', $location, $location, $value ) )
+			if ( $prepared = apply_filters( self::und( static::BASE, 'prep_location' ), $location, $location, $value ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );

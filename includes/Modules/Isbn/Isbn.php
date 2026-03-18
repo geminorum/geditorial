@@ -303,7 +303,7 @@ class Isbn extends gEditorial\Module
 			if ( ! $data = Services\PostTypeFields::getField( $field, [ 'id' => $post ] ) )
 				continue;
 
-			$label = Services\PostTypeFields::getFieldRaw( sprintf( '%s_label', $field ), $post->ID, 'meta', FALSE, $title );
+			$label = Services\PostTypeFields::getFieldRaw( self::und( $field, 'label' ), $post->ID, 'meta', FALSE, $title );
 
 			printf( $before, '-product-isbn -'.$field );
 				echo $this->get_column_icon( FALSE, $this->module->icon, $label ?: $title, $post->post_type );

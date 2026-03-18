@@ -402,8 +402,7 @@ class Config extends gEditorial\Module
 
 		$this->register_help_tabs( NULL, $context );
 
-		do_action(
-			$this->hook_base( $context, 'settings' ),
+		do_action( $this->hook_base( $context, 'settings' ),
 			$sub,
 			$context
 		);
@@ -442,8 +441,7 @@ class Config extends gEditorial\Module
 			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action(
-			$this->hook_base( $context, 'settings' ),
+		do_action( $this->hook_base( $context, 'settings' ),
 			$sub,
 			$context
 		);

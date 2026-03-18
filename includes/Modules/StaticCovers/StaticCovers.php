@@ -496,13 +496,9 @@ class StaticCovers extends gEditorial\Module
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
-
-		$src = $title = FALSE;
+		$context = $context ?? 'supportedbox';
+		$screen  = $screen  ?? get_current_screen();
+		$src     = $title   =  FALSE;
 
 		if ( 'post' === $screen->base ) {
 

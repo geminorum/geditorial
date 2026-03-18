@@ -10,8 +10,8 @@ class Markup extends gEditorial\Service
 {
 	public static function setup()
 	{
-		add_filter( static::BASE.'_markdown_to_html', [ __CLASS__, 'markdownToHTML' ], 10, 3 );
-		add_filter( static::BASE.'_html_to_markdown', [ __CLASS__, 'markdownFromHTML' ], 10, 2 );
+		add_filter( self::und( static::BASE, 'markdown_to_html' ), [ __CLASS__, 'markdownToHTML' ],   10, 3 );
+		add_filter( self::und( static::BASE, 'html_to_markdown' ), [ __CLASS__, 'markdownFromHTML' ], 10, 2 );
 		add_filter( 'kses_allowed_protocols', [ __CLASS__, 'kses_allowed_protocols' ], 20, 1 );
 	}
 
@@ -105,7 +105,7 @@ class Markup extends gEditorial\Service
 			return $gEditorialMustache;
 
 		$gEditorialMustache = new \Mustache\Engine( [
-			'template_class_prefix' => '__'.static::BASE.'_',
+			'template_class_prefix' => sprintf( '__%s_', static::BASE ),
 			'cache_file_mode'       => FS_CHMOD_FILE,
 			// 'cache'                 => $base.'assets/views/cache',
 			'cache'                 => get_temp_dir(),
@@ -160,8 +160,9 @@ class Markup extends gEditorial\Service
 	 */
 	public static function getDelimiters( $default = '|' )
 	{
-		return apply_filters( static::BASE.'_string_delimiters',
-			Core\Arraay::prepSplitters( GEDITORIAL_STRING_DELIMITERS, $default ) );
+		return apply_filters( self::und( static::BASE, 'string_delimiters' ),
+			Core\Arraay::prepSplitters( GEDITORIAL_STRING_DELIMITERS, $default )
+		);
 	}
 
 	/**

@@ -25,7 +25,7 @@ trait SettingsCore
 		$name       = $title ?? str_ireplace( '_', ' ', trim( Core\Text::removeStartEnd( $constant, 'shortcode' ), '_' ) );
 
 		return [
-			'field' => sprintf( '%s_constant', $constant ),
+			'field' => self::und( $constant, 'constant' ),
 			'type'  => 'text',
 			'title' => sprintf(
 				/* translators: `%s`: short-code name */
@@ -92,7 +92,7 @@ trait SettingsCore
 
 		if ( is_null( $fallback ) ) {
 
-			$callback = [ 'geminorum\\gEditorial\\Settings', sprintf( 'getSetting_%s', $field ) ];
+			$callback = [ 'geminorum\\gEditorial\\Settings', self::und( 'getSetting', $field ) ];
 			$setting  = is_callable( $callback ) ? call_user_func( $callback ) : [];
 
 			if ( ! empty( $setting['default'] ) )

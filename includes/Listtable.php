@@ -195,7 +195,7 @@ SQL;
 			'post_type'        => $posttype,
 			'selected'         => $selected,
 			'name'             => $query_var,
-			'class'            => static::BASE.'-admin-dropbown',
+			'class'            => self::dsh( static::BASE, 'admin-dropbown' ),
 			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_all' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',

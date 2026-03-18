@@ -57,7 +57,7 @@ trait CoreAdmin
 				'author',
 			];
 
-		add_filter( sprintf( 'manage_%s_posts_columns', $posttype ),
+		add_filter( self::und( 'manage', $posttype, 'posts_columns' ),
 			static function ( $columns ) use ( $list ) {
 				return Core\Arraay::stripByKeys( $columns, (array) $list );
 			} );
@@ -79,7 +79,7 @@ trait CoreAdmin
 				'mine',
 			];
 
-		add_filter( sprintf( 'views_edit-%s', $posttype ),
+		add_filter( self::dsh( 'views_edit', $posttype ),
 			static function ( $views ) use ( $list ) {
 				return Core\Arraay::stripByKeys( $views, (array) $list );
 			} );
@@ -89,7 +89,7 @@ trait CoreAdmin
 
 	protected function coreadmin__hook_tweaks_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
 	{
-		$method = $callback_suffix ? sprintf( 'tweaks_column_row_%s', $callback_suffix ) : 'tweaks_column_row';
+		$method = self::und( 'tweaks', 'column_row', $callback_suffix );
 
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;
@@ -102,7 +102,7 @@ trait CoreAdmin
 
 	protected function coreadmin__hook_tweaks_column_attr( $posttype, $priority = 20, $callback_suffix = FALSE )
 	{
-		$method = $callback_suffix ? sprintf( 'tweaks_column_attr_%s', $callback_suffix ) : 'tweaks_column_attr';
+		$method = self::und( 'tweaks', 'column_attr', $callback_suffix );
 
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;
@@ -197,7 +197,7 @@ trait CoreAdmin
 				], 'posts', 'before' );
 			} );
 
-		add_filter( sprintf( 'manage_%s_custom_column', $object->name ),
+		add_filter( self::und( 'manage', $object->name, 'custom_column' ),
 			function ( $display, $column, $term_id ) use ( $object ) {
 
 				if ( $this->hook_base( 'multiplesupported' ) !== $column )

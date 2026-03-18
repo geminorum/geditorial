@@ -46,7 +46,7 @@ trait CoreConstants
 		if ( is_array( $singular ) )
 			return $singular; // already defined
 
-		if ( ! $plural = $this->constant( sprintf( '%s_plural', $key ) ) )
+		if ( ! $plural = $this->constant( self::und( $key, 'plural' ) ) )
 			return [ $singular, Core\L10n::pluralize( $singular ) ];
 
 		return [ $singular, $plural ];
@@ -68,7 +68,7 @@ trait CoreConstants
 		$list = [];
 
 		foreach ( $this->get_global_constants() as $key => $value )
-			$list[$key] = $this->get_setting_fallback( sprintf( '%s_constant', $key ), $value, $value );
+			$list[$key] = $this->get_setting_fallback( self::und( $key, 'constant' ), $value, $value );
 
 		return $list;
 	}

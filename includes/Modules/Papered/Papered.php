@@ -5,8 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\MetaBox;
-use geminorum\gEditorial\Scripts;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -291,7 +289,7 @@ class Papered extends gEditorial\Module
 					$this->enqueue_asset_js( [
 						'strings' => $this->get_strings( $screen->base, 'js' ),
 						'link'    => $this->get_printpage_url(),
-					], $screen, [ Scripts::enqueueColorBox() ] );
+					], $screen, [ gEditorial\Scripts::enqueueColorBox() ] );
 				}
 			}
 		}
@@ -499,10 +497,10 @@ class Papered extends gEditorial\Module
 		$taxonomy = $this->constant( 'flag_taxonomy' );
 
 		if ( has_term( 'needs-barcode', $taxonomy, $profile ) )
-			Scripts::enqueueJSBarcode();
+			gEditorial\Scripts::enqueueJSBarcode();
 
 		if ( has_term( 'needs-qrcode', $taxonomy, $profile ) )
-			Scripts::enqueueQRCodeSVG();
+			gEditorial\Scripts::enqueueQRCodeSVG();
 	}
 
 	public function printpage_render_head( $profile = FALSE )
@@ -514,10 +512,10 @@ class Papered extends gEditorial\Module
 			$taxonomy = $this->constant( 'flag_taxonomy' );
 
 			if ( has_term( 'needs-vazir-fonts', $taxonomy, $post ) )
-				Scripts::linkVazirMatn();
+				gEditorial\Scripts::linkVazirMatn();
 
 			if ( has_term( 'needs-bootstrap-5', $taxonomy, $post ) )
-				Scripts::linkBootstrap5();
+				gEditorial\Scripts::linkBootstrap5();
 
 			if ( $styles = $this->_get_template_styles( $post, 'display' ) )
 				printf( '<style>%s</style>', $styles );
@@ -717,11 +715,10 @@ class Papered extends gEditorial\Module
 
 	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		$context = $context ?? 'mainbox';
 
-		// MetaBox::fieldPostMenuOrder( $object );
-		// MetaBox::fieldPostParent( $object );
+		// gEditorial\MetaBox::fieldPostMenuOrder( $object );
+		// gEditorial\MetaBox::fieldPostParent( $object );
 
 		$field   = 'papersize';
 		$default = 'undefined';
@@ -783,8 +780,7 @@ class Papered extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, 'primary_posttype' ) || empty( $_POST ) )
 			return;
 
-		if ( is_null( $context ) )
-			$context = 'mainbox';
+		$context = $context ?? 'mainbox';
 
 		if ( ! $this->nonce_verify( $context ) )
 			return;
@@ -834,7 +830,7 @@ class Papered extends gEditorial\Module
 
 			$metabox = $this->classs( $screen->post_type, $field );
 
-			MetaBox::classEditorBox( $screen, $metabox );
+			gEditorial\MetaBox::classEditorBox( $screen, $metabox );
 
 			add_meta_box( $metabox,
 				$title,
@@ -859,7 +855,7 @@ class Papered extends gEditorial\Module
 
 		$selectors[] = '#qt_content_textdirection'; // default content editor
 
-		Scripts::inlineScript( $this->classs( 'quicktags' ), 'jQuery(function($){$(window).on("load",function(){$("'.implode( ',', $selectors ).'").click();});});' );
+		gEditorial\Scripts::inlineScript( $this->classs( 'quicktags' ), 'jQuery(function($){$(window).on("load",function(){$("'.implode( ',', $selectors ).'").click();});});' );
 	}
 
 	public function render_lonebox_metabox( $post, $box )
@@ -878,14 +874,12 @@ class Papered extends gEditorial\Module
 
 		$value = $this->fetch_postmeta( $post->ID, '', $this->get_postmeta_key( $field ) ) ?: '';
 
-		MetaBox::fieldEditorBox( $value, $this->classs( 'lonebox', $field ), $title, $atts );
+		gEditorial\MetaBox::fieldEditorBox( $value, $this->classs( 'lonebox', $field ), $title, $atts );
 	}
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'printingbox';
-
+		$context  = $context ?? 'printingbox';
 		$posttype = $this->constant( 'primary_posttype' );
 		$link     = $this->get_printpage_url();
 		$name     = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
@@ -939,10 +933,8 @@ class Papered extends gEditorial\Module
 	// @REF: `render_print_button()`
 	private function _render_printbuttons( $profile, $source = FALSE, $context = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'printingbox';
-
-		$args = [
+		$context = $context ?? 'printingbox';
+		$args    = [
 			'profile'  => $profile->ID,
 			'target'   => 'preview',
 			'noheader' => 1,

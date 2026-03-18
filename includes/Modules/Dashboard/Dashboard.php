@@ -201,7 +201,7 @@ class Dashboard extends gEditorial\Module
 			return FALSE;
 
 		$this->actions( 'include', $page );
-		$this->actions( sprintf( 'include_page_%s', $page ), $page );
+		$this->actions( self::und( 'include_page', $page ), $page );
 
 		if ( FALSE === $page )
 			$this->actions( 'include_page_home', 'home', '', '' );
@@ -307,7 +307,7 @@ class Dashboard extends gEditorial\Module
 	public function dashbard_content_callback()
 	{
 		if ( $page = get_query_var( $this->classs(), FALSE ) )
-			$this->actions( sprintf( 'content_page_%s', $page ), $page );
+			$this->actions( self::und( 'content_page', $page ), $page );
 
 		else
 			$this->actions( 'content_page_home', 'home' );
@@ -336,7 +336,7 @@ class Dashboard extends gEditorial\Module
 		foreach ( $this->_get_pages() as $page => $title )
 			$items[] = [
 				// NOTE: must have `custom-` prefix to whitelist in `gNetwork` Navigation
-				'slug' => sprintf( 'custom-dashboard-%s', $page ),
+				'slug' => self::dsh( 'custom', $this->key, $page ),
 				'link' => $this->_get_dashboard_permalink( $page ),
 				'name' => $title,
 			];

@@ -76,7 +76,7 @@ trait CoreRoles
 
 		foreach ( (array) $whats as $what ) {
 
-			if ( ! $edit && $this->get_setting( sprintf( '%s_post_%s', $what, 'edit' ), TRUE ) )
+			if ( ! $edit && $this->get_setting( self::und( $what, 'post', 'edit' ), TRUE ) )
 				continue;
 
 			if ( $this->role_can( $what, $user_id, FALSE, FALSE, $prefix ) )

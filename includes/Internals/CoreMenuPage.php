@@ -66,8 +66,8 @@ trait CoreMenuPage
 		if ( ! $context )
 			return FALSE;
 
-		$default_callback = [ $this, sprintf( 'admin_%s_page', $context ) ];
-		$default_loading  = [ $this, sprintf( 'admin_%s_load', $context ) ];
+		$default_callback = [ $this, self::und( 'admin', $context, 'page' ) ];
+		$default_loading  = [ $this, self::und( 'admin', $context, 'load' ) ];
 
 		if ( is_null( $capability ) )
 			$capability = $this->caps[$context] ?? 'manage_options';

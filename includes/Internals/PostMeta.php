@@ -141,8 +141,8 @@ trait PostMeta
 			return FALSE;
 
 		$method = $callback_suffix
-			? sprintf( '%s_column_row_%s', $module, $callback_suffix )
-			: 'general_column_row'; // sprintf( '%s_column_row', $module );
+			? self::und( $module, 'column_row', $callback_suffix )
+			: 'general_column_row'; // self::und( $module, 'column_row' );
 
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;

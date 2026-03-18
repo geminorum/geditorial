@@ -77,7 +77,11 @@ class Helper extends WordPress\Main
 				? Core\HTML::tag( 'span', [ 'title' => $value ], Services\Icons::get( [ 'misc-16', 'patch-question-fill' ] ) )
 				: Core\HTML::escape( $value );
 
-		return apply_filters( static::BASE.'_prep_contact', $prepared, $value, $title );
+		return apply_filters( self::und( static::BASE, 'prep', 'contact' ),
+			$prepared,
+			$value,
+			$title
+		);
 	}
 
 	public static function renderPostTermsEditRow( $post, $taxonomy, $before = '', $after = '' )
@@ -338,7 +342,7 @@ class Helper extends WordPress\Main
 
 			echo '</div>';
 
-			do_action( static::BASE.'_editor_status_info', $target );
+			do_action( self::und( static::BASE, 'editor_status_info' ), $target );
 
 		echo '</div>';
 	}

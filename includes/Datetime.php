@@ -81,7 +81,7 @@ class Datetime extends WordPress\Main
 		static $formats;
 
 		if ( empty( $formats ) )
-			$formats = apply_filters( static::BASE.'_custom_date_formats', [
+			$formats = apply_filters( self::und( static::BASE, 'custom_date_formats' ), [
 				'age'       => _x( 'm/d/Y', 'Date Format: `age`', 'geditorial' ),
 				'birthday'  => _x( 'm/d/Y', 'Date Format: `birthdate`', 'geditorial' ),
 				'current'   => _x( 'M j, Y @ G:i', 'Date Format: `current`', 'geditorial' ),
@@ -695,7 +695,7 @@ class Datetime extends WordPress\Main
 		 * - If the user desires that to be the behavior, they can set the result of this filter to `TRUE`.
 		 * - With how WordPress works internally, setting `post_date_gmt` will set the timestamp.
 		 */
-		if ( apply_filters( static::BASE.'_reschedule_set_timestamp', $set_timestamp ) )
+		if ( apply_filters( self::und( static::BASE, 'reschedule_set_timestamp' ), $set_timestamp ) )
 			$data['post_date_gmt'] = date( 'Y-m-d', $timestamp ).' '.date( 'H:i:s', strtotime( $post->post_date_gmt ) );
 
 		// @SEE http://core.trac.wordpress.org/ticket/18362

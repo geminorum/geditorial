@@ -66,11 +66,8 @@ class Pointers extends gEditorial\Module
 
 	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
 	{
-		if ( is_null( $context ) )
-			$context = 'supportedbox';
-
-		if ( is_null( $screen ) )
-			$screen = get_current_screen();
+		$context = $context ?? 'supportedbox';
+		$screen  = $screen ?? get_current_screen();
 
 		if ( 'post' === $screen->base )
 			$this->render_post_pointers( $object, $context, $screen );
@@ -81,13 +78,12 @@ class Pointers extends gEditorial\Module
 
 	public function render_post_pointers( $post, $context = 'box', $screen = NULL )
 	{
-		$action_context = sprintf( '%s_%s', $context, $post->post_type );
+		$action_context = self::und( $context, $post->post_type );
 
 		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-post-%s', $this->key ) ] );
 		echo '<ul class="-rows">';
 
-		$fired = $this->actions(
-			'post',
+		$fired = $this->actions( 'post',
 			$post,
 			$this->wrap_open_row( 'pointer', [
 				'-post-pointer',
@@ -113,13 +109,12 @@ class Pointers extends gEditorial\Module
 
 	public function render_term_pointers( $term, $context = 'box', $screen = NULL )
 	{
-		$action_context = sprintf( '%s_%s', $context, $term->taxonomy );
+		$action_context = self::und( $context, $term->taxonomy );
 
 		echo $this->wrap_open( [ '-wrap-rows', sprintf( '-term-%s', $this->key ) ] );
 		echo '<ul class="-rows">';
 
-		$fired = $this->actions(
-			'term',
+		$fired = $this->actions( 'term',
 			$term,
 			$this->wrap_open_row( 'pointer', [
 				'-term-pointer',

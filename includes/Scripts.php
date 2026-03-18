@@ -16,6 +16,11 @@ class Scripts extends WordPress\Main
 		return gEditorial();
 	}
 
+	public static function handle( $name )
+	{
+		return strtolower( self::dsh( static::BASE, str_replace( '.', '-', $name ) ) );
+	}
+
 	// TODO: move to `Services\Markup`
 	public static function noScriptMessage( $verbose = TRUE )
 	{
@@ -35,10 +40,10 @@ class Scripts extends WordPress\Main
 	public static function renderAppMounter( $name, $module = FALSE, $verbose = TRUE, $message = NULL )
 	{
 		$html = Core\HTML::tag( 'div', [
-			'id'    => sprintf( '%s-app-%s', static::BASE, $name ),
+			'id'    => self::dsh( static::BASE, 'app', $name ),
 			'class' => [
 				'-wrap',
-				static::BASE.'-wrap',
+				self::dsh( static::BASE, 'wrap' ),
 				( $module ? ( '-'.$module ) : '' ),
 				'editorial-app',
 				'hide-if-no-js',
@@ -53,12 +58,11 @@ class Scripts extends WordPress\Main
 
 	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = NULL, $base_url = NULL )
 	{
-		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $name ) );
-
 		$script = sprintf( '%s%s/%s/build/main.js',        $base_url  ?? static::URL,  $path, $name );
 		$style  = sprintf( '%s%s/%s/build/main.css',       $base_url  ?? static::URL,  $path, $name );
 		$asset  = sprintf( '%s%s/%s/build/main.asset.php', $base_path ?? static::PATH, $path, $name );
 
+		$handle = self::handle( $name );
 		$config = Core\File::requireData( $asset, [
 			'dependencies' => [],
 			'version'      => $version ?? static::VERSION,
@@ -76,7 +80,7 @@ class Scripts extends WordPress\Main
 
 	public static function enqueueStyle( $asset, $dep = [], $version = NULL, $base = NULL, $path = 'assets/css', $media = 'all' )
 	{
-		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle = self::handle( $asset );
 
 		wp_enqueue_style( $handle, ( $base ?? static::URL ).$path.'/'.$asset.'.css', $dep, $version ?? static::VERSION, $media );
 		wp_style_add_data( $handle, 'rtl', 'replace' );
@@ -98,7 +102,7 @@ class Scripts extends WordPress\Main
 		if ( empty( $script ) )
 			return FALSE;
 
-		$handle = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle = self::handle( $asset );
 
 		// @REF: https://core.trac.wordpress.org/ticket/44551
 		// @REF: https://wordpress.stackexchange.com/a/311279
@@ -111,7 +115,7 @@ class Scripts extends WordPress\Main
 
 	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = NULL, $base = NULL, $path = 'assets/js' )
 	{
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = self::handle( $asset );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
 		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$asset.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
@@ -127,7 +131,7 @@ class Scripts extends WordPress\Main
 	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
 		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = self::handle( $asset );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
 		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
@@ -140,7 +144,7 @@ class Scripts extends WordPress\Main
 	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
 		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
-		$handle  = strtolower( static::BASE.'-'.str_replace( '.', '-', $asset ) );
+		$handle  = self::handle( $asset );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
 		wp_register_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
@@ -171,7 +175,7 @@ class Scripts extends WordPress\Main
 		if ( $enqueued )
 			return $enqueued;
 
-		return $enqueued = self::inlineScript( static::BASE.'-tableoverflow',
+		return $enqueued = self::inlineScript( self::dsh( static::BASE, 'tableoverflow' ),
 			'jQuery("table.-table-overflow").tableoverflow();',
 			[
 				self::enqueueVendor( 'jquery-tableoverflow', [ 'jquery' ] ),
@@ -209,7 +213,7 @@ class Scripts extends WordPress\Main
 })();
 JS;
 
-		return $enqueued = self::inlineScript( static::BASE.'-clicktoclip', $script, [ 'clipboard' ] );
+		return $enqueued = self::inlineScript( self::dsh( static::BASE, 'clicktoclip' ), $script, [ 'clipboard' ] );
 	}
 
 	public static function enqueueWordCount()
@@ -340,7 +344,7 @@ JS;
 
 	public static function pkgAutosize( $ver = '6.0.1' )
 	{
-		$handle = static::BASE.'-autosize';
+		$handle = self::dsh( static::BASE, 'autosize' );
 
 		wp_enqueue_script( $handle, '//cdn.jsdelivr.net/npm/autosize@'.$ver.'/dist/autosize.min.js', [], NULL, TRUE );
 		wp_add_inline_script( $handle, "autosize(document.querySelectorAll('textarea'));" );
@@ -350,7 +354,7 @@ JS;
 
 	public static function pkgVueJS2( $enqueue = FALSE, $ver = '2.6.14' )
 	{
-		$handle = static::BASE.'-vuejs';
+		$handle = self::dsh( static::BASE, 'vuejs' );
 
 		$url = WordPress\IsIt::dev()
 			? 'https://cdn.jsdelivr.net/npm/vue/dist/vue.js'
@@ -367,7 +371,7 @@ JS;
 	// @REF: https://www.jsdelivr.com/package/npm/vue
 	public static function pkgVueJS3( $enqueue = FALSE, $ver = '3.4.31' )
 	{
-		$handle = static::BASE.'-vuejs';
+		$handle = self::dsh( static::BASE, 'vuejs' );
 
 		$url = WordPress\IsIt::dev()
 			? 'https://unpkg.com/vue@'.$ver.'/dist/vue.global.js'
@@ -438,7 +442,7 @@ JS;
 		if ( $enqueued )
 			return $enqueued;
 
-		return $enqueued = self::inlineScript( static::BASE.'-jsbarcode',
+		return $enqueued = self::inlineScript( self::dsh( static::BASE, 'jsbarcode' ),
 			'JsBarcode(".do-jsbarcode").init();',
 			[
 				self::pkgJSBarcode( FALSE, 'all' ),
@@ -535,7 +539,13 @@ JS;
 	});
 })(jQuery);
 JS;
-		return $enqueued = self::inlineScript( static::BASE.'-qrcodesvg', $script,[ 'jquery', self::pkgQRCodeSVG() ] );
+		return $enqueued = self::inlineScript( self::dsh( static::BASE, 'qrcodesvg' ),
+			$script,
+			[
+				'jquery',
+				self::pkgQRCodeSVG()
+			]
+		);
 	}
 
 	/**
@@ -672,9 +682,9 @@ JS;
 	public static function markupChartJS( $name, $module = FALSE )
 	{
 		return Core\HTML::wrap( Core\HTML::tag( 'canvas', [
-			'id' => sprintf( '%s-chart-%s', static::BASE, $name ),
+			'id' => self::dsh( static::BASE, 'chart', $name ),
 		] ), [
-			static::BASE.'-wrap',
+			self::dsh( static::BASE, 'wrap' ),
 			( $module ? ( '-'.$module ) : '' ),
 			'editorial-chart',
 			'hide-if-no-js',
@@ -699,7 +709,7 @@ JS;
 		$rtl      = $args['rtl'] ? 'true' : 'false';
 		$labels   = Core\HTML::encode( $args['labels'] );
 		$values   = Core\HTML::encode( $args['values'] );
-		$selector = sprintf( '%s-chart-%s', static::BASE, $name );
+		$selector = self::dsh( static::BASE, 'chart', $name );
 
 		$script   = <<<JS
 (function () {
@@ -744,7 +754,7 @@ JS;
 JS;
 
 		return self::inlineScript(
-			sprintf( '%s-chartjs-%s', static::BASE, $name ),
+			self::dsh( static::BASE, 'chartjs', $name ),
 			$script,
 			[
 				self::pkgChartJS( TRUE ),
@@ -801,7 +811,7 @@ JS;
 
 	public static function getTinyMceStrings( $locale )
 	{
-		$strings = apply_filters( static::BASE.'_tinymce_strings', [] );
+		$strings = apply_filters( self::und( static::BASE, 'tinymce_strings' ), [] );
 
 		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.Core\HTML::encode( $strings ).');'."\n" : '';
 	}

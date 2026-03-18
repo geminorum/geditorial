@@ -38,7 +38,7 @@ class RestAPI extends gEditorial\Service
 
 		$posttypes = $posttypes ?? get_post_types( [ 'show_in_rest' => TRUE ] );
 
-		return apply_filters( static::BASE.'_restapi_supported_posttypes',
+		return apply_filters( self::und( static::BASE, 'restapi', 'supported_posttypes' ),
 			array_diff_key( $posttypes, array_flip( $excluded ) ),
 			$context,
 			$excluded
@@ -55,7 +55,7 @@ class RestAPI extends gEditorial\Service
 
 		$rendered = [];
 		$user_id  = get_current_user_id();
-		$ignored  = apply_filters( static::BASE.'_restapi_terms_rendered_ignored',
+		$ignored  = apply_filters( self::und( static::BASE, 'restapi', 'terms_rendered_ignored' ),
 			[
 				'post_format',
 			],
@@ -74,7 +74,7 @@ class RestAPI extends gEditorial\Service
 					continue;
 
 			$rows = WordPress\Taxonomy::getTheTermRows( $taxonomy->name, $post );
-			$html = apply_filters( static::BASE.'_restapi_terms_rendered_html',
+			$html = apply_filters( self::und( static::BASE, 'restapi', 'terms_rendered_html' ),
 				$rows,
 				$taxonomy,
 				$params,
@@ -85,7 +85,7 @@ class RestAPI extends gEditorial\Service
 			if ( FALSE === $html )
 				continue;
 
-			$rendered[$taxonomy->rest_base] = apply_filters( static::BASE.'_restapi_terms_rendered',
+			$rendered[$taxonomy->rest_base] = apply_filters( self::und( static::BASE, 'restapi', 'terms_rendered' ),
 				[
 					'name'     => $taxonomy->name,
 					'title'    => $taxonomy->label,
@@ -109,7 +109,12 @@ class RestAPI extends gEditorial\Service
 		if ( $route = WordPress\Post::getRestRoute( $post ) )
 			$response = WordPress\Rest::doInternalRequest( $route, [ 'context' => $context ] );
 
-		return apply_filters( static::BASE.'_restapi_post_response', $response, $post, $context, $route );
+		return apply_filters( self::und( static::BASE, 'restapi', 'post_response' ),
+			$response,
+			$post,
+			$context,
+			$route
+		);
 	}
 
 	public static function getCommentsResponse( $post, $context = 'view' )
@@ -123,7 +128,12 @@ class RestAPI extends gEditorial\Service
 				'post'    => $post->ID,
 			] );
 
-		return apply_filters( static::BASE.'_restapi_comments_response', $response, $post, $context, $route );
+		return apply_filters( self::und( static::BASE, 'restapi', 'comments_response' ),
+			$response,
+			$post,
+			$context,
+			$route
+		);
 	}
 
 	public static function getTermResponse( $term, $context = 'view' )
@@ -133,7 +143,12 @@ class RestAPI extends gEditorial\Service
 		if ( $route = WordPress\Term::getRestRoute( $term ) )
 			$response = WordPress\Rest::doInternalRequest( $route, [ 'context' => $context ] );
 
-		return apply_filters( static::BASE.'_restapi_term_response', $response, $term, $context, $route );
+		return apply_filters( self::und( static::BASE, 'restapi', 'term_response' ),
+			$response,
+			$term,
+			$context,
+			$route
+		);
 	}
 
 	public static function getErrorForbidden( $code = NULL, $status = 401 )
@@ -211,14 +226,11 @@ class RestAPI extends gEditorial\Service
 			return self::getErrorArgNotEmpty( $key );
 
 		if ( ! WordPress\Post::get( (int) $param ) )
-			return new \WP_Error(
-				'rest_invalid_param',
-				sprintf(
-					/* translators: `%s`: argument key */
-					_x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ),
-					$key
-				)
-			);
+			return new \WP_Error( 'rest_invalid_param', sprintf(
+				/* translators: `%s`: argument key */
+				_x( 'The `%s` argument must be a post.', 'Error', 'geditorial' ),
+				$key
+			) );
 
 		return TRUE;
 	}
@@ -239,14 +251,11 @@ class RestAPI extends gEditorial\Service
 			return self::getErrorArgNotEmpty( $key );
 
 		if ( ! WordPress\Comment::get( (int) $param ) )
-			return new \WP_Error(
-				'rest_invalid_param',
-				sprintf(
-					/* translators: `%s`: argument key */
-					_x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ),
-					$key
-				)
-			);
+			return new \WP_Error( 'rest_invalid_param', sprintf(
+				/* translators: `%s`: argument key */
+				_x( 'The `%s` argument must be a comment.', 'Error', 'geditorial' ),
+				$key
+			) );
 
 		return TRUE;
 	}

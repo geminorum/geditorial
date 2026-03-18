@@ -25,12 +25,11 @@ trait MetaBoxList
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-				$this->actions(
-					sprintf( 'render_%s_metabox', $context ),
+				$this->actions( self::und( 'render', $context, 'metabox' ),
 					$post,
 					$box,
 					NULL,
-					sprintf( '%s_%s', $context, $post->post_type )
+					self::und( $context, $post->post_type )
 				);
 
 				if ( $list = gEditorial\MetaBox::getChildrenPosts( $post, $posttypes ) )
@@ -41,9 +40,8 @@ trait MetaBoxList
 
 				$this->_render_children_listbox_extra( $post, $box, $context, $screen );
 
-				do_action(
-					// @HOOK: `geditorial_metabox_listbox_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $post->post_type ),
+				// @HOOK: `geditorial_metabox_listbox_{current_posttype}`
+				do_action( $this->hook_base( 'metabox', $context, $post->post_type ),
 					$post,
 					$box,
 					$context,
@@ -55,8 +53,7 @@ trait MetaBoxList
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
@@ -64,7 +61,7 @@ trait MetaBoxList
 			'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
@@ -78,7 +75,7 @@ trait MetaBoxList
 	// DEFAULT METHOD
 	protected function _render_children_listbox_extra( $object, $box, $context = NULL, $screen = NULL )
 	{
-		$context  = $context ?? 'listbox';
+		$context = $context ?? 'listbox';
 
 		// WTF?!
 	}

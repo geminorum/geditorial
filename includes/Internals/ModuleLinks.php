@@ -288,7 +288,7 @@ trait ModuleLinks
 				'priority' => 20,
 			];
 
-			Services\HeaderButtons::register( sprintf( 'module_%s', $context ), $args );
+			Services\HeaderButtons::register( self::und( 'module', $context ), $args );
 		}
 
 		return $contexts;

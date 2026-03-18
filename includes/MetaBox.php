@@ -311,7 +311,7 @@ class MetaBox extends WordPress\Main
 		}
 
 		$html = $form = $list = $hidden = '';
-		$id   = implode( '-', [ static::BASE, $args['taxonomy'], 'list' ] );
+		$id   = self::dsh( static::BASE, $args['taxonomy'], 'list' );
 		$tax  = get_taxonomy( $args['taxonomy'] );
 		$atts = [
 			'taxonomy' => $args['taxonomy'],
@@ -567,7 +567,7 @@ class MetaBox extends WordPress\Main
 			return Core\HTML::tag( 'input', [ 'type' => 'hidden', 'value' => '0', 'name' => $name ] );
 
 		$html = Core\HTML::dropdown( $terms, [
-			'class'      => static::BASE.'-paired-subterms',
+			'class'      => self::dsh( static::BASE, 'paired-subterms' ),
 			'name'       => $name,
 			'prop'       => 'name',
 			'value'      => 'term_id',
@@ -885,7 +885,7 @@ class MetaBox extends WordPress\Main
 			'field_class' => 'wp-tab-panel',
 			'taxonomy'    => $object->name,
 			'edit'        => $edit,
-			'name'        => $name ?: sprintf( '%s-object_tax', static::BASE )
+			'name'        => $name ?: self::dsh( static::BASE, 'object_tax' )
 		] );
 
 		echo '</td></tr>'.$after;
@@ -899,7 +899,7 @@ class MetaBox extends WordPress\Main
 		if ( $check && ! current_user_can( $object->cap->assign_terms ) )
 			return FALSE;
 
-		$name = $name ?? sprintf( '%s-object_tax', static::BASE );
+		$name = $name ?? self::dsh( static::BASE, 'object_tax' );
 		$data = $data ?? self::req( $name, [] );
 
 		// For clearing must send `0` as `term_id`
@@ -993,9 +993,9 @@ class MetaBox extends WordPress\Main
 			'placeholder' => $args['title'],
 			'class'       => [
 				'form-control',
-				sprintf( '%s-textarea', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'textarea' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 				'textarea-autosize',
 			],
 			'data' => [
@@ -1062,9 +1062,9 @@ class MetaBox extends WordPress\Main
 			'placeholder'  => $args['title'],
 			'class'        => [
 				'form-control',
-				sprintf( '%s-inputgeneral', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'inputgeneral' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field'  => $args['name'],
@@ -1413,9 +1413,9 @@ class MetaBox extends WordPress\Main
 			// 'placeholder' => $args['title'],
 			'class'       => [
 				'form-control',
-				sprintf( '%s-inputnumber', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'inputnumber' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field'  => $args['name'],
@@ -1491,9 +1491,9 @@ class MetaBox extends WordPress\Main
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
 				'form-control',
-				sprintf( '%s-select', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'select' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field'  => $args['name'],
@@ -1567,12 +1567,12 @@ class MetaBox extends WordPress\Main
 		], Settings::showOptionNone() );
 
 		$atts = [
-			'name'  => 'parent_id', // sprintf( '%s-%s-%s', static::BASE, $module, $args['name'] ),
+			'name'  => 'parent_id', // self::dsh( static::BASE, $module, $args['name'] ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-searchselect-select2', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'searchselect', 'select2' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field' => $args['name'],
@@ -1628,9 +1628,9 @@ class MetaBox extends WordPress\Main
 			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-searchselect-select2', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'searchselect', 'select2' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field' => $args['name'],
@@ -1680,9 +1680,9 @@ class MetaBox extends WordPress\Main
 			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-searchselect-select2', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'searchselect', 'select2' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field' => $args['name'],
@@ -1738,9 +1738,9 @@ class MetaBox extends WordPress\Main
 			'name'  => self::_getNameAttr( $args, $module ),
 			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
 			'class' => [
-				sprintf( '%s-searchselect-select2', static::BASE ),
-				sprintf( '%s-%s-field-%s', static::BASE, $module, $args['name'] ),
-				sprintf( '%s-%s-type-%s', static::BASE, $module, $args['type'] ),
+				self::dsh( static::BASE, 'searchselect', 'select2' ),
+				self::dsh( static::BASE, $module, 'field', $args['name'] ),
+				self::dsh( static::BASE, $module, 'type', $args['type'] ),
 			],
 			'data' => [
 				'meta-field' => $args['name'],
@@ -1782,7 +1782,7 @@ class MetaBox extends WordPress\Main
 			// Fills the meta by query data, only on new posts.
 			$meta = WordPress\Strings::kses( self::req( $metakey, '' ), 'none' );
 			$meta = Services\PostTypeFields::replaceTokens( $meta, $field, $post, 'raw' );
-			$meta = apply_filters( implode( '_', [ static::BASE, $module, 'initial', $field['name'] ] ), $meta, $field, $post, $module );
+			$meta = apply_filters( self::und( static::BASE, $module, 'initial', $field['name'] ), $meta, $field, $post, $module );
 		}
 
 		return $meta;

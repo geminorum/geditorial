@@ -1994,7 +1994,7 @@ class Importer extends gEditorial\Module
 			if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )
 				continue;
 
-			$columns[sprintf( '%s_%s', $taxonomy, $term_id )] = [
+			$columns[self::und( $taxonomy, $term_id )] = [
 				'title' => sprintf( '%s: %s', $taxonomies[$taxonomy]->label, Core\HTML::code( $term->name ) ),
 				'args'  => [
 					'taxonomy' => $taxonomy,

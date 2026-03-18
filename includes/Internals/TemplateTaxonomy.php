@@ -306,8 +306,7 @@ trait TemplateTaxonomy
 		if ( ! WordPress\Taxonomy::can( $object, 'manage_terms' ) )
 			return '';
 
-		$extra = apply_filters(
-			$this->hook_base( 'template', 'taxonomy', 'addnew', 'extra' ),
+		$extra = apply_filters( $this->hook_base( 'template', 'taxonomy', 'addnew', 'extra' ),
 			[
 				'name' => $title,
 			],

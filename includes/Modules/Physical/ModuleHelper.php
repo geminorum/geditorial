@@ -82,8 +82,7 @@ class ModuleHelper extends gEditorial\Helper
 			$data['report']  = _x( 'The Person is obese.', 'BMI: Report', 'geditorial-physical' );
 		}
 
-		return apply_filters(
-			sprintf( '%s_%s_%s', static::BASE, static::MODULE, 'calculate_bmi' ),
+		return apply_filters( self::und( static::BASE, static::MODULE, 'calculate_bmi' ),
 			$data,
 			$bmi,
 			$weight_in_kg,

@@ -45,8 +45,7 @@ class BoxFactory extends O2O\Factory
 		$box      = $this->create_box( $directed );
 		$box_args = $this->queue[ $directed->name ];
 
-		add_meta_box(
-			sprintf( 'o2o-%s-%s', $directed->get_direction(), $directed->name ),
+		add_meta_box( sprintf( 'o2o-%s-%s', $directed->get_direction(), $directed->name ),
 			$title,
 			[ $box, 'render' ],
 			$post_type,

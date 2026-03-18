@@ -75,7 +75,7 @@ trait CoreDashboard
 
 				case 'info' :
 
-					$info_callback = sprintf( 'get_widget_%s_info', $hook );
+					$info_callback = self::und( 'get_widget', $hook, 'info' );
 
 					if ( method_exists( $this, $info_callback ) )
 						$title.= WordPress\MetaBox::markupTitleInfo(
@@ -90,17 +90,16 @@ trait CoreDashboard
 			}
 		}
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$title,
-			$callback ?? [ $this, sprintf( 'render_widget_%s', $hook ) ],
+			$callback ?? [ $this, self::und( 'render_widget', $hook ) ],
 			$screen,
 			'normal',
 			'default',
 			$args
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $name, $context ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',

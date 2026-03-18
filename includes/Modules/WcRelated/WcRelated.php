@@ -340,8 +340,7 @@ class WcRelated extends gEditorial\Module
 			set_transient( $transient_name, $transient, DAY_IN_SECONDS );
 		}
 
-		$related_products = apply_filters(
-			'woocommerce_related_products',
+		$related_products = apply_filters( 'woocommerce_related_products',
 			$related_products,
 			$product_id,
 			[

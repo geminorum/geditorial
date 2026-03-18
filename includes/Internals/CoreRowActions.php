@@ -39,7 +39,7 @@ trait CoreRowActions
 		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
 			return FALSE;
 
-		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_post_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_post';
+		$method = self::und( 'rowaction_get_mainlink_for_post', $callback_suffix );
 
 		if ( ! method_exists( $this, $method ) )
 			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
@@ -80,7 +80,7 @@ trait CoreRowActions
 		if ( TRUE !== $setting_key && ! $this->get_setting( $setting_key ) )
 			return FALSE;
 
-		$method = $callback_suffix ? sprintf( 'rowaction_get_mainlink_for_term_%s', $callback_suffix ) : 'rowaction_get_mainlink_for_term';
+		$method = self::und( 'rowaction_get_mainlink_for_term', $callback_suffix );
 
 		if ( ! method_exists( $this, $method ) )
 			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );

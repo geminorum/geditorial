@@ -53,7 +53,7 @@ class Icons extends gEditorial\Service
 
 		return is_array( $icon )
 			? Core\Icon::getBase64( $icon[1], $icon[0] )
-			: sprintf( 'dashicons-%s', $icon );
+			: self::dsh( 'dashicons', $icon );
 	}
 
 	// OLD: `Visual::getPostTypeIconMarkup()`

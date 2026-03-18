@@ -89,7 +89,7 @@ class LineDiscovery extends gEditorial\Service
 
 		foreach ( $queried['raw'] as $row ) {
 
-			$discovered = apply_filters( sprintf( '%s_linediscovery_data_for_post', static::BASE ),
+			$discovered = apply_filters( self::und( static::BASE, 'linediscovery', 'data_for_post' ),
 				NULL,
 				$row,
 				$queried['posttype'],

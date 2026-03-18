@@ -31,7 +31,7 @@ trait LateChores
 		$collectors = [];
 
 		foreach ( (array) $posttypes as $posttype ) {
-			$collectors[$posttype] = sprintf( 'save_post_%s', $posttype );
+			$collectors[$posttype] = self::und( 'save_post', $posttype );
 			add_action( $collectors[$posttype], [ $this, 'latechores__collector_post_aftercare' ], 20, 3 );
 		}
 

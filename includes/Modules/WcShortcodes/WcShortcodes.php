@@ -67,7 +67,7 @@ class WcShortcodes extends gEditorial\Module
 		parent::init();
 
 		foreach ( $this->get_setting( 'shortcodes', [] ) as $shortcode )
-			$this->register_shortcode( sprintf( '%s_shortcode', Core\Text::sanitizeHook( $shortcode ) ), TRUE );
+			$this->register_shortcode( self::und( Core\Text::sanitizeHook( $shortcode ), 'shortcode' ), TRUE );
 
 		if ( is_admin() )
 			return;
@@ -258,7 +258,7 @@ class WcShortcodes extends gEditorial\Module
 		foreach ( WordPress\Strings::getSeparated( $args['status'] ) as $status ) {
 
 			if ( ! Core\Text::starts( $status, 'wc-' ) )
-				$status = sprintf( 'wc-%s', $status );
+				$status = self::dsh( 'wc', $status );
 
 			$count+= wp_count_posts( WordPress\WooCommerce::ORDER_POSTTYPE )->$status;
 		}

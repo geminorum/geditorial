@@ -15,7 +15,7 @@ trait MetaBoxMain
 		$context = $context ?? 'mainbox';
 
 		if ( ! empty( $screen->post_type ) && method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
-			add_action( sprintf( 'save_post_%s', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
+			add_action( self::und( 'save_post', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
 
 		else if ( method_exists( $this, 'store_'.$context.'_metabox' ) )
 			add_action( 'save_post', [ $this, 'store_'.$context.'_metabox' ], 20, 3 );
@@ -36,21 +36,19 @@ trait MetaBoxMain
 
 			echo $this->wrap_open( '-admin-metabox' );
 
-				$this->actions(
-					sprintf( 'render_%s_metabox', $context ),
+				$this->actions( self::und( 'render', $context, 'metabox' ),
 					$post,
 					$box,
 					NULL,
-					sprintf( '%s_%s', $context, $post->post_type )
+					self::und( $context, $post->post_type )
 				);
 
 				do_action( $this->hook_base( 'meta', 'render_metabox' ), $post, $box, NULL );
 
 				$this->_render_mainbox_content( $post, $box, $context, $screen );
 
-				do_action(
-					// @HOOK: `geditorial_metabox_mainbox_{current_posttype}`
-					$this->hook_base( 'metabox', $context, $post->post_type ),
+				// @HOOK: `geditorial_metabox_mainbox_{current_posttype}`
+				do_action( $this->hook_base( 'metabox', $context, $post->post_type ),
 					$post,
 					$box,
 					$context,
@@ -62,8 +60,7 @@ trait MetaBoxMain
 			$this->nonce_field( $context );
 		};
 
-		add_meta_box(
-			$metabox,
+		add_meta_box( $metabox,
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
@@ -71,7 +68,7 @@ trait MetaBoxMain
 			'default'
 		);
 
-		add_filter( sprintf( 'postbox_classes_%s_%s', $screen->id, $metabox ),
+		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
 			function ( $classes ) use ( $context, $extra ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',

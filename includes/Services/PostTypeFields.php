@@ -11,8 +11,8 @@ class PostTypeFields extends gEditorial\Service
 	public static function setup()
 	{
 		if ( 'fa_IR' === Core\L10n::locale( TRUE ) ) {
-			add_filter( static::BASE.'_posts_search_append_meta_frontend', [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
-			add_filter( static::BASE.'_posts_search_append_meta_backend', [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
+			add_filter( self::und( static::BASE, 'posts_search_append_meta_frontend' ), [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
+			add_filter( self::und( static::BASE, 'posts_search_append_meta_backend' ),  [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );
 		}
 	}
 
@@ -330,7 +330,7 @@ class PostTypeFields extends gEditorial\Service
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
 
 		if ( FALSE === $meta )
-			$meta = apply_filters( static::BASE.'_meta_field_empty', $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+			$meta = apply_filters( self::und( static::BASE, 'meta_field', 'empty' ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -343,8 +343,8 @@ class PostTypeFields extends gEditorial\Service
 				return $args['noaccess'] ?? $args['default'];
 		}
 
-		$meta = apply_filters( static::BASE.'_meta_field', $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
-		$meta = apply_filters( static::BASE.'_meta_field_'.$field_key, $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+		$meta = apply_filters( self::und( static::BASE, 'meta_field' ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+		$meta = apply_filters( self::und( static::BASE, 'meta_field', $field_key ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ gEditorial\Template::class, 'doEmbedShortCode' ];
@@ -378,7 +378,13 @@ class PostTypeFields extends gEditorial\Service
 
 		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
 
-		return apply_filters( static::BASE.'_get_meta_field', $meta, $field_key, $post_id, $module, $default );
+		return apply_filters( self::und( static::BASE, 'get_meta_field' ),
+			$meta,
+			$field_key,
+			$post_id,
+			$module,
+			$default
+		);
 	}
 
 	public static function getFieldDate( $field_key, $post_id, $module = 'meta', $check = TRUE, $default = FALSE, $default_calendar = NULL )
@@ -396,7 +402,7 @@ class PostTypeFields extends gEditorial\Service
 	// TODO: support: `dob`,`date`,`datetime`
 	public static function prepFieldRow( $value, $field_key = NULL, $field = [], $raw = NULL, $module = 'meta' )
 	{
-		$filtered = apply_filters( static::BASE.'_prep_meta_row', $value, $field_key, $field, $raw );
+		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw );
 
 		if ( $filtered !== $value )
 			return $filtered; // bail if already filtered

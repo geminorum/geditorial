@@ -315,7 +315,7 @@ class Lingo extends gEditorial\Module
 					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
 					$metakeys = $this->_get_supported_metakeys( 'imports' );
-					$name_key = sprintf( '%s_name', Core\L10n::available( [ 'en', 'fa' ] ) );
+					$name_key = self::und( Core\L10n::available( [ 'en', 'fa' ] ), 'name' );
 
 					foreach ( $_POST['_cb'] as $term_id ) {
 
@@ -408,7 +408,7 @@ class Lingo extends gEditorial\Module
 					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
 					$metakeys = $this->_get_supported_metakeys( 'imports' );
-					$name_key = sprintf( '%s_name', Core\L10n::available( [ 'en', 'fa' ] ) );
+					$name_key = self::und( Core\L10n::available( [ 'en', 'fa' ] ), 'name' );
 
 					foreach ( $_POST['_cb'] as $code ) {
 

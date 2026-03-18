@@ -67,7 +67,7 @@ trait AdminPage
 
 		if ( $this->screens[$context] )
 			add_action(
-				sprintf( 'load-%s', $this->screens[$context] ),
+				self::dsh( 'load', $this->screens[$context] ),
 				[ $this, 'load_menu_adminpage' ],
 				10,
 				0
@@ -94,7 +94,11 @@ trait AdminPage
 			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
 		$this->register_help_tabs( NULL, $context );
-		$this->actions( 'load_adminpage', $page, $sub, $context );
+		$this->actions( 'load_adminpage',
+			$page,
+			$sub,
+			$context
+		);
 	}
 
 	public function render_menu_adminpage()
@@ -170,7 +174,11 @@ trait AdminPage
 		$sub  = self::req( 'sub', NULL );
 
 		$this->register_help_tabs( NULL, $context );
-		$this->actions( 'load_adminpage', $page, $sub, $context );
+		$this->actions( 'load_adminpage',
+			$page,
+			$sub,
+			$context
+		);
 
 		if ( self::req( 'noheader' ) )
 			self::define( 'QM_DISABLED', TRUE );

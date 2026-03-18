@@ -143,7 +143,7 @@ class SearchSelect extends gEditorial\Service
 			$args['post_status'] = WordPress\Status::available( $args['post_type'] );
 
 		// NOTE: must return single or array of post ids
-		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_posts', static::BASE ), NULL, $args, $queried );
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_posts' ), NULL, $args, $queried );
 
 		if ( is_wp_error( $pre ) )
 			return $pre;
@@ -194,13 +194,13 @@ class SearchSelect extends gEditorial\Service
 	// NOTE: also used by others!
 	public static function getExtraForPost( $post, $queried = [], $default = [] )
 	{
-		return apply_filters( sprintf( '%s_searchselect_result_extra_for_post', static::BASE ), $default, $post, $queried );
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_post' ), $default, $post, $queried );
 	}
 
 	// NOTE: also used by others!
 	public static function getImageForPost( $post, $queried = [], $default = '' )
 	{
-		return apply_filters( sprintf( '%s_searchselect_result_image_for_post', static::BASE ), $default, $post, $queried );
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ), $default, $post, $queried );
 	}
 
 	private static function _get_select2_terms( $queried )
@@ -229,7 +229,7 @@ class SearchSelect extends gEditorial\Service
 
 		// NOTE: Must return single or array of term objects/ids.
 		// NOTE: If it's array, will handle duplicates.
-		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_terms', static::BASE ), NULL, $args, $queried );
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_terms' ), NULL, $args, $queried );
 
 		if ( is_wp_error( $pre ) )
 			return $pre;
@@ -317,13 +317,13 @@ class SearchSelect extends gEditorial\Service
 	// NOTE: also used by others!
 	public static function getExtraForTerm( $term, $queried = [], $default = [] )
 	{
-		return apply_filters( sprintf( '%s_searchselect_result_extra_for_term', static::BASE ), $default, $term, $queried );
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_term' ), $default, $term, $queried );
 	}
 
 	// NOTE: also used by others!
 	public static function getImageForTerm( $term, $queried = [], $default = '' )
 	{
-		return apply_filters( sprintf( '%s_searchselect_result_image_for_term', static::BASE ), $default, $term, $queried );
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_term' ), $default, $term, $queried );
 	}
 
 	private static function _get_select2_users( $queried )
@@ -357,7 +357,7 @@ class SearchSelect extends gEditorial\Service
 			$args['search'] = trim( $queried['search'] );
 
 		// NOTE: must return single or array of user ids
-		$pre = apply_filters( sprintf( '%s_searchselect_pre_query_users', static::BASE ), NULL, $args, $queried );
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_users' ), NULL, $args, $queried );
 
 		if ( is_wp_error( $pre ) )
 			return $pre;

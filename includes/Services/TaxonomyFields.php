@@ -135,7 +135,7 @@ class TaxonomyFields extends gEditorial\Service
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
 
 		if ( FALSE === $meta )
-			$meta = apply_filters( static::BASE.'_terms_field_empty', $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
+			$meta = apply_filters( self::und( static::BASE, 'terms_field', 'empty' ), $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -149,8 +149,8 @@ class TaxonomyFields extends gEditorial\Service
 				return $args['noaccess'] ?? $args['default'];
 		}
 
-		$meta = apply_filters( static::BASE.'_terms_field', $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
-		$meta = apply_filters( static::BASE.'_terms_field_'.$field_key, $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
+		$meta = apply_filters( self::und( static::BASE, 'terms_field' ), $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
+		$meta = apply_filters( self::und( static::BASE, 'terms_field', $field_key ), $meta, $field_key, $term, $args, $raw, $field, $args['context'], $module );
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ gEditorial\Template::class, 'doEmbedShortCode' ];
@@ -185,7 +185,7 @@ class TaxonomyFields extends gEditorial\Service
 		if ( FALSE === ( $data = get_term_meta( $term_id, $metakey, TRUE ) ) )
 			$data = $default;
 
-		return apply_filters( static::BASE.'_get_terms_field', $data, $field_key, $term_id, $module, $default );
+		return apply_filters( self::und( static::BASE, 'get_terms_field' ), $data, $field_key, $term_id, $module, $default );
 	}
 
 	public static function getFieldDate( $field_key, $term_id, $module = 'terms', $check = TRUE, $default = FALSE, $default_calendar = NULL )

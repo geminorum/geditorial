@@ -23,9 +23,9 @@ class SemiSecure extends gEditorial\Service
 		if ( ! $subject || ! $fullname )
 			return $fallback;
 
-		$algo = apply_filters( static::BASE.'_securitytoken_algorithm', 'RS256', $context );
-		$rsa  = apply_filters( static::BASE.'_securitytoken_rsakey_path', NULL, $context );
-		$age  = apply_filters( static::BASE.'_securitytoken_expires', $expires ?? Core\Date::YEAR_IN_SECONDS, $context );
+		$algo = apply_filters( self::und( static::BASE, 'securitytoken', 'algorithm' ), 'RS256', $context );
+		$rsa  = apply_filters( self::und( static::BASE, 'securitytoken', 'rsakey_path' ), NULL, $context );
+		$age  = apply_filters( self::und( static::BASE, 'securitytoken', 'expires' ), $expires ?? Core\Date::YEAR_IN_SECONDS, $context );
 
 		if ( ! $algo || ! $rsa )
 			return $fallback;

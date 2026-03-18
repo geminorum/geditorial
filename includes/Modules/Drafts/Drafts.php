@@ -468,7 +468,7 @@ class Drafts extends gEditorial\Module
 
 	private function _hook_posttype_views( $posttype )
 	{
-		add_filter( sprintf( 'views_edit-%s', $posttype ),
+		add_filter( self::dsh( 'views_edit', $posttype ),
 			function ( $views ) use ( $posttype ) {
 
 				$ids = WordPress\PostType::getIDListByMetakey(

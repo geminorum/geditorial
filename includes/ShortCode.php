@@ -652,7 +652,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['item_link'] && 'attachment' == $post->post_type && $args['item_download'] )
 				$item = Core\HTML::tag( 'a', [
 					'href'     => wp_get_attachment_url( $post->ID ),
-					'download' => apply_filters( static::BASE.'_shortcode_attachment_download', basename( get_attached_file( $post->ID ) ), $post ),
+					'download' => apply_filters( self::und( static::BASE, 'shortcode', 'attachment_download' ), basename( get_attached_file( $post->ID ) ), $post ),
 					'title'    => $attr,
 					'class'    => '-download',
 					'rel'      => 'attachment',
@@ -955,7 +955,7 @@ class ShortCode extends WordPress\Main
 			$list = 'paired';
 
 		$key   = static::hash( $list, $args );
-		$group = sprintf( '%s_list_posts', static::BASE );
+		$group = self::und( static::BASE, 'list_posts' );
 		$cache = wp_cache_get( $key, $group );
 
 		if ( FALSE !== $cache )
@@ -1681,7 +1681,7 @@ class ShortCode extends WordPress\Main
 			return NULL;
 
 		$key   = static::hash( $list, $args );
-		$group = sprintf( '%s_list_terms', static::BASE );
+		$group = self::und( static::BASE, 'list_terms' );
 		$cache = wp_cache_get( $key, $group );
 
 		if ( FALSE !== $cache )

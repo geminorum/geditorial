@@ -57,8 +57,7 @@ trait O2OMetaBox
 				'multiple' => $box['args']['multiple'],
 			] );
 
-			do_action(
-				$this->hook_base( 'o2o', 'render_from_metabox' ),
+			do_action( $this->hook_base( 'o2o', 'render_from_metabox' ),
 				$post,
 				$box,
 				$box['args']['o2o'],
@@ -116,8 +115,7 @@ trait O2OMetaBox
 				'multiple' => $box['args']['multiple'],
 			] );
 
-			do_action(
-				$this->hook_base( 'o2o', 'render_to_metabox' ),
+			do_action( $this->hook_base( 'o2o', 'render_to_metabox' ),
 				$post,
 				$box,
 				$box['args']['o2o'],
@@ -131,8 +129,9 @@ trait O2OMetaBox
 
 	protected function o2o_hook_store_metabox( $posttype, $type )
 	{
-		add_action( sprintf( 'save_post_%s', $posttype ),
-			function ( $post_id, $post, $update ) use ( $type ) {
+		add_action( self::und( 'save_post', $posttype ),
+			function ( $post_id, $post, $update )
+				use ( $type ) {
 
 				if ( ! $this->is_save_post( $post ) )
 					return;

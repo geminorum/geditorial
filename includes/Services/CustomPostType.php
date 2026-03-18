@@ -35,7 +35,7 @@ class CustomPostType extends gEditorial\Service
 	{
 		$strings = WordPress\Strings::getNameForms( $name );
 
-		$name_templates = apply_filters( static::BASE.'_posttype_labels_name_templates', [
+		$name_templates = apply_filters( self::und( static::BASE, 'posttype_labels', 'name_templates' ), [
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
 			'name'                     => _x( '%1$s', 'CustomPostType: Label for `name`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
@@ -96,7 +96,7 @@ class CustomPostType extends gEditorial\Service
 			'item_link_description'    => _x( 'A link to a %4$s.', 'CustomPostType: Label for `item_link_description`', 'geditorial' ),
 		], $posttype, $strings, $name );
 
-		$featured_templates = apply_filters( static::BASE.'_posttype_labels_featured_templates', [
+		$featured_templates = apply_filters( self::und( static::BASE, 'posttype_labels', 'featured_templates' ), [
 			/* translators: `%1$s`: featured camel case, `%2$s`: featured lowercase */
 			'featured_image'        => _x( '%1$s', 'CustomPostType: Label for `featured_image`', 'geditorial' ),
 			/* translators: `%1$s`: featured camel case, `%2$s`: featured lowercase */
@@ -264,7 +264,7 @@ class CustomPostType extends gEditorial\Service
 
 		$strings = WordPress\Strings::getNameForms( $name );
 
-		$templates = apply_filters( static::BASE.'_posttype_message_templates', [
+		$templates = apply_filters( self::und( static::BASE, 'posttype', 'message_templates' ), [
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
 			'view_post'                      => _x( 'View %4$s', 'CustomPostType: Message for `view_post`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
@@ -333,7 +333,7 @@ class CustomPostType extends gEditorial\Service
 	{
 		$strings = WordPress\Strings::getNameForms( $name );
 
-		$templates = apply_filters( static::BASE.'_posttype_bulk_message_templates', [
+		$templates = apply_filters( self::und( static::BASE. 'posttype', 'bulk_message_templates' ), [
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
 			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'CustomPostType: Bulk Message for `updated`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
@@ -398,5 +398,39 @@ class CustomPostType extends gEditorial\Service
 		update_term_meta( $term->term_id, $posttype->name.'_linked', $post->ID );
 
 		return TRUE;
+	}
+
+	// TODO!
+	// Transforms a term into post of given type and assign's the relation via `paired`/`o2o`.
+	// TODO: add taxonomy bulk action // maybe on `Switcher` module
+	// EXAMPLE: `post_tag` of a Book/ `post_tag` of a Film
+	public static function ConvertFromTerm( $term, $posttype )
+	{
+		$post_id = WordPress\Post::newByTerm( $term, $term->taxonomy, $posttype );
+
+		if ( ! $post_id || self::isError( $post_id ) )
+			return FALSE;
+
+		if ( $paired = Services\Paired::isPostType( $posttype ) ) {
+
+			if ( ! $converted = WordPress\Term::updateTaxonomy( $term, $paired ) )
+				return FALSE;
+
+			// NOTE: preserve term image data
+			if ( ! Paired::doPair( $post_id, $converted, FALSE ) )
+				return FALSE;
+
+		} else {
+
+			// Check for `o2o` support on the post-type
+
+			$keep = FALSE;
+
+			foreach ( WordPress\Taxonomy::getTermObjects( $term->term_id ) as $connected ) {
+
+			}
+		}
+
+		return $post_id;
 	}
 }

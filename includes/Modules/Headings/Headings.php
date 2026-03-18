@@ -126,7 +126,7 @@ class Headings extends gEditorial\Module
 			$i    = 2;
 
 			while ( FALSE !== in_array( $slug, $this->anchors, TRUE ) )
-				$slug = sprintf( '%s-%d', $temp, $i++ );
+				$slug = self::dsh( $temp, $i++ );
 		}
 
 		$this->anchors[] = $slug;

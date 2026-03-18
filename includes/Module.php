@@ -581,7 +581,7 @@ class Module extends WordPress\Module
 	{
 		return $this->filters( 'column_title',
 			$this->get_string(
-				sprintf( '%s_column_title', $column ),
+				self::und( $column, 'column_title' ),
 				$constant,
 				'misc',
 				$fallback ?? $column
@@ -594,14 +594,22 @@ class Module extends WordPress\Module
 
 	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
 	{
-		$title = Services\CustomPostType::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
-		return $this->filters( 'column_title', $title, $taxonomy, $constant, $fallback );
+		return $this->filters( 'column_title',
+			Services\CustomPostType::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback ),
+			$taxonomy,
+			$constant,
+			$fallback
+		);
 	}
 
 	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
 	{
-		$title = Services\CustomTaxonomy::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback );
-		return $this->filters( 'column_title', $title, $posttype, $constant, $fallback );
+		return $this->filters( 'column_title',
+			Services\CustomTaxonomy::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback ),
+			$posttype,
+			$constant,
+			$fallback
+		);
 	}
 
 	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )

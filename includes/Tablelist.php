@@ -608,7 +608,9 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Date-Start', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
 			'class'    => 'datetime',
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $metakey, $calendar ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $metakey, $calendar ) {
+
 				$html = '';
 
 				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'datestart', TRUE ) )
@@ -624,7 +626,9 @@ class Tablelist extends WordPress\Main
 		return [
 			'title'    => _x( 'Date-End', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
 			'class'    => 'datetime',
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $metakey, $calendar ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $metakey, $calendar ) {
+
 				$html = '';
 
 				if ( $meta = get_term_meta( $row->term_id, $metakey ?? 'dateend', TRUE ) )

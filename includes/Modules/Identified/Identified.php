@@ -387,7 +387,7 @@ class Identified extends gEditorial\Module
 
 	private function _get_posttype_identifier_type( $posttype )
 	{
-		if ( $setting = $this->get_setting( sprintf( '%s_posttype_type', $posttype ) ) )
+		if ( $setting = $this->get_setting( self::und( $posttype, 'posttype', 'type' ) ) )
 			return $setting;
 
 		$types = $this->get_strings( 'types', 'fields' );
@@ -400,7 +400,7 @@ class Identified extends gEditorial\Module
 
 	private function _get_posttype_identifier_metakey( $posttype )
 	{
-		if ( $setting = $this->get_setting( $posttype.'_posttype_identifier_metakey' ) )
+		if ( $setting = $this->get_setting( self::und( $posttype, 'posttype', 'identifier_metakey' ) ) )
 			return $setting;
 
 		if ( $default = $this->filters( 'default_posttype_identifier_metakey', '', $posttype ) )
@@ -1043,7 +1043,7 @@ class Identified extends gEditorial\Module
 		if ( ! is_user_logged_in() )
 			return FALSE;
 
-		if ( ! $template = $this->get_setting( sprintf( '%s_type_notfound_template', $type ) ) )
+		if ( ! $template = $this->get_setting( self::und( $type, 'type_notfound_template' ) ) )
 			return FALSE;
 
 		$tokens = [

@@ -575,14 +575,14 @@ class Plugin extends WordPress\Plugin
 
 		Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'all' ),
-			implode( '-', [ $this->base, 'front' ] ),
+			self::dsh( $this->base, 'front' ),
 			$this->get_hash()
 		);
 
 		if ( WordPress\WooCommerce::isActive() )
 			Scripts::enqueueStyleSrc(
 				sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'woocommerce' ),
-				implode( '-', [ $this->base, 'woocommerce', 'front' ] ),
+				self::dsh( $this->base, 'woocommerce', 'front' ),
 				$this->get_hash()
 			);
 
@@ -591,7 +591,7 @@ class Plugin extends WordPress\Plugin
 
 		Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'gnetwork' ),
-			implode( '-', [ $this->base, 'gnetwork', 'front' ] ),
+			self::dsh( $this->base, 'gnetwork', 'front' ),
 			$this->get_hash()
 		);
 	}
@@ -610,7 +610,7 @@ class Plugin extends WordPress\Plugin
 
 		return Scripts::enqueueStyleSrc(
 			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'adminbar', 'all' ),
-			implode( '-', [ $this->base, 'adminbar' ] ),
+			self::dsh( $this->base, 'adminbar' ),
 			$this->get_hash()
 		);
 	}
@@ -710,7 +710,7 @@ class Plugin extends WordPress\Plugin
 				'href'   => $link,
 				'meta'   => [
 					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),
-					'class' => implode( '-', [ $this->base, 'adminbar', 'node', 'icononly' ] ),
+					'class' => self::dsh( $this->base, 'adminbar', 'node', 'icononly' ),
 				],
 			] );
 		}

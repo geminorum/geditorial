@@ -87,8 +87,7 @@ trait ContentReplace
 		if ( empty( $term->name ) )
 			return FALSE;
 
-		$words = apply_filters(
-			$this->hook_base( 'contentreplace', 'term', 'words' ),
+		$words = apply_filters( $this->hook_base( 'contentreplace', 'term', 'words' ),
 			[
 				Core\Text::trimQuotes( $term->name ),
 			],

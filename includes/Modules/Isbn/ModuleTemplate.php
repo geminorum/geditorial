@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Info;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -40,7 +39,7 @@ class ModuleTemplate extends gEditorial\Template
 		$html = Core\HTML::img( ModuleHelper::barcode( $isbn ), '-barcode-isbn', $isbn );
 
 		if ( is_null( $args['link'] ) )
-			$html = Core\HTML::link( $html, Info::lookupURLforISBN( $isbn ) );
+			$html = Core\HTML::link( $html, gEditorial\Info::lookupURLforISBN( $isbn ) );
 
 		else if ( $args['link'] )
 			$html = Core\HTML::link( $html, $args['link'] );

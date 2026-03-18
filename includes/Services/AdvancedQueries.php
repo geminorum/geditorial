@@ -57,7 +57,7 @@ class AdvancedQueries extends gEditorial\Service
 		// NOTE: filter value iterates on the entire data!
 		// @hook `geditorial_posts_search_append_meta_backend`
 		// @hook `geditorial_posts_search_append_meta_frontend`
-		$filter = sprintf( '%s_posts_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+		$filter = self::und( static::BASE, 'posts_search_append_meta', is_admin() ? 'backend' : 'frontend' );
 		$meta   = [];
 
 		foreach ( WordPress\Strings::getSeparated( $query->query_vars['s'], static::SEARCH_OPERATOR_OR ) as $criteria )
@@ -115,7 +115,7 @@ class AdvancedQueries extends gEditorial\Service
 		// NOTE: filter value iterates on the entire data!
 		// @hook `geditorial_terms_search_append_meta_backend`
 		// @hook `geditorial_terms_search_append_meta_frontend`
-		$filter = sprintf( '%s_terms_search_append_meta_%s', static::BASE, is_admin() ? 'backend' : 'frontend' );
+		$filter = self::und( static::BASE, 'terms_search_append_meta', is_admin() ? 'backend' : 'frontend' );
 		$meta   = [];
 
 		foreach ( WordPress\Strings::getSeparated( $args['search'], static::SEARCH_OPERATOR_OR ) as $criteria )

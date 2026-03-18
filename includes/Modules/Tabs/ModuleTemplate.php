@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 
 		foreach ( $items as $item_name => $item_args ) {
 
-			$title = apply_filters( sprintf( '%s_%s_%s', static::BASE, static::MODULE, 'item_title' ),
+			$title = apply_filters( self::und( static::BASE, static::MODULE, 'item_title' ),
 				empty( $item_args['title'] ) ? $item_name : $item_args['title'],
 				$item_name,
 				$item_args,
@@ -72,8 +72,8 @@ class ModuleTemplate extends gEditorial\Template
 		$html = Core\HTML::tag( 'nav', $html );
 		$html.= '<div class="tab-content">';
 
-		$before_hook = sprintf( '%s_%s_render_content_before', static::BASE, static::MODULE );
-		$after_hook  = sprintf( '%s_%s_render_content_after',  static::BASE, static::MODULE );
+		$before_hook = self::und( static::BASE, static::MODULE, 'render_content_before' );
+		$after_hook  = self::und( static::BASE, static::MODULE, 'render_content_after'  );
 
 		if ( ! has_action( $before_hook ) ) $before_hook = FALSE;
 		if ( ! has_action( $after_hook ) )  $after_hook  = FALSE;

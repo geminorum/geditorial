@@ -96,7 +96,7 @@ trait Strings
 			}
 		}
 
-		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $posttype, 'metabox', $default );
+		$template = $this->get_string( self::und( $context, $prop ), $posttype, 'metabox', $default );
 		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
 		$title    = WordPress\Post::title( $post, $singular );
 
@@ -155,7 +155,7 @@ trait Strings
 			}
 		}
 
-		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $posttype, $group, $default );
+		$template = $this->get_string( self::und( $context, $prop ), $posttype, $group, $default );
 		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
 		$title    = WordPress\Post::title( $post );
 
@@ -182,7 +182,7 @@ trait Strings
 			}
 		}
 
-		$template = $this->get_string( sprintf( '%s_%s', $context, $prop ), $taxonomy, $group, $default );
+		$template = $this->get_string( self::und( $context, $prop ), $taxonomy, $group, $default );
 		$singular = Services\CustomTaxonomy::getLabel( $taxonomy, 'singular_name' );
 		$title    = WordPress\Term::title( $term, $singular );
 

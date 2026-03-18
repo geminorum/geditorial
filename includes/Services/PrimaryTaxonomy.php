@@ -39,6 +39,10 @@ class PrimaryTaxonomy extends gEditorial\Service
 					$taxonomy = $object->{self::POSTTYPE_PROP};
 		}
 
-		return apply_filters( static::BASE.'_posttype_primary_taxonomy', $taxonomy, $posttype, $fallback );
+		return apply_filters( self::und( static::BASE, 'posttype', 'primary_taxonomy' ),
+			$taxonomy,
+			$posttype,
+			$fallback
+		);
 	}
 }

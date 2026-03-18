@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Datetime;
 use geminorum\gEditorial\WordPress;
 
 class Paired extends gEditorial\Service
@@ -18,10 +17,10 @@ class Paired extends gEditorial\Service
 
 	public static function setup()
 	{
-		add_filter( static::BASE.'_tabloid_post_summaries',
+		add_filter( self::und( static::BASE, 'tabloid', 'post_summaries' ),
 			[ __CLASS__, 'tabloid_post_summaries_multipaired' ], 45, 4 );
 
-		add_filter( static::BASE.'_papered_view_data_for_post',
+		add_filter( self::und( static::BASE, 'papered', 'view_data_for_post' ),
 			[ __CLASS__, 'papered_view_data_for_post' ], 99, 4 );
 	}
 
@@ -81,7 +80,7 @@ class Paired extends gEditorial\Service
 			if ( $paired = self::isPostType( $posttype ) )
 				$list[$posttype] = $paired;
 
-		return apply_filters( sprintf( '%s_paired_posttypes', static::BASE ), $list );
+		return apply_filters( self::und( static::BASE, 'paired', 'posttypes' ), $list );
 	}
 
 	// OLD: `paired_get_to_term_direct()`
@@ -99,7 +98,7 @@ class Paired extends gEditorial\Service
 	public static function getGlobalSummaryForPost( $post, $context = NULL, $fields = NULL )
 	{
 		// NOTE: must be `$list['posttype'] = [ $items ];`
-		$list = apply_filters( static::BASE.'_paired_globalsummary_for_post', [], $post, $context );
+		$list = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post' ), [], $post, $context );
 
 		if ( empty( $list ) )
 			return [];
@@ -121,7 +120,7 @@ class Paired extends gEditorial\Service
 			'lazy_load_term_meta'    => FALSE,
 		];
 
-		$posts = get_posts( apply_filters( static::BASE.'_paired_globalsummary_for_post_args', $args, $post, $list, $context ) );
+		$posts = get_posts( apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'args' ), $args, $post, $list, $context ) );
 
 		return empty( $posts ) ? [] : $posts;
 	}
@@ -135,8 +134,8 @@ class Paired extends gEditorial\Service
 
 		/* translators: `%s`: item count */
 		$default  = _x( 'Connected (%s)', 'Service: Paired: Global Summary Title', 'geditorial-admin' );
-		$template = apply_filters( static::BASE.'_paired_globalsummary_for_post_title', $default, $post );
-		$columns  = apply_filters( static::BASE.'_paired_globalsummary_for_post_columns', [
+		$template = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'title' ), $default, $post );
+		$columns  = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'columns' ), [
 			'index' => _x( '#', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
 			'date'  => _x( 'Date', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
 			'type'  => _x( 'Type', 'Service: Paired: Global Summary Title Column', 'geditorial-admin' ),
@@ -150,7 +149,7 @@ class Paired extends gEditorial\Service
 			if ( empty( $types[$item->post_type] ) )
 				$types[$item->post_type] = CustomPostType::getLabel( $item->post_type, 'singular_name' );
 
-			$posts[] = apply_filters( static::BASE.'_paired_globalsummary_for_post_data', [
+			$posts[] = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'data' ), [
 				'title' => self::_get_item_title( $item, $context ),
 				'type'  => $types[$item->post_type],
 				'date'  => self::_get_item_date( $item, $context ),
@@ -180,9 +179,9 @@ class Paired extends gEditorial\Service
 	private static function _get_item_date( $post, $context = NULL )
 	{
 		if ( $custom = PostTypeFields::getFieldRaw( 'print_date', $post->ID ) )
-			return Datetime::prepForDisplay( $custom, NULL, PostTypeFields::getDefaultCalendar() );
+			return gEditorial\Datetime::prepForDisplay( $custom, NULL, PostTypeFields::getDefaultCalendar() );
 
-		return Datetime::prepForDisplay( $post->post_date, NULL, PostTypeFields::getDefaultCalendar() );
+		return gEditorial\Datetime::prepForDisplay( $post->post_date, NULL, PostTypeFields::getDefaultCalendar() );
 	}
 
 	public static function tabloid_post_summaries_multipaired( $list, $data, $post, $context )
