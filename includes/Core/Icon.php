@@ -323,9 +323,9 @@ class Icon extends Base
 	public static function get( $icon, $group, $extra = [] )
 	{
 		return '<span data-icon="svg" class="'.HTML::prepClass(
-			static::BASE.'-icon',
+			self::dsh( static::BASE, 'icon' ),
 			'-iconsvg',
-			sprintf( 'icon-%s-%s', $group, $icon ),
+			self::dsh( 'icon', $group, $icon ),
 			$extra
 		).'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
 	}
@@ -336,7 +336,7 @@ class Icon extends Base
 	public static function wrapBase64( $data, $extra = [] )
 	{
 		return '<span data-icon="base64" class="'.HTML::prepClass(
-			static::BASE.'-icon',
+			self::dsh( static::BASE, 'icon' ),
 			'-iconbase64',
 			$extra
 		).'"><img src="'.$data.'" /></span>';
@@ -345,7 +345,7 @@ class Icon extends Base
 	public static function wrapURL( $url, $extra = [] )
 	{
 		return '<span data-icon="url" class="'.HTML::prepClass(
-			static::BASE.'-icon',
+			self::dsh( static::BASE, 'icon' ),
 			'-iconurl',
 			$extra
 		).'"><img src="'.$url.'" /></span>';

@@ -542,7 +542,7 @@ class Media extends Core\Base
 		else if ( $taxonomy && isset( $sizes[$taxonomy] ) )
 			$size = $taxonomy;
 
-		$size = apply_filters( 'geditorial_get_thumbnail_default_size', $size, $perent_posttype, $perent_taxonomy, $fallback );
+		$size = apply_filters( 'nucleus_get_thumbnail_default_size', $size, $perent_posttype, $perent_taxonomy, $fallback );
 
 		return $size ?: $fallback;
 	}
@@ -568,7 +568,7 @@ class Media extends Core\Base
 				$src = $img[0];
 		}
 
-		return apply_filters( 'geditorial_get_thumbnail_src', $src, $attachment_id, $img, $fallback );
+		return apply_filters( 'nucleus_get_thumbnail_src', $src, $attachment_id, $img, $fallback );
 	}
 
 	public static function htmlAttachmentImage( $attachment_id, $size = NULL, $link = TRUE, $data = [], $class = '-attachment-image' )

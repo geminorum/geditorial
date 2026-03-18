@@ -102,7 +102,7 @@ class Plugin extends Core\Base
 	protected function setup_loaded()
 	{
 		if ( $this->base )
-			do_action( sprintf( '%s_loaded', $this->base ),
+			do_action( self::und( $this->base, 'loaded' ),
 				$this->__dir,
 				$this->__url,
 				$this->__file,
