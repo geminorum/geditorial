@@ -180,36 +180,53 @@ trait CoreRestrictPosts
 	{
 		$posttype = $this->constant( $constant, $constant );
 		$can      = WordPress\PostType::can( $posttype, 'edit_posts' );
-		$link     = $can ? WordPress\PostType::edit( $posttype ) : FALSE;
-		$edit     = $this->get_column_icon( $link, $icon, NULL, $posttype );
-		$notice   = $empty ?? $this->get_string( 'post_children_empty', $constant, 'misc', gEditorial()->na() );
-		$status   = WordPress\Status::available( $posttype );
 
 		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row', $parent_type ),
-			function ( $post, $before, $after, $module ) use ( $constant, $posttype, $notice, $can, $edit, $status ) {
+			function ( $post, $before, $after, $module )
+				use ( $constant, $posttype, $empty, $can, $icon ) {
 
 				$children = get_children( [
 					'post_parent' => $post->ID,
 					'post_type'   => $posttype,
-					'post_status' => $status,
+					'post_status' => WordPress\Status::available( $posttype ),
 					'fields'      => 'ids',
 				] );
 
-				if ( ( ! $count = count( $children ) ) && ! $notice )
+				if ( ( ! $count = count( $children ) ) && FALSE === $empty )
 					return;
 
 				printf( $before, '-post-children -type-'.$posttype.( $count ? ' -has-children' : ' -has-not-children' ) );
 
-				if ( $count = count( $children ) )
-					echo $edit.Core\HTML::tag( $can ? 'a' : 'span', [
-						'href'  => $can ? WordPress\PostType::edit( $posttype, [
-							self::und( $posttype, 'parent' ) => $post->ID,
-						] ) : FALSE,
+				echo $this->get_column_icon(
+					WordPress\PostType::edit( $posttype ),
+					$icon,
+					Services\CustomPostType::getLabel( $posttype, 'extended_label' ),
+					$posttype
+				);
+
+				if ( $count && $can )
+					echo Core\HTML::tag( 'a', [
 						'class' => '-counted',
+						'href'  => WordPress\PostType::edit( $posttype, [
+							self::und( $posttype, 'parent' ) => $post->ID,
+						] ),
 					], $this->nooped_count( self::und( $constant, 'count' ), $count ) );
 
+				else if ( $count )
+					echo Core\HTML::span(
+						$this->nooped_count( self::und( $constant, 'count' ), $count ),
+						'-counted'
+					);
+
 				else
-					echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );
+					echo Core\HTML::span(
+						$empty ?? $this->get_string( 'post_children_empty', $posttype, 'misc', gEditorial\Plugin::noinfo( FALSE ) ),
+						[
+							'-empty',
+							'-noinfo',
+							'-empty-children-post',
+						]
+					);
 
 				echo $after;
 
@@ -231,24 +248,44 @@ trait CoreRestrictPosts
 	 */
 	protected function corerestrictposts__hook_columnrow_for_parent_post( $posttype, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
-		$can    = WordPress\PostType::can( $posttype, 'edit_posts' );
-		$link   = $can ? WordPress\PostType::edit( $posttype ) : FALSE;
-		$edit   = $this->get_column_icon( $link, $icon, NULL, $posttype );
-		$notice = $empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial()->na() );
-
 		add_action( $this->hook_base( $module ?? 'tweaks', 'column_row', $posttype ),
-			static function ( $post, $before, $after, $module ) use ( $posttype, $notice, $can, $edit ) {
+			function ( $post, $before, $after, $module )
+				use ( $posttype, $icon, $empty ) {
 
-				if ( ! $post->post_parent && ! $notice )
+				$parent = $post->post_parent ? WordPress\Post::get( $post->post_parent ) : FALSE;
+
+				if ( ! $parent && FALSE === $empty )
 					return;
 
 				printf( $before, '-parent-post -type-'.$posttype.( $post->post_parent ? ' -has-parent-post' : ' -has-not-parent-post' ) );
 
-					if ( $post->post_parent )
-						echo $edit.gEditorial\Helper::getPostTitleRow( $post->post_parent, $can ? 'edit' : FALSE, FALSE, 'posttype' );
+					echo $this->get_column_icon(
+						$parent ? WordPress\Post::edit( $parent ) : FALSE,
+						$icon,
+						$parent ? Services\CustomPostType::getLabel( $parent, 'extended_label' ) : gEditorial\Plugin::na( FALSE ),
+						$post->post_parent
+					);
+
+					if ( $parent )
+						echo gEditorial\Helper::getPostTitleRow(
+							$post->post_parent,
+							'edit',
+							FALSE,
+							$parent ? Services\CustomPostType::getLabel( $parent, 'singular_name' ) : FALSE
+						);
+
+					else if ( $post->post_parent )
+						echo gEditorial\Plugin::invalid( 'span' );
 
 					else
-						echo $edit.Core\HTML::tag( 'span', [ 'class' => '-na -empty-parent-post' ], $notice );
+						echo Core\HTML::span(
+							$empty ?? $this->get_string( 'parent_post_empty', $posttype, 'misc', gEditorial\Plugin::noinfo( FALSE ) ),
+							[
+								'-empty',
+								'-noinfo',
+								'-empty-parent-post',
+							]
+						);
 
 				echo $after;
 
