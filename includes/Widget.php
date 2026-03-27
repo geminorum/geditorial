@@ -765,6 +765,17 @@ class Widget extends \WP_Widget
 		}
 	}
 
+	public function form_connection( $instance, $default = '', $field = 'connection', $label = NULL )
+	{
+		return $this->form_dropdown(
+			$instance,
+			Services\O2O\API::listConnections(),
+			$default,
+			$field,
+			$label ?? _x( 'Connection:', 'Widget Core', 'geditorial-admin' )
+		);
+	}
+
 	public function form_dropdown( $instance, $values, $default = '', $field = 'selected', $label = NULL )
 	{
 		$html = Core\HTML::dropdown( $values, [

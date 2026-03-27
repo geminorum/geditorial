@@ -119,6 +119,7 @@ class Widgets extends gEditorial\Module
 			'WPRest-Posts'    => 'WPRestPosts',
 			'WPRest-Single'   => 'WPRestSingle',
 			'Profile-Summary' => 'ProfileSummary',
+			'Connected-Posts' => 'ConnectedPosts',
 		];
 	}
 
