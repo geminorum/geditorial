@@ -980,6 +980,8 @@ class ShortCode extends WordPress\Main
 			'meta_query'       => [],
 		];
 
+		$list_class = Core\HTML::attrClass( $args['list_class'], '-posts-list' );
+
 		if ( ! empty( $args['posttypes'] ) )
 			$query['post_type'] = WordPress\Strings::getSeparated( $args['posttypes'] );
 
@@ -1009,6 +1011,8 @@ class ShortCode extends WordPress\Main
 			if ( ! $args['orderby'] )
 				$query['orderby'] = 'menu_order';
 
+			$list_class[] = '-attachment-list';
+
 		} else if ( 'objects2objects' === $list ) {
 
 			// if ( $posttype && is_post_type_archive( $posttype ) ) {
@@ -1025,6 +1029,9 @@ class ShortCode extends WordPress\Main
 
 				return $content;
 			}
+
+			$list_class[] = '-o2o';
+			$list_class[] = sprintf( '-o2o-%s', $args['connection'] );
 
 		} else if ( 'metadata' === $list ) {
 
@@ -1086,6 +1093,8 @@ class ShortCode extends WordPress\Main
 					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
 				);
 
+			$list_class[] = '-children-list';
+
 		} else if ( 'all' === $args['id'] || 'all' === $args['term_id'] ) {
 
 			if ( $posttype && empty( $query['post_type'] ) )
@@ -1129,6 +1138,8 @@ class ShortCode extends WordPress\Main
 		} else if ( $posttype && is_post_type_archive( $posttype ) ) {
 
 			$query['post_type'] = $posttype;
+
+			$list_class[] = sprintf( '-type-%s', is_array( $posttype ) ? $posttype[0] : $posttype );
 
 		} else if ( $taxonomy && is_tax( $taxonomy ) ) {
 
@@ -1325,7 +1336,7 @@ class ShortCode extends WordPress\Main
 
 		if ( $args['list_tag'] )
 			$html = Core\HTML::tag( $args['list_tag'], [
-				'class' => Core\HTML::attrClass( $args['list_class'], '-posts-list', sprintf( '-type-%s', is_array( $posttype ) ? $posttype[0] : $posttype ) ),
+				'class' => $list_class,
 			], $html );
 
 		if ( $args['title'] )

@@ -102,7 +102,7 @@ class Widget extends \WP_Widget
 	// NOTE: override this to bypass caching.
 	public function widget( $args, $instance )
 	{
-		$this->widget_cache( $args, $instance );
+		$this->widget_cache( $args, $instance, '' );
 	}
 
 	// NOTE: override this for different types of caching.

@@ -111,7 +111,9 @@ trait CoreRestrictPosts
 			return FALSE;
 
 		add_filter( sprintf( 'manage_edit-%s_sortable_columns', $posttype ),
-			static function ( $columns ) use ( $taxonomies ) {
+			static function ( $columns )
+				use ( $taxonomies ) {
+
 				return array_merge( $columns,
 					Core\Arraay::sameKey(
 						Core\Arraay::prefixValues( $taxonomies, 'taxonomy-' ) ) );
@@ -119,7 +121,8 @@ trait CoreRestrictPosts
 			}, $priority, 1 );
 
 		add_filter( 'posts_clauses',
-			static function ( $pieces, $wp_query ) use ( $taxonomies, $posttype ) {
+			static function ( $pieces, $wp_query )
+				use ( $taxonomies, $posttype ) {
 
 				if ( ! isset( $wp_query->query['orderby'] ) )
 					return $pieces;
@@ -152,7 +155,8 @@ trait CoreRestrictPosts
 		$this->filter_append( 'query_vars', $query_var );
 
 		add_action( 'parse_query',
-			static function ( &$query ) use ( $query_var ) {
+			static function ( &$query )
+				use ( $query_var ) {
 
 				if ( ! isset( $query->query_vars[$query_var] ) )
 					return;

@@ -290,7 +290,7 @@ class Tube extends gEditorial\Module
 				// TODO: restrict videos by channel
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) ) {
-					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'playlist-video', 'meta', NULL, -10 );
+					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, 'playlist-video', 'meta', FALSE, -10 );
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'primary_posttype' );
 				}
 

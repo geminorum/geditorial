@@ -272,6 +272,9 @@ trait ModuleLinks
 
 			if ( method_exists( $this, 'imports_settings' ) && ! gEditorial\Settings::isScreenContext( 'imports', $screen ) )
 				$contexts['imports'] = _x( 'Imports', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
+
+			if ( method_exists( $this, 'customs_settings' ) && ! gEditorial\Settings::isScreenContext( 'customs', $screen ) )
+				$contexts['customs'] = _x( 'Customs', 'Internal: ModuleLinks: Header Button', 'geditorial-admin' );
 		}
 
 		foreach ( $contexts as $context => $text ) {

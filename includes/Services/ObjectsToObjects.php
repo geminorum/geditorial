@@ -315,7 +315,8 @@ class ObjectsToObjects extends gEditorial\Service
 			$args['_nonce'] = wp_create_nonce( GEDITORIAL_O2O_BOX_NONCE );
 
 		if ( ! array_key_exists( '_spinner', $args ) )
-			$args['_spinner'] = admin_url( 'images/wpspin_light.gif' );
+			// $args['_spinner'] = admin_url( 'images/wpspin_light.gif' );
+			$args['_spinner'] = GEDITORIAL_URL.'assets/images/spinner/fade-stagger-squares.svg';
 
 		gEditorial()->enqueue_asset_config( $args, 'o2obox' );
 
