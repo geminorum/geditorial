@@ -382,7 +382,7 @@ class Meta extends gEditorial\Module
 			if ( ! count( $fields ) )
 				return;
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$contexts = Core\Arraay::column( $fields, 'context' );
 				$nobox    = $this->filters( 'nobox_callback', in_array( 'nobox', $contexts, TRUE ), $screen->post_type );
@@ -408,7 +408,7 @@ class Meta extends gEditorial\Module
 				$this->enqueue_asset_js( $asset, $screen );
 				$this->posttypefields__hook_metabox( $screen, $fields );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->posttypefields__hook_edit_screen( $screen->post_type );

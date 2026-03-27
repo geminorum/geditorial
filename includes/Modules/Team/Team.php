@@ -166,14 +166,14 @@ class Team extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'member_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'member_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->posttypes__media_register_headerbutton( 'member_posttype' );
 				$this->_hook_post_updated_messages( 'member_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'member_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( 'group_taxonomy' );

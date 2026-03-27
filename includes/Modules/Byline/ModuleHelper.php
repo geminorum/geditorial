@@ -219,10 +219,8 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
 
-		if ( is_null( $args['callback'] ) )
-			$args['callback'] = [ __NAMESPACE__.'\\ModuleTemplate', 'renderTermIntro' ];
-
 		$html = '';
+		$args['callback'] = $args['callback'] ?? [ __NAMESPACE__.'\\ModuleTemplate', 'renderTermIntro' ];
 
 		foreach ( $list as $item ) {
 

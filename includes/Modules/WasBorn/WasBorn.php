@@ -225,24 +225,24 @@ class WasBorn extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
-		} else if ( $this->constant( 'year_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'year_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
-		} else if ( $this->constant( 'group_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'group_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->in_setting_posttypes( $screen->post_type, 'parent' ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->hook_taxonomy_metabox_mainbox(
 					'main_taxonomy',
@@ -250,7 +250,7 @@ class WasBorn extends gEditorial\Module
 					'__singleselect_terms_callback',
 				);
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( $this->get_setting( 'admin_restrict', TRUE )
 					&& $this->role_can( 'reports' ) ) {

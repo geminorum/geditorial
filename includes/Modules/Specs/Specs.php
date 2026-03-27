@@ -107,7 +107,7 @@ class Specs extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base
+		if ( 'post' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			$this->class_metabox( $screen, 'supportedbox' );

@@ -173,8 +173,7 @@ class Archives extends gEditorial\Module
 
 		$this->filter_module( 'countables', 'taxonomy_countbox_tokens', 4, 9 );
 
-		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, $this->base );
-		$this->filter( 'taxonomy_archive_link', 2, 10, FALSE, 'gnetwork' );
+		$this->filter( 'taxonomy_archive_link', 3, 10, FALSE, 'nucleus' );
 		$this->filter( 'navigation_taxonomy_archive_link', 2, 9, FALSE, 'gtheme' );
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
@@ -191,7 +190,7 @@ class Archives extends gEditorial\Module
 					WordPress\Taxonomy::object( $screen->taxonomy )->label
 				) ] ] ) );
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->action( 'taxonomy_tab_extra_content', 2, 9, FALSE, 'gnetwork' );
 			}
@@ -526,7 +525,7 @@ class Archives extends gEditorial\Module
 		return $tokens;
 	}
 
-	public function taxonomy_archive_link( $false, $taxonomy )
+	public function taxonomy_archive_link( $false, $taxonomy, $fallback )
 	{
 		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
 			return $link;

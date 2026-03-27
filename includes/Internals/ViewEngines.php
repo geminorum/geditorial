@@ -63,8 +63,7 @@ trait ViewEngines
 	{
 		self::_dep( '$this->viewengine__render()' );
 
-		if ( is_null( $path ) )
-			$path = $this->get_view_path();
+		$path = $path ?? $this->get_view_path();
 
 		if ( empty( $this->view_engines[$path] ) )
 			$this->view_engines[$path] = $this->viewengine__get( $path );
@@ -212,8 +211,7 @@ trait ViewEngines
 	{
 		self::_dep();
 
-		if ( is_null( $path ) )
-			$path = $this->path.'views';
+		$path = $path ?? ( $this->path.'views' );
 
 		return $part ? sprintf( '%s/%s.mustache', $path, $part ) : $path;
 	}

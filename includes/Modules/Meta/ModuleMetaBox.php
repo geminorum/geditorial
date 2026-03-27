@@ -311,7 +311,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		$atts = [
 			'textarea_name' => 'geditorial-meta-'.$field.( FALSE === $key ? '' : '['.$key.']' ),
 			'editor_class'  => 'editor-status-counts textarea-autosize geditorial-meta-field-'.$field.' geditorial-meta-type-'.$type,
-			'editor_css'    => apply_filters( 'geditorial_meta_'.$type.'_css', '', $type, $field, $post ),
+			'editor_css'    => apply_filters( self::und( static::BASE, 'meta', $type, 'css' ), '', $type, $field, $post ),
 			'tinymce'       => 'postbox_tiny' == $type,
 		];
 

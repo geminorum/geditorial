@@ -257,17 +257,17 @@ class Positions extends gEditorial\Module
 			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $this->constant( 'primary_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'primary_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 
-		} else if ( $this->constant( 'flag_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'flag_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 
-		} else if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		} else if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_parentfile_for_optionsgeneralphp();
 
@@ -282,7 +282,7 @@ class Positions extends gEditorial\Module
 
 				$this->subcontent_do_enqueue_asset_js( $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->pairedcore__hook_sync_paired();
 
@@ -295,7 +295,7 @@ class Positions extends gEditorial\Module
 				}
 			}
 
-		} else if ( 'post' == $screen->base ) {
+		} else if ( 'post' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -312,7 +312,7 @@ class Positions extends gEditorial\Module
 				$this->subcontent_do_enqueue_asset_js( $screen );
 			}
 
-		} else if ( 'edit' == $screen->base ) {
+		} else if ( 'edit' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 

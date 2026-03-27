@@ -355,12 +355,12 @@ class Audit extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->filter( 'taxonomy_empty_terms', 2, 8, FALSE, 'gnetwork' );
 
@@ -370,7 +370,7 @@ class Audit extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) ) {
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy', FALSE, 5 );

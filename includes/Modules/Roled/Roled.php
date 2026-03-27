@@ -199,8 +199,7 @@ class Roled extends gEditorial\Module
 	// @SEE: https://developer.wordpress.org/?p=1109
 	private function map( $base = NULL )
 	{
-		if ( is_null( $base ) )
-			$base = $this->constant( 'base_type' );
+		$base = $base ?? $this->constant( 'base_type' );
 
 		return [
 

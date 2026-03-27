@@ -130,13 +130,13 @@ class Drafts extends gEditorial\Module
 
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->action( 'post_submitbox_minor_actions', 1, 12 );
 
 				$this->enqueue_asset_js( [], $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter( 'display_post_states', 2 );
 
@@ -348,9 +348,7 @@ class Drafts extends gEditorial\Module
 	public function get_preview_url( $post_id, $key = NULL )
 	{
 		$url = get_permalink( $post_id );
-
-		if ( is_null( $key ) )
-			$key = get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE );
+		$key = $key ?? get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE );
 
 		return $key ? add_query_arg( $this->constant( 'public_queryvar' ), $key, $url ) : $url;
 	}

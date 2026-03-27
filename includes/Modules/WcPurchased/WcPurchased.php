@@ -58,11 +58,11 @@ class WcPurchased extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == 'product' ) {
+		if ( $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( $this->role_can( 'reports' ) ) {
 					$this->filter( 'post_row_actions', 2 );

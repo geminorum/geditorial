@@ -426,9 +426,9 @@ class Trained extends gEditorial\Module
 			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__media_register_headerbutton( 'primary_posttype' );
@@ -437,7 +437,7 @@ class Trained extends gEditorial\Module
 				$this->pairedmetabox__hook_megabox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
@@ -465,16 +465,16 @@ class Trained extends gEditorial\Module
 			if ( $subterms && $subterms === $screen->taxonomy )
 				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
 
-			} else if ( 'post' == $screen->base ) {
+			} else if ( 'post' === $screen->base ) {
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
 				$this->_hook_paired_overviewbox( $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
@@ -482,7 +482,7 @@ class Trained extends gEditorial\Module
 			}
 		}
 
-		// only for supported posttypes
+		// only for supported post-types
 		$this->remove_taxonomy_submenu( $subterms );
 
 		$this->modulelinks__hook_calendar_linked_post( $screen );

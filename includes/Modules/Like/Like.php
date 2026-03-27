@@ -110,7 +110,7 @@ class Like extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
+		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( $this->get_setting( 'like_count' ) )
@@ -131,10 +131,7 @@ class Like extends gEditorial\Module
 
 	public function get_button( $post = NULL )
 	{
-		if ( is_null( $post ) )
-			$post = $this->current_queried;
-
-		if ( ! $post )
+		if ( ! $post = $post ?? $this->current_queried )
 			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

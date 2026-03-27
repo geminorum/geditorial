@@ -208,16 +208,16 @@ class Workflow extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 
-			if ( 'edit-tags' == $screen->base )
+			if ( 'edit-tags' === $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$edit = WordPress\Taxonomy::edit( $this->constant( 'main_taxonomy' ), [ 'post_type' => $screen->post_type ] );
 				remove_meta_box( 'submitdiv', $screen, 'side' );
@@ -231,7 +231,7 @@ class Workflow extends gEditorial\Module
 					'high'
 				);
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				// FIXME: Temporarily hiding inline/bulk edit action
 				Services\AdminScreen::disableQuickEdit( $screen );

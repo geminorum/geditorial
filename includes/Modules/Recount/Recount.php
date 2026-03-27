@@ -58,7 +58,8 @@ class Recount extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit-tags' == $screen->base && $this->taxonomy_supported( $screen->taxonomy ) ) {
+		if ( 'edit-tags' === $screen->base
+			&& $this->taxonomy_supported( $screen->taxonomy ) ) {
 
 			$this->_edit_tags_screen( $screen->taxonomy );
 			add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_taxonomy_columns' ] );

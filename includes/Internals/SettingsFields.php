@@ -131,7 +131,7 @@ trait SettingsFields
 
 	public function posttype_fields_all( $posttype = 'post', $module = NULL )
 	{
-		return WordPress\PostType::supports( $posttype, ( is_null( $module ) ? $this->module->name : $module ).'_fields' );
+		return WordPress\PostType::supports( $posttype, self::und( $module ?? $this->module->name, 'fields' ) );
 	}
 
 	public function posttype_fields_list( $posttype = 'post', $extra = [] )
@@ -149,7 +149,7 @@ trait SettingsFields
 		return $list;
 	}
 
-	// enabled fields for a posttype
+	// Retrieves enabled fields for given post-type.
 	public function posttype_fields( $posttype = 'post', $js = FALSE )
 	{
 		$fields = [];

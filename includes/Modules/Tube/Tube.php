@@ -271,9 +271,9 @@ class Tube extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__media_register_headerbutton( 'primary_posttype' );
@@ -285,7 +285,7 @@ class Tube extends gEditorial\Module
 					$screen
 				);
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				// TODO: restrict videos by channel
 
@@ -298,10 +298,10 @@ class Tube extends gEditorial\Module
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 			}
 
-		} else if ( $screen->post_type == $this->constant( 'secondary_posttype' )
+		} else if ( $this->is_screen_posttype( 'secondary_posttype', $screen )
 			&& $this->get_setting( 'video_channels' ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__media_register_headerbutton( 'secondary_posttype' );
@@ -310,7 +310,7 @@ class Tube extends gEditorial\Module
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
 					$this->_hook_children_listbox( $screen, $this->constant( 'primary_posttype' ) );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'primary_posttype' ) ) )
 					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'primary_posttype', NULL, NULL, NULL, -10 );
@@ -319,9 +319,9 @@ class Tube extends gEditorial\Module
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 			}
 
-		} else if ( $this->in_setting( $screen->post_type, 'connected_posttypes' ) ) {
+		} else if ( $this->in_setting_posttypes( $screen->post_type, 'connected' ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->o2o_register_metabox_to(
 					'primary_posttype_connected',
@@ -329,9 +329,9 @@ class Tube extends gEditorial\Module
 					$screen
 				);
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
-				// TODO: columnrow_for_o2o_connected_to
+				// TODO: `columnrow_for_o2o_connected_to`
 			}
 		}
 	}

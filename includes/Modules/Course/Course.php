@@ -338,9 +338,9 @@ class Course extends gEditorial\Module
 			? $this->constant( 'topic_taxonomy' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'course_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'course_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__increase_menu_order( $screen->post_type );
@@ -350,7 +350,7 @@ class Course extends gEditorial\Module
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->modulelinks__register_headerbuttons();
 				$this->latechores__hook_admin_bulkactions( $screen );
@@ -369,13 +369,13 @@ class Course extends gEditorial\Module
 			if ( $subterms && $subterms === $screen->taxonomy )
 				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'course_posttype' ) ) );
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
 
-			} else if ( 'post' == $screen->base ) {
+			} else if ( 'post' === $screen->base ) {
 
-				if ( $screen->post_type == $this->constant( 'lesson_posttype' ) ) {
+				if ( $this->is_screen_posttype( 'lesson_posttype', $screen ) ) {
 					$this->posttypes__media_register_headerbutton( 'lesson_posttype' );
 					$this->_hook_post_updated_messages( 'lesson_posttype' );
 					$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
@@ -383,12 +383,12 @@ class Course extends gEditorial\Module
 				}
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
-				$this->_hook_paired_pairedbox( $screen, ( $screen->post_type == $this->constant( 'lesson_posttype' ) ) );
+				$this->_hook_paired_pairedbox( $screen, $this->is_screen_posttype( 'lesson_posttype', $screen ) );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
-				if ( $screen->post_type == $this->constant( 'lesson_posttype' ) )
+				if ( $this->is_screen_posttype( 'lesson_posttype', $screen ) )
 					$this->_hook_bulk_post_updated_messages( 'lesson_posttype' );
 
 				$this->latechores__hook_admin_bulkactions( $screen );

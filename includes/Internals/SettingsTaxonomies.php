@@ -36,14 +36,12 @@ trait SettingsTaxonomies
 
 	public function register_settings_taxonomies_option( $title = NULL )
 	{
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'taxonomies_title', FALSE, 'settings',
-				_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
-
 		$option = $this->hook_base( $this->module->name );
+		$title  = $title ?? $this->get_string( 'taxonomies_title', FALSE, 'settings',
+			_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
 
 		gEditorial\Settings::addModuleSection( $option, [
-			'id'            => $option.'_taxonomies',
+			'id'            => self::und( $option, 'taxonomies' ),
 			'title'         => _x( 'Taxonomies', 'Internal: SettingsTaxonomies: Section Title', 'geditorial-admin' ),
 			'section_class' => 'taxonomies_option_section',
 		] );
@@ -52,7 +50,7 @@ trait SettingsTaxonomies
 			$title,
 			[ $this, 'settings_taxonomies_option' ],
 			$option,
-			$option.'_taxonomies'
+			self::und( $option, 'taxonomies' )
 		);
 	}
 
@@ -68,7 +66,7 @@ trait SettingsTaxonomies
 			$html = Core\HTML::tag( 'input', [
 				'type'    => 'checkbox',
 				'value'   => 'enabled',
-				'id'      => 'tax-'.$taxonomy,
+				'id'      => self::dsh( 'tax', $taxonomy ),
 				'name'    => $this->hook_base( $this->module->name ).'[taxonomies]['.$taxonomy.']',
 				'checked' => ! empty( $this->options->taxonomies[$taxonomy] ),
 			] );
@@ -173,8 +171,10 @@ trait SettingsTaxonomies
 
 	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
 	{
-		$hook = $this->hook_base( is_null( $module ) ? $this->module->name : $module, 'taxonomies_excluded' );
-		$this->filter_append( $hook, $this->constant( $constant ) );
+		return $this->filter_append(
+			$this->hook_base( $module ?? $this->module->name, 'taxonomies_excluded' ),
+			$this->constant( $constant )
+		);
 	}
 
 	protected function get_taxonomy_show_in_quickedit_desc( $constant )

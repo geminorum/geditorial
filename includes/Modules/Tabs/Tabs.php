@@ -39,7 +39,7 @@ class Tabs extends gEditorial\Module
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_builtins',
+				'field' => self::und( 'posttype', $posttype_name, 'builtins' ),
 				'type'  => 'checkbox-panel',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -140,7 +140,7 @@ class Tabs extends gEditorial\Module
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
 				'public'                              => FALSE,
-				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: gEditorial prop
+				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,    // NOTE: `gEditorial` prop
 			], 'names', 'or' ) + $extra, $this->keep_taxonomies )
 		);
 	}
@@ -200,7 +200,7 @@ class Tabs extends gEditorial\Module
 			if ( empty( $tab['name'] ) )
 				continue;
 
-			if ( ! in_array( $tab['name'], $this->get_setting( 'posttype_'.$post->post_type.'_builtins', [] ), TRUE ) )
+			if ( ! in_array( $tab['name'], $this->get_setting( self::und( 'posttype', $post->post_type, 'builtins' ), [] ), TRUE ) )
 				continue;
 
 			if ( array_key_exists( 'viewable', $tab ) && TRUE !== $tab['viewable'] ) {

@@ -207,9 +207,9 @@ class Quotation extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->action_module( 'meta', 'render_metabox', 4, 1 );
 				$this->filter_false_module( 'tweaks', 'metabox_menuorder' );
@@ -220,7 +220,7 @@ class Quotation extends gEditorial\Module
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter( 'the_title', 2, 9 );
 
@@ -237,14 +237,14 @@ class Quotation extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) ) {
 					$this->filter( 'the_title', 2, 9 );
 					$this->_hook_children_listbox( $screen, $this->constant( 'main_posttype' ) );
 				}
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) )
 					$this->corerestrictposts__hook_columnrow_for_post_children( $screen->post_type, 'main_posttype', NULL, NULL, NULL, -10 );

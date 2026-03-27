@@ -169,7 +169,7 @@ class Users extends gEditorial\Module
 		$types      = $this->get_setting( 'user_types' );
 		$categories = $this->get_setting( 'author_categories' );
 
-		if ( 'users' == $screen->base ) {
+		if ( 'users' === $screen->base ) {
 
 			if ( $this->get_setting( 'posttype_counts', FALSE ) ) {
 				$this->filter( 'manage_users_columns' );
@@ -178,7 +178,7 @@ class Users extends gEditorial\Module
 
 			$this->action_module( 'tweaks', 'column_user', 3, 12 );
 
-		} else if ( $categories && 'post' == $screen->base
+		} else if ( $categories && 'post' === $screen->base
 			&& is_object_in_taxonomy( $screen->post_type, 'category' ) ) {
 
 			if ( current_user_can( 'edit_posts' )
@@ -194,7 +194,7 @@ class Users extends gEditorial\Module
 				);
 			}
 
-		} else if ( 'edit' == $screen->base
+		} else if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
 			$this->corerestrictposts__hook_screen_authors();
@@ -211,29 +211,29 @@ class Users extends gEditorial\Module
 
 		} else if ( $groups || $types || $categories ) {
 
-			if ( 'profile' == $screen->base || 'user-edit' == $screen->base ) {
+			if ( 'profile' === $screen->base || 'user-edit' === $screen->base ) {
 
 				add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
 				add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
 				add_action( 'personal_options_update', [ $this, 'edit_user_profile_update' ] );
 				add_action( 'edit_user_profile_update', [ $this, 'edit_user_profile_update' ] );
 
-			} else if ( $screen->taxonomy == $this->constant( 'group_taxonomy' ) ) {
+			} else if ( $this->is_screen_taxonomy( 'group_taxonomy', $screen ) ) {
 
 				$this->_hook_parentfile_for_usersphp();
 				$this->modulelinks__register_headerbuttons();
 
-				if ( 'edit-tags' == $screen->base ) {
+				if ( 'edit-tags' === $screen->base ) {
 					add_filter( 'manage_edit-'.$screen->taxonomy.'_columns', [ $this, 'manage_columns_groups' ] );
 					add_action( 'manage_'.$screen->taxonomy.'_custom_column', [ $this, 'custom_column_groups' ], 10, 3 );
 				}
 
-			} else if ( $screen->taxonomy == $this->constant( 'type_taxonomy' ) ) {
+			} else if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {
 
 				$this->_hook_parentfile_for_usersphp();
 				$this->modulelinks__register_headerbuttons();
 
-				if ( 'edit-tags' == $screen->base ) {
+				if ( 'edit-tags' === $screen->base ) {
 					add_filter( 'manage_edit-'.$screen->taxonomy.'_columns', [ $this, 'manage_columns_types' ] );
 					add_action( 'manage_'.$screen->taxonomy.'_custom_column', [ $this, 'custom_column_types' ], 10, 3 );
 				}
@@ -243,10 +243,10 @@ class Users extends gEditorial\Module
 
 	public function sanitize_user( $username )
 	{
-		if ( $username == $this->constant( 'group_taxonomy_slug' ) )
+		if ( $username === $this->constant( 'group_taxonomy_slug' ) )
 			$username = '';
 
-		else if ( $username == $this->constant( 'type_taxonomy_slug' ) )
+		else if ( $username === $this->constant( 'type_taxonomy_slug' ) )
 			$username = '';
 
 		return $username;

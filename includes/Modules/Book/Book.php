@@ -570,9 +570,9 @@ class Book extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_editform_meta_summary( [
 					'publication_byline'  => NULL,
@@ -597,7 +597,7 @@ class Book extends gEditorial\Module
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
@@ -621,17 +621,17 @@ class Book extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_paired_pairedbox( $screen );
 				$this->_hook_paired_store_metabox( $screen->post_type );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 			}
 
-		} else if ( $this->_p2p && 'edit' == $screen->base
+		} else if ( $this->_p2p && 'edit' === $screen->base
 			&& $this->in_setting( $screen->post_type, 'p2p_posttypes' ) ) {
 
 			$this->coreadmin__hook_tweaks_column_row( $screen->post_type, -25, 'p2p_from' );

@@ -128,7 +128,7 @@ class Importer extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
+		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type )
 				&& current_user_can( gEditorial\Plugin::CAPABILITY_IMPORTS ) ) {
 

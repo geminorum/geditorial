@@ -197,13 +197,13 @@ class Entry extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'dashboard' == $screen->base ) {
+		if ( 'dashboard' === $screen->base ) {
 
 			$this->filter( 'dashboard_recent_drafts_query_args' );
 
-		} else if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+		} else if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->filter_module( 'markdown', 'linking', 8, 8 );
 
@@ -211,7 +211,7 @@ class Entry extends gEditorial\Module
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_edit_screen( $screen->post_type );
 

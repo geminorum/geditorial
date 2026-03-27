@@ -118,27 +118,21 @@ class Badges extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 
 			} else if ( 'post' === $screen->base ) {
 
-				$this->hook_taxonomy_metabox_mainbox(
-					'main_taxonomy',
-					$screen->post_type,
-					$this->get_setting( 'selectmultiple_term', TRUE )
-						? '__checklist_restricted_terms_callback'
-						: '__singleselect_restricted_terms_callback'
-				);
+				$this->coretax__hook_posttype_mainbox( 'main_taxonomy', $screen, TRUE, FALSE, TRUE, FALSE );
 			}
 		}
 	}
@@ -203,10 +197,7 @@ class Badges extends gEditorial\Module
 
 	public function get_rendered_badges( $post = NULL, $badges = NULL, $fallback = '' )
 	{
-		if ( is_null( $badges ) )
-			$badges = $this->get_badges( $post );
-
-		if ( ! $badges )
+		if ( ! $badges = $badges ?? $this->get_badges( $post ) )
 			return $fallback;
 
 		$html     = '';

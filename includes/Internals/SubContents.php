@@ -720,10 +720,8 @@ trait SubContents
 		if ( ! $data = $this->quantumcomments__get_data_all( $post, $args['context'] ?? 'display' ) )
 			return $content;
 
-		if ( is_null( $args['fields'] ) )
-			$args['fields'] = $this->subcontent_get_fields( $args['context'] );
-
-		$data = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
+		$args['fields'] = $args['fields'] ?? $this->subcontent_get_fields( $args['context'] );
+		$data           = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
 
 		return gEditorial\ShortCode::wrap(
 			Core\HTML::tableSimple( $data, $args['fields'], FALSE ),

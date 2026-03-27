@@ -316,9 +316,9 @@ class Today extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base ) {
+		if ( 'post' === $screen->base ) {
 
-			if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+			if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
 				$this->_hook_general_mainbox( $screen );
 				$this->_save_meta_supported( $screen->post_type );
@@ -337,9 +337,9 @@ class Today extends gEditorial\Module
 				$this->_save_meta_supported( $screen->post_type );
 			}
 
-		} else if ( 'edit' == $screen->base ) {
+		} else if ( 'edit' === $screen->base ) {
 
-			if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+			if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 

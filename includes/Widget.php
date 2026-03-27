@@ -783,6 +783,18 @@ class Widget extends \WP_Widget
 
 	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
 	{
+		if ( is_null( $label ) ) {
+			switch ( $field ) {
+				case 'embeds'     : $label = _x( 'Process Embeds', 'Widget Core', 'geditorial-admin' ); break;
+				case 'shortcodes' : $label = _x( 'Process Short-codes', 'Widget Core', 'geditorial-admin' ); break;
+				case 'filters'    : $label = _x( 'Process Filters', 'Widget Core', 'geditorial-admin' ); break;
+				case 'legacy'     : $label = _x( 'Process Filters (Legacy)', 'Widget Core', 'geditorial-admin' ); break;
+				case 'autop'      : $label = _x( 'Automatic Paragraphs', 'Widget Core', 'geditorial-admin' ); break;
+				case 'bypasscache': $label = _x( 'Bypass Caching', 'Widget Core', 'geditorial-admin' ); break;
+				default:            $label = _x( 'Checked:', 'Widget Core', 'geditorial-admin' );
+			}
+		}
+
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
 			'name'    => $this->get_field_name( $field ),
@@ -791,7 +803,7 @@ class Widget extends \WP_Widget
 		] );
 
 		Core\HTML::label( Core\Text::gluedNBSP(
-			$label ?? _x( 'Checked:', 'Widget Core', 'geditorial-admin' ),
+			$label,
 			$html
 		), $this->get_field_id( $field ) );
 	}

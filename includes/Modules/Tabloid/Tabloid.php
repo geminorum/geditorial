@@ -46,8 +46,8 @@ class Tabloid extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->filter( 'post_overview_pre_link', 3, 12, FALSE, $this->base );
-		$this->filter( 'term_overview_pre_link', 3, 12, FALSE, $this->base );
+		$this->filter( 'post_overview_pre_link', 3, 12, FALSE, 'nucleus' );
+		$this->filter( 'term_overview_pre_link', 3, 12, FALSE, 'nucleus' );
 	}
 
 	public function admin_menu()
@@ -78,7 +78,7 @@ class Tabloid extends gEditorial\Module
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
-				if ( 'post' == $screen->base ) {
+				if ( 'post' === $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action' ) ) ) {
@@ -91,7 +91,7 @@ class Tabloid extends gEditorial\Module
 						gEditorial\Scripts::enqueueColorBox();
 					}
 
-				} else if ( 'edit' == $screen->base ) {
+				} else if ( 'edit' === $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, FALSE, TRUE, NULL, TRUE ) )
@@ -103,7 +103,7 @@ class Tabloid extends gEditorial\Module
 
 			if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
-				if ( 'term' == $screen->base ) {
+				if ( 'term' === $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& ( $html = $this->rowaction_get_mainlink_for_term( WordPress\Term::get(), 'page-title-action' ) ) ) {
@@ -116,7 +116,7 @@ class Tabloid extends gEditorial\Module
 						gEditorial\Scripts::enqueueColorBox();
 					}
 
-				} else if ( 'edit-tags' == $screen->base ) {
+				} else if ( 'edit-tags' === $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
 						&& $this->rowactions__hook_mainlink_for_term( $screen->taxonomy, 8, FALSE, TRUE, NULL, TRUE ) )

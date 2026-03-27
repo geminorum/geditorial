@@ -63,31 +63,31 @@ class WCMessage extends gEditorial\Widget
 		$this->before_form( $instance );
 
 		$this->form_open_group();
-		$this->form_content( $instance );
+			$this->form_content( $instance );
 		$this->form_close_group();
 
 		$this->form_open_group( 'config' );
-		$this->form_dropdown( $instance, $this->_get_wc_notice_types(), 'notice', 'notice_type', _x( 'Notice Type:', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		// $this->form_checkbox( $instance, FALSE, 'dismissible', _x( 'With a Dismis Button', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'bypasscache', _x( 'Bypass Caching', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
+			$this->form_dropdown( $instance, $this->_get_wc_notice_types(), 'notice', 'notice_type', _x( 'Notice Type:', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
+			// $this->form_checkbox( $instance, FALSE, 'dismissible', _x( 'With a Dismis Button', 'Widget: WCMessage', 'geditorial-wc-widgets' ) );
+			$this->form_checkbox( $instance, FALSE, 'shortcodes' );
+			$this->form_checkbox( $instance, FALSE, 'filters' );
+			$this->form_checkbox( $instance, FALSE, 'legacy' );
+			$this->form_checkbox( $instance, FALSE, 'autop' );
+			$this->form_checkbox( $instance, FALSE, 'bypasscache' );
 		$this->form_close_group();
 
 		$this->form_open_group( 'heading' );
-		$this->form_title( $instance );
-		$this->form_title_link( $instance );
-		$this->form_title_image( $instance );
-		$this->form_class( $instance );
-		// $this->form_context( $instance );
+			$this->form_title( $instance );
+			$this->form_title_link( $instance );
+			$this->form_title_image( $instance );
+			$this->form_class( $instance );
+			// $this->form_context( $instance );
 		$this->form_close_group();
 
 		$this->form_open_group( 'customs' );
-		$this->form_open_widget( $instance );
-		$this->form_after_title( $instance );
-		$this->form_close_widget( $instance );
+			$this->form_open_widget( $instance );
+			$this->form_after_title( $instance );
+			$this->form_close_widget( $instance );
 		$this->form_close_group();
 
 		$this->after_form( $instance );

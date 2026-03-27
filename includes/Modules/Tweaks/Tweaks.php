@@ -270,7 +270,7 @@ class Tweaks extends gEditorial\Module
 	{
 		$enqueue = FALSE;
 
-		if ( 'post' == $screen->base
+		if ( 'post' === $screen->base
 			&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
 
 			if ( $this->in_setting( $screen->post_type, 'post_modified' ) )
@@ -294,7 +294,7 @@ class Tweaks extends gEditorial\Module
 					'strings'  => $this->get_strings( 'editpost', 'js' ),
 				], $screen );
 
-		} else if ( 'edit' == $screen->base ) {
+		} else if ( 'edit' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 				$this->_admin_enabled();
@@ -307,7 +307,7 @@ class Tweaks extends gEditorial\Module
 				$this->filter( 'posts_distinct', 2, 9 );
 			}
 
-		} else if ( 'users' == $screen->base ) {
+		} else if ( 'users' === $screen->base ) {
 
 			$this->filter( 'manage_users_columns', 1, 1 );
 			$this->filter( 'manage_users_custom_column', 3, 99 );
@@ -317,11 +317,11 @@ class Tweaks extends gEditorial\Module
 			add_action( $this->hook( 'column_user' ), [ $this, 'column_user_default' ], 10, 3 );
 			add_action( $this->hook( 'column_contacts' ), [ $this, 'column_contacts_default' ], 20, 3 );
 
-		} else if ( 'edit-tags' == $screen->base ) {
+		} else if ( 'edit-tags' === $screen->base ) {
 
 			// TODO: add support for taxonomy list table
 
-		} else if ( 'edit-comments' == $screen->base ) {
+		} else if ( 'edit-comments' === $screen->base ) {
 
 			if ( $this->get_setting( 'comments_user', FALSE ) ) {
 

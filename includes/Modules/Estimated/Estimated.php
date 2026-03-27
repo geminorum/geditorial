@@ -119,11 +119,11 @@ class Estimated extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_store_metabox( $screen->post_type );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 40 );
 			}

@@ -333,11 +333,8 @@ class ModuleHelper extends gEditorial\Helper
 
 		$the_day      = [];
 		$default_type = $default_type ?? Core\L10n::calendar();
-
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
-
-		$post_meta = get_post_meta( $post->ID );
+		$constants    = $constants ?? self::getTheDayConstants();
+		$post_meta    = get_post_meta( $post->ID );
 
 		foreach ( $constants as $field => $constant )
 			if ( ! empty( $post_meta[$constant][0] ) )
@@ -353,12 +350,8 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		$the_day      = [];
 		$default_type = $default_type ?? Core\L10n::calendar();
-
-		if ( is_null( $admin ) )
-			$admin = is_admin();
-
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
+		$admin        = $admin ?? is_admin();
+		$constants    = $constants ?? self::getTheDayConstants();
 
 		foreach ( $constants as $field => $constant ) {
 
@@ -391,16 +384,14 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getDayPost( $stored, $constants = NULL )
 	{
-		$posttype = self::constant( 'main_posttype', 'day' );
-		$the_day  = self::atts( [
+		$constants = $constants ?? self::getTheDayConstants();
+		$posttype  = self::constant( 'main_posttype', 'day' );
+		$the_day   = self::atts( [
 			'cal'   => '',
 			'day'   => '',
 			'month' => '',
 			// 'year'  => '', // there is no year in `day` post-type
 		], $stored );
-
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
 
 		$args = [
 			'post_type'        => $posttype,
@@ -517,8 +508,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $args['today'] ) )
 			$args['today'] = [ $args['the_day'] ];
 
-		// if ( is_null( $constants ) )
-		// 	$constants = self::getTheDayConstants();
+		// $constants = $constants ?? self::getTheDayConstants();
 
 		$query_args = [
 			'orderby'             => $args['orderby'],
@@ -571,11 +561,9 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function theDayMetaQuery( $today, $constants = NULL )
 	{
+		$constants = $constants ?? self::getTheDayConstants();
 		$metaquery = [ 'relation' => 'OR' ];
 		$orderby   = [];
-
-		if ( is_null( $constants ) )
-			$constants = self::getTheDayConstants();
 
 		foreach ( $today as $offset => $the_day ) {
 
@@ -619,8 +607,7 @@ class ModuleHelper extends gEditorial\Helper
 			'year'  => '',
 		], $atts );
 
-		if ( is_null( $calendars ) )
-			$calendars = Services\Calendars::getDefualts( TRUE );
+		$calendars = $calendars ?? Services\Calendars::getDefualts( TRUE );
 
 		$html = Core\HTML::tag( 'input', [
 			'type'         => 'text',

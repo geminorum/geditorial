@@ -122,12 +122,7 @@ class ProfileSummary extends gEditorial\Widget
 		$this->flush_widget_cache();
 
 		return $this->handle_update( $new, $old, [
-			'embeds',
-			'shortcodes',
-			'filters',
-			'legacy',
-			'autop',
-			'bypasscache',
+			// 'shortcodes',
 		] );
 	}
 }

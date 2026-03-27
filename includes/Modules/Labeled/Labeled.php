@@ -162,7 +162,7 @@ class Labeled extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
@@ -171,7 +171,7 @@ class Labeled extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 

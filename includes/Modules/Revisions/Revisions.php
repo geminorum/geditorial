@@ -90,7 +90,7 @@ class Revisions extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base
+			if ( 'post' === $screen->base
 				&& ( $post = self::req( 'post', FALSE ) )
 				&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
 
@@ -103,7 +103,7 @@ class Revisions extends gEditorial\Module
 					'_nonce' => wp_create_nonce( $this->hook( $post ) ),
 				], $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->rowactions__hook_admin_bulkactions( $screen, (bool) $this->cuc( 'edit' ) );
 

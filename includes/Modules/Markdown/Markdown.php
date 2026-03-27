@@ -80,7 +80,7 @@ class Markdown extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->filter( 'wp_insert_post_data', 2 );
 				$this->filter( 'edit_post_content', 2 );

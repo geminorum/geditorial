@@ -27,14 +27,14 @@ class Skilled extends gEditorial\Module
 	 * WTF: or maybe new module!
 	 * @SEE: https://ielts.org/organisations/ielts-for-organisations/ielts-scoring-in-detail
 	 * 9 - Expert
-	 * 8 - Very good
+	 * 8 - Excellent (`Very good`)
 	 * 7 - Good
 	 * 6 - Competent
 	 * 5 - Modest
 	 * 4 - Limited
 	 * 3 - Extremely limited
 	 * 2 - Intermittent
-	 * 1 - Non-user
+	 * 1 - `Non-user`
 	 * 0 - Did not attempt the test
 	 */
 
@@ -137,7 +137,7 @@ class Skilled extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
@@ -146,21 +146,14 @@ class Skilled extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 
 			} else if ( 'post' === $screen->base ) {
 
-				if ( ! $this->get_setting( 'metabox_advanced', TRUE ) )
-					$this->hook_taxonomy_metabox_mainbox(
-						'main_taxonomy',
-						$screen->post_type,
-						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
-					);
+				$this->coretax__hook_posttype_mainbox( 'main_taxonomy', $screen, TRUE, TRUE );
 			}
 		}
 	}

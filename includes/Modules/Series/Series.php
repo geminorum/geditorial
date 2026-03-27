@@ -114,7 +114,7 @@ class Series extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->class_metabox( $screen, 'supportedbox' );
 
@@ -130,7 +130,7 @@ class Series extends gEditorial\Module
 				add_action( $this->hook( 'render_metabox' ), [ $this, 'render_metabox' ], 10, 4 );
 				add_action( $this->hook( 'render_metabox_item' ), [ $this, 'render_metabox_item' ], 5, 4 );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );

@@ -178,7 +178,7 @@ class Ortho extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base ) {
+		if ( 'post' === $screen->base ) {
 
 			if ( WordPress\PostType::supportBlocks( $screen->post_type ) )
 				return;
@@ -186,7 +186,7 @@ class Ortho extends gEditorial\Module
 			if ( $this->posttype_supported( $screen->post_type ) )
 				$this->enqueueVirastar();
 
-		} else if ( 'edit-tags' == $screen->base || 'term' == $screen->base ) {
+		} else if ( 'edit-tags' === $screen->base || 'term' === $screen->base ) {
 
 			if ( $this->taxonomy_supported( $screen->taxonomy ) )
 				$this->enqueueVirastar();

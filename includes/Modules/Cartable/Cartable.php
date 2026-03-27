@@ -344,17 +344,17 @@ class Cartable extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'type_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				$this->_hook_tweaks_column_attr( $screen->post_type );
 
-			} else if ( 'post' == $screen->base ) {
+			} else if ( 'post' === $screen->base ) {
 
 				$this->class_metabox( $screen, 'mainbox' );
 				add_meta_box( $this->classs( 'mainbox' ),
@@ -896,8 +896,7 @@ class Cartable extends gEditorial\Module
 
 	private function get_user_groups( $user_id = NULL )
 	{
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
+		$user_id = $user_id ?? get_current_user_id();
 
 		return wp_get_object_terms( (int) $user_id, $this->constant( 'group_ref' ) );
 	}
@@ -906,6 +905,7 @@ class Cartable extends gEditorial\Module
 	{
 		if ( 'user' == $context )
 			$title = _x( 'Your Cartable', 'Page Title', 'geditorial-cartable' );
+
 		else
 			$title = sprintf(
 				/* translators: `%s`: term name placeholder */

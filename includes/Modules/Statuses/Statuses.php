@@ -249,19 +249,19 @@ class Statuses extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
-			if ( 'edit-tags' == $screen->base )
+			if ( 'edit-tags' === $screen->base )
 				add_filter( 'manage_edit-'.$this->constant( 'main_taxonomy' ).'_columns', [ $this, 'manage_columns' ] );
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				// if ( $this->get_setting( 'status_restrict' ) )
 				// 	$this->action( 'pre_get_posts', 1, 20, 'admin' );

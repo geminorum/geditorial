@@ -298,9 +298,9 @@ class Venue extends gEditorial\Module
 			? $this->constant( 'primary_subterm' )
 			: FALSE;
 
-		if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_editform_meta_summary( [
 					'street_address' => NULL,
@@ -316,7 +316,7 @@ class Venue extends gEditorial\Module
 				$this->_hook_paired_listbox( $screen );
 				$this->pairedcore__hook_sync_paired();
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
@@ -337,11 +337,11 @@ class Venue extends gEditorial\Module
 			if ( $subterms && $subterms === $screen->taxonomy )
 				$this->filter_string( 'parent_file', sprintf( 'edit.php?post_type=%s', $this->constant( 'primary_posttype' ) ) );
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->_hook_paired_taxonomy_bulk_actions( $screen->post_type, $screen->taxonomy );
 
-			} else if ( 'post' == $screen->base ) {
+			} else if ( 'post' === $screen->base ) {
 
 				$this->_metabox_remove_subterm( $screen, $subterms );
 
@@ -363,7 +363,7 @@ class Venue extends gEditorial\Module
 					$this->_hook_paired_overviewbox( $screen );
 				}
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
 				$this->paired__hook_tweaks_column( $screen->post_type, 12 );

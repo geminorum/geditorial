@@ -111,14 +111,14 @@ class Gallery extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'album_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'album_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->_hook_post_updated_messages( 'album_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'album_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );

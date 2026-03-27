@@ -168,7 +168,7 @@ class Athlete extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
@@ -184,14 +184,7 @@ class Athlete extends gEditorial\Module
 
 			} else if ( 'post' === $screen->base ) {
 
-				if ( ! $this->get_setting( 'metabox_advanced' ) )
-					$this->hook_taxonomy_metabox_mainbox(
-						'main_taxonomy',
-						$screen->post_type,
-						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
-					);
+				$this->coretax__hook_posttype_mainbox( 'main_taxonomy', $screen, TRUE );
 			}
 		}
 	}

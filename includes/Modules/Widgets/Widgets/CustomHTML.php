@@ -72,18 +72,18 @@ class CustomHTML extends gEditorial\Widget
 		$this->form_close_group();
 
 		$this->form_open_group( 'config' );
-		$this->form_checkbox( $instance, FALSE, 'embeds', _x( 'Process Embeds', 'Widget: Custom HTML', 'geditorial-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'shortcodes', _x( 'Process Shortcodes', 'Widget: Custom HTML', 'geditorial-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'filters', _x( 'Process Filters', 'Widget: Custom HTML', 'geditorial-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'legacy', _x( 'Process Filters (Legacy)', 'Widget: Custom HTML', 'geditorial-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'autop', _x( 'Automatic Paragraphs', 'Widget: Custom HTML', 'geditorial-widgets' ) );
-		$this->form_checkbox( $instance, FALSE, 'bypasscache', _x( 'Bypass Caching', 'Widget: Custom HTML', 'geditorial-widgets' ) );
+			$this->form_checkbox( $instance, FALSE, 'embeds' );
+			$this->form_checkbox( $instance, FALSE, 'shortcodes' );
+			$this->form_checkbox( $instance, FALSE, 'filters' );
+			$this->form_checkbox( $instance, FALSE, 'legacy' );
+			$this->form_checkbox( $instance, FALSE, 'autop' );
+			$this->form_checkbox( $instance, FALSE, 'bypasscache' );
 		$this->form_close_group();
 
 		$this->form_open_group( 'customs' );
-		$this->form_open_widget( $instance );
-		$this->form_after_title( $instance );
-		$this->form_close_widget( $instance );
+			$this->form_open_widget( $instance );
+			$this->form_after_title( $instance );
+			$this->form_close_widget( $instance );
 		$this->form_close_group();
 
 		$this->after_form( $instance );

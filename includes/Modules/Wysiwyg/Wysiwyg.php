@@ -67,7 +67,7 @@ class Wysiwyg extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( ( 'edit-tags' == $screen->base || 'term' == $screen->base )
+		if ( ( 'edit-tags' === $screen->base || 'term' === $screen->base )
 			&& $this->taxonomy_supported( $screen->taxonomy ) ) {
 
 			$this->_admin_enabled();

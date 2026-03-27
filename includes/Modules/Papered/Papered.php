@@ -240,18 +240,18 @@ class Papered extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'primary_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'primary_taxonomy', $screen ) ) {
 
 			$this->filter_string( 'parent_file', 'themes.php' );
 
-		} else if ( $this->constant( 'flag_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'flag_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
 
-		} else if ( $screen->post_type == $this->constant( 'primary_posttype' ) ) {
+		} else if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->filter_string( 'parent_file', 'themes.php' );
 				$this->filter_string( 'wp_default_editor', 'html' );
@@ -260,12 +260,12 @@ class Papered extends gEditorial\Module
 				$this->_hook_paired_listbox( $screen );
 				$this->_register_lonebox_fields( $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				// TODO: add row action for preview/print
 			}
 
-		} else if ( 'post' == $screen->base ) {
+		} else if ( 'post' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -280,7 +280,7 @@ class Papered extends gEditorial\Module
 				// $this->_hook_paired_store_metabox( $screen->post_type );
 			}
 
-			if ( $this->in_setting( $screen->post_type, 'directed_posttypes' ) ) {
+			if ( $this->in_setting_posttypes( $screen->post_type, 'directed' ) ) {
 
 				if ( $this->role_can( 'prints' ) ) {
 
@@ -289,7 +289,9 @@ class Papered extends gEditorial\Module
 					$this->enqueue_asset_js( [
 						'strings' => $this->get_strings( $screen->base, 'js' ),
 						'link'    => $this->get_printpage_url(),
-					], $screen, [ gEditorial\Scripts::enqueueColorBox() ] );
+					], $screen, [
+						gEditorial\Scripts::enqueueColorBox(),
+					] );
 				}
 			}
 		}

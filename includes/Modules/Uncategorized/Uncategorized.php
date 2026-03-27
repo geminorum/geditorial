@@ -67,7 +67,7 @@ class Uncategorized extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'edit' == $screen->base
+		if ( 'edit' === $screen->base
 			// TODO: add separate list of post-types on settings for this
 			&& $this->posttype_supported( $screen->post_type ) ) {
 
@@ -77,7 +77,7 @@ class Uncategorized extends gEditorial\Module
 
 			$this->rowactions__hook_admin_bulkactions( $screen );
 
-		} else if ( 'dashboard' == $screen->base
+		} else if ( 'dashboard' === $screen->base
 			// NOTE: only for `post` post-type
 			&& current_user_can( 'edit_others_posts' ) ) {
 

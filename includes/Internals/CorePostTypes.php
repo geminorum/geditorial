@@ -486,6 +486,14 @@ trait CorePostTypes
 		];
 	}
 
+	public function is_screen_posttype( $constant, $screen = NULL )
+	{
+		if ( ! $screen = $screen ?? get_current_screen() )
+			return FALSE;
+
+		return $this->constant( $constant ) === $screen->post_type;
+	}
+
 	public function is_posttype( $constant, $post = NULL )
 	{
 		if ( ! $constant )
@@ -494,7 +502,7 @@ trait CorePostTypes
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		return $this->constant( $constant ) == $post->post_type;
+		return $this->constant( $constant ) === $post->post_type;
 	}
 
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )

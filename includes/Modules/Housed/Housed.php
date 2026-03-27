@@ -280,7 +280,7 @@ class Housed extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
@@ -308,14 +308,14 @@ class Housed extends gEditorial\Module
 
 			if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
-				if ( 'post' == $screen->base ) {
+				if ( 'post' === $screen->base ) {
 
 					if ( $this->role_can( [ 'reports', 'assign' ] ) )
 						$this->_hook_general_supportedbox( $screen, NULL, 'advanced', 'low', '-subcontent-grid-metabox' );
 
 					$this->subcontent_do_enqueue_asset_js( $screen );
 
-				} else if ( 'edit' == $screen->base ) {
+				} else if ( 'edit' === $screen->base ) {
 
 					if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 

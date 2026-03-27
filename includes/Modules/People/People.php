@@ -208,7 +208,7 @@ class People extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) === $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
@@ -222,13 +222,13 @@ class People extends gEditorial\Module
 
 			$this->action( 'pre_get_terms', 1, 99, 'admin' );
 
-		} else if ( $this->constant( 'category_taxonomy' ) === $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'category_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 			$this->register_headerbutton_for_taxonomy( 'main_taxonomy' );
 
-		} else if ( $this->constant( 'type_taxonomy' ) === $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();

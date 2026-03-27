@@ -165,9 +165,9 @@ class Inquire extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->filter( 'enter_title_here', 2 );
 
@@ -187,7 +187,7 @@ class Inquire extends gEditorial\Module
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->corerestrictposts__hook_screen_taxonomies( [

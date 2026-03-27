@@ -66,17 +66,12 @@ trait TemplateTaxonomy
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'taxonomy_archive_link' ),
-			function ( $false, $tax ) use ( $taxonomy, $custom ) {
+		add_filter( self::und( 'nucleus', 'taxonomy', 'archive_link' ),
+			function ( $false, $tax, $fallback ) use ( $taxonomy, $custom ) {
 				return $tax === $taxonomy ? $custom : $false;
-			}, 10, 2 );
+			}, 10, 3 );
 
-		add_filter( 'gnetwork_taxonomy_archive_link',
-			function ( $false, $tax ) use ( $taxonomy, $custom ) {
-				return $tax === $taxonomy ? $custom : $false;
-			}, 10, 2 );
-
-		add_filter( 'gtheme_navigation_taxonomy_archive_link',
+		add_filter( self::und( 'gtheme', 'navigation', 'taxonomy', 'archive_link' ),
 			function ( $false, $tax ) use ( $taxonomy, $custom ) {
 				return $tax === $taxonomy ? $custom : $false;
 			}, 9, 2 );

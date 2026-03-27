@@ -132,12 +132,12 @@ class Grouping extends gEditorial\Module
 		if ( ! $customs = $this->get_custom_taxonomies() )
 			return;
 
-		if ( 'users' == $screen->base ) {
+		if ( 'users' === $screen->base ) {
 
 			$this->action_module( 'tweaks', 'column_user', 3, 12 );
 			$this->filter( 'users_list_table_query_args' );
 
-		} else if ( 'profile' == $screen->base || 'user-edit' == $screen->base ) {
+		} else if ( 'profile' === $screen->base || 'user-edit' === $screen->base ) {
 
 			add_action( 'show_user_profile', [ $this, 'edit_user_profile' ], 5 );
 			add_action( 'edit_user_profile', [ $this, 'edit_user_profile' ], 5 );
@@ -149,7 +149,7 @@ class Grouping extends gEditorial\Module
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
 
-			if ( 'edit-tags' == $screen->base )
+			if ( 'edit-tags' === $screen->base )
 				$this->_edit_tags_screen( $screen->taxonomy );
 		}
 	}

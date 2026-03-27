@@ -423,9 +423,9 @@ class Personage extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type == $this->constant( 'main_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->_hook_editform_meta_summary( [
 					'first_name'      => NULL,
@@ -443,7 +443,7 @@ class Personage extends gEditorial\Module
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
 					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->filter_true( 'disable_months_dropdown', 12 );
 
@@ -828,8 +828,7 @@ class Personage extends gEditorial\Module
 		if ( empty( $this->cache['fullnames'][$context] ) )
 			$this->cache['fullnames'][$context] = [];
 
-		if ( is_null( $names ) )
-			$names = $this->_get_human_names( $post );
+		$names = $names ?? $this->_get_human_names( $post );
 
 		$fullname = $this->filters( 'make_human_title',
 			Services\Individuals::makeFullname( $names, $context, $fallback ),

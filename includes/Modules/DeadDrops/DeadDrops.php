@@ -91,7 +91,7 @@ class DeadDrops extends gEditorial\Module
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 			} else if ( 'post' === $screen->base ) {
 

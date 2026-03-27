@@ -185,14 +185,14 @@ class Lingo extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'language_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'language_taxonomy', $screen ) ) {
 
-			if ( 'edit-tags' == $screen->base ) {
+			if ( 'edit-tags' === $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->action( 'taxonomy_tab_extra_content', 2, 12, FALSE, 'gnetwork' );
 
-			} else if ( 'term' == $screen->base ) {
+			} else if ( 'term' === $screen->base ) {
 
 			}
 
@@ -203,18 +203,11 @@ class Lingo extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
-				if ( ! $this->get_setting( 'metabox_advanced' ) )
-					$this->hook_taxonomy_metabox_mainbox(
-						'language_taxonomy',
-						$screen->post_type,
-						$this->get_setting( 'selectmultiple_term' )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
-					);
+				$this->coretax__hook_posttype_mainbox( 'language_taxonomy', $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->corerestrictposts__hook_screen_taxonomies( 'language_taxonomy', 'reports' );
 			}

@@ -231,14 +231,14 @@ class Bookmarked extends gEditorial\Module
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) )
 					$this->_hook_general_supportedbox( $screen, NULL, 'advanced', 'low', '-subcontent-grid-metabox' );
 
 				$this->subcontent_do_enqueue_asset_js( $screen );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 

@@ -108,7 +108,7 @@ class WcConnected extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'post' == $screen->base ) {
+		if ( 'post' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -118,7 +118,7 @@ class WcConnected extends gEditorial\Module
 				}
 			}
 
-		} else if ( 'edit' == $screen->base ) {
+		} else if ( 'edit' === $screen->base ) {
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 

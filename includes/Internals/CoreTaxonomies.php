@@ -692,6 +692,14 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
+	public function is_screen_taxonomy( $constant, $screen = NULL )
+	{
+		if ( ! $screen = $screen ?? get_current_screen() )
+			return FALSE;
+
+		return $this->constant( $constant ) === $screen->taxonomy;
+	}
+
 	public function is_taxonomy( $constant, $term = NULL )
 	{
 		if ( ! $constant )
@@ -807,6 +815,37 @@ trait CoreTaxonomies
 				'taxonomy'               => $taxonomy->name,
 				'__back_compat_meta_box' => TRUE,
 			]
+		);
+	}
+
+	/**
+	 * Hooks taxonomy main-box for given screen post-type.
+	 *
+	 * @param string $constant
+	 * @param object $screen
+	 * @param bool $default_multiple_term
+	 * @param bool $default_advanced
+	 * @param bool $restricted
+	 * @param bool $check_advanced
+	 * @return bool
+	 */
+	protected function coretax__hook_posttype_mainbox( $constant, $screen = NULL, $default_multiple_term = FALSE, $default_advanced = FALSE, $restricted = TRUE, $check_advanced = TRUE )
+	{
+		if ( ! $constant )
+			return FALSE;
+
+		if ( $check_advanced && $this->get_setting( 'metabox_advanced', $default_advanced ) )
+			return FALSE;
+
+		if ( ! $screen = $screen ?? get_current_screen() )
+			return FALSE;
+
+		return $this->hook_taxonomy_metabox_mainbox(
+			$constant,
+			$screen->post_type,
+			$this->get_setting( 'selectmultiple_term', $default_multiple_term )
+				? ( $restricted ? '__checklist_restricted_terms_callback' : '__checklist_terms_callback' )
+				: ( $restricted ? '__singleselect_restricted_terms_callback' : '__singleselect_terms_callback' )
 		);
 	}
 

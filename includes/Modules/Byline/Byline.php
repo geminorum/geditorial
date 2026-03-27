@@ -260,11 +260,11 @@ class Byline extends gEditorial\Module
 
 	public function current_screen( $screen )
 	{
-		if ( 'users' == $screen->base ) {
+		if ( 'users' === $screen->base ) {
 
 			$this->filter( 'pre_count_many_users_posts', 2 );
 
-		} else if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		} else if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_usersphp();
 			$this->modulelinks__register_headerbuttons();
@@ -285,7 +285,7 @@ class Byline extends gEditorial\Module
 				if ( $this->role_can( 'reports' ) )
 					$this->_register_header_button();
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 					$this->_hook_tweaks_column( $screen );

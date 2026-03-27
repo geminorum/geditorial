@@ -208,11 +208,11 @@ class Units extends gEditorial\Module
 			if ( ! count( $fields ) )
 				return;
 
-			if ( 'post' == $screen->base ) {
+			if ( 'post' === $screen->base ) {
 
 				$this->posttypefields__hook_metabox( $screen, $fields );
 
-			} else if ( 'edit' == $screen->base ) {
+			} else if ( 'edit' === $screen->base ) {
 
 				$this->_admin_enabled();
 				$this->posttypefields__hook_edit_screen( $screen->post_type );

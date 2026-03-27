@@ -380,7 +380,7 @@ class Terms extends gEditorial\Module
 	{
 		$enqueue = FALSE;
 
-		if ( 'edit-tags' == $screen->base ) {
+		if ( 'edit-tags' === $screen->base ) {
 
 			$fields = $this->get_supported( $screen->taxonomy );
 
@@ -448,7 +448,7 @@ class Terms extends gEditorial\Module
 				}
 			}
 
-		} else if ( 'term' == $screen->base ) {
+		} else if ( 'term' === $screen->base ) {
 
 			$fields = $this->get_supported( $screen->taxonomy );
 
@@ -498,7 +498,9 @@ class Terms extends gEditorial\Module
 
 	private function _get_supported_raw( $filtered = TRUE )
 	{
-		return $filtered ? $this->filters( 'supported_fields_raw', $this->supported ) : $this->supported;
+		return $filtered
+			? $this->filters( 'supported_fields_raw', $this->supported )
+			: $this->supported;
 	}
 
 	// FALSE for all
@@ -507,7 +509,7 @@ class Terms extends gEditorial\Module
 		$fields = [];
 
 		foreach ( $this->_get_supported_raw() as $field )
-			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
+			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, self::und( 'term', $field ) ) )
 				$fields[] = $field;
 
 		return $this->filters( 'supported_fields',
@@ -522,7 +524,7 @@ class Terms extends gEditorial\Module
 		$list = [];
 
 		foreach ( $this->_get_supported_raw() as $field )
-			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, 'term_'.$field ) )
+			if ( FALSE === $taxonomy || $this->in_setting( $taxonomy, self::und( 'term', $field ) ) )
 				$list[$field] = $this->strings['titles'][$field];
 
 		return $this->filters( 'list_supported_fields',
@@ -553,7 +555,7 @@ class Terms extends gEditorial\Module
 	public function get_supported_taxonomies( $field )
 	{
 		return $this->filters( 'supported_field_taxonomies',
-			$this->get_setting( 'term_'.$field, [] ),
+			$this->get_setting( self::und( 'term', $field ), [] ),
 			$field
 		);
 	}
@@ -562,12 +564,12 @@ class Terms extends gEditorial\Module
 	{
 		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
 		$suitable  = $suitables[$field]['title'] ?? NULL;
-		$title      = '';
+		$title     = '';
 
 		if ( FALSE !== $suitable )
 			$title = $suitable ?? $this->get_string( $field, $taxonomy, 'titles', $field );
 
-		return $this->filters( 'field_'.$field.'_title',
+		return $this->filters( self::und( 'field', $field, 'title' ),
 			$title,
 			$taxonomy,
 			$field,
@@ -584,7 +586,7 @@ class Terms extends gEditorial\Module
 		if ( FALSE !== $suitable )
 			$desc = $suitable ?? $this->get_string( $field, $taxonomy, 'descriptions', '' );
 
-		return $this->filters( 'field_'.$field.'_desc',
+		return $this->filters( self::und( 'field', $field, 'desc' ),
 			$desc,
 			$taxonomy,
 			$field,
@@ -649,7 +651,7 @@ class Terms extends gEditorial\Module
 			if ( ! $taxonomies = $this->get_supported_taxonomies( $field ) )
 				continue;
 
-			$prepare = 'register_prepare_callback_'.$field;
+			$prepare = self::und( 'register_prepare_callback', $field );
 
 			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
 			if ( in_array( $field, [ 'parent', 'order', 'user', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
@@ -700,7 +702,7 @@ class Terms extends gEditorial\Module
 					register_meta( 'term', $field, $filtered );
 			}
 
-			// registers general field for prepared meta-data
+			// Registers general field for prepared meta-data
 			// mainly for display purposes only
 			if ( in_array( $field, [ 'image' ] ) )
 				register_rest_field( $taxonomies, $field, [
@@ -860,7 +862,7 @@ class Terms extends gEditorial\Module
 
 		foreach ( $supported as $field )
 			if ( ! in_array( $field, $sortables, TRUE ) )
-				$columns[$this->classs( $field )] = 'meta_'.$field;
+				$columns[$this->classs( $field )] = self::und( 'meta', $field );
 
 		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
 	}
@@ -996,7 +998,10 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-					$html.= Core\HTML::link( Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ), gEditorial\Info::lookupURLforLatLng( $meta ), TRUE ).'</span>';
+					$html.= Core\HTML::link(
+						Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ),
+						gEditorial\Info::lookupURLforLatLng( $meta ), TRUE
+					).'</span>';
 
 				} else {
 

@@ -134,8 +134,7 @@ trait PostMeta
 		if ( ! $posttype || empty( $fields ) )
 			return FALSE;
 
-		if ( is_null( $module ) )
-			$module = 'meta';
+		$module = $module ?? 'meta';
 
 		if ( ! gEditorial()->enabled( $module ) )
 			return FALSE;

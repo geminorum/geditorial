@@ -641,8 +641,7 @@ class Module extends WordPress\Module
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
-		if ( is_null( $request ) )
-			$request = $_REQUEST;
+		$request = $request ?? $_REQUEST;
 
 		if ( empty( $request['bulk_edit'] )
 			&& ( empty( $request['action'] ) || 'inline-save' != $request['action'] ) )

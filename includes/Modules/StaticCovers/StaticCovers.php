@@ -256,7 +256,7 @@ class StaticCovers extends gEditorial\Module
 
 		$this->filter( 'rest_thumbnail_data', 4, 99, FALSE, 'gnetwork' );
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
-		$this->filter( 'post_image_pre_src', 5, 12, FALSE, $this->base );
+		$this->filter( 'post_image_pre_src', 5, 12, FALSE, 'nucleus' );
 		$this->filter( 'searchselect_result_image_for_post', 3, 12, FALSE, $this->base );
 		$this->filter_module( 'tabloid', 'view_data_for_post', 3, 20 );
 		$this->filter_module( 'papered', 'view_data_for_post', 4 );
@@ -298,19 +298,19 @@ class StaticCovers extends gEditorial\Module
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
-				if ( 'post' == $screen->base ) {
+				if ( 'post' === $screen->base ) {
 
 					$this->_register_headerbuttons_for_post( $screen->post_type );
 					$this->_hook_general_supportedbox( $screen, NULL, 'side', 'high' );
 					gEditorial\Scripts::enqueueThickBox();
 					gEditorial\Scripts::enqueueColorBox();
 
-				} else if ( 'edit' == $screen->base ) {
+				} else if ( 'edit' === $screen->base ) {
 
 					$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
 				}
 
-			} else if ( 'post' == $screen->base
+			} else if ( 'post' === $screen->base
 				&& $this->filters( 'post_supported_secondary', NULL, WordPress\Post::get() ) ) {
 
 				$this->_register_headerbuttons_for_post_secondary( $screen->post_type );
@@ -322,7 +322,7 @@ class StaticCovers extends gEditorial\Module
 
 			if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
-				if ( 'term' == $screen->base ) {
+				if ( 'term' === $screen->base ) {
 
 					$this->_register_headerbuttons_for_term( $screen->taxonomy );
 					$this->_hook_term_supportedbox( $screen, NULL, 'side', 'high' );
@@ -549,8 +549,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $post->post_type.'_posttype_url_template' ) )
 			return FALSE;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->_get_posttype_metakey( $post->post_type );
+		$metakey = $metakey ?? $this->_get_posttype_metakey( $post->post_type );
 
 		if ( ! $reference = get_post_meta( $post->ID, $metakey, TRUE ) )
 			return FALSE;
@@ -607,8 +606,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $post->post_type.'_posttype_url_template' ) )
 			return FALSE;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->_get_posttype_metakey( $post->post_type );
+		$metakey = $metakey ?? $this->_get_posttype_metakey( $post->post_type );
 
 		if ( ! $reference = get_post_meta( $post->ID, $metakey, TRUE ) )
 			return FALSE;
@@ -653,8 +651,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $term->taxonomy.'_taxonomy_url_template' ) )
 			return FALSE;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->_get_posttype_metakey( $term->taxonomy );
+		$metakey = $metakey ?? $this->_get_posttype_metakey( $term->taxonomy );
 
 		if ( ! $reference = get_term_meta( $term->term_id, $metakey, TRUE ) )
 			return FALSE;
@@ -712,8 +709,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $term->taxonomy.'_taxonomy_url_template' ) )
 			return FALSE;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->_get_posttype_metakey( $term->taxonomy );
+		$metakey = $metakey ?? $this->_get_posttype_metakey( $term->taxonomy );
 
 		if ( ! $reference = get_term_meta( $term->term_id, $metakey, TRUE ) )
 			return FALSE;
@@ -946,8 +942,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		if ( is_null( $args['check'] ) )
-			$args['check'] = 'read_post';
+		$args['check'] = $args['check'] ?? 'read_post';
 
 		if ( $args['check'] && ! WordPress\Post::can( $post, $args['check'] ) )
 			return $content;
@@ -957,8 +952,7 @@ class StaticCovers extends gEditorial\Module
 
 		$title = WordPress\Post::title( $post );
 
-		if ( is_null( $args['alt'] ) )
-			$args['alt'] = $title;
+		$args['alt'] = $args['alt'] ?? $title;
 
 		$html = Core\HTML::tag( 'img', [
 			'src'     => $src,
@@ -981,8 +975,7 @@ class StaticCovers extends gEditorial\Module
 
 		if ( $args['figure'] ) {
 
-			if ( is_null( $args['caption'] ) )
-				$args['caption'] = $title;
+			$args['caption'] = $args['caption'] ?? $title;
 
 			if ( $args['caption'] )
 				$html.= '<figcaption class="figure-caption">'.$args['caption'].'</figcaption>';
@@ -1026,8 +1019,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $term = WordPress\Term::get( $args['id'] ) )
 			return $content;
 
-		if ( is_null( $args['check'] ) )
-			$args['check'] = FALSE; // default is viewable
+		$args['check'] = $args['check'] ?? FALSE; // default is viewable
 
 		if ( $args['check'] && ! WordPress\Term::can( $term, $args['check'] ) )
 			return $content;
@@ -1037,8 +1029,7 @@ class StaticCovers extends gEditorial\Module
 
 		$title = WordPress\Term::title( $term );
 
-		if ( is_null( $args['alt'] ) )
-			$args['alt'] = $title;
+		$args['alt'] = $args['alt'] ?? $title;
 
 		$html = Core\HTML::tag( 'img', [
 			'src'     => $src,
@@ -1061,8 +1052,7 @@ class StaticCovers extends gEditorial\Module
 
 		if ( $args['figure'] ) {
 
-			if ( is_null( $args['caption'] ) )
-				$args['caption'] = $title;
+			$args['caption'] = $args['caption'] ?? $title;
 
 			if ( $args['caption'] )
 				$html.= '<figcaption class="figure-caption">'.$args['caption'].'</figcaption>';
