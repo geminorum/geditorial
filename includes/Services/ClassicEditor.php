@@ -8,7 +8,15 @@ use geminorum\gEditorial\WordPress;
 
 class ClassicEditor extends gEditorial\Service
 {
-	public static $tinymce = [
+	const TINYMCE_FILTERS = [
+		'teeny_mce_buttons',
+		'mce_buttons',
+		'mce_buttons_2',
+		'mce_buttons_3',
+		'mce_buttons_4',
+	];
+
+	public static $tinymce_buttons = [
 		[], // 0: `teeny_mce_buttons`
 		[], // 1: `mce_buttons`
 		[], // 2: `mce_buttons_2`
@@ -26,15 +34,6 @@ class ClassicEditor extends gEditorial\Service
 
 			add_action( 'init', [ __CLASS__, 'hook_buttons' ], 999 );
 		}
-
-		add_filter( 'mce_external_languages', [ __CLASS__, 'mce_external_languages' ] );
-	}
-
-	public static function mce_external_languages( $languages )
-	{
-		return array_merge( $languages, [
-			static::BASE => sprintf( '%sincludes/Misc/TinyMceStrings.php', self::factory()->get_dir() ),
-		] );
 	}
 
 	public static function hook_buttons()
@@ -42,44 +41,52 @@ class ClassicEditor extends gEditorial\Service
 		if ( 'true' != get_user_option( 'rich_editing' ) )
 			return;
 
-		if ( empty( array_filter( static::$tinymce ) ) )
+		if ( empty( array_filter( static::$tinymce_buttons ) ) )
 			return;
 
+		foreach ( static::TINYMCE_FILTERS as $level => $filter )
+			add_filter( $filter, static function ( $buttons, $editor_id )
+				use ( $level, $filter ) {
+
+				// if ( WordPress\IsIt::blockEditor() )
+				// 	return $buttons;
+
+				if ( empty( static::$tinymce_buttons[$level] ) )
+					return $buttons;
+
+				foreach ( static::$tinymce_buttons[$level] as $plugin => $filepath )
+					array_push( $buttons, $plugin );
+
+				return $buttons;
+
+			}, 12, 2 );
+
 		add_filter( 'mce_external_plugins', [ __CLASS__, 'mce_external_plugins' ] );
-		add_filter( 'mce_buttons', [ __CLASS__, 'mce_buttons' ] );
+		add_filter( 'mce_external_languages', [ __CLASS__, 'mce_external_languages' ] );
 	}
 
 	public static function registerButton( $button, $filepath, $level = NULL )
 	{
-		static::$tinymce[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
-	}
-
-	public static function mce_buttons( $buttons )
-	{
-		// if ( WordPress\IsIt::blockEditor() )
-		// 	return $buttons;
-
-		// array_push( $buttons, '|' );
-
-		if ( empty( static::$tinymce[1] ) )
-			return $buttons;
-
-		foreach ( static::$tinymce[1] as $plugin => $filepath )
-			array_push( $buttons, $plugin );
-
-		return $buttons;
+		static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
 	}
 
 	public static function mce_external_plugins( $plugin_array )
 	{
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
-		foreach ( self::$tinymce as $row )
+		foreach ( self::$tinymce_buttons as $row )
 			foreach ( $row as $plugin => $filepath )
 				if ( $filepath )
-					$plugin_array[$plugin] = $filepath.$variant.'.js';
+					$plugin_array[$plugin] = sprintf( '%s%s.js', $filepath, $variant );
 
 		return $plugin_array;
+	}
+
+	public static function mce_external_languages( $languages )
+	{
+		return array_merge( $languages, [
+			static::BASE => sprintf( '%sincludes/Misc/TinyMceStrings.php', self::factory()->get_dir() ),
+		] );
 	}
 
 	public static function getTinyMceStrings( $locale )
@@ -98,16 +105,16 @@ class ClassicEditor extends gEditorial\Service
 
 				printf(
 					/* translators: `%s`: words count */
-					_x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="word-count">'.Core\Number::format( '0' ).'</span>'
+					_x( 'Words: %s', 'Service: ClassicEditor: WordCount', 'geditorial' ),
+					Core\HTML::span( Core\Number::format( '0' ), 'word-count' )
 				);
 
 				echo '&nbsp;|&nbsp;';
 
 				printf(
 					/* translators: `%s`: chars count */
-					_x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="char-count">'.Core\Number::format( '0' ).'</span>'
+					_x( 'Chars: %s', 'Service: ClassicEditor: WordCount', 'geditorial' ),
+					Core\HTML::span( Core\Number::format( '0' ), 'char-count' )
 				);
 
 			echo '</div>';
