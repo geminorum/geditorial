@@ -318,35 +318,6 @@ class Helper extends WordPress\Main
 		return gEditorial()->user( $fallback );
 	}
 
-	// TODO: `line-count`
-	// TODO: Move to `ClassicEditor` Service
-	public static function renderEditorStatusInfo( $target )
-	{
-		echo '<div class="-wrap -editor-status-info">';
-
-			echo '<div data-target="'.$target.'" class="-status-count hide-if-no-js">';
-
-				printf(
-					/* translators: `%s`: words count */
-					_x( 'Words: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="word-count">'.Core\Number::format( '0' ).'</span>'
-				);
-
-				echo '&nbsp;|&nbsp;';
-
-				printf(
-					/* translators: `%s`: chars count */
-					_x( 'Chars: %s', 'Helper: WordCount', 'geditorial' ),
-					'<span class="char-count">'.Core\Number::format( '0' ).'</span>'
-				);
-
-			echo '</div>';
-
-			do_action( self::und( static::BASE, 'editor_status_info' ), $target );
-
-		echo '</div>';
-	}
-
 	// TODO: move to `WordPress\Strings`
 	public static function htmlEmpty( $class = '', $title_attr = NULL )
 	{

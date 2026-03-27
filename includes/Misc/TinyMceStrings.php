@@ -5,4 +5,4 @@
 if ( ! class_exists( '_WP_Editors' ) )
 	require ABSPATH.WPINC.'/class-wp-editor.php';
 
-$strings = class_exists( 'geminorum\\gEditorial\\Scripts' ) ? \geminorum\gEditorial\Scripts::getTinyMceStrings( \_WP_Editors::$mce_locale ) : '';
+$strings = class_exists( 'geminorum\\gEditorial\\Services\\ClassicEditor' ) ? \geminorum\gEditorial\Services\ClassicEditor::getTinyMceStrings( \_WP_Editors::$mce_locale ) : '';

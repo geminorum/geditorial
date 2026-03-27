@@ -784,7 +784,7 @@ class MetaBox extends WordPress\Main
 
 			wp_editor( html_entity_decode( $content ), $id, $args );
 
-			Helper::renderEditorStatusInfo( $id );
+			Services\ClassicEditor::renderEditorStatusInfo( $id );
 
 		echo '</div>';
 

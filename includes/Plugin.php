@@ -12,7 +12,6 @@ class Plugin extends WordPress\Plugin
 	private $asset_config   = FALSE;
 	private $asset_jsargs   = [];
 	private $asset_icons    = [];
-	private $editor_buttons = [];
 	private $adminbar_nodes = [];
 
 	private $_path;
@@ -59,11 +58,9 @@ class Plugin extends WordPress\Plugin
 	protected function actions()
 	{
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
-		add_action( 'init', [ $this, 'init_late' ], 999 );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
 		add_action( 'admin_bar_init', [ $this, 'admin_bar_init' ] );
 		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
-		add_filter( 'mce_external_languages', [ $this, 'mce_external_languages' ] );
 		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
 
 		if ( ! is_admin() ) {
@@ -205,6 +202,7 @@ class Plugin extends WordPress\Plugin
 			'Avatars',
 			'Barcodes',
 			'Calendars',
+			'ClassicEditor',
 			'ContentActions',
 			'ContentBrand',
 			'CustomPostType',
@@ -237,38 +235,6 @@ class Plugin extends WordPress\Plugin
 		foreach ( $available as $service )
 			if ( is_callable( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] ) )
 				call_user_func( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] );
-	}
-
-	// TODO: Move to `ClassicEditor` Service
-	public function init_late()
-	{
-		if ( count( $this->editor_buttons )
-			&& 'true' == get_user_option( 'rich_editing' ) ) {
-
-			add_filter( 'mce_external_plugins', [ $this, 'mce_external_plugins' ] );
-			add_filter( 'mce_buttons', [ $this, 'mce_buttons' ] );
-		}
-	}
-
-	// TODO: Move to `ClassicEditor` Service
-	public function mce_buttons( $buttons )
-	{
-		array_push( $buttons, '|' );
-
-		foreach ( $this->editor_buttons as $plugin => $filepath )
-			array_push( $buttons, $plugin );
-
-		return $buttons;
-	}
-
-	// TODO: Move to `ClassicEditor` Service
-	public function mce_external_plugins( $plugin_array )
-	{
-		foreach ( $this->editor_buttons as $plugin => $filepath )
-			if ( $filepath )
-				$plugin_array[$plugin] = $filepath;
-
-		return $plugin_array;
 	}
 
 	// HELPER
@@ -506,12 +472,6 @@ class Plugin extends WordPress\Plugin
 			Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
 	}
 
-	// TODO: Move to `ClassicEditor` Service
-	public function mce_external_languages( $languages )
-	{
-		return array_merge( $languages, [ 'geditorial' => GEDITORIAL_DIR.'includes/Misc/TinyMceStrings.php' ] );
-	}
-
 	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
 	{
 		return $option === $this->base.'_options' ? TRUE : $autoload;
@@ -665,12 +625,6 @@ class Plugin extends WordPress\Plugin
 		}
 
 		return FALSE;
-	}
-
-	// TODO: Move to `ClassicEditor` Service
-	public function register_editor_button( $button, $filepath )
-	{
-		$this->editor_buttons[$button] = sprintf( '%s%S', $this->get_url(), $filepath );
 	}
 
 	// TODO: Move to `AdminbarRegistry` Service

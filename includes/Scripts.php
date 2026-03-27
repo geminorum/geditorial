@@ -809,13 +809,6 @@ JS;
 		);
 	}
 
-	public static function getTinyMceStrings( $locale )
-	{
-		$strings = apply_filters( self::und( static::BASE, 'tinymce_strings' ), [] );
-
-		return count( $strings ) ? 'tinyMCE.addI18n("'.$locale.'.'.static::BASE.'", '.Core\HTML::encode( $strings ).');'."\n" : '';
-	}
-
 	public static function printJSConfig( $args, $object = 'gEditorial' )
 	{
 		$props = array_merge( $args, [

@@ -92,12 +92,15 @@ trait Assets
 		gEditorial()->enqueue_styles();
 	}
 
-	public function register_editor_button( $plugin, $settings_key = 'editor_button' )
+	public function register_editor_button( $plugin, $level = NULL, $settings_key = 'editor_button' )
 	{
 		if ( ! $this->get_setting( $settings_key, TRUE ) )
 			return;
 
-		gEditorial()->register_editor_button( $this->hook( $plugin ),
-			'assets/js/tinymce/'.$this->module->name.'.'.$plugin.'.js' );
+		Services\ClassicEditor::registerButton(
+			$this->hook( $plugin ),
+			sprintf( 'assets/js/tinymce/%s.%s', $this->module->name, $plugin ),
+			$level
+		);
 	}
 }

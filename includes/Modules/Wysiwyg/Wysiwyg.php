@@ -152,7 +152,7 @@ class Wysiwyg extends gEditorial\Module
 
 			wp_editor( '', $id, $this->_get_taxonomy_desc_editor_settings( $object, 'description' ) );
 
-			gEditorial\Helper::renderEditorStatusInfo( $id );
+			Services\ClassicEditor::renderEditorStatusInfo( $id );
 
 			Core\HTML::desc( $this->_get_taxonomy_desc_desc( $object ) );
 
@@ -191,7 +191,7 @@ JS;
 			wp_editor( htmlspecialchars_decode( $term->description ), $id,
 				$this->_get_taxonomy_desc_editor_settings( $object, 'description' ) );
 
-			gEditorial\Helper::renderEditorStatusInfo( $id );
+			Services\ClassicEditor::renderEditorStatusInfo( $id );
 
 			Core\HTML::desc( $this->_get_taxonomy_desc_desc( $object ) );
 			Core\HTML::wrapScript( 'jQuery("textarea#description").closest(".form-field").remove();' );
