@@ -345,4 +345,14 @@ class API extends Core\Base
 			'%s',
 		] );
 	}
+
+	public static function listConnections()
+	{
+		$list = [];
+
+		foreach ( ConnectionTypeFactory::get_all_instances() as $type )
+			$list[$type->name] = $type->get_desc();
+
+		return $list;
+	}
 }

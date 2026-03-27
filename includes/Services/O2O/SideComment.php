@@ -24,7 +24,7 @@ class SideComment extends Side
 
 	public function get_desc()
 	{
-		return implode( ', ', array_map( [ $this, 'taxonomy_label' ], $this->query_vars['taxonomy'] ) );
+		return implode( wp_get_list_item_separator(), array_map( [ $this, 'taxonomy_label' ], $this->query_vars['taxonomy'] ) );
 	}
 
 	public function get_labels()
@@ -107,6 +107,26 @@ class SideComment extends Side
 		return new \WP_Term_Query( $args );
 	}
 
+	public function capture_query( $args )
+	{
+		return ''; // WTF?!
+	}
+
+	public function get_list( $query )
+	{
+		return []; // WTF?!
+	}
+
+	public function is_indeterminate( $side )
+	{
+		return TRUE; // WTF?!
+	}
+
+	protected function recognize( $arg )
+	{
+		return FALSE; // WTF?!
+	}
+
 	// `post_type_label()`
 	private function taxonomy_label( $taxonomy )
 	{
@@ -130,6 +150,4 @@ class SideComment extends Side
 
 		return $tax_object;
 	}
-
-
 }

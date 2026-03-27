@@ -8,7 +8,9 @@ use geminorum\gEditorial\Core;
 class Widgets extends gEditorial\Module
 {
 
-	protected $deafults = [ 'widget_support' => TRUE ];
+	protected $deafults = [
+		'widget_support' => TRUE,
+	];
 
 	public static function module()
 	{
@@ -128,7 +130,7 @@ class Widgets extends gEditorial\Module
 
 			$widget = call_user_func( [ __NAMESPACE__.'\\Widgets\\'.$class, 'setup' ] );
 
-			$list[$key] = $widget['title'].': <em>'.$widget['desc'].'</em>';
+			$list[$key] = sprintf( '%s: %s', $widget['title'], Core\HTML::em( $widget['desc'] ) );
 		}
 
 		return $list;
@@ -145,10 +147,8 @@ class Widgets extends gEditorial\Module
 
 	private function _register_widgets()
 	{
-		$widgets = $this->get_setting( 'widgets', [] );
-
 		foreach ( $this->get_widgets() as $key => $class )
-			if ( in_array( $key, $widgets, TRUE ) )
+			if ( $this->in_setting( $key, 'widgets' ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 	}
 

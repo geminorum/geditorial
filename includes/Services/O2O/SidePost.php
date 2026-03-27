@@ -50,7 +50,7 @@ class SidePost extends Side
 
 	public function get_desc()
 	{
-		return implode( ', ', array_map( [ $this, 'post_type_label' ], $this->query_vars['post_type'] ) );
+		return implode( wp_get_list_item_separator(), array_map( [ $this, 'post_type_label' ], $this->query_vars['post_type'] ) );
 	}
 
 	private function post_type_label( $post_type )

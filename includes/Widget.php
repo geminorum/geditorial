@@ -99,13 +99,13 @@ class Widget extends \WP_Widget
 		];
 	}
 
-	// override this to bypass caching
+	// NOTE: override this to bypass caching.
 	public function widget( $args, $instance )
 	{
 		$this->widget_cache( $args, $instance );
 	}
 
-	// override this for different types of caching
+	// NOTE: override this for different types of caching.
 	protected function widget_cache_key( $instance = [] )
 	{
 		return $this->alt_option_name;
@@ -133,7 +133,7 @@ class Widget extends \WP_Widget
 		ob_start();
 
 		if ( $this->widget_html( $args, $instance ) )
-			$cache[$args['widget_id'].$prefix] = ob_get_flush();
+			$cache[Core\Base::und( $args['widget_id'], $prefix )] = ob_get_flush();
 
 		else
 			return ob_end_flush();
@@ -803,8 +803,8 @@ class Widget extends \WP_Widget
 		] );
 
 		Core\HTML::label( Core\Text::gluedNBSP(
-			$label,
-			$html
+			$html,
+			$label
 		), $this->get_field_id( $field ) );
 	}
 
@@ -888,8 +888,8 @@ class Widget extends \WP_Widget
 		] );
 
 		Core\HTML::label( Core\Text::gluedNBSP(
-			$label ?? _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' ),
-			$html
+			$html,
+			$label ?? _x( 'Must has Thumbnail Image', 'Widget Core', 'geditorial-admin' )
 		), $this->get_field_id( $field ) );
 	}
 
@@ -903,8 +903,8 @@ class Widget extends \WP_Widget
 		] );
 
 		Core\HTML::label( Core\Text::gluedNBSP(
-			$label ?? _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' ),
-			$html
+			$html,
+			$label ?? _x( 'Wrap as List Items', 'Widget Core', 'geditorial-admin' )
 		), $this->get_field_id( $field ) );
 	}
 }

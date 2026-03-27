@@ -10,7 +10,9 @@ use geminorum\gEditorial\WordPress;
 
 class WcWidgets extends gEditorial\Module
 {
-	protected $deafults = [ 'widget_support' => TRUE ];
+	protected $deafults = [
+		'widget_support' => TRUE,
+	];
 
 	public static function module()
 	{
@@ -54,8 +56,6 @@ class WcWidgets extends gEditorial\Module
 	{
 		return [
 			'WC-Message' => 'WCMessage',
-			// TODO: 'WC-ProductMeta' => 'WCProductMeta', // https://gist.github.com/bekarice/4022e3051d7684ddee2a
-			// TODO: https://gist.github.com/bekarice/377d10d2efd929be1ab8
 		];
 	}
 
@@ -67,7 +67,7 @@ class WcWidgets extends gEditorial\Module
 
 			$widget = call_user_func( [ __NAMESPACE__.'\\Widgets\\'.$class, 'setup' ] );
 
-			$list[$key] = $widget['title'].': <em>'.$widget['desc'].'</em>';
+			$list[$key] = sprintf( '%s: %s', $widget['title'], Core\HTML::em( $widget['desc'] ) );
 		}
 
 		return $list;
@@ -140,10 +140,8 @@ class WcWidgets extends gEditorial\Module
 
 	public function widgets_init()
 	{
-		$widgets = $this->get_setting( 'widgets', [] );
-
 		foreach ( $this->get_widgets() as $key => $class )
-			if ( in_array( $key, $widgets, TRUE ) )
+			if ( $this->in_setting( $key, 'widgets' ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 
 		$areas  = Core\Arraay::reKey( $this->_get_widget_action_hooks(), 'action' );
