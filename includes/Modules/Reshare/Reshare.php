@@ -12,6 +12,7 @@ class Reshare extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\ObjectsToObjects;
 
 	public static function module()
 	{
@@ -31,14 +32,17 @@ class Reshare extends gEditorial\Module
 	protected function get_global_settings()
 	{
 		return [
-			'posttypes_option' => 'posttypes_option',
-			'_general'         => [
-				'comment_status',
+			'_connected' => [
+				$this->settings_posttypes_for_target( 'o2o', _x( 'Connected Post-types', 'Setting Title', 'geditorial-reshare' ) ),
+				$this->settings_o2o_field_desc(),
 			],
 			'_supports' => [
-				'assign_default_term',
 				'thumbnail_support',
 				$this->settings_supports_option( 'primary_posttype' ),
+			],
+			'_defaults' => [
+				'assign_default_term',
+				'comment_status',
 			],
 		];
 	}
@@ -46,10 +50,9 @@ class Reshare extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype' => 'reshare',
-			'primary_taxonomy' => 'reshare_category',
-
-			'o2o_name' => 'reshares_to_posts',
+			'primary_posttype'     => 'reshare',
+			'primary_posttype_o2o' => 'reshare_to_posts',
+			'primary_taxonomy'     => 'reshare_category',
 		];
 	}
 
@@ -59,6 +62,11 @@ class Reshare extends gEditorial\Module
 			'noops' => [
 				'primary_posttype' => _n_noop( 'Reshare', 'Reshares', 'geditorial-reshare' ),
 				'primary_taxonomy' => _n_noop( 'Reshare Category', 'Reshare Categories', 'geditorial-reshare' ),
+			],
+			'o2o' => [
+				'primary_posttype' => [
+					'title' => _x( 'Connected Reshares', 'MetaBox Title', 'geditorial-reshare' ),
+				],
 			],
 		];
 	}
@@ -101,13 +109,10 @@ class Reshare extends gEditorial\Module
 
 	public function o2o_init()
 	{
-		$this->_o2o = Services\O2O\API::registerConnectionType( [
-			'name' => $this->constant( 'o2o_name' ),
-			'from' => $this->constant( 'primary_posttype' ),
-			'to'   => $this->posttypes( 'primary_posttype' ),
+		if ( ! $o2o = $this->o2o_register( 'primary_posttype' ) )
+			return;
 
-			'reciprocal' => TRUE,
-		] );
+		$this->o2o__hook_insert_content( $o2o, 'primary_posttype' );
 	}
 
 	public function current_screen( $screen )
