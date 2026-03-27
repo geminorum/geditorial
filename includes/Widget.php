@@ -802,6 +802,7 @@ class Widget extends \WP_Widget
 				case 'legacy'     : $label = _x( 'Process Filters (Legacy)', 'Widget Core', 'geditorial-admin' ); break;
 				case 'autop'      : $label = _x( 'Automatic Paragraphs', 'Widget Core', 'geditorial-admin' ); break;
 				case 'bypasscache': $label = _x( 'Bypass Caching', 'Widget Core', 'geditorial-admin' ); break;
+				case 'field_desc' : $label = _x( 'Display Descriptions', 'Widget Core', 'geditorial-admin' ); break;
 				default:            $label = _x( 'Checked:', 'Widget Core', 'geditorial-admin' );
 			}
 		}

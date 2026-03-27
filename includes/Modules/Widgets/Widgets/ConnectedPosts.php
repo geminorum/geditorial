@@ -40,9 +40,10 @@ class ConnectedPosts extends gEditorial\Widget
 			return FALSE;
 
 		$html = gEditorial\ShortCode::listPosts( 'objects2objects', '', '', [
-			'connection' => $instance['connection'],
-			'post_id'    => $post_id,
-			'title'      => FALSE,
+			'connection'    => $instance['connection'],
+			'post_id'       => $post_id,
+			'title'         => FALSE,
+			'item_after_cb' => empty( $instance['field_desc'] ) ? FALSE : [ __CLASS__, 'item_after_cb' ],
 		] );
 
 		if ( ! $html )
@@ -56,12 +57,24 @@ class ConnectedPosts extends gEditorial\Widget
 		return TRUE;
 	}
 
+	public static function item_after_cb( $post, $args, $item )
+	{
+		$html = '';
+
+		if ( $desc = Services\O2O\API::getMeta( $post->o2o_id, 'desc', TRUE ) )
+			$html.= sprintf( '<div class="-description">%s</div>',
+				WordPress\Strings::prepDescription( $desc ) );
+
+		return $html;
+	}
+
 	public function form( $instance )
 	{
 		$this->before_form( $instance );
 
 		$this->form_open_group( 'config' );
 			$this->form_connection( $instance );
+			$this->form_checkbox( $instance, FALSE, 'field_desc' );
 			$this->form_checkbox( $instance, FALSE, 'bypasscache' );
 		$this->form_close_group();
 
@@ -87,6 +100,7 @@ class ConnectedPosts extends gEditorial\Widget
 		$this->flush_widget_cache();
 
 		return $this->handle_update( $new, $old, [
+			'field_desc',
 			'bypasscache',
 		] );
 	}
