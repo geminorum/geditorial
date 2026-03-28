@@ -44,7 +44,8 @@
   };
 
   const strings = $.extend({}, {
-    button_virastar: '<span class="dashicons dashicons-text"></span>', // TODO: change to `virastar` icon
+    // button_virastar: '<span class="dashicons dashicons-text"></span>',
+    button_virastar: '<span class="-virastar-icon"></span>',
     button_virastar_title: 'Apply Virastar!',
     qtag_virastar: 'Virastar!',
     qtag_virastar_title: 'Apply Virastar!',
@@ -63,28 +64,30 @@
 
   const options = p[module].virastar || {};
 
-  const virastar = {
+  const app = {
+    virastar: {
 
-    text: new Virastar($.extend({}, options, {
-      preserve_HTML: false,
-      preserve_URIs: false,
-      preserve_frontmatter: false
-    })),
+      text: new Virastar($.extend({}, options, {
+        preserve_HTML: false,
+        preserve_URIs: false,
+        preserve_frontmatter: false
+      })),
 
-    markdown: new Virastar($.extend({}, options, {
-      // fix_dashes: false,
-      // cleanup_spacing: false,
-      // cleanup_begin_and_end: false,
-      preserve_frontmatter: false,
-      skip_markdown_ordered_lists_numbers_conversion: true
-    })),
+      markdown: new Virastar($.extend({}, options, {
+        // fix_dashes: false,
+        // cleanup_spacing: false,
+        // cleanup_begin_and_end: false,
+        preserve_frontmatter: false,
+        skip_markdown_ordered_lists_numbers_conversion: true
+      })),
 
-    html: new Virastar($.extend({}, options, {
-      // cleanup_spacing: false,
-      preserve_frontmatter: false,
-      preserve_brackets: true,
-      preserve_braces: true
-    }))
+      html: new Virastar($.extend({}, options, {
+        // cleanup_spacing: false,
+        preserve_frontmatter: false,
+        preserve_brackets: true,
+        preserve_braces: true
+      }))
+    }
   };
 
   function doFootnotes (content) {
@@ -585,9 +588,9 @@
     virastar: function (e, c, ed) {
       const s = c.value.substring(c.selectionStart, c.selectionEnd);
       if (s !== '') {
-        QTags.insertContent(virastar.html.cleanup(s));
+        QTags.insertContent(app.virastar.html.cleanup(s));
       } else {
-        $(c).val(virastar.html.cleanup($(c).val()));
+        $(c).val(app.virastar.html.cleanup($(c).val()));
       }
     },
 
@@ -637,7 +640,7 @@
       $('a.do-' + module).on('click', function (event) {
         event.preventDefault();
         const target = $(this).closest('.' + module + '-input-wrap').find('.target-' + module);
-        target.val(virastar[target.data(module)].cleanup(target.val()));
+        target.val(app.virastar[target.data(module)].cleanup(target.val()));
       });
 
       if (settings.virastar_on_paste) {
@@ -645,7 +648,7 @@
           const el = this;
           setTimeout(function () {
             const target = $(el);
-            target.val(virastar[target.data(module)].cleanup(target.val()));
+            target.val(app.virastar[target.data(module)].cleanup(target.val()));
           }, 100);
         });
       }
@@ -678,5 +681,7 @@
     } catch (e) {}
 
     $(document).trigger('gEditorialReady', [module, null]);
+    window[p._base] = window[p._base] || {};
+    window[p._base][module] = app;
   });
 }(jQuery, gEditorial, 'ortho'));
