@@ -266,11 +266,12 @@ class PostType extends Core\Base
 	 * @param string|object $posttype
 	 * @param array $extra
 	 * @param mixed $fallback
+	 * @param string $capability
 	 * @return string
 	 */
-	public static function edit( $posttype, $extra = [], $fallback = FALSE )
+	public static function edit( $posttype, $extra = [], $fallback = FALSE, $capability = NULL )
 	{
-		return self::can( $posttype, 'read' )
+		return self::can( $posttype, $capability ?? 'read' )
 			? URL::editPostType( $posttype, $extra )
 			: $fallback;
 	}

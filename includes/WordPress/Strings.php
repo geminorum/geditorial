@@ -363,6 +363,32 @@ class Strings extends Core\Base
 		return force_balance_tags( $html );
 	}
 
+	/**
+	 * Generates a title attribute by name and description.
+	 *
+	 * @param string $name
+	 * @param string $description
+	 * @return string
+	 */
+	public static function makeTitleAttribute( $name, $description = NULL )
+	{
+		$text = '';
+
+		if ( $name )
+			$text.= apply_filters( 'string_format_i18n', $name );
+
+		if ( ! $description )
+			return $text;
+
+		if ( ! $stripped = Core\Text::stripTags( $description ) )
+			return $text;
+
+		if ( ! $text )
+			return $stripped;
+
+		return sprintf( '%s :: %s', $text, $stripped );
+	}
+
 	public static function prepTitle( $text, $post_id = 0 )
 	{
 		if ( ! $text )

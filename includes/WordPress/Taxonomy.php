@@ -271,11 +271,12 @@ class Taxonomy extends Core\Base
 	 * @param string|object $taxonomy
 	 * @param array $extra
 	 * @param mixed $fallback
+	 * @param string $capability
 	 * @return string
 	 */
-	public static function edit( $taxonomy, $extra = [], $fallback = FALSE )
+	public static function edit( $taxonomy, $extra = [], $fallback = FALSE, $capability = NULL )
 	{
-		return self::can( $taxonomy, 'manage_terms' )
+		return self::can( $taxonomy, $capability ?? 'manage_terms' )
 			? URL::editTaxonomy( $taxonomy, $extra )
 			: $fallback;
 	}
