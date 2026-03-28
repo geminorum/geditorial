@@ -1,10 +1,30 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-/// gEditorial Partials: Like Front ALL ----------------------------------------
+/// gEditorial Partials: Like Front ALL
 
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 .geditorial-wrap.-like {
-  line-height: 1; // 30px;
+  // line-height: 1; // 30px;
+  line-height: 0;
+
+  a,
+  a:hover {
+    display: inline-block;
+    text-decoration: none;
+    outline: 0 none;
+    cursor: pointer;
+  }
+
+  img {
+    max-width: 30px;
+    max-height: 30px;
+    display: inline-block;
+    // border-radius: 2px;
+    border-radius: calc(10% - 1px);
+    padding: 0;
+  }
 
   @include theme-clearfix;
   @include theme-box-sizing-reset;
@@ -15,28 +35,31 @@
   }
 
   a.like {
-    text-decoration: none;
-    display: inline-block;
-    outline: 0 none;
-    cursor: pointer;
+    // text-decoration: none;
+    // display: inline-block;
+    // outline: 0 none;
+    // cursor: pointer;
 
     width: 32px;
     height: 32px;
 
     color: inherit;
-    background: $gray-lighter;
-    border: 1px solid $gray-lighter;
+    // background: $gray-lighter;
+    background: var(--bs-btn-border-color, #{$gray-lighter});
+    border: 1px solid var(--bs-btn-border-color, #{$gray-lighter});
     border-radius: 3px;
 
     &:hover {
-      border: 1px solid $gray-light;
+      // border: 1px solid $gray-light;
+      border: 1px solid var(--bs-btn-hover-border-color, #{$gray-light});
       text-decoration: none;
     }
 
     // &:focus {}
 
     &.loading {
-      color: $gray-lighter;
+      // color: $gray-lighter;
+      color: var(--bs-btn-border-color, #{$gray-lighter});
     }
 
     &.unlike {
@@ -59,38 +82,46 @@
   span.like {
     display: inline-block;
     position: relative;
-    background: #fff;
+    // background: #fff;
+    background: var(--bs-body-bg, #fff);
 
-    color: $gray;
+    // color: $gray;
+    // color: var(--bs-gray, #{$gray});
+    color: var(--bs-body-color, #{$gray});
     cursor: help;
 
-    border: 1px solid $gray-lighter;
-    border-radius: 3px;
+    border: 1px solid var(--bs-btn-border-color, #{$gray-lighter});
+    // border-radius: 3px;
+    border-radius: 10%;
 
     margin-left: 6px;
     font-size: 20px;
     font-family: Arial, serif;
     padding: 0 6px;
     line-height: 30px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      margin: auto;
+
+      top: 0;
+      bottom: 0;
+      left: -3px;
+      width: 4px;
+      height: 4px;
+
+      border-width: 0 0 1px 1px;
+      border-style: solid;
+      // border-color: $gray-lighter;
+      border-color: var(--bs-btn-border-color, #{$gray-lighter});
+      // background: #fff;
+      background: var(--bs-body-bg, #fff);
+      transform: rotate(45deg);
+    }
   }
 
-  span.like::before {
-    content: "";
-    position: absolute;
-    margin: auto;
-
-    top: 0;
-    bottom: 0;
-    left: -3px;
-    width: 4px;
-    height: 4px;
-
-    border-width: 0 0 1px 1px;
-    border-style: solid;
-    border-color: $gray-lighter;
-    background: #fff;
-    transform: rotate(45deg);
-  }
+  // html[data-bs-theme="light"] & {}
 
   ul.like {
     margin: 0 0 0 6px;
@@ -104,23 +135,26 @@
       margin: 0 4px 0 0;
 
       a {
-        display: inline-block;
-        outline: 0 none;
+        // display: inline-block;
+        // outline: 0 none;
+        // line-height: 0;
 
-        border: 1px solid $gray-lighter;
-        border-radius: 3px;
+        border: 1px solid var(--bs-btn-border-color, #{$gray-lighter});
+        // border-radius: 3px;
+        border-radius: 10%;
 
         &:hover {
-          border: 1px solid $gray-light;
-          text-decoration: none;
+          // border: 1px solid $gray-light;
+          border: 1px solid var(--bs-btn-hover-border-color, #{$gray-light});
+          // text-decoration: none;
         }
 
         img {
-          max-width: 30px;
-          max-height: 30px;
-          display: inline-block;
-          border-radius: 2px;
-          padding: 0;
+          // max-width: 30px;
+          // max-height: 30px;
+          // display: inline-block;
+          // border-radius: 2px;
+          // padding: 0;
         }
       }
     }

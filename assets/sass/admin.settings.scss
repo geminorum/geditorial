@@ -218,7 +218,8 @@
 
       .-wrap.-danger,
       .-wrap.-danger a,
-      .-button-danger {
+      .-button-danger, // DEPRECATED
+      .-button.-danger {
         color: $brand-danger;
         text-decoration: none;
 
@@ -252,11 +253,24 @@
 }
 
 @media screen and (max-width: 782px) {
-  .geditorial-admin-wrap.geditorial-settings {
-    .modules {
-      .module {
-        width: 100%;
+  .geditorial-admin-wrap {
+    &.geditorial-settings {
+      .modules {
+        .module {
+          width: 100%;
+        }
       }
+    }
+
+    .settings-title-search {
+      float: none;
+      clear: both;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: ($spacer * .5) 0 ($spacer * .5);
+      width: 100%;
+      min-height: 40px;
     }
   }
 }

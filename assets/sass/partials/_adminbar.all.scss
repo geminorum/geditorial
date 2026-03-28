@@ -218,6 +218,8 @@ $adminbar-maxwidth: 210px !default;
   > div.ab-empty-item {
 
     // NOTE: node text if wrapped, needed to have `.-label`
+    > time,
+    > code,
     > span.-label {
       display: inline-block;
       height: 26px;

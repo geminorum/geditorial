@@ -258,8 +258,10 @@ body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
   box-sizing: border-box;
   width: 100%;
   // margin: 0;
-  padding: 3px 8px;
+  // padding: 3px 8px;
   font-size: 1.3em;
+  min-height: 32px !important;
+  line-height: 2.14285714 !important;
 
   &.geditorial-meta-type-title_before {
     margin: 0 0 5px;
@@ -286,7 +288,7 @@ body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
       width: 24px;
       height: 24px;
       font-size: 24px;
-      margin: 0;
+      margin: 5px 0 0;
     }
   }
 }

@@ -15,12 +15,32 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import "partials/ortho.admin.all";
-@import "partials/like.admin.all";
+// @import "partials/like.admin.all";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// .geditorial-admin-wrap.geditorial-imports {}
+.geditorial-admin-wrap.geditorial-imports {
+  .base-table-list,
+  .wp-list-table {
+
+    // `Lingo` Module
+    // th.-column.-language-term {}
+    // th.-column.-language-english-name {}
+    // th.-column.-language-endonym {}
+
+    // `Quranic` Module
+    th.-column.-quran-sura-index { width: 5ch; }
+    // th.-column.-quran-sura-term {}
+    th.-column.-quran-sura-name { width: 10ch; }
+    // th.-column.-quran-sura-english-name {}
+
+    // `Importer`/`Today` Module
+    th.-column.importfield-today__day,
+    th.-column.importfield-today__month,
+    th.-column.importfield-today__year { width: 10ch; }
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 .geditorial-wrap.-view.-imports-data-summary {

@@ -92,24 +92,15 @@
 
   .settings-title-search {
     position: relative;
-    top: -2px;
-    left: 20px;
+    top: -1.5px;
+    left: $spacer * .5;
+    right: $spacer * .5;
     margin: 0;
     width: 280px;
     font-size: 16px;
     font-weight: 300;
     line-height: 1.5;
-
-    @media only screen and (max-width: 650px) {
-      float: none;
-      clear: both;
-      left: 0;
-      top: 0;
-      right: 0;
-      margin: 10px 0;
-      width: 100%;
-      max-width: 280px;
-    }
+    min-height: 32px;
   }
 
   .settings-title-filters {

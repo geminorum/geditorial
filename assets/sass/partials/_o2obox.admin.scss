@@ -65,12 +65,13 @@ $spacer: 1rem !default;
 
   .o2o-search input {
     width: 100%;
+    padding-right: $spacer * 2.5; // for the spinner
 
-    body.rtl & {
+    // body.rtl & {
 
-      /*rtl:ignore*/
-      padding-right: 5px;
-    }
+    //   /*rtl:ignore*/
+    //   padding-right: 5px;
+    // }
   }
 
   .o2o-connections {
@@ -172,9 +173,10 @@ $spacer: 1rem !default;
   }
 
   .o2o-spinner {
-    margin-left: -20px;
-    opacity: 0.8;
-    vertical-align: -0.3em;
+    margin-left: $spacer * -2;
+    vertical-align: middle;
+    height: $spacer * 2;
+    width: $spacer * 1;
   }
 }
 
@@ -268,6 +270,47 @@ tr {
 }
 
 .o2o-navigation {
+  display: flex;
+  align-items: center;
+
+  > div {
+    margin-bottom: 0;
+
+    &:not([class]) {
+      margin: 0 $spacer;
+    }
+  }
+
+  .o2o-spinner {
+    // margin-top: $spacer * .5;
+    margin-left: $spacer * .5;
+    height: $spacer * 2;
+    width: $spacer * 1;
+  }
+
+  .button {
+    min-height: 30px;
+    margin-bottom: 0;
+  }
+
+  .button.inactive {
+    border-color: #bbb;
+    color: #aaa;
+    background: #f6f6f6;
+    text-shadow: none;
+    cursor: default;
+
+    &:hover {
+      border-color: #bbb;
+      color: #aaa;
+      background: #f6f6f6;
+      text-shadow: none;
+      cursor: default;
+    }
+  }
+}
+
+.o2o-navigation_OLD {
   clear: both;
   display: table;
   overflow: hidden;

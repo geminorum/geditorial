@@ -9,7 +9,12 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 th.column-geditorial-recount {
-  width: 50px; // has sort icon
+  width: 40px; // has sort icon
+
+  a {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
   span.-column-icon::before {
     content: "\f109"; // `dashicons-admin-post`
@@ -17,6 +22,7 @@ th.column-geditorial-recount {
 }
 
 td.column-geditorial-recount {
-  /* rtl:ignore */
-  text-align: left;
+  text-align: center;
+  padding-left: 2px;
+  padding-right: 2px;
 }

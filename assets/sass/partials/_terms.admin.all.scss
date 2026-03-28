@@ -27,6 +27,7 @@ body.geditorial-terms-enabled {
   @include plugin-listtable-column-icon("venue", "\f231", "column-geditorial-terms");
   @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
+  @include plugin-listtable-column-icon("user", "\f110", "column-geditorial-terms");
   @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
   @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms");     // `dashicons-admin-site-alt3`
   @include plugin-listtable-column-icon("source", "\f504", "column-geditorial-terms");     // `dashicons-external`
@@ -75,6 +76,21 @@ body.geditorial-terms-enabled {
       }
     }
 
+    th.column-posts {
+      width: 40px; // has sort icon
+
+      a {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    th.column-geditorial-terms-tagline {
+      // avoid messing the table header
+      white-space: nowrap;
+      overflow-x: hidden;
+    }
+
     .column-geditorial-terms-author,
     .column-geditorial-terms-role,
     .column-geditorial-terms-posttype {
@@ -86,12 +102,13 @@ body.geditorial-terms-enabled {
       width: 120px;
     }
 
+    .column-geditorial-terms-user,
+    .column-geditorial-terms-author,
     .column-geditorial-terms-image,
     .column-geditorial-terms-code {
       width: 55px;
     }
 
-    .column-posts,
     .column-geditorial-terms-min,
     .column-geditorial-terms-max,
     .column-geditorial-terms-order,
@@ -109,6 +126,12 @@ body.geditorial-terms-enabled {
       a:not(:hover) {
         color: inherit;
       }
+    }
+
+    td.column-posts {
+      text-align: center;
+      padding-left: 2px;
+      padding-right: 2px;
     }
 
     td.column-geditorial-terms-viewable,
@@ -138,6 +161,8 @@ body.geditorial-terms-enabled {
       }
     }
 
+    td.column-geditorial-terms-user,
+    td.column-geditorial-terms-author,
     td.column-geditorial-terms-image {
 
       padding: 10px 0 0;
@@ -152,6 +177,22 @@ body.geditorial-terms-enabled {
         height: auto;
         max-width: 50px; // WIDTH + HALF PADDING
         max-height: 83px; // 3:5
+
+        // svg may have not the width
+        &[src$=".svg"] {
+          width: 50px;
+          /* stylelint-disable-next-line value-keyword-case */
+          fill: currentColor;
+        }
+      }
+
+      a {
+        display: inline-block;
+        &.-without-avatar {
+          // avoid messing the table header
+          white-space: nowrap;
+          overflow-x: hidden;
+        }
       }
     }
 

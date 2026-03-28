@@ -5,6 +5,79 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+@mixin plugin-today-thedaybadge() {
+  .-wrap.the-day-badge {
+    display: flex;
+    flex-direction: column;
+    width: $spacer * 6;
+
+    // max-width: $spacer * 7.5;
+    margin-bottom: $spacer * 1;
+    // margin-left: $spacer * 1;
+    text-align: center;
+
+    border: 1px solid var(--bs-border-color, #{$gray-lighter});
+    // border-bottom: none;
+    // border-radius: 2px;
+    cursor: pointer;
+    // box-shadow: 0 1px 3px rgb(0 0 0 / 10%);
+    // box-shadow: 0 1px 3px rgba(0, 0, 0 , 0.15);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    > a {
+      height: 100%;
+      width: 100%;
+      color: var(--bs-tertiary-color, #{$gray-light});
+      border-bottom: 1px dotted var(--bs-border-color, #{$gray-lighter});
+      text-decoration: none;
+      transition: color 0.5s ease;
+      line-height: 1;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
+
+      &:hover {
+        color: var(--bs-body-color, #{$gray-dark});
+        transition: color 0.2s ease;
+      }
+
+      &:focus {
+        box-shadow: none;
+        color: var(--bs-body-color, #{$gray-dark});
+      }
+
+      &.-day {
+        padding-bottom: $spacer * .25;
+        font-size: $spacer * 3;
+        line-height: 1.1;
+        font-weight: 700;
+      }
+
+      &.-month {
+        font-size: $spacer * 1.2;
+        font-weight: 700;
+        line-height: 1.7;
+      }
+
+      &.-year {
+        padding-top: $spacer * .25;
+        padding-bottom: $spacer * .25;
+        font-size: $spacer * 1.5;
+        line-height: 1.1;
+        font-weight: 700;
+      }
+
+      &.-cal {
+        padding-bottom: $spacer * .25;
+        font-size: $spacer * 1;
+        line-height: 1.7;
+      }
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 @mixin plugin-today-datebadge() {
   .-date-badge-empty {
     color: $gray-light;
@@ -30,7 +103,7 @@
       color: $gray-light;
       border-bottom: 1px solid $gray-lighter;
 
-      > a {
+      >a {
         color: $gray-light;
         text-decoration: none;
         display: block;

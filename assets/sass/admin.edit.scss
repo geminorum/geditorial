@@ -12,14 +12,13 @@
 @import "partials/spinner.all";
 @import "partials/today.all.mixins";
 // @import "partials/ortho.admin.all"; // TODO: support ortho on `edit` screens
-@import "partials/tweaks.admin.all";
+@import "partials/tweaks.admin.listtable";
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 @import "partials/book.admin.edit";
 @import "partials/drafts.admin.edit";
 @import "partials/magazine.admin.edit";
 @import "partials/today.admin.edit";
-@import "partials/tweaks.admin.edit";
 @import "partials/meta.admin.edit";
 @import "partials/users.admin.edit";
 ////////////////////////////////////////////////////////////////////////////////

@@ -55,10 +55,12 @@ $spacer: 1rem !default;
         display: block;
         width: 100%;
         max-width: 100% !important; // avoid affecting by other plugins
-        min-height: 30px; // same as type text
+        min-height: 40px; // same as type text
         margin: 0;
-        padding: 4px 8px;
-        line-height: 1.4;
+        // padding: 4px 8px;
+        // line-height: 1.4;
+        padding: 0 12px;
+        line-height: 2.71428571;
         resize: vertical;
       }
     }

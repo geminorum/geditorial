@@ -124,6 +124,14 @@ table.base-table-list {
     &.-field-meta-venue_string {
       width: 245px;
     }
+
+    &.-iso639-alpha2code {
+      width: 5ch;
+    }
+
+    &.-direction-data {
+      width: 30px;
+    }
   }
 
   .-cell {
@@ -138,6 +146,15 @@ table.base-table-list {
         text-align: left;
         width: 95px;
       }
+    }
+
+    &.-iso639-alpha2code {
+      /*rtl:ignore*/
+      direction: ltr;
+    }
+
+    &.-direction-data {
+      text-align: center;
     }
   }
 }
