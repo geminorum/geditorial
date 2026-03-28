@@ -1,0 +1,93 @@
+<?php namespace <%= namespaceAuthor %>\<%= namespaceBase %>\Modules\<%= moduleCamelCase %>\Widgets;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use <%= namespaceAuthor %>\<%= namespaceBase %>;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Core;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Internals;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Services;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
+use <%= namespaceAuthor %>\<%= namespaceBase %>\Modules\<%= moduleCamelCase %> as ParentModule;
+
+class <%= widgetCamelCase %> extends <%= namespaceBase %>\Widget
+{
+
+	const MODULE = '<%= moduleUnderline %>';
+	const WIDGET = '<%= widgetUnderline %>';
+
+	public static function setup()
+	{
+		return [
+			'title' => _x( '<%= widgetTitlePrefix %>: <%= widgetTitle %>', 'Widget Title', '<%= moduleTextdomain %>' ),
+			'desc'  => _x( '<%= widgetTagline %>', 'Widget Description', '<%= moduleTextdomain %>' ),
+		];
+	}
+
+	public function widget( $args, $instance )
+	{
+		$this->widget_cache( $args, $instance, get_queried_object_id() );
+	}
+
+	public function widget_html( $args, $instance )
+	{
+		if ( ! $post_id = get_queried_object_id() )
+			return FALSE;
+
+		$html = ''; // WTF?!
+
+		if ( ! $html )
+			return FALSE;
+
+		$this->before_widget( $args, $instance );
+		$this->widget_title( $args, $instance );
+			echo $html;
+		$this->after_widget( $args, $instance );
+
+		return empty( $instance['bypasscache'] );
+	}
+
+	public function form( $instance )
+	{
+		$this->before_form( $instance );
+
+		$this->form_open_group( 'config' );
+			$this->form_checkbox( $instance, TRUE, 'featured', _x( 'Display Featured Items', 'Widget: <%= widgetTitle %>', '<%= moduleTextdomain %>' ) );
+			$this->form_checkbox( $instance, FALSE, 'hidden', _x( 'Display Hidden Items', 'Widget: <%= widgetTitle %>', '<%= moduleTextdomain %>' ) );
+			$this->form_number( $instance, '', 'limit', _x( 'Limit:', 'Widget: <%= widgetTitle %>', '<%= moduleTextdomain %>' ) );
+			$this->form_number( $instance, '', 'columns', _x( 'Columns:', 'Widget: <%= widgetTitle %>', '<%= moduleTextdomain %>' ) );
+			$this->form_custom_code( $instance, '', 'template', _x( 'Template:', 'Widget: <%= widgetTitle %>', '<%= moduleTextdomain %>' ) );
+			$this->form_checkbox( $instance, FALSE, 'bypasscache' );
+		$this->form_close_group();
+
+		$this->form_open_group( 'heading' );
+			$this->form_title( $instance );
+			$this->form_title_link( $instance );
+			$this->form_title_image( $instance );
+			$this->form_class( $instance );
+			$this->form_context( $instance );
+		$this->form_close_group();
+
+		$this->form_open_group( 'customs' );
+			$this->form_open_widget( $instance );
+			$this->form_after_title( $instance );
+			$this->form_close_widget( $instance );
+		$this->form_close_group();
+
+		$this->after_form( $instance );
+	}
+
+	public function update( $new, $old )
+	{
+		$this->flush_widget_cache();
+
+		return $this->handle_update( $new, $old, [
+			'featured',
+			'hidden',
+			'bypasscache',
+		], [
+			'template' => 'key',
+			'limit'    => 'digit',
+			'columns'  => 'digit',
+		] );
+	}
+}

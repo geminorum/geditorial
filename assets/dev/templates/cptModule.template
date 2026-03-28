@@ -31,6 +31,13 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function get_global_settings()
 	{
 		return [
+			'_general' => [
+
+			],
+			'_supports' => [
+				'thumbnail_support',
+				$this->settings_supports_option( 'main_posttype' ),
+			],
 			'_editpost' => [
 				'metabox_advanced',
 			],
@@ -88,6 +95,20 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
+	protected function posttypes_excluded( $extra = [] )
+	{
+		return $this->filters( 'posttypes_excluded',
+			<%= namespaceBase %>\Settings::posttypesExcluded( $extra + [
+				$this->constant( 'main_posttype' ),
+			], $this->keep_posttypes )
+		);
+	}
+
+	public function after_setup_theme()
+	{
+		$this->register_posttype_thumbnail( 'main_posttype' );
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -113,16 +134,25 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $screen->post_type === $this->constant( 'main_posttype' ) ) {
+		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
+				$this->modulelinks__register_headerbuttons();
 
 			} else if ( 'post' === $screen->base ) {
 
 			}
 		}
+	}
+
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
+			$items[] = $glance;
+
+		return $items;
 	}
 
 	public function template_include( $template )

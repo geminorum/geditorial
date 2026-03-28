@@ -137,7 +137,6 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
 			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
 			'custom_captype'  => TRUE,
-			'module_link'     => TRUE,
 		] );
 
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
@@ -153,6 +152,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 			$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
 			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
+
+			// $this->filter( 'post_class', 3, 12 );
 		}
 
 		$this->register_shortcode( 'main_shortcode' );
@@ -160,7 +161,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	public function current_screen( $screen )
 	{
-		if ( $this->constant( 'main_taxonomy' ) == $screen->taxonomy ) {
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
@@ -169,21 +170,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			if ( 'edit' == $screen->base ) {
+			if ( 'edit' === $screen->base ) {
 
 				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
 					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
 
 			} else if ( 'post' === $screen->base ) {
 
-				if ( ! $this->get_setting( 'metabox_advanced' ) )
-					$this->hook_taxonomy_metabox_mainbox(
-						'main_taxonomy',
-						$screen->post_type,
-						$this->get_setting( 'selectmultiple_term', TRUE )
-							? '__checklist_restricted_terms_callback'
-							: '__singleselect_restricted_terms_callback'
-					);
+				$this->coretax__hook_posttype_mainbox( 'main_taxonomy', $screen, TRUE );
 			}
 		}
 	}
@@ -198,6 +192,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
+	public function dashboard_glance_items( $items )
+	{
+		if ( $glance = $this->dashboard_glance_taxonomy( 'main_taxonomy' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
@@ -210,6 +212,23 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			: $template;
 	}
 
+	public function post_class( $classes, $css_class, $post_id )
+	{
+		if ( ! $post = WordPress\Post::type( $post_id ) );
+			return $classes;
+
+		if ( ! $this->posttype_supported( $post ) )
+			return $classes;
+
+		$classes[] = $this->classs( 'supported' );
+		$template  = $this->constant( 'postclass_template', '%s' );
+
+		foreach ( WordPress\Taxonomy::getPostTerms( $this->constant( 'main_taxonomy' ), $post ) as $term )
+			$classes[] = Core\HTML::prepClass( sprintf( $template, $term->slug ) );
+
+		return $classes;
+	}
+
 	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
 	{
 		return <%= namespaceBase %>\ShortCode::listPosts( 'assigned',
@@ -220,7 +239,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'posttypes' => $this->posttypes(),
 			], (array) $atts ),
 			$content,
-			$this->constant( 'main_shortcode' )
+			$tag ?: $this->constant( 'main_shortcode' ),
+			$this->key
 		);
 	}
 

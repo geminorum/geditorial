@@ -102,6 +102,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 		$html = '';
 
-		return <%= namespaceBase %>\ShortCode::wrap( $html, $this->constant( 'main_shortcode' ), $args );
+		return <%= namespaceBase %>\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 }

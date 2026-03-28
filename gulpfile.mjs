@@ -83,6 +83,69 @@ function githubCommand (command, callback) {
   });
 }
 
+function moduleData (name, template, widget) {
+  // TODO: sanitize `name`/`widget`
+  const nameParts = name.trim().split(/(?=[A-Z])/);
+  const widgetParts = widget ? widget.trim().split(/(?=[A-Z])/) : [];
+
+  return extend(conf.templates[template].defaults, {
+    moduleTitle: nameParts.join(' '),
+    moduleCamelCase: name,
+    moduleUnderline: nameParts.join('_').toLowerCase(),
+    moduleTextdomain: conf.templates[template].defaults.pluginTexdomain + '-' + nameParts.join('-').toLowerCase()
+  }, widget
+    ? {
+        widgetTitle: widgetParts.join(' '),
+        widgetCamelCase: widget,
+        widgetUnderline: widgetParts.join('_').toLowerCase()
+      }
+    : {});
+}
+
+task('dev:newwidget', function (done) {
+  if (!('name' in args)) {
+    log.error('Error: missing required name for the module: `--name ModuleName`');
+    return done();
+  }
+
+  if (!('widget' in args)) {
+    log.error('Error: missing required widget for the module: `--widget WidgetName`');
+    return done();
+  }
+
+  const template = 'template' in args ? args.template : 'generalWidget';
+
+  if (!(template in conf.templates)) {
+    log.error('Error: provided template not exist in configuration: `' + template + '`');
+    return done();
+  }
+
+  const name = capitalize(sanitizeModule(args.name));
+  const widget = capitalize(sanitizeModule(args.widget));
+
+  if (!name || !widget) {
+    log.error('Error: invalid name/widget for the widget: `' + args.name + '`');
+    return done();
+  }
+
+  const data = moduleData(name, template, widget);
+  const file = data.widgetCamelCase + '.' + conf.templates[template].ext;
+  const targ = path.join(conf.templates[template].dest, data.moduleCamelCase, 'Widgets');
+
+  if (debug) log.info(data, path.join(targ, file));
+
+  try {
+    accessSync(path.join(targ, file));
+    log.error('Error: the module already exists');
+    return done();
+  } catch (e) {
+    return src(conf.templates[template].src)
+      .pipe(gulptemplate(data))
+      .pipe(rename(file))
+      .pipe(dest(targ));
+  }
+});
+
 task('dev:newmodule', function (done) {
   if (!('name' in args)) {
     log.error('Error: missing required name for the module: `--name NewModule`');
@@ -103,15 +166,7 @@ task('dev:newmodule', function (done) {
     return done();
   }
 
-  const parts = name.split(/(?=[A-Z])/);
-
-  const data = extend(conf.templates[template].defaults, {
-    moduleTitle: parts.join(' '),
-    moduleCamelCase: name,
-    moduleUnderline: parts.join('_').toLowerCase(),
-    moduleTextdomain: conf.templates[template].defaults.pluginTexdomain + '-' + parts.join('-').toLowerCase()
-  });
-
+  const data = moduleData(name, template);
   const file = data.moduleCamelCase + '.' + conf.templates[template].ext;
   const targ = path.join(conf.templates[template].dest, data.moduleCamelCase);
 
@@ -481,6 +536,6 @@ task('default', function (done) {
   log.info('Hi, I\'m Gulp!');
   log.info('Sass is:\n' + compiler.default.info);
   log.info('Args', args);
-  if ( 'name' in args ) log.info(i18nModule(args.name));
+  if ('name' in args) log.info(i18nModule(args.name));
   done();
 });

@@ -103,7 +103,8 @@
   "cssnano": {
     "dev": {
       "preset": [
-        "default", {
+        "default",
+        {
           "zindex": false,
           "normalizeWhitespace": false,
           "discardComments": false
@@ -112,7 +113,8 @@
     },
     "build": {
       "preset": [
-        "default", {
+        "default",
+        {
           "zindex": false,
           "discardComments": {
             "removeAll": true
@@ -140,6 +142,8 @@
         ".temp",
         ".test",
         ".vscode",
+        ".TODOs",
+        ".todos",
         "assets/apps",
         "assets/bin",
         "assets/blocks/**/src",
@@ -153,7 +157,8 @@
         "assets/templates",
         "assets/vendor",
         "assets/views",
-        "includes/Modules/**/.temp",
+        "includes/**/.temp",
+        "includes/**/.test",
         "languages",
         "node_modules",
         "gulpfile.mjs",
@@ -177,6 +182,8 @@
         ".temp",
         ".test",
         ".vscode",
+        ".TODOs",
+        ".todos",
         "assets/apps",
         "assets/bin",
         "assets/blocks/**/src",
@@ -190,7 +197,8 @@
         "assets/templates",
         "assets/vendor",
         "assets/views",
-        "includes/Modules/**/.temp",
+        "includes/**/.temp",
+        "includes/**/.test",
         "languages",
         "node_modules",
         "gulpfile.mjs",
@@ -210,6 +218,8 @@
       "exclude": [
         ".temp",
         ".test",
+        ".TODOs",
+        ".todos",
         "node_modules",
         "index.html"
       ],
@@ -271,7 +281,7 @@
     ""
   ],
   "templates": {
-    "rawModule" : {
+    "rawModule": {
       "src": "./assets/dev/templates/rawModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -289,7 +299,7 @@
         "moduleDashicon": "smiley"
       }
     },
-    "generalModule" : {
+    "generalModule": {
       "src": "./assets/dev/templates/generalModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -307,7 +317,7 @@
         "moduleDashicon": "smiley"
       }
     },
-    "cptModule" : {
+    "cptModule": {
       "src": "./assets/dev/templates/cptModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -325,7 +335,7 @@
         "moduleDashicon": "smiley"
       }
     },
-    "taxModule" : {
+    "taxModule": {
       "src": "./assets/dev/templates/taxModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -343,7 +353,7 @@
         "moduleDashicon": "smiley"
       }
     },
-    "scModule" : {
+    "scModule": {
       "src": "./assets/dev/templates/scModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -361,7 +371,7 @@
         "moduleDashicon": "smiley"
       }
     },
-    "wcModule" : {
+    "wcModule": {
       "src": "./assets/dev/templates/wcModule.template",
       "dest": "./includes/Modules/",
       "ext": "php",
@@ -377,6 +387,52 @@
         "moduleUnderline": "wc_module",
         "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "store"
+      }
+    },
+    "generalWidget": {
+      "src": "./assets/dev/templates/generalWidget.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "widgetTitle": "Widget Title",
+        "widgetCamelCase": "WidgetTitle",
+        "widgetUnderline": "widget_title",
+        "widgetTitlePrefix": "Editorial",
+        "widgetTagline": "[CHANGE ME]",
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-raw-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "Raw Module",
+        "moduleCamelCase": "RawModule",
+        "moduleUnderline": "raw_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
+      }
+    },
+    "postsWidget": {
+      "src": "./assets/dev/templates/postsWidget.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "widgetTitle": "Widget Title",
+        "widgetCamelCase": "WidgetTitle",
+        "widgetUnderline": "widget_title",
+        "widgetTitlePrefix": "Editorial",
+        "widgetTagline": "[CHANGE ME]",
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-raw-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "Raw Module",
+        "moduleCamelCase": "RawModule",
+        "moduleUnderline": "raw_module",
+        "moduleTagline": "[CHANGE ME]",
+        "moduleDashicon": "smiley"
       }
     }
   }
