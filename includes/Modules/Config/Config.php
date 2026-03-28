@@ -132,7 +132,11 @@ class Config extends gEditorial\Module
 		// `dashboard_page_geditorial-kiosks`
 		$this->screens['kiosks'] = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Kiosks', 'Menu Title', 'geditorial-admin' ),
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Kiosks', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
 			_x( 'My Kiosks', 'Menu Title', 'geditorial-admin' ),
 			gEditorial\Plugin::CAPABILITY_KIOSKS,
 			$this->classs_base( 'kiosks' ),
@@ -142,7 +146,11 @@ class Config extends gEditorial\Module
 		// `dashboard_page_geditorial-reports`
 		$this->screens['reports'] = add_submenu_page(
 			'index.php',
-			_x( 'Editorial Reports', 'Menu Title', 'geditorial-admin' ),
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Reports', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
 			_x( 'My Reports', 'Menu Title', 'geditorial-admin' ),
 			gEditorial\Plugin::CAPABILITY_REPORTS,
 			$this->classs_base( 'reports' ),
@@ -162,10 +170,17 @@ class Config extends gEditorial\Module
 		// `tools_page_geditorial-tools`
 		$this->screens['tools'] = add_submenu_page(
 			$edit ? 'tools.php' : $slug,
-			_x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' ),
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Tools', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
 			( $edit
-				? _x( 'Editorial Tools', 'Menu Title', 'geditorial-admin' )
-				: _x( 'Tools', 'Menu Title', 'geditorial-admin' )
+				? sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s Tools', 'Menu Title', 'geditorial-admin' ),
+					$system
+				) : _x( 'Tools', 'Menu Title', 'geditorial-admin' )
 			),
 			gEditorial\Plugin::CAPABILITY_TOOLS,
 			$this->classs_base( 'tools' ),
@@ -174,18 +189,36 @@ class Config extends gEditorial\Module
 
 		$this->_hook_wp_submenu_page( 'roles',
 			current_user_can( 'list_users' ) ? 'users.php' : $slug,
-			_x( 'Editorial Roles', 'Menu Title', 'geditorial-admin' ),
-			NULL, gEditorial\Plugin::CAPABILITY_ROLES );
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Roles', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
+			NULL,
+			gEditorial\Plugin::CAPABILITY_ROLES
+		);
 
 		$this->_hook_wp_submenu_page( 'imports',
 			$edit ? 'tools.php' : $slug,
-			_x( 'Editorial Imports', 'Menu Title', 'geditorial-admin' ),
-			NULL, gEditorial\Plugin::CAPABILITY_IMPORTS );
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Imports', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
+			NULL,
+			gEditorial\Plugin::CAPABILITY_IMPORTS
+		);
 
 		$this->_hook_wp_submenu_page( 'customs',
 			current_user_can( 'edit_theme_options' ) ? 'themes.php' : $slug,
-			_x( 'Editorial Customs', 'Menu Title', 'geditorial-admin' ),
-			NULL, gEditorial\Plugin::CAPABILITY_CUSTOMS );
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Customs', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
+			NULL,
+			gEditorial\Plugin::CAPABILITY_CUSTOMS
+		);
 
 		add_action( sprintf( 'load-%s', $this->screens['kiosks'] ), [ $this, 'admin_kiosks_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['reports'] ), [ $this, 'admin_reports_load' ] );
@@ -223,6 +256,7 @@ class Config extends gEditorial\Module
 	public function admin_kiosks_page()
 	{
 		$context = 'kiosks';
+		$system  = gEditorial\Plugin::system();
 
 		$can = $this->cuc( $context );
 		$uri = gEditorial\Settings::getURLbyContext( $context );
@@ -235,17 +269,24 @@ class Config extends gEditorial\Module
 
 			Services\AdminScreen::renderDashboard( $context,
 
-				function ( $context, $screen ) use ( $uri, $sub, $subs ) {
+				function ( $context, $screen )
+					use ( $uri, $sub, $subs, $system ) {
 
-					gEditorial\Settings::headerTitle( $context, _x( 'Editorial Kiosks', 'Page Title', 'geditorial-admin' ) );
+					gEditorial\Settings::headerTitle( $context, sprintf(
+						/* translators: `%s`: system string */
+						_x( '%s Kiosks', 'Page Title', 'geditorial-admin' ),
+						$system
+					) );
+
 					Core\HTML::headerNav( $uri, $sub, $subs ); // better not be side-navigation
 
-					do_action( $this->hook_base( $context, 'before' ), $uri, $screen );
+					do_action( $this->hook_base( $context, 'before' ), $uri, $screen, $system );
 				},
 
-				function ( $context, $screen ) use ( $uri, $sub, $subs ) {
+				function ( $context, $screen )
+					use ( $uri, $sub, $subs, $system ) {
 
-					do_action( $this->hook_base( $context, 'after' ), $uri, $screen );
+					do_action( $this->hook_base( $context, 'after' ), $uri, $screen, $system );
 				}
 			);
 
@@ -598,12 +639,18 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Reports', 'Config: Header', 'geditorial-admin' ) );
+		$system = gEditorial\Plugin::system();
+
+		Core\HTML::h3( sprintf(
+			/* translators: `%s`: system string */
+			_x( 'General %s Reports', 'Config: Header', 'geditorial-admin' ),
+			$system
+		) );
 
 		$action = $this->hook_base( 'reports', 'general_summary' );
 
 		if ( has_action( $action ) )
-			do_action( $action, $uri );
+			do_action( $action, $uri, $system );
 
 		else
 			gEditorial\Info::renderNoReportsAvailable();
@@ -799,12 +846,18 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'roles' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Roles', 'Config: Header', 'geditorial-admin' ) );
+		$system = gEditorial\Plugin::system();
+
+		Core\HTML::h3( sprintf(
+			/* translators: `%s`: system string */
+			_x( 'General %s Roles', 'Config: Header', 'geditorial-admin' ),
+			$system
+		) );
 
 		$action = $this->hook_base( 'roles', 'general_summary' );
 
 		if ( has_action( $action ) )
-			do_action( $action, $uri );
+			do_action( $action, $uri, $system );
 
 		else
 			gEditorial\Info::renderNoRolesAvailable();
@@ -870,12 +923,18 @@ class Config extends gEditorial\Module
 		if ( ! $this->cuc( 'imports' ) )
 			self::cheatin();
 
-		Core\HTML::h3( _x( 'General Editorial Imports', 'Config: Header', 'geditorial-admin' ) );
+		$system = gEditorial\Plugin::system();
+
+		Core\HTML::h3( sprintf(
+			/* translators: `%s`: system string */
+			_x( 'General %s Imports', 'Config: Header', 'geditorial-admin' ),
+			$system
+		) );
 
 		$action = $this->hook_base( 'imports', 'general_summary' );
 
 		if ( has_action( $action ) )
-			do_action( $action, $uri );
+			do_action( $action, $uri, $system );
 
 		else
 			gEditorial\Info::renderNoImportsAvailable();
