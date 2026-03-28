@@ -165,6 +165,17 @@ class Ortho extends gEditorial\Module
 		];
 	}
 
+	public function tinymce_strings( $strings )
+	{
+		return array_merge( $strings, [
+			self::und( $this->key, 'virastar', 'title' ) => sprintf(
+				/* translators: `%s`: keyboard shortcut */
+				_x( 'Virastar! (%s)', 'TinyMCE String', 'geditorial-ortho' ),
+				'Ctrl+Shift+1'
+			),
+		] );
+	}
+
 	public function init()
 	{
 		parent::init();
@@ -210,6 +221,8 @@ class Ortho extends gEditorial\Module
 			'strings'  => $this->get_strings( 'virastar', 'js' ),
 			'virastar' => $this->prepare_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
+
+		$this->register_editor_button( 'virastar', 2 );
 
 		return $this->virastar_enqueued = TRUE;
 	}
