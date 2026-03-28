@@ -1,14 +1,15 @@
 (function ($, plugin, mainkey, context) {
   const s = {
-    action: plugin._base + '_' + mainkey,
-    wrap: '#' + plugin._base + '-' + mainkey + '-wrap',
-    button: '#wp-admin-bar-' + plugin._base + '-' + mainkey + ' > .ab-item',
+    action: [plugin._base, mainkey].join('_'),
+    classs: [plugin._base, mainkey, context, 'wrap'].join('-'),
+    wrap: '#' + [plugin._base, mainkey, context, 'wrap'].join('-'),
+    button: '#' + ['wp-admin-bar', plugin._base, mainkey].join('-') + ' > .ab-item',
     spinner: '.' + plugin._base + '-spinner'
   };
 
   const app = {
     empty: true,
-    wrap: '<div id="' + plugin._base + '-' + mainkey + '-wrap" class="geditorial-wrap -drafts" style="display:none;"><div class="-content"></div></div>',
+    wrap: '<div id="' + s.classs + '" style="display:none"><div class="-content"></div></div>',
 
     init: function () {
       $(s.button).on('click', function (e) {
