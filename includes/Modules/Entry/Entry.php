@@ -44,19 +44,11 @@ class Entry extends gEditorial\Module
 			'_editlist' => [
 				'admin_columns',
 				'admin_ordering',
-				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'category_taxonomy' ), '1' ],
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'category_taxonomy' ), TRUE ],
 			],
 			'_frontend' => [
-				'show_in_navmenus' => [ sprintf(
-					/* translators: `%s`: category taxonomy name */
-					_x( 'Makes <strong>%s</strong> available for selection in navigation menus.', 'Settings', 'geditorial-entry' ),
-					$this->get_taxonomy_label( 'category_taxonomy' )
-				), '1' ],
-				'autolink_terms' => [ sprintf(
-					/* translators: `%s`: category taxonomy name */
-					_x( 'Tries to linkify the string of <strong>%s</strong> in the entry content.', 'Settings', 'geditorial-entry' ),
-					$this->get_taxonomy_label( 'category_taxonomy' )
-				) ],
+				'show_in_navmenus' => [ $this->get_taxonomy_show_in_navmenus_desc( 'category_taxonomy' ), TRUE ],
+				'autolink_terms'   => [ $this->get_taxonomy_autolink_terms_desc( 'category_taxonomy' ) ],
 				'before_content',
 				'after_content',
 			],

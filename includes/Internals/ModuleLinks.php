@@ -285,7 +285,7 @@ trait ModuleLinks
 			$args = [
 				'text'     => $text,
 				'link'     => $this->get_module_url( $context ),
-				'title'    => sprintf( '%s :: %s', $this->module->title, $this->module->desc ),
+				'title'    => WordPress\Strings::makeTitleAttribute( $this->module->title, $this->module->desc ),
 				'icon'     => $this->modulelinks__get_context_icon( $context, FALSE ),
 				'class'    => '-link-to-'.$context,
 				'priority' => 20,

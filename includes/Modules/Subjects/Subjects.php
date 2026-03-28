@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Subjects extends gEditorial\Module
 {
 	use Internals\BulkExports;
+	use Internals\ContentReplace;
 	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
@@ -33,6 +34,8 @@ class Subjects extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'literature',
+				'has-shortcodes',
+				'terms-as-definitions',
 				'taxmodule',
 			],
 		];
@@ -44,6 +47,9 @@ class Subjects extends gEditorial\Module
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
 
 		return [
+			'_general' => [
+				'autolink_terms' => [ $this->get_taxonomy_autolink_terms_desc( 'main_taxonomy' ) ],
+			],
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),
 			'_dashboard'       => [
@@ -186,6 +192,14 @@ class Subjects extends gEditorial\Module
 	public function cuc( $context = 'settings', $fallback = '' )
 	{
 		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+	}
+
+	public function template_redirect()
+	{
+		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
+			return;
+
+		$this->contentreplace__autolink_terms( 'main_taxonomy' );
 	}
 
 	public function template_include( $template )

@@ -34,6 +34,7 @@ class Glossary extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'has-shortcodes',
+				'terms-as-definitions',
 				'taxmodule',
 			],
 		];
@@ -46,7 +47,7 @@ class Glossary extends gEditorial\Module
 
 		return [
 			'_general' => [
-				'autolink_terms' => [ _x( 'Tries to linkify the glossary terms in contents of supported post-types.', 'Settings', 'geditorial-glossary' ), TRUE ],
+				'autolink_terms' => [ $this->get_taxonomy_autolink_terms_desc( 'main_taxonomy' ) ],
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', FALSE, FALSE, $terms, $empty ),

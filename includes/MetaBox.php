@@ -989,7 +989,7 @@ class MetaBox extends WordPress\Main
 			// 'rows'        => '1',
 			// 'cols'        => '40',
 			'name'        => self::_getNameAttr( $args, $module ),
-			'title'       => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'title'       => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'placeholder' => $args['title'],
 			'class'       => [
 				'form-control',
@@ -1056,7 +1056,7 @@ class MetaBox extends WordPress\Main
 			'type'         => 'text',
 			'value'        => $value ?: '',
 			'name'         => self::_getNameAttr( $args, $module ),
-			'title'        => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'title'        => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'pattern'      => $args['pattern'],
 			'autocomplete' => $args['autocomplete'],
 			'placeholder'  => $args['title'],
@@ -1407,7 +1407,7 @@ class MetaBox extends WordPress\Main
 			'dir'          => 'ltr',
 			'value'        => $value ?: '',
 			'name'         => self::_getNameAttr( $args, $module ),
-			'title'        => sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' ),
+			'title'        => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'pattern'      => $args['pattern'],
 			'autocomplete' => $args['autocomplete'],
 			// 'placeholder' => $args['title'],
@@ -1488,7 +1488,7 @@ class MetaBox extends WordPress\Main
 
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),
-			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
+			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				'form-control',
 				self::dsh( static::BASE, 'select' ),
@@ -1568,7 +1568,7 @@ class MetaBox extends WordPress\Main
 
 		$atts = [
 			'name'  => 'parent_id', // self::dsh( static::BASE, $module, $args['name'] ),
-			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
+			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				self::dsh( static::BASE, 'searchselect', 'select2' ),
 				self::dsh( static::BASE, $module, 'field', $args['name'] ),
@@ -1626,7 +1626,7 @@ class MetaBox extends WordPress\Main
 
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),
-			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
+			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				self::dsh( static::BASE, 'searchselect', 'select2' ),
 				self::dsh( static::BASE, $module, 'field', $args['name'] ),
@@ -1678,7 +1678,7 @@ class MetaBox extends WordPress\Main
 
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),
-			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
+			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				self::dsh( static::BASE, 'searchselect', 'select2' ),
 				self::dsh( static::BASE, $module, 'field', $args['name'] ),
@@ -1736,7 +1736,7 @@ class MetaBox extends WordPress\Main
 
 		$atts = [
 			'name'  => self::_getNameAttr( $args, $module ),
-			'title' => sprintf( '%s :: %s', $args['title'], $args['description'] ),
+			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				self::dsh( static::BASE, 'searchselect', 'select2' ),
 				self::dsh( static::BASE, $module, 'field', $args['name'] ),

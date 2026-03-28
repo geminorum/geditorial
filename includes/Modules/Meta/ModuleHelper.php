@@ -64,7 +64,7 @@ class ModuleHelper extends gEditorial\Helper
 				$hints[] = [
 					'text'     => $hint,
 					// 'link'     => $overview ?: '',
-					'title'    => sprintf( '%s :: %s', $field['title'] ?: $field['name'], $field['description'] ?: '' ),
+					'title'    => WordPress\Strings::makeTitleAttribute( $field['title'] ?: $field['name'], $field['description'] ?: '' ),
 					'class'    => static::classs( $field_key ),
 					'source'   => static::MODULE,
 					'priority' => 10,

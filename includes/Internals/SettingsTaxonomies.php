@@ -177,12 +177,30 @@ trait SettingsTaxonomies
 		);
 	}
 
+	protected function get_taxonomy_autolink_terms_desc( $constant )
+	{
+		return sprintf(
+			/* translators: `%s`: taxonomy name */
+			_x( 'Tries to linkify the string of %s in the contents of supported post-types.', 'Settings: Taxonomies', 'geditorial-admin' ),
+			Core\HTML::strong( $this->get_taxonomy_label( $constant ) )
+		);
+	}
+
+	protected function get_taxonomy_show_in_navmenus_desc( $constant )
+	{
+		return sprintf(
+			/* translators: `%s`: taxonomy name */
+			_x( 'Makes %s available for selection in navigation menus.', 'Settings: Taxonomies', 'geditorial-admin' ),
+			Core\HTML::strong( $this->get_taxonomy_label( $constant ) )
+		);
+	}
+
 	protected function get_taxonomy_show_in_quickedit_desc( $constant )
 	{
 		return sprintf(
 			/* translators: `%s`: taxonomy name */
-			_x( 'Whether to show the <strong>%s</strong> in the quick/bulk edit panel.', 'Settings: Taxonomies', 'geditorial-admin' ),
-			$this->get_taxonomy_label( $constant )
+			_x( 'Whether to show the %s in the quick/bulk edit panel.', 'Settings: Taxonomies', 'geditorial-admin' ),
+			Core\HTML::strong( $this->get_taxonomy_label( $constant ) )
 		);
 	}
 }

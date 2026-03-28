@@ -940,7 +940,7 @@ trait PostTypeFields
 
 			// NOTE: no need for access checks: just input/not value
 
-			$hint  = sprintf( '%s :: %s', $args['title'] ?: $args['name'], $args['description'] ?: '' );
+			$hint  = WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' );
 			$class = $prefix.'-'.( $bulkedit ? 'bulkedit' : 'quickedit' ).'-'.$field;
 			$name  = $prefix.'-'.$field;
 

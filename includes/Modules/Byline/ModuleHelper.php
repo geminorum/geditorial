@@ -280,7 +280,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				$hints[] = [
 					'text'     => $fullname,
-					'title'    => sprintf( '%s :: %s', $label, $metakey ),
+					'title'    => WordPress\Strings::makeTitleAttribute( $label, $metakey ),
 					'class'    => static::classs( $metakey ),
 					'source'   => static::MODULE,
 					'priority' => 20,
