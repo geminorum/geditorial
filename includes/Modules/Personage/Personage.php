@@ -86,6 +86,7 @@ class Personage extends gEditorial\Module
 			'_editlist' => [
 				'admin_bulkactions',
 				'admin_displaystates',
+				'parents_as_views'  => [ $this->get_taxonomy_parents_as_views_desc( 'status_taxonomy' ) ],
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
 			],
 			'_editpost' => [
@@ -451,10 +452,19 @@ class Personage extends gEditorial\Module
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 				$this->latechores__hook_admin_bulkactions( $screen );
-				$this->corerestrictposts__hook_screen_taxonomies( [
-					'status_taxonomy',
-					'category_taxonomy',
-				] );
+
+				if ( $this->hook_taxonomy_parents_as_views( $screen, 'status_taxonomy' ) )
+					$restricted = [
+						'category_taxonomy'
+					];
+
+				else
+					$restricted = [
+						'status_taxonomy',
+						'category_taxonomy',
+					];
+
+				$this->corerestrictposts__hook_screen_taxonomies( $restricted );
 
 				// $this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
 			}
