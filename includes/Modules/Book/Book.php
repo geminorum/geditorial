@@ -586,10 +586,10 @@ class Book extends gEditorial\Module
 				$this->_hook_general_mainbox( $screen, 'main_posttype' );
 
 				if ( post_type_supports( $screen->post_type, 'author' ) )
-					$this->metaboxcustom_add_metabox_author( 'main_posttype' );
+					$this->metaboxcustom_add_metabox_author( $screen, 'main_posttype' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );
+					$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );

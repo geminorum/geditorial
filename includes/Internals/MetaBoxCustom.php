@@ -10,40 +10,41 @@ use geminorum\gEditorial\WordPress;
 trait MetaBoxCustom
 {
 
-	public function metaboxcustom_add_metabox_author( $constant, $callback = 'post_author_meta_box' )
+	public function metaboxcustom_add_metabox_author( $screen, $constant, $callback = 'post_author_meta_box' )
 	{
+		if ( ! empty( $screen->is_block_editor ) )
+			return FALSE;
+
 		$posttype = WordPress\PostType::object( $this->constant( $constant ) );
 
-		if ( WordPress\PostType::supportBlocks( $posttype->name ) )
-			return;
-
 		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_author' ), TRUE, $posttype->name ) )
-			return;
+			return FALSE;
 
 		if ( ! current_user_can( $posttype->cap->edit_others_posts ) )
-			return;
+			return FALSE;
 
 		add_meta_box( 'authordiv', // same as core to override
 			$this->get_posttype_label( $constant, 'author_label', __( 'Author' ) ),
 			$callback,
-			NULL,
+			$screen,
 			'normal',
 			'core'
 		);
+
+		return TRUE;
 	}
 
-	public function metaboxcustom_add_metabox_excerpt( $constant, $metabox_context = NULL, $callback = NULL )
+	public function metaboxcustom_add_metabox_excerpt( $screen, $constant, $metabox_context = NULL, $callback = NULL )
 	{
-		$posttype = $this->constant( $constant );
-
-		if ( WordPress\PostType::supportBlocks( $posttype ) )
+		if ( ! empty( $screen->is_block_editor ) )
 			return FALSE;
+
+		$posttype = $this->constant( $constant );
 
 		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_excerpt' ), TRUE, $posttype ) )
 			return FALSE;
 
-		$screen = get_current_screen();
-		$label  = $this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) );
+		$label = $this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) );
 
 		add_meta_box( 'postexcerpt', // same as core to override
 			$label,

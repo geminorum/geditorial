@@ -191,7 +191,7 @@ class Ortho extends gEditorial\Module
 	{
 		if ( 'post' === $screen->base ) {
 
-			if ( WordPress\PostType::supportBlocks( $screen->post_type ) )
+			if ( ! empty( $screen->is_block_editor ) )
 				return;
 
 			if ( $this->posttype_supported( $screen->post_type ) )

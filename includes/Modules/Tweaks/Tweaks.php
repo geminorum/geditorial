@@ -271,7 +271,7 @@ class Tweaks extends gEditorial\Module
 		$enqueue = FALSE;
 
 		if ( 'post' === $screen->base
-			&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
+			&& empty( $screen->is_block_editor ) ) {
 
 			if ( $this->in_setting( $screen->post_type, 'post_modified' ) )
 				$this->action( 'post_submitbox_misc_actions', 1, 1 );
@@ -395,10 +395,11 @@ class Tweaks extends gEditorial\Module
 	// Using this hook to early control `current_screen` on other modules
 	public function add_meta_boxes( $posttype, $post )
 	{
-		if ( WordPress\Post::supportBlocks( $post ) )
+		$screen = get_current_screen();
+
+		if ( ! empty( $screen->is_block_editor ) )
 			return;
 
-		$screen = get_current_screen();
 		$object = WordPress\PostType::object( $posttype );
 
 		if ( $this->in_setting( $posttype, 'post_mainbox' ) ) {

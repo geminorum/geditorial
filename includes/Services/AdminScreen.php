@@ -37,9 +37,6 @@ class AdminScreen extends gEditorial\Service
 	// @SEE: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
 	public static function add_meta_boxes( $posttype, $post )
 	{
-		if ( WordPress\Post::supportBlocks( $post ) )
-			return;
-
 		add_action( 'edit_form_after_title', [ __CLASS__, 'edit_form_after_title' ] );
 	}
 
@@ -100,8 +97,14 @@ class AdminScreen extends gEditorial\Service
 
 	public static function edit_form_after_title( $post )
 	{
+		if ( ! $screen = get_current_screen() )
+			return;
+
+		if ( ! empty( $screen->is_block_editor ) )
+			return;
+
 		echo '<div id="postbox-container-after-title" class="postbox-container">';
-			do_meta_boxes( get_current_screen(), 'after_title', $post );
+			do_meta_boxes( $screen, 'after_title', $post );
 		echo '</div>';
 	}
 
@@ -148,10 +151,10 @@ class AdminScreen extends gEditorial\Service
 
 	public static function _handle_posttype_body_class( $screen )
 	{
-		if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
+		if ( ! empty( $screen->is_block_editor ) )
 			return;
 
-		if ( WordPress\PostType::supportBlocks( $posttype ) )
+		if ( ! $posttype = WordPress\PostType::object( $screen->post_type ) )
 			return;
 
 		$extra = [];

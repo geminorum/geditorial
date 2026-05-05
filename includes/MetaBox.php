@@ -24,7 +24,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $screen = get_current_screen() )
 			return FALSE;
 
-		if ( $posttype && WordPress\PostType::supportBlocks( $posttype ) )
+		if ( $posttype && ! empty( $screen->is_block_editor ) )
 			return FALSE;
 
 		if ( is_null( $hidden ) )

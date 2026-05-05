@@ -91,8 +91,8 @@ class Revisions extends gEditorial\Module
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
 			if ( 'post' === $screen->base
-				&& ( $post = self::req( 'post', FALSE ) )
-				&& ! WordPress\PostType::supportBlocks( $screen->post_type ) ) {
+				&& empty( $screen->is_block_editor )
+				&& ( $post = self::req( 'post', FALSE ) ) ) {
 
 				$this->_admin_enabled();
 

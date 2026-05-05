@@ -326,7 +326,7 @@ class Today extends gEditorial\Module
 				$this->action( 'edit_form_after_editor' );
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype', 'after_title' );
+					$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype', 'after_title' );
 
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
