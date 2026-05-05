@@ -952,7 +952,8 @@ trait CoreTaxonomies
 			return FALSE;
 
 		add_action( 'admin_bar_menu',
-			function ( $wp_admin_bar ) use ( $taxonomy, $parent, $edit ) {
+			function ( $wp_admin_bar )
+				use ( $taxonomy, $parent, $edit ) {
 
 				if ( ! is_admin_bar_showing() )
 					return;
@@ -1037,6 +1038,7 @@ trait CoreTaxonomies
 		] );
 	}
 
+	// TODO: support term colors. @see `coreadmin__hook_taxonomy_display_states()`
 	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
@@ -1045,12 +1047,16 @@ trait CoreTaxonomies
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) ) )
 			return FALSE;
 
+		$excludes = $this->get_setting( 'views_exclude_terms', [] );
+
 		add_filter( "views_{$screen->id}",
-			static function ( $views ) use ( $taxonomy, $screen ) {
+			static function ( $views )
+				use ( $taxonomy, $excludes, $screen ) {
 
 				$terms = get_terms( [
 					'taxonomy'   => $taxonomy->name,
 					'parent'     => 0, // parents only
+					'exclude'    => $excludes ?: '',
 					'hide_empty' => TRUE,
 
 					'update_term_meta_cache' => FALSE,
@@ -1104,7 +1110,8 @@ trait CoreTaxonomies
 			return FALSE;
 
 		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
-			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
+			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append )
+				use ( $taxonomy ) {
 
 				$parents = [];
 

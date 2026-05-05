@@ -32,7 +32,7 @@ trait FramePage
 			'target'       => 'none',
 			'refresh'      => FALSE,              // refresh data prop
 			'route'        => NULL,               // refresh rest route
-			'pot'          => NULL,               // refresh html target
+			'pot'          => NULL,               // refresh HTML target
 			'maxwidth'     => '95%',
 			'maxheight'    => '640',
 			'link'         => NULL,
@@ -40,6 +40,8 @@ trait FramePage
 			'title'        => NULL,
 			'text'         => NULL,
 			'icon'         => NULL,
+			'before'       => '',
+			'after'        => '',
 			'extra'        => [],
 			'data'         => [],
 		], $atts );
@@ -64,7 +66,7 @@ trait FramePage
 				'-mainbutton',
 			] );
 
-		return Core\HTML::tag( 'a', [
+		return $args['before'].Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'title'  => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 			'class'  => array_merge( $class, (array) $args['extra'] ),
@@ -79,7 +81,7 @@ trait FramePage
 				'max-width'     => $args['maxwidth'],
 				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
-		], sprintf( $text, Services\Icons::get( $args['icon'] ?? $this->module->icon ), $name ) );
+		], sprintf( $text, Services\Icons::get( $args['icon'] ?? $this->module->icon ), $name ) ).$args['after'];
 	}
 
 	protected function framepage_get_mainlink_for_term( $term, $atts = [] )
@@ -100,6 +102,8 @@ trait FramePage
 			'title'        => NULL,
 			'text'         => NULL,
 			'icon'         => NULL,
+			'before'       => '',
+			'after'        => '',
 			'extra'        => [],
 			'data'         => [],
 		], $atts );
@@ -124,7 +128,7 @@ trait FramePage
 				'-mainbutton',
 			] );
 
-		return Core\HTML::tag( 'a', [
+		return $args['before'].Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'title'  => $title ? sprintf( $title, WordPress\Term::title( $term, $name ), $name ) : FALSE,
 			'class'  => array_merge( $class, (array) $args['extra'] ),
@@ -136,6 +140,6 @@ trait FramePage
 				'max-width'     => $args['maxwidth'],
 				'max-height'    => $args['maxheight'],
 			], $args['data'] ),
-		], sprintf( $text, Services\Icons::get( $args['icon'] ?? $this->module->icon ), $name ) );
+		], sprintf( $text, Services\Icons::get( $args['icon'] ?? $this->module->icon ), $name ) ).$args['after'];
 	}
 }

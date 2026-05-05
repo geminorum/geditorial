@@ -1015,11 +1015,6 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'objects2objects' === $list ) {
 
-			// if ( $posttype && is_post_type_archive( $posttype ) ) {
-
-			// 	$query['post_type'] = $posttype;
-
-			// } else if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
 			if ( $post = WordPress\Post::get( $args['post_id'] ) ) {
 
 				$query['connected_type']  = $args['connection'];
@@ -1221,7 +1216,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'assigned' === $list && $args['term_id'] ) {
 
-			// Gets the list of posts by the term,
+			// Gets the list of posts by the term.
 
 			if ( ! $term = WordPress\Term::get( $args['term_id'] ) )
 				return $content;
@@ -1256,6 +1251,8 @@ class ShortCode extends WordPress\Main
 			$skip = TRUE; // maybe queried itself!
 
 		} else if ( 'assigned' === $list ) {
+
+			// NOTE: at this point no data are available for query!
 
 			return $content;
 		}
@@ -1317,7 +1314,7 @@ class ShortCode extends WordPress\Main
 
 			if ( $args['item_cb'] ) {
 
-				// NOTE: no need for call-back to setup post-data
+				// NOTE: no need for callback to set up post-data
 				// @REF: https://developer.wordpress.org/?p=2837#comment-874
 				$GLOBALS['post'] = $item;
 				setup_postdata( $item );
@@ -1344,7 +1341,7 @@ class ShortCode extends WordPress\Main
 
 		$html = self::wrap( $html, $tag, $args );
 
-		// NOTE: since callback used setup post data
+		// NOTE: since callback used to set up post-data
 		if ( $args['item_cb'] )
 			wp_reset_postdata();
 
@@ -1406,7 +1403,7 @@ class ShortCode extends WordPress\Main
 
 		} else if ( 'all' == $args['id'] ) {
 
-			// DO NOTHING: will collect all posttype: e.g. all entries of all sections.
+			// DO NOTHING: will collect all post-types: e.g. all entries of all sections.
 
 		} else if ( $args['id'] ) {
 
@@ -1483,10 +1480,10 @@ class ShortCode extends WordPress\Main
 
 		foreach ( $items as $item ) {
 
-			// caller must setup postdata
+			// NOTE: Caller must setup post-data
 			// REF: https://developer.wordpress.org/?p=2837#comment-874
-			// $GLOBALS['post'] = $item;
-			// setup_postdata( $item );
+			// `$GLOBALS['post'] = $item;`
+			// `setup_postdata( $item );`
 
 			if ( $args['item_cb'] )
 				$html.= call_user_func_array( $args['item_cb'], [ $item, $args, $term ] );
@@ -1505,7 +1502,7 @@ class ShortCode extends WordPress\Main
 
 		$html = self::wrap( $html, $tag, $args );
 
-		// wp_reset_postdata();
+		// `wp_reset_postdata();`
 		wp_cache_set( $key, $html, $posttype );
 
 		return $html;
@@ -1763,7 +1760,7 @@ class ShortCode extends WordPress\Main
 
 		if ( FALSE === $args['title'] ) {
 
-			// DO NOTHING, title is disabled by the `args`
+			// DO NOTHING, title is disabled by the arguments!
 
 		} else if ( 'taxonomy' === $args['title'] ) {
 

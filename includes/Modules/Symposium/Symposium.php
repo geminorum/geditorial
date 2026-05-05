@@ -13,6 +13,7 @@ class Symposium extends gEditorial\Module
 	use Internals\BulkExports;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
@@ -52,6 +53,12 @@ class Symposium extends gEditorial\Module
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'main_posttype' ) ],
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'units' ) ],
+			],
+			'_fields' => [
+				$this->settings_posttypes_for_target( 'parent',
+					_x( 'Owner Post-types', 'Settings', 'geditorial-symposium' ),
+					_x( 'Selected will be available as the post-types of the owner meta-field.', 'Settings', 'geditorial-symposium' )
+				),
 			],
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'entry' ],
@@ -118,6 +125,17 @@ class Symposium extends gEditorial\Module
 						'type'        => 'people',
 						'quickedit'   => TRUE,
 					],
+					'owner_userid' => [
+						'title'       => _x( 'Owner', 'Field Title', 'geditorial-symposium' ),
+						'description' => _x( 'Determines the user responsible for this session.', 'Field Description', 'geditorial-symposium' ),
+						'type'        => 'user',
+					],
+					'owner_postid' => [
+						'title'       => _x( 'Owner', 'Field Title', 'geditorial-symposium' ),
+						'description' => _x( 'Determines the individual responsible for this session.', 'Field Description', 'geditorial-symposium' ),
+						'type'        => 'parent_post',
+						'posttype'    => $this->get_setting_posttypes( 'parent' ),
+					],
 
 					'published'    => [ 'type' => 'text', 'quickedit' => TRUE ],
 					'source_title' => [ 'type' => 'text' ],
@@ -138,6 +156,15 @@ class Symposium extends gEditorial\Module
 				],
 			],
 		];
+	}
+
+	protected function posttypes_excluded( $extra = [] )
+	{
+		return $this->filters( 'posttypes_excluded',
+			gEditorial\Settings::posttypesExcluded( $extra + [
+				$this->constant( 'main_posttype' ),
+			], $this->keep_posttypes )
+		);
 	}
 
 	public function after_setup_theme()
@@ -195,6 +222,9 @@ class Symposium extends gEditorial\Module
 					'type_taxonomy',
 					'category_taxonomy',
 				] );
+
+				$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
+				$this->modulelinks__register_headerbuttons();
 			}
 		}
 	}

@@ -128,7 +128,7 @@ class Diagnosed extends gEditorial\Module
 					'age'        => _x( 'Age', 'Field Label: `age`', 'geditorial-diagnosed' ),
 					'datestring' => _x( 'Date', 'Field Label: `datestring`', 'geditorial-diagnosed' ),
 					'location'   => _x( 'Location', 'Field Label: `location`', 'geditorial-diagnosed' ),
-					'people'     => _x( 'Doctors', 'Field Label: `location`', 'geditorial-diagnosed' ),
+					'people'     => _x( 'Medics', 'Field Label: `location`', 'geditorial-diagnosed' ),
 					'desc'       => _x( 'Description', 'Field Label: `desc`', 'geditorial-diagnosed' ),
 				],
 			],

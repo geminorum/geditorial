@@ -58,9 +58,10 @@ class Yearly extends gEditorial\Module
 				'selectmultiple_term',
 			],
 			'_editlist' => [
-				'parents_as_views',
 				'admin_restrict',
 				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'main_taxonomy' ) ],
+				'parents_as_views',
+				'views_exclude_terms' => [ NULL, $this->constant( 'main_taxonomy' ), $empty ],
 			],
 			'_frontend' => [
 				'contents_viewable',

@@ -35,6 +35,7 @@ class Metropolis extends gEditorial\Module
 				'geo',
 				'regional',
 				'has-shortcodes',
+				'terms-as-definitions',
 				'taxmodule',
 			],
 		];

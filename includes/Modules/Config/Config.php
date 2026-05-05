@@ -22,7 +22,7 @@ class Config extends gEditorial\Module
 		'reports'  => 'publish_posts',        // NOTE: `Author` role
 		'roles'    => 'edit_users',           // Note: `Administrator` role
 		'settings' => 'manage_options',       // Note: `Administrator` role
-		'tests'    => 'manage_options',       // TODO: add test pages
+		'tests'    => 'manage_options',       // TODO: add the tests pages
 		'tools'    => 'edit_posts',           // NOTE: `Contributor` role
 	];
 
@@ -104,7 +104,7 @@ class Config extends gEditorial\Module
 	 */
 	public function import_filters()
 	{
-		// TODO: add more details for the end-user via `wp_importer` on strings api
+		// TODO: add more details for the end-user via `wp_importer` on strings API
 		$this->render_imports_toolbox_card(
 			$this->get_module_url( 'imports', 'overview' )
 		);

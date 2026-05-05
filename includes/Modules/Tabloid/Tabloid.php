@@ -85,7 +85,7 @@ class Tabloid extends gEditorial\Module
 
 						Services\HeaderButtons::register( $this->key, [
 							'html'     => $html,
-							'priority' => -9,
+							'priority' => -99,
 						] );
 
 						gEditorial\Scripts::enqueueColorBox();
@@ -126,13 +126,16 @@ class Tabloid extends gEditorial\Module
 		}
 	}
 
-	public function rowaction_get_mainlink_for_post( $post, $extra = NULL )
+	public function rowaction_get_mainlink_for_post( $post, $extra = NULL, $icon = FALSE )
 	{
 		if ( ! $post || ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
 		if ( ! $text = $this->filters( 'post_action', $this->is_post_viewable( $post ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $post ) )
 			return FALSE;
+
+		if ( FALSE !== $icon )
+			$text = Core\Text::glued( [ '%1$s', $text ] );
 
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'title' => sprintf(
@@ -142,6 +145,7 @@ class Tabloid extends gEditorial\Module
 				Services\CustomPostType::getLabel( $post, 'singular_name' )
 			),
 			'text'         => $text,
+			'icon'         => $icon,
 			'target'       => 'post',
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
@@ -219,7 +223,7 @@ class Tabloid extends gEditorial\Module
 		if ( ! current_user_can( 'read', $post->ID ) )
 			return FALSE;
 
-		add_filter( 'is_post_type_viewable',
+		return add_filter( 'is_post_type_viewable',
 			function ( $is_viewable, $posttype ) use ( $post ) {
 				return $posttype->name === $post->post_type ? TRUE : $is_viewable;
 			}, 2, 99 );

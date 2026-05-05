@@ -81,7 +81,7 @@ class Importer extends gEditorial\Module
 					'title'       => _x( 'Import Capability', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Also enables &ldquo;Import&rdquo; capability for the selected imports roles.', 'Setting Description', 'geditorial-importer' ),
 				],
-			]
+			],
 		];
 	}
 
@@ -1229,7 +1229,7 @@ class Importer extends gEditorial\Module
 
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
-				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
+				_x( 'Terms and more to append to all items for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
 				WordPress\Attachment::title( $attach_id )
 			) );
 

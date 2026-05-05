@@ -151,7 +151,6 @@ class Markdown extends gEditorial\Module
 			],
 		] );
 
-
 		if ( ! $this->is_markdown( $post->ID ) ) {
 
 			$wp_admin_bar->add_menu( [

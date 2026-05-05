@@ -27,9 +27,9 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// public function rowactions_bulk_actions( $actions ) {}
-	// public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}
-	// public function rowactions_admin_notices() {}
+	// `public function rowactions_bulk_actions( $actions ) {}`
+	// `public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}`
+	// `public function rowactions_admin_notices() {}`
 
 	protected function rowactions__hook_mainlink_for_post( $posttype = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
@@ -44,7 +44,8 @@ trait CoreRowActions
 		if ( ! method_exists( $this, $method ) )
 			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
 
-		$callback = function ( $actions, $post ) use ( $posttype, $prepend, $action_key, $method ) {
+		$callback = function ( $actions, $post )
+			use ( $posttype, $prepend, $action_key, $method ) {
 
 			if ( ! is_null( $posttype ) && $post->post_type !== $posttype )
 				return $actions;
@@ -70,7 +71,7 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// protected function rowaction_get_mainlink_for_post( $post ) { return ''; }
+	// `protected function rowaction_get_mainlink_for_post( $post ) { return ''; }`
 
 	protected function rowactions__hook_mainlink_for_term( $taxonomy = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
@@ -85,7 +86,8 @@ trait CoreRowActions
 		if ( ! method_exists( $this, $method ) )
 			return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', $method.'()' ) );
 
-		$callback = function ( $actions, $term ) use ( $taxonomy, $prepend, $action_key, $method ) {
+		$callback = function ( $actions, $term )
+			use ( $taxonomy, $prepend, $action_key, $method ) {
 
 			if ( ! is_null( $taxonomy ) && $term->taxonomy !== $taxonomy )
 				return $actions;
@@ -107,7 +109,7 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// protected function rowaction_get_mainlink_for_term( $term ) { return ''; }
+	// `protected function rowaction_get_mainlink_for_term( $term ) { return ''; }`
 
 	// NOTE: appears only on empty posts!
 	protected function rowactions__hook_force_default_term( $screen, $constant, $cap_check = NULL )
@@ -129,7 +131,8 @@ trait CoreRowActions
 			return FALSE;
 
 		add_filter( 'bulk_actions-'.$screen->id,
-			function ( $actions ) use ( $taxonomy, $action ) {
+			function ( $actions )
+				use ( $taxonomy, $action ) {
 
 				if ( '-1' !== self::req( WordPress\Taxonomy::queryVar( $taxonomy ) ) )
 					return $actions;
@@ -144,7 +147,8 @@ trait CoreRowActions
 			} );
 
 		add_filter( 'handle_bulk_actions-'.$screen->id,
-			function ( $redirect_to, $doaction, $post_ids ) use ( $taxonomy, $action, $message, $default ) {
+			function ( $redirect_to, $doaction, $post_ids )
+				use ( $taxonomy, $action, $message, $default ) {
 
 				if ( $action !== $doaction )
 					return $redirect_to;
@@ -164,7 +168,8 @@ trait CoreRowActions
 			}, 10, 3 );
 
 		add_action( 'admin_notices',
-			function () use ( $message ) {
+			function ()
+				use ( $message ) {
 
 				if ( ! $saved = self::req( $message ) )
 					return;

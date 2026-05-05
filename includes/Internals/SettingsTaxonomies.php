@@ -203,4 +203,13 @@ trait SettingsTaxonomies
 			Core\HTML::strong( $this->get_taxonomy_label( $constant ) )
 		);
 	}
+
+	protected function get_taxonomy_parents_as_views_desc( $constant )
+	{
+		return sprintf(
+			/* translators: `%s`: taxonomy name */
+			_x( 'Prepends the parent terms of %s to views on supported post-types', 'Settings: Taxonomies', 'geditorial-admin' ),
+			Core\HTML::strong( $this->get_taxonomy_label( $constant ) )
+		);
+	}
 }

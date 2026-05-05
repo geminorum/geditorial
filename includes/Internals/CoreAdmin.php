@@ -24,8 +24,9 @@ trait CoreAdmin
 		if ( ! $this->get_setting( 'admin_ordering', TRUE ) )
 			return FALSE;
 
-		add_action( 'pre_get_posts',
-			function ( &$wp_query ) use ( $posttype, $orderby, $order ) {
+		return add_action( 'pre_get_posts',
+			function ( &$wp_query )
+				use ( $posttype, $orderby, $order ) {
 
 				if ( ! $wp_query->is_admin )
 					return;
@@ -39,8 +40,6 @@ trait CoreAdmin
 				if ( $order && ! isset( $_GET['order'] ) )
 					$wp_query->set( 'order', $order );
 			} );
-
-		return TRUE;
 	}
 
 	/**
@@ -52,17 +51,14 @@ trait CoreAdmin
 	 */
 	protected function coreadmin__unset_columns( $posttype, $list = NULL )
 	{
-		if ( is_null( $list ) )
-			$list = [
-				'author',
-			];
+		$list = $list ?? [
+			'author',
+		];
 
-		add_filter( self::und( 'manage', $posttype, 'posts_columns' ),
+		return add_filter( self::und( 'manage', $posttype, 'posts_columns' ),
 			static function ( $columns ) use ( $list ) {
 				return Core\Arraay::stripByKeys( $columns, (array) $list );
 			} );
-
-		return TRUE;
 	}
 
 	/**
@@ -74,17 +70,14 @@ trait CoreAdmin
 	 */
 	protected function coreadmin__unset_views( $posttype, $list = NULL )
 	{
-		if ( is_null( $list ) )
-			$list = [
-				'mine',
-			];
+		$list = $list ?? [
+			'mine',
+		];
 
-		add_filter( self::dsh( 'views_edit', $posttype ),
+		return add_filter( self::dsh( 'views_edit', $posttype ),
 			static function ( $views ) use ( $list ) {
 				return Core\Arraay::stripByKeys( $views, (array) $list );
 			} );
-
-		return TRUE;
 	}
 
 	protected function coreadmin__hook_tweaks_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
@@ -94,7 +87,7 @@ trait CoreAdmin
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
+		return add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
 			function ( $post, $before, $after, $module ) use ( $method ) {
 				call_user_func_array( [ $this, $method ], [ $post, $before, $after, $module ] );
 			}, $priority, 4 );
@@ -107,7 +100,7 @@ trait CoreAdmin
 		if ( ! method_exists( $this, $method ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
+		return add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
 			function ( $post, $before, $after ) use ( $method ) {
 				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
 			}, $priority, 3 );
@@ -119,10 +112,15 @@ trait CoreAdmin
 		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )
 			return FALSE;
 
-		add_filter( 'display_post_states',
-			function ( $states, $post ) use ( $constants ) {
+		return add_filter( 'display_post_states',
+			function ( $states, $post )
+				use ( $constants ) {
 
 				foreach ( $this->constants( $constants ) as $taxonomy ) {
+
+					// Skips if current screen is filtered by this taxonomy.
+					if ( self::req( WordPress\Taxonomy::queryVar( $taxonomy ) ) )
+						continue;
 
 					if ( ! $terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) )
 						continue;
@@ -137,6 +135,7 @@ trait CoreAdmin
 						if ( $term->term_id == $default )
 							continue;
 
+						// TODO: move this up to!
 						$color = get_term_meta( $term->term_id, $metakey, TRUE );
 
 						// TODO: cache each state by tax/id
@@ -154,8 +153,6 @@ trait CoreAdmin
 				return $states;
 
 			}, $priority, 2 );
-
-		return TRUE;
 	}
 
 	protected function coreadmin__ajax_taxonomy_multiple_supported_column( $constant )
@@ -198,7 +195,8 @@ trait CoreAdmin
 			} );
 
 		add_filter( self::und( 'manage', $object->name, 'custom_column' ),
-			function ( $display, $column, $term_id ) use ( $object ) {
+			function ( $display, $column, $term_id )
+				use ( $object ) {
 
 				if ( $this->hook_base( 'multiplesupported' ) !== $column )
 					return;

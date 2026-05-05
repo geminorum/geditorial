@@ -46,9 +46,10 @@ class Personage extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$roles = $this->get_settings_default_roles();
-		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) );
-		$empty = $this->get_taxonomy_label( 'status_taxonomy', 'no_items_available', NULL, 'no_terms' );
+		$status = $this->constant( 'status_taxonomy' );
+		$roles  = $this->get_settings_default_roles();
+		$terms  = WordPress\Taxonomy::listTerms( $status );
+		$empty  = $this->get_taxonomy_label( 'status_taxonomy', 'extended_no_items', NULL, 'no_terms' );
 
 		return [
 			'_roles' => [
@@ -62,8 +63,8 @@ class Personage extends gEditorial\Module
 				'summary_parents',
 				'summary_excludes' => [
 					NULL,
-					WordPress\Taxonomy::listTerms( $this->constant( 'status_taxonomy' ) ),
-					$this->get_taxonomy_label( 'status_taxonomy', 'no_items_available', NULL, 'no_terms' ),
+					WordPress\Taxonomy::listTerms( $status ),
+					$empty,
 				],
 				'summary_scope',
 				'summary_drafts',
@@ -86,8 +87,9 @@ class Personage extends gEditorial\Module
 			'_editlist' => [
 				'admin_bulkactions',
 				'admin_displaystates',
-				'parents_as_views'  => [ $this->get_taxonomy_parents_as_views_desc( 'status_taxonomy' ) ],
-				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
+				'show_in_quickedit'   => [ $this->get_taxonomy_show_in_quickedit_desc( 'status_taxonomy' ), '1' ],
+				'parents_as_views'    => [ $this->get_taxonomy_parents_as_views_desc( 'status_taxonomy' ) ],
+				'views_exclude_terms' => [ NULL, $status, $empty ],
 			],
 			'_editpost' => [
 				'display_globalsummary',
@@ -118,6 +120,7 @@ class Personage extends gEditorial\Module
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'human' ],
 				'category_taxonomy_constant' => [ NULL, 'human_group' ],
+				'status_taxonomy_constant'   => [ NULL, 'human_status' ],
 			],
 		];
 	}
@@ -442,7 +445,7 @@ class Personage extends gEditorial\Module
 				$this->_hook_editform_globalsummary();
 
 				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( 'main_posttype' );
+					$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
 
 			} else if ( 'edit' === $screen->base ) {
 

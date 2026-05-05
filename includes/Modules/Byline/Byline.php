@@ -396,19 +396,19 @@ class Byline extends gEditorial\Module
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Byline Dock for %s', 'Page Title', 'geditorial-byline' );
 
-			gEditorial\Settings::wrapOpen( 'overview', $this->key, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			ModuleSettings::wrapOpen( 'overview', $this->key, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				gEditorial\Scripts::renderAppMounter( static::APP_NAME, $this->key );
 				gEditorial\Scripts::noScriptMessage();
 
-			gEditorial\Settings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Byline Overview for %s', 'Page Title', 'geditorial-byline' );
 
-			gEditorial\Settings::wrapOpen( 'overview', $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			ModuleSettings::wrapOpen( 'overview', $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
 					'default'  => $this->get_notice_for_empty( $target, NULL, FALSE ),
@@ -417,15 +417,15 @@ class Byline extends gEditorial\Module
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 				], $post );
 
-			gEditorial\Settings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE );
 
 		} else {
 
-			gEditorial\Settings::wrapOpen( 'overview', $this->key, gEditorial\Plugin::denied( FALSE ) );
+			ModuleSettings::wrapOpen( 'overview', $this->key, gEditorial\Plugin::denied( FALSE ) );
 
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 
-			gEditorial\Settings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE );
 		}
 	}
 

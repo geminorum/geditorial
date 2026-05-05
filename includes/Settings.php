@@ -382,6 +382,7 @@ class Settings extends WordPress\Main
 			'wp_template',         // WP Core
 			'wp_font_face',        // WP Core
 			'wp_font_family',      // WP Core
+			'wp_sync_storage',     // WP Core
 			'user_request',        // WP Core
 			'oembed_cache',        // WP Core
 
@@ -1235,6 +1236,18 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	public static function getSetting_views_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
+	{
+		return [
+			'field'        => 'views_exclude_terms',
+			'type'         => 'checkbox-panel',
+			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial-admin' ),
+			'description'  => $description ?? _x( 'Selected terms will be excluded form views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
+			'string_empty' => $empty ?: Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_no_items', 'no_terms' ),
+			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
+		];
+	}
+
 	public static function getSetting_force_parents( $description = NULL, $default = NULL )
 	{
 		return [
@@ -1319,6 +1332,20 @@ class Settings extends WordPress\Main
 			'type'        => 'text',
 			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
 			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
+			'after'       => self::fieldAfterTaxonomyConstant(),
+			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
+			'field_class' => [ 'medium-text', 'code-text' ],
+			'placeholder' => $default,
+		];
+	}
+
+	public static function getSetting_status_taxonomy_constant( $description = NULL, $default = '' )
+	{
+		return [
+			'field'       => 'status_taxonomy_constant',
+			'type'        => 'text',
+			'title'       => _x( 'Status Key', 'Setting: Setting Title', 'geditorial-admin' ),
+			'description' => $description ?: _x( 'Customizes the status taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
 			'after'       => self::fieldAfterTaxonomyConstant(),
 			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
 			'field_class' => [ 'medium-text', 'code-text' ],

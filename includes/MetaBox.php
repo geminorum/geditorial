@@ -109,7 +109,7 @@ class MetaBox extends WordPress\Main
 	// CAUTION: tax must be hierarchical.
 	// Hierarchical taxonomies save by IDs,
 	// whereas non-hierarchical save by slugs.
-	// WTF: because the core's not passing args into the walker!
+	// WTF: because the core's not passing arguments into the walker!
 	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
 	public static function checklistTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
@@ -118,20 +118,20 @@ class MetaBox extends WordPress\Main
 		$args = self::args( $atts, [
 			'taxonomy'             => NULL,
 			'posttype'             => FALSE,
-			'metabox'              => NULL,          // metabox id to check for hidden
+			'metabox'              => NULL,          // `metabox` id to check for hidden
 			'header'               => FALSE,         // `TRUE`, `NULL`, or template
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
-			'selected_preserve'    => NULL,          // keep hidden selected / NULL to check for assign cap
+			'selected_preserve'    => NULL,          // Keeps hidden selected / `NULL` to check for assign cap
 			'descendants_and_self' => 0,
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
 			'checked_ontop'        => TRUE,
 			'show_count'           => FALSE,         // `TRUE`, `NULL`, or template
 			'minus_count'          => FALSE,         // or number to subtract from count
-			'edit'                 => NULL,          // manage page if has no terms, FALSE to disable
+			'edit'                 => NULL,          // Links to manage page if has no terms, FALSE to disable
 			'restricted'           => FALSE,         // `disabled` / `hidden`
-			'name'                 => NULL,          // override if not saving by core
+			'name'                 => NULL,          // Override this if not saving by core
 			'field_class'          => '',
 			'walker'               => NULL,
 			'echo'                 => TRUE,
@@ -287,9 +287,9 @@ class MetaBox extends WordPress\Main
 			'restricted'        => NULL,
 			'list_only'         => NULL,
 			'selected_only'     => NULL,
-			'selected_preserve' => NULL,          // Keep hidden selected / NULL to check for assign cap
+			'selected_preserve' => NULL,          // Keeps hidden selected / NULL to check for assign cap
 			'walker'            => NULL,
-			'name'              => 'tax_input',   // Override if not saving by core
+			'name'              => 'tax_input',   // Override this if not saving by core
 		] );
 
 		if ( ! $args['taxonomy'] )
