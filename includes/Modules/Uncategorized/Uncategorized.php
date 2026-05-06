@@ -65,6 +65,12 @@ class Uncategorized extends gEditorial\Module
 		);
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'edit' === $screen->base
@@ -132,7 +138,7 @@ class Uncategorized extends gEditorial\Module
 
 		foreach ( $post_ids as $post_id ) {
 
-			if ( ! current_user_can( 'edit_post', (int) $post_id ) )
+			if ( ! WordPress\Post::can( (int) $post_id, 'edit_post' ) )
 				continue;
 
 			if ( call_user_func_array( $callback, [ $post_id, $taxonomies ] ) )

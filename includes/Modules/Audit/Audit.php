@@ -169,7 +169,7 @@ class Audit extends gEditorial\Module
 		if ( empty( $post['post_id'] ) )
 			gEditorial\Ajax::errorMessage();
 
-		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 			gEditorial\Ajax::errorUserCant();
 
 		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
@@ -353,6 +353,12 @@ class Audit extends gEditorial\Module
 		] );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
@@ -447,7 +453,7 @@ class Audit extends gEditorial\Module
 
 		foreach ( $post_ids as $post_id ) {
 
-			if ( ! current_user_can( 'edit_post', $post_id ) )
+			if ( ! WordPress\Post::can( (int) $post_id, 'edit_post' ) )
 				continue;
 
 			if ( ModuleHelper::doAutoAuditPost( $post_id, TRUE, $taxonomy ) )

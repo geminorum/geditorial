@@ -342,6 +342,12 @@ class Cartable extends gEditorial\Module
 		$this->_hook_tweaks_column_attr( $posttype );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {

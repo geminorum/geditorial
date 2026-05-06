@@ -33,10 +33,11 @@ class Ajax extends WordPress\Main
 
 	public static function successMessage( $message = NULL )
 	{
-		$message = $message ?? _x( 'Successful!', 'Ajax: Ajax Notice', 'geditorial' );
+		$message = $message ?? Plugin::done( FALSE );
 
 		if ( $message )
 			self::success( Core\HTML::success( $message, FALSE, '-via-ajax' ) );
+
 		else
 			self::success();
 	}
@@ -48,22 +49,23 @@ class Ajax extends WordPress\Main
 
 	public static function errorMessage( $message = NULL )
 	{
-		$message = $message ?? _x( 'Error!', 'Ajax: Ajax Notice', 'geditorial' );
+		$message = $message ?? Plugin::wrong( FALSE );
 
 		if ( $message )
 			self::error( Core\HTML::error( $message, FALSE, '-via-ajax' ) );
+
 		else
 			self::error();
 	}
 
 	public static function errorUserCant()
 	{
-		self::errorMessage( _x( 'You\'re not authorized!', 'Ajax: Ajax Notice', 'geditorial' ) );
+		self::errorMessage( Plugin::denied( FALSE ) );
 	}
 
 	public static function errorWhat()
 	{
-		self::errorMessage( _x( 'What?!', 'Ajax: Ajax Notice', 'geditorial' ) );
+		self::errorMessage( Plugin::what( FALSE ) );
 	}
 
 	// @REF: https://make.wordpress.org/core/?p=12799

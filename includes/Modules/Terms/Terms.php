@@ -376,6 +376,12 @@ class Terms extends gEditorial\Module
 			$this->_edit_tags_screen( $taxonomy );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		$enqueue = FALSE;

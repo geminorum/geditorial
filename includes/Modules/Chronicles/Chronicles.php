@@ -280,6 +280,12 @@ class Chronicles extends gEditorial\Module
 		$this->subcontent__hook_importer_init();
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {

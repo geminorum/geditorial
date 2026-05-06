@@ -206,6 +206,12 @@ class People extends gEditorial\Module
 		$this->filter( 'insert_term_data', 3, 9, FALSE, 'wp' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

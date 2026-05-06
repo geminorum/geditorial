@@ -126,6 +126,12 @@ class Importer extends gEditorial\Module
 		// $this->action( 'imports_general_summary', 1, 10, FALSE, $this->base );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'edit' === $screen->base
@@ -768,7 +774,7 @@ class Importer extends gEditorial\Module
 					$post_status    = $this->filters( 'default_post_status', $this->get_setting( 'post_status', 'pending' ), $posttype, $override );
 					$comment_status = $this->filters( 'default_comment_status', $this->get_setting( 'comment_status', 'closed' ), $posttype, $override );
 					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all of them and must be unfiltered!
-					$terms_all      = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
+					$terms_all      = Core\Arraay::prepItemsNumeral( $terms_all );
 					$headers        = $rawdata['headers'];
 
 					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
@@ -2063,7 +2069,7 @@ class Importer extends gEditorial\Module
 		if ( $rawdata['error'] )
 			return self::_log_error( $rawdata['error'] );
 
-		$taxonomies = array_map( [ 'geminorum\gEditorial\Core\Arraay', 'prepNumeral' ], $terms_all );
+		$taxonomies = Core\Arraay::prepItemsNumeral( $terms_all );
 
 		$this->actions( 'terms_before', $posttype );
 
@@ -2105,12 +2111,12 @@ class Importer extends gEditorial\Module
 			$this->actions( 'terms_saved', $post, [
 				'append'     => $append,
 				'attach_id'  => $attach_id,
-				'extra_all'  => $extra_all,
 				'override'   => $override,
 				'raw'        => $raw,
 				'source_id'  => $source_id,
 				'taxonomies' => $taxonomies,
 				'terms_all'  => $terms_all,
+				'extra_all'  => $extra_all,
 			] );
 
 			$this->actions( 'terms_after_each', $posttype );

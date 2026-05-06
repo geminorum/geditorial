@@ -76,6 +76,12 @@ class Markdown extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 6, 120 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -151,7 +157,7 @@ class Markdown extends gEditorial\Module
 			],
 		] );
 
-		if ( ! $this->is_markdown( $post->ID ) ) {
+		if ( ! $this->_post_is_markdown( $post->ID ) ) {
 
 			$wp_admin_bar->add_menu( [
 				'parent' => $node_id,
@@ -240,7 +246,7 @@ class Markdown extends gEditorial\Module
 		$icon    = $this->adminbar__get_icon();
 		$reports = $this->role_can_post( $post, 'reports' );
 
-		if ( ! $this->is_markdown( $post->ID ) ) {
+		if ( ! $this->_post_is_markdown( $post->ID ) ) {
 
 			$nodes[] = [
 				'parent' => $parent,
@@ -282,9 +288,9 @@ class Markdown extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorMessage();
+			gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
 
-		if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 			gEditorial\Ajax::errorUserCant();
 
 		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
@@ -329,31 +335,51 @@ class Markdown extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	// @REF: https://github.com/michelf/php-markdown
-	private function process_content( $content, $id )
+	/**
+	 * Processes given content in Markdown syntax to HTML.
+	 *
+	 * @param string $content
+	 * @param int $post_id
+	 * @return string
+	 */
+	private function process_content( $content, $post_id )
 	{
 		// `$content` is slashed, but Markdown parser hates it precious.
 		$content = stripslashes( $content );
 		$content = Services\Markup::mdExtra( $content, TRUE, FALSE );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->_do_wiki_linking( $content, WordPress\Post::get( $id ) );
+			$content = $this->_do_wiki_linking( $content, WordPress\Post::get( $post_id ) );
 
 		// Reference the `post_id` to make footnote ids unique
-		$content = preg_replace( '/fn(ref)?:/', "fn$1-$id:", $content );
+		$content = preg_replace( '/fn(ref)?:/', "fn$1-$post_id:", $content );
 		$content = Core\Text::removeP( $content );
 
 		// WordPress expects slashed data. Put needed ones back.
 		return addslashes( $content );
 	}
 
-	private function convert_content( $content, $id )
+	/**
+	 * Converts given content into Markdown syntax.
+	 *
+	 * @param string $content
+	 * @param int $post_id
+	 * @return string
+	 */
+	private function _do_convert_content( $content, $post_id )
 	{
 		return Services\Markup::markdownFromHTML( $content, TRUE );
 	}
 
-	// FIXME: do the cleanup!
-	private function cleanup_content( $content, $id )
+	/**
+	 * Cleanups given content.
+	 * FIXME: do the cleanup!
+	 *
+	 * @param string $content
+	 * @param int $post_id
+	 * @return string
+	 */
+	private function _do_cleanup_content( $content, $post_id )
 	{
 		return $content;
 	}
@@ -427,7 +453,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( $this->is_markdown( $post->ID ) )
+		if ( $this->_post_is_markdown( $post->ID ) )
 			return FALSE;
 
 		if ( empty( $post->post_content ) )
@@ -435,7 +461,7 @@ class Markdown extends gEditorial\Module
 
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $this->convert_content( $post->post_content, $post->ID ),
+			'post_content_filtered' => $this->_do_convert_content( $post->post_content, $post->ID ),
 		];
 
 		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
@@ -456,7 +482,7 @@ class Markdown extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $this->is_markdown( $post->ID ) )
+		if ( ! $this->_post_is_markdown( $post->ID ) )
 			return FALSE;
 
 		if ( empty( $post->post_content_filtered ) )
@@ -464,7 +490,7 @@ class Markdown extends gEditorial\Module
 
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $this->cleanup_content( $post->post_content_filtered, $post->ID ),
+			'post_content_filtered' => $this->_do_cleanup_content( $post->post_content_filtered, $post->ID ),
 		];
 
 		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
@@ -502,7 +528,13 @@ class Markdown extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function is_markdown( $post_id )
+	/**
+	 * Determines if given post is in Markdown format.
+	 *
+	 * @param int $post_id
+	 * @return bool
+	 */
+	private function _post_is_markdown( $post_id )
 	{
 		return (bool) get_post_meta( $post_id, $this->constant( 'metakey_is_markdown' ), TRUE );
 	}
@@ -525,7 +557,7 @@ class Markdown extends gEditorial\Module
 
 	public function edit_post_content( $value, $post_id )
 	{
-		if ( ! $this->is_markdown( $post_id ) )
+		if ( ! $this->_post_is_markdown( $post_id ) )
 			return $value;
 
 		$post = WordPress\Post::get( $post_id );
@@ -551,7 +583,7 @@ class Markdown extends gEditorial\Module
 
 		} else {
 
-			$markdown = $this->is_markdown( $post->ID );
+			$markdown = $this->_post_is_markdown( $post->ID );
 
 			printf( $before, '-markdown '.( $markdown ? '-is-in-markdown' : '-is-in-html' ) );
 
@@ -656,7 +688,9 @@ class Markdown extends gEditorial\Module
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return $this->is_markdown( $row->ID ) ? Services\Icons::get( $this->module->icon ) : '';
+					return $this->_post_is_markdown( $row->ID )
+						? Services\Icons::get( $this->module->icon )
+						: '';
 				},
 			],
 			'title' => gEditorial\Tablelist::columnPostTitle(),

@@ -266,6 +266,12 @@ class Tweaks extends gEditorial\Module
 			$this->_edit_screen( $posttype );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		$enqueue = FALSE;
@@ -831,7 +837,7 @@ class Tweaks extends gEditorial\Module
 	// FIXME: use `get_file_description( untrailingslashit( get_stylesheet_directory() ).'/'.get_page_template_slug() )`
 	public function column_attr_page_template( $post, $before, $after )
 	{
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
 
 		if ( ! empty( $post->page_template )
@@ -941,7 +947,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 
 		if ( $post->post_modified != $post->post_date
-			&& current_user_can( 'edit_post', $post->ID ) ) {
+			&& WordPress\Post::can( $post, 'edit_post' ) )  {
 
 			printf( $before, '-post-modified' );
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Row Icon Title', 'geditorial-tweaks' ) );

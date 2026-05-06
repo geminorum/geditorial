@@ -105,6 +105,12 @@ class Pitches extends gEditorial\Module
 		] );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {

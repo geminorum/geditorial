@@ -188,6 +188,12 @@ class NationalLibrary extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'post' === $screen->base
@@ -902,7 +908,7 @@ class NationalLibrary extends gEditorial\Module
 			'subject',
 		];
 
-		if ( ! $extend || ! in_array( $extend, $support, TRUE  ) )
+		if ( ! $extend || ! in_array( $extend, $support, TRUE ) )
 			return $tips;
 
 		if ( ! $fipa = $this->get_fipa_by_post( $post, FALSE, TRUE ) )

@@ -65,6 +65,12 @@ class Wysiwyg extends gEditorial\Module
 		return $strings;
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( ( 'edit-tags' === $screen->base || 'term' === $screen->base )

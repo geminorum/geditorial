@@ -815,6 +815,9 @@ JS;
 			'_base' => static::BASE,
 			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
 
+			'_debug' => WordPress\IsIt::debug(),
+			'_dev'   => WordPress\IsIt::dev(),
+
 			'_restBase'  => Core\URL::untrail( rest_url() ),
 			'_restNonce' => wp_create_nonce( 'wp_rest' ),
 		] );

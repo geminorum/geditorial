@@ -195,6 +195,12 @@ class Units extends gEditorial\Module
 		$this->posttypefields__hook_setup_ajax( $posttype );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {

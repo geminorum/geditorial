@@ -138,6 +138,12 @@ class Conscripted extends gEditorial\Module
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

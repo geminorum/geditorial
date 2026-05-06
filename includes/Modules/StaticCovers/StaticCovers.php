@@ -292,6 +292,12 @@ class StaticCovers extends gEditorial\Module
 			$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {

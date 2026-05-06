@@ -40,13 +40,15 @@ class Tablelist extends WordPress\Main
 			$limit = self::limit( $perpage );
 			$paged = self::paged();
 			$pre   = [
-				'number'   => $limit,
-				'offset'   => ( $paged - 1 ) * $limit,
+				'number' => $limit,
+				'offset' => ( $paged - 1 ) * $limit,
 			];
 
 		} else {
 
-			$pre = [ 'number' => '' ];
+			$pre = [
+				'number' => '',
+			];
 		}
 
 		$args = array_merge( $pre, [
@@ -67,8 +69,22 @@ class Tablelist extends WordPress\Main
 		if ( ! $perpage )
 			return $terms;
 
-		$total      = WordPress\Taxonomy::hasTerms( $taxonomy, FALSE, TRUE, array_merge( $atts, [ 'search' => self::req( 's', '' ) ] ) );
-		$pagination = Core\HTML::tablePagination( $total, ceil( $total / $limit ), $limit, $paged, $extra );
+		$total = WordPress\Taxonomy::hasTerms(
+			$taxonomy,
+			FALSE,
+			TRUE,
+			array_merge( $atts, [
+				'search' => self::req( 's', '' )
+			] )
+		);
+
+		$pagination = Core\HTML::tablePagination(
+			$total,
+			ceil( $total / ( $limit ?? 25 ) ),
+			$limit ?? 25,
+			$paged ?? 1,
+			$extra
+		);
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];
@@ -107,7 +123,9 @@ class Tablelist extends WordPress\Main
 
 		} else {
 
-			$pre = [ 'posts_per_page' => -1 ];
+			$pre = [
+				'posts_per_page' => -1,
+			];
 		}
 
 		$args = array_merge( $pre, [
@@ -140,7 +158,7 @@ class Tablelist extends WordPress\Main
 		if ( ! empty( $_REQUEST['parent'] ) )
 			$args['post_parent'] = $extra['parent'] = $_REQUEST['parent'];
 
-		if ( 'attachment' == $args['post_type'] && is_array( $args['post_status'] ) )
+		if ( 'attachment' === $args['post_type'] && is_array( $args['post_status'] ) )
 			$args['post_status'][] = 'inherit';
 
 		$query = new \WP_Query();
@@ -149,7 +167,13 @@ class Tablelist extends WordPress\Main
 		if ( ! $perpage )
 			return $posts;
 
-		$pagination = Core\HTML::tablePagination( $query->found_posts, $query->max_num_pages, $limit, $paged, $extra );
+		$pagination = Core\HTML::tablePagination(
+			$query->found_posts,
+			$query->max_num_pages,
+			$limit ?? 25,
+			$paged ?? 1,
+			$extra
+		);
 
 		$pagination['orderby'] = $args['orderby'];
 		$pagination['order']   = $args['order'];
@@ -189,13 +213,10 @@ class Tablelist extends WordPress\Main
 
 	public static function getPostRowActions( $post_id, $actions = NULL )
 	{
-		if ( is_null( $actions ) )
-			$actions = [ 'edit', 'view' ];
-
 		$list = [];
-		$edit = current_user_can( 'edit_post', $post_id );
+		$edit = WordPress\Post::can( $post_id, 'edit_post' );
 
-		foreach ( $actions as $action ) {
+		foreach ( $actions ?? [ 'edit', 'view' ] as $action ) {
 
 			switch ( $action ) {
 
@@ -208,6 +229,8 @@ class Tablelist extends WordPress\Main
 							'data'   => [ 'id' => $post_id, 'row' => 'attached' ],
 							'target' => '_blank',
 						], _x( 'Attached', 'Tablelist: Row Action: Post', 'geditorial' ) );
+
+					break;
 
 				case 'revisions':
 
@@ -222,7 +245,8 @@ class Tablelist extends WordPress\Main
 							'target' => '_blank',
 						], _x( 'Revisions', 'Tablelist: Row Action: Post', 'geditorial' ) );
 
-				break;
+					break;
+
 				case 'edit':
 
 					if ( ! $edit )
@@ -235,7 +259,8 @@ class Tablelist extends WordPress\Main
 						'target' => '_blank',
 					], _x( 'Edit', 'Tablelist: Row Action: Post', 'geditorial' ) );
 
-				break;
+					break;
+
 				case 'view':
 
 					$list['view'] = Core\HTML::tag( 'a', [
@@ -289,37 +314,39 @@ class Tablelist extends WordPress\Main
 		], Core\HTML::escape( $title ) );
 	}
 
-	public static function columnPostID( $icon = TRUE )
+	public static function columnPostID( $icon = TRUE, $column_title = NULL )
 	{
-		$title = _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
+		$title = $column_title ?? _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
 		return $icon ? sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), '-post-id' ) : $title;
 	}
 
-	public static function columnPostDate()
+	public static function columnPostDate( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
+			'title'    => $column_title ?? _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::humanTimeDiffRound( $row->post_date );
 			},
 		];
 	}
 
-	public static function columnPostDateModified( $title = NULL )
+	public static function columnPostDateModified( $column_title = NULL )
 	{
 		return [
-			'title'    => $title ?? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ),
+			'title'    => $column_title ?? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Datetime::htmlHumanTime( $row->post_modified, TRUE );
 			},
 		];
 	}
 
-	public static function columnPostType( $post_id_prop = NULL )
+	public static function columnPostType( $post_id_prop = NULL, $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
-			'args'     => [ 'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ) ],
+			'title' => $column_title ?? _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
+			'args'  => [
+				'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ),
+			],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $post_id_prop ) {
 
 				if ( ! $post = WordPress\Post::get( $post_id_prop ? $row->{$post_id_prop} : $row ) )
@@ -330,11 +357,13 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostMime()
+	public static function columnPostMime( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
-			'args'     => [ 'mime_types' => wp_get_mime_types() ],
+			'title' => $column_title ?? _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
+			'args'  => [
+				'mime_types' => wp_get_mime_types(),
+			],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				if ( $ext = WordPress\Media::getExtension( $row->post_mime_type, $column['args']['mime_types'] ) )
 					return '<span title="'.$row->post_mime_type.'">'.$ext.'</span>';
@@ -347,8 +376,10 @@ class Tablelist extends WordPress\Main
 	public static function columnPostTitle( $actions = NULL, $excerpt = FALSE, $custom = [] )
 	{
 		return [
-			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => WordPress\Status::get() ],
+			'title' => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
+			'args'  => [
+				'statuses' => WordPress\Status::get(),
+			],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
 
 				$title = WordPress\Post::title( $row );
@@ -387,10 +418,10 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostExcerpt()
+	public static function columnPostExcerpt( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
+			'title'    => $column_title ?? _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return $row->post_excerpt
 					? wpautop( WordPress\Strings::prepDescription( $row->post_excerpt, FALSE, FALSE ), FALSE )
@@ -399,21 +430,23 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostTitleSummary()
+	public static function columnPostTitleSummary( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
+			'title'    => $column_title ?? _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				return Helper::getPostTitleRow( $row, 'edit' );
 			},
 		];
 	}
 
-	public static function columnPostStatusSummary()
+	public static function columnPostStatusSummary( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
-			'args'     => [ 'statuses' => WordPress\Status::get() ],
+			'title' => $column_title ?? _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
+			'args'  => [
+				'statuses' => WordPress\Status::get(),
+			],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 				if ( ! $row->post_status )
@@ -427,10 +460,10 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostAuthorSummary()
+	public static function columnPostAuthorSummary( $column_title = NULL )
 	{
 		return [
-			'title'    => _x( 'Author', 'Tablelist: Column: Post Author', 'geditorial' ),
+			'title'    => $column_title ?? _x( 'Author', 'Tablelist: Column: Post Author', 'geditorial' ),
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 
 				if ( current_user_can( 'edit_post', $row->ID ) )
@@ -444,14 +477,13 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostTerms( $taxonomies = NULL )
+	public static function columnPostTerms( $taxonomies = NULL, $column_title = NULL )
 	{
-		if ( is_null( $taxonomies ) )
-			$taxonomies = WordPress\Taxonomy::get( 4 );
-
 		return [
-			'title'    => _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
-			'args'     => [ 'taxonomies' => $taxonomies ],
+			'title' => $column_title ?? _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
+			'args'  => [
+				'taxonomies' => $taxonomies ?? WordPress\Taxonomy::get( 4 ),
+			],
 			'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
 				foreach ( $column['args']['taxonomies'] as $object )
 					if ( WordPress\Taxonomy::viewable( $object ) )
@@ -463,16 +495,18 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnTermID()
+	public static function columnTermID( $column_title = NULL )
 	{
-		return _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
+		return $column_title ?? _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
-	public static function columnTermTaxonomyCode( $link = TRUE, $title = NULL )
+	public static function columnTermTaxonomyCode( $link = TRUE, $column_title = NULL )
 	{
 		return [
-			'title'    => $title ?? _x( 'Taxonomy', 'Tablelist: Column Title', 'geditorial' ),
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $link ) {
+			'title'    => $column_title ?? _x( 'Taxonomy', 'Tablelist: Column Title', 'geditorial' ),
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $link ) {
+
 				if ( ! taxonomy_exists( $row->taxonomy ) )
 					return Core\HTML::code( $row->taxonomy, FALSE, TRUE );
 
@@ -487,7 +521,8 @@ class Tablelist extends WordPress\Main
 	{
 		return [
 			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $description ) {
 
 				if ( ! $term = WordPress\Term::get( $row ) )
 					return Plugin::na( FALSE );
@@ -499,7 +534,9 @@ class Tablelist extends WordPress\Main
 
 				return $html;
 			},
-			'actions' => static function ( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
+			'actions' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $actions, $custom ) {
+
 				return array_merge( self::getTermRowActions( $row, $actions ), $custom );
 			},
 		];
@@ -512,13 +549,10 @@ class Tablelist extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $row ) )
 			return [];
 
-		if ( is_null( $actions ) )
-			$actions = [ 'edit', 'view' ];
-
 		$list = [];
 		$edit = WordPress\Term::edit( $term );
 
-		foreach ( $actions as $action ) {
+		foreach ( $actions ?? [ 'edit', 'view' ] as $action ) {
 
 			switch ( $action ) {
 

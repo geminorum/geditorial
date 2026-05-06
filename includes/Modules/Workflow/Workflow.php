@@ -206,6 +206,12 @@ class Workflow extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
@@ -575,7 +581,7 @@ class Workflow extends gEditorial\Module
 
 		echo '<div id="delete-action">';
 
-			if ( current_user_can( 'delete_post', $post->ID ) )
+			if ( WordPress\Post::can( $post, 'delete_post' ) )
 				echo Core\HTML::tag( 'a', [
 					'href'  => get_delete_post_link( $post->ID ),
 					'class' => [ 'submitdelete', 'deletion' ],

@@ -105,6 +105,12 @@ class Specs extends gEditorial\Module
 		// add_shortcode( $this->constant( 'multiple_main_shortcode' ), [ $this, 'shortcode_multiple_specs' ] );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'post' === $screen->base

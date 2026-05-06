@@ -72,7 +72,7 @@ class WcCheckout extends gEditorial\Module
 		switch ( $suffix ) {
 
 			case '_checkoutform': return [ _x( 'Checkout Form', 'Setting Section Title', 'geditorial-wc-checkout' ), NULL ];
-			case '_ordernotes'  : return [ _x( 'Order Notes', 'Setting Section Title', 'geditorial-wc-checkout' ), NULL ];
+			case '_ordernotes'  : return [ _x( 'Order Notes',   'Setting Section Title', 'geditorial-wc-checkout' ), NULL ];
 		}
 
 		return FALSE;

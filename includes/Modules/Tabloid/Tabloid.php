@@ -72,6 +72,12 @@ class Tabloid extends gEditorial\Module
 			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE, NULL, TRUE );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
@@ -128,7 +134,7 @@ class Tabloid extends gEditorial\Module
 
 	public function rowaction_get_mainlink_for_post( $post, $extra = NULL, $icon = FALSE )
 	{
-		if ( ! $post || ! current_user_can( 'read', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return FALSE;
 
 		if ( ! $text = $this->filters( 'post_action', $this->is_post_viewable( $post ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $post ) )
@@ -187,7 +193,7 @@ class Tabloid extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $link;
 
-		if ( ! current_user_can( 'read', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return $link;
 
 		return $this->get_adminpage_url( TRUE, [
@@ -220,7 +226,7 @@ class Tabloid extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $linked ) )
 			return FALSE;
 
-		if ( ! current_user_can( 'read', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return FALSE;
 
 		return add_filter( 'is_post_type_viewable',

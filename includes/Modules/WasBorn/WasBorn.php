@@ -223,6 +223,12 @@ class WasBorn extends gEditorial\Module
 		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

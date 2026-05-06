@@ -333,7 +333,7 @@ class CustomPostType extends gEditorial\Service
 	{
 		$strings = WordPress\Strings::getNameForms( $name );
 
-		$templates = apply_filters( self::und( static::BASE. 'posttype', 'bulk_message_templates' ), [
+		$templates = apply_filters( self::und( static::BASE, 'posttype', 'bulk_message_templates' ), [
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */
 			'updated'   => _nx_noop( '%5$s %4$s updated.', '%5$s %3$s updated.', 'CustomPostType: Bulk Message for `updated`', 'geditorial' ),
 			/* translators: `%1$s`: camel case / plural post-type, `%2$s`: camel case / singular post-type, `%3$s`: lower case / plural post-type, `%4$s`: lower case / singular post-type, `%5$s`: `%s` placeholder */

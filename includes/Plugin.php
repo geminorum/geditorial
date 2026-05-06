@@ -757,4 +757,10 @@ class Plugin extends WordPress\Plugin
 		$message = __( 'All Done!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-done' ] ], $message ) : $message;
 	}
+
+	public static function what( $wrap = 'p' )
+	{
+		$message = __( 'What?!', 'geditorial' );
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-what' ] ], $message ) : $message;
+	}
 }

@@ -116,6 +116,12 @@ class Badges extends gEditorial\Module
 			$this->filter( 'template_post_image_args', 4, 9, FALSE, $this->base );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

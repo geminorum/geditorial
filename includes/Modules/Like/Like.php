@@ -108,6 +108,12 @@ class Like extends gEditorial\Module
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 50 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'edit' === $screen->base
@@ -490,7 +496,7 @@ class Like extends gEditorial\Module
 
 	public function tweaks_column_attr( $post, $before, $after )
 	{
-		if ( ! current_user_can( 'read_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return;
 
 		$total = $this->get_liked_total( $post->ID );

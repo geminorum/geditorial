@@ -86,6 +86,12 @@ class Revisions extends gEditorial\Module
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 100 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
@@ -160,17 +166,25 @@ class Revisions extends gEditorial\Module
 
 				printf( $before, '-revision-count' );
 
-					echo $this->get_column_icon( FALSE, 'backup', _x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' ) );
+					echo $this->get_column_icon(
+						FALSE,
+						'backup',
+						_x( 'Revisions', 'Row Icon Title', 'geditorial-revisions' )
+					);
 
-					/* translators: `%s`: revisions count */
-					$title = sprintf( _nx( '%s Revision', '%s Revisions', $count, 'Row', 'geditorial-revisions' ), Core\Number::format( $count ) );
+					$title = sprintf(
+						/* translators: `%s`: revisions count */
+						_nx( '%s Revision', '%s Revisions', $count, 'Row', 'geditorial-revisions' ),
+						Core\Number::format( $count )
+					);
 
-					if ( current_user_can( 'edit_post', $last ) )
+					if ( WordPress\Post::can( $last, 'edit_post' ) )
 						echo Core\HTML::tag( 'a', [
 							'href'   => get_edit_post_link( $last ),
 							'title'  => _x( 'View the last revision', 'Title Attr', 'geditorial-revisions' ),
 							'target' => '_blank',
 						], $title );
+
 					else
 						echo $title;
 
@@ -239,7 +253,7 @@ class Revisions extends gEditorial\Module
 			$autosave = TRUE;
 		}
 
-		if ( $link && current_user_can( 'edit_post', $revision->ID ) ) {
+		if ( $link && WordPress\Post::can( $revision, 'edit_post' ) ) {
 
 			// NOTE: `.-text` will hide if meta-box is on the side
 			$parts['edit'] = vsprintf( '<a class="%4$s" href="%1$s" title="%3$s">%2$s<span class="-text"> %3$s</span></a>', [
@@ -518,8 +532,8 @@ class Revisions extends gEditorial\Module
 		if ( ! empty( $_REQUEST['type'] ) )
 			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
-		if ( 'attachment' == $args['post_type'] )
-			$args['post_status'][] = 'inherit';
+		if ( 'attachment' === $args['post_type'] )
+			$args['post_status'] = 'inherit';
 
 		$query = new \WP_Query();
 		$posts = $query->query( $args );

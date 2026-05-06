@@ -56,6 +56,12 @@ class WcPurchased extends gEditorial\Module
 		$this->render_default_mainpage( 'reports', 'update' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {

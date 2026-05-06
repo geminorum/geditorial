@@ -251,6 +251,12 @@ class Diagnosed extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

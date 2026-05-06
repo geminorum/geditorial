@@ -42,6 +42,12 @@ class Pointers extends gEditorial\Module
 		$this->filter_module( 'static_covers', 'post_summaries', 4, 50 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {

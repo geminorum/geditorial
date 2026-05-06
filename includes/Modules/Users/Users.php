@@ -163,6 +163,12 @@ class Users extends gEditorial\Module
 			$this->_hook_menu_taxonomy( 'type_taxonomy', 'users.php' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		$groups     = $this->get_setting( 'user_groups' );

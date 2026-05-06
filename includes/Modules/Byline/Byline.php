@@ -258,6 +258,12 @@ class Byline extends gEditorial\Module
 		$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 12 ), FALSE, 'woocommerce' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'users' === $screen->base ) {

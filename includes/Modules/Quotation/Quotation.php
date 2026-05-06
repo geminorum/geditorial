@@ -205,6 +205,12 @@ class Quotation extends gEditorial\Module
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {

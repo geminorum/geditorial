@@ -59,6 +59,14 @@ class Markup extends gEditorial\Service
 		] );
 	}
 
+	/**
+	 * Transforms given Markdown content into HTML.
+	 *
+	 * @param string $markdown
+	 * @param bool $autop
+	 * @param bool $strip_frontmatter
+	 * @return string
+	 */
 	public static function mdExtra( $markdown, $autop = TRUE, $strip_frontmatter = TRUE )
 	{
 		static $instance;
@@ -79,7 +87,9 @@ class Markup extends gEditorial\Service
 
 		$markdown = $instance->defaultTransform( $markdown );
 
-		return $autop ? $markdown : Core\Text::removeP( $markdown );
+		return $autop
+			? $markdown // NOTE: the default is wrapped with paragraphs.
+			: Core\Text::removeP( $markdown );
 	}
 
 	// @source https://github.com/ergebnis/front-matter/blob/main/src/YamlParser.php

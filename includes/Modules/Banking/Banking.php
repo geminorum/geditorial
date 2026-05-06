@@ -239,6 +239,12 @@ class Banking extends gEditorial\Module
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {

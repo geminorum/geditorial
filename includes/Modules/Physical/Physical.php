@@ -239,6 +239,12 @@ class Physical extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 6, 500 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {

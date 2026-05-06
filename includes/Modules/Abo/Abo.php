@@ -129,12 +129,19 @@ class Abo extends gEditorial\Module
 			],
 		] );
 
-		add_filter( self::und( $this->constant( 'main_taxonomy' ), 'name' ), [ $this, 'main_taxonomy_name_field' ], 20, 3 );
+		add_filter( self::und( $this->constant( 'main_taxonomy' ), 'name' ),
+			[ $this, 'main_taxonomy_name_field' ], 20, 3 );
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

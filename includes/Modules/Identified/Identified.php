@@ -229,6 +229,12 @@ class Identified extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {

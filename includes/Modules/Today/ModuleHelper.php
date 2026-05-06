@@ -867,36 +867,29 @@ class ModuleHelper extends gEditorial\Helper
 			return $buttons;
 
 		$object = WordPress\PostType::object( self::constant( 'main_posttype', 'day' ) );
+		$icon   = $admin ? Services\Icons::posttypeMarkup( $object ) : '';
 
 		if ( WordPress\PostType::can( $object, 'create_posts' ) ) {
 
-			$title = $object->labels->add_new_item;
-
-			if ( $admin )
-				$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
-
-			$buttons[] = Core\HTML::button( $title,
+			$buttons[] = Core\HTML::button(
+				Core\Text::glued( [ $icon, $object->labels->add_new_item ] ),
 				WordPress\PostType::newLink( $object->name, $the_day ),
-				_x( 'New Day!', 'Title Attr', 'geditorial-today' ),
+				_x( 'New the Day!', 'Title Attr', 'geditorial-today' ),
 				$admin
 			);
 		}
 
 		foreach ( $posts as $post ) {
 
-			if ( current_user_can( 'edit_post', $post->ID ) ) {
+			if ( ! $edit = WordPress\Post::edit( $post ) )
+				continue;
 
-				$title = $object->labels->edit_item;
-
-				if ( $admin )
-					$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
-
-				$buttons[] = Core\HTML::button( $title,
-					WordPress\Post::edit( $post ),
-					_x( 'Edit Day!', 'Title Attr', 'geditorial-today' ),
-					$admin
-				);
-			}
+			$buttons[] = Core\HTML::button(
+				Core\Text::glued( [ $icon, $object->labels->edit_item ] ),
+				$edit,
+				_x( 'Edit the Day!', 'Title Attr', 'geditorial-today' ),
+				$admin
+			);
 		}
 
 		return $buttons;

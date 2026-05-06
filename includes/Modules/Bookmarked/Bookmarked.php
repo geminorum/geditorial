@@ -227,6 +227,12 @@ class Bookmarked extends gEditorial\Module
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'subcontent' ) );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {

@@ -78,7 +78,7 @@ class Schedule extends gEditorial\Module
 				if ( empty( $post['post_id'] ) )
 					gEditorial\Ajax::errorMessage();
 
-				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 					gEditorial\Ajax::errorUserCant();
 
 				gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
@@ -151,7 +151,7 @@ class Schedule extends gEditorial\Module
 		if ( ! $this->is_post_viewable( $post ) )
 			return $actions;
 
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return $actions;
 
 		if ( $link = $this->get_calendar_link( $post ) )
@@ -277,7 +277,7 @@ class Schedule extends gEditorial\Module
 
 		$html = '<li data-day="'.$the_day.'" data-status="'.$post->post_status.'"';
 
-		if ( $this->can_reschedule( $post ) && current_user_can( 'edit_post', $post->ID ) ) {
+		if ( $this->can_reschedule( $post ) && WordPress\Post::can( $post, 'edit_post' ) ) {
 
 			$html.= ' data-post="'.$post->ID.'" data-nonce="'.wp_create_nonce( $this->hook( $post->ID ) ).'">';
 			$html.= '<span class="-handle" title="'._x( 'Drag me!', 'Sortable', 'geditorial-schedule' ).'">';

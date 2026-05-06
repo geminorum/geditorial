@@ -238,6 +238,12 @@ class Papered extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'printpage', 'exist' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'primary_taxonomy', $screen ) ) {

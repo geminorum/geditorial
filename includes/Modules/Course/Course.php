@@ -332,6 +332,12 @@ class Course extends gEditorial\Module
 		}
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		$subterms = $this->get_setting( 'subterms_support' )

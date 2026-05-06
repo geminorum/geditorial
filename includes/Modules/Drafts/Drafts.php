@@ -123,6 +123,12 @@ class Drafts extends gEditorial\Module
 		$this->coreadmin__hook_tweaks_column_attr( $posttype, 90 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )
@@ -185,7 +191,7 @@ class Drafts extends gEditorial\Module
 				if ( empty( $post['post_id'] ) )
 					gEditorial\Ajax::errorMessage();
 
-				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 					gEditorial\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
@@ -203,7 +209,7 @@ class Drafts extends gEditorial\Module
 				if ( empty( $post['post_id'] ) )
 					gEditorial\Ajax::errorMessage();
 
-				if ( ! current_user_can( 'edit_post', $post['post_id'] ) )
+				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 					gEditorial\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )

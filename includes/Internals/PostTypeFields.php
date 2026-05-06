@@ -823,7 +823,7 @@ trait PostTypeFields
 				return;
 
 		// here only check for cap to edit this post
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
 
 		$this->store_posttype_fields( $post );
@@ -1618,10 +1618,10 @@ trait PostTypeFields
 
 			if ( ! $term = get_term_by( 'name', $formatted, $field['taxonomy'] ) ) {
 
-				$term = wp_insert_term( $formatted, $field['taxonomy'] );
+				$inserted = wp_insert_term( $formatted, $field['taxonomy'] );
 
-				if ( ! is_wp_error( $term ) )
-					$terms[] = $term->term_id;
+				if ( ! is_wp_error( $inserted ) )
+					$terms[] = $inserted['term_id'];
 
 			} else {
 

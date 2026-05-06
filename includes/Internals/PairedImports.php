@@ -205,7 +205,7 @@ trait PairedImports
 
 		$context = 'importitems';
 
-		if ( current_user_can( 'edit_post', $post->ID ) ) {
+		if ( WordPress\Post::can( $post, 'edit_post' ) ) {
 
 			$title = sprintf(
 				/* translators: `%s`: post title */

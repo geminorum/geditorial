@@ -418,7 +418,6 @@ class Datetime extends WordPress\Main
 
 		// NOTE: full-dates stored in Gregorian
 		else if ( Core\Date::isInFormat( $sanitized, 'Y-m-d' ) )
-			// $datetime = sprintf( '%s 23:59:59', $sanitized );
 			$datetime = sprintf( '%s 00:00:00', $sanitized );
 
 		else if ( Core\Date::isInFormat( $sanitized, $format ?? Core\Date::MYSQL_FORMAT ) )
@@ -634,13 +633,13 @@ class Datetime extends WordPress\Main
 		return FALSE;
 	}
 
-	// - for post time, if the post is unpublished, the change sets the
-	// publication timestamp
-	// - if the post was published or scheduled for the future, the change will
-	// change the timestamp. 'publish' posts will become scheduled if moved past
-	// today and 'future' posts will be published if moved before today
+	// - For post time, if the post is unpublished, the change sets the
+	// publication timestamp.
+	// - If the post was published or scheduled for the future, the change will
+	// change the timestamp. `publish` posts will become scheduled if moved past
+	// today and `future` posts will be published if moved before today.
 	// @REF: `handle_ajax_drag_and_drop()`
-	// FIXME: needs fallback
+	// FIXME: NEEDS fallback
 	public static function reSchedulePost( $post, $array, $default_calendar = FALSE, $set_timestamp = TRUE )
 	{
 		global $wpdb;
@@ -665,8 +664,8 @@ class Datetime extends WordPress\Main
 		if ( ! $the_day['cal'] || ! $the_day['year'] || ! $the_day['month'] || ! $the_day['day'] )
 			return FALSE;
 
-		// persist the old hourstamp because we can't manipulate the exact time
-		// on the calendar bump the last modified timestamps too
+		// Persist the old `hourstamp` because we can't manipulate the exact time
+		// on the calendar bump the last modified timestamps too.
 		$old  = date( 'H:i:s', strtotime( $post->post_date ) );
 		$time = explode( ':', $old );
 

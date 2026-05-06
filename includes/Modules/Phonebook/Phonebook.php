@@ -326,7 +326,9 @@ class Phonebook extends gEditorial\Module
 		if ( ! is_admin() )
 			return;
 
-		$this->action( 'pre_get_posts', 1, 5, 'sanitized' );
+		// NOTE: DISABLED: must support multiple search: raw+sanitized
+		// Messing with identity numbers!
+		// $this->action( 'pre_get_posts', 1, 5, 'sanitized' );
 	}
 
 	public function importer_init()
@@ -334,6 +336,12 @@ class Phonebook extends gEditorial\Module
 		$this->subcontent__hook_importer_init();
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {

@@ -148,6 +148,12 @@ class Assigned extends gEditorial\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {

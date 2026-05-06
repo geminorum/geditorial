@@ -187,6 +187,12 @@ class Ortho extends gEditorial\Module
 			$this->filter_module( 'importer', 'prepare', 7, 8 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'post' === $screen->base ) {

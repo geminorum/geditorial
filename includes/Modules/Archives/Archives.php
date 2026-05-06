@@ -178,6 +178,12 @@ class Archives extends gEditorial\Module
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {

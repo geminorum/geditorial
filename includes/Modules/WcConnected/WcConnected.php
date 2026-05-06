@@ -106,6 +106,12 @@ class WcConnected extends gEditorial\Module
 		register_widget( __NAMESPACE__.'\\Widgets\\WcConnectedProducts' );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'post' === $screen->base ) {
@@ -139,7 +145,7 @@ class WcConnected extends gEditorial\Module
 		if ( ! $this->nonce_verify( 'supportedbox' ) )
 			return;
 
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
 
 		$metakey = $this->constant( 'metakey_connected' );

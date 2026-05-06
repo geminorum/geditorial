@@ -603,7 +603,7 @@ class ShortCode extends WordPress\Main
 		$text = WordPress\Post::title( $post );
 		$link = WordPress\Post::link( $post, '' );
 
-		if ( ! $link && current_user_can( 'edit_post', $post->ID ) )
+		if ( ! $link && WordPress\Post::can( $post, 'edit_post' ) )
 			$link = get_preview_post_link( $post );
 
 		if ( is_null( $args['item_text'] ) )

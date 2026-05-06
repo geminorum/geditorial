@@ -167,6 +167,12 @@ class Attachments extends gEditorial\Module
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( 'edit' === $screen->base
@@ -446,7 +452,7 @@ class Attachments extends gEditorial\Module
 
 	public function tweaks_column_attr( $post, $before, $after )
 	{
-		if ( ! current_user_can( 'edit_post', $post->ID ) )
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
 
 		$this->_render_summary_row( $post, $before, $after );

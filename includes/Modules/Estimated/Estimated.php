@@ -115,6 +115,12 @@ class Estimated extends gEditorial\Module
 		$this->coreadmin__hook_tweaks_column_attr( $posttype, 40 );
 	}
 
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	public function current_screen( $screen )
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {

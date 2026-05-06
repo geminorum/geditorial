@@ -139,7 +139,7 @@ trait O2OMetaBox
 				if ( ! $this->nonce_verify( 'o2obox', NULL, $type->name ) )
 					return;
 
-				if ( ! current_user_can( 'edit_post', $post->ID ) )
+				if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 					return;
 
 				$request = $this->classs( $type->name );

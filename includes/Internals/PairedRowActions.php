@@ -30,21 +30,27 @@ trait PairedRowActions
 		$key   = self::und( 'paired', 'add_new', $paired_posttype );
 
 		add_filter( 'gnetwork_taxonomy_bulk_actions',
-			static function ( $actions, $taxonomy ) use ( $taxonomy_origin, $key, $label ) {
+			static function ( $actions, $taxonomy )
+				use ( $taxonomy_origin, $key, $label ) {
+
 				return $taxonomy === $taxonomy_origin
 					? array_merge( $actions, [ $key => $label ] )
 					: $actions;
 			}, 20, 2 );
 
 		add_filter( 'gnetwork_taxonomy_bulk_input',
-			function ( $callback, $action, $taxonomy ) use ( $taxonomy_origin, $key ) {
+			function ( $callback, $action, $taxonomy )
+				use ( $taxonomy_origin, $key ) {
+
 				return ( $taxonomy === $taxonomy_origin && $action === $key )
 					? [ $this, 'paired_bulk_input_add_new_item' ]
 					: $callback;
 			}, 20, 3 );
 
 		add_filter( 'gnetwork_taxonomy_bulk_callback',
-			function ( $callback, $action, $taxonomy ) use ( $taxonomy_origin, $key ) {
+			function ( $callback, $action, $taxonomy )
+				use ( $taxonomy_origin, $key ) {
+
 				return ( $taxonomy === $taxonomy_origin && $action === $key )
 					? [ $this, 'paired_bulk_action_add_new_item' ]
 					: $callback;
@@ -294,7 +300,7 @@ trait PairedRowActions
 
 				foreach ( $post_ids as $post_id ) {
 
-					if ( ! current_user_can( 'edit_post', (int) $post_id ) )
+					if ( ! WordPress\Post::can( (int) $post_id, 'edit_post' ) )
 						continue;
 
 					$result = wp_set_object_terms( (int) $post_id, NULL, $paired );
