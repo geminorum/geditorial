@@ -91,9 +91,10 @@ class Importer extends gEditorial\Module
 			'metakey_mapping_data'  => '_importer_source_map',
 			'metakey_source_column' => '_importer_source_id_key',
 			'metakey_source_postid' => '_importer_source_postid',
-			'metakey_source_data'   => '_import_source_data',
-			'metakey_prepared_data' => '_import_prepared_data',
-			'metakey_attach_id'     => '_import_attachment_id',
+			'metakey_source_log'    => '_imported_source_log',
+			// 'metakey_source_data'   => '_import_source_data',       // DEPRECATED
+			// 'metakey_prepared_data' => '_import_prepared_data',     // DEPRECATED
+			// 'metakey_attach_id'     => '_import_attachment_id',     // DEPRECATED
 			'metakey_source_id'     => 'import_source_id',
 			'term_newpost_imported' => 'imported',
 		];
@@ -1603,10 +1604,29 @@ class Importer extends gEditorial\Module
 			return;
 
 		if ( $this->get_setting( 'store_source_data' ) ) {
-			$suffix = '_'.current_time( 'Ymd-His', TRUE );
-			add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ).$suffix , $atts['raw'] );
-			add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ).$suffix, $atts['prepared'] );
-			add_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ).$suffix, $atts['attach_id'] );
+
+			// $suffix = sprintf( '_%s', current_time( 'Ymd-His', TRUE ) );
+
+			// add_post_meta( $post->ID, $this->constant( 'metakey_source_data' ).$suffix , $atts['raw'] );
+			// add_post_meta( $post->ID, $this->constant( 'metakey_prepared_data' ).$suffix, $atts['prepared'] );
+			// add_post_meta( $post->ID, $this->constant( 'metakey_attach_id' ).$suffix, $atts['attach_id'] );
+
+			add_metadata( 'post',
+				$post->ID,
+				self::und(
+					$this->constant( 'metakey_source_log' ),
+					current_time( 'YmdHis', TRUE )
+				),
+				[
+					'datetime'     => current_time( 'mysql' ),
+					'updated'      => $atts['updated'],
+					'prepared'     => $atts['prepared'],
+					'raw'          => $atts['raw'],
+					'attach_id'    => $atts['attach_id'],
+					'current_user' => get_current_user_id(),
+				],
+				TRUE
+			);
 		}
 
 		if ( $this->get_setting( 'add_audit_attribute' ) )
@@ -1778,13 +1798,17 @@ class Importer extends gEditorial\Module
 	private function _get_metakeys()
 	{
 		return Core\Arraay::prepString( $this->constants( [
-			'metakey_source_data',
-			'metakey_prepared_data',
-			'metakey_attach_id',
+			'metakey_source_log',
+			// 'metakey_source_data'  ,  // DEPRECATED
+			// 'metakey_prepared_data',  // DEPRECATED
+			// 'metakey_attach_id'    ,  // DEPRECATED
 		] ), [
 			// OLD KEYS: DEPRECATED
 			'_importer_source_data',
 			'_importer_attachment_id',
+			'_import_source_data',
+			'_import_prepared_data',
+			'_import_attachment_id',
 		] );
 	}
 
