@@ -66,7 +66,7 @@ class TermHierarchy extends gEditorial\Service
 
 				foreach ( $taxonomies as $taxonomy ) {
 
-					echo '<div class="hidden '.static::BASE.'-singleselect-value-'.$taxonomy->name.'">';
+					echo '<div class="hidden '.self::dsh( static::BASE, 'singleselect', 'value', $taxonomy->name ).'">';
 
 					if ( $term = self::getSingleSelectTerm( $taxonomy, get_the_terms( $post, $taxonomy->name ) ) )
 						echo $taxonomy->hierarchical ? $term->term_id : $term->slug;
@@ -109,8 +109,10 @@ class TermHierarchy extends gEditorial\Service
 					if ( ! in_array( $taxonomy, $list, TRUE ) )
 						continue;
 
+					$filtered = array_filter( $terms );
+
 					// skip `0`
-					if ( ! $single = reset( array_filter( $terms ) ) )
+					if ( ! $single = reset( $filtered ) )
 						continue;
 
 					if ( $taxonomies[$taxonomy]->hierarchical )
@@ -153,7 +155,7 @@ class TermHierarchy extends gEditorial\Service
 				'id'                => self::dsh( static::BASE, 'singleselect', $bulkedit ? 'bulkedit' : 'quickedit', $taxonomy->name ),
 				'option_none_value' => '0',
 				'show_option_none'  => CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
-				'class'             => static::BASE.'-admin-dropbown '.( $bulkedit ? '-bulkedit-custombox' : '-quickedit-custombox' ),
+				'class'             => self::dsh( static::BASE, 'admin', 'dropbown' ).( $bulkedit ? ' -bulkedit-custombox' : ' -quickedit-custombox' ),
 				'show_count'        => FALSE,
 				'hide_empty'        => FALSE,
 				'hide_if_empty'     => TRUE,

@@ -24,6 +24,11 @@ class Module extends WordPress\Module
 	use Internals\ShortCodes;
 	use Internals\Strings;
 
+	/**
+	 * Holds the current module setup information.
+	 *
+	 * @var object
+	 */
 	public $module;
 	public $options;
 	public $settings;
@@ -45,9 +50,9 @@ class Module extends WordPress\Module
 	protected $priority_template_redirect = 10;
 	protected $priority_template_include  = 10;
 
-	protected $screens   = []; // screen-id by context/constant
-	protected $positions = []; // menu positions by context/constant
-	protected $deafults  = []; // default settings
+	protected $screens   = [];  // screen-id by context/constant
+	protected $positions = [];  // menu positions by context/constant
+	protected $deafults  = [];  // default settings
 
 	protected $constants = [];
 	protected $strings   = [];
@@ -58,9 +63,9 @@ class Module extends WordPress\Module
 	protected $partials_remote  = [];
 	protected $process_disabled = [];
 
-	protected $disable_no_customs    = FALSE; // Avoids hooking module if has no post-types/taxonomies
-	protected $disable_no_posttypes  = FALSE; // Avoids hooking module if has no post-types
-	protected $disable_no_taxonomies = FALSE; // Avoids hooking module if has no taxonomies
+	protected $disable_no_customs    = FALSE;  // Avoids hooking up the module if has no post-types/taxonomies
+	protected $disable_no_posttypes  = FALSE;  // Avoids hooking up the module if has no post-types
+	protected $disable_no_taxonomies = FALSE;  // Avoids hooking up the module if has no taxonomies
 
 	protected $keep_posttypes  = [];  // keeps from excludes
 	protected $keep_taxonomies = [];  // keeps from excludes
@@ -91,13 +96,20 @@ class Module extends WordPress\Module
 		// 'paired_delete' => 'manage_options', // to restrict main post
 	];
 
-	protected $root_key = FALSE; // ROOT CONSTANT
-	protected $_p2p     = FALSE; // P2P ENABLED/Connection Type
-	protected $_o2o     = FALSE; // O2O ENABLED/Connection Type
-	protected $_paired  = FALSE; // PAIRED API ENABLED/taxonomy paired
+	protected $root_key = FALSE;  // ROOT CONSTANT
+	protected $_p2p     = FALSE;  // P2P ENABLED/Connection Type
+	protected $_o2o     = FALSE;  // O2O ENABLED/Connection Type
+	protected $_paired  = FALSE;  // PAIRED API ENABLED/taxonomy paired
 
 	protected $scripts_printed = FALSE;
-	protected $current_queried = NULL; // usually contains `get_queried_object_id()`
+
+	/**
+	 * Holds the current queried data.
+	 * usually contains `get_queried_object_id()`
+	 *
+	 * @var mixed
+	 */
+	protected $current_queried = NULL;
 
 	protected $default_link_context = 'reports'; // default context for module link
 

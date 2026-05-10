@@ -152,7 +152,6 @@ class Tabloid extends gEditorial\Module
 			),
 			'text'         => $text,
 			'icon'         => $icon,
-			'target'       => 'post',
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
@@ -178,7 +177,6 @@ class Tabloid extends gEditorial\Module
 				Services\CustomTaxonomy::getLabel( $term, 'singular_name' )
 			),
 			'text'         => $text,
-			'target'       => 'term',
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',

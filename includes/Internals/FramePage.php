@@ -10,6 +10,14 @@ use geminorum\gEditorial\WordPress;
 trait FramePage
 {
 
+	/**
+	 * Retrieves the main-link URL for the context.
+	 *
+	 * @param int $linked
+	 * @param string $target
+	 * @param string $context
+	 * @return string
+	 */
 	public function framepage_get_mainlink_url( $linked, $target = NULL, $context = NULL )
 	{
 		return $this->get_adminpage_url( TRUE, [
@@ -29,7 +37,7 @@ trait FramePage
 			'link_context' => 'framepage',
 			'refkey'       => 'linked',
 			'posttype'     => $post->post_type,
-			'target'       => 'none',
+			'target'       => 'post',
 			'refresh'      => FALSE,              // refresh data prop
 			'route'        => NULL,               // refresh rest route
 			'pot'          => NULL,               // refresh HTML target
@@ -94,7 +102,7 @@ trait FramePage
 			'link_context' => 'framepage',
 			'refkey'       => 'linked',
 			'taxonomy'     => $term->taxonomy,
-			'target'       => 'none',
+			'target'       => 'term',
 			'maxwidth'     => '95%',
 			'maxheight'    => '640',
 			'link'         => NULL,

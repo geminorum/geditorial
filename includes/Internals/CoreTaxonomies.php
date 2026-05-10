@@ -188,8 +188,9 @@ trait CoreTaxonomies
 				case 'custom_icon':
 
 					/**
-					 * NOTE: `menu_icon` here is `gEditorial` prop, WordPress has no icon support for taxonomies.
-					 * NOTE: following is from `register_post_type()` docs:
+					 * NOTE: `menu_icon` here is `gEditorial` prop.
+					 * WordPress has no icon support for taxonomies.
+					 * The following is from `register_post_type()` docs:
 					 *
 					 * The URL to the icon to be used for this menu. Pass a
 					 * `base64-encoded` SVG using a data URI, which will be

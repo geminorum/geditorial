@@ -1358,7 +1358,11 @@ trait PostTypeFields
 
 	public function attribute_get_callback_posttypefields( $params, $attr, $request, $object_type )
 	{
-		return $this->get_posttype_fields_data( (int) $params['id'], FALSE, 'rest' );
+		return $this->get_posttype_fields_data(
+			(int) $params['id'],
+			FALSE,
+			$request['context'] ?? 'rest'
+		);
 	}
 
 	/**

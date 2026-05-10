@@ -81,7 +81,7 @@ class MetaBox extends WordPress\Main
 			'include'           => $terms ?? [],
 			'order'             => $reversed ? 'DESC' : 'ASC',
 			'orderby'           => $reversed ?: 'id',
-			'show_option_none'  => $args['none'] ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_all' ),
+			'show_option_none'  => $args['none'] ?? Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 			'option_none_value' => '0',
 			'show_count'        => FALSE,
 			'hide_empty'        => FALSE,
@@ -90,7 +90,7 @@ class MetaBox extends WordPress\Main
 			'title_with_parent' => $args['with_parent'] ?? $taxonomy->hierarchical,
 			'restricted'        => $args['restricted'],
 			'walker'            => new Misc\WalkerCategoryDropdown(),
-			'class'             => static::BASE.'-admin-dropbown -dropdown-with-reset',
+			'class'             => self::dsh( static::BASE, 'admin', 'dropbown' ).' -dropdown-with-reset',
 			'echo'              => FALSE,
 			'disabled'          => ! current_user_can( $taxonomy->cap->assign_terms ),
 		];
@@ -641,7 +641,7 @@ class MetaBox extends WordPress\Main
 			'selected'         => $selected,
 			'name'             => ( $prefix ? $prefix.'-' : '' ).$posttype.'[]',
 			'id'               => ( $prefix ? $prefix.'-' : '' ).$posttype.'-'.( $selected ? $selected : '0' ),
-			'class'            => static::BASE.'-admin-dropbown',
+			'class'            => self::dsh( static::BASE, 'admin', 'dropbown' ),
 			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order',
 			'sort_order'       => 'desc',
@@ -702,7 +702,7 @@ class MetaBox extends WordPress\Main
 
 		$html = Listtable::restrictByAuthor( $selected, 'post_author_override', [
 			'echo'            => FALSE,
-			'class'           => static::BASE.'-admin-dropbown',
+			'class'           => self::dsh( static::BASE, 'admin', 'dropbown' ),
 			'show_option_all' => '',
 		] );
 
@@ -727,8 +727,8 @@ class MetaBox extends WordPress\Main
 		$args = [
 			'post_type'         => $posttype,
 			'selected'          => $post->post_parent,
-			'name'              => is_null( $name ) ? 'parent_id' : $name,
-			'class'             => static::BASE.'-admin-dropbown',
+			'name'              => $name ?? 'parent_id',
+			'class'             => self::dsh( static::BASE, 'admin', 'dropbown' ),
 			'show_option_none'  => Services\CustomPostType::getLabel( $object, 'show_option_parent' ),
 			'sort_column'       => 'menu_order, post_title',
 			'sort_order'        => 'desc',
@@ -812,9 +812,9 @@ class MetaBox extends WordPress\Main
 			'selected'          => $selected,
 			'show_option_none'  => Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_select' ),
 			'option_none_value' => '0',
-			'class'             => static::BASE.'-admin-dropbown',
+			'class'             => self::dsh( static::BASE, 'admin', 'dropbown' ),
+			'id'                => self::dsh( static::BASE, $taxonomy ),
 			'name'              => 'tax_input['.$taxonomy.'][]',
-			'id'                => static::BASE.'-'.$taxonomy,
 			// 'name'              => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
 			// 'id'                => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
 			'hierarchical'      => $obj->hierarchical,

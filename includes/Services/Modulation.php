@@ -14,18 +14,26 @@ class Modulation extends gEditorial\Service
 		'unknown',
 	];
 
-	public static function moduleObject( $args, $folder = FALSE, $class = NULL )
+	/**
+	 * Retrieves the module setup object for given arguments.
+	 *
+	 * @param array $arguments
+	 * @param string|bool $folder
+	 * @param string $class
+	 * @return false|object
+	 */
+	public static function moduleObject( $arguments, $folder = FALSE, $class = NULL )
 	{
-		if ( FALSE === $args )
+		if ( FALSE === $arguments )
 			return FALSE;
 
-		if ( ! isset( $args['name'], $args['title'] ) )
+		if ( ! isset( $arguments['name'], $arguments['title'] ) )
 			return FALSE;
 
 		$defaults = [
 			'folder'     => $folder,
-			'class'      => $class ?: self::moduleClass( $args['name'], FALSE ),
-			'textdomain' => self::dsh( static::BASE, Core\Text::sanitizeBase( $args['name'] ) ),   // or `NULL` for plugin base
+			'class'      => $class ?: self::moduleClass( $arguments['name'], FALSE ),
+			'textdomain' => self::dsh( static::BASE, Core\Text::sanitizeBase( $arguments['name'] ) ),   // or `NULL` for plugin base
 
 			'icon'      => 'screenoptions',   // `dashicons` class / SVG icon array
 			'configure' => TRUE,              // or `settings`, `tools`, `reports`, `imports`, `customs`, `FALSE` to disable
@@ -38,8 +46,8 @@ class Modulation extends gEditorial\Service
 		];
 
 		return [
-			$args['name'],
-			(object) array_merge( $defaults, $args ),
+			$arguments['name'],
+			(object) array_merge( $defaults, $arguments ),
 		];
 	}
 

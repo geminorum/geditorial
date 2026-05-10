@@ -181,7 +181,7 @@ SQL;
 		$query_var = WordPress\Taxonomy::queryVar( $object );
 		$selected  = $_GET[$query_var] ?? '';
 
-		// if selected is term_id instead of term slug
+		// If selected is `term_id` instead of term `slug`
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
 
 			if ( $term = get_term_by( 'id', $selected, $taxonomy ) )

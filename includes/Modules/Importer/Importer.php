@@ -1055,6 +1055,7 @@ class Importer extends gEditorial\Module
 							'map'        => $field_map,
 							'source_id'  => $source_id,
 							'attach_id'  => $attach_id,
+							'user_id'    => $user_id,
 							'terms_all'  => $terms_all,
 							'extra_all'  => $extra_all,
 							'taxonomies' => $taxonomies,
@@ -1576,9 +1577,9 @@ class Importer extends gEditorial\Module
 			if ( $field !== self::und( $this->key, 'tax', $taxonomy ) )
 				continue;
 
-			if ( in_array( $value, [ 'true', 'TRUE', 'True', '1' ], TRUE ) ) {
+			if ( WordPress\Strings::isTruthy( $value ) ) {
 
-				// Translates truthy value to the default term for taxonomy
+				// Translates truthy value to the default term for taxonomy.
 				if ( $default_term = WordPress\Taxonomy::getDefaultTermID( $taxonomy ) )
 					return (array) WordPress\Term::title(
 						(int) $default_term,
@@ -1690,7 +1691,7 @@ class Importer extends gEditorial\Module
 	{
 		unset( $data['ID'] );
 
-		return empty( array_filter( $data ) );
+		return self::empty( $data );
 	}
 
 	private function _set_terms_for_post( $post_id, $taxonomies, $source_id = NULL, $oldpost = FALSE, $override = TRUE, $append = TRUE )

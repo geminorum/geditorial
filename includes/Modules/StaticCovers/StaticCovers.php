@@ -1020,7 +1020,6 @@ class StaticCovers extends gEditorial\Module
 			return FALSE;
 
 		$link = $this->framepage_get_mainlink_for_post( $post, [
-			'target'       => 'post',
 			'context'      => 'headerbutton',
 			'link_context' => 'secondary',
 			'maxwidth'     => '920px',
@@ -1045,7 +1044,6 @@ class StaticCovers extends gEditorial\Module
 			return FALSE;
 
 		$link = $this->framepage_get_mainlink_for_post( $post, [
-			'target'       => 'post',
 			'context'      => 'headerbutton',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
@@ -1070,7 +1068,6 @@ class StaticCovers extends gEditorial\Module
 			return FALSE;
 
 		$link = $this->framepage_get_mainlink_for_term( $term, [
-			'target'       => 'term',
 			'context'      => 'headerbutton',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',

@@ -845,7 +845,7 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return gEditorial\Info::lookupPlate( trim( $raw ) );
+				return gEditorial\Info::lookupVIN( trim( $raw ) );
 
 			case 'plate':
 
