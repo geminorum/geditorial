@@ -18,7 +18,7 @@ class Audit extends gEditorial\Module
 	use Internals\CoreRowActions;
 	use Internals\DashboardSummary;
 	use Internals\FramePage;
-	use Internals\ViewEngines;
+	use Internals\FramePageViews;
 
 	protected $disable_no_posttypes   = TRUE;
 	protected $priority_adminbar_init = 8;
@@ -424,13 +424,7 @@ class Audit extends gEditorial\Module
 
 	protected function render_overview_content()
 	{
-		if ( ! $linked = self::req( 'linked' ) )
-			return gEditorial\Info::renderNoPostsAvailable();
-
-		if ( ! $post = WordPress\Post::get( $linked ) )
-			return gEditorial\Info::renderNoPostsAvailable();
-
-		$this->_render_view_for_post( $post, 'overview' );
+		$this->framepageviews__render_context_content( 'overview' );
 	}
 
 	public function rowactions_bulk_actions( $actions )
@@ -630,36 +624,10 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function _render_view_for_post( $post, $context )
+	protected function framepageviews__prep_data_for_post( $data, $post, $context )
 	{
-		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
-			return gEditorial\Info::renderSomethingIsWrong();
-
-		$data = $this->_get_view_data_for_post( $post, $context );
-
-		echo $this->wrap_open( '-view -'.$context );
-			$this->actions( 'render_view_post_before', $post, $context, $data, $view );
-			$this->viewengine__render( $view, $data );
-			$this->actions( 'render_view_post_after', $post, $context, $data, $view );
-		echo '</div>';
-
-		// $this->_print_script( $post, $context, $data );
-
-		echo $this->wrap_open( '-debug -debug-data', TRUE, $this->classs( 'raw' ), TRUE );
-			Core\HTML::tableSide( $data );
-		echo '</div>';
-	}
-
-	private function _get_view_data_for_post( $post, $context )
-	{
-		$data = [];
-
 		if ( $post_route = WordPress\Post::getRestRoute( $post ) )
 			$data['post'] = WordPress\Rest::doInternalRequest( $post_route, [ 'context' => 'view' ] );
-
-		// fallback if `title` is not supported by the posttype
-		if ( empty( $data['post']['title'] ) )
-			$data['post']['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
 
 		if ( $terms_route = WordPress\Taxonomy::getRestRoute( $this->constant( 'main_taxonomy' ) ) )
 			$data['terms'] = WordPress\Rest::doInternalRequest( $terms_route, [ 'post' => $post->ID, 'context' => 'view' ] );
@@ -668,11 +636,7 @@ class Audit extends gEditorial\Module
 			unset( $term['_links'] );
 		}
 
-		$data['__direction']  = Core\HTML::dir();
-		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
-		// $data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
-
-		return $this->filters( 'view_data_for_post', $data, $post, $context );
+		return $data;
 	}
 
 	protected function raise_resources( $count = 1, $per = 60, $context = NULL )

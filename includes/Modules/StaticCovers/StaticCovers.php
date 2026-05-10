@@ -12,8 +12,8 @@ class StaticCovers extends gEditorial\Module
 {
 	use Internals\AdminPage;
 	use Internals\FramePage;
+	use Internals\FramePageViews;
 	use Internals\MetaBoxSupported;
-	use Internals\ViewEngines;
 
 	public static function module()
 	{
@@ -357,43 +357,11 @@ class StaticCovers extends gEditorial\Module
 
 	protected function render_mainpage_content( $sub, $uri, $context, $subs )
 	{
-		if ( 'term' == self::req( 'target', 'post' ) ) {
-
-			if ( ! $term = WordPress\Term::get( self::req( 'linked', FALSE ) ) )
-				return gEditorial\Info::renderNoTermsAvailable();
-
-			$this->_render_view_for_term( $term, $context );
-
-		} else {
-
-			if ( ! $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) )
-				return gEditorial\Info::renderNoPostsAvailable();
-
-			$this->_render_view_for_post( $post, $context );
-		}
+		$this->framepageviews__render_context_content( $context );
 	}
 
-	private function _render_view_for_term( $term, $context )
+	protected function framepageviews__prep_data_for_term( $data, $term, $context )
 	{
-		if ( ! $view = $this->viewengine__view_by_term( $term, $context ) )
-			return gEditorial\Info::renderSomethingIsWrong();
-
-		$data = $this->_get_view_data_for_term( $term, $context );
-
-		echo $this->wrap_open( '-view -'.$context );
-			$this->actions( 'render_view_term_before', $term, $context, $data, $view );
-			$this->viewengine__render( $view, $data );
-			$this->actions( 'render_view_term_after', $term, $context, $data, $view );
-		echo '</div>';
-	}
-
-	private function _get_view_data_for_term( $term, $context )
-	{
-		$data = [];
-
-		if ( $response = Services\RestAPI::getTermResponse( $term, 'view' ) )
-			$data = $response;
-
 		foreach ( (array) $this->_get_taxonomy_images( $term ) as $image )
 			$data['covers'][] = [
 				'url'      => $image,
@@ -401,8 +369,7 @@ class StaticCovers extends gEditorial\Module
 				'headers'  => @get_headers( $image, TRUE ),
 			];
 
-		$data['__direction'] = Core\HTML::dir();
-		$data['___hooks']    = array_fill_keys( [
+		$data['___hooks'] = array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -412,38 +379,11 @@ class StaticCovers extends gEditorial\Module
 			'after-content',
 		], '' );
 
-		return $this->filters( 'view_data_for_term', $data, $term, $context );
+		return $data;
 	}
 
-	private function _render_view_for_post( $post, $context )
+	protected function framepageviews__prep_data_for_post( $data, $post, $context )
 	{
-		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
-			return gEditorial\Info::renderSomethingIsWrong();
-
-		$data = $this->_get_view_data_for_post( $post, $context );
-
-		echo $this->wrap_open( '-view -'.$context );
-			$this->actions( 'render_view_post_before', $post, $context, $data, $view );
-			$this->viewengine__render( $view, $data );
-			$this->actions( 'render_view_post_after', $post, $context, $data, $view );
-		echo '</div>';
-	}
-
-	private function _get_view_data_for_post( $post, $context )
-	{
-		$data = [];
-
-		if ( $response = Services\RestAPI::getPostResponse( $post, 'view' ) )
-			$data = $response;
-
-		// fallback if `title` is not supported by the post-type
-		if ( empty( $data['title'] ) )
-			$data['title'] = [ 'rendered' => WordPress\Post::title( $post ) ];
-
-		// strip the generated excerpt
-		if ( empty( $data['excerpt']['raw'] ) )
-			$data['excerpt']['rendered'] = '';
-
 		switch ( $context ) {
 
 			case 'secondary':
@@ -469,10 +409,8 @@ class StaticCovers extends gEditorial\Module
 					];
 		}
 
-		$data['i18n']        = $this->get_strings( 'post', 'i18n' );
-		$data['__direction'] = Core\HTML::dir();
-		$data['__summaries'] = $this->filters( 'post_summaries', [], $data, $post, $context );
-		$data['___hooks']    = array_fill_keys( [
+		$data['i18n']     = $this->get_strings( 'post', 'i18n' );
+		$data['___hooks'] = array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -482,7 +420,7 @@ class StaticCovers extends gEditorial\Module
 			'after-content',
 		], '' );
 
-		return $this->filters( 'view_data_for_post', $data, $post, $context );
+		return $data;
 	}
 
 	// TODO: link to `framepage`
