@@ -1,0 +1,10 @@
+# https://phpstan.org/config-reference
+
+parameters:
+	level: 6
+	paths:
+#		- includes
+		- geditorial.php
+
+	excludePaths:
+		- **/.temp

@@ -102,7 +102,7 @@ function moduleData (name, template, widget) {
     : {});
 }
 
-task('dev:newwidget', function (done) {
+task('dev:new:widget', function (done) {
   if (!('name' in args)) {
     log.error('Error: missing required name for the module: `--name ModuleName`');
     return done();
@@ -146,7 +146,7 @@ task('dev:newwidget', function (done) {
   }
 });
 
-task('dev:newmodule', function (done) {
+task('dev:new:module', function (done) {
   if (!('name' in args)) {
     log.error('Error: missing required name for the module: `--name NewModule`');
     return done();

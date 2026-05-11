@@ -43,7 +43,43 @@ const getQuery = (name, url) => {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 };
 
+/**
+ * @source https://stackoverflow.com/a/5717133
+ *
+ * @param {String} input
+ * @returns {Bool}
+ */
+const isValid = (input) => {
+  const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR IPv4 address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+  return !!pattern.test(input);
+};
+
+/**
+ * @source https://stackoverflow.com/a/43467144
+ *
+ * @param {String} input
+ * @returns {Bool}
+ */
+const isValidHTTP = (input) => {
+  let url;
+
+  try {
+    url = new URL(input);
+  } catch (_) {
+    return false;
+  }
+
+  return url.protocol === 'http:' || url.protocol === 'https:';
+};
+
 export {
+  isValid,
+  isValidHTTP,
   getQuery,
   sanitize,
   SAFE_URL_PATTERN
