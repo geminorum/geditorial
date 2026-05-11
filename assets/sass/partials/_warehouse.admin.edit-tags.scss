@@ -5,7 +5,7 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-body.geditorial-warehouse-enabled {
+body.#{$plugin}-warehouse-enabled {
   .inline-edit-col {
     input[name="name"] {
       /* rtl:ignore */
@@ -32,11 +32,11 @@ body.geditorial-warehouse-enabled {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-th.column-geditorial-warehouse-partials {
+th.column-#{$plugin}-warehouse-partials {
   width: 125px;
 }
 
-td.column-geditorial-warehouse-partials {
+td.column-#{$plugin}-warehouse-partials {
   padding: 4px 5px;
 
   table {
@@ -69,7 +69,7 @@ td.column-geditorial-warehouse-partials {
   }
 }
 
-th.column-geditorial-warehouse-reference {
+th.column-#{$plugin}-warehouse-reference {
   width: 22px;
   // padding-left: 2px !important;
   // padding-right: 2px !important;
@@ -79,7 +79,7 @@ th.column-geditorial-warehouse-reference {
   }
 }
 
-td.column-geditorial-warehouse-reference {
+td.column-#{$plugin}-warehouse-reference {
   span[data-icon] {
     // cursor: help;
   }

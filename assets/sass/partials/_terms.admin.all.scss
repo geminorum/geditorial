@@ -14,36 +14,37 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-body.geditorial-terms-enabled {
+body.#{$plugin}-terms-enabled {
   @include plugin-listtable-column-icon("posts", "\f157");
-  @include plugin-listtable-column-icon("order", "\f156", "column-geditorial-terms"); // `dashicons-sort`
-  @include plugin-listtable-column-icon("code", "\f475", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("min", "\f347", "column-geditorial-terms");  // `dashicons-arrow-down-alt2`
-  @include plugin-listtable-column-icon("max", "\f343", "column-geditorial-terms");  // `dashicons-arrow-up-alt2`
-  @include plugin-listtable-column-icon("viewable", "\f177", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("arrow", "\f545", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("barcode", "\f212", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("contact", "\f525", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("venue", "\f231", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("label", "\f323", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("color", "\f131", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("user", "\f110", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("author", "\f110", "column-geditorial-terms");
-  @include plugin-listtable-column-icon("latlng", "\f11f", "column-geditorial-terms");     // `dashicons-admin-site-alt3`
-  @include plugin-listtable-column-icon("source", "\f504", "column-geditorial-terms");     // `dashicons-external`
-  @include plugin-listtable-column-icon("embed", "\f13f", "column-geditorial-terms");      // `dashicons-embed-generic`
-  @include plugin-listtable-column-icon("url", "\f103", "column-geditorial-terms");        // `dashicons-admin-links`
-  @include plugin-listtable-column-icon("born", "\f517", "column-geditorial-terms");       // `dashicons-controls-skipforward`
-  @include plugin-listtable-column-icon("dead", "\f516", "column-geditorial-terms");       // `dashicons-controls-skipback`
-  @include plugin-listtable-column-icon("establish", "\f12a", "column-geditorial-terms");  // `dashicons-yes-alt`
-  @include plugin-listtable-column-icon("abolish", "\f153", "column-geditorial-terms");    // `dashicons-dismiss`
+  @include plugin-listtable-column-icon("order", "\f156", "column-#{$plugin}-terms"); // `dashicons-sort`
+  @include plugin-listtable-column-icon("code", "\f475", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("min", "\f347", "column-#{$plugin}-terms");  // `dashicons-arrow-down-alt2`
+  @include plugin-listtable-column-icon("max", "\f343", "column-#{$plugin}-terms");  // `dashicons-arrow-up-alt2`
+  @include plugin-listtable-column-icon("viewable", "\f177", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("arrow", "\f545", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("barcode", "\f212", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("contact", "\f525", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("venue", "\f231", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("label", "\f323", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("color", "\f131", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("border", "\f131", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("user", "\f110", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("author", "\f110", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("latlng", "\f11f", "column-#{$plugin}-terms");     // `dashicons-admin-site-alt3`
+  @include plugin-listtable-column-icon("source", "\f504", "column-#{$plugin}-terms");     // `dashicons-external`
+  @include plugin-listtable-column-icon("embed", "\f13f", "column-#{$plugin}-terms");      // `dashicons-embed-generic`
+  @include plugin-listtable-column-icon("url", "\f103", "column-#{$plugin}-terms");        // `dashicons-admin-links`
+  @include plugin-listtable-column-icon("born", "\f517", "column-#{$plugin}-terms");       // `dashicons-controls-skipforward`
+  @include plugin-listtable-column-icon("dead", "\f516", "column-#{$plugin}-terms");       // `dashicons-controls-skipback`
+  @include plugin-listtable-column-icon("establish", "\f12a", "column-#{$plugin}-terms");  // `dashicons-yes-alt`
+  @include plugin-listtable-column-icon("abolish", "\f153", "column-#{$plugin}-terms");    // `dashicons-dismiss`
 
   .wp-list-table.tags {
     .column-slug {
       width: 15%;
     }
 
-    th.column-geditorial-terms-image {
+    th.column-#{$plugin}-terms-image {
       span.-column-icon {
         margin: 0 auto;
 
@@ -53,24 +54,24 @@ body.geditorial-terms-enabled {
       }
     }
 
-    th.column-geditorial-terms-dateend,
-    th.column-geditorial-terms-datestart,
-    th.column-geditorial-terms-datetime,
-    th.column-geditorial-terms-date {
+    th.column-#{$plugin}-terms-dateend,
+    th.column-#{$plugin}-terms-datestart,
+    th.column-#{$plugin}-terms-datetime,
+    th.column-#{$plugin}-terms-date {
       span.-column-icon::before {
         content: "\f508";
       }
     }
 
-    th.column-geditorial-terms-role,
-    th.column-geditorial-terms-roles {
+    th.column-#{$plugin}-terms-role,
+    th.column-#{$plugin}-terms-roles {
       span.-column-icon::before {
         content: "\f307";
       }
     }
 
-    th.column-geditorial-terms-posttype,
-    th.column-geditorial-terms-posttypes {
+    th.column-#{$plugin}-terms-posttype,
+    th.column-#{$plugin}-terms-posttypes {
       span.-column-icon::before {
         content: "\f109";
       }
@@ -85,42 +86,43 @@ body.geditorial-terms-enabled {
       }
     }
 
-    th.column-geditorial-terms-tagline {
+    th.column-#{$plugin}-terms-tagline {
       // avoid messing the table header
       white-space: nowrap;
       overflow-x: hidden;
     }
 
-    .column-geditorial-terms-author,
-    .column-geditorial-terms-role,
-    .column-geditorial-terms-posttype {
+    .column-#{$plugin}-terms-author,
+    .column-#{$plugin}-terms-role,
+    .column-#{$plugin}-terms-posttype {
       width: 80px;
     }
 
-    .column-geditorial-terms-roles,
-    .column-geditorial-terms-posttypes {
+    .column-#{$plugin}-terms-roles,
+    .column-#{$plugin}-terms-posttypes {
       width: 120px;
     }
 
-    .column-geditorial-terms-user,
-    .column-geditorial-terms-author,
-    .column-geditorial-terms-image,
-    .column-geditorial-terms-code {
+    .column-#{$plugin}-terms-user,
+    .column-#{$plugin}-terms-author,
+    .column-#{$plugin}-terms-image,
+    .column-#{$plugin}-terms-code {
       width: 55px;
     }
 
-    .column-geditorial-terms-min,
-    .column-geditorial-terms-max,
-    .column-geditorial-terms-order,
-    .column-geditorial-terms-color {
+    .column-#{$plugin}-terms-min,
+    .column-#{$plugin}-terms-max,
+    .column-#{$plugin}-terms-order,
+    .column-#{$plugin}-terms-border,
+    .column-#{$plugin}-terms-color {
       width: 54px;
     }
 
-    .column-geditorial-terms-latlng,
-    .column-geditorial-terms-contact,
-    .column-geditorial-terms-barcode,
-    .column-geditorial-terms-arrow,
-    .column-geditorial-terms-viewable {
+    .column-#{$plugin}-terms-latlng,
+    .column-#{$plugin}-terms-contact,
+    .column-#{$plugin}-terms-barcode,
+    .column-#{$plugin}-terms-arrow,
+    .column-#{$plugin}-terms-viewable {
       width: 22px;
 
       a:not(:hover) {
@@ -134,10 +136,10 @@ body.geditorial-terms-enabled {
       padding-right: 2px;
     }
 
-    td.column-geditorial-terms-viewable,
-    td.column-geditorial-terms-arrow,
-    td.column-geditorial-terms-barcode,
-    td.column-geditorial-terms-contact {
+    td.column-#{$plugin}-terms-viewable,
+    td.column-#{$plugin}-terms-arrow,
+    td.column-#{$plugin}-terms-barcode,
+    td.column-#{$plugin}-terms-contact {
       // > span.field-contact,
       // > span.field-contact a {
       > span.-field,
@@ -151,8 +153,8 @@ body.geditorial-terms-enabled {
         }
       }
 
-      .geditorial-icon svg,
-      .geditorial-icon img,
+      .#{$plugin}-icon svg,
+      .#{$plugin}-icon img,
       .dashicons {
         font-size: 18px;
         width: 18px;
@@ -161,9 +163,9 @@ body.geditorial-terms-enabled {
       }
     }
 
-    td.column-geditorial-terms-user,
-    td.column-geditorial-terms-author,
-    td.column-geditorial-terms-image {
+    td.column-#{$plugin}-terms-user,
+    td.column-#{$plugin}-terms-author,
+    td.column-#{$plugin}-terms-image {
 
       padding: 10px 0 0;
       text-align: center;
@@ -196,7 +198,8 @@ body.geditorial-terms-enabled {
       }
     }
 
-    td.column-geditorial-terms-color {
+    td.column-#{$plugin}-terms-border,
+    td.column-#{$plugin}-terms-color {
       padding: ($spacer * .35) ($spacer * .5);
       text-align: center;
     }
@@ -209,7 +212,7 @@ body.geditorial-terms-enabled {
       display: inline-block;
     }
 
-    i.field-color {
+    i.metatype-color {
       height: 25px;
       width: 25px;
       display: inline-block;
@@ -230,11 +233,11 @@ body.geditorial-terms-enabled {
   }
 }
 
-// img.geditorial-terms-image-img,
-// .column-geditorial-terms-image img
+// img.#{$plugin}-terms-image-img,
+// .column-#{$plugin}-terms-image img
 
 // on addtag/edittag
-#geditorial-terms-image-img {
+##{$plugin}-terms-image-img {
   max-height: 125px;
   max-width: 125px;
   height: auto;

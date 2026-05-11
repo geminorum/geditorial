@@ -5,7 +5,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// `#geditorial-{MODULE}-supportedbox {}`
+// `##{$plugin}-{MODULE}-supportedbox {}`
 @mixin plugin-subcontent-datagrid-metabox-id() {
   > .inside {
     margin-top: 0 !important;
@@ -58,6 +58,7 @@
 
     td > p {
       margin-top: 0;
+      font-size: inherit;
 
       &:last-of-type {
         margin-bottom: 0;

@@ -5,7 +5,7 @@
 
 // @import "../vendor/mediaelement_source_chooser";
 
-.-wrap.geditorial-tube-video {
+.-wrap.#{$plugin}-tube-video {
   margin: 1em 0;
 
   .-button {
@@ -19,7 +19,7 @@
     padding: 4px 3px 3px !important;
   }
 
-  .geditorial-icon {
+  .#{$plugin}-icon {
     width: 1.4em;
     height: 1.4em;
     vertical-align: middle;

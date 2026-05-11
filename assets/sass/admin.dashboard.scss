@@ -31,8 +31,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
-.postbox.geditorial-wrap.-admin-postbox-term-summary,
-.postbox.geditorial-wrap.-admin-postbox-dashboard-summary {
+.postbox.#{$plugin}-wrap.-admin-postbox-term-summary,
+.postbox.#{$plugin}-wrap.-admin-postbox-dashboard-summary {
   .inside {
     padding: 0;
   }

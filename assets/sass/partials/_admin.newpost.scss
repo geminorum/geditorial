@@ -7,7 +7,7 @@
 $spacer: 1rem !default;
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-wrap.-newpost-layout {
+.#{$plugin}-wrap.-newpost-layout {
   display: flex;
   padding: 0 $spacer * .5;
 

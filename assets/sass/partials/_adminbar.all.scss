@@ -14,7 +14,7 @@ $adminbar-maxwidth: 210px !default;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// General Node
-.geditorial-adminbar-node {
+.#{$plugin}-adminbar-node {
   @include theme-clearfix;
 
   &.-notice-pot {
@@ -62,7 +62,7 @@ $adminbar-maxwidth: 210px !default;
       position: relative;
       cursor: pointer;
 
-      > .geditorial-spinner {
+      > .#{$plugin}-spinner {
         margin: 0 auto !important;
         height: 100% !important;
         position: absolute;
@@ -85,7 +85,7 @@ $adminbar-maxwidth: 210px !default;
     &.-has-loading {
       > a.ab-item,
       > div.ab-empty-item {
-        > .geditorial-spinner { // spinner over icon
+        > .#{$plugin}-spinner { // spinner over icon
           right: auto;
           left: 10px;
         }
@@ -234,7 +234,7 @@ $adminbar-maxwidth: 210px !default;
     }
 
     // span.dashicons {}
-    span.geditorial-icon {
+    span.#{$plugin}-icon {
       // margin-top: -4px;
       // margin-left: -1px;
 
@@ -283,7 +283,7 @@ $adminbar-maxwidth: 210px !default;
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Icon-Only Node
-.geditorial-adminbar-node-icononly {
+.#{$plugin}-adminbar-node-icononly {
   .ab-icon { // may or not with `.dashicons`
     padding: 0 !important;
     margin: 6px -1px 6px 0 !important;
@@ -292,7 +292,7 @@ $adminbar-maxwidth: 210px !default;
   > a.ab-item,
   > div.ab-empty-item {
 
-    span.geditorial-icon {
+    span.#{$plugin}-icon {
       margin-top: -4px;
       height: 20px;
       width: 20px;

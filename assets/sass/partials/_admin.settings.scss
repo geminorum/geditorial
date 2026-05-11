@@ -8,7 +8,7 @@
 @use "sass:color";
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-admin-wrap {
+.#{$plugin}-admin-wrap {
   // #TB_window &,
   // body.iframe & {
   //   margin: 0 10px 0 12px;
@@ -79,7 +79,7 @@
       padding-right: 10px;
     }
 
-    .geditorial-icon svg {
+    .#{$plugin}-icon svg {
       width: 30px;
       height: 30px;
       padding-right: 10px;
@@ -111,7 +111,7 @@
   }
 }
 
-.geditorial-processing-wrap {
+.#{$plugin}-processing-wrap {
   margin: $spacer 0;
 
   ul {

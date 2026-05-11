@@ -4,7 +4,7 @@
 /// gEditorial Partials: Like Admin ALL ----------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-.wrap.geditorial-reports.sub-like {
+.wrap.#{$plugin}-reports.sub-like {
   table.base-table-list {
     .-column-total,
     .-column-users,

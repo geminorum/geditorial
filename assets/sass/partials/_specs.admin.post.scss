@@ -3,14 +3,14 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Specs: Admin Post --------------------------------------------------
 
-// .geditorial-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
-.geditorial-wrap.-admin-metabox.-specs {
+// .#{$plugin}-admin-wrap-metabox.-specs, // FIXME: DEPRECATED
+.#{$plugin}-wrap.-admin-metabox.-specs {
   margin: 11px 0 0 0;
   padding: 0;
   @include theme-box-sizing-reset;
 
-  // ol.geditorial-specs-list {} // FOR JQUERY SELECTOR
-  // ul.geditorial-specs-new {} // FOR JQUERY SELECTOR
+  // ol.#{$plugin}-specs-list {} // FOR JQUERY SELECTOR
+  // ul.#{$plugin}-specs-new {} // FOR JQUERY SELECTOR
 
   ol {
     list-style: none !important;

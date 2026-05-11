@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Comments: Admin Post -----------------------------------------------
 
-.geditorial-wrap.-admin-postbox.-comments-supportedbox {
+.#{$plugin}-wrap.-admin-postbox.-comments-supportedbox {
   .inside {
     margin: 0 !important;
     padding: 0;
@@ -73,7 +73,7 @@
   }
 
 
-  .geditorial-listtable {
+  .#{$plugin}-listtable {
 
     border: 0 none;
 

@@ -4,7 +4,7 @@
 /// Module: WC Purchased: Admin iFrame
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-admin-wrap.sub-wc_purchased {
+.#{$plugin}-admin-wrap.sub-wc_purchased {
   @include theme-gutter-reset;
   @include theme-box-sizing-reset;
 

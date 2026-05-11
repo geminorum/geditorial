@@ -29,19 +29,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-body.admin_page_geditorial-code-pond-signal,
-body.admin_page_geditorial-dead-drops-signal {
+body.admin_page_#{$plugin}-code-pond-signal,
+body.admin_page_#{$plugin}-dead-drops-signal {
   @include plugin-signalframe-body;
 }
 
-.wrap.geditorial-signal-code_pond,
-.wrap.geditorial-signal-dead_drops {
+.wrap.#{$plugin}-signal-code_pond,
+.wrap.#{$plugin}-signal-dead_drops {
   @include plugin-signalframe-wrap;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-admin-wrap {
+.#{$plugin}-admin-wrap {
   margin: 0 !important;
+
+  .#{$plugin}-wrap.-view {
+
+    // Module:  `Audit`/`Tabloid`/`Importer`
+    &.-overview {
+      margin: ($spacer * .5) auto 0;
+      padding: 0 ($spacer * .5);
+    }
+
+    // Module: `Dead Drops`/`Code Pond`
+    &.-signal {
+      margin: ($spacer * .5) auto 0;
+      padding: 0 ($spacer * .5);
+    }
+  }
 
   > p.-description.-empty {
     margin: ($spacer * 3) ($spacer * 2);
@@ -89,7 +104,7 @@ body.admin_page_geditorial-dead-drops-signal {
         }
       }
     }
-}
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -114,7 +129,8 @@ body.admin_page_geditorial-dead-drops-signal {
     }
 
     .dashicons {
-      vertical-align: middle;
+      // vertical-align: middle;
+      line-height: 1;
     }
   }
 }
@@ -419,6 +435,12 @@ body.admin_page_geditorial-dead-drops-signal {
 
   .-wrap.list-columns ul {
     columns: 2;
+  }
+
+  .-wrap.-title-actions {
+    .dashicons {
+      line-height: 1.9 !important;
+    }
   }
 }
 ////////////////////////////////////////////////////////////////////////////////

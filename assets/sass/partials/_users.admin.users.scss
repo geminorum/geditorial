@@ -6,11 +6,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 .wp-list-table {
-  th.column-geditorial-users-counts {
+  th.column-#{$plugin}-users-counts {
     width: 185px;
   }
 
-  td.column-geditorial-users-counts {
+  td.column-#{$plugin}-users-counts {
     padding-top: 4px;
 
     table {

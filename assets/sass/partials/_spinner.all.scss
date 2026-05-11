@@ -9,7 +9,7 @@ $spacer: 1rem !default;
 
 ////////////////////////////////////////////////////////////////////////////////
 // front only spinner
-.geditorial-spinner {
+.#{$plugin}-spinner {
 
   background: url(../images/spinner-adminbar.gif) center center no-repeat;
   background-size: 16px 16px;

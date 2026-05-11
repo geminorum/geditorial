@@ -7,19 +7,21 @@
 @use "sass:color";
 
 ////////////////////////////////////////////////////////////////////////////////
+$plugin: 'geditorial' !default;
+////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 $spacer: 1rem !default;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$base-size-font:     16px !default;
+$base-size-font    : 16px !default;
 $base-size-baseline: 16px !default;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$font-family-base:   "Droid Arabic Naskh", "Tahoma", "Iranian Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
-$font-family-head:   "Arial", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$font-family-base: "Droid Arabic Naskh", "Tahoma", "Iranian Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$font-family-head: "Arial", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", "Helvetica",  sans-serif !default;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$white:    #fff !default;
+$white   : #fff    !default;
 $gray-100: #f8f9fa !default;
 $gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
@@ -29,24 +31,24 @@ $gray-600: #6c757d !default;
 $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
-$black:    #000 !default;
+$black   : #000    !default;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$gray-base:          #000 !default;
-$gray-darker:        color.adjust($gray-base, $lightness: 13.5%) !default; // #222
-$gray-dark:          color.adjust($gray-base, $lightness: 20%) !default;   // #333
-$gray:               color.adjust($gray-base, $lightness: 33.5%) !default; // #555
-$gray-light:         color.adjust($gray-base, $lightness: 46.7%) !default; // #777
-$gray-lighter:       color.adjust($gray-base, $lightness: 93.5%) !default; // #eee
+$gray-base   : #000 !default;
+$gray-darker : color.adjust($gray-base, $lightness: 13.5%) !default;  // #222
+$gray-dark   : color.adjust($gray-base, $lightness: 20%)   !default;  // #333
+$gray        : color.adjust($gray-base, $lightness: 33.5%) !default;  // #555
+$gray-light  : color.adjust($gray-base, $lightness: 46.7%) !default;  // #777
+$gray-lighter: color.adjust($gray-base, $lightness: 93.5%) !default;  // #eee
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$brand-primary:      color.adjust(#428bca, $lightness: -6.5%) !default; // #337ab7
-$brand-success:      #5cb85c !default;
-$brand-info:         #5bc0de !default;
-$brand-warning:      #f0ad4e !default;
-$brand-danger:       #d9534f !default;
+$brand-primary: color.adjust(#428bca, $lightness: -6.5%) !default;  // #337ab7
+$brand-success: #5cb85c !default;
+$brand-info   : #5bc0de !default;
+$brand-warning: #f0ad4e !default;
+$brand-danger : #d9534f !default;
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-$link-color:         $brand-primary !default;
-$link-hover-color:   color.adjust($link-color, $lightness: -15%) !default;
-$headings-color:     inherit !default;
+$link-color      : $brand-primary !default;
+$link-hover-color: color.adjust($link-color, $lightness: -15%) !default;
+$headings-color  : inherit !default;

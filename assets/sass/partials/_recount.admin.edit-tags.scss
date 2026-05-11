@@ -5,10 +5,10 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// body.geditorial-recount-enabled {}
+// body.#{$plugin}-recount-enabled {}
 
 ////////////////////////////////////////////////////////////////////////////////
-th.column-geditorial-recount {
+th.column-#{$plugin}-recount {
   width: 40px; // has sort icon
 
   a {
@@ -21,7 +21,7 @@ th.column-geditorial-recount {
   }
 }
 
-td.column-geditorial-recount {
+td.column-#{$plugin}-recount {
   text-align: center;
   padding-left: 2px;
   padding-right: 2px;

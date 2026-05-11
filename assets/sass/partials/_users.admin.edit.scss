@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Users: Admin Edit --------------------------------------------------
 
-body.geditorial-users-enabled {
+body.#{$plugin}-users-enabled {
   .wp-list-table {
     .inline-edit-col {
       .inline-edit-categories-label:first-of-type,

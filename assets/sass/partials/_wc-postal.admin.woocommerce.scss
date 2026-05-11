@@ -7,7 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Admin Edit
 .widefat .column-wc_actions {
-  a.button.geditorial-wc-postal-tracking {
+  a.button.#{$plugin}-wc-postal-tracking {
     padding: 5px 4px 0 !important;
     width: 28px;
 
@@ -20,7 +20,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 /// Admin Post
-.geditorial-wrap.-wc_postal {
+.#{$plugin}-wrap.-wc_postal {
   &.form-field {
     img.-before-icon {
       width: 12px;

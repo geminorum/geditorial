@@ -20,13 +20,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 @media screen and (max-width: 782px) {
   #wpadminbar {
-    li#wp-admin-bar-geditorial-systemheartbeat,
-    li.geditorial-adminbar-node-icononly.-binary-eye {
+    li#wp-admin-bar-#{$plugin}-systemheartbeat,
+    li.#{$plugin}-adminbar-node-icononly.-binary-eye {
       display: block !important;
       position: static;
     }
 
-    .geditorial-adminbar-node-icononly {
+    .#{$plugin}-adminbar-node-icononly {
       .ab-icon {
         margin: 2px 0 -2px !important;
       }

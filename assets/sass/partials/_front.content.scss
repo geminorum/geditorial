@@ -23,12 +23,12 @@
 // .hentry.archive-posttype {}
 
 ////////////////////////////////////////////////////////////////////////////////
-// .-wrap.geditorial-newpost-content {}
+// .-wrap.#{$plugin}-newpost-content {}
 
 ////////////////////////////////////////////////////////////////////////////////
-.-wrap.geditorial-empty-content,
-.-wrap.geditorial-newpost-content,
-.-wrap.geditorial-archive-content {
+.-wrap.#{$plugin}-empty-content,
+.-wrap.#{$plugin}-newpost-content,
+.-wrap.#{$plugin}-archive-content {
   color: $gray-light;
 
   .-form-group {

@@ -11,7 +11,7 @@
 $spacer: 1rem !default;
 
 ////////////////////////////////////////////////////////////////////////////////
-// body.geditorial-revisions-enabled {
+// body.#{$plugin}-revisions-enabled {
 //   .misc-pub-section.misc-pub-revisions {
 //     display: none;
 //     visibility: hidden;
@@ -19,7 +19,7 @@ $spacer: 1rem !default;
 // }
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-admin-wrap.-revisions {
+.#{$plugin}-admin-wrap.-revisions {
   padding: 10px;
   // text-align: left;
 
@@ -53,7 +53,7 @@ $spacer: 1rem !default;
   }
 }
 
-.geditorial-admin-wrap-inline.-revisions {
+.#{$plugin}-admin-wrap-inline.-revisions {
   span.-wordcount {
     cursor: help;
   }
@@ -98,7 +98,7 @@ $spacer: 1rem !default;
 }
 
 ul.post-revisions,
-.geditorial-admin-wrap.-revisions {
+.#{$plugin}-admin-wrap.-revisions {
   span.-user-avatar {
     img {
       width: 24px;

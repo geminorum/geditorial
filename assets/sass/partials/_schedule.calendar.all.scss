@@ -16,7 +16,7 @@ $padding-small-vertical: 4px !default;
 $padding-small-horizontal: 8px !default;
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-schedule-calendar {
+.#{$plugin}-schedule-calendar {
   position: relative;
 
   .-wrap.-messages {
@@ -154,8 +154,8 @@ $padding-small-horizontal: 8px !default;
           }
         }
 
-        .geditorial-icon svg,
-        .geditorial-icon img,
+        .#{$plugin}-icon svg,
+        .#{$plugin}-icon img,
         .dashicons {
           font-size: 12px;
           width: 12px;
@@ -215,8 +215,8 @@ $padding-small-horizontal: 8px !default;
             border-bottom: transparent;
           }
 
-          .geditorial-icon svg,
-          .geditorial-icon img,
+          .#{$plugin}-icon svg,
+          .#{$plugin}-icon img,
           .dashicons {
             vertical-align: middle;
             font-size: 14px;
@@ -315,7 +315,7 @@ $padding-small-horizontal: 8px !default;
   }
 }
 
-#geditorial-schedule-add-new {
+##{$plugin}-schedule-add-new {
   box-sizing: border-box;
   position: absolute;
   top: 0;

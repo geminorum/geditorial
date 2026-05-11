@@ -3,7 +3,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// Module: Letter: Admin Post -------------------------------------------------
 
-.geditorial-wrap.-admin-nobox.-letter {
+.#{$plugin}-wrap.-admin-nobox.-letter {
   background-color: #fff;
   border: 1px solid #ddd;
   margin-top: 1em;
@@ -31,7 +31,7 @@
   }
 }
 
-.geditorial-admin-toolbar.-letter {
+.#{$plugin}-admin-toolbar.-letter {
   padding: .7em .5em 0.5em;
   border-bottom: 1px solid #ddd;
 
@@ -49,13 +49,13 @@
   }
 }
 
-.geditorial-letter-empty,
-.geditorial-letter-list {
+.#{$plugin}-letter-empty,
+.#{$plugin}-letter-list {
   list-style: none;
   margin: .7em .5em;
 }
 
-.geditorial-letter-block {
+.#{$plugin}-letter-block {
   position: relative;
   margin-bottom: 5px;
 

@@ -23,7 +23,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-.geditorial-admin-wrap.geditorial-settings {
+.#{$plugin}-admin-wrap.#{$plugin}-settings {
 
   // on each module settings
   > .-header {
@@ -228,8 +228,8 @@
         }
       }
 
-      .geditorial-icon svg,
-      .geditorial-icon img,
+      .#{$plugin}-icon svg,
+      .#{$plugin}-icon img,
       .dashicons {
         color: $gray; // for dashicon
         fill: $gray; // for svg
@@ -242,7 +242,7 @@
         margin: 0;
       }
 
-      .geditorial-icon,
+      .#{$plugin}-icon,
       .dashicons,
       .spinner {
         float: right;
@@ -253,8 +253,8 @@
 }
 
 @media screen and (max-width: 782px) {
-  .geditorial-admin-wrap {
-    &.geditorial-settings {
+  .#{$plugin}-admin-wrap {
+    &.#{$plugin}-settings {
       .modules {
         .module {
           width: 100%;

@@ -40,17 +40,17 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
 .wp-list-table {
 
   // Module: `Meta`
-  th.column-geditorial-meta {
+  th.column-#{$plugin}-meta {
     width: auto; // default is auto
   }
 
   // Module: `ISBN`
-  th.column-geditorial-isbn {
+  th.column-#{$plugin}-isbn {
     width: 25ch; // default for gtin is `20ch`
   }
 
   // Module: `Units`
-  th.column-geditorial-units {
+  th.column-#{$plugin}-units {
     width: 95px;
   }
 
@@ -72,9 +72,9 @@ body.disable-posttype-password .inline-edit-row fieldset.inline-edit-date + br.c
 ////////////////////////////////////////////////////////////////////////////////
 body.woocommerce-admin-page {
   // only if `Tweaks` not enabled and we have product cat/tag/brand columns.
-  &.post-type-product:not(.geditorial-tweaks-enabled) {
+  &.post-type-product:not(.#{$plugin}-tweaks-enabled) {
     .wp-list-table {
-      th.column-geditorial-meta {
+      th.column-#{$plugin}-meta {
         width: 20ch; // default only on products
       }
     }
@@ -87,13 +87,13 @@ body.woocommerce-admin-page {
 
     // NOTE: columns `before` primary column must be hidden
     .column-taxonomy-entry_section,
-    .column-geditorial-tweaks-order,
-    .column-geditorial-tweaks-thumb {
+    .column-#{$plugin}-tweaks-order,
+    .column-#{$plugin}-tweaks-thumb {
       display: none !important;
     }
 
-    .column-geditorial-tweaks-id,
-    .column-geditorial-tweaks-thumb {
+    .column-#{$plugin}-tweaks-id,
+    .column-#{$plugin}-tweaks-thumb {
       text-align: inherit !important;
     }
 

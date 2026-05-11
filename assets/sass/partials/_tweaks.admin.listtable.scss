@@ -6,7 +6,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 .wp-list-table {
-  th.column-geditorial-tweaks-id {
+  th.column-#{$plugin}-tweaks-id {
     // width: calc(5% + #{($spacer * .25)});
     width: calc(5ch + #{($spacer * .25)});
 
@@ -29,7 +29,7 @@
     }
   }
 
-  th.column-geditorial-tweaks-order {
+  th.column-#{$plugin}-tweaks-order {
     width: 55px;
 
     span.-column-icon::before {
@@ -37,7 +37,7 @@
     }
   }
 
-  th.column-geditorial-tweaks-thumb {
+  th.column-#{$plugin}-tweaks-thumb {
     width: 70px;
 
     span.-column-icon {
@@ -49,7 +49,7 @@
     }
   }
 
-  td.column-geditorial-tweaks-thumb {
+  td.column-#{$plugin}-tweaks-thumb {
     padding: 10px 0 0;
     text-align: center;
 
@@ -65,14 +65,14 @@
     }
   }
 
-  th.column-geditorial-tweaks-thumb,
-  th.column-geditorial-tweaks-id {
+  th.column-#{$plugin}-tweaks-thumb,
+  th.column-#{$plugin}-tweaks-id {
     span.sorting-indicators {
       margin-left: 0 !important;
     }
   }
 
-  td.column-geditorial-tweaks-id {
+  td.column-#{$plugin}-tweaks-id {
     text-align: right;
     font-size: smaller;
 
@@ -88,17 +88,17 @@
     }
   }
 
-  th.column-geditorial-tweaks-rows {
+  th.column-#{$plugin}-tweaks-rows {
     width: 25%;
   }
 
-  th.column-geditorial-tweaks-atts {
+  th.column-#{$plugin}-tweaks-atts {
     width: 15%;
   }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-body.geditorial-tweaks-enabled {
+body.#{$plugin}-tweaks-enabled {
   .wp-list-table {
     th.column-comments {
       width: 3.3rem;

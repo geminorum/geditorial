@@ -3,8 +3,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 /// gEditorial Partials: Admin QuickEdit ---------------------------------------
 
-.geditorial-admin-wrap-bulkedit,
-.geditorial-admin-wrap-quickedit {
+.#{$plugin}-admin-wrap-bulkedit,
+.#{$plugin}-admin-wrap-quickedit {
   margin-top: .5 * $spacer;
   @include theme-box-sizing-reset;
 
@@ -39,7 +39,7 @@
     }
   }
 
-  .geditorial-admin-dropbown {
+  .#{$plugin}-admin-dropbown {
     box-sizing: border-box;
     width: 100%;
     margin: 0 0 ( .25 * $spacer );

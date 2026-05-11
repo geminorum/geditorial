@@ -40,7 +40,7 @@ $spacer: 1rem !default;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-.geditorial-wrap {
+.#{$plugin}-wrap {
   &.-admin-nobox,
   &.-admin-metabox {
     margin: 12px 0 0 0;
@@ -318,7 +318,7 @@ $spacer: 1rem !default;
 
         .dashicons {
           position: relative;
-          top: 5px;
+          top: 2.5px;
 
           width: 22px !important;
           height: 18px;
@@ -362,7 +362,7 @@ $spacer: 1rem !default;
       //     margin-right: 4px;
       //   }
       // --
-      //   .geditorial-icon svg {
+      //   .#{$plugin}-icon svg {
       //     width: 26px;
       //     height: 26px;
       //     margin-top: 2px;
@@ -685,8 +685,8 @@ $spacer: 1rem !default;
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-// .geditorial-admin-wrap-metabox, // FIXME: DEPRECATED
-.geditorial-wrap.-admin-metabox {
+// .#{$plugin}-admin-wrap-metabox, // FIXME: DEPRECATED
+.#{$plugin}-wrap.-admin-metabox {
   .field-wrap {
     &.-textarea {
       padding-left: 1px;
@@ -700,7 +700,7 @@ $spacer: 1rem !default;
 }
 
 // FIXME: DEPRECATED
-.geditorial-admin-wrap-textbox {
+.#{$plugin}-admin-wrap-textbox {
   margin-top: 12px;
 
   textarea {
@@ -711,7 +711,7 @@ $spacer: 1rem !default;
   }
 }
 
-.geditorial-admin-dropbown {
+.#{$plugin}-admin-dropbown {
   box-sizing: border-box;
   width: 100%;
 
@@ -724,7 +724,7 @@ $spacer: 1rem !default;
   }
 }
 
-.geditorial-wrap.-admin-postbox-manual {
+.#{$plugin}-wrap.-admin-postbox-manual {
   .handlediv.button-link {
     text-align: center;
   }
@@ -754,7 +754,7 @@ $spacer: 1rem !default;
   }
 }
 
-.geditorial-wrap.-admin-postbox-editorbox {
+.#{$plugin}-wrap.-admin-postbox-editorbox {
   .inside {
     margin: 0 !important;
     padding: 0;
