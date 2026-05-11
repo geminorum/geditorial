@@ -24,6 +24,7 @@ class FrontSettings extends gEditorial\Service
 	const MAIN_PANEL   = 'geditorial';
 	const MAIN_SECTION = 'geditorial_general';
 	const MORE_SECTION = 'geditorial_andmore';
+	const LINK_SECTION = 'geditorial_wiki';
 
 	public static function setup()
 	{
@@ -94,6 +95,31 @@ class FrontSettings extends gEditorial\Service
 				]
 			)
 		);
+
+		$manager->register_section_type( Controls\SectionButton::class );
+		$manager->add_section(
+			new Controls\SectionButton(
+				$manager,
+				static::LINK_SECTION,
+				[
+					'panel'       => static::MAIN_PANEL,
+					'button_text' => _x( 'Visit Wiki Pages', 'Customizer: Control Button', 'geditorial-admin' ),
+					'button_url'  => 'https://github.com/geminorum/geditorial/wiki',
+					'title'       => sprintf(
+						/* translators: `%s`: system version */
+						_x( 'Editorial v%s', 'Customizer: Control Title', 'geditorial-admin' ),
+						\GEDITORIAL_VERSION
+					),
+				]
+			)
+		);
+
+		$wiki = self::hook( 'more', 'wiki' );
+		$manager->add_setting( $wiki );
+		$manager->add_control( $wiki, [
+			'section'  => static::LINK_SECTION,
+			'settings' => $wiki,
+		] );
 
 		do_action_ref_array( self::und( static::BASE, 'front_settings', 'customize' ),
 			[
