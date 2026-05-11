@@ -78,9 +78,9 @@
       }
     },
 
-    inlineColor: function (tag, event) {
-      const value = $('td.' + s.classs + '-color i', '#' + tag).attr('data-color');
-      if (typeof value !== 'undefined') $(':input[name="term-color"]', '.inline-edit-row').val(value);
+    inlineColor: function (field, tag, event) {
+      const value = $('td.' + s.classs + '-' + field + ' i', '#' + tag).attr('data-color');
+      if (typeof value !== 'undefined') $(':input[name="term-' + field + '"]', '.inline-edit-row').val(value);
     },
 
     inlineOrder: function (tag, event) {
@@ -149,7 +149,8 @@
       app.inlineImage(tag, event);
       app.inlineSelect('user', tag, event);
       app.inlineSelect('author', tag, event);
-      app.inlineColor(tag, event);
+      app.inlineColor('color', tag, event);
+      app.inlineColor('border', tag, event);
       app.inlineSelect('role', tag, event);
       // TODO: multi-select: `roles`
       app.inlineSelect('posttype', tag, event);

@@ -27,6 +27,7 @@ class Terms extends gEditorial\Module
 		'user'  ,  // one-to-one
 		'author',  // one-to-many
 		'color',
+		'border', // border color
 		'role',
 		'roles',
 		'posttype',
@@ -195,6 +196,7 @@ class Terms extends gEditorial\Module
 				'user'      => _x( 'User', 'Titles', 'geditorial-terms' ),
 				'author'    => _x( 'Author', 'Titles', 'geditorial-terms' ),
 				'color'     => _x( 'Color', 'Titles', 'geditorial-terms' ),
+				'border'    => _x( 'Border', 'Titles', 'geditorial-terms' ),
 				'role'      => _x( 'Role', 'Titles', 'geditorial-terms' ),
 				'posttype'  => _x( 'Posttype', 'Titles', 'geditorial-terms' ),
 				'roles'     => _x( 'Roles', 'Titles', 'geditorial-terms' ),
@@ -238,6 +240,7 @@ class Terms extends gEditorial\Module
 				'user'      => _x( 'Connects a user to the term to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'author'    => _x( 'Sets a user as term author to help identify who created or owns each term.', 'Descriptions', 'geditorial-terms' ),
 				'color'     => _x( 'Assigns a custom color to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
+				'border'    => _x( 'Assigns a custom border color to visually separate terms from each other.', 'Descriptions', 'geditorial-terms' ),
 				'role'      => _x( 'Terms can have unique role visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'roles'     => _x( 'Terms can have unique roles visibility to help separate them for user roles.', 'Descriptions', 'geditorial-terms' ),
 				'posttype'  => _x( 'Terms can have unique posttype visibility to help separate them on editing.', 'Descriptions', 'geditorial-terms' ),
@@ -417,7 +420,7 @@ class Terms extends gEditorial\Module
 
 					gEditorial\Scripts::enqueueThickBox();
 
-				} else if ( 'color' == $field ) {
+				} else if ( in_array( $field, [ 'color', 'border' ], TRUE ) ) {
 
 					gEditorial\Scripts::enqueueColorPicker();
 				}
@@ -477,7 +480,7 @@ class Terms extends gEditorial\Module
 
 					gEditorial\Scripts::enqueueThickBox();
 
-				} else if ( 'color' == $field ) {
+				} else if ( in_array( $field, [ 'color', 'border' ], TRUE ) ) {
 
 					gEditorial\Scripts::enqueueColorPicker();
 				}
@@ -551,8 +554,14 @@ class Terms extends gEditorial\Module
 
 	public function get_supported_field_metatype( $field, $taxonomy )
 	{
+		$metatype = $field; // NOTE: by default the meta-type is the same as the field
+
+		switch ( $field ) {
+			case 'border': $metatype = 'color'; break;
+		}
+
 		return $this->filters( 'supported_field_metatype',
-			$field, // NOTE: by default the meta-type is the same as the field
+			$metatype,
 			$field,
 			$taxonomy
 		);
@@ -613,6 +622,7 @@ class Terms extends gEditorial\Module
 			case 'author':
 			case 'image':
 			case 'color':
+			case 'border':
 			case 'role':
 			case 'posttype':
 			case 'code':
@@ -764,6 +774,7 @@ class Terms extends gEditorial\Module
 			'user',
 			'author',
 			'color',
+			'border',
 			'role',
 			'roles',
 			'posttype',
@@ -1128,7 +1139,7 @@ class Terms extends gEditorial\Module
 			case 'color':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<i class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
+					$html = '<i class="-field metatype-'.$metatype.' field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" style="background-color:'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'"></i>';
 
@@ -2070,7 +2081,8 @@ class Terms extends gEditorial\Module
 
 			foreach ( $this->get_supported( $term->taxonomy ) as $field ) {
 
-				$metakey = $this->get_supported_metakey( $field, $term->taxonomy );
+				$metakey  = $this->get_supported_metakey( $field, $term->taxonomy );
+				$metatype = $this->get_supported_field_metatype( $field, $term->taxonomy );
 
 				if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					continue;
@@ -2098,7 +2110,7 @@ class Terms extends gEditorial\Module
 					],
 				];
 
-				switch ( $this->get_supported_field_metatype( $field, $term->taxonomy ) ) {
+				switch ( $metatype ) {
 
 					case 'order':
 
@@ -2148,7 +2160,7 @@ class Terms extends gEditorial\Module
 
 					case 'color':
 
-						$child['title'] = '<i class="field-color" style="background-color:'.Core\HTML::escape( $meta ).'"></i>';
+						$child['title'] = '<i class="metatype-'.$metatype.' field-'.$field.'" style="background-color:'.Core\HTML::escape( $meta ).'"></i>';
 						break;
 
 					case 'plural':
