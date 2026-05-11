@@ -413,7 +413,7 @@ class Terms extends gEditorial\Module
 					$enqueue = TRUE;
 				}
 
-				if ( 'image' == $field ) {
+				if ( in_array( $field, [ 'image' ], TRUE ) ) {
 
 					gEditorial\Scripts::enqueueThickBox();
 
@@ -473,7 +473,7 @@ class Terms extends gEditorial\Module
 				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) )
 					$enqueue = TRUE;
 
-				if ( 'image' == $field ) {
+				if ( in_array( $field, [ 'image' ], TRUE ) ) {
 
 					gEditorial\Scripts::enqueueThickBox();
 

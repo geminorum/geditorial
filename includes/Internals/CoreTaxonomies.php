@@ -501,7 +501,15 @@ trait CoreTaxonomies
 		return $term;
 	}
 
-	// DEFAULT CALLBACK for `__checklist_terms_callback`
+	/**
+	 * Callback for Checklist Terms on Meta-box.
+	 * NOTE: passing `__checklist_terms_callback`
+	 *
+	 * @param object $post
+	 * @param false|array $box
+	 * @param string $taxonomy
+	 * @return void
+	 */
 	public function taxonomy_meta_box_checklist_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -535,8 +543,16 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	// DEFAULT CALLBACK for `__checklist_reverse_terms_callback`
-	// TODO: compliance with `reverse_ordered` setting
+	/**
+	 * Callback for reversed Checklist Terms on Meta-box.
+	 * NOTE: passing `__checklist_reverse_terms_callback`
+	 * TODO: compliance with `reverse_ordered` setting
+	 *
+	 * @param object $post
+	 * @param false|array $box
+	 * @param string $taxonomy
+	 * @return void
+	 */
 	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -573,7 +589,15 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	// DEFAULT CALLBACK for `__checklist_restricted_terms_callback`
+	/**
+	 * Callback for restricted Checklist Terms on Meta-box.
+	 * NOTE: passing `__checklist_restricted_terms_callback`
+	 *
+	 * @param object $post
+	 * @param false|array $box
+	 * @param string $taxonomy
+	 * @return void
+	 */
 	public function taxonomy_meta_box_checklist_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -610,7 +634,15 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	// DEFAULT CALLBACK for `__singleselect_terms_callback`
+	/**
+	 * Callback for Single-Select Terms on Meta-box.
+	 * NOTE: passing `__singleselect_terms_callback`
+	 *
+	 * @param object $post
+	 * @param false|array $box
+	 * @param string $taxonomy
+	 * @return void
+	 */
 	public function taxonomy_meta_box_singleselect_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
@@ -650,7 +682,15 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	// DEFAULT CALLBACK for `__singleselect_restricted_terms_callback`
+	/**
+	 * Callback for restricted Single-Select Terms on Meta-box.
+	 * NOTE: passing `__singleselect_restricted_terms_callback`
+	 *
+	 * @param object $post
+	 * @param false|array $box
+	 * @param string $taxonomy
+	 * @return void
+	 */
 	public function taxonomy_meta_box_singleselect_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )

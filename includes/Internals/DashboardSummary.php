@@ -250,6 +250,8 @@ trait DashboardSummary
 
 			if ( $paired ) {
 
+				$not = [];
+
 				foreach ( $posttypes as $posttype )
 					$not[$posttype] = WordPress\Taxonomy::countPostsWithoutTerms( $taxonomy, $posttype, $paired, $exclude );
 

@@ -55,11 +55,12 @@ class Barcodes extends gEditorial\Service
 	}
 
 	// @REF: https://github.com/hbgl/php-code-128-encoder
-	// NOTE: depends on `tecnickcom/tc-lib-barcode`
 	public static function encode( $data, $type )
 	{
 		switch ( $type ) {
-			case 'code128': return \Hbgl\Barcode\Code128Encoder\Code128Encoder::encode( $data );
+			// NOTE: depends on `tecnickcom/tc-lib-barcode`
+			// NOTE: not included on `Production` yet!
+			// case 'code128': return \Hbgl\Barcode\Code128Encoder\Code128Encoder::encode( $data );
 		}
 
 		return $data;

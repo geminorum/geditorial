@@ -29,6 +29,7 @@ class NationalLibrary extends gEditorial\Module
 				'persian',
 				'woocommerce',
 				'tabmodule',
+				'persian',
 			],
 		];
 	}

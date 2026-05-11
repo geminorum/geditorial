@@ -92,6 +92,9 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $body = self::getRemoteBody( $search ) )
 			return FALSE;
 
+		/**
+		 * @package `rct567/dom-query`
+		 */
 		$dom = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
 
 		if ( ! $brief = $dom->find( '[href^="/opac-prod/search/briefListSearch.do"]' )->attr( 'href' ) )
@@ -108,6 +111,9 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $body = self::getRemoteBody( $url ) )
 			return FALSE;
 
+		/**
+		 * @package `rct567/dom-query`
+		 */
 		$dom  = @new \Rct567\DomQuery\DomQuery( trim( $body ) );
 		$data = [
 			'rows'   => [],

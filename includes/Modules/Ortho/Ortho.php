@@ -33,6 +33,11 @@ class Ortho extends gEditorial\Module
 			'frontend' => FALSE,
 			'access'   => 'stable',
 			'disabled' => Services\Modulation::moduleCheckLocale( 'fa_IR' ),
+			'keywords' => [
+				'virastar',
+				'tiny-mce',
+				'persian',
+			],
 		];
 	}
 

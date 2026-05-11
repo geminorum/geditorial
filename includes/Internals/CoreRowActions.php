@@ -59,9 +59,14 @@ trait CoreRowActions
 			if ( is_array( $links ) )
 				return $prepend ? array_merge( $links, $actions ) : array_merge( $actions, $links );
 
+			$key = Core\Text::glued( [
+				$action_key ?? $this->classs(),
+				'hide-if-no-js',
+			] );
+
 			return $prepend
-				? array_merge( [ $action_key ?? $this->classs() => $links ], $actions )
-				: array_merge( $actions, [ $action_key ?? $this->classs() => $links ] );
+				? array_merge( [ $key => $links ], $actions )
+				: array_merge( $actions, [ $key => $links ] );
 		};
 
 		add_filter( 'page_row_actions', $callback, $priority, 2 );

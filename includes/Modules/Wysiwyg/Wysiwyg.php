@@ -25,6 +25,9 @@ class Wysiwyg extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
 			'frontend' => FALSE,
+			'keywords' => [
+				'tiny-mce',
+			],
 		];
 	}
 
@@ -84,6 +87,12 @@ class Wysiwyg extends gEditorial\Module
 		}
 	}
 
+	/**
+	 * Handles editor scripts for given screen object.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
 	private function _enqueue_editor( $screen )
 	{
 		// Removes the filters which disallow HTML in term descriptions

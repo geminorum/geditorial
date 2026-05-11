@@ -11,6 +11,8 @@ use geminorum\gEditorial\WordPress;
 class Audit extends gEditorial\Module
 {
 	use Internals\AdminPage;
+	use Internals\BulkExports;
+	use Internals\CoreAdmin;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
@@ -155,6 +157,9 @@ class Audit extends gEditorial\Module
 
 		$this->hook_taxonomy_tabloid_exclude_rendered( 'main_taxonomy' );
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
 		$this->action( 'save_post', 3, 99 );
 
 		if ( $this->get_setting( 'auto_audit_empty' ) )
@@ -365,6 +370,8 @@ class Audit extends gEditorial\Module
 
 			$this->_hook_parentfile_for_optionsgeneralphp();
 			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
 
 			if ( 'edit-tags' === $screen->base ) {
 
@@ -410,16 +417,14 @@ class Audit extends gEditorial\Module
 
 	protected function rowaction_get_mainlink_for_post( $post )
 	{
-		return [
-			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
-				'context'      => 'rowaction',
-				'link_context' => 'overview',
-				'maxwidth'     => '920px',
-				'extra'        => [
-					'-audit-overview',
-				]
-			] ),
-		];
+		return $this->framepage_get_mainlink_for_post( $post, [
+			'context'      => 'rowaction',
+			'link_context' => 'overview',
+			'maxwidth'     => '920px',
+			'extra'        => [
+				'-audit-overview',
+			]
+		] );
 	}
 
 	protected function render_overview_content()

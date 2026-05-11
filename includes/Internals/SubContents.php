@@ -939,12 +939,10 @@ trait SubContents
 		if ( ! $this->role_can_post( $post, [ 'reports', 'assign' ] ) )
 			return FALSE;
 
-		return [
-			$this->classs().' hide-if-no-js' => $this->framepage_get_mainlink_for_post( $post, [
-				'context'      => 'rowaction',
-				'link_context' => 'overview',
-			] ),
-		];
+		return $this->framepage_get_mainlink_for_post( $post, [
+			'context'      => 'rowaction',
+			'link_context' => 'overview',
+		] );
 	}
 
 	protected function subcontent_do_render_supportedbox_content( $post, $context )

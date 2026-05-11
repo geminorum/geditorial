@@ -15,6 +15,10 @@ class Tabloid extends gEditorial\Module
 	use Internals\FramePage;
 	use Internals\FramePageViews;
 
+	protected $deafults = [
+		'admin_rowactions' => TRUE,
+	];
+
 	public static function module()
 	{
 		return [
@@ -69,7 +73,7 @@ class Tabloid extends gEditorial\Module
 	public function setup_ajax()
 	{
 		if ( $this->role_can( 'overview' ) && ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) )
-			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE, NULL, TRUE );
+			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE );
 	}
 
 	/**
@@ -100,7 +104,7 @@ class Tabloid extends gEditorial\Module
 				} else if ( 'edit' === $screen->base ) {
 
 					if ( $this->role_can( 'overview' )
-						&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, FALSE, TRUE, NULL, TRUE ) )
+						&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 8, FALSE, TRUE ) )
 							gEditorial\Scripts::enqueueColorBox();
 				}
 			}
