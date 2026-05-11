@@ -13,6 +13,7 @@ class Symposium extends gEditorial\Module
 	use Internals\BulkExports;
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
+	use Internals\ObjectsToObjects;
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
@@ -27,6 +28,7 @@ class Symposium extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'session',
+				'manual-connect',
 				'cptmodule',
 			],
 		];
@@ -37,6 +39,10 @@ class Symposium extends gEditorial\Module
 		return [
 			'_general' => [
 				'comment_status',
+			],
+			'_connected' => [
+				$this->settings_posttypes_for_target( 'o2o', _x( 'Connected Post-types', 'Settings', 'geditorial-symposium' ) ),
+				$this->settings_o2o_field_desc(),
 			],
 			'_content' => [
 				'archive_override',
@@ -71,6 +77,7 @@ class Symposium extends gEditorial\Module
 	{
 		return [
 			'main_posttype'     => 'session',
+			'main_posttype_o2o' => 'session_to_posts',
 			'category_taxonomy' => 'session_category',
 			'type_taxonomy'     => 'session_type',
 		];
@@ -83,6 +90,11 @@ class Symposium extends gEditorial\Module
 				'main_posttype'     => _n_noop( 'Session', 'Sessions', 'geditorial-symposium' ),
 				'category_taxonomy' => _n_noop( 'Session Category', 'Session Categories', 'geditorial-symposium' ),
 				'type_taxonomy'     => _n_noop( 'Session Type', 'Session Types', 'geditorial-symposium' ),
+			],
+			'o2o' => [
+				'main_posttype' => [
+					'title' => _x( 'Connected Sessions', 'MetaBox Title', 'geditorial-symposium' ),
+				],
 			],
 		];
 
@@ -170,6 +182,14 @@ class Symposium extends gEditorial\Module
 	public function after_setup_theme()
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
+	}
+
+	public function o2o_init()
+	{
+		if ( ! $o2o = $this->o2o_register( 'main_posttype' ) )
+			return;
+
+		$this->o2o__hook_insert_content( $o2o, 'main_posttype' );
 	}
 
 	public function meta_init()
