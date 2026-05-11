@@ -266,9 +266,13 @@ trait ObjectsToObjects
 
 			printf( $before, '-o2o -connected' );
 
-				if ( current_user_can( 'edit_post', $item->get_id() ) )
-					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
-						NULL, $this->strings['o2o'][$constant]['title']['from'] ?? NULL );
+				if ( WordPress\Post::can( $item->get_id(), 'edit_post' ) )
+					echo $this->get_column_icon(
+						get_edit_post_link( $item->get_id() ),
+						NULL,
+						$this->strings['o2o'][$constant]['title']['from'] ?? NULL
+					);
+
 				else
 					echo $icons[$constant];
 

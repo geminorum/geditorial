@@ -116,7 +116,7 @@ class TermRelations extends gEditorial\Service
 			if ( empty( $raw['id'] ) || ! $term = WordPress\Term::get( (int) $raw['id'] ) )
 				continue;
 
-			if ( ! current_user_can( 'assign_term', $term->term_id ) )
+			if ( ! WordPress\Term::can( $term, 'assign_term' ) )
 				continue;
 
 			if ( ! empty( $raw['__delete'] ) ) {
@@ -155,7 +155,11 @@ class TermRelations extends gEditorial\Service
 					}
 
 					$filtered = apply_filters( self::und( static::BASE, 'sanitize_field_data' ),
-						$meta, $field, $term, $post, $raw
+						$meta ?? FALSE,
+						$field,
+						$term,
+						$post,
+						$raw
 					);
 
 					// skipped by filter!

@@ -516,7 +516,7 @@ trait SubContents
 
 		$read = function ( $request ) {
 
-			if ( ! current_user_can( 'read_post', (int) $request['linked'] ) )
+			if ( ! WordPress\Post::can( (int) $request['linked'], 'read_post' ) )
 				return Services\RestAPI::getErrorForbidden();
 
 			if ( ! $this->role_can( 'reports' ) )
@@ -527,7 +527,7 @@ trait SubContents
 
 		$edit = function ( $request ) {
 
-			if ( ! current_user_can( 'edit_post', (int) $request['linked'] ) )
+			if ( ! WordPress\Post::can( (int) $request['linked'], 'edit_post' ) )
 				return Services\RestAPI::getErrorForbidden();
 
 			if ( ! $this->role_can( 'assign' ) )
@@ -630,7 +630,7 @@ trait SubContents
 					if ( empty( $subcontent->comment_post_ID ) )
 						return Services\RestAPI::getErrorSomethingIsWrong();
 
-					if ( ! current_user_can( 'read_post', (int) $subcontent->comment_post_ID ) )
+					if ( ! WordPress\Post::can( (int) $subcontent->comment_post_ID, 'edit_post' ) )
 						return Services\RestAPI::getErrorForbidden();
 
 					if ( ! $this->role_can( 'reports' ) )

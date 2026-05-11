@@ -111,10 +111,10 @@ class Schedule extends gEditorial\Module
 
 				// gEditorial\Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
 
-				if ( ! $new = $this->add_new_post( $data['post_type'], $data['date_cal'], $data['date_year'], $data['date_month'], $data['date_day'], $data['post_title'] ) )
+				if ( ! $new = $this->_add_new_post( $data['post_type'], $data['date_cal'], $data['date_year'], $data['date_month'], $data['date_day'], $data['post_title'] ) )
 					gEditorial\Ajax::errorMessage();
 
-				gEditorial\Ajax::success( $this->get_post_row( $data['date_day'], $new ) );
+				gEditorial\Ajax::success( $this->_get_post_row( $data['date_day'], $new ) );
 		}
 
 		gEditorial\Ajax::errorWhat();
@@ -207,7 +207,7 @@ class Schedule extends gEditorial\Module
 
 			$html = Core\HTML::wrap( '', '-messages' );
 			$html.= gEditorial\Datetime::getCalendar( $cal, $args );
-			$html.= $this->add_new_box( $cal );
+			$html.= $this->_add_new_box( $cal );
 
 			echo '<div class="'.Core\HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
@@ -215,7 +215,7 @@ class Schedule extends gEditorial\Module
 		gEditorial\Settings::wrapClose();
 	}
 
-	private function add_new_box( $calendar )
+	private function _add_new_box( $calendar )
 	{
 		$html = Core\HTML::tag( 'input', [ 'type' => 'text', 'name' => 'post_title', 'data-field' => 'title', 'class' => 'regular-text' ] );
 
@@ -257,12 +257,12 @@ class Schedule extends gEditorial\Module
 		$html.= '<ol class="-sortable" data-day="'.$the_day.'">';
 
 		foreach ( $data as $post )
-			$html.= $this->get_post_row( $the_day, $post['ID'], $args );
+			$html.= $this->_get_post_row( $the_day, $post['ID'], $args );
 
 		$html.= '</ol>';
 
 		if ( ! isset( $this->cache['posttype_addnew'] ) )
-			$this->cache['posttype_addnew'] = $this->get_addnew_links( $args['post_type'] );
+			$this->cache['posttype_addnew'] = $this->_get_addnew_links( $args['post_type'] );
 
 		if ( ! empty( $this->cache['posttype_addnew'] ) )
 			$html.= Core\HTML::wrap( $this->cache['posttype_addnew'], '-buttons' );
@@ -270,7 +270,7 @@ class Schedule extends gEditorial\Module
 		return $html;
 	}
 
-	private function get_post_row( $the_day, $post, $calendar_args = [] )
+	private function _get_post_row( $the_day, $post, $calendar_args = [] )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
@@ -306,7 +306,7 @@ class Schedule extends gEditorial\Module
 		return $html.'</li>';
 	}
 
-	private function get_addnew_links( $posttypes )
+	private function _get_addnew_links( $posttypes )
 	{
 		$buttons = '';
 
@@ -327,7 +327,7 @@ class Schedule extends gEditorial\Module
 		return $buttons;
 	}
 
-	private function add_new_post( $posttype, $cal, $year, $month, $day, $title )
+	private function _add_new_post( $posttype, $cal, $year, $month, $day, $title )
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'makeMySQL' ) )
 			return FALSE;
@@ -342,7 +342,7 @@ class Schedule extends gEditorial\Module
 		return wp_insert_post( $data );
 	}
 
-	private function get_calendar_link( $post )
+	public function get_calendar_link( $post )
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'getByPost' ) )
 			return FALSE;

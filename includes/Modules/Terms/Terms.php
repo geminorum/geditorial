@@ -1828,7 +1828,7 @@ class Terms extends gEditorial\Module
 
 			case 'color':
 
-				// NOTE: better not to use `input[typ=color]` since there is noway to leave it empty!
+				// NOTE: better not to use `input[typ=color]` since there is no-way to leave it empty!
 				// @REF: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color#value
 				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
@@ -1836,7 +1836,7 @@ class Terms extends gEditorial\Module
 					'value' => '',
 					'class' => [ 'small-text', 'code-text' ],
 					'data'  => [ 'ortho' => 'color' ],
-					'style' => 'width:85px;', // to override forced width within the quickedit
+					'style' => 'width:85px;', // To override forced width within the quick-edit!
 				] );
 
 				break;
@@ -1953,7 +1953,7 @@ class Terms extends gEditorial\Module
 			if ( ! $term = get_queried_object() )
 				return;
 
-			if ( ! current_user_can( 'assign_term', $term->term_id ) )
+			if ( ! WordPress\Term::can( $term, 'assign_term' ) )
 				return;
 
 			$icon     = $this->adminbar__get_icon();
@@ -2305,7 +2305,7 @@ class Terms extends gEditorial\Module
 
 		if ( WordPress\IsIt::ajax() ) {
 
-			// NOTE: on media modal HTML tags will escaped
+			// NOTE: on media modal HTML tags will be escaped!
 
 			$states[] = sprintf(
 				/* translators: `%s`: term name */

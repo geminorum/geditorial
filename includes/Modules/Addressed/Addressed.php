@@ -140,7 +140,7 @@ class Addressed extends gEditorial\Module
 		];
 	}
 
-	// TODO: support `phone`/`fax`/`mobile`/`postcode` by controls
+	// TODO: support `phone`/`fax`/`mobile`/`postcode`/`country`/`code` by controls
 	private function _get_address_type_fields( $context = NULL )
 	{
 		return $this->filters( 'type_fields', [
@@ -267,11 +267,11 @@ class Addressed extends gEditorial\Module
 				] );
 
 				$manager->add_control( $this->hook( $type['hook'], $field['key'] ), [
+					'type'        => $field['type'],
 					'label'       => $field['label'] ?: $field['key'],
 					'description' => $field['description'],
 					'section'     => $section,
 					'settings'    => $setting,
-					'type'        => 'text',
 				] );
 			}
 		}

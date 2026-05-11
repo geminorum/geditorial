@@ -233,9 +233,7 @@ class Ortho extends gEditorial\Module
 			'virastar' => $this->prepare_virastar_options(),
 		], NULL, [ 'jquery', $virastar ] );
 
-		$this->register_editor_button( 'virastar', 2 );
-
-		return $this->virastar_enqueued = TRUE;
+		return $this->virastar_enqueued = $this->register_editor_button( 'virastar', 2 );
 	}
 
 	public function enqueuePersianTools()

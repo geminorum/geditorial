@@ -83,6 +83,7 @@ class WcPurchased extends gEditorial\Module
 		if ( ! $this->is_post_viewable( $post ) )
 			return $actions;
 
+		// WTF?!
 		if ( ! current_user_can( 'edit_others_products', $post->ID ) )
 			return $actions;
 

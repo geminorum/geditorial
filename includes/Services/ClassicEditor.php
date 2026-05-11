@@ -67,7 +67,7 @@ class ClassicEditor extends gEditorial\Service
 
 	public static function registerButton( $button, $filepath, $level = NULL )
 	{
-		static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
+		return static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
 	}
 
 	public static function mce_external_plugins( $plugin_array )

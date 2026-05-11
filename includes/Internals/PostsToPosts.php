@@ -184,9 +184,13 @@ trait PostsToPosts
 
 			printf( $before, '-p2p -connected' );
 
-				if ( current_user_can( 'edit_post', $item->get_id() ) )
-					echo $this->get_column_icon( get_edit_post_link( $item->get_id() ),
-						NULL, $this->strings['p2p'][$constant]['title']['from'] );
+				if ( WordPress\Post::can( $item->get_id(), 'edit_post' ) )
+					echo $this->get_column_icon(
+						get_edit_post_link( $item->get_id() ),
+						NULL,
+						$this->strings['p2p'][$constant]['title']['from'] ?? NULL
+					);
+
 				else
 					echo $icons[$constant];
 

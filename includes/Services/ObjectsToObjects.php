@@ -243,7 +243,7 @@ class ObjectsToObjects extends gEditorial\Service
 				],
 			],
 			'permission_callback' => static function ( $request ) {
-				return current_user_can( 'edit_post', (int) $request['to'] );
+				return WordPress\Post::can( (int) $request['to'], 'edit_post' );
 			},
 		] );
 
@@ -268,7 +268,7 @@ class ObjectsToObjects extends gEditorial\Service
 				],
 			],
 			'permission_callback' => static function ( $request ) {
-				return current_user_can( 'edit_post', (int) $request['to'] );
+				return WordPress\Post::can( (int) $request['to'], 'edit_post' );
 			},
 		] );
 	}

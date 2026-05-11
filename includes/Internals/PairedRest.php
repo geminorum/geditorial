@@ -51,7 +51,7 @@ trait PairedRest
 
 	public function pairedrest_get_posts_permissions_check( $request )
 	{
-		if ( ! current_user_can( 'read_post', (int) $request['parent'] ) )
+		if ( ! WordPress\Post::can( (int) $request['parent'], 'read_post' ) )
 			return Services\RestAPI::getErrorForbidden();
 
 		// if ( ! $this->role_can( 'paired' ) ) // FIXME
@@ -62,7 +62,7 @@ trait PairedRest
 
 	public function pairedrest_connect_post_permissions_check( $request )
 	{
-		if ( ! current_user_can( 'edit_post', (int) $request['parent'] ) )
+		if ( ! WordPress\Post::can( (int) $request['parent'], 'edit_post' ) )
 			return Services\RestAPI::getErrorForbidden();
 
 		// if ( ! $this->role_can( 'assign' ) ) // FIXME
@@ -73,7 +73,7 @@ trait PairedRest
 
 	public function pairedrest_disconnect_post_permissions_check( $request )
 	{
-		if ( ! current_user_can( 'edit_post', (int) $request['parent'] ) )
+		if ( ! WordPress\Post::can( (int) $request['parent'], 'edit_post' ) )
 			return Services\RestAPI::getErrorForbidden();
 
 		// if ( ! $this->role_can( 'assign' ) ) // FIXME
