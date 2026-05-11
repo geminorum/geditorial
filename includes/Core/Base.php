@@ -89,9 +89,18 @@ class Base
 		return $value;
 	}
 
+	/**
+	 * Determines whether a variable is empty.
+	 *
+	 * @param mixed $value
+	 * @return bool
+	 */
 	public static function empty( $value )
 	{
 		if ( empty( $value ) )
+			return TRUE;
+
+		if ( is_array( $value ) && empty( array_filter( $value ) ) )
 			return TRUE;
 
 		// only checks for empty strings
@@ -110,7 +119,7 @@ class Base
 		return FALSE;
 	}
 
-	// converts to boolean
+	// converts into boolean
 	public static function bool( $value )
 	{
 		if ( is_bool( $value ) )

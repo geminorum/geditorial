@@ -33,6 +33,7 @@ class ISBN extends Base
 			 * @package `nicebooks/isbn`
 			 * @source https://github.com/nicebooks-com/isbn/tree/0.3.48
 			 * @see https://github.com/nicebooks-com/isbn#formatting-an-isbn
+			 * TODO: handle exceptions
 			 */
 			$tools  = new \Nicebooks\Isbn\IsbnTools();
 			$string = $tools->format( self::sanitize( $input ) );
