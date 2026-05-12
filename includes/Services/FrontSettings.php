@@ -69,6 +69,32 @@ class FrontSettings extends gEditorial\Service
 			'priority'           => 10,
 		] );
 
+		$welcome = self::_customize_register_branding( $manager, $system );
+
+		// @hook `geditorial_front_settings_customize`
+		do_action_ref_array( self::und( static::BASE, 'front_settings', 'customize' ),
+			[
+				&$manager,
+				static::MAIN_PANEL,                      // $main_panel
+				static::MAIN_SECTION,                    // $main_section
+				$welcome ? static::MORE_SECTION : FALSE, // $more_section
+				$welcome ?: FALSE,                       // $welcome_control
+			]
+		);
+	}
+
+	/**
+	 * Registers `Customizer` branding sections for this service.
+	 *
+	 * @param object $manager
+	 * @param string $system
+	 * @return false|string
+	 */
+	private static function _customize_register_branding( $manager, $system )
+	{
+		if ( ! GEDITORIAL_DISABLE_CREDITS )
+			return FALSE;
+
 		$manager->add_section( static::MORE_SECTION, [
 			'panel'              => static::MAIN_PANEL,
 			'title'              => _x( 'And More', 'Customizer: Section Title', 'geditorial-admin' ),
@@ -121,15 +147,7 @@ class FrontSettings extends gEditorial\Service
 			'settings' => $wiki,
 		] );
 
-		do_action_ref_array( self::und( static::BASE, 'front_settings', 'customize' ),
-			[
-				&$manager,
-				static::MAIN_PANEL   ,   // $main_panel
-				static::MAIN_SECTION ,   // $main_section
-				static::MORE_SECTION ,   // $more_section
-				$welcome             ,   // $welcome_control
-			]
-		);
+		return $welcome;
 	}
 
 	public static function admin_bar_menu( $wp_admin_bar )
