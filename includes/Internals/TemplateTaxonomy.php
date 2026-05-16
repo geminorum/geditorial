@@ -261,7 +261,7 @@ trait TemplateTaxonomy
 		if ( ! is_tax() )
 			return '';
 
-		$html = self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermIntro' ], [
+		$html = self::buffer( [ gEditorial\Template::class, 'renderTermIntro' ], [
 			$this->current_queried,
 			[],
 			$this->key,

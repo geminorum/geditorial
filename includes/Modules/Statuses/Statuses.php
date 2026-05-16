@@ -14,7 +14,12 @@ class Statuses extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	private $map_caps = FALSE;
+	/**
+	 * Holds the Mapped Capabilities.
+	 *
+	 * @var array
+	 */
+	private $map_caps = NULL;
 
 	public static function module()
 	{

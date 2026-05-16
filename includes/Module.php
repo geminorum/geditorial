@@ -41,14 +41,15 @@ class Module extends WordPress\Module
 
 	protected $rest_api_version = 'v1';
 
-	protected $priority_init              = 10;
-	protected $priority_init_ajax         = 12;
-	protected $priority_restapi_init      = 10;
-	protected $priority_current_screen    = 10;
-	protected $priority_admin_menu        = 10;
-	protected $priority_adminbar_init     = 10;
-	protected $priority_template_redirect = 10;
-	protected $priority_template_include  = 10;
+	protected $priority_init               = 10;
+	protected $priority_init_ajax          = 12;
+	protected $priority_restapi_init       = 10;
+	protected $priority_customize_register = 10;
+	protected $priority_current_screen     = 10;
+	protected $priority_admin_menu         = 10;
+	protected $priority_adminbar_init      = 10;
+	protected $priority_template_redirect  = 10;
+	protected $priority_template_include   = 10;
 
 	protected $screens   = [];  // screen-id by context/constant
 	protected $positions = [];  // menu positions by context/constant
@@ -195,8 +196,8 @@ class Module extends WordPress\Module
 		if ( method_exists( $this, 'widgets_init' ) && $this->get_setting( 'widget_support' ) )
 			$this->action( 'widgets_init' );
 
-		if ( method_exists( $this, 'customize_setup' ) && $this->get_setting( 'customize_support', TRUE ) )
-			add_action( 'customize_register', [ $this, 'customize_setup' ] );
+		if ( method_exists( $this, 'customize_setup' ) && $this->get_setting( 'customize_support' ) )
+			add_action( 'customize_register', [ $this, 'customize_setup' ], $this->priority_customize_register );
 
 		if ( ! $ajax && method_exists( $this, 'tinymce_strings' ) )
 			add_filter( $this->hook_base( 'tinymce_strings' ), [ $this, 'tinymce_strings' ] );

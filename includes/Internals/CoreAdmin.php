@@ -236,4 +236,17 @@ trait CoreAdmin
 
 		return TRUE;
 	}
+
+	protected function coreadmn__hook_posttype_default_status( $constant, $status )
+	{
+		if ( ! $posttype = $this->constant( $constant, $constant ) )
+			return FALSE;
+
+		return add_action( 'admin_menu',
+			static function ()
+				use ( $posttype, $status ) {
+
+				$GLOBALS['submenu']['edit.php?post_type='.$posttype][5][2] = 'edit.php?post_type='.$posttype.'&post_status='.$status;
+			}, 99 );
+	}
 }

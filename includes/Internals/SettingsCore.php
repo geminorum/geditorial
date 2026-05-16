@@ -9,10 +9,10 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsCore
 {
-	protected function settings_insert_priority_option( $default = 10, $prefix = FALSE )
+	protected function settings_insert_priority_option( $default = 10, $suffix = FALSE )
 	{
 		return [
-			'field'   => 'insert_priority'.( $prefix ? '_'.$prefix : '' ),
+			'field'   => self::und( 'insert_priority', $suffix ),
 			'type'    => 'priority',
 			'title'   => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial-admin' ),
 			'default' => $default,
@@ -92,7 +92,7 @@ trait SettingsCore
 
 		if ( is_null( $fallback ) ) {
 
-			$callback = [ 'geminorum\\gEditorial\\Settings', self::und( 'getSetting', $field ) ];
+			$callback = [ gEditorial\Settings::class, self::und( 'getSetting', $field ) ];
 			$setting  = is_callable( $callback ) ? call_user_func( $callback ) : [];
 
 			if ( ! empty( $setting['default'] ) )
@@ -180,7 +180,7 @@ trait SettingsCore
 			echo '</p>';
 	}
 
-	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = FALSE )
+	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check_sidebox = FALSE )
 	{
 		$sub   = $sub ?? $this->module->name;
 		$class = [
@@ -190,7 +190,9 @@ trait SettingsCore
 			'-sub-'.$sub,
 		];
 
-		if ( $check && $sidebox = method_exists( $this, $context.'_sidebox' ) )
+		$sidebox = $check_sidebox ? method_exists( $this, self::und( $context, 'sidebox' ) ) : FALSE;
+
+		if ( $sidebox )
 			$class[] = 'has-sidebox';
 
 		echo '<form enctype="multipart/form-data" class="'.Core\HTML::prepClass( $class ).'" method="post" action="">';
@@ -198,19 +200,19 @@ trait SettingsCore
 			if ( in_array( $context, [ 'settings', 'tools', 'reports', 'imports', 'customs' ], TRUE ) )
 				$this->render_form_fields( $sub, $action, $context );
 
-			if ( $check && $sidebox ) {
+			if ( $sidebox ) {
 				echo '<div class="'.Core\HTML::prepClass( '-sidebox', '-'.$this->module->name, '-sidebox-'.$sub ).'">';
-					call_user_func_array( [ $this, $context.'_sidebox' ], [ $sub, $uri, $context ] );
+					call_user_func_array( [ $this, self::und( $context, 'sidebox' ) ], [ $sub, $uri, $context ] );
 				echo '</div>';
 			}
 	}
 
-	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check = FALSE )
+	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check_sidebox = FALSE )
 	{
 		echo '</form>';
 	}
 
-	// DEFAULT METHOD: tools sub html
+	// DEFAULT METHOD: tools-sub HTML
 	public function tools_sub( $uri, $sub )
 	{
 		$this->render_form_start( $uri, $sub, 'bulk', 'tools', TRUE );
@@ -798,13 +800,13 @@ trait SettingsCore
 	{
 		if ( $args['option_group'] )
 			return [
-				( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['option_group'].'-'.$args['field'] ),
-				( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['option_group'].']['.$args['field'].']' ),
+				$args['id_attr'] ?: self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
+				$args['name_attr'] ?: sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
 			];
 
 		return [
-			( $args['id_attr'] ? $args['id_attr'] : $args['option_base'].'-'.$args['field'] ),
-			( $args['name_attr'] ? $args['name_attr'] : $args['option_base'].'['.$args['field'].']' ),
+			$args['id_attr'] ?: self::dsh( $args['option_base'], $args['field'] ),
+			$args['name_attr'] ?: sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
 		];
 	}
 

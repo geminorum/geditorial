@@ -3,8 +3,8 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Controls;
+use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
 /**
@@ -28,7 +28,7 @@ class FrontSettings extends gEditorial\Service
 
 	public static function setup()
 	{
-		add_action( 'customize_register', [ __CLASS__, 'customize_register' ] );
+		add_action( 'customize_register', [ __CLASS__, 'customize_register' ], 9, 1 );
 
 		if ( is_admin() )
 			return;
@@ -50,6 +50,9 @@ class FrontSettings extends gEditorial\Service
 	public static function customize_register( $manager )
 	{
 		$system = gEditorial\Plugin::system();
+
+		$manager->register_section_type( Controls\SectionButton::class );
+		$manager->register_control_type( Controls\GroupRepeater::class );
 
 		$manager->add_panel( static::MAIN_PANEL, [
 			'title'          => $system ?: _x( 'Editorial', 'Customizer: Panel Title', 'geditorial-admin' ),
@@ -92,7 +95,7 @@ class FrontSettings extends gEditorial\Service
 	 */
 	private static function _customize_register_branding( $manager, $system )
 	{
-		if ( ! GEDITORIAL_DISABLE_CREDITS )
+		if ( GEDITORIAL_DISABLE_CREDITS )
 			return FALSE;
 
 		$manager->add_section( static::MORE_SECTION, [
@@ -122,7 +125,6 @@ class FrontSettings extends gEditorial\Service
 			)
 		);
 
-		$manager->register_section_type( Controls\SectionButton::class );
 		$manager->add_section(
 			new Controls\SectionButton(
 				$manager,
@@ -134,7 +136,7 @@ class FrontSettings extends gEditorial\Service
 					'title'       => sprintf(
 						/* translators: `%s`: system version */
 						_x( 'Editorial v%s', 'Customizer: Control Title', 'geditorial-admin' ),
-						\GEDITORIAL_VERSION
+						GEDITORIAL_VERSION
 					),
 				]
 			)

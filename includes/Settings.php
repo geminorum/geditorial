@@ -268,6 +268,7 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// TODO: Move to `Fields` Service
 	public static function getPageExcludes( $include = [], $context = 'settings' )
 	{
 		$pages = [];
@@ -289,6 +290,7 @@ class Settings extends WordPress\Main
 		);
 	}
 
+	// TODO: Move to `Fields` Service
 	public static function priorityOptions( $format = TRUE )
 	{
 		return
@@ -298,6 +300,7 @@ class Settings extends WordPress\Main
 			Core\Arraay::range( 100, 1000, 100, $format );
 	}
 
+	// TODO: Move to `Fields` Service
 	public static function minutesOptions()
 	{
 		return [
@@ -314,6 +317,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	// TODO: Move to `CustomPostType` Service
 	public static function supportsOptions()
 	{
 		return [
@@ -2094,6 +2098,58 @@ class Settings extends WordPress\Main
 		];
 	}
 
+	/**
+	 * Retrieves the list of capabilities with role titles.
+	 * NOTE: must check with `WordPress\User::cuc()`
+	 * TODO: Move to `Fields` Service
+	 *
+	 * @param string $single_title
+	 * @param bool $pseudo_caps
+	 * @param string $none_title
+	 * @param string $none_value
+	 * @return array|string
+	 */
+	public static function getUserCapList( $single_title = NULL, $pseudo_caps = NULL, $none_title = NULL, $none_value = NULL )
+	{
+		$multisite   = is_multisite();
+		$pseudo_caps = $pseudo_caps ?? $multisite;
+		$none_value  = $none_value  ?? 'none';
+		$none_title  = $none_title  ?? _x( '&ndash; No One &ndash;', 'Fields: Role Dropdown', 'geditorial' );
+
+		$list = [
+			'edit_theme_options'   => _x( 'Administrators', 'Fields: Role Dropdown', 'geditorial' ),
+			'edit_others_posts'    => _x( 'Editors', 'Fields: Role Dropdown', 'geditorial' ),
+			'edit_published_posts' => _x( 'Authors', 'Fields: Role Dropdown', 'geditorial' ),
+			'edit_posts'           => _x( 'Contributors', 'Fields: Role Dropdown', 'geditorial' ),
+		];
+
+		if ( $multisite ) {
+
+			if ( $pseudo_caps )
+				$list['_member_of_site'] = _x( 'Site Users', 'Fields: Role Dropdown', 'geditorial' );
+
+			$list = [
+				'manage_network' => _x( 'Super Admins', 'Fields: Role Dropdown', 'geditorial' ),
+			] + $list;
+
+			if ( $pseudo_caps )
+				$list['_member_of_network'] = _x( 'Network Users', 'Fields: Role Dropdown', 'geditorial' );
+		}
+
+		// @hook: `geditorial_settings_user_cap_list`
+		$list = apply_filters( self::und( static::BASE, 'settings', 'user_cap_list' ),
+			$list,
+			$pseudo_caps,
+			$none_value,
+			$none_title,
+		);
+
+		if ( $none_title )
+			$list[$none_value] = $none_title;
+
+		return $single_title ? $list[$single_title] : $list;
+	}
+
 	public static function sub( $default = 'general' )
 	{
 		return trim( self::req( 'sub', $default ) );
@@ -2458,6 +2514,7 @@ class Settings extends WordPress\Main
 		return _x( 'huh?', 'Settings: Message', 'geditorial-admin' );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function getModuleSectionTitle( $suffix )
 	{
 		switch ( $suffix ) {
@@ -2507,6 +2564,7 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function makeModuleSectionTitle( $suffix )
 	{
 		$title = '';
@@ -2517,6 +2575,7 @@ class Settings extends WordPress\Main
 		return $title;
 	}
 
+	// TODO: Move to `Modulation` Service
 	// @SOURCE: `add_settings_section()`
 	public static function addModuleSection( $page, $atts = [] )
 	{
@@ -2540,6 +2599,7 @@ class Settings extends WordPress\Main
 		return $wp_settings_sections[$page][$args['id']] = $args;
 	}
 
+	// TODO: Move to `Modulation` Service
 	// @SOURCE: `do_settings_sections()`
 	public static function moduleSections( $page )
 	{
@@ -2584,6 +2644,7 @@ class Settings extends WordPress\Main
 		echo '</div>';
 	}
 
+	// TODO: Move to `Modulation` Service
 	// NOTE: THE OLD CLASSIC WAY!
 	public static function moduleSections_OLD( $page )
 	{
@@ -2618,6 +2679,7 @@ class Settings extends WordPress\Main
 		}
 	}
 
+	// TODO: Move to `Modulation` Service
 	// @SOURCE: `do_settings_fields()`
 	public static function moduleSectionFields( $page, $section )
 	{
@@ -2648,11 +2710,13 @@ class Settings extends WordPress\Main
 		}
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleSectionEmpty( $description )
 	{
 		Core\HTML::desc( $description, TRUE, '-section-description -section-empty' );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleButtons( $module, $enabled = FALSE )
 	{
 		if ( $module->autoload ) {
@@ -2687,6 +2751,7 @@ class Settings extends WordPress\Main
 		], _x( 'You have to enable Javascript!', 'Settings: Notice', 'geditorial-admin' ) );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleConfigure( $module, $enabled = FALSE )
 	{
 		if ( ! $module->configure )
@@ -2727,6 +2792,7 @@ class Settings extends WordPress\Main
 			], _x( 'Configure', 'Settings: Button', 'geditorial-admin' ) );
 	}
 
+	// TODO: Move to `Modulation` Service
 	public static function moduleInfo( $module, $enabled = FALSE, $tag = 'h3' )
 	{
 		$access = ( ! empty( $module->access ) && 'stable' !== $module->access )
@@ -2758,6 +2824,7 @@ class Settings extends WordPress\Main
 
 	/**
 	 * Returns Documentation URL for the module.
+	 * TODO: Move to `SystemHelp` Service
 	 *
 	 * @param boolean|object $module
 	 * @return string
@@ -2769,6 +2836,7 @@ class Settings extends WordPress\Main
 			: 'https://github.com/geminorum/geditorial/wiki/Modules-'.Services\Modulation::moduleSlug( $module->name );
 	}
 
+	// TODO: move to `SystemBranding` Service
 	public static function settingsCredits()
 	{
 		if ( GEDITORIAL_DISABLE_CREDITS )
@@ -2788,6 +2856,7 @@ class Settings extends WordPress\Main
 		echo '</div>';
 	}
 
+	// TODO: Move to `SystemBranding` Service
 	public static function settingsSignature( $context = NULL )
 	{
 		if ( GEDITORIAL_DISABLE_CREDITS )
@@ -2803,6 +2872,7 @@ class Settings extends WordPress\Main
 		echo '</p></div>';
 	}
 
+	// TODO: Move to `SystemHelp` Service
 	public static function helpSidebar( $list )
 	{
 		if ( ! is_array( $list ) )
@@ -2818,6 +2888,7 @@ class Settings extends WordPress\Main
 
 	/**
 	 * Returns the help content for given module
+	 * TODO: Move to `SystemHelp` Service
 	 *
 	 * @param boolean|object $module
 	 * @return array
@@ -2851,12 +2922,14 @@ class Settings extends WordPress\Main
 		return [ $wikimodule, $wikihome ];
 	}
 
+	// TODO: Move to `SystemHelp` Service
 	public static function add_help_tab_home_callback( $screen, $tab )
 	{
 		$tab['module'] = FALSE;
 		self::add_help_tab_module_callback( $screen, $tab );
 	}
 
+	// TODO: Move to `SystemHelp` Service
 	public static function add_help_tab_module_callback( $screen, $tab )
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
@@ -2876,7 +2949,7 @@ class Settings extends WordPress\Main
 		] );
 	}
 
-	// TODO: move to new main: `Fields`
+	// TODO: Move to `Fields` Service: `Fields::renderType()`
 	// TODO: support HTML `pattern`: https://input-pattern.com/en/tutorial.php
 	// TODO: support HTML `title_attr`
 	public static function fieldType( $atts, &$scripts )
@@ -2929,8 +3002,8 @@ class Settings extends WordPress\Main
 			'wrap'        => FALSE,
 			'class'       => '',      // now used on wrapper
 			'field_class' => '',      // formally just class!
-			'before'      => '',      // html to print before field
-			'after'       => '',      // html to print after field
+			'before'      => '',      // HTML to print before field
+			'after'       => '',      // HTML to print after field
 
 			'string_select'   => self::showOptionNone(),
 			'string_disabled' => _x( 'Disabled', 'Settings', 'geditorial-admin' ),
@@ -2990,7 +3063,7 @@ class Settings extends WordPress\Main
 
 		} else {
 
-			$id   = $args['id_attr'] ? $args['id_attr'] : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.Core\HTML::escape( $args['field'] );
+			$id   = $args['id_attr']   ? $args['id_attr']   : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.Core\HTML::escape( $args['field'] );
 			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.Core\HTML::escape( $args['field'] ).']';
 		}
 
@@ -3795,6 +3868,46 @@ class Settings extends WordPress\Main
 
 				if ( $args['readonly'] )
 					Core\HTML::inputHidden( $name, $value );
+
+				break;
+
+			case 'cap':
+
+				if ( ! $args['values'] )
+					$args['values'] = self::getUserCapList( NULL, NULL, $args['none_title'], $args['none_value'] );
+
+				if ( count( $args['values'] ) ) {
+
+					foreach ( $args['values'] as $value_name => $value_title ) {
+
+						if ( in_array( $value_name, $exclude ) )
+							continue;
+
+						$html.= Core\HTML::tag( 'option', [
+							'value'    => $value_name,
+							'selected' => $value == $value_name,
+							'disabled' => Core\HTML::attrBoolean( $args['disabled'], $value_name ),
+						], $value_title );
+					}
+
+					echo Core\HTML::tag( 'select', [
+						'id'       => $id,
+						'name'     => $name,
+						'class'    => Core\HTML::attrClass( $args['field_class'], '-type-cap' ),
+						// `select` doesn't have a `readonly`, keeping `disabled` with hidden input
+						// @REF: https://stackoverflow.com/a/368834
+						'disabled' => $args['readonly'],
+						'dir'      => $args['dir'],
+						'data'     => $args['data'],
+					], $html );
+
+					if ( $args['readonly'] )
+						Core\HTML::inputHidden( $name, $value );
+
+				} else {
+
+					$args['description'] = FALSE;
+				}
 
 				break;
 

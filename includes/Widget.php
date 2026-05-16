@@ -14,27 +14,49 @@ class Widget extends \WP_Widget
 		return gEditorial();
 	}
 
+	/**
+	 * Retrieves the constant value for given module.
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 * @param string $module
+	 * @return mixed
+	 */
 	protected static function constant( $key, $default = FALSE, $module = NULL )
 	{
 		return static::factory()->constant( $module ?? static::MODULE, $key, $default );
 	}
 
-	protected static function filters( $hook, ...$args )
+	/**
+	 * Calls the callbacks that have been added to given filter hook.
+	 *
+	 * @param string $hook
+	 * @param mixed $arguments
+	 * @return mixed
+	 */
+	protected static function filters( $hook, ...$arguments )
 	{
 		return apply_filters( sprintf( '%s_%s_%s',
 			static::BASE,
 			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook
-		), ...$args );
+		), ...$arguments );
 	}
 
-	protected static function actions( $hook, ...$args )
+	/**
+	 * Calls the callbacks that have been added to given action hook.
+	 *
+	 * @param string $hook
+	 * @param mixed $arguments
+	 * @return mixed
+	 */
+	protected static function actions( $hook, ...$arguments )
 	{
 		return do_action( sprintf( '%s_%s_%s',
 			static::BASE,
 			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook
-		), ...$args );
+		), ...$arguments );
 	}
 
 	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )

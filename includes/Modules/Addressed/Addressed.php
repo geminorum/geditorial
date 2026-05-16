@@ -11,6 +11,10 @@ use geminorum\gEditorial\WordPress;
 class Addressed extends gEditorial\Module
 {
 
+	protected $deafults = [
+		'customize_support' => TRUE,
+	];
+
 	public static function module()
 	{
 		return [

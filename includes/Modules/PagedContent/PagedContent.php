@@ -126,6 +126,7 @@ class PagedContent extends gEditorial\Module
 						'https://github.com/ethitter/Automatically-Paginate-Posts'
 					),
 				],
+				// https://wordpress.org/plugins/automatically-paginate-posts/
 			];
 		}
 

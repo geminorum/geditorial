@@ -367,7 +367,7 @@ class Shortcodes extends gEditorial\Module
 		if ( ! $args['completed'] || ! $args['total'] )
 			return $content;
 
-		$html = self::buffer( [ 'geminorum\\gEditorial\\Services\\Markup', 'renderCircleProgress' ], [
+		$html = self::buffer( [ Services\Markup::class, 'renderCircleProgress' ], [
 			$args['completed'],
 			$args['total'],
 			$args['hint'] ?: FALSE,

@@ -467,14 +467,14 @@ class Archives extends gEditorial\Module
 		$setting = $this->get_setting( 'term_'.$this->current_queried->taxonomy.'_content',
 			$this->_get_default_term_content( $this->current_queried->taxonomy ) );
 
-		$html.= self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermIntro' ], [
+		$html.= self::buffer( [ gEditorial\Template::class, 'renderTermIntro' ], [
 			$this->current_queried,
 			[],
 			$this->key,
 		] );
 
 		if ( WordPress\Taxonomy::hierarchical( $this->current_queried->taxonomy ) )
-			$html.= self::buffer( [ 'geminorum\\gEditorial\\Template', 'renderTermSubTerms' ], [
+			$html.= self::buffer( [ gEditorial\Template::class, 'renderTermSubTerms' ], [
 				$this->current_queried,
 				[],
 				$this->key,
