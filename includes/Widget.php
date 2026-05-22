@@ -738,14 +738,14 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_avatar_size( $instance, $default = '32', $field = 'avatar_size' )
+	public function form_avatar_size( $instance, $default = NULL, $field = 'avatar_size' )
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
 			'size'  => 3,
 			'name'  => $this->get_field_name( $field ),
 			'id'    => $this->get_field_id( $field ),
-			'value' => $instance[$field] ?? $default, // TODO: use default form `Services\Avatars`
+			'value' => $instance[$field] ?? Services\Avatars::DEFAULT_SIZE,
 		] );
 
 		Core\HTML::label( Template::spc(

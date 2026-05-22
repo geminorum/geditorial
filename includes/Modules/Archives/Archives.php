@@ -188,7 +188,7 @@ class Archives extends gEditorial\Module
 	{
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
-			$screen->set_help_sidebar( gEditorial\Settings::helpSidebar( [ [
+			$screen->set_help_sidebar( Services\SystemHelp::sidebar( [ [
 				'url'   => $this->get_taxonomy_archive_link( $screen->taxonomy ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -203,7 +203,7 @@ class Archives extends gEditorial\Module
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {
 
-			$screen->set_help_sidebar( gEditorial\Settings::helpSidebar( [ [
+			$screen->set_help_sidebar( Services\SystemHelp::sidebar( [ [
 				'url'   => $this->get_posttype_archive_link( $screen->post_type ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */

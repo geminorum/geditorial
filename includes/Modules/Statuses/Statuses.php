@@ -133,17 +133,30 @@ class Statuses extends gEditorial\Module
 			]
 		);
 
-		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE );
+		$statuses  = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE );
+		$supported = $this->posttypes();
 
 		foreach ( $statuses as $status ) {
 
 			$can = $this->role_can( 'status', NULL, FALSE, TRUE, '_roles_'.$status->term_id );
+
+			$metas = WordPress\Term::getMeta( $status, [
+				'order'     => '',
+				'color'     => '',
+				'posttype'  => '',
+				'posttypes' => $supported,
+				'viewable'  => '0',          // NOTE: `0`: Undefined, `1`: Non-Viewable, `2`: Viewable
+				'roles'     => FALSE,
+				'plural'    => FALSE,
+				'icon'      => FALSE,
+			] );
 
 			$args = [
 
 				'public'      => TRUE,
 				'label'       => $status->name,
 				'label_count' => Core\L10n::getNooped( $status->name.' <span class="count">(%s)</span>', $status->name.' <span class="count">(%s)</span>' ),
+				'post_type'   => $metas['posttypes'],
 
 				'show_in_admin_all_list'    => TRUE,
 				'show_in_admin_status_list' => $can,
@@ -152,9 +165,6 @@ class Statuses extends gEditorial\Module
 				'show_in_metabox_dropdown'    => $can,
 				'show_in_inline_dropdown'     => $can,
 				'show_in_press_this_dropdown' => $can,
-
-				// FIXME: check for post-type meta
-				'post_type' => $this->posttypes(),
 
 				// FIXME: check for post-type icon
 				// 'dashicon' => 'dashicons-archive',

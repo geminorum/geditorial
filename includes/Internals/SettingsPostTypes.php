@@ -77,7 +77,7 @@ trait SettingsPostTypes
 
 		$option = $this->hook_base( $this->module->name );
 
-		gEditorial\Settings::addModuleSection( $option, [
+		Services\Modulation::addSection( $option, [
 			'id'            => $option.'_posttypes',
 			'title'         => _x( 'Post-types', 'Internal: SettingsPostTypes: Section Title', 'geditorial-admin' ),
 			'section_class' => 'posttypes_option_section',

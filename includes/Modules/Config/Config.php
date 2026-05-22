@@ -1060,13 +1060,13 @@ class Config extends gEditorial\Module
 
 			echo gEditorial\Ajax::spinner();
 
-			gEditorial\Settings::moduleInfo( $module, $enabled );
+			Services\Modulation::renderInfo( $module, $enabled );
 
 			if ( FALSE === $module->disabled ) {
 
 				echo '<div class="-wrap -actions">';
-					gEditorial\Settings::moduleConfigure( $module, $enabled );
-					gEditorial\Settings::moduleButtons( $module, $enabled );
+					Services\Modulation::renderConfigure( $module, $enabled );
+					Services\Modulation::renderButtons( $module, $enabled );
 				echo '</div>';
 
 			} else if ( $module->disabled ) {

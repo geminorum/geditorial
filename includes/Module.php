@@ -608,7 +608,12 @@ class Module extends WordPress\Module
 	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
 	{
 		return $this->filters( 'column_title',
-			Services\CustomPostType::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback ),
+			Services\CustomPostType::getLabel(
+				$this->constant( $constant ),
+				'column_title',
+				'name',
+				$fallback
+			),
 			$taxonomy,
 			$constant,
 			$fallback
@@ -618,7 +623,12 @@ class Module extends WordPress\Module
 	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
 	{
 		return $this->filters( 'column_title',
-			Services\CustomTaxonomy::getLabel( $this->constant( $constant ), 'column_title', 'name', $fallback ),
+			Services\CustomTaxonomy::getLabel(
+				$this->constant( $constant ),
+				'column_title',
+				'name',
+				$fallback
+			),
 			$posttype,
 			$constant,
 			$fallback
@@ -628,7 +638,13 @@ class Module extends WordPress\Module
 	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )
 	{
 		$title = $this->get_column_title( $column, $constant, $fallback );
-		return sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), $this->classs( $column ) );
+
+		return sprintf(
+			'<span class="-column-icon %3$s" title="%2$s">%1$s</span>',
+			$title,
+			esc_attr( $title ),
+			$this->classs( $column )
+		);
 	}
 
 	public function is_save_post( $post, $constant = FALSE )
@@ -707,7 +723,7 @@ class Module extends WordPress\Module
 	{
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
-			'title'  => $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc' ),
+			'title'  => $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc', $this->module->title ),
 			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
 			'target' => $link ? '_blank' : FALSE,
 		], Services\Icons::get( $icon ?? $this->module->icon ) );

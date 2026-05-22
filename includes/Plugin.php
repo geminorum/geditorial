@@ -115,6 +115,8 @@ class Plugin extends WordPress\Plugin
 			'GEDITORIAL_DISABLE_HELP_TABS' => FALSE,
 			'GEDITORIAL_STRING_DELIMITERS' => NULL,
 
+			'GEDITORIAL_WIKI_URL' => 'https://github.com/geminorum/geditorial/wiki',
+
 			'GEDITORIAL_CACHE_DIR' => sprintf( '%s/cache', WP_CONTENT_DIR ),   // FALSE to disable
 			'GEDITORIAL_CACHE_URL' => sprintf( '%s/cache', WP_CONTENT_URL ),
 			'GEDITORIAL_CACHE_TTL' => 60 * 60 * 12,                            // 12 hours
@@ -225,7 +227,9 @@ class Plugin extends WordPress\Plugin
 			'SearchSelect',
 			'SemiSecure',
 			'Sitemaps',
+			'SystemBranding',
 			'SystemHeartbeat',
+			'SystemHelp',
 			'TaxonomyFields',
 			'TaxonomyTaxonomy',
 			'TermHierarchy',

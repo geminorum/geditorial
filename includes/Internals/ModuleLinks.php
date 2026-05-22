@@ -162,7 +162,7 @@ trait ModuleLinks
 				'context' => 'docs',
 				'sub'     => FALSE,
 				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
-				'url'     => gEditorial\Settings::getModuleDocsURL( FALSE ),
+				'url'     => Services\SystemHelp::getModuleDocsURL( FALSE ),
 				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
 			];
 
@@ -181,7 +181,7 @@ trait ModuleLinks
 			case 'reports'  : $url = gEditorial\Settings::getURLbyContext( $context ); break;
 			case 'config'   : $url = gEditorial\Settings::getURLbyContext( 'settings' ); break;
 			case 'settings' : $url = gEditorial\Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $this->module->name ] ); $sub = FALSE; break;
-			case 'docs'     : $url = gEditorial\Settings::getModuleDocsURL( $this->module ); $sub = FALSE; break;
+			case 'docs'     : $url = Services\SystemHelp::getModuleDocsURL( $this->module ); $sub = FALSE; break;
 			case 'listtable': $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
 			     default    : $url = Core\URL::current();
 		}

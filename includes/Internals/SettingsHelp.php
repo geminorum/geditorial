@@ -11,12 +11,12 @@ trait SettingsHelp
 {
 	protected function settings_help_tabs( $context = 'settings' )
 	{
-		return gEditorial\Settings::helpContent( $this->module );
+		return Services\SystemHelp::content( $this->module );
 	}
 
 	protected function settings_help_sidebar( $context = 'settings' )
 	{
-		return gEditorial\Settings::helpSidebar( $this->get_module_links() );
+		return Services\SystemHelp::sidebar( $this->get_module_links() );
 	}
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )

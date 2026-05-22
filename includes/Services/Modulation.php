@@ -109,6 +109,343 @@ class Modulation extends gEditorial\Service
 		return $enabled;
 	}
 
+	public static function getSectionTitle( $suffix )
+	{
+		switch ( $suffix ) {
+			case '_general'    : return [ _x( 'General', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_setup'      : return [ _x( 'Setup', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_config'     : return [ _x( 'Configuration', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_defaults'   : return [ _x( 'Defaults', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_tweaks'     : return [ _x( 'Tweaks', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_misc'       : return [ _x( 'Miscellaneous', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_archives'   : return [ _x( 'Archives', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_frontend'   : return [ _x( 'Front-end', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_backend'    : return [ _x( 'Back-end', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_content'    : return [ _x( 'Generated Contents', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_featured'   : return [ _x( 'Featured Contents', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_connected'  : return [ _x( 'Connected Contents', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_supports'   : return [ _x( 'Feature Support', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_dashboard'  : return [ _x( 'Admin Dashboard', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editlist'   : return [ _x( 'Admin Edit List', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_comments'   : return [ _x( 'Admin Comment List', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_editpost'   : return [ _x( 'Admin Edit Post', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_edittags'   : return [ _x( 'Admin Edit Terms', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_columns'    : return [ _x( 'Admin List Columns', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_import'     : return [ _x( 'Import Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_reports'    : return [ _x( 'Report Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_printpage'  : return [ _x( 'Print Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_shortcode'  : return [ _x( 'ShortCode Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_strings'    : return [ _x( 'Custom Strings', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_formats'    : return [ _x( 'Custom Formats', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_avatars'    : return [ _x( 'User Avatars', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_tabs'       : return [ _x( 'Content Tabs', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_types'      : return [ _x( 'Data Types', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_fields'     : return [ _x( 'Data Fields', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_constants'  : return [ _x( 'Custom Constants', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_posttypes'  : return [ _x( 'Post-Types', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_taxonomies' : return [ _x( 'Taxonomies', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_subcontent' : return [ _x( 'Sub-Contents', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_bulkactions': return [ _x( 'Bulk Actions', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_customtabs' : return [ _x( 'Custom Tabs', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_roles'      : return [ _x( 'Availability', 'Service: Modulation: Section Title', 'geditorial-admin' ), _x( 'Though Administrators have it all!', 'Service: Modulation: Section Description', 'geditorial-admin' ) ];
+			case '_units'      : return [ _x( 'Units Fields', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_geo'        : return [ _x( 'Geo Fields', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_woocommerce': return [ _x( 'WooCommerce', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_p2p'        : return [ _x( 'Posts-to-Posts', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_o2o'        : return [ _x( 'Objects-to-Objects', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+		}
+
+		return FALSE;
+	}
+
+	public static function makeSectionTitle( $suffix )
+	{
+		$title = '';
+
+		foreach ( explode( '_', str_replace( ' ', '_', $suffix ) ) as $word )
+			$title.= ucfirst( $word ).' ';
+
+		return $title;
+	}
+
+	// @source: `add_settings_section()`
+	public static function addSection( $page, $atts = [] )
+	{
+		global $wp_settings_sections;
+
+		$args = self::atts( [
+			'id'            => FALSE,
+			'title'         => FALSE,
+			'description'   => FALSE,
+			'link'          => FALSE,
+			'callback'      => '__return_false',
+			'section_class' => '',
+		], $atts );
+
+		if ( ! $args['id'] )
+			return FALSE;
+
+		if ( ! $args['title'] )
+			$args['title'] = self::makeSectionTitle( $args['id'] );
+
+		return $wp_settings_sections[$page][$args['id']] = $args;
+	}
+
+	// @SOURCE: `do_settings_sections()`
+	public static function renderSections( $page )
+	{
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if ( empty( $wp_settings_sections[$page] ) )
+			return;
+
+		$tabs   = Core\Arraay::pluck( $wp_settings_sections[$page], 'title', 'id' );
+		$active = Core\Arraay::keyFirst( $tabs );
+
+		echo '<div class="base-tabs-list -base nav-tab-base">';
+
+			Core\HTML::tabNav( $active, $tabs );
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+				echo '<div class="nav-tab-content -content'.( $active === $section['id'] ? ' nav-tab-active -active' : '' ).'" data-tab="'.$section['id'].'">';
+
+				if ( $section['callback'] && '__return_false' !== $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				else
+					self::fieldSection( $section );
+
+				if ( ! isset( $wp_settings_fields )
+					|| ! isset( $wp_settings_fields[$page] )
+					|| ! isset( $wp_settings_fields[$page][$section['id']] ) ) {
+
+					echo '</div>';
+					continue;
+				}
+
+				echo '<table class="form-table -section-table"><tbody class="-section-body -list">';
+					// do_settings_fields( $page, $section['id'] );
+					self::sectionFields( $page, $section['id'] );
+				echo '</tbody></table>';
+
+				echo '</div>';
+			}
+
+		echo '</div>';
+	}
+
+	// NOTE: THE OLD CLASSIC WAY!
+	public static function renderSections_OLD( $page )
+	{
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_sections[$page] ) )
+			return;
+
+		foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+			echo '<div class="'.Core\HTML::prepClass( '-section-wrap', $section['section_class'] ).'">';
+
+				Core\HTML::h2( $section['title'], '-section-title' );
+
+				if ( $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				if ( ! isset( $wp_settings_fields )
+					|| ! isset( $wp_settings_fields[$page] )
+					|| ! isset( $wp_settings_fields[$page][$section['id']] ) ) {
+
+					echo '</div>';
+					continue;
+				}
+
+				echo '<table class="form-table -section-table"><tbody class="-section-body -list">';
+					// do_settings_fields( $page, $section['id'] );
+					self::sectionFields( $page, $section['id'] );
+				echo '</tbody></table>';
+
+			echo '</div>';
+		}
+	}
+
+	// @SOURCE: `do_settings_fields()`
+	public static function sectionFields( $page, $section )
+	{
+		global $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_fields[$page][$section] ) )
+			return;
+
+		foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
+			$class = [ '-field' ];
+
+			if ( ! empty( $field['args']['class'] ) )
+				$class[] = $field['args']['class'];
+
+			echo '<tr class="'.Core\HTML::prepClass( $class ).'">';
+
+			if ( ! empty( $field['args']['label_for'] ) )
+				echo '<th class="-th" scope="row"><label for="'
+					.Core\HTML::escape( $field['args']['label_for'] )
+					.'">'.$field['title'].'</label></th>';
+
+			else
+				echo '<th class="-th" scope="row">'.$field['title'].'</th>';
+
+			echo '<td class="-td">';
+				call_user_func( $field['callback'], $field['args'] );
+			echo '</td></tr>';
+		}
+	}
+
+	public static function sectionEmpty( $description )
+	{
+		Core\HTML::desc( $description, TRUE, '-section-description -section-empty' );
+	}
+
+	public static function fieldSection( $section, $tag = 'h2' )
+	{
+		echo Core\HTML::tag( $tag, ( $section['title'] ?? '' ).gEditorial\Settings::fieldAfterIcon( $section['link'] ?? '' ) );
+
+		Core\HTML::desc( ( $section['description'] ?? '' ) );
+	}
+
+	public static function fieldSectionAdopted( $source, $author = NULL, $link = NULL )
+	{
+		$template = $author
+			/* translators: `%1$s`: source name, `%2$s`: author name */
+			? _x( 'Adopted from %1$s by %2$s.', 'Service: Modulation: Section Description', 'geditorial-admin' )
+			/* translators: `%1$s`: source name */
+			: _x( 'Adopted from %1$s.', 'Service: Modulation: Section Description', 'geditorial-admin' );
+
+		$html = sprintf( $template,
+			Core\HTML::code( $source ),
+			Core\HTML::code( $author ?? '' )
+		);
+
+		if ( empty( $link ) )
+			return $html;
+
+		return Core\Text::spc(
+			$html,
+			sprintf(
+				/* translators: `%1$s`: link start, `%2$s`: link end */
+				_x( 'Visit %1$shere%2$s for more information.', 'Service: Modulation: Section Description', 'geditorial-admin' ),
+				sprintf( '<a href="%s" target="_blank">', Core\HTML::escapeURL( $link ) ),
+				'</a>'
+			)
+		);
+	}
+
+	public static function renderButtons( $module, $enabled = FALSE )
+	{
+		if ( $module->autoload ) {
+			echo Core\HTML::wrap( _x( 'Auto-loaded!', 'Service: Modulation: Notice', 'geditorial-admin' ), '-autoloaded -warning', FALSE );
+			return;
+		}
+
+		echo Core\HTML::tag( 'input', [
+			'type'  => 'submit',
+			'value' => _x( 'Enable', 'Service: Modulation: Button', 'geditorial-admin' ),
+			'style' => $enabled ? 'display:none' : FALSE,
+			'class' => Core\HTML::buttonClass( TRUE, [ 'button-primary', 'hide-if-no-js' ] ),
+			'data'  => [
+				'module' => $module->name,
+				'do'     => 'enable',
+			],
+		] );
+
+		echo Core\HTML::tag( 'input', [
+			'type'  => 'submit',
+			'value' => _x( 'Disable', 'Service: Modulation: Button', 'geditorial-admin' ),
+			'style' => $enabled ? FALSE : 'display:none',
+			'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-danger' ] ),
+			'data'  => [
+				'module' => $module->name,
+				'do'     => 'disable',
+			],
+		] );
+
+		echo Core\HTML::tag( 'span', [
+			'class' => Core\HTML::buttonClass( TRUE, [ '-danger', 'hide-if-js' ] ),
+		], _x( 'You have to enable Javascript!', 'Service: Modulation: Notice', 'geditorial-admin' ) );
+	}
+
+	public static function renderConfigure( $module, $enabled = FALSE )
+	{
+		if ( ! $module->configure )
+			return;
+
+		if ( 'tools' === $module->configure )
+			echo Core\HTML::tag( 'a', [
+				'href'  => Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'data'  => [
+					'module' => $module->name,
+					'do'     => 'configure',
+				],
+			], _x( 'Tools', 'Service: Modulation: Button', 'geditorial-admin' ) );
+
+
+		else if ( 'reports' === $module->configure )
+			echo Core\HTML::tag( 'a', [
+				'href'  => Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'data'  => [
+					'module' => $module->name,
+					'do'     => 'configure',
+				],
+			], _x( 'Reports', 'Service: Modulation: Button', 'geditorial-admin' ) );
+
+		else
+			echo Core\HTML::tag( 'a', [
+				'href'  => Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
+				'style' => $enabled ? FALSE : 'display:none',
+				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'data'  => [
+					'module' => $module->name,
+					'do'     => 'configure',
+				],
+			], _x( 'Configure', 'Service: Modulation: Button', 'geditorial-admin' ) );
+	}
+
+	public static function renderInfo( $module, $enabled = FALSE, $tag = 'h3' )
+	{
+		$access = ( ! empty( $module->access ) && 'stable' !== $module->access )
+			? sprintf( ' <code title="%3$s" class="-acccess -access-%1$s">%2$s</code>',
+				$module->access,
+				strtoupper( $module->access ),
+				_x( 'Access Code', 'Service: Modulation', 'geditorial-admin' )
+			) : '';
+
+		if ( $wiki = Services\SystemHelp::getModuleDocsURL( $module ) )
+			Core\HTML::h3( Core\HTML::tag( 'a', [
+				'href'   => $wiki,
+				'target' => '_blank',
+				'title'  => sprintf(
+					/* translators: `%s`: module title */
+					_x( '%s Documentation', 'Service: Modulation', 'geditorial-admin' ),
+					$module->title
+				),
+			], $module->title ).$access, '-title' );
+
+		else
+			Core\HTML::h3( $module->title.$access, '-title' );
+
+
+		Core\HTML::desc( Core\Text::wordWrap( $module->desc ?? '' ) );
+
+		// `list.js` filters
+		echo '<span class="-module-title" style="display:none;" aria-hidden="true">'.$module->title.'</span>';
+		echo '<span class="-module-key" style="display:none;" aria-hidden="true">'.$module->name.'</span>';
+		echo '<span class="-module-access" style="display:none;" aria-hidden="true">'.$module->access.'</span>';
+		echo '<span class="-module-keywords" style="display:none;" aria-hidden="true">'.implode( ' ', Core\Arraay::prepString( $module->keywords ) ).'</span>';
+		echo '<span class="status" data-do="enabled" style="display:none;" aria-hidden="true">'.( $enabled ? 'true' : 'false' ).'</span>';
+	}
+
 	// TODO: must check for minimum version of WooCommerce
 	public static function moduleCheckWooCommerce( $message = NULL )
 	{
@@ -121,7 +458,7 @@ class Modulation extends gEditorial\Service
 	{
 		return self::const( 'GPERSIANDATE_VERSION' )
 			? FALSE
-			: _x( 'Needs gPersianDate', 'Modules: Calendar', 'geditorial-admin' );
+			: _x( 'Needs gPersianDate', 'Service: Modulation', 'geditorial-admin' );
 	}
 
 	public static function moduleCheckLocale( $locale, $message = NULL )

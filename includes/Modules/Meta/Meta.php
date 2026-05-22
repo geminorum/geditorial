@@ -85,8 +85,8 @@ class Meta extends gEditorial\Module
 	{
 		$strings = [
 			'titles' => [
-				'over_title' => _x( 'OverTitle', 'Titles', 'geditorial-meta' ),
-				'sub_title'  => _x( 'SubTitle', 'Titles', 'geditorial-meta' ),
+				'over_title' => _x( 'Overtitle', 'Titles', 'geditorial-meta' ),
+				'sub_title'  => _x( 'Subtitle', 'Titles', 'geditorial-meta' ),
 				'url'        => _x( 'External Link', 'Titles', 'geditorial-meta' ),
 				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
 				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
@@ -306,7 +306,7 @@ class Meta extends gEditorial\Module
 				],
 				'page' => [
 					'over_title' => [ 'type' => 'title_before' ],
-					'sub_title'  => [ 'type' => 'title_after' ],
+					'sub_title'  => [ 'type' => 'title_after'  ],
 					'url'        => [ 'type' => 'title_link'   ],
 
 					'content_embed_url' => [ 'type' => 'embed' ],

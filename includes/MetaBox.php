@@ -1093,6 +1093,7 @@ class MetaBox extends WordPress\Main
 			case 'video_source':
 			case 'image_source':
 			case 'downloadable':
+			case 'title_link':
 			case 'link':
 
 				$atts['dir'] = 'ltr';

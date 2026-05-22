@@ -943,8 +943,8 @@ trait PostTypeFields
 			// NOTE: no need for access checks: just input/not value
 
 			$hint  = WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' );
-			$class = $prefix.'-'.( $bulkedit ? 'bulkedit' : 'quickedit' ).'-'.$field;
-			$name  = $prefix.'-'.$field;
+			$class = self::dsh( $prefix, $bulkedit ? 'bulkedit' : 'quickedit', $field );
+			$name  = self::dsh( $prefix, $field );
 
 			switch ( $args['type'] ) {
 
@@ -1598,8 +1598,8 @@ trait PostTypeFields
 			case 'term':
 
 				$this->posttypefields_do_migrate_field_terms( $data, $field, $post );
+				break;
 
-			break;
 			default:
 
 				$this->posttypefields_do_migrate_field_strings( $data, $field, $post );
@@ -1637,7 +1637,12 @@ trait PostTypeFields
 
 		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
 
-		return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
+		return wp_set_object_terms(
+			$post->ID,
+			Core\Arraay::prepNumeral( $terms ),
+			$field['taxonomy'],
+			FALSE
+		);
 	}
 
 	// OLD: `import_field_raw_strings()`

@@ -24,7 +24,7 @@ trait SettingsFields
 
 			if ( count( $fields ) ) {
 
-				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				Services\Modulation::addSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'section_class' => 'fields_option_section fields_option-'.$posttype,
@@ -62,7 +62,7 @@ trait SettingsFields
 
 			} else if ( isset( $all[$posttype] ) ) {
 
-				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				Services\Modulation::addSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'title'         => sprintf( $section_title, $all[$posttype] ),
 					'callback'      => [ $this, 'settings_fields_option_none' ],
@@ -126,7 +126,7 @@ trait SettingsFields
 
 	public function settings_fields_option_none( $args )
 	{
-		gEditorial\Settings::moduleSectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
+		Services\Modulation::sectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
 	}
 
 	public function posttype_fields_all( $posttype = 'post', $module = NULL )

@@ -40,7 +40,7 @@ trait SettingsTaxonomies
 		$title  = $title ?? $this->get_string( 'taxonomies_title', FALSE, 'settings',
 			_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
 
-		gEditorial\Settings::addModuleSection( $option, [
+		Services\Modulation::addSection( $option, [
 			'id'            => self::und( $option, 'taxonomies' ),
 			'title'         => _x( 'Taxonomies', 'Internal: SettingsTaxonomies: Section Title', 'geditorial-admin' ),
 			'section_class' => 'taxonomies_option_section',

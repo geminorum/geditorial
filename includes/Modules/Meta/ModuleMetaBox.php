@@ -249,6 +249,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 			],
 		];
 
+		// TODO: handle ortho types: url/text
 		if ( $ltr )
 			$atts['dir'] = 'ltr';
 

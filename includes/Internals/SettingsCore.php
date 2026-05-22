@@ -127,7 +127,7 @@ trait SettingsCore
 
 			$this->render_form_fields( $this->module->name );
 
-			gEditorial\Settings::moduleSections( $this->hook_base( $this->module->name ) );
+			Services\Modulation::renderSections( $this->hook_base( $this->module->name ) );
 
 			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.Core\HTML::escape( $this->module->name ).'" />';
 
@@ -663,7 +663,7 @@ trait SettingsCore
 			if ( is_array( $fields ) ) {
 
 				$section = $this->hook_base( $this->module->name ).$section_suffix;
-				$title   = gEditorial\Settings::getModuleSectionTitle( $section_suffix );
+				$title   = Services\Modulation::getSectionTitle( $section_suffix );
 
 				if ( ! $title && method_exists( $this, 'settings_section_titles' ) )
 					$title = call_user_func_array( [ $this, 'settings_section_titles' ], [ $section_suffix ] );
@@ -675,10 +675,10 @@ trait SettingsCore
 				else
 					$callback = '__return_false';
 
-				gEditorial\Settings::addModuleSection( $this->hook_base( $this->module->name ), [
+				Services\Modulation::addSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'callback'      => $callback,
-					'title'         => empty( $title[0] ) ? gEditorial\Settings::makeModuleSectionTitle( $section_suffix ) : $title[0],
+					'title'         => empty( $title[0] ) ? Services\Modulation::makeSectionTitle( $section_suffix ) : $title[0],
 					'description'   => empty( $title[1] ) ? FALSE : $title[1],
 					'link'          => empty( $title[2] ) ? FALSE : $title[2],
 					'section_class' => 'settings_section',
@@ -764,7 +764,7 @@ trait SettingsCore
 	protected function settings_footer()
 	{
 		if ( 'config' === $this->module->name )
-			gEditorial\Settings::settingsCredits();
+			Services\SystemBranding::credits();
 
 		else
 			$this->settings_signature( 'settings' );
@@ -772,7 +772,7 @@ trait SettingsCore
 
 	protected function settings_signature( $context = 'settings' )
 	{
-		gEditorial\Settings::settingsSignature( $context );
+		Services\SystemBranding::signature( $context );
 	}
 
 	public function add_settings_field( $r = [] )

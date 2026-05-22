@@ -103,7 +103,7 @@ class PagedContent extends gEditorial\Module
 						_x( 'Provides a &#8220;view all&#8221; (single page) option for supported multipage post-types, using WordPress %s Quicktag.', 'Setting Section Description', 'geditorial-paged-content' ),
 						Core\HTML::code( '&lt;!--nextpage--&gt;' )
 					),
-					gEditorial\Settings::fieldSectionAdopted(
+					Services\Modulation::fieldSectionAdopted(
 						'View All Posts Pages',
 						'Erick Hitter',
 						'https://github.com/ethitter/View-All-Posts-Pages'
@@ -120,7 +120,7 @@ class PagedContent extends gEditorial\Module
 						_x( 'Automatically page posts by injecting %s Quick-tag.', 'Setting Section Description', 'geditorial-paged-content' ),
 						Core\HTML::code( '&lt;!--nextpage--&gt;' )
 					),
-					gEditorial\Settings::fieldSectionAdopted(
+					Services\Modulation::fieldSectionAdopted(
 						'Automatically Paginate Posts',
 						'Erick Hitter',
 						'https://github.com/ethitter/Automatically-Paginate-Posts'

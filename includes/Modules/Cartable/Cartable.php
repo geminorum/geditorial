@@ -750,7 +750,7 @@ class Cartable extends gEditorial\Module
 		if ( ! $user = get_user_by( 'id', $user_id ) )
 			return;
 
-			WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE );
+		WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE );
 	}
 
 	public function render_widget_summary( $object, $box )
@@ -778,47 +778,39 @@ class Cartable extends gEditorial\Module
 				$this->actions( 'render_metabox', $post, $box, NULL, 'mainbox' );
 
 			else
-				echo $this->metabox_summary( $post );
+				echo $this->_get_metabox_summary( $post );
 
 		echo '</div>';
 	}
 
-	public function metabox_summary( $post, $check_groups = TRUE, $wrap = TRUE )
+	private function _get_metabox_summary( $post, $check_groups = TRUE )
 	{
-		$html  = '';
+		$rows  = [];
 		$user  = wp_get_current_user();
 		$users = $this->get_users( $post->ID );
 
 		if ( in_array( $user->user_login, $users ) )
-			$html.= '<li class="-row">'
-				.$this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Row Icon Title', 'geditorial-cartable' ) )
-				._x( 'This currently is on your cartable.', 'Message', 'geditorial-cartable' )
-				.'</li>';
+			$rows[] = $this->get_column_icon( FALSE, 'portfolio', _x( 'User Cartables', 'Row Icon Title', 'geditorial-cartable' ) )
+				._x( 'This currently is on your cartable.', 'Message', 'geditorial-cartable' );
 
 		if ( $check_groups && $this->support_groups ) {
-			$groups = $this->get_groups( $post->ID );
 
-			foreach ( $groups as $group ) {
+			foreach ( $this->get_groups( $post->ID ) as $group ) {
 
 				if ( is_object_in_term( $user->ID, $this->constant( 'group_ref' ), $group ) ) {
 
-					$html.= '<li class="-row">'
-						.$this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Row Icon Title', 'geditorial-cartable' ) )
-						._x( 'This currently is on your group cartable.', 'Message', 'geditorial-cartable' )
-						.'</li>';
+					$rows[] = $this->get_column_icon( FALSE, 'groups', _x( 'Group Cartables', 'Row Icon Title', 'geditorial-cartable' ) )
+						._x( 'This currently is on your group cartable.', 'Message', 'geditorial-cartable' );
 
 					break;
 				}
 			}
 		}
 
-		if ( ! $wrap )
-			return $html;
+		if ( empty( $rows ) )
+			$rows[] = _x( 'This currently is <b>not</b> on any of your cartables.', 'Message', 'geditorial-cartable' );
 
-		if ( ! $html )
-			$html.= '<li class="-row">'._x( 'This currently is <b>not</b> on any of your cartables.', 'Message', 'geditorial-cartable' ).'</li>';
-
-		return Core\HTML::wrap( '<ul class="-rows">'.$html.'</ul>', 'field-wrap -summary' );
+		return Core\HTML::rows( $rows, 'field-wrap -summary' );
 	}
 
 	public function render_metabox_users( $post, $box )
@@ -837,7 +829,7 @@ class Cartable extends gEditorial\Module
 			}
 
 			if ( ! count( $users ) ) {
-				echo $this->metabox_summary( $post, FALSE );
+				echo $this->_get_metabox_summary( $post, FALSE );
 				return;
 			}
 
@@ -854,7 +846,7 @@ class Cartable extends gEditorial\Module
 		], $users, $this->get_setting( 'display_threshold', 5 ) );
 
 		if ( FALSE === $list )
-			echo $this->metabox_summary( $post, FALSE );
+			echo $this->_get_metabox_summary( $post, FALSE );
 	}
 
 	public function render_metabox_groups( $post, $box )
@@ -946,7 +938,7 @@ class Cartable extends gEditorial\Module
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
 				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
-					return $this->metabox_summary( $row );
+					return $this->_get_metabox_summary( $row );
 				},
 			],
 		], $posts, [
