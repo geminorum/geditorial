@@ -135,7 +135,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'context', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after' ] ) )
+				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after', 'title_link' ] ) )
 					$args['context'] = 'nobox'; // OLD: 'raw'
 
 				else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny' ] ) )
@@ -156,7 +156,7 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'code', 'color', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'plate', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'title_link', 'code', 'color', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'plate', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -182,11 +182,11 @@ trait PostTypeFields
 				$args['exclude'] = in_array( $args['type'], [ 'parent_post' ] ) ? NULL : FALSE;
 
 			if ( ! array_key_exists( 'quickedit', $args ) )
-				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after' ] );
+				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after', 'title_link' ] );
 
 			if ( ! array_key_exists( 'bulkedit', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'title_before', 'title_after', 'isbn', 'iban', 'bankcard', 'identity', 'postcode', 'email', 'contact', 'phone', 'mobile' ], TRUE ) )
+				if ( in_array( $args['type'], [ 'title_before', 'title_after', 'title_link', 'isbn', 'iban', 'bankcard', 'identity', 'postcode', 'email', 'contact', 'phone', 'mobile' ], TRUE ) )
 					$args['bulkedit'] = FALSE;
 			}
 
@@ -426,6 +426,7 @@ trait PostTypeFields
 			case 'video_source':
 			case 'image_source':
 			case 'downloadable':
+			case 'title_link':
 			case 'link':
 
 				$sanitized = Core\URL::sanitize( $data );
@@ -731,6 +732,7 @@ trait PostTypeFields
 				case 'video_source':
 				case 'image_source':
 				case 'downloadable':
+				case 'title_link':
 				case 'link':
 				case 'latlng':
 
@@ -1834,6 +1836,7 @@ trait PostTypeFields
 	{
 		$this->action( 'template_newpost_beforetitle', 6, 20, 'posttypefields_title_before', $this->base );
 		$this->action( 'template_newpost_aftertitle', 6, 1, 'posttypefields_title_after', $this->base );
+		$this->action( 'template_newpost_aftertitle', 6, 10, 'posttypefields_title_link', $this->base );
 		$this->action( 'template_newpost_aftertitle', 6, 20, 'posttypefields_quickedit', $this->base );
 	}
 
@@ -1858,6 +1861,21 @@ trait PostTypeFields
 			return;
 
 		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_after' ] ) )
+			return;
+
+		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', [
+			'before' => '<div class="-form-group">',
+			'after'  => '</div>',
+			'rest'   => TRUE,
+		] );
+	}
+
+	public function template_newpost_aftertitle_posttypefields_title_link( $posttype, $post, $target, $linked, $status, $meta )
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return;
+
+		if ( ! $fields = Core\Arraay::filter( $this->get_posttype_fields( $posttype ), [ 'type' => 'title_link' ] ) )
 			return;
 
 		$this->render_posttype_fields( $post, FALSE, $fields, 'nobox', [

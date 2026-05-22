@@ -87,6 +87,7 @@ class Meta extends gEditorial\Module
 			'titles' => [
 				'over_title' => _x( 'OverTitle', 'Titles', 'geditorial-meta' ),
 				'sub_title'  => _x( 'SubTitle', 'Titles', 'geditorial-meta' ),
+				'url'        => _x( 'External Link', 'Titles', 'geditorial-meta' ),
 				'byline'     => _x( 'Byline', 'Titles', 'geditorial-meta' ),
 				'lead'       => _x( 'Lead', 'Titles', 'geditorial-meta' ),
 
@@ -154,6 +155,7 @@ class Meta extends gEditorial\Module
 			'descriptions' => [
 				'over_title' => _x( 'Text to place over the content title', 'Descriptions', 'geditorial-meta' ),
 				'sub_title'  => _x( 'Text to place under the content title', 'Descriptions', 'geditorial-meta' ),
+				'url'        => _x( 'Link to Override the Content URL', 'Descriptions', 'geditorial-meta' ),
 				'byline'     => _x( 'Text to override the content author', 'Descriptions', 'geditorial-meta' ),
 				'lead'       => _x( 'Notes to place before the content text', 'Descriptions', 'geditorial-meta' ),
 
@@ -245,6 +247,7 @@ class Meta extends gEditorial\Module
 				'_supported' => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
 					'byline'     => [ 'type' => 'text', 'quickedit' => TRUE ],
 					'lead'       => [ 'type' => 'postbox_html' ],                // OLD: 'postbox_legacy'
 
@@ -304,6 +307,7 @@ class Meta extends gEditorial\Module
 				'page' => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link'   ],
 
 					'content_embed_url' => [ 'type' => 'embed' ],
 				],
@@ -462,6 +466,7 @@ class Meta extends gEditorial\Module
 
 					case 'title_before':
 					case 'title_after':
+					case 'title_link':
 						// FIXME
 						ModuleMetaBox::legacy_fieldTitle( $field, [ $field ], $post, $args['ltr'], $args['title'], FALSE, $args['type'] );
 					break;
