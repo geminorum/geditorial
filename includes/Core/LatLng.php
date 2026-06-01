@@ -563,7 +563,7 @@ class LatLng extends Base
 	{
 		// define calculation variables
 		$theta    = $longitude1 - $longitude2;
-		$distance = ( sin( deg2rad ($latitude1 ) ) * sin( deg2rad( $latitude2 ) ) )
+		$distance = ( sin( deg2rad( $latitude1 ) ) * sin( deg2rad( $latitude2 ) ) )
 			+ ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
 		$distance = acos( $distance );
 		$distance = rad2deg( $distance );
@@ -629,12 +629,12 @@ class LatLng extends Base
 	public static function haversine( $lat1, $lon1, $lat2, $lon2 )
 	{
 		// distance between latitudes and longitudes
-		$dLat = ($lat2 - $lat1) * M_PI / 180.0;
-		$dLon = ($lon2 - $lon1) * M_PI / 180.0;
+		$dLat = ( $lat2 - $lat1 ) * M_PI / 180.0;
+		$dLon = ( $lon2 - $lon1 ) * M_PI / 180.0;
 
 		// convert to radians
-		$lat1 = ($lat1) * M_PI / 180.0;
-		$lat2 = ($lat2) * M_PI / 180.0;
+		$lat1 = ( $lat1 ) * M_PI / 180.0;
+		$lat2 = ( $lat2 ) * M_PI / 180.0;
 
 		// apply formulae
 		$a   = pow( sin( $dLat / 2 ), 2 ) + pow( sin( $dLon / 2 ), 2 ) * cos( $lat1 ) * cos( $lat2 );
@@ -695,5 +695,77 @@ class LatLng extends Base
 	public static function validateLatLong( $lat, $long )
 	{
 		return preg_match( '/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?),[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lat.','.$long );
+	}
+
+	/**
+	 * Creating KMZ File on the Fly
+	 *
+	 * My KML file was getting large and consuming time/bandwidth to download. So needed a quick solution and found KMZ. KMZ is a compressed KML file which is treated like KML by Google Earth.  Here is a php code to create KMZ file from KML on the fly. My KML of 6.0 Mb was reduced to 600Kb.
+	 * @source https://shprabin.wordpress.com/2013/06/24/creating-kmz-file-on-the-fly-php/
+	 *
+	 * @param string $data
+	 * @return void
+	 */
+	public static function kmz( $data )
+	{
+		header( 'Content-Type: application/vnd.google-earth.kmz' );
+		header( 'Content-Disposition: attachment; filename="test.kmz"' );
+
+		$kmlString="This is your KML string";
+
+		$file = "test.kmz";
+		$zip = new \ZipArchive();
+
+		if ( $zip->open( $file, \ZIPARCHIVE::CREATE ) !== TRUE ) {
+			exit("cannot open <$file>\n");
+		}
+
+		$zip->addFromString("doc.kml", $kmlString);
+		$zip->close();
+
+		echo file_get_contents( $file );
+	}
+
+
+	// Create KMZ files on-the-fly
+	// Google Earth uses a XML based file format for data exports, named with KML extension, which can be created easily with PHP. However, when icons and other data must be packed together to a KMZ file, the following snippet can create the ZIP-File, with KMZ extension using the PHP zip extension.
+	// Copyright Robert Eisele 2017
+	// https://raw.org/snippet/create-kmz-files-with-php/
+	public static function kmz2()
+	{
+$kml = <<<KML
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>XARG.org Snippet</name>
+    <Style id="msn">
+        <IconStyle>
+            <Icon>
+                <href>files/bla.png</href>
+            </Icon>
+        </IconStyle>
+    </Style>
+    <Placemark>
+        <name>This is a name</name>
+            <description>This is a description.</description>
+        <styleUrl>#msn</styleUrl>
+        <Point>
+            <coordinates>37.545734,14.159431,0</coordinates>
+        </Point>
+    </Placemark>
+  </Document>
+</kml>
+KML;
+
+$zip = new \ZipArchive();
+if ($zip->open('GoogleEarth.kmz', \ZIPARCHIVE::CREATE)) {
+    $zip->addEmptyDir('files');
+
+    foreach (glob('icons/*') as $file) {
+        $zip->addFile($file, 'files/'.basename( $file ) );
+	}
+    $zip->addFromString('doc.kml', $kml);
+    $zip->close();
+}
 	}
 }

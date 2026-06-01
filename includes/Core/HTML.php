@@ -429,13 +429,13 @@ class HTML extends Base
 				if ( ! count( $att ) )
 					continue;
 
-				if ( 'data' == $key ) {
+				if ( 'data' === $key ) {
 
 					$html.= self::propData( $att );
 
 					continue;
 
-				} else if ( 'class' == $key ) {
+				} else if ( 'class' === $key ) {
 
 					$att = self::prepClass( $att );
 
@@ -459,16 +459,16 @@ class HTML extends Base
 			if ( FALSE === $att )
 				continue;
 
-			if ( 'class' == $key && ! $sanitized )
+			if ( 'class' === $key && ! $sanitized )
 				$att = self::prepClass( $att );
 
-			else if ( 'class' == $key || 'title' == $key )
+			else if ( in_array( $key, [ 'class', 'title' ], TRUE ) )
 				$att = $att;
 
-			else if ( 'href' == $key && '#' != $att )
+			else if ( 'href' === $key && '#' !== $att )
 				$att = self::escapeURL( $att );
 
-			else if ( 'src' == $key && FALSE === strpos( $att, 'data:image' ) )
+			else if ( 'src' === $key && FALSE === strpos( $att, 'data:image' ) )
 				$att = self::escapeURL( $att );
 
 			else
@@ -498,6 +498,7 @@ class HTML extends Base
 	}
 
 	// @ref: `esc_html()`, `esc_attr()`
+	// NOTE: reverse with `WP_HTML_Decoder::decode_attribute( $string );`
 	public static function escape( $data )
 	{
 		if ( is_null( $data ) )
