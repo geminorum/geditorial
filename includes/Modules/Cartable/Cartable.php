@@ -170,8 +170,9 @@ class Cartable extends gEditorial\Module
 	{
 		return [
 			'metabox' => [
-				'metabox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
-				'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
+				// 'metabox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
+				// 'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
+				'mainbox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
 			],
 			'noops' => [
 				'type_taxonomy' => _n_noop( 'Cartable Type', 'Cartable Types', 'geditorial-cartable' ),
@@ -364,7 +365,8 @@ class Cartable extends gEditorial\Module
 
 				$this->class_metabox( $screen, 'mainbox' );
 				add_meta_box( $this->classs( 'mainbox' ),
-					$this->get_meta_box_title( 'users', $this->get_adminpage_url( TRUE, [], 'adminmenu' ), TRUE ),
+					// $this->get_meta_box_title( 'users', $this->get_adminpage_url( TRUE, [], 'adminmenu' ), TRUE ),
+					$this->get_string( self::und( 'mainbox', 'title' ), FALSE, 'metabox', $this->module->title ),
 					[ $this, 'render_mainbox_metabox' ],
 					$screen,
 					'side',

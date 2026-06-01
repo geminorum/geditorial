@@ -932,12 +932,18 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
+
 				return gEditorial\Template::doEmbedShortCode( trim( $raw ), $post, $context );
 
 			case 'text_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
+
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
 
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
 
@@ -946,12 +952,18 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
+
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'audio', $post, $context );
 
 			case 'video_source':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
+
+				if ( 'print' === $context )
+					return Core\URL::prepTitle( trim( $raw ) );
 
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
 
@@ -962,17 +974,8 @@ class Meta extends gEditorial\Module
 
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'image', $post, $context );
 
-			case 'embed':
-
-				if ( 'export' === $context )
-					return $raw ?: $meta;
-
-				if ( 'print' === $context )
-					return Core\URL::prepTitle( trim( $raw ) );
-
-				return Core\HTML::link( Core\URL::getDomain( trim( $raw ) ), trim( $raw ), TRUE );
-
 			case 'link':
+			case 'title_link':
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;

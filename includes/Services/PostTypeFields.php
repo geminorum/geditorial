@@ -217,6 +217,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'notes'      : return 'text-page';
 			case 'reference'  : return 'editor-break';
 			case 'itineraries': return 'editor-ul';
+			case 'url'        : return 'admin-links';
 		}
 
 		if ( ! empty( $args['type'] ) ) {
@@ -246,6 +247,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'latlng'    : return 'location';
 				case 'color'     : return 'color-picker';
 
+				case 'title_link'  : return 'admin-links';
 				case 'text_source' : return 'media-text';
 				case 'audio_source': return 'media-audio';
 				case 'video_source': return 'media-video';
@@ -634,6 +636,7 @@ class PostTypeFields extends gEditorial\Service
 
 					return gEditorial\Info::lookupLatLng( $raw ?: $value );
 
+				case 'title_link':
 				case 'text_source':
 				case 'audio_source':
 				case 'video_source':

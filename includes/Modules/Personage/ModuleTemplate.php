@@ -96,9 +96,9 @@ class ModuleTemplate extends gEditorial\Template
 				NULL,
 				NULL,
 				NULL,
-				self::const( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				self::const( 'NUCLEUS_DEFAULT_PROVINCE_CODE', 'THR' ),
 				NULL,
-				self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				self::const( 'NUCLEUS_DEFAULT_COUNTRY_CODE', 'IR' ),
 				'HOME'
 			);
 
@@ -108,9 +108,9 @@ class ModuleTemplate extends gEditorial\Template
 				NULL,
 				NULL,
 				NULL,
-				self::const( 'GCORE_DEFAULT_PROVINCE_CODE', 'Tehran' ),
+				self::const( 'NUCLEUS_DEFAULT_PROVINCE_CODE', 'THR' ),
 				NULL,
-				self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'Iran' ),
+				self::const( 'NUCLEUS_DEFAULT_COUNTRY_CODE', 'IR' ),
 				'WORK'
 			);
 

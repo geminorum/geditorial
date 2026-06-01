@@ -250,10 +250,12 @@ class PhoneNumberInPersian extends Core\Base
 	 * @param string $mobile
 	 * @return string
 	 */
-	static public function getPhonePrefix(string $mobile)
+	static public function getPhonePrefix( string $mobile )
 	{
 		$matches = [];
-		preg_match(static::$mobileRegex, $mobile, $matches);
+
+		preg_match( static::$mobileRegex, $mobile, $matches );
+
 		return $matches[1] ?? '';
 	}
 
@@ -273,7 +275,7 @@ class PhoneNumberInPersian extends Core\Base
 	 */
 	static public function phoneNumberDetail( string $mobile )
 	{
-		if ( self::phoneNumberValidator($mobile ) ) {
+		if ( self::phoneNumberValidator( $mobile ) ) {
 			$prefix = self::getPhonePrefix( $mobile );
 			return self::operators()[$prefix] ?? '';
 		}

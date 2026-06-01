@@ -762,9 +762,20 @@ JS;
 		);
 	}
 
-	// @REF: https://github.com/select2/select2/
-	// @REF: https://select2.org/
-	public static function pkgSelect2( $enqueue = FALSE, $ver = '4.1.0-rc.0' )
+	/**
+	 * Enqueues the `Select2` from packages in assets.
+	 *
+	 * `Select2` is a jQuery based replacement for select boxes. It supports
+	 * searching, remote datasets, and infinite scrolling of results.
+	 *
+	 * @docs https://select2.org
+	 * @source https://github.com/select2/select2
+	 *
+	 * @param bool $enqueue
+	 * @param string $version
+	 * @return string
+	 */
+	public static function pkgSelect2( $enqueue = FALSE, $version = '4.1.0' )
 	{
 		$handle    = 'select2';
 		$dir       = Core\L10n::rtl() ? '-rtl' : '';
@@ -772,17 +783,17 @@ JS;
 
 		if ( $enqueue ) {
 
-			wp_enqueue_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $ver, TRUE );
+			wp_enqueue_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $version, TRUE );
 
 			if ( ! $wooselect )
-				wp_enqueue_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $ver, 'screen' );
+				wp_enqueue_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $version, 'screen' );
 
 		} else {
 
-			wp_register_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $ver, TRUE );
+			wp_register_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $version, TRUE );
 
 			if ( ! $wooselect )
-				wp_register_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $ver, 'screen' );
+				wp_register_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $version, 'screen' );
 		}
 
 		return $handle;

@@ -131,7 +131,7 @@ class Locations extends gEditorial\Service
 				$fallback
 			) : WordPress\WooCommerce::getBaseCountry();
 
-		if ( FALSE !== ( $country = Core\Base::const( 'GCORE_DEFAULT_COUNTRY_CODE', FALSE ) ) )
+		if ( FALSE !== ( $country = Core\Base::const( 'NUCLEUS_DEFAULT_COUNTRY_CODE', FALSE ) ) )
 			return $filtered ? self::filters( 'locations_base_country',
 				$country,
 				'gnetwork',
@@ -172,7 +172,7 @@ class Locations extends gEditorial\Service
 				$fallback
 			) : WordPress\WooCommerce::getBaseState();
 
-		if ( FALSE !== ( $state = Core\Base::const( 'GCORE_DEFAULT_PROVINCE_CODE', FALSE ) ) )
+		if ( FALSE !== ( $state = Core\Base::const( 'NUCLEUS_DEFAULT_PROVINCE_CODE', FALSE ) ) )
 			return $filtered ? self::filters( 'locations_base_state',
 				$state,
 				'gnetwork',

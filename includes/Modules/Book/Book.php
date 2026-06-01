@@ -388,6 +388,10 @@ class Book extends gEditorial\Module
 						'type'        => 'term',
 						'taxonomy'    => $this->constant( 'size_taxonomy' ),
 					],
+					'publication_circulation' => [
+						'title'       => _x( 'Circulation', 'Field Title', 'geditorial-book' ),
+						'description' => _x( 'The Circulation Number of the Publication', 'Field Description', 'geditorial-book' ),
+					],
 					'publication_reference' => [
 						'title'       => _x( 'Reference', 'Field Title', 'geditorial-book' ),
 						'description' => _x( 'Full reference to this publication', 'Field Description', 'geditorial-book' ),

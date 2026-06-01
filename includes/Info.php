@@ -171,7 +171,7 @@ class Info extends WordPress\Main
 			 * @link https://github.com/brick/postcode
 			 */
 			$formatter = new \Brick\Postcode\PostcodeFormatter;
-			$country   = self::const( 'GCORE_DEFAULT_COUNTRY_CODE', 'IR' );
+			$country   = self::const( 'NUCLEUS_DEFAULT_COUNTRY_CODE', 'IR' );
 
 			if ( ! empty( $info['country'] ) )
 				$country = $info['country'];

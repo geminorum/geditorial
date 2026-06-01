@@ -289,7 +289,7 @@ class LemonImage extends Core\Base
 		$dir  = $info['dirname'];
 		$ext  = '';
 
-		if ( ! empty($info['extension'] ) )
+		if ( ! empty( $info['extension'] ) )
 			$ext = $info['extension'];
 
 		$name = wp_basename( $file_path, ".$ext" );

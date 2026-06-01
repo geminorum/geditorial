@@ -182,7 +182,8 @@ trait ModuleLinks
 			case 'config'   : $url = gEditorial\Settings::getURLbyContext( 'settings' ); break;
 			case 'settings' : $url = gEditorial\Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $this->module->name ] ); $sub = FALSE; break;
 			case 'docs'     : $url = Services\SystemHelp::getModuleDocsURL( $this->module ); $sub = FALSE; break;
-			case 'listtable': $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
+			case 'listtable': $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break; // DEPRECATED
+			case 'adminpage': $url = $this->get_adminpage_url( TRUE, [], 'adminmenu' ); $sub = FALSE; break;
 			     default    : $url = Core\URL::current();
 		}
 

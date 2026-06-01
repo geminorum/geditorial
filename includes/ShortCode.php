@@ -14,7 +14,14 @@ class ShortCode extends WordPress\Main
 
 	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
 	{
-		return WordPress\ShortCode::wrap( $html, $suffix, $args, $block, $extra, static::BASE );
+		return WordPress\ShortCode::wrap(
+			$html,
+			$suffix,
+			$args,
+			$block,
+			$extra,
+			static::BASE
+		);
 	}
 
 	/**
@@ -1278,7 +1285,7 @@ class ShortCode extends WordPress\Main
 			if ( is_null( $args['title'] ) || $args['title'] )
 				$args['title'] = ( 'all' === $args['id'] || 'all' === $args['term_id'] )
 					? self::posttypeTitle( $posttype, $args )
-					: self::termTitle( is_array( $term ) ? array_values($term)[0] : $term, $taxonomy, $args );
+					: self::termTitle( is_array( $term ) ? array_values( $term )[0] : $term, $taxonomy, $args );
 
 			$ref = $term;
 
@@ -1467,7 +1474,7 @@ class ShortCode extends WordPress\Main
 		if ( 1 == $count && is_singular( $args['posttypes'] ) )
 			return $content;
 
-		$args['title'] = self::termTitle( is_array( $term ) ? array_values($term)[0] : $term, $taxonomy, $args );
+		$args['title'] = self::termTitle( is_array( $term ) ? array_values( $term )[0] : $term, $taxonomy, $args );
 
 		if ( $args['orderby'] == 'order' ) {
 
