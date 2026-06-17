@@ -13,12 +13,13 @@ class Countables extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'countables',
-			'title'  => _x( 'Countables', 'Modules: Countables', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial-admin' ),
-			'icon'   => 'performance',
-			'i18n'   => FALSE,
-			'access' => 'beta',
+			'name'     => 'countables',
+			'title'    => _x( 'Countables', 'Modules: Countables', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Countable Items', 'Modules: Countables', 'geditorial-admin' ),
+			'icon'     => 'performance',
+			'i18n'     => FALSE,
+			'access'   => 'beta',
+			'keywords' => [],
 		];
 	}
 

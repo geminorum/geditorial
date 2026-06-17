@@ -11,12 +11,13 @@ class Home extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'home',
-			'title'  => _x( 'Home', 'Modules: Home', 'geditorial-admin' ),
-			'desc'   => _x( 'Customized Homepage', 'Modules: Home', 'geditorial-admin' ),
-			'icon'   => 'admin-home',
-			'i18n'   => 'adminonly',
-			'access' => 'stable',
+			'name'     => 'home',
+			'title'    => _x( 'Home', 'Modules: Home', 'geditorial-admin' ),
+			'desc'     => _x( 'Customized Homepage', 'Modules: Home', 'geditorial-admin' ),
+			'icon'     => 'admin-home',
+			'i18n'     => 'adminonly',
+			'access'   => 'stable',
+			'keywords' => [],
 		];
 	}
 

@@ -107,6 +107,8 @@ trait FramePageViews
 		if ( method_exists( $this, 'framepageviews__prep_data_for_post' ) )
 			$data = $this->framepageviews__prep_data_for_post( $data, $post, $context );
 
+		$data['__mainkey']    = $this->key;
+		$data['__context']    = $context;
 		$data['__direction']  = Core\HTML::dir();
 		$data['__can_edit']   = WordPress\Post::edit( $post );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
@@ -136,12 +138,14 @@ trait FramePageViews
 		unset( $data['___flags'] );
 		unset( $data['___sides'] );
 		unset( $data['___hooks'] );
-		unset( $data['__summaries'] );
+		unset( $data['__mainkey'] );
+		unset( $data['__context'] );
 		unset( $data['__direction'] );
 		unset( $data['__can_edit'] );
 		unset( $data['__can_debug'] );
 		unset( $data['__can_print'] );
 		unset( $data['__can_export'] );
+		unset( $data['__summaries'] );
 		unset( $data['__today'] );
 
 		if ( method_exists( $this, 'framepageviews__cleanup_data_for_post' ) )
@@ -220,6 +224,8 @@ trait FramePageViews
 		if ( method_exists( $this, 'framepageviews__prep_data_for_term' ) )
 			$data = $this->framepageviews__prep_data_for_term( $data, $term, $context );
 
+		$data['__mainkey']    = $this->key;
+		$data['__context']    = $context;
 		$data['__direction']  = Core\HTML::dir();
 		$data['__can_edit']   = WordPress\Term::edit( $term );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
@@ -246,6 +252,8 @@ trait FramePageViews
 		unset( $data['___flags'] );
 		unset( $data['___sides'] );
 		unset( $data['___hooks'] );
+		unset( $data['__mainkey'] );
+		unset( $data['__context'] );
 		unset( $data['__summaries'] );
 		unset( $data['__direction'] );
 		unset( $data['__can_edit'] );

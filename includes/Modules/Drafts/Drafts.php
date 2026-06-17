@@ -131,6 +131,9 @@ class Drafts extends gEditorial\Module
 	 */
 	public function current_screen( $screen )
 	{
+		if ( ! empty( $screen->is_block_editor ) )
+			return;
+
 		if ( ! $this->get_setting( 'public_preview', FALSE ) )
 			return;
 

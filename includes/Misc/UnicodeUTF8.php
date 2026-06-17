@@ -86,7 +86,7 @@ class UnicodeUTF8 extends Core\Base
 					* First octet of 5 octet sequence.
 					* This is illegal because the encoded code-point must be either
 					* (a) not the shortest form or
-					* (b) outside the Unicode range of 0-0x10FFFF.
+					* (b) outside the Unicode range of `0`-`0x10FFFF`.
 					* Rather than trying to re-synchronize, we will carry on until the end
 					* of the sequence and let the later error handling code catch it.
 					*/
@@ -114,7 +114,7 @@ class UnicodeUTF8 extends Core\Base
 
 			} else {
 
-				// When `mState` is non-zero, We expect a continuation of the multi-octet sequence
+				// When `mState` is nonzero, We expect a continuation of the multi-octet sequence
 				if (0x80 == (0xC0 & ( $in))) {
 
 					// Legal continuation.
@@ -158,7 +158,7 @@ class UnicodeUTF8 extends Core\Base
 				} else {
 
 					/*
-					 * ( ( 0xC0 & (*in) != 0x80 ) && ( mState != 0 ) )
+					 * `( ( 0xC0 & (*in) != 0x80 ) && ( mState != 0 ) )`
          			 *
          			 * Incomplete multi-octet sequence.
          			 */
@@ -175,7 +175,7 @@ class UnicodeUTF8 extends Core\Base
 	 *
 	 * Takes an array of integers representing the Unicode characters and returns
 	 * a `UTF-8` string. Astral planes are supported i.e. the integers in the
-	 * input can be > 0xFFFF. Occurrences of the BOM are ignored. Surrogates
+	 * input can be > `0xFFFF`. Occurrences of the BOM are ignored. Surrogates
 	 * are not allowed.
 	 *
 	 * Returns false if the input array contains integers that represent
@@ -205,7 +205,7 @@ class UnicodeUTF8 extends Core\Base
 
 			} else if ( $src == 0xFEFF ) {
 
-				// nop -- zap the BOM
+				// nope - zap the BOM
 
 			} else if ( $src >= 0xD800 && $src <= 0xDFFF ) {
 

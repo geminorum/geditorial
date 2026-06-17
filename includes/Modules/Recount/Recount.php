@@ -16,12 +16,13 @@ class Recount extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'recount',
-			'title'  => _x( 'Recount', 'Modules: Recount', 'geditorial-admin' ),
-			'desc'   => _x( 'Custom Counts Interface', 'Modules: Recount', 'geditorial-admin' ),
-			'icon'   => 'database',
-			'i18n'   => 'adminonly',
-			'access' => 'beta',
+			'name'     => 'recount',
+			'title'    => _x( 'Recount', 'Modules: Recount', 'geditorial-admin' ),
+			'desc'     => _x( 'Custom Counts Interface', 'Modules: Recount', 'geditorial-admin' ),
+			'icon'     => 'database',
+			'i18n'     => 'adminonly',
+			'access'   => 'beta',
+			'keywords' => [],
 		];
 	}
 
@@ -29,7 +30,7 @@ class Recount extends gEditorial\Module
 	{
 		return [
 			'taxonomies_option' => 'taxonomies_option',
-			'_general' => [
+			'_general'          => [
 				'thrift_mode',
 				[
 					'field'       => 'count_on_display',

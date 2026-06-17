@@ -129,7 +129,7 @@ class Chronicles extends gEditorial\Module
 		return $strings;
 	}
 
-	// TODO: founded date/dismantled dates
+	// TODO: founded date/dismantled dates || `Founded`/`Defunct`
 	// TODO: incorporation/dissolution dates
 	protected function get_global_fields()
 	{

@@ -24,11 +24,11 @@ class Badges extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'badges',
-			'title'  => _x( 'Badges', 'Modules: Badges', 'geditorial-admin' ),
-			'desc'   => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial-admin' ),
-			'icon'   => [ 'misc-16', 'patch-question' ],
-			'access' => 'beta',
+			'name'     => 'badges',
+			'title'    => _x( 'Badges', 'Modules: Badges', 'geditorial-admin' ),
+			'desc'     => _x( 'Editorial Content Badges', 'Modules: Badges', 'geditorial-admin' ),
+			'icon'     => [ 'misc-16', 'patch-question' ],
+			'access'   => 'beta',
 			'keywords' => [
 				'taxmodule',
 			],

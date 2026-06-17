@@ -18,11 +18,12 @@ class StaticCovers extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'static_covers',
-			'title'  => _x( 'Static Covers', 'Modules: Static Covers', 'geditorial-admin' ),
-			'desc'   => _x( 'Alternative Cover Management', 'Modules: Static Covers', 'geditorial-admin' ),
-			'icon'   => 'cover-image',
-			'access' => 'beta',
+			'name'     => 'static_covers',
+			'title'    => _x( 'Static Covers', 'Modules: Static Covers', 'geditorial-admin' ),
+			'desc'     => _x( 'Alternative Cover Management', 'Modules: Static Covers', 'geditorial-admin' ),
+			'icon'     => 'cover-image',
+			'access'   => 'beta',
+			'keywords' => [],
 		];
 	}
 

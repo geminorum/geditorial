@@ -20,11 +20,14 @@ class Series extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'series',
-			'title'  => _x( 'Series', 'Modules: Series', 'geditorial-admin' ),
-			'desc'   => _x( 'List Posts in Series', 'Modules: Series', 'geditorial-admin' ),
-			'icon'   => 'editor-ol',
-			'access' => 'beta',
+			'name'     => 'series',
+			'title'    => _x( 'Series', 'Modules: Series', 'geditorial-admin' ),
+			'desc'     => _x( 'List Posts in Series', 'Modules: Series', 'geditorial-admin' ),
+			'icon'     => 'editor-ol',
+			'access'   => 'beta',
+			'keywords' => [
+				'has-shortcodes',
+			],
 		];
 	}
 

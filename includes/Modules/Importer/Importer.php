@@ -31,6 +31,8 @@ class Importer extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
+		$roles = $this->get_settings_default_roles( 'contributor' );
+
 		return [
 			'posttypes_option' => 'posttypes_option',
 			'_general'         => [
@@ -75,7 +77,7 @@ class Importer extends gEditorial\Module
 				'comment_status',
 			],
 			'_roles' => [
-				'imports_roles' => [ NULL, $this->get_settings_default_roles( 'contributor' ) ],
+				'imports_roles'  => [ NULL, $roles ],
 				[
 					'field'       => 'map_import_cap',
 					'title'       => _x( 'Import Capability', 'Setting Title', 'geditorial-importer' ),
@@ -2100,7 +2102,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( $_POST['_cb'] as $offset ) {
 
-			$row = $raw = $rawdata['items'][($offset + 1)]; // this parser combines header data
+			$row = $raw = $rawdata['items'][( $offset + 1 )]; // this parser combines header data
 
 			$this->actions( 'terms_before_each', $posttype );
 

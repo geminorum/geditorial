@@ -508,7 +508,7 @@ class Meta extends gEditorial\Module
 							$title,
 							[ $this, 'render_lonebox_metabox' ],
 							$screen,
-							'after_title', // TODO: must defined on field args
+							'after_title', // TODO: must be defined on field arguments
 							'high',
 							[
 								'posttype'   => $screen->post_type,

@@ -575,6 +575,7 @@ class Identified extends gEditorial\Module
 			return $discovered;
 
 		$supported  = $this->posttypes();
+		$metakey    = [];
 		$identifier = FALSE;
 
 		if ( ! Core\Arraay::exists( $supported, (array) $posttypes ) )
@@ -598,7 +599,7 @@ class Identified extends gEditorial\Module
 			}
 		}
 
-		if ( ! $identifier )
+		if ( ! $identifier || ! count( $metakey ) )
 			return NULL;
 
 		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
@@ -609,7 +610,8 @@ class Identified extends gEditorial\Module
 		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return new \WP_Error( 'create_noaccess', gEditorial\Plugin::denied( FALSE ) );
 
-		unset( $row[$key] ); // avoid passing into meta action
+		if ( isset( $key ) )
+			unset( $row[$key] ); // avoid passing into meta action
 
 		return $insert
 			? $this->_insert_post_by_identifier( $posttype, $identifier, $metakey, $row )

@@ -20,12 +20,15 @@ class Roled extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'   => 'roled',
-			'title'  => _x( 'Roled', 'Modules: Roled', 'geditorial-admin' ),
-			'desc'   => _x( 'Member & Role Management', 'Modules: Roled', 'geditorial-admin' ),
-			'icon'   => 'privacy',
-			'i18n'   => 'adminonly',
-			'access' => 'beta',
+			'name'     => 'roled',
+			'title'    => _x( 'Roled', 'Modules: Roled', 'geditorial-admin' ),
+			'desc'     => _x( 'Member & Role Management', 'Modules: Roled', 'geditorial-admin' ),
+			'icon'     => 'privacy',
+			'i18n'     => 'adminonly',
+			'access'   => 'beta',
+			'keywords' => [
+				'roles',
+			],
 		];
 	}
 
