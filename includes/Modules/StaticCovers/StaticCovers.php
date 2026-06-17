@@ -369,7 +369,12 @@ class StaticCovers extends gEditorial\Module
 				'headers'  => @get_headers( $image, TRUE ),
 			];
 
-		$data['___hooks'] = array_fill_keys( [
+		return $data;
+	}
+
+	protected function framepageviews__prep_hooks_for_term( $data, $term, $context )
+	{
+		return array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -378,8 +383,6 @@ class StaticCovers extends gEditorial\Module
 			'after-custom',
 			'after-content',
 		], '' );
-
-		return $data;
 	}
 
 	protected function framepageviews__prep_data_for_post( $data, $post, $context )
@@ -409,8 +412,14 @@ class StaticCovers extends gEditorial\Module
 					];
 		}
 
-		$data['i18n']     = $this->get_strings( 'post', 'i18n' );
-		$data['___hooks'] = array_fill_keys( [
+		$data['i18n'] = $this->get_strings( 'post', 'i18n' );
+
+		return $data;
+	}
+
+	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	{
+		return array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -419,8 +428,6 @@ class StaticCovers extends gEditorial\Module
 			'after-custom',
 			'after-content',
 		], '' );
-
-		return $data;
 	}
 
 	// TODO: link to `framepage`

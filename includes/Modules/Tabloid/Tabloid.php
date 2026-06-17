@@ -273,7 +273,12 @@ class Tabloid extends gEditorial\Module
 			'comments',
 		], '' );
 
-		$data['___hooks'] = array_fill_keys( [
+		return $data;
+	}
+
+	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	{
+		return array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -282,8 +287,6 @@ class Tabloid extends gEditorial\Module
 			'after-content',
 			'after-comments',
 		], '' );
-
-		return $data;
 	}
 
 	protected function framepageviews__cleanup_data_for_post( $data, $post, $context )
@@ -302,7 +305,12 @@ class Tabloid extends gEditorial\Module
 			'custom',
 		], '' );
 
-		$data['___hooks'] = array_fill_keys( [
+		return $data;
+	}
+
+	protected function framepageviews__prep_hooks_for_term( $data, $term, $context )
+	{
+		return array_fill_keys( [
 			'after-actions',
 			'after-post',
 			'after-meta',
@@ -310,7 +318,5 @@ class Tabloid extends gEditorial\Module
 			'after-custom',
 			'after-content',
 		], '' );
-
-		return $data;
 	}
 }

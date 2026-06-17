@@ -116,6 +116,9 @@ trait FramePageViews
 		$data['__summaries']  = $this->filters( 'post_summaries', [], $data, $post, $context );
 		$data['___flags']     = $this->filters( 'post_flags', [], $data, $post, $context );
 
+		if ( method_exists( $this, 'framepageviews__prep_hooks_for_post' ) )
+			$data['___hooks'] = $this->framepageviews__prep_hooks_for_post( $data, $post, $context );
+
 		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
@@ -225,6 +228,9 @@ trait FramePageViews
 		$data['__today']      = gEditorial\Datetime::dateFormat( 'now', 'printdate' );
 		$data['__summaries']  = $this->filters( 'term_summaries', [], $data, $term, $context );
 		$data['___flags']     = $this->filters( 'term_flags', [], $data, $term, $context );
+
+		if ( method_exists( $this, 'framepageviews__prep_hooks_for_term' ) )
+			$data['___hooks'] = $this->framepageviews__prep_hooks_for_term( $data, $term, $context );
 
 		return $this->filters( 'view_data_for_term', $data, $term, $context );
 	}
