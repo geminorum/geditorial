@@ -29,6 +29,7 @@ class Addressed extends gEditorial\Module
 				'social-network',
 				'site-identity',
 				'has-customizer',
+				'location',
 			],
 		];
 	}

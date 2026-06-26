@@ -33,6 +33,7 @@ class Today extends gEditorial\Module
 				'day',
 				'calendar',
 				'history',
+				'date-tools',
 				'cptmodule',
 			],
 		];

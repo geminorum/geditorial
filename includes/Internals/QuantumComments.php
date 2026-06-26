@@ -439,11 +439,13 @@ trait QuantumComments
 				case 'hours'   :
 				case 'account' :
 				case 'count'   :
+
 					$data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) );
 					break;
 
 				case 'location':
 				case 'people'  :
+
 					$data[$raw_key] = WordPress\Strings::getPiped( Services\Markup::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
 					break;
 
@@ -456,14 +458,17 @@ trait QuantumComments
 				case 'occupation':
 				case 'education' :
 				case 'address'   :
+
 					$data[$raw_key] = WordPress\Strings::cleanupChars( WordPress\Strings::kses( $raw_value, 'none' ), TRUE );
 					break;
 
 				case 'html':
+
 					$data[$raw_key] = Core\Text::normalizeWhitespace( WordPress\Strings::kses( $raw_value, 'text' ), TRUE );
 					break;
 
 				default:
+
 					$data[$raw_key] = WordPress\Strings::kses( $raw_value, 'none' );
 			}
 		}

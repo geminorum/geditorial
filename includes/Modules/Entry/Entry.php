@@ -125,11 +125,10 @@ class Entry extends gEditorial\Module
 			'default_term'       => NULL,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : '__checklist_terms_callback',
 		], 'main_posttype', [
-			'custom_icon' => 'category',
 		] );
 
 		$this->register_posttype( 'main_posttype', [], [
-			'primary_taxonomy' => 'category_taxonomy',
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 
 		$this->register_shortcode( 'main_shortcode' );

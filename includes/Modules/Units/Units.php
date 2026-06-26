@@ -239,17 +239,18 @@ class Units extends gEditorial\Module
 			case 'duration':
 				return Core\Duration::prep( $raw, $field_args, $context );
 
-			case 'day':
-			case 'hour':
-			case 'member':
-			case 'person':
-			case 'gram':
-			case 'kilogram':
+			case 'day'        :
+			case 'hour'       :
+			case 'member'     :
+			case 'person'     :
+			case 'gram'       :
+			case 'kilogram'   :
 			case 'km_per_hour':
-			case 'millimetre':
-			case 'centimetre':
-			case 'metre':
-			case 'kilometre':
+			case 'millimetre' :
+			case 'centimetre' :
+			case 'metre'      :
+			case 'kilometre'  :
+			case 'hectare'    :
 
 				if ( 'export' === $context )
 					return trim( $raw );

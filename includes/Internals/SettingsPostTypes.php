@@ -71,8 +71,7 @@ trait SettingsPostTypes
 
 	public function register_settings_posttypes_option( $title = NULL )
 	{
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'post_types_title', FALSE, 'settings',
+		$title = $title ?? $this->get_string( 'post_types_title', FALSE, 'settings',
 				_x( 'Supported Post-types', 'Internal: SettingsPostTypes: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );

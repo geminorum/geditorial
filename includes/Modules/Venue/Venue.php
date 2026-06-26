@@ -62,8 +62,8 @@ class Venue extends gEditorial\Module
 				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
-					$this->constant( 'primary_taxonomy' ),
-					$this->get_taxonomy_label( 'primary_taxonomy', 'no_terms' ),
+					$this->constant( 'category_taxonomy' ),
+					$this->get_taxonomy_label( 'category_taxonomy', 'no_terms' ),
 				],
 			],
 			'_roles' => [
@@ -123,11 +123,11 @@ class Venue extends gEditorial\Module
 	protected function get_global_constants()
 	{
 		return [
-			'primary_posttype' => 'place',
-			'primary_paired'   => 'place',
-			'primary_taxonomy' => 'place_category',
-			'primary_subterm'  => 'place_facility',
-			'main_shortcode'   => 'place',
+			'primary_posttype'  => 'place',
+			'primary_paired'    => 'place',
+			'category_taxonomy' => 'place_category',
+			'primary_subterm'   => 'place_facility',
+			'main_shortcode'    => 'place',
 		];
 	}
 
@@ -135,10 +135,10 @@ class Venue extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'primary_posttype' => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'primary_paired'   => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
-				'primary_taxonomy' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
-				'primary_subterm'  => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
+				'primary_posttype'  => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'primary_paired'    => _n_noop( 'Place', 'Places', 'geditorial-venue' ),
+				'category_taxonomy' => _n_noop( 'Place Category', 'Place Categories', 'geditorial-venue' ),
+				'primary_subterm'   => _n_noop( 'Facility', 'Facilities', 'geditorial-venue' ),
 			],
 		];
 
@@ -232,20 +232,19 @@ class Venue extends gEditorial\Module
 			? $this->constant_plural( 'primary_posttype' )
 			: FALSE;
 
-		$this->register_taxonomy( 'primary_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
 		], 'primary_posttype', [
-			'custom_icon' => 'category',
 			'is_viewable'    => $viewable,
 			'custom_captype' => $captype,
 		] );
 
 		$this->paired_register( [], [
-			'primary_taxonomy' => TRUE,
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 			'is_viewable'      => $viewable,
 			'custom_captype'   => $captype,
 		], [
@@ -334,7 +333,7 @@ class Venue extends gEditorial\Module
 				$this->pairedadmin__hook_tweaks_column_connected( $screen->post_type );
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'primary_subterm',
-					'primary_taxonomy',
+					'category_taxonomy',
 				] );
 			}
 
@@ -389,7 +388,7 @@ class Venue extends gEditorial\Module
 			'primary_posttype',
 			'primary_paired',
 			'primary_subterm',
-			'primary_taxonomy',
+			'category_taxonomy',
 			TRUE,   // hierarchical
 			FALSE,  // private
 			(bool) $this->get_setting( 'assignment_dock' ),   // `terms_related`

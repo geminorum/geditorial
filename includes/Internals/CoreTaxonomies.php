@@ -212,10 +212,14 @@ trait CoreTaxonomies
 					if ( TRUE === $value && in_array( $constant, [
 						'main_taxonomy',
 						'primary_taxonomy',
-						'category_taxonomy',
 						'primary_paired',
 					], TRUE ) )
 						$icon = $this->module->icon;
+
+					else if ( TRUE === $value && in_array( $constant, [
+						'category_taxonomy',
+					], TRUE ) )
+						$icon = 'category';
 
 					else if ( TRUE === $value && in_array( $constant, [
 						'status_taxonomy',

@@ -920,12 +920,11 @@ class MetaBox extends WordPress\Main
 
 		return [
 			'name'         => $field,
-			'rest'         => $field,      // FALSE to disable
-			'title'        => NULL,        // self::getString( $field, $posttype, 'titles', $field, $module ),
-			'description'  => NULL,        // self::getString( $field, $posttype, 'descriptions', FALSE, $module ),
+			'rest'         => $field,      // `FALSE` to disable
+			'title'        => NULL,        // `self::getString( $field, $posttype, 'titles', $field, $module ),`
+			'description'  => NULL,        // `self::getString( $field, $posttype, 'descriptions', FALSE, $module ),`
 			'access_view'  => NULL,        // @SEE: `$this->access_posttype_field()`
 			'access_edit'  => NULL,        // @SEE: `$this->access_posttype_field()`
-			'sanitize'     => NULL,
 			'sanitize'     => NULL,        // callback
 			'prep'         => NULL,        // callback
 			'pattern'      => NULL,        // HTML5 input pattern
@@ -937,7 +936,7 @@ class MetaBox extends WordPress\Main
 			'type'         => 'text',
 			'context'      => NULL,        // default is `mainbox`
 			'quickedit'    => FALSE,
-			'autocomplete' => 'off',       // NULL to drop the attribute,
+			'autocomplete' => 'off',       // `NULL` to drop the attribute,
 			'values'       => [],
 			'none_title'   => NULL,
 			'none_value'   => '',
@@ -1058,7 +1057,7 @@ class MetaBox extends WordPress\Main
 			'name'         => self::_getNameAttr( $args, $module ),
 			'title'        => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'pattern'      => $args['pattern'],
-			'autocomplete' => $args['autocomplete'],
+			'autocomplete' => $args['autocomplete'] ?? FALSE,
 			'placeholder'  => $args['title'],
 			'class'        => [
 				'form-control',
@@ -1409,8 +1408,9 @@ class MetaBox extends WordPress\Main
 			'value'        => $value ?: '',
 			'name'         => self::_getNameAttr( $args, $module ),
 			'title'        => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
-			'pattern'      => $args['pattern'],
-			'autocomplete' => $args['autocomplete'],
+			'pattern'      => $args['pattern'] ?? FALSE,
+			'size'         => $args['data_length'] ?? FALSE,
+			'autocomplete' => $args['autocomplete'] ?? FALSE,
 			// 'placeholder' => $args['title'],
 			'class'       => [
 				'form-control',
@@ -1457,8 +1457,10 @@ class MetaBox extends WordPress\Main
 
 			case 'number':
 			default:
-				$label = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
+
+				$label  = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
 				$wrap[] = sprintf( '-input%s', $args['type'] ?: 'unknowntype' );
+
 				$atts['data']['ortho'] = 'number';
 		}
 

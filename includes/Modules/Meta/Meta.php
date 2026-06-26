@@ -237,6 +237,10 @@ class Meta extends gEditorial\Module
 			'author_column_title' => _x( 'Author', 'Column Title', 'geditorial-meta' ),
 		];
 
+		$strings['settings'] = [
+			'post_types_after' => _x( 'Define the fields after select and save the supported post-types.', 'Settings: Description', 'geditorial-meta' ),
+		];
+
 		return $strings;
 	}
 

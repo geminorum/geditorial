@@ -52,8 +52,8 @@ class Markup extends gEditorial\Service
 	public static function kses_allowed_protocols( $protocols )
 	{
 		return array_merge( $protocols, [
-			'tel', // to be safe
-			'sms', // to be safe
+			'tel',  // to be safe
+			'sms',  // to be safe
 			'geo',
 			'binaryeye', // https://github.com/markusfisch/BinaryEye
 		] );
@@ -189,7 +189,7 @@ class Markup extends gEditorial\Service
 	{
 		$step = $completed + 1;
 
-		// Given 'r' (circle element's r attr), `dashoffset` = ((100-$desired_percentage)/100) * PI * (r*2).
+		// Given `r` (circle element's `r` attribute), `dashoffset = ((100-$desired_percentage)/100) * PI * (r*2)`.
 		$circle_r   = 6.5;
 		$percentage = ( $completed / $total ) * 100;
 		$dashoffset = ( ( 100 - $percentage ) / 100 ) * ( pi() * ( $circle_r * 2 ) );

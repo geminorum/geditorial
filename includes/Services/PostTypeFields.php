@@ -259,6 +259,32 @@ class PostTypeFields extends gEditorial\Service
 			}
 		}
 
+		if ( ! empty( $args['data_unit'] ) )  {
+
+			switch ( $args['type'] ) {
+
+				case 'person':
+					return 'groups';
+
+				// weight
+				case 'kilogram' :
+				case 'gram'     :
+				case 'milligram':
+					return 'image-filter';
+
+				// length
+				case 'kilometre' :
+				case 'metre'     :
+				case 'centimetre':
+				case 'millimetre':
+					return 'image-flip-horizontal';
+
+				// area
+				case 'hectare':
+					return 'image-crop';
+			}
+		}
+
 		return 'admin-post';
 	}
 
@@ -550,7 +576,7 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'isbn':
 
-					// return gEditorial\Info::lookupISBN( $raw ?: $value );
+					// `return gEditorial\Info::lookupISBN( $raw ?: $value );`
 					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
@@ -712,7 +738,7 @@ class PostTypeFields extends gEditorial\Service
 		if ( in_array( $field['type'], [
 			'integer', 'number', 'float', 'price',
 			'member', 'person', 'day', 'hour',
-			'gram', 'millimetre', 'kilogram', 'centimetre', 'metre',
+			'gram', 'kilogram', 'millimetre', 'centimetre', 'metre', 'kilometre', 'hectare',
 			'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'postcode',
 			'post', 'attachment', 'parent_post', 'posts', 'attachments',
 			'user', 'term',

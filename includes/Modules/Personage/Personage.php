@@ -358,11 +358,11 @@ class Personage extends gEditorial\Module
 
 			gEditorial\MetaBox::POSTTYPE_MAINBOX_PROP => TRUE,
 		], [
-			'is_viewable'       => $viewable,
-			'custom_icon'       => $this->module->icon,
-			'custom_captype'    => $captype,
-			'category_taxonomy' => TRUE,
-			'status_taxonomy'   => TRUE,
+			'is_viewable'      => $viewable,
+			'custom_icon'      => $this->module->icon,
+			'custom_captype'   => $captype,
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+			'status_taxonomy'  => TRUE,
 
 			'readonly_title'    => TRUE,
 			'slug_disabled'     => TRUE,

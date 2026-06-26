@@ -29,7 +29,8 @@ trait MetaBoxMain
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function ( $post, $box ) use ( $context, $screen ) {
+		$callback = function ( $post, $box )
+			use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;

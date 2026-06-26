@@ -271,9 +271,7 @@ class Course extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'show_in_nav_menus'  => TRUE,
 			'default_term'       => NULL,
-		], 'course_posttype', [
-			'custom_icon' => 'category',
-		] );
+		], 'course_posttype', [] );
 
 		$this->register_taxonomy( 'span_taxonomy', [
 			'hierarchical'       => TRUE,

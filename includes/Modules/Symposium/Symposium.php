@@ -207,9 +207,7 @@ class Symposium extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 			'meta_box_cb'        => '__checklist_terms_callback',
-		], 'main_posttype', [
-			'custom_icon' => 'category',
-		] );
+		], 'main_posttype', [] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical' => TRUE,

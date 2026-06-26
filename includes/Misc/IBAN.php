@@ -4,28 +4,32 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 
+/**
+ * @author `Esser Jan`
+ * @license MIT
+ *
+ * @example `IBAN::createFromString( $data )`
+ * @example `IBAN::createFromString( $data )->toFormattedString()`: space separated
+ * @example `IBAN::createFromString( $data )->toFormattedString( '-', 4, TRUE )`: IBAN prefixed - separated
+ *
+ * @source https://gist.github.com/esserj/a54ffd11182417cf920d
+ */
 class IBAN extends Core\Base
 {
-
 	// NOTE: `bcmod()` needs `ext-bcmath`
 
 	/**
-	 * @author Esser Jan
-	 * @license MIT
+	 * Country Code
 	 *
-	 * @example `IBAN::createFromString( $data )`
-	 * @example `IBAN::createFromString( $data )->toFormattedString()`: space separated
-	 * @example `IBAN::createFromString( $data )->toFormattedString( '-', 4, TRUE )`: IBAN prefixed - separated
-	 *
-	 * @source https://gist.github.com/esserj/a54ffd11182417cf920d
+	 * @var string
 	 */
+	protected $country_code;
 
-	protected $countryCode;
 	protected $check;
 	protected $bban;
 
 	/**
-	 * assoc list of `country code => length` pairs that indicate how long tot total IBAN may be
+	 * Assoc list of `country code => length` pairs that indicate how long tot total IBAN may be.
 	 * @var array
 	 */
 	protected static $IBANLengths = [
@@ -45,28 +49,28 @@ class IBAN extends Core\Base
 	/**
 	 * International Bank Account Number constructor.
 	 *
-	 * @param string $countryCode   country code using ISO 3166-1 alpha-2 - two letters
+	 * @param string $country_code  country code using ISO 3166-1 alpha-2 - two letters
 	 * @param int    $check         check digits - two digits
 	 * @param string $bban          Basic Bank Account Number (BBAN) - up to 30 alphanumeric characters that
 	 *                              are country-specific. No special characters like `-` or space allowed here, use
 	 *                              the {@see createFromString} or {@see sanitize} instead if that's what you may have
 	 */
-	public function __construct( $countryCode, $check, $bban )
+	public function __construct( $country_code, $check, $bban )
 	{
-		$this->countryCode = strtoupper( $countryCode );
-		$this->check       = $check;
-		$this->bban        = strtoupper( $bban );
+		$this->country_code = strtoupper( $country_code );
+		$this->check        = $check;
+		$this->bban         = strtoupper( $bban );
 
 		$this->validateSelf();
 	}
 
-	public static function createFromString( $accountNumber )
+	public static function createFromString( $account_number )
 	{
 		$min = min( static::$IBANLengths ) - 4; // first 4 are <country><check>
 		$max = max( static::$IBANLengths ) - 4; // first 4 are <country><check>
 
-		if ( ! preg_match( '/^(:?IBAN)?([A-Za-z]{2})(\d{2})([A-Za-z0-9\s\-]{'.$min.','.$max.'})$/', static::sanitize( $accountNumber ), $matches ) )
-			throw new \Exception( 'Invalid International Bank Account Number, not a valid format ['.$accountNumber.']' );
+		if ( ! preg_match( '/^(:?IBAN)?([A-Za-z]{2})(\d{2})([A-Za-z0-9\s\-]{'.$min.','.$max.'})$/', static::sanitize( $account_number ), $matches ) )
+			throw new \Exception( 'Invalid International Bank Account Number, not a valid format ['.$account_number.']' );
 
 		return new static( $matches[2], $matches[3], $matches[4] );
 	}
@@ -74,12 +78,12 @@ class IBAN extends Core\Base
 	/**
 	 * Removes common used white spacing and hyphenation from the account number.
 	 *
-	 * @param string $accountNumber
+	 * @param string $account_number
 	 * @return string
 	 */
-	public static function sanitize( $accountNumber )
+	public static function sanitize( $account_number )
 	{
-		return preg_replace( '/[\s\-]*/', '', $accountNumber );
+		return preg_replace( '/[\s\-]*/', '', $account_number );
 	}
 
 	/**
@@ -103,11 +107,11 @@ class IBAN extends Core\Base
 	 */
 	protected function validateSelf()
 	{
-		if ( ! isset( static::$IBANLengths[$this->countryCode] ) )
-			throw new \Exception( 'Country for IBAN is not (yet) supported: '.$this->countryCode );
+		if ( ! isset( static::$IBANLengths[$this->country_code] ) )
+			throw new \Exception( 'Country for IBAN is not (yet) supported: '.$this->country_code );
 
 		// 1.
-		if ( strlen( $this->countryCode.$this->check.$this->bban ) !== static::$IBANLengths[$this->countryCode] )
+		if ( strlen( $this->country_code.$this->check.$this->bban ) !== static::$IBANLengths[$this->country_code] )
 			throw new \Exception( 'IBAN not long enough: '.$this->toFormattedString() );
 
 		// 2. + 3. + 4. + 5. Only checking uppercase characters cause we `strtoupper`'d it in constructor
@@ -116,7 +120,7 @@ class IBAN extends Core\Base
 			if ( substr( $matches[0], 0, 1 ) !== '0' ) // may be multiple leading 0's
 				return base_convert( $matches[0], 36, 10 );
 			return '';
-		}, $this->bban.$this->countryCode.'00' );
+		}, $this->bban.$this->country_code.'00' );
 
 		// 6. + 7.
 		if ( str_pad( 98 - bcmod( $checkString, 97 ), 2, '0', STR_PAD_LEFT ) !== $this->check )
@@ -124,26 +128,26 @@ class IBAN extends Core\Base
 	}
 
 	/**
-	 * @param string $separator  supported separators are white spaces (regex \s) and hyphen (-) all other separators
+	 * @param string $separator  supported separators are white spaces (regex `\s`) and hyphen (-) all other separators
 	 *                           will not be able to be converted back into objects, a combination may be used.
 	 * @param int    $size       the separator group size to use, this will chunk
-	 * @param bool   $prefix     when true `IBAN ` will be prefixed
+	 * @param bool   $prefix     when true `IBAN` will be prefixed
 	 *
 	 * @return string
 	 */
 	public function toFormattedString( $separator = ' ', $size = 4, $prefix = FALSE )
 	{
-		$accountNumber = implode( $separator, str_split( $this->countryCode.$this->check.$this->bban, $size ) );
+		$account_number = implode( $separator, str_split( $this->country_code.$this->check.$this->bban, $size ) );
 
 		if ( $prefix )
-			$accountNumber = 'IBAN '.$accountNumber;
+			$account_number = 'IBAN '.$account_number;
 
-		return $accountNumber;
+		return $account_number;
 	}
 
 	public function getCountryCode()
 	{
-		return $this->countryCode;
+		return $this->country_code;
 	}
 
 	public function __toString()

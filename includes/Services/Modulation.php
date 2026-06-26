@@ -379,7 +379,7 @@ class Modulation extends gEditorial\Service
 
 		if ( 'tools' === $module->configure )
 			echo Core\HTML::tag( 'a', [
-				'href'  => Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
+				'href'  => gEditorial\Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
@@ -391,7 +391,7 @@ class Modulation extends gEditorial\Service
 
 		else if ( 'reports' === $module->configure )
 			echo Core\HTML::tag( 'a', [
-				'href'  => Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
+				'href'  => gEditorial\Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
@@ -402,7 +402,7 @@ class Modulation extends gEditorial\Service
 
 		else
 			echo Core\HTML::tag( 'a', [
-				'href'  => Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
+				'href'  => gEditorial\Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
 				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
@@ -421,7 +421,7 @@ class Modulation extends gEditorial\Service
 				_x( 'Access Code', 'Service: Modulation', 'geditorial-admin' )
 			) : '';
 
-		if ( $wiki = Services\SystemHelp::getModuleDocsURL( $module ) )
+		if ( $wiki = SystemHelp::getModuleDocsURL( $module ) )
 			Core\HTML::h3( Core\HTML::tag( 'a', [
 				'href'   => $wiki,
 				'target' => '_blank',
@@ -459,6 +459,17 @@ class Modulation extends gEditorial\Service
 		return self::const( 'GPERSIANDATE_VERSION' )
 			? FALSE
 			: _x( 'Needs gPersianDate', 'Service: Modulation', 'geditorial-admin' );
+	}
+
+	public static function moduleCheckDocumentRevisions( $message = NULL )
+	{
+		return class_exists( 'WP_Document_Revisions' )
+			? FALSE
+			: Core\HTML::link(
+				_x( 'Needs WP-Document-Revisions', 'Service: Modulation', 'geditorial-admin' ),
+				'https://github.com/wp-document-revisions/wp-document-revisions',
+				TRUE
+			);
 	}
 
 	public static function moduleCheckLocale( $locale, $message = NULL )

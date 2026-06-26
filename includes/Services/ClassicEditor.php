@@ -36,17 +36,23 @@ class ClassicEditor extends gEditorial\Service
 		}
 	}
 
+	public static function richEditing( $user = NULL )
+	{
+		return WordPress\Strings::isTruthy( WordPress\User::option( 'rich_editing', $user ) );
+	}
+
 	public static function hook_buttons()
 	{
-		if ( 'true' != get_user_option( 'rich_editing' ) )
+		if ( ! self::richEditing() )
 			return;
 
 		if ( empty( array_filter( static::$tinymce_buttons ) ) )
 			return;
 
 		foreach ( static::TINYMCE_FILTERS as $level => $filter )
-			add_filter( $filter, static function ( $buttons, $editor_id )
-				use ( $level, $filter ) {
+			add_filter( $filter,
+				static function ( $buttons, $editor_id )
+					use ( $level, $filter ) {
 
 				// if ( WordPress\IsIt::blockEditor() )
 				// 	return $buttons;
@@ -61,7 +67,7 @@ class ClassicEditor extends gEditorial\Service
 
 			}, 12, 2 );
 
-		add_filter( 'mce_external_plugins', [ __CLASS__, 'mce_external_plugins' ] );
+		add_filter( 'mce_external_plugins',   [ __CLASS__, 'mce_external_plugins'   ] );
 		add_filter( 'mce_external_languages', [ __CLASS__, 'mce_external_languages' ] );
 	}
 

@@ -52,7 +52,7 @@ class Reshare extends gEditorial\Module
 		return [
 			'primary_posttype'     => 'reshare',
 			'primary_posttype_o2o' => 'reshare_to_posts',
-			'primary_taxonomy'     => 'reshare_category',
+			'category_taxonomy'    => 'reshare_category',
 		];
 	}
 
@@ -60,8 +60,8 @@ class Reshare extends gEditorial\Module
 	{
 		return [
 			'noops' => [
-				'primary_posttype' => _n_noop( 'Reshare', 'Reshares', 'geditorial-reshare' ),
-				'primary_taxonomy' => _n_noop( 'Reshare Category', 'Reshare Categories', 'geditorial-reshare' ),
+				'primary_posttype'  => _n_noop( 'Reshare', 'Reshares', 'geditorial-reshare' ),
+				'category_taxonomy' => _n_noop( 'Reshare Category', 'Reshare Categories', 'geditorial-reshare' ),
 			],
 			'o2o' => [
 				'primary_posttype' => [
@@ -92,7 +92,7 @@ class Reshare extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->register_taxonomy( 'primary_taxonomy', [
+		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => NULL, // default meta box
 			'show_admin_column'  => TRUE,
@@ -103,7 +103,7 @@ class Reshare extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'primary_posttype', [], [
-			'primary_taxonomy' => TRUE,
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}
 
@@ -134,7 +134,7 @@ class Reshare extends gEditorial\Module
 			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_bulk_post_updated_messages( 'primary_posttype' );
-				$this->corerestrictposts__hook_screen_taxonomies( 'primary_taxonomy' );
+				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
 			}
 		}
 	}

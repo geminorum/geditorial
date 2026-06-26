@@ -6,8 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
-// TODO: restrict taxonomy by taxonomy, @SEE: `restrict_manage_posts` filter
-
 class TaxonomyTaxonomy extends gEditorial\Service
 {
 	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
@@ -53,19 +51,32 @@ class TaxonomyTaxonomy extends gEditorial\Service
 		switch ( $context ) {
 
 			case 'addnew':
-				$wrap = TRUE;
+
+				$wrap    = TRUE;
 				$default = WordPress\Taxonomy::getDefaultTermID( $object->name );
+
 				break;
 
 			case 'editterm':
+
 				$wrap = 'tr';
-				$selected = $term ? wp_get_object_terms( $term->term_id, $object->name, [ 'fields' => 'ids' ] ) : FALSE;
+
+				if ( $term )
+					$selected = wp_get_object_terms(
+						$term->term_id,
+						$object->name,
+						[
+							'fields' => 'ids',
+						]
+					);
+
 				break;
 
 			case 'quickedit':
-				$wrap = 'fieldset';
+
+				$wrap              = 'fieldset';
+				$description       = '';          // avoid display
 				$data['quickedit'] = $html_name;
-				$description = ''; // avoid display
 		}
 
 		if ( ! TermHierarchy::isSingleTerm( $object ) )

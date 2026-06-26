@@ -29,6 +29,7 @@ class Happening extends gEditorial\Module
 				'event',
 				'calendar',
 				'has-widgets',
+				'date-tools',
 				'cptmodule',
 			],
 		];
@@ -229,7 +230,6 @@ class Happening extends gEditorial\Module
 			'show_in_quick_edit' => TRUE,
 			'default_term'       => NULL,
 		], 'main_posttype', [
-			'custom_icon' => 'category',
 		] );
 
 		$this->register_taxonomy( 'type_taxonomy', [
@@ -262,8 +262,8 @@ class Happening extends gEditorial\Module
 		$this->register_posttype( 'main_posttype', [
 			'hierarchical' => TRUE,
 		], [
-			'category_taxonomy' => TRUE,
-			'status_taxonomy'   => TRUE,
+			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
+			'status_taxonomy'  => TRUE,
 		] );
 	}
 

@@ -30,6 +30,7 @@ class WasBorn extends gEditorial\Module
 				'birthdate',
 				'gender',
 				'age',
+				'date-tools',
 			],
 		];
 	}

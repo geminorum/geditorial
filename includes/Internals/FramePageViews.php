@@ -162,7 +162,9 @@ trait FramePageViews
 		) );
 
 		$this->enqueue_asset_js( [
-			'config' => [
+			'_nonce'  => wp_create_nonce( $this->hook( $post->ID ) ),
+			'post_id' => $post->ID,
+			'config'  => [
 				'printtitle'  => WordPress\Post::title( $post ),
 				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
 			],
@@ -276,7 +278,9 @@ trait FramePageViews
 		) );
 
 		$this->enqueue_asset_js( [
-			'config' => [
+			'_nonce'  => wp_create_nonce( $this->hook( $term->term_id ) ),
+			'term_id' => $term->term_id,
+			'config'  => [
 				'printtitle'  => WordPress\Term::title( $term ),
 				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
 			],

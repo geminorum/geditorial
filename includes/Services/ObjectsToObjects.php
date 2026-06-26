@@ -56,47 +56,47 @@ class ObjectsToObjects extends gEditorial\Service
 		do_action( 'o2o_init' ); // avoid unnecessary registers
 	}
 
-	public static function parse_query( $wp_query )
+	public static function parse_query( $query )
 	{
-		$result = O2O\Query::create_from_qv( $wp_query->query_vars, 'post' );
+		$result = O2O\Query::create_from_qv( $query->query_vars, 'post' );
 
 		if ( is_wp_error( $result ) ) {
-			$wp_query->_o2o_error = $result;
-			$wp_query->set( 'year', 2525 );
+			$query->_o2o_error = $result;
+			$query->set( 'year', 2525 );
 			return;
 		}
 
 		if ( NULL === $result )
 			return;
 
-		list( $wp_query->_o2o_query, $wp_query->query_vars ) = $result;
+		list( $query->_o2o_query, $query->query_vars ) = $result;
 
-		$wp_query->is_home    = FALSE;
-		$wp_query->is_archive = TRUE;
+		$query->is_home    = FALSE;
+		$query->is_archive = TRUE;
 	}
 
-	public static function posts_clauses( $clauses, $wp_query )
+	public static function posts_clauses( $clauses, $query )
 	{
 		global $wpdb;
 
-		if ( ! isset( $wp_query->_o2o_query ) )
+		if ( ! isset( $query->_o2o_query ) )
 			return $clauses;
 
-		return $wp_query->_o2o_query->alter_clauses( $clauses, "{$wpdb->posts}.ID" );
+		return $query->_o2o_query->alter_clauses( $clauses, "{$wpdb->posts}.ID" );
 	}
 
-	public static function capture( $request, $wp_query )
+	public static function capture( $request, $query )
 	{
-		if ( ! isset( $wp_query->_o2o_capture ) )
+		if ( ! isset( $query->_o2o_capture ) )
 			return $request;
 
-		$wp_query->_o2o_sql = $request;
+		$query->_o2o_sql = $request;
 
 		return '';
 	}
 
 	// pre-populates the o2o meta cache to decrease the number of queries
-	public static function cache_o2o_meta( $the_posts, $wp_query )
+	public static function cache_o2o_meta( $the_posts, $query )
 	{
 		if ( isset( $wp_query->_o2o_query ) && ! empty( $the_posts ) )
 			update_meta_cache( 'o2o', Core\Arraay::pluck( $the_posts, 'o2o_id' ) );

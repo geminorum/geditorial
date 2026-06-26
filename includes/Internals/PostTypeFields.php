@@ -156,7 +156,26 @@ trait PostTypeFields
 
 			if ( ! array_key_exists( 'ltr', $args ) ) {
 
-				if ( in_array( $args['type'], [ 'title_link', 'code', 'color', 'phone', 'mobile', 'contact', 'identity', 'iban', 'bankcard', 'isbn', 'vin', 'plate', 'year', 'date', 'datetime', 'distance', 'duration', 'area' ], TRUE ) )
+				if ( in_array( $args['type'], [
+					'title_link',
+					'code',
+					'color',
+					'phone',
+					'mobile',
+					'contact',
+					'identity',
+					'iban',
+					'bankcard',
+					'isbn',
+					'vin',
+					'plate',
+					'year',
+					'date',
+					'datetime',
+					'distance',
+					'duration',
+					'area',
+				], TRUE ) )
 					$args['ltr'] = TRUE;
 			}
 
@@ -174,7 +193,23 @@ trait PostTypeFields
 				else if ( in_array( $args['type'], [ 'iban' ], TRUE ) )
 					$args['data_length'] = 26;
 
-				else if ( in_array( $args['type'], [ 'gram', 'millimetre', 'kilogram', 'centimetre', 'km_per_hour', 'european_shoe', 'international_shirt', 'international_pants', 'day', 'hour', 'member', 'person' ], TRUE ) )
+				else if ( in_array( $args['type'], [
+					'gram',
+					'millimetre',
+					'kilogram',
+					'centimetre',
+					'metre',
+					'kilometre',
+					'hectare',
+					'km_per_hour',
+					'european_shoe',
+					'international_shirt',
+					'international_pants',
+					'day',
+					'hour',
+					'member',
+					'person',
+				], TRUE ) )
 					$args['data_length'] = 4;
 			}
 
@@ -199,7 +234,7 @@ trait PostTypeFields
 			$fields[$field] = self::atts( [
 				'type'        => 'text',
 				'name'        => $field,
-				'rest'        => $field, // FALSE to disable
+				'rest'        => $field, // `FALSE` to disable
 				'title'       => $this->get_string( $field, $posttype, 'titles', $field ),
 				'description' => $this->get_string( $field, $posttype, 'descriptions' ),
 
@@ -213,7 +248,7 @@ trait PostTypeFields
 				'prep'        => NULL, // callback
 				'pattern'     => NULL, // HTML input pattern
 				'default'     => NULL, // currently only on rest
-				'datatype'    => NULL, // DataType Class
+				'datatype'    => NULL, // `DataType` Class
 				'icon'        => 'smiley',
 				'context'     => 'mainbox', // OLD: 'main'
 				'quickedit'   => FALSE,
@@ -223,9 +258,11 @@ trait PostTypeFields
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will be ignored on import
 				'export_title'   => NULL,    // the export column title
 				'data_unit'      => NULL,    // The unit which in the data is stored
-				'data_length'    => NULL,    // Typical length of the data // FIXME: implement this!
-				'autocomplete'   => 'off',   // NULL to drop the attribute // FIXME: implement this!
-				// 'discovery'      => FALSE,   // REGEX string or callback array
+				'data_length'    => NULL,    // Typical length of the data
+				'autocomplete'   => 'off',   // `NULL` to drop the attribute
+				// 'discovery'      => FALSE,   // REGEX string or callback array // FIXME: implement this!
+				// 'fields_class'   => NULL,    // Additional field CSS class for the input. // FIXME: implement this!
+				// 'fields_type'    => NULL,    // Additional field type attribute for the input. // FIXME: implement this!
 
 				'values'     => $this->get_strings( $field, 'values', $this->get_strings( $args['type'], 'values', [] ) ),
 				'none_title' => $this->get_string( $field, $posttype, 'none', $this->get_string( $args['type'], $posttype, 'none', NULL ) ),
@@ -550,24 +587,25 @@ trait PostTypeFields
 				$sanitized = Core\Area::sanitize( $data );
 				break;
 
-			case 'member':
-			case 'person':
-			case 'day':
-			case 'hour':
-			case 'gram':
-			case 'kilogram':
+			case 'member'     :
+			case 'person'     :
+			case 'day'        :
+			case 'hour'       :
+			case 'gram'       :
 			case 'km_per_hour':
-			case 'millimetre':
-			case 'centimetre':
-			case 'metre':
-			case 'kilometre':
-			case 'price':
-			case 'number':
+			case 'millimetre' :
+			case 'centimetre' :
+			case 'price'      :
+			case 'number'     :
 
 				$sanitized = Core\Number::intval( $data );
 				break;
 
-			case 'float':
+			case 'metre'    :
+			case 'kilogram' :
+			case 'kilometre':
+			case 'hectare'  :
+			case 'float'    :
 
 				$sanitized = Core\Number::floatval( $data );
 				break;
@@ -608,6 +646,7 @@ trait PostTypeFields
 		if ( ! count( $fields ) )
 			return FALSE;
 
+		// @hook `geditorial_{$module}_mainbox_callback`
 		$callback = $this->filters( self::und( $context, 'callback' ),
 			in_array( $context, Core\Arraay::column( $fields, 'context' ), TRUE ),
 			$screen->post_type
@@ -746,20 +785,21 @@ trait PostTypeFields
 					gEditorial\MetaBox::renderFieldInput( $field, $post, $this->module->name );
 					break;
 
-				case 'float':
-				case 'price': // TODO must use custom text input + code + ortho-number + separator
-				case 'number':
-				case 'member':
-				case 'person':
-				case 'day':
-				case 'hour':
-				case 'gram':
+				case 'float'      :
+				case 'price'      :   // TODO: must use custom text input + code + ortho-number + separator
+				case 'number'     :
+				case 'member'     :
+				case 'person'     :
+				case 'day'        :
+				case 'hour'       :
+				case 'gram'       :
 				case 'km_per_hour':
-				case 'millimetre':
-				case 'kilogram':
-				case 'centimetre':
-				case 'metre':
-				case 'kilometre':
+				case 'millimetre' :
+				case 'kilogram'   :
+				case 'centimetre' :
+				case 'metre'      :
+				case 'kilometre'  :
+				case 'hectare'    :
 
 					gEditorial\MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
@@ -784,7 +824,7 @@ trait PostTypeFields
 
 				case 'attachment':
 
-					// gEditorial\MetaBox::renderFieldAttachment( $field, $post, $this->module->name ); // FIXME
+					// `gEditorial\MetaBox::renderFieldAttachment( $field, $post, $this->module->name );` // FIXME
 					gEditorial\MetaBox::renderFieldNumber( $field, $post, $this->module->name );
 					break;
 
@@ -804,7 +844,7 @@ trait PostTypeFields
 					if ( ! $count = WordPress\Taxonomy::hasTerms( $field['taxonomy'] ) )
 						break;
 
-					if ( $count > 15 ) // WTF: customize this!
+					if ( $count > 15 ) // TODO: customize this!
 						gEditorial\MetaBox::renderFieldTerm( $field, $post, $this->module->name );
 
 					else

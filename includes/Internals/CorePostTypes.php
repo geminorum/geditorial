@@ -469,7 +469,7 @@ trait CorePostTypes
 		$singular = $this->get_posttype_label( $constant, 'singular_name' );
 
 		return [
-			'field'   => $constant.'_supports',
+			'field'   => self::und( $constant, 'supports' ),
 			'type'    => 'checkboxes-values',
 			'default' => $defaults,
 			'values'  => $supports,
@@ -507,7 +507,12 @@ trait CorePostTypes
 
 	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
 	{
-		return Services\CustomPostType::getLabel( $this->constant( $constant, $constant ), $label, NULL, $fallback );
+		return Services\CustomPostType::getLabel(
+			$this->constant( $constant, $constant ),
+			$label,
+			NULL,
+			$fallback
+		);
 	}
 
 	public function get_posttype_taxonomies_list( $constant )

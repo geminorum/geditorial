@@ -56,7 +56,7 @@ class Terms extends gEditorial\Module
 		'max',
 		'min',
 		// 'rtl', // TODO
-		'viewable',
+		'viewable', // single choice
 		'source',
 		'embed',
 		'url',

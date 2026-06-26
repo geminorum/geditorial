@@ -22,18 +22,18 @@ class Sitemaps extends gEditorial\Service
 	 *
 	 * NOTE: also see: `hook_taxonomy_sitemap_show_empty`
 	 *
-	 * @param array $args
+	 * @param array $arguments
 	 * @param string $taxonomy
 	 * @return array
 	 */
-	public static function taxonomies_query_args( $args, $taxonomy )
+	public static function taxonomies_query_args( $arguments, $taxonomy )
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
-			return $args;
+			return $arguments;
 
 		if ( ! empty( $object->{self::VIEWABLE_TAXONOMY_PROP} ) )
 			$args['hide_empty'] = FALSE;
 
-		return $args;
+		return $arguments;
 	}
 }

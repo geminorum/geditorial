@@ -501,6 +501,7 @@ class Info extends WordPress\Main
 			case 'metre'        : return [ _x( 'Metres', 'Info: Unit', 'geditorial' ), _x( 'm', 'Info: Unit', 'geditorial' ) ];
 			case 'kilometre'    : return [ _x( 'Kilometres', 'Info: Unit', 'geditorial' ), _x( 'km', 'Info: Unit', 'geditorial' ) ];
 			case 'km_per_hour'  : return [ _x( 'Kilometres per Hour', 'Info: Unit', 'geditorial' ), _x( 'kmph', 'Info: Unit', 'geditorial' ) ];
+			case 'hectare'      : return [ _x( 'Hectares', 'Info: Unit', 'geditorial' ), _x( 'ha', 'Info: Unit', 'geditorial' ) ];
 			case 'european'     : return [ _x( 'European', 'Info: Unit', 'geditorial' ), _x( 'eu', 'Info: Unit', 'geditorial' ) ];
 			case 'international': return [ _x( 'International', 'Info: Unit', 'geditorial' ), _x( 'int', 'Info: Unit', 'geditorial' ) ];
 			case 'person'       : return [ _x( 'Persons', 'Info: Unit', 'geditorial' ), _x( 'persons', 'Info: Unit', 'geditorial' ) ];
@@ -550,6 +551,7 @@ class Info extends WordPress\Main
 				/* translators: `%s`: items count */
 				return _nx_noop( '%s Member', '%s Members', 'Info: Noop', 'geditorial' );
 
+			case 'population':
 			case 'people':
 			case 'person':
 				/**
@@ -689,10 +691,11 @@ class Info extends WordPress\Main
 				 * `Metre` is the standard spelling of the metric unit for length
 				 * in nearly all English-speaking nations, the exceptions being
 				 * the United States and the Philippines which use `meter`.
-				 * Measuring devices (such as ammeter, speedometer) are spelled
-				 * "-meter" in all variants of English.
 				 *
-				 * @ref https://en.wikipedia.org/wiki/Metre
+				 * Measuring devices (such as ammeter, speedometer) are spelled
+				 * `-meter` in all variants of English.
+				 *
+				 * @source https://en.wikipedia.org/wiki/Metre
 				 * @see https://www.grammarly.com/commonly-confused-words/meter-vs-metre
 				 */
 				/* translators: `%s`: unit amount */
@@ -709,6 +712,11 @@ class Info extends WordPress\Main
 			case 'km_per_hour':
 				/* translators: `%s`: unit amount */
 				return _nx_noop( '%s Kilometer per Hour', '%s Kilometres per Hour', 'Info: Noop', 'geditorial' );
+
+			case 'ha':
+			case 'hectare':
+				/* translators: `%s`: unit amount */
+				return _nx_noop( '%s Hectare', '%s Hectares', 'Info: Noop', 'geditorial' );
 
 			case 'card':
 			case 'cards':

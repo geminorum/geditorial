@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait Assets
 {
-	public function enqueue_asset_style( $name = NULL, $deps = [], $handle = NULL )
+	public function enqueue_asset_style( $name = NULL, $deps = NULL, $handle = NULL )
 	{
 		if ( is_null( $name ) )
 			$name = $this->key;
@@ -19,55 +19,67 @@ trait Assets
 			$name = $name->base;
 
 		else
-			$name = $this->key.'.'.$name;
+			$name = self::dot( $this->key, $name );
 
-		$name = str_replace( '_', '-', $name );
-
-		if ( is_null( $handle ) )
-			$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
-
+		$name   = str_replace( '_', '-', $name );
+		$handle = $handle ?? strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 		$prefix = is_admin() ? 'admin.' : 'front.';
 
-		wp_enqueue_style( $handle, GEDITORIAL_URL.'assets/css/'.$prefix.$name.'.css', $deps, GEDITORIAL_HASH, 'all' );
+		wp_enqueue_style(
+			$handle,
+			sprintf( '%sassets/css/%s%s.css',
+				GEDITORIAL_URL,
+				$prefix,
+				$name
+			),
+			$deps ?? [],
+			GEDITORIAL_HASH,
+			'all'
+		);
+
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 
 		return $handle;
 	}
 
 	// NOTE: each script must have a `.min` version
-	public function enqueue_asset_js( $args = [], $name = NULL, $deps = [ 'jquery' ], $key = NULL, $handle = NULL )
+	public function enqueue_asset_js( $args = [], $name = NULL, $deps = NULL, $key = NULL, $handle = NULL )
 	{
-		if ( is_null( $key ) )
-			$key = $this->key;
+		$key = $key ?? $this->key;
 
 		if ( is_null( $name ) )
 			$name = $key;
 
 		else if ( $name instanceof \WP_Screen )
-			$name = $key.'.'.$name->base;
+			$name = self::dot( $key, $name->base );
 
 		if ( TRUE === $args ) {
+
 			$args = [];
 
 		} else if ( $args && $name && is_string( $args ) ) {
-			$name.= '.'.$args;
+
+			$name = self::dot( $name, $args );
 			$args = [];
 		}
 
 		if ( $name ) {
 
-			$name = str_replace( '_', '-', $name );
-
-			if ( is_null( $handle ) )
-				$handle = strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
+			$name   = str_replace( '_', '-', $name );
+			$handle = $handle ?? strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
 			$prefix = is_admin() ? 'admin.' : 'front.';
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 			wp_enqueue_script(
 				$handle,
-				GEDITORIAL_URL.'assets/js/'.$prefix.$name.$suffix.'.js',
-				$deps,
+				sprintf( '%sassets/js/%s%s%s.js',
+					GEDITORIAL_URL,
+					$prefix,
+					$name,
+					$suffix
+				),
+				$deps ?? [ 'jquery' ],
 				GEDITORIAL_HASH,
 				TRUE
 			);
@@ -92,14 +104,17 @@ trait Assets
 		gEditorial()->enqueue_styles();
 	}
 
-	public function register_editor_button( $plugin, $level = NULL, $settings_key = 'editor_button' )
+	public function register_editor_button( string $plugin, $level = NULL, $settings_key = NULL )
 	{
-		if ( ! $this->get_setting( $settings_key, TRUE ) )
+		if ( ! $this->get_setting( $settings_key ?? 'editor_button', TRUE ) )
 			return FALSE;
 
 		return Services\ClassicEditor::registerButton(
 			$this->hook( $plugin ),
-			sprintf( 'assets/js/tinymce/%s.%s', $this->module->name, $plugin ),
+			sprintf( 'assets/js/tinymce/%s.%s',
+				$this->module->name,
+				$plugin
+			),
 			$level
 		);
 	}

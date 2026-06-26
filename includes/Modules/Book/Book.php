@@ -509,9 +509,7 @@ class Book extends gEditorial\Module
 			$this->register_taxonomy( 'main_paired', [
 				'show_ui'      => FALSE,
 				'show_in_rest' => FALSE,
-			], NULL, [
-
-			] );
+			], NULL, [] );
 
 			$this->_paired = $this->constant( 'main_paired' );
 
