@@ -616,9 +616,16 @@ trait PostTypeFields
 		if ( TRUE === $callback )
 			$callback = [ $this, 'render_metabox_posttypefields' ];
 
+		// @hook `geditorial_{$module}_metabox_title`
+		$title = $this->filters( self::und( 'metabox', 'title' ),
+			Services\CustomPostType::getLabel( $screen->post_type, self::und( $this->key, $context ), NULL, NULL ),
+			$screen->post_type,
+			$context
+		);
+
 		if ( $callback && is_callable( $callback ) )
 			add_meta_box( $this->classs( $screen->post_type ),
-				$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
+				$title ?? $this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 				$callback,
 				$screen,
 				'side',
