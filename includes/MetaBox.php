@@ -1430,7 +1430,31 @@ class MetaBox extends WordPress\Main
 
 		switch ( $args['type'] ) {
 
-			case 'float':
+			case 'metre'    :
+			case 'kilogram' :
+			case 'kilometre':
+			case 'hectare'  :
+			case 'float'    :
+
+				if ( empty( $args['pattern'] ) )
+					// $args['pattern'] = 'fa_IR' === self::const( 'GNETWORK_WPLANG' )
+					// 	? '[0-9۰-۹]*[.,]?[0-9۰-۹]*'
+					// 	: '[0-9]*[.,]?[0-9]*';
+					$args['pattern'] = '[0-9۰-۹]*[.,]?[0-9۰-۹]*';
+
+				/**
+				 * `step="any"` will allow any decimal.
+				 * `step="1"` will allow no decimal.
+				 * `step="0.5"` will allow 0.5; 1; 1.5; …
+				 * `step="0.1"` will allow 0.1; 0.2; 0.3; 0.4; …
+				 *
+				 * @source https://stackoverflow.com/a/24921307
+				 * @REF: https://web.archive.org/web/20150305121355/http://blog.isotoma.com/2012/03/html5-input-typenumber-and-decimalsfloats-in-chrome/
+				 */
+				$atts['step'] = 'any';
+
+				// NOTE: no break!
+
 			case 'number':
 			default:
 				$label = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
