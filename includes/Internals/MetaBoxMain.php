@@ -60,8 +60,15 @@ trait MetaBoxMain
 			$this->nonce_field( $context );
 		};
 
+		// @hook `geditorial_{module}_metabox_title`
+		$title = $this->filters( self::und( 'metabox', 'title' ),
+			Services\CustomPostType::getLabel( $screen->post_type, self::und( $this->key, $context ), NULL, NULL ),
+			$screen->post_type,
+			$context
+		);
+
 		add_meta_box( $metabox,
-			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
+			$title ?? $this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
 			$metabox_context,
