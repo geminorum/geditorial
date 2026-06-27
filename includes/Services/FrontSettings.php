@@ -52,7 +52,7 @@ class FrontSettings extends gEditorial\Service
 		$system = gEditorial\Plugin::system();
 
 		$manager->register_section_type( Controls\SectionButton::class );
-		$manager->register_control_type( Controls\GroupRepeater::class );
+		// $manager->register_control_type( Controls\GroupRepeater::class );
 
 		$manager->add_panel( static::MAIN_PANEL, [
 			'title'          => $system ?: _x( 'Editorial', 'Customizer: Panel Title', 'geditorial-admin' ),

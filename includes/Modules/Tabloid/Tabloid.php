@@ -289,6 +289,14 @@ class Tabloid extends gEditorial\Module
 		], '' );
 	}
 
+	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	{
+		return [
+			'printtitle'  => WordPress\Post::title( $post ),
+			'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
+		];
+	}
+
 	protected function framepageviews__cleanup_data_for_post( $data, $post, $context )
 	{
 		unset( $data['comments_rendered'] );
@@ -318,5 +326,13 @@ class Tabloid extends gEditorial\Module
 			'after-custom',
 			'after-content',
 		], '' );
+	}
+
+	private function framepageviews__config_script_for_term( $term, $context, $data )
+	{
+		return  [
+			'printtitle'  => WordPress\Term::title( $term ),
+			'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
+		];
 	}
 }

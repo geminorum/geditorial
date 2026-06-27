@@ -164,14 +164,16 @@ trait FramePageViews
 		$this->enqueue_asset_js( [
 			'_nonce'  => wp_create_nonce( $this->hook( $post->ID ) ),
 			'post_id' => $post->ID,
-			'config'  => [
-				'printtitle'  => WordPress\Post::title( $post ),
-				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
-			],
+			'config'  => $this->framepageviews__config_script_for_post( $post, $context, $data ),
 		], $this->dotted( $context ), [
 			'jquery',
 			gEditorial\Scripts::pkgPrintThis(),
 		] );
+	}
+
+	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	{
+		return [];
 	}
 
 	/**
@@ -280,13 +282,15 @@ trait FramePageViews
 		$this->enqueue_asset_js( [
 			'_nonce'  => wp_create_nonce( $this->hook( $term->term_id ) ),
 			'term_id' => $term->term_id,
-			'config'  => [
-				'printtitle'  => WordPress\Term::title( $term ),
-				'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
-			],
+			'config'  => $this->framepageviews__config_script_for_term( $term, $context, $data ),
 		], $this->dotted( $context ), [
 			'jquery',
 			gEditorial\Scripts::pkgPrintThis(),
 		] );
+	}
+
+	private function framepageviews__config_script_for_term( $term, $context, $data )
+	{
+		return  [];
 	}
 }
