@@ -2,6 +2,305 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.34.0] - 2026-06-27
+* 🔧 change license to GPLv2 or later
+* internal/content-insert: check content paged before insert
+* internal/content-insert: control term checks
+* internal/content-insert: 🆕 internal
+* internal/content-replace: 🆕 internal
+* internal/core-admin-bar: 🆕 internal
+* internal/core-admin-bar: support for icon/spinner/conditions
+* internal/core-comments: check for post/comment types on default status
+* internal/core-menu-page: check for available parent file
+* internal/core-post-types: check for post-type before apply increased menu order
+* internal/core-restrict-posts: check each post cap before linking
+* internal/core-taxonomies: header button for archives
+* internal/core-taxonomies: header button for queried edit
+* internal/frame-page-views: custom callbacks for hooks
+* internal/frame-page-views: 🆕 internal
+* internal/meta-box-list: list-box for post children
+* internal/meta-box-main: customize meta-box title
+* internal/module-links: check for custom caps before linking contexts
+* internal/module-links: default context by each module
+* internal/module-links: like via post-type/taxonomy register
+* internal/o2o-meta-box: 🆕 internal
+* internal/objects-to-objects: 🆕 internal
+* internal/post-meta: field key map by module
+* internal/post-typ-fields: customize meta-box title
+* internal/post-type-fields-reports: column for legacy data count
+* internal/post-type-fields-reports: 🆕 internal
+* internal/post-type-fields: account for custom column for all types
+* internal/post-type-fields: bulk cleanup legacy revised
+* internal/quantum-comments: 🆕 internal
+* internal/rewrites: handle use verbose page rules
+* internal/settings-core: avoid storing default values
+* internal/settings-core: extra buttons internal api
+* internal/settings-core: module icon on subs
+* internal/settings-core: short-code constant helper
+* internal/settings-post-type: more methods for target post-types
+* internal/short-codes: support for aliases
+* internal/sub-contents: proper context on frame-page
+* internal/template-post-type: process default contents
+* internal/template-taxonomy: admin-bar edit node on archives
+* internal/template-taxonomy: process default contents
+* internal/template-taxonomy: term title/link on absent term intro
+* main/datetime: formats revised
+* main/datetime: prep for mysql format
+* main/datetime: rethinking date helpers
+* main/list-table: 🆕 check for hidden columns
+* main/meta-box: cache hidden meta-box data
+* main/meta-box: handling data on term types
+* main/meta-box: override name attr option
+* main/meta-box: support float step on number inputs
+* main/module: admin-bar summery enabled by default
+* main/module: auto-hook customize setup
+* main/module: prevent infinite loop on cuc fallback
+* main/module: refactoring custom icons
+* main/module: storing screen id by context/constant
+* main/module: unified admin-bar node class
+* main/parser: check for package availability
+* main/parser: csv parser revised
+* main/parser: migrate to `League\Csv`
+* main/parser: unified api for attachments sources
+* main/plugin: admin-bar last-call action hook
+* main/plugin: admin-bar styles revised
+* main/plugin: extended counts of modules
+* main/plugin: front styles revised
+* main/plugin: migrate to plugin core
+* main/plugin: style for customizer
+* main/plugin: system string helper
+* main/plugin: unified global cap list
+* main/plugin: using hash on assets
+* main/scripts: 🆕 dynamic submit
+* main/scripts: support mustache.js
+* main/settings: apply css class if no wrap
+* main/settings: default settings for tab title/priority
+* main/settings: excludes api revised
+* main/settings: field section revised
+* main/settings: module links after tool-box
+* main/settings: new type for date-format
+* main/settings: processing error open
+* main/settings: separate logic for go back button
+* main/settings: support for list panel expanded
+* main/settings: support for values on radio type
+* main/short-code: apply term default on list terms
+* main/short-code: auto setup post data for item callback
+* main/short-code: check for separated post-types/taxonomies
+* main/short-code: support for children type lists
+* main/short-code: support for metadata type lists
+* main/table-list: column for general code data
+* main/template: avoid duplicate bylines
+* main/template: check paged content for meta links
+* main/template: default button class for action links
+* main/widget: parent module supported post-types
+* misc/color-calc: adopting the abandoned `ariColor`
+* module/abo: svg icons for blood types
+* module/addressed: logic move to settings sub-class
+* module/addressed: 🆕 module
+* module/addressed: support for base province
+* module/alphabet: support exclude post-types/taxonomies
+* module/archives: apply short-code on default term content
+* module/attachments: admin-bar revised
+* module/attachments: auto rotation jpeg images after upload
+* module/attachments: button for upload with parent
+* module/attachments: comment control for each attachment
+* module/attachments: warning on upload with parent
+* module/audit: admin-bar revised
+* module/byline: admin-bar revised
+* module/byline: check for available parser
+* module/byline: custom delimiters for full-name
+* module/byline: import from byline meta
+* module/byline: import from simple meta
+* module/byline: 🆕 short-code
+* module/byline: 🆕 widget
+* module/byline: prepend byline on meta summary rows
+* module/byline: proper context on frame-page
+* module/byline: support object hints by simple meta data
+* module/byline: support raw data context
+* module/byline: template for admin overview
+* module/cine: 🆕 module
+* module/config: apply custom system string on menu titles
+* module/config: check for overview callback before registering sub
+* module/config: general tools migrate to card columns
+* module/config: info via tool-box card on the import screen
+* module/config: meta-box layout for reports overview
+* module/config: 🆕 kiosks context
+* module/config: o2o conversion revised
+* module/config: refactoring render page by context
+* module/config: sub icon for contexts
+* module/drafts: admin-bar revised
+* module/estimated: admin-bar revised
+* module/estimated: proper handling meta-key
+* module/estimated: support for post pointers
+* module/genres: optional multiple terms
+* module/glossary : 🆕 module
+* module/headings: support for control term
+* module/home: avoid forcing on taxonomy pages
+* module/identified: admin-bar revised
+* module/identified: handle data on search
+* module/identified: handling un-published posts
+* module/identified: not-found template for logged in only
+* module/importer: circle progress hints
+* module/importer: combining the log meta
+* module/importer: custom extra data to use with all imported items
+* module/importer: migrate to parser api
+* module/importer: overview for import history
+* module/importer: roles revised
+* module/importer: source id value as post id
+* module/importer: translate truthy value to the default term
+* module/isbn: support for custom column
+* module/like: admin-bar revised
+* module/like: optional buddybress support
+* module/lingo: :up: raw data
+* module/lingo: add terms meta field only if supported
+* module/lingo: imports migrate to card columns
+* module/lingo: imports revised
+* module/lingo: 🆕 term convertor tool
+* module/lingo: optional multiple terms
+* module/lingo: text-direction field support
+* module/markdown: admin-bar revised
+* module/markdown: public api for to/from data
+* module/meta: event summary field
+* module/meta: filter meta-keys on imports
+* module/meta: prepend meta string fields on modified summary
+* module/meta: separate byline hints
+* module/meta: support for `sku` field
+* module/meta: support for color field types
+* module/meta: title link field type
+* module/metropolis: 🆕 module
+* module/modified: date blocks on summary
+* module/modified: insert content context
+* module/modified: 🆕 short-code
+* module/modified: null title for full-time on short-codes
+* module/modified: support for admin-bar summary
+* module/modified: support for post pointers
+* module/modified: support post/dashboard pointers
+* module/modified: using fallback setting for prefix
+* module/national-library: handling not found fipa/isbn queries
+* module/national-library: handling un-published posts
+* module/ortho: 🆕 support tinymce
+* module/ortho: tools migrate to card columns
+* module/ortho: using virastar icon for buttons
+* module/paged-content: 🆕 module
+* module/people: apply family first/last filters on all
+* module/people: correcting the comma before comparisons
+* module/people: filter search results on term search
+* module/people: filter search select pre results
+* module/people: filter searching names on admin
+* module/people: get criteria helper
+* module/people: override order defaults on front
+* module/people: pre term name/slug filters
+* module/people: prep individuals with admin search links
+* module/personage: parent statuses as post-type views
+* module/pointers: passing new post/term info to actions
+* module/publishers: 🆕 module
+* module/remoted: better handling request on receiver
+* module/remoted: custom destinations
+* module/remoted: custom index for receiver
+* module/remoted: generate receiver app
+* module/remoted: home/overwrite on receiver
+* module/remoted: priority/default destination support
+* module/remoted: render widget by context
+* module/remoted: uploader config settings
+* module/reshare: migrate to new o2o api
+* module/short-codes: admin-bar revised
+* module/short-codes: 🆕 circle progress short-code
+* module/socialite: handling icon link from other sources
+* module/socialite: icon list on the term widget
+* module/socialite: support for ical links
+* module/symposium: support for o2o
+* module/tabs: avoid render on theme compat mode
+* module/tabs: filter for meta summary viewable
+* module/terms: admin-bar revised
+* module/terms: avoid html tags on media stats via ajax
+* module/terms: avoid setting current on user field
+* module/terms: avoid year only icals
+* module/terms: check user exists on display
+* module/terms: display avatars for user/author fields
+* module/terms: fallback to search select if network count is large
+* module/terms: hide ical links if no data available
+* module/terms: linkify media states
+* module/terms: support for border color
+* module/terms: support for establish/abolish fields
+* module/terms: support for user field
+* module/terms: using search-select for user field
+* module/today: custom template for front-end
+* module/today: sort posts by the day data
+* module/today: support importer extra all
+* module/today: today in navigation buttons
+* module/today: tools migrate to card columns
+* module/tube: video/channel relations revised
+* module/tweaks: 🆕 support for wc products
+* module/uncategorized: imports migrate to card columns
+* module/uncategorized: tool check for dead taxonomy terms
+* module/users: migrate to internal parser api
+* module/venue: proper context on frame-page
+* module/views: admin-bar revised
+* module/wc-connected: 🆕 module
+* module/wc-shortcodes: 🆕 order count short-code
+* module/wc-terms: archives for terms with no products
+* module/widgets: 🆕 connected posts widget
+* module/widgets: search terms: filter results
+* module/yearly: append year to post titles
+* module/yearly: support ordering supported by year span
+* service/admin-screen: check screen object for block editor
+* service/admin-screen: css variables for current color scheme
+* service/admin-screen: 🆕 fill tag form by query
+* service/advanced-queries: 🆕 api for searching term meta fields
+* service/advanced-queries: 🆕 search term name
+* service/advanced-queries: support for not exact meta values
+* service/advanced-queries: trim quotes on meta criteria
+* service/avatars: 🆕 service
+* service/avatars: display full image on hover via cursor
+* service/avatars: initial gravatar support
+* service/barcodes: BWIPP revised
+* service/barcodes: general qr-code api
+* service/calendars: callback may return timespan
+* service/calendars: customize the summary of event
+* service/calendars: endpoint data as context
+* service/calendars: event generation revised again!
+* service/calendars: handle ical not found
+* service/calendars: handling build-in types
+* service/calendars: method naming revised
+* service/calendars: returning empty calendars
+* service/calendars: sanitize ical context
+* service/calendars: support for date-string fields
+* service/calendars: support for term events
+* service/classic-editor: 🆕 service
+* service/content-brand: 🆕 service
+* service/file-cache: internal api revised
+* service/front-settings: admin-bar node for settings page
+* service/front-settings: apply disable credits on customizer
+* service/front-settings: 🆕 service
+* service/front-settings: wiki link on customizer
+* service/icons: 🆕 service
+* service/icons: unified markup for admin-bar icon only nodes
+* service/individuals: check available parser
+* service/individuals: check for parser before making full name
+* service/locations: format address helper
+* service/locations: prep address revised
+* service/markup: 🆕 service
+* service/markup: html to markdown helper
+* service/markup: markdown conversion revised
+* service/modulation: 🆕 service
+* service/modulation: check for persian date plugin
+* service/modulation: filter crm features by constant
+* service/objects-to-objects: rename to plural
+* service/objects-to-objects: support for admin interface
+* service/paired: paring simplified
+* service/search-select: handle object/duplicate terms on pre filter
+* service/search-select: select2 revised
+* service/semi-secure: 🆕 service
+* service/system-heartbeat: 🆕 service
+* service/taxonomy-fields: 🆕 get field/raw meta interface
+* service/taxonomy-fields: support for suitables/tagline
+* service/taxonomy-taxonomy: hide description on quick-edit
+* 🆙 jQTree v1.8.11
+* 🆙 JSBarcodes v3.12.3
+* 🆙 min php 8.3
+* 🆙 requires at least WordPress v5.9.0
+* 🆙 select2 4.1.0
+
 ## [3.33.0]
 * internal/core-post-type: parent module on post-type args
 * internal/core-post-types: combine register sub-methods
