@@ -22,7 +22,7 @@ import livereload from 'gulp-livereload';
 import parseChangelog from 'parse-changelog';
 import extend from 'xtend';
 import template from 'lodash.template';
-import yaml from 'js-yaml';
+import { load as yaml } from 'js-yaml';
 
 import { exec } from 'child_process';
 import path from 'path';
@@ -70,7 +70,7 @@ const debug = /--debug/.test(process.argv.slice(2));
 const patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
 
 try {
-  env = extend(conf.env, yaml.load(readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true })); // eslint-disable-line no-unused-vars
+  env = extend(conf.env, yaml(readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true })); // eslint-disable-line no-unused-vars
 } catch (e) {
   log.warn('no environment.yml loaded!');
 }

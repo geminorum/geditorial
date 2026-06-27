@@ -10,9 +10,9 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 {
+	use Internals\CoreDashboard;
+	use Internals\CoreRestrictPosts;
 	use Internals\TemplateTaxonomy;
-
-	protected $disable_no_posttypes = TRUE;
 
 	public static function module()
 	{
@@ -30,9 +30,13 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 	protected function get_global_settings()
 	{
-		return [
-			'_general' => [
+		$roles = $this->get_settings_default_roles();
 
+		return [
+			// '_general' => [],
+			'_roles' => [
+				'custom_captype',
+				'reports_roles' => [ NULL, $roles ],
 			],
 			'_supports' => [
 				'thumbnail_support',
@@ -42,15 +46,21 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'metabox_advanced',
 			],
 			'_editlist' => [
-				'show_in_quickedit',
+				'show_in_quickedit' => [ $this->get_taxonomy_show_in_quickedit_desc( 'category_taxonomy' ), '1' ],
 			],
 			'_frontend' => [
 				'contents_viewable',
-				'show_in_navmenus',
+				'show_in_navmenus' => [ $this->get_taxonomy_show_in_navmenus_desc( 'category_taxonomy' ), '1' ],
+			],
+			'_fields' => [
+				$this->settings_posttypes_for_target( 'parent',
+					_x( 'Owner Post-types', 'Settings', '<%= moduleTextdomain %>' ),
+					_x( 'Selected will be available as the post-types of the owner meta-field.', 'Settings', '<%= moduleTextdomain %>' )
+				),
 			],
 			'_constants' => [
-				'main_posttype_constant'     => [ NULL, 'xxx' ],
-				'category_taxonomy_constant' => [ NULL, 'xxx_category' ],
+				'main_posttype_constant'     => [ NULL, 'xxx' ], // FIXME <----
+				'category_taxonomy_constant' => [ NULL, 'xxx_category' ], // FIXME <----
 			],
 		];
 	}
@@ -58,8 +68,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	protected function get_global_constants()
 	{
 		return [
-			'main_posttype'     => 'xxx',
-			'category_taxonomy' => 'xxx_category',
+			'main_posttype'     => 'xxx', // FIXME <----
+			'category_taxonomy' => 'xxx_category', // FIXME <----
 		];
 	}
 
@@ -67,7 +77,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_posttype'     => _n_noop( '', '', '<%= moduleTextdomain %>' ),
+				'main_posttype'     => _n_noop( '', '', '<%= moduleTextdomain %>' ), // FIXME <----
 				'category_taxonomy' => _n_noop( 'Category', 'Categories', '<%= moduleTextdomain %>' ),
 			],
 			'labels' => [
@@ -90,10 +100,50 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		return [
 			'category_taxonomy' => [
-				'' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ),
+				// '' => _x( '', 'Main Taxonomy: Default Term', '<%= moduleTextdomain %>' ),
 			],
 		];
 	}
+
+	public function get_global_fields()
+	{
+		$posttype = $this->constant( 'main_posttype' );
+
+		return [
+			'meta' => [
+				$posttype => [
+
+					'owner_userid' => [
+						'title'       => _x( 'Owner', 'Field Title', '<%= moduleTextdomain %>' ),
+						'description' => _x( 'Determines the user responsible for this content.', 'Field Description', '<%= moduleTextdomain %>' ),
+						'type'        => 'user',
+					],
+					'owner_postid' => [
+						'title'       => _x( 'Owner', 'Field Title', '<%= moduleTextdomain %>' ),
+						'description' => _x( 'Determines the individual responsible for this content.', 'Field Description', '<%= moduleTextdomain %>' ),
+						'type'        => 'parent_post',
+						'posttype'    => $this->get_setting_posttypes( 'parent' ),
+					],
+
+					'venue_string'   => [ 'type' => 'venue' ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'website_url'    => [ 'type' => 'link' ],
+					'wiki_url'       => [ 'type' => 'link' ],
+					'email_address'  => [ 'type' => 'email' ],
+
+					'content_embed_url' => [ 'type' => 'embed' ],
+					'text_source_url'   => [ 'type' => 'text_source' ],
+					'audio_source_url'  => [ 'type' => 'audio_source' ],
+					'video_source_url'  => [ 'type' => 'video_source' ],
+					'image_source_url'  => [ 'type' => 'image_source' ],
+				],
+			],
+ 			'units' => [
+ 				// $posttype => [],
+			],
+		];
+	}
+
 
 	protected function posttypes_excluded( $extra = [] )
 	{
@@ -109,25 +159,42 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
+	public function meta_init()
+	{
+		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
+	}
+
+	public function units_init()
+	{
+		// $this->add_posttype_fields_for( 'units', 'main_posttype' );
+	}
+
 	public function init()
 	{
 		parent::init();
+
+		$viewable = $this->get_setting( 'contents_viewable', TRUE );
+		$captype  = $this->get_setting( 'custom_captype', FALSE )
+			? $this->constant_plural( 'main_posttype' )
+			: FALSE;
 
 		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
 			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
 			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
-		], NULL, [
-			'is_viewable' => $this->get_setting( 'contents_viewable', TRUE ),
-			// 'custom_icon' => $this->module->icon, // default is module icon
+		], 'main_posttype', [
+			'is_viewable'    => $viewable,
+			'custom_captype' => $captype,
+			// 'custom_icon'    => $this->module->icon,   // default is module icon
 		] );
 
 		$this->register_posttype( 'main_posttype', [
 
 		], [
-			'is_viewable'      => $this->get_setting( 'contents_viewable', TRUE ),
-			// 'custom_icon'      => $this->module->icon, // default is module icon
+			'is_viewable'      => $viewable,
+			'custom_captype'   => $captype,
+			// 'custom_icon'      => $this->module->icon,                      // default is module icon
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 	}
