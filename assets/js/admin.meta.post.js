@@ -5,6 +5,10 @@ jQuery(function ($) {
     $(this).insertBefore('#titlewrap').show();
   });
 
+  $("[data-meta-type='title_link']").each(function () {
+    $(this).insertAfter('#titlewrap').show();
+  });
+
   $("[data-meta-type='title_after']").each(function () {
     $(this).insertAfter('#titlewrap').show();
   });
@@ -13,12 +17,12 @@ jQuery(function ($) {
     $(this).parents('div.postbox').appendTo('#titlediv');
   });
 
-  // wait till post.js binds
+  // Waits till `post.js` binds!
   $(window).on('load', function () {
     if ($("[data-meta-type='title_after']").length) {
       $('#title').off('keydown.editor-focus');
 
-      // copy from post.js
+      // Copy from `post.js`
       // This code is meant to allow tabbing from Title to Post content.
       $("[data-meta-type='title_after']").on('keydown.editor-focus', function (event) {
         let editor;

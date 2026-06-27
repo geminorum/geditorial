@@ -1,19 +1,19 @@
 /* global inlineEditPost */
 
-(function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module
     table: '#the-list',
-    quickedit: '#' + plugin._base + '-' + module + '-quickedit-wrap',
-    bulkedit: '#' + plugin._base + '-' + module + '-bulkedit-wrap',
-    select: 'select#' + plugin._base + '-' + module + '-quickedit-',
-    value: 'div.' + plugin._base + '-' + module + '-value-'
+    quickedit: '#' + plugin._base + '-' + mainkey + '-quickedit-wrap',
+    bulkedit: '#' + plugin._base + '-' + mainkey + '-bulkedit-wrap',
+    select: 'select#' + plugin._base + '-' + mainkey + '-quickedit-',
+    value: 'div.' + plugin._base + '-' + mainkey + '-value-'
   };
 
   const app = {
+    init: function () {
+      app.initBulk();
+      $(s.table).on('click', '.editinline', app.clicked);
+    },
 
     // @REF: https://rudrastyh.com/wordpress/quick-edit-tutorial.html
     initBulk: function () {
@@ -61,10 +61,11 @@
   };
 
   $(function () {
-    app.initBulk();
-    $(s.table).on('click', '.editinline', app.clicked);
-
-    // $(document).trigger('gEditorialReady', [module, app]);
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'singleselect', 'edit'));

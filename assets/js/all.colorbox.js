@@ -15,7 +15,20 @@
       });
     },
 
-    mobile: () => ($(window).width() <= 782), // wp-core media query
+    // The current viewport width
+    // @source `getViewportWidth()`
+    viewport: () => {
+      if (window.innerWidth) {
+        // On phones, `window.innerWidth` is affected by zooming.
+        return Math.max(window.innerWidth, document.documentElement.clientWidth);
+      }
+
+      return $(window).width() || 961;
+    },
+
+    // mobile: () => ($(window).width() <= 782), // WordPress-core media query
+    mobile: () => (u.viewport() <= 782), // WordPress-core media query
+    // isMobile: () => $(document.body).hasClass('mobile'),
 
     // Access object child properties using a dot notation string
     // @REF: https://stackoverflow.com/a/33397682

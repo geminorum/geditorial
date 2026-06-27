@@ -1,9 +1,5 @@
-(function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module
     wrap: 'div.' + plugin._base + '-wrap.-newpost-layout',
     form: 'div.' + plugin._base + '-wrap.-newpost-layout form.-form-form',
     save: 'a.button.-form-save-data'
@@ -12,11 +8,10 @@
   const app = {
     request: null,
 
-    // rtl: $('html').attr('dir') === 'rtl',
     strings: $.extend({}, {
       notarget: 'Cannot handle the target window!',
       willgo: 'Your Draft save successfully. will redirect you in moments &hellip;'
-    }, plugin[module].strings || {}),
+    }, plugin[mainkey].strings || {}),
 
     // this is our own version!
     // @REF: https://stackoverflow.com/a/55460579
@@ -115,9 +110,11 @@
   };
 
   $(function () {
-    app.init();
-
-    // $(document).trigger('gEditorialReady', [module, app]);
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, '_template', 'newpost'));

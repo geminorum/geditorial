@@ -1,23 +1,26 @@
-(function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   let modal;
 
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module
-    button: 'input.' + plugin._base + '-' + module + '-uploadbutton'
+    button: 'input.' + plugin._base + '-' + mainkey + '-uploadbutton'
   };
 
   const app = {
     strings: $.extend({}, {
       modal_title: 'Choose a Datasheet',
       modal_button: 'Select as Source'
-    }, plugin[module].strings || {}),
+    }, plugin[mainkey].strings || {}),
 
     config: $.extend({}, {
       mimetypes: ['application/vnd.ms-excel', 'text/csv']
-    }, plugin[module].config || {}),
+    }, plugin[mainkey].config || {}),
+
+    init: function () {
+      $(s.button).on('click', function (e) {
+        e.preventDefault();
+        app.openModal($(this).data('target'));
+      });
+    },
 
     openModal: function (target) {
       if (!modal) {
@@ -32,7 +35,7 @@
         modal.on('select', function () {
           const attachment = modal.state().get('selection').first().toJSON();
           $('input[name=' + target + ']').val(attachment.id);
-          // console.log(attachment);
+          if (plugin._debug) console.log(attachment);
         });
       }
 
@@ -41,11 +44,11 @@
   };
 
   $(function () {
-    $(s.button).on('click', function (e) {
-      e.preventDefault();
-      app.openModal($(this).data('target'));
-    });
-
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'importer', 'media'));

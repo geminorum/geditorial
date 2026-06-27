@@ -1,23 +1,16 @@
 /* eslint no-unused-vars: off */
 /* global Mustache, Backbone */
 
-(function ($, plugin, module, section) {
+(function ($, plugin, mainkey, context) {
   const ENTER_KEY = 13;
 
   // const s = {
-  //   action: plugin._base + '_' + module,
-  //   classs: plugin._base + '-' + module
+  //   action: plugin._base + '_' + mainkey,
+  //   classs: plugin._base + '-' + mainkey
   // };
 
-  const app = {
-    rtl: $('html').attr('dir') === 'rtl',
-    strings: $.extend({}, {
-      confirm: 'Are you sure you want to delete all connections?'
-    }, plugin[module].strings || {})
-  };
-
   const rowWait = function ($td) {
-    return $td.find('.o2o-icon').css('background-image', 'url(' + plugin[module]._spinner + ')');
+    return $td.find('.o2o-icon').css('background-image', 'url(' + plugin[mainkey]._spinner + ')');
   };
 
   const removeRow = function ($td) {
@@ -370,96 +363,111 @@
     boxes: {}
   };
 
-  $(function () {
-    // Mustache.compilePartial('table-row', getMustacheTemplate('table-row'));
-    // Mustache.render('table-row', getMustacheTemplate('table-row'));
+  const app = {
+    rtl: $('html').attr('dir') === 'rtl',
 
-    $('.o2o-box').each(function () {
-      const $metabox = $(this);
-      const $spinner = $('<img>', {
-        src: plugin[module]._spinner,
-        class: 'o2o-spinner'
-      });
+    strings: $.extend({}, {
+      confirm: 'Are you sure you want to delete all connections?'
+    }, plugin[mainkey].strings || {}),
 
-      const candidates = new Candidates({
-        s: '',
-        paged: 1
-      });
+    init: function () {
+      // Mustache.compilePartial('table-row', getMustacheTemplate('table-row'));
+      // Mustache.render('table-row', getMustacheTemplate('table-row'));
 
-      candidates.total_pages = $metabox.find('.o2o-total').data('num') || 1;
-
-      const ctype = {
-        o2o_type: $metabox.data('o2o_type'),
-        direction: $metabox.data('direction'),
-        from: $('#post_ID').val()
-      };
-
-      // All Ajax requests should be done through this function
-      function ajaxRequest (options, callback) {
-        const params = $.extend({}, options, candidates.attributes, ctype, {
-          action: 'o2o_box',
-          nonce: plugin[module]._nonce
+      $('.o2o-box').each(function () {
+        const $metabox = $(this);
+        const $spinner = $('<img>', {
+          src: plugin[mainkey]._spinner,
+          class: 'o2o-spinner'
         });
 
-        return $.post(ajaxurl, params, function (response) {
-          // let e;
+        const candidates = new Candidates({
+          s: '',
+          paged: 1
+        });
 
-          try {
-            response = JSON.parse(response);
-          } catch (_error) {
-            // e = _error;
-            if (typeof console !== 'undefined' && console !== null) {
-              console.error('Malformed response', response);
+        candidates.total_pages = $metabox.find('.o2o-total').data('num') || 1;
+
+        const ctype = {
+          o2o_type: $metabox.data('o2o_type'),
+          direction: $metabox.data('direction'),
+          from: $('#post_ID').val()
+        };
+
+        // All Ajax requests should be done through this function
+        function ajaxRequest (options, callback) {
+          const params = $.extend({}, options, candidates.attributes, ctype, {
+            action: 'o2o_box',
+            nonce: plugin[mainkey]._nonce
+          });
+
+          return $.post(ajaxurl, params, function (response) {
+            // let e;
+
+            try {
+              response = JSON.parse(response);
+            } catch (_error) {
+              // e = _error;
+              if (typeof console !== 'undefined' && console !== null) {
+                console.error('Malformed response', response);
+              }
+              return;
             }
-            return;
-          }
 
-          if (response.error) {
-            return alert(response.error);
-          } else {
-            return callback(response);
-          }
+            if (response.error) {
+              return alert(response.error);
+            } else {
+              return callback(response);
+            }
+          });
+        }
+
+        candidates.ajaxRequest = ajaxRequest;
+
+        const connections = new Connections();
+        connections.ajaxRequest = ajaxRequest;
+
+        const connectionsView = new ConnectionsView({
+          el: $metabox.find('.o2o-connections'),
+          collection: connections,
+          candidates
         });
-      }
 
-      candidates.ajaxRequest = ajaxRequest;
+        const candidatesView = new CandidatesView({
+          el: $metabox.find('.o2o-tab-search'),
+          collection: candidates,
+          connections,
+          spinner: $spinner,
+          duplicate_connections: $metabox.data('duplicate_connections')
+        });
 
-      const connections = new Connections();
-      connections.ajaxRequest = ajaxRequest;
+        const createPostView = new CreatePostView({
+          el: $metabox.find('.o2o-tab-create-post'),
+          collection: connections
+        });
 
-      const connectionsView = new ConnectionsView({
-        el: $metabox.find('.o2o-connections'),
-        collection: connections,
-        candidates
+        const metaboxView = new MetaboxView({
+          el: $metabox,
+          spinner: $spinner,
+          cardinality: $metabox.data('cardinality'),
+          candidates,
+          connections
+        });
+
+        window.O2OAdmin.boxes[ctype.o2o_type] = {
+          candidates,
+          connections
+        };
       });
+    }
+  };
 
-      const candidatesView = new CandidatesView({
-        el: $metabox.find('.o2o-tab-search'),
-        collection: candidates,
-        connections,
-        spinner: $spinner,
-        duplicate_connections: $metabox.data('duplicate_connections')
-      });
-
-      const createPostView = new CreatePostView({
-        el: $metabox.find('.o2o-tab-create-post'),
-        collection: connections
-      });
-
-      const metaboxView = new MetaboxView({
-        el: $metabox,
-        spinner: $spinner,
-        cardinality: $metabox.data('cardinality'),
-        candidates,
-        connections
-      });
-
-      window.O2OAdmin.boxes[ctype.o2o_type] = {
-        candidates,
-        connections
-      };
-    });
-
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+  $(function () {
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'o2obox', 'admin'));

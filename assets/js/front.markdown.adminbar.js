@@ -12,6 +12,7 @@
         $(this).html(h || '').fadeIn();
       });
     },
+
     reload: (deley) => {
       setTimeout(() => {
         window.location.reload();

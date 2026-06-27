@@ -1,23 +1,13 @@
-(function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-
+(function ($, plugin, mainkey, context) {
   const s = {
-    // action: plugin._base + '_' + module,
-    // classs: plugin._base + '-' + module,
-    wrap: '.' + plugin._base + '-wrap.-' + module + '.-admin-metabox',
-    dropdown: '#' + plugin._base + '-' + module + '-printprofile',
-    iframe: plugin._base + '-' + module + '-printiframe',
-    preview: plugin._base + '-' + module + '-printpreview',
-    print: plugin._base + '-' + module + '-printprint'
+    wrap: '.' + plugin._base + '-wrap.-' + mainkey + '.-admin-metabox',
+    dropdown: '#' + plugin._base + '-' + mainkey + '-printprofile',
+    iframe: plugin._base + '-' + mainkey + '-printiframe',
+    preview: plugin._base + '-' + mainkey + '-printpreview',
+    print: plugin._base + '-' + mainkey + '-printprint'
   };
 
   const app = {
-    // rtl: $('html').attr('dir') === 'rtl',
-    // strings: $.extend({}, {
-    //   button_title: 'Import Items',
-    //   button_text: 'Import'
-    // }, plugin[module].strings || {}),
-
     init: function () {
       const $preview = $('#' + s.preview, s.wrap);
       const $print = $('#' + s.print, s.wrap);
@@ -52,8 +42,11 @@
   };
 
   $(function () {
-    app.init();
-
-    $(document).trigger('gEditorialReady', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'papered', 'post'));

@@ -1,19 +1,22 @@
 /* global inlineEditPost */
 
-(function ($, plugin, module, section) {
-  if (typeof plugin === 'undefined') return;
-  if (!Object.keys(plugin[module].fields).length) return;
+(function ($, plugin, mainkey, context) {
+  if (!Object.keys(plugin[mainkey].fields).length) return;
 
   const s = {
-    // action: plugin._base + '_' + module,
-    classs: plugin._base + '-' + module,
+    // action: plugin._base + '_' + mainkey,
+    classs: plugin._base + '-' + mainkey,
     table: '#the-list',
-    bulkedit: '.' + plugin._base + '-' + module + '-bulkedit-',
-    quickedit: '.' + plugin._base + '-' + module + '-quickedit-',
-    value: 'div.' + plugin._base + '-' + module + '-value-'
+    bulkedit: '.' + plugin._base + '-' + mainkey + '-bulkedit-',
+    quickedit: '.' + plugin._base + '-' + mainkey + '-quickedit-',
+    value: 'div.' + plugin._base + '-' + mainkey + '-value-'
   };
 
   const app = {
+    init: function () {
+      app.initBulk();
+      $(s.table).on('click', '.editinline', app.clicked);
+    },
 
     // @REF: https://rudrastyh.com/wordpress/quick-edit-tutorial.html
     initBulk: function () {
@@ -26,7 +29,7 @@
         const editColLeft = $('fieldset.inline-edit-col-left', 'div.inline-edit-wrapper');
         // const editColCenter = $('fieldset.inline-edit-col-center', '.inline-edit-col');
 
-        for (const field in plugin[module].fields) {
+        for (const field in plugin[mainkey].fields) {
           $('div.inline-edit-wrapper')
             .find(s.bulkedit + field)
             .val('') // must be empty
@@ -45,11 +48,12 @@
       // const postNameLabel = $(':input[name="post_name"]', '.inline-edit-row').parents('label');
       const postEditDate = $(':input[name="jj"]', '.inline-edit-row').parents('fieldset.inline-edit-date');
 
-      for (const field in plugin[module].fields) {
+      for (const field in plugin[mainkey].fields) {
         const hidden = $('#' + tagID).find(s.value + field);
         const disabled = hidden.data('disabled') === true;
 
-        switch (plugin[module].fields[field]) {
+        // switch (plugin[mainkey].fields[field]) {
+        switch (field) {
           case 'title_before':
 
             $('.inline-edit-row')
@@ -60,6 +64,8 @@
               .insertBefore(postTitleLabel);
 
             break;
+
+          case 'title_link':
           case 'title_after':
 
             $('.inline-edit-row')
@@ -99,10 +105,11 @@
   };
 
   $(function () {
-    app.initBulk();
-    $(s.table).on('click', '.editinline', app.clicked);
-
-    // $(document).trigger('gEditorialReady', [module, app]);
-    $(document).trigger('gEditorial:Module:Loaded', [module, app]);
+    $(document).trigger('gEditorial:Module:Loaded', [
+      mainkey,
+      context,
+      app,
+      app.init()
+    ]);
   });
 }(jQuery, gEditorial, 'meta', 'edit'));
