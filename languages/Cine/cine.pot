@@ -1,0 +1,342 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Cine\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Cine\n"
+"X-Domain: geditorial-cine\n"
+
+#: Cine.php:47
+msgctxt "Settings"
+msgid "Connected Post-types"
+msgstr ""
+
+#: Cine.php:98
+msgctxt "Settings"
+msgid "Owner Post-types"
+msgstr ""
+
+#: Cine.php:99
+msgctxt "Settings"
+msgid "Selected will be available as the post-types of the owner meta-field."
+msgstr ""
+
+#: Cine.php:105
+msgctxt "Setting Title"
+msgid "Append Year"
+msgstr ""
+
+#: Cine.php:106
+msgctxt "Settings"
+msgid "Automatically adds a suffix of assigned year to the title of the film."
+msgstr ""
+
+#: Cine.php:111
+msgctxt "Setting Title"
+msgid "Append Template"
+msgstr ""
+
+#. translators: `%s`: modifier placeholder
+#: Cine.php:114
+#, php-format
+msgctxt "Settings"
+msgid "Defines the template for adding the year to the title of the film. %s will be replaced by the formatted year."
+msgstr ""
+
+#: Cine.php:144
+msgid "Film"
+msgid_plural "Films"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Cine.php:145
+msgid "Film Category"
+msgid_plural "Film Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Cine.php:146
+msgid "Film Rating"
+msgid_plural "Film Ratings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Cine.php:147
+msgid "Film Year"
+msgid_plural "Film Years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Cine.php:148
+msgid "Film Status"
+msgid_plural "Film Statuses"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Cine.php:152
+msgctxt "Label: Menu Name"
+msgid "Cine"
+msgstr ""
+
+#: Cine.php:153
+msgctxt "Label: Featured Image"
+msgid "Movie Poster"
+msgstr ""
+
+#: Cine.php:156
+msgctxt "Label: Show Option All"
+msgid "Ratings"
+msgstr ""
+
+#: Cine.php:157
+msgctxt "Label: Show Option No Terms"
+msgid "(Unrated)"
+msgstr ""
+
+#: Cine.php:160
+msgctxt "Label: Menu Name"
+msgid "Statuses"
+msgstr ""
+
+#: Cine.php:161
+msgctxt "Label: Show Option All"
+msgid "Statuses"
+msgstr ""
+
+#: Cine.php:162
+msgctxt "Label: Show Option No Terms"
+msgid "(Unknown)"
+msgstr ""
+
+#: Cine.php:167
+msgctxt "MetaBox Title"
+msgid "Connected Films"
+msgstr ""
+
+#: Cine.php:179
+msgctxt "Default Term"
+msgid "G"
+msgstr ""
+
+#: Cine.php:180
+msgctxt "Default Term"
+msgid "PG"
+msgstr ""
+
+#: Cine.php:181
+msgctxt "Default Term"
+msgid "PG-13"
+msgstr ""
+
+#: Cine.php:182
+msgctxt "Default Term"
+msgid "R"
+msgstr ""
+
+#: Cine.php:183
+msgctxt "Default Term"
+msgid "NC-17"
+msgstr ""
+
+#: Cine.php:184
+msgctxt "Default Term"
+msgid "X"
+msgstr ""
+
+#: Cine.php:185
+msgctxt "Default Term"
+msgid "GP"
+msgstr ""
+
+#: Cine.php:186
+msgctxt "Default Term"
+msgid "M"
+msgstr ""
+
+#: Cine.php:187
+msgctxt "Default Term"
+msgid "M/PG"
+msgstr ""
+
+#: Cine.php:190
+msgctxt "Default Term"
+msgid "Drama"
+msgstr ""
+
+#: Cine.php:191
+msgctxt "Default Term"
+msgid "Melodrama"
+msgstr ""
+
+#: Cine.php:192
+msgctxt "Default Term"
+msgid "Action"
+msgstr ""
+
+#: Cine.php:193
+msgctxt "Default Term"
+msgid "Horror"
+msgstr ""
+
+#: Cine.php:194
+msgctxt "Default Term"
+msgid "Science Fiction"
+msgstr ""
+
+#: Cine.php:195
+msgctxt "Default Term"
+msgid "War"
+msgstr ""
+
+#: Cine.php:196
+msgctxt "Default Term"
+msgid "Crime"
+msgstr ""
+
+#: Cine.php:197
+msgctxt "Default Term"
+msgid "Romance"
+msgstr ""
+
+#: Cine.php:198
+msgctxt "Default Term"
+msgid "Thriller"
+msgstr ""
+
+#: Cine.php:199
+msgctxt "Default Term"
+msgid "Adventure"
+msgstr ""
+
+#: Cine.php:200
+msgctxt "Default Term"
+msgid "Superhero"
+msgstr ""
+
+#: Cine.php:201
+msgctxt "Default Term"
+msgid "Mystery"
+msgstr ""
+
+#: Cine.php:202
+msgctxt "Default Term"
+msgid "Psychological"
+msgstr ""
+
+#: Cine.php:203
+msgctxt "Default Term"
+msgid "Musical"
+msgstr ""
+
+#: Cine.php:204
+msgctxt "Default Term"
+msgid "Comedy"
+msgstr ""
+
+#: Cine.php:205
+msgctxt "Default Term"
+msgid "Political"
+msgstr ""
+
+#: Cine.php:206
+msgctxt "Default Term"
+msgid "Historical"
+msgstr ""
+
+#: Cine.php:207
+msgctxt "Default Term"
+msgid "Western"
+msgstr ""
+
+#: Cine.php:208
+msgctxt "Default Term"
+msgid "Biography"
+msgstr ""
+
+#: Cine.php:209
+msgctxt "Default Term"
+msgid "Family"
+msgstr ""
+
+#: Cine.php:210
+msgctxt "Default Term"
+msgid "Sport"
+msgstr ""
+
+#: Cine.php:211
+msgctxt "Default Term"
+msgid "Documentary"
+msgstr ""
+
+#: Cine.php:212
+msgctxt "Default Term"
+msgid "Animation"
+msgstr ""
+
+#: Cine.php:213
+msgctxt "Default Term"
+msgid "Disaster"
+msgstr ""
+
+#: Cine.php:226
+msgctxt "Field Title"
+msgid "Tagline"
+msgstr ""
+
+#: Cine.php:230
+msgctxt "Field Title"
+msgid "Synopsis"
+msgstr ""
+
+#: Cine.php:236
+msgctxt "Field Title"
+msgid "Release Date"
+msgstr ""
+
+#: Cine.php:237
+msgctxt "Field Description"
+msgid "The Date on Which the Movie was Released"
+msgstr ""
+
+#: Cine.php:243
+#: Cine.php:248
+msgctxt "Field Title"
+msgid "Owner"
+msgstr ""
+
+#: Cine.php:244
+msgctxt "Field Description"
+msgid "Determines the user responsible for this film."
+msgstr ""
+
+#: Cine.php:249
+msgctxt "Field Description"
+msgid "Determines the individual responsible for this film."
+msgstr ""
+
+#: Cine.php:254
+msgctxt "Field Title"
+msgid "IMDb Link"
+msgstr ""
+
+#: Cine.php:255
+msgctxt "Field Description"
+msgid "Internet Movie Database URL."
+msgstr ""
+
+#: Cine.php:275
+msgctxt "Field Title"
+msgid "Film Duration"
+msgstr ""
+
+#: Cine.php:276
+msgctxt "Field Description"
+msgid "How long is the film."
+msgstr ""
