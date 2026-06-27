@@ -10,7 +10,11 @@ use geminorum\gEditorial\WordPress;
 
 class Importer extends gEditorial\Module
 {
+	use Internals\AdminPage;
+	use Internals\CoreRowActions;
 	use Internals\CoreToolBox;
+	use Internals\FramePage;
+	use Internals\FramePageViews;
 	use Internals\PostMeta;
 	use Internals\RawImports;
 
@@ -78,6 +82,8 @@ class Importer extends gEditorial\Module
 			],
 			'_roles' => [
 				'imports_roles'  => [ NULL, $roles ],
+				'overview_roles' => [ NULL, $roles ],
+				'admin_rowactions',
 				[
 					'field'       => 'map_import_cap',
 					'title'       => _x( 'Import Capability', 'Setting Title', 'geditorial-importer' ),
@@ -148,12 +154,37 @@ class Importer extends gEditorial\Module
 				'cap_check' => WordPress\PostType::cap( $screen->post_type, $this->capability_posttype ),
 			] );
 		}
+
+		if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'post' === $screen->base ) {
+
+				if ( $this->role_can( 'overview' )
+					&& ( $html = $this->rowaction_get_mainlink_for_post( WordPress\Post::get(), 'page-title-action', NULL ) ) ) {
+
+					Services\HeaderButtons::register( $this->key, [
+						'html'     => $html,
+						'priority' => 99,
+					] );
+
+					gEditorial\Scripts::enqueueColorBox();
+				}
+
+			} else if ( 'edit' === $screen->base ) {
+
+				if ( $this->role_can( 'overview' )
+					&& $this->rowactions__hook_mainlink_for_post( $screen->post_type, 12 ) )
+						gEditorial\Scripts::enqueueColorBox();
+			}
+		}
 	}
 
 	// @REF: https://www.kristinfalkner.com/adding-url-link-custom-post-type-wordpress-admin-submenu/
 	public function admin_menu()
 	{
 		global $submenu;
+
+		$this->_hook_submenu_adminpage( 'overview' );
 
 		if ( $this->is_thrift_mode() )
 			return;
@@ -168,6 +199,60 @@ class Importer extends gEditorial\Module
 					'exist', // already checked
 					$this->get_imports_page_url( NULL, [ 'posttype' => $posttype ] ),
 				];
+	}
+
+	public function load_overview_adminpage( $context = 'overview' )
+	{
+		$this->_load_submenu_adminpage( $context );
+	}
+
+	public function render_submenu_adminpage()
+	{
+		$this->render_default_mainpage( 'overview', 'update' );
+	}
+
+	public function do_ajax()
+	{
+		$post = self::unslash( $_POST );
+		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
+
+		if ( empty( $post['post_id'] ) )
+			gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
+
+		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
+			gEditorial\Ajax::errorUserCant();
+
+		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+
+		switch ( $what ) {
+
+			case 'cleanup_post':
+
+				if ( ! $this->role_can( 'imports' ) )
+					gEditorial\Ajax::errorUserCant();
+
+				if ( ! $this->_do_cleanup_post( $post['post_id'] ) )
+					gEditorial\Ajax::errorMessage( _x( 'Unable to clean-up imported residual data!', 'Message', 'geditorial-importer' ) );
+
+				gEditorial\Ajax::successMessage( _x( 'Imported residual data cleaned-up successfully.', 'Message', 'geditorial-importer' ) );
+
+				break;
+
+			case 'discard_meta':
+
+				if ( ! $this->role_can( 'imports' ) )
+					gEditorial\Ajax::errorUserCant();
+
+				if ( empty( $post['metakey'] ) )
+					gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
+
+				if ( ! $this->_do_discard_meta( $post['post_id'], $post['metakey'] ) )
+					gEditorial\Ajax::errorMessage( _x( 'Unable to discard imported meta log!', 'Message', 'geditorial-importer' ) );
+
+				gEditorial\Ajax::successMessage( _x( 'Imported meta log discarded successfully.', 'Message', 'geditorial-importer' ) );
+		}
+
+		gEditorial\Ajax::errorWhat();
 	}
 
 	private function _guess_fields_map( $headers, $fields = [], $taxonomies = [], $attachment_id = NULL )
@@ -2154,5 +2239,118 @@ class Importer extends gEditorial\Module
 		$this->actions( 'terms_after', $posttype );
 
 		return $count;
+	}
+
+	public function rowaction_get_mainlink_for_post( $post, $extra = NULL, $icon = FALSE )
+	{
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
+			return FALSE;
+
+		if ( ! $text = $this->filters( 'post_action', _x( 'Imported', 'Action', 'geditorial-importer' ), $post ) )
+			return FALSE;
+
+		if ( FALSE !== $icon )
+			$text = Core\Text::glued( [ '%1$s', $text ] );
+
+		return $this->framepage_get_mainlink_for_post( $post, [
+			'title' => sprintf(
+				/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
+				_x( 'Overview of the imported data into this %2$s', 'Post Row Action Title Attr', 'geditorial-importer' ),
+				WordPress\Post::title( $post ),
+				Services\CustomPostType::getLabel( $post, 'singular_name' )
+			),
+			'text'         => $text,
+			'icon'         => $icon,
+			'context'      => 'rowaction',
+			'link_context' => 'overview',
+			'maxwidth'     => '920px',
+			'extra'        => $extra ?? [
+				'-importer-overview',
+			]
+		] );
+	}
+
+	protected function render_overview_content()
+	{
+		$this->framepageviews__render_context_content( 'overview' );
+	}
+
+	// TODO: split to default/legacy blocks with prepping date/user/attachment
+	protected function framepageviews__prep_data_for_post( $data, $post, $context )
+	{
+		$meta = WordPress\Post::getMeta( $post, FALSE );
+
+		foreach ( $this->_get_metakeys() as $metakey ) {
+
+			$keys = Core\Arraay::prepString(
+				$metakey, // original key
+				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', preg_quote( $metakey, '/' ) ) ) )
+			);
+
+			foreach ( $keys as $key ) {
+
+				if ( empty( $meta[$key] ) )
+					continue;
+
+				$data['raw_rendered'][] = [
+					'key'  => $key,
+					'data' => self::buffer( [ Core\HTML::class, 'tableSide' ], [
+						(array) $meta[$key],
+						FALSE,
+						FALSE // $key
+					] ),
+				];
+			}
+		}
+
+		$data['__can_cleanup'] = $this->role_can( 'imports' );
+
+		return $data;
+	}
+
+	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	{
+		return array_fill_keys( [
+			'after-actions',
+			'after-raw',
+		], '' );
+	}
+
+	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	{
+		return [
+			'canimport' => $this->role_can( 'imports' ),
+			'noaccess'  => Core\HTML::error( gEditorial\Plugin::denied( FALSE ), FALSE, '-via-ajax' ),
+		];
+	}
+
+	/**
+	 * Discards imported meta log for given post.
+	 *
+	 * @param int $post_id
+	 * @param string $meta_key
+	 * @return bool
+	 */
+	private function _do_discard_meta( $post_id, $meta_key )
+	{
+		if ( ! $post = WordPress\Post::get( $post_id ) )
+			return FALSE;
+
+		return delete_metadata( 'post', $post->ID, $meta_key );
+	}
+
+	/**
+	 * Cleanups imported meta logs for given post.
+	 *
+	 * @param int $post_id
+	 * @return bool
+	 */
+	private function _do_cleanup_post( $post_id )
+	{
+		// NOTE: settings return `FALSE` on success!
+		return ! ModuleSettings::post_cleanup_raw_data(
+			$post_id,
+			$this->_get_metakeys()
+		);
 	}
 }

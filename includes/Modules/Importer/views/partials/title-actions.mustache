@@ -1,0 +1,13 @@
+<div class="-wrap -title-actions">
+	<span class="-loading spinner i1s-active"></span>
+	{{#__today}}
+		<span class="-today xx-print-only-inline">{{{__today}}}</span>
+	{{/__today}}
+	{{#__can_cleanup}}
+		<a class="button button-small button-danger -print-hide-inline do-cleanup-post" data-action="cleanup_post" href="#"><span class="dashicons dashicons-trash"></span></a>
+	{{/__can_cleanup}}
+	{{#__can_edit}}
+		<a class="button button-small -print-hide-inline" data-action="edit" href="{{{__can_edit}}}"><span class="dashicons dashicons-edit-large"></span></a>
+	{{/__can_edit}}
+</div>
+<div class="clear"></div>

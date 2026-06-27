@@ -1,0 +1,27 @@
+<div class="-wrap" id="geditorial-{{__mainkey}}-wrap" dir="{{__direction}}">
+	{{> title-actions}}
+
+	{{{___hooks.after-actions}}}
+
+	<div class="-wrap -data-block-wrap">
+	{{#raw_rendered}}
+		<div class="-wrap -data-block">
+			<div class="-wrap -block-actions">
+				<code class="-block-key">{{{key}}}</code>
+				<a class="button button-small button-danger -button-danger -danger has-action hidden" data-action="discard_meta" data-key="{{{key}}}" href="#">
+					<span class="dashicons dashicons-remove"></span>
+				</a>
+				<div class="-block-message"></div>
+				<a class="button button-small do-toggle floated visible" href="#">
+					<span class="dashicons dashicons-image-flip-vertical"></span>
+				</a>
+				<span class="-loading spinner"></span>
+			</div>
+			<div class="clear"></div>
+			<div class="-wrap -block-content">{{{data}}}</div>
+		</div>
+	{{/raw_rendered}}
+	</div>
+
+	{{{___hooks.after-raw}}}
+</div>
