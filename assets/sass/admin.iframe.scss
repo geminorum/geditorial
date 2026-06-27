@@ -46,16 +46,20 @@ body.admin_page_#{$plugin}-dead-drops-signal {
   .#{$plugin}-wrap.-view {
 
     // Module:  `Audit`/`Tabloid`/`Importer`
+    &.-secondary,
     &.-overview {
-      margin: ($spacer * .5) auto 0;
+      margin: calc( #{($spacer * .5)} - 1px ) auto 0;
       padding: 0 ($spacer * .5);
     }
 
     // Module: `Dead Drops`/`Code Pond`
     &.-signal {
-      margin: ($spacer * .5) auto 0;
+      margin: calc( #{($spacer * .5)} - 1px ) auto 0;
       padding: 0 ($spacer * .5);
     }
+
+    // WTF: `StaticCovers`
+    // &.-secondary {}
   }
 
   > p.-description.-empty {
@@ -111,8 +115,14 @@ body.admin_page_#{$plugin}-dead-drops-signal {
 .-wrap.-title-actions {
   display: inline-block;
   float: right;
-  clear: right;
+  // clear: right;
   margin-top: - (.25rem);
+
+  span.spinner {
+    margin: 0 ($spacer * .25) 0 0;
+    padding: 0;
+    float: none;
+  }
 
   span.-today {
     display: inline-block;
@@ -409,6 +419,64 @@ body.admin_page_#{$plugin}-dead-drops-signal {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+// .-wrap.-data-block-wrap {}
+.-wrap.-data-block {
+  margin-top: $spacer * .5;
+  padding: $spacer * .25;
+  border: 1px solid #ccc;
+  border-radius: $spacer * .125;
+
+  > div.-block-actions {
+    a:not(:hover) {
+      color: inherit;
+    }
+
+    code.-block-key {
+      font-size: smaller;
+    }
+
+    div.-block-message {
+      display: inline-block;
+
+      .notice {
+        padding: ($spacer * .25) ($spacer * .5);
+        margin: 0;
+        p {
+          margin: 0;
+          font-size: smaller;
+        }
+      }
+    }
+
+    a.button {
+      margin-top: -1px;
+      padding-left: ($spacer * .25);
+      padding-right: ($spacer * .25);
+    }
+
+    a.floated {
+      float: right;
+    }
+
+    span.-loading {
+      float: right;
+      // margin: ($spacer * .15) ($spacer * .25) 0 0;
+      margin: 0 ($spacer * .25) 0 0;
+    }
+
+    + .-wrap {
+      margin-top: $spacer * .25;
+    }
+  }
+
+  > div.-block-content {
+
+    // table {}
+  }
+}
+
+////////////////////////////////////////////////////////////////////////////////
 .-wrap.editorial-app {
   padding: $spacer * .5;
 
@@ -440,6 +508,14 @@ body.admin_page_#{$plugin}-dead-drops-signal {
   .-wrap.-title-actions {
     .dashicons {
       line-height: 1.9 !important;
+      padding: 0 ($spacer * .5);
+    }
+  }
+
+  .-wrap.-block-actions {
+    .dashicons {
+      line-height: 1.9 !important;
+      // padding: 0 ($spacer * .5);
     }
   }
 }

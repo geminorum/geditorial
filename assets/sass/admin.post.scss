@@ -276,6 +276,13 @@ body.disable-posttype-date div.misc-pub-section.curtime.misc-pub-curtime {
   &.#{$plugin}-meta-type-title_after {
     margin: 2px 0 10px;
   }
+
+  // &.#{$plugin}-meta-type-title_link {}
+
+  &[dir="ltr"]::placeholder {
+    direction: ltr;
+    text-align: left; // for firefox
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

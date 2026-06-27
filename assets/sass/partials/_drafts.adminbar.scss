@@ -36,7 +36,13 @@
       }
     }
 
-    .-empty,
+    .-empty {
+      margin: 0;
+      padding: 0 ($spacer * .5);
+      font-size: smaller;
+      text-align: center;
+    }
+
     .-block {
       border-left: 1px solid $gray-light;
       float: left;
