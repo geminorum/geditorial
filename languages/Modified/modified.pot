@@ -13,72 +13,134 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Modified\n"
 "X-Domain: geditorial-modified\n"
 
-#: Modified.php:45
+#: Modified.php:39
 msgctxt "Setting Title"
 msgid "Last Published"
 msgstr ""
 
-#: Modified.php:46
+#: Modified.php:40
 msgctxt "Setting Description"
-msgid "Displays last published instead of modified date."
+msgid "Displays last published instead of modified date for site."
 msgstr ""
 
-#: Modified.php:52
+#: Modified.php:45
 msgctxt "Setting Title"
 msgid "Content Prefix"
 msgstr ""
 
-#: Modified.php:53
+#. translators: `%s`: zero placeholder
+#: Modified.php:48
+#, php-format
 msgctxt "Setting Description"
-msgid "Custom string before the modified time on the content."
+msgid "Custom string before the modified time on the content. Leave blank for default or %s to disable."
 msgstr ""
 
-#: Modified.php:54
+#: Modified.php:51
+#: Modified.php:347
 msgctxt "Setting Default"
 msgid "Last modified on"
 msgstr ""
 
-#: Modified.php:59
-msgctxt "Setting Title"
-msgid "Insert Format"
-msgstr ""
-
-#: Modified.php:60
-msgctxt "Setting Description"
-msgid "Displays the date in this format on the content."
-msgstr ""
-
-#: Modified.php:67
+#: Modified.php:56
 msgctxt "Setting Title"
 msgid "Display After"
 msgstr ""
 
-#: Modified.php:68
+#: Modified.php:57
 msgctxt "Setting Description"
 msgid "Skips displaying modified since the original content published time."
 msgstr ""
 
+#: Modified.php:75
+msgctxt "Setting Title"
+msgid "Content Context"
+msgstr ""
+
+#: Modified.php:76
+msgctxt "Setting Description"
+msgid "Which context the modified information must be rendered."
+msgstr ""
+
+#: Modified.php:79
+msgctxt "Setting Option"
+msgid "Summary"
+msgstr ""
+
 #: Modified.php:80
-msgctxt "Setting: Setting Title"
-msgid "Post Shortcode Tag"
+msgctxt "Setting Option"
+msgid "Delayed"
 msgstr ""
 
-#: Modified.php:81
-msgctxt "Setting: Setting Description"
-msgid "Customizes the post modified short-code tag. Leave blank for default."
+#: Modified.php:86
+msgctxt "Setting Title"
+msgid "Insert Format"
 msgstr ""
 
-#: Modified.php:90
-msgctxt "Setting: Setting Title"
-msgid "Site Shortcode Tag"
+#: Modified.php:87
+msgctxt "Setting Description"
+msgid "Displays the date in this format on the content."
 msgstr ""
 
-#: Modified.php:91
-msgctxt "Setting: Setting Description"
-msgid "Customizes the site modified short-code tag. Leave blank for default."
+#: Modified.php:100
+msgctxt "Setting: Short-code Title"
+msgid "Entry Modified"
 msgstr ""
 
-#: Modified.php:135
+#: Modified.php:104
+msgctxt "Setting: Short-code Title"
+msgid "Post Modified"
+msgstr ""
+
+#: Modified.php:108
+msgctxt "Setting: Short-code Title"
+msgid "Site Modified"
+msgstr ""
+
+#. translators: `%1$s`: singular post-type label, `%2$s`: published date
+#: Modified.php:168
+#, php-format
+msgctxt "Node: Title"
+msgid "This %1$s was published on %2$s."
+msgstr ""
+
+#: Modified.php:179
 msgctxt "Dashboard Widget Title"
 msgid "Latest Changes"
+msgstr ""
+
+#: Modified.php:242
+msgctxt "Pointer: Site"
+msgid "This is the time of last published post is this site."
+msgstr ""
+
+#: Modified.php:243
+msgctxt "Pointer: Site"
+msgid "This is the time of last modified post is this site."
+msgstr ""
+
+#. translators: `%s`: site modified
+#: Modified.php:247
+#, php-format
+msgctxt "Pointer: Site"
+msgid "Last updated on %s"
+msgstr ""
+
+#: Modified.php:536
+msgctxt "View Text"
+msgid "First published"
+msgstr ""
+
+#: Modified.php:537
+msgctxt "View Title"
+msgid "Publicly accessed on"
+msgstr ""
+
+#: Modified.php:548
+msgctxt "View Text"
+msgid "Last updated"
+msgstr ""
+
+#: Modified.php:549
+msgctxt "View Title"
+msgid "Lastly edited on"
 msgstr ""

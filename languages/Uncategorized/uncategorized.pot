@@ -13,43 +13,43 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Uncategorized\n"
 "X-Domain: geditorial-uncategorized\n"
 
-#: Uncategorized.php:45
+#: Uncategorized.php:41
 msgctxt "Setting Description"
 msgid "Roles that can see Uncategorized Reports."
 msgstr ""
 
-#: Uncategorized.php:46
+#: Uncategorized.php:42
 msgctxt "Setting Description"
 msgid "Roles that can use Uncategorized Tools."
 msgstr ""
 
-#: Uncategorized.php:102
-#: Uncategorized.php:269
+#: Uncategorized.php:104
+#: Uncategorized.php:274
 msgctxt "Action"
 msgid "Clean Uncategorized"
 msgstr ""
 
-#: Uncategorized.php:103
-#: Uncategorized.php:270
+#: Uncategorized.php:105
+#: Uncategorized.php:275
 msgctxt "Action"
 msgid "Clean Unregistered"
 msgstr ""
 
-#: Uncategorized.php:104
-#: Uncategorized.php:271
+#: Uncategorized.php:106
+#: Uncategorized.php:276
 msgctxt "Action"
 msgid "Clean Unattached"
 msgstr ""
 
 #. translators: `%s`: count
-#: Uncategorized.php:159
+#: Uncategorized.php:162
 #, php-format
 msgctxt "Message"
 msgid "%s items(s) cleaned!"
 msgstr ""
 
 #. translators: `%s`: posts count
-#: Uncategorized.php:170
+#: Uncategorized.php:175
 #, php-format
 msgctxt "Noop"
 msgid "%s Uncategorized Post"
@@ -57,42 +57,67 @@ msgid_plural "%s Uncategorized Posts"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Uncategorized.php:175
+#: Uncategorized.php:180
 msgctxt "Title Attr"
 msgid "You need to assign categories to some posts!"
 msgstr ""
 
-#: Uncategorized.php:285
+#: Uncategorized.php:290
 msgctxt "Table Column"
 msgid "Raw"
 msgstr ""
 
-#: Uncategorized.php:312
+#: Uncategorized.php:317
 msgctxt "Header"
 msgid "Overview of Posts in Uncategorized Terms"
 msgstr ""
 
-#: Uncategorized.php:363
+#: Uncategorized.php:371
 msgctxt "Header"
-msgid "Uncategorized Tools"
+msgid "Uncategorized Imports"
 msgstr ""
 
-#: Uncategorized.php:369
-msgctxt "Tools"
-msgid "Orphaned Terms"
+#: Uncategorized.php:407
+msgctxt "Card Title"
+msgid "Queried Dead Taxonomy"
 msgstr ""
 
-#: Uncategorized.php:389
+#: Uncategorized.php:426
+msgctxt "Table Empty"
+msgid "There are no term-data available!"
+msgstr ""
+
+#: Uncategorized.php:435
+msgctxt "Card Title"
+msgid "Convert Orphaned Terms"
+msgstr ""
+
+#: Uncategorized.php:448
+msgctxt "Message"
+msgid "Select from any of currently un-registered taxonomy terms."
+msgstr ""
+
+#: Uncategorized.php:461
+msgctxt "Message"
+msgid "Import to any of currently registered taxonomy."
+msgstr ""
+
+#: Uncategorized.php:466
 msgctxt "Button"
-msgid "Convert"
+msgid "Check Terms"
 msgstr ""
 
-#: Uncategorized.php:391
+#: Uncategorized.php:469
+msgctxt "Button"
+msgid "Convert Terms"
+msgstr ""
+
+#: Uncategorized.php:471
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Uncategorized.php:572
+#: Uncategorized.php:645
 msgctxt "Default Label"
 msgid "Uncategorized"
 msgstr ""

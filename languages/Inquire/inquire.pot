@@ -132,17 +132,17 @@ msgctxt "Default Term"
 msgid "Zero"
 msgstr ""
 
-#: Inquire.php:164
+#: Inquire.php:161
 msgctxt "Template Title"
 msgid "Editorial: Inquire: Dashboard"
 msgstr ""
 
-#: Inquire.php:220
+#: Inquire.php:223
 msgctxt "Placeholder"
 msgid "Enter question title here"
 msgstr ""
 
-#: Inquire.php:242
+#: Inquire.php:245
 msgctxt "Dashboard Title"
 msgid "Inquiries"
 msgstr ""

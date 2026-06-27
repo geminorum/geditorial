@@ -13,17 +13,17 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Views\n"
 "X-Domain: geditorial-views\n"
 
-#: Views.php:27
+#: Views.php:31
 msgctxt "Message"
-msgid "Note that the logget-out users count by default."
+msgid "Note that the logged-out users are counted by default."
 msgstr ""
 
-#: Views.php:51
+#: Views.php:62
 msgctxt "Event Name"
 msgid "Entry Views"
 msgstr ""
 
-#: Views.php:72
-msgctxt "Title Attr"
+#: Views.php:83
+msgctxt "Node: Title"
 msgid "View Summary"
 msgstr ""

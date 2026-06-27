@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Recount\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-01 18:20+0330\n"
+"PO-Revision-Date: 2026-03-28 11:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Counts\n"
 "X-Domain: geditorial-counts\n"
 
@@ -25,17 +25,17 @@ msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr "برای شمارش فرسته‌ها در هنگام نمایش نبود داده، تلاش می‌کند."
 
-#: Recount.php:169
+#: Recount.php:173
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr "بازشماری موارد"
 
-#: Recount.php:204
+#: Recount.php:208
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr "بازشماری موارد"
 
-#: Recount.php:210
+#: Recount.php:216
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr "بازشماری تمامی موارد در رده‌ها"

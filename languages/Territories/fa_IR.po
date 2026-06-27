@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Territory\n"
+"Project-Id-Version: gEditorial Territories\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:28+0330\n"
+"PO-Revision-Date: 2026-06-27 10:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,27 +11,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
-"X-Poedit-Basepath: ../../includes/Modules/Territory\n"
-"X-Domain: geditorial-territory\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-Basepath: ../../includes/Modules/Territories\n"
+"X-Domain: geditorial-territories\n"
 
-#: Territory.php:89
+#: Territories.php:86
 msgid "Territorial Arrangement"
 msgid_plural "Territorial Arrangements"
 msgstr[0] "آمایش‌های سرزمینی"
 msgstr[1] "آمایش سرزمینی"
 
-#: Territory.php:93
+#: Territories.php:90
 msgctxt "Label: Menu Name"
-msgid "Content Territory"
+msgid "Content Territories"
 msgstr "سرزمین محتوا"
 
-#: Territory.php:94
+#: Territories.php:91
 msgctxt "Label: Show Option All"
 msgid "Territory"
 msgstr "آمایش"
 
-#: Territory.php:95
+#: Territories.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(No-Territory)"
 msgstr "(بدون آمایش)"

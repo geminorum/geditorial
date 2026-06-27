@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Achieved\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-05-16 20:08+0330\n"
+"PO-Revision-Date: 2026-03-16 22:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,37 +11,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Achieved\n"
 "X-Domain: geditorial-achieved\n"
 
-#: Achieved.php:95
+#: Achieved.php:93
 msgid "Achievement"
 msgid_plural "Achievements"
 msgstr[0] "دستاوردها"
 msgstr[1] "دستاورد"
 
-#: Achieved.php:99
+#: Achieved.php:97
 msgctxt "Label: `extended_label`"
 msgid "Content Achievements"
 msgstr "دستاوردهای محتوا"
 
-#: Achieved.php:100
+#: Achieved.php:98
 msgctxt "Label: `menu_name`"
 msgid "Content Achievements"
 msgstr "دستاوردهای محتوا"
 
-#: Achieved.php:101
+#: Achieved.php:99
 msgctxt "Label: `show_option_all`"
 msgid "Achievements"
 msgstr "دستاوردها"
 
-#: Achieved.php:102
+#: Achieved.php:100
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unachieved)"
 msgstr "(بدون دستاورد)"
 
-#: Achieved.php:120
+#: Achieved.php:118
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "120"
 msgstr "120"

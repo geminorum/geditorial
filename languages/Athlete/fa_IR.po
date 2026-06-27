@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Athlete\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-08-14 12:47+0330\n"
+"PO-Revision-Date: 2026-03-06 21:29+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,97 +11,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
 "X-Domain: geditorial-athlete\n"
 
-#: Athlete.php:97
+#: Athlete.php:96
 msgid "Sports Field"
 msgid_plural "Sports Fields"
 msgstr[0] "رشته‌های ورزشی"
 msgstr[1] "رشته ورزشی"
 
-#: Athlete.php:101
+#: Athlete.php:100
 msgctxt "Label: `menu_name`"
 msgid "Sports"
 msgstr "ورزشی"
 
-#: Athlete.php:102
+#: Athlete.php:101
 msgctxt "Label: `show_option_all`"
 msgid "Sports Field"
 msgstr "رشته‌های ورزشی"
 
-#: Athlete.php:103
+#: Athlete.php:102
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unspecified)"
 msgstr "(نامشخص)"
 
-#: Athlete.php:117
+#: Athlete.php:116
 msgctxt "Default Term: Sports Field"
 msgid "Acrobatic"
 msgstr "حرکتی"
 
-#: Athlete.php:118
+#: Athlete.php:117
 msgctxt "Default Term: Sports Field"
 msgid "Air"
 msgstr "هوایی"
 
-#: Athlete.php:119
+#: Athlete.php:118
 msgctxt "Default Term: Sports Field"
 msgid "Performance"
 msgstr "نمایشی"
 
-#: Athlete.php:120
+#: Athlete.php:119
 msgctxt "Default Term: Sports Field"
 msgid "Martial Arts"
 msgstr "رزمی"
 
-#: Athlete.php:121
+#: Athlete.php:120
 msgctxt "Default Term: Sports Field"
 msgid "Strength"
 msgstr "قدرتی"
 
-#: Athlete.php:122
+#: Athlete.php:121
 msgctxt "Default Term: Sports Field"
 msgid "Adventure"
 msgstr "ماجراجویانه"
 
-#: Athlete.php:123
+#: Athlete.php:122
 msgctxt "Default Term: Sports Field"
 msgid "Riding"
 msgstr "سواری"
 
-#: Athlete.php:124
+#: Athlete.php:123
 msgctxt "Default Term: Sports Field"
 msgid "Shooting"
 msgstr "تیراندازی"
 
-#: Athlete.php:125
+#: Athlete.php:124
 msgctxt "Default Term: Sports Field"
 msgid "Group"
 msgstr "گروهی"
 
-#: Athlete.php:126
+#: Athlete.php:125
 msgctxt "Default Term: Sports Field"
 msgid "Net and Wall"
 msgstr "راکتی"
 
-#: Athlete.php:127
+#: Athlete.php:126
 msgctxt "Default Term: Sports Field"
 msgid "Mind"
 msgstr "فکری"
 
-#: Athlete.php:128
+#: Athlete.php:127
 msgctxt "Default Term: Sports Field"
 msgid "Beach"
 msgstr "ساحلی"
 
-#: Athlete.php:129
+#: Athlete.php:128
 msgctxt "Default Term: Sports Field"
 msgid "Water"
 msgstr "آبی"
 
-#: Athlete.php:130
+#: Athlete.php:129
 msgctxt "Default Term: Sports Field"
 msgid "Snow"
 msgstr "برفی"

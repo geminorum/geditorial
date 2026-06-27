@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Terms\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-08-14 21:39+0330\n"
+"PO-Revision-Date: 2026-01-09 09:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcTerms\n"
 "X-Domain: geditorial-wc-terms\n"
 
@@ -96,7 +96,7 @@ msgstr "عنوان بایگانی"
 
 #: WcTerms.php:94
 msgctxt "Setting Description"
-msgid "Enhance the term archive titles."
+msgid "Enhance the product term archive titles."
 msgstr ""
 
 #: WcTerms.php:98
@@ -141,7 +141,7 @@ msgstr "توضیحات بایگانی"
 
 #: WcTerms.php:110
 msgctxt "Setting Description"
-msgid "Enhance the term archive descriptions with assigned image."
+msgid "Enhance the product term archive descriptions with assigned image."
 msgstr ""
 
 #: WcTerms.php:114
@@ -151,5 +151,15 @@ msgstr "زیررده‌های بایگانی"
 
 #: WcTerms.php:115
 msgctxt "Setting Description"
-msgid "Enhance the term archive with list of sub-terms."
+msgid "Enhance the product term archive with list of sub-terms."
+msgstr ""
+
+#: WcTerms.php:119
+msgctxt "Setting Title"
+msgid "Archive Assigned"
+msgstr "بایگانی تخصیص‌یافته"
+
+#: WcTerms.php:120
+msgctxt "Setting Description"
+msgid "Enhance the product term archive with list of assigned posts."
 msgstr ""

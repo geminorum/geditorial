@@ -13,67 +13,79 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Shortcodes\n"
 "X-Domain: geditorial-shortcodes\n"
 
-#: Shortcodes.php:35
+#: Shortcodes.php:37
 msgctxt "Setting Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:36
+#: Shortcodes.php:38
 msgctxt "Setting Description"
 msgid "Enables the use of the selected short-codes."
 msgstr ""
 
-#: Shortcodes.php:46
+#: Shortcodes.php:48
 msgctxt "Setting Title"
 msgid "Remove Empty Paragraphs"
 msgstr ""
 
-#: Shortcodes.php:47
+#: Shortcodes.php:49
 msgctxt "Setting Description"
 msgid "Strips empty paragraph tags around short-codes from post content."
 msgstr ""
 
-#: Shortcodes.php:51
+#: Shortcodes.php:53
 msgctxt "Setting Title"
 msgid "Remove Orphaned"
 msgstr ""
 
-#: Shortcodes.php:52
+#: Shortcodes.php:54
 msgctxt "Setting Description"
 msgid "Strips unregistered shortcode tags from post content."
 msgstr ""
 
-#: Shortcodes.php:62
+#: Shortcodes.php:64
 msgctxt "Shortcode Name"
 msgid "Display Terms"
 msgstr ""
 
-#: Shortcodes.php:63
+#: Shortcodes.php:65
 msgctxt "Shortcode Name"
 msgid "Term Tiles"
 msgstr ""
 
-#: Shortcodes.php:64
+#: Shortcodes.php:66
 msgctxt "Shortcode Name"
 msgid "Posts Assigned"
 msgstr ""
 
-#: Shortcodes.php:112
-msgctxt "Title Attr"
-msgid "Shortcodes"
+#: Shortcodes.php:67
+msgctxt "Shortcode Name"
+msgid "Circle Progress"
 msgstr ""
 
-#: Shortcodes.php:150
+#: Shortcodes.php:116
+msgctxt "Node: Title"
+msgid "Short-codes"
+msgstr ""
+
+#. translators: `%s`: singular post-type label
+#: Shortcodes.php:122
+#, php-format
+msgctxt "Node: Title"
+msgid "View Short-code Reports for this %s"
+msgstr ""
+
+#: Shortcodes.php:189
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:164
+#: Shortcodes.php:203
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr ""
 
-#: Shortcodes.php:182
+#: Shortcodes.php:222
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr ""

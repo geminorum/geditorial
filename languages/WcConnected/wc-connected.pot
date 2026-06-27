@@ -19,7 +19,7 @@ msgid "Displays connected posts on front-end product tabs."
 msgstr ""
 
 #: WcConnected.php:41
-#: WcConnected.php:269
+#: WcConnected.php:278
 msgctxt "Setting Default"
 msgid "Related Posts"
 msgstr ""
@@ -36,7 +36,7 @@ msgctxt "MetaBox: `supportedbox_title`"
 msgid "Connected Products"
 msgstr ""
 
-#: WcConnected.php:195
+#: WcConnected.php:204
 msgctxt "Place Holder"
 msgid "Search for a product …"
 msgstr ""

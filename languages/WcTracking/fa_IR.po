@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC-Tracking\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-08-14 21:38+0330\n"
+"PO-Revision-Date: 2026-03-06 21:32+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/WC-Tracking\n"
 "X-Domain: geditorial-wc-tracking\n"
 
@@ -22,9 +22,7 @@ msgstr "متاکلید رهگیری"
 
 #: WcTracking.php:36
 msgctxt "Setting Description"
-msgid ""
-"Defines the meta-key that stored the tracking identifier data. Leave empty to "
-"use default."
+msgid "Defines the meta-key that stored the tracking identifier data. Leave empty to use default."
 msgstr ""
 
 #: WcTracking.php:44
@@ -34,9 +32,7 @@ msgstr "الگوی سرویس"
 
 #: WcTracking.php:45
 msgctxt "Setting Description"
-msgid ""
-"Defines the template that used to build the url to the tracking service. "
-"Leave empty to use default."
+msgid "Defines the template that used to build the url to the tracking service. Leave empty to use default."
 msgstr ""
 
 #: WcTracking.php:53
@@ -46,9 +42,7 @@ msgstr "نشان سرویس"
 
 #: WcTracking.php:54
 msgctxt "Setting Description"
-msgid ""
-"Defines the image that used as visual identifier of the tracking service. "
-"Leave empty to use default."
+msgid "Defines the image that used as visual identifier of the tracking service. Leave empty to use default."
 msgstr ""
 
 #: WcTracking.php:57
@@ -63,12 +57,10 @@ msgstr "متن قبل ایمیل"
 
 #: WcTracking.php:65
 msgctxt "Setting Description"
-msgid ""
-"String to use before tracking info button on email template of the order "
-"details. Leave empty to use default."
+msgid "String to use before tracking info button on email template of the order details. Leave empty to use default."
 msgstr ""
 
-#: WcTracking.php:66 WcTracking.php:154
+#: WcTracking.php:66 WcTracking.php:153
 msgctxt "Setting Default"
 msgid "You can view the status of package at any time by visiting this page:"
 msgstr "می‌توانید وضعیت مرسوله پستی را در هر زمان از طریق صفحه زیر رهگیری کنید:"
@@ -80,12 +72,10 @@ msgstr "متن دکمه ایمیل"
 
 #: WcTracking.php:72
 msgctxt "Setting Description"
-msgid ""
-"String to use as prefix to tracking info button on email template of the "
-"order details. Leave empty to use default."
+msgid "String to use as prefix to tracking info button on email template of the order details. Leave empty to use default."
 msgstr ""
 
-#: WcTracking.php:73 WcTracking.php:158
+#: WcTracking.php:73 WcTracking.php:157
 msgctxt "Setting Default"
 msgid "Tracking Postal Package"
 msgstr "رهگیری مرسوله پستی"
@@ -97,12 +87,10 @@ msgstr "عنوان دکمه مدیریت"
 
 #: WcTracking.php:79
 msgctxt "Setting Description"
-msgid ""
-"String to use as title of order action button on admin area. Leave empty to "
-"use default."
+msgid "String to use as title of order action button on admin area. Leave empty to use default."
 msgstr ""
 
-#: WcTracking.php:80 WcTracking.php:214
+#: WcTracking.php:80 WcTracking.php:213
 msgctxt "Setting Default"
 msgid "Tracking Package"
 msgstr "رهگیری مرسوله"
@@ -117,12 +105,12 @@ msgctxt "Export Column"
 msgid "Tracking"
 msgstr "رهگیری"
 
-#: WcTracking.php:193
+#: WcTracking.php:192
 msgctxt "Action Title"
 msgid "Tracking Package ID:"
 msgstr "شناسه رهگیری مرسوله:"
 
-#: WcTracking.php:203
+#: WcTracking.php:202
 msgctxt "Action"
 msgid "Tracking"
 msgstr "رهگیری"

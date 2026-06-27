@@ -152,17 +152,17 @@ msgctxt "Field Description"
 msgid "Subtitle of the Lesson"
 msgstr ""
 
-#: Course.php:541
+#: Course.php:546
 msgctxt "Header"
 msgid "Course Tools"
 msgstr ""
 
-#: Course.php:553
+#: Course.php:558
 msgctxt "Card"
 msgid "Course/Lesson Date from Meta-data"
 msgstr ""
 
-#: Course.php:627
+#: Course.php:634
 msgctxt "Default Term: Audit"
 msgid "Lesson Abandoned"
 msgstr ""

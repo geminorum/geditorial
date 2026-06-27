@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Socialite\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-08 07:56+0330\n"
+"PO-Revision-Date: 2026-03-06 21:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,31 +11,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Socialite\n"
 "X-Domain: geditorial-socialite\n"
 
-#: Socialite.php:52
+#: Socialite.php:53
 msgctxt "Setting Title"
 msgid "Social Icons"
 msgstr "آیکون‌های اجتماعی"
 
-#: Socialite.php:57
+#: Socialite.php:58
 msgctxt "Setting Title"
 msgid "URL"
 msgstr "نشانی"
 
-#: Socialite.php:58
+#: Socialite.php:59
 msgctxt "Setting Description"
 msgid "Sets as URL of the social icon."
 msgstr "به عنوان نشانی آیکون اجتماعی تنظیم می‌شود."
 
-#: Socialite.php:65
+#: Socialite.php:66
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr "آیکون"
 
-#: Socialite.php:66
+#: Socialite.php:67
 msgctxt "Setting Description"
 msgid "Sets the icon image of the social icon."
 msgstr "به عنوان تصویر آیکون اجتماعی تنظیم می‌شود."
@@ -70,185 +70,182 @@ msgctxt "Setting Description"
 msgid "HTML opening before each social icon link."
 msgstr ""
 
-#: Socialite.php:94
+#: Socialite.php:93
 msgctxt "Setting Title"
 msgid "After Link"
 msgstr "قبل از پیوند"
 
-#: Socialite.php:95
+#: Socialite.php:94
 msgctxt "Setting Description"
 msgid "HTML closing after each social icon link."
 msgstr ""
 
-#: Socialite.php:102
+#: Socialite.php:100
 msgctxt "Setting Title"
 msgid "Before Image"
 msgstr "قبل از تصویر"
 
-#: Socialite.php:103
+#: Socialite.php:101
 msgctxt "Setting Description"
 msgid "HTML opening before each social icon image."
 msgstr ""
 
-#: Socialite.php:110
+#: Socialite.php:107
 msgctxt "Setting Title"
 msgid "After Image"
 msgstr "بعد از تصویر"
 
-#: Socialite.php:111
+#: Socialite.php:108
 msgctxt "Setting Description"
 msgid "HTML closing after each social icon image."
 msgstr ""
 
-#: Socialite.php:123
+#: Socialite.php:119
 msgctxt "Setting Title"
 msgid "Supported Fields"
 msgstr "فیلد‌های پشتیبانی‌شده"
 
-#: Socialite.php:124
+#: Socialite.php:120
 msgctxt "Setting Description"
-msgid ""
-"Appends custom meta fields for social services to taxonomies. <em>Terms</em> "
-"module needs to be enabled."
-msgstr ""
-"فیلد‌های متا سفارشی را برای شبکه‌های اجتمای به رده‌بندی‌ها اضافه می‌کند. پودمان "
-"<em>رده‌ها</em> باید فعال باشد."
+msgid "Appends custom meta fields for social services to taxonomies. <em>Terms</em> module needs to be enabled."
+msgstr "فیلد‌های متا سفارشی را برای شبکه‌های اجتمای به رده‌بندی‌ها اضافه می‌کند. پودمان <em>رده‌ها</em> باید فعال باشد."
 
-#: Socialite.php:125
+#: Socialite.php:121
 msgctxt "Setting String Empty"
 msgid "The Terms module is not available!"
 msgstr "پودمان رده‌ها در دسترس نیست!"
 
-#: Socialite.php:142
+#: Socialite.php:138
 msgctxt "Title"
 msgid "Twitter"
 msgstr "توییتر"
 
-#: Socialite.php:143
+#: Socialite.php:139
 msgctxt "Title"
 msgid "TikTok"
 msgstr "تیک‌تاک"
 
-#: Socialite.php:144
+#: Socialite.php:140
 msgctxt "Title"
 msgid "Instagram"
 msgstr "اینستاگرام"
 
-#: Socialite.php:145
+#: Socialite.php:141
 msgctxt "Title"
 msgid "Telegram"
 msgstr "تلگرام"
 
-#: Socialite.php:146
+#: Socialite.php:142
 msgctxt "Title"
 msgid "Facebook"
 msgstr "فیس‌بوک"
 
-#: Socialite.php:147
+#: Socialite.php:143
 msgctxt "Title"
 msgid "YouTube"
 msgstr "یوتوب"
 
-#: Socialite.php:148
+#: Socialite.php:144
 msgctxt "Title"
 msgid "Aparat"
 msgstr "آپارات"
 
-#: Socialite.php:149
+#: Socialite.php:145
 msgctxt "Title"
 msgid "Behkhaan"
 msgstr "بهخان"
 
-#: Socialite.php:150
+#: Socialite.php:146
 msgctxt "Title"
 msgid "Fidibo"
 msgstr "فیدیبو"
 
-#: Socialite.php:151
+#: Socialite.php:147
 msgctxt "Title"
 msgid "Goodreads"
 msgstr "گودریدز"
 
-#: Socialite.php:152
+#: Socialite.php:148
 msgctxt "Title"
 msgid "Eitaa"
 msgstr "ایتا"
 
-#: Socialite.php:153
+#: Socialite.php:149
 msgctxt "Title"
 msgid "Wikipedia"
 msgstr "ویکی‌پدیا"
 
-#: Socialite.php:156
+#: Socialite.php:150
+msgctxt "Title"
+msgid "iCal"
+msgstr ""
+
+#: Socialite.php:153
 msgctxt "Description"
 msgid "Handle or URL to a Twitter account."
 msgstr "شناسه یا نشانی به حسابی در توییتر."
 
-#: Socialite.php:157
+#: Socialite.php:154
 msgctxt "Description"
 msgid "Handle or URL to a TikTok account."
 msgstr "شناسه یا نشانی به حسابی در تیک‌تاک."
 
-#: Socialite.php:158
+#: Socialite.php:155
 msgctxt "Description"
 msgid "Handle or URL to an Instagram account."
 msgstr "شناسه یا نشانی به حسابی در اینستاگرام."
 
-#: Socialite.php:159
+#: Socialite.php:156
 msgctxt "Description"
 msgid "Handle or URL to a Telegram user or channel."
 msgstr "شناسه یا نشانی به کاربر و یا کانالی در تلگرام."
 
-#: Socialite.php:160
+#: Socialite.php:157
 msgctxt "Description"
 msgid "Handle or URL to a Facebook profile or page."
 msgstr "شناسه یا نشانی به کاربر و یا صفحه‌ای در فیس‌بوک."
 
-#: Socialite.php:161
+#: Socialite.php:158
 msgctxt "Description"
 msgid "Handle or URL to a YouTube channel."
 msgstr "شناسه یا نشانی به کانالی در یوتوب."
 
-#: Socialite.php:162
+#: Socialite.php:159
 msgctxt "Description"
 msgid "Handle or URL to an Aparat channel."
 msgstr "شناسه یا نشانی به کانالی در آپارات."
 
-#: Socialite.php:163
+#: Socialite.php:160
 msgctxt "Description"
 msgid "Handle or URL to a Behkhaan profile page."
 msgstr "شناسه یا نشانی به صفحه نمایه‌ای در بهخوان."
 
-#: Socialite.php:164
+#: Socialite.php:161
 msgctxt "Description"
 msgid "ID or URL to a Fidibo profile page."
 msgstr "شناسه یا نشانی به صفحه نمایه‌ای در فیدیبو."
 
-#: Socialite.php:165
+#: Socialite.php:162
 msgctxt "Description"
 msgid "URL to a Goodreads profile page."
 msgstr "نشانی به صفحه‌ای در گودریدز."
 
-#: Socialite.php:166
+#: Socialite.php:163
 msgctxt "Description"
 msgid "Handle or URL to an Eitaa user or channel."
 msgstr "شناسه یا نشانی به کاربر و یا کانالی در ایتا."
 
-#: Socialite.php:167
+#: Socialite.php:164
 msgctxt "Description"
 msgid "Handle or URL to a Wikipedia page."
 msgstr "شناسه یا نشانی به برگه‌ای در ویکی‌پدیا."
 
-#: Socialite.php:170
+#: Socialite.php:167
 msgctxt "Setting Description"
-msgid ""
-"Appends custom meta fields for social services to post-types. <em>Meta</em> "
-"module needs to be enabled."
-msgstr ""
-"فیلد‌های متا سفارشی را برای شبکه‌های اجتمای به نوع‌فرسته‌ها اضافه می‌کند. پودمان "
-"<em>متا</em> باید فعال باشد."
+msgid "Appends custom meta fields for social services to post-types. <em>Meta</em> module needs to be enabled."
+msgstr "فیلد‌های متا سفارشی را برای شبکه‌های اجتمای به نوع‌فرسته‌ها اضافه می‌کند. پودمان <em>متا</em> باید فعال باشد."
 
-#: Socialite.php:173
+#: Socialite.php:170
 msgctxt "Column Title"
 msgid "Social"
 msgstr "اجتماعی"

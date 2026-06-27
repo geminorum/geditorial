@@ -263,234 +263,234 @@ msgctxt "Pant Size"
 msgid "56"
 msgstr ""
 
-#: Units.php:56
+#: Units.php:55
 msgctxt "Titles"
 msgid "Weight"
 msgstr ""
 
-#: Units.php:57
+#: Units.php:56
 msgctxt "Titles"
 msgid "Width"
 msgstr ""
 
-#: Units.php:58
+#: Units.php:57
 msgctxt "Titles"
 msgid "Height"
 msgstr ""
 
-#: Units.php:59
+#: Units.php:58
 msgctxt "Titles"
 msgid "Length"
 msgstr ""
 
-#: Units.php:61
+#: Units.php:60
 msgctxt "Titles"
 msgid "Payload"
 msgstr ""
 
-#: Units.php:62
+#: Units.php:61
 msgctxt "Titles"
 msgid "Max Speed"
 msgstr ""
 
-#: Units.php:64
+#: Units.php:63
 msgctxt "Titles"
 msgid "Hair Color"
 msgstr ""
 
-#: Units.php:65
+#: Units.php:64
 msgctxt "Titles"
 msgid "Skin Color"
 msgstr ""
 
-#: Units.php:66
+#: Units.php:65
 msgctxt "Titles"
 msgid "Eye Color"
 msgstr ""
 
-#: Units.php:68
+#: Units.php:67
 msgctxt "Titles"
 msgid "Total Days"
 msgstr ""
 
-#: Units.php:69
+#: Units.php:68
 msgctxt "Titles"
 msgid "Total Hours"
 msgstr ""
 
-#: Units.php:71
+#: Units.php:70
 msgctxt "Titles"
 msgid "Total Members"
 msgstr ""
 
-#: Units.php:72
+#: Units.php:71
 msgctxt "Titles"
 msgid "Total People"
 msgstr ""
 
-#: Units.php:74
+#: Units.php:73
 msgctxt "Titles"
 msgid "Book Cover"
 msgstr ""
 
-#: Units.php:75
+#: Units.php:74
 msgctxt "Titles"
 msgid "Paper Size"
 msgstr ""
 
-#: Units.php:80
+#: Units.php:79
 msgctxt "Descriptions"
 msgid "Weight in Grams"
 msgstr ""
 
-#: Units.php:81
+#: Units.php:80
 msgctxt "Descriptions"
 msgid "Width in Millimetres"
 msgstr ""
 
-#: Units.php:82
+#: Units.php:81
 msgctxt "Descriptions"
 msgid "Height in Millimetres"
 msgstr ""
 
-#: Units.php:83
+#: Units.php:82
 msgctxt "Descriptions"
 msgid "Length in Millimetres"
 msgstr ""
 
-#: Units.php:85
+#: Units.php:84
 msgctxt "Descriptions"
 msgid "Payload in Kilograms"
 msgstr ""
 
-#: Units.php:86
+#: Units.php:85
 msgctxt "Descriptions"
 msgid "Max Speed in Kilometres per Hour"
 msgstr ""
 
-#: Units.php:88
+#: Units.php:87
 msgctxt "Descriptions"
 msgid "Color of the Hair"
 msgstr ""
 
-#: Units.php:89
+#: Units.php:88
 msgctxt "Descriptions"
 msgid "Color of the Skin"
 msgstr ""
 
-#: Units.php:90
+#: Units.php:89
 msgctxt "Descriptions"
 msgid "Color of the Eye"
 msgstr ""
 
-#: Units.php:92
+#: Units.php:91
 msgctxt "Descriptions"
 msgid "The Total Number of the Days"
 msgstr ""
 
-#: Units.php:93
+#: Units.php:92
 msgctxt "Descriptions"
 msgid "The Total Number of the Hours"
 msgstr ""
 
-#: Units.php:95
+#: Units.php:94
 msgctxt "Descriptions"
 msgid "The Total Number of the Members"
 msgstr ""
 
-#: Units.php:96
+#: Units.php:95
 msgctxt "Descriptions"
 msgid "The Total Number of the People"
 msgstr ""
 
-#: Units.php:98
+#: Units.php:97
 msgctxt "Descriptions"
 msgid "The Book Cover Size"
 msgstr ""
 
-#: Units.php:99
+#: Units.php:98
 msgctxt "Descriptions"
 msgid "The Standard Paper Size"
 msgstr ""
 
+#: Units.php:110
 #: Units.php:111
 #: Units.php:112
-#: Units.php:113
-#: Units.php:115
+#: Units.php:114
 msgctxt "None"
 msgid "&ndash; Select Size &ndash;"
 msgstr ""
 
-#: Units.php:114
+#: Units.php:113
 msgctxt "None"
 msgid "&ndash; Select Cover &ndash;"
 msgstr ""
 
 #. translators: `%s`: field title
-#: Units.php:124
+#: Units.php:123
 #, php-format
 msgctxt "Import Field Title"
 msgid "Units: %s"
 msgstr ""
 
 #. translators: `%s`: field title
-#: Units.php:126
+#: Units.php:125
 #, php-format
 msgctxt "Import Field Title"
 msgid "Units: %s [Ignored]"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Units.php:131
+#: Units.php:130
 msgctxt "MetaBox: `mainbox_title`"
 msgid "Measurements"
 msgstr ""
 
-#: Units.php:132
+#: Units.php:131
 msgctxt "MetaBox: `mainbox_action`"
 msgid "Configure"
 msgstr ""
 
-#: Units.php:136
+#: Units.php:135
 msgctxt "Notice: `no_fields`"
 msgid "There are no measurement units available!"
 msgstr ""
 
-#: Units.php:140
+#: Units.php:139
 msgctxt "Column Title"
 msgid "Measurements"
 msgstr ""
 
 #. translators: `%s`: shoe size placeholder
-#: Units.php:293
+#: Units.php:299
 #, php-format
 msgctxt "Display"
 msgid "Size %s Shoe"
 msgstr ""
 
 #. translators: `%s`: shirt size placeholder
-#: Units.php:305
+#: Units.php:311
 #, php-format
 msgctxt "Display"
 msgid "Size %s Shirt"
 msgstr ""
 
 #. translators: `%s`: pants size placeholder
-#: Units.php:317
+#: Units.php:323
 #, php-format
 msgctxt "Display"
 msgid "Size %s Pants"
 msgstr ""
 
 #. translators: `%s`: book cover placeholder
-#: Units.php:329
+#: Units.php:335
 #, php-format
 msgctxt "Display"
 msgid "%s Book-Cover"
 msgstr ""
 
 #. translators: `%s`: paper size cover placeholder
-#: Units.php:341
+#: Units.php:347
 #, php-format
 msgctxt "Display"
 msgid "Size %s Paper"

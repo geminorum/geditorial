@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial Addressed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-02-09 00:15+0330\n"
+"PO-Revision-Date: 2026-03-16 22:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Addressed\n"
 "X-Domain: geditorial-addressed\n"
 
@@ -22,204 +22,221 @@ msgstr "کشور پایه"
 #: Addressed.php:42
 msgctxt "Setting Description"
 msgid "Defines the base country of site for supported contents."
-msgstr ""
+msgstr "کشور پایه سایت را برای محتوای پشتیبانی‌شده تعریف می‌کند."
 
-#: Addressed.php:51
+#: Addressed.php:49
+msgctxt "Setting Title"
+msgid "Base Province"
+msgstr "استان پایه"
+
+#: Addressed.php:50
+msgctxt "Setting Description"
+msgid "Defines the base state or province of site for supported contents."
+msgstr "استان پایه سایت را برای محتوای پشتیبانی‌شده تعریف می‌کند."
+
+#: Addressed.php:59
 msgctxt "Setting Title"
 msgid "Default Format"
 msgstr "ساختار پیش‌فرض"
 
-#: Addressed.php:52
+#: Addressed.php:60
 msgctxt "Setting Description"
 msgid "Defines the default address format for supported contents."
-msgstr ""
+msgstr "ساخار پیش‌فرض نشانی را برای محتوای پشتیبانی‌شده تعریف می‌کند."
 
-#: Addressed.php:58
+#: Addressed.php:66
 msgctxt "Setting Title"
 msgid "Override Base Country"
 msgstr "رونویسی کشور پایه"
 
-#: Addressed.php:59
+#: Addressed.php:67
 msgctxt "Setting Description"
-msgid "Also overrides the format of the base country of site."
-msgstr ""
+msgid "Also overrides the address format of the base country of site."
+msgstr "همچنین ساختار نشانی کشور پایه سایت را رونویسی می‌کند."
 
-#: Addressed.php:64
+#: Addressed.php:72
 msgctxt "Setting Title"
 msgid "Override Woo-Commerce"
 msgstr "رونویسی ووکامرس"
 
-#: Addressed.php:65
+#: Addressed.php:73
 msgctxt "Setting Description"
 msgid "Also overrides the default format of Woo-Commerce adressess."
-msgstr ""
+msgstr "همچنین ساختار پیش‌فرض نشانی‌های ووکامرس را رونویسی می‌کند."
 
-#: Addressed.php:73
+#: Addressed.php:81
 msgctxt "Setting Title"
 msgid "Address Types"
 msgstr "انواع نشانی"
 
-#: Addressed.php:78
+#: Addressed.php:86
 msgctxt "Setting Title"
 msgid "Title"
 msgstr "عنوان"
 
-#: Addressed.php:79
+#: Addressed.php:87
 msgctxt "Setting Description"
 msgid "Defines the title on the address type."
-msgstr ""
+msgstr "عنوان نوع نشانی را تعریف می‌کند."
 
-#: Addressed.php:84
+#: Addressed.php:92
 msgctxt "Setting Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Addressed.php:85
+#: Addressed.php:93
 msgctxt "Setting Description"
 msgid "Defines the description on the address type."
-msgstr ""
+msgstr "توضیحات نوع نشانی را تعریف می‌کند."
 
-#: Addressed.php:90
+#: Addressed.php:98
 msgctxt "Setting Title"
 msgid "Identifier"
 msgstr "شناساگر"
 
-#: Addressed.php:91
+#: Addressed.php:99
 msgctxt "Setting Description"
 msgid "Defines the unique identifier on the address type."
-msgstr ""
+msgstr "شناساگر یکتا برای نوع نشانی تعریف می‌کند."
 
-#: Addressed.php:98
+#: Addressed.php:106
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr "اولویت"
 
-#: Addressed.php:99
+#: Addressed.php:107
 msgctxt "Setting Description"
 msgid "Sets as the sort priority where the address display on the list."
-msgstr ""
+msgstr "به‌عنوان اولویت مرتب‌سازی تنظیم می‌کند که نشانی در فهرست کجا نمایش داده شود."
 
-#: Addressed.php:108
+#: Addressed.php:116
 msgctxt "Setting Title"
 msgid "Supported Fields"
 msgstr "فیلدهای پشتیبانی‌شده"
 
-#: Addressed.php:109
+#: Addressed.php:117
 msgctxt "Setting Description"
 msgid "Defines supported address fields for all type."
-msgstr ""
+msgstr "فیلد نشانی پشتیبانی‌شده برای تمامی انواع را تعریف می‌کند."
 
-#: Addressed.php:110
+#: Addressed.php:118
 msgctxt "Setting Empty String"
 msgid "There are no address fields available!"
 msgstr "هیچ فیلد نشانی در دسترس نیست!"
 
-#: Addressed.php:141
+#: Addressed.php:149
 msgctxt "Control label"
 msgid "Address line 1"
 msgstr "خط اول نشانی"
 
-#: Addressed.php:142
-msgctxt "Setting Description"
+#: Addressed.php:150
+msgctxt "Control Description"
 msgid "The street address for the location."
-msgstr ""
+msgstr "نشانی خیابان محل مورد نظر شما."
 
-#: Addressed.php:147
+#: Addressed.php:155
 msgctxt "Control label"
 msgid "Address Line 2"
 msgstr "خط دوم نشانی"
 
-#: Addressed.php:148
-msgctxt "Setting Description"
+#: Addressed.php:156
+msgctxt "Control Description"
 msgid "An additional, optional address line for the location."
-msgstr ""
+msgstr "خط نشانی افزوده و اختیاری، برای محل مورد نظر شما."
 
-#: Addressed.php:153
+#: Addressed.php:161
 msgctxt "Control label"
 msgid "Company"
 msgstr "شرکت"
 
-#: Addressed.php:154
-msgctxt "Setting Description"
+#: Addressed.php:162
+msgctxt "Control Description"
 msgid "The organization in which this address is located."
-msgstr ""
+msgstr "سازمانی که این نشانی در آن قرار دارد."
 
-#: Addressed.php:159
+#: Addressed.php:167
 msgctxt "Control label"
 msgid "City"
 msgstr "شهر"
 
-#: Addressed.php:160
-msgctxt "Setting Description"
+#: Addressed.php:168
+msgctxt "Control Description"
 msgid "The city in which this address is located."
-msgstr ""
+msgstr "شهری که نشانی شما در آن واقع شده است."
 
-#: Addressed.php:165
+#: Addressed.php:173
 msgctxt "Control label"
 msgid "Province"
 msgstr "استان"
 
-#: Addressed.php:166
-msgctxt "Setting Description"
+#: Addressed.php:174
+msgctxt "Control Description"
 msgid "The state or province in which this address is located."
 msgstr "استانی که نشانی شما در آن واقع شده است."
 
-#: Addressed.php:171
+#: Addressed.php:179
 msgctxt "Control label"
 msgid "Country"
 msgstr "کشور"
 
-#: Addressed.php:172
-msgctxt "Setting Description"
+#: Addressed.php:180
+msgctxt "Control Description"
 msgid "The country in which this address is located."
 msgstr "کشوری که نشانی شما در آن واقع شده است."
 
-#: Addressed.php:177
+#: Addressed.php:185
 msgctxt "Control label"
 msgid "Coordinates"
 msgstr "مختصات جغرافیایی"
 
-#: Addressed.php:178
-msgctxt "Setting Description"
+#: Addressed.php:186
+msgctxt "Control Description"
 msgid "The Latitude and Longitude to this address."
 msgstr "طول و عرض جغرافیایی برای این نشانی."
 
-#: Addressed.php:183
+#: Addressed.php:191
 msgctxt "Control label"
 msgid "Site URL"
 msgstr "نشانی سایت"
 
-#: Addressed.php:184
-msgctxt "Setting Description"
+#: Addressed.php:192
+msgctxt "Control Description"
 msgid "The site URL of this address."
 msgstr "URL سایت این نشانی."
 
-#: Addressed.php:189
+#: Addressed.php:197
 msgctxt "Control label"
 msgid "Embed URL"
 msgstr "نشانه جاساز"
 
-#: Addressed.php:190
-msgctxt "Setting Description"
+#: Addressed.php:198
+msgctxt "Control Description"
 msgid "An embeddable resource URL about this address."
 msgstr "URL یک منبع جاساز درباره این نشانی."
 
 #. translators: `%s`: address type title
-#: Addressed.php:230
+#: Addressed.php:241
 #, php-format
 msgctxt "Customizer: Section Title"
 msgid "Address: %s"
 msgstr "نشانی %s"
 
-#: Addressed.php:366
+#: Addressed.php:385
 msgctxt "Header"
 msgid "Address Reports"
 msgstr "گزارش‌های نشانی"
 
-#: Addressed.php:393
+#: ModuleSettings.php:16
 msgctxt "Card Title"
 msgid "Untitled Address Type"
 msgstr "نوع نشانی بدون عنوان"
+
+#. translators: `%s`: site URL title
+#: ModuleSettings.php:42
+#, php-format
+msgctxt "Button"
+msgid "Visit the website on &#8220;%s&#8221;"
+msgstr "وب‌سایت &laquo;%s&raquo; را ببینید"
 
 #, fuzzy
 #~| msgctxt "Control label"

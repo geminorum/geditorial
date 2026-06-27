@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Estimated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-02-12 01:50+0330\n"
+"PO-Revision-Date: 2026-03-27 11:55+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,87 +11,91 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:38
+#: Estimated.php:40
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr "سرعت مطالعه"
 
-#: Estimated.php:39
+#: Estimated.php:41
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr "میانگین سرعت مطالعه کلمات در دقیقه"
 
-#: Estimated.php:45
+#: Estimated.php:47
 msgctxt "Setting Title"
-msgid "Content Prefix"
-msgstr "پیشوند توضیحات"
+msgid "Minimum Words"
+msgstr "کمترین مقدار"
 
-#: Estimated.php:46
+#: Estimated.php:48
 msgctxt "Setting Description"
-msgid "Custom string before the estimated time on the content."
-msgstr "رشته سفارشی که قبل از برآورد زمان نمایش داده خواهد شد."
+msgid "And above this number of words will show the notice"
+msgstr "و بیشتر از این تعداد کلمه نمایش داده خواهد شد"
 
-#: Estimated.php:47 Estimated.php:209
-msgctxt "Setting Default"
-msgid "Estimated read time:"
-msgstr "برآورد زمان مطالعه:‌"
-
-#: Estimated.php:52
+#: Estimated.php:54
 msgctxt "Setting Title"
 msgid "Content Teaser"
 msgstr "تیزر محتوا"
 
-#: Estimated.php:53
+#: Estimated.php:55
 msgctxt "Setting Description"
 msgid "Calculate teaser text along with rest of the content"
 msgstr "محاسبه متن تیز همراه با محتوای نوشته"
 
-#: Estimated.php:56
+#: Estimated.php:58
 msgctxt "Content Teaser Option"
 msgid "Ignore"
 msgstr "نادیده بگیر"
 
-#: Estimated.php:57
+#: Estimated.php:59
 msgctxt "Content Teaser Option"
 msgid "Include"
 msgstr "در نظر بگیر"
 
 #: Estimated.php:65
 msgctxt "Setting Title"
-msgid "Minimum Words"
-msgstr "کمترین مقدار"
+msgid "Content Prefix"
+msgstr "پیشوند توضیحات"
 
-#: Estimated.php:66
+#. translators: `%s`: zero placeholder
+#: Estimated.php:68
+#, php-format
 msgctxt "Setting Description"
-msgid "And above this number of words will show the notice"
-msgstr "و بیشتر از این تعداد کلمه نمایش داده خواهد شد"
+msgid "Custom string before the estimated time on the content. Leave blank for default or %s to disable."
+msgstr "رشته سفارشی که قبل از برآورد زمان نمایش داده خواهد شد. برای پیش‌فرض خالی، یا غیرفعال‌سازی %s بگذارید."
 
-#: Estimated.php:113
+#: Estimated.php:71 Estimated.php:270
+msgctxt "Setting Default"
+msgid "Estimated read time:"
+msgstr "برآورد زمان مطالعه:‌"
+
+#: Estimated.php:139
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr "برآورد زمانی"
 
-#: Estimated.php:116
+#: Estimated.php:142
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr "شمار واژه‌ها"
 
-#. translators: %s: words count
-#: Estimated.php:149 Estimated.php:233
+#. translators: `%s`: average word count
+#: Estimated.php:177 Estimated.php:292
+#, php-format
 msgctxt "Title Attr"
-msgid "If you try to read %s words per minute"
-msgstr "اگر تلاش کنید در هر دقیقه %s کلمه بخوانید"
+msgid "If you try to read %s words per minute."
+msgstr "اگر تلاش کنید در هر دقیقه %s کلمه بخوانید."
 
-#: Estimated.php:222
+#: Estimated.php:281
 msgid "less than 1 minute"
 msgstr "کمتر از ۱ دقیقه"
 
-#. translators: %s: number of minutes
-#: Estimated.php:226
+#. translators: `%s`: number of minutes
+#: Estimated.php:285
+#, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] "%s دقیقه"

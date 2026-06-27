@@ -191,25 +191,25 @@ msgid "Body Stature in Centimetres"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Physical.php:286
+#: Physical.php:292
 #, php-format
 msgctxt "Page Title"
 msgid "Athletics Grid for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Physical.php:288
+#: Physical.php:294
 #, php-format
 msgctxt "Page Title"
 msgid "Athletics Overview for %s"
 msgstr ""
 
-#: Physical.php:310
+#: Physical.php:316
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr ""
 
-#: Physical.php:356
+#: Physical.php:365
 msgctxt "Header"
 msgid "Overview of the Physical Examinations"
 msgstr ""

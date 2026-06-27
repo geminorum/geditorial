@@ -13,121 +13,121 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
 "X-Domain: geditorial-bookmarked\n"
 
-#: Bookmarked.php:86
+#: Bookmarked.php:89
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr ""
 
-#: Bookmarked.php:87
+#: Bookmarked.php:90
 msgctxt "Field Label: `link`"
 msgid "Bookmark"
 msgstr ""
 
-#: Bookmarked.php:88
+#: Bookmarked.php:91
 msgctxt "Field Label: `type`"
 msgid "Type"
 msgstr ""
 
-#: Bookmarked.php:89
+#: Bookmarked.php:92
 msgctxt "Field Label: `code`"
 msgid "Code"
 msgstr ""
 
-#: Bookmarked.php:92
+#: Bookmarked.php:95
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr ""
 
-#: Bookmarked.php:98
+#: Bookmarked.php:101
 msgctxt "Tab Title"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:102
+#: Bookmarked.php:105
 msgctxt "Notice"
 msgid "There is no bookmarks information available!"
 msgstr ""
 
-#: Bookmarked.php:103
+#: Bookmarked.php:106
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the bookmarks data."
 msgstr ""
 
-#: Bookmarked.php:110
+#: Bookmarked.php:113
 msgctxt "MetaBox Title"
 msgid "Bookmarks"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:114
+#: Bookmarked.php:117
 #, php-format
 msgctxt "Button Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:116
+#: Bookmarked.php:119
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Bookmarks of %2$s"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:119
+#: Bookmarked.php:122
 #, php-format
 msgctxt "Action Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:121
+#: Bookmarked.php:124
 msgctxt "Action Text"
 msgid "Bookmarks"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:124
+#: Bookmarked.php:127
 #, php-format
 msgctxt "Row Title"
 msgid "Bookmarks of %1$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:126
+#: Bookmarked.php:129
 msgctxt "Row Text"
 msgid "Bookmarks"
 msgstr ""
 
-#: Bookmarked.php:138
+#: Bookmarked.php:141
 msgctxt "Field Title"
 msgid "Bookmarks Title"
 msgstr ""
 
-#: Bookmarked.php:139
+#: Bookmarked.php:142
 msgctxt "Field Description"
 msgid "The Bookmarks Table Caption"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Bookmarked.php:273
+#: Bookmarked.php:282
 #, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Bookmarked.php:275
+#: Bookmarked.php:284
 #, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr ""
 
-#: Bookmarked.php:323
+#: Bookmarked.php:332
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
 msgstr ""
 
-#: Bookmarked.php:375
+#: Bookmarked.php:384
 msgctxt "Header"
 msgid "Overview of the Bookmarks"
 msgstr ""

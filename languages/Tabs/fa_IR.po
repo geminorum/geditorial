@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tabs\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-20 12:20+0330\n"
+"PO-Revision-Date: 2025-11-02 23:05+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -16,88 +16,88 @@ msgstr ""
 "X-Domain: geditorial-tabs\n"
 
 #. translators: `%s`: supported object label
-#: Tabs.php:46
+#: Tabs.php:47
 #, php-format
 msgctxt "Setting Title"
 msgid "Built-in Tabs for %s"
 msgstr "زبانه‌های درون‌ساخته برای %s"
 
-#: Tabs.php:49
+#: Tabs.php:50
 msgctxt "Setting Description"
 msgid "Select to add pre-configured tabs for posts."
 msgstr "برای افزودن زبانه‌های از پیش تنظیم‌شده مخصوص فرسته‌ها، انتخاب کنید."
 
-#: Tabs.php:62
+#: Tabs.php:63
 msgctxt "Setting Title"
 msgid "Attachment Mime-types"
 msgstr "نوع پیوست‌ها"
 
-#: Tabs.php:63
+#: Tabs.php:64
 msgctxt "Setting Description"
 msgid "Defines the mime-types on attachment summary tab on front-end."
 msgstr ""
 
-#: Tabs.php:76
+#: Tabs.php:77
 msgctxt "Mime-Type"
 msgid "MP3"
 msgstr "MP3"
 
-#: Tabs.php:77
+#: Tabs.php:78
 msgctxt "Mime-Type"
 msgid "PDF"
 msgstr "پی‌دی‌اف"
 
-#: Tabs.php:78
+#: Tabs.php:79
 msgctxt "Mime-Type"
 msgid "Markdown"
 msgstr "مارک‌داون"
 
-#: Tabs.php:79
+#: Tabs.php:80
 msgctxt "Mime-Type"
 msgid "CSV"
 msgstr "سی‌اس‌وی"
 
-#: Tabs.php:80
+#: Tabs.php:81
 msgctxt "Mime-Type"
 msgid "CSV (Excel)"
 msgstr "CSV (اکسل)"
 
-#: Tabs.php:81
+#: Tabs.php:82
 msgctxt "Mime-Type"
 msgid "Microsoft Word"
 msgstr "مایکروسافت ورد"
 
-#: Tabs.php:82
+#: Tabs.php:83
 msgctxt "Mime-Type"
 msgid "ePub"
 msgstr "ایی‌پاب"
 
-#: Tabs.php:97
+#: Tabs.php:98
 msgctxt "Tab Title"
 msgid "Comments"
 msgstr "دیدگاه‌ها"
 
-#: Tabs.php:98
+#: Tabs.php:99
 msgctxt "Tab Description"
 msgid "Comments of the post."
 msgstr "دیدگاه‌های فرسته نمایش می‌دهد."
 
-#: Tabs.php:108
+#: Tabs.php:109
 msgctxt "Tab Title"
 msgid "Meta"
 msgstr "فراداده"
 
-#: Tabs.php:109
+#: Tabs.php:110
 msgctxt "Tab Description"
 msgid "Meta Summary of the post."
 msgstr "گزارشی از فراداده‌های فرسته را ارائه می‌دهد."
 
-#: Tabs.php:119
+#: Tabs.php:120
 msgctxt "Tab Title"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
-#: Tabs.php:120
+#: Tabs.php:121
 msgctxt "Tab Description"
 msgid "Attachment Summary of the post."
 msgstr "گزارشی از پیوست‌های فرسته را ارائه می‌دهد."

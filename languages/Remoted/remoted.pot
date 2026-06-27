@@ -19,27 +19,217 @@ msgid "Remote Base"
 msgstr ""
 
 #: Remoted.php:42
-#: Remoted.php:48
 msgctxt "Setting Description"
-msgid "Full URL into the remote base for receiving uploads."
+msgid "Defines the full URL of the remote base for receiving uploads."
 msgstr ""
 
 #: Remoted.php:47
 msgctxt "Setting Title"
-msgid "Remote Hash"
+msgid "Remote Target"
 msgstr ""
 
-#: Remoted.php:67
+#: Remoted.php:48
+msgctxt "Setting Description"
+msgid "Defines the relative path for the receiving uploads. Leave empty for the base."
+msgstr ""
+
+#: Remoted.php:54
+msgctxt "Setting Title"
+msgid "Remote Identifier"
+msgstr ""
+
+#: Remoted.php:55
+msgctxt "Setting Description"
+msgid "Defines a unique string for the receiver. Must start with a letter."
+msgstr ""
+
+#: Remoted.php:62
+msgctxt "Setting Title"
+msgid "Remote Token"
+msgstr ""
+
+#: Remoted.php:63
+msgctxt "Setting Description"
+msgid "Defines the communication key for the receiver. Only letters and numbers."
+msgstr ""
+
+#: Remoted.php:70
+msgctxt "Setting Title"
+msgid "Remote Home"
+msgstr ""
+
+#: Remoted.php:71
+msgctxt "Setting Description"
+msgid "Defines the full URL of the home of uploads."
+msgstr ""
+
+#: Remoted.php:76
+msgctxt "Setting Title"
+msgid "Remote Overwrite"
+msgstr ""
+
+#: Remoted.php:77
+msgctxt "Setting Description"
+msgid "Whether to replace already existing file with the uploaded."
+msgstr ""
+
+#: Remoted.php:84
+msgctxt "Setting Title"
+msgid "Mime-type Extensions"
+msgstr ""
+
+#: Remoted.php:85
+msgctxt "Setting Description"
+msgid "Defines the list of extensions for accepted mime-types. Separate with latin comma."
+msgstr ""
+
+#: Remoted.php:92
+msgctxt "Setting Title"
+msgid "Chunk Size"
+msgstr ""
+
+#: Remoted.php:93
+msgctxt "Setting Description"
+msgid "Slices the file into number of bytes. Supports b, kb, mb, gb, tb suffixes also."
+msgstr ""
+
+#: Remoted.php:100
+msgctxt "Setting Title"
+msgid "Max File Size"
+msgstr ""
+
+#: Remoted.php:101
+msgctxt "Setting Description"
+msgid "Defines the maximum file size in bytes. Supports b, kb, mb, gb, tb suffixes also."
+msgstr ""
+
+#: Remoted.php:108
+msgctxt "Setting Title"
+msgid "Post Process"
+msgstr ""
+
+#: Remoted.php:109
+msgctxt "Setting Description"
+msgid "Whether to register uploaded file into <b>Media Library</b>."
+msgstr ""
+
+#: Remoted.php:112
+msgctxt "Setting Option"
+msgid "Click on store button for each file uploaded."
+msgstr ""
+
+#: Remoted.php:113
+msgctxt "Setting Option"
+msgid "Only provides the final URL of the file uploaded."
+msgstr ""
+
+#: Remoted.php:114
+msgctxt "Setting Option"
+msgid "Automatically stores file uploaded into the library."
+msgstr ""
+
+#: Remoted.php:122
+msgctxt "Setting Title"
+msgid "Destinetions"
+msgstr ""
+
+#: Remoted.php:127
+msgctxt "Setting Title"
+msgid "Option Title"
+msgstr ""
+
+#: Remoted.php:128
+msgctxt "Setting Description"
+msgid "Defines the title on the widget drop-down."
+msgstr ""
+
+#: Remoted.php:133
+msgctxt "Setting Title"
+msgid "Relative Path"
+msgstr ""
+
+#: Remoted.php:134
+msgctxt "Setting Description"
+msgid "Defines the path relative to the base directory."
+msgstr ""
+
+#: Remoted.php:141
+msgctxt "Setting Title"
+msgid "Sort Priority"
+msgstr ""
+
+#: Remoted.php:142
+msgctxt "Setting Description"
+msgid "Sets as the priority where the path display on the list."
+msgstr ""
+
+#: Remoted.php:149
+msgctxt "Setting Title"
+msgid "Root Title"
+msgstr ""
+
+#: Remoted.php:150
+msgctxt "Setting Description"
+msgid "Displays as title of the root destination on the widget select."
+msgstr ""
+
+#: Remoted.php:151
+#: Remoted.php:273
+msgctxt "Setting Default"
+msgid "Root Destination"
+msgstr ""
+
+#: Remoted.php:156
+msgctxt "Setting Title"
+msgid "Default Destination"
+msgstr ""
+
+#: Remoted.php:157
+msgctxt "Setting Description"
+msgid "Sets as the default path option on the list. Leave empty for the root."
+msgstr ""
+
+#: Remoted.php:216
+msgctxt "Message"
+msgid "The mime-type is not allowed on this site!"
+msgstr ""
+
+#: Remoted.php:234
 msgctxt "Dashboard Widget Title"
 msgid "Remote Uploads"
 msgstr ""
 
-#: Remoted.php:90
+#: Remoted.php:286
 msgctxt "Button"
 msgid "Upload Files"
 msgstr ""
 
-#: Remoted.php:93
+#: Remoted.php:289
 msgctxt "Notice"
 msgid "Your browser does not support HTML5 upload."
+msgstr ""
+
+#: Remoted.php:311
+msgctxt "Filter Title"
+msgid "Supported Extensions"
+msgstr ""
+
+#: Remoted.php:380
+msgctxt "Button"
+msgid "Download Receiver"
+msgstr ""
+
+#: Remoted.php:386
+msgctxt "Button"
+msgid "Cleanup Receiver"
+msgstr ""
+
+#: Remoted.php:394
+msgctxt "Button"
+msgid "Generate Receiver"
+msgstr ""
+
+#: Remoted.php:438
+msgctxt "Setting Default"
+msgid "You will be returned to the main site."
 msgstr ""

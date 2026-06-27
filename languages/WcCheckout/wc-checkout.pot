@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcCheckout\n"
+"Project-Id-Version: gEditorial WcCheckout 1.0.1\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -13,62 +13,87 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcCheckout\n"
 "X-Domain: geditorial-wc-checkout\n"
 
-#: WcCheckout.php:36
+#. Plugin Name of the plugin
+#: WcCheckout.php:190
+msgid "Remove WooCommerce billing address for free checkout"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: WcCheckout.php:191
+msgid "https://github.com/helgatheviking/wc-remove-billing-address-on-free-checkout"
+msgstr ""
+
+#. Description of the plugin
+#: WcCheckout.php:192
+msgid "Remove billing address fields fro checkout when cart total is free."
+msgstr ""
+
+#. Author of the plugin
+#: WcCheckout.php:194
+msgid "Kathy Darling"
+msgstr ""
+
+#. Author URI of the plugin
+#: WcCheckout.php:195
+msgid "https://kathyisawesome.com"
+msgstr ""
+
+#: WcCheckout.php:37
 msgctxt "Setting Title"
 msgid "Simplify Freebies"
 msgstr ""
 
-#: WcCheckout.php:37
+#: WcCheckout.php:38
 msgctxt "Setting Description"
 msgid "Removes unnecessary checkout fields for free checkouts."
 msgstr ""
 
-#: WcCheckout.php:41
+#: WcCheckout.php:42
 msgctxt "Setting Title"
 msgid "Inside Labels"
 msgstr ""
 
-#: WcCheckout.php:42
+#: WcCheckout.php:43
 msgctxt "Setting Description"
 msgid "Moves labels inside the checkout fields."
 msgstr ""
 
-#: WcCheckout.php:48
+#: WcCheckout.php:49
 msgctxt "Setting Title"
 msgid "Remove Order Notes"
 msgstr ""
 
-#: WcCheckout.php:49
+#: WcCheckout.php:50
 msgctxt "Setting Description"
 msgid "Removes default `Order notes` from checkout form."
 msgstr ""
 
-#: WcCheckout.php:54
+#: WcCheckout.php:55
 msgctxt "Setting Title"
 msgid "Order Notes Label"
 msgstr ""
 
-#: WcCheckout.php:55
+#: WcCheckout.php:56
 msgctxt "Setting Description"
 msgid "Changes default `Order notes` label for customers. Leave empty to use defaults."
 msgstr ""
 
-#: WcCheckout.php:61
+#: WcCheckout.php:62
 msgctxt "Setting Title"
 msgid "Order Notes Placeholder"
 msgstr ""
 
-#: WcCheckout.php:62
+#: WcCheckout.php:63
 msgctxt "Setting Description"
 msgid "Changes default `Order notes` placeholder for customers. Leave empty to use defaults."
 msgstr ""
 
-#: WcCheckout.php:73
+#: WcCheckout.php:74
 msgctxt "Setting Section Title"
 msgid "Checkout Form"
 msgstr ""
 
-#: WcCheckout.php:74
+#: WcCheckout.php:75
 msgctxt "Setting Section Title"
 msgid "Order Notes"
 msgstr ""

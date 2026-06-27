@@ -13,347 +13,367 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Today\n"
 "X-Domain: geditorial-today\n"
 
-#: ModuleHelper.php:498
+#: ModuleHelper.php:621
 msgctxt "Meta Box Input"
 msgid "Day"
 msgstr ""
 
-#: ModuleHelper.php:499
+#: ModuleHelper.php:622
 msgctxt "Meta Box Input Placeholder"
 msgid "Day"
 msgstr ""
 
-#: ModuleHelper.php:513
+#: ModuleHelper.php:636
 msgctxt "Meta Box Input"
 msgid "Month"
 msgstr ""
 
-#: ModuleHelper.php:514
+#: ModuleHelper.php:637
 msgctxt "Meta Box Input Placeholder"
 msgid "Month"
 msgstr ""
 
-#: ModuleHelper.php:527
+#: ModuleHelper.php:650
 msgctxt "Meta Box Input"
 msgid "Year"
 msgstr ""
 
-#: ModuleHelper.php:528
+#: ModuleHelper.php:651
 msgctxt "Meta Box Input Placeholder"
 msgid "Year"
 msgstr ""
 
-#: ModuleHelper.php:538
+#: ModuleHelper.php:661
 msgctxt "Meta Box Input Option None"
 msgid "&ndash; Select Calendar &ndash;"
 msgstr ""
 
-#: ModuleHelper.php:550
+#: ModuleHelper.php:673
 msgctxt "Meta Box Input"
 msgid "Calendar"
 msgstr ""
 
-#: ModuleHelper.php:575
+#: ModuleHelper.php:696
+msgctxt "Button"
+msgid "Today"
+msgstr ""
+
+#: ModuleHelper.php:698
+msgctxt "Title Attr"
+msgid "Today in this Calendar"
+msgstr ""
+
+#: ModuleHelper.php:706
 msgctxt "Button"
 msgid "Next Year"
 msgstr ""
 
-#: ModuleHelper.php:577
+#: ModuleHelper.php:708
 msgctxt "Title Attr"
 msgid "The Next Year in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:581
+#: ModuleHelper.php:712
 msgctxt "Button"
 msgid "Previous Year"
 msgstr ""
 
-#: ModuleHelper.php:583
+#: ModuleHelper.php:714
 msgctxt "Title Attr"
 msgid "The Previous Year in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:591
-#: ModuleHelper.php:607
+#: ModuleHelper.php:722
+#: ModuleHelper.php:738
 msgctxt "Button"
 msgid "Next Month"
 msgstr ""
 
-#: ModuleHelper.php:593
+#: ModuleHelper.php:724
 msgctxt "Title Attr"
 msgid "The Next Month in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:597
-#: ModuleHelper.php:613
+#: ModuleHelper.php:728
+#: ModuleHelper.php:744
 msgctxt "Button"
 msgid "Previous Month"
 msgstr ""
 
-#: ModuleHelper.php:599
+#: ModuleHelper.php:730
 msgctxt "Title Attr"
 msgid "The Previous Month in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:609
+#: ModuleHelper.php:740
 msgctxt "Title Attr"
 msgid "The Next Month in this Year"
 msgstr ""
 
-#: ModuleHelper.php:615
+#: ModuleHelper.php:746
 msgctxt "Title Attr"
 msgid "The Previous Month in this Year"
 msgstr ""
 
-#: ModuleHelper.php:621
-#: ModuleHelper.php:651
-#: ModuleHelper.php:681
+#: ModuleHelper.php:752
+#: ModuleHelper.php:782
+#: ModuleHelper.php:818
 msgctxt "Button"
 msgid "This Month"
 msgstr ""
 
-#: ModuleHelper.php:623
-#: ModuleHelper.php:653
-#: ModuleHelper.php:683
+#: ModuleHelper.php:754
+#: ModuleHelper.php:784
+#: ModuleHelper.php:820
 msgctxt "Title Attr"
 msgid "This Month in the Calendar"
 msgstr ""
 
-#: ModuleHelper.php:627
-#: ModuleHelper.php:657
-#: ModuleHelper.php:687
+#: ModuleHelper.php:758
+#: ModuleHelper.php:788
+#: ModuleHelper.php:824
 msgctxt "Button"
 msgid "This Year"
 msgstr ""
 
-#: ModuleHelper.php:629
-#: ModuleHelper.php:659
-#: ModuleHelper.php:689
+#: ModuleHelper.php:760
+#: ModuleHelper.php:790
+#: ModuleHelper.php:826
 msgctxt "Title Attr"
 msgid "This Year in the Calendar"
 msgstr ""
 
-#: ModuleHelper.php:637
-#: ModuleHelper.php:667
+#: ModuleHelper.php:768
+#: ModuleHelper.php:798
 msgctxt "Button"
 msgid "Next Day"
 msgstr ""
 
-#: ModuleHelper.php:639
+#: ModuleHelper.php:770
 msgctxt "Title Attr"
 msgid "The Next Day in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:643
-#: ModuleHelper.php:673
+#: ModuleHelper.php:774
+#: ModuleHelper.php:804
 msgctxt "Button"
 msgid "Previous Day"
 msgstr ""
 
-#: ModuleHelper.php:645
+#: ModuleHelper.php:776
 msgctxt "Title Attr"
 msgid "The Previous Day in this Calendar"
 msgstr ""
 
-#: ModuleHelper.php:669
+#: ModuleHelper.php:800
 msgctxt "Title Attr"
 msgid "The Next Day"
 msgstr ""
 
-#: ModuleHelper.php:675
+#: ModuleHelper.php:806
 msgctxt "Title Attr"
 msgid "The Previous Day"
 msgstr ""
 
+#: ModuleHelper.php:812
+msgctxt "Button"
+msgid "Anniversaries"
+msgstr ""
+
+#: ModuleHelper.php:814
+msgctxt "Title Attr"
+msgid "This Day in the Calendar"
+msgstr ""
+
 #. translators: `%s`: singular name
-#: ModuleHelper.php:722
+#: ModuleHelper.php:859
 #, php-format
 msgctxt "Title Attr"
 msgid "New %s connected to this day"
 msgstr ""
 
-#: ModuleHelper.php:743
+#: ModuleHelper.php:877
 msgctxt "Title Attr"
-msgid "New Day!"
+msgid "New the Day!"
 msgstr ""
 
-#: ModuleHelper.php:759
+#: ModuleHelper.php:890
 msgctxt "Title Attr"
-msgid "Edit Day!"
+msgid "Edit the Day!"
 msgstr ""
 
-#: Today.php:48
+#: Today.php:51
 msgctxt "Setting Title"
 msgid "Fill The Day"
 msgstr ""
 
-#: Today.php:49
+#: Today.php:52
 msgctxt "Setting Description"
 msgid "Fills the current day info on newly drafted supported posttypes."
 msgstr ""
 
-#: Today.php:57
+#: Today.php:60
 msgctxt "Settings"
 msgid "Displays today column on edit list for supported posttypes."
 msgstr ""
 
-#: Today.php:62
+#: Today.php:65
 msgctxt "Setting Title"
 msgid "Insert The Day"
 msgstr ""
 
-#: Today.php:63
+#: Today.php:66
 msgctxt "Setting Description"
 msgid "Displays the day info for supported posttypes."
 msgstr ""
 
-#: Today.php:70
+#: Today.php:73
 msgctxt "Setting Title"
 msgid "Override Front-Page"
 msgstr ""
 
-#: Today.php:71
+#: Today.php:74
 msgctxt "Setting Description"
 msgid "Displays today list of connected posts on front-page."
 msgstr ""
 
-#: Today.php:111
+#: Today.php:114
 msgid "Day"
 msgid_plural "Days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Today.php:115
+#: Today.php:118
 msgctxt "Label: Featured Image"
 msgid "Cover Image"
 msgstr ""
 
-#: Today.php:116
+#: Today.php:119
 msgctxt "Label: MetaBox Label"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:117
+#: Today.php:120
 msgctxt "MetaBox Title"
 msgid "Summary"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Today.php:127
+#: Today.php:130
 msgctxt "MetaBox: `mainbox_title`"
 msgid "The Day"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Today.php:129
+#: Today.php:132
 msgctxt "MetaBox: `quickedit_title`"
 msgid "The Day"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Today.php:131
+#: Today.php:134
 msgctxt "MetaBox: `supportedbox_title`"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:135
+#: Today.php:138
 msgctxt "Column Title"
 msgid "Day"
 msgstr ""
 
-#: Today.php:159
+#: Today.php:162
 msgctxt "Template Title"
 msgid "Editorial: Today: Front-page"
 msgstr ""
 
-#: Today.php:259
-#: Today.php:278
+#: Today.php:269
+#: Today.php:288
 msgctxt "Page Title"
 msgid "Editorial Today"
 msgstr ""
 
-#: Today.php:260
+#: Today.php:270
 msgctxt "Menu Title"
 msgid "My Today"
 msgstr ""
 
-#: Today.php:398
+#: Today.php:417
 msgctxt "Title Attr"
 msgid "View on Today"
 msgstr ""
 
-#: Today.php:401
+#: Today.php:420
 msgctxt "Action"
 msgid "Today"
 msgstr ""
 
-#: Today.php:582
-#: Today.php:1304
+#: Today.php:598
+#: Today.php:1382
 msgctxt "Message"
 msgid "No posts with day information found."
 msgstr ""
 
-#: Today.php:889
+#: Today.php:958
 msgctxt "Message"
 msgid "Nothing happened!"
 msgstr ""
 
-#: Today.php:1286
+#: Today.php:1364
 msgctxt "Table Column"
 msgid "The Day"
 msgstr ""
 
-#: Today.php:1303
+#: Today.php:1381
 msgctxt "Header"
 msgid "Overview of Post with Day Information"
 msgstr ""
 
-#: Today.php:1349
+#: Today.php:1428
 msgctxt "Header"
 msgid "Today Tools"
 msgstr ""
 
-#: Today.php:1352
-msgctxt "Header"
+#: Today.php:1447
+msgctxt "Card Title"
 msgid "Re-schedule by Day"
 msgstr ""
 
-#: Today.php:1358
+#: Today.php:1454
 msgctxt "Setting"
 msgid "Schedule"
 msgstr ""
 
-#: Today.php:1360
+#: Today.php:1457
 msgctxt "Message"
 msgid "Tries to re-set the date of posts based on it's day data."
 msgstr ""
 
-#: Today.php:1392
+#: Today.php:1489
 msgctxt "Default Term: Audit"
 msgid "No day"
 msgstr ""
 
-#: Today.php:1399
+#: Today.php:1496
 msgctxt "Import Field"
 msgid "Today: Calendar"
 msgstr ""
 
-#: Today.php:1400
+#: Today.php:1497
 msgctxt "Import Field"
 msgid "Today: Year"
 msgstr ""
 
-#: Today.php:1401
+#: Today.php:1498
 msgctxt "Import Field"
 msgid "Today: Month"
 msgstr ""
 
-#: Today.php:1402
+#: Today.php:1499
 msgctxt "Import Field"
 msgid "Today: Day"
 msgstr ""
 
-#: Today.php:1403
+#: Today.php:1500
 msgctxt "Import Field"
 msgid "Today: Full"
 msgstr ""

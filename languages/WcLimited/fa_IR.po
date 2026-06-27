@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC-Limited\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:13+0330\n"
+"PO-Revision-Date: 2026-01-09 10:02+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,65 +11,56 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/WC-Limited\n"
 "X-Domain: geditorial-wc-limited\n"
 
-#: WcLimited.php:30
+#: WcLimited.php:32
 msgctxt "Setting Title"
 msgid "Purchased Once"
 msgstr "یک‌بار خرید"
 
-#: WcLimited.php:31
+#: WcLimited.php:33
 msgctxt "Setting Description"
 msgid "Denies further sales if user has already purchased a product."
 msgstr ""
 
-#: WcLimited.php:36
+#: WcLimited.php:38
 msgctxt "Setting Title"
 msgid "Limited Terms"
 msgstr "رده‌های محدود"
 
-#: WcLimited.php:37
+#: WcLimited.php:39
 msgctxt "Setting Description"
-msgid ""
-"Products on the selected categories will be limited to only one per purchase."
+msgid "Products on the selected categories will be limited to only one per purchase."
 msgstr ""
 
-#: WcLimited.php:43
+#: WcLimited.php:45
 msgctxt "Setting Title"
 msgid "Limited Notice"
 msgstr "اخطار محدود‌شده"
 
-#: WcLimited.php:44
+#: WcLimited.php:46
 msgctxt "Setting Description"
-msgid ""
-"Customized string to notice customer that product is limited to one per "
-"purchase."
+msgid "Customized string to notice customer that product is limited to one per purchase."
 msgstr ""
 
-#: WcLimited.php:45 WcLimited.php:86
+#: WcLimited.php:47 WcLimited.php:88
 msgctxt "Setting Default"
-msgid ""
-"This product cannot be purchased with other products. Please, empty your "
-"cart first and then add it again."
-msgstr ""
-"خرید این کالا، به همراه کالاهای دیگر امکان‌پذیر نیست. لطفاً سبد خرید خود را "
-"خالی و دوباره تلاش کنید."
+msgid "This product cannot be purchased with other products. Please, empty your cart first and then add it again."
+msgstr "خرید این کالا، به همراه کالاهای دیگر امکان‌پذیر نیست. لطفاً سبد خرید خود را خالی و دوباره تلاش کنید."
 
-#: WcLimited.php:51
+#: WcLimited.php:53
 msgctxt "Setting Title"
 msgid "Limited Already"
 msgstr "پیش‌از این محدودشده"
 
-#: WcLimited.php:52
+#: WcLimited.php:54
 msgctxt "Setting Description"
-msgid ""
-"Customized string to notice customer that cart has already a product that is "
-"limited to one per purchase."
+msgid "Customized string to notice customer that cart has already a product that is limited to one per purchase."
 msgstr ""
 
-#: WcLimited.php:53 WcLimited.php:97
+#: WcLimited.php:55 WcLimited.php:99
 msgctxt "Setting Default"
 msgid "You can only purchase one product at a time from limited categories."
 msgstr "در هر بار، فقط می‌توانید یک کالا از دسته‌های محدودشده را خریداری کنید."

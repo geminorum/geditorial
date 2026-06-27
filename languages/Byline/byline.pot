@@ -13,168 +13,163 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Byline\n"
 "X-Domain: geditorial-byline\n"
 
-#: Byline.php:50
+#: Byline.php:53
 msgctxt "Setting Description"
 msgid "Roles that can manage, edit and delete <strong>relations</strong>."
 msgstr ""
 
-#: Byline.php:65
-msgctxt "Setting Title"
-msgid "Tab Title"
-msgstr ""
-
-#: Byline.php:66
-msgctxt "Setting Description"
-msgid "Template for the custom byline tab title. Leave empty to use defaults."
-msgstr ""
-
-#: Byline.php:67
-#: Byline.php:215
-#: Byline.php:700
+#: Byline.php:69
+#: Byline.php:228
+#: Byline.php:777
 msgctxt "Setting Default"
 msgid "People"
 msgstr ""
 
-#: Byline.php:72
-msgctxt "Setting Title"
-msgid "Tab Priority"
-msgstr ""
-
-#: Byline.php:73
-msgctxt "Setting Description"
-msgid "Priority of the custom byline tab."
-msgstr ""
-
-#: Byline.php:95
+#: Byline.php:92
 msgid "Relation"
 msgid_plural "Relations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Byline.php:99
+#: Byline.php:96
 msgctxt "Label: `extended_label`"
 msgid "Byline Relations"
 msgstr ""
 
-#: Byline.php:100
+#: Byline.php:97
 msgctxt "Label: `show_option_all`"
 msgid "Byline Relations"
 msgstr ""
 
-#: Byline.php:101
+#: Byline.php:98
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unrelated)"
 msgstr ""
 
-#: Byline.php:102
+#: Byline.php:99
 msgctxt "Label: `assign_description`"
 msgid "Defines the relation on the byline."
 msgstr ""
 
-#: Byline.php:112
+#: Byline.php:109
 msgctxt "Javascript String"
 msgid "Search the directory and add as byline to this post."
 msgstr ""
 
-#: Byline.php:113
+#: Byline.php:110
 msgctxt "Javascript String"
 msgid "Loading"
 msgstr ""
 
-#: Byline.php:114
+#: Byline.php:111
 msgctxt "Javascript String"
 msgid "New Name …"
 msgstr ""
 
-#: Byline.php:115
+#: Byline.php:112
 msgctxt "Javascript String"
 msgid "Slug"
 msgstr ""
 
-#: Byline.php:116
+#: Byline.php:113
 msgctxt "Javascript String"
 msgid "Type and press enter …"
 msgstr ""
 
-#: Byline.php:117
+#: Byline.php:114
 msgctxt "Javascript String"
 msgid "Search"
 msgstr ""
 
-#: Byline.php:118
+#: Byline.php:115
 msgctxt "Javascript String"
 msgid "– Select –"
 msgstr ""
 
-#: Byline.php:119
+#: Byline.php:116
 msgctxt "Javascript String"
 msgid "Save"
 msgstr ""
 
-#: Byline.php:120
+#: Byline.php:117
 msgctxt "Javascript String"
 msgid "You are Offline …"
 msgstr ""
 
-#: Byline.php:121
+#: Byline.php:118
 msgctxt "Javascript String"
 msgid "Back Online …"
 msgstr ""
 
-#: Byline.php:126
+#: Byline.php:123
 msgctxt "Misc: `column_icon_title`"
 msgid "Byline"
 msgstr ""
 
-#: Byline.php:130
+#: Byline.php:127
 msgctxt "MetaBox Title"
 msgid "Byline"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Byline.php:133
+#: Byline.php:130
 #, php-format
 msgctxt "Button Title"
 msgid "By-line of %2$s"
 msgstr ""
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Byline.php:135
+#: Byline.php:132
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage %2$s By-line"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Byline.php:138
+#: Byline.php:135
 #, php-format
 msgctxt "Button Title"
 msgid "Byline Report for %1$s"
 msgstr ""
 
-#: Byline.php:148
+#: Byline.php:145
 msgctxt "Main Taxonomy: Default Term"
 msgid "Author"
 msgstr ""
 
-#: Byline.php:149
+#: Byline.php:146
 msgctxt "Main Taxonomy: Default Term"
-msgid "Co-Author"
+msgid "Translator"
 msgstr ""
 
-#: Byline.php:150
+#: Byline.php:147
+msgctxt "Main Taxonomy: Default Term"
+msgid "Reporter"
+msgstr ""
+
+#: Byline.php:148
 msgctxt "Main Taxonomy: Default Term"
 msgid "Editor"
 msgstr ""
 
-#: Byline.php:151
+#: Byline.php:149
 msgctxt "Main Taxonomy: Default Term"
 msgid "Prefacer"
 msgstr ""
 
-#: Byline.php:152
+#: Byline.php:150
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject"
+msgstr ""
+
+#: Byline.php:151
+msgctxt "Main Taxonomy: Default Term"
+msgid "Guest"
+msgstr ""
+
+#: Byline.php:152
+msgctxt "Main Taxonomy: Default Term"
+msgid "Host"
 msgstr ""
 
 #: Byline.php:153
@@ -184,254 +179,356 @@ msgstr ""
 
 #: Byline.php:154
 msgctxt "Main Taxonomy: Default Term"
-msgid "Translator"
+msgid "Commentator"
 msgstr ""
 
 #: Byline.php:155
 msgctxt "Main Taxonomy: Default Term"
-msgid "Reporter"
+msgid "Artist"
 msgstr ""
 
 #: Byline.php:156
 msgctxt "Main Taxonomy: Default Term"
-msgid "Commentator"
+msgid "Co-Artist"
 msgstr ""
 
 #: Byline.php:157
 msgctxt "Main Taxonomy: Default Term"
-msgid "Artist"
+msgid "Illustrator"
 msgstr ""
 
 #: Byline.php:158
 msgctxt "Main Taxonomy: Default Term"
-msgid "Co-Artist"
+msgid "Collector"
 msgstr ""
 
 #: Byline.php:159
 msgctxt "Main Taxonomy: Default Term"
-msgid "Illustrator"
+msgid "Curator"
 msgstr ""
 
 #: Byline.php:160
 msgctxt "Main Taxonomy: Default Term"
-msgid "Collector"
+msgid "Poet"
 msgstr ""
 
 #: Byline.php:161
 msgctxt "Main Taxonomy: Default Term"
-msgid "Curator"
+msgid "Interviewer"
 msgstr ""
 
 #: Byline.php:162
 msgctxt "Main Taxonomy: Default Term"
-msgid "Poet"
+msgid "Interviewee"
 msgstr ""
 
 #: Byline.php:163
 msgctxt "Main Taxonomy: Default Term"
-msgid "Interviewer"
+msgid "Director"
 msgstr ""
 
 #: Byline.php:164
 msgctxt "Main Taxonomy: Default Term"
-msgid "Interviewee"
+msgid "Selector"
 msgstr ""
 
 #: Byline.php:165
 msgctxt "Main Taxonomy: Default Term"
-msgid "Director"
+msgid "Conductor"
 msgstr ""
 
 #: Byline.php:166
 msgctxt "Main Taxonomy: Default Term"
-msgid "Selector"
+msgid "Speaker"
 msgstr ""
 
 #: Byline.php:167
 msgctxt "Main Taxonomy: Default Term"
-msgid "Conductor"
+msgid "Critic"
 msgstr ""
 
 #: Byline.php:168
 msgctxt "Main Taxonomy: Default Term"
-msgid "Speaker"
+msgid "Proofreader"
 msgstr ""
 
 #: Byline.php:169
 msgctxt "Main Taxonomy: Default Term"
-msgid "Critic"
-msgstr ""
-
-#: Byline.php:170
-msgctxt "Main Taxonomy: Default Term"
-msgid "Proofreader"
+msgid "Co-Author"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Byline.php:388
+#: Byline.php:403
 #, php-format
 msgctxt "Page Title"
 msgid "Byline Dock for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Byline.php:400
+#: Byline.php:415
 #, php-format
 msgctxt "Page Title"
 msgid "Byline Overview for %s"
 msgstr ""
 
-#: Byline.php:446
+#: Byline.php:463
 msgctxt "Message"
 msgid "The Byline is Empty"
 msgstr ""
 
-#: Byline.php:498
+#: Byline.php:581
 msgctxt "Field Title"
 msgid "Relation"
 msgstr ""
 
-#: Byline.php:499
+#: Byline.php:582
 msgctxt "Field Description"
 msgid "Subject of relation to the post."
 msgstr ""
 
-#: Byline.php:507
+#: Byline.php:590
 msgctxt "Field Title"
 msgid "Filter"
 msgstr ""
 
 #. translators: do not translate `%s`
-#: Byline.php:509
+#: Byline.php:592
 #, php-format
 msgctxt "Field Description"
 msgid "String to use before or with `%s` as name."
 msgstr ""
 
-#: Byline.php:516
+#: Byline.php:599
 msgctxt "Field Title"
 msgid "Overwrite"
 msgstr ""
 
-#: Byline.php:517
+#: Byline.php:600
 msgctxt "Field Description"
 msgid "String to override the name."
 msgstr ""
 
-#: Byline.php:523
+#: Byline.php:606
 msgctxt "Field Title"
 msgid "Notes"
 msgstr ""
 
-#: Byline.php:524
+#: Byline.php:607
 msgctxt "Field Description"
 msgid "About relation to the post."
 msgstr ""
 
-#: Byline.php:531
+#: Byline.php:614
 msgctxt "Field Title"
 msgid "Featured"
 msgstr ""
 
-#: Byline.php:532
+#: Byline.php:615
 msgctxt "Field Description"
 msgid "Features the individual on the extended list."
 msgstr ""
 
-#: Byline.php:539
+#: Byline.php:622
 msgctxt "Field Title"
 msgid "Hidden"
 msgstr ""
 
-#: Byline.php:540
+#: Byline.php:623
 msgctxt "Field Description"
 msgid "Hides the name from byline but assignes the term."
 msgstr ""
 
-#: Byline.php:720
+#: Byline.php:798
 msgctxt "Header Button"
 msgid "Byline Report"
 msgstr ""
 
-#: Byline.php:798
-#: Byline.php:809
-msgctxt "Adminbar"
+#. translators: `%s`: singular post-type label
+#: Byline.php:877
+#, php-format
+msgctxt "Node: Title"
+msgid "Manage byline for this %s"
+msgstr ""
+
+#. translators: `%s`: singular post-type label
+#: Byline.php:888
+#, php-format
+msgctxt "Node: Title"
+msgid "Byline for this %s"
+msgstr ""
+
+#: Byline.php:919
+msgctxt "Node: Title"
 msgid "Byline"
 msgstr ""
 
-#: Byline.php:823
+#. translators: `%s`: singular post-type label
+#: Byline.php:925
+#, php-format
+msgctxt "Node: Title"
+msgid "View Byline Reports for this %s"
+msgstr ""
+
+#: Byline.php:960
+msgctxt "Node: Title"
+msgid "[Unrelated]"
+msgstr ""
+
+#: Byline.php:1016
+msgctxt "Metakey"
+msgid "Meta Byline"
+msgstr ""
+
+#: Byline.php:1017
+msgctxt "Metakey"
+msgid "Publication Byline"
+msgstr ""
+
+#: Byline.php:1018
+msgctxt "Metakey"
+msgid "Featured People"
+msgstr ""
+
+#: Byline.php:1019
+msgctxt "Metakey"
+msgid "Custom Meta Byline"
+msgstr ""
+
+#: Byline.php:1037
 msgctxt "Header"
 msgid "Byline Imports"
 msgstr ""
 
-#: ModuleHelper.php:34
+#: ModuleHelper.php:45
 msgctxt "Walker: Default: Between Delimiter"
 msgid ", "
 msgstr ""
 
-#: ModuleHelper.php:35
+#: ModuleHelper.php:46
 msgctxt "Walker: Default: Between Last Delimiter"
 msgid " and "
 msgstr ""
 
-#: ModuleHelper.php:36
+#: ModuleHelper.php:47
 msgctxt "Walker: Default: Pre"
 msgid "Written by"
 msgstr ""
 
-#: ModuleHelper.php:120
+#: ModuleHelper.php:135
 msgctxt "Walker: Default: Hint"
 msgid "View full profile"
 msgstr ""
 
-#: ModuleHelper.php:121
+#: ModuleHelper.php:136
 msgctxt "Walker: Default: No-Relation"
 msgid "[Unrelated]"
 msgstr ""
 
-#: ModuleSettings.php:27
+#: ModuleSettings.php:31
 msgctxt "Card Title"
 msgid "From People Plugin"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:35
+#: ModuleSettings.php:36
+#: ModuleSettings.php:210
+#: ModuleSettings.php:418
 #, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
 #. translators: `%s`: number of rows found
-#: ModuleSettings.php:41
+#: ModuleSettings.php:45
+#: ModuleSettings.php:227
+#: ModuleSettings.php:436
 #, php-format
 msgctxt "Message"
 msgid "Migrate meta-data of found %s rows into current module system."
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:138
+#: ModuleSettings.php:143
+#: ModuleSettings.php:335
+#: ModuleSettings.php:599
 #, php-format
 msgctxt "Notice"
 msgid "No byline meta-data available for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:145
+#: ModuleSettings.php:150
+#: ModuleSettings.php:342
+#: ModuleSettings.php:606
 #, php-format
 msgctxt "Notice"
 msgid "There is problem updating byline meta-data for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:152
+#: ModuleSettings.php:157
+#: ModuleSettings.php:349
+#: ModuleSettings.php:613
 #, php-format
 msgctxt "Notice"
 msgid "There is problem removing byline meta-data for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: byline string, `%2$s`: post title
-#: ModuleSettings.php:158
+#: ModuleSettings.php:163
+#: ModuleSettings.php:355
+#: ModuleSettings.php:619
 #, php-format
 msgctxt "Notice"
 msgid "Byline %1$s migrated for &ldquo;%2$s&rdquo;."
+msgstr ""
+
+#: ModuleSettings.php:183
+msgctxt "Card Title"
+msgid "From Simple Meta"
+msgstr ""
+
+#: ModuleSettings.php:377
+msgctxt "Option"
+msgid "<b>Avoid</b> import if the post already have any byline terms."
+msgstr ""
+
+#: ModuleSettings.php:378
+msgctxt "Option"
+msgid "<b>Append</b> import even if the post already have byline terms."
+msgstr ""
+
+#: ModuleSettings.php:381
+msgctxt "Card Title"
+msgid "From Byline Meta"
+msgstr ""
+
+#: Widgets/FeaturedCards.php:19
+msgctxt "Widget Title"
+msgid "Editorial: Featured Cards"
+msgstr ""
+
+#: Widgets/FeaturedCards.php:20
+msgctxt "Widget Description"
+msgid "Displays byline card rows for currently queried post."
+msgstr ""
+
+#: Widgets/FeaturedCards.php:66
+msgctxt "Widget: Featured Cards"
+msgid "Display Featured Items"
+msgstr ""
+
+#: Widgets/FeaturedCards.php:67
+msgctxt "Widget: Featured Cards"
+msgid "Display Hidden Items"
+msgstr ""
+
+#: Widgets/FeaturedCards.php:69
+msgctxt "Widget: Featured Cards"
+msgid "Columns:"
+msgstr ""
+
+#: Widgets/FeaturedCards.php:70
+msgctxt "Widget: Featured Cards"
+msgid "Template:"
 msgstr ""

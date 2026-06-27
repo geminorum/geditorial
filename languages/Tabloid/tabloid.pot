@@ -13,36 +13,36 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Tabloid\n"
 "X-Domain: geditorial-tabloid\n"
 
-#: Tabloid.php:41
+#: Tabloid.php:42
 msgctxt "Setting Description"
 msgid "Roles that can view overviews."
 msgstr ""
 
-#: Tabloid.php:42
+#: Tabloid.php:43
 msgctxt "Setting Description"
 msgid "Roles that can print overviews."
 msgstr ""
 
-#: Tabloid.php:43
+#: Tabloid.php:44
 msgctxt "Setting Description"
 msgid "Roles that can export overviews."
 msgstr ""
 
-#: Tabloid.php:137
-#: Tabloid.php:163
+#: Tabloid.php:144
+#: Tabloid.php:173
 msgctxt "Action"
 msgid "Overview"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Tabloid.php:143
+#: Tabloid.php:153
 #, php-format
 msgctxt "Post Row Action Title Attr"
 msgid "Overview of this %2$s"
 msgstr ""
 
 #. translators: `%1$s`: current term name, `%2$s`: taxonomy singular name
-#: Tabloid.php:169
+#: Tabloid.php:179
 #, php-format
 msgctxt "Term Row Action Title Attr"
 msgid "Overview of this %2$s"

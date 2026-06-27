@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Lingo\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-06-11 08:49+0330\n"
+"PO-Revision-Date: 2026-03-11 17:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,147 +11,260 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Lingo\n"
 "X-Domain: geditorial-lingo\n"
 
-#. translators: `%s`: iso code
-#: Lingo.php:61
+#. translators: `%s`: ISO code
+#: Lingo.php:66
 #, php-format
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr "به درون‌ریزی شناساگرهای زبانی از %s به وردپرس کمک می‌کند."
 
-#: Lingo.php:68
+#: Lingo.php:75
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] "زبان‌ها"
 msgstr[1] "زبان"
 
-#: Lingo.php:72
+#: Lingo.php:79
 msgctxt "Label: `extended_label`"
 msgid "Language Identifiers"
 msgstr "شناساگرهای زبانی"
 
-#: Lingo.php:73
+#: Lingo.php:80
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr "زبان"
 
-#: Lingo.php:74
+#: Lingo.php:81
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr "(ناشناسا)"
 
-#: Lingo.php:75
+#: Lingo.php:82
 msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr "ناشناسا"
 
-#: Lingo.php:80
+#: Lingo.php:87
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr "[ناشناسا]"
 
-#: Lingo.php:81
+#: Lingo.php:88
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr "زبان‌های ناشناسا"
 
-#: Lingo.php:92
+#: Lingo.php:99
+msgctxt "Setting Title"
+msgid "Source Taxonomies"
+msgstr "رده‌بندی‌های منبع"
+
+#: Lingo.php:100
+msgctxt "Setting Description"
+msgid "Selected taxonomies will be available on conversion via tools."
+msgstr "رده‌بندی‌های انتخاب‌شده برای تبدیل رد ابزارها در دسترس خواهند بود."
+
+#: Lingo.php:103
 msgctxt "Importer: Title"
 msgid "Import Language Identifiers"
 msgstr "درون‌ریزی شناساگرهای زبانی"
 
 #. translators: `%s`: ISO code
-#: Lingo.php:94
+#: Lingo.php:106
 #, php-format
 msgctxt "Importer: Description"
 msgid "Language Identifiers from %s into WordPress"
 msgstr "شناساگرهای زبانی از %s به وردپرس"
 
 #. translators: `%s`: redirect URL
-#: Lingo.php:96
+#: Lingo.php:110
 #, php-format
 msgctxt "Importer: Redirect"
-msgid ""
-"If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click "
-"here</a>."
-msgstr ""
-"اگر مرورگر شما به صورت خودکار بازگردانی نشد، به <a href=\"%s\">این صفحه</a> "
-"بروید."
+msgid "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click here</a>."
+msgstr "اگر مرورگر شما به صورت خودکار بازگردانی نشد، به <a href=\"%s\">این صفحه</a> بروید."
 
-#: Lingo.php:109
+#: Lingo.php:123
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr "عربی"
 
-#: Lingo.php:110
+#: Lingo.php:124
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr "فارسی"
 
-#: Lingo.php:111
+#: Lingo.php:125
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr "انگلیسی"
 
-#: Lingo.php:112
+#: Lingo.php:126
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr "فرانسه"
 
-#: Lingo.php:267
+#: Lingo.php:127
+msgctxt "Default Term: Language"
+msgid "Russian"
+msgstr "روسی"
+
+#: Lingo.php:151
+msgctxt "Meta Field Title"
+msgid "Endonym"
+msgstr "درون‌نام"
+
+#: Lingo.php:152
+msgctxt "Meta Field Description"
+msgid "The native name for the language."
+msgstr "نام بومی که برای این زبان استفاده می‌شود."
+
+#: Lingo.php:156
+msgctxt "Meta Field"
+msgid "Alpha-2 Code"
+msgstr "کد آلفا-۲"
+
+#: Lingo.php:157
+msgctxt "Meta Field Column"
+msgid "ISO 639-1/Alpha-2 Code for the language."
+msgstr "کد ایزو ۶۳۹-۱ آلفا-۲ که برای این زبان مشخص شده است."
+
+#: Lingo.php:158
+msgctxt "Meta Field Column"
+msgid "Alpha-2"
+msgstr "آلفا-۲"
+
+#: Lingo.php:378
 msgctxt "Header"
-msgid "Import Language Identifiers"
-msgstr "درون‌ریزی شناساگرهای زبانی"
+msgid "Language Tools"
+msgstr "ابزارهای زبان"
 
-#: Lingo.php:270
+#: Lingo.php:477
+msgctxt "Header"
+msgid "Language Imports"
+msgstr "درون‌ریزی‌های زبان"
+
+#: ModuleSettings.php:28
+msgctxt "Card Title"
+msgid "Language Identifiers"
+msgstr "شناساگرهای زبانی"
+
+#: ModuleSettings.php:29
 msgctxt "Imports"
-msgid "ISO 639-1 Alpha-2"
-msgstr ""
+msgid "ISO 639-1"
+msgstr "ISO 639-1"
 
-#: Lingo.php:277
-msgctxt "Table Column"
-msgid "Code"
-msgstr "کد"
-
-#: Lingo.php:281
+#: ModuleSettings.php:34
 msgctxt "Table Column"
 msgid "Term"
 msgstr "رده"
 
-#: Lingo.php:293
+#: ModuleSettings.php:60
+msgctxt "Table Column"
+msgid "Alpha-2"
+msgstr "آلفا-۲"
+
+#: ModuleSettings.php:65
 msgctxt "Table Column"
 msgid "English Name"
 msgstr "نام انگلیسی"
 
-#: Lingo.php:297 Lingo.php:335 Lingo.php:345
+#: ModuleSettings.php:69
 msgctxt "Table Column"
-msgid "Native Name"
-msgstr "نام بومی"
+msgid "Endonym"
+msgstr "درون‌نام"
 
-#: Lingo.php:302
+#: ModuleSettings.php:74
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr "هیچ شناساگر زبانی در دسترس نیست!"
 
-#: Lingo.php:315
+#: ModuleSettings.php:80 ModuleSettings.php:141
+msgctxt "Message"
+msgid "Check for available language identifiers and create corresponding terms."
+msgstr "شناساگرهای زبانی موجود را بررسی کنید و رده‌های مربوط به آن را ایجاد کنید."
+
+#: ModuleSettings.php:83
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr "ایجاد رده‌های زبان"
 
-#: Lingo.php:318
-msgctxt "Button"
+#: ModuleSettings.php:86
+msgctxt "CheckBox"
 msgid "Update Existing Terms"
 msgstr "به‌روزرسانی رده‌های موجود"
 
-#: Lingo.php:322
+#: ModuleSettings.php:111
+msgctxt "Card Title"
+msgid "Queried Taxonomy Terms"
+msgstr "رده‌های رده‌بندی استعلام‌شده"
+
+#: ModuleSettings.php:116
+msgctxt "Table Column"
+msgid "<abbr title=\"Language\">Lang</abbr>"
+msgstr "زبان"
+
+#: ModuleSettings.php:122
+msgctxt "Table Empty"
+msgid "There are no terms available!"
+msgstr "هیچ رده‌ای در دسترس نیست!"
+
+#: ModuleSettings.php:144
+msgctxt "Button"
+msgid "Convert to Language Terms"
+msgstr "تبدیل به رده‌های زبان"
+
+#: ModuleSettings.php:147
+msgctxt "CheckBox"
+msgid "Override The Name of Language"
+msgstr "نام زبان رونویسی شود"
+
+#: ModuleSettings.php:196
+msgctxt "Card Title"
+msgid "Terms for Languages"
+msgstr "رده‌هایی برای زبان‌ها"
+
+#: ModuleSettings.php:198
 msgctxt "Message"
-msgid ""
-"Check for available language identifiers and create corresponding terms."
-msgstr ""
-"شناساگرهای زبانی موجود را بررسی کنید و رده‌های مربوط به آن را ایجاد کنید."
+msgid "Imports already tagged taxonomy data into language identifiers."
+msgstr "داده‌هایی که پیشتر رده‌بندی‌شده‌اند را به شناساگرهای زبانی درون‌ریزی می‌کند."
+
+#: ModuleSettings.php:209
+msgctxt "Button"
+msgid "Investigate Terms"
+msgstr "جستار در رده‌ها"
+
+#: ModuleSettings.php:212
+msgctxt "CheckBox"
+msgid "Skip Empty Terms"
+msgstr "از رده‌های خالی صرف نظر شود"
+
+#~ msgctxt "Table Column"
+#~ msgid "<abbr title=\"Direction\">Dir</abbr>"
+#~ msgstr "جهت"
+
+#~ msgctxt "Table Column"
+#~ msgid "Right-to-Left"
+#~ msgstr "راست-به-چپ"
+
+#~ msgctxt "Table Column"
+#~ msgid "Left-to-Right"
+#~ msgstr "چپ-به-راست"
+
+#~ msgctxt "Table Column"
+#~ msgid "Lng."
+#~ msgstr "زبان"
+
+#~ msgctxt "Table Column"
+#~ msgid "Code"
+#~ msgstr "کد"
+
+#~ msgctxt "Header"
+#~ msgid "Import Language Identifiers"
+#~ msgstr "درون‌ریزی شناساگرهای زبانی"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Manage Roles"
@@ -159,16 +272,11 @@ msgstr ""
 
 #~ msgctxt "Setting Description"
 #~ msgid "Roles that can Manage, Edit and Delete Language Identifiers."
-#~ msgstr ""
-#~ "نقش‌هایی که میتوانند شناساگرهای زبانی را مدیریت، ویرایش و یا حذف کنند."
+#~ msgstr "نقش‌هایی که میتوانند شناساگرهای زبانی را مدیریت، ویرایش و یا حذف کنند."
 
 #~ msgctxt "Setting Title"
 #~ msgid "Assign Roles"
 #~ msgstr "نقش‌های مأمور واگذاری"
-
-#~ msgctxt "Setting Description"
-#~ msgid "Roles that can Assign Language Identifiers."
-#~ msgstr "نقش‌هایی که می‌توانند شناساگرهای زبانی را تخصیص دهند."
 
 #~ msgctxt "Setting Title"
 #~ msgid "Reports Roles"
@@ -184,8 +292,7 @@ msgstr ""
 
 #~ msgctxt "Setting Description"
 #~ msgid "Roles that check for Language Identifiers visibility."
-#~ msgstr ""
-#~ "نقش‌هایی که سطح دسترسی هر شناساگر زبانی برای نمایش به آن‌ها بررسی میشود."
+#~ msgstr "نقش‌هایی که سطح دسترسی هر شناساگر زبانی برای نمایش به آن‌ها بررسی میشود."
 
 #~ msgctxt "Setting Title"
 #~ msgid "Restricted Identifiers"
@@ -223,10 +330,6 @@ msgstr ""
 #~ msgid "Unknown Languages"
 #~ msgstr "زبان‌های ناشناخته"
 
-#~ msgctxt "Importer: Title"
-#~ msgid "Import Languages"
-#~ msgstr "درون‌ریزی زبان‌ها"
-
 #~ msgctxt "Importer: Description"
 #~ msgid "Regional Languages from %s into WordPress"
 #~ msgstr "زبان‌های بومی از %s به وردپرس"
@@ -235,13 +338,8 @@ msgstr ""
 #~ msgid "Import Languages"
 #~ msgstr "درون‌ریزی زبان‌ها"
 
-#~ msgctxt "Message: Table Empty"
-#~ msgid "There are no languages available!"
-#~ msgstr "هیچ زبانی در دسترس نیست!"
-
 #~ msgctxt "Message"
-#~ msgid ""
-#~ "Check for available languages and create corresponding language terms."
+#~ msgid "Check for available languages and create corresponding language terms."
 #~ msgstr "زبان‌های موجود را بررسی کنید و رده‌های مربوط به زبان را ایجاد کنید."
 
 #~ msgctxt "Show Option All"
@@ -255,10 +353,6 @@ msgstr ""
 #~ msgctxt "Button"
 #~ msgid "Store Extra Fields"
 #~ msgstr "ذخیره زمینه‌های افزوده"
-
-#~ msgctxt "Button"
-#~ msgid "Delete Terms"
-#~ msgstr "پاک‌کردن رده‌ها"
 
 #~ msgctxt "Imports"
 #~ msgid "Available Languages"

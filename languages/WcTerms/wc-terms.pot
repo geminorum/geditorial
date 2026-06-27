@@ -95,7 +95,7 @@ msgstr ""
 
 #: WcTerms.php:94
 msgctxt "Setting Description"
-msgid "Enhance the term archive titles."
+msgid "Enhance the product term archive titles."
 msgstr ""
 
 #: WcTerms.php:98
@@ -140,7 +140,7 @@ msgstr ""
 
 #: WcTerms.php:110
 msgctxt "Setting Description"
-msgid "Enhance the term archive descriptions with assigned image."
+msgid "Enhance the product term archive descriptions with assigned image."
 msgstr ""
 
 #: WcTerms.php:114
@@ -150,7 +150,7 @@ msgstr ""
 
 #: WcTerms.php:115
 msgctxt "Setting Description"
-msgid "Enhance the term archive with list of sub-terms."
+msgid "Enhance the product term archive with list of sub-terms."
 msgstr ""
 
 #: WcTerms.php:119
@@ -160,5 +160,5 @@ msgstr ""
 
 #: WcTerms.php:120
 msgctxt "Setting Description"
-msgid "Enhance the term archive with list of assigned posts."
+msgid "Enhance the product term archive with list of assigned posts."
 msgstr ""

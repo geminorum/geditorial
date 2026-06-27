@@ -14,7 +14,7 @@ msgstr ""
 "X-Domain: geditorial-wc-related\n"
 
 #: WcRelated.php:32
-#: WcRelated.php:88
+#: WcRelated.php:81
 msgctxt "Setting Title"
 msgid "Hide Out-of-Stock"
 msgstr ""
@@ -94,42 +94,43 @@ msgctxt "Setting Description"
 msgid "Sets all products are related."
 msgstr ""
 
-#: WcRelated.php:81
-msgctxt "Setting Title"
-msgid "Related on Tabs"
-msgstr ""
-
 #: WcRelated.php:82
-msgctxt "Setting Description"
-msgid "Displays Upsells and Related products on front-end product tabs."
-msgstr ""
-
-#: WcRelated.php:89
 msgctxt "Setting Description"
 msgid "Enforces the visibility of out-of-stock items on related by attribute products."
 msgstr ""
 
-#: WcRelated.php:94
+#: WcRelated.php:87
 msgctxt "Setting Title"
 msgid "Related by Taxonomy"
 msgstr ""
 
-#: WcRelated.php:99
+#: WcRelated.php:92
 msgctxt "Setting Title"
 msgid "Taxonomy"
 msgstr ""
 
-#: WcRelated.php:100
+#: WcRelated.php:93
 msgctxt "Setting Description"
 msgid "Target taxonomy for related products."
 msgstr ""
 
-#: WcRelated.php:107
+#: WcRelated.php:99
 msgctxt "Setting Title"
 msgid "Heading"
 msgstr ""
 
-#: WcRelated.php:108
+#: WcRelated.php:100
 msgctxt "Setting Description"
 msgid "Template for related products heading."
+msgstr ""
+
+#: WcRelated.php:106
+msgctxt "Setting Description"
+msgid "Displays Upsells and Related products on front-end product tabs."
+msgstr ""
+
+#: WcRelated.php:107
+#: WcRelated.php:232
+msgctxt "Setting Default"
+msgid "Related Products"
 msgstr ""

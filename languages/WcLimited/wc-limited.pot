@@ -13,54 +13,54 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcLimited\n"
 "X-Domain: geditorial-wc-limited\n"
 
-#: WcLimited.php:30
+#: WcLimited.php:32
 msgctxt "Setting Title"
 msgid "Purchased Once"
 msgstr ""
 
-#: WcLimited.php:31
+#: WcLimited.php:33
 msgctxt "Setting Description"
 msgid "Denies further sales if user has already purchased a product."
 msgstr ""
 
-#: WcLimited.php:36
+#: WcLimited.php:38
 msgctxt "Setting Title"
 msgid "Limited Terms"
 msgstr ""
 
-#: WcLimited.php:37
+#: WcLimited.php:39
 msgctxt "Setting Description"
 msgid "Products on the selected categories will be limited to only one per purchase."
 msgstr ""
 
-#: WcLimited.php:43
+#: WcLimited.php:45
 msgctxt "Setting Title"
 msgid "Limited Notice"
 msgstr ""
 
-#: WcLimited.php:44
+#: WcLimited.php:46
 msgctxt "Setting Description"
 msgid "Customized string to notice customer that product is limited to one per purchase."
 msgstr ""
 
-#: WcLimited.php:45
-#: WcLimited.php:86
+#: WcLimited.php:47
+#: WcLimited.php:88
 msgctxt "Setting Default"
 msgid "This product cannot be purchased with other products. Please, empty your cart first and then add it again."
 msgstr ""
 
-#: WcLimited.php:51
+#: WcLimited.php:53
 msgctxt "Setting Title"
 msgid "Limited Already"
 msgstr ""
 
-#: WcLimited.php:52
+#: WcLimited.php:54
 msgctxt "Setting Description"
 msgid "Customized string to notice customer that cart has already a product that is limited to one per purchase."
 msgstr ""
 
-#: WcLimited.php:53
-#: WcLimited.php:97
+#: WcLimited.php:55
+#: WcLimited.php:99
 msgctxt "Setting Default"
 msgid "You can only purchase one product at a time from limited categories."
 msgstr ""

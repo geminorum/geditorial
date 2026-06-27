@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Almanac\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-12-04 21:02+0330\n"
+"PO-Revision-Date: 2026-03-16 22:18+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,77 +11,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Almanac\n"
 "X-Domain: geditorial-almanac\n"
 
-#: Almanac.php:82
+#: Almanac.php:77
 msgid "Calendar Type"
 msgid_plural "Calendar Types"
 msgstr[0] "انواع تقویم"
 msgstr[1] "نوع تقویم"
 
-#: Almanac.php:86
+#: Almanac.php:81
 msgctxt "Label: Menu Name"
 msgid "Calendars"
 msgstr "تقویم‌ها"
 
-#: Almanac.php:87
+#: Almanac.php:82
 msgctxt "Label: Show Option All"
 msgid "Calendars"
 msgstr "تقویم‌ها"
 
-#: Almanac.php:88
+#: Almanac.php:83
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Almanac.php:102
+#: Almanac.php:97
 msgctxt "Main Taxonomy: Default Term"
 msgid "Gregorian"
 msgstr "میلادی"
 
-#: Almanac.php:103
+#: Almanac.php:98
 msgctxt "Main Taxonomy: Default Term"
 msgid "Japanese"
 msgstr "ژاپنی"
 
-#: Almanac.php:104
+#: Almanac.php:99
 msgctxt "Main Taxonomy: Default Term"
 msgid "Buddhist"
 msgstr "بودایی"
 
-#: Almanac.php:105
+#: Almanac.php:100
 msgctxt "Main Taxonomy: Default Term"
 msgid "Chinese"
 msgstr "چینی"
 
-#: Almanac.php:106
+#: Almanac.php:101
 msgctxt "Main Taxonomy: Default Term"
 msgid "Persian"
 msgstr "شمسی"
 
-#: Almanac.php:107
+#: Almanac.php:102
 msgctxt "Main Taxonomy: Default Term"
 msgid "Indian"
 msgstr "هندی"
 
-#: Almanac.php:108
+#: Almanac.php:103
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic"
 msgstr "قمری"
 
-#: Almanac.php:109
+#: Almanac.php:104
 msgctxt "Main Taxonomy: Default Term"
 msgid "Islamic-Civil"
 msgstr "قمری-مدنی"
 
-#: Almanac.php:110
+#: Almanac.php:105
 msgctxt "Main Taxonomy: Default Term"
 msgid "Coptic"
 msgstr "مصری"
 
-#: Almanac.php:111
+#: Almanac.php:106
 msgctxt "Main Taxonomy: Default Term"
 msgid "Ethiopic"
 msgstr "اتیوپیایی"

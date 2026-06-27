@@ -13,23 +13,38 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
-#: Yearly.php:84
+#: Yearly.php:75
+msgctxt "Setting Title"
+msgid "Append to Titles"
+msgstr ""
+
+#: Yearly.php:76
+msgctxt "Settings"
+msgid "Automatically adds a suffix of assigned year to the title of the selected post-types."
+msgstr ""
+
+#: Yearly.php:94
 msgid "Year Span"
 msgid_plural "Year Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Yearly.php:88
+#: Yearly.php:98
 msgctxt "Label: Show Option All"
 msgid "Years"
 msgstr ""
 
-#: Yearly.php:89
+#: Yearly.php:99
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr ""
 
-#: Yearly.php:114
+#: Yearly.php:124
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
+msgstr ""
+
+#: Yearly.php:131
+msgctxt "Meta Field"
+msgid "Year"
 msgstr ""

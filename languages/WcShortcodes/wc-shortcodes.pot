@@ -13,27 +13,32 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcShortcodes\n"
 "X-Domain: geditorial-wc-shortcodes\n"
 
-#: WcShortcodes.php:36
+#: WcShortcodes.php:37
 msgctxt "Setting Title"
 msgid "Shortcodes"
 msgstr ""
 
-#: WcShortcodes.php:37
+#: WcShortcodes.php:38
 msgctxt "Setting Description"
 msgid "Enables the use of the selected short-codes."
 msgstr ""
 
-#: WcShortcodes.php:49
+#: WcShortcodes.php:50
 msgctxt "Shortcode Name"
 msgid "Stock Status"
 msgstr ""
 
-#: WcShortcodes.php:50
+#: WcShortcodes.php:51
+msgctxt "Shortcode Name"
+msgid "Order Count"
+msgstr ""
+
+#: WcShortcodes.php:52
 msgctxt "Shortcode Name"
 msgid "Scheduled On-sales"
 msgstr ""
 
-#: WcShortcodes.php:213
+#: WcShortcodes.php:220
 msgctxt "Message"
 msgid "There are no products available!"
 msgstr ""

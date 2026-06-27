@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial PagedContent\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-02-07 19:29+0330\n"
+"PO-Revision-Date: 2026-02-07 22:13+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -97,7 +97,7 @@ msgstr "رده کنترل"
 #: PagedContent.php:87
 msgctxt "Setting Description"
 msgid "Enables the auto-paging if the term exists on the post. Leave blank to disable."
-msgstr ""
+msgstr "صفحه‌بندی خودکار را فقط در صورتی که فرسته دارای این رده باشد، فعال می‌کند. برای غیرفعال‌سازی خالی بگذارید."
 
 #: PagedContent.php:99
 msgctxt "Setting Section Title"

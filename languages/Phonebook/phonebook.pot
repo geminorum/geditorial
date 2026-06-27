@@ -13,12 +13,12 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Phonebook\n"
 "X-Domain: geditorial-phonebook\n"
 
-#: Phonebook.php:53
+#: Phonebook.php:51
 msgctxt "Setting Description"
 msgid "Roles that can view contact information."
 msgstr ""
 
-#: Phonebook.php:54
+#: Phonebook.php:52
 msgctxt "Setting Description"
 msgid "Roles that can assign contact information."
 msgstr ""
@@ -289,50 +289,50 @@ msgid "Full address to Be reached on Emergency"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Phonebook.php:383
+#: Phonebook.php:391
 #, php-format
 msgctxt "Page Title"
 msgid "Contact Grid for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Phonebook.php:385
+#: Phonebook.php:393
 #, php-format
 msgctxt "Page Title"
 msgid "Contacts Overview for %s"
 msgstr ""
 
-#: Phonebook.php:431
+#: Phonebook.php:439
 msgctxt "Default Term: Audit"
 msgid "Empty Contact Data"
 msgstr ""
 
-#: Phonebook.php:432
+#: Phonebook.php:440
 msgctxt "Default Term: Audit"
 msgid "Empty Mobile Number"
 msgstr ""
 
-#: Phonebook.php:643
+#: Phonebook.php:651
 msgctxt "Possible Phone Key"
 msgid "Mobile"
 msgstr ""
 
-#: Phonebook.php:644
+#: Phonebook.php:652
 msgctxt "Possible Phone Key"
 msgid "Mobile Phone"
 msgstr ""
 
-#: Phonebook.php:645
+#: Phonebook.php:653
 msgctxt "Possible Phone Key"
 msgid "Phone"
 msgstr ""
 
-#: Phonebook.php:646
+#: Phonebook.php:654
 msgctxt "Possible Phone Key"
 msgid "Phone Number"
 msgstr ""
 
-#: Phonebook.php:698
+#: Phonebook.php:706
 msgctxt "Header"
 msgid "Overview of the Contacts"
 msgstr ""

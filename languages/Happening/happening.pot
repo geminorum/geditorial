@@ -13,174 +13,174 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Happening\n"
 "X-Domain: geditorial-happening\n"
 
-#: Happening.php:74
+#: Happening.php:76
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Happening.php:75
+#: Happening.php:77
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Happening.php:76
+#: Happening.php:78
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Happening.php:77
+#: Happening.php:79
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Happening.php:78
+#: Happening.php:80
 msgid "Event Status"
 msgid_plural "Event Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Happening.php:82
+#: Happening.php:84
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr ""
 
-#: Happening.php:83
+#: Happening.php:85
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr ""
 
-#: Happening.php:86
+#: Happening.php:88
 msgctxt "Menu Title"
 msgid "Types"
 msgstr ""
 
-#: Happening.php:89
+#: Happening.php:91
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr ""
 
-#: Happening.php:92
+#: Happening.php:94
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Happening.php:105
+#: Happening.php:107
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr ""
 
-#: Happening.php:106
+#: Happening.php:108
 msgctxt "Default Term"
 msgid "Birth"
 msgstr ""
 
-#: Happening.php:107
+#: Happening.php:109
 msgctxt "Default Term"
 msgid "Death"
 msgstr ""
 
-#: Happening.php:108
+#: Happening.php:110
 msgctxt "Default Term"
 msgid "Start"
 msgstr ""
 
-#: Happening.php:109
+#: Happening.php:111
 msgctxt "Default Term"
 msgid "End"
 msgstr ""
 
-#: Happening.php:127
+#: Happening.php:129
 msgctxt "Fields"
 msgid "Event Date"
 msgstr ""
 
-#: Happening.php:128
+#: Happening.php:130
 msgctxt "Fields"
 msgid "Determines the date in which the Event is scheduled."
 msgstr ""
 
-#: Happening.php:133
+#: Happening.php:135
 msgctxt "Fields"
 msgid "Date-Time"
 msgstr ""
 
-#: Happening.php:134
+#: Happening.php:136
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled."
 msgstr ""
 
-#: Happening.php:139
+#: Happening.php:141
 msgctxt "Fields"
 msgid "Event Start"
 msgstr ""
 
-#: Happening.php:140
+#: Happening.php:142
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled to commence."
 msgstr ""
 
-#: Happening.php:145
+#: Happening.php:147
 msgctxt "Fields"
 msgid "Event End"
 msgstr ""
 
-#: Happening.php:146
+#: Happening.php:148
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled to conclude."
 msgstr ""
 
-#: Happening.php:152
+#: Happening.php:154
 msgctxt "Fields"
 msgid "Event All-Day"
 msgstr ""
 
-#: Happening.php:153
+#: Happening.php:155
 msgctxt "Fields"
 msgid "Determines that is an all-day event."
 msgstr ""
 
-#: Happening.php:160
-#: Happening.php:161
+#: Happening.php:162
+#: Happening.php:163
 msgctxt "Fields"
 msgid "Event Repeat"
 msgstr ""
 
-#: Happening.php:166
+#: Happening.php:168
 msgctxt "Fields"
 msgid "Never"
 msgstr ""
 
-#: Happening.php:167
+#: Happening.php:169
 msgctxt "Fields"
 msgid "Weekly"
 msgstr ""
 
-#: Happening.php:168
+#: Happening.php:170
 msgctxt "Fields"
 msgid "Monthly"
 msgstr ""
 
-#: Happening.php:169
+#: Happening.php:171
 msgctxt "Fields"
 msgid "Yearly"
 msgstr ""
 
-#: Happening.php:173
-#: Happening.php:174
+#: Happening.php:175
+#: Happening.php:176
 msgctxt "Fields"
 msgid "Event Expire"
 msgstr ""
 
-#: Happening.php:322
+#: Happening.php:328
 msgctxt "Header"
 msgid "Happening Tools"
 msgstr ""
 
-#: Happening.php:331
+#: Happening.php:337
 msgctxt "Card"
 msgid "Event Date from Meta-data"
 msgstr ""
@@ -225,17 +225,17 @@ msgctxt "Widget Description"
 msgid "Displays selected, connected or current event poster."
 msgstr ""
 
-#: Widgets/EventPoster.php:93
+#: Widgets/EventPoster.php:90
 msgctxt "Widget: Event Poster"
 msgid "The Event:"
 msgstr ""
 
-#: Widgets/EventPoster.php:96
+#: Widgets/EventPoster.php:93
 msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr ""
 
-#: Widgets/EventPoster.php:97
+#: Widgets/EventPoster.php:94
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Yearly\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-09-13 00:34+0330\n"
+"PO-Revision-Date: 2026-03-28 11:39+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,30 +11,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Yearly\n"
 "X-Domain: geditorial-yearly\n"
 
-#: Yearly.php:84
+#: Yearly.php:74
+msgctxt "Setting Title"
+msgid "Append to Titles"
+msgstr "الحاق به عنوان‌ها"
+
+#: Yearly.php:75
+msgctxt "Settings"
+msgid "Automatically adds a suffix of assigned year to the title of the selected post-types."
+msgstr ""
+
+#: Yearly.php:93
 msgid "Year Span"
 msgid_plural "Year Spans"
 msgstr[0] "دوره‌های سالیانه"
 msgstr[1] "دوره سالیانه"
 
-#: Yearly.php:88
+#: Yearly.php:97
 msgctxt "Label: Show Option All"
 msgid "Years"
 msgstr "سال‌ها"
 
-#: Yearly.php:89
+#: Yearly.php:98
 msgctxt "Label: Show Option No Terms"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Yearly.php:114
+#: Yearly.php:123
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "4"
 msgstr ""
+
+#: Yearly.php:130
+msgctxt "Meta Field"
+msgid "Year"
+msgstr "سال"
 
 #~ msgctxt "Dashboard Widget Title"
 #~ msgid "Your Team Years Summary"

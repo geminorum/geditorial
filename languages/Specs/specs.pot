@@ -13,84 +13,84 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Specs\n"
 "X-Domain: geditorial-specs\n"
 
-#: Specs.php:53
+#: Specs.php:52
 msgctxt "Strings: Title"
 msgid "Title"
 msgstr ""
 
-#: Specs.php:54
+#: Specs.php:53
 msgctxt "Strings: Title"
 msgid "Order"
 msgstr ""
 
-#: Specs.php:55
+#: Specs.php:54
 msgctxt "Strings: Title"
 msgid "Description"
 msgstr ""
 
-#: Specs.php:58
+#: Specs.php:57
 msgctxt "Strings: Description"
 msgid "In Specifications Title"
 msgstr ""
 
-#: Specs.php:59
+#: Specs.php:58
 msgctxt "Strings: Description"
 msgid "In Specifications Order"
 msgstr ""
 
-#: Specs.php:60
+#: Specs.php:59
 msgctxt "Strings: Description"
 msgid "In Specifications Description"
 msgstr ""
 
-#: Specs.php:63
+#: Specs.php:62
 msgctxt "Column Title"
 msgid "Specifications"
 msgstr ""
 
-#: Specs.php:64
+#: Specs.php:63
 msgctxt "Show Option None"
 msgid "&ndash; Choose a Specification &ndash;"
 msgstr ""
 
-#: Specs.php:67
+#: Specs.php:66
 msgid "Specification"
 msgid_plural "Specifications"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Specs.php:78
+#: Specs.php:77
 msgctxt "Default Term"
 msgid "Color"
 msgstr ""
 
-#: Specs.php:79
+#: Specs.php:78
 msgctxt "Default Term"
 msgid "Width"
 msgstr ""
 
-#: Specs.php:80
+#: Specs.php:79
 msgctxt "Default Term"
 msgid "Height"
 msgstr ""
 
-#: Specs.php:81
+#: Specs.php:80
 msgctxt "Default Term"
 msgid "Weight"
 msgstr ""
 
-#: Specs.php:316
+#: Specs.php:323
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr ""
 
-#: Specs.php:319
+#: Specs.php:326
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr ""
 
-#: Specs.php:335
-#: Specs.php:467
+#: Specs.php:342
+#: Specs.php:474
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr ""

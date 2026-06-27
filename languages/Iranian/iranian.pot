@@ -14,63 +14,218 @@ msgstr ""
 "X-Domain: geditorial-iranian\n"
 
 #. translators: `%s`: supported object label
-#: Iranian.php:60
+#: Iranian.php:57
 #, php-format
 msgctxt "Setting Title"
 msgid "Identity Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:63
+#: Iranian.php:60
 msgctxt "Setting Description"
 msgid "Defines identity meta-key for the post-type."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: Iranian.php:75
+#: Iranian.php:72
 #, php-format
 msgctxt "Setting Title"
 msgid "Location Meta-key for %s"
 msgstr ""
 
-#: Iranian.php:78
+#: Iranian.php:75
 msgctxt "Setting Description"
 msgid "Defines location meta-key for the post-type."
 msgstr ""
 
-#: Iranian.php:112
+#: Iranian.php:109
 msgctxt "Setting Description"
 msgid "Supports meta fields for the selected post-types."
 msgstr ""
 
-#: Iranian.php:124
+#: Iranian.php:121
 msgctxt "Field Title"
 msgid "Birth Certificate"
 msgstr ""
 
-#: Iranian.php:125
+#: Iranian.php:122
 msgctxt "Field Description"
 msgid "Iranian Birth Certificate Number"
 msgstr ""
 
-#: Iranian.php:160
+#: Iranian.php:157
 msgctxt "RestAPI: Arg Description"
 msgid "The National Code to process."
 msgstr ""
 
-#: Iranian.php:231
+#: Iranian.php:228
 msgctxt "Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:285
+#: Iranian.php:287
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:424
-#: ModuleSettings.php:294
+#: Iranian.php:430
+#: ModuleSettings.php:295
 msgctxt "Header"
 msgid "Iranian Reports"
+msgstr ""
+
+#: ModuleInfo.php:52
+msgctxt "Province Name"
+msgid "Alborz"
+msgstr ""
+
+#: ModuleInfo.php:53
+msgctxt "Province Name"
+msgid "Ardabil"
+msgstr ""
+
+#: ModuleInfo.php:54
+msgctxt "Province Name"
+msgid "Bushehr"
+msgstr ""
+
+#: ModuleInfo.php:55
+msgctxt "Province Name"
+msgid "Chaharmahal and Bakhtiari"
+msgstr ""
+
+#: ModuleInfo.php:56
+msgctxt "Province Name"
+msgid "East Azarbaijan"
+msgstr ""
+
+#: ModuleInfo.php:57
+msgctxt "Province Name"
+msgid "Isfahan"
+msgstr ""
+
+#: ModuleInfo.php:58
+msgctxt "Province Name"
+msgid "Fars"
+msgstr ""
+
+#: ModuleInfo.php:59
+msgctxt "Province Name"
+msgid "Gilan"
+msgstr ""
+
+#: ModuleInfo.php:60
+msgctxt "Province Name"
+msgid "Golestan"
+msgstr ""
+
+#: ModuleInfo.php:61
+msgctxt "Province Name"
+msgid "Ghazvin"
+msgstr ""
+
+#: ModuleInfo.php:62
+msgctxt "Province Name"
+msgid "Hamadan"
+msgstr ""
+
+#: ModuleInfo.php:63
+msgctxt "Province Name"
+msgid "Hormozgan"
+msgstr ""
+
+#: ModuleInfo.php:64
+msgctxt "Province Name"
+msgid "Ilaam"
+msgstr ""
+
+#: ModuleInfo.php:65
+msgctxt "Province Name"
+msgid "Kohgiluyeh and BoyerAhmad"
+msgstr ""
+
+#: ModuleInfo.php:66
+msgctxt "Province Name"
+msgid "Khuzestan"
+msgstr ""
+
+#: ModuleInfo.php:67
+msgctxt "Province Name"
+msgid "Kurdistan"
+msgstr ""
+
+#: ModuleInfo.php:68
+msgctxt "Province Name"
+msgid "Kermanshah"
+msgstr ""
+
+#: ModuleInfo.php:69
+msgctxt "Province Name"
+msgid "Kerman"
+msgstr ""
+
+#: ModuleInfo.php:70
+msgctxt "Province Name"
+msgid "Luristan"
+msgstr ""
+
+#: ModuleInfo.php:71
+msgctxt "Province Name"
+msgid "Markazi"
+msgstr ""
+
+#: ModuleInfo.php:72
+msgctxt "Province Name"
+msgid "Mazandaran"
+msgstr ""
+
+#: ModuleInfo.php:73
+msgctxt "Province Name"
+msgid "North Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:74
+msgctxt "Province Name"
+msgid "Qom"
+msgstr ""
+
+#: ModuleInfo.php:75
+msgctxt "Province Name"
+msgid "Razavi Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:76
+msgctxt "Province Name"
+msgid "Sistan and Baluchestan"
+msgstr ""
+
+#: ModuleInfo.php:77
+msgctxt "Province Name"
+msgid "South Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:78
+msgctxt "Province Name"
+msgid "Semnan"
+msgstr ""
+
+#: ModuleInfo.php:79
+msgctxt "Province Name"
+msgid "Tehran"
+msgstr ""
+
+#: ModuleInfo.php:80
+msgctxt "Province Name"
+msgid "West Azarbaijan"
+msgstr ""
+
+#: ModuleInfo.php:81
+msgctxt "Province Name"
+msgid "Yazd"
+msgstr ""
+
+#: ModuleInfo.php:82
+msgctxt "Province Name"
+msgid "Zanjan"
 msgstr ""
 
 #: ModuleSettings.php:25
@@ -79,7 +234,7 @@ msgid "Compare Identity to Birth Certificate"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:33
+#: ModuleSettings.php:30
 #, php-format
 msgctxt "Button"
 msgid "Compare Identity for %s"
@@ -119,9 +274,9 @@ msgid "Location by Identity"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:143
-#: ModuleSettings.php:254
-#: ModuleSettings.php:278
+#: ModuleSettings.php:140
+#: ModuleSettings.php:252
+#: ModuleSettings.php:276
 #, php-format
 msgctxt "Button"
 msgid "On %s"
@@ -133,62 +288,62 @@ msgid "Tries to set the location based on identity data."
 msgstr ""
 
 #. translators: `%s`: identity code
-#: ModuleSettings.php:206
+#: ModuleSettings.php:207
 #, php-format
 msgctxt "Notice"
 msgid "No location data available for &ldquo;%s&rdquo;!"
 msgstr ""
 
 #. translators: `%s`: identity code
-#: ModuleSettings.php:213
+#: ModuleSettings.php:214
 #, php-format
 msgctxt "Notice"
 msgid "No city data available for &ldquo;%s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: city data, `%2$s`: identity code
-#: ModuleSettings.php:220
+#: ModuleSettings.php:221
 #, php-format
 msgctxt "Notice"
 msgid "City data is empty for %1$s: %2$s!"
 msgstr ""
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:228
+#: ModuleSettings.php:229
 #, php-format
 msgctxt "Notice"
 msgid "There is problem updating location for &ldquo;%s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: city data, `%2$s`: identity code, `%3$s`: post title
-#: ModuleSettings.php:234
+#: ModuleSettings.php:235
 #, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; city is set by %2$s on &ldquo;%3$s&rdquo;."
 msgstr ""
 
-#: ModuleSettings.php:246
-#: ModuleSettings.php:295
+#: ModuleSettings.php:247
+#: ModuleSettings.php:296
 msgctxt "Card Title"
 msgid "Country Summary"
 msgstr ""
 
-#: ModuleSettings.php:258
+#: ModuleSettings.php:259
 msgctxt "Button Description"
 msgid "Tries to summarize the country info based on the raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:270
+#: ModuleSettings.php:271
 msgctxt "Card Title"
 msgid "City Summary"
 msgstr ""
 
-#: ModuleSettings.php:282
+#: ModuleSettings.php:283
 msgctxt "Button Description"
 msgid "Tries to summarize the city info based on the raw meta-data."
 msgstr ""
 
-#: ModuleSettings.php:335
+#: ModuleSettings.php:333
 msgctxt "Button"
 msgid "Next Batch"
 msgstr ""

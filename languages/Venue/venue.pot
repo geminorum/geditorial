@@ -164,20 +164,20 @@ msgid "Embeddable map URL of the location."
 msgstr ""
 
 #. translators: `%s`: post title
-#: Venue.php:416
+#: Venue.php:421
 #, php-format
 msgctxt "Page Title"
 msgid "Location Dock for %s"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Venue.php:418
+#: Venue.php:423
 #, php-format
 msgctxt "Page Title"
 msgid "Location Overview for %s"
 msgstr ""
 
-#: Venue.php:493
+#: Venue.php:498
 msgctxt "Header"
 msgid "Venue Tools"
 msgstr ""

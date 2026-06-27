@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcWidgets\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-06-21 20:32+0330\n"
+"PO-Revision-Date: 2026-03-27 12:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -11,79 +11,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
-#: WcWidgets.php:37
+#: WcWidgets.php:38
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr "ابزارک‌ها"
 
-#: WcWidgets.php:44
+#: WcWidgets.php:45
 msgctxt "Setting Title"
 msgid "Custom Areas"
 msgstr "عرصه‌های سفارشی"
 
-#: WcWidgets.php:45
+#: WcWidgets.php:46
 msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:83
+#: WcWidgets.php:84
 msgctxt "Action Hook"
 msgid "Thank-you (Before Order Details)"
 msgstr "سپاس‌گزاریم (پیش از جزئیات سفارش)"
 
-#: WcWidgets.php:88
+#: WcWidgets.php:89
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr "پیش از فرم تسویه حساب"
 
-#: WcWidgets.php:93
+#: WcWidgets.php:94
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr "پس از فرم تسویه حساب"
 
-#: WcWidgets.php:98
+#: WcWidgets.php:99
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr "پیش از یادداشت‌های سفارش"
 
-#: WcWidgets.php:103
+#: WcWidgets.php:104
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr "بازبینی سفارش: پیش از پرداخت"
 
-#: WcWidgets.php:108
+#: WcWidgets.php:109
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr "پیش از فرم ویرایش نشانی حساب"
 
-#: WcWidgets.php:113
+#: WcWidgets.php:114
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr "پیشخوان کاربری"
 
-#: WcWidgets.php:121
+#: WcWidgets.php:122
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr "تحریریه: پیشخوان خرید خالی"
 
-#: WcWidgets.php:128
+#: WcWidgets.php:129
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr "وودمارت: عرصه پالایه‌های فروشگاه"
 
 #. translators: `%s`: widget area name
-#: WcWidgets.php:172
+#: WcWidgets.php:173
 #, php-format
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr "ووکامرس: %s"
 
 #. translators: `%s`: widget action hook
-#: WcWidgets.php:177
+#: WcWidgets.php:178
 #, php-format
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
@@ -119,27 +119,22 @@ msgctxt "Widget: WCMessage"
 msgid "Notice Type:"
 msgstr "نوع اعلان:"
 
-#: Widgets/WCMessage.php:72
-msgctxt "Widget: WCMessage"
-msgid "Process Shortcodes"
-msgstr "پردازش شورت‌کدها"
+#~ msgctxt "Widget: WCMessage"
+#~ msgid "Process Shortcodes"
+#~ msgstr "پردازش شورت‌کدها"
 
-#: Widgets/WCMessage.php:73
-msgctxt "Widget: WCMessage"
-msgid "Process Filters"
-msgstr "پردازش فیلترها"
+#~ msgctxt "Widget: WCMessage"
+#~ msgid "Process Filters"
+#~ msgstr "پردازش فیلترها"
 
-#: Widgets/WCMessage.php:74
-msgctxt "Widget: WCMessage"
-msgid "Process Filters (Legacy)"
-msgstr "پردازش فیلترها (قدیمی)"
+#~ msgctxt "Widget: WCMessage"
+#~ msgid "Process Filters (Legacy)"
+#~ msgstr "پردازش فیلترها (قدیمی)"
 
-#: Widgets/WCMessage.php:75
-msgctxt "Widget: WCMessage"
-msgid "Automatic Paragraphs"
-msgstr "پاراگراف‌های خودکار"
+#~ msgctxt "Widget: WCMessage"
+#~ msgid "Automatic Paragraphs"
+#~ msgstr "پاراگراف‌های خودکار"
 
-#: Widgets/WCMessage.php:76
-msgctxt "Widget: WCMessage"
-msgid "Bypass Caching"
-msgstr "نادیده‌گرفتن انباشت"
+#~ msgctxt "Widget: WCMessage"
+#~ msgid "Bypass Caching"
+#~ msgstr "نادیده‌گرفتن انباشت"

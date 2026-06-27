@@ -13,112 +13,112 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcIdentity\n"
 "X-Domain: geditorial-wc-identity\n"
 
-#: WcIdentity.php:34
+#: WcIdentity.php:36
 msgctxt "Setting Title"
 msgid "Identity Number Field"
 msgstr ""
 
-#: WcIdentity.php:35
+#: WcIdentity.php:37
 msgctxt "Setting Description"
 msgid "Adds extra required field for national identity number after checkout form."
 msgstr ""
 
-#: WcIdentity.php:39
+#: WcIdentity.php:41
 msgctxt "Setting Title"
 msgid "Identity Number Validation"
 msgstr ""
 
-#: WcIdentity.php:40
+#: WcIdentity.php:42
 msgctxt "Setting Description"
 msgid "Adds extra checks for national identity number."
 msgstr ""
 
-#: WcIdentity.php:45
+#: WcIdentity.php:47
 msgctxt "Setting Title"
 msgid "Form Row"
 msgstr ""
 
-#: WcIdentity.php:46
+#: WcIdentity.php:48
 msgctxt "Setting Description"
 msgid "Defines the positioning of the identity field."
 msgstr ""
 
-#: WcIdentity.php:49
+#: WcIdentity.php:51
 msgctxt "Setting Option"
 msgid "Default"
 msgstr ""
 
-#: WcIdentity.php:50
+#: WcIdentity.php:52
 msgctxt "Setting Option"
 msgid "Wide"
 msgstr ""
 
-#: WcIdentity.php:51
+#: WcIdentity.php:53
 msgctxt "Setting Option"
 msgid "First"
 msgstr ""
 
-#: WcIdentity.php:52
+#: WcIdentity.php:54
 msgctxt "Setting Option"
 msgid "Last"
 msgstr ""
 
-#: WcIdentity.php:106
+#: WcIdentity.php:108
 msgctxt "Email Field Label"
 msgid "Identity Number"
 msgstr ""
 
-#: WcIdentity.php:125
+#: WcIdentity.php:127
 msgctxt "Checkout Field Label"
 msgid "Identity Number"
 msgstr ""
 
-#: WcIdentity.php:154
+#: WcIdentity.php:156
 msgctxt "Checkout Error Message"
 msgid "Identity Number cannot be empty."
 msgstr ""
 
-#: WcIdentity.php:158
+#: WcIdentity.php:160
 msgctxt "Checkout Error Message"
 msgid "Identity Number is not valid."
 msgstr ""
 
-#: WcIdentity.php:162
+#: WcIdentity.php:164
 msgctxt "Checkout Error Message"
 msgid "Identity Number is already registered."
 msgstr ""
 
-#: WcIdentity.php:182
+#: WcIdentity.php:184
 msgctxt "Account Field Label"
 msgid "Identity Number"
 msgstr ""
 
-#: WcIdentity.php:216
+#: WcIdentity.php:218
 msgctxt "Account Error Message"
 msgid "The Identity Number cannot be empty."
 msgstr ""
 
-#: WcIdentity.php:222
+#: WcIdentity.php:224
 msgctxt "Account Error Message"
 msgid "The Identity Number is not valid."
 msgstr ""
 
-#: WcIdentity.php:228
+#: WcIdentity.php:230
 msgctxt "Account Error Message"
 msgid "The Identity Number is already registered."
 msgstr ""
 
-#: WcIdentity.php:235
+#: WcIdentity.php:237
 msgctxt "Account Field Required"
 msgid "Identity Number"
 msgstr ""
 
-#: WcIdentity.php:245
+#: WcIdentity.php:247
 msgctxt "Register Field Label"
 msgid "Identity Number"
 msgstr ""
 
-#: WcIdentity.php:246
+#: WcIdentity.php:248
 msgctxt "Register Field Placeholder"
 msgid "National Identity Number"
 msgstr ""

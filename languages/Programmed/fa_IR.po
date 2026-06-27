@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Programmed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:44+0330\n"
+"PO-Revision-Date: 2026-03-06 21:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,176 +11,179 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Programmed\n"
 "X-Domain: geditorial-programmed\n"
 
-#: Programmed.php:67
+#: Programmed.php:63
 msgctxt "Settings"
 msgid "Program Levels"
 msgstr "سطوح برنامه"
 
-#: Programmed.php:68
+#: Programmed.php:64
 msgctxt "Settings"
 msgid "Substitute taxonomy for the programs and supported post-types."
 msgstr ""
 
-#: Programmed.php:132 Programmed.php:133
+#: Programmed.php:128 Programmed.php:129
 msgid "Program"
 msgid_plural "Programs"
 msgstr[0] "برنامه‌ها"
 msgstr[1] "برنامه"
 
-#: Programmed.php:134
+#: Programmed.php:130
 msgid "Program Category"
 msgid_plural "Program Categories"
 msgstr[0] "دسته‌های برنامه"
 msgstr[1] "دسته برنامه"
 
-#: Programmed.php:135
+#: Programmed.php:131
 msgid "Program Level"
 msgid_plural "Program Levels"
 msgstr[0] "سطوح برنامه"
 msgstr[1] "سطح برنامه"
 
-#: Programmed.php:136
+#: Programmed.php:132
 msgid "Program Project"
 msgid_plural "Program Projects"
 msgstr[0] "پروژه‌های برنامه"
 msgstr[1] "پروژه برنامه"
 
-#: Programmed.php:137
+#: Programmed.php:133
 msgid "Program Span"
 msgid_plural "Program Spans"
 msgstr[0] "دوره‌های برنامه"
 msgstr[1] "دوره برنامه"
 
-#: Programmed.php:138
+#: Programmed.php:134
 msgid "Program Type"
 msgid_plural "Program Types"
 msgstr[0] "انواع برنامه"
 msgstr[1] "نوع برنامه"
 
-#: Programmed.php:139
+#: Programmed.php:135
 msgid "Program Status"
 msgid_plural "Program Statuses"
 msgstr[0] "وضعیت‌های برنامه"
 msgstr[1] "وضعیت برنامه"
 
-#: Programmed.php:143
+#: Programmed.php:139
 msgctxt "Label: `menu_name`"
 msgid "Programs"
 msgstr "برنامه‌ها"
 
-#: Programmed.php:144
+#: Programmed.php:140
 msgctxt "Label: Featured Image"
 msgid "Program Poster"
 msgstr "پوستر برنامه"
 
-#: Programmed.php:145
+#: Programmed.php:141
 msgctxt "Label: MetaBox Title"
 msgid "The Program"
 msgstr "این برنامه"
 
-#: Programmed.php:148
+#: Programmed.php:144
 msgctxt "Label: MetaBox Title"
 msgid "In This Program"
 msgstr "در این برنامه"
 
-#: Programmed.php:151
+#: Programmed.php:147
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Programmed.php:154
+#: Programmed.php:150
 msgctxt "Label: Menu Name"
 msgid "Projects"
 msgstr "پروژه‌ها"
 
-#: Programmed.php:157
+#: Programmed.php:153
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr "دوره"
 
-#: Programmed.php:160
+#: Programmed.php:156
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr "انواع"
 
-#: Programmed.php:163
+#: Programmed.php:159
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت"
 
-#: Programmed.php:172
+#: Programmed.php:168
 msgctxt "Notice"
 msgid "There is no program information available!"
 msgstr "هیچ اطلاعات برنامه‌ای در دسترس نیست!"
 
-#: Programmed.php:173
+#: Programmed.php:169
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the program information."
 msgstr "شما دسترسی لازم برای مدیریت اطلاعات برنامه‌ها را ندارید."
 
 #. translators: `%s`: item count
-#: Programmed.php:178
+#: Programmed.php:174
+#, php-format
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Program Participants (%s)"
 msgstr "شرکت‌کنندگان در برنامه (%s)"
 
 #. translators: `%s`: item count
-#: Programmed.php:180
+#: Programmed.php:176
+#, php-format
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Program Participations (%s)"
 msgstr "مشارکت در برنامه (%s)"
 
-#: Programmed.php:181
+#: Programmed.php:177
 msgctxt "Misc: `column_icon_title`"
 msgid "Programs"
 msgstr "برنامه‌ها"
 
-#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
-#: Programmed.php:186
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Programmed.php:182
+#, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr "مشارکت‌کنندگان در &rdquo;%1$s&ldquo;"
 
-#: Programmed.php:197
+#: Programmed.php:193
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr "برنامه‌ریزی شده"
 
-#: Programmed.php:198
+#: Programmed.php:194
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr "برگزار شده"
 
-#: Programmed.php:240
+#: Programmed.php:237
 msgctxt "Field Title"
 msgid "Organizers"
 msgstr "برگزارکنندگان"
 
-#: Programmed.php:241
+#: Programmed.php:238
 msgctxt "Field Description"
 msgid "People Who Participate as Organizers in This Program"
 msgstr "افرادی که به عنوان برگزارکننده در این برنامه شرکت کرده‌اند"
 
-#: Programmed.php:248
+#: Programmed.php:245
 msgctxt "Field Title"
 msgid "Program Code"
 msgstr "کد برنامه"
 
-#: Programmed.php:249
+#: Programmed.php:246
 msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr "کد برنامه یکتا"
 
-#: Programmed.php:606
+#: Programmed.php:586
 msgctxt "Header"
 msgid "Program Tools"
 msgstr "ابزارهای برنامه"
 
-#: Programmed.php:615
+#: Programmed.php:595
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr "تاریخ برنامه از داده‌های متا"

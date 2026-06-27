@@ -13,652 +13,691 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Meta\n"
 "X-Domain: geditorial-meta\n"
 
-#: Elementor/FieldLead.php:38
-msgctxt "Elementor: Widget Title"
-msgid "Meta: Lead"
-msgstr ""
-
-#: Elementor/FieldLead.php:126
-msgctxt "Elementor: Section Title"
-msgid "Style"
-msgstr ""
-
-#: Elementor/FieldLead.php:134
-msgctxt "Elementor: Control Title"
-msgid "Color"
-msgstr ""
-
-#: Elementor/FieldLead.php:146
-msgctxt "Elementor: Control Title"
-msgid "Background"
-msgstr ""
-
-#: Elementor/FieldLead.php:159
-msgctxt "Elementor: Control Title"
-msgid "Spacing"
-msgstr ""
-
-#: Meta.php:46
+#: Meta.php:47
 msgctxt "Setting Title"
 msgid "Overwrite Author"
 msgstr ""
 
-#: Meta.php:47
+#: Meta.php:48
 msgctxt "Setting Description"
 msgid "Replaces user display name with author meta field data."
 msgstr ""
 
-#: Meta.php:52
+#: Meta.php:53
 msgctxt "Setting Title"
 msgid "Before Source"
 msgstr ""
 
-#: Meta.php:53
+#: Meta.php:54
 msgctxt "Setting Description"
 msgid "Used as default text before the source links."
 msgstr ""
 
-#: Meta.php:54
+#: Meta.php:55
 msgctxt "Setting Default"
 msgid "Source:"
 msgstr ""
 
-#: Meta.php:59
+#: Meta.php:60
 msgctxt "Setting Title"
 msgid "Before Action"
 msgstr ""
 
-#: Meta.php:60
+#: Meta.php:61
 msgctxt "Setting Description"
 msgid "Used as default text before the action buttons."
 msgstr ""
 
-#: Meta.php:65
+#: Meta.php:66
 msgctxt "Setting Title"
 msgid "Price Format"
 msgstr ""
 
-#: Meta.php:66
+#: Meta.php:67
 msgctxt "Setting Description"
 msgid "Used as default format on rendering prices."
 msgstr ""
 
 #. translators: `%s`: price number
-#: Meta.php:68
+#: Meta.php:69
 #, php-format
 msgctxt "Setting Default"
 msgid "%s Toman"
 msgstr ""
 
-#: Meta.php:87
-msgctxt "Titles"
-msgid "OverTitle"
-msgstr ""
-
 #: Meta.php:88
 msgctxt "Titles"
-msgid "SubTitle"
+msgid "Overtitle"
 msgstr ""
 
 #: Meta.php:89
 msgctxt "Titles"
-msgid "Byline"
+msgid "Subtitle"
 msgstr ""
 
 #: Meta.php:90
 msgctxt "Titles"
-msgid "Lead"
+msgid "External Link"
+msgstr ""
+
+#: Meta.php:91
+msgctxt "Titles"
+msgid "Byline"
 msgstr ""
 
 #: Meta.php:92
 msgctxt "Titles"
-msgid "Alternative Title"
-msgstr ""
-
-#: Meta.php:93
-msgctxt "Titles"
-msgid "Print Title"
+msgid "Lead"
 msgstr ""
 
 #: Meta.php:94
 msgctxt "Titles"
-msgid "Print Date"
+msgid "Alternative Title"
+msgstr ""
+
+#: Meta.php:95
+msgctxt "Titles"
+msgid "Print Title"
 msgstr ""
 
 #: Meta.php:96
 msgctxt "Titles"
-msgid "Published"
-msgstr ""
-
-#: Meta.php:97
-msgctxt "Titles"
-msgid "Status"
+msgid "Print Date"
 msgstr ""
 
 #: Meta.php:98
 msgctxt "Titles"
-msgid "Source Title"
+msgid "Published"
 msgstr ""
 
 #: Meta.php:99
 msgctxt "Titles"
-msgid "Source URL"
+msgid "Status"
 msgstr ""
 
 #: Meta.php:100
 msgctxt "Titles"
-msgid "Action Title"
+msgid "Source Title"
 msgstr ""
 
 #: Meta.php:101
 msgctxt "Titles"
-msgid "Action URL"
+msgid "Source URL"
 msgstr ""
 
 #: Meta.php:102
 msgctxt "Titles"
-msgid "Highlight"
+msgid "Action Title"
 msgstr ""
 
 #: Meta.php:103
 msgctxt "Titles"
-msgid "Dashboard"
+msgid "Action URL"
 msgstr ""
 
 #: Meta.php:104
 msgctxt "Titles"
-msgid "Abstract"
+msgid "Highlight"
 msgstr ""
 
 #: Meta.php:105
 msgctxt "Titles"
-msgid "Foreword"
+msgid "Dashboard"
 msgstr ""
 
 #: Meta.php:106
 msgctxt "Titles"
-msgid "Cover Blurb"
+msgid "Abstract"
 msgstr ""
 
 #: Meta.php:107
 msgctxt "Titles"
-msgid "Cover Price"
+msgid "Foreword"
 msgstr ""
 
 #: Meta.php:108
 msgctxt "Titles"
-msgid "Content Fee"
+msgid "Cover Blurb"
+msgstr ""
+
+#: Meta.php:109
+msgctxt "Titles"
+msgid "Cover Price"
 msgstr ""
 
 #: Meta.php:110
+msgctxt "Titles"
+msgid "Content Fee"
+msgstr ""
+
+#: Meta.php:112
 msgctxt "Descriptions"
 msgid "Venue"
 msgstr ""
 
-#: Meta.php:111
+#: Meta.php:113
 msgctxt "Descriptions"
 msgid "Contact"
 msgstr ""
 
-#: Meta.php:112
+#: Meta.php:114
 msgctxt "Titles"
 msgid "Website URL"
 msgstr ""
 
-#: Meta.php:113
+#: Meta.php:115
 msgctxt "Titles"
 msgid "Wiki URL"
 msgstr ""
 
-#: Meta.php:114
+#: Meta.php:116
 msgctxt "Titles"
 msgid "Email Address"
 msgstr ""
 
-#: Meta.php:116
+#: Meta.php:118
 msgctxt "Titles"
 msgid "Content Embed URL"
 msgstr ""
 
-#: Meta.php:117
+#: Meta.php:119
 msgctxt "Titles"
 msgid "Text Source URL"
 msgstr ""
 
-#: Meta.php:118
+#: Meta.php:120
 msgctxt "Titles"
 msgid "Audio Source URL"
 msgstr ""
 
-#: Meta.php:119
+#: Meta.php:121
 msgctxt "Titles"
 msgid "Video Source URL"
 msgstr ""
 
-#: Meta.php:120
+#: Meta.php:122
 msgctxt "Titles"
 msgid "Image Source URL"
 msgstr ""
 
-#: Meta.php:121
+#: Meta.php:123
 msgctxt "Titles"
 msgid "Main Download URL"
 msgstr ""
 
-#: Meta.php:122
+#: Meta.php:124
 msgctxt "Titles"
 msgid "Main Download Attachment"
 msgstr ""
 
-#: Meta.php:124
-msgctxt "Titles"
-msgid "Date"
-msgstr ""
-
-#: Meta.php:125
-msgctxt "Titles"
-msgid "Date-Time"
-msgstr ""
-
 #: Meta.php:126
 msgctxt "Titles"
-msgid "Date-Start"
-msgstr ""
-
-#: Meta.php:127
-msgctxt "Titles"
-msgid "Date-End"
+msgid "Event Summary"
 msgstr ""
 
 #: Meta.php:128
 msgctxt "Titles"
-msgid "Time"
+msgid "Date"
 msgstr ""
 
 #: Meta.php:129
 msgctxt "Titles"
-msgid "Time-Start"
+msgid "Date-Time"
 msgstr ""
 
 #: Meta.php:130
 msgctxt "Titles"
-msgid "Time-End"
+msgid "Date-Start"
 msgstr ""
 
 #: Meta.php:131
 msgctxt "Titles"
-msgid "Distance"
+msgid "Date-End"
 msgstr ""
 
 #: Meta.php:132
 msgctxt "Titles"
-msgid "Duration"
+msgid "Time"
 msgstr ""
 
 #: Meta.php:133
 msgctxt "Titles"
-msgid "Area"
+msgid "Time-Start"
 msgstr ""
 
 #: Meta.php:134
 msgctxt "Titles"
-msgid "Period"
+msgid "Time-End"
 msgstr ""
 
 #: Meta.php:135
 msgctxt "Titles"
-msgid "Amount"
+msgid "Distance"
+msgstr ""
+
+#: Meta.php:136
+msgctxt "Titles"
+msgid "Duration"
 msgstr ""
 
 #: Meta.php:137
 msgctxt "Titles"
-msgid "Notes"
+msgid "Area"
 msgstr ""
 
 #: Meta.php:138
 msgctxt "Titles"
-msgid "Reference"
+msgid "Period"
 msgstr ""
 
 #: Meta.php:139
 msgctxt "Titles"
-msgid "Itineraries"
+msgid "Amount"
 msgstr ""
 
-#: Meta.php:141
+#: Meta.php:140
 msgctxt "Titles"
-msgid "Coordinates"
+msgid "SKU"
+msgstr ""
+
+#: Meta.php:142
+msgctxt "Titles"
+msgid "Notes"
+msgstr ""
+
+#: Meta.php:143
+msgctxt "Titles"
+msgid "Reference"
 msgstr ""
 
 #: Meta.php:144
 msgctxt "Titles"
+msgid "Itineraries"
+msgstr ""
+
+#: Meta.php:146
+msgctxt "Titles"
+msgid "Coordinates"
+msgstr ""
+
+#: Meta.php:147
+msgctxt "Titles"
+msgid "Color"
+msgstr ""
+
+#: Meta.php:150
+msgctxt "Titles"
 msgid "Source"
 msgstr ""
 
-#: Meta.php:145
+#: Meta.php:151
 msgctxt "Titles"
 msgid "Action"
 msgstr ""
 
-#: Meta.php:150
+#: Meta.php:156
 msgctxt "Descriptions"
 msgid "Text to place over the content title"
 msgstr ""
 
-#: Meta.php:151
+#: Meta.php:157
 msgctxt "Descriptions"
 msgid "Text to place under the content title"
 msgstr ""
 
-#: Meta.php:152
+#: Meta.php:158
 msgctxt "Descriptions"
-msgid "Text to override the content author"
-msgstr ""
-
-#: Meta.php:153
-msgctxt "Descriptions"
-msgid "Notes to place before the content text"
-msgstr ""
-
-#: Meta.php:155
-msgctxt "Descriptions"
-msgid "The Original Title or Title in Another Language"
-msgstr ""
-
-#: Meta.php:156
-msgctxt "Descriptions"
-msgid "Text to Overwrite the Original Title on Printing"
-msgstr ""
-
-#: Meta.php:157
-msgctxt "Descriptions"
-msgid "Date to Overwrite the Original Date on Printing"
+msgid "Link to Override the Content URL"
 msgstr ""
 
 #: Meta.php:159
 msgctxt "Descriptions"
-msgid "Text to indicate the original date of the content"
+msgid "Text to override the content author"
 msgstr ""
 
 #: Meta.php:160
 msgctxt "Descriptions"
-msgid "Text to indicate the current status of the content"
-msgstr ""
-
-#: Meta.php:161
-msgctxt "Descriptions"
-msgid "Custom title for the source of the content"
+msgid "Notes to place before the content text"
 msgstr ""
 
 #: Meta.php:162
 msgctxt "Descriptions"
-msgid "Custom URL to the source of the content"
+msgid "The Original Title or Title in Another Language"
 msgstr ""
 
 #: Meta.php:163
 msgctxt "Descriptions"
-msgid "Custom title for the action of the content"
+msgid "Text to Overwrite the Original Title on Printing"
 msgstr ""
 
 #: Meta.php:164
 msgctxt "Descriptions"
-msgid "Custom URL to the action of the content"
-msgstr ""
-
-#: Meta.php:165
-msgctxt "Descriptions"
-msgid "Notes highlighted about the content"
+msgid "Date to Overwrite the Original Date on Printing"
 msgstr ""
 
 #: Meta.php:166
 msgctxt "Descriptions"
-msgid "Custom HTML content on the dashboard"
+msgid "Text to indicate the original date of the content"
 msgstr ""
 
 #: Meta.php:167
 msgctxt "Descriptions"
-msgid "Brief summary of the content"
+msgid "Text to indicate the current status of the content"
 msgstr ""
 
 #: Meta.php:168
 msgctxt "Descriptions"
-msgid "Introduction to the Content"
+msgid "Custom title for the source of the content"
 msgstr ""
 
 #: Meta.php:169
 msgctxt "Descriptions"
-msgid "Description included on the inside cover or on the back"
+msgid "Custom URL to the source of the content"
 msgstr ""
 
 #: Meta.php:170
 msgctxt "Descriptions"
-msgid "Cover Price of the content"
+msgid "Custom title for the action of the content"
 msgstr ""
 
 #: Meta.php:171
 msgctxt "Descriptions"
-msgid "Fee of the content"
+msgid "Custom URL to the action of the content"
+msgstr ""
+
+#: Meta.php:172
+msgctxt "Descriptions"
+msgid "Notes highlighted about the content"
 msgstr ""
 
 #: Meta.php:173
 msgctxt "Descriptions"
-msgid "Placing Information about the Content"
+msgid "Custom HTML content on the dashboard"
 msgstr ""
 
 #: Meta.php:174
 msgctxt "Descriptions"
-msgid "A Way to Contact Someone about the Content"
+msgid "Brief summary of the content"
 msgstr ""
 
 #: Meta.php:175
 msgctxt "Descriptions"
-msgid "Public Website URL of the Content"
+msgid "Introduction to the Content"
 msgstr ""
 
 #: Meta.php:176
 msgctxt "Descriptions"
-msgid "Public Wiki URL of the Content"
+msgid "Description included on the inside cover or on the back"
 msgstr ""
 
 #: Meta.php:177
 msgctxt "Descriptions"
-msgid "Email Address about the Content"
+msgid "Cover Price of the content"
 msgstr ""
 
-#: Meta.php:179
+#: Meta.php:178
 msgctxt "Descriptions"
-msgid "Embeddable URL of the External Content"
+msgid "Fee of the content"
 msgstr ""
 
 #: Meta.php:180
 msgctxt "Descriptions"
-msgid "Text Source URL of the Content"
+msgid "Placing Information about the Content"
 msgstr ""
 
 #: Meta.php:181
 msgctxt "Descriptions"
-msgid "Audio Source URL of the Content"
+msgid "A Way to Contact Someone about the Content"
 msgstr ""
 
 #: Meta.php:182
 msgctxt "Descriptions"
-msgid "Video Source URL of the Content"
+msgid "Public Website URL of the Content"
 msgstr ""
 
 #: Meta.php:183
 msgctxt "Descriptions"
-msgid "Image Source URL of the Content"
+msgid "Public Wiki URL of the Content"
 msgstr ""
 
 #: Meta.php:184
 msgctxt "Descriptions"
-msgid "Downloadable URL of the External Content"
+msgid "Email Address about the Content"
 msgstr ""
 
-#: Meta.php:185
+#: Meta.php:186
 msgctxt "Descriptions"
-msgid "Downloadable Attachment of the External Content"
+msgid "Embeddable URL of the External Content"
 msgstr ""
 
 #: Meta.php:187
 msgctxt "Descriptions"
-msgid "Posts can have date to help organize them."
+msgid "Text Source URL of the Content"
 msgstr ""
 
 #: Meta.php:188
 msgctxt "Descriptions"
-msgid "Posts can have date-time to help organize them."
+msgid "Audio Source URL of the Content"
 msgstr ""
 
 #: Meta.php:189
 msgctxt "Descriptions"
-msgid "Posts can have date-start to help organize them."
+msgid "Video Source URL of the Content"
 msgstr ""
 
 #: Meta.php:190
 msgctxt "Descriptions"
-msgid "Posts can have date-end to help organize them."
+msgid "Image Source URL of the Content"
 msgstr ""
 
 #: Meta.php:191
 msgctxt "Descriptions"
-msgid "Posts can have time to help organize them."
+msgid "Downloadable URL of the External Content"
 msgstr ""
 
 #: Meta.php:192
 msgctxt "Descriptions"
-msgid "Posts can have time-start to help organize them."
-msgstr ""
-
-#: Meta.php:193
-msgctxt "Descriptions"
-msgid "Posts can have time-end to help organize them."
+msgid "Downloadable Attachment of the External Content"
 msgstr ""
 
 #: Meta.php:194
 msgctxt "Descriptions"
-msgid "The formatted length of space about the post."
-msgstr ""
-
-#: Meta.php:195
-msgctxt "Descriptions"
-msgid "The formatted length of time about the post."
+msgid "Summary of the Event appears on the Calendar"
 msgstr ""
 
 #: Meta.php:196
 msgctxt "Descriptions"
-msgid "The formatted area, measured in square metres."
+msgid "Posts can have date to help organize them."
 msgstr ""
 
 #: Meta.php:197
 msgctxt "Descriptions"
-msgid "The length of time about the post."
+msgid "Posts can have date-time to help organize them."
 msgstr ""
 
 #: Meta.php:198
 msgctxt "Descriptions"
-msgid "The quantity number about the post."
+msgid "Posts can have date-start to help organize them."
+msgstr ""
+
+#: Meta.php:199
+msgctxt "Descriptions"
+msgid "Posts can have date-end to help organize them."
 msgstr ""
 
 #: Meta.php:200
-msgctxt "Descriptions: `notes`"
-msgid "General Notes about the Content"
+msgctxt "Descriptions"
+msgid "Posts can have time to help organize them."
 msgstr ""
 
 #: Meta.php:201
-msgctxt "Descriptions: `reference`"
-msgid "Full Reference to the Content"
+msgctxt "Descriptions"
+msgid "Posts can have time-start to help organize them."
 msgstr ""
 
 #: Meta.php:202
-msgctxt "Descriptions: `itineraries`"
-msgid "Brief Itineraries of the Content"
+msgctxt "Descriptions"
+msgid "Posts can have time-end to help organize them."
+msgstr ""
+
+#: Meta.php:203
+msgctxt "Descriptions"
+msgid "The formatted length of space about the post."
 msgstr ""
 
 #: Meta.php:204
-msgctxt "Descriptions: `latlng`"
-msgid "Latitude and Longitude"
+msgctxt "Descriptions"
+msgid "The formatted length of time about the post."
+msgstr ""
+
+#: Meta.php:205
+msgctxt "Descriptions"
+msgid "The formatted area, measured in square metres."
 msgstr ""
 
 #: Meta.php:206
 msgctxt "Descriptions"
-msgid "Source of the content"
+msgid "The length of time about the post."
 msgstr ""
 
 #: Meta.php:207
 msgctxt "Descriptions"
+msgid "The quantity number about the post."
+msgstr ""
+
+#: Meta.php:208
+msgctxt "Descriptions"
+msgid "Stock Keeping Unit"
+msgstr ""
+
+#: Meta.php:210
+msgctxt "Descriptions: `notes`"
+msgid "General Notes about the Content"
+msgstr ""
+
+#: Meta.php:211
+msgctxt "Descriptions: `reference`"
+msgid "Full Reference to the Content"
+msgstr ""
+
+#: Meta.php:212
+msgctxt "Descriptions: `itineraries`"
+msgid "Brief Itineraries of the Content"
+msgstr ""
+
+#: Meta.php:214
+msgctxt "Descriptions: `latlng`"
+msgid "Latitude and Longitude"
+msgstr ""
+
+#: Meta.php:215
+msgctxt "Descriptions: `color`"
+msgid "The Color Code about the Content"
+msgstr ""
+
+#: Meta.php:217
+msgctxt "Descriptions: `source`"
+msgid "Source of the content"
+msgstr ""
+
+#: Meta.php:218
+msgctxt "Descriptions: `action`"
 msgid "Action of the content"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Meta.php:216
+#: Meta.php:227
 msgctxt "MetaBox: `mainbox_title`"
 msgid "Metadata"
 msgstr ""
 
-#: Meta.php:217
+#: Meta.php:228
 msgctxt "MetaBox: `mainbox_action`"
 msgid "Configure"
 msgstr ""
 
-#: Meta.php:221
+#: Meta.php:232
 msgctxt "Notice: `no_fields`"
 msgid "There are no meta fields available!"
 msgstr ""
 
-#: Meta.php:225
+#: Meta.php:236
 msgctxt "Column Title"
 msgid "Metadata"
 msgstr ""
 
-#: Meta.php:226
+#: Meta.php:237
 msgctxt "Column Title"
 msgid "Author"
 msgstr ""
 
-#: Meta.php:1024
+#: Meta.php:241
+msgctxt "Settings: Description"
+msgid "Define the fields after select and save the supported post-types."
+msgstr ""
+
+#: Meta.php:687
+#: Meta.php:700
+msgctxt "Title Attribute"
+msgid "The Original Date for this Entry"
+msgstr ""
+
+#: Meta.php:1138
 msgctxt "Header"
 msgid "Meta Imports"
 msgstr ""
 
-#: Meta.php:1030
-msgctxt "Header"
-msgid "Import Custom Fields"
+#: Meta.php:1169
+msgctxt "Card Title"
+msgid "Queried Custom Fields"
 msgstr ""
 
-#: Meta.php:1081
-msgctxt "Button"
-msgid "Check"
-msgstr ""
-
-#: Meta.php:1084
-msgctxt "Button"
-msgid "Covert"
-msgstr ""
-
-#: Meta.php:1087
-msgctxt "Button"
-msgid "Delete"
-msgstr ""
-
-#: Meta.php:1089
-msgctxt "Message"
-msgid "Check for Custom Fields and import them into Meta"
-msgstr ""
-
-#: Meta.php:1099
+#: Meta.php:1175
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
-#. translators: `%s`: title
-#: Meta.php:1106
-#, php-format
+#: Meta.php:1181
 msgctxt "Table Column"
-msgid "Meta: %s"
+msgid "Raw Data"
 msgstr ""
 
-#: Meta.php:1113
+#: Meta.php:1190
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
+msgstr ""
+
+#: Meta.php:1202
+msgctxt "Card Title"
+msgid "Import Custom Fields"
+msgstr ""
+
+#: Meta.php:1232
+msgctxt "Message"
+msgid "Non-protect custom fields limited by post-type and total count."
+msgstr ""
+
+#: Meta.php:1244
+msgctxt "Message"
+msgid "Import into any of available meta fields."
+msgstr ""
+
+#: Meta.php:1249
+msgctxt "Button"
+msgid "Check"
+msgstr ""
+
+#: Meta.php:1252
+msgctxt "Button"
+msgid "Covert"
+msgstr ""
+
+#: Meta.php:1255
+msgctxt "Button"
+msgid "Delete"
+msgstr ""
+
+#: Meta.php:1257
+msgctxt "Message"
+msgid "Check for custom fields and import them into meta fields."
 msgstr ""

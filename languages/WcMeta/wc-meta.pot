@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcMeta\n"
+"Project-Id-Version: gEditorial WcMeta 1.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -12,6 +12,31 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcMeta\n"
 "X-Domain: geditorial-wc-meta\n"
+
+#. Plugin Name of the plugin
+#: WcMeta.php:119
+msgid "KIA Subtitle + WooCommerce Bridge"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: WcMeta.php:120
+msgid "https://gist.github.com/helgatheviking/ffbf9d1c82351fb9220ff91ce61f7518"
+msgstr ""
+
+#. Description of the plugin
+#: WcMeta.php:122
+msgid "Show the KIA Subtitle on WooCommerce products."
+msgstr ""
+
+#. Author of the plugin
+#: WcMeta.php:124
+msgid "Kathy Darling"
+msgstr ""
+
+#. Author URI of the plugin
+#: WcMeta.php:125
+msgid "http://kathyisawesome.com"
+msgstr ""
 
 #: WcMeta.php:44
 msgctxt "Field Title"

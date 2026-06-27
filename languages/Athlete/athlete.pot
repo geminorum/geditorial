@@ -13,93 +13,93 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Athlete\n"
 "X-Domain: geditorial-athlete\n"
 
-#: Athlete.php:95
+#: Athlete.php:96
 msgid "Sports Field"
 msgid_plural "Sports Fields"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Athlete.php:99
+#: Athlete.php:100
 msgctxt "Label: `menu_name`"
 msgid "Sports"
 msgstr ""
 
-#: Athlete.php:100
+#: Athlete.php:101
 msgctxt "Label: `show_option_all`"
 msgid "Sports Field"
 msgstr ""
 
-#: Athlete.php:101
+#: Athlete.php:102
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unspecified)"
 msgstr ""
 
-#: Athlete.php:115
+#: Athlete.php:116
 msgctxt "Default Term: Sports Field"
 msgid "Acrobatic"
 msgstr ""
 
-#: Athlete.php:116
+#: Athlete.php:117
 msgctxt "Default Term: Sports Field"
 msgid "Air"
 msgstr ""
 
-#: Athlete.php:117
+#: Athlete.php:118
 msgctxt "Default Term: Sports Field"
 msgid "Performance"
 msgstr ""
 
-#: Athlete.php:118
+#: Athlete.php:119
 msgctxt "Default Term: Sports Field"
 msgid "Martial Arts"
 msgstr ""
 
-#: Athlete.php:119
+#: Athlete.php:120
 msgctxt "Default Term: Sports Field"
 msgid "Strength"
 msgstr ""
 
-#: Athlete.php:120
+#: Athlete.php:121
 msgctxt "Default Term: Sports Field"
 msgid "Adventure"
 msgstr ""
 
-#: Athlete.php:121
+#: Athlete.php:122
 msgctxt "Default Term: Sports Field"
 msgid "Riding"
 msgstr ""
 
-#: Athlete.php:122
+#: Athlete.php:123
 msgctxt "Default Term: Sports Field"
 msgid "Shooting"
 msgstr ""
 
-#: Athlete.php:123
+#: Athlete.php:124
 msgctxt "Default Term: Sports Field"
 msgid "Group"
 msgstr ""
 
-#: Athlete.php:124
+#: Athlete.php:125
 msgctxt "Default Term: Sports Field"
 msgid "Net and Wall"
 msgstr ""
 
-#: Athlete.php:125
+#: Athlete.php:126
 msgctxt "Default Term: Sports Field"
 msgid "Mind"
 msgstr ""
 
-#: Athlete.php:126
+#: Athlete.php:127
 msgctxt "Default Term: Sports Field"
 msgid "Beach"
 msgstr ""
 
-#: Athlete.php:127
+#: Athlete.php:128
 msgctxt "Default Term: Sports Field"
 msgid "Water"
 msgstr ""
 
-#: Athlete.php:128
+#: Athlete.php:129
 msgctxt "Default Term: Sports Field"
 msgid "Snow"
 msgstr ""

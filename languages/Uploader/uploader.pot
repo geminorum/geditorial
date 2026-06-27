@@ -98,7 +98,7 @@ msgid "Can not put contents into file!"
 msgstr ""
 
 #. translators: `%1$s`: link markup start, `%2$s`: link markup end
-#: Uploader.php:260
+#: Uploader.php:261
 #, php-format
 msgctxt "Message"
 msgid "Alternatively, you can use %1$sLarge File Uploader%2$s widget on the dashoard."

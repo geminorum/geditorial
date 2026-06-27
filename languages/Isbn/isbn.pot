@@ -13,126 +13,136 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Isbn\n"
 "X-Domain: geditorial-isbn\n"
 
-#: Isbn.php:46
+#: Isbn.php:50
 msgctxt "Setting Title"
 msgid "Default Post-Type"
 msgstr ""
 
-#: Isbn.php:47
+#: Isbn.php:51
 msgctxt "Setting Description"
 msgid "Defines the default post-type to create new posts with queried data on front-end."
 msgstr ""
 
-#: Isbn.php:48
+#: Isbn.php:52
 msgctxt "Setting Description"
 msgid "Define supported post-types first!"
 msgstr ""
 
-#: Isbn.php:54
+#: Isbn.php:58
 msgctxt "Setting Description"
 msgid "Adds results by ISBN information on front-end search."
 msgstr ""
 
-#: Isbn.php:73
+#: Isbn.php:80
 msgctxt "Field Title"
 msgid "Bibliographic"
 msgstr ""
 
-#: Isbn.php:74
+#: Isbn.php:81
 msgctxt "Field Description"
 msgid "National Bibliographic Number"
 msgstr ""
 
-#: Isbn.php:82
-#: Isbn.php:409
+#: Isbn.php:89
+#: Isbn.php:542
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:83
-#: Isbn.php:92
-#: Isbn.php:103
-#: Isbn.php:114
-#: Isbn.php:125
+#: Isbn.php:90
+#: Isbn.php:99
+#: Isbn.php:110
+#: Isbn.php:121
+#: Isbn.php:132
 msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr ""
 
-#: Isbn.php:91
-#: Isbn.php:415
+#: Isbn.php:98
+#: Isbn.php:548
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr ""
 
-#: Isbn.php:97
+#: Isbn.php:104
 msgctxt "Field Title"
 msgid "ISBN #2 Label"
 msgstr ""
 
-#: Isbn.php:98
+#: Isbn.php:105
 msgctxt "Field Description"
 msgid "Label to use on ISBN #2"
 msgstr ""
 
-#: Isbn.php:102
-#: Isbn.php:421
+#: Isbn.php:109
+#: Isbn.php:554
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr ""
 
-#: Isbn.php:108
+#: Isbn.php:115
 msgctxt "Field Title"
 msgid "ISBN #3 Label"
 msgstr ""
 
-#: Isbn.php:109
+#: Isbn.php:116
 msgctxt "Field Description"
 msgid "Label to use on ISBN #3"
 msgstr ""
 
-#: Isbn.php:113
-#: Isbn.php:427
+#: Isbn.php:120
+#: Isbn.php:560
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr ""
 
-#: Isbn.php:119
+#: Isbn.php:126
 msgctxt "Field Title"
 msgid "ISBN #4 Label"
 msgstr ""
 
-#: Isbn.php:120
+#: Isbn.php:127
 msgctxt "Field Description"
 msgid "Label to use on ISBN #4"
 msgstr ""
 
-#: Isbn.php:124
-#: Isbn.php:433
+#: Isbn.php:131
+#: Isbn.php:566
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr ""
 
-#: Isbn.php:130
+#: Isbn.php:137
 msgctxt "Field Title"
 msgid "ISBN #5 Label"
 msgstr ""
 
-#: Isbn.php:131
+#: Isbn.php:138
 msgctxt "Field Description"
 msgid "Label to use on ISBN #5"
 msgstr ""
 
-#: Isbn.php:333
+#: Isbn.php:242
+msgctxt "Column Title"
+msgid "ISBN"
+msgstr ""
+
+#: Isbn.php:292
+msgctxt "Row Icon Title"
+msgid "ISBN"
+msgstr ""
+
+#: Isbn.php:466
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:456
+#: Isbn.php:589
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr ""
 
-#: Isbn.php:484
+#: Isbn.php:619
 msgctxt "Field Title Attr"
 msgid "See the page about this on National Library website."
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Quotation\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:24+0330\n"
+"PO-Revision-Date: 2025-11-17 13:03+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,170 +11,183 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
-#: Quotation.php:67
+#: Quotation.php:73
 msgid "Quote"
 msgid_plural "Quotes"
 msgstr[0] "نقل‌ها"
 msgstr[1] "نقل"
 
-#: Quotation.php:68
+#: Quotation.php:74
 msgid "Topic"
 msgid_plural "Topics"
 msgstr[0] "جستارها"
 msgstr[1] "جستار"
 
-#. translators: %s: count number
-#: Quotation.php:71
+#. translators: `%s`: count number
+#: Quotation.php:77
+#, php-format
 msgid "%s Quotation"
 msgid_plural "%s Quotations"
 msgstr[0] "%s نقل"
 msgstr[1] "%s نقل"
 
-#: Quotation.php:80
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Quotation.php:86
+#, php-format
+msgctxt "MetaBox: `listbox_title`"
+msgid "Quotations from &ldquo;%1$s&rdquo; %2$s"
+msgstr "نقل‌ها از %2$s &rdquo;%1$s&ldquo;"
+
+#: Quotation.php:91
 msgctxt "Posttype Menu"
 msgid "Quotation"
 msgstr "گفتاورد"
 
-#: Quotation.php:81
+#: Quotation.php:92
 msgctxt "MetaBox Title"
 msgid "Quotation"
 msgstr "گفتاورد"
 
-#: Quotation.php:83
+#: Quotation.php:94
 msgctxt "Column Title"
 msgid "Topic"
 msgstr "جستار"
 
-#: Quotation.php:84
+#: Quotation.php:95
 msgctxt "Misc: `column_icon_title`"
 msgid "Quotation Sources"
 msgstr "منابع نقل‌قول"
 
-#: Quotation.php:85
+#: Quotation.php:96
 msgctxt "Misc: `parent_post_empty`"
 msgid "Unknown Source"
 msgstr "[منبع نامعلوم]"
 
-#: Quotation.php:86
+#: Quotation.php:97
 msgctxt "Misc: `post_children_empty`"
 msgid "Not Quoted"
 msgstr "[بدون ارجاع]"
 
-#: Quotation.php:99
+#: Quotation.php:111
 msgctxt "Field Title"
 msgid "Parent"
 msgstr "مادر"
 
-#: Quotation.php:100
+#: Quotation.php:112
 msgctxt "Field Description"
 msgid "Parent post of the Quote"
 msgstr "فرسته مادر نقل‌قول"
 
-#: Quotation.php:106
+#: Quotation.php:118
 msgctxt "Field Title"
 msgid "Pages"
 msgstr "صفحات"
 
-#: Quotation.php:107
+#: Quotation.php:119
 msgctxt "Field Description"
 msgid "Source Pages of the Quote"
 msgstr "صفحات در منبع نقل‌قول"
 
-#: Quotation.php:114
+#: Quotation.php:126
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr "صفحه شروع"
 
-#: Quotation.php:115
+#: Quotation.php:127
 msgctxt "Field Description"
 msgid "Source Start Page of the Quote"
 msgstr "صفحه شروع در منبع نقل‌قول"
 
-#: Quotation.php:122
+#: Quotation.php:134
 msgctxt "Field Title"
 msgid "Page End"
 msgstr "صفحه پایان"
 
-#: Quotation.php:123
+#: Quotation.php:135
 msgctxt "Field Description"
 msgid "Source End Page of the Quote"
 msgstr "صفحه پایان در منبع نقل‌قول"
 
-#: Quotation.php:130
+#: Quotation.php:142
 msgctxt "Field Title"
 msgid "Section"
 msgstr "بخش"
 
-#: Quotation.php:131
+#: Quotation.php:143
 msgctxt "Field Description"
 msgid "Source Section of the Quote"
 msgstr "بخش در منبع نقل‌قول"
 
-#: Quotation.php:136
+#: Quotation.php:148
 msgctxt "Field Title"
 msgid "Volume"
 msgstr "جلد"
 
-#: Quotation.php:137
+#: Quotation.php:149
 msgctxt "Field Description"
 msgid "Source Volume of the Quote"
 msgstr "جلد منبع نقل‌قول"
 
-#: Quotation.php:143
+#: Quotation.php:155
 msgctxt "Field Title"
 msgid "Reference"
 msgstr "ارجاع"
 
-#: Quotation.php:144
+#: Quotation.php:156
 msgctxt "Field Description"
 msgid "Reference to the Quote Source"
 msgstr "ارجاع به منبع نقل‌قول"
 
-#: Quotation.php:148
+#: Quotation.php:160
 msgctxt "Field Title"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Quotation.php:149
+#: Quotation.php:161
 msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr "توضیحات نقل‌قول"
 
-#: Quotation.php:247 Quotation.php:250
+#: Quotation.php:276 Quotation.php:279
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr "ترتیب فهرست"
 
-#. translators: %1$s: post parent, `%2$s`: menu order
-#: Quotation.php:267
+#. translators: `%1$s`: post parent, `%2$s`: menu order
+#: Quotation.php:296
+#, php-format
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr "[نقل از «%1$s» — %2$s]"
 
-#. translators: %s: page start placeholder
-#: Quotation.php:296
+#. translators: `%s`: page start placeholder
+#: Quotation.php:325
+#, php-format
 msgctxt "Display"
 msgid "Starts on Page %s"
 msgstr "شروع از صفحه %s"
 
-#. translators: %s: page end placeholder
-#: Quotation.php:303
+#. translators: `%s`: page end placeholder
+#: Quotation.php:332
+#, php-format
 msgctxt "Display"
 msgid "Ends in Page %s"
 msgstr "پایان در صفحه %s"
 
-#. translators: %s: section placeholder
-#: Quotation.php:310
+#. translators: `%s`: section placeholder
+#: Quotation.php:339
+#, php-format
 msgctxt "Display"
 msgid "Section %s"
 msgstr "بخش %s"
 
-#. translators: %s: volume placeholder
-#: Quotation.php:317
+#. translators: `%s`: volume placeholder
+#: Quotation.php:346
+#, php-format
 msgctxt "Display"
 msgid "Volume %s"
 msgstr "جلد %s"

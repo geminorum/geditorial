@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Glossary\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-02-07 19:56+0330\n"
+"PO-Revision-Date: 2026-05-22 13:10+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,42 +11,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Glossary\n"
 "X-Domain: geditorial-glossary\n"
 
-#: Glossary.php:50
-msgctxt "Settings"
-msgid "Tries to linkify the glossary elements in contents of supported post-types."
-msgstr "برای پیوند‌دهی عناصر واژه‌نامه در محتوای فرسته‌های پشتیبانی‌شده تلاش می‌کند."
+#: Glossary.php:99
+msgid "Glossary Term"
+msgid_plural "Glossary Terms"
+msgstr[0] "کلمات واژه‌نامه"
+msgstr[1] "کلمه واژه‌نامه"
 
-#: Glossary.php:101
-msgid "Glossary Element"
-msgid_plural "Glossary Elements"
-msgstr[0] "عنصر‌های واژه‌نامه"
-msgstr[1] "عنصر واژه‌نامه"
-
-#: Glossary.php:105
+#: Glossary.php:103
 msgctxt "Label: `extended_label`"
-msgid "Glossary of Words"
+msgid "Glossary of Terms"
 msgstr "واژه‌نامه کلمات"
 
-#: Glossary.php:106
+#: Glossary.php:104
 msgctxt "Label: `menu_name`"
 msgid "Glossary"
 msgstr "واژه‌نامه"
 
-#: Glossary.php:107
+#: Glossary.php:105
 msgctxt "Label: `show_option_all`"
-msgid "Elements"
-msgstr "المان‌ها"
+msgid "Terms"
+msgstr "کلمات"
 
-#: Glossary.php:108
+#: Glossary.php:106
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr "(تعریف‌نشده)"
 
-#: Glossary.php:131
+#: Glossary.php:124
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
-msgstr ""
+msgstr "20"
+
+#~ msgctxt "Settings"
+#~ msgid "Tries to linkify the glossary terms in contents of supported post-types."
+#~ msgstr "برای پیوند‌دهی کلمات واژه‌نامه در محتوای فرسته‌های پشتیبانی‌شده تلاش می‌کند."
+
+#~ msgid "Glossary Element"
+#~ msgid_plural "Glossary Elements"
+#~ msgstr[0] "عنصر‌های واژه‌نامه"
+#~ msgstr[1] "عنصر واژه‌نامه"
+
+#~ msgctxt "Label: `show_option_all`"
+#~ msgid "Elements"
+#~ msgstr "المان‌ها"

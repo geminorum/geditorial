@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Interested\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-13 16:48+0330\n"
+"PO-Revision-Date: 2026-03-06 21:21+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,37 +11,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Interested\n"
 "X-Domain: geditorial-interested\n"
 
-#: Interested.php:95
+#: Interested.php:93
 msgid "Interest"
 msgid_plural "Interests"
 msgstr[0] "علاقمندی‌ها"
 msgstr[1] "علاقمندی"
 
-#: Interested.php:99
+#: Interested.php:97
 msgctxt "Label: `extended_label`"
 msgid "Content Interests"
 msgstr "علاقمندی‌های محتوا"
 
-#: Interested.php:100
+#: Interested.php:98
 msgctxt "Label: `menu_name`"
 msgid "Content Interests"
 msgstr "علاقمندی‌های محتوا"
 
-#: Interested.php:101
+#: Interested.php:99
 msgctxt "Label: `show_option_all`"
 msgid "Interests"
 msgstr "علاقمندی‌ها"
 
-#: Interested.php:102
+#: Interested.php:100
 msgctxt "Label: `show_option_no_items`"
 msgid "(Uninterested)"
 msgstr "(بی‌علاقه)"
 
-#: Interested.php:120
+#: Interested.php:118
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr "20"

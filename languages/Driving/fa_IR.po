@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Driving\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 12:38+0330\n"
+"PO-Revision-Date: 2026-03-27 11:54+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,177 +11,188 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Driving\n"
 "X-Domain: geditorial-driving\n"
 
-#: Driving.php:81
+#: Driving.php:84
 msgctxt "Field Label: `label`"
 msgid "Model & Color"
 msgstr "مدل و رنگ"
 
-#: Driving.php:82
-msgctxt "Field Label: `platenumber`"
+#: Driving.php:85
+msgctxt "Field Label: `plate`"
 msgid "Plate Number"
 msgstr "شماره پلاک"
 
-#: Driving.php:83
+#: Driving.php:86
 msgctxt "Field Label: `fullname`"
 msgid "Owner"
 msgstr "مالک"
 
-#: Driving.php:84
+#: Driving.php:87
 msgctxt "Field Label: `identity`"
 msgid "Identity"
 msgstr "کد ملی"
 
-#: Driving.php:85
+#: Driving.php:88
 msgctxt "Field Label: `relation`"
 msgid "Relation"
 msgstr "نسبت"
 
-#: Driving.php:86
+#: Driving.php:89
 msgctxt "Field Label: `phone`"
 msgid "Contact"
 msgstr "تماس"
 
-#: Driving.php:87
+#: Driving.php:90
 msgctxt "Field Label: `year`"
 msgid "Year"
 msgstr "سال"
 
-#: Driving.php:88
+#: Driving.php:91
 msgctxt "Field Label: `vin`"
 msgid "VIN"
 msgstr "وین"
 
-#: Driving.php:89
+#: Driving.php:92
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Driving.php:95
+#: Driving.php:98
 msgctxt "Tab Title"
 msgid "Vehicles"
 msgstr "خودرو"
 
-#: Driving.php:99
+#: Driving.php:102
 msgctxt "Notice"
 msgid "There is no vehicle information available!"
 msgstr "هیچ اطلاعات خودرویی در دسترس نیست!"
 
-#: Driving.php:100
+#: Driving.php:103
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the vehicles data."
 msgstr "شما دستری لازم برای مدیریت داده‌های خودرویی را ندارید."
 
-#: Driving.php:107
+#: Driving.php:110
 msgctxt "MetaBox Title"
 msgid "Vehicles"
 msgstr "خودرو"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Driving.php:111
+#: Driving.php:114
+#, php-format
 msgctxt "Button Title"
 msgid "Vehicles of %1$s"
 msgstr "خودروهای %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Driving.php:113
+#: Driving.php:116
+#, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Vehicles of %2$s"
 msgstr "%1$s مدیریت خودروهای این %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Driving.php:116
+#: Driving.php:119
+#, php-format
 msgctxt "Action Title"
 msgid "Vehicles of %1$s"
 msgstr "خودروهای %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Driving.php:118
+#: Driving.php:121
 msgctxt "Action Text"
 msgid "Vehicles"
 msgstr "خودرو"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Driving.php:121
+#: Driving.php:124
+#, php-format
 msgctxt "Row Title"
 msgid "Vehicles of %1$s"
 msgstr "خودروهای %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Driving.php:123
+#: Driving.php:126
 msgctxt "Row Text"
 msgid "Vehicles"
 msgstr "خودرو"
 
-#: Driving.php:135
+#: Driving.php:138
 msgctxt "Field Title"
 msgid "Vehicle Model"
 msgstr "مدل خودرو"
 
-#: Driving.php:136
+#: Driving.php:139
 msgctxt "Field Description"
 msgid "Registered Vehicle Model"
 msgstr "مدل ثبتی خودرو"
 
-#: Driving.php:140
+#: Driving.php:143
 msgctxt "Field Title"
 msgid "Vehicle Color"
 msgstr "رنگ خودرو"
 
-#: Driving.php:141
+#: Driving.php:144
 msgctxt "Field Description"
 msgid "Registered Vehicle Color"
 msgstr "رنگ ثبتی خودرو"
 
-#: Driving.php:145
+#: Driving.php:148
 msgctxt "Field Title"
 msgid "Vehicle Year"
 msgstr "سال تولید خودرو"
 
-#: Driving.php:146
+#: Driving.php:149
 msgctxt "Field Description"
 msgid "Registered Vehicle Year"
 msgstr "سال ثبتی تولید خودرو"
 
-#: Driving.php:151
+#: Driving.php:154
 msgctxt "Field Title"
 msgid "Vehicle Plate"
 msgstr "پلاک خودرو"
 
-#: Driving.php:152
+#: Driving.php:155
 msgctxt "Field Description"
 msgid "Registered Vehicle Plate"
 msgstr "شماره ثبتی پلاک خودرو"
 
-#: Driving.php:157
+#: Driving.php:160
 msgctxt "Field Title"
 msgid "VIN"
 msgstr "وین"
 
-#: Driving.php:158
+#: Driving.php:161
 msgctxt "Field Description"
 msgid "Vehicle Identification Number"
 msgstr "شماره شناسایی خودرو"
 
 #. translators: `%s`: post title
-#: Driving.php:285
+#: Driving.php:288
+#, php-format
 msgctxt "Page Title"
 msgid "Vehicle Grid for %s"
 msgstr "شبکه خودرویی برای %s"
 
 #. translators: `%s`: post title
-#: Driving.php:287
+#: Driving.php:290
+#, php-format
 msgctxt "Page Title"
 msgid "Vehicle Overview for %s"
 msgstr "نمای کلی خودرویی برای %s"
 
-#: Driving.php:304
+#: Driving.php:307
 msgctxt "Default Term: Audit"
 msgid "Empty Vehicle Data"
 msgstr "داده‌های خودرو خالی‌ست"
+
+#: Driving.php:332
+msgctxt "Header"
+msgid "Overview of the Vehicles"
+msgstr "مروری بر خودروها"
 
 #~ msgctxt "Field Label: `contact`"
 #~ msgid "Contact"

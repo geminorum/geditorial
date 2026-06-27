@@ -13,93 +13,51 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Statuses\n"
 "X-Domain: geditorial-statuses\n"
 
-#: Statuses.php:44
+#: Statuses.php:56
 msgctxt "Setting Title"
 msgid "Status Menu"
 msgstr ""
 
-#: Statuses.php:45
+#: Statuses.php:57
 msgctxt "Setting Description"
 msgid "Adds status links to the admin submenus for each supported posttype."
 msgstr ""
 
-#: Statuses.php:54
+#: Statuses.php:66
 msgctxt "Setting Title"
 msgid "Map Status Roles"
 msgstr ""
 
-#: Statuses.php:58
+#: Statuses.php:70
 msgctxt "Setting Title"
 msgid "Default Status"
 msgstr ""
 
 #. translators: `%s`: status name
-#: Statuses.php:71
+#: Statuses.php:84
 #, php-format
 msgctxt "Setting Title"
 msgid "Roles for %s"
 msgstr ""
 
 #. translators: `%s`: status name
-#: Statuses.php:73
+#: Statuses.php:89
 #, php-format
 msgctxt "Setting Description"
-msgid "The <b>%s</b> status will be visibile to the selected roles."
+msgid "The %s status will be visibile to the selected roles."
 msgstr ""
 
-#: Statuses.php:91
+#: Statuses.php:109
 msgctxt "Default Term"
 msgid "Expired"
 msgstr ""
 
-#: Statuses.php:92
+#: Statuses.php:110
 msgctxt "Default Term"
 msgid "Achieved"
 msgstr ""
 
-#: Statuses.php:105
+#: Statuses.php:123
 msgctxt "Taxonomy Label"
 msgid "Statuses"
-msgstr ""
-
-#. translators: `%s`: status name
-#: Statuses.php:149
-#, php-format
-msgctxt "MetaBox Submit"
-msgid "Submit: %s"
-msgstr ""
-
-#. translators: `%s`: status name
-#: Statuses.php:151
-#, php-format
-msgctxt "MetaBox Save On"
-msgid "Save as %s on:"
-msgstr ""
-
-#. translators: `%1$s`: status name, `%2$s`: time placeholder
-#: Statuses.php:153
-#, php-format
-msgctxt "MetaBox Save Date"
-msgid "Save as %1$s on: %2$s"
-msgstr ""
-
-#. translators: `%s`: status name
-#: Statuses.php:155
-#, php-format
-msgctxt "MetaBox Saved On"
-msgid "Saved as %s on:"
-msgstr ""
-
-#. translators: `%1$s`: status name, `%2$s`: time placeholder
-#: Statuses.php:157
-#, php-format
-msgctxt "MetaBox Saved Date"
-msgid "Saved as %1$s on: %2$s"
-msgstr ""
-
-#. translators: `%s`: status name
-#: Statuses.php:159
-#, php-format
-msgctxt "MetaBox Saved On"
-msgid "Save as %s <b>now</b>"
 msgstr ""

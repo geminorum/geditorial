@@ -1,2 +1,0 @@
-<?php
-return ['domain'=>'geditorial-territory','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Territory','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:28+0330','x-generator'=>'Poedit 3.5','messages'=>['Territorial Arrangement'=>'آمایش‌های سرزمینی' . "\0" . 'آمایش سرزمینی','Label: Menu NameContent Territory'=>'سرزمین محتوا','Label: Show Option AllTerritory'=>'آمایش','Label: Show Option No Terms(No-Territory)'=>'(بدون آمایش)']];

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Symposium\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-04-03 06:33+0330\n"
+"PO-Revision-Date: 2026-06-27 10:36+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,62 +11,97 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Symposium\n"
 "X-Domain: geditorial-symposium\n"
 
-#: Symposium.php:76
+#: Symposium.php:44
+msgctxt "Settings"
+msgid "Connected Post-types"
+msgstr "نوع‌فرسته‌های پیوسته"
+
+#: Symposium.php:65
+msgctxt "Settings"
+msgid "Owner Post-types"
+msgstr "نوع‌فرسته‌های مالک"
+
+#: Symposium.php:66
+msgctxt "Settings"
+msgid "Selected will be available as the post-types of the owner meta-field."
+msgstr ""
+
+#: Symposium.php:90
 msgid "Session"
 msgid_plural "Sessions"
 msgstr[0] "نشست‌ها"
 msgstr[1] "نشست"
 
-#: Symposium.php:77
+#: Symposium.php:91
 msgid "Session Category"
 msgid_plural "Session Categories"
 msgstr[0] "دسته‌های نشست"
 msgstr[1] "دسته نشست"
 
-#: Symposium.php:78
+#: Symposium.php:92
 msgid "Session Type"
 msgid_plural "Session Types"
 msgstr[0] "انواع نشست"
 msgstr[1] "نوع نشست"
 
-#: Symposium.php:87
+#: Symposium.php:96
+msgctxt "MetaBox Title"
+msgid "Connected Sessions"
+msgstr "نشست‌های پیوسته"
+
+#: Symposium.php:106
 msgctxt "Session: Featured"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Symposium.php:98
+#: Symposium.php:117
 msgctxt "Session Type: Default Term"
 msgid "Lecture"
 msgstr "سخنرانی"
 
-#: Symposium.php:99
+#: Symposium.php:118
 msgctxt "Session Type: Default Term"
 msgid "Conference"
 msgstr "همایش"
 
-#: Symposium.php:100
+#: Symposium.php:119
 msgctxt "Session Type: Default Term"
 msgid "Colloquium"
 msgstr "مکالمه"
 
-#: Symposium.php:101
+#: Symposium.php:120
 msgctxt "Session Type: Default Term"
 msgid "Book Review"
 msgstr "نقد کتاب"
 
-#: Symposium.php:116
+#: Symposium.php:135
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr "افراد برجسته"
 
-#: Symposium.php:117
+#: Symposium.php:136
 msgctxt "Field Description"
 msgid "People Who Featured in This Session"
 msgstr "افرادی که به صورت برجسته در این نشست حضور داشته‌اند"
+
+#: Symposium.php:141 Symposium.php:146
+msgctxt "Field Title"
+msgid "Owner"
+msgstr "مالک"
+
+#: Symposium.php:142
+msgctxt "Field Description"
+msgid "Determines the user responsible for this session."
+msgstr "کاربر مسؤول این نشست را مشخص می‌کند."
+
+#: Symposium.php:147
+msgctxt "Field Description"
+msgid "Determines the individual responsible for this session."
+msgstr "فرد مسؤول این نشست را مشخص می‌کند."
 
 #~ msgid "Session Audience"
 #~ msgid_plural "Session Audiences"

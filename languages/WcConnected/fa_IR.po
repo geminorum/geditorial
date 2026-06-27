@@ -3,21 +3,21 @@ msgstr ""
 "Project-Id-Version: gEditorial WC Connected\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-11-17 13:03+0330\n"
+"PO-Revision-Date: 2026-03-27 20:47+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcConnected\n"
 "X-Domain: geditorial-wc-connected\n"
 
 #: WcConnected.php:40
 msgctxt "Setting Description"
 msgid "Displays connected posts on front-end product tabs."
-msgstr "فرسته‌های متصل را در زبانه‌های کالا روی سایت نمایش می‌دهد."
+msgstr "فرسته‌های پیوسته را در زبانه‌های کالا روی سایت نمایش می‌دهد."
 
 #: WcConnected.php:41 WcConnected.php:269
 msgctxt "Setting Default"
@@ -28,13 +28,13 @@ msgstr "فرسته‌های مرتبط"
 #: WcConnected.php:76
 msgctxt "MetaBox: `mainbox_title`"
 msgid "Connected Contents"
-msgstr "محتوای متصل"
+msgstr "محتوای پیوسته"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: WcConnected.php:78
 msgctxt "MetaBox: `supportedbox_title`"
 msgid "Connected Products"
-msgstr "کالاهای متصل"
+msgstr "کالاهای پیوسته"
 
 #: WcConnected.php:195
 msgctxt "Place Holder"
@@ -44,12 +44,12 @@ msgstr "جست‌وجو برای کالا …"
 #: Widgets/WcConnectedProducts.php:18
 msgctxt "Widget Title"
 msgid "Editorial: WC Connected Products"
-msgstr "تحریریه: وکـ کالاهای متصل"
+msgstr "تحریریه: وکـ کالاهای پیوسته"
 
 #: Widgets/WcConnectedProducts.php:19
 msgctxt "Widget Description"
 msgid "Displays connected products for currently queried post."
-msgstr "کالاهای متصل را برای فرسته کنونی نمایش می‌دهد."
+msgstr "کالاهای پیوسته را برای فرسته کنونی نمایش می‌دهد."
 
 #: Widgets/WcConnectedProducts.php:66
 msgctxt "Widget: WC Connected Products"

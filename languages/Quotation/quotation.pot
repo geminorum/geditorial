@@ -13,172 +13,179 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Quotation\n"
 "X-Domain: geditorial-quotation\n"
 
-#: Quotation.php:72
+#: Quotation.php:71
 msgid "Quote"
 msgid_plural "Quotes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Quotation.php:73
+#: Quotation.php:72
 msgid "Topic"
 msgid_plural "Topics"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: `%s`: count number
-#: Quotation.php:76
+#: Quotation.php:75
 #, php-format
 msgid "%s Quotation"
 msgid_plural "%s Quotations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Quotation.php:85
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Quotation.php:84
+#, php-format
+msgctxt "MetaBox: `listbox_title`"
+msgid "Quotations from &ldquo;%1$s&rdquo; %2$s"
+msgstr ""
+
+#: Quotation.php:89
 msgctxt "Posttype Menu"
 msgid "Quotation"
 msgstr ""
 
-#: Quotation.php:86
+#: Quotation.php:90
 msgctxt "MetaBox Title"
 msgid "Quotation"
 msgstr ""
 
-#: Quotation.php:88
+#: Quotation.php:92
 msgctxt "Column Title"
 msgid "Topic"
 msgstr ""
 
-#: Quotation.php:89
+#: Quotation.php:93
 msgctxt "Misc: `column_icon_title`"
 msgid "Quotation Sources"
 msgstr ""
 
-#: Quotation.php:90
+#: Quotation.php:94
 msgctxt "Misc: `parent_post_empty`"
 msgid "Unknown Source"
 msgstr ""
 
-#: Quotation.php:91
+#: Quotation.php:95
 msgctxt "Misc: `post_children_empty`"
 msgid "Not Quoted"
 msgstr ""
 
-#: Quotation.php:105
+#: Quotation.php:109
 msgctxt "Field Title"
 msgid "Parent"
 msgstr ""
 
-#: Quotation.php:106
+#: Quotation.php:110
 msgctxt "Field Description"
 msgid "Parent post of the Quote"
 msgstr ""
 
-#: Quotation.php:112
+#: Quotation.php:116
 msgctxt "Field Title"
 msgid "Pages"
 msgstr ""
 
-#: Quotation.php:113
+#: Quotation.php:117
 msgctxt "Field Description"
 msgid "Source Pages of the Quote"
 msgstr ""
 
-#: Quotation.php:120
+#: Quotation.php:124
 msgctxt "Field Title"
 msgid "Page Start"
 msgstr ""
 
-#: Quotation.php:121
+#: Quotation.php:125
 msgctxt "Field Description"
 msgid "Source Start Page of the Quote"
 msgstr ""
 
-#: Quotation.php:128
+#: Quotation.php:132
 msgctxt "Field Title"
 msgid "Page End"
 msgstr ""
 
-#: Quotation.php:129
+#: Quotation.php:133
 msgctxt "Field Description"
 msgid "Source End Page of the Quote"
 msgstr ""
 
-#: Quotation.php:136
+#: Quotation.php:140
 msgctxt "Field Title"
 msgid "Section"
 msgstr ""
 
-#: Quotation.php:137
+#: Quotation.php:141
 msgctxt "Field Description"
 msgid "Source Section of the Quote"
 msgstr ""
 
-#: Quotation.php:142
+#: Quotation.php:146
 msgctxt "Field Title"
 msgid "Volume"
 msgstr ""
 
-#: Quotation.php:143
+#: Quotation.php:147
 msgctxt "Field Description"
 msgid "Source Volume of the Quote"
 msgstr ""
 
-#: Quotation.php:149
+#: Quotation.php:153
 msgctxt "Field Title"
 msgid "Reference"
 msgstr ""
 
-#: Quotation.php:150
+#: Quotation.php:154
 msgctxt "Field Description"
 msgid "Reference to the Quote Source"
 msgstr ""
 
-#: Quotation.php:154
+#: Quotation.php:158
 msgctxt "Field Title"
 msgid "Description"
 msgstr ""
 
-#: Quotation.php:155
+#: Quotation.php:159
 msgctxt "Field Description"
 msgid "Description of the Quote"
 msgstr ""
 
-#: Quotation.php:258
-#: Quotation.php:261
+#: Quotation.php:281
+#: Quotation.php:284
 msgctxt "Placeholder"
 msgid "Menu Order"
 msgstr ""
 
 #. translators: `%1$s`: post parent, `%2$s`: menu order
-#: Quotation.php:278
+#: Quotation.php:302
 #, php-format
 msgctxt "Title Template"
 msgid "[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]"
 msgstr ""
 
 #. translators: `%s`: page start placeholder
-#: Quotation.php:307
+#: Quotation.php:333
 #, php-format
 msgctxt "Display"
 msgid "Starts on Page %s"
 msgstr ""
 
 #. translators: `%s`: page end placeholder
-#: Quotation.php:314
+#: Quotation.php:340
 #, php-format
 msgctxt "Display"
 msgid "Ends in Page %s"
 msgstr ""
 
 #. translators: `%s`: section placeholder
-#: Quotation.php:321
+#: Quotation.php:347
 #, php-format
 msgctxt "Display"
 msgid "Section %s"
 msgstr ""
 
 #. translators: `%s`: volume placeholder
-#: Quotation.php:328
+#: Quotation.php:354
 #, php-format
 msgctxt "Display"
 msgid "Volume %s"

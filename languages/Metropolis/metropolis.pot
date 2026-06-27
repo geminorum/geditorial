@@ -13,38 +13,38 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Metropolis\n"
 "X-Domain: geditorial-metropolis\n"
 
-#: Metropolis.php:96
+#: Metropolis.php:97
 msgid "City"
 msgid_plural "Cities"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Metropolis.php:100
+#: Metropolis.php:101
 msgctxt "Label: `extended_label`"
 msgid "Cities Directory"
 msgstr ""
 
-#: Metropolis.php:101
+#: Metropolis.php:102
 msgctxt "Label: `menu_name`"
 msgid "Cities Directory"
 msgstr ""
 
-#: Metropolis.php:102
+#: Metropolis.php:103
 msgctxt "Label: `show_option_all`"
 msgid "Cities"
 msgstr ""
 
-#: Metropolis.php:103
+#: Metropolis.php:104
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr ""
 
-#: Metropolis.php:120
+#: Metropolis.php:121
 msgctxt "Main Taxonomy: Default Term"
 msgid "Tehran"
 msgstr ""
 
-#: Metropolis.php:135
+#: Metropolis.php:136
 msgctxt "Main Taxonomy Argument: `data_length`"
 msgid "20"
 msgstr ""

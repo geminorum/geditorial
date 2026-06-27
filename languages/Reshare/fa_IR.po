@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Reshare\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:10+0330\n"
+"PO-Revision-Date: 2026-03-27 20:42+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,21 +11,43 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Reshare\n"
 "X-Domain: geditorial-reshare\n"
 
-#: Reshare.php:76
+#: Reshare.php:36
+msgctxt "Setting Title"
+msgid "Connected Post-types"
+msgstr "نوع‌فرسته‌های پیوسته"
+
+#: Reshare.php:63
 msgid "Reshare"
 msgid_plural "Reshares"
 msgstr[0] "بازنشرها"
 msgstr[1] "بازنشر"
 
-#: Reshare.php:77
+#: Reshare.php:64
 msgid "Reshare Category"
 msgid_plural "Reshare Categories"
 msgstr[0] "دسته‌های بازنشر"
 msgstr[1] "دسته بازنشر"
+
+#: Reshare.php:68
+msgctxt "MetaBox Title"
+msgid "Connected Reshares"
+msgstr "بازنشرهای پیوسته"
+
+#~ msgctxt "Settings"
+#~ msgid "Description Field"
+#~ msgstr "فیلد توضیحات"
+
+#~ msgctxt "Settings"
+#~ msgid "Displays description field on connected metabox."
+#~ msgstr "فیلد توضیحات را در متاباکس متصل نمایش می‌دهد."
+
+#~ msgctxt "Field Title"
+#~ msgid "Description"
+#~ msgstr "توضیحات"
 
 #~ msgctxt "Column Title"
 #~ msgid "Reshare Categories"

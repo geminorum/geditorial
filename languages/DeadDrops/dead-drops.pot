@@ -24,7 +24,7 @@ msgid "Displays beside the qr-code on the signalling pop-up. Leave blank for def
 msgstr ""
 
 #: DeadDrops.php:45
-#: DeadDrops.php:136
+#: DeadDrops.php:142
 msgctxt "Message"
 msgid "Scan this with your phone and open it to upload files anonymously."
 msgstr ""
@@ -36,12 +36,12 @@ msgctxt "Button Title"
 msgid "Dead Drop for %1$s"
 msgstr ""
 
-#: DeadDrops.php:242
+#: DeadDrops.php:251
 msgctxt "Header Button"
 msgid "Dead Drop"
 msgstr ""
 
-#: DeadDrops.php:410
+#: DeadDrops.php:419
 msgctxt "Button"
 msgid "Discard"
 msgstr ""

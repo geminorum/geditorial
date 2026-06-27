@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WcRelated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:14+0330\n"
+"PO-Revision-Date: 2026-01-09 10:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -11,20 +11,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcRelated\n"
 "X-Domain: geditorial-wc-related\n"
 
-#: WcRelated.php:32 WcRelated.php:88
+#: WcRelated.php:32 WcRelated.php:81
 msgctxt "Setting Title"
 msgid "Hide Out-of-Stock"
 msgstr "پنهان‌سازی عدم موجودی"
 
 #: WcRelated.php:33
 msgctxt "Setting Description"
-msgid ""
-"Modifies the visibility of out-of-stock items on related products. "
-"Applicable only if out-of-stock items are not generally hidden."
+msgid "Modifies the visibility of out-of-stock items on related products. Applicable only if out-of-stock items are not generally hidden."
 msgstr ""
 
 #: WcRelated.php:38
@@ -34,9 +32,7 @@ msgstr "پنهان‌سازی عدم بندانگشتی"
 
 #: WcRelated.php:39
 msgctxt "Setting Description"
-msgid ""
-"Modifies the visibility of items without thumbnail on related products. "
-"Applicable only if out-of-stock items are not generally hidden."
+msgid "Modifies the visibility of items without thumbnail on related products. Applicable only if out-of-stock items are not generally hidden."
 msgstr ""
 
 #: WcRelated.php:44
@@ -99,47 +95,45 @@ msgctxt "Setting Description"
 msgid "Sets all products are related."
 msgstr ""
 
-#: WcRelated.php:81
-msgctxt "Setting Title"
-msgid "Related on Tabs"
-msgstr "مرتبط روی زبانه‌ها"
-
 #: WcRelated.php:82
 msgctxt "Setting Description"
-msgid "Displays Upsells and Related products on front-end product tabs."
+msgid "Enforces the visibility of out-of-stock items on related by attribute products."
 msgstr ""
 
-#: WcRelated.php:89
-msgctxt "Setting Description"
-msgid ""
-"Enforces the visibility of out-of-stock items on related by attribute "
-"products."
-msgstr ""
-
-#: WcRelated.php:94
+#: WcRelated.php:87
 msgctxt "Setting Title"
 msgid "Related by Taxonomy"
 msgstr "مرتبط با رده‌بندی"
 
-#: WcRelated.php:99
+#: WcRelated.php:92
 msgctxt "Setting Title"
 msgid "Taxonomy"
 msgstr "رده‌بندی"
 
-#: WcRelated.php:100
+#: WcRelated.php:93
 msgctxt "Setting Description"
 msgid "Target taxonomy for related products."
 msgstr ""
 
-#: WcRelated.php:107
+#: WcRelated.php:99
 msgctxt "Setting Title"
 msgid "Heading"
 msgstr "تیتر"
 
-#: WcRelated.php:108
+#: WcRelated.php:100
 msgctxt "Setting Description"
 msgid "Template for related products heading."
 msgstr ""
+
+#: WcRelated.php:106
+msgctxt "Setting Description"
+msgid "Displays Upsells and Related products on front-end product tabs."
+msgstr ""
+
+#: WcRelated.php:107 WcRelated.php:232
+msgctxt "Setting Default"
+msgid "Related Products"
+msgstr "کالاهای مرتبط"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Related by Attribute"

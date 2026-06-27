@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Markdown\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-14 11:13+0330\n"
+"PO-Revision-Date: 2026-02-07 03:28+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,96 +11,209 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Markdown\n"
 "X-Domain: geditorial-markdown\n"
 
-#: Markdown.php:38
+#: Markdown.php:50
 msgctxt "Setting Title"
 msgid "Wiki Linking"
 msgstr "پیونددهی ویکی"
 
-#: Markdown.php:39
+#: Markdown.php:51
 msgctxt "Setting Description"
 msgid "Converts wiki like markup into internal links."
 msgstr ""
 
-#: Markdown.php:89
-msgctxt "Adminbar"
-msgid "Markdown Summary"
-msgstr "مارک‌داون"
-
-#: Markdown.php:98
-msgctxt "Adminbar"
-msgid "Markdown: Convert"
-msgstr "تبدیل به مارک‌داون"
-
-#: Markdown.php:108
-msgctxt "Adminbar"
-msgid "Markdown: Process"
-msgstr "پردازش مارک‌داون"
-
-#: Markdown.php:116
-msgctxt "Adminbar"
-msgid "Markdown: Cleanup"
-msgstr "پالایش مارک‌داون"
-
-#: Markdown.php:124
-msgctxt "Adminbar"
-msgid "Markdown: Discard"
-msgstr "برگشت از مارک‌داون"
-
-#: Markdown.php:154
-msgctxt "Message"
-msgid "Unable to process Markdown content into HTML. Please try again."
-msgstr ""
+#: Markdown.php:152
+msgctxt "Node: Title"
+msgid "Markdown Syntax"
+msgstr "دستورخط مارک‌داون"
 
 #: Markdown.php:162
-msgctxt "Message"
-msgid "Unable to convert content into Markdown. Please try again."
-msgstr ""
+msgctxt "Node: Notice"
+msgid "This content is written in HTML."
+msgstr "این محتوا به HTML نوشته شده است."
 
-#: Markdown.php:171
-msgctxt "Message"
-msgid "Unable to cleanup Markdown content. Please try again."
-msgstr ""
+#: Markdown.php:172
+msgctxt "Node: Title"
+msgid "Convert Markdown to HTML"
+msgstr "تبدیل مارک‌داون به HTML"
 
-#: Markdown.php:179
-msgctxt "Message"
-msgid "Unable to discard Markdown content back into HTML. Please try again."
-msgstr ""
+#: Markdown.php:176
+msgctxt "Node: Title"
+msgid "Tries to convert Markdown to HTML from raw content."
+msgstr "برای تبدیل مارک‌داون به HTML از محتوای خام تلاش می‌کند."
 
-#: Markdown.php:469
+#: Markdown.php:185
+msgctxt "Node: Notice"
+msgid "This content is written in Markdown."
+msgstr "این محتوا به مارک‌داون نوشته شده است."
+
+#: Markdown.php:196
+msgctxt "Node: Title"
+msgid "Clean-up Content"
+msgstr "پالایش محتوا"
+
+#: Markdown.php:200
+msgctxt "Node: Title"
+msgid "Tries to clean-up and convert from raw content."
+msgstr "برای پالایش و تدبیل از محتوای خام تلاش می‌کند."
+
+#: Markdown.php:209
+msgctxt "Node: Title"
+msgid "Process Content Again"
+msgstr "پردازش دوباره محتوا"
+
+#: Markdown.php:213
+msgctxt "Node: Title"
+msgid "Tries to re-process Markdown to HTML from raw content."
+msgstr "برای پردازش دوباره مارک‌داون به HTML از محتوای خام تلاش می‌کند."
+
+#: Markdown.php:222
+msgctxt "Node: Title"
+msgid "Discard Converted HTML"
+msgstr "واگردانی HTML تبدیل‌شده"
+
+#: Markdown.php:226
+msgctxt "Node: Title"
+msgid "Tries to discard processed Markdown and restore raw content."
+msgstr "برای واگردانی مارک‌داون پردازش‌شده و بازنشانی محتوای خام تلاش می‌کند."
+
+#: Markdown.php:252
+msgctxt "Node: Notice"
+msgid "Written in HTML"
+msgstr "نوشته به HTML"
+
+#. translators: `%s`: singular post-type label
+#: Markdown.php:257
+#, php-format
+msgctxt "Node: Title"
+msgid "The content of this %s is written in conventional HTML."
+msgstr "محتوای این %s به HTML قراردادی نوشته شده است."
+
+#: Markdown.php:268
+msgctxt "Node: Notice"
+msgid "Written in Markdown"
+msgstr "نوشته به مارک‌داون"
+
+#. translators: `%s`: singular post-type label
+#: Markdown.php:274
+#, php-format
+msgctxt "Node: Title"
+msgid "The content of this %s is written in Markdown syntax."
+msgstr "محتوای این %s به دستورخط مارک‌داون نوشته شده است."
+
+#: Markdown.php:300
+msgctxt "Message"
+msgid "Unable to process Markdown content into HTML!"
+msgstr "ناتوانی در پردازش محتوای مارک‌داون به HTML!"
+
+#: Markdown.php:302
+msgctxt "Message"
+msgid "Processed successfully. Reloading &hellip;"
+msgstr "پردازش موفق بود. بارگیری دوباره &hellip;"
+
+#: Markdown.php:308
+msgctxt "Message"
+msgid "Unable to convert content into Markdown!"
+msgstr "ناتوانی در تبدیل محتوا به مارک‌داون!"
+
+#: Markdown.php:310
+msgctxt "Message"
+msgid "Converted successfully. Reloading &hellip;"
+msgstr "تبدیل موفق بود. بارگیری دوباره &hellip;"
+
+#: Markdown.php:316
+msgctxt "Message"
+msgid "Unable to cleanup Markdown content!"
+msgstr "ناتوانی در پالایش محتوای مارک‌داون!"
+
+#: Markdown.php:318
+msgctxt "Message"
+msgid "Cleaned-up successfully. Reloading &hellip;"
+msgstr "پالایش موفق بود. بارگیری دوباره &hellip;"
+
+#: Markdown.php:324
+msgctxt "Message"
+msgid "Unable to discard Markdown content back into HTML!"
+msgstr "ناتوان در واگردانی محتوای مارک‌داون به HTML!"
+
+#: Markdown.php:326
+msgctxt "Message"
+msgid "Discarded successfully. Reloading &hellip;"
+msgstr "واگردانی موفق بود. بارگیری دوباره &hellip;"
+
+#: Markdown.php:547
+msgctxt "Pointer"
+msgid "The content can be written in <b>Markdown</b>"
+msgstr "این محتوا ‌می‌تواند به <b>مارک‌داون</b> نوشته شود"
+
+#: Markdown.php:561
+msgctxt "Pointer"
+msgid "The content is written in <b>Markdown</b>"
+msgstr "این محتوا به <b>مارک‌داون</b> نوشته شده است"
+
+#: Markdown.php:562
+msgctxt "Pointer"
+msgid "The content is written in <b>HTML</b>"
+msgstr "این محتوا به <b>HTML</b> نوشته شده است"
+
+#: Markdown.php:642
 msgctxt "Table Action"
 msgid "Convert into Markdown"
 msgstr "تبدیل به مارک‌داون"
 
-#: Markdown.php:470
+#: Markdown.php:643
 msgctxt "Table Action"
 msgid "Re-Process Markdown"
 msgstr "پردازش دوباره مارک‌داون"
 
-#: Markdown.php:471
+#: Markdown.php:644
 msgctxt "Table Action"
 msgid "Cleanup Markdown"
 msgstr "پالایش مارک‌داون"
 
-#: Markdown.php:472
+#: Markdown.php:645
 msgctxt "Table Action"
 msgid "Discard Markdown"
 msgstr "برگشت از مارک‌داون"
 
-#: Markdown.php:483
+#: Markdown.php:656
 msgctxt "Table Column"
 msgid "Markdown"
 msgstr "مـ. د."
 
-#: Markdown.php:494
+#: Markdown.php:667
 msgctxt "Header"
 msgid "Overview of Markdown Posts"
 msgstr "مروری بر نوشته‌ها به مارک‌داون"
 
-#: Markdown.php:495
+#: Markdown.php:668
 msgctxt "Message"
 msgid "No markdown posts found."
 msgstr "نوشته‌ای با مارک‌داون پیدا نشد."
+
+#~ msgctxt "Node: Title"
+#~ msgid "Do a Clean-up"
+#~ msgstr "اعمال پالایش"
+
+#~ msgctxt "Node: Title"
+#~ msgid "Convert Back to Raw"
+#~ msgstr "برگشت به محتوای خام"
+
+#~ msgctxt "Adminbar"
+#~ msgid "Markdown: Convert"
+#~ msgstr "تبدیل به مارک‌داون"
+
+#~ msgctxt "Adminbar"
+#~ msgid "Markdown: Process"
+#~ msgstr "پردازش مارک‌داون"
+
+#~ msgctxt "Adminbar"
+#~ msgid "Markdown: Cleanup"
+#~ msgstr "پالایش مارک‌داون"
+
+#~ msgctxt "Adminbar"
+#~ msgid "Markdown: Discard"
+#~ msgstr "برگشت از مارک‌داون"

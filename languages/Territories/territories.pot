@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial Territory\n"
+"Project-Id-Version: gEditorial Territories\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -10,26 +10,26 @@ msgstr ""
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Poedit-Basepath: ../../includes/Modules/Territory\n"
-"X-Domain: geditorial-territory\n"
+"X-Poedit-Basepath: ../../includes/Modules/Territories\n"
+"X-Domain: geditorial-territories\n"
 
-#: Territory.php:85
+#: Territories.php:86
 msgid "Territorial Arrangement"
 msgid_plural "Territorial Arrangements"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Territory.php:89
+#: Territories.php:90
 msgctxt "Label: Menu Name"
-msgid "Content Territory"
+msgid "Content Territories"
 msgstr ""
 
-#: Territory.php:90
+#: Territories.php:91
 msgctxt "Label: Show Option All"
 msgid "Territory"
 msgstr ""
 
-#: Territory.php:91
+#: Territories.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(No-Territory)"
 msgstr ""

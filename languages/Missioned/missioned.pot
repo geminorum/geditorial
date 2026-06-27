@@ -13,176 +13,176 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Missioned\n"
 "X-Domain: geditorial-missioned\n"
 
-#: Missioned.php:62
+#: Missioned.php:63
 msgctxt "Settings"
 msgid "Mission Levels"
 msgstr ""
 
-#: Missioned.php:63
+#: Missioned.php:64
 msgctxt "Settings"
 msgid "Substitute taxonomy for the missions and supported post-types."
 msgstr ""
 
-#: Missioned.php:127
 #: Missioned.php:128
+#: Missioned.php:129
 msgid "Mission"
 msgid_plural "Missions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:129
+#: Missioned.php:130
 msgid "Mission Category"
 msgid_plural "Mission Categories"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:130
+#: Missioned.php:131
 msgid "Mission Level"
 msgid_plural "Mission Levels"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:131
+#: Missioned.php:132
 msgid "Mission Program"
 msgid_plural "Mission Programs"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:132
+#: Missioned.php:133
 msgid "Mission Span"
 msgid_plural "Mission Spans"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:133
+#: Missioned.php:134
 msgid "Mission Type"
 msgid_plural "Mission Types"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:134
+#: Missioned.php:135
 msgid "Mission Status"
 msgid_plural "Mission Statuses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Missioned.php:138
+#: Missioned.php:139
 msgctxt "Label: `menu_name`"
 msgid "Missions"
 msgstr ""
 
-#: Missioned.php:139
+#: Missioned.php:140
 msgctxt "Label: Featured Image"
 msgid "Mission Poster"
 msgstr ""
 
-#: Missioned.php:140
+#: Missioned.php:141
 msgctxt "Label: MetaBox Title"
 msgid "The Mission"
 msgstr ""
 
-#: Missioned.php:143
+#: Missioned.php:144
 msgctxt "Label: MetaBox Title"
 msgid "In This Mission"
 msgstr ""
 
-#: Missioned.php:146
+#: Missioned.php:147
 msgctxt "Label: Menu Name"
 msgid "Categories"
 msgstr ""
 
-#: Missioned.php:149
+#: Missioned.php:150
 msgctxt "Label: Menu Name"
 msgid "Programs"
 msgstr ""
 
-#: Missioned.php:152
+#: Missioned.php:153
 msgctxt "Label: Menu Name"
 msgid "Spans"
 msgstr ""
 
-#: Missioned.php:155
+#: Missioned.php:156
 msgctxt "Label: Menu Name"
 msgid "Types"
 msgstr ""
 
-#: Missioned.php:158
+#: Missioned.php:159
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr ""
 
-#: Missioned.php:167
+#: Missioned.php:168
 msgctxt "Notice"
 msgid "There is no mission information available!"
 msgstr ""
 
-#: Missioned.php:168
+#: Missioned.php:169
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the mission information."
 msgstr ""
 
 #. translators: `%s`: item count
-#: Missioned.php:173
+#: Missioned.php:174
 #, php-format
 msgctxt "Misc: `tabloid_paired_posttype`"
 msgid "Mission Participants (%s)"
 msgstr ""
 
 #. translators: `%s`: item count
-#: Missioned.php:175
+#: Missioned.php:176
 #, php-format
 msgctxt "Misc: `tabloid_paired_supported`"
 msgid "Mission Participations (%s)"
 msgstr ""
 
-#: Missioned.php:176
+#: Missioned.php:177
 msgctxt "Misc: `column_icon_title`"
 msgid "Missions"
 msgstr ""
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Missioned.php:181
+#: Missioned.php:182
 #, php-format
 msgctxt "MetaBox: `listbox_title`"
 msgid "Participants on &ldquo;%1$s&rdquo;"
 msgstr ""
 
-#: Missioned.php:192
+#: Missioned.php:193
 msgctxt "Status Taxonomy: Default Term"
 msgid "Planned"
 msgstr ""
 
-#: Missioned.php:193
+#: Missioned.php:194
 msgctxt "Status Taxonomy: Default Term"
 msgid "Held"
 msgstr ""
 
-#: Missioned.php:235
+#: Missioned.php:237
 msgctxt "Field Title"
 msgid "Officers"
 msgstr ""
 
-#: Missioned.php:236
+#: Missioned.php:238
 msgctxt "Field Description"
 msgid "People Who Participate as Officers in This Mission"
 msgstr ""
 
-#: Missioned.php:243
+#: Missioned.php:245
 msgctxt "Field Title"
 msgid "Mission Code"
 msgstr ""
 
-#: Missioned.php:244
+#: Missioned.php:246
 msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:591
+#: Missioned.php:593
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:600
+#: Missioned.php:602
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""

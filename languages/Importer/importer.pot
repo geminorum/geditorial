@@ -13,411 +13,485 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Importer\n"
 "X-Domain: geditorial-importer\n"
 
-#: Importer.php:38
+#: Importer.php:45
 msgctxt "Setting Title"
 msgid "Skip No Source ID"
 msgstr ""
 
-#: Importer.php:39
+#: Importer.php:46
 msgctxt "Setting Description"
 msgid "Tries to avoid creating posts with no source IDs."
 msgstr ""
 
-#: Importer.php:44
+#: Importer.php:51
 msgctxt "Setting Title"
 msgid "Skip Same Title"
 msgstr ""
 
-#: Importer.php:45
+#: Importer.php:52
 msgctxt "Setting Description"
 msgid "Tries to avoid creating posts with the same titles."
 msgstr ""
 
-#: Importer.php:49
+#: Importer.php:56
 msgctxt "Setting Title"
 msgid "Skip Has Thumbnail"
 msgstr ""
 
-#: Importer.php:50
+#: Importer.php:57
 msgctxt "Setting Description"
 msgid "Tries to avoid importing attachments for posts with thumbnail images."
 msgstr ""
 
-#: Importer.php:54
+#: Importer.php:61
 msgctxt "Setting Title"
 msgid "Match Source ID"
 msgstr ""
 
-#: Importer.php:55
+#: Importer.php:62
 msgctxt "Setting Description"
 msgid "Tries to find the previously imported by provided source id."
 msgstr ""
 
-#: Importer.php:60
+#: Importer.php:67
 msgctxt "Setting Title"
 msgid "Store Source Data"
 msgstr ""
 
-#: Importer.php:61
+#: Importer.php:68
 msgctxt "Setting Description"
 msgid "Stores raw source data and attchment reference as meta for each imported item."
 msgstr ""
 
 #. translators: `%s`: audit attribute placeholder
-#: Importer.php:66
+#: Importer.php:73
 #, php-format
 msgctxt "Setting Description"
 msgid "Appends %s audit attribute to each imported item."
 msgstr ""
 
-#: Importer.php:97
+#: Importer.php:89
+msgctxt "Setting Title"
+msgid "Import Capability"
+msgstr ""
+
+#: Importer.php:90
+msgctxt "Setting Description"
+msgid "Also enables &ldquo;Import&rdquo; capability for the selected imports roles."
+msgstr ""
+
+#: Importer.php:116
 msgctxt "Javascript String"
 msgid "Choose a Datasheet"
 msgstr ""
 
-#: Importer.php:98
+#: Importer.php:117
 msgctxt "Javascript String"
 msgid "Select as Source"
 msgstr ""
 
-#: Importer.php:106
+#: Importer.php:125
 msgctxt "Tool Box"
-msgid "Helps with Importing contents from CSV files into any post-type, with meta support."
+msgid "Helps with Importing contents from source files into any post-type, with meta support and more."
 msgstr ""
 
-#: Importer.php:122
+#: Importer.php:151
 msgctxt "Button"
 msgid "Import"
 msgstr ""
 
-#: Importer.php:141
+#: Importer.php:198
 msgctxt "Menu"
 msgid "Import"
 msgstr ""
 
+#: Importer.php:235
+msgctxt "Message"
+msgid "Unable to clean-up imported residual data!"
+msgstr ""
+
+#: Importer.php:237
+msgctxt "Message"
+msgid "Imported residual data cleaned-up successfully."
+msgstr ""
+
+#: Importer.php:250
+msgctxt "Message"
+msgid "Unable to discard imported meta log!"
+msgstr ""
+
+#: Importer.php:252
+msgctxt "Message"
+msgid "Imported meta log discarded successfully."
+msgstr ""
+
 #. translators: `%s`: joined duplicate keys
-#: Importer.php:249
-#: Importer.php:1708
+#: Importer.php:404
+#: Importer.php:2026
 #, php-format
 msgctxt "Message"
 msgid "Found duplicate column headers: %s"
 msgstr ""
 
-#: Importer.php:255
-#: Importer.php:1712
+#: Importer.php:410
+#: Importer.php:2032
 msgctxt "Dropdown Label"
 msgid "Source ID"
 msgstr ""
 
-#: Importer.php:272
-#: Importer.php:1729
-msgctxt "Description"
-msgid "Used as Identifider of each item."
+#: Importer.php:436
+#: Importer.php:2058
+msgctxt "Label"
+msgid "Treat values on source column as the same as Post-ID"
 msgstr ""
 
-#: Importer.php:318
-#: Importer.php:1664
+#: Importer.php:440
+#: Importer.php:2062
+msgctxt "Description"
+msgid "Will be used as the identifier of each item."
+msgstr ""
+
+#: Importer.php:488
+#: Importer.php:1978
 msgctxt "Button"
 msgid "Upload"
 msgstr ""
 
-#: Importer.php:375
+#: Importer.php:545
 msgctxt "Table Column"
 msgid "Image"
 msgstr ""
 
-#: Importer.php:396
+#: Importer.php:566
 msgctxt "Table Column"
 msgid "Thumbnail"
 msgstr ""
 
 #. translators: `%s`: count placeholder
-#: Importer.php:405
+#: Importer.php:577
 #, php-format
 msgctxt "Header"
 msgid "%s Records Found"
 msgstr ""
 
-#: Importer.php:441
-#: Importer.php:1755
+#: Importer.php:603
+#: Importer.php:2098
 msgctxt "Table Column"
 msgid "[Checks]"
 msgstr ""
 
 #. translators: `%s`: custom meta-key
-#: Importer.php:454
+#: Importer.php:622
 #, php-format
 msgctxt "Post Field Column"
 msgid "Custom: %s"
 msgstr ""
 
 #. translators: `%1$s`: count placeholder, `%2$s`: attachment title
-#: Importer.php:465
-#: Importer.php:1784
+#: Importer.php:630
+#: Importer.php:2128
 #, php-format
 msgctxt "Header"
 msgid "%1$s Records Found for &ldquo;%2$s&rdquo;"
 msgstr ""
 
 #. translators: `%s`: source id
-#: Importer.php:491
+#: Importer.php:656
 #, php-format
 msgctxt "Checks"
-msgid "SourceID: %s"
+msgid "Source-ID: %s"
 msgstr ""
 
-#: Importer.php:496
+#: Importer.php:661
 msgctxt "Checks"
 msgid "Skipped: Filtered"
 msgstr ""
 
-#: Importer.php:499
+#: Importer.php:664
 msgctxt "Checks"
-msgid "Skipped: No SourceID"
+msgid "Skipped: No Source-ID"
 msgstr ""
 
 #. translators: `%s`: post title
-#: Importer.php:504
+#: Importer.php:669
 #, php-format
 msgctxt "Checks"
 msgid "Matched: %s"
 msgstr ""
 
-#: Importer.php:523
+#: Importer.php:688
 msgctxt "Checks"
 msgid "Similar:"
 msgstr ""
 
-#: Importer.php:1059
+#: Importer.php:1227
 msgctxt "Header"
 msgid "Content Imports"
 msgstr ""
 
-#: Importer.php:1064
+#: Importer.php:1232
 msgctxt "Header"
-msgid "Import Data from CSV into Posts"
+msgid "Import Data from Provided Source into Posts"
 msgstr ""
 
-#: Importer.php:1068
+#: Importer.php:1238
 msgctxt "Header"
-msgid "Import Terms and Assign them to Posts"
+msgid "Assign Terms to Posts based on Provided Source"
 msgstr ""
 
-#: Importer.php:1072
+#: Importer.php:1244
 msgctxt "Header"
 msgid "Import Remote Files as Attachments"
 msgstr ""
 
-#: Importer.php:1095
-#: Importer.php:1118
-#: Importer.php:1146
-#: Importer.php:1196
-#: Importer.php:1219
-#: Importer.php:1249
+#: Importer.php:1278
+#: Importer.php:1316
+#: Importer.php:1351
+#: Importer.php:1415
+#: Importer.php:1440
+#: Importer.php:1473
 msgctxt "Message"
 msgid "Import source is not defined!"
 msgstr ""
 
-#: Importer.php:1098
-#: Importer.php:1121
-#: Importer.php:1149
-#: Importer.php:1199
-#: Importer.php:1225
-#: Importer.php:1252
-#: Importer.php:1303
+#: Importer.php:1281
+#: Importer.php:1319
+#: Importer.php:1354
+#: Importer.php:1418
+#: Importer.php:1446
+#: Importer.php:1476
+#: Importer.php:1532
 msgctxt "Message"
 msgid "You are not allowed to edit this post-type!"
 msgstr ""
 
-#: Importer.php:1111
-#: Importer.php:1211
+#: Importer.php:1284
+msgctxt "Step"
+msgid "Import"
+msgstr ""
+
+#: Importer.php:1308
+#: Importer.php:1431
 msgctxt "Button"
 msgid "Import New Data"
 msgstr ""
 
-#: Importer.php:1112
-#: Importer.php:1213
+#: Importer.php:1309
+#: Importer.php:1433
 msgctxt "Button"
 msgid "Import and Override"
 msgstr ""
 
-#: Importer.php:1113
-#: Importer.php:1214
-#: Importer.php:1313
+#: Importer.php:1310
+#: Importer.php:1434
+#: Importer.php:1540
 msgctxt "Message"
 msgid "Select records to finally import."
 msgstr ""
 
-#. translators: `%s`: attachment title
-#: Importer.php:1125
-#: Importer.php:1229
-#, php-format
-msgctxt "Header"
-msgid "Terms to Append All for &ldquo;%s&rdquo;"
+#: Importer.php:1322
+msgctxt "Step"
+msgid "Terms"
 msgstr ""
 
-#: Importer.php:1137
-#: Importer.php:1234
+#. translators: `%s`: attachment title
+#: Importer.php:1327
+#, php-format
+msgctxt "Header"
+msgid "Terms and more to append to all items for &ldquo;%s&rdquo;"
+msgstr ""
+
+#: Importer.php:1341
+#: Importer.php:1457
 msgctxt "Message"
 msgid "No taxonomy availabe for this post-type!"
 msgstr ""
 
-#: Importer.php:1140
-#: Importer.php:1243
+#: Importer.php:1344
 msgctxt "Button"
-msgid "Step 3: Terms"
+msgid "Step 4: Import"
 msgstr ""
 
-#: Importer.php:1141
-#: Importer.php:1244
+#: Importer.php:1345
+#: Importer.php:1467
 msgctxt "Message"
 msgid "Select a term from each post-type supported taxonomy to append all imported posts."
 msgstr ""
 
+#: Importer.php:1357
+msgctxt "Step"
+msgid "Map"
+msgstr ""
+
 #. translators: `%s`: attachment title
-#: Importer.php:1153
-#: Importer.php:1256
+#: Importer.php:1362
+#: Importer.php:1480
 #, php-format
 msgctxt "Header"
 msgid "Map the Importer for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Importer.php:1165
-#: Importer.php:1267
-#: Importer.php:1275
+#: Importer.php:1376
+#: Importer.php:1466
 msgctxt "Button"
-msgid "Step 2: Map"
+msgid "Step 3: Terms"
 msgstr ""
 
-#: Importer.php:1166
-#: Importer.php:1268
+#: Importer.php:1377
+#: Importer.php:1495
 msgctxt "Message"
 msgid "Map the file fields to the post-type fields."
 msgstr ""
 
-#: Importer.php:1173
+#: Importer.php:1383
+msgctxt "Step"
+msgid "Attachment"
+msgstr ""
+
+#: Importer.php:1389
+#: Importer.php:1494
+#: Importer.php:1503
 msgctxt "Button"
-msgid "Step 1: Attachment"
+msgid "Step 2: Map"
 msgstr ""
 
-#: Importer.php:1174
+#: Importer.php:1390
 msgctxt "Message"
-msgid "Upload or select a CSV file, post-type and user to map the import."
+msgid "Upload or select a source file, post-type and user to map the import."
 msgstr ""
 
-#: Importer.php:1212
+#: Importer.php:1432
 msgctxt "Button"
 msgid "Import and Append"
 msgstr ""
 
-#: Importer.php:1222
+#: Importer.php:1443
 msgctxt "Message"
 msgid "Import source column is not defined!"
 msgstr ""
 
-#: Importer.php:1276
-msgctxt "Message"
-msgid "Upload or select a CSV file with post-type to map the import."
+#. translators: `%s`: attachment title
+#: Importer.php:1450
+#, php-format
+msgctxt "Header"
+msgid "Terms to Append All for &ldquo;%s&rdquo;"
 msgstr ""
 
-#: Importer.php:1293
+#: Importer.php:1504
+msgctxt "Message"
+msgid "Upload or select a source file with post-type to map the import."
+msgstr ""
+
+#: Importer.php:1522
 msgctxt "Message"
 msgid "You are not allowed to upload files!"
 msgstr ""
 
-#: Importer.php:1300
+#: Importer.php:1529
 msgctxt "Message"
 msgid "Refrence meta-key is not defined!"
 msgstr ""
 
-#: Importer.php:1311
+#: Importer.php:1538
 msgctxt "Button"
 msgid "Import & Set Thumbnail"
 msgstr ""
 
-#: Importer.php:1312
+#: Importer.php:1539
 msgctxt "Button"
 msgid "Import Only"
 msgstr ""
 
-#: Importer.php:1369
+#: Importer.php:1597
 msgctxt "Button"
 msgid "Step 1: Meta-key"
 msgstr ""
 
-#: Importer.php:1370
+#: Importer.php:1598
 msgctxt "Message"
 msgid "Select a meta-key for refrence on importing the attachments."
 msgstr ""
 
-#: Importer.php:1405
+#: Importer.php:1632
 msgctxt "Post Field"
 msgid "Extra: Custom Meta"
 msgstr ""
 
-#: Importer.php:1406
+#: Importer.php:1633
 msgctxt "Post Field"
 msgid "Menu Order"
 msgstr ""
 
-#: Importer.php:1407
+#: Importer.php:1634
 msgctxt "Post Field"
 msgid "Post Title"
 msgstr ""
 
-#: Importer.php:1408
+#: Importer.php:1635
 msgctxt "Post Field"
 msgid "Post Content"
 msgstr ""
 
-#: Importer.php:1409
+#: Importer.php:1636
 msgctxt "Post Field"
 msgid "Post Excerpt"
 msgstr ""
 
-#: Importer.php:1410
+#: Importer.php:1637
 msgctxt "Post Field"
 msgid "Comment Content"
 msgstr ""
 
 #. translators: `%s`: taxonomy name placeholder
-#: Importer.php:1416
+#: Importer.php:1643
 #, php-format
 msgctxt "Post Field"
 msgid "Taxonomy: %s"
 msgstr ""
 
-#: Importer.php:1568
+#: Importer.php:1842
 msgctxt "Header"
 msgid "Importer Tools"
 msgstr ""
 
-#: ModuleSettings.php:19
+#: Importer.php:2249
+msgctxt "Action"
+msgid "Imported"
+msgstr ""
+
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
+#: Importer.php:2258
+#, php-format
+msgctxt "Post Row Action Title Attr"
+msgid "Overview of the imported data into this %2$s"
+msgstr ""
+
+#: ModuleSettings.php:22
 msgctxt "Card Title"
 msgid "Clean-up Raw Data"
 msgstr ""
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:26
+#: ModuleSettings.php:27
 #, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr ""
 
-#: ModuleSettings.php:28
+#: ModuleSettings.php:34
 msgctxt "Button Description"
 msgid "Tries to clean imported raw meta-data."
 msgstr ""
 
 #. translators: `%1$s`: post title, `%2$s`: post id
-#: ModuleSettings.php:61
+#: ModuleSettings.php:70
 #, php-format
 msgctxt "Notice"
 msgid "No meta-data available on &ldquo;%1$s&rdquo; (%2$s)."
 msgstr ""
 
 #. translators: `%1$s`: post title, `%2$s`: post id
-#: ModuleSettings.php:79
+#: ModuleSettings.php:88
 #, php-format
 msgctxt "Notice"
 msgid "Imported raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)."

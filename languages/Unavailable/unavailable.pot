@@ -23,57 +23,57 @@ msgctxt "Settings"
 msgid "Activates archived status for comments and hides them from the counts."
 msgstr ""
 
-#: Unavailable.php:93
+#: Unavailable.php:99
 msgctxt "Message"
 msgid "Restored"
 msgstr ""
 
-#: Unavailable.php:107
+#: Unavailable.php:113
 msgctxt "Message"
 msgid "Archived"
 msgstr ""
 
-#: Unavailable.php:144
+#: Unavailable.php:150
 msgctxt "Status Link"
 msgid "Archived"
 msgstr ""
 
-#: Unavailable.php:161
+#: Unavailable.php:167
 msgctxt "Action"
 msgid "Loading"
 msgstr ""
 
-#: Unavailable.php:162
+#: Unavailable.php:168
 msgctxt "Action"
 msgid "Error!"
 msgstr ""
 
-#: Unavailable.php:170
+#: Unavailable.php:176
 msgctxt "Action"
 msgid "Restore this comment from the Archived"
 msgstr ""
 
-#: Unavailable.php:171
+#: Unavailable.php:177
 msgctxt "Action"
 msgid "Restore"
 msgstr ""
 
-#: Unavailable.php:180
+#: Unavailable.php:186
 msgctxt "Action"
 msgid "Send this comment to the Archived"
 msgstr ""
 
-#: Unavailable.php:181
+#: Unavailable.php:187
 msgctxt "Action"
 msgid "Archive"
 msgstr ""
 
-#: Unavailable.php:188
+#: Unavailable.php:194
 msgctxt "Action"
 msgid "Restore from Archived"
 msgstr ""
 
-#: Unavailable.php:191
+#: Unavailable.php:197
 msgctxt "Action"
 msgid "Move to Archived"
 msgstr ""

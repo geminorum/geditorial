@@ -35,7 +35,7 @@ msgstr ""
 
 #: PagedContent.php:46
 #: PagedContent.php:47
-#: PagedContent.php:435
+#: PagedContent.php:436
 msgctxt "Setting Default"
 msgid "View All"
 msgstr ""

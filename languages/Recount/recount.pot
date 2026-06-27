@@ -13,27 +13,27 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Recount\n"
 "X-Domain: geditorial-recount\n"
 
-#: Recount.php:36
+#: Recount.php:37
 msgctxt "Setting Title"
 msgid "Count on Display"
 msgstr ""
 
-#: Recount.php:37
+#: Recount.php:38
 msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr ""
 
-#: Recount.php:169
+#: Recount.php:180
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:204
+#: Recount.php:215
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:210
+#: Recount.php:223
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

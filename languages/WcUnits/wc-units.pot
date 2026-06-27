@@ -13,261 +13,261 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcUnits\n"
 "X-Domain: geditorial-wc-units\n"
 
-#: WcUnits.php:32
+#: WcUnits.php:33
 msgctxt "Setting Title"
 msgid "Non-Admin Only"
 msgstr ""
 
-#: WcUnits.php:33
+#: WcUnits.php:34
 msgctxt "Setting Description"
 msgid "Modifies filters only on non-administration areas of your site."
 msgstr ""
 
-#: WcUnits.php:39
+#: WcUnits.php:40
 msgctxt "Setting Title"
 msgid "Decimal Point"
 msgstr ""
 
-#: WcUnits.php:40
+#: WcUnits.php:41
 msgctxt "Setting Description"
 msgid "Formats decimal point in units with a custom character."
 msgstr ""
 
-#: WcUnits.php:41
+#: WcUnits.php:42
 msgctxt "Setting Default: Decimal Point"
 msgid "."
 msgstr ""
 
-#: WcUnits.php:48
+#: WcUnits.php:49
 msgctxt "Setting Title"
 msgid "Multiplication Sign"
 msgstr ""
 
-#: WcUnits.php:49
+#: WcUnits.php:50
 msgctxt "Setting Description"
 msgid "Joins dimension units with a custom string."
 msgstr ""
 
-#: WcUnits.php:50
+#: WcUnits.php:51
 msgctxt "Setting Default: Multiplication Sign"
 msgid "&nbsp;&times;&nbsp;"
 msgstr ""
 
-#: WcUnits.php:58
+#: WcUnits.php:59
 msgctxt "Setting Title"
 msgid "Weight Empty Fallback"
 msgstr ""
 
-#: WcUnits.php:59
+#: WcUnits.php:60
 msgctxt "Setting Description"
 msgid "Sets a fallback value on products with empty <b>weight</b> field. Leave empty to disable."
 msgstr ""
 
-#: WcUnits.php:63
-#: WcUnits.php:136
+#: WcUnits.php:64
+#: WcUnits.php:149
 msgctxt "Setting Title"
-msgid "After All Attribiutes"
+msgid "After All Attributes"
 msgstr ""
 
-#: WcUnits.php:64
+#: WcUnits.php:65
 msgctxt "Setting Description"
 msgid "Moves the weight to the bottom of the product attributes table."
 msgstr ""
 
-#: WcUnits.php:69
+#: WcUnits.php:70
 msgctxt "Setting Title"
 msgid "Not Available on Weights"
 msgstr ""
 
-#: WcUnits.php:70
+#: WcUnits.php:71
 msgctxt "Setting Description"
 msgid "Used as not available string upon display of weights. Leave empty to disable."
 msgstr ""
 
 #. translators: `%s`: unit name
-#: WcUnits.php:78
-#: WcUnits.php:88
-#: WcUnits.php:98
-#: WcUnits.php:108
-#: WcUnits.php:151
-#: WcUnits.php:161
-#: WcUnits.php:171
-#: WcUnits.php:181
+#: WcUnits.php:80
+#: WcUnits.php:93
+#: WcUnits.php:106
+#: WcUnits.php:119
+#: WcUnits.php:165
+#: WcUnits.php:178
 #: WcUnits.php:191
+#: WcUnits.php:204
+#: WcUnits.php:217
 #, php-format
 msgctxt "Setting Title"
 msgid "Template for %s"
 msgstr ""
 
-#: WcUnits.php:79
+#: WcUnits.php:83
 msgctxt "Setting Description"
 msgid "Used as template upon display of weights in “Kilograms”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:81
+#: WcUnits.php:85
 #, php-format
 msgctxt "Setting Default"
 msgid "%s kg"
 msgstr ""
 
-#: WcUnits.php:89
+#: WcUnits.php:96
 msgctxt "Setting Description"
 msgid "Used as template upon display of weight in “Grams”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:91
+#: WcUnits.php:98
 #, php-format
 msgctxt "Setting Default"
 msgid "%s g"
 msgstr ""
 
-#: WcUnits.php:99
-msgctxt "Setting Description"
-msgid "Used as template upon display of weights in “Pounds”."
-msgstr ""
-
-#. translators: `%s`: unit amount
-#: WcUnits.php:101
-#, php-format
-msgctxt "Setting Default"
-msgid "%s lbs"
-msgstr ""
-
 #: WcUnits.php:109
 msgctxt "Setting Description"
-msgid "Used as template upon display of weight in “Ounces”."
+msgid "Used as template upon display of weights in “Pounds”."
 msgstr ""
 
 #. translators: `%s`: unit amount
 #: WcUnits.php:111
 #, php-format
 msgctxt "Setting Default"
+msgid "%s lbs"
+msgstr ""
+
+#: WcUnits.php:122
+msgctxt "Setting Description"
+msgid "Used as template upon display of weight in “Ounces”."
+msgstr ""
+
+#. translators: `%s`: unit amount
+#: WcUnits.php:124
+#, php-format
+msgctxt "Setting Default"
 msgid "%s oz"
 msgstr ""
 
-#: WcUnits.php:119
+#: WcUnits.php:132
 msgctxt "Setting Title"
 msgid "Length Empty Fallback"
 msgstr ""
 
-#: WcUnits.php:120
+#: WcUnits.php:133
 msgctxt "Setting Description"
 msgid "Sets a fallback value on products with empty <b>length</b> field. Leave empty to disable."
 msgstr ""
 
-#: WcUnits.php:125
+#: WcUnits.php:138
 msgctxt "Setting Title"
 msgid "Width Empty Fallback"
 msgstr ""
 
-#: WcUnits.php:126
+#: WcUnits.php:139
 msgctxt "Setting Description"
 msgid "Sets a fallback value on products with empty <b>width</b> field. Leave empty to disable."
 msgstr ""
 
-#: WcUnits.php:131
+#: WcUnits.php:144
 msgctxt "Setting Title"
 msgid "Height Empty Fallback"
 msgstr ""
 
-#: WcUnits.php:132
+#: WcUnits.php:145
 msgctxt "Setting Description"
 msgid "Sets a fallback value on products with empty <b>height</b> field. Leave empty to disable."
 msgstr ""
 
-#: WcUnits.php:137
+#: WcUnits.php:150
 msgctxt "Setting Description"
 msgid "Moves the dimensions to the bottom of the product attributes table."
 msgstr ""
 
-#: WcUnits.php:142
+#: WcUnits.php:155
 msgctxt "Setting Title"
 msgid "Not Available on Dimensions"
 msgstr ""
 
-#: WcUnits.php:143
+#: WcUnits.php:156
 msgctxt "Setting Description"
 msgid "Used as not available string upon display of dimensions. Leave empty to disable."
 msgstr ""
 
-#: WcUnits.php:152
+#: WcUnits.php:168
 msgctxt "Setting Description"
 msgid "Used as template upon display of dimensions in “Metres”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:154
+#: WcUnits.php:170
 #, php-format
 msgctxt "Setting Default"
 msgid "%s m"
 msgstr ""
 
-#: WcUnits.php:162
+#: WcUnits.php:181
 msgctxt "Setting Description"
 msgid "Used as template upon display of dimensions in “Centimetres”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:164
+#: WcUnits.php:183
 #, php-format
 msgctxt "Setting Default"
 msgid "%s cm"
 msgstr ""
 
-#: WcUnits.php:172
+#: WcUnits.php:194
 msgctxt "Setting Description"
 msgid "Used as template upon display of dimensions in “Millimetres”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:174
+#: WcUnits.php:196
 #, php-format
 msgctxt "Setting Default"
 msgid "%s mm"
 msgstr ""
 
-#: WcUnits.php:182
+#: WcUnits.php:207
 msgctxt "Setting Description"
 msgid "Used as template upon display of dimensions in “Inchs”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:184
+#: WcUnits.php:209
 #, php-format
 msgctxt "Setting Default"
 msgid "%s in"
 msgstr ""
 
-#: WcUnits.php:192
+#: WcUnits.php:220
 msgctxt "Setting Description"
 msgid "Used as template upon display of dimensions in “Yards”."
 msgstr ""
 
 #. translators: `%s`: unit amount
-#: WcUnits.php:194
+#: WcUnits.php:222
 #, php-format
 msgctxt "Setting Default"
 msgid "%s yd"
 msgstr ""
 
-#: WcUnits.php:205
+#: WcUnits.php:233
 msgctxt "Setting Section Title"
 msgid "Weight"
 msgstr ""
 
-#: WcUnits.php:206
+#: WcUnits.php:234
 msgctxt "Setting Section Description"
 msgid "Format a weight for display."
 msgstr ""
 
-#: WcUnits.php:208
+#: WcUnits.php:236
 msgctxt "Setting Section Title"
 msgid "Dimensions"
 msgstr ""
 
-#: WcUnits.php:209
+#: WcUnits.php:237
 msgctxt "Setting Section Description"
 msgid "Format dimensions for display."
 msgstr ""

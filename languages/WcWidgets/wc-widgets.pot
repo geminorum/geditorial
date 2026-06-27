@@ -13,75 +13,75 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcWidgets\n"
 "X-Domain: geditorial-wc-widgets\n"
 
-#: WcWidgets.php:37
+#: WcWidgets.php:40
 msgctxt "Setting Title"
 msgid "Widgets"
 msgstr ""
 
-#: WcWidgets.php:44
+#: WcWidgets.php:47
 msgctxt "Setting Title"
 msgid "Custom Areas"
 msgstr ""
 
-#: WcWidgets.php:45
+#: WcWidgets.php:48
 msgctxt "Setting Description"
 msgid "Registers widget area on the selected action hooks."
 msgstr ""
 
-#: WcWidgets.php:83
+#: WcWidgets.php:84
 msgctxt "Action Hook"
 msgid "Thank-you (Before Order Details)"
 msgstr ""
 
-#: WcWidgets.php:88
+#: WcWidgets.php:89
 msgctxt "Action Hook"
 msgid "Before Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:93
+#: WcWidgets.php:94
 msgctxt "Action Hook"
 msgid "After Checkout Form"
 msgstr ""
 
-#: WcWidgets.php:98
+#: WcWidgets.php:99
 msgctxt "Action Hook"
 msgid "Before Order Notes"
 msgstr ""
 
-#: WcWidgets.php:103
+#: WcWidgets.php:104
 msgctxt "Action Hook"
 msgid "Review Order: Before Payment"
 msgstr ""
 
-#: WcWidgets.php:108
+#: WcWidgets.php:109
 msgctxt "Action Hook"
 msgid "Before Edit Account Address Form"
 msgstr ""
 
-#: WcWidgets.php:113
+#: WcWidgets.php:114
 msgctxt "Action Hook"
 msgid "Account Dashboard"
 msgstr ""
 
-#: WcWidgets.php:121
+#: WcWidgets.php:122
 msgctxt "Action Hook"
 msgid "Editorial: Dashboard Purchased Empty"
 msgstr ""
 
-#: WcWidgets.php:128
+#: WcWidgets.php:129
 msgctxt "Action Hook"
 msgid "Woodmart: Shop Filters Area"
 msgstr ""
 
 #. translators: `%s`: widget area name
-#: WcWidgets.php:172
+#: WcWidgets.php:171
 #, php-format
 msgctxt "Widget Area Prefix"
 msgid "WooCommerce: %s"
 msgstr ""
 
 #. translators: `%s`: widget action hook
-#: WcWidgets.php:177
+#: WcWidgets.php:176
 #, php-format
 msgctxt "Widget Area Description"
 msgid "Widgets in this area will appear on %s action hook."
@@ -115,29 +115,4 @@ msgstr ""
 #: Widgets/WCMessage.php:70
 msgctxt "Widget: WCMessage"
 msgid "Notice Type:"
-msgstr ""
-
-#: Widgets/WCMessage.php:72
-msgctxt "Widget: WCMessage"
-msgid "Process Shortcodes"
-msgstr ""
-
-#: Widgets/WCMessage.php:73
-msgctxt "Widget: WCMessage"
-msgid "Process Filters"
-msgstr ""
-
-#: Widgets/WCMessage.php:74
-msgctxt "Widget: WCMessage"
-msgid "Process Filters (Legacy)"
-msgstr ""
-
-#: Widgets/WCMessage.php:75
-msgctxt "Widget: WCMessage"
-msgid "Automatic Paragraphs"
-msgstr ""
-
-#: Widgets/WCMessage.php:76
-msgctxt "Widget: WCMessage"
-msgid "Bypass Caching"
 msgstr ""

@@ -23,32 +23,32 @@ msgctxt "Setting Title"
 msgid "Taxonomy Name"
 msgstr ""
 
-#: Grouping.php:48
+#: Grouping.php:47
 msgctxt "Setting Title"
 msgid "Taxonomy Slug"
 msgstr ""
 
-#: Grouping.php:57
+#: Grouping.php:55
 msgctxt "Setting Title"
 msgid "Singular Label"
 msgstr ""
 
-#: Grouping.php:63
+#: Grouping.php:61
 msgctxt "Setting Title"
 msgid "Plural Label"
 msgstr ""
 
-#: Grouping.php:69
+#: Grouping.php:67
 msgctxt "Setting Title"
 msgid "Menu Label"
 msgstr ""
 
-#: Grouping.php:75
+#: Grouping.php:73
 msgctxt "Setting Title"
 msgid "Icon"
 msgstr ""
 
-#: Grouping.php:167
+#: Grouping.php:170
 msgctxt "Column Title"
 msgid "Users"
 msgstr ""

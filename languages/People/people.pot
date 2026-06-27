@@ -13,95 +13,140 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/People\n"
 "X-Domain: geditorial-people\n"
 
-#: People.php:45
+#: People.php:46
 msgctxt "Setting Description"
 msgid "Whether to assign multiple affiliations in edit panel."
 msgstr ""
 
-#: People.php:81
+#: People.php:82
 msgid "Person"
 msgid_plural "People"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:82
+#: People.php:83
 msgid "Affiliation"
 msgid_plural "Affiliations"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:83
+#: People.php:84
 msgid "Honorific"
 msgid_plural "Honorifics"
 msgstr[0] ""
 msgstr[1] ""
 
-#: People.php:87
+#: People.php:88
 msgctxt "Label: `name_field_description`"
 msgid "What is the full-name of the person."
 msgstr ""
 
-#: People.php:88
+#: People.php:89
 msgctxt "Label: `slug_field_description`"
 msgid "Define the URL-friendly version of the name of the person."
 msgstr ""
 
-#: People.php:89
+#: People.php:90
 msgctxt "Label: `desc_field_description`"
 msgid "Describe the person in more words."
 msgstr ""
 
-#: People.php:90
+#: People.php:91
 msgctxt "Label: `manage_description`"
 msgid "Define the individuals affiliated with this site."
 msgstr ""
 
-#: People.php:93
+#: People.php:94
 msgctxt "Label: `extended_label`"
 msgid "People Affiliations"
 msgstr ""
 
-#: People.php:94
+#: People.php:95
 msgctxt "Label: `column_title`"
 msgid "Affiliations"
 msgstr ""
 
-#: People.php:95
+#: People.php:96
 msgctxt "Label: `show_option_all`"
 msgid "People Affiliations"
 msgstr ""
 
-#: People.php:96
+#: People.php:97
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unaffiliated)"
 msgstr ""
 
-#: People.php:97
+#: People.php:98
 msgctxt "Label: `assign_description`"
 msgid "Defines the affiliation of the person."
 msgstr ""
 
-#: People.php:100
+#: People.php:101
 msgctxt "Label: `extended_label`"
 msgid "People Honorifics"
 msgstr ""
 
-#: People.php:101
+#: People.php:102
 msgctxt "Label: `column_title`"
 msgid "Honorifics"
 msgstr ""
 
-#: People.php:102
+#: People.php:103
 msgctxt "Label: `show_option_all`"
 msgid "People Honorifics"
 msgstr ""
 
-#: People.php:103
+#: People.php:104
 msgctxt "Label: `show_option_no_items`"
 msgid "(Undefined)"
 msgstr ""
 
-#: People.php:104
+#: People.php:105
 msgctxt "Label: `assign_description`"
 msgid "Defines the honorifics of the person."
+msgstr ""
+
+#: People.php:117
+msgctxt "Type Taxonomy: Default Term"
+msgid "Clergy"
+msgstr ""
+
+#: People.php:118
+msgctxt "Type Taxonomy: Default Term"
+msgid "Doctor"
+msgstr ""
+
+#: People.php:119
+msgctxt "Type Taxonomy: Default Term"
+msgid "Sadat"
+msgstr ""
+
+#: People.php:120
+msgctxt "Type Taxonomy: Default Term"
+msgid "Sayyid"
+msgstr ""
+
+#: People.php:121
+msgctxt "Type Taxonomy: Default Term"
+msgid "Sayyidah"
+msgstr ""
+
+#: People.php:122
+msgctxt "Type Taxonomy: Default Term"
+msgid "Engineer"
+msgstr ""
+
+#: People.php:123
+msgctxt "Type Taxonomy: Default Term"
+msgid "Lawyer"
+msgstr ""
+
+#: People.php:124
+msgctxt "Type Taxonomy: Default Term"
+msgid "Professor"
+msgstr ""
+
+#: People.php:125
+msgctxt "Type Taxonomy: Default Term"
+msgid "Ayatollah"
 msgstr ""

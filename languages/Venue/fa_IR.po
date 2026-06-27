@@ -147,7 +147,7 @@ msgstr "شماره تماس کامل برای تماس با مکان."
 #: Venue.php:205
 msgctxt "Field Title"
 msgid "Website URL"
-msgstr "نشانی وبسایت"
+msgstr "نشانی وب‌سایت"
 
 #: Venue.php:206
 msgctxt "Field Description"

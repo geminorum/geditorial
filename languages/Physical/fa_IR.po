@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Physical\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-08-14 12:55+0330\n"
+"PO-Revision-Date: 2026-03-06 21:30+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Physical\n"
 "X-Domain: geditorial-physical\n"
 
@@ -65,149 +65,154 @@ msgctxt "BMI Message"
 msgid "Your BMI falls within the obese (class three) range."
 msgstr "BMI شما در محدوده چاقی (درجه ۳) قرار دارد."
 
-#: Physical.php:90
+#: Physical.php:88
 msgctxt "Field Label: `label`"
 msgid "Event"
 msgstr "رویداد"
 
-#: Physical.php:91
+#: Physical.php:89
 msgctxt "Field Label: `grade`"
 msgid "Grade"
 msgstr "نمره"
 
-#: Physical.php:92
+#: Physical.php:90
 msgctxt "Field Label: `age`"
 msgid "Age"
 msgstr "سن"
 
-#: Physical.php:93
+#: Physical.php:91
 msgctxt "Field Label: `stature`"
 msgid "Stature"
 msgstr "قامت"
 
-#: Physical.php:94
+#: Physical.php:92
 msgctxt "Field Label: `mass`"
 msgid "Mass"
 msgstr "وزن"
 
-#: Physical.php:95
+#: Physical.php:93
 msgctxt "Field Label: `date`"
 msgid "Date"
 msgstr "تاریخ"
 
-#: Physical.php:96
+#: Physical.php:94
 msgctxt "Field Label: `location`"
 msgid "Venue"
 msgstr "محل برگزاری"
 
-#: Physical.php:97
+#: Physical.php:95
 msgctxt "Field Label: `location`"
 msgid "Instructors"
 msgstr "مربیان"
 
-#: Physical.php:98
+#: Physical.php:96
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Physical.php:104
+#: Physical.php:102
 msgctxt "Tab Title"
 msgid "Physical Examinations"
 msgstr "سوابق جسمانی"
 
-#: Physical.php:108
+#: Physical.php:106
 msgctxt "Notice"
 msgid "There is no physical examination available!"
 msgstr "هیچ سابقه جسمانی در دسترس نیست!"
 
-#: Physical.php:109
+#: Physical.php:107
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage this examination data."
 msgstr "شما مجوز دسترس لازم برای مدیریت این داده‌های جسمانی را ندارید."
 
-#: Physical.php:116
+#: Physical.php:114
 msgctxt "MetaBox Title"
 msgid "Physicals"
 msgstr "جسمانی"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Physical.php:120
+#: Physical.php:118
 #, php-format
 msgctxt "Button Title"
 msgid "Physical Examinations of %1$s"
 msgstr "سوابق جسمانی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Physical.php:122
+#: Physical.php:120
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Physical Examinations of %2$s"
 msgstr "%1$s مدیریت سوابق جسمانی %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Physical.php:125
+#: Physical.php:123
 #, php-format
 msgctxt "Action Title"
 msgid "Physical Examinations of %1$s"
 msgstr "سوابق جسمانی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Physical.php:127
+#: Physical.php:125
 msgctxt "Action Text"
 msgid "Physicals"
 msgstr "جسمانی"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Physical.php:130
+#: Physical.php:128
 #, php-format
 msgctxt "Row Title"
 msgid "Physical Examinations of %1$s"
 msgstr "سوابق جسمانی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Physical.php:132
+#: Physical.php:130
 msgctxt "Row Text"
 msgid "Physicals"
 msgstr "جسمانی"
 
-#: Physical.php:144
+#: Physical.php:142
 msgctxt "Field Title"
 msgid "Mass"
 msgstr "وزن"
 
-#: Physical.php:145
+#: Physical.php:143
 msgctxt "Field Description"
 msgid "Body Mass in Kilograms"
 msgstr "وزن جسمی به کیلوگرم"
 
-#: Physical.php:152
+#: Physical.php:150
 msgctxt "Field Title"
 msgid "Stature"
 msgstr "قامت"
 
-#: Physical.php:153
+#: Physical.php:151
 msgctxt "Field Description"
 msgid "Body Stature in Centimetres"
 msgstr "قامت جسم به سانتی‌متر"
 
 #. translators: `%s`: post title
-#: Physical.php:288
+#: Physical.php:286
 #, php-format
 msgctxt "Page Title"
 msgid "Athletics Grid for %s"
 msgstr "آمادگی جسمانی برای %s"
 
 #. translators: `%s`: post title
-#: Physical.php:290
+#: Physical.php:288
 #, php-format
 msgctxt "Page Title"
 msgid "Athletics Overview for %s"
 msgstr "نمای کلی آمادگی جسمانی برای %s"
 
-#: Physical.php:312
+#: Physical.php:310
 msgctxt "Default Term: Audit"
 msgid "Empty Athletics Data"
 msgstr "داده‌های ورزشی خالی"
+
+#: Physical.php:359
+msgctxt "Header"
+msgid "Overview of the Physical Examinations"
+msgstr ""
 
 #~ msgctxt "Tab Title"
 #~ msgid "Athletics"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Personage\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-13 13:37+0330\n"
+"PO-Revision-Date: 2026-06-27 10:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Personage\n"
 "X-Domain: geditorial-personage\n"
 
@@ -20,136 +20,136 @@ msgctxt "Card Title"
 msgid "Full-name Operations"
 msgstr "کنش‌های نام‌کامل"
 
-#: ModuleSettings.php:28
+#: ModuleSettings.php:27
 msgctxt "Button"
 msgid "From Full-name"
 msgstr "از نام‌کامل"
 
-#: ModuleSettings.php:32
+#: ModuleSettings.php:34
 msgctxt "Button"
 msgid "Parse Full-name"
 msgstr "تجزیه نام‌کامل"
 
-#: ModuleSettings.php:36
+#: ModuleSettings.php:41
 msgctxt "Button"
 msgid "Delete Full-name"
 msgstr "حذف نام‌کامل"
 
 #. translators: `%s`: field key placeholder
-#: ModuleSettings.php:40
+#: ModuleSettings.php:49
 #, php-format
 msgctxt "Message"
 msgid "Tries to fill the name fields base on %s field data."
 msgstr "برای تکمیل فیلدهای نام از دادهای فیلد %s تلاش می‌کند."
 
 #. translators: `%1$s`: first_name string %2$s: post title
-#: ModuleSettings.php:178
+#: ModuleSettings.php:188
 #, php-format
 msgctxt "Notice"
 msgid "First-name is empty (%1$s) on &ldquo;%2$s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: last_name string %2$s: post title
-#: ModuleSettings.php:186
+#: ModuleSettings.php:196
 #, php-format
 msgctxt "Notice"
 msgid "Last-name is empty (%1$s) on &ldquo;%2$s&rdquo;."
 msgstr ""
 
 #. translators: `%1$s`: full-name string, `%2$s`: post title
-#: ModuleSettings.php:203 ModuleSettings.php:297
+#: ModuleSettings.php:213 ModuleSettings.php:307
 #, php-format
 msgctxt "Notice"
 msgid "Can not parse full-name (%1$s) on &ldquo;%2$s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: first-name string, `%2$s`: full-name string, `%3$s`: post title
-#: ModuleSettings.php:212 ModuleSettings.php:306
+#: ModuleSettings.php:222 ModuleSettings.php:316
 #, php-format
 msgctxt "Notice"
 msgid "First-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: last-name string, `%2$s`: full-name string, `%3$s`: post title
-#: ModuleSettings.php:222 ModuleSettings.php:316
+#: ModuleSettings.php:232 ModuleSettings.php:326
 #, php-format
 msgctxt "Notice"
 msgid "Last-name is empty (%1$s) via &ldquo;%2$s&rdquo; on &ldquo;%3$s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: full-name string, `%2$s`: post title
-#: ModuleSettings.php:232 ModuleSettings.php:326
+#: ModuleSettings.php:242 ModuleSettings.php:336
 #, php-format
 msgctxt "Notice"
 msgid "There is problem updating first-name (%1$s) on &ldquo;%2$s&rdquo;!"
 msgstr ""
 
 #. translators: `%1$s`: full-name string, `%2$s`: post title
-#: ModuleSettings.php:241 ModuleSettings.php:335
+#: ModuleSettings.php:251 ModuleSettings.php:345
 #, php-format
 msgctxt "Notice"
 msgid "There is problem updating last-name (%1$s) on &ldquo;%2$s&rdquo;!"
 msgstr ""
 
-#. translators: `%1$s`: parsed fullname, `%2$s`: full-name string, `%3$s`: post title
-#: ModuleSettings.php:253 ModuleSettings.php:356
+#. translators: `%1$s`: parsed full-name, `%2$s`: full-name string, `%3$s`: post title
+#: ModuleSettings.php:263 ModuleSettings.php:366
 #, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; names are set by %2$s on &ldquo;%3$s&rdquo;."
 msgstr "نام‌های «%1$s» توسط %2$s در «%3$s» تنظیم شدند."
 
-#. translators: `%1$s`: fullname string, `%2$s`: post title
-#: ModuleSettings.php:272 ModuleSettings.php:349
+#. translators: `%1$s`: full-name string, `%2$s`: post title
+#: ModuleSettings.php:282 ModuleSettings.php:359
 #, php-format
 msgctxt "Notice"
 msgid "There is problem removing full-name data (%1$s) for &ldquo;%2$s&rdquo;!"
 msgstr ""
 
-#. translators: `%1$s`: fullname string, `%2$s`: post title
-#: ModuleSettings.php:279
+#. translators: `%1$s`: full-name string, `%2$s`: post title
+#: ModuleSettings.php:289
 #, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; full-name data deleted on &ldquo;%2$s&rdquo;!"
 msgstr "داده نام‌کامل «%1$s» در «%2$s» حذف شد!"
 
-#: ModuleSettings.php:386
+#: ModuleSettings.php:396
 msgctxt "Card Title"
 msgid "People Parser"
 msgstr "تجزیه‌کننده افراد"
 
-#: ModuleSettings.php:394
+#: ModuleSettings.php:404
 msgctxt "Placeholder"
 msgid "One person per line"
 msgstr "هر فرد در یک خط"
 
-#: ModuleSettings.php:399
+#: ModuleSettings.php:409
 msgctxt "Button"
 msgid "Parse Lines"
 msgstr "تجزیه خطوط"
 
 #. translators: `%s`: file ext placeholder
-#: ModuleSettings.php:403
+#: ModuleSettings.php:413
 #, php-format
 msgctxt "Message"
 msgid "Generates a %s file with parsed parts of each name."
 msgstr "یک پرونده %s از تکه‌های تجزیه‌شده هر نام ایجاد می‌کند."
 
-#: Personage.php:112
+#: Personage.php:111
 msgctxt "Setting Title"
 msgid "Check Identity Number"
 msgstr "بررسی شماره شناسایی"
 
-#: Personage.php:113
+#: Personage.php:112
 msgctxt "Setting Description"
 msgid "Validates Identity Number prior to importing data."
 msgstr "پیش از درون‌ریزی، شماره شناسایی را صحت‌سنجی می‌کند."
 
-#: Personage.php:117
+#: Personage.php:116
 msgctxt "Setting Title"
 msgid "Fill Post Title"
 msgstr "پرکردن عنوان فرسته"
 
-#: Personage.php:118
+#: Personage.php:117
 msgctxt "Setting Description"
 msgid "Tries to fill the post title with meta-data prior to importing data."
 msgstr "برای پر کردن عنوان نوشته به کمک متا، پیش از دورن‌ریزی تلاش می‌کند."
@@ -412,22 +412,22 @@ msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr "شماره گذرنامه شخصی"
 
-#: Personage.php:558
+#: Personage.php:569
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr "شماره شناسایی خالی"
 
-#: Personage.php:652
+#: Personage.php:663
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr "شناسایی"
 
-#: Personage.php:1049
+#: Personage.php:1059
 msgctxt "Header"
 msgid "Personage Tools"
 msgstr "ابزارهای نقاب"
 
-#: Personage.php:1075
+#: Personage.php:1085
 msgctxt "Header"
 msgid "Personage Imports"
 msgstr "درون‌ریزی‌های نقاب"

@@ -13,136 +13,230 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Lingo\n"
 "X-Domain: geditorial-lingo\n"
 
-#. translators: `%s`: iso code
-#: Lingo.php:65
+#. translators: `%s`: ISO code
+#: Lingo.php:66
 #, php-format
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr ""
 
-#: Lingo.php:72
+#: Lingo.php:75
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Lingo.php:76
+#: Lingo.php:79
 msgctxt "Label: `extended_label`"
 msgid "Language Identifiers"
 msgstr ""
 
-#: Lingo.php:77
+#: Lingo.php:80
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr ""
 
-#: Lingo.php:78
+#: Lingo.php:81
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr ""
 
-#: Lingo.php:79
+#: Lingo.php:82
 msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr ""
 
-#: Lingo.php:84
+#: Lingo.php:87
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr ""
 
-#: Lingo.php:85
+#: Lingo.php:88
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr ""
 
-#: Lingo.php:96
+#: Lingo.php:99
+msgctxt "Setting Title"
+msgid "Source Taxonomies"
+msgstr ""
+
+#: Lingo.php:100
+msgctxt "Setting Description"
+msgid "Selected taxonomies will be available on conversion via tools."
+msgstr ""
+
+#: Lingo.php:103
 msgctxt "Importer: Title"
 msgid "Import Language Identifiers"
 msgstr ""
 
 #. translators: `%s`: ISO code
-#: Lingo.php:98
+#: Lingo.php:106
 #, php-format
 msgctxt "Importer: Description"
 msgid "Language Identifiers from %s into WordPress"
 msgstr ""
 
 #. translators: `%s`: redirect URL
-#: Lingo.php:100
+#: Lingo.php:110
 #, php-format
 msgctxt "Importer: Redirect"
 msgid "If your browser doesn&#8217;t redirect automatically, <a href=\"%s\">click here</a>."
 msgstr ""
 
-#: Lingo.php:113
+#: Lingo.php:123
 msgctxt "Default Term: Language"
 msgid "Arabic"
 msgstr ""
 
-#: Lingo.php:114
+#: Lingo.php:124
 msgctxt "Default Term: Language"
 msgid "Farsi"
 msgstr ""
 
-#: Lingo.php:115
+#: Lingo.php:125
 msgctxt "Default Term: Language"
 msgid "English"
 msgstr ""
 
-#: Lingo.php:116
+#: Lingo.php:126
 msgctxt "Default Term: Language"
 msgid "French"
 msgstr ""
 
-#: Lingo.php:274
+#: Lingo.php:127
+msgctxt "Default Term: Language"
+msgid "Russian"
+msgstr ""
+
+#: Lingo.php:151
+msgctxt "Meta Field Title"
+msgid "Endonym"
+msgstr ""
+
+#: Lingo.php:152
+msgctxt "Meta Field Description"
+msgid "The native name for the language."
+msgstr ""
+
+#: Lingo.php:156
+msgctxt "Meta Field"
+msgid "Alpha-2 Code"
+msgstr ""
+
+#: Lingo.php:157
+msgctxt "Meta Field Column"
+msgid "ISO 639-1/Alpha-2 Code for the language."
+msgstr ""
+
+#: Lingo.php:158
+msgctxt "Meta Field Column"
+msgid "Alpha-2"
+msgstr ""
+
+#: Lingo.php:377
 msgctxt "Header"
-msgid "Import Language Identifiers"
+msgid "Language Tools"
 msgstr ""
 
-#: Lingo.php:277
+#: Lingo.php:476
+msgctxt "Header"
+msgid "Language Imports"
+msgstr ""
+
+#: ModuleSettings.php:28
+msgctxt "Card Title"
+msgid "Language Identifiers"
+msgstr ""
+
+#: ModuleSettings.php:29
 msgctxt "Imports"
-msgid "ISO 639-1 Alpha-2"
+msgid "ISO 639-1"
 msgstr ""
 
-#: Lingo.php:284
-msgctxt "Table Column"
-msgid "Code"
-msgstr ""
-
-#: Lingo.php:288
+#: ModuleSettings.php:34
 msgctxt "Table Column"
 msgid "Term"
 msgstr ""
 
-#: Lingo.php:300
+#: ModuleSettings.php:60
+msgctxt "Table Column"
+msgid "Alpha-2"
+msgstr ""
+
+#: ModuleSettings.php:65
 msgctxt "Table Column"
 msgid "English Name"
 msgstr ""
 
-#: Lingo.php:304
-#: Lingo.php:342
-#: Lingo.php:352
+#: ModuleSettings.php:69
 msgctxt "Table Column"
-msgid "Native Name"
+msgid "Endonym"
 msgstr ""
 
-#: Lingo.php:309
+#: ModuleSettings.php:74
 msgctxt "Message: Table Empty"
 msgid "There are no language identifiers available!"
 msgstr ""
 
-#: Lingo.php:322
+#: ModuleSettings.php:80
+#: ModuleSettings.php:141
+msgctxt "Message"
+msgid "Check for available language identifiers and create corresponding terms."
+msgstr ""
+
+#: ModuleSettings.php:83
 msgctxt "Button"
 msgid "Create Language Terms"
 msgstr ""
 
-#: Lingo.php:325
-msgctxt "Button"
+#: ModuleSettings.php:86
+msgctxt "CheckBox"
 msgid "Update Existing Terms"
 msgstr ""
 
-#: Lingo.php:329
+#: ModuleSettings.php:111
+msgctxt "Card Title"
+msgid "Queried Taxonomy Terms"
+msgstr ""
+
+#: ModuleSettings.php:116
+msgctxt "Table Column"
+msgid "<abbr title=\"Language\">Lang</abbr>"
+msgstr ""
+
+#: ModuleSettings.php:122
+msgctxt "Table Empty"
+msgid "There are no terms available!"
+msgstr ""
+
+#: ModuleSettings.php:144
+msgctxt "Button"
+msgid "Convert to Language Terms"
+msgstr ""
+
+#: ModuleSettings.php:147
+msgctxt "CheckBox"
+msgid "Override The Name of Language"
+msgstr ""
+
+#: ModuleSettings.php:196
+msgctxt "Card Title"
+msgid "Terms for Languages"
+msgstr ""
+
+#: ModuleSettings.php:198
 msgctxt "Message"
-msgid "Check for available language identifiers and create corresponding terms."
+msgid "Imports already tagged taxonomy data into language identifiers."
+msgstr ""
+
+#: ModuleSettings.php:209
+msgctxt "Button"
+msgid "Investigate Terms"
+msgstr ""
+
+#: ModuleSettings.php:212
+msgctxt "CheckBox"
+msgid "Skip Empty Terms"
 msgstr ""

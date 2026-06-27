@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Tube\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:25+0330\n"
+"PO-Revision-Date: 2026-03-28 11:37+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,178 +11,193 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: geditorial-tube\n"
 "X-Poedit-Basepath: ../../includes/Modules/Tube\n"
 
-#: Tube.php:43
+#: Tube.php:45
 msgctxt "Setting Title"
 msgid "Channels Support"
 msgstr "کانال‌های ویدئویی"
 
-#: Tube.php:44
+#: Tube.php:46
 msgctxt "Setting Description"
 msgid "Supports channel post-type and related features."
 msgstr "نوع‌فرسته کانال را فعال و ویژگی‌های مرتبط را پشتیبانی می‌کند."
 
-#: Tube.php:48
+#: Tube.php:50
 msgctxt "Setting Title"
 msgid "Video Toolbar"
 msgstr "نوارابزار ویدئو"
 
-#: Tube.php:49
+#: Tube.php:51
 msgctxt "Setting Description"
 msgid "Displays customized toolbar after player."
 msgstr "نمایش نوارابزار سفارشی بعد از پخش‌کننده."
 
-#: Tube.php:56
+#: Tube.php:58
 msgctxt "Setting Title"
 msgid "Connected Post-types"
 msgstr "نوع‌فرسته‌های مرتبط"
 
-#: Tube.php:107
+#: Tube.php:100
 msgid "Video"
 msgid_plural "Videos"
 msgstr[0] "ویدئوها"
 msgstr[1] "ویدئو"
 
-#: Tube.php:108
+#: Tube.php:101
 msgid "Video Category"
 msgid_plural "Video Categories"
 msgstr[0] "دسته‌های ویدئو"
 msgstr[1] "دسته ویدئو"
 
-#: Tube.php:109
+#: Tube.php:102
 msgid "Channel"
 msgid_plural "Channels"
 msgstr[0] "کانال‌ها"
 msgstr[1] "کانال"
 
-#: Tube.php:110
+#: Tube.php:103
 msgid "Channel Category"
 msgid_plural "Channel Categories"
 msgstr[0] "دسته‌های کانال"
 msgstr[1] "دسته کانال"
 
-#: Tube.php:119
-msgctxt "MetaBox: Title"
-msgid "Connected Videos"
-msgstr "ویدئوهای مرتبط"
+#. translators: `%s`: count number
+#: Tube.php:106
+#, php-format
+msgid "%s Video"
+msgid_plural "%s Videos"
+msgstr[0] "%s ویدئو"
+msgstr[1] "%s ویدئو"
 
-#: Tube.php:122
-msgctxt "MetaBox: Title"
-msgid "Connected Channels"
-msgstr "کانال‌های مرتبط"
-
-#: Tube.php:129 Tube.php:136
+#: Tube.php:116
 msgctxt "O2O"
 msgid "Connected Videos"
 msgstr "ویدئوهای مرتبط"
 
-#: Tube.php:130
+#: Tube.php:117
 msgctxt "O2O"
 msgid "Connected Posts"
 msgstr "نوشته‌های مرتبط"
 
-#: Tube.php:135
-msgctxt "O2O"
-msgid "Connected Channels"
-msgstr "کانال‌های مرتبط"
+#: Tube.php:136
+msgctxt "Field Title"
+msgid "Channel"
+msgstr "کانال"
 
-#: Tube.php:154
+#: Tube.php:137
+msgctxt "Field Description"
+msgid "Parent Channel of the Video"
+msgstr "کانال مالک این ویدئو"
+
+#: Tube.php:143
 msgctxt "Field Title"
 msgid "Featured People"
 msgstr "افراد برجسته"
 
-#: Tube.php:155
+#: Tube.php:144
 msgctxt "Field Description"
 msgid "People Who Featured in This Video"
 msgstr "افرادی که به صورت برجسته در این ویدئو حضور دارند"
 
-#: Tube.php:160
+#: Tube.php:149
 msgctxt "Field Title"
 msgid "Creation Date"
 msgstr "تاریخ ساخت"
 
-#: Tube.php:161
+#: Tube.php:150
 msgctxt "Field Description"
 msgid "Creation Date of the Video"
 msgstr "تاریخ ساخت این ویدئو"
 
-#: Tube.php:168
+#: Tube.php:156
 msgctxt "Field Title"
 msgid "Video Duration"
 msgstr "مدت‌زمان ویدئو"
 
-#: Tube.php:169
+#: Tube.php:157
 msgctxt "Field Description"
 msgid "Duration of the Video"
 msgstr "مدت زمان این ویدئو"
 
-#: Tube.php:175
+#: Tube.php:163
 msgctxt "Field Title"
 msgid "Video Embed URL"
 msgstr "نشانی جاساز ویدئو"
 
-#: Tube.php:176
+#: Tube.php:164
 msgctxt "Field Description"
 msgid "Embeddable URL of the External Video"
 msgstr "نشانی قابل جاسازی برای ویدئوی بیرونی"
 
-#: Tube.php:394
+#: Tube.php:384
 msgctxt "Button"
 msgid "The date of this video"
 msgstr "تاریخ این ویدئو"
 
-#: Tube.php:400
+#: Tube.php:390
 msgctxt "Button"
 msgid "Total time of this video"
 msgstr "مجموع مدت زمان این ویدئو"
 
-#: Tube.php:407
+#: Tube.php:397
 msgctxt "Button"
 msgid "Download this video"
 msgstr "دریافت این ویدئو"
 
-#: Tube.php:408
+#: Tube.php:398
 msgctxt "Button"
 msgid "Download"
 msgstr "دریافت"
 
-#: Tube.php:414
+#: Tube.php:404
 msgctxt "Button"
 msgid "View this video on YouTube"
 msgstr "نمایش این ویدئو در یوتوب"
 
-#: Tube.php:416
+#: Tube.php:406
 msgctxt "Button"
 msgid "YouTube"
 msgstr "یوتوب"
 
-#: Tube.php:422
+#: Tube.php:412
 msgctxt "Button"
 msgid "View this video on Aparat"
 msgstr "نمایش این ویدئو در آپارات"
 
-#: Tube.php:424
+#: Tube.php:414
 msgctxt "Button"
 msgid "Aparat"
 msgstr "آپارات"
 
-#: Tube.php:431
+#: Tube.php:421
 msgctxt "Button"
 msgid "Shortlink to this video"
 msgstr "پیوند کوتاه به این ویدئو"
 
-#: Tube.php:433
+#: Tube.php:423
 msgctxt "Button"
 msgid "Shortlink"
 msgstr "پیوند کوتاه"
 
-#: Tube.php:438 Tube.php:445 Tube.php:452
+#: Tube.php:428 Tube.php:435 Tube.php:442
 msgctxt "Button"
 msgid "Share this video"
 msgstr "همخوان کنید"
+
+#~ msgctxt "MetaBox: Title"
+#~ msgid "Connected Videos"
+#~ msgstr "ویدئوهای مرتبط"
+
+#~ msgctxt "MetaBox: Title"
+#~ msgid "Connected Channels"
+#~ msgstr "کانال‌های مرتبط"
+
+#~ msgctxt "O2O"
+#~ msgid "Connected Channels"
+#~ msgstr "کانال‌های مرتبط"
 
 #~ msgctxt "Field Description"
 #~ msgid "Featured People in the Video"

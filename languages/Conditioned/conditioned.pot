@@ -13,23 +13,23 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Conditioned\n"
 "X-Domain: geditorial-conditioned\n"
 
-#: Conditioned.php:87
+#: Conditioned.php:86
 msgid "Condition"
 msgid_plural "Conditions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Conditioned.php:91
+#: Conditioned.php:90
 msgctxt "Label: Menu Name"
 msgid "Condition Ranks"
 msgstr ""
 
-#: Conditioned.php:92
+#: Conditioned.php:91
 msgctxt "Label: Show Option All"
 msgid "Condition Ranks"
 msgstr ""
 
-#: Conditioned.php:93
+#: Conditioned.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(Unranked)"
 msgstr ""

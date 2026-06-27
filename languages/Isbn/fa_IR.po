@@ -3,128 +3,138 @@ msgstr ""
 "Project-Id-Version: gEditorial Isbn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-09-19 22:39+0330\n"
+"PO-Revision-Date: 2026-01-16 20:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-Basepath: ../../includes/Modules/Isbn\n"
 "X-Domain: geditorial-isbn\n"
 
-#: Isbn.php:46
+#: Isbn.php:50
 msgctxt "Setting Title"
 msgid "Default Post-Type"
 msgstr "نوع‌فرسته پیش‌فرض"
 
-#: Isbn.php:47
+#: Isbn.php:51
 msgctxt "Setting Description"
 msgid "Defines the default post-type to create new posts with queried data on front-end."
 msgstr ""
 
-#: Isbn.php:48
+#: Isbn.php:52
 msgctxt "Setting Description"
 msgid "Define supported post-types first!"
 msgstr "ابتدا نوع‌فرسته‌های پشتیبانی شده را تعریف کنید!"
 
-#: Isbn.php:54
+#: Isbn.php:58
 msgctxt "Setting Description"
 msgid "Adds results by ISBN information on front-end search."
 msgstr "در جست‌وجوی روی سایت، نتایج بر اساس اطلاعات ISBN را اضافه می‌کند."
 
-#: Isbn.php:73
+#: Isbn.php:80
 msgctxt "Field Title"
 msgid "Bibliographic"
 msgstr "کتابشناسی"
 
-#: Isbn.php:74
+#: Isbn.php:81
 msgctxt "Field Description"
 msgid "National Bibliographic Number"
 msgstr "شماره کتابشناسی ملی"
 
-#: Isbn.php:82 Isbn.php:408
+#: Isbn.php:89 Isbn.php:538
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:83 Isbn.php:92 Isbn.php:103 Isbn.php:114 Isbn.php:125
+#: Isbn.php:90 Isbn.php:99 Isbn.php:110 Isbn.php:121 Isbn.php:132
 msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr "شماره استاندارد بین‌المللی کتاب"
 
-#: Isbn.php:91 Isbn.php:414
+#: Isbn.php:98 Isbn.php:544
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr "شابک #۲"
 
-#: Isbn.php:97
+#: Isbn.php:104
 msgctxt "Field Title"
 msgid "ISBN #2 Label"
 msgstr "عنوان شابک #۲"
 
-#: Isbn.php:98
+#: Isbn.php:105
 msgctxt "Field Description"
 msgid "Label to use on ISBN #2"
 msgstr "عنوان برای استفاده با شابک #۲"
 
-#: Isbn.php:102 Isbn.php:420
+#: Isbn.php:109 Isbn.php:550
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr "شابک #۳"
 
-#: Isbn.php:108
+#: Isbn.php:115
 msgctxt "Field Title"
 msgid "ISBN #3 Label"
 msgstr "عنوان شابک #۳"
 
-#: Isbn.php:109
+#: Isbn.php:116
 msgctxt "Field Description"
 msgid "Label to use on ISBN #3"
 msgstr "عنوان برای استفاده با شابک #۳"
 
-#: Isbn.php:113 Isbn.php:426
+#: Isbn.php:120 Isbn.php:556
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr "شابک #۴"
 
-#: Isbn.php:119
+#: Isbn.php:126
 msgctxt "Field Title"
 msgid "ISBN #4 Label"
 msgstr "عنوان شابک #۴"
 
-#: Isbn.php:120
+#: Isbn.php:127
 msgctxt "Field Description"
 msgid "Label to use on ISBN #4"
 msgstr "عنوان برای استفاده با شابک #۴"
 
-#: Isbn.php:124 Isbn.php:432
+#: Isbn.php:131 Isbn.php:562
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr "شابک #۵"
 
-#: Isbn.php:130
+#: Isbn.php:137
 msgctxt "Field Title"
 msgid "ISBN #5 Label"
 msgstr "عنوان شابک #۵"
 
-#: Isbn.php:131
+#: Isbn.php:138
 msgctxt "Field Description"
 msgid "Label to use on ISBN #5"
 msgstr "عنوان برای استفاده با شابک #۵"
 
-#: Isbn.php:332
+#: Isbn.php:242
+msgctxt "Column Title"
+msgid "ISBN"
+msgstr "شابک"
+
+#: Isbn.php:292
+msgctxt "Row Icon Title"
+msgid "ISBN"
+msgstr "شابک"
+
+#: Isbn.php:462
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:455
+#: Isbn.php:585
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr "درون‌ریزی‌های شابک"
 
-#: Isbn.php:483
+#: Isbn.php:613
 msgctxt "Field Title Attr"
 msgid "See the page about this on National Library website."
 msgstr "به صفحه مربوط به این کتاب در سایت کتابخانه ملی مراجعه کنید."

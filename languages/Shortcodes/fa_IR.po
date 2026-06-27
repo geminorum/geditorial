@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Shortcodes\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-08-11 14:18+0330\n"
+"PO-Revision-Date: 2026-03-29 00:56+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,71 +11,87 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Shortcodes\n"
 "X-Domain: geditorial-shortcodes\n"
 
-#: Shortcodes.php:35
+#: Shortcodes.php:37
 msgctxt "Setting Title"
 msgid "Shortcodes"
 msgstr "شورت‌کدها"
 
-#: Shortcodes.php:36
+#: Shortcodes.php:38
 msgctxt "Setting Description"
 msgid "Enables the use of the selected short-codes."
 msgstr "استفاده از شورت‌کدهای انتخاب شده را فعال می‌کند."
 
-#: Shortcodes.php:46
+#: Shortcodes.php:48
 msgctxt "Setting Title"
 msgid "Remove Empty Paragraphs"
 msgstr "حذف پاراگراف‌های خالی"
 
-#: Shortcodes.php:47
+#: Shortcodes.php:49
 msgctxt "Setting Description"
 msgid "Strips empty paragraph tags around short-codes from post content."
 msgstr ""
 
-#: Shortcodes.php:51
+#: Shortcodes.php:53
 msgctxt "Setting Title"
 msgid "Remove Orphaned"
 msgstr "حذف یتیم‌شده‌ها"
 
-#: Shortcodes.php:52
+#: Shortcodes.php:54
 msgctxt "Setting Description"
 msgid "Strips unregistered shortcode tags from post content."
 msgstr ""
 
-#: Shortcodes.php:62
+#: Shortcodes.php:64
 msgctxt "Shortcode Name"
 msgid "Display Terms"
 msgstr "نمایش رده‌ها"
 
-#: Shortcodes.php:63
+#: Shortcodes.php:65
 msgctxt "Shortcode Name"
 msgid "Term Tiles"
 msgstr "کاشی‌های رده‌ها"
 
-#: Shortcodes.php:64
+#: Shortcodes.php:66
 msgctxt "Shortcode Name"
 msgid "Posts Assigned"
 msgstr "فرسته‌های تخصیصی"
 
-#: Shortcodes.php:112
-msgctxt "Title Attr"
-msgid "Shortcodes"
+#: Shortcodes.php:67
+msgctxt "Shortcode Name"
+msgid "Circle Progress"
+msgstr "دایره پیشرفت"
+
+#: Shortcodes.php:116
+msgctxt "Node: Title"
+msgid "Short-codes"
 msgstr "شورت‌کدها"
 
-#: Shortcodes.php:150
+#. translators: `%s`: singular post-type label
+#: Shortcodes.php:122
+#, php-format
+msgctxt "Node: Title"
+msgid "View Short-code Reports for this %s"
+msgstr "مشاهده گزارش شورت‌کدها برای این %s"
+
+#: Shortcodes.php:189
 msgctxt "None Title"
 msgid "All Shortcodes"
 msgstr "همهٔ شورت‌کدها"
 
-#: Shortcodes.php:164
+#: Shortcodes.php:203
 msgctxt "Table Column"
 msgid "Shortcodes"
 msgstr "شورت‌کدها"
 
-#: Shortcodes.php:182
+#: Shortcodes.php:222
 msgctxt "Header"
 msgid "Overview of Post Shortcodes"
 msgstr "مروری بر شورت‌کدها در نوشته‌ها"
+
+#~ msgctxt "Title Attr"
+#~ msgid "Shortcodes"
+#~ msgstr "شورت‌کدها"

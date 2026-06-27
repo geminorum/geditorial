@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Attachments\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-09-24 01:24+0330\n"
+"PO-Revision-Date: 2026-05-22 13:08+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,97 +11,162 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: geditorial-attachments\n"
 "X-Poedit-Basepath: ../../includes/Modules/Attachments\n"
 
-#: Attachments.php:51
+#: Attachments.php:46
+msgctxt "Setting Description"
+msgid "Determines the default status of the new attachment comments."
+msgstr "وضعیت پیش‌فرض دیدگاه‌ها در پیوست تازه را تعیین می‌کند."
+
+#: Attachments.php:49
+msgctxt "Setting Title"
+msgid "Comment Control"
+msgstr "کنترل دیدگاه‌ها"
+
+#: Attachments.php:50
+msgctxt "Setting Description"
+msgid "Displays comments status check-box for each attachment."
+msgstr "جعبه‌انتخاب وضعیت دیدگاه‌ها را برای هر پیوست نمایش می‌دهد."
+
+#: Attachments.php:54
+msgctxt "Setting Title"
+msgid "Auto Rotation"
+msgstr "چرخش خودکار"
+
+#. translators: `%s`: `EXIF`
+#: Attachments.php:57
+#, php-format
+msgctxt "Setting Description"
+msgid "Fixes the rotation of JPEG images using %s extension, immediately after the upload."
+msgstr "بلافاصله پس از بارگزاری، چرخش تصاویر JPEG را با استفاده از افزونه %s اصلاح می‌کند."
+
+#. translators: `%s`: `alt`
+#: Attachments.php:65
+#, php-format
+msgctxt "Setting Title"
+msgid "Fallback %s to Title"
+msgstr "پس‌نشینی %s به عنوان"
+
+#: Attachments.php:68
+msgctxt "Setting Description"
+msgid "Tries to fill empty alt attribute with attachment title on images."
+msgstr "برای پر کردن ویژگی alt خالی به کمک عنوان پیوست تلاش می‌کند."
+
+#: Attachments.php:75
 msgctxt "Setting Title"
 msgid "Rewrite Permalinks"
 msgstr "بازنویسی پایاپیوندها"
 
-#: Attachments.php:52
+#: Attachments.php:76
 msgctxt "Setting Description"
 msgid "Changes default permalinks into attachment id."
 msgstr "پایاپیوندهای پیش‌فرض را به شناسه پیوست تغییر می‌دهد."
 
-#: Attachments.php:57
+#: Attachments.php:81
 msgctxt "Setting Title"
 msgid "Prefix Permalinks"
 msgstr "پیشوند پایاپیوندها"
 
-#: Attachments.php:58
+#: Attachments.php:82
 msgctxt "Setting Description"
 msgid "Adds to the permalink of attachments, before id."
 msgstr "به پایاپیوند پیوست‌ها، پس از شناسه، افزوده می‌شود."
 
-#: Attachments.php:65
-msgctxt "Setting Title"
-msgid "Fallback Alt to Title"
-msgstr "پس‌نشینی Alt به عنوان"
-
-#: Attachments.php:66
-msgctxt "Setting Description"
-msgid "Tries to fill empty alt attribute with attachment title on images."
-msgstr ""
-
-#: Attachments.php:72
+#: Attachments.php:91
 msgctxt "Setting Title"
 msgid "Attachment Count"
 msgstr "شمار پیوست‌ها"
 
-#: Attachments.php:73
+#: Attachments.php:92
 msgctxt "Setting Description"
 msgid "Displays attachment summary of the post."
 msgstr "نمایش گزارش پیوست‌های نوشته."
 
-#: Attachments.php:75
+#: Attachments.php:94
 msgctxt "Setting Description"
 msgid "Enhances author restrictions on media library list view."
 msgstr "در نمای فهرست کتابخانه رسانه‌ای، امکان محدودیت بر اساس نویسندگان را اضافه می‌کند."
 
-#: Attachments.php:78
+#: Attachments.php:97
 msgctxt "Setting Title"
 msgid "Restrict Library"
 msgstr "محدودسازی کتاب‌خانه"
 
-#: Attachments.php:79
+#: Attachments.php:98
 msgctxt "Setting Description"
 msgid "Restricts Media Library access to user's own uploads."
 msgstr "در نمای فهرست کتابخانه رسانه‌ای، هر کاربر را محدود به پرونده‌های خودش می‌کند."
 
-#: Attachments.php:87
+#: Attachments.php:106
 msgctxt "Setting Title"
 msgid "ShortCode Caption"
 msgstr "برنگاشت شورت‌کد"
 
-#: Attachments.php:88
+#: Attachments.php:107
 msgctxt "Setting Description"
 msgid "Displays the attachment caption after each item on the list."
-msgstr ""
+msgstr "در فهرست، بعد از هر مورد برنگاشت پیوست را نمایش می‌دهد."
 
-#: Attachments.php:92
+#: Attachments.php:111
 msgctxt "Setting Title"
 msgid "ShortCode Description"
 msgstr "توضیحات شورت‌کد"
 
-#: Attachments.php:93
+#: Attachments.php:112
 msgctxt "Setting Description"
 msgid "Displays the attachment description after each item on the list."
-msgstr ""
+msgstr "در فهرست، بعد از هر مورد توضیحات پیوست را نمایش می‌دهد."
 
-#: Attachments.php:214
-msgctxt "Adminbar"
-msgid "Attachment Summary"
+#. translators: `%1$s`: mark-up start, `%2$s`: mark-up end, `%3$s`: post title, `%4$s`: post-type singular label
+#: Attachments.php:207
+#, php-format
+msgctxt "Message"
+msgid "You are about to upload attachments into %1$s%3$s%2$s %4$s."
+msgstr "شما در حال بارگذاری پیوست‌ها در %4$s %1$s%3$s%2$s هستید."
+
+#. translators: `%s`: parent post title
+#: Attachments.php:230
+#, php-format
+msgctxt "Header Button"
+msgid "Add Media File for &#8220;%s&#8221;"
+msgstr "افزودن پرونده رسانه‌ای برای &laquo;%s&raquo;"
+
+#: Attachments.php:285
+msgctxt "Field Label"
+msgid "Comment Control"
+msgstr "کنترل دیدگاه‌ها"
+
+#: Attachments.php:286
+msgctxt "Field Help"
+msgid "Applies to the attachment page associated with this media."
+msgstr "برای برگه‌های مرتبط با این پیوست اعمال می‌شود."
+
+#: Attachments.php:395
+msgctxt "Node: Title"
+msgid "Attachments Summary"
 msgstr "گزارش پیوست‌ها"
 
-#: Attachments.php:275
+#: Attachments.php:439
+msgctxt "Node: Title"
+msgid "Upload Attachments"
+msgstr "بارگذاری پیوست‌ها"
+
+#. translators: `%s`: singular post-type label
+#: Attachments.php:445
+#, php-format
+msgctxt "Node: Title"
+msgid "Upload Attachments for this %s."
+msgstr "پیوست‌ها را برای این %s بارگذاری کنید."
+
+#: Attachments.php:484
 msgctxt "Row Icon Title"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: `%s`: attachments count
-#: Attachments.php:279
+#: Attachments.php:488
 #, php-format
 msgctxt "Noop"
 msgid "%s Attachment"
@@ -109,97 +174,97 @@ msgid_plural "%s Attachments"
 msgstr[0] "%s پیوست"
 msgstr[1] "%s پیوست"
 
-#: Attachments.php:286
+#: Attachments.php:494
 msgctxt "Title Attr"
 msgid "View the list of attachments"
 msgstr "نمایش فهرست پیوست‌ها"
 
-#: Attachments.php:321
+#: Attachments.php:530
 msgctxt "Shortcode"
 msgid "Attachments"
 msgstr "پیوست‌ها"
 
 #. translators: `%s`: attachment parent title
-#: Attachments.php:323
+#: Attachments.php:532
 #, php-format
 msgctxt "Shortcode"
 msgid "Attachments of %s"
 msgstr "پیوست‌ها برای %s"
 
-#: Attachments.php:420
+#: Attachments.php:633
 msgctxt "Table Action"
 msgid "Delete Permanently"
 msgstr "پاک‌کردن برای همیشه"
 
-#: Attachments.php:421
+#: Attachments.php:634
 msgctxt "Table Action"
 msgid "Empty Meta-data"
 msgstr "خالی‌کردن فراداده‌ها"
 
-#: Attachments.php:422
+#: Attachments.php:635
 msgctxt "Table Action"
-msgid "Remove Thumbnails"
-msgstr "حذف بندانگشتی‌ها"
+msgid "Delete Sizes"
+msgstr "حذف اندازه‌ها"
 
-#: Attachments.php:439
+#: Attachments.php:652
 msgctxt "Table Column"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: Attachments.php:451
+#: Attachments.php:664
 msgctxt "Table Column"
 msgid "Search"
 msgstr "جست‌وجو"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:458
+#: Attachments.php:672
 #, php-format
 msgctxt "Search Result Prefix"
 msgid "[Parent]: %s"
 msgstr "[والد]: %s"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:463
+#: Attachments.php:679
 #, php-format
 msgctxt "Search Result Prefix"
 msgid "[Thumb]: %s"
 msgstr "[برگزیده]: %s"
 
 #. translators: `%s`: linked term title
-#: Attachments.php:468
+#: Attachments.php:686
 #, php-format
 msgctxt "Search Result Prefix"
 msgid "[Term]: %s"
 msgstr "[رده]: %s"
 
 #. translators: `%s`: linked post title
-#: Attachments.php:473
+#: Attachments.php:693
 #, php-format
 msgctxt "Search Result Prefix"
 msgid "[Content]: %s"
 msgstr "[محتوا]: %s"
 
-#: Attachments.php:480
+#: Attachments.php:701
 msgctxt "Table Column"
 msgid "Sizes"
 msgstr "اندازه‌ها"
 
-#: Attachments.php:503
+#: Attachments.php:728
 msgctxt "Table Column"
 msgid "Meta"
 msgstr "متا"
 
-#: Attachments.php:524
+#: Attachments.php:749
 msgctxt "Header"
 msgid "Overview of Attachments"
 msgstr "مروری بر پیوست‌ها"
 
-#: Attachments.php:525
+#: Attachments.php:750
 msgctxt "Message"
 msgid "No attachments found."
 msgstr "پیوستی پیدا نشد."
 
-#: Attachments.php:537
+#: Attachments.php:762
 msgctxt "Header"
 msgid "Attachment Tools"
 msgstr "ابزارهایی برای پیوست‌ها"
@@ -215,89 +280,101 @@ msgid "Re-attach Un-Parented"
 msgstr "پیوست دوباره بدون والدها"
 
 #. translators: `%s`: post-type label
-#: ModuleSettings.php:28 ModuleSettings.php:43
+#: ModuleSettings.php:26 ModuleSettings.php:45
 #, php-format
 msgctxt "Button"
 msgid "On %s"
 msgstr "در %s"
 
-#: ModuleSettings.php:30
+#: ModuleSettings.php:33
 msgctxt "Button Description"
 msgid "Tries to re-attach un-parented via thumbnail meta-data."
-msgstr ""
+msgstr "برای بازپیوست، بی‌والدها بر اساس داده‌های متای بندانگشتی تلاش می‌کند."
 
-#: ModuleSettings.php:36
+#: ModuleSettings.php:40
 msgctxt "Card Title"
 msgid "Empty Meta-data"
 msgstr "خالی‌کردن فراداده‌ها"
 
-#: ModuleSettings.php:45
+#: ModuleSettings.php:52
 msgctxt "Button Description"
 msgid "Tries to clean attachemnt raw meta-data."
-msgstr ""
+msgstr "برای پاک‌سازی داده‌های متای خام پیوست تلاش می‌کند."
 
-#: ModuleSettings.php:51
+#: ModuleSettings.php:59
 msgctxt "Card Title"
 msgid "Deletion by MIME"
 msgstr "حذف بر اساس میم"
 
-#: ModuleSettings.php:59
+#: ModuleSettings.php:70
 msgctxt "Button Description"
 msgid "Tries to delete attachemnts by MIME types."
-msgstr ""
+msgstr "برای حذف پیوست‌ها بر اساس مایم تلاش می‌کند."
 
 #. translators: `%s`: attachment id
-#: ModuleSettings.php:126 ModuleSettings.php:207
+#: ModuleSettings.php:138 ModuleSettings.php:219
 #, php-format
 msgctxt "Notice"
 msgid "Attachment ID (%s) is not valid!"
-msgstr ""
+msgstr "شناسه پیوست (%s) نامعتبر است!"
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
-#: ModuleSettings.php:133
+#: ModuleSettings.php:145
 #, php-format
 msgctxt "Notice"
 msgid "There is problem cleaning raw meta-data on &ldquo;%2$s&rdquo; (%1$s)."
-msgstr ""
+msgstr "مشکلی در پاک‌سازی داده‌های متای خام در &rdquo;%2$s&ldquo; (%1$s) اتفاق افتاده است."
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
-#: ModuleSettings.php:140
+#: ModuleSettings.php:152
 #, php-format
 msgctxt "Notice"
 msgid "Raw meta-data cleaned on &ldquo;%1$s&rdquo; (%2$s)."
-msgstr ""
+msgstr "داده‌های متای خام در در &rdquo;%2$s&ldquo; (%1$s) پاک‌سازی شد."
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
-#: ModuleSettings.php:154
+#: ModuleSettings.php:166
 #, php-format
 msgctxt "Notice"
 msgid "There is problem deleting attachment &ldquo;%1$s&rdquo; (%2$s)."
-msgstr ""
+msgstr "مشکلی در حذف پیوست &rdquo;%2$s&ldquo; (%1$s) اتفاق افتاده است."
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id
-#: ModuleSettings.php:161
+#: ModuleSettings.php:173
 #, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) successfully deleted!"
-msgstr ""
+msgstr "پیوست &rdquo;%1$s&ldquo; (%2$s) با موفقیت حذف شد!"
 
 #. translators: `%s`: parent id
-#: ModuleSettings.php:214
+#: ModuleSettings.php:226
 #, php-format
 msgctxt "Notice"
 msgid "Parent ID (%s) is not valid!"
-msgstr ""
+msgstr "شناسه والد (%s) نامعتبر است!"
 
 #. translators: `%1$s`: attachment id, `%2$s`: parent title
-#: ModuleSettings.php:221
+#: ModuleSettings.php:233
 #, php-format
 msgctxt "Notice"
 msgid "There is problem setting attachment (%1$s) parent to &ldquo;%2$s&rdquo;."
-msgstr ""
+msgstr "مشکلی در تنظیم والد پیوست (%1$s) به &rdquo;%2$s&ldquo; اتفاق افتاده است."
 
 #. translators: `%1$s`: attachment title, `%2$s`: attachment id, `%3$s`: parent title
-#: ModuleSettings.php:228
+#: ModuleSettings.php:240
 #, php-format
 msgctxt "Notice"
 msgid "&ldquo;%1$s&rdquo; attachemnt (%2$s) parent is set to &ldquo;%3$s&rdquo;."
-msgstr ""
+msgstr "والد &rdquo;%3$s&ldquo; برای پیوست &rdquo;%1$s&ldquo; (%2$s) تنظیم شد."
+
+#~ msgctxt "Field Label"
+#~ msgid "Allow Comments"
+#~ msgstr "پذیرفتن دیدگاه"
+
+#~ msgctxt "Field Label"
+#~ msgid "Allow Pings"
+#~ msgstr "پذیرفتن بازتاب"
+
+#~ msgctxt "Table Action"
+#~ msgid "Remove Thumbnails"
+#~ msgstr "حذف بندانگشتی‌ها"

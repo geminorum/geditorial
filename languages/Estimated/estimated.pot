@@ -13,86 +13,88 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Estimated\n"
 "X-Domain: geditorial-estimated\n"
 
-#: Estimated.php:36
+#: Estimated.php:40
 msgctxt "Setting Title"
 msgid "Reading Time"
 msgstr ""
 
-#: Estimated.php:37
+#: Estimated.php:41
 msgctxt "Setting Description"
 msgid "Average words per minute"
 msgstr ""
 
-#: Estimated.php:43
-msgctxt "Setting Title"
-msgid "Content Prefix"
-msgstr ""
-
-#: Estimated.php:44
-msgctxt "Setting Description"
-msgid "Custom string before the estimated time on the content."
-msgstr ""
-
-#: Estimated.php:45
-#: Estimated.php:214
-msgctxt "Setting Default"
-msgid "Estimated read time:"
-msgstr ""
-
-#: Estimated.php:50
-msgctxt "Setting Title"
-msgid "Content Teaser"
-msgstr ""
-
-#: Estimated.php:51
-msgctxt "Setting Description"
-msgid "Calculate teaser text along with rest of the content"
-msgstr ""
-
-#: Estimated.php:54
-msgctxt "Content Teaser Option"
-msgid "Ignore"
-msgstr ""
-
-#: Estimated.php:55
-msgctxt "Content Teaser Option"
-msgid "Include"
-msgstr ""
-
-#: Estimated.php:63
+#: Estimated.php:47
 msgctxt "Setting Title"
 msgid "Minimum Words"
 msgstr ""
 
-#: Estimated.php:64
+#: Estimated.php:48
 msgctxt "Setting Description"
 msgid "And above this number of words will show the notice"
 msgstr ""
 
-#: Estimated.php:118
+#: Estimated.php:54
+msgctxt "Setting Title"
+msgid "Content Teaser"
+msgstr ""
+
+#: Estimated.php:55
+msgctxt "Setting Description"
+msgid "Calculate teaser text along with rest of the content"
+msgstr ""
+
+#: Estimated.php:58
+msgctxt "Content Teaser Option"
+msgid "Ignore"
+msgstr ""
+
+#: Estimated.php:59
+msgctxt "Content Teaser Option"
+msgid "Include"
+msgstr ""
+
+#: Estimated.php:65
+msgctxt "Setting Title"
+msgid "Content Prefix"
+msgstr ""
+
+#. translators: `%s`: zero placeholder
+#: Estimated.php:68
+#, php-format
+msgctxt "Setting Description"
+msgid "Custom string before the estimated time on the content. Leave blank for default or %s to disable."
+msgstr ""
+
+#: Estimated.php:71
+#: Estimated.php:276
+msgctxt "Setting Default"
+msgid "Estimated read time:"
+msgstr ""
+
+#: Estimated.php:145
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr ""
 
-#: Estimated.php:121
+#: Estimated.php:148
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr ""
 
-#. translators: `%s`: words count
-#: Estimated.php:154
-#: Estimated.php:238
+#. translators: `%s`: average word count
+#: Estimated.php:183
+#: Estimated.php:298
 #, php-format
 msgctxt "Title Attr"
-msgid "If you try to read %s words per minute"
+msgid "If you try to read %s words per minute."
 msgstr ""
 
-#: Estimated.php:227
+#: Estimated.php:287
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: `%s`: number of minutes
-#: Estimated.php:231
+#: Estimated.php:291
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"
