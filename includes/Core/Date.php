@@ -608,7 +608,8 @@ class Date extends Base
 		if ( empty( $now ) )
 			$now = time();
 
-		$diff = $now - $timestamp;
+		$diff  = $now - $timestamp;
+		$since = '';
 
 		if ( 0 == $diff ) {
 			return $args['now'];
