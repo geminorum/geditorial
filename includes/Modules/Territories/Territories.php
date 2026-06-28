@@ -1,4 +1,4 @@
-<?php namespace geminorum\gEditorial\Modules\Territory;
+<?php namespace geminorum\gEditorial\Modules\Territories;
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
@@ -8,7 +8,7 @@ use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
-class Territory extends gEditorial\Module
+class Territories extends gEditorial\Module
 {
 	use Internals\BulkExports;
 	use Internals\CoreAdmin;
@@ -26,9 +26,9 @@ class Territory extends gEditorial\Module
 	public static function module()
 	{
 		return [
-			'name'     => 'territory',
-			'title'    => _x( 'Territory', 'Modules: Territory', 'geditorial-admin' ),
-			'desc'     => _x( 'Territorial Arrangements', 'Modules: Territory', 'geditorial-admin' ),
+			'name'     => 'territories',
+			'title'    => _x( 'Territories', 'Modules: Territories', 'geditorial-admin' ),
+			'desc'     => _x( 'Territorial Arrangements', 'Modules: Territories', 'geditorial-admin' ),
 			'icon'     => 'location-alt',
 			'access'   => 'beta',
 			'keywords' => [
@@ -83,13 +83,13 @@ class Territory extends gEditorial\Module
 	{
 		$strings = [
 			'noops' => [
-				'main_taxonomy' => _n_noop( 'Territorial Arrangement', 'Territorial Arrangements', 'geditorial-territory' ),
+				'main_taxonomy' => _n_noop( 'Territorial Arrangement', 'Territorial Arrangements', 'geditorial-territories' ),
 			],
 			'labels' => [
 				'main_taxonomy' => [
-					'menu_name'            => _x( 'Content Territory', 'Label: Menu Name', 'geditorial-territory' ),
-					'show_option_all'      => _x( 'Territory', 'Label: Show Option All', 'geditorial-territory' ),
-					'show_option_no_items' => _x( '(No-Territory)', 'Label: Show Option No Terms', 'geditorial-territory' ),
+					'menu_name'            => _x( 'Content Territories', 'Label: Menu Name', 'geditorial-territories' ),
+					'show_option_all'      => _x( 'Territory', 'Label: Show Option All', 'geditorial-territories' ),
+					'show_option_no_items' => _x( '(No-Territory)', 'Label: Show Option No Terms', 'geditorial-territories' ),
 				],
 			],
 		];
