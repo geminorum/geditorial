@@ -964,7 +964,6 @@ class NationalLibrary extends gEditorial\Module
 			$args
 		);
 	}
-	}
 
 	public function tools_settings( $sub )
 	{
