@@ -1,6 +1,4 @@
 (function ($, plugin, module) {
-  if (typeof plugin === 'undefined') return;
-
   const s = {
     action: plugin._base + '_' + module,
     classs: plugin._base + '-' + module,
@@ -47,8 +45,8 @@
         data: {
           action: s.action,
           what: 'addnew',
-          data: data,
-          nonce: nonce
+          data,
+          nonce
         },
         beforeSend: function (xhr) {
           $title.prop('disabled', true);
@@ -85,12 +83,12 @@
         data: {
           action: s.action,
           what: 'reschedule',
-          day: day,
+          day,
           month: month || $cal.data('month'),
           year: year || $cal.data('year'),
           cal: $cal.data('calendar'),
           post_id: post,
-          nonce: nonce
+          nonce
         },
         beforeSend: function (xhr) {
           $theday.hide();

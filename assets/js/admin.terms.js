@@ -1,6 +1,4 @@
 (function ($, plugin, module) {
-  if (typeof plugin === 'undefined') return;
-
   let modal;
 
   const s = {
@@ -192,7 +190,7 @@
       });
     });
 
-    // reset the form on submit
+    // Resets the form on submit
     // since the form is never *actually* submitted (but instead serialized
     // on #submit being clicked), we'll have to do the same
     // @SEE: https://core.trac.wordpress.org/ticket/36956
