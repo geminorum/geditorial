@@ -320,9 +320,7 @@ class Series extends gEditorial\Module
 				'title'        => $title,
 				'placeholder'  => $title,
 				'autocomplete' => 'off',
-				'data'         => [
-					'ortho' => 'text',
-				],
+				'data-ortho'   => 'text',
 			] );
 
 			echo Core\HTML::wrap( $html, 'field-wrap -inputtext' );
@@ -334,14 +332,14 @@ class Series extends gEditorial\Module
 			$title = $this->get_string( $field, $post->post_type );
 
 			$html = Core\HTML::tag( 'input', [
-				'type'         => 'text',
-				'name'         => 'geditorial-series-'.$field.'['.$counter.']',
-				'id'           => 'geditorial-series-'.$field.'-'.$counter,
-				'value'        => $meta[$field] ?? '',
-				'title'        => $title,
-				'placeholder'  => $title,
-				'autocomplete' => 'off',
-				'data'         => [ 'ortho' => 'number' ],
+				'type'           => 'text',
+				'name'           => 'geditorial-series-'.$field.'['.$counter.']',
+				'id'             => 'geditorial-series-'.$field.'-'.$counter,
+				'value'          => $meta[$field] ?? '',
+				'title'          => $title,
+				'placeholder'    => $title,
+				'autocomplete'   => 'off',
+				'data-validator' => 'number',
 			] );
 
 			echo Core\HTML::wrap( $html, 'field-wrap -inputtext' );
@@ -359,9 +357,7 @@ class Series extends gEditorial\Module
 				'id'          => 'geditorial-series-'.$field.'-'.$counter,
 				'title'       => $title,
 				'placeholder' => $title,
-				'data'        => [
-					'ortho' => 'html',
-				],
+				'data-ortho'  => 'html',
 			], isset( $meta[$field] ) ? esc_textarea( $meta[$field] ) : '' );
 
 			echo Core\HTML::wrap( $html, 'field-wrap -textarea' );

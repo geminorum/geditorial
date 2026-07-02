@@ -82,7 +82,7 @@ class Attachments extends gEditorial\Module
 					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Setting Description', 'geditorial-attachments' ),
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'media',
-					'ortho'       => 'slug',
+					'validator'   => 'slug',
 				],
 			],
 			'_editlist' => [

@@ -141,7 +141,7 @@ class ModuleMetaBox extends gEditorial\MetaBox
 		if ( $ltr )
 			$atts['dir'] = 'ltr';
 
-		$atts['data']['ortho'] = 'number';
+		$atts['data']['validator'] = 'number';
 
 		echo Core\HTML::wrap( Core\HTML::tag( 'input', $atts ), 'field-wrap -inputnumber' );
 	}

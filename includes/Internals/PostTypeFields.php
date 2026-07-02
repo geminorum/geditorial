@@ -254,6 +254,9 @@ trait PostTypeFields
 				'quickedit'   => FALSE,
 				'bulkedit'    => NULL, // NULL to fallback to `quickedit`
 
+				'ortho'     => NULL,   // FIXME: implement this!
+				'validator' => NULL,   // FIXME: implement this!
+
 				'import'         => TRUE,    // FALSE to hide on imports
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will be ignored on import
 				'export_title'   => NULL,    // the export column title

@@ -48,13 +48,28 @@ class AdminScreen extends gEditorial\Service
 
 				add_action( "{$screen->taxonomy}_term_edit_form_top", [ __CLASS__, 'term_edit_form_open' ], -9999999, 2 );
 				add_action( "{$screen->taxonomy}_edit_form", [ __CLASS__, 'term_edit_form_close' ], 9999999, 2 );
-			}
 
-			self::_enqueue_screen_script( $screen );
+				self::enqueueValidator();
+				self::_enqueue_screen_script( $screen );
+
+			} else if ( 'edit-tags' === $screen->base ) {
+
+				self::enqueueValidator();
+				self::_enqueue_screen_script( $screen );
+			}
 
 		} else if ( $screen->post_type ) {
 
-			self::_handle_posttype_body_class( $screen );
+			if ( 'post' === $screen->base ) {
+
+				self::enqueueValidator();
+				self::_handle_posttype_body_class( $screen );
+
+			} else if ( 'edit' === $screen->base ) {
+
+				self::enqueueValidator();
+				self::_handle_posttype_body_class( $screen );
+			}
 		}
 	}
 
@@ -211,6 +226,21 @@ class AdminScreen extends gEditorial\Service
 					self::dsh( static::BASE, 'readonlytitle' )
 				);
 			}, 1, 1 );
+	}
+
+	public static function enqueueValidator()
+	{
+		static $enqueued;
+
+		if ( $enqueued )
+			return $enqueued;
+
+		$mainkey = 'validator';
+		$asset   = [];
+
+		gEditorial()->enqueue_asset_config( $asset, $mainkey );
+
+		return $enqueued = gEditorial\Scripts::enqueue( self::dot( 'all', $mainkey ) );
 	}
 
 	/**

@@ -58,7 +58,7 @@ class Socialite extends gEditorial\Module
 							'title'       => _x( 'URL', 'Setting Title', 'geditorial-socialite' ),
 							'description' => _x( 'Sets as URL of the social icon.', 'Setting Description', 'geditorial-socialite' ),
 							'field_class' => [ 'regular-text', 'url-text' ],
-							'ortho'       => 'slug',
+							'validator'   => 'slug',
 						],
 						[
 							'field'       => 'icon',

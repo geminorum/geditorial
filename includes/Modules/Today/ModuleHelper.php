@@ -620,7 +620,7 @@ class ModuleHelper extends gEditorial\Helper
 			'value'        => $args['day'],
 			'title'        => _x( 'Day', 'Meta Box Input', 'geditorial-today' ),
 			'placeholder'  => _x( 'Day', 'Meta Box Input Placeholder', 'geditorial-today' ),
-			'data'         => [ 'ortho' => 'number' ],
+			'data'         => [ 'validator' => 'number' ],
 			'onclick'      => 'this.focus();this.select()',
 		] );
 
@@ -635,7 +635,7 @@ class ModuleHelper extends gEditorial\Helper
 			'value'        => $args['month'],
 			'title'        => _x( 'Month', 'Meta Box Input', 'geditorial-today' ),
 			'placeholder'  => _x( 'Month', 'Meta Box Input Placeholder', 'geditorial-today' ),
-			'data'         => [ 'ortho' => 'number' ],
+			'data'         => [ 'validator' => 'number' ],
 			'onclick'      => 'this.focus();this.select()',
 		] );
 
@@ -650,7 +650,7 @@ class ModuleHelper extends gEditorial\Helper
 				'title'        => _x( 'Year', 'Meta Box Input', 'geditorial-today' ),
 				'placeholder'  => _x( 'Year', 'Meta Box Input Placeholder', 'geditorial-today' ),
 				'disabled'     => ! $year,
-				'data'         => [ 'ortho' => 'number' ],
+				'data'         => [ 'validator' => 'number' ],
 				'onclick'      => 'this.focus();this.select()',
 			] );
 

@@ -360,7 +360,7 @@ class Ortho extends gEditorial\Module
 					'option_group' => 'tools',
 					'placeholder'  => 'identity: `xxxxxxxxxx`',
 					'data'         => [
-						'ortho' => 'identity',
+						'validator' => 'identity',
 					],
 				] );
 
@@ -373,7 +373,7 @@ class Ortho extends gEditorial\Module
 					'option_group' => 'tools',
 					'placeholder'  => 'iban: `IRxxxxxxxxxxxxxxxxxxxxxxx`',
 					'data'         => [
-						'ortho' => 'iban',
+						'validator' => 'iban',
 					],
 				] );
 
@@ -386,7 +386,7 @@ class Ortho extends gEditorial\Module
 					'option_group' => 'tools',
 					'placeholder'  => 'vin: `IRXXXXXXXXXXXXXXX`',
 					'data'         => [
-						'ortho' => 'vin',
+						'validator' => 'vin',
 					],
 				] );
 
@@ -399,7 +399,7 @@ class Ortho extends gEditorial\Module
 					'option_group' => 'tools',
 					'placeholder'  => 'plate',
 					'data'         => [
-						'ortho' => 'plate',
+						'validator' => 'plate',
 					],
 				] );
 

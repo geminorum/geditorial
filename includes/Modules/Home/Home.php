@@ -63,7 +63,7 @@ class Home extends gEditorial\Module
 					'description' => _x( 'Specify a term slug to use for theme-designated featured content area.', 'Setting Description', 'geditorial-home' ),
 					'field_class' => [ 'medium-text', 'code-text' ],
 					'placeholder' => 'featured-slug',
-					'ortho'       => 'slug',
+					'validator'   => 'slug',
 				],
 				[
 					'field'       => 'featured_max',

@@ -121,7 +121,7 @@ class Remoted extends gEditorial\Module
 							'title'       => _x( 'Relative Path', 'Setting Title', 'geditorial-remoted' ),
 							'description' => _x( 'Defines the path relative to the base directory.', 'Setting Description', 'geditorial-remoted' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'ortho'       => 'slug',
+							'validator'   => 'slug',
 						],
 						[
 							'field'       => 'priority',
@@ -144,7 +144,7 @@ class Remoted extends gEditorial\Module
 					'title'       => _x( 'Default Destination', 'Setting Title', 'geditorial-remoted' ),
 					'description' => _x( 'Sets as the default path option on the list. Leave empty for the root.', 'Setting Description', 'geditorial-remoted' ),
 					'field_class' => [ 'regular-text', 'code-text' ],
-					'ortho'       => 'slug',
+					'validator'   => 'slug',
 				],
 			],
 			'_roles' => [

@@ -103,7 +103,7 @@ class Addressed extends gEditorial\Module
 							'title'       => _x( 'Identifier', 'Setting Title', 'geditorial-addressed' ),
 							'description' => _x( 'Defines the unique identifier on the address type.', 'Setting Description', 'geditorial-addressed' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'ortho'       => 'hook',
+							'validator'   => 'hook',
 						],
 						[
 							'field'       => 'priority',

@@ -1510,7 +1510,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'number',
 					'value' => empty( $meta ) ? '' : $meta,
 					'class' => 'small-text',
-					'data'  => [ 'ortho' => 'number' ],
+					'data'  => [ 'validator' => 'number' ],
 				] );
 
 				break;
@@ -1613,7 +1613,7 @@ class Terms extends gEditorial\Module
 					'name'  => 'term-'.$field,
 					'type'  => 'text',
 					'value' => empty( $meta ) ? '' : $meta,
-					'data'  => [ 'ortho' => 'color' ],
+					'data'  => [ 'validator' => 'color' ],
 				] );
 
 				break;
@@ -1646,7 +1646,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => empty( $meta ) ? '' : $meta,
 					'class' => [ 'code' ],
-					'data'  => [ 'ortho' => 'code' ],
+					'data'  => [ 'validator' => 'code' ],
 				] );
 
 				break;
@@ -1696,7 +1696,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => $value,
 					'class' => [ 'code' ],
-					'data'  => [ 'ortho' => 'date' ],
+					'data'  => [ 'validator' => 'date' ],
 				] );
 
 				break;
@@ -1721,7 +1721,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => $value,
 					'class' => [ 'code' ],
-					'data'  => [ 'ortho' => 'date' ],
+					'data'  => [ 'validator' => 'date' ],
 				] );
 
 				break;
@@ -1798,7 +1798,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'number',
 					'value' => '',
 					'class' => [ 'ptitle', 'small-text' ],
-					// 'data'  => [ 'ortho' => 'number' ],
+					// 'data'  => [ 'validator' => 'number' ],
 				] );
 
 				break;
@@ -1835,7 +1835,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => '',
 					'class' => [ 'small-text', 'code-text' ],
-					'data'  => [ 'ortho' => 'color' ],
+					'data'  => [ 'validator' => 'color' ],
 					'style' => 'width:85px;', // To override forced width within the quick-edit!
 				] );
 
@@ -1907,7 +1907,7 @@ class Terms extends gEditorial\Module
 					'type'  => 'text',
 					'value' => '',
 					'class' => [ 'ptitle', 'code-text' ],
-					'data'  => [ 'ortho' => 'date' ],
+					'data'  => [ 'validator' => 'date' ],
 				] );
 
 				break;

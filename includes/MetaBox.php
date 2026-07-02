@@ -669,7 +669,7 @@ class MetaBox extends WordPress\Main
 			'title'       => _x( 'Order', 'MetaBox: Title Attr', 'geditorial' ),
 			'placeholder' => _x( 'Order', 'MetaBox: Placeholder', 'geditorial' ),
 			'class'       => 'small-text',
-			'data'        => [ 'ortho' => 'number' ],
+			'data'        => [ 'validator' => 'number' ],
 		] );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -inputnumber' );
@@ -1121,7 +1121,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'year';
+				$atts['data']['validator'] = 'year';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputyear';
@@ -1132,7 +1132,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'date';
+				$atts['data']['validator'] = 'date';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputdate';
@@ -1150,7 +1150,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'datetime';
+				$atts['data']['validator'] = 'datetime';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputdate';
@@ -1168,7 +1168,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'distance';
+				$atts['data']['validator'] = 'distance';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputdistance';
@@ -1182,7 +1182,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'duration';
+				$atts['data']['validator'] = 'duration';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputduration';
@@ -1196,7 +1196,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'area';
+				$atts['data']['validator'] = 'area';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputarea';
@@ -1211,7 +1211,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\PostCode::getHTMLPattern();
 
-				$atts['data']['ortho'] = 'postcode';
+				$atts['data']['validator'] = 'postcode';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputpostcode';
@@ -1230,7 +1230,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir'] = 'ltr';
 
-				$atts['data']['ortho'] = 'latlng';
+				$atts['data']['validator'] = 'latlng';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputlatlng';
@@ -1263,7 +1263,7 @@ class MetaBox extends WordPress\Main
 				$atts['type']    = 'email';
 				$atts['pattern'] = $atts['pattern'] ?? Core\Email::getHTMLPattern();
 
-				$atts['data']['ortho'] = 'email';
+				$atts['data']['validator'] = 'email';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputemail';
@@ -1276,7 +1276,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']  = 'ltr';
 				$atts['type'] = 'tel';
 
-				$atts['data']['ortho'] = 'phone';
+				$atts['data']['validator'] = 'phone';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputphone';
@@ -1294,7 +1294,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\ISBN::getHTMLPattern();
 
-				$atts['data']['ortho'] = 'isbn';
+				$atts['data']['validator'] = 'isbn';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputisbn';
@@ -1306,7 +1306,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getVINHTMLPattern();
 
-				$atts['data']['ortho'] = 'vin';
+				$atts['data']['validator'] = 'vin';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputvin';
@@ -1318,7 +1318,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getPlateHTMLPattern();
 
-				$atts['data']['ortho'] = 'plate';
+				$atts['data']['validator'] = 'plate';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputplate';
@@ -1330,7 +1330,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getIBANHTMLPattern();
 
-				$atts['data']['ortho'] = 'iban';
+				$atts['data']['validator'] = 'iban';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputiban';
@@ -1342,7 +1342,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']     = 'ltr';
 				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getCardNumberHTMLPattern();
 
-				$atts['data']['ortho'] = 'bankcard';
+				$atts['data']['validator'] = 'bankcard';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputbankcard';
@@ -1356,7 +1356,7 @@ class MetaBox extends WordPress\Main
 				$atts['dir']          = 'ltr';
 				$atts['pattern']      = $atts['pattern'] ?? Core\Validation::getIdentityNumberHTMLPattern();
 
-				$atts['data']['ortho'] = 'identity';
+				$atts['data']['validator'] = 'identity';
 
 				$wrap[] = '-inputcode';
 				$wrap[] = '-inputidentity';
@@ -1461,7 +1461,7 @@ class MetaBox extends WordPress\Main
 				$label  = sprintf( '<span class="%s" title="%s">%s</span>', '-label', $args['description'], $args['title'] );
 				$wrap[] = sprintf( '-input%s', $args['type'] ?: 'unknowntype' );
 
-				$atts['data']['ortho'] = 'number';
+				$atts['data']['validator'] = 'number';
 		}
 
 		if ( ! $atts['pattern'] )

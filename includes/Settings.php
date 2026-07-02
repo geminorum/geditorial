@@ -2524,6 +2524,7 @@ class Settings extends WordPress\Main
 			'placeholder' => FALSE,
 			'constant'    => FALSE,   // override value if constant defined & disabling
 			'ortho'       => FALSE,
+			'validator'   => NULL,
 
 			'data'   => [],     // data attr
 			'extra'  => [],     // extra args to pass to deeper generator
@@ -2736,17 +2737,18 @@ class Settings extends WordPress\Main
 							continue;
 
 						$html = Core\HTML::tag( 'input', [
-							'type'        => 'text',
-							'id'          => $id.'-'.$value_name,
-							'name'        => $name.'['.$value_name.']',
-							'value'       => $value[$value_name] ?? '',
-							'class'       => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
-							'placeholder' => $args['placeholder'],
-							'disabled'    => Core\HTML::attrBoolean( $args['disabled'], $value_name ),
-							'readonly'    => Core\HTML::attrBoolean( $args['readonly'], $value_name ),
-							'dir'         => $args['dir'],
-							'data'        => $args['data'],
-							'data-ortho'  => $args['ortho'],
+							'type'           => 'text',
+							'id'             => $id.'-'.$value_name,
+							'name'           => $name.'['.$value_name.']',
+							'value'          => $value[$value_name] ?? '',
+							'class'          => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
+							'placeholder'    => $args['placeholder'],
+							'disabled'       => Core\HTML::attrBoolean( $args['disabled'], $value_name ),
+							'readonly'       => Core\HTML::attrBoolean( $args['readonly'], $value_name ),
+							'dir'            => $args['dir'],
+							'data'           => $args['data'],
+							'data-ortho'     => $args['ortho'],
+							'data-validator' => $args['validator'] ?: FALSE,
 						] );
 
 						$html.= '&nbsp;<span class="-field-after">'.$value_title.'</span>';
@@ -2757,17 +2759,18 @@ class Settings extends WordPress\Main
 				} else {
 
 					echo Core\HTML::tag( 'input', [
-						'type'        => 'text',
-						'id'          => $id,
-						'name'        => $name,
-						'value'       => $value,
-						'class'       => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
-						'placeholder' => $args['placeholder'],
-						'disabled'    => $args['disabled'],
-						'readonly'    => $args['readonly'],
-						'dir'         => $args['dir'],
-						'data'        => $args['data'],
-						'data-ortho'  => $args['ortho'],
+						'type'           => 'text',
+						'id'             => $id,
+						'name'           => $name,
+						'value'          => $value,
+						'class'          => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
+						'placeholder'    => $args['placeholder'],
+						'disabled'       => $args['disabled'],
+						'readonly'       => $args['readonly'],
+						'dir'            => $args['dir'],
+						'data'           => $args['data'],
+						'data-ortho'     => $args['ortho'],
+						'data-validator' => $args['validator'],
 					] );
 				}
 
@@ -2782,19 +2785,20 @@ class Settings extends WordPress\Main
 					$args['dir'] = 'ltr';
 
 				echo Core\HTML::tag( 'input', [
-					'type'        => 'number',
-					'id'          => $id,
-					'name'        => $name,
-					'value'       => (int) $value,
-					'step'        => (int) $args['step_attr'],
-					'min'         => (int) $args['min_attr'],
-					'class'       => Core\HTML::attrClass( $args['field_class'], '-type-number' ),
-					'placeholder' => $args['placeholder'],
-					'disabled'    => $args['disabled'],
-					'readonly'    => $args['readonly'],
-					'dir'         => $args['dir'],
-					'data'        => $args['data'],
-					'data-ortho'  => $args['ortho'],
+					'type'           => 'number',
+					'id'             => $id,
+					'name'           => $name,
+					'value'          => (int) $value,
+					'step'           => (int) $args['step_attr'],
+					'min'            => (int) $args['min_attr'],
+					'class'          => Core\HTML::attrClass( $args['field_class'], '-type-number' ),
+					'placeholder'    => $args['placeholder'],
+					'disabled'       => $args['disabled'],
+					'readonly'       => $args['readonly'],
+					'dir'            => $args['dir'],
+					'data'           => $args['data'],
+					'data-ortho'     => $args['ortho'],
+					'data-validator' => $args['validator'] ?? 'number',
 				] );
 
 				break;
@@ -2808,17 +2812,18 @@ class Settings extends WordPress\Main
 					$args['dir'] = 'ltr';
 
 				echo Core\HTML::tag( 'input', [
-					'type'        => 'url',
-					'id'          => $id,
-					'name'        => $name,
-					'value'       => $value,
-					'class'       => Core\HTML::attrClass( $args['field_class'], '-type-url' ),
-					'placeholder' => $args['placeholder'],
-					'disabled'    => $args['disabled'],
-					'readonly'    => $args['readonly'],
-					'dir'         => $args['dir'],
-					'data'        => $args['data'],
-					'data-ortho'  => $args['ortho'],
+					'type'           => 'url',
+					'id'             => $id,
+					'name'           => $name,
+					'value'          => $value,
+					'class'          => Core\HTML::attrClass( $args['field_class'], '-type-url' ),
+					'placeholder'    => $args['placeholder'],
+					'disabled'       => $args['disabled'],
+					'readonly'       => $args['readonly'],
+					'dir'            => $args['dir'],
+					'data'           => $args['data'],
+					'data-ortho'     => $args['ortho'],
+					'data-validator' => $args['validator'] ?? 'url',
 				] );
 
 				break;
@@ -2832,17 +2837,18 @@ class Settings extends WordPress\Main
 					$args['dir'] = 'ltr';
 
 				echo Core\HTML::tag( 'input', [
-					'type'        => 'text', // it's better to be `text`
-					'id'          => $id,
-					'name'        => $name,
-					'value'       => $value,
-					'class'       => Core\HTML::attrClass( $args['field_class'], '-type-color' ),
-					'placeholder' => $args['placeholder'],
-					'disabled'    => $args['disabled'],
-					'readonly'    => $args['readonly'],
-					'dir'         => $args['dir'],
-					'data'        => $args['data'],
-					'data-ortho'  => $args['ortho'],
+					'type'           => 'text', // NOTE: better to be `text`
+					'id'             => $id,
+					'name'           => $name,
+					'value'          => $value,
+					'class'          => Core\HTML::attrClass( $args['field_class'], '-type-color' ),
+					'placeholder'    => $args['placeholder'],
+					'disabled'       => $args['disabled'],
+					'readonly'       => $args['readonly'],
+					'dir'            => $args['dir'],
+					'data'           => $args['data'],
+					'data-ortho'     => $args['ortho'],
+					'data-validator' => $args['validator'] ?? 'color',
 				] );
 
 				// NOTE: CAUTION: module must enqueue `wp-color-picker` styles/scripts
@@ -2860,17 +2866,18 @@ class Settings extends WordPress\Main
 					$args['dir'] = 'ltr';
 
 				echo Core\HTML::tag( 'input', [
-					'type'        => 'email',
-					'id'          => $id,
-					'name'        => $name,
-					'value'       => $value,
-					'class'       => Core\HTML::attrClass( $args['field_class'], '-type-email' ),
-					'placeholder' => $args['placeholder'],
-					'disabled'    => $args['disabled'],
-					'readonly'    => $args['readonly'],
-					'dir'         => $args['dir'],
-					'data'        => $args['data'],
-					'data-ortho'  => $args['ortho'],
+					'type'           => 'email',
+					'id'             => $id,
+					'name'           => $name,
+					'value'          => $value,
+					'class'          => Core\HTML::attrClass( $args['field_class'], '-type-email' ),
+					'placeholder'    => $args['placeholder'],
+					'disabled'       => $args['disabled'],
+					'readonly'       => $args['readonly'],
+					'dir'            => $args['dir'],
+					'data'           => $args['data'],
+					'data-ortho'     => $args['ortho'],
+					'data-validator' => $args['validator'] ?? 'email',
 				] );
 
 				break;
@@ -3251,17 +3258,18 @@ class Settings extends WordPress\Main
 				}
 
 				echo Core\HTML::tag( 'textarea', [
-					'id'          => $id,
-					'name'        => $name,
-					'rows'        => $args['rows_attr'],
-					'cols'        => $args['cols_attr'],
-					'class'       => Core\HTML::attrClass( $args['field_class'], '-type'.$args['type'] ),
-					'placeholder' => $args['placeholder'],
-					'disabled'    => $args['disabled'],
-					'readonly'    => $args['readonly'],
-					'dir'         => $args['dir'],
-					'data'        => $args['data'],
-					'data-ortho'  => $args['ortho'],
+					'id'             => $id,
+					'name'           => $name,
+					'rows'           => $args['rows_attr'],
+					'cols'           => $args['cols_attr'],
+					'class'          => Core\HTML::attrClass( $args['field_class'], '-type'.$args['type'] ),
+					'placeholder'    => $args['placeholder'],
+					'disabled'       => $args['disabled'],
+					'readonly'       => $args['readonly'],
+					'dir'            => $args['dir'],
+					'data'           => $args['data'],
+					'data-ortho'     => $args['ortho'],
+					'data-validator' => $args['validator'] ?: FALSE,
 				], esc_textarea( $value ) );
 
 				break;
@@ -3758,6 +3766,7 @@ class Settings extends WordPress\Main
 			$placeholder = array_key_exists( 'placeholder', $field ) ? $field['placeholder'] : FALSE;
 			$description = array_key_exists( 'description', $field ) ? $field['description'] : FALSE;
 			$ortho       = array_key_exists( 'ortho', $field ) ? $field['ortho'] : FALSE;
+			$validator   = array_key_exists( 'validator', $field ) ? $field['validator'] : NULL;
 			$values      = array_key_exists( 'values', $field ) ? $field['values'] : [];
 
 			switch ( $field['type'] ) {
@@ -3788,14 +3797,15 @@ class Settings extends WordPress\Main
 				case 'number':
 
 					$html = Core\HTML::tag( 'input', [
-						'type'        => 'text',
-						'name'        => $name,
-						'placeholder' => $placeholder,
-						'title'       => $description,
-						'value'       => $value,
-						'class'       => Core\HTML::attrClass( $field['field_class'] ?? 'small-text', '-type-number' ),
-						'dir'         => $field['dir'] ?? 'ltr',
-						'data-ortho'  => $ortho,
+						'type'           => 'text',
+						'name'           => $name,
+						'placeholder'    => $placeholder,
+						'title'          => $description,
+						'value'          => $value,
+						'class'          => Core\HTML::attrClass( $field['field_class'] ?? 'small-text', '-type-number' ),
+						'dir'            => $field['dir'] ?? 'ltr',
+						'data-ortho'     => $ortho,
+						'data-validator' => $validator ?? 'number',
 					] );
 
 					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';
@@ -3807,14 +3817,15 @@ class Settings extends WordPress\Main
 				default:
 
 					$html = Core\HTML::tag( 'input', [
-						'type'        => 'text',
-						'name'        => $name,
-						'placeholder' => $placeholder,
-						'title'       => $description,
-						'value'       => $value,
-						'class'       => Core\HTML::attrClass( $field['field_class'] ?? 'regular-text', '-type-text' ),
-						'dir'         => $field['dir'] ?? FALSE,
-						'data-ortho'  => $ortho,
+						'type'           => 'text',
+						'name'           => $name,
+						'placeholder'    => $placeholder,
+						'title'          => $description,
+						'value'          => $value,
+						'class'          => Core\HTML::attrClass( $field['field_class'] ?? 'regular-text', '-type-text' ),
+						'dir'            => $field['dir'] ?? FALSE,
+						'data-ortho'     => $ortho,
+						'data-validator' => $validator ?: FALSE,
 					] );
 
 					$html.= '&nbsp;<span class="-field-after">'.$field['title'].'</span>';

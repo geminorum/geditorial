@@ -39,7 +39,7 @@ class Grouping extends gEditorial\Module
 							'title'       => _x( 'Taxonomy Name', 'Setting Title', 'geditorial-grouping' ),
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'ortho'       => 'hook',
+							'validator'   => 'hook',
 						],
 						[
 							'field'       => 'rewrite',
@@ -47,7 +47,7 @@ class Grouping extends gEditorial\Module
 							'title'       => _x( 'Taxonomy Slug', 'Setting Title', 'geditorial-grouping' ),
 							'description' => _x( '', 'Setting Description', 'geditorial-grouping' ),
 							'field_class' => [ 'regular-text', 'code-text' ],
-							'ortho'       => 'slug',
+							'validator'   => 'slug',
 						],
 						[
 							'field'       => 'singular',

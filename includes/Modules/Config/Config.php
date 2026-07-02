@@ -448,7 +448,7 @@ class Config extends gEditorial\Module
 			$context
 		);
 
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	public function admin_reports_load()
@@ -487,7 +487,7 @@ class Config extends gEditorial\Module
 			$context
 		);
 
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	public function admin_tools_load()
@@ -608,7 +608,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'tools', 'settings' ), $sub );
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
@@ -630,7 +630,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'roles', 'settings' ), $sub );
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	// TODO: display download reports box for each module
@@ -875,7 +875,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'imports', 'settings' ), $sub );
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	public function admin_imports_page()
@@ -952,7 +952,7 @@ class Config extends gEditorial\Module
 		}
 
 		do_action( $this->hook_base( 'customs', 'settings' ), $sub );
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	public function admin_customs_page()
@@ -1097,7 +1097,7 @@ class Config extends gEditorial\Module
 			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
 
 		do_action( $this->hook_base( 'settings', 'load' ), $module );
-		Services\Modulation::enqueueVirastar();
+		Services\AdminScreen::enqueueValidator();
 
 		$this->enqueue_asset_js( [], NULL, [ 'jquery', gEditorial\Scripts::pkgListJS() ] );
 		gEditorial\Scripts::enqueueAdminSelectAll();
