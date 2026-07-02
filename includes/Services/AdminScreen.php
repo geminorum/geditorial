@@ -158,7 +158,8 @@ class AdminScreen extends gEditorial\Service
 			];
 
 			gEditorial()->enqueue_asset_config( $asset, $mainkey );
-			gEditorial\Scripts::enqueue( sprintf( '%s.%s', $screen->base, $mainkey ) );
+
+			return gEditorial\Scripts::enqueue( self::dot( $screen->base, $mainkey ) );
 		}
 
 		return TRUE;

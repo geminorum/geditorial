@@ -164,7 +164,7 @@ class Ortho extends gEditorial\Module
 					'qtag_download'          => _x( 'Download', 'Javascript String', 'geditorial-ortho' ),
 					'qtag_download_title'    => _x( 'Download text as markdown', 'Javascript String', 'geditorial-ortho' ),
 					'qtag_nbsp'              => _x( 'nbsp', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_nbsp_title'        => _x( 'Non-Breaking SPace', 'Javascript String', 'geditorial-ortho' ),
+					'qtag_nbsp_title'        => _x( 'Non-Breaking Space', 'Javascript String', 'geditorial-ortho' ),
 				],
 			],
 		];
