@@ -1321,47 +1321,74 @@ trait PostTypeFields
 				if ( $args['repeat'] ) {
 
 					$defaults = [
-						// NOTE: require an item schema when registering `array` meta
-						'type'    => 'array',
+						'type'    => 'array',  // NOTE: require an item schema when registering `array` meta
 						'single'  => FALSE,
-						'default' => (array) $args['default'],
+						'default' => $args['default'] ?? [],
+
+						// TODO: must prepare the object scheme on repeatable fields
+						// @SEE: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/#read-and-write-a-post-meta-field-in-post-responses
+						// @SEE: `rest_validate_value_from_schema()`, `wp_register_persisted_preferences_meta()`
+						// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback_posttypefields' ] ],
 					];
 
-				} else if ( in_array( $args['type'], [ 'integer', 'number', 'float', 'price' ] ) ) {
+				} else if ( in_array( $args['type'], [
+					'number',
+					'float',
+
+					'gram',
+					'millimetre',
+					'kilogram',
+					'centimetre',
+					'metre',
+					'kilometre',
+					'hectare',
+
+					'km_per_hour',
+				], TRUE ) ) {
+
+					$defaults = [
+						'type'    => 'number',
+						'single'  => TRUE,
+						'default' => $args['default'] ?? 0,
+					];
+
+				} else if ( in_array( $args['type'], [
+					'integer',
+
+					'day',
+					'hour',
+
+					'member',
+					'person',
+
+					// 'price', // must be `string`
+				], TRUE ) ) {
 
 					$defaults = [
 						'type'    => 'integer',
 						'single'  => TRUE,
-						'default' => $args['default'] ?: 0,
+						'default' => $args['default'] ?? 0,
 					];
 
 				} else {
 
 					$defaults = [
-						// NOTE: valid values: `string`, `boolean`, `integer`, `number`, `array`, `object`
-						'type'    => 'string',
+						'type'    => 'string',  // NOTE: valid values: `string`, `boolean`, `integer`, `number`, `array`, `object`
 						'single'  => TRUE,
-						'default' => $args['default'] ?: '',
+						'default' => $args['default'] ?? '',
 					];
 				}
 
-				$register_args = array_merge( $defaults, [
-
+				$register_args = array_merge( [
 					/**
 					 * Accepts `post`, `comment`, `term`, `user`
 					 * or any other object type with an associated meta table
 					 */
 					'object_subtype' => $posttype,
-
-					'description'   => sprintf( '%s: %s', $args['title'], $args['description'] ),
-					'auth_callback' => [ $this, 'register_auth_callback_posttypefields' ],
-					'show_in_rest'  => TRUE,
-
-					// TODO: must prepare object scheme on repeatable fields
-					// @SEE: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/#read-and-write-a-post-meta-field-in-post-responses
-					// @SEE: `rest_validate_value_from_schema()`, `wp_register_persisted_preferences_meta()`
-					// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback_posttypefields' ] ],
-				] );
+					'description'    => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
+					'auth_callback'  => [ $this, 'register_auth_callback_posttypefields' ],
+					'show_in_rest'   => TRUE,
+				], $defaults );
 
 				if ( $is_rest ) // WTF: double sanitizes along with store meta-box default sanitize
 					$register_args['sanitize_callback'] = [ $this, 'register_sanitize_callback_posttypefields' ];
