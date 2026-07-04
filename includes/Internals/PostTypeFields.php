@@ -147,7 +147,24 @@ trait PostTypeFields
 				if ( in_array( $args['type'], [ 'array' ] ) || ! empty( $args['repeat'] ) )
 					$args['default'] = [];
 
-				else if ( in_array( $args['type'], [ 'integer', 'number', 'float', 'price' ] ) )
+				else if ( in_array( $args['type'], [
+					'number',
+					'integer',
+					'float',
+					'gram',
+					'millimetre',
+					'kilogram',
+					'centimetre',
+					'metre',
+					'kilometre',
+					'hectare',
+					'km_per_hour',
+					'day',
+					'hour',
+					'member',
+					'person',
+					// 'price', // must be `string`
+				] ) )
 					$args['default'] = 0;
 
 				else
