@@ -97,8 +97,8 @@ class WcCheckout extends gEditorial\Module
 	// @REF: https://gist.github.com/bekarice/474ab82ab37b8de8617d
 	public function wp_simplify()
 	{
-		if ( WC()->cart && WC()->cart->needs_payment() )
 		// Bails if the cart needs payment, we don't want to do anything.
+		if ( WC()->cart && ( WC()->cart->needs_payment() || WC()->cart->needs_shipping() ) )
 			return;
 
 		// Now continue only if we're at checkout.
