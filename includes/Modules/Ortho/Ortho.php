@@ -49,57 +49,6 @@ class Ortho extends gEditorial\Module
 		);
 	}
 
-	private function virastar_options()
-	{
-		return [
-			// 'cleanup_begin_and_end'                          => TRUE,
-			'cleanup_extra_marks'                            => TRUE,
-			'cleanup_kashidas'                               => TRUE,
-			'cleanup_line_breaks'                            => TRUE,
-			'cleanup_rlm'                                    => TRUE,
-			'cleanup_spacing'                                => TRUE,
-			'cleanup_zwnj'                                   => TRUE,
-			'decode_htmlentities'                            => TRUE,
-			'fix_arabic_numbers'                             => TRUE,
-			'fix_dashes'                                     => TRUE,
-			'fix_diacritics'                                 => TRUE,
-			'fix_english_numbers'                            => TRUE,
-			'fix_english_quotes_pairs'                       => TRUE,
-			'fix_english_quotes'                             => TRUE,
-			'fix_hamzeh'                                     => TRUE,
-			'fix_hamzeh_arabic'                              => FALSE,
-			'fix_misc_non_persian_chars'                     => TRUE,
-			'fix_misc_spacing'                               => TRUE,
-			'fix_numeral_symbols'                            => TRUE,
-			'fix_perfix_spacing'                             => TRUE,
-			'fix_persian_glyphs'                             => TRUE,
-			'fix_punctuations'                               => TRUE,
-			'fix_question_mark'                              => TRUE,
-			'fix_spacing_for_braces_and_quotes'              => TRUE,
-			'fix_spacing_for_punctuations'                   => TRUE,
-			'fix_suffix_misc'                                => TRUE,
-			'fix_suffix_spacing'                             => TRUE,
-			'fix_three_dots'                                 => TRUE,
-			'kashidas_as_parenthetic'                        => TRUE,
-			// 'markdown_normalize_braces'                      => TRUE,
-			// 'markdown_normalize_lists'                       => TRUE,
-			'normalize_dates'                                => TRUE,
-			'normalize_ellipsis'                             => TRUE,
-			'remove_spaces_before_ellipsis'                  => TRUE,
-			// 'normalize_eol'                                  => TRUE,
-			// 'preserve_braces'                                => FALSE,
-			// 'preserve_brackets'                              => FALSE,
-			// 'preserve_comments'                              => TRUE,
-			// 'preserve_entities'                              => TRUE,
-			// 'preserve_frontmatter'                           => TRUE,
-			// 'preserve_HTML'                                  => TRUE,
-			'preserve_nbsps'                                 => TRUE,
-			// 'preserve_URIs'                                  => TRUE,
-			// 'remove_diacritics'                              => FALSE,
-			// 'skip_markdown_ordered_lists_numbers_conversion' => FALSE,
-		];
-	}
-
 	private static function keyLabels( $keys )
 	{
 		$list  = [];
@@ -114,7 +63,7 @@ class Ortho extends gEditorial\Module
 
 	protected function get_global_settings()
 	{
-		$virastar_options = $this->virastar_options();
+		$virastar_options = ModuleInfo::virastarOptions( 'settings' );
 
 		return [
 			'posttypes_option'  => 'posttypes_option',
@@ -230,7 +179,7 @@ class Ortho extends gEditorial\Module
 		$this->enqueue_asset_js( [
 			'settings' => $settings,
 			'strings'  => $this->get_strings( 'virastar', 'js' ),
-			'virastar' => $this->prepare_virastar_options(),
+			'virastar' => $this->prepare_virastar_options( 'js' ),
 		], NULL, [ 'jquery', $virastar ] );
 
 		return $this->virastar_enqueued = $this->register_editor_button( 'virastar', 2 );
@@ -249,9 +198,9 @@ class Ortho extends gEditorial\Module
 		return $this->persiantools_enqueued = TRUE;
 	}
 
-	private function prepare_virastar_options()
+	private function prepare_virastar_options( $context = NULL )
 	{
-		$options  = $this->virastar_options();
+		$options  = ModuleInfo::virastarOptions( $context );
 		$defaults = array_keys( array_filter( $options ) );
 		$saved    = $this->get_setting( 'virastar_options', $defaults );
 		$prepared = [];
