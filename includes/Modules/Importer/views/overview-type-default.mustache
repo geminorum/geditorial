@@ -21,6 +21,9 @@
 			<div class="-wrap -block-content">{{{data}}}</div>
 		</div>
 	{{/raw_rendered}}
+	{{^raw_rendered}}
+		{{{__no_data}}}
+	{{/raw_rendered}}
 	</div>
 
 	{{{___hooks.after-raw}}}

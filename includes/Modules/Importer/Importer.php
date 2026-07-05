@@ -2279,6 +2279,7 @@ class Importer extends gEditorial\Module
 	protected function framepageviews__prep_data_for_post( $data, $post, $context )
 	{
 		$meta = WordPress\Post::getMeta( $post, FALSE );
+		$data['raw_rendered'] = [];
 
 		foreach ( $this->_get_metakeys() as $metakey ) {
 
@@ -2289,7 +2290,7 @@ class Importer extends gEditorial\Module
 
 			foreach ( $keys as $key ) {
 
-				if ( empty( $meta[$key] ) )
+				if ( ! array_key_exists( $key, $meta ) )
 					continue;
 
 				$data['raw_rendered'][] = [
@@ -2303,7 +2304,9 @@ class Importer extends gEditorial\Module
 			}
 		}
 
-		$data['__can_cleanup'] = $this->role_can( 'imports' );
+		$data['__can_cleanup'] = count( $data['raw_rendered'] )
+			? $this->role_can( 'imports' )
+			: FALSE;
 
 		return $data;
 	}
