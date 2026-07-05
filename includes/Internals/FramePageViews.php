@@ -110,6 +110,7 @@ trait FramePageViews
 		$data['__mainkey']    = $this->key;
 		$data['__context']    = $context;
 		$data['__direction']  = Core\HTML::dir();
+		$data['__no_data']    = gEditorial\Plugin::noinfo();
 		$data['__can_edit']   = WordPress\Post::edit( $post );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );
@@ -231,6 +232,7 @@ trait FramePageViews
 		$data['__mainkey']    = $this->key;
 		$data['__context']    = $context;
 		$data['__direction']  = Core\HTML::dir();
+		$data['__no_data']    = gEditorial\Plugin::noinfo();
 		$data['__can_edit']   = WordPress\Term::edit( $term );
 		$data['__can_debug']  = WordPress\IsIt::dev() || WordPress\User::isSuperAdmin();
 		$data['__can_print']  = $this->role_can( 'prints' );

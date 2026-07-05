@@ -29,7 +29,7 @@ class SystemHeartbeat extends gEditorial\Service
 		gEditorial()->enqueue_adminbar( TRUE );  // NOTE: `admin_bar_menu` is too late for this!
 
 		gEditorial\Scripts::enqueue(
-			'all.systemheartbeat',
+			self::dot( 'all', 'systemheartbeat' ),
 			[
 				'jquery',
 				'heartbeat',

@@ -124,7 +124,7 @@ trait PostTypeFields
 	 */
 	public function posttypefields_init_for_posttype( $posttype, $all, $enabled )
 	{
-		$fields  = [];
+		$fields = [];
 
 		foreach ( $enabled as $i => $field ) {
 

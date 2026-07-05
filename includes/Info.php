@@ -76,26 +76,9 @@ class Info extends WordPress\Main
 		], Core\ISBN::prep( $isbn, TRUE ) );
 	}
 
-	// https://ketab.ir/search/9786005334548
-	// https://openlibrary.org/search?isbn=9786227260267
-	// https://books.google.com/books?vid=isbn9789646799950
-	// https://www.google.com/search?tbm=bks&q=9786005334395
-	// https://www.google.com/search?q=9786229627747
-	// https://fa.wikipedia.org/wiki/%D9%88%DB%8C%DA%98%D9%87:%D9%85%D9%86%D8%A7%D8%A8%D8%B9_%DA%A9%D8%AA%D8%A7%D8%A8?isbn=0-13-981176-1
-	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=9786227260267
-	// https://en.wikipedia.org/wiki/Special:BookSources/978-0-618-05676-7
-	// https://en.wikipedia.org/wiki/Special:BookSources/978-1-55783-528-4
-	// https://en.wikipedia.org/wiki/Special:BookSources?isbn=122334
-	// https://www.goodreads.com/search?q=MAGICNUMBER
-	// https://www.goodreads.com/search?utf8=%E2%9C%93&q=0-13-981176-1&search_type=books
 	// NOTE: must return HTML link tag
 	public static function lookupURLforISBN( $isbn )
 	{
-		// $url = add_query_arg( [
-		// 	// 'q' => 'ISBN:'.urlencode( ISBN::sanitize( $isbn ) ),
-		// 	'q' => urlencode( ISBN::sanitize( $isbn ) ),
-		// ], 'https://www.google.com/search' );
-
 		$url = add_query_arg( [
 			'vid' => urlencode( 'isbn'.Core\ISBN::sanitize( $isbn ) ),
 		], 'https://books.google.com/books' );

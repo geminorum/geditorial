@@ -439,9 +439,12 @@ class SearchSelect extends gEditorial\Service
 
 		gEditorial()->enqueue_asset_config( $args, 'searchselect' );
 
-		return $enqueued = gEditorial\Scripts::enqueue( 'all.searchselect.select2', [
-			'jquery',
-			gEditorial\Scripts::pkgSelect2( TRUE ),
-		] );
+		return $enqueued = gEditorial\Scripts::enqueue(
+			self::dot( 'all', 'searchselect', 'select2' ),
+			[
+				'jquery',
+				gEditorial\Scripts::pkgSelect2( TRUE ),
+			]
+		);
 	}
 }

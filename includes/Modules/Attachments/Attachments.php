@@ -315,6 +315,7 @@ class Attachments extends gEditorial\Module
 	/**
 	 * Action: Fires once an attachment has been added.
 	 * @hook `add_attachment`
+	 * @see `maybe_exif_rotate()` @since WP 5.3.0
 	 *
 	 * @param int $post_id
 	 * @return void

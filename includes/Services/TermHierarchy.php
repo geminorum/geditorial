@@ -91,7 +91,7 @@ class TermHierarchy extends gEditorial\Service
 
 			}, 1, 2 );
 
-		gEditorial\Scripts::enqueue( 'admin.singleselect.edit' );
+		gEditorial\Scripts::enqueue( self::dot( 'admin', 'singleselect', 'edit' ) );
 
 		if ( ! WordPress\IsIt::compatWP( '6.3.0' ) ) // @since WP 6.3.0
 			return;
@@ -167,7 +167,9 @@ class TermHierarchy extends gEditorial\Service
 				continue;
 
 			$html.= sprintf( '<div title="%s">%s</div>',
-				Core\HTML::escapeAttr( CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ), $dropdown );
+				Core\HTML::escapeAttr( CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ),
+				$dropdown
+			);
 		}
 
 		if ( $html ) {

@@ -322,10 +322,13 @@ class ObjectsToObjects extends gEditorial\Service
 
 		add_action( 'admin_footer', [ __NAMESPACE__.'\\O2O\\Admin\\Box', 'add_templates' ] );
 
-		return $enqueued = gEditorial\Scripts::enqueue( 'admin.o2obox', [
-			'jquery',
-			'backbone',
-			gEditorial\Scripts::pkgMustache(),
-		] );
+		return $enqueued = gEditorial\Scripts::enqueue(
+			self::dot( 'admin', 'o2obox' ),
+			[
+				'jquery',
+				'backbone',
+				gEditorial\Scripts::pkgMustache(),
+			]
+		);
 	}
 }

@@ -3680,7 +3680,7 @@ class Settings extends WordPress\Main
 
 					echo '</p></div>';
 
-					Scripts::enqueue( 'settings.typeobject' );
+					Scripts::enqueue( self::dot( 'settings', 'typeobject' ) );
 
 				} else {
 

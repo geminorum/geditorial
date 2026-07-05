@@ -97,13 +97,13 @@ class WcCheckout extends gEditorial\Module
 	// @REF: https://gist.github.com/bekarice/474ab82ab37b8de8617d
 	public function wp_simplify()
 	{
-		// bail if the cart needs payment, we don't want to do anything
 		if ( WC()->cart && WC()->cart->needs_payment() )
+		// Bails if the cart needs payment, we don't want to do anything.
 			return;
 
-		// now continue only if we're at checkout
-		// is_checkout() was broken as of WC 3.2 in Ajax context, double-check for `is_ajax`
-		// I would check `WOOCOMMERCE_CHECKOUT` but testing shows it's not set reliably
+		// Now continue only if we're at checkout.
+		// `is_checkout()` was broken as of WC 3.2 in Ajax context, double-check for `is_ajax`.
+		// I would check `WOOCOMMERCE_CHECKOUT` but testing shows it's not set reliably.
 		if ( ! is_checkout() && ! WordPress\IsIt::ajax() )
 			return;
 
