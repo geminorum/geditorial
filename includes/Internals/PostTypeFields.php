@@ -1348,6 +1348,8 @@ trait PostTypeFields
 						// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback_posttypefields' ] ],
 					];
 
+					$defaults['default'] = (array) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
+
 				} else if ( in_array( $args['type'], [
 					'number',
 					'float',
@@ -1387,6 +1389,8 @@ trait PostTypeFields
 						'default' => $args['default'] ?? 0,
 					];
 
+					$defaults['default'] = (int) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
+
 				} else {
 
 					$defaults = [
@@ -1394,6 +1398,8 @@ trait PostTypeFields
 						'single'  => TRUE,
 						'default' => $args['default'] ?? '',
 					];
+
+					$defaults['default'] = (string) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
 				}
 
 				$register_args = array_merge( [
