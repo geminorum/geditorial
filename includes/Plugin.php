@@ -69,6 +69,8 @@ class Plugin extends WordPress\Plugin
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 			add_filter( 'template_include', [ $this, 'template_include' ], 98 );  // before `gTheme`
 		}
+
+		WordPress\WooCommerce::declareCompat( $this->get_file() );
 	}
 
 	public function admin_init()
