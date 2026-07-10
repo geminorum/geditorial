@@ -177,6 +177,9 @@ class HTTP extends Base
 		else if ( $url )
 			$log = sprintf( '{%s}', $url );
 
+		else
+			return FALSE;
+
 		if ( $context )
 			$log = sprintf( '[%s]: %s', $context, $log );
 
@@ -710,7 +713,7 @@ class HTTP extends Base
 		curl_setopt( $handle, CURLOPT_HEADER, TRUE );
 		curl_setopt( $handle, CURLOPT_RETURNTRANSFER, TRUE );
 		curl_setopt( $handle, CURLOPT_FOLLOWLOCATION, TRUE );
-		curl_setopt( $handle, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
+		curl_setopt( $handle, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] ?? NULL );
 
 		if ( 'development' === wp_get_environment_type() ) {
 			curl_setopt( $handle, CURLOPT_SSL_VERIFYHOST, FALSE );

@@ -9,18 +9,22 @@ class Mobile extends Base
 
 	/**
 	 * Validates a phone number using a regular expression.
-	 * @source `WC_Validation::is_phone()`
 	 *
-	 * @param string $text Phone number to validate.
+	 * @param string $data Mobile number to validate.
+	 * @param string $country The country code the mobile is being validated for, or null if unknown.
 	 * @return bool
 	 */
-	public static function is( $text )
+	public static function is( $data, $country = NULL )
 	{
-		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $text ) ) ) )
+		if ( self::empty( $data ) )
+			return FALSE;
+
+		// @source `WC_Validation::is_phone()`
+		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $data ) ) ) )
 			return FALSE;
 
 		// all zeros!
-		if ( ! intval( $text ) )
+		if ( ! intval( $data ) )
 			return FALSE;
 
 		return TRUE;

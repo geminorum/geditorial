@@ -50,6 +50,45 @@ class WooCommerce extends Core\Base
 	}
 
 	/**
+	 * Declare (in)compatibility with a given feature for a given plugin.
+	 *
+	 * * NOTE: WooCommerce only shows an incompatibility message for plugins
+	 * * that include a `WC tested up to` header.
+	 *
+	 * @param string $plugin_file
+	 * @param array $features
+	 * @return bool
+	 */
+	public static function declareCompat( $plugin_file, $features = NULL )
+	{
+		$features = $features ?? [
+			// Declares whether it’s compatible with `HPOS` or not.
+			// https://developer.woocommerce.com/docs/hpos-extension-recipe-book/
+			'custom_order_tables' => TRUE,
+
+			// 'cart_checkout_blocks' => TRUE,
+			// 'product_block_editor' => TRUE,
+		];
+
+		if ( empty( $plugin_file ) || empty( $features ) )
+			return FALSE;
+
+		return add_action( 'before_woocommerce_init',
+			function () use ( $features, $plugin_file ) {
+
+				if ( ! class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) )
+					return;
+
+				foreach ( $features as $feature => $declaration )
+					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+						$feature,
+						$plugin_file,
+						$declaration
+					);
+			} );
+	}
+
+	/**
 	 * Checks if a given feature is currently enabled.
 	 *
 	 * @param string $feature_id

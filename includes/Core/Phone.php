@@ -11,22 +11,27 @@ class Phone extends Base
 	/**
 	 * Validates a phone number using a regular expression.
 	 *
-	 * @source `WC_Validation::is_phone()`
-	 *
 	 * @param string $data Phone number to validate.
+	 * @param string $country The country code the phone is being validated for, or null if unknown.
 	 * @return bool
 	 */
-	public static function is( $data )
+	public static function is( $data, $country = NULL )
 	{
 		if ( self::empty( $data ) )
 			return FALSE;
 
+		// @source `WC_Validation::is_phone()`
 		if ( 0 < strlen( trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', $data ) ) ) )
 			return FALSE;
 
 		// all zeros!
 		if ( ! intval( $data ) )
 			return FALSE;
+
+		// NUCLEUS_DEFAULT_COUNTRY_CODE
+		// NUCLEUS_DEFAULT_COUNTRY_PHONE
+		// https://github.com/woocommerce/woocommerce/pull/65817
+		// `preg_match( '/^(0|0098|\+98)?(9\d{9}|[1-8]\d{9,10})$/', $data );`
 
 		return TRUE;
 	}
@@ -152,6 +157,20 @@ class Phone extends Base
 	{
 		if ( ! $sanitized = self::sanitize( $criteria ) )
 			return FALSE;
+
+		/**
+		 * Checks whether a string has the basic shape of a phone number, i.e. it contains
+		 * only digits and characters commonly used in phone numbers (whitespace and the
+		 * "# _ - + / ( ) ." characters).
+		 *
+		 * Unlike `is_phone`, this method doesn't apply the `woocommerce_validate_phone` filter,
+		 * so its result always reflects the default validation rules regardless of any
+		 * merchant-defined validation policy. It's intended for contexts that need a
+		 * country-agnostic sanity check, such as phone number formatting.
+		 *
+		 * @source https://github.com/woocommerce/woocommerce/pull/66122/changes
+		 */
+		// `return '' === trim( preg_replace( '/[\s\#0-9_\-\+\/\(\)\.]/', '', (string) $criteria ) );`
 
 		// // only numbers
 		// if ( ! Number::is( $sanitized ) )

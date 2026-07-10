@@ -418,6 +418,35 @@ class Strings extends Core\Base
 		return sprintf( '%s :: %s', $text, $stripped );
 	}
 
+	/**
+	 * Generates item labels based on given keys.
+	 * @old `Ortho::keyLabels()`
+	 *
+	 * @param array $keys
+	 * @param array $extra
+	 * @return array
+	 */
+	public static function makeLabelsByKeys( $keys, $extra = NULL )
+	{
+		$words = $extra ?? [
+			'nbsp',
+			'html',
+			'eol',
+			'rlm',
+			'zwnj',
+			'zwj',
+			'uri',
+		];
+
+		$list  = [];
+		$upper = array_map( 'strtoupper', $words );
+
+		foreach ( (array) $keys as $key )
+			$list[$key] = str_ireplace( $words, $upper, Core\Text::titleCase( str_replace( '_', ' ', $key ) ) );
+
+		return $list;
+	}
+
 	public static function prepTitle( $text, $post_id = 0 )
 	{
 		if ( ! $text )

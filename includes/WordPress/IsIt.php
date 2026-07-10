@@ -36,7 +36,7 @@ class IsIt extends Core\Base
 	// @SEE: `WordPress\Screen::mustRegisterUI()`
 	public static function singularUI( $posttypes = '' )
 	{
-		if ( is_robots() || is_favicon() || is_feed() )
+		if ( is_robots() || is_favicon() || is_feed() || self::sitemap() )
 			return FALSE;
 
 		// NOTE: `wp-activate.php` does not reach here!
@@ -103,14 +103,17 @@ class IsIt extends Core\Base
 
 	/**
 	 * Determines whether the current request is for the login screen.
-	 * NOTE: `is_login()` @since WP 6.1.0
-	 * @see https://core.trac.wordpress.org/ticket/19898
+	 * NOTE: wrapper for `is_login()` @since WP 6.1.0
+	 * @ticket https://core.trac.wordpress.org/ticket/19898
 	 * @link https://make.wordpress.org/core/2022/09/11/new-is_login-function-for-determining-if-a-page-is-the-login-screen/
 	 *
 	 * @return bool
 	 */
 	public static function login()
 	{
+		if ( function_exists( 'is_login' ) )
+			return is_login();
+
 		return FALSE !== stripos( wp_login_url(), $_SERVER['SCRIPT_NAME'] );
 	}
 
@@ -362,9 +365,20 @@ class IsIt extends Core\Base
 		return FALSE;
 	}
 
+	/**
+	 * Is the query for a sitemap?
+	 * NOTE: wrapper for `is_sitemap()` @since WP 7.1.0
+	 *
+	 * @return bool
+	 */
 	public static function sitemap()
 	{
-		return FALSE !== strpos( $_SERVER[REQUEST_URI], 'wp-sitemap' );
+		global $wp_query;
+
+		if ( function_exists( 'is_sitemap' ) && isset( $wp_query ) )
+			return is_sitemap();
+
+		return FALSE !== strpos( $_SERVER['REQUEST_URI'], 'wp-sitemap' );
 	}
 
 	// `is_main_network()` with extra checks
