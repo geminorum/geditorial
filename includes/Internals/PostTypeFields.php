@@ -806,7 +806,7 @@ trait PostTypeFields
 					break;
 
 				case 'float'      :
-				case 'price'      :   // TODO: must use custom text input + code + ortho-number + separator
+				case 'price'      :   // TODO: must use custom text input + code + validator: number + separator
 				case 'number'     :
 				case 'member'     :
 				case 'person'     :
@@ -1438,8 +1438,9 @@ trait PostTypeFields
 				if ( $is_rest && ! isset( $register_args['sanitize_callback'] ) )
 					$register_args['sanitize_callback'] = [ $this, 'register_sanitize_callback_posttypefields' ];
 
+				// NOTE: only for explicitly private fields
 				if ( FALSE === $args['access_view'] )
-					$register_args['show_in_rest'] = FALSE; // only for explicitly private fields
+					$register_args['show_in_rest'] = FALSE;
 
 				$meta_key = $this->get_postmeta_key( $field );
 				$filtered = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );

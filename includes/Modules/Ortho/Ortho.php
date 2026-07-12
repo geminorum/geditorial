@@ -49,18 +49,6 @@ class Ortho extends gEditorial\Module
 		);
 	}
 
-	private static function keyLabels( $keys )
-	{
-		$list  = [];
-		$words = [ 'nbsp', 'html', 'eol', 'rlm', 'zwnj', 'uri' ];
-		$upper = array_map( 'strtoupper', $words );
-
-		foreach ( (array) $keys as $key )
-			$list[$key] = str_ireplace( $words, $upper, Core\Text::titleCase( str_replace( '_', ' ', $key ) ) );
-
-		return $list;
-	}
-
 	protected function get_global_settings()
 	{
 		$virastar_options = ModuleInfo::virastarOptions( 'settings' );
@@ -75,7 +63,7 @@ class Ortho extends gEditorial\Module
 					'title'       => _x( 'Virastar Options', 'Setting Title', 'geditorial-ortho' ),
 					'description' => _x( 'For more information, please see the library documentations.', 'Setting Description', 'geditorial-ortho' ),
 					'default'     => array_keys( array_filter( $virastar_options ) ),
-					'values'      => self::keyLabels( array_keys( $virastar_options ) ),
+					'values'      => WordPress\Strings::makeLabelsByKeys( array_keys( $virastar_options ) ),
 				],
 				[
 					'field'       => 'virastar_on_paste',
@@ -90,8 +78,10 @@ class Ortho extends gEditorial\Module
 	{
 		switch ( $suffix ) {
 
-			case '_virastar': return [ _x( 'Virastar!', 'Setting Section Title', 'geditorial-ortho' ),
-				_x( 'Customize the behavior of Virastar library.', 'Setting Section Description', 'geditorial-ortho' ) ];
+			case '_virastar': return [
+				_x( 'Virastar!', 'Setting Section Title', 'geditorial-ortho' ),
+				_x( 'Customize the behavior of Virastar library.', 'Setting Section Description', 'geditorial-ortho' ),
+			];
 		}
 
 		return FALSE;
@@ -102,7 +92,6 @@ class Ortho extends gEditorial\Module
 		return [
 			'js' => [
 				'virastar' => [
-					// 'button_virastar'        => Core\HTML::getDashicon( 'text' ),
 					'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
 					'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
 					'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),

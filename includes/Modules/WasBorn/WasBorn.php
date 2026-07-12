@@ -31,6 +31,7 @@ class WasBorn extends gEditorial\Module
 				'gender',
 				'age',
 				'date-tools',
+				'crm-feature',
 			],
 		];
 	}
@@ -1171,10 +1172,8 @@ class WasBorn extends gEditorial\Module
 		if ( ! $html = $this->get_dashboard_summary_content( 'paired', NULL, $paired, 'li' ) )
 			return $summaries;
 
-		$target = $this->constant( 'main_taxonomy' );
-
 		$summaries[] = [
-			'key'     => $this->classs( 'summary', $target ),
+			'key'     => $this->classs( 'summary' ),
 			'class'   => '-paired-summary',
 			'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', '' ),
 			'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),

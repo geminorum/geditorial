@@ -1010,6 +1010,10 @@ class MetaBox extends WordPress\Main
 		switch ( $args['type'] ) {
 
 			case 'address':
+				$atts['data']['validator'] = 'address';
+
+				// NO BREAK!
+
 			case 'note':
 				$atts['rows'] = '1';
 				$atts['data']['ortho'] = 'html';
