@@ -1348,7 +1348,26 @@ trait PostTypeFields
 						// 'show_in_rest'      => [ 'prepare_callback' => [ $this, 'register_prepare_callback_posttypefields' ] ],
 					];
 
-					$defaults['default'] = (array) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
+					// NOTE: forced to avoid schema notice by WP core.
+					$defaults['default'] = (array) $defaults['default'];
+
+				} else if ( in_array( $args['type'], [
+					'post',
+					'attachment',
+					'parent_post',
+					'term',
+					'user',
+				], TRUE ) ) {
+
+					$defaults = [
+						'type'              => 'integer',
+						'single'            => TRUE,
+						'default'           => $args['default'] ?? 0,
+						'sanitize_callback' => 'absint',
+					];
+
+					// NOTE: forced to avoid schema notice by WP core.
+					$defaults['default'] = (int) $defaults['default'];
 
 				} else if ( in_array( $args['type'], [
 					'number',
@@ -1389,7 +1408,8 @@ trait PostTypeFields
 						'default' => $args['default'] ?? 0,
 					];
 
-					$defaults['default'] = (int) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
+					// NOTE: forced to avoid schema notice by WP core.
+					$defaults['default'] = (int) $defaults['default'];
 
 				} else {
 
@@ -1399,7 +1419,8 @@ trait PostTypeFields
 						'default' => $args['default'] ?? '',
 					];
 
-					$defaults['default'] = (string) $defaults['default'];  // NOTE: forced to avoid deprecation notice by core.
+					// NOTE: forced to avoid schema notice by WP core.
+					$defaults['default'] = (string) $defaults['default'];
 				}
 
 				$register_args = array_merge( [
@@ -1413,7 +1434,8 @@ trait PostTypeFields
 					'show_in_rest'   => TRUE,
 				], $defaults );
 
-				if ( $is_rest ) // WTF: double sanitizes along with store meta-box default sanitize
+				// FIXME: WTF?!: double sanitizes along with store meta-box default sanitize.
+				if ( $is_rest && ! isset( $register_args['sanitize_callback'] ) )
 					$register_args['sanitize_callback'] = [ $this, 'register_sanitize_callback_posttypefields' ];
 
 				if ( FALSE === $args['access_view'] )
