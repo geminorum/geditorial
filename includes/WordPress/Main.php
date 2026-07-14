@@ -9,14 +9,14 @@ class Main extends Core\Base
 	const BASE   = '';
 	const MODULE = FALSE;
 
-	public static function setup() {}
+	public static function setup(): void {}
 
 	public static function factory()
 	{
 		throw new Core\Exception( 'The Factory is not defined!' );
 	}
 
-	protected static function hook()
+	protected static function hook(): string
 	{
 		$string = '';
 
@@ -33,7 +33,7 @@ class Main extends Core\Base
 		return trim( $string, '_' );
 	}
 
-	protected static function classs()
+	protected static function classs(): string
 	{
 		$string = '';
 
@@ -50,7 +50,7 @@ class Main extends Core\Base
 		return trim( $string, '-' );
 	}
 
-	protected static function hash()
+	protected static function hash(): string
 	{
 		$string = '';
 
@@ -74,7 +74,7 @@ class Main extends Core\Base
 	 * @param string $module
 	 * @return mixed
 	 */
-	protected static function constant( $key, $default = FALSE, $module = NULL )
+	protected static function constant( string $key, mixed $default = FALSE, ?string $module = NULL ): mixed
 	{
 		return static::factory()->constant( $module ?? static::MODULE, $key, $default );
 	}
@@ -86,7 +86,7 @@ class Main extends Core\Base
 	 * @param mixed $arguments
 	 * @return mixed
 	 */
-	protected static function filters( $hook, ...$arguments )
+	protected static function filters( string $hook, ...$arguments ): mixed
 	{
 		return apply_filters( self::und(
 			static::BASE,
@@ -100,15 +100,17 @@ class Main extends Core\Base
 	 *
 	 * @param string $hook
 	 * @param mixed $arguments
-	 * @return mixed
+	 * @return true
 	 */
-	protected static function actions( $hook, ...$arguments )
+	protected static function actions( string $hook, ...$arguments ): true
 	{
-		return do_action( self::und(
+		do_action( self::und(
 			static::BASE,
 			static::MODULE,
 			$hook
 		), ...$arguments );
+
+		return TRUE;
 	}
 
 	protected static function path( $context = NULL, $module = NULL, $fallback = FALSE )

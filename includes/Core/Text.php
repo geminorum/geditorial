@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Text extends Base
 {
-	public static function glued( $args, $with = ' ' )
+	public static function glued( array $args, string $with = ' ' )
 	{
 		$parts = [];
 
@@ -315,17 +315,19 @@ class Text extends Base
 			}, $text );
 	}
 
-	public static function nameFamilyFirst( $text, $separator = ', ' )
+	public static function nameFamilyFirst( string $text, ?string $separator = NULL )
 	{
 		if ( empty( $text ) )
 			return $text;
+
+		$separator = $separator ?? ', ';
 
 		// already formatted
 		if ( FALSE !== stripos( $text, trim( $separator ) ) )
 			return $text;
 
 		// removes `NULL`, `FALSE` and empty strings (""), but leave values of `0`
-		$parts = array_filter( explode( ' ', trim( $text ), 2 ), 'strlen' );
+		$parts = array_filter( explode( ' ', self::trim( $text ), 2 ), 'strlen' );
 
 		if ( 1 == count( $parts ) )
 			return $text;
@@ -333,32 +335,34 @@ class Text extends Base
 		return $parts[1].$separator.$parts[0];
 	}
 
-	public static function nameFamilyLast( $text, $separator = ', ' )
+	public static function nameFamilyLast( string $text, ?string $separator = NULL )
 	{
 		if ( empty( $text ) )
 			return $text;
 
-		return preg_replace( '/(.*), (.*)/', '$2 $1', $text );
-		// return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', $text ); // Wrong!
+		$separator = $separator ?? ', ';
+
+		return preg_replace( '/(.*), (.*)/', '$2 $1', self::trim( $text ) );
+		// return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', self::trim( $text ) ); // Wrong!
 	}
 
-	public static function formatName( $text, $separator = ', ' )
+	public static function formatName( string $text, ?string $separator = NULL )
 	{
 		return self::nameFamilyFirst( $text, $separator );
 	}
 
-	public static function reFormatName( $text, $separator = ', ' )
+	public static function reFormatName( string $text, ?string $separator = NULL )
 	{
 		return self::nameFamilyLast( $text, $separator );
 	}
 
-	public static function readableKey( $text )
+	public static function readableKey( string $text )
 	{
 		return $text ? ucwords( trim( str_replace( [ '_', '-', '.' ], ' ', $text ) ) ) : $text;
 	}
 
 	// @REF: https://davidwalsh.name/php-email-encode-prevent-spam
-	public static function encodeEmail( $text )
+	public static function encodeEmail( string $text )
 	{
 		$encoded = '';
 
@@ -370,7 +374,7 @@ class Text extends Base
 
 	// @REF: http://php.net/manual/en/function.htmlspecialchars-decode.php#68962
 	// @REF: `htmlspecialchars_decode()`
-	public static function decodeHTML( $text )
+	public static function decodeHTML( string $text )
 	{
 		return strtr( $text, array_flip( get_html_translation_table() ) );
 	}
@@ -414,7 +418,7 @@ class Text extends Base
 		], [
 			"\n\n",
 			"",
-		], $text ) ) : $text;
+		], (string) $text ) ) : $text;
 	}
 
 	/**

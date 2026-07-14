@@ -11,6 +11,7 @@ class WooCommerce extends Core\Base
 
 	const ORDER_POSTTYPE     = 'shop_order';
 	const PRODUCT_POSTTYPE   = 'product';
+	const PRODUCT_VARIATION  = 'product_variation';
 	const PROCUCT_CATEGORY   = 'product_cat';
 	const PRODUCT_TAXONOMIES = [
 		'product_type',
