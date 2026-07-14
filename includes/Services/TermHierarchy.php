@@ -12,7 +12,7 @@ class TermHierarchy extends gEditorial\Service
 	const AUTO_SET_CHILD_TERMS  = 'auto_set_child_terms';
 	const REVERSE_ORDERED_TERMS = 'reverse_ordered_terms';
 	const AUTO_ASSIGNED_TERMS   = 'auto_assigned_terms';
-	const SINGLE_TERM_SELECT    = 'single_term_select'; // TODO: restrict via aftercare with info from `added_term_relationship`
+	const SINGLE_TERM_SELECT    = 'single_term_select';     // TODO: restrict via aftercare with info from `added_term_relationship`
 
 	public static function setup()
 	{

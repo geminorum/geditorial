@@ -760,7 +760,8 @@ class Attachments extends gEditorial\Module
 
 	protected function render_tools_html( $uri, $sub )
 	{
-		echo ModuleSettings::toolboxColumnOpen( _x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
+		echo ModuleSettings::toolboxColumnOpen(
+			_x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
 
 		$available = FALSE;
 		$posttypes = $this->list_posttypes();

@@ -23,7 +23,8 @@ class Box extends Core\Base
 		$this->args    = $args;
 		$this->columns = $columns;
 		$this->ctype   = $ctype;
-		$this->labels  = $this->ctype->get( 'opposite', 'labels' );
+
+		$this->labels = $this->ctype->get( 'opposite', 'labels' );
 	}
 
 	public static function add_templates()

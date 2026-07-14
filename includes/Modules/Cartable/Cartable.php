@@ -414,17 +414,18 @@ class Cartable extends gEditorial\Module
 
 	public function admin_cartable_page()
 	{
-		$user = wp_get_current_user();
-		$uri  = $this->get_adminpage_url( TRUE, [], 'adminmenu' );
+		$context = $context ?? 'listtable';
+		$user    = wp_get_current_user();
+		$uri     = $this->get_adminpage_url( TRUE, [], 'adminmenu' );
 
-		$sub  = $slug = $context = FALSE;
+		$sub  = $slug = $_context = FALSE;
 		$subs = [];
 
 		if ( $this->support_users && $this->role_can( 'view_user', $user->ID ) ) {
 
-			$sub     = 'personal';
-			$slug    = $user->user_login;
-			$context = 'user';
+			$sub      = 'personal';
+			$slug     = $user->user_login;
+			$_context = 'user';
 
 			$subs['personal'] = _x( 'Personal', 'Sub', 'geditorial-cartable' );
 		}
@@ -434,9 +435,9 @@ class Cartable extends gEditorial\Module
 			foreach ( $this->get_user_groups( $user->ID ) as $term ) {
 
 				if ( ! count( $subs ) ) {
-					$sub     = 'group-'.$term->slug;
-					$slug    = $term->slug;
-					$context = 'group';
+					$sub      = 'group-'.$term->slug;
+					$slug     = $term->slug;
+					$_context = 'group';
 				}
 
 				$subs['group-'.$term->slug] = [
@@ -455,9 +456,9 @@ class Cartable extends gEditorial\Module
 			foreach ( $this->get_types( FALSE, TRUE ) as $term ) {
 
 				if ( ! count( $subs ) ) {
-					$sub     = 'type-'.$term->slug;
-					$slug    = $term->slug;
-					$context = 'type';
+					$sub      = 'type-'.$term->slug;
+					$slug     = $term->slug;
+					$_context = 'type';
 				}
 
 				$subs['type-'.$term->slug] = [
@@ -471,16 +472,16 @@ class Cartable extends gEditorial\Module
 			}
 		}
 
-		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
+		gEditorial\Settings::wrapOpen( $this->key, $context );
 
-			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
+			gEditorial\Settings::headerTitle( $context, _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
 
-			$context = self::req( 'context', $context );
-			$slug    = 'user' == $context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
+			$_context = self::req( 'context', $_context );
+			$slug    = 'user' == $_context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
 
-			$current = WordPress\Term::get( $slug, $this->constant( $context.'_taxonomy' ) );
+			$current = WordPress\Term::get( $slug, $this->constant( $_context.'_taxonomy' ) );
 
-			if ( $current && 'group' == $context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
+			if ( $current && 'group' == $_context && $this->role_can( 'restricted', NULL, FALSE, FALSE ) ) {
 
 				// prevents access to other groups
 				if ( ! in_array( $current->slug, Core\Arraay::pluck( $this->get_user_groups( $user->ID ), 'slug' ) ) )
@@ -491,15 +492,15 @@ class Cartable extends gEditorial\Module
 
 				Core\HTML::headerNav( $uri, self::req( 'sub', $sub ), $subs );
 
-				$this->tableCartable( $current, $context );
+				$this->tableCartable( $current, $_context );
 
 			} else {
 
 				echo gEditorial\Plugin::wrong();
 			}
 
-			$this->settings_signature( 'listtable' );
-		gEditorial\Settings::wrapClose();
+			$this->settings_signature( $context );
+		gEditorial\Settings::wrapClose( TRUE, $context );
 	}
 
 	private function _hook_tweaks_column_attr( $posttype )

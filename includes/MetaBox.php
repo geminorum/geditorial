@@ -49,6 +49,7 @@ class MetaBox extends WordPress\Main
 	public static function singleselectTerms( $object_id = 0, $atts = [], $terms = NULL )
 	{
 		$args = self::args( $atts, [
+			'context'     => NULL,
 			'taxonomy'    => NULL,
 			'posttype'    => FALSE,
 			'restricted'  => FALSE,   // `disabled` / `hidden` / FALSE

@@ -13,7 +13,10 @@ class NationalLibrary extends gEditorial\Module
 	use Internals\Rewrites;
 	use Internals\RestAPI;
 
-	public static function module()
+	const APP_NAME  = 'biblio-search'; // NOTE: same as the app's base folder
+	const APP_ASSET = 'biblio-search'; // NOTE: same as `name` prop on the app's `package.json`
+
+	public static function module(): array
 	{
 		return [
 			'name'     => 'national_library',
@@ -981,7 +984,6 @@ class NationalLibrary extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
 	public function searchform_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
@@ -1013,6 +1015,7 @@ class NationalLibrary extends gEditorial\Module
 		);
 	}
 
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 

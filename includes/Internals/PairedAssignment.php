@@ -152,7 +152,7 @@ trait PairedAssignment
 				gEditorial\Scripts::renderAppMounter( $custom_app ?? ( defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock' ), $this->key );
 				gEditorial\Scripts::noScriptMessage();
 
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
@@ -163,13 +163,13 @@ trait PairedAssignment
 
 				// TODO
 
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 
 		} else {
 
 			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
 	}
 

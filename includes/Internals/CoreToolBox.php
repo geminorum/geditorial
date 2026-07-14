@@ -13,6 +13,7 @@ trait CoreToolBox
 	// DEFAULT CALLBACK: use in module for descriptions
 	// protected function tool_box_content() {}
 
+	// TODO: add context
 	public function tool_box()
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );

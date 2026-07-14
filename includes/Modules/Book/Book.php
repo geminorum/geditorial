@@ -30,7 +30,9 @@ class Book extends gEditorial\Module
 	use Internals\QuickPosts;
 	use Internals\TemplatePostType;
 
-	protected $deafults = [ 'multiple_instances' => TRUE ];
+	protected $deafults = [ 
+		'multiple_instances' => TRUE,
+	];
 
 	public static function module()
 	{

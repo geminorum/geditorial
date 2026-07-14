@@ -218,13 +218,13 @@ trait PairedImports
 				gEditorial\Scripts::renderAppMounter( 'import-items', $this->key );
 				gEditorial\Scripts::noScriptMessage();
 
-			gEditorial\Settings::wrapClose();
+			gEditorial\Settings::wrapClose( TRUE, $context );
 
 		} else {
 
 			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
 	}
 }

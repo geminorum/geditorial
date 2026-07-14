@@ -112,7 +112,8 @@ class Module extends WordPress\Module
 	 */
 	protected $current_queried = NULL;
 
-	protected $default_link_context = 'reports'; // default context for module link
+	protected $default_link_context = 'reports';   // default context for module link
+	protected $default_cuc_context  = 'settings';  // default context for user checks
 
 	public function __construct( &$module, &$options, $root, $locale = NULL )
 	{
@@ -427,7 +428,7 @@ class Module extends WordPress\Module
 	public function do_render_thickbox_mainbutton( $post, $context = 'framepage', $extra = [], $inline = FALSE, $width = '800' )
 	{
 		// NOTE: for inline only: modal id must be: `{$base}-{$module}-thickbox-{$context}`
-		if ( $inline && $context && method_exists( $this, 'admin_footer_'.$context ) )
+		if ( $inline && $context && method_exists( $this, self::und( 'admin_footer', $context ) ) )
 			$this->action( 'admin_footer', 0, 20, $context );
 
 		$name  = Services\CustomPostType::getLabel( $post->post_type, 'singular_name' );
@@ -536,7 +537,7 @@ class Module extends WordPress\Module
 		if ( $posttype )
 			add_action(
 				sprintf( 'save_post_%s', $posttype ),
-				[ $this, 'store_metabox'.( $prefix ? '_'.$prefix : '' ) ],
+				[ $this, self::und( 'store_metabox', $prefix ) ],
 				20,
 				3
 			);

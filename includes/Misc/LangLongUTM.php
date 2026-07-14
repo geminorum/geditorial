@@ -34,6 +34,7 @@ class LangLongUTM extends Core\Base
 
 	/**
 	 * Equatorial Radius
+	 *
 	 * @var integer
 	 */
 	private $a;
@@ -47,6 +48,7 @@ class LangLongUTM extends Core\Base
 
 	/**
 	 * Square of eccentricity
+	 *
 	 * @var float
 	 */
 	private $eccSquared;
@@ -58,7 +60,7 @@ class LangLongUTM extends Core\Base
 	}
 
 	/**
-	 * Convert latitude/longitude into UTM coordinates. Equations from USGS Bulletin 1532
+	 * Convert latitude/longitude into `UTM` coordinates. Equations from `USGS Bulletin 1532`
 	 * Automatically calculates the zone, with special zone rules added for Denmark and Svalbard.
 	 * Denmark stretches the zone 32 in `ETRS89` to include all of Zealand so users don't have to deal with zone crossings.
 	 *
@@ -67,7 +69,7 @@ class LangLongUTM extends Core\Base
 	 */
 	public function convertLatLngToUTM( $latitude, $longitude )
 	{
-		// Make sure the longitude is between -180.00 ~ 179.9
+		// Make sure the longitude is between `-180.00 ~ 179.9`
 		$LongTemp = ( $longitude + 180 ) - (int) ( ( $longitude + 180 ) / 360 ) * 360 - 180;  // -180.00 ~ 179.9;
 		$LatRad   = deg2rad( $latitude );
 		$LongRad  = deg2rad( $LongTemp );
@@ -139,7 +141,7 @@ class LangLongUTM extends Core\Base
 	/**
 	 * Convert UTM to Longitude/Latitude
 	 *
-	 * Equations from USGS Bulletin 1532.
+	 * Equations from `USGS Bulletin 1532`.
 	 * East Longitudes are positive, West longitudes are negative.
 	 * North latitudes are positive, South latitudes are negative
 	 * Lat and Long are in decimal degrees.
@@ -156,7 +158,7 @@ class LangLongUTM extends Core\Base
 
 		sscanf( $UTMZone, '%d%s', $ZoneNumber, $ZoneLetter );
 
-		if ( strcmp( 'N', $ZoneLetter ) <= 0 ) {
+		if ( strcmp( 'N', $ZoneLetter ?? '' ) <= 0 ) {
 			$NorthernHemisphere = 1; // point is in northern hemisphere
 		} else {
 			$NorthernHemisphere = 0; // point is in southern hemisphere
@@ -234,8 +236,8 @@ class LangLongUTM extends Core\Base
 			case 'ED50'                 : $this->a = 6378388; $this->eccSquared = 0.00672267;  break;   // International Ellipsoid
 
 			case 'WGS 84' :
-			case 'EUREF89':   // Max deviation from WGS 84 is 40 cm/km see http://ocq.dk/euref89 (in danish)
-			case 'ETRS89' :   // Same as EUREF89
+			case 'EUREF89':   // Max deviation from `WGS 84` is 40 cm/km see http://ocq.dk/euref89 (in danish)
+			case 'ETRS89' :   // Same as `EUREF89`
 				$this->a = 6378137;
 				$this->eccSquared = 0.00669438;
 				break;
@@ -246,8 +248,8 @@ class LangLongUTM extends Core\Base
 	}
 
 	/**
-	 * Get the UTM letter designator for a given latitude.
-	 * Returns 'Z' if latitude is outside the UTM limits of 84N to 80S
+	 * Get the `UTM` letter designator for a given latitude.
+	 * Returns `Z` if latitude is outside the `UTM` limits of `84N` to `80S`
 	 *
 	 * @param float $latitude
 	 * @return string

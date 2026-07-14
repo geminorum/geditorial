@@ -2144,7 +2144,7 @@ class Settings extends WordPress\Main
 		).'">';
 	}
 
-	public static function wrapClose( $iframe_exit = TRUE )
+	public static function wrapClose( $iframe_exit = TRUE, ?string $context = NULL )
 	{
 		echo '<div class="clear"></div></div>';
 

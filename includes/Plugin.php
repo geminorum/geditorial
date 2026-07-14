@@ -86,7 +86,7 @@ class Plugin extends WordPress\Plugin
 		$this->load_options();
 		$this->init_modules();
 
-		// \TenUp\ContentConnect\Plugin::instance();
+		// `\TenUp\ContentConnect\Plugin::instance();`
 	}
 
 	// NOTE: `custom path` once set by `load_plugin_textdomain()`
@@ -219,6 +219,7 @@ class Plugin extends WordPress\Plugin
 			'LateChores',
 			'LineDiscovery',
 			'Locations',
+			'Lookup',
 			'Markup',
 			'ObjectHints',
 			'ObjectsToObjects',
@@ -384,16 +385,17 @@ class Plugin extends WordPress\Plugin
 			return $options;
 
 		foreach ( $this->_modules as $name => $enabled )
-			$options[$name] = get_option( $this->base.'_'.$name.'_options', '{{NO-OPTIONS}}' );
+			$options[$name] = get_option( self::und( $this->base, $name, 'options' ), '{{NO-OPTIONS}}' );
 
-		$options['{{GLOBAL}}'] = get_option( 'geditorial_options', FALSE );
+		$options['{{GLOBAL}}'] = get_option( self::und( $this->base, 'options' ), FALSE );
 
 		return $options;
 	}
 
 	public function upgrade_old_options()
 	{
-		$options  = get_option( 'geditorial_options' );
+		$key      = self::und( $this->base, 'options' );
+		$options  = get_option( $key );
 		$upgraded = [];
 		$update   = FALSE;
 
@@ -402,7 +404,7 @@ class Plugin extends WordPress\Plugin
 
 		foreach ( $this->_modules as $mod_name => &$module ) {
 
-			$key = $this->base.'_'.$mod_name.'_options';
+			$key = self::und( $this->base, $mod_name, 'options' );
 			$old = get_option( $key );
 
 			if ( isset( $options[$mod_name] ) ) {
@@ -417,7 +419,7 @@ class Plugin extends WordPress\Plugin
 		}
 
 		if ( $update )
-			update_option( 'geditorial_options', $options, TRUE );
+			update_option( $key, $options, TRUE );
 
 		return $upgraded;
 	}
@@ -480,7 +482,7 @@ class Plugin extends WordPress\Plugin
 
 	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
 	{
-		return $option === $this->base.'_options' ? TRUE : $autoload;
+		return $option === self::und( $this->base, 'options' ) ? TRUE : $autoload;
 	}
 
 	public function template_include( $template )
@@ -643,7 +645,7 @@ class Plugin extends WordPress\Plugin
 	public function admin_bar_menu( $wp_admin_bar )
 	{
 		// NOT USED YET: WTF: it causes to `geditorial_adminbar` action fires again!
-		// do_action_ref_array( 'geditorial_adminbar_lastcall', [ &$this->adminbar_nodes, $this->base ] );
+		// `do_action_ref_array( 'geditorial_adminbar_lastcall', [ &$this->adminbar_nodes, $this->base ] );`
 
 		if ( empty( $this->adminbar_nodes ) )
 			return;

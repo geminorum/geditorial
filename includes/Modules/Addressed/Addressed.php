@@ -30,6 +30,7 @@ class Addressed extends gEditorial\Module
 				'site-identity',
 				'has-customizer',
 				'location',
+				'address-tools',
 			],
 		];
 	}

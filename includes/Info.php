@@ -11,6 +11,7 @@ class Info extends WordPress\Main
 		return gEditorial();
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// `https://db-ip.com/xxx.xxx.xx.xxx`
 	// TODO: customize for this plugin
 	// MAYBE: `Services\InternetProtocol`
@@ -22,6 +23,7 @@ class Info extends WordPress\Main
 		return $ip;
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
 	public static function lookupLatLng( $latlng, $extra = [] )
 	{
@@ -33,6 +35,7 @@ class Info extends WordPress\Main
 		], Core\LatLng::prep( $latlng, TRUE ) );
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// @SEE: https://www.latlong.net/countries.html
 	// @REF: https://stackoverflow.com/a/52943975
 	// `maps.google.com/?q=35.6928,50.82565`
@@ -58,6 +61,7 @@ class Info extends WordPress\Main
 	}
 
 	public static function lookupCountry( $code )
+	// TODO: Migrate to `Services\Lookup`
 	{
 		if ( function_exists( 'gnetwork_country_lookup' ) )
 			return gnetwork_country_lookup( $code );
@@ -65,6 +69,7 @@ class Info extends WordPress\Main
 		return $code;
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
 	public static function lookupISBN( $isbn )
 	{
@@ -76,6 +81,7 @@ class Info extends WordPress\Main
 		], Core\ISBN::prep( $isbn, TRUE ) );
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
 	public static function lookupURLforISBN( $isbn )
 	{
@@ -89,6 +95,7 @@ class Info extends WordPress\Main
 		);
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
 	public static function lookupVIN( $vin )
 	{
@@ -100,6 +107,7 @@ class Info extends WordPress\Main
 		], Core\Validation::sanitizeVIN( $vin ) );
 	}
 
+	// TODO: Migrate to `Services\Lookup`
 	// `https://en.vindecoder.pl/en/decode/JH2RC3605MM101581`
 	// @SEE: https://vpic.nhtsa.dot.gov/decoder/
 	public static function lookupURLforVIN( $vin )
@@ -498,6 +506,12 @@ class Info extends WordPress\Main
 
 	public static function getNoop( $key, $fallback = NULL )
 	{
+		if ( self::empty( $key ) )
+			return $fallback;
+
+		if ( is_array( $key ) )
+			return $key; // already nooped!
+
 		switch ( $key ) {
 
 			case 'item':
@@ -766,51 +780,52 @@ class Info extends WordPress\Main
 		return apply_filters( self::und( static::BASE, 'posttype_prop_title' ),
 			$title,
 			$prop,
-			$context
+			$context,
+			$posttype,
 		);
 	}
 
 	public static function getDropzoneStrings()
 	{
 		return apply_filters( self::und( static::BASE, 'strings_dropzone' ), [
-				/* translators: The text used before any files are dropped. */
-				'dictDefaultMessage' => _x( 'Drop files here to upload', 'Info: Dropzone: `dictDefaultMessage`', 'geditorial' ),
+			/* Translators: The text used before any files are dropped. */
+			'dictDefaultMessage' => _x( 'Drop files here to upload', 'Info: Dropzone: `dictDefaultMessage`', 'geditorial' ),
 
-				/* translators: The text that replaces the default message text it the browser is not supported. */
-				'dictFallbackMessage' => _x( 'Your browser does not support drag\'n\'drop file uploads.', 'Info: Dropzone: `dictFallbackMessage`', 'geditorial' ),
+			/* Translators: The text that replaces the default message text it the browser is not supported. */
+			'dictFallbackMessage' => _x( 'Your browser does not support drag\'n\'drop file uploads.', 'Info: Dropzone: `dictFallbackMessage`', 'geditorial' ),
 
-				/* translators: The text that will be added before the fallback form. If you provide a  fallback element yourself, or if this option is `null` this will be ignored. */
-				'dictFallbackText' => _x( 'Please use the fallback form below to upload your files like in the olden days.', 'Info: Dropzone: `dictFallbackText`', 'geditorial' ),
+			/* Translators: The text that will be added before the fallback form. If you provide a  fallback element yourself, or if this option is `null` this will be ignored. */
+			'dictFallbackText' => _x( 'Please use the fallback form below to upload your files like in the olden days.', 'Info: Dropzone: `dictFallbackText`', 'geditorial' ),
 
-				/* translators: If the file-size is too big. `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values. */
-				'dictFileTooBig' => _x( 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.', 'Info: Dropzone: `dictFileTooBig`', 'geditorial' ),
+			/* Translators: If the file-size is too big. `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values. */
+			'dictFileTooBig' => _x( 'File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.', 'Info: Dropzone: `dictFileTooBig`', 'geditorial' ),
 
-				/* translators: If the file doesn't match the file-type. */
-				'dictInvalidFileType' => _x( 'You can\'t upload files of this type.', 'Info: Dropzone: `dictInvalidFileType`', 'geditorial' ),
+			/* Translators: If the file doesn't match the file-type. */
+			'dictInvalidFileType' => _x( 'You can\'t upload files of this type.', 'Info: Dropzone: `dictInvalidFileType`', 'geditorial' ),
 
-				/* translators: If the server response was invalid. `{{statusCode}}` will be replaced with the servers status code. */
-				'dictResponseError' => _x( 'Server responded with {{statusCode}} code.', 'Info: Dropzone: `dictResponseError`', 'geditorial' ),
+			/* Translators: If the server response was invalid. `{{statusCode}}` will be replaced with the servers status code. */
+			'dictResponseError' => _x( 'Server responded with {{statusCode}} code.', 'Info: Dropzone: `dictResponseError`', 'geditorial' ),
 
-				/* translators: If `addRemoveLinks` is true, the text to be used for the cancel upload link. */
-				'dictCancelUpload' => _x( 'Cancel upload', 'Info: Dropzone: `dictCancelUpload`', 'geditorial' ),
+			/* Translators: If `addRemoveLinks` is true, the text to be used for the cancel upload link. */
+			'dictCancelUpload' => _x( 'Cancel upload', 'Info: Dropzone: `dictCancelUpload`', 'geditorial' ),
 
-				/* translators: The text that is displayed if an upload was manually canceled. */
-				'dictUploadCanceled' => _x( 'Upload canceled.', 'Info: Dropzone: `dictUploadCanceled`', 'geditorial' ),
+			/* Translators: The text that is displayed if an upload was manually canceled. */
+			'dictUploadCanceled' => _x( 'Upload canceled.', 'Info: Dropzone: `dictUploadCanceled`', 'geditorial' ),
 
-				/* translators: If `addRemoveLinks` is true, the text to be used for confirmation when canceling upload. */
-				'dictCancelUploadConfirmation' => _x( 'Are you sure you want to cancel this upload?', 'Info: Dropzone: `dictCancelUploadConfirmation`', 'geditorial' ),
+			/* Translators: If `addRemoveLinks` is true, the text to be used for confirmation when canceling upload. */
+			'dictCancelUploadConfirmation' => _x( 'Are you sure you want to cancel this upload?', 'Info: Dropzone: `dictCancelUploadConfirmation`', 'geditorial' ),
 
-				/* translators: If `addRemoveLinks` is true, the text to be used to remove a file. */
-				'dictRemoveFile' => _x( 'Remove file', 'Info: Dropzone: `dictRemoveFile`', 'geditorial' ),
+			/* Translators: If `addRemoveLinks` is true, the text to be used to remove a file. */
+			'dictRemoveFile' => _x( 'Remove file', 'Info: Dropzone: `dictRemoveFile`', 'geditorial' ),
 
-				/* translators: Displayed if `maxFiles` is st and exceeded. The string `{{maxFiles}}` will be replaced by the configuration value. */
-				'dictMaxFilesExceeded' => _x( 'You can not upload any more files.', 'Info: Dropzone: `dictMaxFilesExceeded`', 'geditorial' ),
+			/* Translators: Displayed if `maxFiles` is st and exceeded. The string `{{maxFiles}}` will be replaced by the configuration value. */
+			'dictMaxFilesExceeded' => _x( 'You can not upload any more files.', 'Info: Dropzone: `dictMaxFilesExceeded`', 'geditorial' ),
 
-				/* translators: Allows you to translate the different units. Starting with `tb` for terabytes and going down to `b` for bytes. */
-				// 'dictFileSizeUnits' => '', // `{ tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" }`
+			/* Translators: Allows you to translate the different units. Starting with `tb` for terabytes and going down to `b` for bytes. */
+			// `'dictFileSizeUnits' => '',` // `{ tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" }`
 
-				/* translators: If this is not null, then the user will be prompted before removing a file. */
-				// 'dictRemoveFileConfirmation => '', // NULL
+			/* Translators: If this is not null, then the user will be prompted before removing a file. */
+			// `'dictRemoveFileConfirmation => '',` // NULL
 		] );
 	}
 

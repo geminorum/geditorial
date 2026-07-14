@@ -811,7 +811,7 @@ trait SubContents
 				gEditorial\Scripts::renderAppMounter( $custom_app ?? 'subcontent-grid', $this->key );
 				gEditorial\Scripts::noScriptMessage();
 
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) ) {
 
@@ -823,13 +823,13 @@ trait SubContents
 					'class'   => '-table-content',
 				], $this->get_notice_for_empty( $context ) );
 
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 
 		} else {
 
 			gEditorial\Settings::wrapOpen( $this->key, $context, gEditorial\Plugin::denied( FALSE ) );
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
-			gEditorial\Settings::wrapClose( FALSE );
+			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
 	}
 

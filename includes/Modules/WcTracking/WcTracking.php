@@ -17,7 +17,7 @@ class WcTracking extends gEditorial\Module
 			'name'     => 'wc_tracking',
 			'title'    => _x( 'WC Tracking', 'Modules: WC Tracking', 'geditorial-admin' ),
 			'desc'     => _x( 'Package Tracking Enhancements for WooCommerce', 'Modules: WC Tracking', 'geditorial-admin' ),
-			'icon'     => [ 'misc-48', 'ir-post' ], // 'buddicons-tracking',
+			'icon'     => [ 'misc-48', 'ir-post' ], // `'buddicons-tracking',`
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 		];

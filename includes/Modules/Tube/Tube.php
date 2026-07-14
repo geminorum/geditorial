@@ -103,7 +103,9 @@ class Tube extends gEditorial\Module
 				'secondary_taxonomy' => _n_noop( 'Channel Category', 'Channel Categories', 'geditorial-tube' ),
 
 				/* translators: `%s`: count number */
-				'primary_posttype_count' => _n_noop( '%s Video', '%s Videos', 'geditorial-tube' ),
+				'primary_posttype_count'   => _n_noop( '%s Video', '%s Videos', 'geditorial-tube' ),
+				/* translators: `%s`: count number */
+				'secondary_posttype_count' => _n_noop( '%s Channel', '%s Channels', 'geditorial-tube' ),
 			],
 		];
 
@@ -120,6 +122,35 @@ class Tube extends gEditorial\Module
 		];
 
 		return $strings;
+	}
+
+	protected function define_default_terms(): array
+	{
+		return [
+			'primary_taxonomy' => [
+				/**
+				 * Categories that content creators can apply to
+				 * their YouTube videos as of May, 2023.
+				 *
+				 * @source https://gist.github.com/kellenmace/2f8c419eb3c12bfc053d0cf9e774a97e
+				 */
+				'autos-n-vehicles'      => _x( 'Autos & Vehicles', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'comedy'                => _x( 'Comedy', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'education'             => _x( 'Education', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'entertainment'         => _x( 'Entertainment', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'film-n-animation'      => _x( 'Film & Animation', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'gaming'                => _x( 'Gaming', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'howto-n-style'         => _x( 'Howto & Style', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'music'                 => _x( 'Music', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'news-n-politics'       => _x( 'News & Politics', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'nonprofits-n-activism' => _x( 'Nonprofits & Activism', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'people-n-blogs'        => _x( 'People & Blogs', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'pets-n-animals'        => _x( 'Pets & Animals', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'science-n-technology'  => _x( 'Science & Technology', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'sports'                => _x( 'Sports', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+				'travel-n-events'       => _x( 'Travel & Events', 'Primary Taxonomy: Default Term', 'geditorial-tube' ),
+			],
+		];
 	}
 
 	// @REF: https://www.videouniversity.com/?p=6660

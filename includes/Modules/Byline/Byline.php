@@ -395,26 +395,27 @@ class Byline extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
-		$target = self::req( 'target', 'mainapp' );
+		$context = $context ?? 'overview';
+		$target  = self::req( 'target', 'mainapp' );
 
 		if ( $this->role_can_post( $post, 'assign' ) && 'mainapp' === $target ) {
 
 			/* translators: `%s`: post title */
 			$assign_template = _x( 'Byline Dock for %s', 'Page Title', 'geditorial-byline' );
 
-			ModuleSettings::wrapOpen( 'overview', $this->key, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
+			ModuleSettings::wrapOpen( $context, $this->key, sprintf( $assign_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				gEditorial\Scripts::renderAppMounter( static::APP_NAME, $this->key );
 				gEditorial\Scripts::noScriptMessage();
 
-			ModuleSettings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE, $context );
 
 		} else if ( $this->role_can_post( $post, 'reports' ) && 'summaryreport' === $target ) {
 
 			/* translators: `%s`: post title */
 			$reports_template = _x( 'Byline Overview for %s', 'Page Title', 'geditorial-byline' );
 
-			ModuleSettings::wrapOpen( 'overview', $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
+			ModuleSettings::wrapOpen( $context, $this->key, sprintf( $reports_template ?? '%s', WordPress\Post::title( $post ) ) );
 
 				ModuleTemplate::renderDefault( [
 					'default'  => $this->get_notice_for_empty( $target, NULL, FALSE ),
@@ -423,15 +424,15 @@ class Byline extends gEditorial\Module
 					'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
 				], $post );
 
-			ModuleSettings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE, $context );
 
 		} else {
 
-			ModuleSettings::wrapOpen( 'overview', $this->key, gEditorial\Plugin::denied( FALSE ) );
+			ModuleSettings::wrapOpen( $context, $this->key, gEditorial\Plugin::denied( FALSE ) );
 
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 
-			ModuleSettings::wrapClose( FALSE );
+			ModuleSettings::wrapClose( FALSE, $context );
 		}
 	}
 

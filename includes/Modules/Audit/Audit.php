@@ -106,14 +106,14 @@ class Audit extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'rowaction_title' => _x( 'Audit Attributes of %1$s', 'Action Title', 'geditorial-audit' ),
-			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'rowaction_text'  => _x( 'Audit', 'Action Text', 'geditorial-audit' ),
 
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'columnrow_title' => _x( 'Audit Attributes of %1$s', 'Row Title', 'geditorial-audit' ),
-			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'columnrow_text'  => _x( 'Audit', 'Row Text', 'geditorial-audit' ),
 		];
 
