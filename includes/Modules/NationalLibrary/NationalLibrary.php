@@ -112,6 +112,7 @@ class NationalLibrary extends gEditorial\Module
 
 		$settings['_constants'] = [
 			'main_shortcode_constant'       => [ NULL, 'fipa' ],
+			'searchform_shortcode_constant' => [ NULL, 'fipa-search' ],
 		];
 
 		return $settings;
@@ -126,6 +127,7 @@ class NationalLibrary extends gEditorial\Module
 			'bib_queryvar'  => 'bib',    // NOTE: value is an `National Bibliographic Number`
 
 			'main_shortcode'       => 'fipa',
+			'searchform_shortcode' => 'fipa-search',
 
 			'metakey_bib_posttype'  => 'nali_bib',        // FALLBACK
 			'metakey_isbn_posttype' => 'isbn',            // FALLBACK
@@ -182,11 +184,13 @@ class NationalLibrary extends gEditorial\Module
 		$this->filter( 'meta_initial_bibliographic', 4, 8, FALSE, $this->base );
 		$this->filter( 'meta_initial_isbn', 4, 8, FALSE, $this->base );
 		$this->filter( 'lookup_isbn', 2, 20, FALSE, $this->base );
+		$this->action_self( 'searchform', 1, 10, 'frontend' );
 
 		if ( $this->get_setting( 'tabs_support', TRUE ) )
 			$this->filter_module( 'tabs', 'builtins_tabs', 2 );
 
 		$this->register_shortcode( 'main_shortcode' );
+		$this->register_shortcode( 'searchform_shortcode' );
 	}
 
 	/**
@@ -511,6 +515,16 @@ class NationalLibrary extends gEditorial\Module
 			return $viewable;
 
 		return WordPress\Post::can( $post, 'read_post' );
+	}
+
+	// NOTE: fires via @hook: `geditorial_national_library_searchform`
+	public function searchform_frontend( $enqueue = TRUE )
+	{
+		gEditorial\Scripts::renderAppMounter( static::APP_NAME, $this->module->name );
+		gEditorial\Scripts::noScriptMessage();
+
+		if ( $enqueue )
+			$this->_do_enqueue_app();
 	}
 
 	public function lookup_isbn( $url, $isbn )
@@ -862,6 +876,8 @@ class NationalLibrary extends gEditorial\Module
 		$this->template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta );
 	}
 
+	private function _do_enqueue_app( $atts = [] ) {} // FIXME
+
 	public function meta_initial_bibliographic( $meta, $field, $post, $module )
 	{
 		if ( $meta )
@@ -966,6 +982,37 @@ class NationalLibrary extends gEditorial\Module
 	}
 
 	public function tools_settings( $sub )
+	public function searchform_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	{
+		$args = shortcode_atts( [
+			'enqueue' => TRUE,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'searchform_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		$html = gEditorial\Scripts::renderAppMounter(
+			static::APP_NAME,
+			$this->module->name,
+			FALSE,
+			$content ?: NULL
+		);
+
+		if ( $args['enqueue'] )
+			$this->_do_enqueue_app();
+
+		return gEditorial\ShortCode::wrap(
+			$html.gEditorial\Scripts::noScriptMessage( FALSE ),
+			$this->constant( 'searchform_shortcode' ),
+			$args
+		);
+	}
+
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
