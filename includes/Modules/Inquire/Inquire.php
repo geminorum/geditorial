@@ -14,7 +14,7 @@ class Inquire extends gEditorial\Module
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'inquire',
@@ -30,7 +30,7 @@ class Inquire extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -53,7 +53,7 @@ class Inquire extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'inquiry',
@@ -63,7 +63,7 @@ class Inquire extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -82,7 +82,7 @@ class Inquire extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'status_taxonomy' => [
@@ -108,7 +108,7 @@ class Inquire extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -148,13 +148,13 @@ class Inquire extends gEditorial\Module
 		] );
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'dashboard', 'pages' );
 		$this->action_module( 'dashboard', 'content_page_inquire', 1 );
 	}
 
-	protected function get_module_templates()
+	protected function get_module_templates(): array
 	{
 		return [
 			'page_posttype' => [
@@ -169,7 +169,7 @@ class Inquire extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -205,12 +205,12 @@ class Inquire extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hack_adminmenu_no_create_posts( $this->constant( 'main_posttype' ) );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;

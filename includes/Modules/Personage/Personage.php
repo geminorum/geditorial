@@ -27,7 +27,7 @@ class Personage extends gEditorial\Module
 	protected $positions     = [ 'main_posttype' => 2 ];
 	protected $priority_init = 9;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'personage',
@@ -44,7 +44,7 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$status = $this->constant( 'status_taxonomy' );
 		$roles  = $this->get_settings_default_roles();
@@ -125,7 +125,7 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'human',
@@ -136,7 +136,7 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -173,7 +173,7 @@ class Personage extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'status_taxonomy' => [
@@ -192,7 +192,7 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -316,13 +316,13 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -387,7 +387,7 @@ class Personage extends gEditorial\Module
 			$this->filter( 'prep_individual', 3, 8, 'admin', $this->base );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 
@@ -410,14 +410,14 @@ class Personage extends gEditorial\Module
 		$this->latechores__init_post_aftercare( $this->constant( 'main_posttype' ) );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->filter_module( 'importer', 'source_id', 3 );
 		$this->filter_module( 'importer', 'matched', 4 );
 		$this->filter_module( 'importer', 'insert', 8 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
@@ -431,7 +431,7 @@ class Personage extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -480,7 +480,7 @@ class Personage extends gEditorial\Module
 		}
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->constant( 'main_posttype' ) ) )
 			return;
@@ -494,7 +494,7 @@ class Personage extends gEditorial\Module
 		$this->hook_content_insert();
 	}
 
-	public function insert_cover( $content )
+	public function insert_cover( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -505,7 +505,7 @@ class Personage extends gEditorial\Module
 		] );
 	}
 
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -513,7 +513,7 @@ class Personage extends gEditorial\Module
 		echo $this->wrap( ModuleTemplate::summary( [ 'echo' => FALSE ] ) );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype', [ 'reports' ] ) )
 			$items[] = $glance;
@@ -521,7 +521,7 @@ class Personage extends gEditorial\Module
 		return $items;
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		if ( $this->role_can( [ 'reports' ] ) )
 			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
@@ -1024,16 +1024,16 @@ class Personage extends gEditorial\Module
 		return $sanitized ?: '';
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [
+		return $this->_override_module_cuc( $context, $fallback_capability, [
 			'reports',
 			'tools',
 			'imports',
 		] );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -1054,33 +1054,36 @@ class Personage extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Tools', 'Header', 'geditorial-personage' ) );
 
 			ModuleSettings::renderCard_parse_pool();
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) )
 			$this->modulelinks__register_posttype_export_headerbuttons( 'main_posttype', 'reports', FALSE );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Imports', 'Header', 'geditorial-personage' ) );
 
@@ -1101,12 +1104,15 @@ class Personage extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_imports_html_before( $uri, $sub )
+	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_import_from_fullname( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_import_from_fullname( $sub )

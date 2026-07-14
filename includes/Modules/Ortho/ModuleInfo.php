@@ -63,7 +63,7 @@ class ModuleInfo extends gEditorial\Info
 		];
 	}
 
-	public static function getHelpTabs( $context = NULL )
+	public static function getHelpTabs( ?string $context = NULL ): array
 	{
 		return [
 			[

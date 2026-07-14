@@ -28,7 +28,7 @@ class Positions extends gEditorial\Module
 		'subterms_support'   => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'positions',
@@ -44,7 +44,7 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -80,7 +80,7 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => 'position_profile',
@@ -98,7 +98,7 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -156,7 +156,7 @@ class Positions extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function subcontent_get_data_mapping()
+	protected function subcontent_get_data_mapping(): array
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
@@ -185,7 +185,7 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_required_fields()
+	protected function subcontent_define_required_fields(): array
 	{
 		return [
 			'label',
@@ -193,7 +193,7 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'primary_posttype',
@@ -205,12 +205,12 @@ class Positions extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -257,7 +257,7 @@ class Positions extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -494,7 +494,7 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_posttype( 'primary_posttype', 'options-general.php' );
 		$this->_hook_menu_taxonomy( 'primary_taxonomy', 'options-general.php' );
@@ -535,9 +535,9 @@ class Positions extends gEditorial\Module
 		$this->subcontent_do_enqueue_app( $args );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->subcontent_do_render_iframe_content(
+		return $this->subcontent_do_render_iframe_content(
 			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Position Grid for %s', 'Page Title', 'geditorial-positions' ),
@@ -551,7 +551,7 @@ class Positions extends gEditorial\Module
 		$this->subcontent_restapi_register_routes();
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}

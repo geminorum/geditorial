@@ -24,7 +24,7 @@ class ClassicEditor extends gEditorial\Service
 		[], // 4: `mce_buttons_4`
 	];
 
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( is_admin() ) {
 
@@ -41,7 +41,7 @@ class ClassicEditor extends gEditorial\Service
 		return WordPress\Strings::isTruthy( WordPress\User::option( 'rich_editing', $user ) );
 	}
 
-	public static function hook_buttons()
+	public static function hook_buttons() : void
 	{
 		if ( ! self::richEditing() )
 			return;
@@ -88,14 +88,14 @@ class ClassicEditor extends gEditorial\Service
 		return $plugin_array;
 	}
 
-	public static function mce_external_languages( $languages )
+	public static function mce_external_languages( array $languages ): array
 	{
 		return array_merge( $languages, [
 			static::BASE => sprintf( '%sincludes/Misc/TinyMceStrings.php', self::factory()->get_dir() ),
 		] );
 	}
 
-	public static function getTinyMceStrings( $locale )
+	public static function getTinyMceStrings( string $locale ): string
 	{
 		$strings = apply_filters( self::und( static::BASE, 'tinymce_strings' ), [] );
 
@@ -103,7 +103,7 @@ class ClassicEditor extends gEditorial\Service
 	}
 
 	// TODO: `line-count`
-	public static function renderEditorStatusInfo( $target )
+	public static function renderEditorStatusInfo( string $target ): true
 	{
 		echo '<div class="-wrap -editor-status-info">';
 
@@ -128,5 +128,7 @@ class ClassicEditor extends gEditorial\Service
 			do_action( self::und( static::BASE, 'editor_status_info' ), $target );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 }

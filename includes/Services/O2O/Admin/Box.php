@@ -5,8 +5,20 @@ use geminorum\gEditorial\Services\O2O;
 
 class Box extends Core\Base
 {
+	/**
+	 * Undocumented variable
+	 *
+	 * @var object
+	 */
 	private $ctype;
+
+	/**
+	 * Undocumented variable
+	 *
+	 * @var object
+	 */
 	private $args;
+
 	private $columns;
 	private $labels;
 	private $connected_items;
@@ -33,7 +45,7 @@ class Box extends Core\Base
 		self::add_template( 'table-row' );
 	}
 
-	private static function add_template( $slug )
+	private static function add_template( string $slug )
 	{
 		echo Core\HTML::tag( 'script', [
 			'type' => 'text/html',
@@ -41,7 +53,7 @@ class Box extends Core\Base
 		], file_get_contents( dirname( __FILE__ )."/templates/$slug.mustache" ) );
 	}
 
-	public function render( $item )
+	public function render( mixed $item )
 	{
 		$extra_qv = array_merge( self::$admin_box_qv, [
 			'o2o:context'  => 'admin_box',
@@ -77,7 +89,7 @@ class Box extends Core\Base
 		return implode( ' ', $data_attr_str );
 	}
 
-	protected function render_connections_table( $item )
+	protected function render_connections_table( mixed $item )
 	{
 		$data = [];
 
@@ -86,8 +98,8 @@ class Box extends Core\Base
 
 		$tbody = [];
 
-		foreach ( $this->connected_items as $item )
-			$tbody[] = $this->connection_row( $item->o2o_id, $item );
+		foreach ( $this->connected_items as $connected_item )
+			$tbody[] = $this->connection_row( $connected_item->o2o_id, $connected_item );
 
 		$data['tbody'] = $tbody;
 
@@ -141,7 +153,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	protected function connection_row( $o2o_id, $item, $render = FALSE )
+	protected function connection_row( int $o2o_id, mixed $item, bool $render = FALSE )
 	{
 		$item->title = apply_filters( 'o2o_connected_title',
 			$item->get_title(),
@@ -162,7 +174,7 @@ class Box extends Core\Base
 			: $data;
 	}
 
-	protected function candidate_row( $item )
+	protected function candidate_row( mixed $item )
 	{
 		$title = apply_filters( 'o2o_candidate_title',
 			$item->get_title(),
@@ -185,7 +197,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	protected function candidate_rows( $current_post_id, $page = 1, $search = '' )
+	protected function candidate_rows( int $current_post_id, $page = 1, $search = '' )
 	{
 		$extra_qv = array_merge( self::$admin_box_qv, [
 			'o2o:context'  => 'admin_box_candidates',
@@ -242,7 +254,7 @@ class Box extends Core\Base
 		$this->safe_connect( $_POST['to'] );
 	}
 
-	private function safe_connect( $to )
+	private function safe_connect( int $to )
 	{
 		$from = absint( $_POST['from'] );
 		$to   = absint( $to );
@@ -277,7 +289,7 @@ class Box extends Core\Base
 		$this->refresh_candidates();
 	}
 
-	protected static function maybe_send_error( $r )
+	protected static function maybe_send_error( mixed $r )
 	{
 		if ( ! is_wp_error( $r ) )
 			return;

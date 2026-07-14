@@ -9,7 +9,7 @@ class ModuleInfo extends gEditorial\Info
 {
 	const MODULE = 'units';
 
-	public static function getHelpTabs( $context = NULL )
+	public static function getHelpTabs( ?string $context = NULL ): array
 	{
 		return [
 			[

@@ -12,7 +12,7 @@ class Uncategorized extends gEditorial\Module
 {
 	use Internals\CoreRowActions;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'uncategorized',
@@ -27,7 +27,7 @@ class Uncategorized extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -45,7 +45,7 @@ class Uncategorized extends gEditorial\Module
 	}
 
 	// TODO: append `taxtax` taxonomies / @see `Archives` module for query
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( [
@@ -71,7 +71,7 @@ class Uncategorized extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			// TODO: add separate list of post-types on settings for this
@@ -91,12 +91,12 @@ class Uncategorized extends gEditorial\Module
 		}
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
+		return $this->_override_module_cuc( $context, $fallback_capability, [ 'reports', 'tools' ] );
 	}
 
-	public function rowactions_bulk_actions( $actions )
+	public function rowactions_bulk_actions( array $actions ): array
 	{
 		$prefix = $this->classs();
 
@@ -107,7 +107,7 @@ class Uncategorized extends gEditorial\Module
 		] );
 	}
 
-	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string
 	{
 		$count  = 0;
 		$prefix = $this->classs();
@@ -148,7 +148,7 @@ class Uncategorized extends gEditorial\Module
 		return add_query_arg( $this->hook( 'cleaned' ), $count, $redirect_to );
 	}
 
-	public function rowactions_admin_notices()
+	public function rowactions_admin_notices(): void
 	{
 		$hook = $this->hook( 'cleaned' );
 
@@ -184,7 +184,7 @@ class Uncategorized extends gEditorial\Module
 		return $items;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports' ) ) {
 
@@ -261,7 +261,7 @@ class Uncategorized extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		// FIXME: add screen option for this!
 		// $query = [ 'tax_query' => $this->_get_uncategorized_tax_query() ];
@@ -279,7 +279,7 @@ class Uncategorized extends gEditorial\Module
 		$pagination['before'][] = gEditorial\Tablelist::filterAuthors();
 		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
 
-		Core\HTML::tableList( [
+		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
 			'ID'    => gEditorial\Tablelist::columnPostID(),
 			'date'  => gEditorial\Tablelist::columnPostDate(),
@@ -320,7 +320,7 @@ class Uncategorized extends gEditorial\Module
 		] );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
 
@@ -366,7 +366,7 @@ class Uncategorized extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Uncategorized Imports', 'Header', 'geditorial-uncategorized' ) );
 
@@ -386,6 +386,7 @@ class Uncategorized extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	// TODO: option to delete orphaned terms

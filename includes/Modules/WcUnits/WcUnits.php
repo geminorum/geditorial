@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcUnits extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_units',
@@ -24,7 +24,7 @@ class WcUnits extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -226,7 +226,7 @@ class WcUnits extends gEditorial\Module
 		];
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 
@@ -240,7 +240,7 @@ class WcUnits extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -303,7 +303,7 @@ class WcUnits extends gEditorial\Module
 		return sprintf( $template, Core\Number::localize( $formatted ) );
 	}
 
-	public function format_dimensions( $string, $dimensions, $unit = NULL )
+	public function format_dimensions( ?string $string, array $dimensions, ?string $unit = NULL ): string
 	{
 		$formatted = implode( $this->get_setting( 'multiplication_sign', '&nbsp;&times;&nbsp;' ),
 			array_filter( array_map( 'wc_format_localized_decimal', $dimensions ) ) );
@@ -323,12 +323,12 @@ class WcUnits extends gEditorial\Module
 
 	// Arabic Decimal Separator: https://unicode-table.com/en/066B/
 	// Arabic Thousands Separator: https://unicode-table.com/en/066C/
-	public function format_localized_decimal( $value )
+	public function format_localized_decimal( mixed $value ): string
 	{
 		return str_replace( '.', $this->get_setting( 'decimal_point', '.' ), (string) $value );
 	}
 
-	public function display_product_attributes( $attributes, $product )
+	public function display_product_attributes( array $attributes, object $product ): array
 	{
 		$after = [];
 
@@ -350,7 +350,7 @@ class WcUnits extends gEditorial\Module
 	}
 
 	// Hints the formatting on WooCommerce settings page
-	public function products_general_settings( $settings )
+	public function products_general_settings( array $settings ): array
 	{
 		foreach ( $settings as &$setting ) {
 

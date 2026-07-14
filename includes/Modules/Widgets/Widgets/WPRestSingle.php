@@ -12,7 +12,7 @@ class WPRestSingle extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'wprest_single';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: WP-REST Single', 'Widget Title', 'geditorial-widgets' ),

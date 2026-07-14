@@ -14,7 +14,7 @@ class Quotation extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\MetaBoxList;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'quotation',
@@ -29,7 +29,7 @@ class Quotation extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -55,7 +55,7 @@ class Quotation extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'quote',
@@ -64,7 +64,7 @@ class Quotation extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -98,7 +98,7 @@ class Quotation extends gEditorial\Module
 		return $strings;
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$rtl = Core\L10n::rtl();
 
@@ -164,7 +164,7 @@ class Quotation extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -173,12 +173,12 @@ class Quotation extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -196,7 +196,7 @@ class Quotation extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
@@ -209,7 +209,7 @@ class Quotation extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -256,7 +256,7 @@ class Quotation extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -309,7 +309,7 @@ class Quotation extends gEditorial\Module
 		return $title;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),

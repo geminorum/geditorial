@@ -15,7 +15,7 @@ class Attachments extends gEditorial\Module
 
 	protected $priority_adminbar_init = 110;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'attachments',
@@ -39,7 +39,7 @@ class Attachments extends gEditorial\Module
 		);
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -119,14 +119,14 @@ class Attachments extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode' => 'attachments',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -155,7 +155,7 @@ class Attachments extends gEditorial\Module
 			$this->filter( 'get_attachment_image_attributes', 3, 8, FALSE, 'wp' );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $this->get_setting( 'restrict_library' ) )
 			$this->filter( 'ajax_query_attachments_args' );
@@ -173,7 +173,7 @@ class Attachments extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -379,7 +379,7 @@ class Attachments extends gEditorial\Module
 		return $query;
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -521,7 +521,7 @@ class Attachments extends gEditorial\Module
 		return $attr;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'attached',
 			'attachment',
@@ -561,7 +561,7 @@ class Attachments extends gEditorial\Module
 		return $html;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -619,7 +619,7 @@ class Attachments extends gEditorial\Module
 	}
 
 	// TODO: check and validate parent id for attachments
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
@@ -753,12 +753,12 @@ class Attachments extends gEditorial\Module
 		] );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen(
 			_x( 'Attachment Tools', 'Header', 'geditorial-attachments' ) );
@@ -788,9 +788,11 @@ class Attachments extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_tool_reattach_thumbnails( $sub ) )
 			return FALSE; // avoid further UI
@@ -800,6 +802,8 @@ class Attachments extends gEditorial\Module
 
 		if ( $this->_do_tool_deletion_by_mime( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_tool_deletion_by_mime( $sub )

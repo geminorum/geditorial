@@ -9,7 +9,7 @@ class Connected extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'connected',
@@ -26,7 +26,7 @@ class Connected extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -66,14 +66,14 @@ class Connected extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'p2p_name' => 'connected_posts',
 		];
 	}
 
-	public function p2p_init()
+	public function p2p_init(): void
 	{
 		$posttypes = $this->posttypes();
 

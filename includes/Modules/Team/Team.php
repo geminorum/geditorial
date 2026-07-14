@@ -14,7 +14,7 @@ class Team extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\PostMeta;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'team',
@@ -29,7 +29,7 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_supports' => [
@@ -39,7 +39,7 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'member_posttype' => 'team_member',
@@ -49,7 +49,7 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'noops' => [
@@ -64,7 +64,7 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -116,7 +116,7 @@ class Team extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -125,12 +125,12 @@ class Team extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'member_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -170,7 +170,7 @@ class Team extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'member_posttype', $screen ) ) {
 
@@ -199,14 +199,14 @@ class Team extends gEditorial\Module
 		return $value;
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'member_posttype' );
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'member_posttype' ) )
 			$items[] = $glance;

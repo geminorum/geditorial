@@ -106,7 +106,7 @@ trait AdminPage
 		$this->render_default_mainpage( 'mainpage', 'update' );
 	}
 
-	protected function render_default_mainpage( $context = 'mainpage', $action = 'update' )
+	protected function render_default_mainpage( $context = 'mainpage', $action = 'update' ): bool
 	{
 		$uri     = $this->get_adminpage_url( TRUE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
@@ -128,6 +128,8 @@ trait AdminPage
 			$this->render_adminpage_signature( $uri, $sub, $subs, $context );
 
 		gEditorial\Settings::wrapClose();
+
+		return TRUE;
 	}
 
 	// DEFAULT CALLBACK
@@ -184,9 +186,9 @@ trait AdminPage
 			self::define( 'QM_DISABLED', TRUE );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'subpage', 'update' );
+		return $this->render_default_mainpage( 'subpage', 'update' );
 	}
 
 	// Allows for filtering the page title

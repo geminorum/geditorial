@@ -28,7 +28,7 @@ class Diagnosed extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'diagnosed',
@@ -47,7 +47,7 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$roles = $this->get_settings_default_roles();
@@ -94,7 +94,7 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy' => 'diagnosis',
@@ -108,7 +108,7 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -173,7 +173,7 @@ class Diagnosed extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -192,7 +192,7 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_get_data_mapping()
+	protected function subcontent_get_data_mapping(): array
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
@@ -206,7 +206,7 @@ class Diagnosed extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_required_fields()
+	protected function subcontent_define_required_fields(): array
 	{
 		return [
 			'age',
@@ -214,12 +214,12 @@ class Diagnosed extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -257,7 +257,7 @@ class Diagnosed extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -304,7 +304,7 @@ class Diagnosed extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
@@ -317,7 +317,7 @@ class Diagnosed extends gEditorial\Module
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
@@ -328,9 +328,9 @@ class Diagnosed extends gEditorial\Module
 		$this->subcontent_do_enqueue_app();
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->subcontent_do_render_iframe_content(
+		return $this->subcontent_do_render_iframe_content(
 			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Medical Grid for %s', 'Page Title', 'geditorial-diagnosed' ),
@@ -344,7 +344,7 @@ class Diagnosed extends gEditorial\Module
 		$this->subcontent_restapi_register_routes();
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
@@ -356,26 +356,28 @@ class Diagnosed extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

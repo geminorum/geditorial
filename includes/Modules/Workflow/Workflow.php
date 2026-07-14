@@ -12,7 +12,7 @@ class Workflow extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'workflow',
@@ -24,7 +24,7 @@ class Workflow extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -74,14 +74,14 @@ class Workflow extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy' => 'custom_status',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'noops' => [
@@ -98,7 +98,7 @@ class Workflow extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -126,13 +126,13 @@ class Workflow extends gEditorial\Module
 			$this->filter( 'map_meta_cap', 4, 12 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy( 'main_taxonomy' ) )
 			$this->_edit_tags_screen( $taxonomy );
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		switch ( $cap ) {
 
@@ -163,7 +163,7 @@ class Workflow extends gEditorial\Module
 		return $caps;
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->get_setting( 'status_menus' ) ) {
 
@@ -213,7 +213,7 @@ class Workflow extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 

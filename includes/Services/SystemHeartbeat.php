@@ -11,7 +11,7 @@ class SystemHeartbeat extends gEditorial\Service
 	const HEARTBEAT_KEY   = 'systemheartbeat';  // same as `mainkey` on the script
 	const HEARTBEAT_VALUE = 'alive';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_filter( 'heartbeat_received', [ __CLASS__, 'heartbeat_received' ], 10, 2 );
 

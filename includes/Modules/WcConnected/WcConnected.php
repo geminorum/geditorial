@@ -12,7 +12,7 @@ class WcConnected extends gEditorial\Module
 {
 	use Internals\MetaBoxSupported;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_connected',
@@ -30,7 +30,7 @@ class WcConnected extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -55,7 +55,7 @@ class WcConnected extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode'      => 'connected-posts',
@@ -64,7 +64,7 @@ class WcConnected extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [];
 
@@ -81,7 +81,7 @@ class WcConnected extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -90,7 +90,7 @@ class WcConnected extends gEditorial\Module
 		);
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -101,7 +101,7 @@ class WcConnected extends gEditorial\Module
 			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 65 ), FALSE, 'woocommerce' );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\WcConnectedProducts' );
 	}
@@ -112,7 +112,7 @@ class WcConnected extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -212,7 +212,7 @@ class WcConnected extends gEditorial\Module
 		Core\HTML::inputHidden( $atts['name'], '0' );
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'metadata',
 			WordPress\WooCommerce::PRODUCT_POSTTYPE,
@@ -232,7 +232,7 @@ class WcConnected extends gEditorial\Module
 		);
 	}
 
-	public function connected_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function connected_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),

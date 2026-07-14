@@ -12,7 +12,7 @@ class Grouping extends gEditorial\Module
 {
 	use Internals\CoreMenuPage;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'grouping',
@@ -24,7 +24,7 @@ class Grouping extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -81,21 +81,21 @@ class Grouping extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'custom_tax_rewrite' => 'users/%s',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
 		$this->init_custom_taxonomies();
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $taxonomy = $this->is_inline_save_taxonomy() )
 			return;
@@ -107,7 +107,7 @@ class Grouping extends gEditorial\Module
 			$this->_edit_tags_screen( $taxonomy );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
 
@@ -134,7 +134,7 @@ class Grouping extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( ! $customs = $this->get_custom_taxonomies() )
 			return;

@@ -24,7 +24,7 @@ class WcIdentify extends gEditorial\Module
 	 * @see https://support.google.com/merchants/answer/160161?hl=en
 	 */
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_identify',
@@ -40,7 +40,7 @@ class WcIdentify extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -72,7 +72,7 @@ class WcIdentify extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -157,12 +157,12 @@ class WcIdentify extends gEditorial\Module
 		return $markup;
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Product Identification Tools', 'Header', 'geditorial-wc-identify' ) );
 
@@ -177,12 +177,15 @@ class WcIdentify extends gEditorial\Module
 			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_tool_migrate_gtin( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	// https://woocommerce.com/document/google-for-woocommerce/attribute-mapping/gtin/

@@ -13,7 +13,7 @@ class Uploader extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'uploader',
@@ -29,7 +29,7 @@ class Uploader extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_dashboard' => [
@@ -47,14 +47,14 @@ class Uploader extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
 		$this->action( 'post-plupload-upload-ui', 0, 12 );
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		if ( ! $this->role_can( 'uploads' ) )
 			return;
@@ -111,7 +111,7 @@ class Uploader extends gEditorial\Module
 		return _x( 'You can access uploaded files via Media Library.', 'Widget Info', 'geditorial-uploader' );
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_REQUEST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

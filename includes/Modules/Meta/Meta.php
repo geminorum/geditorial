@@ -21,7 +21,7 @@ class Meta extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'meta',
@@ -35,7 +35,7 @@ class Meta extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -74,14 +74,14 @@ class Meta extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_attribute' => 'meta_rendered',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'titles' => [
@@ -244,7 +244,7 @@ class Meta extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -333,7 +333,7 @@ class Meta extends gEditorial\Module
 		return $this->filters( 'support_posttypes', $list );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -350,12 +350,12 @@ class Meta extends gEditorial\Module
 		$this->filter_module( 'modified', 'data_summary', 4, 8 );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->posttypefields__hook_importer_init();
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -369,7 +369,7 @@ class Meta extends gEditorial\Module
 			$this->filter( 'the_author', 1, 9 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -383,7 +383,7 @@ class Meta extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -1074,7 +1074,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
 
@@ -1132,7 +1132,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Meta Imports', 'Header', 'geditorial-meta' ) );
@@ -1156,6 +1156,7 @@ class Meta extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	protected function renderCard_imports_custom_fields( $form, $metakeys )
@@ -1260,7 +1261,7 @@ class Meta extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -1276,9 +1277,11 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttypefields_reports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

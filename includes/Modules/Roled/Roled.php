@@ -17,7 +17,7 @@ class Roled extends gEditorial\Module
 
 	protected $priority_admin_menu = 99;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'roled',
@@ -32,7 +32,7 @@ class Roled extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles   = $this->get_roles_support_duplicate();
 		$exclude = [ 'administrator', 'subscriber' ];
@@ -90,7 +90,7 @@ class Roled extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'base_type'   => [ 'editorial', 'editorials' ],
@@ -124,7 +124,7 @@ class Roled extends gEditorial\Module
 		return $posttypes;
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		if ( $this->get_setting( 'disable_builtin_post' ) ) {
 			$this->filter( 'register_post_post_type_args', 2, 12, 'disable' );     // @since WP 6.0.0
@@ -135,14 +135,14 @@ class Roled extends gEditorial\Module
 		}
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
 	// NOTE: hacked to hide shared tag sub-menu on other post-types
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		global $menu;
 
@@ -228,7 +228,7 @@ class Roled extends gEditorial\Module
 	}
 
 	// @REF: http://justintadlock.com/?p=2462
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		list( $singular, $plural ) = $this->constant( 'base_type' );
 
@@ -288,7 +288,7 @@ class Roled extends gEditorial\Module
 		return $caps;
 	}
 
-	protected function handle_settings_extra_buttons( $module )
+	protected function handle_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		if ( isset( $_POST['duplicate_default_roles'] ) )
 			$this->duplicate_default_roles();
@@ -303,7 +303,7 @@ class Roled extends gEditorial\Module
 			$this->add_theme_caps( 'editor' );
 	}
 
-	protected function register_settings_extra_buttons( $module )
+	protected function register_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		$this->register_button( 'duplicate_default_roles', _x( 'Duplicate Default Roles', 'Button', 'geditorial-roled' ) );
 		$this->register_button( 'remove_duplicate_roles', _x( 'Remove Duplicated Roles', 'Button', 'geditorial-roled' ), 'danger' );
@@ -412,7 +412,7 @@ class Roled extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -436,7 +436,7 @@ class Roled extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		Core\HTML::h3( _x( 'Editorial Roles', 'Header', 'geditorial-roled' ) );
 
@@ -463,5 +463,6 @@ class Roled extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+		return TRUE;
 	}
 }

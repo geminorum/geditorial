@@ -18,7 +18,7 @@ class Symposium extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'symposium',
@@ -34,7 +34,7 @@ class Symposium extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -73,7 +73,7 @@ class Symposium extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'session',
@@ -83,7 +83,7 @@ class Symposium extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -110,7 +110,7 @@ class Symposium extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'type_taxonomy' => [
@@ -122,7 +122,7 @@ class Symposium extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -170,7 +170,7 @@ class Symposium extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -179,7 +179,7 @@ class Symposium extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
@@ -192,12 +192,12 @@ class Symposium extends gEditorial\Module
 		$this->o2o__hook_insert_content( $o2o, 'main_posttype' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -227,7 +227,7 @@ class Symposium extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -253,12 +253,12 @@ class Symposium extends gEditorial\Module
 		}
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'main_posttype' ), FALSE );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -266,14 +266,16 @@ class Symposium extends gEditorial\Module
 		return $items;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

@@ -12,7 +12,7 @@ class IssueCover extends gEditorial\Widget
 	const MODULE = 'magazine';
 	const WIDGET = 'magazine_issue_cover';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Issue Cover', 'Widget Title', 'geditorial-magazine' ),

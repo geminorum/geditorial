@@ -159,7 +159,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded(

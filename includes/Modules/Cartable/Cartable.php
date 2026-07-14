@@ -23,7 +23,7 @@ class Cartable extends gEditorial\Module
 	protected $support_types  = FALSE;
 	protected $before_terms   = [];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'cartable',
@@ -35,7 +35,7 @@ class Cartable extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -156,7 +156,7 @@ class Cartable extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'user_taxonomy'  => 'cartable_user',
@@ -166,7 +166,7 @@ class Cartable extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'metabox' => [
@@ -180,7 +180,7 @@ class Cartable extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -257,7 +257,7 @@ class Cartable extends gEditorial\Module
 		$this->support_groups = TRUE;
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		// hack to bypass the dumb `_wp_translate_postdata()`
 		if ( isset( $_POST['post_type'] )
@@ -335,7 +335,7 @@ class Cartable extends gEditorial\Module
 		return $caps;
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -349,7 +349,7 @@ class Cartable extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {
 
@@ -385,7 +385,7 @@ class Cartable extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->support_types )
 			$this->_hook_menu_taxonomy( 'type_taxonomy', 'options-general.php' );
@@ -412,7 +412,7 @@ class Cartable extends gEditorial\Module
 		}
 	}
 
-	public function admin_cartable_page()
+	public function admin_cartable_page(): bool
 	{
 		$context = $context ?? 'listtable';
 		$user    = wp_get_current_user();
@@ -501,9 +501,11 @@ class Cartable extends gEditorial\Module
 
 			$this->settings_signature( $context );
 		gEditorial\Settings::wrapClose( TRUE, $context );
+
+		return TRUE;
 	}
 
-	private function _hook_tweaks_column_attr( $posttype )
+	private function _hook_tweaks_column_attr( string $posttype ): void
 	{
 		if ( $this->support_users && $this->role_can( 'view_user' ) )
 		$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'users' );
@@ -515,10 +517,10 @@ class Cartable extends gEditorial\Module
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'types' );
 	}
 
-	public function tweaks_column_attr_users( $post, $before, $after )
+	public function tweaks_column_attr_users( object $post, string $before, string $after ): void
 	{
 		if ( ! $users = $this->get_users( $post->ID ) )
-			return FALSE;
+			return;
 
 		printf( $before, '-cartable-users' );
 
@@ -534,10 +536,10 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	public function tweaks_column_attr_groups( $post, $before, $after )
+	public function tweaks_column_attr_groups( object $post, string $before, string $after ): void
 	{
 		if ( ! $groups = $this->get_groups( $post->ID ) )
-			return FALSE;
+			return;
 
 		printf( $before, '-cartable-groups' );
 
@@ -553,10 +555,10 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	public function tweaks_column_attr_types( $post, $before, $after )
+	public function tweaks_column_attr_types( object $post, string $before, string $after ): void
 	{
 		if ( ! $types = $this->get_types( $post->ID ) )
-			return FALSE;
+			return;
 
 		printf( $before, '-cartable-types' );
 
@@ -572,7 +574,7 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$user_id = get_current_user_id();
 
@@ -664,13 +666,13 @@ class Cartable extends gEditorial\Module
 		}
 	}
 
-	protected function handle_settings_extra_buttons( $module )
+	protected function handle_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		if ( isset( $_POST['sync_terms'] ) )
 			$this->do_sync_terms();
 	}
 
-	protected function register_settings_extra_buttons( $module )
+	protected function register_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		$this->register_button(
 			'sync_terms',

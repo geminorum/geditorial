@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcShortcodes extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_shortcodes',
@@ -28,7 +28,7 @@ class WcShortcodes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -53,7 +53,7 @@ class WcShortcodes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'wc_stock_status_shortcode'       => 'wc-stock-status',
@@ -62,7 +62,7 @@ class WcShortcodes extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -113,7 +113,7 @@ class WcShortcodes extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/hamidrezayazdani/c0e2f0be5142ee12691dca0b09337114
-	public function wc_stock_status_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function wc_stock_status_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),
@@ -152,7 +152,7 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_scheduled_on_sales_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function wc_scheduled_on_sales_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$columns = wc_get_default_products_per_row();
 		$args    = shortcode_atts( [
@@ -239,7 +239,7 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_order_count_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function wc_order_count_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'status'  => 'completed',

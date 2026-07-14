@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class HeaderButtons extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( ! is_admin() )
 			return;

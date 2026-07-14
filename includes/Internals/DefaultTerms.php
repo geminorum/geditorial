@@ -30,7 +30,7 @@ trait DefaultTerms
 		return $terms;
 	}
 
-	// protected function define_default_terms() { return []; }
+	// protected function define_default_terms(): array { return []; }
 
 	protected function get_default_terms( $constant, $terms = NULL )
 	{

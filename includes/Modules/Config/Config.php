@@ -33,7 +33,7 @@ class Config extends gEditorial\Module
 
 	protected $default_link_context = 'settings';
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'config',
@@ -47,7 +47,7 @@ class Config extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 		$this->filter( 'map_meta_cap', 4 );
@@ -55,7 +55,7 @@ class Config extends gEditorial\Module
 	}
 
 	// @REF: http://justintadlock.com/?p=2462
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		switch ( $cap ) {
 
@@ -122,7 +122,7 @@ class Config extends gEditorial\Module
 		return $this->adminbar__get_icon( NULL, $extra );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		// $can    = $this->cuc( 'settings' );
 		$slug   = $this->classs_base( 'settings' );
@@ -290,10 +290,10 @@ class Config extends gEditorial\Module
 				}
 			);
 
-		gEditorial\Settings::wrapClose();
+		gEditorial\Settings::wrapClose( TRUE, $context );
 	}
 
-	private function _render_page_by_context( $context, $title = NULL, $extra_subs = NULL )
+	private function _render_page_by_context( string $context, $title = NULL, $extra_subs = NULL ): bool
 	{
 		$title    = $title ?? _x( 'Configurations', 'Page Title', 'geditorial-admin' );
 		$can      = $this->cuc( $context );
@@ -363,18 +363,20 @@ class Config extends gEditorial\Module
 			$this->settings_signature( $context );
 
 			gEditorial\Settings::sideClose();
-		gEditorial\Settings::wrapClose();
+		gEditorial\Settings::wrapClose( TRUE, $context );
+
+		return TRUE;
 	}
 
-	public function admin_reports_page()
+	public function admin_reports_page(): bool
 	{
-		$this->_render_page_by_context( 'reports',
+		return $this->_render_page_by_context( 'reports',
 			_x( 'Reports', 'Page Title', 'geditorial-admin' )
 		);
 	}
 
 	// NOTE: maybe using `wp_dashboard()` on overview
-	protected function reports_overview( $uri )
+	protected function reports_overview( string $uri )
 	{
 		Services\AdminScreen::renderLayout( 'reports',
 			function ( $context, $screen ) use ( $uri ) {
@@ -382,31 +384,31 @@ class Config extends gEditorial\Module
 			} );
 	}
 
-	public function admin_tools_page()
+	public function admin_tools_page(): bool
 	{
-		$this->_render_page_by_context( 'tools',
+		return $this->_render_page_by_context( 'tools',
 			_x( 'Tools', 'Page Title', 'geditorial-admin' )
 		);
 	}
 
-	protected function tools_overview( $uri )
+	protected function tools_overview( string $uri )
 	{
 		do_action( $this->hook_base( 'tools', 'overview' ), $uri );
 	}
 
-	public function tools_overview_notice( $uri )
+	public function tools_overview_notice( string $uri )
 	{
 		if ( function_exists( 'gnetwork_update_notice' ) )
 			gnetwork_update_notice( GEDITORIAL_FILE );
 	}
 
-	public function tools_overview_readme( $uri )
+	public function tools_overview_readme( string $uri )
 	{
 		if ( function_exists( 'gnetwork_github_readme' ) )
 			gnetwork_github_readme( 'geminorum/geditorial' );
 	}
 
-	protected function tools_options( $uri )
+	protected function tools_options( string $uri )
 	{
 		WordPress\User::superAdminOnly();
 
@@ -419,19 +421,19 @@ class Config extends gEditorial\Module
 			Core\HTML::desc( gEditorial\Plugin::na() );
 	}
 
-	public function admin_roles_page()
+	public function admin_roles_page(): bool
 	{
-		$this->_render_page_by_context( 'roles',
+		return $this->_render_page_by_context( 'roles',
 			_x( 'Roles', 'Page Title', 'geditorial-admin' )
 		);
 	}
 
-	protected function roles_overview( $uri )
+	protected function roles_overview( string $uri )
 	{
 		do_action( $this->hook_base( 'roles', 'overview' ), $uri );
 	}
 
-	public function admin_kiosks_load()
+	public function admin_kiosks_load(): void
 	{
 		$context = 'kiosks';
 		$sub     = gEditorial\Settings::sub();
@@ -451,7 +453,7 @@ class Config extends gEditorial\Module
 		Services\AdminScreen::enqueueValidator();
 	}
 
-	public function admin_reports_load()
+	public function admin_reports_load(): void
 	{
 		$context = 'reports';
 		$sub     = gEditorial\Settings::sub();
@@ -490,7 +492,7 @@ class Config extends gEditorial\Module
 		Services\AdminScreen::enqueueValidator();
 	}
 
-	public function admin_tools_load()
+	public function admin_tools_load(): void
 	{
 		$sub = gEditorial\Settings::sub();
 
@@ -614,7 +616,7 @@ class Config extends gEditorial\Module
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
 	}
 
-	public function admin_roles_load()
+	public function admin_roles_load(): void
 	{
 		$sub = gEditorial\Settings::sub();
 
@@ -634,7 +636,7 @@ class Config extends gEditorial\Module
 	}
 
 	// TODO: display download reports box for each module
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->cuc( 'reports' ) )
 			self::cheatin();
@@ -654,10 +656,12 @@ class Config extends gEditorial\Module
 
 		else
 			gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 
 	// TODO: add button to use `wp_set_options_autoload()`
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->cuc( 'tools' ) )
 			self::cheatin();
@@ -691,6 +695,7 @@ class Config extends gEditorial\Module
 			gEditorial\Info::renderNoToolsAvailable();
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	private function renderCard_tools_options( $form, $system = NULL )
@@ -841,7 +846,7 @@ class Config extends gEditorial\Module
 
 	// TODO: add buttons to append `{$this->base}_{$context}` to current role
 	// FIXME: move here `render_tools_html` from `Users` Module
-	protected function render_roles_html( $uri, $sub )
+	protected function render_roles_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->cuc( 'roles' ) )
 			self::cheatin();
@@ -861,6 +866,8 @@ class Config extends gEditorial\Module
 
 		else
 			gEditorial\Info::renderNoRolesAvailable();
+
+		return TRUE;
 	}
 
 	public function admin_imports_load()
@@ -918,7 +925,7 @@ class Config extends gEditorial\Module
 		do_action( $this->hook_base( 'imports', 'data' ), $uri );
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->cuc( 'imports' ) )
 			self::cheatin();
@@ -938,6 +945,8 @@ class Config extends gEditorial\Module
 
 		else
 			gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
 	public function admin_customs_load()
@@ -986,7 +995,7 @@ class Config extends gEditorial\Module
 		}
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		if ( ! $this->cuc( 'settings' ) )
 			self::cheatin();
@@ -1034,7 +1043,7 @@ class Config extends gEditorial\Module
 		gEditorial()->module( $module->name )->settings_footer();
 	}
 
-	public function settings_from()
+	public function settings_from(): void
 	{
 		$stage = gEditorial\Helper::const( 'WP_STAGE', 'production' );  // 'development'
 
@@ -1104,7 +1113,7 @@ class Config extends gEditorial\Module
 	}
 
 	// no settings/only screen options
-	public function register_settings( $module = FALSE )
+	public function register_settings( string $module = '' ): void
 	{
 		if ( $module )
 			return;

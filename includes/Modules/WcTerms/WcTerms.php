@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcTerms extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_terms',
@@ -27,7 +27,7 @@ class WcTerms extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'taxonomies_option' => 'taxonomies_option',
@@ -123,7 +123,7 @@ class WcTerms extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -147,7 +147,7 @@ class WcTerms extends gEditorial\Module
 		$this->_init_tab_from_taxonomy();
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;

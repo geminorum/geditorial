@@ -16,7 +16,7 @@ class Switcher extends gEditorial\Module
 		'admin_bulkactions' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'switcher',
@@ -32,7 +32,7 @@ class Switcher extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -69,7 +69,7 @@ class Switcher extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->in_setting_posttypes( $screen->post_type, 'bulk_from' ) ) {
@@ -78,7 +78,7 @@ class Switcher extends gEditorial\Module
 		}
 	}
 
-	public function rowactions_bulk_actions( $actions )
+	public function rowactions_bulk_actions( array $actions ): array
 	{
 		if ( ! $posttypes = $this->get_setting_posttypes( 'bulk_to' ) )
 			return $actions;
@@ -111,7 +111,7 @@ class Switcher extends gEditorial\Module
 		return array_merge( $actions, $list );
 	}
 
-	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string
 	{
 		foreach ( $this->get_setting_posttypes( 'bulk_to' ) as $posttype ) {
 
@@ -136,7 +136,7 @@ class Switcher extends gEditorial\Module
 		return $redirect_to;
 	}
 
-	public function rowactions_admin_notices()
+	public function rowactions_admin_notices(): void
 	{
 		if ( ! $switched = self::req( $this->hook( 'count' ) ) )
 			return;

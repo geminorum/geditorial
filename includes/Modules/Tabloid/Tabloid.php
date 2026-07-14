@@ -19,7 +19,7 @@ class Tabloid extends gEditorial\Module
 		'admin_rowactions' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'tabloid',
@@ -31,7 +31,7 @@ class Tabloid extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -46,7 +46,7 @@ class Tabloid extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -54,7 +54,7 @@ class Tabloid extends gEditorial\Module
 		$this->filter( 'term_overview_pre_link', 3, 12, FALSE, 'nucleus' );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_submenu_adminpage( 'overview' );
 	}
@@ -65,12 +65,12 @@ class Tabloid extends gEditorial\Module
 		$this->_make_linked_viewable();
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'overview', 'update' );
+		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $this->role_can( 'overview' ) && ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) )
 			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE );
@@ -82,7 +82,7 @@ class Tabloid extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
 
@@ -237,9 +237,9 @@ class Tabloid extends gEditorial\Module
 			}, 2, 99 );
 	}
 
-	protected function render_overview_content()
+	protected function render_overview_content(): bool
 	{
-		$this->framepageviews__render_context_content( 'overview' );
+		return (bool) $this->framepageviews__render_context_content( 'overview' );
 	}
 
 	protected function framepageviews__handle_flags_for_post( $flags, $post, $context, $data )

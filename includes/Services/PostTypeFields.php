@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class PostTypeFields extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( 'fa_IR' === Core\L10n::locale( TRUE ) ) {
 			add_filter( self::und( static::BASE, 'posts_search_append_meta_frontend' ), [ __CLASS__, 'posts_search_append_meta' ], 12, 3 );

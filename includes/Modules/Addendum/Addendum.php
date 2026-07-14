@@ -31,7 +31,7 @@ class Addendum extends gEditorial\Module
 	protected $deafults  = [ 'multiple_instances' => TRUE ];
 	protected $positions = [ 'primary_posttype' => 18 ];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'addendum',
@@ -45,7 +45,7 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -110,7 +110,7 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => 'appendage',
@@ -123,7 +123,7 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -172,7 +172,7 @@ class Addendum extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'primary_subterm' => [
@@ -182,7 +182,7 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -204,7 +204,7 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'primary_posttype',
@@ -214,18 +214,18 @@ class Addendum extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		// $this->add_posttype_fields_supported();
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -274,7 +274,7 @@ class Addendum extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -287,7 +287,7 @@ class Addendum extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -353,7 +353,7 @@ class Addendum extends gEditorial\Module
 		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
@@ -361,7 +361,7 @@ class Addendum extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -378,36 +378,42 @@ class Addendum extends gEditorial\Module
 		}
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 		gEditorial\MetaBox::fieldPostParent( $object );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
+			'context'    => $context,
 			'empty_link' => FALSE,
 		] );
 	}
 
-	protected function maindownload__posttype_supported( $posttype )
+	protected function maindownload__posttype_supported( string $posttype ): bool
 	{
 		return $this->constant( 'primary_posttype' ) === $posttype;
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): false|array
 	{
 		return $this->maindownload__get_file_data_for_latechores( $post );
 	}
 
 	// TODO: must sort appendages by menu_order
 	// TODO: optional append child appendages
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
@@ -430,7 +436,7 @@ class Addendum extends gEditorial\Module
 
 			$appendages = [];
 
-			// self as an appendage only if has download
+			// Self as an appendage only if has download!
 			if ( $this->maindownload__get_link( $post ) )
 				$appendages[] = $post;
 
@@ -483,7 +489,7 @@ class Addendum extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -497,7 +503,7 @@ class Addendum extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Appendage Tools', 'Header', 'geditorial-addendum' ) );
@@ -507,14 +513,16 @@ class Addendum extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return FALSE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( ?string $sub = NULL )
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -528,20 +536,24 @@ class Addendum extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

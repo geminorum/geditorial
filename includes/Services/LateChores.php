@@ -10,7 +10,7 @@ class LateChores extends gEditorial\Service
 {
 	const TERMS_COUNT_ACTION = 'geditorial_late_terms_counts';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		// custom-actions
 		add_action( static::TERMS_COUNT_ACTION, [ __CLASS__, 'termCountDoCount' ], 10, 1 );

@@ -25,7 +25,7 @@ class Individuals extends gEditorial\Service
 		'|',
 	];
 
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( self::isParserAvailable() )
 			add_filter( self::und( static::BASE, 'people_format_name' ), [ __CLASS__, 'filter_people_format_name' ], 9, 3 );

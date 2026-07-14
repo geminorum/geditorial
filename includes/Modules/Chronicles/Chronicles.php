@@ -19,7 +19,7 @@ class Chronicles extends gEditorial\Module
 	use Internals\RestAPI;
 	use Internals\SubContents;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'chronicles',
@@ -36,7 +36,7 @@ class Chronicles extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -67,7 +67,7 @@ class Chronicles extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_namespace' => 'content-timelines',
@@ -79,7 +79,7 @@ class Chronicles extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'fields' => [
@@ -131,7 +131,7 @@ class Chronicles extends gEditorial\Module
 
 	// TODO: founded date/dismantled dates || `Founded`/`Defunct`
 	// TODO: incorporation/dissolution dates
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -222,7 +222,7 @@ class Chronicles extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_get_data_mapping()
+	protected function subcontent_get_data_mapping(): array
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
@@ -236,7 +236,7 @@ class Chronicles extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_required_fields()
+	protected function subcontent_define_required_fields(): array
 	{
 		return [
 			'label',
@@ -244,12 +244,12 @@ class Chronicles extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -263,7 +263,7 @@ class Chronicles extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported();
 
@@ -275,7 +275,7 @@ class Chronicles extends gEditorial\Module
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->subcontent__hook_importer_init();
 	}
@@ -286,7 +286,7 @@ class Chronicles extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->in_setting_posttypes( $screen->post_type, 'subcontent' ) ) {
 
@@ -323,7 +323,7 @@ class Chronicles extends gEditorial\Module
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
@@ -335,9 +335,9 @@ class Chronicles extends gEditorial\Module
 		$this->subcontent_do_enqueue_app();
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->subcontent_do_render_iframe_content(
+		return $this->subcontent_do_render_iframe_content(
 			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Timeline Grid for %s', 'Page Title', 'geditorial-chronicles' ),
@@ -351,7 +351,7 @@ class Chronicles extends gEditorial\Module
 		$this->subcontent_restapi_register_routes();
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
@@ -423,14 +423,16 @@ class Chronicles extends gEditorial\Module
 		return $data;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', TRUE );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->subcontent_reports_render_table( $uri, $sub, 'reports', _x( 'Overview of the Timelines', 'Header', 'geditorial-chronicles' ) ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

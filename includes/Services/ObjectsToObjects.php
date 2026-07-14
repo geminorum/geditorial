@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class ObjectsToObjects extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		// FIXME: WTF: not compatible with original p2p!
 		if ( defined( 'P2P_PLUGIN_VERSION' ) )

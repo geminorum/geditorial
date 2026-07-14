@@ -12,7 +12,7 @@ class WcPurchased extends gEditorial\Module
 {
 	use Internals\AdminPage;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_purchased',
@@ -25,7 +25,7 @@ class WcPurchased extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -46,12 +46,12 @@ class WcPurchased extends gEditorial\Module
 		];
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_submenu_adminpage( 'reports' );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
 		$this->render_default_mainpage( 'reports', 'update' );
 	}
@@ -62,7 +62,7 @@ class WcPurchased extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {
 

@@ -15,7 +15,7 @@ class Markdown extends gEditorial\Module
 	protected $disable_no_posttypes = TRUE;
 	protected $priority_adminbar_init = 210;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'markdown',
@@ -30,7 +30,7 @@ class Markdown extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles  = $this->get_settings_default_roles();
 
@@ -53,14 +53,14 @@ class Markdown extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_is_markdown' => '_is_markdown',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -82,7 +82,7 @@ class Markdown extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -138,7 +138,7 @@ class Markdown extends gEditorial\Module
 		return rest_ensure_response( $response );
 	}
 
-	public function admin_bar_menu( $wp_admin_bar )
+	public function admin_bar_menu( object $wp_admin_bar ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -237,7 +237,7 @@ class Markdown extends gEditorial\Module
 		], $this->dotted( 'adminbar' ) );
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -282,7 +282,7 @@ class Markdown extends gEditorial\Module
 		}
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
@@ -598,12 +598,12 @@ class Markdown extends gEditorial\Module
 		}
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback );
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -665,7 +665,7 @@ class Markdown extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$list = $this->list_posttypes();
 

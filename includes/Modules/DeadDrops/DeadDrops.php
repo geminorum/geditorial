@@ -15,7 +15,7 @@ class DeadDrops extends gEditorial\Module
 
 	protected $priority_template_redirect = 5;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'dead_drops',
@@ -30,7 +30,7 @@ class DeadDrops extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -52,7 +52,7 @@ class DeadDrops extends gEditorial\Module
 	}
 
 	// NOTE: WTF: `drop` not working!
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_endpoint' => 'deaddrop',
@@ -62,7 +62,7 @@ class DeadDrops extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'metabox' => [
@@ -74,7 +74,7 @@ class DeadDrops extends gEditorial\Module
 		return $strings;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -93,7 +93,7 @@ class DeadDrops extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -107,13 +107,13 @@ class DeadDrops extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->role_can( 'public' ) )
 			$this->_hook_submenu_adminpage( 'signal', 'exist' );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
 		$this->render_default_mainpage( 'signal', 'update' );
 	}
@@ -204,7 +204,7 @@ class DeadDrops extends gEditorial\Module
 		return $wp_hasher->CheckPassword( $plain, $hash );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;

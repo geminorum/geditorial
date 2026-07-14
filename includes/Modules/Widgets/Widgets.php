@@ -12,7 +12,7 @@ class Widgets extends gEditorial\Module
 		'widget_support' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'widgets',
@@ -27,7 +27,7 @@ class Widgets extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -108,7 +108,7 @@ class Widgets extends gEditorial\Module
 		];
 	}
 
-	private function get_widgets()
+	private function get_widgets(): array
 	{
 		return [
 			'Custom-HTML'     => 'CustomHTML',
@@ -123,7 +123,7 @@ class Widgets extends gEditorial\Module
 		];
 	}
 
-	private function _list_widgets()
+	private function _list_widgets(): array
 	{
 		$list = [];
 
@@ -137,7 +137,7 @@ class Widgets extends gEditorial\Module
 		return $list;
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		if ( count( $this->get_setting( 'manage_roles', [] ) ) )
 			$this->filter( 'map_meta_cap', 4 );
@@ -146,14 +146,14 @@ class Widgets extends gEditorial\Module
 		$this->_register_areas();
 	}
 
-	private function _register_widgets()
+	private function _register_widgets(): void
 	{
 		foreach ( $this->get_widgets() as $key => $class )
 			if ( $this->in_setting( $key, 'widgets' ) )
 				register_widget( __NAMESPACE__.'\\Widgets\\'.$class );
 	}
 
-	private function _register_areas()
+	private function _register_areas(): void
 	{
 		foreach ( $this->get_setting( 'areas', [] ) as $index => $area ) {
 
@@ -179,7 +179,7 @@ class Widgets extends gEditorial\Module
 		}
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		switch ( $cap ) {
 
@@ -189,8 +189,6 @@ class Widgets extends gEditorial\Module
 				return $this->role_can( 'manage', $user_id )
 					? [ 'exist' ]
 					: [ 'do_not_allow' ];
-
-				break;
 		}
 
 		return $caps;

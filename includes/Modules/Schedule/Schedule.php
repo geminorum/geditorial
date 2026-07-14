@@ -15,7 +15,7 @@ class Schedule extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'schedule',
@@ -32,7 +32,7 @@ class Schedule extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_dashboard' => [
@@ -54,7 +54,7 @@ class Schedule extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -66,7 +66,7 @@ class Schedule extends gEditorial\Module
 		}
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
@@ -120,7 +120,7 @@ class Schedule extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_wp_submenu_page( 'mainpage',
 			'index.php',
@@ -131,7 +131,7 @@ class Schedule extends gEditorial\Module
 		);
 	}
 
-	public function admin_mainpage_load()
+	public function admin_mainpage_load(): void
 	{
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );

@@ -21,7 +21,7 @@ class Importer extends gEditorial\Module
 	protected $disable_no_posttypes = TRUE;
 	protected $capability_posttype  = 'import_posts'; // Retrieves the `edit_others_posts` on the target post-type.
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'importer',
@@ -33,7 +33,7 @@ class Importer extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles( 'contributor' );
 
@@ -93,7 +93,7 @@ class Importer extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_mapping_data'  => '_importer_source_map',
@@ -108,7 +108,7 @@ class Importer extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'js' => [
@@ -120,12 +120,12 @@ class Importer extends gEditorial\Module
 		];
 	}
 
-	protected function tool_box_content()
+	protected function tool_box_content(): void
 	{
 		Core\HTML::desc( _x( 'Helps with Importing contents from source files into any post-type, with meta support and more.', 'Tool Box', 'geditorial-importer' ) );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -141,7 +141,7 @@ class Importer extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type )
@@ -180,7 +180,7 @@ class Importer extends gEditorial\Module
 	}
 
 	// @REF: https://www.kristinfalkner.com/adding-url-link-custom-post-type-wordpress-admin-submenu/
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		global $submenu;
 
@@ -206,12 +206,12 @@ class Importer extends gEditorial\Module
 		$this->_load_submenu_adminpage( $context );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'overview', 'update' );
+		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
@@ -760,7 +760,7 @@ class Importer extends gEditorial\Module
 		return Core\HTML::sanitizeDisplay( $filtered );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports' ) ) {
 
@@ -1180,7 +1180,7 @@ class Importer extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		switch ( self::step() ) {
 
@@ -1219,6 +1219,8 @@ class Importer extends gEditorial\Module
 
 				$this->_render_imports_firstpage( $uri, $sub );
 		}
+
+		return TRUE;
 	}
 
 	private function _render_imports_firstpage( $uri, $sub )
@@ -1686,7 +1688,7 @@ class Importer extends gEditorial\Module
 		return $value;
 	}
 
-	public function importer_saved( $post, $atts = [] )
+	public function importer_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post )
 			return;
@@ -1831,12 +1833,12 @@ class Importer extends gEditorial\Module
 		}
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen(
 			_x( 'Importer Tools', 'Header', 'geditorial-importer' ) );
@@ -1853,12 +1855,15 @@ class Importer extends gEditorial\Module
 			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_tool_cleanup_raw_data( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_tool_cleanup_raw_data( $sub )
@@ -1900,7 +1905,7 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	private function _get_source_mimetypes()
+	private function _get_source_mimetypes(): array
 	{
 		return [
 			'text/csv',
@@ -1927,7 +1932,7 @@ class Importer extends gEditorial\Module
 			: get_current_user_id();
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		switch ( $cap ) {
 
@@ -1953,9 +1958,9 @@ class Importer extends gEditorial\Module
 		return $caps;
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'imports' ] );
+		return $this->_override_module_cuc( $context, $fallback_capability, [ 'imports' ] );
 	}
 
 	public function imports_general_summary( $uri )
@@ -2270,9 +2275,9 @@ class Importer extends gEditorial\Module
 		] );
 	}
 
-	protected function render_overview_content()
+	protected function render_overview_content(): bool
 	{
-		$this->framepageviews__render_context_content( 'overview' );
+		return (bool) $this->framepageviews__render_context_content( 'overview' );
 	}
 
 	// TODO: split to default/legacy blocks with prepping date/user/attachment

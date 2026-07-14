@@ -13,7 +13,7 @@ class Dashboard extends gEditorial\Module
 
 	protected $priority_template_redirect = 9; // NOTE: before `redirect_canonical`
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'dashboard',
@@ -27,7 +27,7 @@ class Dashboard extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -62,7 +62,7 @@ class Dashboard extends gEditorial\Module
 		];
 	}
 
-	protected function register_settings_extra_buttons( $module )
+	protected function register_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		$this->register_button(
 			$this->_get_dashboard_permalink(),
@@ -71,7 +71,7 @@ class Dashboard extends gEditorial\Module
 		);
 	}
 
-	public function setup_disabled()
+	public function setup_disabled(): bool
 	{
 		if ( ! $page = $this->get_setting( 'dashboard_page_id', 0 ) )
 			return TRUE;
@@ -83,7 +83,7 @@ class Dashboard extends gEditorial\Module
 		return $post->post_name !== urldecode( $post->post_name );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -109,7 +109,7 @@ class Dashboard extends gEditorial\Module
 		$this->filter( 'navigation_general_items', 1, 10, FALSE, 'gnetwork' );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		$name = $this->classs();
 
@@ -214,7 +214,7 @@ class Dashboard extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -223,7 +223,7 @@ class Dashboard extends gEditorial\Module
 			remove_action( 'template_redirect', 'redirect_canonical' );
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		if ( $this->_dahboard_is_homepage() ) {
 

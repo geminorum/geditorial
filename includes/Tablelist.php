@@ -12,7 +12,7 @@ class Tablelist extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function isAction( $actions, $check_cb = FALSE )
+	public static function isAction( string|array $actions, bool $check_cb = FALSE ): bool
 	{
 		foreach ( (array) $actions as $action )
 			if ( $action == self::req( 'table_action' ) || isset( $_POST[$action] ) )

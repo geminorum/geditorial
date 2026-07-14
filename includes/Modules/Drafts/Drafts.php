@@ -14,7 +14,7 @@ class Drafts extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'drafts',
@@ -28,7 +28,7 @@ class Drafts extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -62,7 +62,7 @@ class Drafts extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'public_queryvar' => 'secret',
@@ -71,7 +71,7 @@ class Drafts extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -104,7 +104,7 @@ class Drafts extends gEditorial\Module
 		return $viewables;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -115,7 +115,7 @@ class Drafts extends gEditorial\Module
 			$this->filter( 'the_posts', 2 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -129,7 +129,7 @@ class Drafts extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return;
@@ -161,7 +161,7 @@ class Drafts extends gEditorial\Module
 		}
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $this->adminbar__check_general() )
 			return;
@@ -182,7 +182,7 @@ class Drafts extends gEditorial\Module
 		$this->enqueue_asset_js( [], $this->dotted( 'adminbar' ) );
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

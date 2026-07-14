@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 class Countables extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'countables',
@@ -23,7 +23,7 @@ class Countables extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option'  => 'posttypes_option',
@@ -31,7 +31,7 @@ class Countables extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'posttype_shortcode' => 'posttype-countbox',
@@ -39,7 +39,7 @@ class Countables extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -60,7 +60,7 @@ class Countables extends gEditorial\Module
 		return $this->filters( 'countbox_default_template', $template, $type );
 	}
 
-	public function posttype_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function posttype_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'counter'    => FALSE, // FIXME
@@ -113,7 +113,7 @@ class Countables extends gEditorial\Module
 		);
 	}
 
-	public function taxonomy_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function taxonomy_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'counter'    => FALSE, // FIXME

@@ -27,7 +27,7 @@ class Socialite extends gEditorial\Module
 		'wikipedia',
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'socialite',
@@ -43,7 +43,7 @@ class Socialite extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -131,7 +131,7 @@ class Socialite extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'titles' => [
@@ -175,7 +175,7 @@ class Socialite extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		// Bail if no post-type supported.
 		if ( empty( $this->posttypes() ) )
@@ -201,21 +201,21 @@ class Socialite extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode' => 'socialite',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	public function terms_init()
+	public function terms_init(): void
 	{
 		if ( empty( $this->get_setting( 'extra_meta_fields' ) ) )
 			return;
@@ -235,7 +235,7 @@ class Socialite extends gEditorial\Module
 		}
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		if ( empty( $this->posttypes() ) )
 			return;
@@ -474,7 +474,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'context' => NULL,

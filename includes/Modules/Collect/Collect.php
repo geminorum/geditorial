@@ -24,7 +24,7 @@ class Collect extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'collect',
@@ -39,7 +39,7 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -94,7 +94,7 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'collection_posttype' => 'collection',
@@ -108,7 +108,7 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -144,7 +144,7 @@ class Collect extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -191,7 +191,7 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'collection_posttype',
@@ -200,12 +200,12 @@ class Collect extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'collection_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -235,7 +235,7 @@ class Collect extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -265,7 +265,7 @@ class Collect extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'collection_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -278,7 +278,7 @@ class Collect extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'part_taxonomy' )
@@ -343,12 +343,12 @@ class Collect extends gEditorial\Module
 		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\CollectionPoster' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'collection_posttype' );
 		$this->add_posttype_fields_supported();
@@ -357,7 +357,7 @@ class Collect extends gEditorial\Module
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'collection_posttype' ) )
 			$items[] = $glance;
@@ -365,7 +365,7 @@ class Collect extends gEditorial\Module
 		return $items;
 	}
 
-	public function insert_cover( $content )
+	public function insert_cover( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -399,7 +399,7 @@ class Collect extends gEditorial\Module
 		return $meta;
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -413,7 +413,7 @@ class Collect extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Collection Tools', 'Header', 'geditorial-collect' ) );
@@ -423,14 +423,15 @@ class Collect extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -444,24 +445,28 @@ class Collect extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'collection_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'collection_posttype' ),
@@ -479,7 +484,7 @@ class Collect extends gEditorial\Module
 		);
 	}
 
-	public function group_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function group_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'collection_posttype' ),
@@ -492,7 +497,7 @@ class Collect extends gEditorial\Module
 		);
 	}
 
-	public function poster_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function poster_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'collection_posttype' );
 		$args = [

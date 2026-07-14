@@ -20,7 +20,7 @@ class Modulation extends gEditorial\Service
 	 * @param array $arguments
 	 * @param string|bool $folder
 	 * @param string $class
-	 * @return false|object
+	 * @return false|array
 	 */
 	public static function moduleObject( $arguments, $folder = FALSE, $class = NULL )
 	{

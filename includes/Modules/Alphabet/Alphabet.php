@@ -12,7 +12,7 @@ use geminorum\gEditorial\WordPress;
 class Alphabet extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'alphabet',
@@ -27,7 +27,7 @@ class Alphabet extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option'  => 'posttypes_option',
@@ -46,7 +46,7 @@ class Alphabet extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'shortcode_posts' => 'alphabet-posts',
@@ -54,7 +54,7 @@ class Alphabet extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -62,7 +62,7 @@ class Alphabet extends gEditorial\Module
 		$this->register_shortcode( 'shortcode_terms', TRUE );
 	}
 
-	public function shortcode_posts( $atts = [], $content = NULL, $tag = '' )
+	public function shortcode_posts( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'locale'            => Core\L10n::locale( TRUE ),
@@ -238,7 +238,7 @@ class Alphabet extends gEditorial\Module
 		return $html;
 	}
 
-	public function shortcode_terms( $atts = [], $content = NULL, $tag = '' )
+	public function shortcode_terms( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'locale'             => Core\L10n::locale( TRUE ),

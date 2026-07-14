@@ -29,10 +29,28 @@ class Module extends WordPress\Module
 	 *
 	 * @var object
 	 */
-	public $module;
-	public $options;
-	public $settings;
-	public $customs;
+	public $module = NULL;
+
+	/**
+	 * Holds the current module saved options.
+	 *
+	 * @var object
+	 */
+	public $options = NULL;
+
+	/**
+	 * Holds the current module saved settings.
+	 *
+	 * @var array
+	 */
+	public $settings = [];
+
+	/**
+	 * Holds the current module saved customs.
+	 *
+	 * @var array
+	 */
+	public $customs = [];
 
 	public $enabled  = FALSE;
 	public $meta_key = '_ge'; // TODO: DEPRECATE
@@ -115,7 +133,7 @@ class Module extends WordPress\Module
 	protected $default_link_context = 'reports';   // default context for module link
 	protected $default_cuc_context  = 'settings';  // default context for user checks
 
-	public function __construct( &$module, &$options, $root, $locale = NULL )
+	public function __construct( object &$module, object &$options, string $root, ?string $locale = NULL )
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
@@ -137,7 +155,7 @@ class Module extends WordPress\Module
 			$this->setup();
 	}
 
-	protected function setup_textdomain( $locale = NULL, $domain = NULL )
+	protected function setup_textdomain( ?string $locale = NULL, ?string $domain = NULL ): bool
 	{
 		global $wp_textdomain_registry;
 
@@ -166,12 +184,17 @@ class Module extends WordPress\Module
 		return load_textdomain( $domain, $path."/{$locale}.mo" );
 	}
 
-	protected function setup_remote( $args = [] )
+	protected function setup_remote( array $args = [] ): bool
 	{
+		if ( ! count( $this->partials_remote ) )
+			return FALSE;
+
 		$this->require_code( $this->partials_remote );
+
+		return TRUE;
 	}
 
-	protected function setup( $args = [] )
+	protected function setup( array $args = [] ): bool
 	{
 		$admin = is_admin();
 		$ajax  = WordPress\IsIt::ajax();
@@ -287,14 +310,16 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_cuc( $context, $fallback );
+		return $this->_cuc( $context, $fallback_capability );
 	}
 
 	// NOTE: to prevent infinite loops!
-	public function _cuc( $context = 'settings', $fallback = '' )
+	public function _cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
+		$context = $context ?? $this->default_cuc_context;
+
 		if ( ! empty( $this->caps[$context] ) )
 			return current_user_can( $this->caps[$context] );
 
@@ -304,13 +329,13 @@ class Module extends WordPress\Module
 		if ( ! empty( $this->caps['default'] ) )
 			return current_user_can( $this->caps['default'] );
 
-		else if ( $fallback )
-			return current_user_can( $fallback );
+		else if ( $fallback_capability )
+			return current_user_can( $fallback_capability );
 
 		return FALSE;
 	}
 
-	public function setup_disabled()
+	public function setup_disabled(): bool
 	{
 		if ( $this->disable_no_customs && ! count( $this->posttypes() ) && ! count( $this->taxonomies() ) )
 			return TRUE;
@@ -324,7 +349,7 @@ class Module extends WordPress\Module
 		return FALSE;
 	}
 
-	public function setup_dashboard()
+	public function setup_dashboard(): void
 	{
 		if ( method_exists( $this, 'dashboard_glance_items' ) )
 			$this->filter( 'dashboard_glance_items' );
@@ -339,14 +364,14 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: ALWAYS HOOKED
-	public function _after_setup_theme()
+	public function _after_setup_theme(): void
 	{
 		$this->constants = $this->filters( 'constants', $this->_get_global_constants(), $this->module );
 		$this->fields    = $this->filters( 'fields', $this->get_global_fields(), $this->module );
 	}
 
 	// NOTE: ALWAYS HOOKED
-	public function _rest_api_init()
+	public function _rest_api_init(): void
 	{
 		if ( method_exists( $this, 'setup_restapi' ) )
 			$this->setup_restapi();
@@ -356,7 +381,7 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: ALWAYS HOOKED: PRIORITY: `12`
-	public function _init_ajax()
+	public function _init_ajax(): void
 	{
 		if ( method_exists( $this, 'setup_ajax' ) )
 			$this->setup_ajax();
@@ -369,7 +394,7 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: MUST ALWAYS CALLED BY THE MODULE
-	public function init()
+	public function init(): void
 	{
 		$this->actions( 'init', $this->options, $this->module );
 
@@ -378,7 +403,7 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: ALWAYS HOOKED
-	public function _admin_init()
+	public function _admin_init(): void
 	{
 		if ( method_exists( $this, 'exports_do_check_requests' ) )
 			$this->exports_do_check_requests();
@@ -402,7 +427,7 @@ class Module extends WordPress\Module
 		}
 	}
 
-	protected function get_textdomain()
+	protected function get_textdomain(): false|string
 	{
 		if ( NULL === $this->module->textdomain )
 			return $this->base;
@@ -415,18 +440,24 @@ class Module extends WordPress\Module
 			: $this->module->textdomain;
 	}
 
-	protected function get_global_settings() { return []; }
-	protected function get_global_constants() { return []; }
-	protected function get_global_strings() { return []; }
-	protected function get_global_features() { return []; }
-	protected function get_global_fields() { return []; }
+	protected function get_global_settings(): array { return []; }
+	protected function get_global_constants(): array { return []; }
+	protected function get_global_strings(): array { return []; }
+	protected function get_global_features(): array { return []; }
+	protected function get_global_fields(): array { return []; }
 
-	protected function get_module_templates() { return []; }
+	protected function get_module_templates(): array { return []; }
 
 	// NOTE: do not use `thick-box` anymore!
 	// NOTE: must `add_thickbox()` on load
-	public function do_render_thickbox_mainbutton( $post, $context = 'framepage', $extra = [], $inline = FALSE, $width = '800' )
-	{
+	public function do_render_thickbox_mainbutton(
+		object $post,
+		string $context = 'framepage',
+		array $extra = [],
+		bool $inline = FALSE,
+		string $width = '800',
+	): void {
+
 		// NOTE: for inline only: modal id must be: `{$base}-{$module}-thickbox-{$context}`
 		if ( $inline && $context && method_exists( $this, self::und( 'admin_footer', $context ) ) )
 			$this->action( 'admin_footer', 0, 20, $context );
@@ -438,6 +469,7 @@ class Module extends WordPress\Module
 		if ( $inline )
 			// WTF: thick-box bug: does not process the query arguments after `TB_inline`!
 			$link = '#TB_inline?dummy=dummy&width='.$width.'&inlineId='.$this->classs( 'thickbox', $context ).( $extra ? '&'.http_build_query( $extra ) : '' ); // &modal=true
+
 		else
 			// WTF: thick-box bug: does not pass the query arguments after `TB_iframe`!
 			$link = $this->get_adminpage_url( TRUE, array_merge( [
@@ -462,7 +494,7 @@ class Module extends WordPress\Module
 	 *
 	 * @return bool
 	 */
-	public function remote()
+	public function remote(): bool
 	{
 		if ( ! $this->root_key )
 			return FALSE;
@@ -476,7 +508,7 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
-	public function slug()
+	public function slug(): string
 	{
 		return str_replace( '_', '-', $this->module->name );
 	}
@@ -488,18 +520,18 @@ class Module extends WordPress\Module
 	 * @param mixed $value
 	 * @return bool
 	 */
-	public function update_option( $key, $value )
+	public function update_option( string $key, mixed $value ): bool
 	{
 		return gEditorial()->update_module_option( $this->module->name, $key, $value );
 	}
 
 	// NOTE: better to be on module-core than the internal
-	public function default_calendar( $default = NULL )
+	public function default_calendar( ?string $default = NULL ): string
 	{
 		return $this->get_setting( 'calendar_type', $default ?? Core\L10n::calendar() );
 	}
 
-	public function get_search_form( $constant_or_hidden = [], $search_query = FALSE )
+	public function get_search_form( string|array $constant_or_hidden = [], false|string $search_query = FALSE ): string
 	{
 		if ( ! $this->get_setting( 'display_searchform' ) )
 			return '';
@@ -526,13 +558,13 @@ class Module extends WordPress\Module
 		return $form.'</form>';
 	}
 
-	protected function _metabox_remove_subterm( $screen, $subterms = FALSE )
+	protected function _metabox_remove_subterm( object $screen, false|string $subterms = FALSE ): void
 	{
 		if ( $subterms )
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
-	protected function _hook_store_metabox( $posttype, $prefix = FALSE )
+	protected function _hook_store_metabox( string $posttype, false|string $prefix = FALSE ): void
 	{
 		if ( $posttype )
 			add_action(
@@ -543,10 +575,11 @@ class Module extends WordPress\Module
 			);
 	}
 
-	protected function class_metabox( $screen, $context = 'mainbox' )
+	protected function class_metabox( object $screen, string $context = 'mainbox' ): void
 	{
 		add_filter( self::und( 'postbox_classes', $screen->id, $this->classs( $context ) ),
-			function ( $classes ) use ( $context ) {
+			function ( $classes )
+				use ( $context ) {
 				return Core\Arraay::prepString( $classes, [
 					$this->base.'-wrap',
 					'-admin-postbox',
@@ -558,7 +591,7 @@ class Module extends WordPress\Module
 
 	// TODO: filter the results
 	// TODO: MUST DEPRECATE
-	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL )
+	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL ): string
 	{
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
@@ -591,7 +624,7 @@ class Module extends WordPress\Module
 		return $title;
 	}
 
-	public function get_column_title( $column, $constant = NULL, $fallback = NULL )
+	public function get_column_title( string $column, ?string $constant = NULL, mixed $fallback = NULL ): string
 	{
 		return $this->filters( 'column_title',
 			$this->get_string(
@@ -606,7 +639,7 @@ class Module extends WordPress\Module
 		);
 	}
 
-	public function get_column_title_posttype( $constant, $taxonomy = FALSE, $fallback = NULL )
+	public function get_column_title_posttype( string $constant, false|string $taxonomy = FALSE, mixed $fallback = NULL ): string
 	{
 		return $this->filters( 'column_title',
 			Services\CustomPostType::getLabel(
@@ -621,8 +654,12 @@ class Module extends WordPress\Module
 		);
 	}
 
-	public function get_column_title_taxonomy( $constant, $posttype = FALSE, $fallback = NULL )
-	{
+	public function get_column_title_taxonomy(
+		string $constant,
+		false|string $posttype = FALSE,
+		mixed $fallback = NULL,
+	): string {
+
 		return $this->filters( 'column_title',
 			Services\CustomTaxonomy::getLabel(
 				$this->constant( $constant ),
@@ -636,8 +673,12 @@ class Module extends WordPress\Module
 		);
 	}
 
-	public function get_column_title_icon( $column, $constant = NULL, $fallback = NULL )
-	{
+	public function get_column_title_icon(
+		string $column,
+		?string $constant = NULL,
+		mixed $fallback = NULL,
+	): string {
+
 		$title = $this->get_column_title( $column, $constant, $fallback );
 
 		return sprintf(
@@ -648,8 +689,11 @@ class Module extends WordPress\Module
 		);
 	}
 
-	public function is_save_post( $post, $constant = FALSE )
-	{
+	public function is_save_post(
+		object $post,
+		false|string|array $constant = FALSE,
+	): bool {
+
 		if ( $constant ) {
 
 			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant, TRUE ) )
@@ -666,8 +710,12 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: for Ajax calls on quick-edit
-	public function is_inline_save_posttype( $target = FALSE, $request = NULL, $key = 'post_type' )
-	{
+	public function is_inline_save_posttype(
+		false|string|array $target = FALSE,
+		?array $request = NULL,
+		string $key = 'post_type',
+	): bool {
+
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
@@ -693,8 +741,12 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: for Ajax calls on quick-edit
-	public function is_inline_save_taxonomy( $target = FALSE, $request = NULL, $key = 'taxonomy' )
-	{
+	public function is_inline_save_taxonomy(
+		false|string|array $target = FALSE,
+		?array $request = NULL,
+		string $key = 'taxonomy',
+	): bool {
+
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
@@ -720,8 +772,14 @@ class Module extends WordPress\Module
 		return $request[$key];
 	}
 
-	public function get_column_icon( $link = FALSE, $icon = NULL, $title = NULL, $posttype = 'post', $extra = [] )
-	{
+	public function get_column_icon(
+		false|string $link = FALSE,
+		null|string|array $icon = NULL,
+		?string $title = NULL,
+		string $posttype = 'post',
+		array|string $extra = [],
+	): string {
+
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
 			'title'  => $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc', $this->module->title ),
@@ -731,7 +789,7 @@ class Module extends WordPress\Module
 	}
 
 	// NOTE: adds the `{$module_key}-enabled` class to body in admin
-	public function _admin_enabled( $extra = [] )
+	public function _admin_enabled( array $extra = [] ): void
 	{
 		add_filter( 'admin_body_class',
 			function ( $classes ) use ( $extra ) {
@@ -739,7 +797,7 @@ class Module extends WordPress\Module
 			} );
 	}
 
-	public function icon( $name, $group = NULL, $extra = [] )
+	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false
 	{
 		return gEditorial()->icon(
 			$name,
@@ -749,7 +807,7 @@ class Module extends WordPress\Module
 	}
 
 	// Checks to bail early if meta-box/widget is hidden
-	protected function check_hidden_metabox( $box, $posttype = FALSE, $after = '' )
+	protected function check_hidden_metabox( false|array $box, false|string $posttype = FALSE, string $after = '' ): bool
 	{
 		if ( FALSE === $box )
 			return FALSE;
@@ -763,7 +821,7 @@ class Module extends WordPress\Module
 	}
 
 	// Checks to bail early if column is hidden
-	protected function check_hidden_column( $column, $after = '' )
+	protected function check_hidden_column( false|string $column, string $after = '' ): bool
 	{
 		if ( FALSE === $column )
 			return FALSE;
@@ -776,7 +834,7 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD
 	// NOTE: must be available to all modules
-	public function prep_meta_row( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
 	{
 		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
 			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
@@ -795,65 +853,79 @@ class Module extends WordPress\Module
 	// TODO: customize column position/sorting
 	// NOTE: appends custom meta fields into Terms Module
 	// @SEE: `Socialite` Module
-	protected function _hook_terms_meta_field( $constant, $field, $args = [] )
-	{
+	protected function _hook_terms_meta_field(
+		string $constant,
+		string $field_key,
+		array $field_args = [],
+	): bool {
+
 		if ( ! gEditorial()->enabled( 'terms' ) )
 			return FALSE;
 
 		$taxonomy = $this->constant( $constant );
-		$title    = $this->get_string( 'field_title', $field, 'terms_meta_field', $field );
-		$desc     = $this->get_string( 'field_desc', $field, 'terms_meta_field', '' );
+		$title    = $this->get_string( 'field_title', $field_key, 'terms_meta_field', $field_key );
+		$desc     = $this->get_string( 'field_desc', $field_key, 'terms_meta_field', '' );
 
 		add_filter( $this->hook_base( 'terms', 'supported_fields' ),
-			static function ( $list, $tax ) use ( $taxonomy, $field ) {
+			static function ( $list, $tax )
+				use ( $taxonomy, $field_key ) {
 
 				if ( FALSE === $tax || $tax === $taxonomy )
-					$list[] = $field;
+					$list[] = $field_key;
 
 				return $list;
 			}, 12, 2 );
 
 		add_filter( $this->hook_base( 'terms', 'list_supported_fields' ),
-			static function ( $list, $tax ) use ( $taxonomy, $field, $title ) {
+			static function ( $list, $tax )
+				use ( $taxonomy, $field_key, $title ) {
 
 				if ( FALSE === $tax || $tax === $taxonomy )
-					$list[$field] = $title;
+					$list[$field_key] = $title;
 
 				return $list;
 			}, 12, 2 );
 
 		add_filter( $this->hook_base( 'terms', 'supported_field_taxonomies' ),
-			static function ( $taxonomies, $_field ) use ( $taxonomy, $field ) {
+			static function ( $taxonomies, $_field )
+				use ( $taxonomy, $field_key ) {
 
-				if ( $_field === $field )
+				if ( $_field === $field_key )
 					$taxonomies[] = $taxonomy;
 
 				return $taxonomies;
 			}, 12, 2 );
 
 		if ( ! is_admin() )
-			return;
+			return TRUE;
 
-		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'title' ), $title );
-		$this->filter_string( $this->hook_base( 'terms', 'field', $field, 'desc' ), $desc );
+		$this->filter_string( $this->hook_base( 'terms', 'field', $field_key, 'title' ), $title );
+		$this->filter_string( $this->hook_base( 'terms', 'field', $field_key, 'desc' ), $desc );
 
 		add_filter( $this->hook_base( 'terms', 'column_title' ),
-			static function ( $_title, $column, $constant, $fallback ) use ( $taxonomy, $field, $title ) {
+			static function ( $_title, $column, $constant, $fallback )
+				use ( $taxonomy, $field_key, $title ) {
 
-				if ( $column === $field )
+				if ( $column === $field_key )
 					return $title;
 
 				return $_title;
 			}, 12, 4 );
+
+		return TRUE;
 	}
 
-	protected function log( $level, $message = '', $context = [] )
+	protected function log( string $level, string $message = '', mixed $contextual_data = NULL ): false
 	{
-		return Helper::log( $message, $this->classs(), $level, $context );
+		return Helper::log( $message, $this->classs(), $level, $contextual_data );
 	}
 
-	protected function raise_resources( $count = 1, $per = 60, $context = NULL )
-	{
+	protected function raise_resources(
+		int $count = 1,
+		int $per = 60,
+		?string $context = NULL,
+	): int|string|false {
+
 		gEditorial()->disable_process( 'audit', $context ?? 'import' );
 		gEditorial()->disable_process( 'personage', 'aftercare' );
 		gEditorial()->disable_process( 'was_born', 'aftercare' );
@@ -869,17 +941,17 @@ class Module extends WordPress\Module
 		return $this->raise_memory_limit( $count, $per, $context ?? 'import' );
 	}
 
-	public function disable_process( $context = 'import' )
+	public function disable_process( ?string $context = NULL ): true
 	{
-		return $this->process_disabled[$context] = TRUE;
+		return $this->process_disabled[( $context ?? 'import' )] = TRUE;
 	}
 
-	public function enable_process( $context = 'import' )
+	public function enable_process( ?string $context = NULL ): false
 	{
-		return $this->process_disabled[$context] = FALSE;
+		return $this->process_disabled[( $context ?? 'import' )] = FALSE;
 	}
 
-	public function is_thrift_mode()
+	public function is_thrift_mode(): bool|string
 	{
 		if ( self::const( 'GEDITORIAL_THRIFT_MODE' ) )
 			return TRUE;
@@ -887,7 +959,7 @@ class Module extends WordPress\Module
 		return $this->get_setting( 'thrift_mode', FALSE );
 	}
 
-	public function is_debug_mode()
+	public function is_debug_mode(): bool|string
 	{
 		if ( self::const( 'GEDITORIAL_DEBUG_MODE' ) )
 			return TRUE;

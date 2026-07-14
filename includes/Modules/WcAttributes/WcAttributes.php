@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcAttributes extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_attributes',
@@ -27,7 +27,7 @@ class WcAttributes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -45,14 +45,14 @@ class WcAttributes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_attribute_url' => 'url',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

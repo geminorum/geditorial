@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class Markup extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		add_filter( self::und( static::BASE, 'markdown_to_html' ), [ __CLASS__, 'markdownToHTML' ],   10, 3 );
 		add_filter( self::und( static::BASE, 'html_to_markdown' ), [ __CLASS__, 'markdownFromHTML' ], 10, 2 );

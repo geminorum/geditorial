@@ -24,7 +24,7 @@ class Glossary extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'glossary',
@@ -40,7 +40,7 @@ class Glossary extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
@@ -84,7 +84,7 @@ class Glossary extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy'  => 'glossary_term',
@@ -92,7 +92,7 @@ class Glossary extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -111,7 +111,7 @@ class Glossary extends gEditorial\Module
 		return $strings;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -156,7 +156,7 @@ class Glossary extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -178,22 +178,22 @@ class Glossary extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -201,14 +201,14 @@ class Glossary extends gEditorial\Module
 		$this->contentreplace__autolink_terms( 'main_taxonomy' );
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
 			: $template;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			'post',
@@ -223,14 +223,16 @@ class Glossary extends gEditorial\Module
 		);
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

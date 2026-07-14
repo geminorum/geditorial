@@ -13,7 +13,7 @@ class Recount extends gEditorial\Module
 
 	protected $disable_no_taxonomies = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'recount',
@@ -26,7 +26,7 @@ class Recount extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'taxonomies_option' => 'taxonomies_option',
@@ -41,7 +41,7 @@ class Recount extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -51,7 +51,7 @@ class Recount extends gEditorial\Module
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $this->taxonomy_supported( $taxonomy = $this->is_inline_save_taxonomy() ) )
 			$this->_edit_tags_screen( $taxonomy );
@@ -63,7 +63,7 @@ class Recount extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit-tags' === $screen->base
 			&& $this->taxonomy_supported( $screen->taxonomy ) ) {
@@ -214,7 +214,7 @@ class Recount extends gEditorial\Module
 	{
 		echo gEditorial\Settings::toolboxCardOpen( _x( 'Re-count Items', 'Tab Tools', 'geditorial-recount' ), FALSE );
 
-			$this->render_form_start( NULL, 'recount-items', 'maintenance', 'tabs' );
+			$this->render_form_start( '', 'recount-items', 'maintenance', 'tabs' );
 				$this->nonce_field( 'do-recount-items' );
 
 				echo $this->wrap_open_buttons( '-toolbox-buttons' );
@@ -225,12 +225,12 @@ class Recount extends gEditorial\Module
 					);
 				echo '</p>';
 
-			$this->render_form_end( NULL, 'recount-items', 'maintenance', 'tabs' );
+			$this->render_form_end( '', 'recount-items', 'maintenance', 'tabs' );
 
 		echo '</div>';
 	}
 
-	public function taxonomy_handle_tab_content_actions( $taxonomy )
+	public function taxonomy_handle_tab_content_actions( string $taxonomy ): void
 	{
 		if ( self::req( $this->classs( 'do-recount-items' ) ) ) {
 

@@ -14,7 +14,7 @@ class TermHierarchy extends gEditorial\Service
 	const AUTO_ASSIGNED_TERMS   = 'auto_assigned_terms';
 	const SINGLE_TERM_SELECT    = 'single_term_select';     // TODO: restrict via aftercare with info from `added_term_relationship`
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_parent_terms' ], 9999, 6 );
 		add_action( 'set_object_terms', [ __CLASS__, 'set_object_terms_auto_set_child_terms' ], 9999, 6 );

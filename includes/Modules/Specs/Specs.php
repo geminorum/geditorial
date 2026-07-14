@@ -16,7 +16,7 @@ class Specs extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'specs',
@@ -28,7 +28,7 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -36,7 +36,7 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy'           => 'spec',
@@ -45,7 +45,7 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'titles' => [
@@ -70,7 +70,7 @@ class Specs extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -82,7 +82,7 @@ class Specs extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [ 'specs' => [
 			'_supported' => [
@@ -93,7 +93,7 @@ class Specs extends gEditorial\Module
 		] ];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -112,7 +112,7 @@ class Specs extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'post' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {

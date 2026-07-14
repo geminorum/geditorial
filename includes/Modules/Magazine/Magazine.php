@@ -33,7 +33,7 @@ class Magazine extends gEditorial\Module
 	use Internals\QuickPosts;
 	use Internals\TemplatePostType;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'magazine',
@@ -49,7 +49,7 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -115,7 +115,7 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => 'issue',
@@ -131,7 +131,7 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -164,14 +164,14 @@ class Magazine extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'span_taxonomy' => gEditorial\Datetime::getYears( '-5 years' ),
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -239,7 +239,7 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'primary_posttype',
@@ -248,12 +248,12 @@ class Magazine extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -283,7 +283,7 @@ class Magazine extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -296,7 +296,7 @@ class Magazine extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -362,12 +362,12 @@ class Magazine extends gEditorial\Module
 		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\IssueCover' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		$this->add_posttype_fields_supported();
@@ -378,7 +378,7 @@ class Magazine extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_submenu_adminpage( 'importitems', 'exist' );
 
@@ -388,7 +388,7 @@ class Magazine extends gEditorial\Module
 		}
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -418,7 +418,7 @@ class Magazine extends gEditorial\Module
 		}
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
@@ -428,7 +428,7 @@ class Magazine extends gEditorial\Module
 		return ModuleTemplate::spanTiles();
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
@@ -436,7 +436,7 @@ class Magazine extends gEditorial\Module
 		return $items;
 	}
 
-	public function insert_cover( $content )
+	public function insert_cover( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -476,7 +476,7 @@ class Magazine extends gEditorial\Module
 		return $value;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
@@ -495,7 +495,7 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function span_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
@@ -508,7 +508,7 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'primary_posttype' );
 		$args = [
@@ -541,7 +541,7 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -555,7 +555,7 @@ class Magazine extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Magazine Tools', 'Header', 'geditorial-magazine' ) );
@@ -573,9 +573,10 @@ class Magazine extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( FALSE === $this->postdate__render_before_override_dates(
 			$this->constant( 'primary_posttype' ),
@@ -589,7 +590,7 @@ class Magazine extends gEditorial\Module
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -603,20 +604,24 @@ class Magazine extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

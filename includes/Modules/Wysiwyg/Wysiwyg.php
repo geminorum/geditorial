@@ -15,7 +15,7 @@ class Wysiwyg extends gEditorial\Module
 
 	protected $deafults = [ 'description_editor' => TRUE ];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wysiwyg',
@@ -31,7 +31,7 @@ class Wysiwyg extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -49,7 +49,7 @@ class Wysiwyg extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'titles' => [ // label of description field
@@ -74,7 +74,7 @@ class Wysiwyg extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( ( 'edit-tags' === $screen->base || 'term' === $screen->base )
 			&& $this->taxonomy_supported( $screen->taxonomy ) ) {

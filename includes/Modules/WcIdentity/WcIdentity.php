@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcIdentity extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_identity',
@@ -27,7 +27,7 @@ class WcIdentity extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -58,7 +58,7 @@ class WcIdentity extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_user_identity_number'  => 'identity_number',
@@ -66,7 +66,7 @@ class WcIdentity extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

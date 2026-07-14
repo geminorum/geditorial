@@ -20,7 +20,7 @@ class Cine extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'cine',
@@ -38,7 +38,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -125,7 +125,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'film',
@@ -137,7 +137,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -172,7 +172,7 @@ class Cine extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'rating_taxonomy' => [
@@ -215,7 +215,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -281,7 +281,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -290,7 +290,7 @@ class Cine extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 		$this->filter_module( 'genres', 'get_default_terms', 2 );
@@ -304,7 +304,7 @@ class Cine extends gEditorial\Module
 		$this->o2o__hook_insert_content( $o2o, 'main_posttype' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 	}
@@ -314,7 +314,7 @@ class Cine extends gEditorial\Module
 		$this->add_posttype_fields_for( 'units', 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -386,7 +386,7 @@ class Cine extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -427,13 +427,13 @@ class Cine extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		if ( $this->role_can( [ 'reports' ] ) )
 			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -493,14 +493,16 @@ class Cine extends gEditorial\Module
 		return $post_title;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

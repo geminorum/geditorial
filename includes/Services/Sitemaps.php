@@ -11,7 +11,7 @@ class Sitemaps extends gEditorial\Service
 	const VIEWABLE_POSTTYPE_PROP  = 'sitemaps_viewable'; // TODO: WTF?!
 	const VIEWABLE_TAXONOMY_PROP  = 'sitemaps_viewable';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_filter( 'wp_sitemaps_taxonomies_query_args', [ __CLASS__, 'taxonomies_query_args' ], 9, 2 );
 	}

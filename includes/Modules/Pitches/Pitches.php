@@ -15,7 +15,7 @@ class Pitches extends gEditorial\Module
 	// @EXAMPLE: http://useridea.idea.informer.com/
 	// https://woocommerce.com/feature-requests/woocommerce/
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'pitches',
@@ -27,7 +27,7 @@ class Pitches extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_supports' => [
@@ -45,7 +45,7 @@ class Pitches extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => 'idea',
@@ -54,7 +54,7 @@ class Pitches extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -72,12 +72,12 @@ class Pitches extends gEditorial\Module
 		return $strings;
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -111,7 +111,7 @@ class Pitches extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
@@ -131,7 +131,7 @@ class Pitches extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;

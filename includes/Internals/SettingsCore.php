@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsCore
 {
-	protected function settings_insert_priority_option( $default = 10, $suffix = FALSE )
+	protected function settings_insert_priority_option( int $default = 10, string $suffix = '' ): array
 	{
 		return [
 			'field'   => self::und( 'insert_priority', $suffix ),
@@ -19,8 +19,12 @@ trait SettingsCore
 		];
 	}
 
-	protected function settings_shortcode_constant( $constant, $title = NULL, $extended = NULL )
-	{
+	protected function settings_shortcode_constant(
+		string $constant,
+		?string $title = NULL,
+		?string $extended = NULL,
+	): array {
+
 		$unfiltered = $this->get_global_constants();
 		$name       = $title ?? str_ireplace( '_', ' ', trim( Core\Text::removeStartEnd( $constant, 'shortcode' ), '_' ) );
 
@@ -48,7 +52,7 @@ trait SettingsCore
 	}
 
 	// NOTE: features are `TRUE` by default
-	public function get_feature( $field, $fallback = TRUE )
+	public function get_feature( string $field, mixed $fallback = TRUE ): mixed
 	{
 		$settings = $this->options->settings ?? [];
 
@@ -61,7 +65,7 @@ trait SettingsCore
 		return $fallback;
 	}
 
-	public function get_setting( $field, $fallback = NULL )
+	public function get_setting( string $field, mixed $fallback = NULL ): mixed
 	{
 		$settings = $this->options->settings ?? [];
 
@@ -74,7 +78,7 @@ trait SettingsCore
 		return $fallback;
 	}
 
-	public function get_setting_fallback( $field, $fallback = NULL, $empty = '' )
+	public function get_setting_fallback( string $field, mixed $fallback = NULL, mixed $empty = '' ): mixed
 	{
 		$settings = $this->options->settings ?? [];
 
@@ -108,7 +112,7 @@ trait SettingsCore
 	}
 
 	// Checks arrays with support of old settings
-	public function in_setting( $item, $field, $default = [] )
+	public function in_setting( string $item, string $field, array $default = [] ): bool
 	{
 		$setting = $this->get_setting( $field );
 
@@ -120,7 +124,7 @@ trait SettingsCore
 		return in_array( $item, (array) $setting, TRUE );
 	}
 
-	public function settings_from()
+	public function settings_from(): void
 	{
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
 			.'" action="'.$this->get_module_url( 'settings' ).'" method="post">';
@@ -139,7 +143,7 @@ trait SettingsCore
 			echo Core\HTML::wrap( self::dump( $this->options, TRUE, FALSE ), '-debug-wrap' );
 	}
 
-	public function register_settings_default_buttons( $module = FALSE )
+	public function register_settings_default_buttons( ?string $module = NULL ): void
 	{
 		$this->register_button( 'submit', NULL, TRUE );
 		$this->register_button( 'reset', NULL, 'reset', TRUE );
@@ -150,11 +154,16 @@ trait SettingsCore
 		foreach ( $this->get_module_links( TRUE ) as $link )
 			$this->register_button( $link['url'], $link['title'], 'link' );
 
-		$this->register_settings_extra_buttons( $module );
+		$this->register_settings_extra_buttons( $module ?? $this->module->name );
 	}
 
-	public function register_button( $key, $value = NULL, $type = FALSE, $atts = [] )
-	{
+	public function register_button(
+		string $key,
+		?string $value = NULL,
+		false|string $type = FALSE,
+		mixed $atts = [],
+	): void {
+
 		$this->buttons[] = [
 			'key'   => $key,
 			'value' => $value ?? $this->get_string( $key, 'buttons', 'settings', NULL ),
@@ -163,7 +172,7 @@ trait SettingsCore
 		];
 	}
 
-	protected function render_form_buttons( $module = FALSE, $wrap = '', $buttons = NULL )
+	protected function render_form_buttons( ?string $context = NULL, ?string $module = NULL, false|string $wrap = '', ?array $buttons = NULL )
 	{
 		if ( FALSE !== $wrap )
 			echo $this->wrap_open_buttons( $wrap );
@@ -180,10 +189,18 @@ trait SettingsCore
 			echo '</p>';
 	}
 
-	protected function render_form_start( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check_sidebox = FALSE )
-	{
-		$sub   = $sub ?? $this->module->name;
-		$class = [
+	protected function render_form_start(
+		string $uri = '',
+		?string $sub = NULL,
+		?string $action = NULL,
+		?string $context = NULL,
+		bool $check_sidebox = FALSE,
+	): true {
+
+		$sub     = $sub     ?? $this->module->name;
+		$context = $context ?? 'settings';
+		$action  = $action  ?? 'update';
+		$class   = [
 			$this->base.'-form',
 			'-form',
 			'-'.$this->module->name,
@@ -205,120 +222,146 @@ trait SettingsCore
 					call_user_func_array( [ $this, self::und( $context, 'sidebox' ) ], [ $sub, $uri, $context ] );
 				echo '</div>';
 			}
+
+		return TRUE;
 	}
 
-	protected function render_form_end( $uri, $sub = NULL, $action = 'update', $context = 'settings', $check_sidebox = FALSE )
-	{
+	protected function render_form_end(
+		string $uri = '',
+		?string $sub = NULL,
+		?string $action = NULL,
+		?string $context = NULL,
+		bool $check_sidebox = FALSE
+	): true {
+
 		echo '</form>';
+		return TRUE;
 	}
 
 	// DEFAULT METHOD: tools-sub HTML
-	public function tools_sub( $uri, $sub )
+	public function tools_sub( string $uri = '', ?string $sub = NULL ): true
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'tools', TRUE );
+		$context = 'tools';
+		$action  = 'bulk';
 
-			if ( FALSE === $this->render_tools_html_before( $uri, $sub ) )
-				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
 
-			if ( $this->render_tools_html( $uri, $sub ) )
-				$this->render_form_buttons();
+			if ( FALSE === $this->render_tools_html_before( $uri, $sub, $action, $context ) )
+				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
 
-			$this->render_tools_html_after( $uri, $sub );
+			if ( $this->render_tools_html( $uri, $sub, $action, $context ) )
+				$this->render_form_buttons( $context );
 
-		$this->render_form_end( $uri, $sub );
+			$this->render_tools_html_after( $uri, $sub, $action, $context );
+
+		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
 	}
 
-	// DEFAULT METHOD: used for tools default sub html
-	protected function render_tools_html( $uri, $sub ) {}
-	protected function render_tools_html_before( $uri, $sub ) {}
-	protected function render_tools_html_after( $uri, $sub ) {}
+	// DEFAULT METHOD: used for `tools` default sub HTML
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	protected function render_tools_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
-	// DEFAULT METHOD: roles sub html
-	public function roles_sub( $uri, $sub )
+	// DEFAULT METHOD: `roles` sub HTML
+	public function roles_sub( string $uri = '', ?string $sub = NULL ): true
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'roles', TRUE );
+		$context = 'roles';
+		$action  = 'bulk';
 
-			if ( FALSE === $this->render_roles_html_before( $uri, $sub ) )
-				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
 
-			if ( $this->render_roles_html( $uri, $sub ) )
-				$this->render_form_buttons();
+			if ( FALSE === $this->render_roles_html_before( $uri, $sub, $action, $context ) )
+				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
 
-			$this->render_roles_html_after( $uri, $sub );
+			if ( $this->render_roles_html( $uri, $sub, $action, $context ) )
+				$this->render_form_buttons( $context );
 
-		$this->render_form_end( $uri, $sub );
+			$this->render_roles_html_after( $uri, $sub, $action, $context );
+
+		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
 	}
 
-	// DEFAULT METHOD: used for roles default sub html
-	protected function render_roles_html( $uri, $sub ) {}
-	protected function render_roles_html_before( $uri, $sub ) {}
-	protected function render_roles_html_after( $uri, $sub ) {}
+	// DEFAULT METHOD: used for `roles` default sub HTML
+	protected function render_roles_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
+	protected function render_roles_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	protected function render_roles_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
-	// DEFAULT METHOD: reports sub html
-	public function reports_sub( $uri, $sub )
+	// DEFAULT METHOD: `reports` sub HTML
+	public function reports_sub( string $uri = '', ?string $sub = NULL ): true
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'reports', TRUE );
+		$context = 'reports';
+		$action  = 'bulk';
 
-			if ( FALSE === $this->render_reports_html_before( $uri, $sub ) )
-				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
 
-			if ( $this->render_reports_html( $uri, $sub ) )
-				$this->render_form_buttons();
+			if ( FALSE === $this->render_reports_html_before( $uri, $sub, $action, $context ) )
+				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
 
-			$this->render_reports_html_after( $uri, $sub );
+			if ( $this->render_reports_html( $uri, $sub, $action, $context ) )
+				$this->render_form_buttons( $context );
 
-		$this->render_form_end( $uri, $sub );
+			$this->render_reports_html_after( $uri, $sub, $action, $context );
+
+		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
 	}
 
-	// DEFAULT METHOD: used for reports default sub html
-	protected function render_reports_html( $uri, $sub ) {}
-	protected function render_reports_html_before( $uri, $sub ) {}
-	protected function render_reports_html_after( $uri, $sub ) {}
+	// DEFAULT METHOD: used for `reports` default sub HTML
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
+	protected function render_reports_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	protected function render_reports_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
-	// DEFAULT METHOD: imports sub html
-	public function imports_sub( $uri, $sub )
+	// DEFAULT METHOD: `imports` sub HTML
+	public function imports_sub( string $uri = '', ?string $sub = NULL ): true
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'imports', TRUE );
+		$context = 'imports';
+		$action  = 'bulk';
 
-			if ( FALSE === $this->render_imports_html_before( $uri, $sub ) )
-				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
 
-			if ( $this->render_imports_html( $uri, $sub ) )
-				$this->render_form_buttons();
+			if ( FALSE === $this->render_imports_html_before( $uri, $sub, $action, $context ) )
+				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
 
-			$this->render_imports_html_after( $uri, $sub );
+			if ( $this->render_imports_html( $uri, $sub, $action, $context ) )
+				$this->render_form_buttons( $context );
 
-		$this->render_form_end( $uri, $sub );
+			$this->render_imports_html_after( $uri, $sub, $action, $context );
+
+		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
 	}
 
-	// DEFAULT METHOD: used for imports default sub html
-	protected function render_imports_html( $uri, $sub ) {}
-	protected function render_imports_html_before( $uri, $sub ) {}
-	protected function render_imports_html_after( $uri, $sub ) {}
+	// DEFAULT METHOD: used for `imports` default sub HTML
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
+	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	protected function render_imports_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
-	// DEFAULT METHOD: customs sub html
-	public function customs_sub( $uri, $sub )
+	// DEFAULT METHOD: `customs` sub HTML
+	public function customs_sub( string $uri = '', ?string $sub = NULL ): true
 	{
-		$this->render_form_start( $uri, $sub, 'bulk', 'customs', TRUE );
+		$context = 'customs';
+		$action  = 'bulk';
 
-			if ( FALSE === $this->render_customs_html_before( $uri, $sub ) )
-				return $this->render_form_end( $uri, $sub ); // bail if explicitly FALSE
+		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
 
-			if ( $this->render_customs_html( $uri, $sub ) )
-				$this->render_form_buttons();
+			if ( FALSE === $this->render_customs_html_before( $uri, $sub, $action, $context ) )
+				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
 
-			$this->render_customs_html_after( $uri, $sub );
+			if ( $this->render_customs_html( $uri, $sub, $action, $context ) )
+				$this->render_form_buttons( $context );
 
-		$this->render_form_end( $uri, $sub );
+			$this->render_customs_html_after( $uri, $sub, $action, $context );
+
+		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
 	}
 
-	// DEFAULT METHOD: used for customs default sub html
-	protected function render_customs_html( $uri, $sub ) {}
-	protected function render_customs_html_before( $uri, $sub ) {}
-	protected function render_customs_html_after( $uri, $sub ) {}
+	// DEFAULT METHOD: used for `customs` default sub HTML
+	protected function render_customs_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
+	protected function render_customs_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	protected function render_customs_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
-	protected function get_current_form( $defaults, $context = 'settings' )
+	protected function get_current_form( array $defaults, ?string $context = NULL ): array
 	{
+		$context = $context ?? 'settings';
+
 		$req = empty( $_REQUEST[$this->hook_base( $this->module->name )][$context] )
 			? []
 			: $_REQUEST[$this->hook_base( $this->module->name )][$context];
@@ -326,8 +369,10 @@ trait SettingsCore
 		return self::atts( $defaults, $req );
 	}
 
-	protected function fields_current_form( $fields, $context = 'settings', $excludes = [] )
+	protected function fields_current_form( array $fields, ?string $context = NULL, array $excludes = [] ): void
 	{
+		$context = $context ?? 'settings';
+
 		foreach ( $fields as $key => $value ) {
 
 			if ( in_array( $key, $excludes ) )
@@ -337,13 +382,15 @@ trait SettingsCore
 		}
 	}
 
-	protected function render_form_fields( $sub, $action = 'update', $context = 'settings' )
+	protected function render_form_fields( string $sub, ?string $action = NULL, ?string $context = NULL ): void
 	{
+		$context = $context ?? 'settings';
+
 		Core\HTML::inputHidden( 'base', $this->base );
 		Core\HTML::inputHidden( 'key', $this->key );
 		Core\HTML::inputHidden( 'context', $context );
 		Core\HTML::inputHidden( 'sub', $sub );
-		Core\HTML::inputHidden( 'action', $action );
+		Core\HTML::inputHidden( 'action', $action ?? 'update' );
 
 		WordPress\Redirect::fieldReferer();
 		$this->nonce_field( $context, $sub );
@@ -351,8 +398,10 @@ trait SettingsCore
 
 	// DEFAULT METHOD
 	// NOTE: `$extra` argument is for extending in modules.
-	public function append_sub( $subs, $context = 'settings', $extra = [] )
+	public function append_sub( array $subs, ?string $context = NULL, array $extra = [] ): array
 	{
+		$context = $context ?? 'settings';
+
 		if ( ! $this->cuc( $context ) )
 			return $subs;
 
@@ -364,8 +413,10 @@ trait SettingsCore
 	}
 
 	// TODO: must avoid storing the defaults!
-	public function settings_validate( $options, $context = 'settings' )
+	public function settings_validate( array $options, ?string $context = NULL ): array
 	{
+		$context = $context ?? 'settings';
+
 		if ( 'settings' === $context ) {
 
 			$this->init_settings();
@@ -569,8 +620,10 @@ trait SettingsCore
 		return $options;
 	}
 
-	protected function get_settings_field( $setting, $context = 'settings' )
+	protected function get_settings_field( string $setting, ?string $context = NULL ): array
 	{
+		$context = $context ?? 'settings';
+
 		foreach ( $this->{$context} as $section ) {
 
 			if ( is_array( $section ) ) {
@@ -599,8 +652,16 @@ trait SettingsCore
 		return [];
 	}
 
-	protected function check_settings( $sub, $context = 'tools', $screen_option = FALSE, $extra = [], $key = NULL )
-	{
+	protected function check_settings(
+		string $sub,
+		?string $context = NULL,
+		null|bool|string $screen_option = FALSE,
+		array $extra = [],
+		?string $key = NULL,
+	): bool {
+
+		$context = $context ?? 'tools'; // WTF?!
+
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
@@ -629,15 +690,15 @@ trait SettingsCore
 		return TRUE;
 	}
 
-	public function init_settings()
+	public function init_settings(): void
 	{
 		if ( ! isset( $this->settings ) )
 			$this->settings = $this->filters( 'settings', $this->get_global_settings(), $this->module );
 	}
 
-	public function register_settings( $module = FALSE )
+	public function register_settings( string $module = '' ): void
 	{
-		if ( $module != $this->module->name )
+		if ( $module !== $this->module->name )
 			return;
 
 		$this->init_settings();
@@ -722,9 +783,10 @@ trait SettingsCore
 		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
 	}
 
-	public function settings_header()
+	public function settings_header( ?string $context = NULL ): void
 	{
-		$back = $count = $flush = $filters = FALSE;
+		$context = $context ?? 'settings';
+		$back    = $count = $flush = $filters = FALSE;
 
 		if ( 'config' == $this->module->name ) {
 
@@ -735,7 +797,7 @@ trait SettingsCore
 
 		} else {
 
-			$back  = gEditorial\Settings::getURLbyContext( 'settings' );
+			$back  = gEditorial\Settings::getURLbyContext( $context );
 			$title = sprintf(
 				/* translators: `%1$s`: system title, `%2$s`: module title */
 				_x( '%1$s: %2$s', 'Module', 'geditorial-admin' ),
@@ -744,9 +806,9 @@ trait SettingsCore
 			);
 		}
 
-		gEditorial\Settings::wrapOpen( $this->module->name );
+		gEditorial\Settings::wrapOpen( $this->module->name, $context );
 
-			gEditorial\Settings::headerTitle( 'settings', $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
+			gEditorial\Settings::headerTitle( $context, $title, $back, NULL, $this->module->icon, $count, TRUE, $filters );
 			gEditorial\Settings::message();
 
 			if ( $flush )
@@ -756,26 +818,28 @@ trait SettingsCore
 			Core\HTML::h4( $this->module->desc ?? '' );
 
 			if ( method_exists( $this, 'settings_intro' ) )
-				$this->settings_intro();
+				$this->settings_intro( $context );
 
-		gEditorial\Settings::wrapClose();
+		gEditorial\Settings::wrapClose( TRUE, $context );
 	}
 
-	protected function settings_footer()
+	protected function settings_footer( ?string $context = NULL ): void
 	{
+		$context = $context ?? 'settings';
+
 		if ( 'config' === $this->module->name )
-			Services\SystemBranding::credits();
+			Services\SystemBranding::credits( $context );
 
 		else
-			$this->settings_signature( 'settings' );
+			$this->settings_signature( $context );
 	}
 
-	protected function settings_signature( $context = 'settings' )
+	protected function settings_signature( ?string $context = NULL ): void
 	{
-		Services\SystemBranding::signature( $context );
+		Services\SystemBranding::signature( $context ?? 'settings' );
 	}
 
-	public function add_settings_field( $r = [] )
+	public function add_settings_field( $r = [], ?string $context = NULL ): mixed
 	{
 		$args = array_merge( [
 			'page'        => $this->hook_base( $this->module->name ),
@@ -788,12 +852,19 @@ trait SettingsCore
 		], $r );
 
 		if ( ! $args['field'] )
-			return;
+			return FALSE;
 
 		if ( empty( $args['title'] ) )
 			$args['title'] = $args['field'];
 
-		add_settings_field( $args['field'], $args['title'], $args['callback'], $args['page'], $args['section'], $args );
+		return add_settings_field(
+			$args['field'],
+			$args['title'],
+			$args['callback'],
+			$args['page'],
+			$args['section'],
+			$args
+		);
 	}
 
 	public function settings_id_name_cb( $args )
@@ -888,7 +959,7 @@ trait SettingsCore
 		return $filesize;
 	}
 
-	protected function notice_settings_extra_buttons( $module ) {}
-	protected function handle_settings_extra_buttons( $module ) {}
-	protected function register_settings_extra_buttons( $module ) {}
+	protected function notice_settings_extra_buttons( ?string $module = NULL ): void {}
+	protected function handle_settings_extra_buttons( ?string $module = NULL ): void {}
+	protected function register_settings_extra_buttons( ?string $module = NULL ): void {}
 }

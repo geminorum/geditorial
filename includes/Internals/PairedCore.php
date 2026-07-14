@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait PairedCore
 {
 	// EXAMPLE CALLBACK
-	// protected function paired_get_paired_constants()
+	// protected function paired_get_paired_constants(): array
 	// {
 	// 	return [
 	// 		FALSE, // posttype: `primary_posttype`
@@ -25,7 +25,7 @@ trait PairedCore
 
 	// wraps `paired_get_paired_constants()` with checks
 	// NOTE: not checking for `$this->_paired` for maybe before `init`
-	public function paired_get_constants()
+	public function paired_get_constants(): false|array
 	{
 		if ( ! method_exists( $this, 'paired_get_paired_constants' ) )
 			return FALSE;

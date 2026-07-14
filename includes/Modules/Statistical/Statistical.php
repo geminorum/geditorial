@@ -13,7 +13,7 @@ class Statistical extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'statistical',
@@ -30,7 +30,7 @@ class Statistical extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -43,19 +43,19 @@ class Statistical extends gEditorial\Module
 		];
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [
+		return $this->_override_module_cuc( $context, $fallback_capability, [
 			'reports',
 		] );
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$args = $this->get_current_form( [
 			'post_type'  => 'post',
@@ -106,9 +106,10 @@ class Statistical extends gEditorial\Module
 
 			$period = $args['year_month']
 				? gEditorial\Datetime::monthFirstAndLast(
-					$this->default_calendar(),
 					substr( $args['year_month'], 0, 4 ),
-					substr( $args['year_month'], 4, 2 )
+					substr( $args['year_month'], 4, 2 ),
+					NULL,
+					$this->default_calendar()
 				) : [];
 
 			echo Core\HTML::tableCode(

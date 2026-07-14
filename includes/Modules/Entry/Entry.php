@@ -18,7 +18,7 @@ class Entry extends gEditorial\Module
 
 	protected $priority_template_include = 9;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'entry',
@@ -34,7 +34,7 @@ class Entry extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_editpost' => [
@@ -74,7 +74,7 @@ class Entry extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'entry',
@@ -83,7 +83,7 @@ class Entry extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -109,12 +109,12 @@ class Entry extends gEditorial\Module
 		return $strings;
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -134,7 +134,7 @@ class Entry extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->constant( 'main_posttype' ) ) )
 			return;
@@ -162,7 +162,7 @@ class Entry extends gEditorial\Module
 		$this->contentreplace__autolink_terms( 'category_taxonomy' );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) )
 			$this->_edit_screen( $posttype );
@@ -192,7 +192,7 @@ class Entry extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'dashboard' === $screen->base ) {
 
@@ -246,7 +246,7 @@ class Entry extends gEditorial\Module
 		], 'cb', 'after' );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -254,7 +254,7 @@ class Entry extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'main_posttype' ) );
 	}
@@ -280,7 +280,7 @@ class Entry extends gEditorial\Module
 		return $html;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),

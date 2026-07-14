@@ -12,7 +12,7 @@ class AdvancedQueries extends gEditorial\Service
 	const SEARCH_OPERATOR_NOT = '!';
 	const TAXONOMY_PROP       = 'search_titles';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts' ], 1, 1 );
 		add_filter( 'posts_search', [ __CLASS__, 'posts_search' ], 8, 2 );
@@ -29,7 +29,7 @@ class AdvancedQueries extends gEditorial\Service
 		add_action( 'init', [ __CLASS__, 'init_late' ], 999 );
 	}
 
-	public static function init_late()
+	public static function init_late(): void
 	{
 		self::_init_term_search();
 	}

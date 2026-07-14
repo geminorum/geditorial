@@ -30,7 +30,7 @@ class Venue extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'venue',
@@ -47,7 +47,7 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -120,7 +120,7 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype'  => 'place',
@@ -131,7 +131,7 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -169,7 +169,7 @@ class Venue extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -218,12 +218,12 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -267,7 +267,7 @@ class Venue extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -284,7 +284,7 @@ class Venue extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -297,7 +297,7 @@ class Venue extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -382,7 +382,7 @@ class Venue extends gEditorial\Module
 		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'primary_posttype',
@@ -395,13 +395,13 @@ class Venue extends gEditorial\Module
 		];
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		// $this->add_posttype_fields_supported(); // FIXME: add fields first
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->get_setting( 'assignment_dock' ) && $this->role_can( 'paired' ) )
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
@@ -413,9 +413,9 @@ class Venue extends gEditorial\Module
 		$this->paired_assignment__load_submenu_adminpage( 'overview' );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->paired_assignment__do_render_iframe_content(
+		return $this->paired_assignment__do_render_iframe_content(
 			'overview',
 			/* translators: `%s`: post title */
 			_x( 'Location Dock for %s', 'Page Title', 'geditorial-venue' ),
@@ -424,7 +424,7 @@ class Venue extends gEditorial\Module
 		);
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
@@ -432,7 +432,7 @@ class Venue extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ) );
 	}
@@ -462,7 +462,7 @@ class Venue extends gEditorial\Module
 		$this->pairedmetabox__render_supportedbox_content( $object, $box, $context, $screen );
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
@@ -478,7 +478,7 @@ class Venue extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -492,7 +492,7 @@ class Venue extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Venue Tools', 'Header', 'geditorial-venue' ) );
@@ -502,14 +502,15 @@ class Venue extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -523,20 +524,24 @@ class Venue extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'primary_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

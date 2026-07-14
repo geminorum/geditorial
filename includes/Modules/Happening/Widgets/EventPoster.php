@@ -12,7 +12,7 @@ class EventPoster extends gEditorial\Widget
 	const MODULE = 'happening';
 	const WIDGET = 'happening_event_poster';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Event Poster', 'Widget Title', 'geditorial-happening' ),

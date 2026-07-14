@@ -17,7 +17,7 @@ class People extends gEditorial\Module
 	use Internals\TaxonomyTaxonomy;
 	use Internals\TemplateTaxonomy;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'people',
@@ -36,7 +36,7 @@ class People extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -63,7 +63,7 @@ class People extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy'         => 'people',
@@ -75,7 +75,7 @@ class People extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -110,7 +110,7 @@ class People extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'type_taxonomy' => [
@@ -127,7 +127,7 @@ class People extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -212,7 +212,7 @@ class People extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -252,19 +252,19 @@ class People extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 		$this->_hook_menu_taxonomy( 'category_taxonomy', 'users.php' );
 		$this->_hook_menu_taxonomy( 'type_taxonomy', 'users.php' );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_taxonomy( 'main_taxonomy' ) )
 			$items[] = $glance;
@@ -272,7 +272,7 @@ class People extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
@@ -414,7 +414,7 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `gnetwork_taxonomy_exclude_empty`
-	public function taxonomy_exclude_empty( $excludes )
+	public function taxonomy_exclude_empty( array $excludes ): array
 	{
 		return array_merge( $excludes, [
 			$this->constant( 'main_taxonomy' ),

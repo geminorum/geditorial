@@ -14,7 +14,7 @@ class WcWidgets extends gEditorial\Module
 		'widget_support' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_widgets',
@@ -31,7 +31,7 @@ class WcWidgets extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -52,14 +52,14 @@ class WcWidgets extends gEditorial\Module
 		];
 	}
 
-	private function get_widgets()
+	private function get_widgets(): array
 	{
 		return [
 			'WC-Message' => 'WCMessage',
 		];
 	}
 
-	private function _list_widgets()
+	private function _list_widgets(): array
 	{
 		$list = [];
 
@@ -76,7 +76,7 @@ class WcWidgets extends gEditorial\Module
 	// @SEE: https://quadlayers.com/how-to-use-woocommerce-hooks/
 	// @SEE: https://www.tychesoftwares.com/woocommerce-checkout-page-hooks-visual-guide-with-code-snippets/
 	// @REF: https://www.businessbloomer.com/woocommerce-visual-hook-guide-checkout-page/
-	private function _get_widget_action_hooks()
+	private function _get_widget_action_hooks(): array
 	{
 		$list = [
 			[
@@ -138,7 +138,7 @@ class WcWidgets extends gEditorial\Module
 		return (array) $this->filters( 'widget_action_hooks', $list );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		foreach ( $this->get_widgets() as $key => $class )
 			if ( $this->in_setting( $key, 'widgets' ) )

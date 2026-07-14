@@ -106,14 +106,16 @@ trait CoreRoles
 	 *
 	 * @param string $constant
 	 * @param string $context
-	 * @param string $fallback
+	 * @param string $fallback_capability
 	 * @param array $customized
-	 * @return mixed
+	 * @return bool
 	 */
-	protected function _override_module_cuc_by_taxonomy( $constant, $context = 'settings', $fallback = '', $customized = NULL )
+	protected function _override_module_cuc_by_taxonomy( string $constant, ?string $context = NULL, string $fallback_capability = '', ?array $customized = NULL ): bool
 	{
+		$context = $context ?? 'settings';
+
 		return in_array( $context, $customized ?? [ 'reports', 'tools' ], TRUE )
-			? $this->corecaps_taxonomy_role_can( $constant, $context, NULL, $fallback )
-			: $this->_cuc( $context, $fallback );
+			? $this->corecaps_taxonomy_role_can( $constant, $context )
+			: $this->_cuc( $context, $fallback_capability );
 	}
 }

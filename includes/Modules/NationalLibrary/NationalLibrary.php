@@ -37,7 +37,7 @@ class NationalLibrary extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings    = [];
 		$posttypes   = $this->list_posttypes();
@@ -121,7 +121,7 @@ class NationalLibrary extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_namespace' => 'national-library',
@@ -160,7 +160,7 @@ class NationalLibrary extends gEditorial\Module
 		return $fallback ?? $this->constant( 'metakey_isbn_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -202,7 +202,7 @@ class NationalLibrary extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'post' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -947,7 +947,7 @@ class NationalLibrary extends gEditorial\Module
 			echo $this->wrap( $html, '-fipa-summary' );
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),
@@ -1036,12 +1036,13 @@ class NationalLibrary extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'National Library Tools', 'Header', 'geditorial-national-library' ) );
 
 			ModuleSettings::renderCard_scrape_pool();
 
 		echo '</div>';
+		return TRUE;
 	}
 }

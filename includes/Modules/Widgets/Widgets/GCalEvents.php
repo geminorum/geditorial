@@ -12,7 +12,7 @@ class GCalEvents extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'gcal_events';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Google Calendar', 'Widget Title', 'geditorial-widgets' ),

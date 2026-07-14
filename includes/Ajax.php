@@ -11,27 +11,27 @@ class Ajax extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function checkReferer( $action = NULL, $key = 'nonce' )
+	public static function checkReferer( ?string $action = NULL, ?string $key = NULL ): int|false
 	{
-		return check_ajax_referer( $action ?? static::BASE, $key );
+		return check_ajax_referer( $action ?? static::BASE, $key ?? 'nonce' );
 	}
 
-	public static function success( $data = NULL, $status_code = NULL )
+	public static function success( mixed $data = NULL, ?int $status_code = NULL ): void
 	{
 		wp_send_json_success( $data, $status_code );
 	}
 
-	public static function error( $data = NULL, $status_code = NULL )
+	public static function error( mixed $data = NULL, ?int $status_code = NULL ): void
 	{
 		wp_send_json_error( $data, $status_code );
 	}
 
-	public static function successHTML( $html, $status_code = NULL )
+	public static function successHTML( string $html, ?int $status_code = NULL ): void
 	{
 		self::success( [ 'html' => $html ], $status_code );
 	}
 
-	public static function successMessage( $message = NULL )
+	public static function successMessage( ?string $message = NULL ): void
 	{
 		$message = $message ?? Plugin::done( FALSE );
 
@@ -42,12 +42,12 @@ class Ajax extends WordPress\Main
 			self::success();
 	}
 
-	public static function errorHTML( $html, $status_code = NULL )
+	public static function errorHTML( string $html, ?int $status_code = NULL ): void
 	{
 		self::error( [ 'html' => $html ], $status_code );
 	}
 
-	public static function errorMessage( $message = NULL )
+	public static function errorMessage( ?string $message = NULL ): void
 	{
 		$message = $message ?? Plugin::wrong( FALSE );
 
@@ -58,19 +58,19 @@ class Ajax extends WordPress\Main
 			self::error();
 	}
 
-	public static function errorUserCant()
+	public static function errorUserCant(): void
 	{
 		self::errorMessage( Plugin::denied( FALSE ) );
 	}
 
-	public static function errorWhat()
+	public static function errorWhat(): void
 	{
 		self::errorMessage( Plugin::what( FALSE ) );
 	}
 
 	// @REF: https://make.wordpress.org/core/?p=12799
 	// @REF: https://austin.passy.co/2014/native-wordpress-loading-gifs/
-	public static function spinner( $admin = NULL, $data = NULL )
+	public static function spinner( ?bool $admin = NULL, mixed $data = NULL ): string
 	{
 		return ( $admin ?? is_admin() )
 			? '<span class="-loading spinner"'.Core\HTML::propData( $data ).'></span>'

@@ -15,7 +15,7 @@ class Paired extends gEditorial\Service
 	const PAIRED_REST_FROM      = 'paired-from-items';
 	const PAIRED_REST_TO        = 'paired-to-items';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_filter( self::und( static::BASE, 'tabloid', 'post_summaries' ),
 			[ __CLASS__, 'tabloid_post_summaries_multipaired' ], 45, 4 );

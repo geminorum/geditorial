@@ -15,7 +15,7 @@ class Archives extends gEditorial\Module
 	protected $disable_no_customs = TRUE;
 	protected $priority_init      = 99;    // after all taxonomies registered
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'archives',
@@ -28,7 +28,7 @@ class Archives extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings  = [];
 		$templates = wp_get_theme()->get_page_templates();
@@ -137,7 +137,7 @@ class Archives extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'taxonomy_query' => 'taxonomy_archives',
@@ -145,7 +145,7 @@ class Archives extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( get_post_types( [
@@ -155,7 +155,7 @@ class Archives extends gEditorial\Module
 		);
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
@@ -166,7 +166,7 @@ class Archives extends gEditorial\Module
 		);
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -185,7 +185,7 @@ class Archives extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
@@ -306,7 +306,7 @@ class Archives extends gEditorial\Module
 		return $taxonomy;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		// No need to check for supported taxonomies, since we using `query_vars` filter.
 		if ( $taxonomy = get_query_var( $this->constant( 'taxonomy_query' ) ) ) {
@@ -578,7 +578,7 @@ class Archives extends gEditorial\Module
 	}
 
 	// TODO: check cap and link button for the module settings page
-	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	public function taxonomy_tab_extra_content( string $taxonomy, object $object ): void
 	{
 		$link = $this->get_taxonomy_archive_link( $taxonomy );
 

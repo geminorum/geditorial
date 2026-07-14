@@ -24,7 +24,7 @@ class Lingo extends gEditorial\Module
 		'default' => 'languages-ISO639.json', // @updated `2026-02-12`
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'lingo',
@@ -39,7 +39,7 @@ class Lingo extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option'  => 'posttypes_option',
@@ -52,14 +52,14 @@ class Lingo extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'language_taxonomy' => 'language',
 		];
 	}
 
-	protected function tool_box_content()
+	protected function tool_box_content(): void
 	{
 		Core\HTML::desc( sprintf(
 			/* translators: `%s`: ISO code */
@@ -68,7 +68,7 @@ class Lingo extends gEditorial\Module
 		) );
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -114,7 +114,7 @@ class Lingo extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'language_taxonomy' => [
@@ -129,7 +129,7 @@ class Lingo extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -175,7 +175,7 @@ class Lingo extends gEditorial\Module
 		}
 	}
 
-	public function terms_init()
+	public function terms_init(): void
 	{
 		if ( ! is_admin() )
 			return;
@@ -189,7 +189,7 @@ class Lingo extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'language_taxonomy', $screen ) ) {
 
@@ -220,12 +220,12 @@ class Lingo extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_taxonomy( 'language_taxonomy', 'options-general.php' );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_taxonomy( 'language_taxonomy' ) )
 			$items[] = $glance;
@@ -233,7 +233,7 @@ class Lingo extends gEditorial\Module
 		return $items;
 	}
 
-	public function imports_data_summary( $data )
+	public function imports_data_summary( array $data ): array
 	{
 		$data[] = [
 			'updated'     => '2026-02-12',
@@ -252,19 +252,19 @@ class Lingo extends gEditorial\Module
 	}
 
 	// @FILTER: `gnetwork_taxonomy_exclude_empty`
-	public function taxonomy_exclude_empty( $excludes )
+	public function taxonomy_exclude_empty( array $excludes ): array
 	{
 		return array_merge( $excludes, [
 			$this->constant( 'language_taxonomy' ),
 		] );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc_by_taxonomy( 'language_taxonomy', $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'language_taxonomy', $context, $fallback_capability );
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( [
@@ -286,7 +286,7 @@ class Lingo extends gEditorial\Module
 		);
 	}
 
-	private function _get_supported_metakeys( $context = NULL )
+	private function _get_supported_metakeys( ?string $context = NULL )
 	{
 		return $this->filters( 'supported_metakeys', [
 			'endonym'    => 'tagline',
@@ -295,13 +295,15 @@ class Lingo extends gEditorial\Module
 		], $context );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
-		if ( $this->check_settings( $sub, 'tools' ) ) {
+		$context = $context ?? 'tools';
+
+		if ( $this->check_settings( $sub, $context ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'tools', $sub );
+				$this->nonce_check( $context, $sub );
 
 				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CONVERT_INTO_LANG, TRUE ) ) {
 
@@ -366,15 +368,17 @@ class Lingo extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
+		$context   = $context ?? 'tools';
 		$rawdata   = $this->get_imports_raw_data();
 		$taxonomy  = $this->constant( 'language_taxonomy' );
-		$metakeys  = $this->_get_supported_metakeys( 'imports' );
+		$metakeys  = $this->_get_supported_metakeys( $context );
 		$supported = $this->list_taxonomies();
 		$available = FALSE;
 
-		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Tools', 'Header', 'geditorial-lingo' ) );
+		echo ModuleSettings::toolboxColumnOpen( 
+			_x( 'Language Tools', 'Header', 'geditorial-lingo' ) );
 
 			if ( ModuleSettings::renderCard_tool_convert_terms( $taxonomy, $rawdata, $metakeys, $supported ) )
 				$available = TRUE;
@@ -385,15 +389,19 @@ class Lingo extends gEditorial\Module
 			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
-		if ( $this->check_settings( $sub, 'imports' ) ) {
+		$context = $context ?? 'imports';
+
+		if ( $this->check_settings( $sub, $context ) ) {
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'imports', $sub );
+				$this->nonce_check( $context, $sub );
 
 				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CREATE_LANG_TAXONOMY, TRUE ) ) {
 
@@ -406,7 +414,7 @@ class Lingo extends gEditorial\Module
 					$update   = self::req( ModuleSettings::ACTION_UPDATE_LANG_TAXONOMY, FALSE );
 					$mapped   = array_filter( self::req( 'mapped', [] ) );
 					$taxonomy = $this->constant( 'language_taxonomy' );
-					$metakeys = $this->_get_supported_metakeys( 'imports' );
+					$metakeys = $this->_get_supported_metakeys( $context );
 					$name_key = self::und( Core\L10n::available( [ 'en', 'fa' ] ), 'name' );
 
 					foreach ( $_POST['_cb'] as $code ) {
@@ -466,14 +474,16 @@ class Lingo extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
+		$context   = $context ?? 'imports';
 		$rawdata   = $this->get_imports_raw_data();
 		$taxonomy  = $this->constant( 'language_taxonomy' );
-		$metakeys  = $this->_get_supported_metakeys( 'imports' );
+		$metakeys  = $this->_get_supported_metakeys( $context );
 		$available = FALSE;
 
-		echo ModuleSettings::toolboxColumnOpen( _x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
+		echo ModuleSettings::toolboxColumnOpen( 
+			_x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
 			if ( ModuleSettings::renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys ) )
 				$available = TRUE;
@@ -484,17 +494,19 @@ class Lingo extends gEditorial\Module
 			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
 	// TODO: use Roles API for this!
-	public function terms_disable_field_edit( $disabled, $field, $taxonomy )
+	public function terms_disable_field_edit( bool $disabled, string $field, string $taxonomy ): bool
 	{
 		return $taxonomy === $this->constant( 'language_taxonomy' )
 			? ( ! current_user_can( 'manage_options' ) ) // restrict to administrators only!
 			: $disabled;
 	}
 
-	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	public function taxonomy_tab_extra_content( string $taxonomy, object $object ): void
 	{
 		$this->render_imports_toolbox_card();
 	}

@@ -12,7 +12,7 @@ class PostTerms extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'post_terms';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Post Terms', 'Widget Title', 'geditorial-widgets' ),

@@ -195,7 +195,7 @@ trait PairedImports
 		gEditorial\Scripts::enqueueApp( 'import-items', [ gEditorial\Scripts::pkgSheetJS() ] );
 	}
 
-	public function render_importitems_adminpage()
+	public function render_importitems_adminpage(): bool
 	{
 		if ( ! $post = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
@@ -226,5 +226,7 @@ trait PairedImports
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
+
+		return TRUE;
 	}
 }

@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class Home extends gEditorial\Module
 {
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'home',
@@ -29,15 +29,16 @@ class Home extends gEditorial\Module
 		);
 	}
 
-	public function settings_intro()
+	public function settings_intro( ?string $context = NULL ): void
 	{
 		if ( get_theme_support( 'featured-content' ) )
 			echo Core\HTML::info( _x( 'Current theme supports Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
+
 		else
 			echo Core\HTML::warning( _x( 'Current theme does not support Featured Contents', 'Setting Section Notice', 'geditorial-home' ), FALSE );
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -86,14 +87,14 @@ class Home extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'featured_taxonomy' => 'post_tag',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'settings' => [
@@ -103,7 +104,7 @@ class Home extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

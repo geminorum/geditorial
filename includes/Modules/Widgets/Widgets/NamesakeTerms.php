@@ -12,7 +12,7 @@ class NamesakeTerms extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'namesake_terms';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Namesake Terms', 'Widget Title', 'geditorial-widgets' ),

@@ -16,7 +16,7 @@ class Like extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'like',
@@ -30,7 +30,7 @@ class Like extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -88,7 +88,7 @@ class Like extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_liked_users'  => '_ge_like_users',
@@ -97,7 +97,7 @@ class Like extends gEditorial\Module
 		];
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 
@@ -114,7 +114,7 @@ class Like extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -124,7 +124,7 @@ class Like extends gEditorial\Module
 		}
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -167,7 +167,7 @@ class Like extends gEditorial\Module
 		return $html;
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -537,12 +537,12 @@ class Like extends gEditorial\Module
 		echo $after;
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback );
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -595,7 +595,7 @@ class Like extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$list  = $this->list_posttypes();
 		$query = [

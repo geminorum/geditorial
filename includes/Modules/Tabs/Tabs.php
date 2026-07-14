@@ -13,7 +13,7 @@ class Tabs extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'tabs',
@@ -29,7 +29,7 @@ class Tabs extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings  = [];
 		$mimetypes = $this->get_strings( 'mimetypes', 'fields' );
@@ -68,7 +68,7 @@ class Tabs extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'fields' => [
@@ -126,7 +126,7 @@ class Tabs extends gEditorial\Module
 		return $this->filters( 'builtins_tabs', $tabs, $posttype );
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( get_post_types( [
@@ -135,7 +135,7 @@ class Tabs extends gEditorial\Module
 		);
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
@@ -145,7 +145,7 @@ class Tabs extends gEditorial\Module
 		);
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;

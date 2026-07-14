@@ -16,7 +16,7 @@ class Estimated extends gEditorial\Module
 	protected $disable_no_posttypes   = TRUE;
 	protected $priority_adminbar_init = 310;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'estimated',
@@ -30,7 +30,7 @@ class Estimated extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -82,14 +82,14 @@ class Estimated extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_post_wordcount' => '_ge_estimated',
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -99,7 +99,7 @@ class Estimated extends gEditorial\Module
 		$this->action_module( 'pointers', 'post', 6, 600 );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -107,7 +107,7 @@ class Estimated extends gEditorial\Module
 		$this->hook_content_insert( 22 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -121,7 +121,7 @@ class Estimated extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -157,7 +157,7 @@ class Estimated extends gEditorial\Module
 		}
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
@@ -210,7 +210,7 @@ class Estimated extends gEditorial\Module
 		echo $after;
 	}
 
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;

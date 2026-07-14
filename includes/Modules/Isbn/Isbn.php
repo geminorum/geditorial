@@ -16,7 +16,7 @@ class Isbn extends gEditorial\Module
 		'range-message' => 'RangeMessage.xml'  // Tue, 4 Nov 2025 23:31:28 GMT @source https://www.isbn-international.org/range_file_generation
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'isbn',
@@ -35,7 +35,7 @@ class Isbn extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -63,14 +63,14 @@ class Isbn extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode' => 'isbn',
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -143,7 +143,7 @@ class Isbn extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -152,7 +152,7 @@ class Isbn extends gEditorial\Module
 		);
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported();
 
@@ -312,7 +312,7 @@ class Isbn extends gEditorial\Module
 		}
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),
@@ -570,7 +570,7 @@ class Isbn extends gEditorial\Module
 		return $attributes;
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -584,7 +584,7 @@ class Isbn extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'ISBN Imports', 'Header', 'geditorial-isbn' ) );
 		$available = FALSE;

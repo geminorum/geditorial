@@ -2463,7 +2463,7 @@ class Settings extends WordPress\Main
 		return Core\HTML::notice( sprintf( $message, Core\Number::format( $count ?? self::req( 'count', 0 ) ) ), $class.' fade' );
 	}
 
-	public static function cheatin( $message = NULL )
+	public static function cheatin( ?string $message = NULL ): void
 	{
 		echo Core\HTML::error( $message ?? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) );
 	}

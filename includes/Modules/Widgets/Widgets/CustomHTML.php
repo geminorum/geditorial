@@ -12,7 +12,7 @@ class CustomHTML extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'custom_html';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Custom HTML', 'Widget Title', 'geditorial-widgets' ),

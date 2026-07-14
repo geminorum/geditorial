@@ -11,7 +11,7 @@ trait CoreToolBox
 {
 
 	// DEFAULT CALLBACK: use in module for descriptions
-	// protected function tool_box_content() {}
+	// protected function tool_box_content(): void {}
 
 	// TODO: add context
 	public function tool_box()

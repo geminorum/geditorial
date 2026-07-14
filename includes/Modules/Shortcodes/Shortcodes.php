@@ -13,7 +13,7 @@ class Shortcodes extends gEditorial\Module
 {
 	protected $priority_adminbar_init = 20;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'shortcodes',
@@ -28,7 +28,7 @@ class Shortcodes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -68,7 +68,7 @@ class Shortcodes extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'display_terms_shortcode'   => 'display-terms',
@@ -78,7 +78,7 @@ class Shortcodes extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -95,7 +95,7 @@ class Shortcodes extends gEditorial\Module
 			$this->filter( 'the_content', 1, 8, 'orphaned' );
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -163,12 +163,12 @@ class Shortcodes extends gEditorial\Module
 		}
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$list      = $this->list_posttypes();
 		$query     = $extra = [];
@@ -308,7 +308,7 @@ class Shortcodes extends gEditorial\Module
 	}
 
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
-	public function display_terms_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function display_terms_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listTerms( 'allitems',
 			'',
@@ -321,7 +321,7 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function term_tiles_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function term_tiles_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listTerms( 'allitems',
 			'',
@@ -335,7 +335,7 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function posts_assigned_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function posts_assigned_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listPosts( 'assigned',
 			'',
@@ -347,7 +347,7 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function circle_progress_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function circle_progress_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'completed' => FALSE,

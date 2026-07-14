@@ -19,7 +19,7 @@ class Users extends gEditorial\Module
 		'tools' => 'edit_users',
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'users',
@@ -36,7 +36,7 @@ class Users extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -75,7 +75,7 @@ class Users extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'group_taxonomy'      => 'user_group',
@@ -87,7 +87,7 @@ class Users extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'dashboard' => [
@@ -123,7 +123,7 @@ class Users extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -154,7 +154,7 @@ class Users extends gEditorial\Module
 			$this->filter( 'pre_option_default_category', 3 );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->get_setting( 'user_groups' ) )
 			$this->_hook_menu_taxonomy( 'group_taxonomy', 'users.php' );
@@ -169,7 +169,7 @@ class Users extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$groups     = $this->get_setting( 'user_groups' );
 		$types      = $this->get_setting( 'user_types' );
@@ -258,7 +258,7 @@ class Users extends gEditorial\Module
 		return $username;
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_widget( 'profile-summary', NULL, [
 			'url'   => admin_url( 'profile.php' ),
@@ -626,7 +626,7 @@ class Users extends gEditorial\Module
 		echo '</ul><div class="clear"></div></div>';
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		global $wpdb;
 
@@ -727,7 +727,7 @@ class Users extends gEditorial\Module
 	// FIXME: move to `Config`: `render_roles_html()`
 	// TODO: export/import/override roles via JSON list of caps // MAYBE: new Module
 	// TODO: migrate to column of cards
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$roles = WordPress\Role::get();
 		$none  = gEditorial\Settings::showOptionNone();

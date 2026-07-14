@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Overwrite extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'overwrite',
@@ -24,7 +24,7 @@ class Overwrite extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings = [];
 
@@ -184,7 +184,7 @@ class Overwrite extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
@@ -200,7 +200,7 @@ class Overwrite extends gEditorial\Module
 			: empty( $this->get_setting( 'frontend_strings' ) );
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->_overwrite_posttype_labels();
 		$this->_overwrite_taxonomy_labels();
@@ -208,7 +208,7 @@ class Overwrite extends gEditorial\Module
 		$this->action( 'paired_registered', 7, 99, FALSE, $this->base );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -292,7 +292,7 @@ class Overwrite extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 

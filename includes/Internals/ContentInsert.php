@@ -51,7 +51,7 @@ trait ContentInsert
 	// TODO: insert content settings for each post-type
 	// NOTE: Example Usage
 	/***
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;

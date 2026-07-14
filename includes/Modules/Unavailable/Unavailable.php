@@ -14,7 +14,7 @@ class Unavailable extends gEditorial\Module
 	// https://wordpress.org/plugins/archived-post-status/
 	// https://github.com/joshuadavidnelson/archived-post-status/
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'unavailable',
@@ -26,7 +26,7 @@ class Unavailable extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -40,7 +40,7 @@ class Unavailable extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'comment_status' => 'archived',
@@ -53,7 +53,7 @@ class Unavailable extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'edit-comments' == $screen->base ) {
 
@@ -73,7 +73,7 @@ class Unavailable extends gEditorial\Module
 		}
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_REQUEST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );

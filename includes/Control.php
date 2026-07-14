@@ -24,7 +24,7 @@ class Control extends \WP_Customize_Control
 	 * @param string $id
 	 * @param array $arguments
 	 */
-	public function __construct( $manager, $id, $arguments = [] )
+	public function __construct( object $manager, string $id, array $arguments = [] )
 	{
 		parent::__construct( $manager, $id, $arguments );
 	}
@@ -37,7 +37,7 @@ class Control extends \WP_Customize_Control
 	 * @param string $module
 	 * @return mixed
 	 */
-	protected static function constant( $key, $default = FALSE, $module = NULL )
+	protected static function constant( string $key, mixed $default = FALSE, ?string $module = NULL ): mixed
 	{
 		return static::factory()->constant( $module ?? static::MODULE, $key, $default );
 	}
@@ -49,7 +49,7 @@ class Control extends \WP_Customize_Control
 	 * @param mixed $arguments
 	 * @return mixed
 	 */
-	protected static function filters( $hook, ...$arguments )
+	protected static function filters( string $hook, ...$arguments ): mixed
 	{
 		return apply_filters( sprintf( '%s_%s_%s',
 			static::BASE,
@@ -63,14 +63,16 @@ class Control extends \WP_Customize_Control
 	 *
 	 * @param string $hook
 	 * @param mixed $arguments
-	 * @return mixed
+	 * @return true
 	 */
-	protected static function actions( $hook, ...$arguments )
+	protected static function actions( string $hook, ...$arguments ): true
 	{
-		return do_action( sprintf( '%s_%s_%s',
+		do_action( sprintf( '%s_%s_%s',
 			static::BASE,
 			static::CONTROL, // NOTE: usually the control name also contain the module name
 			$hook
 		), ...$arguments );
+
+		return TRUE;
 	}
 }

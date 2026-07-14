@@ -27,9 +27,9 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// `public function rowactions_bulk_actions( $actions ) {}`
-	// `public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids ) {}`
-	// `public function rowactions_admin_notices() {}`
+	// `public function rowactions_bulk_actions( array $actions ): array {}`
+	// `public function rowactions_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string {}`
+	// `public function rowactions_admin_notices(): void {}`
 
 	protected function rowactions__hook_mainlink_for_post( $posttype = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{
@@ -76,7 +76,7 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// `protected function rowaction_get_mainlink_for_post( $post ) { return ''; }`
+	// `protected function rowaction_get_mainlink_for_post( object $post ): string { return ''; }`
 
 	protected function rowactions__hook_mainlink_for_term( $taxonomy = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{

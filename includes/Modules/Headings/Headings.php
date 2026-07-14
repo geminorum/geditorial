@@ -16,7 +16,7 @@ class Headings extends gEditorial\Module
 	private $anchors  = [];
 	private $toc      = [];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'headings',
@@ -32,7 +32,7 @@ class Headings extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general'         => [
@@ -73,7 +73,7 @@ class Headings extends gEditorial\Module
 		];
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -152,7 +152,7 @@ class Headings extends gEditorial\Module
 		return $html;
 	}
 
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( empty( $this->toc ) )
 			return;

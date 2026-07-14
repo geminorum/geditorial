@@ -13,7 +13,7 @@ class FeaturedCards extends gEditorial\Widget
 	const MODULE = 'byline';
 	const WIDGET = 'featured_cards';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Featured Cards', 'Widget Title', 'geditorial-byline' ),

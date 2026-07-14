@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class AdminScreen extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( ! is_admin() )
 			return;
@@ -18,7 +18,7 @@ class AdminScreen extends gEditorial\Service
 		add_action( 'admin_print_styles', [ __CLASS__, 'admin_print_styles' ], 1, 0 );
 	}
 
-	public static function init_late_admin()
+	public static function init_late_admin(): void
 	{
 		add_filter( 'screen_settings', [ __CLASS__, 'screen_settings' ], 12, 2 );
 		add_filter( 'set-screen-option', [ __CLASS__, 'set_screen_option' ], 12, 3 );
@@ -35,12 +35,12 @@ class AdminScreen extends gEditorial\Service
 	// @REF: https://wpartisan.me/?p=434
 	// @REF: https://core.trac.wordpress.org/ticket/45283
 	// @SEE: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
-	public static function add_meta_boxes( $posttype, $post )
+	public static function add_meta_boxes( $posttype, $post ): void
 	{
 		add_action( 'edit_form_after_title', [ __CLASS__, 'edit_form_after_title' ] );
 	}
 
-	public static function current_screen( $screen )
+	public static function current_screen( object $screen ): void
 	{
 		if ( $screen->taxonomy ) {
 
@@ -73,7 +73,7 @@ class AdminScreen extends gEditorial\Service
 		}
 	}
 
-	public static function admin_print_styles()
+	public static function admin_print_styles(): void
 	{
 		self::_print_user_colors();
 	}
@@ -81,7 +81,7 @@ class AdminScreen extends gEditorial\Service
 	// @REF: https://wordpress.stackexchange.com/a/369713
 	// @SEE: https://github.com/WordPress/gutenberg/blob/trunk/packages/components/src/utils/theme-variables.scss
 	// @SEE: https://make.wordpress.org/core/2021/01/29/introducing-css-custom-properties/
-	private static function _print_user_colors()
+	private static function _print_user_colors(): false|string
 	{
 		global $_wp_admin_css_colors;
 
@@ -110,7 +110,7 @@ class AdminScreen extends gEditorial\Service
 		return $scheme;
 	}
 
-	public static function edit_form_after_title( $post )
+	public static function edit_form_after_title( object $post ): void
 	{
 		if ( ! $screen = get_current_screen() )
 			return;
@@ -123,14 +123,14 @@ class AdminScreen extends gEditorial\Service
 		echo '</div>';
 	}
 
-	public static function term_edit_form_open( $term, $taxonomy )
+	public static function term_edit_form_open( object $term, string $taxonomy ): void
 	{
 		echo '<div id="poststuff">';
 		echo '<div id="post-body" class="metabox-holder columns-2">';
 		echo '<div id="post-body-content">';
 	}
 
-	public static function term_edit_form_close( $term, $taxonomy )
+	public static function term_edit_form_close( object $term, string $taxonomy ): void
 	{
 		echo '</div><div id="postbox-container-1" class="postbox-container">';
 			// do_accordion_sections( get_current_screen(), 'side', $term );
@@ -138,7 +138,7 @@ class AdminScreen extends gEditorial\Service
 		echo '</div><br class="clear" /></div></div>';
 	}
 
-	private static function _enqueue_screen_script( $screen, $taxonomy = NULL, $mainkey = NULL )
+	private static function _enqueue_screen_script( object $screen, ?string $taxonomy = NULL, ?string $mainkey = NULL ): false|string
 	{
 		$taxonomy = $taxonomy ?? $screen->taxonomy;
 		$mainkey  = $mainkey  ?? 'adminscreen';
@@ -162,10 +162,10 @@ class AdminScreen extends gEditorial\Service
 			return gEditorial\Scripts::enqueue( self::dot( $screen->base, $mainkey ) );
 		}
 
-		return TRUE;
+		return $mainkey;
 	}
 
-	public static function _handle_posttype_body_class( $screen )
+	public static function _handle_posttype_body_class( object $screen ): void
 	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return;
@@ -211,7 +211,7 @@ class AdminScreen extends gEditorial\Service
 	}
 
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
-	private static function _hook_editform_readonly_title( $screen = NULL )
+	private static function _hook_editform_readonly_title( ?object $screen = NULL ): void
 	{
 		add_action( 'edit_form_after_title',
 			static function ( $post ) {
@@ -229,7 +229,7 @@ class AdminScreen extends gEditorial\Service
 			}, 1, 1 );
 	}
 
-	public static function enqueueValidator()
+	public static function enqueueValidator(): string
 	{
 		static $enqueued;
 
@@ -252,7 +252,7 @@ class AdminScreen extends gEditorial\Service
 	 * @param object $screen
 	 * @return void
 	 */
-	public static function disableQuickEdit( $screen = NULL )
+	public static function disableQuickEdit( ?object $screen = NULL ): void
 	{
 		$screen = $screen ?? get_current_screen();
 
@@ -284,7 +284,7 @@ class AdminScreen extends gEditorial\Service
 	}
 
 	// NOTE: see `corerestrictposts__hook_screen_taxonomies()`
-	public static function screen_settings( $settings, $screen )
+	public static function screen_settings( string $settings, object $screen ): string
 	{
 		$taxonomies = apply_filters( self::und( static::BASE, 'screen_restrict_taxonomies' ),
 			[],
@@ -328,14 +328,14 @@ class AdminScreen extends gEditorial\Service
 	 * @param mixed $value
 	 * @return mixed
 	 */
-	public static function set_screen_option( $false, $option, $value )
+	public static function set_screen_option( mixed $false, string $option, mixed $value ): mixed
 	{
 		return Core\Text::starts( $option, static::BASE ) ? $value : $false;
 	}
 
 	// @SEE: https://www.joedolson.com/2013/01/custom-wordpress-screen-options/
 	// @SEE: https://webkul.com/blog/how-to-add-custom-screen-option-in-woocommerce/
-	private static function _handle_set_screen_options( $posttype )
+	private static function _handle_set_screen_options( string $posttype ): bool
 	{
 		$name = self::dsh( static::BASE, 'restrict', $posttype );
 
@@ -344,14 +344,14 @@ class AdminScreen extends gEditorial\Service
 
 		check_admin_referer( 'screen-options-nonce', 'screenoptionnonce' );
 
-		return update_user_option(
+		return (bool) update_user_option(
 			get_current_user_id(),
 			self::und( static::BASE, 'restrict', $posttype ),
 			Core\Arraay::prepString( array_keys( $_POST[$name] ) )
 		);
 	}
 
-	public static function loadDashboard( $dashboard_context, $context = NULL, $object = NULL )
+	public static function loadDashboard( string $dashboard_context, ?string $context = NULL, ?object $object = NULL ): void
 	{
 		require_once ABSPATH.'wp-admin/includes/dashboard.php';
 
@@ -370,7 +370,7 @@ class AdminScreen extends gEditorial\Service
 			} );
 	}
 
-	public static function renderDashboard( $context, $header_callback = NULL, $after_callback = NULL, $object = NULL )
+	public static function renderDashboard( ?string $context, ?callable $header_callback = NULL, ?callable $after_callback = NULL, ?object $object = NULL ): bool
 	{
 		if ( ! $screen = get_current_screen() )
 			return FALSE;
@@ -386,11 +386,13 @@ class AdminScreen extends gEditorial\Service
 
 		if ( $after_callback && is_callable( $after_callback ) )
 			call_user_func_array( $after_callback, [ $context, $screen, $object ] );
+
+		return TRUE;
 	}
 
 	// @source https://code.tutsplus.com/integrating-with-wordpress-ui-meta-boxes-on-custom-pages--wp-26843a
 	// @ref https://gist.github.com/stephenh1988/3676396
-	public static function loadLayout( $layout_context, $context = NULL, $object = NULL )
+	public static function loadLayout( string $layout_context, ?string $context = NULL, ?object $object = NULL ): void
 	{
 		// Trigger the add_meta_boxes hooks to allow meta boxes to be added.
 		do_action( self::und( 'add_meta_boxes', $layout_context ), $object );
@@ -411,7 +413,7 @@ class AdminScreen extends gEditorial\Service
 	}
 
 	// @see `wp_dashboard()`
-	public static function renderLayout( $context, $main_callback = NULL, $title_callback = NULL, $object = NULL )
+	public static function renderLayout( ?string $context, ?callable $main_callback = NULL, ?callable $title_callback = NULL, ?object $object = NULL ): bool
 	{
 		if ( ! $screen = get_current_screen() )
 			return FALSE;
@@ -451,5 +453,7 @@ class AdminScreen extends gEditorial\Service
 		// Used to save closed meta-boxes and their order.
 		wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', FALSE );
 		wp_nonce_field( 'closedpostboxes', 'closedpostboxesnonce', FALSE );
+
+		return TRUE;
 	}
 }

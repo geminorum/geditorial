@@ -12,7 +12,7 @@ class WPRestPosts extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'wprest_posts';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: WP-REST Posts', 'Widget Title', 'geditorial-widgets' ),

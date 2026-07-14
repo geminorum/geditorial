@@ -19,7 +19,7 @@ class Iranian extends gEditorial\Module
 		'province-phones'    => 'province-phones.json',      // 2025-08-13
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'iranian',
@@ -36,7 +36,7 @@ class Iranian extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings  = [];
 		$posttypes = $this->get_settings_posttypes_parents();
@@ -89,7 +89,7 @@ class Iranian extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_namespace'         => 'iranian',
@@ -98,7 +98,7 @@ class Iranian extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [];
 
@@ -112,7 +112,7 @@ class Iranian extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -129,7 +129,7 @@ class Iranian extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -139,7 +139,7 @@ class Iranian extends gEditorial\Module
 		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 5, 8 );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported();
 	}
@@ -213,17 +213,17 @@ class Iranian extends gEditorial\Module
 		return $this->constant( 'metakey_location_posttype' );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'tools' ] );
+		return $this->_override_module_cuc( $context, $fallback_capability, [ 'reports', 'tools' ] );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Imports', 'Header', 'geditorial-iranian' ) );
 
@@ -241,12 +241,16 @@ class Iranian extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_imports_html_before( $uri, $sub )
+	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_import_location_by_identity( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_import_location_by_identity( $sub )
@@ -277,12 +281,12 @@ class Iranian extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'tools', 'per_page' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Tools', 'Header', 'geditorial-iranian' ) );
 
@@ -302,12 +306,16 @@ class Iranian extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_tool_identity_certificate( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_tool_identity_certificate( $sub )
@@ -420,12 +428,12 @@ class Iranian extends gEditorial\Module
 		return $data;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Iranian Reports', 'Header', 'geditorial-iranian' ) );
 
@@ -444,15 +452,19 @@ class Iranian extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_reports_html_before( $uri, $sub )
+	protected function render_reports_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_report_country_summary( $sub ) )
 			return FALSE; // avoid further UI
 
 		else if ( $this->_do_report_city_summary( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_report_country_summary( $sub )

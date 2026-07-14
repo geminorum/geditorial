@@ -12,7 +12,7 @@ class PublicationCover extends gEditorial\Widget
 	const MODULE = 'book';
 	const WIDGET = 'book_publication_cover';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Publication Cover', 'Widget Title', 'geditorial-book' ),

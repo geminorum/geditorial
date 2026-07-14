@@ -47,7 +47,7 @@ trait SubContents
 		return $this->subcontent_get_meta_mapping( $context, $posttype );
 	}
 
-	protected function subcontent_get_strings_for_js( $extra = [] )
+	protected function subcontent_get_strings_for_js( array $extra = [] ): array
 	{
 		return array_merge( [
 			'index'    => _x( '#', 'Internal: Subcontents: Javascript String: `index`', 'geditorial-admin' ),
@@ -206,7 +206,7 @@ trait SubContents
 		return $this->filters( 'searchable_fields', $fields, $context, $posttype );
 	}
 
-	protected function subcontent_define_required_fields()
+	protected function subcontent_define_required_fields(): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
@@ -696,7 +696,7 @@ trait SubContents
 		return $this->filters( 'provide_markup', $markup, $parent, $context );
 	}
 
-	protected function subcontent_do_main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	protected function subcontent_do_main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		// NOTE: falls back into name-space
 		$constant = $this->constant( 'main_shortcode', $this->constant( 'restapi_namespace' ) );
@@ -796,8 +796,13 @@ trait SubContents
 		return $list;
 	}
 
-	protected function subcontent_do_render_iframe_content( $context = NULL, $assign_template = NULL, $reports_template = NULL, $custom_app = NULL )
-	{
+	protected function subcontent_do_render_iframe_content(
+		?string $context = NULL,
+		?string $assign_template = NULL,
+		?string $reports_template = NULL,
+		?string $custom_app = NULL
+	): bool {
+
 		if ( ! $post = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
@@ -831,6 +836,8 @@ trait SubContents
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
+
+		return TRUE;
 	}
 
 	protected function subcontent_do_enqueue_app( $atts = [], $custom_app = NULL )

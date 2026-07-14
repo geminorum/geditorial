@@ -17,7 +17,7 @@ class Happening extends gEditorial\Module
 	use Internals\PostDate;
 	use Internals\PostTypeFields;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'happening',
@@ -35,7 +35,7 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_editlist' => [
@@ -58,7 +58,7 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'event',
@@ -69,7 +69,7 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -99,7 +99,7 @@ class Happening extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			// TODO: move to `ModuleInfo`
@@ -114,7 +114,7 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -196,17 +196,17 @@ class Happening extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\EventPoster' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 
@@ -219,7 +219,7 @@ class Happening extends gEditorial\Module
 		$this->add_posttype_fields_for( 'units', 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -273,7 +273,7 @@ class Happening extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -301,7 +301,7 @@ class Happening extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -317,12 +317,12 @@ class Happening extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'tools' );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Happening Tools', 'Header', 'geditorial-happening' ) );
@@ -343,9 +343,10 @@ class Happening extends gEditorial\Module
 		gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( FALSE === $this->postdate__render_before_override_dates(
 			$this->constant( 'main_posttype' ),
@@ -355,5 +356,7 @@ class Happening extends gEditorial\Module
 			'tools'
 		) )
 			return FALSE;
+
+		return TRUE;
 	}
 }

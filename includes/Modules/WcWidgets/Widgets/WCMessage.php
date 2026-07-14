@@ -11,7 +11,7 @@ class WCMessage extends gEditorial\Widget
 	const MODULE = 'wc_widgets';
 	const WIDGET = 'wc_message';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: WooCommerce Message', 'Widget Title', 'geditorial-wc-widgets' ),

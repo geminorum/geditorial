@@ -23,7 +23,7 @@ class Ortho extends gEditorial\Module
 		'attachment',
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'ortho',
@@ -49,7 +49,7 @@ class Ortho extends gEditorial\Module
 		);
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$virastar_options = ModuleInfo::virastarOptions( 'settings' );
 
@@ -74,7 +74,7 @@ class Ortho extends gEditorial\Module
 		];
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 
@@ -87,7 +87,7 @@ class Ortho extends gEditorial\Module
 		return FALSE;
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'js' => [
@@ -119,7 +119,7 @@ class Ortho extends gEditorial\Module
 		] );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -136,7 +136,7 @@ class Ortho extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -257,7 +257,7 @@ class Ortho extends gEditorial\Module
 		// 	: Orthography::cleanupPersian( $string );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 			$this->enqueueVirastar();
@@ -265,7 +265,7 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Orthography Tools', 'Header', 'geditorial-ortho' ) );
 
@@ -274,6 +274,7 @@ class Ortho extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	private function renderCard_tools_sandbox()
@@ -352,10 +353,10 @@ class Ortho extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
-			return FALSE;
+			return;
 
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -383,7 +384,7 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$list  = $this->list_posttypes();
 		$query = $extra = [];

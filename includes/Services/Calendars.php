@@ -15,10 +15,10 @@ class Calendars extends gEditorial\Service
 	const POSTTYPE_ICAL_SOURCE   = 'ical_source';
 	const TAXONOMY_ICAL_SOURCE   = 'ical_source';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( GEDITORIAL_DISABLE_ICAL )
-			return FALSE;
+			return;
 
 		add_action( 'init', [ __CLASS__, 'init' ] );
 

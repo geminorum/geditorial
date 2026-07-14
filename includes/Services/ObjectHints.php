@@ -12,7 +12,7 @@ class ObjectHints extends gEditorial\Service
 	const REST_ENDPOINT_VERSION    = 'v1';
 	const REST_ENDPOINT_MAIN_ROUTE = 'tips';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 	}

@@ -21,7 +21,7 @@ class Statuses extends gEditorial\Module
 	 */
 	private $map_caps = NULL;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'statuses',
@@ -43,7 +43,7 @@ class Statuses extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$statuses = WordPress\Taxonomy::getTerms( $this->constant( 'main_taxonomy' ), FALSE, TRUE );
 		$roles    = $this->get_settings_default_roles();
@@ -95,14 +95,14 @@ class Statuses extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy' => 'custom_status',
 		];
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -112,7 +112,7 @@ class Statuses extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -203,7 +203,7 @@ class Statuses extends gEditorial\Module
 			$this->action( 'pre_get_posts', 1, 12, 'front' );
 	}
 
-	public function map_meta_cap( $caps, $cap, $user_id, $args )
+	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
 	{
 		$map = $this->get_map_caps();
 		return isset( $map[$cap] ) ? [ $map[$cap] ] : $caps;
@@ -225,7 +225,7 @@ class Statuses extends gEditorial\Module
 		return $this->map_caps;
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->get_setting( 'status_menus' ) ) {
 
@@ -268,7 +268,7 @@ class Statuses extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 

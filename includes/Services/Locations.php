@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 class Locations extends gEditorial\Service
 {
-	public static function setup()
+	public static function setup(): void
 	{
 		if ( is_admin() )
 			return;

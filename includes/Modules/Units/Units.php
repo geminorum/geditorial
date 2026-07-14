@@ -19,7 +19,7 @@ class Units extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'units',
@@ -33,7 +33,7 @@ class Units extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -41,14 +41,14 @@ class Units extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_attribute' => 'units_rendered',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'titles' => [
@@ -142,7 +142,7 @@ class Units extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			$this->key => [
@@ -169,7 +169,7 @@ class Units extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -182,12 +182,12 @@ class Units extends gEditorial\Module
 		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->posttypefields__hook_importer_init();
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -201,7 +201,7 @@ class Units extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -361,7 +361,7 @@ class Units extends gEditorial\Module
 		];
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -377,9 +377,11 @@ class Units extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttypefields_reports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

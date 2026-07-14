@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class WcDashboard extends gEditorial\Module
 {
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_dashboard',
@@ -27,7 +27,7 @@ class WcDashboard extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -85,7 +85,7 @@ class WcDashboard extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'endpoint_purchased' => 'purchased-products',
@@ -102,7 +102,7 @@ class WcDashboard extends gEditorial\Module
 		);
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

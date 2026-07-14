@@ -18,7 +18,7 @@ class TermRelations extends gEditorial\Service
 	const CUSTOM_ORDER    = 'termrelation';
 	const GLOBAL_CONTEXT  = 'termrelation';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 		add_filter( 'get_object_terms', [ __CLASS__, 'get_object_terms' ], 8, 4 );

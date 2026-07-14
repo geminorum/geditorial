@@ -16,9 +16,14 @@ class Tube extends gEditorial\Module
 	use Internals\O2OMetaBox;
 	use Internals\PostMeta;
 
-	private $_wp_video_shortcode_attr = '';
+	/**
+	 * Current video short-code attributes
+	 *
+	 * @var array
+	 */
+	private $_wp_video_shortcode_attr = NULL;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'tube',
@@ -36,7 +41,7 @@ class Tube extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -78,7 +83,7 @@ class Tube extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype'           => 'video',                   // ALT: `clip`
@@ -93,7 +98,7 @@ class Tube extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -154,7 +159,7 @@ class Tube extends gEditorial\Module
 	}
 
 	// @REF: https://www.videouniversity.com/?p=6660
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -220,7 +225,7 @@ class Tube extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -230,7 +235,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 
@@ -250,7 +255,7 @@ class Tube extends gEditorial\Module
 			] );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -306,7 +311,7 @@ class Tube extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
@@ -373,7 +378,7 @@ class Tube extends gEditorial\Module
 		}
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 
@@ -381,7 +386,7 @@ class Tube extends gEditorial\Module
 			$this->add_posttype_fields_for( 'meta', 'secondary_posttype' );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;
@@ -395,7 +400,8 @@ class Tube extends gEditorial\Module
 
 	public function wp_video_shortcode_override( $override, $attr, $content, $instance )
 	{
-		$this->_wp_video_shortcode_attr = $attr;
+		$this->_wp_video_shortcode_attr = self::args( $attr );
+
 		return $override;
 	}
 
@@ -483,7 +489,7 @@ class Tube extends gEditorial\Module
 		return $output.Core\HTML::wrap( $html, $this->classs( 'video' ) );
 	}
 
-	public function primary_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function primary_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
@@ -497,7 +503,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function connected_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function connected_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		if ( ! $this->_o2o )
 			return $content;
@@ -519,7 +525,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function secondary_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function secondary_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'secondary_posttype' ),
@@ -533,7 +539,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function children_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function children_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'children',
 			$this->constant( 'secondary_posttype' ),

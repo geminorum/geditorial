@@ -34,7 +34,7 @@ class Book extends gEditorial\Module
 		'multiple_instances' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'book',
@@ -53,12 +53,12 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function settings_intro()
+	public function settings_intro( ?string $context = NULL ): void
 	{
 		gEditorial\Info::renderNoticeP2P();
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings = [
 			'posttypes_option' => 'posttypes_option',
@@ -148,7 +148,7 @@ class Book extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'publication',
@@ -173,7 +173,7 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -257,7 +257,7 @@ class Book extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'type_taxonomy' => [
@@ -294,7 +294,7 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -423,7 +423,7 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'main_posttype',
@@ -433,17 +433,17 @@ class Book extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function p2p_init()
+	public function p2p_init(): void
 	{
 		$posttypes = $this->get_setting( 'p2p_posttypes', [] );
 
 		if ( empty( $posttypes ) )
-			return FALSE;
+			return;
 
 		$this->p2p_register( 'main_posttype', $posttypes );
 
@@ -457,12 +457,12 @@ class Book extends gEditorial\Module
 			);
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\PublicationCover' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -534,14 +534,14 @@ class Book extends gEditorial\Module
 		$this->register_shortcode( 'cover_shortcode' );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
 		$this->action_module( 'importer', 'saved', 2 );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -565,7 +565,7 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -578,7 +578,7 @@ class Book extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -648,7 +648,7 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->get_setting( 'quick_newpost' ) ) {
 			$this->_hook_submenu_adminpage( 'newpost' );
@@ -656,22 +656,22 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
-	public function tweaks_column_row_p2p_to( $post, $before, $after, $module )
+	public function tweaks_column_row_p2p_to( $post, $before, $after, $module ): void
 	{
 		$this->column_row_p2p_to_posttype( 'main_posttype', $post, $before, $after );
 	}
 
-	public function tweaks_column_row_p2p_from( $post, $before, $after, $module )
+	public function tweaks_column_row_p2p_from( $post, $before, $after, $module ): void
 	{
 		$this->column_row_p2p_from_posttype( 'main_posttype', $post, $before, $after );
 	}
 
-	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -697,7 +697,7 @@ class Book extends gEditorial\Module
 		return $value;
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		// NOTE: DEPRECATED: use `Units` Module
 		$this->register_taxonomy( 'size_taxonomy', [
@@ -713,7 +713,7 @@ class Book extends gEditorial\Module
 		$this->filter( 'pairedimports_define_import_types', 4, 5, FALSE, $this->base );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -721,7 +721,7 @@ class Book extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'main_posttype' ) );
 	}
@@ -758,7 +758,7 @@ class Book extends gEditorial\Module
 		return $html;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'main_posttype' ),
@@ -774,7 +774,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function serie_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function serie_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),
@@ -789,7 +789,7 @@ class Book extends gEditorial\Module
 	}
 
 	// TODO: use `connected_shortcode` constant
-	public function p2p_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function p2p_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		if ( ! $this->_p2p )
 			return $content;
@@ -835,7 +835,7 @@ class Book extends gEditorial\Module
 		return $this->_p2p ? $this->p2p_get_meta_row( 'main_posttype', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
 
-	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'main_posttype' );
 		$args = [
@@ -863,7 +863,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert() )
 			return;
@@ -871,7 +871,7 @@ class Book extends gEditorial\Module
 		echo $this->wrap( ModuleTemplate::cover( [ 'id' => 'paired' ] ) );
 	}
 
-	public function insert_content_p2p( $content )
+	public function insert_content_p2p( string $content ): void
 	{
 		if ( ! $this->_p2p )
 			return;
@@ -954,7 +954,7 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function insert_cover( $content )
+	public function insert_cover( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -965,7 +965,7 @@ class Book extends gEditorial\Module
 		] );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -979,7 +979,7 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Publication Tools', 'Header', 'geditorial-book' ) );
@@ -989,14 +989,16 @@ class Book extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -1010,21 +1012,25 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'main_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
@@ -1139,7 +1145,7 @@ class Book extends gEditorial\Module
 		return array_merge( $types, Core\Arraay::pluck( $fields, 'title', 'name' ) );
 	}
 
-	private function get_importer_fields( $posttype = NULL )
+	private function get_importer_fields( ?string $posttype = NULL ): array
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return [];
@@ -1155,7 +1161,7 @@ class Book extends gEditorial\Module
 		return [];
 	}
 
-	public function importer_fields( $fields, $posttype )
+	public function importer_fields( array $fields, string $posttype ): array
 	{
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
@@ -1171,7 +1177,7 @@ class Book extends gEditorial\Module
 	}
 
 	// FIXME: use `$atts['prepared'][$field]`
-	public function importer_saved( $post, $atts = [] )
+	public function importer_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

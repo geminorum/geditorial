@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class SystemBranding extends gEditorial\Service
 {
-	public static function credits()
+	public static function credits( ?string $context = NULL ): void
 	{
 		if ( GEDITORIAL_DISABLE_CREDITS )
 			return;
@@ -27,7 +27,7 @@ class SystemBranding extends gEditorial\Service
 		echo '</div>';
 	}
 
-	public static function signature( $context = NULL )
+	public static function signature( ?string $context = NULL ): void
 	{
 		if ( GEDITORIAL_DISABLE_CREDITS )
 			return;

@@ -10,9 +10,9 @@ use geminorum\gEditorial\WordPress;
 trait CoreIncludes
 {
 
-	public function get_module_path( $context = NULL )
+	public function get_module_path( ?string $context = NULL ): string
 	{
-		return $this->filters( 'path', $this->path, $context );
+		return (string) $this->filters( 'path', $this->path, $context );
 	}
 
 	/**
@@ -22,7 +22,7 @@ trait CoreIncludes
 	 * @param bool $once
 	 * @return void
 	 */
-	protected function require_code( $filenames, $once = TRUE )
+	protected function require_code( string|array $filenames, bool $once = TRUE ): void
 	{
 		foreach ( (array) $filenames as $filename )
 			if ( $once )
@@ -44,13 +44,19 @@ trait CoreIncludes
 	 * @param string $name
 	 * @param bool $load
 	 * @param bool $once
-	 * @param array $args
+	 * @param array $arguments
 	 * @return string
 	 */
-	protected function locate_template_part( $slug, $name = NULL, $load = FALSE, $once = TRUE, $args = [] )
-	{
+	protected function locate_template_part(
+		string $slug,
+		?string $name = NULL,
+		bool $load = FALSE,
+		bool $once = TRUE,
+		array $arguments = [],
+	): string {
+
 		$located   = '';
-		$templates = WordPress\Theme::getPart( $slug, $name, FALSE, $args );
+		$templates = WordPress\Theme::getPart( $slug, $name, FALSE, $arguments );
 
 		$child  = sprintf( '%s/editorial/templates/%s-', STYLESHEETPATH, $this->key );
 		$theme  = sprintf( '%s/editorial/templates/%s-', TEMPLATEPATH, $this->key );
@@ -79,7 +85,7 @@ trait CoreIncludes
 		}
 
 		if ( $load && '' !== $located )
-			load_template( $located, $once, $args );
+			load_template( $located, $once, $arguments );
 
 		return $located;
 	}

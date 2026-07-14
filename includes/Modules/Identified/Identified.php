@@ -13,7 +13,7 @@ class Identified extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\RestAPI;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'identified',
@@ -29,7 +29,7 @@ class Identified extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings  = [];
 		$posttypes = $this->list_posttypes();
@@ -133,7 +133,7 @@ class Identified extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'restapi_attribute' => 'identifier',
@@ -149,7 +149,7 @@ class Identified extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'fields' => [
@@ -206,12 +206,12 @@ class Identified extends gEditorial\Module
 		return $strings;
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -235,7 +235,7 @@ class Identified extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -256,7 +256,7 @@ class Identified extends gEditorial\Module
 		}
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		// NOTE: also optimized for mobile!
 		if ( ! $this->adminbar__check_general( FALSE, FALSE ) )

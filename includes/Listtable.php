@@ -14,8 +14,11 @@ class Listtable extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function checkHidden( $column_id, $after = '' )
-	{
+	public static function checkHidden(
+		mixed $column_id,
+		string $after = '',
+	): bool {
+
 		static $hidden = NULL;
 
 		if ( ! $column_id )
@@ -27,7 +30,7 @@ class Listtable extends WordPress\Main
 		if ( is_null( $hidden ) )
 			$hidden = (array) get_hidden_columns( $screen );
 
-		if ( ! in_array( $column_id, $hidden, TRUE ) )
+		if ( ! in_array( (string) $column_id, $hidden, TRUE ) )
 			return FALSE;
 
 		$html = Core\HTML::tag( 'a', [
@@ -40,21 +43,21 @@ class Listtable extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function columnCount( $count, $title_attr = NULL )
+	public static function columnCount( int|array $count, ?string $title_attr = NULL ): string
 	{
 		return Helper::htmlCount( $count, $title_attr )
 			.'<span class="count field-count" data-count="'
 			.( FALSE === $count ? '' : $count ).'"></span>';
 	}
 
-	public static function columnOrder( $order, $title_attr = NULL )
+	public static function columnOrder( int $order, ?string $title_attr = NULL ): string
 	{
 		return Helper::htmlOrder( $order, $title_attr )
 			.'<span class="order field-order" data-order="'
 			.( FALSE === $order ? '' : $order ).'"></span>';
 	}
 
-	public static function columnTerm( $object_id, $taxonomy, $title_attr = NULL, $single = TRUE )
+	public static function columnTerm( int $object_id, string $taxonomy, ?string $title_attr = NULL, bool $single = TRUE ): string
 	{
 		$terms = get_the_terms( (int) $object_id, $taxonomy );
 
@@ -69,7 +72,7 @@ class Listtable extends WordPress\Main
 		);
 	}
 
-	public static function parseQueryTaxonomy( &$query, $taxonomy )
+	public static function parseQueryTaxonomy( object &$query, string $taxonomy ): void
 	{
 		if ( ! isset( $query->query_vars[$taxonomy] ) )
 			return;
@@ -94,7 +97,7 @@ class Listtable extends WordPress\Main
 
 	// @SEE: https://core.trac.wordpress.org/ticket/23421
 	// @SOURCE: http://scribu.net/wordpress/sortable-taxonomy-columns.html
-	public static function orderClausesByTaxonomy( $pieces, $query, $taxonomy )
+	public static function orderClausesByTaxonomy( array $pieces, object $query, string $taxonomy ): array
 	{
 		global $wpdb;
 
@@ -116,10 +119,10 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using custom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( $taxonomy, $paired_posttype = FALSE, $extra = [] )
+	public static function restrictByTaxonomy( string $taxonomy, string|false $paired_posttype = FALSE, array $extra = [] ): string
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
-			return FALSE;
+			return '';
 
 		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
 		$selected  = $_GET[$query_var] ?? '';
@@ -168,15 +171,15 @@ SQL;
 			$args['show_option_none'] = Services\CustomTaxonomy::getLabel( $taxonomy, 'show_option_no_items' );
 		}
 
-		wp_dropdown_categories( array_merge( $args, $extra ) );
+		return wp_dropdown_categories( array_merge( $args, $extra ) );
 	}
 
 	// FIXME: DEPRECATED: use `restrictByTaxonomy()`
 	// WTF: `draft` status posts with no `post_name`
-	public static function restrictByPosttype( $taxonomy, $posttype, $option_all = NULL )
+	public static function restrictByPosttype( string $taxonomy, string $posttype, ?string $option_all = NULL ): string
 	{
 		if ( ! $object = get_taxonomy( $taxonomy ) )
-			return;
+			return '';
 
 		$query_var = WordPress\Taxonomy::queryVar( $object );
 		$selected  = $_GET[$query_var] ?? '';
@@ -191,7 +194,7 @@ SQL;
 				$selected = '';
 		}
 
-		wp_dropdown_pages( [
+		return wp_dropdown_pages( [
 			'post_type'        => $posttype,
 			'selected'         => $selected,
 			'name'             => $query_var,
@@ -207,7 +210,7 @@ SQL;
 
 	// @SEE: https://make.wordpress.org/core/2022/01/05/new-capability-queries-in-wordpress-5-9/
 	// @SEE: https://core.trac.wordpress.org/ticket/19867
-	public static function restrictByAuthor( $selected = 0, $name = 'author', $extra = [] )
+	public static function restrictByAuthor( int $selected = 0, string $name = 'author', array $extra = [] ): string
 	{
 		if ( WordPress\User::isLargeCount() )
 			return '';
@@ -228,28 +231,28 @@ SQL;
 		], $extra ) );
 	}
 
-	public static function restrictByPostMeta( $metakey, $none = NULL, $extra = [] )
+	public static function restrictByPostMeta( string $meta_key, ?string $none = NULL, array $extra = [] ): void
 	{
-		$list = WordPress\Database::getPostMetaForDropdown( $metakey );
+		$list = WordPress\Database::getPostMetaForDropdown( $meta_key );
 		$list = Core\Arraay::sameKey( array_filter( $list ) );
 
 		echo Core\HTML::dropdown( $list, array_merge( [
-			'name'       => $metakey,
-			'selected'   => self::req( $metakey ),
+			'name'       => $meta_key,
+			'selected'   => self::req( $meta_key ),
 			'none_title' => $none ?? Settings::showOptionNone(),
 			'none_value' => '',
 		], $extra ) );
 	}
 
-	public static function parseQueryPostMeta( &$query, $metakey )
+	public static function parseQueryPostMeta( object &$query, string $meta_key ): void
 	{
-		if ( ! $selected = self::req( $metakey ) )
+		if ( ! $selected = self::req( $meta_key ) )
 			return;
 
 		$meta_query = $query->query_vars['meta_query'] ?? [];
 
 		$meta_query[] = [
-			'key'     => $metakey,
+			'key'     => $meta_key,
 			'value'   => $selected,
 			'compare' => '=',
 			'type'    => 'CHAR'

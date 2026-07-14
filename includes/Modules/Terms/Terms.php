@@ -68,7 +68,7 @@ class Terms extends gEditorial\Module
 
 	const FORCE_SORT_KEY = 'force_menu_order_sort';
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'terms',
@@ -83,7 +83,7 @@ class Terms extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles  = $this->get_settings_default_roles();
 		$fields = $this->_get_supported_raw();
@@ -166,7 +166,7 @@ class Terms extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		$field = Core\Text::stripPrefix( $suffix, '_field_' );
 
@@ -179,7 +179,7 @@ class Terms extends gEditorial\Module
 		return FALSE;
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'titles' => [
@@ -325,7 +325,7 @@ class Terms extends gEditorial\Module
 		return array_unique( array_diff_key( $supported, array_flip( $excluded ) ) );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -373,7 +373,7 @@ class Terms extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy() )
 			$this->_edit_tags_screen( $taxonomy );
@@ -385,7 +385,7 @@ class Terms extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$enqueue = FALSE;
 
@@ -1941,7 +1941,7 @@ class Terms extends gEditorial\Module
 		echo $this->filters( 'supported_field_quickedit', $html, $field, $taxonomy, $metatype );
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $this->adminbar__check_general( FALSE ) )
 			return;
@@ -2972,7 +2972,7 @@ class Terms extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback );
 	}

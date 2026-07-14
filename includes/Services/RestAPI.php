@@ -10,7 +10,7 @@ class RestAPI extends gEditorial\Service
 {
 	const REST_FIELD_TERMS = 'terms_rendered';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ], 20 );
 	}

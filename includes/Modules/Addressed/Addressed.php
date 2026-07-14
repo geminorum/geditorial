@@ -15,7 +15,7 @@ class Addressed extends gEditorial\Module
 		'customize_support' => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'addressed',
@@ -35,7 +35,7 @@ class Addressed extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -139,7 +139,7 @@ class Addressed extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode' => 'addressed',
@@ -207,7 +207,7 @@ class Addressed extends gEditorial\Module
 		], $context );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -227,7 +227,7 @@ class Addressed extends gEditorial\Module
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	public function customize_setup( $manager )
+	public function customize_setup( object $manager ): void
 	{
 		if ( ! $data = $this->get_setting( 'address_types', [] ) )
 			return;
@@ -349,7 +349,7 @@ class Addressed extends gEditorial\Module
 		);
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'type'      => NULL,
@@ -381,12 +381,12 @@ class Addressed extends gEditorial\Module
 		);
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Address Reports', 'Header', 'geditorial-addressed' ) );
 
@@ -413,5 +413,7 @@ class Addressed extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 }

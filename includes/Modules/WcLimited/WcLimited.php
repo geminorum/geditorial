@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcLimited extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_limited',
@@ -23,7 +23,7 @@ class WcLimited extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -59,7 +59,7 @@ class WcLimited extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

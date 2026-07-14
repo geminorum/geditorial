@@ -22,7 +22,7 @@ class Revisions extends gEditorial\Module
 		'reports' => 'edit_others_posts',
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'revisions',
@@ -38,7 +38,7 @@ class Revisions extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -77,7 +77,7 @@ class Revisions extends gEditorial\Module
 		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			return;
@@ -92,7 +92,7 @@ class Revisions extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -119,12 +119,12 @@ class Revisions extends gEditorial\Module
 		}
 	}
 
-	public function rowactions_bulk_actions( $actions )
+	public function rowactions_bulk_actions( array $actions ): array
 	{
 		return array_merge( $actions, [ 'purgerevisions' => _x( 'Purge Revisions', 'Bulk Action', 'geditorial-revisions' ) ] );
 	}
 
-	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string
 	{
 		if ( 'purgerevisions' != $doaction )
 			return $redirect_to;
@@ -141,7 +141,7 @@ class Revisions extends gEditorial\Module
 		return add_query_arg( $this->hook( 'purged' ), $purged, $redirect_to );
 	}
 
-	public function rowactions_admin_notices()
+	public function rowactions_admin_notices(): void
 	{
 		if ( ! $purged = self::req( $this->hook( 'purged' ) ) )
 			return;
@@ -286,7 +286,7 @@ class Revisions extends gEditorial\Module
 		return Core\HTML::span( implode( ' ', $parts ), [ 'geditorial-admin-wrap-inline', '-revisions' ] );
 	}
 
-	public function post_submitbox_misc_actions( $post )
+	public function post_submitbox_misc_actions( object $post ): void
 	{
 		if ( ! current_user_can( $this->caps['purge'], $post->ID ) )
 			return;
@@ -366,7 +366,7 @@ class Revisions extends gEditorial\Module
 		] );
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
@@ -403,7 +403,7 @@ class Revisions extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'reports', 'per_page' ) ) {
 
@@ -433,7 +433,7 @@ class Revisions extends gEditorial\Module
 		}
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$list = $this->list_posttypes();
 

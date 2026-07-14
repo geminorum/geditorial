@@ -16,7 +16,7 @@ class Modified extends gEditorial\Module
 	protected $disable_no_posttypes   = TRUE;
 	protected $priority_adminbar_init = 910;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'modified',
@@ -30,7 +30,7 @@ class Modified extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -111,7 +111,7 @@ class Modified extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'entry_modified_shortcode' => 'entry-modified',
@@ -120,7 +120,7 @@ class Modified extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -138,7 +138,7 @@ class Modified extends gEditorial\Module
 		$this->filter( 'navigation_help_placeholders', 2, 10, FALSE, 'gnetwork' );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -146,7 +146,7 @@ class Modified extends gEditorial\Module
 		$this->hook_content_insert( 30 );
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
@@ -174,7 +174,7 @@ class Modified extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_widget( 'latest-summary', _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ) );
 	}
@@ -251,7 +251,7 @@ class Modified extends gEditorial\Module
 		return $items;
 	}
 
-	public function insert_content( $content )
+	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
@@ -280,14 +280,14 @@ class Modified extends gEditorial\Module
 		$this->wrap_content_insert( $html, $extra );
 	}
 
-	public function entry_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function entry_modified_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->modified_data_summary( array_merge( [
 			'echo' => FALSE,
 		], (array) $atts ) );
 	}
 
-	public function post_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function post_modified_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'             => get_queried_object_id(),
@@ -368,7 +368,7 @@ class Modified extends gEditorial\Module
 		echo $before.Core\HTML::code( '{SITE_LAST_MODIFIED}', FALSE, TRUE ).$after;
 	}
 
-	public function site_modified_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function site_modified_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'format'         => NULL,

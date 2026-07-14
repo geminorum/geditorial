@@ -26,7 +26,7 @@ class FrontSettings extends gEditorial\Service
 	const MORE_SECTION = 'geditorial_andmore';
 	const LINK_SECTION = 'geditorial_wiki';
 
-	public static function setup()
+	public static function setup(): void
 	{
 		add_action( 'customize_register', [ __CLASS__, 'customize_register' ], 9, 1 );
 

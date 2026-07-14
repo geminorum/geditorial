@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcTracking extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_tracking',
@@ -23,7 +23,7 @@ class WcTracking extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$icon = $this->_service_icon( TRUE );
 
@@ -83,7 +83,7 @@ class WcTracking extends gEditorial\Module
 		];
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 
@@ -93,7 +93,7 @@ class WcTracking extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

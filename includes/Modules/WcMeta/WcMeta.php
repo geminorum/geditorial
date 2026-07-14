@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcMeta extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_meta',
@@ -28,14 +28,14 @@ class WcMeta extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => WordPress\WooCommerce::PRODUCT_POSTTYPE,
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -104,7 +104,7 @@ class WcMeta extends gEditorial\Module
 		];
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 	}

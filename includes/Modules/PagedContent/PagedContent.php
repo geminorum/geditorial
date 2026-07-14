@@ -12,7 +12,7 @@ class PagedContent extends gEditorial\Module
 {
 	use Internals\Rewrites;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'paged_content',
@@ -29,7 +29,7 @@ class PagedContent extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_viewall'          => [
@@ -91,7 +91,7 @@ class PagedContent extends gEditorial\Module
 		];
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 
@@ -133,7 +133,7 @@ class PagedContent extends gEditorial\Module
 		return FALSE;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'viewall_queryvar'  => 'viewall',
@@ -142,7 +142,7 @@ class PagedContent extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

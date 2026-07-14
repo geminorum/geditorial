@@ -15,7 +15,7 @@ class ConnectedPosts extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'connected_posts';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Connected Posts', 'Widget Title', 'geditorial-widgets' ),

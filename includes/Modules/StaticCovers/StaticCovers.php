@@ -15,7 +15,7 @@ class StaticCovers extends gEditorial\Module
 	use Internals\FramePageViews;
 	use Internals\MetaBoxSupported;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'static_covers',
@@ -27,7 +27,7 @@ class StaticCovers extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings        = [];
 		$posttype_tokens = $this->_get_posttype_template_tokens();
@@ -209,7 +209,7 @@ class StaticCovers extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'post_cover_shortcode' => 'post-cover',
@@ -222,7 +222,7 @@ class StaticCovers extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [];
 
@@ -251,7 +251,7 @@ class StaticCovers extends gEditorial\Module
 		return $strings;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -270,7 +270,7 @@ class StaticCovers extends gEditorial\Module
 		// public function user_profile_picture_description ( $description, $profile_user ) {}
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->filter_module( 'importer', 'metakeys_for_image', 2, 9 );
 		$this->filter_module( 'importer', 'template_for_image', 2, 9 );
@@ -287,7 +287,7 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
@@ -299,7 +299,7 @@ class StaticCovers extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
 
@@ -338,7 +338,7 @@ class StaticCovers extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->role_can( 'reports' ) ) {
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
@@ -865,7 +865,7 @@ class StaticCovers extends gEditorial\Module
 		], $url_template );
 	}
 
-	public function post_cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function post_cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id' => is_singular() ? get_queried_object_id() : NULL,
@@ -942,7 +942,7 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	public function term_cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function term_cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id' => ( is_tax() || is_tag() || is_category() ) ? get_queried_object_id() : NULL,

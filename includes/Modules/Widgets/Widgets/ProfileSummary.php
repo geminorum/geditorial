@@ -13,7 +13,7 @@ class ProfileSummary extends gEditorial\Widget
 	const MODULE = 'widgets';
 	const WIDGET = 'profile_summary';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Profile Summary', 'Widget Title', 'geditorial-widgets' ),

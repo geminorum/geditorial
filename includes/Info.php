@@ -15,7 +15,7 @@ class Info extends WordPress\Main
 	// `https://db-ip.com/xxx.xxx.xx.xxx`
 	// TODO: customize for this plugin
 	// MAYBE: `Services\InternetProtocol`
-	public static function lookupIP( $ip )
+	public static function lookupIP( string $ip ): string
 	{
 		if ( function_exists( 'gnetwork_ip_lookup' ) )
 			return gnetwork_ip_lookup( $ip );
@@ -25,7 +25,7 @@ class Info extends WordPress\Main
 
 	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
-	public static function lookupLatLng( $latlng, $extra = [] )
+	public static function lookupLatLng( string $latlng, array $extra = [] ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => self::lookupURLforLatLng( $latlng ),
@@ -39,7 +39,7 @@ class Info extends WordPress\Main
 	// @SEE: https://www.latlong.net/countries.html
 	// @REF: https://stackoverflow.com/a/52943975
 	// `maps.google.com/?q=35.6928,50.82565`
-	public static function lookupURLforLatLng( $latlng )
+	public static function lookupURLforLatLng( string $latlng ): string
 	{
 		if ( ! $latlng )
 			return '#';
@@ -60,8 +60,8 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function lookupCountry( $code )
 	// TODO: Migrate to `Services\Lookup`
+	public static function lookupCountry( string $code ): string
 	{
 		if ( function_exists( 'gnetwork_country_lookup' ) )
 			return gnetwork_country_lookup( $code );
@@ -71,7 +71,7 @@ class Info extends WordPress\Main
 
 	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
-	public static function lookupISBN( $isbn )
+	public static function lookupISBN( string $isbn ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => self::lookupURLforISBN( $isbn ),
@@ -83,7 +83,7 @@ class Info extends WordPress\Main
 
 	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
-	public static function lookupURLforISBN( $isbn )
+	public static function lookupURLforISBN( string $isbn ): string
 	{
 		$url = add_query_arg( [
 			'vid' => urlencode( 'isbn'.Core\ISBN::sanitize( $isbn ) ),
@@ -97,7 +97,7 @@ class Info extends WordPress\Main
 
 	// TODO: Migrate to `Services\Lookup`
 	// NOTE: must return HTML link tag
-	public static function lookupVIN( $vin )
+	public static function lookupVIN( string $vin ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => self::lookupURLforVIN( $vin ),
@@ -110,7 +110,7 @@ class Info extends WordPress\Main
 	// TODO: Migrate to `Services\Lookup`
 	// `https://en.vindecoder.pl/en/decode/JH2RC3605MM101581`
 	// @SEE: https://vpic.nhtsa.dot.gov/decoder/
-	public static function lookupURLforVIN( $vin )
+	public static function lookupURLforVIN( string $vin ): string
 	{
 		$url = sprintf(
 			'https://en.vindecoder.pl/en/decode/%s',
@@ -123,7 +123,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function fromIBAN( $input, $pre = [] )
+	public static function fromIBAN( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
 		$raw  = Core\Number::translate( $input );
@@ -151,7 +151,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function fromPostCode( $input, $pre = [] )
+	public static function fromPostCode( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
 
@@ -200,7 +200,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function fromCardNumber( $input, $pre = [] )
+	public static function fromCardNumber( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
 
@@ -217,7 +217,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function renderNoticeP2P()
+	public static function renderNoticeP2P(): void
 	{
 		if ( defined( 'P2P_PLUGIN_VERSION' ) )
 			return;
@@ -231,7 +231,7 @@ class Info extends WordPress\Main
 	}
 
 	// OLD: `infoP2P()`
-	public static function renderConnectedP2P()
+	public static function renderConnectedP2P(): string
 	{
 		return sprintf(
 			/* translators: `%s`: code placeholder */
@@ -240,7 +240,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function renderSomethingIsWrong( $before = '', $after = '', $block = NULL )
+	public static function renderSomethingIsWrong( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before.Plugin::wrong( FALSE ).$after,
@@ -251,7 +251,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderWaitForAMoment( $before = '', $after = '', $block = NULL )
+	public static function renderWaitForAMoment( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before.Plugin::moment( FALSE ).$after,
@@ -262,7 +262,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoReportsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoReportsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no reports available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -273,7 +273,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoImportsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoImportsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no imports available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -284,7 +284,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoExportsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoExportsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no exports available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -295,7 +295,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoCustomsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoCustomsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no customs available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -306,7 +306,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoToolsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoToolsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no tools available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -317,7 +317,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoRolesAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoRolesAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no roles available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -328,7 +328,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoPostsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoPostsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no posts available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -339,7 +339,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoTermsAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoTermsAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no terms available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -350,7 +350,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNoDataAvailable( $before = '', $after = '', $block = NULL )
+	public static function renderNoDataAvailable( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'There are no data available!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -361,7 +361,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderEmptyMIMEtype( $before = '', $after = '', $block = NULL )
+	public static function renderEmptyMIMEtype( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The MIME-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -372,7 +372,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderEmptyPosttype( $before = '', $after = '', $block = NULL )
+	public static function renderEmptyPosttype( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The post-type is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -383,7 +383,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderEmptyTaxonomy( $before = '', $after = '', $block = NULL )
+	public static function renderEmptyTaxonomy( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The taxonomy is not provided!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -394,7 +394,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNotSupportedPosttype( $before = '', $after = '', $block = NULL )
+	public static function renderNotSupportedPosttype( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The post-type is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -405,7 +405,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNotSupportedTaxonomy( $before = '', $after = '', $block = NULL )
+	public static function renderNotSupportedTaxonomy( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The taxonomy is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -416,7 +416,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderNotSupportedField( $before = '', $after = '', $block = NULL )
+	public static function renderNotSupportedField( string $before = '', string $after = '', ?bool $block = NULL ): false
 	{
 		Core\HTML::desc(
 			$before._x( 'The field is not supported!', 'Info: Message', 'geditorial-admin' ).$after,
@@ -427,7 +427,7 @@ class Info extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function renderRegistered( $datetime_string, $before = '', $after = '' )
+	public static function renderRegistered( string $datetime_string, string $before = '', string $after = '' ): void
 	{
 		echo $before.sprintf(
 			/* translators: `%s`: date-time string */
@@ -437,7 +437,7 @@ class Info extends WordPress\Main
 	}
 
 	// NOTE: front-end only. `$icon` must be an array
-	public static function getIcon( $icon, $title = FALSE, $link = FALSE )
+	public static function getIcon( array $icon, ?string $title = '', ?string $link = '' ): string
 	{
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
 			'href'   => $link ?: FALSE,
@@ -448,8 +448,13 @@ class Info extends WordPress\Main
 	}
 
 	// FIXME: Migrate to `Icons` service: `Icons::renderByField()`
-	public static function renderIcon( $for, $text = NULL, $link = FALSE, $verbose = TRUE )
-	{
+	public static function renderIcon(
+		string $for,
+		?string $text = NULL,
+		?string $link = '',
+		bool $verbose = TRUE,
+	): bool|string {
+
 		$html = '';
 
 		switch ( $for ) {
@@ -476,7 +481,7 @@ class Info extends WordPress\Main
 	 * @param string $fallback
 	 * @return array
 	 */
-	public static function getUnit( $key, $fallback = NULL )
+	public static function getUnit( string $key, ?string $fallback = NULL ): array
 	{
 		switch ( $key ) {
 
@@ -504,7 +509,7 @@ class Info extends WordPress\Main
 		return [ $fallback, $fallback, $fallback ];
 	}
 
-	public static function getNoop( $key, $fallback = NULL )
+	public static function getNoop( mixed $key, mixed $fallback = NULL ): mixed
 	{
 		if ( self::empty( $key ) )
 			return $fallback;
@@ -734,10 +739,10 @@ class Info extends WordPress\Main
 		return $fallback;
 	}
 
-	public static function getHelpTabs( $context = NULL ) { return []; }
+	public static function getHelpTabs( ?string $context = NULL ): array { return []; }
 
 	// TODO: add click to select
-	public static function renderHelpTabList( $list )
+	public static function renderHelpTabList( array $list ): void
 	{
 		echo Core\HTML::wrap( Core\HTML::rows( $list ), [
 			static::classs( 'help-tab-content' ),
@@ -747,7 +752,7 @@ class Info extends WordPress\Main
 		] );
 	}
 
-	public static function getPosttypePropTitle( $prop, $posttype = NULL, $context = NULL )
+	public static function getPosttypePropTitle( string $prop, ?string $posttype = NULL, ?string $context = NULL ): string
 	{
 		$title = '';
 
@@ -785,7 +790,7 @@ class Info extends WordPress\Main
 		);
 	}
 
-	public static function getDropzoneStrings()
+	public static function getDropzoneStrings(): array
 	{
 		return apply_filters( self::und( static::BASE, 'strings_dropzone' ), [
 			/* Translators: The text used before any files are dropped. */
@@ -836,7 +841,7 @@ class Info extends WordPress\Main
 	 * @param bool $extended
 	 * @return array
 	 */
-	public static function getAgeStructure( $extended = FALSE )
+	public static function getAgeStructure( bool $extended = FALSE ): array
 	{
 		$data = [
 			'00to14' => [
@@ -897,7 +902,7 @@ class Info extends WordPress\Main
 	 * @param bool $extended
 	 * @return array
 	 */
-	public static function getMedicalAge( $extended = FALSE )
+	public static function getMedicalAge( bool $extended = FALSE ): array
 	{
 		$data = [
 			'newborns'     => [ 'slug' => 'newborns',     'name' => _x( 'Newborns', 'Datetime: Medical Age', 'geditorial' ),     'meta' => [               'max' => 1   ] ],

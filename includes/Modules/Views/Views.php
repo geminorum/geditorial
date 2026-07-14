@@ -12,7 +12,7 @@ class Views extends gEditorial\Module
 {
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'views',
@@ -26,12 +26,12 @@ class Views extends gEditorial\Module
 		];
 	}
 
-	public function settings_intro()
+	public function settings_intro( ?string $context = NULL ): void
 	{
 		Core\HTML::desc( _x( 'Note that the logged-out users are counted by default.', 'Message', 'geditorial-views' ) );
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -49,7 +49,7 @@ class Views extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_post_template' => '_ge_views_%s',
@@ -63,12 +63,12 @@ class Views extends gEditorial\Module
 		];
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -101,7 +101,7 @@ class Views extends gEditorial\Module
 			];
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -161,7 +161,7 @@ class Views extends gEditorial\Module
 		return (int) get_post_meta( $post_id, sprintf( $this->constant( 'metakey_post_template' ), $event ), TRUE );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback );
 	}

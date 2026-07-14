@@ -132,8 +132,13 @@ trait PairedAssignment
 		], $args['asset'] );
 	}
 
-	protected function paired_assignment__do_render_iframe_content( $context = NULL, $assign_template = NULL, $reports_template = NULL, $custom_app = NULL )
-	{
+	protected function paired_assignment__do_render_iframe_content(
+		?string $context = NULL,
+		?string $assign_template = NULL,
+		?string $reports_template = NULL,
+		?string $custom_app = NULL,
+	): bool {
+
 		if ( ! $post = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
@@ -171,6 +176,8 @@ trait PairedAssignment
 				Core\HTML::dieMessage( $this->get_notice_for_noaccess() );
 			gEditorial\Settings::wrapClose( FALSE, $context );
 		}
+
+		return TRUE;
 	}
 
 	// `$this->filter( 'searchselect_result_image_for_term', 3, 12, 'paired_assignment', $this->base );`
@@ -223,7 +230,7 @@ trait PairedAssignment
 		return $fields;
 	}
 
-	protected function paired_assignment_get_supported_fields( $context, $posttype )
+	protected function paired_assignment_get_supported_fields( ?string $context, string $posttype ): array
 	{
 		return $this->filters( 'paired_supported_fields', [
 
@@ -250,8 +257,12 @@ trait PairedAssignment
 		], $context, $posttype );
 	}
 
-	protected function pairedmetabox__render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function pairedmetabox__render_supportedbox_content( 
+		?object $object, 
+		array|false $box, 
+		?string $context = NULL, 
+		?object $screen = NULL,
+	): bool {
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 
@@ -279,5 +290,7 @@ trait PairedAssignment
 			'maxwidth' => '800px',
 			'refresh'  => sprintf( 'terms_rendered.%s.ordered', get_taxonomy( $this->constant( $paired[1] ) )->rest_base ),
 		] ), 'field-wrap -buttons' );
+
+		return TRUE;
 	}
 }

@@ -24,7 +24,7 @@ class Labeled extends gEditorial\Module
 
 	protected $disable_no_posttypes = TRUE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'labeled',
@@ -39,7 +39,7 @@ class Labeled extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
@@ -65,14 +65,14 @@ class Labeled extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy' => 'label',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -91,7 +91,7 @@ class Labeled extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -104,7 +104,7 @@ class Labeled extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -124,7 +124,7 @@ class Labeled extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -143,7 +143,7 @@ class Labeled extends gEditorial\Module
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported();
 
@@ -155,7 +155,7 @@ class Labeled extends gEditorial\Module
 		register_taxonomy_for_object_type( $this->constant( 'main_taxonomy' ), $posttype );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
@@ -166,7 +166,7 @@ class Labeled extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -187,7 +187,7 @@ class Labeled extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
@@ -206,14 +206,16 @@ class Labeled extends gEditorial\Module
 			] );
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 }

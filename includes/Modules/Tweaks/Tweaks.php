@@ -19,7 +19,7 @@ class Tweaks extends gEditorial\Module
 	private $_site_user_id   = [];
 	private $_post_statuses  = [];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'tweaks',
@@ -43,7 +43,7 @@ class Tweaks extends gEditorial\Module
 		);
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option'  => 'posttypes_option',
@@ -194,7 +194,7 @@ class Tweaks extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'misc' => [
@@ -217,7 +217,7 @@ class Tweaks extends gEditorial\Module
 		];
 	}
 
-	protected function taxonomies_excluded( $extra = [] )
+	protected function taxonomies_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( [
@@ -260,7 +260,7 @@ class Tweaks extends gEditorial\Module
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			$this->_edit_screen( $posttype );
@@ -272,7 +272,7 @@ class Tweaks extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$enqueue = FALSE;
 

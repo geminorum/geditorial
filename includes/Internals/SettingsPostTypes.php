@@ -203,7 +203,7 @@ trait SettingsPostTypes
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		$extra = (array) $extra;
 
@@ -222,7 +222,7 @@ trait SettingsPostTypes
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_parents( $extra = [] )
+	protected function posttypes_parents( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_parents', gEditorial\Settings::posttypesParents( $extra ) );
 	}

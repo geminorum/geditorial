@@ -14,9 +14,21 @@ class Plugin extends WordPress\Plugin
 	private $asset_icons    = [];
 	private $adminbar_nodes = [];
 
-	private $_path;
+	/**
+	 * Keeps a copy of loaded options for current module.
+	 *
+	 * @var object
+	 */
 	private $_options;
+
+	/**
+	 * Keeps a copy of loaded modules.
+	 *
+	 * @var object
+	 */
 	private $_modules;
+
+	private $_path      = '';
 	private $_active    = 0;
 	private $_available = 0;
 
@@ -29,7 +41,7 @@ class Plugin extends WordPress\Plugin
 	const CAPABILITY_TESTS    = 'editorial_tests';
 	const CAPABILITY_TOOLS    = 'editorial_tools';
 
-	protected function setup_check()
+	protected function setup_check(): bool
 	{
 		if ( is_network_admin() || is_user_admin() )
 			return FALSE;
@@ -48,14 +60,14 @@ class Plugin extends WordPress\Plugin
 		return TRUE;
 	}
 
-	protected function initialize()
+	protected function initialize(): void
 	{
 		$this->_path    = sprintf( '%sincludes/Modules/', $this->__dir );
 		$this->_modules = new \stdClass();
 		$this->_options = new \stdClass();
 	}
 
-	protected function actions()
+	protected function actions(): void
 	{
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
@@ -73,13 +85,13 @@ class Plugin extends WordPress\Plugin
 		WordPress\WooCommerce::declareCompat( $this->get_file() );
 	}
 
-	public function admin_init()
+	public function admin_init(): void
 	{
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 999 );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
 	}
 
-	public function plugins_loaded()
+	public function plugins_loaded(): void
 	{
 		$this->setup_services();
 		$this->load_modules();
@@ -91,7 +103,7 @@ class Plugin extends WordPress\Plugin
 
 	// NOTE: `custom path` once set by `load_plugin_textdomain()`
 	// NOTE: assumes the plugin directory is the same as the `textdomain`
-	protected function textdomains()
+	protected function textdomains(): void
 	{
 		parent::textdomains();
 
@@ -102,7 +114,7 @@ class Plugin extends WordPress\Plugin
 		load_textdomain( $this->base.'-admin', $this->__dir."languages/admin-{$locale}.mo", $locale );
 	}
 
-	protected function late_constants()
+	protected function late_constants(): array
 	{
 		return [
 			'GEDITORIAL_SYSTEM_TITLE'      => NULL,
@@ -125,7 +137,7 @@ class Plugin extends WordPress\Plugin
 		];
 	}
 
-	private function load_modules()
+	private function load_modules(): void
 	{
 		foreach ( scandir( $this->_path ) as $module ) {
 
@@ -141,15 +153,17 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// NOTE: public interface to register internal/external modules
-	public function register_module( $args = [], $folder = FALSE, $class = NULL )
+	public function register_module( array $args = [], false|string $folder = FALSE, ?string $class = NULL ): false|object
 	{
 		if ( ! $registration = Services\Modulation::moduleObject( $args, $folder, $class ) )
 			return FALSE;
 
 		$this->_modules->{$registration[0]} = $registration[1];
+
+		return $registration[1];
 	}
 
-	private function load_options()
+	private function load_options(): void
 	{
 		$frontend = ! is_admin();
 		$options  = get_option( $this->base.'_options' );
@@ -167,7 +181,7 @@ class Plugin extends WordPress\Plugin
 		}
 	}
 
-	private function init_modules()
+	private function init_modules(): void
 	{
 		$locale = apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
 		$stage  = Helper::const( 'WP_STAGE', 'production' ); // 'development'
@@ -198,7 +212,7 @@ class Plugin extends WordPress\Plugin
 			$this->_modules = FALSE;
 	}
 
-	private function setup_services()
+	private function setup_services(): void
 	{
 		$available = [
 			'AdminScreen',
@@ -245,7 +259,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// HELPER
-	public function get_module_by( $key, $value )
+	public function get_module_by( string $key, mixed $value ): false|object
 	{
 		if ( empty( $this->_modules ) )
 			return FALSE;
@@ -263,7 +277,7 @@ class Plugin extends WordPress\Plugin
 		return FALSE;
 	}
 
-	public function enabled( $module, $setup_check = TRUE )
+	public function enabled( string $module, bool $setup_check = TRUE ): bool
 	{
 		if ( empty( $module ) )
 			return FALSE;
@@ -277,7 +291,7 @@ class Plugin extends WordPress\Plugin
 		return TRUE;
 	}
 
-	public function disable_process( $module, $context = 'import' )
+	public function disable_process( string $module, ?string $context = NULL ): bool
 	{
 		// already not enabled!
 		if ( ! $this->enabled( $module ) )
@@ -286,22 +300,22 @@ class Plugin extends WordPress\Plugin
 		return $this->{$module}->disable_process( $context );
 	}
 
-	public function count_registered_modules()
+	public function count_registered_modules(): int
 	{
 		return empty( $this->_modules ) ? 0 : count( get_object_vars( $this->_modules ) );
 	}
 
-	public function count_available_modules()
+	public function count_available_modules(): int
 	{
 		return $this->_available ?: 0;
 	}
 
-	public function count_active_modules()
+	public function count_active_modules(): int
 	{
 		return $this->_active ?: 0;
 	}
 
-	public function modules( $orderby = FALSE )
+	public function modules( mixed $orderby = FALSE ): array
 	{
 		if ( empty( $this->_modules ) )
 			return [];
@@ -316,12 +330,12 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// NOTE: must check for enabled before this!
-	public function module( $name )
+	public function module( string $name ): object
 	{
 		return $this->{$name};
 	}
 
-	public function constant( $module, $key, $default = NULL )
+	public function constant( string $module, string $key, mixed $default = NULL ): mixed
 	{
 		if ( $module && self::enabled( $module ) )
 			return $this->{$module}->constant( $key, $default );
@@ -330,12 +344,12 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// NOTE: DEPRECATED
-	public function get_constant( $module, $key, $default = NULL )
+	public function get_constant( string $module, string $key, mixed $default = NULL ): mixed
 	{
 		return $this->{$module}->constant( $key, $default );
 	}
 
-	public function list_modules( $enabled_only = FALSE, $orderby = 'title' )
+	public function list_modules( bool $enabled_only = FALSE, false|string|array $orderby = 'title' ): array
 	{
 		$list = [];
 
@@ -349,13 +363,14 @@ class Plugin extends WordPress\Plugin
 		return $list;
 	}
 
-	public function update_module_option( $name, $key, $value )
+	public function update_module_option( string $name, string $key, mixed $value ): bool
 	{
 		if  ( ! $options = get_option( 'geditorial_options' ) )
 			$options = [];
 
 		if ( isset( $options[$name] ) )
 			$module_options = (object) $options[$name]; // NOTE: upon import will convert into arrays
+
 		else
 			$module_options = new \stdClass();
 
@@ -365,19 +380,21 @@ class Plugin extends WordPress\Plugin
 		return update_option( 'geditorial_options', $options, TRUE );
 	}
 
-	public function update_all_module_options( $name, $new_options )
+	public function update_all_module_options( string $name, array|object $new_options ): bool
 	{
-		$options = get_option( 'geditorial_options' );
+		$key     = self::und( $this->base, 'options' );
+		$options = get_option( $key );
 
 		if ( is_array( $new_options ) )
 			$new_options = (object) $new_options;
 
 		$options[$name] = $new_options;
-		return update_option( 'geditorial_options', $options, TRUE );
+
+		return update_option( $key, $options, TRUE );
 	}
 
 	// FIXME: DROP THIS
-	public function audit_options()
+	public function audit_options(): array
 	{
 		$options = [];
 
@@ -392,7 +409,7 @@ class Plugin extends WordPress\Plugin
 		return $options;
 	}
 
-	public function upgrade_old_options()
+	public function upgrade_old_options(): array
 	{
 		$key      = self::und( $this->base, 'options' );
 		$options  = get_option( $key );
@@ -425,7 +442,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AdminScreen` Service
-	public function admin_print_styles()
+	public function admin_print_styles(): void
 	{
 		$screen = get_current_screen();
 
@@ -480,12 +497,12 @@ class Plugin extends WordPress\Plugin
 			Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
 	}
 
-	public function wp_default_autoload_value( $autoload, $option, $value, $serialized_value )
+	public function wp_default_autoload_value( mixed $autoload, string $option, mixed $value, string $serialized_value ): mixed
 	{
 		return $option === self::und( $this->base, 'options' ) ? TRUE : $autoload;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		if ( ! $custom = get_page_template_slug() )
 			return $template;
@@ -499,25 +516,25 @@ class Plugin extends WordPress\Plugin
 		return $template;
 	}
 
-	public function get_header( $name = 'editorial' )
+	public function get_header( ?string $name = NULL ): void
 	{
 		if ( defined( 'GTHEME_VERSION' ) )
 			return;
 
-		get_header( $name );
+		get_header( $name ?? 'editorial' );
 	}
 
-	public function get_footer( $name = 'editorial' )
+	public function get_footer( ?string $name = NULL ): void
 	{
 		if ( defined( 'GTHEME_VERSION' ) )
 			return;
 
-		get_footer( $name );
+		get_footer( $name ?? 'editorial' );
 	}
 
 	// TODO: Move to `AssetRegistry` Service
 	// NOTE: `enqueue` means just the styles, not the admin-bar itself!
-	public function enqueue_adminbar( $value = NULL )
+	public function enqueue_adminbar( ?bool $value = NULL ): bool
 	{
 		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
 	}
@@ -525,13 +542,13 @@ class Plugin extends WordPress\Plugin
 	// TODO: Move to `AssetRegistry` Service
 	// NOTE: passing `NULL` returns the current state.
 	// FIXME: default must be `NULL` / caller must pass the intended value!
-	public function enqueue_styles( $value = TRUE )
+	public function enqueue_styles( ?bool $value = TRUE ): bool
 	{
 		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	public function wp_enqueue_scripts()
+	public function wp_enqueue_scripts(): void
 	{
 		$this->enqueue_asset_adminbar();
 
@@ -565,7 +582,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	public function enqueue_asset_adminbar()
+	public function enqueue_asset_adminbar(): bool|string
 	{
 		if ( ! is_admin_bar_showing() )
 			return FALSE;
@@ -584,7 +601,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	public function enqueue_asset_config( $args = [], $module = NULL )
+	public function enqueue_asset_config( array $args = [], ?string $module = NULL ): bool
 	{
 		$this->asset_config = TRUE;
 
@@ -605,7 +622,7 @@ class Plugin extends WordPress\Plugin
 
 	// used in front & admin
 	// TODO: Move to `AssetRegistry` Service
-	public function footer_asset_config()
+	public function footer_asset_config(): void
 	{
 		if ( $this->asset_config )
 			Scripts::printJSConfig( $this->asset_jsargs );
@@ -614,7 +631,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	public function icon( $name, $group, $extra = [], $enqueue = TRUE )
+	public function icon( string $name, string $group, array $extra = [], bool $enqueue = TRUE ): false|string|array
 	{
 		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {
 
@@ -636,13 +653,13 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AdminbarRegistry` Service
-	public function admin_bar_init()
+	public function admin_bar_init(): void
 	{
 		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, $this->base ] );
 	}
 
 	// TODO: Move to `AdminbarRegistry` Service
-	public function admin_bar_menu( $wp_admin_bar )
+	public function admin_bar_menu( object $wp_admin_bar ): void
 	{
 		// NOT USED YET: WTF: it causes to `geditorial_adminbar` action fires again!
 		// `do_action_ref_array( 'geditorial_adminbar_lastcall', [ &$this->adminbar_nodes, $this->base ] );`
@@ -682,7 +699,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// @OLD: `Core\WordPress::getEditorialUserID()`
-	public function user( $fallback = FALSE )
+	public function user( bool $fallback = FALSE ): int
 	{
 		if ( function_exists( 'gNetwork' ) )
 			return gNetwork()->user( $fallback );
@@ -700,73 +717,73 @@ class Plugin extends WordPress\Plugin
 		return 0;
 	}
 
-	public function base_country()
+	public function base_country( ?string $fallback = NULL ): string
 	{
-		return Services\Locations::baseCountry( 'IR' );
+		return Services\Locations::baseCountry( $fallback ?? 'IR' );
 	}
 
 	// TODO: move following into Info!
-	public static function system( $wrap = FALSE, $fallback = '' )
+	public static function system( false|string $wrap = FALSE, mixed $fallback = '' ): mixed
 	{
 		if ( ! $message = self::const( 'GEDITORIAL_SYSTEM_TITLE', NULL ) ?? _x( 'Editorial', 'Plugin: System Title', 'geditorial' ) ) return $fallback;
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-system', 'title' => self::const( 'GEDITORIAL_SYSTEM_DESC', NULL ) ?? _x( 'Our Editorial in WordPress', 'Plugin: System Description', 'geditorial' ) ], $message ) : $message;
 	}
 
-	public static function na( $wrap = 'code' )
+	public static function na( false|string $wrap = 'code' ): string
 	{
 		$message = __( 'N/A', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-na', 'title' => __( 'Not Available', 'geditorial' ) ], $message ) : $message;
 	}
 
-	public static function untitled( $wrap = 'span' )
+	public static function untitled( false|string $wrap = 'span' ): string
 	{
 		$message = __( '(Untitled)', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-untitled', 'title' => __( 'Title Undefined', 'geditorial' ) ], $message ) : $message;
 	}
 
-	public static function denied( $wrap = 'p' )
+	public static function denied( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'You don&#8217;t have permission to do this.', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-denied' ] ], $message ) : $message;
 	}
 
-	public static function wrong( $wrap = 'p' )
+	public static function wrong( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Something&#8217;s wrong!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-wrong' ] ], $message ) : $message;
 	}
 
-	public static function moment( $wrap = 'p' )
+	public static function moment( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Wait for a moment &hellip;', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-moment' ] ], $message ) : $message;
 	}
 
-	public static function invalid( $wrap = 'p' )
+	public static function invalid( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Invalid data provided!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-invalid' ] ], $message ) : $message;
 	}
 
-	public static function noinfo( $wrap = 'p' )
+	public static function noinfo( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'There is no information available!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
 	}
 
-	public static function notreadable( $wrap = 'p' )
+	public static function notreadable( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Data source is not readable!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-notreadable' ] ], $message ) : $message;
 	}
 
-	public static function done( $wrap = 'p' )
+	public static function done( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'All Done!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-done' ] ], $message ) : $message;
 	}
 
-	public static function what( $wrap = 'p' )
+	public static function what( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'What?!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-what' ] ], $message ) : $message;

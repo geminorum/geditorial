@@ -14,7 +14,7 @@ class Reshare extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\ObjectsToObjects;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'reshare',
@@ -29,7 +29,7 @@ class Reshare extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_connected' => [
@@ -47,7 +47,7 @@ class Reshare extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype'     => 'reshare',
@@ -56,7 +56,7 @@ class Reshare extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		return [
 			'noops' => [
@@ -71,7 +71,7 @@ class Reshare extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -83,12 +83,12 @@ class Reshare extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'primary_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -121,7 +121,7 @@ class Reshare extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'primary_posttype', $screen ) ) {
 
@@ -139,7 +139,7 @@ class Reshare extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'primary_posttype' ) )
 			$items[] = $glance;

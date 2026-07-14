@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcImages extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'      => 'wc_images',
@@ -29,7 +29,7 @@ class WcImages extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'metakey_thumbnail_id'  => '_thumbnail_id',
@@ -37,7 +37,7 @@ class WcImages extends gEditorial\Module
 		];
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools', 'per_page' ) ) {
 
@@ -86,7 +86,7 @@ class WcImages extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$query = [
 			'meta_query' => [

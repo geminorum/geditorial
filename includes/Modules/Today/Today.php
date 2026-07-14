@@ -21,7 +21,7 @@ class Today extends gEditorial\Module
 	protected $__posts = [];
 	protected $__home  = FALSE;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'today',
@@ -39,7 +39,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -90,7 +90,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'day',
@@ -107,7 +107,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -141,7 +141,7 @@ class Today extends gEditorial\Module
 		return $strings;
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -155,7 +155,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function get_module_templates()
+	protected function get_module_templates(): array
 	{
 		return [
 			'page_posttype' => [
@@ -164,7 +164,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -173,7 +173,7 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function setup( $args = [] )
+	protected function setup( array $args = [] ): bool
 	{
 		parent::setup();
 
@@ -181,23 +181,25 @@ class Today extends gEditorial\Module
 		$this->filter( 'post_type_link', 4 );
 
 		if ( is_admin() )
-			return;
+			return TRUE;
 
 		$this->filter_append( 'query_vars', $this->_get_query_vars() );
+
+		return TRUE;
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 	}
 
-	public function importer_init()
+	public function importer_init(): void
 	{
 		$this->filter_module( 'importer', 'fields', 2 );
 		$this->filter_module( 'importer', 'prepare', 7 );
@@ -206,7 +208,7 @@ class Today extends gEditorial\Module
 		$this->action_module( 'importer', 'posttype_extra_all', 7 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -230,7 +232,7 @@ class Today extends gEditorial\Module
 		$this->filter( 'the_title', 2, 8 );
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( $this->posttypes() ) )
 			return;
@@ -245,7 +247,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 
@@ -262,7 +264,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_wp_submenu_page( 'adminmenu',
 			'index.php',
@@ -321,7 +323,7 @@ class Today extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -715,7 +717,7 @@ class Today extends gEditorial\Module
 		ModuleHelper::displayTheDay( $the_day, FALSE );
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		if ( is_embed() || is_search() )
 			return $template;
@@ -1205,7 +1207,7 @@ class Today extends gEditorial\Module
 		return $events;
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'cal'       => $this->default_calendar(),
@@ -1240,7 +1242,7 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function title_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function title_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'cal'     => $this->default_calendar(),
@@ -1274,7 +1276,7 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function buttons_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function buttons_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'cal'        => $this->default_calendar(),
@@ -1333,12 +1335,12 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		$constants = $this->get_the_day_constants();
 		$list      = $this->list_posttypes();
@@ -1384,7 +1386,7 @@ class Today extends gEditorial\Module
 		] );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 			if ( ! empty( $_POST ) ) {
@@ -1422,7 +1424,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Today Tools', 'Header', 'geditorial-today' ) );
@@ -1439,6 +1441,7 @@ class Today extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	protected function renderCard_tool_reschedule_by_day( $posttypes )
@@ -1501,7 +1504,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	public function importer_fields( $fields, $posttype )
+	public function importer_fields( array $fields, string $posttype ): array
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
@@ -1530,7 +1533,7 @@ class Today extends gEditorial\Module
 	}
 
 	// FIXME: use `$atts['prepared'][$field]`
-	public function importer_saved( $post, $atts = [] )
+	public function importer_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

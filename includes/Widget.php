@@ -22,7 +22,7 @@ class Widget extends \WP_Widget
 	 * @param string $module
 	 * @return mixed
 	 */
-	protected static function constant( $key, $default = FALSE, $module = NULL )
+	protected static function constant( string $key, mixed $default = FALSE, ?string $module = NULL ): mixed
 	{
 		return static::factory()->constant( $module ?? static::MODULE, $key, $default );
 	}
@@ -34,7 +34,7 @@ class Widget extends \WP_Widget
 	 * @param mixed $arguments
 	 * @return mixed
 	 */
-	protected static function filters( $hook, ...$arguments )
+	protected static function filters( string $hook, ...$arguments ): mixed
 	{
 		return apply_filters( sprintf( '%s_%s_%s',
 			static::BASE,
@@ -48,15 +48,17 @@ class Widget extends \WP_Widget
 	 *
 	 * @param string $hook
 	 * @param mixed $arguments
-	 * @return mixed
+	 * @return true
 	 */
-	protected static function actions( $hook, ...$arguments )
+	protected static function actions( string $hook, ...$arguments ): true
 	{
-		return do_action( sprintf( '%s_%s_%s',
+		do_action( sprintf( '%s_%s_%s',
 			static::BASE,
 			static::WIDGET, // NOTE: usually the widget name also contain the module name
 			$hook
 		), ...$arguments );
+
+		return TRUE;
 	}
 
 	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )
@@ -104,7 +106,7 @@ class Widget extends \WP_Widget
 			add_action( $action, [ $this, 'flush_widget_cache' ] );
 	}
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'name'  => '',

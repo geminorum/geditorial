@@ -26,7 +26,7 @@ class Papered extends gEditorial\Module
 		'subterms_support'   => TRUE,
 	];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'papered',
@@ -41,7 +41,7 @@ class Papered extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'posttypes_option' => 'posttypes_option',
@@ -74,7 +74,7 @@ class Papered extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'primary_posttype' => 'print_profile',
@@ -85,7 +85,7 @@ class Papered extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -126,7 +126,7 @@ class Papered extends gEditorial\Module
 		return $strings;
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$primary = $this->constant( 'primary_posttype' );
 
@@ -158,7 +158,7 @@ class Papered extends gEditorial\Module
 	}
 
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'primary_taxonomy' => [
@@ -179,7 +179,7 @@ class Papered extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'primary_posttype',
@@ -191,7 +191,7 @@ class Papered extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -223,12 +223,12 @@ class Papered extends gEditorial\Module
 		] );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_posttype( 'primary_posttype', 'themes.php' );
 		$this->_hook_menu_taxonomy( 'primary_taxonomy', 'themes.php' );
@@ -244,7 +244,7 @@ class Papered extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'primary_taxonomy', $screen ) ) {
 

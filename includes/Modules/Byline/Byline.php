@@ -22,7 +22,7 @@ class Byline extends gEditorial\Module
 	protected $disable_no_taxonomies  = TRUE;
 	protected $priority_adminbar_init = 6;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'byline',
@@ -42,7 +42,7 @@ class Byline extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -76,7 +76,7 @@ class Byline extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy'     => 'relation',
@@ -85,7 +85,7 @@ class Byline extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -138,7 +138,7 @@ class Byline extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -171,12 +171,12 @@ class Byline extends gEditorial\Module
 		];
 	}
 
-	public function widgets_init()
+	public function widgets_init(): void
 	{
 		register_widget( __NAMESPACE__.'\\Widgets\\FeaturedCards' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -264,7 +264,7 @@ class Byline extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( 'users' === $screen->base ) {
 
@@ -301,7 +301,7 @@ class Byline extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		if ( $this->role_can( [ 'assign', 'reports' ] ) )
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
@@ -387,7 +387,7 @@ class Byline extends gEditorial\Module
 		], $args['asset'] );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
 		if ( ! $post = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
@@ -434,6 +434,8 @@ class Byline extends gEditorial\Module
 
 			ModuleSettings::wrapClose( FALSE, $context );
 		}
+
+		return TRUE;
 	}
 
 	public function admin_print_styles_summaryreport()
@@ -846,14 +848,14 @@ class Byline extends gEditorial\Module
 	}
 
 	// @FILTER: `gnetwork_taxonomy_exclude_empty`
-	public function taxonomy_exclude_empty( $excludes )
+	public function taxonomy_exclude_empty( array $excludes ): array
 	{
 		return array_merge( $excludes, [
 			$this->constant( 'main_taxonomy' ),
 		] );
 	}
 
-	public function admin_bar_menu( $wp_admin_bar )
+	public function admin_bar_menu( object $wp_admin_bar ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
@@ -900,7 +902,7 @@ class Byline extends gEditorial\Module
 		gEditorial\Scripts::enqueueColorBox();
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'read_post' ) )
 			return;
@@ -964,7 +966,7 @@ class Byline extends gEditorial\Module
 				];
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'       => get_queried_object_id(),
@@ -1023,17 +1025,17 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback, [ 'reports', 'imports' ] );
+		return $this->_override_module_cuc( $context, $fallback_capability, [ 'reports', 'imports' ] );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'imports', 'per_page' );
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Byline Imports', 'Header', 'geditorial-byline' ) );
 
@@ -1058,9 +1060,11 @@ class Byline extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_imports_html_before( $uri, $sub )
+	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_import_from_byline_meta( $sub ) )
 			return FALSE; // avoid further UI
@@ -1070,6 +1074,8 @@ class Byline extends gEditorial\Module
 
 		else if ( $this->_do_import_from_people_plugin( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
 	private function _do_import_from_byline_meta( $sub )

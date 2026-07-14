@@ -28,7 +28,7 @@ class Course extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'course',
@@ -44,7 +44,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -113,7 +113,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'course_posttype'   => 'course',
@@ -133,7 +133,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -178,7 +178,7 @@ class Course extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'status_taxonomy' => [
@@ -190,7 +190,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_fields()
+	protected function get_global_fields(): array
 	{
 		return [
 			'meta' => [
@@ -242,7 +242,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	protected function paired_get_paired_constants()
+	protected function paired_get_paired_constants(): array
 	{
 		return [
 			'course_posttype',
@@ -252,7 +252,7 @@ class Course extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'course_posttype' );
 		$this->register_posttype_thumbnail( 'lesson_posttype' );
@@ -260,7 +260,7 @@ class Course extends gEditorial\Module
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -323,7 +323,7 @@ class Course extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax()
+	public function setup_ajax(): void
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'course_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
@@ -336,7 +336,7 @@ class Course extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'topic_taxonomy' )
@@ -408,7 +408,7 @@ class Course extends gEditorial\Module
 		$this->modulelinks__hook_calendar_linked_post( $screen );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'course_posttype' );
 		$this->add_posttype_fields_for( 'meta', 'lesson_posttype' );
@@ -420,7 +420,7 @@ class Course extends gEditorial\Module
 			] );
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $courses = $this->dashboard_glance_post( 'course_posttype' ) )
 			$items[] = $courses;
@@ -431,7 +431,7 @@ class Course extends gEditorial\Module
 		return $items;
 	}
 
-	public function template_redirect()
+	public function template_redirect(): void
 	{
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
 			return;
@@ -454,7 +454,7 @@ class Course extends gEditorial\Module
 		}
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->templateposttype__include( $template, $this->constant( 'course_posttype' ), FALSE );
 	}
@@ -464,7 +464,7 @@ class Course extends gEditorial\Module
 		return ModuleTemplate::spanTiles();
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'course_posttype' ),
@@ -480,7 +480,7 @@ class Course extends gEditorial\Module
 		);
 	}
 
-	public function span_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function span_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'course_posttype' ),
@@ -493,7 +493,7 @@ class Course extends gEditorial\Module
 		);
 	}
 
-	public function cover_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'course_posttype' );
 		$args = [
@@ -526,7 +526,7 @@ class Course extends gEditorial\Module
 		);
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools' ) ) {
 
@@ -540,7 +540,7 @@ class Course extends gEditorial\Module
 		}
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Course Tools', 'Header', 'geditorial-course' ) );
@@ -561,9 +561,11 @@ class Course extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( FALSE === $this->postdate__render_before_override_dates(
 			[
@@ -580,7 +582,7 @@ class Course extends gEditorial\Module
 		return $this->paired_tools_render_before( $uri, $sub );
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'imports', 'per_page' ) ) {
 
@@ -594,21 +596,25 @@ class Course extends gEditorial\Module
 		}
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->paired_imports_render_tablelist( $uri, $sub ) )
 			return gEditorial\Info::renderNoImportsAvailable();
+
+		return TRUE;
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports', 'per_page' );
 	}
 
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( ! $this->posttype_overview_render_table( 'course_posttype', $uri, $sub ) )
 			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
 	}
 
 	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )

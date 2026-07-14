@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 class WcCheckout extends gEditorial\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'wc_checkout',
@@ -28,7 +28,7 @@ class WcCheckout extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_checkoutform' => [
@@ -67,7 +67,7 @@ class WcCheckout extends gEditorial\Module
 		];
 	}
 
-	protected function settings_section_titles( $suffix )
+	protected function settings_section_titles( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 
@@ -78,7 +78,7 @@ class WcCheckout extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 

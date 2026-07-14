@@ -18,7 +18,7 @@ class WasBorn extends gEditorial\Module
 	use Internals\LateChores;
 	use Internals\PostDate;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'was_born',
@@ -36,7 +36,7 @@ class WasBorn extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$settings  = [];
 		$roles     = $this->get_settings_default_roles();
@@ -104,7 +104,7 @@ class WasBorn extends gEditorial\Module
 		return $settings;
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy'   => 'gender',
@@ -118,7 +118,7 @@ class WasBorn extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -155,7 +155,7 @@ class WasBorn extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'year_taxonomy'  => gEditorial\Datetime::getYearsByDecades( '-100 years', 10, TRUE, 'code' ),
@@ -167,12 +167,12 @@ class WasBorn extends gEditorial\Module
 		];
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -231,7 +231,7 @@ class WasBorn extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -279,7 +279,7 @@ class WasBorn extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 		$this->_hook_menu_taxonomy( 'year_taxonomy', 'users.php' );
@@ -345,7 +345,7 @@ class WasBorn extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		if ( ! $posttypes = $this->get_setting_posttypes( 'parent' ) )
 			return;
@@ -1042,7 +1042,7 @@ class WasBorn extends gEditorial\Module
 		return $data;
 	}
 
-	public function imports_settings( $sub )
+	public function imports_settings( string $sub ): void
 	{
 		if ( ! $this->check_settings( $sub, 'imports', 'per_page' ) )
 			return;
@@ -1050,7 +1050,7 @@ class WasBorn extends gEditorial\Module
 		$this->action_self( 'postdate_after_post_override_date', 4 );
 	}
 
-	protected function render_imports_html( $uri, $sub )
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo gEditorial\Settings::toolboxColumnOpen(
 			_x( 'Birthday Imports', 'Header', 'geditorial-was-born' ) );
@@ -1073,7 +1073,7 @@ class WasBorn extends gEditorial\Module
 		echo '</div>';
 	}
 
-	protected function render_imports_html_before( $uri, $sub )
+	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		return $this->postdate__render_before_override_dates(
 			$this->get_setting( 'parent_posttypes', [] ),

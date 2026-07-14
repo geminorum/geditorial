@@ -25,7 +25,7 @@ class Audit extends gEditorial\Module
 	protected $disable_no_posttypes   = TRUE;
 	protected $priority_adminbar_init = 8;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'audit',
@@ -42,7 +42,7 @@ class Audit extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
 		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
@@ -80,14 +80,14 @@ class Audit extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_taxonomy' => 'audit_attribute',
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -120,7 +120,7 @@ class Audit extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'main_taxonomy' => [
@@ -140,7 +140,7 @@ class Audit extends gEditorial\Module
 		];
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -166,7 +166,7 @@ class Audit extends gEditorial\Module
 			$this->filter_self( 'auto_audit_save_post', 5 );
 	}
 
-	public function do_ajax()
+	public function do_ajax(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
@@ -203,7 +203,7 @@ class Audit extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	private function get_adminbar_checklist( $post_id )
+	private function get_adminbar_checklist( int $post_id ): string
 	{
 		require_once ABSPATH.'wp-admin/includes/template.php';
 
@@ -216,12 +216,12 @@ class Audit extends gEditorial\Module
 		return Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), '-assignnbox' );
 	}
 
-	public function cuc( $context = 'settings', $fallback = '' )
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback );
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
 	}
 
-	public function save_post( $post_id, $post, $update )
+	public function save_post( int $post_id, object $post, bool $update ): void
 	{
 		if ( ! empty( $this->process_disabled['import'] ) )
 			return;
@@ -268,7 +268,7 @@ class Audit extends gEditorial\Module
 		return $terms;
 	}
 
-	public function adminbar_init( &$nodes, $parent )
+	public function adminbar_init( array &$nodes, string $parent ): void
 	{
 		if ( ! $post = $this->adminbar__check_singular_post( NULL, 'edit_post' ) )
 			return;
@@ -332,7 +332,7 @@ class Audit extends gEditorial\Module
 		], $this->dotted( 'adminbar' ) );
 	}
 
-	public function admin_bar_menu( $wp_admin_bar )
+	public function admin_bar_menu( object $wp_admin_bar ): void
 	{
 		$node_id = $this->classs( 'assignbox' );
 		$spinner = $this->adminbar__get_spinner();
@@ -364,7 +364,7 @@ class Audit extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -399,23 +399,23 @@ class Audit extends gEditorial\Module
 		}
 	}
 
-	public function admin_menu()
+	public function admin_menu(): void
 	{
 		$this->_hook_submenu_adminpage( 'overview' );
 		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
 	}
 
-	public function render_submenu_adminpage()
+	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'overview', 'update' );
+		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
-	protected function rowaction_get_mainlink_for_post( $post )
+	protected function rowaction_get_mainlink_for_post( object $post ): string
 	{
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'context'      => 'rowaction',
@@ -427,19 +427,19 @@ class Audit extends gEditorial\Module
 		] );
 	}
 
-	protected function render_overview_content()
+	protected function render_overview_content(): bool
 	{
-		$this->framepageviews__render_context_content( 'overview' );
+		return (bool) $this->framepageviews__render_context_content( 'overview' );
 	}
 
-	public function rowactions_bulk_actions( $actions )
+	public function rowactions_bulk_actions( array $actions ): array
 	{
 		return array_merge( $actions, [
 			$this->hook( 'forceautoaudit' ) => _x( 'Force Auto-Audit', 'Action', 'geditorial-audit' ),
 		] );
 	}
 
-	public function rowactions_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function rowactions_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string
 	{
 		if ( $doaction != $this->hook( 'forceautoaudit' ) )
 			return $redirect_to;
@@ -462,7 +462,7 @@ class Audit extends gEditorial\Module
 		return add_query_arg( $this->hook( 'audited' ), $count, $redirect_to );
 	}
 
-	public function rowactions_admin_notices()
+	public function rowactions_admin_notices(): void
 	{
 		$hook = $this->hook( 'audited' );
 
@@ -478,7 +478,7 @@ class Audit extends gEditorial\Module
 		) );
 	}
 
-	public function tools_settings( $sub )
+	public function tools_settings( string $sub ): void
 	{
 		if ( $this->check_settings( $sub, 'tools', 'per_page' ) ) {
 
@@ -500,7 +500,7 @@ class Audit extends gEditorial\Module
 		}
 	}
 
-	public function taxonomy_handle_tab_content_actions( $taxonomy )
+	public function taxonomy_handle_tab_content_actions( string $taxonomy ): void
 	{
 		if ( ! $action = self::req( ModuleSettings::ACTION_EMPTY_FIELDS_AUDIT ) )
 			return;
@@ -511,7 +511,7 @@ class Audit extends gEditorial\Module
 		ModuleSettings::handleToolsEmptyFields( $action, $this->constant( 'main_taxonomy' ) );
 	}
 
-	protected function render_tools_html( $uri, $sub )
+	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Content Audit Tools', 'Header', 'geditorial-audit' ) );
 
@@ -531,15 +531,19 @@ class Audit extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	protected function render_tools_html_before( $uri, $sub )
+	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
 		if ( $this->_do_tools_force_auto_audit( $sub ) )
 			return FALSE; // avoid further UI
+
+		return TRUE;
 	}
 
-	public function taxonomy_empty_terms( $terms, $taxonomy )
+	public function taxonomy_empty_terms( array $terms, string $taxonomy ): array
 	{
 		if ( empty( $terms ) || ! $taxonomy )
 			return $terms;
@@ -554,12 +558,12 @@ class Audit extends gEditorial\Module
 		return $terms;
 	}
 
-	public function taxonomy_tab_extra_content( $taxonomy, $object )
+	public function taxonomy_tab_extra_content( string $taxonomy, object $object ): void
 	{
-		$this->render_form_start( NULL, 'empty-fields', 'extra', 'tabs' );
+		$this->render_form_start( '', 'empty-fields', 'extra', 'tabs' );
 			$this->nonce_field( 'do-empty-fields' );
 			ModuleSettings::renderToolsEmptyFields( $this->list_posttypes(), $this->constant( 'main_taxonomy' ), TRUE );
-		$this->render_form_end( NULL, 'empty-fields', 'extra', 'tabs' );
+		$this->render_form_end( '', 'empty-fields', 'extra', 'tabs' );
 	}
 
 	private function _do_tools_force_auto_audit( $sub )
@@ -584,13 +588,13 @@ class Audit extends gEditorial\Module
 		);
 	}
 
-	public function reports_settings( $sub )
+	public function reports_settings( string $sub ): void
 	{
 		$this->check_settings( $sub, 'reports' );
 	}
 
 	// TODO: migrate to column of cards
-	protected function render_reports_html( $uri, $sub )
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
 		Core\HTML::h3( _x( 'Audit Reports', 'Header', 'geditorial-audit' ) );
 
@@ -598,6 +602,8 @@ class Audit extends gEditorial\Module
 			return gEditorial\Info::renderNoReportsAvailable();
 
 		$this->_render_reports_by_user_summary();
+
+		return TRUE;
 	}
 
 	// TODO: export option
@@ -644,8 +650,12 @@ class Audit extends gEditorial\Module
 		return $data;
 	}
 
-	protected function raise_resources( $count = 1, $per = 60, $context = NULL )
-	{
+	protected function raise_resources(
+		int $count = 1,
+		int $per = 60,
+		?string $context = NULL,
+	): int|string|false {
+
 		WordPress\Taxonomy::disableTermCounting();
 		Services\LateChores::termCountCollect();
 

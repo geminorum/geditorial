@@ -13,7 +13,7 @@ class Gallery extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'gallery',
@@ -27,7 +27,7 @@ class Gallery extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_general' => [
@@ -40,7 +40,7 @@ class Gallery extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'album_posttype'         => 'photo_album',
@@ -52,7 +52,7 @@ class Gallery extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -71,7 +71,7 @@ class Gallery extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -80,12 +80,12 @@ class Gallery extends gEditorial\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'album_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -118,7 +118,7 @@ class Gallery extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'album_posttype', $screen ) ) {
 
@@ -135,7 +135,7 @@ class Gallery extends gEditorial\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'album_posttype' ) )
 			$items[] = $glance;

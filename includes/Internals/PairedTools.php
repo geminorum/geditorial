@@ -90,13 +90,13 @@ trait PairedTools
 		}
 	}
 
-	protected function paired_tools_render_before( $uri = '', $sub = NULL )
+	protected function paired_tools_render_before( string $uri = '', ?string $sub = NULL ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
 
 		if ( ! $constants = $this->paired_get_constants() )
-			return;
+			return FALSE;
 
 		if ( FALSE !== $this->paired_tools_handlemove_from_to( $constants, $this->get_sub_limit_option( $sub, 'tools' ) ) )
 			return FALSE;
@@ -107,12 +107,14 @@ trait PairedTools
 			if ( FALSE !== $this->paired_force_assign_parents( $constants[0], $constants[1], $this->get_sub_limit_option( $sub, 'tools' ) ) )
 				return FALSE;
 		}
+
+		return TRUE;
 	}
 
-	protected function paired_imports_handle_tablelist( $sub = NULL )
+	protected function paired_imports_handle_tablelist( ?string $sub = NULL ): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
-			return;
+			return FALSE;
 
 		if ( gEditorial\Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
 
@@ -281,10 +283,10 @@ trait PairedTools
 		return TRUE;
 	}
 
-	protected function paired_tools_handle_tablelist( $sub = NULL )
+	protected function paired_tools_handle_tablelist( ?string $sub = NULL ): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
-			return;
+			return FALSE;
 
 		if ( gEditorial\Tablelist::isAction( 'sync_paired_terms' ) ) {
 
@@ -320,7 +322,7 @@ trait PairedTools
 		return TRUE;
 	}
 
-	protected function paired_imports_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
+	protected function paired_imports_render_tablelist( $uri = '', ?string $sub = NULL, $actions = NULL, $title = NULL ): bool|string
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -452,7 +454,7 @@ trait PairedTools
 		return Core\HTML::tableList( $columns, $data, $args );
 	}
 
-	protected function paired_sync_paired_terms( $posttype_key, $taxonomy_key )
+	protected function paired_sync_paired_terms( string $posttype_key, string $taxonomy_key ): false|int
 	{
 		$count    = 0;
 		$taxonomy = $this->constant( $taxonomy_key );
@@ -485,7 +487,7 @@ trait PairedTools
 	}
 
 	// NO NEED
-	protected function paired_sync_paired_dates( $posttype_key, $taxonomy_key )
+	protected function paired_sync_paired_dates( string $posttype_key, string $taxonomy_key ): false|int
 	{
 		$count    = 0;
 		$taxonomy = $this->constant( $taxonomy_key );
@@ -518,7 +520,7 @@ trait PairedTools
 		return $count;
 	}
 
-	protected function paired_create_paired_terms( $posttype_key, $taxonomy_key )
+	protected function paired_create_paired_terms( string $posttype_key, string $taxonomy_key ): false|int
 	{
 		$count = 0;
 		$args  = [
@@ -548,7 +550,7 @@ trait PairedTools
 		return $count;
 	}
 
-	protected function paired_tools_handlemove_from_to( $constants, $limit )
+	protected function paired_tools_handlemove_from_to( array $constants, int $limit ): bool
 	{
 		if ( ! $posttype = self::req( self::$pairedtools__action_move_from_to ) )
 			return FALSE; // must print nothing
@@ -616,8 +618,14 @@ trait PairedTools
 		] ) );
 	}
 
-	protected function paired__do_post_move_from_to( $post, $taxonomy, $movefrom, $moveto, $verbose = FALSE )
-	{
+	protected function paired__do_post_move_from_to(
+		object $post,
+		string $taxonomy,
+		array $movefrom,
+		array $moveto,
+		bool $verbose = FALSE,
+	): bool {
+
 		$currents = wp_get_object_terms( $post->ID, $taxonomy, [ 'fields' => 'ids' ] );
 		$terms    = Core\Arraay::prepNumeral( array_diff( array_merge( $currents, $moveto ), $movefrom ) );
 
@@ -642,7 +650,7 @@ trait PairedTools
 			], TRUE );
 	}
 
-	protected function paired_force_assign_parents( $posttype_key, $taxonomy_key, $limit )
+	protected function paired_force_assign_parents( string $posttype_key, string $taxonomy_key, int $limit ): bool
 	{
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
@@ -681,7 +689,7 @@ trait PairedTools
 		] ) );
 	}
 
-	protected function paired__do_force_assign_parents( $post, $taxonomy, $verbose = FALSE )
+	protected function paired__do_force_assign_parents( object $post, string $taxonomy, bool $verbose = FALSE ): bool
 	{
 		if ( FALSE === ( $result = $this->do_force_assign_parents( $post, $taxonomy ) ) )
 			return gEditorial\Settings::processingListItem( $verbose,

@@ -12,7 +12,7 @@ class WcConnectedProducts extends gEditorial\Widget
 	const MODULE = 'wc_connected';
 	const WIDGET = 'wc_connected_products';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: WC Connected Products', 'Widget Title', 'geditorial-wc-connected' ),
