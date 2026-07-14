@@ -40,10 +40,11 @@ class Module extends WordPress\Module
 
 	/**
 	 * Holds the current module saved settings.
+	 * NOTE: initial must be `NULL`
 	 *
 	 * @var array
 	 */
-	public $settings = [];
+	public $settings = NULL;
 
 	/**
 	 * Holds the current module saved customs.

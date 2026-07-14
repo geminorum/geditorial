@@ -126,16 +126,17 @@ trait SettingsCore
 
 	public function settings_from(): void
 	{
+		$context = $context ?? 'settings';
+
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
-			.'" action="'.$this->get_module_url( 'settings' ).'" method="post">';
+			.'" action="'.$this->get_module_url( $context ).'" method="post">';
 
 			$this->render_form_fields( $this->module->name );
+			Core\HTML::inputHidden( self::und( $this->base, 'module', 'name' ), $this->module->name );
 
 			Services\Modulation::renderSections( $this->hook_base( $this->module->name ) );
 
-			echo '<input id="geditorial_module_name" name="geditorial_module_name" type="hidden" value="'.Core\HTML::escape( $this->module->name ).'" />';
-
-			$this->render_form_buttons();
+			$this->render_form_buttons( $context );
 
 		echo '</form>';
 

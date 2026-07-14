@@ -22,7 +22,7 @@ class Modulation extends gEditorial\Service
 	 * @param string $class
 	 * @return false|array
 	 */
-	public static function moduleObject( $arguments, $folder = FALSE, $class = NULL )
+	public static function moduleObject( array $arguments, string|bool $folder = FALSE, ?string $class = NULL ): false|array
 	{
 		if ( FALSE === $arguments )
 			return FALSE;
@@ -51,7 +51,7 @@ class Modulation extends gEditorial\Service
 		];
 	}
 
-	public static function moduleClass( $module, $check = TRUE, $root = NULL )
+	public static function moduleClass( string $module, bool $check = TRUE, ?string $root = NULL ): false|string
 	{
 		$class = '';
 		$root  = $root ?? '\\geminorum\\gEditorial\\Modules';
@@ -67,14 +67,14 @@ class Modulation extends gEditorial\Service
 		return $class;
 	}
 
-	public static function moduleSlug( $module, $link = TRUE )
+	public static function moduleSlug( string $module, bool $link = TRUE ): string
 	{
 		return $link
 			? ucwords( str_replace( [ '_', ' ' ], '-', $module ), '-' )
 			: ucwords( str_replace( [ '_', '-' ], ' ', $module ) );
 	}
 
-	public static function moduleLoading( $module, $stage = NULL )
+	public static function moduleLoading( object $module, ?string $stage = NULL ): bool
 	{
 		if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
 			return FALSE;
@@ -96,7 +96,7 @@ class Modulation extends gEditorial\Service
 		return TRUE;
 	}
 
-	public static function moduleEnabled( $options )
+	public static function moduleEnabled( object $options ): bool
 	{
 		$enabled = $options->enabled ?? FALSE;
 
@@ -109,7 +109,7 @@ class Modulation extends gEditorial\Service
 		return $enabled;
 	}
 
-	public static function getSectionTitle( $suffix )
+	public static function getSectionTitle( string $suffix ): false|array
 	{
 		switch ( $suffix ) {
 			case '_general'    : return [ _x( 'General', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
@@ -158,7 +158,7 @@ class Modulation extends gEditorial\Service
 		return FALSE;
 	}
 
-	public static function makeSectionTitle( $suffix )
+	public static function makeSectionTitle( string $suffix ): string
 	{
 		$title = '';
 
@@ -169,7 +169,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// @source: `add_settings_section()`
-	public static function addSection( $page, $atts = [] )
+	public static function addSection( string $page, array $atts = [] ): false|array
 	{
 		global $wp_settings_sections;
 
@@ -192,7 +192,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// @SOURCE: `do_settings_sections()`
-	public static function renderSections( $page )
+	public static function renderSections( string $page ): void
 	{
 		global $wp_settings_sections, $wp_settings_fields;
 
@@ -236,7 +236,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// NOTE: THE OLD CLASSIC WAY!
-	public static function renderSections_OLD( $page )
+	public static function renderSections_OLD( $page ): void
 	{
 		global $wp_settings_sections, $wp_settings_fields;
 
@@ -270,7 +270,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// @SOURCE: `do_settings_fields()`
-	public static function sectionFields( $page, $section )
+	public static function sectionFields( $page, $section ): void
 	{
 		global $wp_settings_fields;
 
@@ -299,19 +299,19 @@ class Modulation extends gEditorial\Service
 		}
 	}
 
-	public static function sectionEmpty( $description )
+	public static function sectionEmpty( string $description ): void
 	{
 		Core\HTML::desc( $description, TRUE, '-section-description -section-empty' );
 	}
 
-	public static function fieldSection( $section, $tag = 'h2' )
+	public static function fieldSection( $section, $tag = 'h2' ): void
 	{
 		echo Core\HTML::tag( $tag, ( $section['title'] ?? '' ).gEditorial\Settings::fieldAfterIcon( $section['link'] ?? '' ) );
 
 		Core\HTML::desc( ( $section['description'] ?? '' ) );
 	}
 
-	public static function fieldSectionAdopted( $source, $author = NULL, $link = NULL )
+	public static function fieldSectionAdopted( $source, $author = NULL, $link = NULL ): string
 	{
 		$template = $author
 			/* translators: `%1$s`: source name, `%2$s`: author name */

@@ -315,7 +315,7 @@ class Plugin extends WordPress\Plugin
 		return $this->_active ?: 0;
 	}
 
-	public function modules( mixed $orderby = FALSE ): array
+	public function get_modules( mixed $orderby = FALSE ): array
 	{
 		if ( empty( $this->_modules ) )
 			return [];
@@ -356,7 +356,7 @@ class Plugin extends WordPress\Plugin
 		if ( empty( $this->_modules ) )
 			return $list;
 
-		foreach ( $this->modules( $orderby ) as $module )
+		foreach ( $this->get_modules( $orderby ) as $module )
 			if ( ! $enabled_only || $this->enabled( $module->name, FALSE ) )
 				$list[$module->name] = $module->title;
 

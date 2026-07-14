@@ -228,7 +228,7 @@ class Config extends gEditorial\Module
 		if ( $this->is_thrift_mode() )
 			return;
 
-		foreach ( gEditorial()->modules( 'title' ) as $module ) {
+		foreach ( gEditorial()->get_modules( 'title' ) as $module ) {
 
 			if ( ! $module->configure || in_array( $module->configure, [ 'tools', 'reports', 'imports', 'customs' ], TRUE ) )
 				continue;
@@ -447,7 +447,7 @@ class Config extends gEditorial\Module
 
 		do_action( $this->hook_base( $context, 'settings' ),
 			$sub,
-			$context
+			$context,
 		);
 
 		Services\AdminScreen::enqueueValidator();
@@ -486,7 +486,7 @@ class Config extends gEditorial\Module
 
 		do_action( $this->hook_base( $context, 'settings' ),
 			$sub,
-			$context
+			$context,
 		);
 
 		Services\AdminScreen::enqueueValidator();
@@ -494,17 +494,18 @@ class Config extends gEditorial\Module
 
 	public function admin_tools_load(): void
 	{
-		$sub = gEditorial\Settings::sub();
+		$context = $context ?? 'tools';
+		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
 
 			if ( ! empty( $_POST ) ) {
 
-				$this->nonce_check( 'tools', $sub );
+				$this->nonce_check( $context, $sub );
 
 				$post = $this->get_current_form( [
 					'empty_module' => FALSE,
-				], 'tools' );
+				], $context );
 
 				if ( gEditorial\Tablelist::isAction( 'upgrade_old_options' ) ) {
 
@@ -604,12 +605,16 @@ class Config extends gEditorial\Module
 				}
 			}
 
-			add_action( $this->hook_base( 'tools', 'sub', $sub ), [ $this, 'tools_sub' ], 10, 2 );
+			add_action( $this->hook_base( $context, 'sub', $sub ), [ $this, 'tools_sub' ], 10, 2 );
 
-			$this->register_help_tabs( NULL, 'tools' );
+			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action( $this->hook_base( 'tools', 'settings' ), $sub );
+		do_action( $this->hook_base( $context, 'settings' ),
+			$sub,
+			$context,
+		);
+
 		Services\AdminScreen::enqueueValidator();
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
@@ -618,20 +623,25 @@ class Config extends gEditorial\Module
 
 	public function admin_roles_load(): void
 	{
-		$sub = gEditorial\Settings::sub();
+		$context = $context ?? 'roles';
+		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
 
 			// if ( ! empty( $_POST ) ) {
-			// 	$this->nonce_check( 'roles', $sub );
+			// 	$this->nonce_check( $context, $sub );
 			// }
 
-			add_action( $this->hook_base( 'roles', 'sub', $sub ), [ $this, 'roles_sub' ], 10, 2 );
+			add_action( $this->hook_base( $context, 'sub', $sub ), [ $this, 'roles_sub' ], 10, 2 );
 
-			$this->register_help_tabs( NULL, 'roles' );
+			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action( $this->hook_base( 'roles', 'settings' ), $sub );
+		do_action( $this->hook_base( $context, 'settings' ),
+			$sub,
+			$context,
+		);
+
 		Services\AdminScreen::enqueueValidator();
 	}
 
@@ -872,16 +882,21 @@ class Config extends gEditorial\Module
 
 	public function admin_imports_load()
 	{
-		$sub = gEditorial\Settings::sub();
+		$context = $context ?? 'imports';
+		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
 
-			add_action( $this->hook_base( 'imports', 'sub', 'general' ), [ $this, 'imports_sub' ], 10, 2 );
+			add_action( $this->hook_base( $context, 'sub', 'general' ), [ $this, 'imports_sub' ], 10, 2 );
 
-			$this->register_help_tabs( NULL, 'imports' );
+			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action( $this->hook_base( 'imports', 'settings' ), $sub );
+		do_action( $this->hook_base( $context, 'settings' ),
+			$sub,
+			$context,
+		);
+
 		Services\AdminScreen::enqueueValidator();
 	}
 
@@ -951,16 +966,21 @@ class Config extends gEditorial\Module
 
 	public function admin_customs_load()
 	{
-		$sub = gEditorial\Settings::sub();
+		$context = $context ?? 'customs';
+		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
 
-			add_action( $this->hook_base( 'customs', 'sub', 'general' ), [ $this, 'customs_sub' ], 10, 2 );
+			add_action( $this->hook_base( $context, 'sub', 'general' ), [ $this, 'customs_sub' ], 10, 2 );
 
-			$this->register_help_tabs( NULL, 'customs' );
+			$this->register_help_tabs( NULL, $context );
 		}
 
-		do_action( $this->hook_base( 'customs', 'settings' ), $sub );
+		do_action( $this->hook_base( $context, 'settings' ),
+			$sub,
+			$context,
+		);
+
 		Services\AdminScreen::enqueueValidator();
 	}
 
@@ -1049,7 +1069,7 @@ class Config extends gEditorial\Module
 
 		echo '<div class="modules -list" data-empty="'.Core\HTML::escape( _x( 'There are no modules available!', 'Config: Message', 'geditorial-admin' ) ).'">';
 
-		foreach ( gEditorial()->modules( 'title' ) as $module ) {
+		foreach ( gEditorial()->get_modules( 'title' ) as $module ) {
 
 			// skip if `config`
 			if ( $this->module->name === $module->name )
@@ -1093,7 +1113,9 @@ class Config extends gEditorial\Module
 
 	public function admin_settings_load()
 	{
-		if ( ! $this->cuc( 'settings' ) )
+		$context = $context ?? 'settings';
+
+		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
 		$module = self::req( 'module', FALSE );
@@ -1103,12 +1125,19 @@ class Config extends gEditorial\Module
 		$this->_handle_settings_save( $module );
 
 		if ( $module )
-			$GLOBALS['submenu_file'] = $this->base.'-settings&module='.$module;
+			$GLOBALS['submenu_file'] = sprintf( '%s-settings&module=%s', $this->base, $module );
 
-		do_action( $this->hook_base( 'settings', 'load' ), $module );
+		do_action( $this->hook_base( $context, 'load' ),
+			$module,
+			$context,
+		);
+
+		$this->enqueue_asset_js( [], NULL, [
+			'jquery',
+			gEditorial\Scripts::pkgListJS(),
+		] );
+
 		Services\AdminScreen::enqueueValidator();
-
-		$this->enqueue_asset_js( [], NULL, [ 'jquery', gEditorial\Scripts::pkgListJS() ] );
 		gEditorial\Scripts::enqueueAdminSelectAll();
 	}
 
