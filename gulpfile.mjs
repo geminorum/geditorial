@@ -308,6 +308,7 @@ task('i18n:php', function () {
 
       // https://developer.wordpress.org/cli/commands/i18n/make-php/
       return 'wp i18n make-php ' + file.path +
+      ' --pretty-print' +
       ' --skip-plugins --skip-themes --skip-packages';
       // extra;
     }), {

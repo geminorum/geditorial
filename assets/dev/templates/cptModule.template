@@ -14,7 +14,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\TemplateTaxonomy;
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => '<%= moduleUnderline %>',
@@ -28,7 +28,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -65,7 +65,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_posttype'     => 'xxx', // FIXME <----
@@ -73,7 +73,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [
 			'noops' => [
@@ -96,7 +96,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $strings;
 	}
 
-	protected function define_default_terms()
+	protected function define_default_terms(): array
 	{
 		return [
 			'category_taxonomy' => [
@@ -105,7 +105,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	public function get_global_fields()
+	public function get_global_fields(): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -145,7 +145,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	}
 
 
-	protected function posttypes_excluded( $extra = [] )
+	protected function posttypes_excluded( array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			<%= namespaceBase %>\Settings::posttypesExcluded( $extra + [
@@ -154,12 +154,12 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		);
 	}
 
-	public function after_setup_theme()
+	public function after_setup_theme(): void
 	{
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function meta_init()
+	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
 	}
@@ -169,7 +169,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		// $this->add_posttype_fields_for( 'units', 'main_posttype' );
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
@@ -205,7 +205,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen )
+	public function current_screen( $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -220,7 +220,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		}
 	}
 
-	public function dashboard_glance_items( $items )
+	public function dashboard_glance_items( array $items ): array
 	{
 		if ( $glance = $this->dashboard_glance_post( 'main_posttype' ) )
 			$items[] = $glance;
@@ -228,7 +228,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $items;
 	}
 
-	public function template_include( $template )
+	public function template_include( string $template ): string
 	{
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'category_taxonomy' ) )

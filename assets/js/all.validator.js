@@ -7,8 +7,8 @@
   // TODO: couple with: https://github.com/validatorjs/validator.js
   const inputs = {
     number: '[data-' + mainkey + '=\'number\']',
-    alphabet: '[data-' + mainkey + '=\'alphabet\']', // example: warehouse partials values (UpperCase)
-    slug: '[data-' + mainkey + '=\'slug\']', // example: warehouse partials names (LowerCase)
+    alphabet: '[data-' + mainkey + '=\'alphabet\']', // example: warehouse partials values (Upper-Case)
+    slug: '[data-' + mainkey + '=\'slug\']', // example: warehouse partials names (Lower-Case)
     hook: '[data-' + mainkey + '=\'hook\']',
     // path: '[data-' + mainkey + '=\'path\']', // TODO!
     // pattern: '[data-' + mainkey + '=\'pattern\']', // TODO!
@@ -31,7 +31,9 @@
     // latlng: '[data-' + mainkey + '=\'latlng\']',
     // code: '[data-' + mainkey + '=\'code\']',
     // color: '[data-' + mainkey + '=\'color\']',
-    // currency: '[data-' + mainkey + '=\'currency\']'
+    // currency: '[data-' + mainkey + '=\'currency\']',
+    // address: '[data-' + mainkey + '=\'address\']',
+    // people: '[data-' + mainkey + '=\'people\']',
   };
 
   // const strings = $.extend({}, {

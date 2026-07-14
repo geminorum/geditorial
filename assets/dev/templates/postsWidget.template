@@ -15,7 +15,7 @@ class <%= widgetCamelCase %> extends <%= namespaceBase %>\Widget
 	const MODULE = '<%= moduleUnderline %>';
 	const WIDGET = '<%= widgetUnderline %>';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( '<%= widgetTitlePrefix %>: <%= widgetTitle %>', 'Widget Title', '<%= moduleTextdomain %>' ),

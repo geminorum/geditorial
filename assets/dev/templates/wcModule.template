@@ -11,7 +11,7 @@ use <%= namespaceAuthor %>\<%= namespaceBase %>\WordPress;
 class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 {
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => '<%= moduleUnderline %>',
@@ -28,7 +28,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
 
@@ -56,14 +56,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		];
 	}
 
-	protected function get_global_constants()
+	protected function get_global_constants(): array
 	{
 		return [
 			'main_shortcode' => '', // FIXME <---
 		];
 	}
 
-	protected function get_global_strings()
+	protected function get_global_strings(): array
 	{
 		$strings = [];
 
@@ -75,14 +75,14 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $strings;
 	}
 
-	public function init()
+	public function init(): void
 	{
 		parent::init();
 
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
-	public function main_shortcode( $atts = [], $content = NULL, $tag = '' )
+	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = shortcode_atts( [
 			'id'      => get_queried_object_id(),
