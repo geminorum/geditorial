@@ -576,14 +576,14 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'isbn':
 
-					// `return gEditorial\Info::lookupISBN( $raw ?: $value );`
+					// `return Services\Lookup::htmlISBN( $raw ?: $value );`
 					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
 
 				case 'vin':
 
-					return gEditorial\Info::lookupVIN( $raw ?: $value );
+					return Services\Lookup::htmlVIN( $raw ?: $value );
 
 				case 'plate':
 
@@ -660,7 +660,7 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'latlng':
 
-					return gEditorial\Info::lookupLatLng( $raw ?: $value );
+					return Lookup::htmlLatLng( $raw ?: $value );
 
 				case 'title_link':
 				case 'text_source':

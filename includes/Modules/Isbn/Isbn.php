@@ -331,7 +331,7 @@ class Isbn extends gEditorial\Module
 		$html = '';
 
 		if ( $args['raw'] && $data = Core\ISBN::sanitize( $args['raw'] ) )
-			$html = gEditorial\Info::lookupISBN( $data );
+			$html = Services\Lookup::htmlISBN( $data );
 
 		// TODO: support Woo Commerce
 

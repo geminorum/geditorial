@@ -98,7 +98,7 @@ class WcIdentify extends gEditorial\Module
 			'raw'    => $raw,
 			'gtin'   => $gtin,
 			'prep'   => Core\ISBN::prep( $raw, TRUE ),
-			'link'   => gEditorial\Info::lookupISBN( $gtin ),
+			'link'   => Services\Lookup::htmlISBN( $gtin ),
 			'label'  => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
 			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
 		];
@@ -117,7 +117,7 @@ class WcIdentify extends gEditorial\Module
 			if ( $gtin = $product->get_global_unique_id() )
 				$before[$this->classs( 'gtin' )] = [
 					'label' => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
-					'value' => $this->get_setting( 'gtin_lookup' ) ? gEditorial\Info::lookupISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
+					'value' => $this->get_setting( 'gtin_lookup' ) ? Services\Lookup::htmlISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
 				];
 		}
 

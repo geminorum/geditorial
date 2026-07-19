@@ -1017,7 +1017,7 @@ class Terms extends gEditorial\Module
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
 					$html.= Core\HTML::link(
 						Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ),
-						gEditorial\Info::lookupURLforLatLng( $meta ), TRUE
+						Services\Lookup::linkLatLng( $meta ), TRUE
 					).'</span>';
 
 				} else {

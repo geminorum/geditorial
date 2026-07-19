@@ -847,14 +847,14 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return gEditorial\Info::lookupISBN( trim( $raw ) );
+				return Services\Lookup::htmlISBN( trim( $raw ) );
 
 			case 'vin':
 
 				if ( 'export' === $context )
 					return Core\Number::translate( $raw ?: $meta );
 
-				return gEditorial\Info::lookupVIN( trim( $raw ) );
+				return Services\Lookup::htmlVIN( trim( $raw ) );
 
 			case 'plate':
 
@@ -994,8 +994,8 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
-				// return Core\LatLng::prep( trim( $raw ) );
-				return gEditorial\Info::lookupLatLng( trim( $raw ) );
+				// `return Core\LatLng::prep( trim( $raw ) );`
+				return Services\Lookup::htmlLatLng( trim( $raw ) );
 
 			case 'color':
 				return Core\Color::prep( $raw, $field_args, $context );

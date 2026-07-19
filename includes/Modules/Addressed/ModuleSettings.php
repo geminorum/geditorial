@@ -53,7 +53,7 @@ class ModuleSettings extends gEditorial\Settings
 			if ( ! empty( $data['latlng'] ) ) {
 
 				if ( Core\LatLng::is( $data['latlng'] ) )
-					$buttons[] = gEditorial\Info::lookupLatLng(
+					$buttons[] = Services\Lookup::htmlLatLng(
 						$data['latlng'],
 						Core\HTML::buttonClass( FALSE, '-is-valid' )
 					);

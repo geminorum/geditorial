@@ -39,7 +39,7 @@ class ModuleTemplate extends gEditorial\Template
 		$html = Core\HTML::img( ModuleHelper::barcode( $isbn ), '-barcode-isbn', $isbn );
 
 		if ( is_null( $args['link'] ) )
-			$html = Core\HTML::link( $html, gEditorial\Info::lookupURLforISBN( $isbn ) );
+			$html = Core\HTML::link( $html, Services\Lookup::linkISBN( $isbn ) );
 
 		else if ( $args['link'] )
 			$html = Core\HTML::link( $html, $args['link'] );
