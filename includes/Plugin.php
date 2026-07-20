@@ -222,6 +222,7 @@ class Plugin extends WordPress\Plugin
 			'Calendars',
 			'ClassicEditor',
 			'CommandPalette',
+			'CommonSettings',
 			'ContentActions',
 			'ContentBrand',
 			'CustomPostType',

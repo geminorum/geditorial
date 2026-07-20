@@ -96,7 +96,7 @@ trait SettingsCore
 
 		if ( is_null( $fallback ) ) {
 
-			$callback = [ gEditorial\Settings::class, self::und( 'getSetting', $field ) ];
+			$callback = [ Services\CommonSettings::class, $field ];
 			$setting  = is_callable( $callback ) ? call_user_func( $callback ) : [];
 
 			if ( ! empty( $setting['default'] ) )
@@ -638,13 +638,13 @@ trait SettingsCore
 						continue;
 
 					if ( is_string( $key ) && $setting == $key )
-						return method_exists( gEditorial\Settings::class, 'getSetting_'.$key )
-							? call_user_func_array( [ gEditorial\Settings::class, 'getSetting_'.$key ], (array) $field )
+						return method_exists( Services\CommonSettings::class, $key )
+							? call_user_func_array( [ Services\CommonSettings::class, $key ], (array) $field )
 							: [];
 
 					else if ( is_string( $field ) && $setting == $field )
-						return method_exists( gEditorial\Settings::class, 'getSetting_'.$field )
-							? call_user_func( [ gEditorial\Settings::class, 'getSetting_'.$field ] )
+						return method_exists( Services\CommonSettings::class, $field )
+							? call_user_func( [ Services\CommonSettings::class, $field ] )
 							: [];
 
 					else if ( is_array( $field ) && isset( $field['field'] ) && $setting == $field['field'] )
@@ -754,11 +754,11 @@ trait SettingsCore
 					if ( FALSE === $field )
 						continue;
 
-					if ( is_string( $key ) && method_exists( gEditorial\Settings::class, 'getSetting_'.$key ) )
-						$args = call_user_func_array( [ gEditorial\Settings::class, 'getSetting_'.$key ], (array) $field );
+					if ( is_string( $key ) && method_exists( Services\CommonSettings::class, $key ) )
+						$args = call_user_func_array( [ Services\CommonSettings::class, $key ], (array) $field );
 
-					else if ( is_string( $field ) && method_exists( gEditorial\Settings::class, 'getSetting_'.$field ) )
-						$args = call_user_func( [ gEditorial\Settings::class, 'getSetting_'.$field ] );
+					else if ( is_string( $field ) && method_exists( Services\CommonSettings::class, $field ) )
+						$args = call_user_func( [ Services\CommonSettings::class, $field ] );
 
 					else if ( ! is_string( $key ) && is_array( $field ) )
 						$args = $field;
