@@ -36,7 +36,7 @@ class ClassicEditor extends gEditorial\Service
 		}
 	}
 
-	public static function richEditing( $user = NULL )
+	public static function richEditing( ?int $user = NULL ): bool
 	{
 		return WordPress\Strings::isTruthy( WordPress\User::option( 'rich_editing', $user ) );
 	}
@@ -71,12 +71,12 @@ class ClassicEditor extends gEditorial\Service
 		add_filter( 'mce_external_languages', [ __CLASS__, 'mce_external_languages' ] );
 	}
 
-	public static function registerButton( $button, $filepath, $level = NULL )
+	public static function registerButton( string $button, string $filepath, ?int $level = NULL ): string
 	{
 		return static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
 	}
 
-	public static function mce_external_plugins( $plugin_array )
+	public static function mce_external_plugins( array $plugin_array ): array
 	{
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 

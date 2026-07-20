@@ -11,7 +11,7 @@ trait ModuleLinks
 {
 
 	// TODO: link to the `Customizer`
-	protected function get_module_links( $compact = FALSE )
+	protected function get_module_links( bool $compact = FALSE ): array
 	{
 		$links  = [];
 		$screen = get_current_screen();
@@ -169,7 +169,7 @@ trait ModuleLinks
 		return $links;
 	}
 
-	public function get_module_url( $context = NULL, $sub = NULL, $extra = [] )
+	public function get_module_url( ?string $context = NULL, ?string $sub = NULL, array $extra = [] ): string
 	{
 		$sub     = $sub     ?? $this->key;
 		$context = $context ?? $this->default_link_context;
@@ -196,8 +196,13 @@ trait ModuleLinks
 	}
 
 	// @SEE: `Settings::getURLbyContext()`
-	protected function get_adminpage_url( $full = TRUE, $extra = [], $context = 'mainpage', $admin_base = NULL )
-	{
+	protected function get_adminpage_url(
+		bool $full = TRUE,
+		array $extra = [],
+		?string $context = 'mainpage',
+		?string $admin_base = NULL,
+	): string {
+
 		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
 			? $this->classs()
 			: $this->classs( $context );
@@ -214,7 +219,7 @@ trait ModuleLinks
 	}
 
 	// DEFAULT METHOD
-	public function get_linked_to_posts( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts( mixed $post = NULL, bool $single = FALSE, bool $published = TRUE ): false|int
 	{
 		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
 
@@ -229,7 +234,7 @@ trait ModuleLinks
 		return FALSE;
 	}
 
-	protected function modulelinks__hook_calendar_linked_post( $screen = NULL, $module = NULL )
+	protected function modulelinks__hook_calendar_linked_post( ?object $screen = NULL, ?string $module = NULL ): bool
 	{
 		$module = $module ?? 'schedule';
 
@@ -237,7 +242,8 @@ trait ModuleLinks
 			return FALSE;
 
 		add_filter( $this->classs_base( $module, 'post_row_title' ),
-			function ( $title, $post, $the_day, $calendar_args ) use ( $module ) {
+			function ( $title, $post, $the_day, $calendar_args )
+				use ( $module ) {
 
 				if ( ! $this->posttype_supported( $post->post_type ) )
 					return $title;
@@ -252,7 +258,7 @@ trait ModuleLinks
 		return TRUE;
 	}
 
-	protected function modulelinks__register_headerbuttons( $contexts = NULL )
+	protected function modulelinks__register_headerbuttons( ?array $contexts = NULL ): array
 	{
 		if ( is_null( $contexts ) ) {
 
@@ -281,7 +287,7 @@ trait ModuleLinks
 		foreach ( $contexts as $context => $text ) {
 
 			if ( ! $this->cuc( $context, 'manage_options' ) )
-				return FALSE;
+				continue;
 
 			$args = [
 				'text'     => $text,
@@ -298,7 +304,7 @@ trait ModuleLinks
 		return $contexts;
 	}
 
-	protected function modulelinks__get_context_icon( $context, $fallback = NULL )
+	protected function modulelinks__get_context_icon( string $context, string|array|null $fallback = NULL ): string|array
 	{
 		switch ( $context ) {
 			case 'customs' : return 'admin-customizer';
@@ -314,8 +320,12 @@ trait ModuleLinks
 		return $fallback ?? 'screenoptions';
 	}
 
-	protected function modulelinks__register_posttype_export_headerbuttons( $constant_or_posttype, $context = 'reports', $check = TRUE )
-	{
+	protected function modulelinks__register_posttype_export_headerbuttons(
+		string $constant_or_posttype,
+		?string $context = 'reports',
+		bool $check = TRUE,
+	): false|string {
+
 		if ( ! method_exists( $this, 'exports_get_export_links' ) )
 			return FALSE;
 

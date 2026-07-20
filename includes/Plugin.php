@@ -221,6 +221,7 @@ class Plugin extends WordPress\Plugin
 			'Barcodes',
 			'Calendars',
 			'ClassicEditor',
+			'CommandPalette',
 			'ContentActions',
 			'ContentBrand',
 			'CustomPostType',

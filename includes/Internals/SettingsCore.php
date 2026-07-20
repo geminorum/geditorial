@@ -112,16 +112,19 @@ trait SettingsCore
 	}
 
 	// Checks arrays with support of old settings
-	public function in_setting( string $item, string $field, array $default = [] ): bool
+	public function in_setting( mixed $item, string $field, array $default = [] ): bool
 	{
 		$setting = $this->get_setting( $field );
 
 		if ( FALSE === $setting || TRUE === $setting )
 			return $setting;
 
+		if ( is_null( $item ) || is_bool( $item ) )
+			return FALSE;
+
 		$setting = $setting ?? $default;
 
-		return in_array( $item, (array) $setting, TRUE );
+		return in_array( (string) $item, (array) $setting, TRUE );
 	}
 
 	public function settings_from(): void
@@ -792,7 +795,7 @@ trait SettingsCore
 		if ( 'config' == $this->module->name ) {
 
 			$title   = NULL;
-			$count   = gEditorial()->count_active_modules();
+			$count   = gEditorial()->count_active_modules() - 1; // minus the `Config` Module
 			$flush   = WordPress\URL::maybeFlushRules();
 			$filters = TRUE;
 

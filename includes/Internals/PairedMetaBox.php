@@ -96,7 +96,7 @@ trait PairedMetaBox
 					$selected = $subterms ? array_pop( $subterms ) : 0;
 				}
 
-				$dropdown.= MetaBox::paired_dropdownSubTerms( $subterm, $to_post_id, $this->classs( $subterm ), $selected, $none_sub );
+				$dropdown.= MetaBox::paired_dropdownSubTerms( $subterm, $to_post_id, $this->classs( $subterm ), $selected, $none_sub ?? NULL );
 
 				if ( $multiple )
 					$dropdown.= '<hr />';
@@ -362,9 +362,10 @@ trait PairedMetaBox
 			} );
 
 		add_action( $this->hook( $action ),
-			function ( $post, $box, $fields = NULL, $action_context = NULL ) use ( $constants, $context ) {
+			function ( $post, $box, $fields = NULL, $action_context = NULL )
+				use ( $constants, $context ) {
 
-				if ( ( $newpost = $this->get_setting( 'quick_newpost' ) ) && method_exists( $this, 'do_render_thickbox_newpostbutton' ) )
+				if ( ( $newpost = $this->get_setting( 'quick_newpost', FALSE ) ) && method_exists( $this, 'do_render_thickbox_newpostbutton' ) )
 					$this->do_render_thickbox_newpostbutton( $post, $constants[0], 'newpost', [ 'target' => 'paired' ] );
 
 				$this->paired_do_render_metabox( $post, $constants[0], $constants[1], $constants[2], $newpost );

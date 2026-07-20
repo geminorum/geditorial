@@ -164,7 +164,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -443,8 +443,13 @@ class Today extends gEditorial\Module
 		return $this->get_adminpage_url( TRUE, array_filter( $the_day ), 'adminmenu' );
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$this->_render_day_input( $object, $context ?? 'mainbox' );
 	}
 

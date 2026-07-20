@@ -19,7 +19,8 @@ class WCMessage extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	// public function widget( $args, $instance ): void
+	public function widget_html( array $args, array $instance ): bool
 	{
 		if ( empty( $instance['content'] ) || ! ( $content = trim( $instance['content'] ) ) )
 			return FALSE;
@@ -58,7 +59,7 @@ class WCMessage extends gEditorial\Widget
 		];
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -93,7 +94,7 @@ class WCMessage extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

@@ -119,7 +119,7 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using custom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( string $taxonomy, string|false $paired_posttype = FALSE, array $extra = [] ): string
+	public static function restrictByTaxonomy( string|object $taxonomy, string|false $paired_posttype = FALSE, array $extra = [] ): string
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';
@@ -176,18 +176,18 @@ SQL;
 
 	// FIXME: DEPRECATED: use `restrictByTaxonomy()`
 	// WTF: `draft` status posts with no `post_name`
-	public static function restrictByPosttype( string $taxonomy, string $posttype, ?string $option_all = NULL ): string
+	public static function restrictByPosttype( string|object $taxonomy, string $posttype, ?string $option_all = NULL ): string
 	{
-		if ( ! $object = get_taxonomy( $taxonomy ) )
+		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';
 
-		$query_var = WordPress\Taxonomy::queryVar( $object );
+		$query_var = WordPress\Taxonomy::queryVar( $taxonomy );
 		$selected  = $_GET[$query_var] ?? '';
 
 		// If selected is `term_id` instead of term `slug`
 		if ( $selected && '-1' != $selected && is_numeric( $selected ) ) {
 
-			if ( $term = get_term_by( 'id', $selected, $taxonomy ) )
+			if ( $term = get_term_by( 'id', $selected, $taxonomy->name ) )
 				$selected = $term->slug;
 
 			else

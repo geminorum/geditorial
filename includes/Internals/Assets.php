@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait Assets
 {
-	public function enqueue_asset_style( $name = NULL, $deps = NULL, $handle = NULL )
+	public function enqueue_asset_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL ): string
 	{
 		if ( is_null( $name ) )
 			$name = $this->key;
@@ -43,7 +43,7 @@ trait Assets
 	}
 
 	// NOTE: each script must have a `.min` version
-	public function enqueue_asset_js( $args = [], $name = NULL, $deps = NULL, $key = NULL, $handle = NULL )
+	public function enqueue_asset_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL ): string
 	{
 		$key = $key ?? $this->key;
 
@@ -99,12 +99,12 @@ trait Assets
 	// CAUTION: front only
 	// NOTE: combined global styles
 	// TODO: also we need API for module specified CSS
-	public function enqueue_styles()
+	public function enqueue_styles(): void
 	{
 		gEditorial()->enqueue_styles();
 	}
 
-	public function register_editor_button( string $plugin, $level = NULL, $settings_key = NULL )
+	public function register_editor_button( string $plugin, ?int $level = NULL, ?string $settings_key = NULL ): false|string
 	{
 		if ( ! $this->get_setting( $settings_key ?? 'editor_button', TRUE ) )
 			return FALSE;

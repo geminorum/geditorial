@@ -1071,6 +1071,7 @@ class WasBorn extends gEditorial\Module
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool

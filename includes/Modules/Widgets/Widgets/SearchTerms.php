@@ -20,7 +20,7 @@ class SearchTerms extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		if ( ! is_search() || ( ! empty( $instance['hide_on_paged'] ) && is_paged() ) )
 			return;
@@ -103,7 +103,7 @@ class SearchTerms extends gEditorial\Widget
 		$this->after_widget( $args, $instance );
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -137,7 +137,7 @@ class SearchTerms extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

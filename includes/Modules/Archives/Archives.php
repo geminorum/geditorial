@@ -145,7 +145,7 @@ class Archives extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( get_post_types( [
@@ -155,7 +155,7 @@ class Archives extends gEditorial\Module
 		);
 	}
 
-	protected function taxonomies_excluded( array $extra = [] ): array
+	protected function taxonomies_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
@@ -185,7 +185,7 @@ class Archives extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 

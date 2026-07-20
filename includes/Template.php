@@ -12,7 +12,7 @@ class Template extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function perPageItems( $default = NULL )
+	public static function perPageItems( ?int $default = NULL ): int|string
 	{
 		if ( WordPress\WooCommerce::isActive() )
 			return WordPress\WooCommerce::getDefaultColumns() * WordPress\WooCommerce::getDefaultRows();
@@ -20,7 +20,7 @@ class Template extends WordPress\Main
 		return get_option( 'posts_per_page', $default ?? 10 );
 	}
 
-	public static function perRowColumns( $default = NULL )
+	public static function perRowColumns( ?int $default = NULL ): int|string
 	{
 		if ( WordPress\WooCommerce::isActive() )
 			return WordPress\WooCommerce::getDefaultColumns( $default );
@@ -28,12 +28,17 @@ class Template extends WordPress\Main
 		return $default ?? ''; // maybe add `Customizer` control
 	}
 
-	public static function getTermImageSrc( $size = NULL, $term_id = NULL, $taxonomy = '', $metakey = NULL )
-	{
+	public static function getTermImageSrc(
+		mixed $size = NULL,
+		mixed $term_id = NULL,
+		string $taxonomy = '',
+		?string $meta_key = NULL,
+	): false|string {
+
 		if ( ! $term = WordPress\Term::get( $term_id, $taxonomy ) )
 			return FALSE;
 
-		if ( ! $term_image_id = get_term_meta( $term->term_id, $metakey ?? 'image', TRUE ) )
+		if ( ! $term_image_id = get_term_meta( $term->term_id, $meta_key ?? 'image', TRUE ) )
 			return FALSE;
 
 		$size = $size ?? WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
@@ -44,7 +49,7 @@ class Template extends WordPress\Main
 		return $image[0] ?? FALSE;
 	}
 
-	public static function getTermImageTag( $atts = [] )
+	public static function getTermImageTag( array $atts = [] ): false|string
 	{
 		$args = self::atts( [
 			'id'       => NULL,
@@ -61,8 +66,15 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function termImageCallback( $image, $link, $args, $status, $title, $module )
-	{
+	public static function termImageCallback(
+		string $image,
+		string|false $link,
+		array $args,
+		string $status,
+		string|false|null $title,
+		string|false|null $module
+	): false|string {
+
 		if ( ! $image )
 			return $args['default'];
 
@@ -94,7 +106,7 @@ class Template extends WordPress\Main
 		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
 	}
 
-	public static function termImage( $atts = [], $module = NULL )
+	public static function termImage( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
@@ -187,7 +199,7 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function termContact( $atts = [], $module = NULL )
+	public static function termContact( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
@@ -249,7 +261,7 @@ class Template extends WordPress\Main
 		return $image[0] ?? FALSE;
 	}
 
-	public static function getPostImageTag( $atts = [] )
+	public static function getPostImageTag( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$html = FALSE;
 
@@ -304,7 +316,7 @@ class Template extends WordPress\Main
 		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
 	}
 
-	public static function postImage( $atts = [], $module = NULL )
+	public static function postImage( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$module = $module ?? static::MODULE;
 		$html   = '';
@@ -418,7 +430,7 @@ class Template extends WordPress\Main
 	}
 
 	// NOTE: DEPRECATED
-	public static function assocLink( $atts = [], $module = NULL )
+	public static function assocLink( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		self::_dep( 'Template::pairedLink()' );
 
@@ -426,7 +438,7 @@ class Template extends WordPress\Main
 	}
 
 	// TODO: duplicate to `pairedList()`
-	public static function pairedLink( $atts = [], $module = NULL )
+	public static function pairedLink( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
@@ -499,7 +511,7 @@ class Template extends WordPress\Main
 		return self::metaField( $field, $atts );
 	}
 
-	public static function metaField( $field, $atts = [] )
+	public static function metaField( mixed $field, array $atts = [] ): mixed
 	{
 		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;
@@ -514,13 +526,13 @@ class Template extends WordPress\Main
 	}
 
 	// NOTE: wraps the service method
-	public static function getMetaField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
+	public static function getMetaField( mixed $field_key, array $atts = [], bool $check = TRUE, ?string $module = 'meta' ): mixed
 	{
 		return Services\PostTypeFields::getField( $field_key, $atts, $check, $module );
 	}
 
 	// NOTE: wraps the service method
-	public static function getMetaFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
+	public static function getMetaFieldRaw( mixed $field_key, mixed $post_id, ?string $module = 'meta', bool $check = FALSE, mixed $default = FALSE ): mixed
 	{
 		return Services\PostTypeFields::getFieldRaw( $field_key, $post_id, $module, $check, $default );
 	}
@@ -530,9 +542,11 @@ class Template extends WordPress\Main
 	 * @source https://wordpress.stackexchange.com/a/23213/
 	 *
 	 * @param string $meta
+	 * @param mixed $post
+	 * @param string $context
 	 * @return string
 	 */
-	public static function doEmbedShortCode( $meta, $post = FALSE, $context = 'display' )
+	public static function doEmbedShortCode( string $meta, mixed $post = FALSE, ?string $context = 'display' ): string
 	{
 		global $wp_embed;
 
@@ -541,11 +555,20 @@ class Template extends WordPress\Main
 		if ( ! Core\URL::isValid( $url ) )
 			return $meta;
 
-		return $wp_embed->run_shortcode( sprintf( '[embed src="%s" context="%s"]%s[/embed]', $url, $context, $url ) );
+		return $wp_embed->run_shortcode( sprintf(
+			'[embed src="%s" context="%s"]%s[/embed]',
+			$url,
+			$context, $url
+		) );
 	}
 
-	public static function doMediaShortCode( $meta, $type = NULL, $post = FALSE, $context = 'display' )
-	{
+	public static function doMediaShortCode(
+		mixed $meta,
+		?string $type = NULL,
+		mixed $post = FALSE,
+		?string $context = 'display',
+	): string {
+
 		$html = trim( $meta );
 
 		if ( $html && is_null( $type ) ) {
@@ -681,14 +704,18 @@ class Template extends WordPress\Main
 	}
 
 	// NOTE: DEPRECATED
-	public static function metaLabel( $atts = [] )
+	public static function metaLabel( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		self::_dep( 'Must extend in sub template!' );
 		return self::metaTermField( $atts );
 	}
 
-	public static function metaTermField( $atts = [], $module = NULL, $check = TRUE )
-	{
+	public static function metaTermField(
+		array $atts = [],
+		?string $module = NULL,
+		bool $check = TRUE,
+	): bool|string {
+
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
 			'id'          => NULL,
@@ -770,8 +797,12 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function metaLink( $atts = [], $module = NULL, $check = TRUE )
-	{
+	public static function metaLink(
+		array $atts = [],
+		?string $module = NULL,
+		bool $check = TRUE,
+	): bool|string {
+
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
 			'id'            => NULL,
@@ -851,7 +882,7 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function metaSource( $atts = [] )
+	public static function metaSource( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		if ( ! array_key_exists( 'check_paged', $atts ) )
 			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
@@ -871,7 +902,7 @@ class Template extends WordPress\Main
 		return self::metaLink( $atts, 'meta', FALSE );
 	}
 
-	public static function metaAction( $atts = [] )
+	public static function metaAction( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		if ( ! array_key_exists( 'check_paged', $atts ) )
 			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
@@ -889,8 +920,12 @@ class Template extends WordPress\Main
 	}
 
 	// TODO: `unitsSummary()`
-	public static function metaSummary( $atts = [], $module = NULL, $check = TRUE )
-	{
+	public static function metaSummary(
+		array $atts = [],
+		?string $module = NULL,
+		bool $check = TRUE,
+	): bool|string {
+
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
 			'id'       => NULL,
@@ -1024,8 +1059,13 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function metaSummary__render_callback( $data, $args, $post = NULL, $module = NULL )
-	{
+	public static function metaSummary__render_callback(
+		array $data,
+		array $args,
+		mixed $post = NULL,
+		?string $module = NULL,
+	): void {
+
 		Core\HTML::tableDouble(
 			array_values( $data ),
 			array_keys( $data ),
@@ -1036,7 +1076,7 @@ class Template extends WordPress\Main
 	}
 
 	// NOTE: DEPRECATED
-	public static function sanitizeField( $field )
+	public static function sanitizeField( string|array $field ): array
 	{
 		self::_dep( 'NO NEED!' );
 
@@ -1063,8 +1103,13 @@ class Template extends WordPress\Main
 		return [ $field ];
 	}
 
-	public static function reorderPosts( $posts, $field_module = 'meta', $field_start = 'start', $field_order = 'order' )
-	{
+	public static function reorderPosts(
+		array $posts,
+		string $field_module = 'meta',
+		string $field_start = 'start',
+		string $field_order = 'order',
+	): array {
+
 		$i = 1000;
 		$o = [];
 
@@ -1089,8 +1134,14 @@ class Template extends WordPress\Main
 		return $o;
 	}
 
-	public static function renderRecentByPosttype( $posttype, $link = 'view', $empty = NULL, $title_attr = NULL, $extra = [] )
-	{
+	public static function renderRecentByPosttype(
+		string|object $posttype,
+		string|false $link = 'view',
+		mixed $empty = NULL,
+		?string $title_attr = NULL,
+		array $extra = [],
+	): void {
+
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return;
 
@@ -1128,7 +1179,7 @@ class Template extends WordPress\Main
 	}
 
 	// @EXAMPLE: https://dastan.ourmag.ir/archives/issues/
-	public static function getSpanTiles( $atts = [], $module = NULL )
+	public static function getSpanTiles( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$html   = '';
 		$module = $module ?? static::MODULE;
@@ -1180,10 +1231,14 @@ class Template extends WordPress\Main
 
 	// TODO: link back to taxonomy archive via `Archives` Module
 	// `WordPress\Taxonomy::link( $term->taxonomy )`
-	public static function renderTermIntro( $term, $atts = [], $module = NULL )
-	{
+	public static function renderTermIntro(
+		mixed $term,
+		array $atts = [],
+		?string $module = NULL,
+	): bool {
+
 		if ( ! $term = WordPress\Term::get( $term ) )
-			return;
+			return FALSE;
 
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
@@ -1212,7 +1267,7 @@ class Template extends WordPress\Main
 		], $module );
 
 		if ( ! $image && ! $desc && ( ! $args['heading'] || ! $args['name_only'] ) )
-			return;
+			return FALSE;
 
 		if ( ! $image )
 			echo $wrap;
@@ -1236,15 +1291,20 @@ class Template extends WordPress\Main
 		echo '</div>'; // `.col`
 		echo '</div>'; // `.row`
 		echo $args['after'];
+		return TRUE;
 	}
 
-	public static function renderTermSubTerms( $term, $atts = [], $module = NULL )
-	{
+	public static function renderTermSubTerms(
+		mixed $term,
+		array $atts = [],
+		?string $module = NULL
+	): bool {
+
 		if ( ! $term = WordPress\Term::get( $term ) )
-			return;
+			return FALSE;
 
 		if ( ! WordPress\Taxonomy::hierarchical( $term->taxonomy ) )
-			return;
+			return FALSE;
 
 		$module = $module ?? static::MODULE;
 		$args   = self::atts( [
@@ -1262,7 +1322,7 @@ class Template extends WordPress\Main
 		$terms = WordPress\Taxonomy::getTerms( $term->taxonomy, FALSE, TRUE, 'term_id', $extra );
 
 		if ( empty( $terms ) )
-			return;
+			return FALSE;
 
 		$wrap = '<div class="-wrap '.static::BASE.'-wrap -term-listsubterms'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$list = [];
@@ -1271,10 +1331,12 @@ class Template extends WordPress\Main
 			$list[] = WordPress\Term::htmlLink( $term );
 
 		echo $args['before'].$wrap.Core\HTML::rows( $list ).'</div>'.$args['after'];
+		return TRUE;
 	}
 
+	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
-	public static function eventDate( $start, $end )
+	public static function eventDate( string $start, string $end ): string|false
 	{
 		// Only a start date
 		if ( empty( $end ) )
@@ -1299,8 +1361,9 @@ class Template extends WordPress\Main
 		return $date;
 	}
 
+	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
-	public static function eventTime( $start, $end )
+	public static function eventTime( string $start, string $end ): false|string
 	{
 		// Same date, same am/pm
 		if ( date( 'F j', $start ) == date( 'F j', $end ) && date( 'a', $start ) == date( 'a', $end ) )

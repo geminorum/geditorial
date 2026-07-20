@@ -18,7 +18,7 @@ class ModuleTemplate extends gEditorial\Template
 	}
 
 	// BACK-COMP
-	public static function metaLabel( $atts = [] )
+	public static function metaLabel( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		if ( ! array_key_exists( 'field', $atts ) )
 			$atts['field'] = 'label_string';

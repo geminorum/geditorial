@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
 {
-	public function register_posttype( $constant, $atts = [], $settings_atts = [], $taxonomies = [ 'post_tag' ] )
+	public function register_posttype( string $constant, array $atts = [], array $settings_atts = [], array $taxonomies = [ 'post_tag' ] ): false|object
 	{
 		$posttype = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
@@ -393,7 +393,7 @@ trait CorePostTypes
 		return $object;
 	}
 
-	public function get_posttype_labels( $constant )
+	public function get_posttype_labels( string $constant ): false|array
 	{
 		if ( isset( $this->strings['labels'] )
 			&& array_key_exists( $constant, $this->strings['labels'] ) )
@@ -428,7 +428,7 @@ trait CorePostTypes
 		return $labels;
 	}
 
-	protected function get_posttype_supports( $constant )
+	protected function get_posttype_supports( string $constant ): array
 	{
 		if ( isset( $this->options->settings[$constant.'_supports'] ) )
 			return $this->options->settings[$constant.'_supports'];
@@ -436,7 +436,7 @@ trait CorePostTypes
 		return array_keys( $this->settings_supports_defaults( $constant ) );
 	}
 
-	protected function settings_supports_defaults( $constant, $excludes = NULL )
+	protected function settings_supports_defaults( string $constant, string|array|null $excludes = NULL ): array
 	{
 		// default excludes
 		if ( is_null( $excludes ) )
@@ -456,7 +456,7 @@ trait CorePostTypes
 		return $supports;
 	}
 
-	protected function settings_supports_option( $constant, $defaults = TRUE, $excludes = NULL )
+	protected function settings_supports_option( string $constant, mixed $defaults = TRUE, string|array|null $excludes = NULL ): array
 	{
 		$supports = $this->settings_supports_defaults( $constant, $excludes );
 
@@ -486,7 +486,7 @@ trait CorePostTypes
 		];
 	}
 
-	public function is_screen_posttype( $constant, $screen = NULL )
+	public function is_screen_posttype( string  $constant, ?object $screen = NULL ): bool
 	{
 		if ( ! $screen = $screen ?? get_current_screen() )
 			return FALSE;
@@ -494,7 +494,7 @@ trait CorePostTypes
 		return $this->constant( $constant ) === $screen->post_type;
 	}
 
-	public function is_posttype( $constant, $post = NULL )
+	public function is_posttype( string $constant, mixed $post = NULL ): bool
 	{
 		if ( ! $constant )
 			return FALSE;
@@ -505,7 +505,7 @@ trait CorePostTypes
 		return $this->constant( $constant ) === $post->post_type;
 	}
 
-	public function get_posttype_label( $constant, $label = 'name', $fallback = '' )
+	public function get_posttype_label( string $constant, string $label = 'name', string $fallback = '' ): string
 	{
 		return Services\CustomPostType::getLabel(
 			$this->constant( $constant, $constant ),
@@ -515,18 +515,18 @@ trait CorePostTypes
 		);
 	}
 
-	public function get_posttype_taxonomies_list( $constant )
+	public function get_posttype_taxonomies_list( string $constant ): array
 	{
 		return WordPress\Taxonomy::get( 0, [ 'show_ui' => TRUE ], $this->constant( $constant ) );
 	}
 
-	public function get_posttype_fields_list( $constant, $module = 'meta' )
+	public function get_posttype_fields_list( string  $constant, ?string $module = 'meta' ): array
 	{
 		return Core\Arraay::pluck( Services\PostTypeFields::getEnabled( $this->constant( $constant ), $module ), 'title', 'name' );
 	}
 
 	// @REF: `post_type_supports()`
-	protected function is_posttype_support( $posttype, $feature, $fallback = TRUE )
+	protected function is_posttype_support( string $posttype, string $feature, mixed $fallback = TRUE ): mixed
 	{
 		global $_wp_post_type_features;
 
@@ -543,7 +543,7 @@ trait CorePostTypes
 
 	// NOTE: like core but with `FALSE` support
 	// @REF: `add_post_type_support()`
-	protected function add_posttype_support( $posttype, $feature, $args = TRUE )
+	protected function add_posttype_support( string $posttype, string $feature, mixed $args = TRUE ): void
 	{
 		global $_wp_post_type_features;
 
@@ -551,7 +551,7 @@ trait CorePostTypes
 			$_wp_post_type_features[$posttype][$key] = $args;
 	}
 
-	public function is_post_viewable( $post = NULL )
+	public function is_post_viewable( mixed $post = NULL ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -559,7 +559,7 @@ trait CorePostTypes
 		return $this->filters( 'is_post_viewable', WordPress\Post::viewable( $post ), $post );
 	}
 
-	public function get_image_sizes_for_posttype( $posttype )
+	public function get_image_sizes_for_posttype( string $posttype ): array
 	{
 		if ( ! isset( $this->image_sizes[$posttype] ) ) {
 
@@ -584,7 +584,7 @@ trait CorePostTypes
 	}
 
 	// NOTE: use this on `after_setup_theme` hook
-	public function register_posttype_thumbnail( $constant )
+	public function register_posttype_thumbnail( string $constant ): void
 	{
 		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
 			return;
@@ -599,7 +599,7 @@ trait CorePostTypes
 
 	// TODO: must add meta-box to list the attachments: maybe on `Attachments` Module
 	// @REF: https://stackoverflow.com/questions/15283026/attaching-media-to-post-type-without-editor-support
-	public function posttypes__media_register_headerbutton( $constant, $post = NULL, $editor_check = TRUE )
+	public function posttypes__media_register_headerbutton( string $constant, mixed $post = NULL, bool $editor_check = TRUE ): false|string
 	{
 		// already handled!
 		if ( $editor_check && post_type_supports( $this->constant( $constant, $constant ), 'editor' ) )
@@ -626,9 +626,9 @@ trait CorePostTypes
 		] );
 	}
 
-	protected function posttypes__increase_menu_order( $posttype )
+	protected function posttypes__increase_menu_order( string $posttype ): true
 	{
-		add_filter( 'wp_insert_post_data',
+		return add_filter( 'wp_insert_post_data',
 			static function ( $data, $postarr )
 				use ( $posttype ) {
 

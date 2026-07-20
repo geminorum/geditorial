@@ -121,7 +121,7 @@ class Views extends gEditorial\Module
 		Core\HTML::wrapjQueryReady( '$.post("'.admin_url( 'admin-ajax.php' ).'",{action:"'.$this->hook().'",_ajax_nonce:"'.wp_create_nonce( $this->classs( $this->current_queried ) ).'",post_id:'.$this->current_queried.',what:"entryview"});' );
 	}
 
-	public function do_ajax_public()
+	public function do_ajax_public(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = $post['what'] ?? 'nothing';
@@ -144,7 +144,7 @@ class Views extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	private function _update_views_for_post( $post_id, $event )
+	private function _update_views_for_post( int $post_id, string $event ): int|bool
 	{
 		if ( ! $post_id )
 			return FALSE;
@@ -156,13 +156,13 @@ class Views extends gEditorial\Module
 		return update_post_meta( $post_id, $key, $new, $old );
 	}
 
-	private function _report_views_for_post( $post_id, $event )
+	private function _report_views_for_post( int $post_id, string $event ): int
 	{
 		return (int) get_post_meta( $post_id, sprintf( $this->constant( 'metakey_post_template' ), $event ), TRUE );
 	}
 
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback_capability );
 	}
 }

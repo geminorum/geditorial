@@ -20,7 +20,7 @@ class NamesakeTerms extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		if ( ! ( is_tax() || is_tag() || is_category() ) || ( ! empty( $instance['hide_on_paged'] ) && is_paged() ) )
 			return;
@@ -91,7 +91,7 @@ class NamesakeTerms extends gEditorial\Widget
 		$this->after_widget( $args, $instance );
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -125,7 +125,7 @@ class NamesakeTerms extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

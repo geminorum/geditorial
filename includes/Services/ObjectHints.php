@@ -17,7 +17,7 @@ class ObjectHints extends gEditorial\Service
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 	}
 
-	public static function namespace()
+	public static function namespace(): string
 	{
 		return sprintf( '%s-%s/%s',
 			static::BASE,
@@ -26,7 +26,7 @@ class ObjectHints extends gEditorial\Service
 		);
 	}
 
-	public static function rest_api_init()
+	public static function rest_api_init(): void
 	{
 		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::READABLE,

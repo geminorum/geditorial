@@ -527,9 +527,15 @@ class Personage extends gEditorial\Module
 			$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,

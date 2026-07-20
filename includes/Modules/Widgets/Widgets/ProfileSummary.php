@@ -21,7 +21,7 @@ class ProfileSummary extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		if ( ! $user = wp_get_current_user() )
 			return;
@@ -90,7 +90,7 @@ class ProfileSummary extends gEditorial\Widget
 		$this->after_widget( $args, $instance );
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -117,7 +117,7 @@ class ProfileSummary extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

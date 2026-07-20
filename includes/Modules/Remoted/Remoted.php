@@ -15,7 +15,7 @@ class Remoted extends gEditorial\Module
 
 	protected $deafults  = [ 'dashboard_widgets' => TRUE ];
 
-	public static function module()
+	public static function module(): array
 	{
 		return [
 			'name'     => 'remoted',
@@ -31,7 +31,7 @@ class Remoted extends gEditorial\Module
 		];
 	}
 
-	protected function get_global_settings()
+	protected function get_global_settings(): array
 	{
 		return [
 			'_setup' => [
@@ -153,7 +153,7 @@ class Remoted extends gEditorial\Module
 		];
 	}
 
-	public function setup_disabled()
+	public function setup_disabled(): bool
 	{
 		$settings = [
 			'remote_base',
@@ -295,7 +295,7 @@ class Remoted extends gEditorial\Module
 		return wp_generate_password( $length ?? 20, FALSE );
 	}
 
-	protected function handle_settings_extra_buttons( $module )
+	protected function handle_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		if ( isset( $_POST['generate_receiver'] ) ) {
 
@@ -309,7 +309,7 @@ class Remoted extends gEditorial\Module
 		}
 	}
 
-	protected function register_settings_extra_buttons( $module )
+	protected function register_settings_extra_buttons( ?string $module = NULL ): void
 	{
 		if ( ! $identifier = $this->get_setting( 'remote_identifier' ) )
 			return;

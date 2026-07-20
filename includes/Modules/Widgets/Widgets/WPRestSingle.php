@@ -20,7 +20,7 @@ class WPRestSingle extends gEditorial\Widget
 		];
 	}
 
-	public function widget_html( $args, $instance )
+	public function widget_html( array $args, array $instance ): bool
 	{
 		if ( empty( $instance['resource'] ) || empty( $instance['post_id'] ) )
 			return FALSE;
@@ -75,7 +75,7 @@ class WPRestSingle extends gEditorial\Widget
 		return TRUE;
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -101,7 +101,7 @@ class WPRestSingle extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

@@ -15,7 +15,7 @@ class RestAPI extends gEditorial\Service
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ], 20 );
 	}
 
-	public static function rest_api_init()
+	public static function rest_api_init(): void
 	{
 		if ( $posttypes = self::getSupportedPosttypes( NULL, 'terms_rendered' ) )
 			register_rest_field( $posttypes, static::REST_FIELD_TERMS, [

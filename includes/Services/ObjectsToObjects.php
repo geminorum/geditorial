@@ -104,7 +104,7 @@ class ObjectsToObjects extends gEditorial\Service
 		return $the_posts;
 	}
 
-	public static function pre_user_query( $query )
+	public static function pre_user_query( object $query ): void
 	{
 		global $wpdb;
 
@@ -143,12 +143,12 @@ class ObjectsToObjects extends gEditorial\Service
 	}
 
 	// make the query vars public
-	public static function query_vars( $public_query_vars )
+	public static function query_vars( array $public_query_vars ): array
 	{
 		return array_merge( $public_query_vars, self::get_custom_query_vars() );
 	}
 
-	public static function get_custom_query_vars()
+	public static function get_custom_query_vars(): array
 	{
 		return [
 			'connected_type',
@@ -157,7 +157,7 @@ class ObjectsToObjects extends gEditorial\Service
 		];
 	}
 
-	public static function maybeInstall()
+	public static function maybeInstall(): void
 	{
 		if ( ! current_user_can( 'manage_options' ) )
 			return;
@@ -174,7 +174,7 @@ class ObjectsToObjects extends gEditorial\Service
 
 	const STORAGE = 4; // same as p2p
 
-	public static function installStorage()
+	public static function installStorage(): void
 	{
 		WordPress\Database::installTable( 'o2o', "
 			o2o_id bigint(20) unsigned NOT NULL auto_increment,
@@ -198,7 +198,7 @@ class ObjectsToObjects extends gEditorial\Service
 		" );
 	}
 
-	public static function uninstallStorage()
+	public static function uninstallStorage(): void
 	{
 		WordPress\Database::uninstallTable( 'o2o' );
 		WordPress\Database::uninstallTable( 'o2ometa' );
@@ -209,7 +209,7 @@ class ObjectsToObjects extends gEditorial\Service
 	const REST_ENDPOINT_SUFFIX  = 'o2o';
 	const REST_ENDPOINT_VERSION = 'v1';
 
-	public static function namespace()
+	public static function namespace(): string
 	{
 		return sprintf( '%s-%s/%s',
 			static::BASE,
@@ -220,7 +220,7 @@ class ObjectsToObjects extends gEditorial\Service
 
 	// @REF: https://github.com/JiveDig/restful-p2p
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
-	public static function rest_api_init()
+	public static function rest_api_init(): void
 	{
 		register_rest_route( self::namespace(), '/connect/(?P<name>[a-zA-Z0-9-_]+)/(?P<from>[\d]+)/(?P<to>[\d]+)', [
 			'methods'  => \WP_REST_Server::CREATABLE,
@@ -284,7 +284,7 @@ class ObjectsToObjects extends gEditorial\Service
 		return is_wp_error( $o2o ) ? $o2o : TRUE;
 	}
 
-	public static function rest_disconnect( $request )
+	public static function rest_disconnect( object $request ): object|true
 	{
 		if ( ! $type = O2O\API::type( $request['name'] ) )
 			return new \WP_Error( 'no_connection_type', _x( 'There are no connection types available!', 'Relation: REST', 'geditorial' ), [ 'status' => 404 ] );

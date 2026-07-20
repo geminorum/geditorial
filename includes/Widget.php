@@ -61,7 +61,7 @@ class Widget extends \WP_Widget
 		return TRUE;
 	}
 
-	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )
+	protected static function posttypes( string|array|null $posttypes = NULL, bool $check = FALSE, ?string $module = NULL ): array
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return [];
@@ -124,18 +124,18 @@ class Widget extends \WP_Widget
 	}
 
 	// NOTE: override this to bypass caching.
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		$this->widget_cache( $args, $instance, '' );
 	}
 
 	// NOTE: override this for different types of caching.
-	protected function widget_cache_key( $instance = [] )
+	protected function widget_cache_key( array $instance = [] ): string
 	{
 		return $this->alt_option_name;
 	}
 
-	public function widget_cache( $args, $instance, $prefix = '' )
+	public function widget_cache( array $args, array $instance, string $prefix = '' )
 	{
 		if ( $this->is_preview() )
 			return $this->widget_html( $args, $instance );
@@ -165,12 +165,12 @@ class Widget extends \WP_Widget
 		set_transient( $key, $cache, 12 * HOUR_IN_SECONDS );
 	}
 
-	public function widget_html( $args, $instance )
+	public function widget_html( array $args, array $instance ): bool
 	{
 		return FALSE;
 	}
 
-	public function before_widget( $args, $instance, $verbose = TRUE, $extra = '' )
+	public function before_widget( array $args, array $instance, bool $verbose = TRUE, string|array $extra = [] ): string|bool
 	{
 		$classes = [];
 
@@ -192,9 +192,10 @@ class Widget extends \WP_Widget
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
-	public function after_widget( $args, $instance, $verbose = TRUE )
+	public function after_widget( array $args, array $instance, bool $verbose = TRUE ): string|bool
 	{
 		$html = $args['after_widget'];
 
@@ -205,9 +206,10 @@ class Widget extends \WP_Widget
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
-	public function widget_title( $args, $instance, $verbose = TRUE, $default = '' )
+	public function widget_title( array $args, array $instance, bool $verbose = TRUE, string $default = '' ): string|bool
 	{
 		$title = apply_filters( 'widget_title',
 			empty( $instance['title'] ) ? $default : $instance['title'],
@@ -233,23 +235,24 @@ class Widget extends \WP_Widget
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
 	// NOTE: may not flush properly with no instance info
-	public function flush_widget_cache()
+	public function flush_widget_cache(): void
 	{
 		$key = $this->widget_cache_key();
 		// wp_cache_delete( $key, 'widget' );
 		delete_transient( $key );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 		return $this->handle_update( $new, $old );
 	}
 
-	public function handle_update( $new, $old, $checkboxes = [], $extra = [] )
+	public function handle_update( array $new, array $old, array $checkboxes = [], array $extra = [] ): array
 	{
 		$fields = array_merge( [
 			'title'        => 'text',
@@ -310,7 +313,7 @@ class Widget extends \WP_Widget
 		return $instance;
 	}
 
-	public function get_images_sizes( $posttype )
+	public function get_images_sizes( string $posttype ): array
 	{
 		$images   = [];
 		$sizes    = gEditorial()->module( $this->parent_module )->get_image_sizes_for_posttype( $posttype );
@@ -348,7 +351,7 @@ class Widget extends \WP_Widget
 		return $images;
 	}
 
-	public function before_form( $instance, $verbose = TRUE )
+	public function before_form( array $instance, bool $verbose = TRUE ): string|bool
 	{
 		$classes = [ static::BASE.'-wrap', '-wrap', '-admin-widgetform' ];
 
@@ -361,9 +364,10 @@ class Widget extends \WP_Widget
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
-	public function after_form( $instance, $verbose = TRUE )
+	public function after_form( array $instance, bool $verbose = TRUE ): string|bool
 	{
 		$html = '</div>';
 
@@ -371,9 +375,10 @@ class Widget extends \WP_Widget
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
-	public function form_open_group( $title = FALSE )
+	public function form_open_group( string $title = '' ): void
 	{
 		echo '<div class="-group">';
 
@@ -389,13 +394,13 @@ class Widget extends \WP_Widget
 		}
 	}
 
-	public function form_close_group( $desc = FALSE )
+	public function form_close_group( string $desc = '' ): void
 	{
 		Core\HTML::desc( $desc );
 		echo '</div>';
 	}
 
-	public function form_content( $instance, $default = '', $field = 'content', $label = NULL )
+	public function form_content( array $instance, string $default = '', string $field = 'content', ?string $label = NULL ): void
 	{
 		echo '<p>';
 
@@ -415,7 +420,7 @@ class Widget extends \WP_Widget
 		echo '</p>';
 	}
 
-	public function form_open_widget( $instance, $default = '', $field = 'open_widget_html', $label = NULL )
+	public function form_open_widget( array $instance, string $default = '', string $field = 'open_widget_html', ?string $label = NULL ): void
 	{
 		echo '<p>';
 
@@ -435,7 +440,7 @@ class Widget extends \WP_Widget
 		echo '</p>';
 	}
 
-	public function form_close_widget( $instance, $default = '', $field = 'close_widget_html', $label = NULL )
+	public function form_close_widget( array $instance, string $default = '', string $field = 'close_widget_html', ?string $label = NULL ): void
 	{
 		echo '<p>';
 
@@ -455,7 +460,7 @@ class Widget extends \WP_Widget
 		echo '</p>';
 	}
 
-	public function form_after_title( $instance, $default = '', $field = 'after_title_html', $label = NULL )
+	public function form_after_title( array $instance, string $default = '', string $field = 'after_title_html', ?string $label = NULL ): void
 	{
 		echo '<p>';
 
@@ -475,7 +480,7 @@ class Widget extends \WP_Widget
 		echo '</p>';
 	}
 
-	public function form_number( $instance, $default = '10', $field = 'number', $label = NULL )
+	public function form_number( array $instance, string $default = '10', string $field = 'number', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
@@ -491,7 +496,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_trim_chars( $instance, $default = '', $field = 'trim_chars', $label = NULL )
+	public function form_trim_chars( array $instance, string $default = '', string $field = 'trim_chars', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'number',
@@ -507,7 +512,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_context( $instance, $default = '', $field = 'context', $label = NULL )
+	public function form_context( array $instance, string $default = '', string $field = 'context', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -523,7 +528,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_class( $instance, $default = '', $field = 'class', $label = NULL )
+	public function form_class( array $instance, string $default = '', string $field = 'class', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -539,7 +544,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_post_type( $instance, $default = 'post', $field = 'post_type', $any = TRUE, $label = NULL )
+	public function form_post_type( array $instance, string $default = 'post', string $field = 'post_type', bool $any = TRUE, ?string $label = NULL ): void
 	{
 		$html = '';
 		$type = $instance[$field] ?? $default;
@@ -568,7 +573,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_taxonomies( $instance, $default = '', $field = 'taxonomies', $posttype_field = 'post_type', $posttype_default = 'any', $label = NULL )
+	public function form_taxonomies( array $instance, string $default = '', string $field = 'taxonomies', string $posttype_field = 'post_type', string $posttype_default = 'any', ?string $label = NULL ): void
 	{
 		$type  = $instance[$posttype_field] ?? $posttype_default;
 		$taxes = $instance[$field] ?? $default;
@@ -599,7 +604,7 @@ class Widget extends \WP_Widget
 		echo '</ul></div>';
 	}
 
-	public function form_taxonomy( $instance, $default = 'all', $field = 'taxonomy', $posttype_field = 'post_type', $posttype_default = 'any', $option_all = 'all', $label = NULL )
+	public function form_taxonomy( array $instance, string $default = 'all', string $field = 'taxonomy', string $posttype_field = 'post_type', string $posttype_default = 'any', string $option_all = 'all', ?string $label = NULL ): void
 	{
 		$html = '';
 		$type = $instance[$posttype_field] ?? $posttype_default;
@@ -628,7 +633,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_title( $instance, $default = '', $field = 'title', $label = NULL )
+	public function form_title( array $instance, string $default = '', string $field = 'title', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -644,7 +649,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_title_link( $instance, $default = '', $field = 'title_link', $label = NULL )
+	public function form_title_link( array $instance, string $default = '', string $field = 'title_link', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text', // `url` will not work on relative URLs
@@ -660,7 +665,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_title_image( $instance, $default = '', $field = 'title_image', $label = NULL )
+	public function form_title_image( array $instance, string $default = '', string $field = 'title_image', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'url',
@@ -676,7 +681,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_custom_link( $instance, $default = '', $field = 'custom_link', $label = NULL )
+	public function form_custom_link( array $instance, string $default = '', string $field = 'custom_link', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text', // `url` will not work on relative URLs
@@ -692,7 +697,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_custom_code( $instance, $default = '', $field = 'custom_code', $label = NULL )
+	public function form_custom_code( array $instance, string $default = '', string $field = 'custom_code', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -708,7 +713,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_custom_title( $instance, $default = '', $field = 'custom_title', $label = NULL )
+	public function form_custom_title( array $instance, string $default = '', string $field = 'custom_title', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -724,7 +729,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_custom_empty( $instance, $default = '', $field = 'empty', $label = NULL )
+	public function form_custom_empty( array $instance, string $default = '', string $field = 'empty', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -740,7 +745,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_avatar_size( $instance, $default = NULL, $field = 'avatar_size' )
+	public function form_avatar_size( array $instance, $default = NULL, $field = 'avatar_size' ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'text',
@@ -756,7 +761,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_image_size( $instance, $default = NULL, $field = 'image_size', $posttype = 'post' )
+	public function form_image_size( array $instance, ?string $default = NULL, string $field = 'image_size', string $posttype = 'post' ): void
 	{
 		$sizes   = $this->get_images_sizes( $posttype );
 		$default = $default ?? WordPress\Media::getAttachmentImageDefaultSize( $posttype );
@@ -789,9 +794,9 @@ class Widget extends \WP_Widget
 		}
 	}
 
-	public function form_connection( $instance, $default = '', $field = 'connection', $label = NULL )
+	public function form_connection( array $instance, string $default = '', string $field = 'connection', ?string $label = NULL ): void
 	{
-		return $this->form_dropdown(
+		$this->form_dropdown(
 			$instance,
 			Services\O2O\API::listConnections(),
 			$default,
@@ -800,7 +805,7 @@ class Widget extends \WP_Widget
 		);
 	}
 
-	public function form_dropdown( $instance, $values, $default = '', $field = 'selected', $label = NULL )
+	public function form_dropdown( array $instance, array $values, string $default = '', string $field = 'selected', ?string $label = NULL )
 	{
 		$html = Core\HTML::dropdown( $values, [
 			'class'      => 'widefat',
@@ -816,7 +821,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_checkbox( $instance, $default = FALSE, $field = 'checked', $label = NULL )
+	public function form_checkbox( array $instance, bool|string $default = FALSE, string $field = 'checked', ?string $label = NULL ): void
 	{
 		if ( is_null( $label ) ) {
 			switch ( $field ) {
@@ -845,8 +850,15 @@ class Widget extends \WP_Widget
 	}
 
 	// only works on hierarchical
-	public function form_page_id( $instance, $default = '0', $field = 'page_id', $posttype_field = 'posttype', $posttype_default = 'page', $label = NULL )
-	{
+	public function form_page_id(
+		array $instance,
+		int|string $default = '0',
+		string $field = 'page_id',
+		string $posttype_field = 'posttype',
+		string $posttype_default = 'page',
+		?string $label = NULL
+	): void {
+
 		$posttype = $instance[$posttype_field] ?? $posttype_default;
 		$page_id  = $instance[$field] ?? $default;
 
@@ -872,8 +884,14 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_term_id( $instance, $default = '0', $field = 'term_id', $taxonomy_field = 'taxonomy', $taxonomy_default = 'post_tag' )
-	{
+	public function form_term_id(
+		array $instance,
+		int|string $default = '0',
+		string $field = 'term_id',
+		string $taxonomy_field = 'taxonomy',
+		string $taxonomy_default = 'post_tag',
+	) {
+
 		$taxonomy = $instance[$taxonomy_field] ?? $taxonomy_default;
 		$term_id  = $instance[$field] ?? $default;
 
@@ -914,7 +932,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_has_thumbnail( $instance, $default = FALSE, $field = 'has_thumbnail', $label = NULL )
+	public function form_has_thumbnail( array $instance, bool|string $default = FALSE, string $field = 'has_thumbnail', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',
@@ -929,7 +947,7 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_wrap_as_items( $instance, $default = TRUE, $field = 'wrap_as_items', $label = NULL )
+	public function form_wrap_as_items( array $instance, bool|string $default = TRUE, string $field = 'wrap_as_items', ?string $label = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'    => 'checkbox',

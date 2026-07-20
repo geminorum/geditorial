@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait BulkExports
 {
-	protected function exports_get_export_buttons( $reference, $context, $target = NULL )
+	protected function exports_get_export_buttons( int|string $reference, ?string $context, ?string $target = NULL ): string
 	{
 		$html = '';
 
@@ -29,7 +29,7 @@ trait BulkExports
 		return $html;
 	}
 
-	protected function exports_get_export_links( $reference, $context, $target = NULL )
+	protected function exports_get_export_links( int|string $reference, ?string $context, ?string $target = NULL ): array
 	{
 		$links = [];
 
@@ -55,7 +55,7 @@ trait BulkExports
 	// TODO: support `taxonomy` target
 	// TODO: support `subcontent` target
 	// TODO: support `subcontent_from_paired` target
-	protected function exports_get_types( $context, $target = NULL )
+	protected function exports_get_types( ?string $context, ?string $target = NULL ): array
 	{
 		$types = [
 			'paired_simple'   => [
@@ -125,11 +125,18 @@ trait BulkExports
 		return $this->filters( 'export_types', $types, $context, $target );
 	}
 
-	protected function exports_get_type_download_link( $reference, $type, $context, $target = 'default', $format = 'xlsx', $extra = [] )
-	{
+	protected function exports_get_type_download_link(
+		int|string $reference,
+		?string $type,
+		?string $context,
+		?string $target = 'default',
+		string $format = 'xlsx',
+		array $extra = []
+	): string {
+
 		return add_query_arg( array_merge( [
 			'action'  => $this->classs( 'exports' ),
-			'ref'     => $reference,
+			'ref'     => $reference ?: FALSE,
 			'target'  => $target,
 			'type'    => $type,
 			'context' => $context,
@@ -138,7 +145,7 @@ trait BulkExports
 	}
 
 	// NOTE: only fires on admin
-	protected function exports_do_check_requests()
+	protected function exports_do_check_requests(): bool
 	{
 		if ( $this->classs( 'exports' ) != self::req( 'action' ) )
 			return FALSE;
@@ -152,12 +159,18 @@ trait BulkExports
 		if ( FALSE !== ( $data = $this->exports_get_export_data( $reference, $target, $type, $context, $format ) ) )
 			Core\Text::download( $data, Core\File::prepName( $this->exports_get_export_filename( $reference, $target, $type, $context, $format ) ) );
 
-		WordPress\Redirect::doReferer( 'wrong' );
+		return WordPress\Redirect::doReferer( 'wrong' );
 	}
 
 	// TODO: apply general filter with token support and override `Core\File::prepName()`
-	protected function exports_get_export_filename( $reference, $target, $type, $context, $format )
-	{
+	protected function exports_get_export_filename(
+		int|string $reference,
+		?string $target,
+		?string $type,
+		?string $context,
+		?string $format
+	): string {
+
 		$ext = in_array( $format, [
 			'csv',
 			'xlsx',
@@ -184,7 +197,7 @@ trait BulkExports
 			case 'globalsummary':
 			case 'paired':
 
-				if ( ! $post = WordPress\Post::get( $reference ) )
+				if ( ! $post = WordPress\Post::get( (int) $reference ) )
 					break;
 
 				return self::dot( self::dsh(
@@ -197,8 +210,21 @@ trait BulkExports
 		return self::dot( self::dsh( $context, $type ), $ext );
 	}
 
-	protected function exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields = [], $units = [], $metas = [], $taxes = [], $customs = [], $format = 'xlsx' )
-	{
+	protected function exports_prep_posts_for_export(
+		array $posttypes,
+		int|string $reference,
+		?string $target,
+		?string $type,
+		array $posts,
+		array $props,
+		array $fields = [],
+		array $units = [],
+		array $metas = [],
+		array $taxes = [],
+		array $customs = [],
+		?string $format = 'xlsx',
+	): array|string {
+
 		$data = [];
 
 		foreach ( $posts as $post ) {
@@ -302,7 +328,7 @@ trait BulkExports
 					$sheet_title = Services\CustomPostType::getLabel( $reference, 'extended_label', 'name', $this->module->title );
 
 				else
-					$sheet_title = WordPress\Post::title( $reference, NULL, FALSE );
+					$sheet_title = WordPress\Post::title( (int) $reference, NULL, FALSE );
 
 				return gEditorial\Parser::toXLSX_Legacy(
 					$data,
@@ -315,7 +341,7 @@ trait BulkExports
 		return $data;
 	}
 
-	protected function exports_generate_date_value( $data, $prop )
+	protected function exports_generate_date_value( mixed $data, string $prop ): string
 	{
 		return gEditorial\Datetime::prepForInput( $data,
 			gEditorial\Datetime::isDateOnly( $data )
@@ -326,7 +352,7 @@ trait BulkExports
 	}
 
 	// Prevents the duplicate headers to avoid messing up the excel exports.
-	protected function exports_generate_column_header( $headers, $header )
+	protected function exports_generate_column_header( array $headers, string $header ): string
 	{
 		static $counter = [];
 
@@ -346,7 +372,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_generate_column_widths( $headers, $posttypes, $default = 20 )
+	protected function exports_generate_column_widths( array $headers, array $posttypes, int $default = 20 ): array
 	{
 		$widths = [];
 		$fields = Services\PostTypeFields::getEnabled( $posttypes[0], 'meta' );
@@ -392,7 +418,7 @@ trait BulkExports
 		return apply_filters( $this->hook_base( 'bulk_exports', 'post_column_widths' ), $widths, $headers, $default );
 	}
 
-	protected function exports_generate_column_widths_for_fields( $field, $default = 20, $module = 'meta', $padding = 4 )
+	protected function exports_generate_column_widths_for_fields( string $field, ?int $default = NULL, ?string $module = 'meta', int $padding = 4 ): int
 	{
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( $field, $module ) )
 			return $default;
@@ -400,12 +426,20 @@ trait BulkExports
 		if ( ! $average = WordPress\PostType::getMetaAverageDataLength( $metakey ) )
 			return $default;
 
-		return Core\Number::round( $average + $padding ) ?: $default;
+		return Core\Number::round( $average + $padding ) ?: $default ?? 20;
 	}
 
 	// TODO: support field meta from paired
-	protected function exports_generate_export_data( $posts, $posttypes, $reference, $target, $type, $context, $format )
-	{
+	protected function exports_generate_export_data(
+		array $posts,
+		array $posttypes,
+		int|string $reference,
+		?string $target,
+		?string $type,
+		?string $context,
+		?string $format,
+	): mixed {
+
 		if ( empty( $posts ) )
 			return FALSE;
 
@@ -421,7 +455,7 @@ trait BulkExports
 	}
 
 	// TODO: export target: `paired_by_term`
-	protected function exports_get_export_data( $reference, $target, $type, $context, $format )
+	protected function exports_get_export_data( int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): false|array
 	{
 		$data = FALSE;
 
@@ -499,7 +533,7 @@ trait BulkExports
 
 			case 'globalsummary':
 
-				if ( ! $post = WordPress\Post::get( $reference ) )
+				if ( ! $post = WordPress\Post::get( (int) $reference ) )
 					break;
 
 				$posts = Services\Paired::getGlobalSummaryForPost( $post, $context );
@@ -571,7 +605,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_props( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [
 			'ID',
@@ -649,7 +683,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_fields( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [];
 
@@ -724,7 +758,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_units( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [];
 
@@ -784,7 +818,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_metas( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [];
 
@@ -830,7 +864,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_taxonomies( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [];
 
@@ -911,7 +945,7 @@ trait BulkExports
 		);
 	}
 
-	protected function exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format )
+	protected function exports_get_post_customs( array $posttypes, int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): array
 	{
 		$list = [];
 
@@ -957,7 +991,7 @@ trait BulkExports
 		);
 	}
 
-	protected function bulkexports__hook_supportedbox_for_term( $constant, $screen, $role_context = NULL )
+	protected function bulkexports__hook_supportedbox_for_term( ?string $constant, ?object $screen, ?string $role_context = NULL ): bool
 	{
 		if ( 'term' !== $screen->base )
 			return FALSE;
@@ -970,7 +1004,7 @@ trait BulkExports
 
 		$this->_hook_term_supportedbox( $screen, NULL, 'side', 'high' );
 
-		add_action( $this->hook( 'render_supportedbox_metabox' ),
+		return add_action( $this->hook( 'render_supportedbox_metabox' ),
 			function ( $object, $box, $screen, $action_context ) use ( $constant ) {
 				echo $this->wrap(
 					$this->exports_get_export_buttons(
@@ -979,16 +1013,14 @@ trait BulkExports
 						'assigned'
 					), 'field-wrap -buttons' );
 			}, 20, 4 );
-
-		return TRUE;
 	}
 
-	protected function bulkexports__hook_tabloid_term_assigned( $constant, $role_context = NULL )
+	protected function bulkexports__hook_tabloid_term_assigned( string $constant, ?string $role_context = NULL ): bool
 	{
 		if ( FALSE !== $role_context && ! $this->corecaps_taxonomy_role_can( $constant, $role_context ?? 'reports' ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'tabloid', 'term_summaries' ),
+		return add_filter( $this->hook_base( 'tabloid', 'term_summaries' ),
 			function ( $list, $data, $term, $context ) use ( $constant ) {
 
 				if ( $term->taxonomy !== $this->constant( $constant ) )
@@ -1007,7 +1039,5 @@ trait BulkExports
 				return $list;
 
 			}, 20, 4 );
-
-		return TRUE;
 	}
 }

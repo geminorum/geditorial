@@ -71,7 +71,7 @@ class Gallery extends gEditorial\Module
 		return $strings;
 	}
 
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [

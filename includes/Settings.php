@@ -18,7 +18,7 @@ class Settings extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function getURLbyContext( $context, $full = TRUE, $extra = [] )
+	public static function getURLbyContext( string $context, $full = TRUE, $extra = [] )
 	{
 		$url = sprintf( 'admin.php?page=%s', self::classs( $context ) );
 
@@ -3752,7 +3752,7 @@ class Settings extends WordPress\Main
 
 	// TODO: support more types!
 	// FIXME: WTF: not possible to pass fields with arrays (check-boxes/multiple-select)
-	private static function fieldType_getObjectForm( $args, $fields, $name_prefix = '', $options = [] )
+	private static function fieldType_getObjectForm( array $args, array $fields, string $name_prefix = '', array $options = [] ): string
 	{
 		$group = '';
 
@@ -3852,7 +3852,7 @@ class Settings extends WordPress\Main
 		], $group );
 	}
 
-	public static function fieldType_switchOnOff( $atts = [] )
+	public static function fieldType_switchOnOff( array $atts = [] ): string|true
 	{
 		$args = self::atts( [
 			'id'         => FALSE,
@@ -3895,7 +3895,7 @@ class Settings extends WordPress\Main
 	}
 
 	// @REF: https://codepen.io/geminorum/pen/RwEPyWJ
-	public static function tabPanelOpen( $data = [], $class = '' )
+	public static function tabPanelOpen( mixed $data = [], string|array $class = '' ): string
 	{
 		if ( empty( $data ) )
 			$data = [];
@@ -3907,12 +3907,12 @@ class Settings extends WordPress\Main
 			.Core\HTML::propData( $data ).'><ul>';
 	}
 
-	public static function processingListOpen()
+	public static function processingListOpen(): string
 	{
 		return '<div class="'.static::BASE.'-processing-wrap"><ul>';
 	}
 
-	public static function processingListItem( $verbose, $message, $args = [], $returns = FALSE )
+	public static function processingListItem( bool $verbose, ?string $message, array $args = [], mixed $returns = FALSE ): mixed
 	{
 		if ( $verbose )
 			echo Core\HTML::row(
@@ -3924,7 +3924,7 @@ class Settings extends WordPress\Main
 		return $returns;
 	}
 
-	public static function processingAllDone( $message = NULL, $remove = NULL )
+	public static function processingAllDone( ?string $message = NULL, string|array|null $remove = NULL ): true
 	{
 		if ( FALSE !== $message )
 			echo self::toolboxColumnOpen( $message ?? Plugin::done( FALSE ) );
@@ -3941,7 +3941,7 @@ class Settings extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function goBackButton( $remove = NULL )
+	public static function goBackButton( string|array|null $remove = NULL ): string
 	{
 		return Core\HTML::button(
 			_x( '&larr; Go-back', 'Settings: Button', 'geditorial-admin' ),
@@ -3958,7 +3958,7 @@ class Settings extends WordPress\Main
 		);
 	}
 
-	public static function processingErrorOpen( $title = NULL )
+	public static function processingErrorOpen( ?string $title = NULL ): string
 	{
 		return
 			self::toolboxColumnOpen( $title ?? Plugin::wrong( FALSE ) ).
@@ -3966,21 +3966,21 @@ class Settings extends WordPress\Main
 	}
 
 	// EXTRA: `.-tablelist-card`
-	public static function toolboxCardOpen( $title = '', $buttons = TRUE, $extra = [] )
+	public static function toolboxCardOpen( string $title = '', bool $buttons = TRUE, string|array $extra = [] ): string
 	{
 		return '<div class="'.Core\HTML::prepClass( '-wrap',  static::BASE.'-wrap', 'card', '-toolbox-card', $extra ).'">'
 			.( $title ? sprintf( '<h4 class="title -title">%s</h4>', $title ) : '' )
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
 
-	public static function toolboxAfterOpen( $desc = '', $buttons = FALSE )
+	public static function toolboxAfterOpen( string $desc = '', bool $buttons = FALSE ): string
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-after">'
 			.( $desc ? sprintf( '<p class="description -description">%s</p>', nl2br( $desc ) ) : '' )
 			.( $buttons ? '<div class="-wrap -wrap-button-row">' : '' );
 	}
 
-	public static function toolboxAfterLinks( $links, $desc = '' )
+	public static function toolboxAfterLinks( array $links, string $desc = '' ): void
 	{
 		echo self::toolboxAfterOpen( $desc, TRUE );
 
@@ -3994,7 +3994,7 @@ class Settings extends WordPress\Main
 		echo '</div></div>';
 	}
 
-	public static function toolboxColumnOpen( $title = '' )
+	public static function toolboxColumnOpen( string $title = '' ): string
 	{
 		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-column">'
 			.( $title ? sprintf( '<h3 class="-title">%s</h3>', $title ) : '' );

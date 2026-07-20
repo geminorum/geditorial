@@ -721,8 +721,13 @@ class Papered extends gEditorial\Module
 		return $this->fetch_postmeta( $profile->ID, '', $this->get_postmeta_key( 'template_styles' ) ) ?: '';
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$context = $context ?? 'mainbox';
 
 		// gEditorial\MetaBox::fieldPostMenuOrder( $object );

@@ -20,7 +20,7 @@ class PostTerms extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		if ( ! is_singular() && ! is_single() )
 			return;
@@ -74,7 +74,7 @@ class PostTerms extends gEditorial\Widget
 		$this->after_widget( $args, $instance );
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 

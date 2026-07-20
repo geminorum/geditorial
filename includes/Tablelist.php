@@ -33,7 +33,7 @@ class Tablelist extends WordPress\Main
 	 * @param int|false $perpage
 	 * @return array
 	 */
-	public static function getTerms( $atts = [], $extra = [], $taxonomy = '', $perpage = 25 )
+	public static function getTerms( array $atts = [], array $extra = [], string|array $taxonomy = '', int|false $perpage = 25 ): array
 	{
 		if ( $perpage ) {
 
@@ -93,7 +93,7 @@ class Tablelist extends WordPress\Main
 	}
 
 	// TODO: support the parent post-type: no way but alter the query to filter the parent post-type
-	public static function getAttachments( $atts = [], $extra = [], $posttypes = 'attachment', $perpage = 25 )
+	public static function getAttachments( array $atts = [], array $extra = [], string|array $posttypes = 'attachment', int|false $perpage = 25 ): array
 	{
 		return self::getPosts( $atts, $extra, $posttypes, $perpage );
 	}
@@ -110,7 +110,7 @@ class Tablelist extends WordPress\Main
 	 * @param int|false $perpage
 	 * @return array
 	 */
-	public static function getPosts( $atts = [], $extra = [], $posttypes = 'any', $perpage = 25 )
+	public static function getPosts( array $atts = [], array $extra = [], string|array $posttypes = 'any', int|false $perpage = 25 ): array
 	{
 		if ( $perpage ) {
 
@@ -182,7 +182,7 @@ class Tablelist extends WordPress\Main
 	}
 
 	// FIXME: must check for excludes from `Settings::posttypesExcluded()`
-	public static function filterPostTypes( $list = NULL, $name = 'type' )
+	public static function filterPostTypes( ?array $list = NULL, string $name = 'type' ): string
 	{
 		if ( is_null( $list ) )
 			$list = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] );
@@ -195,12 +195,12 @@ class Tablelist extends WordPress\Main
 		] );
 	}
 
-	public static function filterAuthors( $list = NULL, $name = 'author' )
+	public static function filterAuthors( ?array $list = NULL, string $name = 'author' ): string
 	{
 		return Listtable::restrictByAuthor( self::req( $name, 0 ), $name, [ 'echo' => FALSE ] );
 	}
 
-	public static function filterSearch( $list = NULL, $name = 's' )
+	public static function filterSearch( ?array $list = NULL, string $name = 's' ): string
 	{
 		return Core\HTML::tag( 'input', [
 			'type'        => 'search',
@@ -211,7 +211,7 @@ class Tablelist extends WordPress\Main
 		] );
 	}
 
-	public static function getPostRowActions( $post_id, $actions = NULL )
+	public static function getPostRowActions( int $post_id, ?array $actions = NULL ): array
 	{
 		$list = [];
 		$edit = WordPress\Post::can( $post_id, 'edit_post' );
@@ -276,7 +276,7 @@ class Tablelist extends WordPress\Main
 	}
 
 	// @SEE: `Helper::getTermTitleRow()`
-	public static function getTermTitleRow( $term, $link = 'edit' )
+	public static function getTermTitleRow( mixed $term, string|bool|null $link = 'edit' ): string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return Plugin::na( FALSE );
@@ -314,13 +314,13 @@ class Tablelist extends WordPress\Main
 		], Core\HTML::escape( $title ) );
 	}
 
-	public static function columnPostID( $icon = TRUE, $column_title = NULL )
+	public static function columnPostID( bool $icon = TRUE, ?string $column_title = NULL ): string
 	{
 		$title = $column_title ?? _x( 'ID', 'Tablelist: Column: Post ID', 'geditorial' );
 		return $icon ? sprintf( '<span class="-column-icon %3$s" title="%2$s">%1$s</span>', $title, esc_attr( $title ), '-post-id' ) : $title;
 	}
 
-	public static function columnPostDate( $column_title = NULL )
+	public static function columnPostDate( ?string $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'Date', 'Tablelist: Column: Post Date', 'geditorial' ),
@@ -330,7 +330,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostDateModified( $column_title = NULL )
+	public static function columnPostDateModified( ?string $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'On', 'Tablelist: Column: Post Date Modified', 'geditorial' ),
@@ -340,7 +340,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostType( $post_id_prop = NULL, $column_title = NULL )
+	public static function columnPostType( ?string $post_id_prop = NULL, ?string $column_title = NULL ): array
 	{
 		return [
 			'title' => $column_title ?? _x( 'Type', 'Tablelist: Column: Post Type', 'geditorial' ),
@@ -357,7 +357,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostMime( $column_title = NULL )
+	public static function columnPostMime( ?string $column_title = NULL ): array
 	{
 		return [
 			'title' => $column_title ?? _x( 'Mime', 'Tablelist: Column: Post Mime', 'geditorial' ),
@@ -373,7 +373,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostTitle( $actions = NULL, $excerpt = FALSE, $custom = [] )
+	public static function columnPostTitle( ?array $actions = NULL, bool $excerpt = FALSE, $custom = [] ): array
 	{
 		return [
 			'title' => _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
@@ -418,7 +418,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostExcerpt( $column_title = NULL )
+	public static function columnPostExcerpt( ?string $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'Excerpt', 'Tablelist: Column: Post Excerpt', 'geditorial' ),
@@ -430,7 +430,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostTitleSummary( $column_title = NULL )
+	public static function columnPostTitleSummary( ?string $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'Title', 'Tablelist: Column: Post Title', 'geditorial' ),
@@ -440,7 +440,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostStatusSummary( $column_title = NULL )
+	public static function columnPostStatusSummary( ?string $column_title = NULL ): array
 	{
 		return [
 			'title' => $column_title ?? _x( 'Status', 'Tablelist: Column: Post Title', 'geditorial' ),
@@ -460,7 +460,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostAuthorSummary( $column_title = NULL )
+	public static function columnPostAuthorSummary( ?string $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'Author', 'Tablelist: Column: Post Author', 'geditorial' ),
@@ -477,7 +477,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnPostTerms( $taxonomies = NULL, $column_title = NULL )
+	public static function columnPostTerms( ?array $taxonomies = NULL, ?string $column_title = NULL ): array
 	{
 		return [
 			'title' => $column_title ?? _x( 'Terms', 'Tablelist: Column: Post Terms', 'geditorial' ),
@@ -495,12 +495,12 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnTermID( $column_title = NULL )
+	public static function columnTermID( ?string $column_title = NULL ): string
 	{
 		return $column_title ?? _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
-	public static function columnTermTaxonomyCode( $link = TRUE, $column_title = NULL )
+	public static function columnTermTaxonomyCode( bool $link = TRUE, $column_title = NULL ): array
 	{
 		return [
 			'title'    => $column_title ?? _x( 'Taxonomy', 'Tablelist: Column Title', 'geditorial' ),
@@ -517,7 +517,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnTermName( $actions = NULL, $description = FALSE, $custom = [], $title = NULL )
+	public static function columnTermName( ?array $actions = NULL, bool $description = FALSE, array $custom = [], ?string $title = NULL ): array
 	{
 		return [
 			'title'    => $title ?: _x( 'Name', 'Tablelist: Column: Term Name', 'geditorial' ),
@@ -544,7 +544,7 @@ class Tablelist extends WordPress\Main
 
 	// TODO: check if taxonomy has ui
 	// TODO: check if taxonomy is viewable
-	public static function getTermRowActions( $row, $actions = NULL )
+	public static function getTermRowActions( mixed $row, ?array $actions = NULL ): array
 	{
 		if ( ! $term = WordPress\Term::get( $row ) )
 			return [];
@@ -591,7 +591,7 @@ class Tablelist extends WordPress\Main
 	 * @param string $empty_attribute
 	 * @return array
 	 */
-	public static function columnTermSlug( $linked = FALSE, $column_title = NULL, $extra_arguments = [], $empty_attribute = '' )
+	public static function columnTermSlug( bool $linked = FALSE, ?string $column_title = NULL, array $extra_arguments = [], ?string $empty_attribute = '' ): array
 	{
 		return array_merge( [
 			'title'    => $column_title ?? _x( 'Slug', 'Tablelist: Column Title', 'geditorial' ),
@@ -611,7 +611,7 @@ class Tablelist extends WordPress\Main
 		], $extra_arguments );
 	}
 
-	public static function columnTermDesc( $title = NULL, $extra = [] )
+	public static function columnTermDesc( ?string $title = NULL, array $extra = [] ): array
 	{
 		return array_merge( [
 			'title'    => $title ?? _x( 'Description', 'Tablelist: Column: Term Desc', 'geditorial' ),
@@ -624,7 +624,7 @@ class Tablelist extends WordPress\Main
 		], $extra );
 	}
 
-	public static function columnTermMetaList( $title = NULL, $extra = [] )
+	public static function columnTermMetaList( ?string $title = NULL, array $extra = [] ): array
 	{
 		return array_merge( [
 			'title'    => $title ?? _x( 'Meta', 'Tablelist: Column: Term Desc', 'geditorial' ),
@@ -637,7 +637,7 @@ class Tablelist extends WordPress\Main
 		], $extra );
 	}
 
-	public static function columnTermMetaDateStart( $metakey = NULL, $calendar = NULL )
+	public static function columnTermMetaDateStart( ?string $metakey = NULL, ?string $calendar = NULL ): array
 	{
 		return [
 			'title'    => _x( 'Date-Start', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
@@ -655,7 +655,7 @@ class Tablelist extends WordPress\Main
 		];
 	}
 
-	public static function columnTermMetaDateEnd( $metakey = NULL, $calendar = NULL )
+	public static function columnTermMetaDateEnd( ?string $metakey = NULL, ?string $calendar = NULL ): array
 	{
 		return [
 			'title'    => _x( 'Date-End', 'Tablelist: Column: Term Meta Date-Start', 'geditorial' ),
@@ -682,7 +682,7 @@ class Tablelist extends WordPress\Main
 	 * @param string $empty_attribute
 	 * @return array
 	 */
-	public static function columnGeneralCode( $data_key, $column_title = NULL, $extra_arguments = [], $empty_attribute = '' )
+	public static function columnGeneralCode( string $data_key, ?string $column_title = NULL, array $extra_arguments = [], ?string $empty_attribute = '' ): array
 	{
 		return array_merge( [
 			'title'    => $column_title ?? Core\HTML::code( Core\Text::removeFromStart( $data_key, '_' ) ),
@@ -713,7 +713,7 @@ class Tablelist extends WordPress\Main
 	 * @param array $extra_arguments
 	 * @return array
 	 */
-	public static function columnGeneralDirection( $column_title = NULL, $extra_arguments = [] )
+	public static function columnGeneralDirection( ?string $column_title = NULL, array $extra_arguments = [] ): array
 	{
 		return array_merge( [
 			'title'    => $column_title ?? _x( '<abbr title="Direction">Dir</abbr>', 'Tablelist: Column: Direction', 'geditorial' ),

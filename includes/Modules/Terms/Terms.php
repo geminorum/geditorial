@@ -2562,15 +2562,15 @@ class Terms extends gEditorial\Module
 	 * @param array $taxonomies
 	 * @return array
 	 */
-	public function get_terms_defaults_ordering( $defaults, $taxonomies )
+	public function get_terms_defaults_ordering( array $defaults, ?array $taxonomies ): array
 	{
-		if ( is_array( $taxonomies ) && count( $taxonomies ) > 1 )
+		if ( ! $taxonomies || ( is_array( $taxonomies ) && count( $taxonomies ) > 1 ) )
 			return $defaults;
 
 		$taxonomy = is_array( $taxonomies ) ? (string) current( $taxonomies ) : $taxonomies;
 		$orderby  = 'name';
 
-		if ( in_array( 'order', $this->get_supported( $taxonomy, TRUE ) ) )
+		if ( in_array( 'order', $this->get_supported( $taxonomy ) ) )
 			$orderby = 'menu_order';
 
 		// Change defaults. Invalid values will be changed later @see `self::pre_get_terms_ordering()`.
@@ -2974,6 +2974,6 @@ class Terms extends gEditorial\Module
 
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback_capability );
 	}
 }

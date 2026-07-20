@@ -84,8 +84,13 @@ class WcIdentify extends gEditorial\Module
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
 	}
 
-	public function render_product_gtin( $product, $before = '', $after = '', $template = NULL )
-	{
+	public function render_product_gtin(
+		mixed $product,
+		string $before = '',
+		string $after = '',
+		?string $template = NULL,
+	): void {
+
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return;
 
@@ -108,7 +113,7 @@ class WcIdentify extends gEditorial\Module
 			$tokens ).$after;
 	}
 
-	public function display_product_attributes( $attributes, $product )
+	public function display_product_attributes( array $attributes, object $product ): array
 	{
 		$before = $after = [];
 

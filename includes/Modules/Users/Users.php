@@ -805,6 +805,7 @@ class Users extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+		return TRUE;
 	}
 
 	// FIXME: move to `Config`: `roles_overview()` and display list of caps for each

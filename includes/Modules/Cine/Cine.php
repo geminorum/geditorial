@@ -281,7 +281,7 @@ class Cine extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -441,21 +441,29 @@ class Cine extends gEditorial\Module
 		return $items;
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'rating_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'year_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,

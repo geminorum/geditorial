@@ -19,7 +19,7 @@ class SearchSelect extends gEditorial\Service
 		add_action( 'rest_api_init', [ __CLASS__, 'rest_api_init' ] );
 	}
 
-	public static function namespace()
+	public static function namespace(): string
 	{
 		return sprintf( '%s-%s/%s',
 			static::BASE,
@@ -28,7 +28,7 @@ class SearchSelect extends gEditorial\Service
 		);
 	}
 
-	public static function rest_api_init()
+	public static function rest_api_init(): void
 	{
 		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::READABLE,
@@ -38,7 +38,7 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// @REF: https://select2.org/data-sources/formats
-	public static function main_route_callback( $request )
+	public static function main_route_callback( object $request ): object
 	{
 		$queried = self::atts( [
 			'context'  => NULL,   // TODO / default is `select2` compatible
@@ -109,7 +109,7 @@ class SearchSelect extends gEditorial\Service
 		return is_wp_error( $response ) ? $response : new \WP_REST_Response( $response, 200 );
 	}
 
-	private static function _get_select2_posts( $queried )
+	private static function _get_select2_posts( array $queried ): array|object
 	{
 		$found = 0;
 		$posts = [];
@@ -133,10 +133,10 @@ class SearchSelect extends gEditorial\Service
 			$args['s'] = trim( $queried['search'] );
 
 		if ( ! empty( $queried['include'] ) )
-			$args['post__in'] = self::ids( $queried['include'] );
+			$args['post__in'] = self::parseIDs( $queried['include'] );
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['post__not_in'] = self::ids( $queried['exclude'] );
+			$args['post__not_in'] = self::parseIDs( $queried['exclude'] );
 
 		if ( ! empty( $queried['status'] ) )
 			$args['post_status'] = trim( $queried['status'] );
@@ -194,18 +194,18 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// NOTE: also used by others!
-	public static function getExtraForPost( $post, $queried = [], $default = [] )
+	public static function getExtraForPost( mixed $post, array $queried = [], array $default = [] ): array
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_post' ), $default, $post, $queried );
 	}
 
 	// NOTE: also used by others!
-	public static function getImageForPost( $post, $queried = [], $default = '' )
+	public static function getImageForPost( mixed $post, array $queried = [], string|false $default = '' ): string|false
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ), $default, $post, $queried );
 	}
 
-	private static function _get_select2_terms( $queried )
+	private static function _get_select2_terms( array $queried ): array|object
 	{
 		$found = 0;
 		$terms = [];
@@ -226,10 +226,10 @@ class SearchSelect extends gEditorial\Service
 			$args['name__like'] = trim( $queried['search'] );
 
 		if ( ! empty( $queried['include'] ) )
-			$args['include'] = self::ids( $queried['include'] );
+			$args['include'] = self::parseIDs( $queried['include'] );
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['exclude'] = self::ids( $queried['exclude'] );
+			$args['exclude'] = self::parseIDs( $queried['exclude'] );
 
 		// NOTE: Must return single or array of term objects/ids.
 		// NOTE: If it's array, will handle duplicates.
@@ -313,18 +313,18 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// NOTE: also used by others!
-	public static function getExtraForTerm( $term, $queried = [], $default = [] )
+	public static function getExtraForTerm( mixed $term, array $queried = [], array $default = [] ): array
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_term' ), $default, $term, $queried );
 	}
 
 	// NOTE: also used by others!
-	public static function getImageForTerm( $term, $queried = [], $default = '' )
+	public static function getImageForTerm( mixed $term, array $queried = [], string|false $default = '' ): false|string
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_term' ), $default, $term, $queried );
 	}
 
-	private static function _get_select2_users( $queried )
+	private static function _get_select2_users( array $queried ): array|object
 	{
 		$found = 0;
 		$users = [];
@@ -348,7 +348,7 @@ class SearchSelect extends gEditorial\Service
 		];
 
 		if ( ! empty( $queried['exclude'] ) )
-			$args['exclude'] = self::ids( $queried['exclude'] );
+			$args['exclude'] = self::parseIDs( $queried['exclude'] );
 
 		if ( ! empty( $queried['role'] ) && 'all' !== trim( $queried['role'] ) )
 			$args['role__in'] = array_diff( explode( ',', $queried['role'] ), $args['role__not_in'] );
@@ -404,7 +404,7 @@ class SearchSelect extends gEditorial\Service
 		];
 	}
 
-	public static function enqueueSelect2( $extra = [] )
+	public static function enqueueSelect2( array $extra = [] ): string
 	{
 		static $enqueued = FALSE;
 

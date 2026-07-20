@@ -88,8 +88,13 @@ trait MetaBoxMain
 	}
 
 	// DEFAULT METHOD
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$context = $context ?? 'mainbox';
 
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );

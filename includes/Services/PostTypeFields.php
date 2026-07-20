@@ -576,14 +576,14 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'isbn':
 
-					// `return Services\Lookup::htmlISBN( $raw ?: $value );`
+					// `return Lookup::htmlISBN( $raw ?: $value );`
 					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
 						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
 						$raw ?: $value, $raw ?: $value );
 
 				case 'vin':
 
-					return Services\Lookup::htmlVIN( $raw ?: $value );
+					return Lookup::htmlVIN( $raw ?: $value );
 
 				case 'plate':
 

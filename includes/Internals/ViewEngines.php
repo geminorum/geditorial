@@ -10,6 +10,10 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 trait ViewEngines
 {
 
+	protected $base = NULL;
+	protected $key  = NULL;
+	protected $path = NULL;
+
 	protected $view_engines = [];
 
 	// @SEE: https://github.com/GaryJones/Gamajo-Template-Loader

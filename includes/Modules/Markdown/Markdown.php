@@ -600,7 +600,7 @@ class Markdown extends gEditorial\Module
 
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback_capability );
 	}
 
 	public function reports_settings( string $sub ): void

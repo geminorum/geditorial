@@ -179,7 +179,7 @@ class Agenda extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_parents( array $extra = [] ): array
+	protected function posttypes_parents( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_parents', [
 			'event',

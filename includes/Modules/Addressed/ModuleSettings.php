@@ -11,7 +11,7 @@ class ModuleSettings extends gEditorial\Settings
 {
 	const MODULE = 'addressed';
 
-	public static function renderCard_address_type_report( $type, $data = FALSE )
+	public static function renderCard_address_type_report( array $type, array $data = [] ): bool
 	{
 		echo self::toolboxCardOpen( $type['title'] ?? _x( 'Untitled Address Type', 'Card Title', 'geditorial-addressed' ), FALSE );
 

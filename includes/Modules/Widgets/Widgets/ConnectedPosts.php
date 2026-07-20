@@ -23,12 +23,12 @@ class ConnectedPosts extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		$this->widget_cache( $args, $instance, get_queried_object_id() );
 	}
 
-	public function widget_html( $args, $instance )
+	public function widget_html( array $args, array $instance ): bool
 	{
 		if ( ! is_singular() && ! is_single() )
 			return FALSE;
@@ -68,7 +68,7 @@ class ConnectedPosts extends gEditorial\Widget
 		return $html;
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -95,7 +95,7 @@ class ConnectedPosts extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

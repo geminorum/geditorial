@@ -26,7 +26,7 @@ class Sitemaps extends gEditorial\Service
 	 * @param string $taxonomy
 	 * @return array
 	 */
-	public static function taxonomies_query_args( $arguments, $taxonomy )
+	public static function taxonomies_query_args( array $arguments, string $taxonomy ): array
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return $arguments;

@@ -26,7 +26,7 @@ class TermRelations extends gEditorial\Service
 
 	// TODO: register endpoint for rendered: `{prefix}/{post_id}/{taxonomy}`
 	// @SEE `rest_{$this->taxonomy}_query` filter
-	public static function rest_api_init()
+	public static function rest_api_init(): void
 	{
 		if ( ! $taxonomies = self::getTaxonomies() )
 			return;

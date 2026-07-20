@@ -394,9 +394,9 @@ class Addendum extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostParent( $object );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
-			'context'    => $context,
 			'empty_link' => FALSE,
 		] );
 	}

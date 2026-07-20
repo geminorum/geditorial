@@ -20,7 +20,7 @@ class IssueCover extends gEditorial\Widget
 		];
 	}
 
-	public function widget( $args, $instance )
+	public function widget( $args, $instance ): void
 	{
 		if ( ! $instance['latest_issue']
 			&& ! $instance['page_id']
@@ -39,7 +39,7 @@ class IssueCover extends gEditorial\Widget
 		$this->widget_cache( $args, $instance, $prefix );
 	}
 
-	public function widget_html( $args, $instance )
+	public function widget_html( array $args, array $instance ): bool
 	{
 		$link = 'parent';
 		$type = self::constant( 'primary_posttype', 'issue' );
@@ -84,7 +84,7 @@ class IssueCover extends gEditorial\Widget
 		return TRUE;
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$type = self::constant( 'primary_posttype', 'issue' );
 
@@ -114,7 +114,7 @@ class IssueCover extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

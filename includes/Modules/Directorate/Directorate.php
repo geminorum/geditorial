@@ -486,18 +486,25 @@ class Directorate extends gEditorial\Module
 		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ), FALSE );
 	}
 
-	protected function _render_mainbox_content( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_mainbox_content(
+		object $object,
+		array|false $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 		gEditorial\MetaBox::fieldPostParent( $object );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'type_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,
 		] );
 
 		gEditorial\MetaBox::singleselectTerms( $object->ID, [
+			'context'    => $context,
 			'taxonomy'   => $this->constant( 'status_taxonomy' ),
 			'posttype'   => $object->post_type,
 			'empty_link' => FALSE,

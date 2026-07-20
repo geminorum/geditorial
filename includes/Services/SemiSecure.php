@@ -18,8 +18,14 @@ class SemiSecure extends gEditorial\Service
 	 * @param mixed $fallback
 	 * @return string
 	 */
-	public static function generateToken( $context, $subject, $fullname, $expires = NULL, $fallback = FALSE )
-	{
+	public static function generateToken(
+		string $context,
+		string $subject,
+		string $fullname,
+		?int $expires = NULL,
+		bool|string $fallback = FALSE,
+	): string|bool {
+
 		if ( ! $subject || ! $fullname )
 			return $fallback;
 

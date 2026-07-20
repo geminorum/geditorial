@@ -10,7 +10,7 @@ class Welcome extends gEditorial\Control
 {
 	const CONTROL = 'welcome';
 
-	public function render_content()
+	public function render_content(): void
 	{
 		$system = gEditorial\Plugin::system();
 

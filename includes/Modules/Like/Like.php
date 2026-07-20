@@ -239,7 +239,7 @@ class Like extends gEditorial\Module
 		}
 	}
 
-	public function do_ajax_public()
+	public function do_ajax_public(): void
 	{
 		$post = self::unslash( $_POST );
 		$what = isset( $post['what'] ) ? $post['what'] : 'nothing';
@@ -539,7 +539,7 @@ class Like extends gEditorial\Module
 
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		return $this->_override_module_cuc( $context, $fallback );
+		return $this->_override_module_cuc( $context, $fallback_capability );
 	}
 
 	public function reports_settings( string $sub ): void

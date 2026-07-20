@@ -20,7 +20,7 @@ class CustomHTML extends gEditorial\Widget
 		];
 	}
 
-	public function widget_html( $args, $instance )
+	public function widget_html( array $args, array $instance ): bool
 	{
 		global $wp_embed;
 
@@ -57,7 +57,7 @@ class CustomHTML extends gEditorial\Widget
 		return empty( $instance['bypasscache'] );
 	}
 
-	public function form( $instance )
+	public function form( $instance ): void
 	{
 		$this->before_form( $instance );
 
@@ -89,7 +89,7 @@ class CustomHTML extends gEditorial\Widget
 		$this->after_form( $instance );
 	}
 
-	public function update( $new, $old )
+	public function update( $new, $old ): array
 	{
 		$this->flush_widget_cache();
 

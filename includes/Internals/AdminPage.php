@@ -9,8 +9,12 @@ use geminorum\gEditorial\WordPress;
 
 trait AdminPage
 {
+	public $module = NULL;
 
-	protected function get_adminpage_subs( $context = 'mainpage' )
+	protected $base = NULL;
+	protected $key  = NULL;
+
+	protected function get_adminpage_subs( ?string $context = 'mainpage' ): array
 	{
 		// $subs = $this->list_posttypes( NULL, NULL, 'create_posts' );
 		$subs = $this->get_string( 'subs', $context, 'adminpage', [] );
@@ -21,7 +25,7 @@ trait AdminPage
 		return $this->filters( $context.'_subs', $subs );
 	}
 
-	protected function get_adminpage_default_sub( $subs = NULL, $context = 'mainpage' )
+	protected function get_adminpage_default_sub( ?array $subs = NULL, ?string $context = 'mainpage' )
 	{
 		if ( is_null( $subs ) )
 			$subs = $this->get_adminpage_subs( $context );
@@ -29,7 +33,7 @@ trait AdminPage
 		return $this->filters( $context.'_default_sub', Core\Arraay::keyFirst( $subs ) );
 	}
 
-	protected function _hook_menu_adminpage( $context = 'mainpage', $position = NULL, $capability = NULL )
+	protected function _hook_menu_adminpage( ?string $context = 'mainpage', ?int $position = NULL, ?string $capability = NULL )
 	{
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
@@ -76,14 +80,14 @@ trait AdminPage
 		return $slug;
 	}
 
-	public function load_menu_adminpage( $context = 'mainpage' )
+	public function load_menu_adminpage( ?string $context = 'mainpage' )
 	{
 		$this->_load_menu_adminpage( $context );
 		// $this->enqueue_asset_js( [], $this->dotted( $context ), [ 'jquery', 'wp-api-request' ] );
 		// $this->enqueue_asset_style( $context );
 	}
 
-	protected function _load_menu_adminpage( $context = 'mainpage' )
+	protected function _load_menu_adminpage( ?string $context = 'mainpage' )
 	{
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
@@ -106,7 +110,7 @@ trait AdminPage
 		$this->render_default_mainpage( 'mainpage', 'update' );
 	}
 
-	protected function render_default_mainpage( $context = 'mainpage', $action = 'update' ): bool
+	protected function render_default_mainpage( ?string $context = 'mainpage', $action = 'update' ): bool
 	{
 		$uri     = $this->get_adminpage_url( TRUE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
@@ -138,7 +142,7 @@ trait AdminPage
 		Core\HTML::desc( gEditorial()->na(), TRUE, '-empty' );
 	}
 
-	protected function _hook_submenu_adminpage( $context = 'subpage', $capability = NULL, $parent_slug = '' )
+	protected function _hook_submenu_adminpage( ?string $context = 'subpage', $capability = NULL, $parent_slug = '' )
 	{
 		$slug = $this->get_adminpage_url( FALSE, [], $context );
 		$cap  = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
@@ -170,7 +174,7 @@ trait AdminPage
 		$this->_load_submenu_adminpage( 'subpage' );
 	}
 
-	protected function _load_submenu_adminpage( $context = 'subpage' )
+	protected function _load_submenu_adminpage( ?string $context = 'subpage' )
 	{
 		$page = self::req( 'page', NULL );
 		$sub  = self::req( 'sub', NULL );
@@ -193,7 +197,7 @@ trait AdminPage
 
 	// Allows for filtering the page title
 	// TODO: add compact mode to hide this on user screen setting
-	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, $context = 'mainpage' )
+	protected function render_adminpage_header_title( $title = NULL, $links = NULL, $icon = NULL, ?string $context = 'mainpage' )
 	{
 		if ( self::req( 'noheader' ) )
 			return;
@@ -211,7 +215,7 @@ trait AdminPage
 			gEditorial\Settings::headerTitle( 'adminpage', $title, $links, NULL, $icon );
 	}
 
-	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
+	protected function render_adminpage_header_nav( $uri = '', $sub = NULL, $subs = NULL, ?string $context = 'mainpage' )
 	{
 		if ( self::req( 'noheader' ) ) {
 			echo '<div class="base-tabs-list -base nav-tab-base">';
@@ -222,7 +226,7 @@ trait AdminPage
 		}
 	}
 
-	protected function render_adminpage_signature( $uri = '', $sub = NULL, $subs = NULL, $context = 'mainpage' )
+	protected function render_adminpage_signature( $uri = '', $sub = NULL, $subs = NULL, ?string $context = 'mainpage' )
 	{
 		if ( ! self::req( 'noheader' ) )
 			$this->settings_signature( $context );
@@ -231,7 +235,7 @@ trait AdminPage
 	}
 
 	// `array` for custom, `NULL` to settings, `FALSE` to disable
-	protected function get_adminpage_header_links( $context = 'mainpage' )
+	protected function get_adminpage_header_links( ?string $context = 'mainpage' )
 	{
 		if ( $action = $this->get_string( 'page_action', $context, 'adminpage', NULL ) )
 			return [ $this->get_adminpage_url() => $action ];

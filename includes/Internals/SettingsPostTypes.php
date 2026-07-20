@@ -120,7 +120,7 @@ trait SettingsPostTypes
 	}
 
 	// Enabled post-types for this module
-	public function posttypes( $posttypes = NULL )
+	public function posttypes( string|array|null $posttypes = NULL ): array
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = [];
@@ -138,19 +138,19 @@ trait SettingsPostTypes
 			: $posttypes;
 	}
 
-	public function posttype_supported( $posttype )
+	public function posttype_supported( string $posttype ): bool
 	{
 		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
 	}
 
-	public function posttype_woocommerce( $posttype, $supported_default = TRUE )
+	public function posttype_woocommerce( string $posttype, bool $supported_default = TRUE ): bool
 	{
 		return $posttype
 			&& $posttype === WordPress\WooCommerce::PRODUCT_POSTTYPE
 			&& $this->get_setting( 'woocommerce_support', $supported_default );
 	}
 
-	public function posttype_anchor( $posttype )
+	public function posttype_anchor( string $posttype ): string
 	{
 		$posttype = $this->constant( $posttype, $posttype );
 		$object   = WordPress\PostType::object( $posttype );
@@ -161,23 +161,31 @@ trait SettingsPostTypes
 		return Core\L10n::pluralize( $posttype );
 	}
 
-	public function screen_posttype_supported( $screen, $base = [ 'edit', 'post' ] )
+	public function screen_posttype_supported( object $screen, string|array|false|null $base = NULL ): bool
 	{
+		$base = $base ?? [ 'edit', 'post' ];
+
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
 			return FALSE;
 
 		return $this->posttype_supported( $screen->post_type );
 	}
 
-	public function list_posttypes( $pre = NULL, $posttypes = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
-	{
+	public function list_posttypes(
+		mixed $pre = NULL,
+		string|array|null $posttypes = NULL,
+		?string $capability = NULL,
+		?array $args = NULL,
+		?int $user_id = NULL,
+	): array {
+
 		if ( is_null( $pre ) )
 			$pre = [];
 
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All PostTypes', 'Module', 'geditorial-admin' ) ];
 
-		$all = WordPress\PostType::get( 0, $args, $capability, $user_id );
+		$all = WordPress\PostType::get( 0, $args ?? [ 'show_ui' => TRUE ], $capability, $user_id );
 
 		foreach ( $this->posttypes( $posttypes ) as $posttype ) {
 
@@ -192,10 +200,10 @@ trait SettingsPostTypes
 		return $pre;
 	}
 
-	public function all_posttypes( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
+	public function all_posttypes( ?array $args = NULL, string|array $exclude_extra = [] ): array
 	{
 		return Core\Arraay::stripByKeys(
-			WordPress\PostType::get( 0, $args ),
+			WordPress\PostType::get( 0, $args ?? [ 'show_ui' => TRUE ] ),
 			Core\Arraay::prepString(
 				$this->posttypes_excluded( $exclude_extra )
 			)
@@ -203,7 +211,7 @@ trait SettingsPostTypes
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		$extra = (array) $extra;
 
@@ -222,13 +230,13 @@ trait SettingsPostTypes
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_parents( array $extra = [] ): array
+	protected function posttypes_parents( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_parents', gEditorial\Settings::posttypesParents( $extra ) );
 	}
 
 	// DEFAULT METHOD
-	protected function posttypes_for_target( $target, $extra = [] )
+	protected function posttypes_for_target( string $target, string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_for_target',
 			array_merge( array_keys( $this->all_posttypes() ), (array) $extra ),
@@ -243,7 +251,7 @@ trait SettingsPostTypes
 	 * @param string $capability
 	 * @return array
 	 */
-	protected function get_settings_posttypes_parents( $extra = [], $capability = NULL )
+	protected function get_settings_posttypes_parents( string|array $extra = [], ?string $capability = NULL ): array
 	{
 		$list       = [];
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
@@ -270,7 +278,7 @@ trait SettingsPostTypes
 	 * @param string|array $supports
 	 * @return array
 	 */
-	protected function get_settings_posttypes_for_target( $target, $extra = [], $capability = NULL, $supports = NULL )
+	protected function get_settings_posttypes_for_target( string $target, string|array $extra = [], ?string $capability = NULL, string|array|null $supports = NULL ): array
 	{
 		$list       = [];
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );

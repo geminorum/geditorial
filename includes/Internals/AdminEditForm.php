@@ -9,9 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 trait AdminEditForm
 {
-	protected function _hook_editform_meta_summary( $fields = NULL, $priority = NULL )
+	protected function _hook_editform_meta_summary( ?array $fields = NULL, ?int $priority = NULL ): bool
 	{
-		add_action( 'edit_form_after_title',
+		return add_action( 'edit_form_after_title',
 			function ( $post ) use ( $fields ) {
 				echo $this->wrap( gEditorial\Template::metaSummary( [
 					'echo'   => FALSE,
@@ -25,12 +25,12 @@ trait AdminEditForm
 		);
 	}
 
-	protected function _hook_editform_globalsummary( $option_key = NULL, $priority = NULL )
+	protected function _hook_editform_globalsummary( true|string|null $option_key = NULL, ?int $priority = NULL ): bool
 	{
 		if ( $option_key !== TRUE && ! $this->get_setting( $option_key ?? 'display_globalsummary' ) )
 			return FALSE;
 
-		add_action( 'edit_form_after_title',
+		return add_action( 'edit_form_after_title',
 			function ( $post ) {
 
 				if ( ! $markup = Services\Paired::getGlobalSummaryForPostMarkup( $post, 'editpost', 'table' ) )

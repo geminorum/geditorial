@@ -12,7 +12,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'isbn';
 
-	public static function barcode( $atts = [] )
+	public static function barcode( array $atts = [] ): bool|string
 	{
 		$args = self::atts( [
 			'id'       => isset( $atts['post'] ) ? $atts['post'] : NULL,

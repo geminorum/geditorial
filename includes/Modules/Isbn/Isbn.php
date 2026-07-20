@@ -143,7 +143,7 @@ class Isbn extends gEditorial\Module
 		];
 	}
 
-	protected function posttypes_excluded( array $extra = [] ): array
+	protected function posttypes_excluded( string|array $extra = [] ): array
 	{
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
@@ -598,6 +598,7 @@ class Isbn extends gEditorial\Module
 		ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
 
 		echo '</div>';
+		return TRUE;
 	}
 
 	// NOTE: `isbn` field type will be handled by the service.
