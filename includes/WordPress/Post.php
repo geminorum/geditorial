@@ -501,11 +501,11 @@ class Post extends Core\Base
 	 *
 	 * @source `set_post_type()`
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param string|object $posttype
 	 * @return bool
 	 */
-	public static function setPostType( $post, $posttype ): bool
+	public static function setPostType( mixed $post, string|object $posttype ): bool
 	{
 		global $wpdb;
 

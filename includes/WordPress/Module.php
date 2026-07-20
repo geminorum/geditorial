@@ -380,6 +380,21 @@ class Module extends Core\Base
 			}, $priority, 1 );
 	}
 
+	// USAGE: `$this->filter_if_not_set( 'widget_posts_args', [ 'post_type' => 'page' ] );`
+	protected function filter_if_not_set( string $hook, string|array $items, int $priority = 10 ): true
+	{
+		return add_filter( $hook,
+			static function ( $first )
+				use ( $items ) {
+
+				foreach ( $items as $key => $value )
+					if ( ! isset( $first[$key] ) )
+						$first[$key] = $value;
+
+				return $first;
+			}, $priority, 1 );
+	}
+
 	// USAGE: `$this->filter_unset( 'shortcode_atts_gallery', [ 'columns' ] );`
 	protected function filter_unset( string $hook, string|array $items, int $priority = 10 ): true
 	{
@@ -389,6 +404,7 @@ class Module extends Core\Base
 
 				foreach ( (array) $items as $key )
 					unset( $first[$key] );
+
 				return $first;
 			}, $priority, 1 );
 	}
@@ -592,13 +608,17 @@ class Module extends Core\Base
 		add_screen_option( $option, $args );
 	}
 
-	protected function _hook_ajax( ?bool $auth = TRUE, ?string $hook = NULL, string $method = 'do_ajax' ): void
+	protected function _hook_ajax( ?bool $auth = TRUE, ?string $hook = NULL, string $method = 'do_ajax' ): bool
 	{
+		$hooked = FALSE;
+
 		if ( is_null( $auth ) || TRUE === $auth )
-			add_action( self::und( 'wp', 'ajax', $hook ?? $this->hook() ), [ $this, $method ] );
+			$hooked = add_action( self::und( 'wp', 'ajax', $hook ?? $this->hook() ), [ $this, $method ] );
 
 		if ( is_null( $auth ) || FALSE === $auth )
-			add_action( self::und( 'wp', 'ajax', 'nopriv', $hook ?? $this->hook() ), [ $this, $method ] );
+			$hooked = add_action( self::und( 'wp', 'ajax', 'nopriv', $hook ?? $this->hook() ), [ $this, $method ] );
+
+		return $hooked;
 	}
 
 	// DEFAULT FILTER
@@ -607,16 +627,20 @@ class Module extends Core\Base
 		wp_send_json_error();
 	}
 
-	protected function _hook_post( ?bool $auth = TRUE, ?string $hook = NULL, string $method = 'do_post' ): void
+	protected function _hook_post( ?bool $auth = TRUE, ?string $hook = NULL, string $method = 'do_post' ): bool
 	{
+		$hooked = FALSE;
+
 		if ( ! is_admin() )
-			return;
+			return $hooked;
 
 		if ( is_null( $auth ) || TRUE === $auth )
-			add_action( self::und( 'admin', 'post', $hook ?? $this->hook() ), [ $this, $method ] );
+			$hooked = add_action( self::und( 'admin', 'post', $hook ?? $this->hook() ), [ $this, $method ] );
 
 		if ( is_null( $auth ) || FALSE === $auth )
-			add_action( self::und( 'admin', 'post', 'nopriv', $hook ?? $this->hook() ), [ $this, $method ] );
+			$hooked = add_action( self::und( 'admin', 'post', 'nopriv', $hook ?? $this->hook() ), [ $this, $method ] );
+
+		return $hooked;
 	}
 
 	// DEFAULT FILTER
@@ -626,12 +650,13 @@ class Module extends Core\Base
 	}
 
 	// TODO: un-schedule on deactivation
-	protected function _hook_event( string $name, string $recurrence = 'monthly' ): bool|object
+	protected function _hook_event( string $name, ?string $recurrence = NULL, array $args = [] ): bool
 	{
-		$hook = $this->hook( $name );
+		$hook       = $this->hook( $name );
+		$recurrence = $recurrence ?? 'monthly';
 
 		if ( ! wp_next_scheduled( $hook ) )
-			return wp_schedule_event( time(), $recurrence, $hook );
+			return wp_schedule_event( time(), $recurrence, $hook, $args, FALSE );
 
 		return TRUE;
 	}

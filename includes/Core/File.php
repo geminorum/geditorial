@@ -1047,6 +1047,7 @@ class File extends Base
 	 * Includes and evaluates the specified file.
 	 *
 	 * @see https://konstantin.blog/2021/php-benchmark-include-vs-file_get_contents/
+	 * @see `get_file_data()`
 	 *
 	 * @param string $filepath
 	 * @param mixed $fallback

@@ -81,9 +81,9 @@ class Email extends Base
 			case 'input' : return $value;
 			case 'export': return $value;
 			case 'print' : return HTML::wrapLTR( trim( $raw ) );
-			case 'icon'  : return HTML::mailto( $value, $title, $icon ?? HTML::getDashicon( 'email-alt' ), self::is( $value ) ? '-is-valid' : '-is-not-valid' );
+			case 'icon'  : return Link::mailto( $value, $title, $icon ?? HTML::getDashicon( 'email-alt' ), self::is( $value ) ? '-is-valid' : '-is-not-valid' );
 			case 'admin' :
-			     default : return HTML::mailto( $value, $title, NULL, self::is( $value ) ? '-is-valid' : '-is-not-valid' );
+			     default : return Link::mailto( $value, $title, NULL, self::is( $value ) ? '-is-valid' : '-is-not-valid' );
 		}
 
 		return $value;

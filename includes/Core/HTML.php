@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class HTML extends Base
 {
 
-	// NOTE: DEPRECATED: use `Core\L10n::rtl()`
+	#[Deprecated(message:'use `Core\L10n::rtl()` instead')]
 	public static function rtl(): bool
 	{
 		return L10n::rtl();
@@ -16,70 +16,14 @@ class HTML extends Base
 		return L10n::rtl() ? 'rtl' : 'ltr';
 	}
 
+	#[Deprecated(message:'use `Core\Link::get()` instead')]
 	public static function link(
 		?string $html = NULL,
 		string $link = '#',
 		bool $target_blank = FALSE,
 	): string {
 
-		return self::tag( 'a', [
-			'class'  => '-link',
-			'href'   => $link,
-			'target' => $target_blank ? '_blank' : FALSE,
-			'dummy'  => 'wtf', // HACK: dummy attribute to distract the `wordWrap()`!
-		], $html ?? $link );
-	}
-
-	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#e-mail-address
-	public static function mailto(
-		string $email,
-		string $title = '',
-		?string $content = NULL,
-		string|array $class = '',
-	): string {
-
-		return '<a class="'.self::prepClass( '-mailto', $class ).'"'
-			.' href="mailto:'.trim( $email ).'"'
-			.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
-			.'>'.( $content ?? self::wrapLTR( trim( $email ) ) )
-		.'</a>';
-	}
-
-	public static function tel(
-		string $number,
-		string $title = '',
-		?string $content = NULL,
-		string|array $class = '',
-	): string {
-
-		return '<a class="'.self::prepClass( '-tel', $class ).'"'
-			.' href="'.self::prepURLforTel( $number ).'"'
-			.' data-tel-number="'.self::escape( $number ).'"'
-			.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
-			.'>'.( $content ?? self::wrapLTR( Number::localize( $number ) ) )
-		.'</a>';
-	}
-
-	public static function geo(
-		string $data,
-		string $title = '',
-		?string $content = NULL,
-		string|array $class = '',
-	): string {
-
-		if ( is_null( $content ) )
-			$content = Number::localize( $data );
-
-		return '<a class="'.self::prepClass( '-geo', $class )
-			.'" href="'.self::prepURLforGeo( $data )
-			.'"'.( $title ? ' data-bs-toggle="tooltip" title="'.self::escape( $title ).'"' : '' )
-			.' data-geo-data="'.self::escape( $data ).'">'
-			.self::wrapLTR( $content ).'</a>';
-	}
-
-	public static function scroll( string $html, string $to, string $title = '' ): string
-	{
-		return '<a class="scroll" title="'.$title.'" href="#'.$to.'">'.$html.'</a>';
+		return Link::get( $html, $link, $target_blank );
 	}
 
 	// @REF: https://web.dev/native-lazy-loading/
@@ -94,9 +38,9 @@ class HTML extends Base
 	}
 
 	public static function heading(
-		int|string $level,
-		mixed $html,
-		string|array|null|false $class = NULL,
+		mixed $level,   // may come straight from setting
+		string $html,
+		string|array|false|null $class = NULL,
 		string $link = '',
 	): void {
 
@@ -265,50 +209,6 @@ class HTML extends Base
 			: $html;
 	}
 
-	public static function buttonClass(
-		bool $small = TRUE,
-		string|array $extra = [],
-	): array {
-
-		$classes = array_merge( [
-			'btn'                   ,   // BS5
-			'btn-default'           ,   // BS: DEPRECATED
-			'btn-outline-secondary' ,   // BS5
-			'button'                ,   // WP Core: Admin
-			'-button'               ,   // OURS!
-		], (array) $extra );
-
-		if ( ! $small )
-			return $classes;
-
-		$classes[] = 'btn-sm';        // BS5
-		$classes[] = 'button-small';  // WP Core: Admin
-
-		return $classes;
-	}
-
-	public static function button(
-		mixed $html,
-		string|false $link = '#',
-		string|false $title = FALSE,
-		bool $icon = FALSE,
-		mixed $data = [],
-		string $id = '',
-	): string {
-
-		if ( ! $html )
-			return '';
-
-		return self::tag( $link ? 'a' : 'span', [
-			'id'     => $id ?: FALSE,
-			'href'   => $link ?: FALSE,
-			'title'  => $title,
-			'class'  => self::buttonClass( TRUE, $icon ? '-button-icon' : [] ),
-			'data'   => $data,
-			// 'target' => '_blank',
-		], (string) $html );
-	}
-
 	public static function row(
 		mixed $html,
 		string|array $class = '',
@@ -369,7 +269,7 @@ class HTML extends Base
 
 	public static function wrapLTR( string $content ): string
 	{
-		// return '&lrm;'.$content.'&rlm;';
+		// `return '&lrm;'.$content.'&rlm;';`
 		return '&#8206;'.$content.'&#8207;';
 	}
 
@@ -696,49 +596,8 @@ class HTML extends Base
 		return preg_replace( '/[^a-zA-Z0-9_:]/', '', $data );
 	}
 
-	// @REF: https://www.billerickson.net/code/phone-number-url/
-	// @SEE: https://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
-	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#telephone-numbers
-
-	// OLD: `sanitizePhoneNumberURL()`
-	public static function prepURLforTel( ?string $data ): string
-	{
-		if ( is_null( $data ) )
-			return '';
-
-		return self::escapeURL( sprintf(
-			Text::starts( $data, 'tel:' ) ? '%s' : 'tel:%s',
-			str_replace( [ '(', ')', '-', '.', '|', ' ' ], '', $data )
-		) );
-	}
-
-	// @SEE: https://github.com/zxing/zxing/wiki/Barcode-Contents#smsmmsfacetime
-	// OLD: `sanitizeSMSNumberURL()`
-	public static function prepURLforSMS( ?string $data ): string
-	{
-		if ( is_null( $data ) )
-			return '';
-
-		return self::escapeURL( sprintf(
-			Text::starts( $data, 'sms:' ) ? '%s' : 'sms:%s',
-			str_replace( [ '(', ')', '-', '.', '|', ' ' ], '', $data )
-		) );
-	}
-
-	// OLD: `sanitizeGeoURL()`
-	public static function prepURLforGeo( ?string $data ): string
-	{
-		if ( is_null( $data ) )
-			return '';
-
-		return self::escapeURL( sprintf(
-			Text::starts( $data, 'geo:' ) ? '%s' : 'geo:%s',
-			str_replace( [ '(', ')', '-', ' ' ], '', $data )
-		) );
-	}
-
-	// NOTE: DEPRECATED
-	public static function getAtts( $string, $expecting = [] )
+	#[Deprecated(message:'use `Core\HTML::parseAtts()` instead')]
+	public static function getAtts( string $string, array $expecting = [] ): array
 	{
 		self::_dev_dep( 'HTML::parseAtts()' );
 
@@ -749,6 +608,9 @@ class HTML extends Base
 		string $string,
 		array $expecting = [],
 	): array {
+
+		if ( empty( $string ) )
+			return $expecting;
 
 		foreach ( $expecting as $attr => $default ) {
 
@@ -2064,7 +1926,7 @@ class HTML extends Base
 		return self::wrap( $html, '-multiselect-wrap'.( $args['panel'] ? ' wp-tab-panel' : '' ) );
 	}
 
-	// NOTE: DEPRECATED: use `HTML::rows()`
+	#[Deprecated(message:'use `Core\HTML::rows()` instead')]
 	public static function renderList( array $items, bool $keys = FALSE, string $list = 'ul' ): string
 	{
 		return $items ? self::tag( $list, '<li>'.implode( '</li><li>', $keys ? array_keys( $items ) : array_filter( $items ) ).'</li>' ) : '';
