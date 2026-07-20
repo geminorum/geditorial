@@ -1555,7 +1555,7 @@ class Taxonomy extends Core\Base
 	 * @param string|object $taxonomy
 	 * @return false|string
 	 */
-	public static function getRestRoute( string|object $taxonomy )
+	public static function getRestRoute( string|object $taxonomy ): false|string
 	{
 		if ( ! $object = self::object( $taxonomy ) )
 			return FALSE;

@@ -113,7 +113,7 @@ class Main extends Core\Base
 		return TRUE;
 	}
 
-	protected static function path( $context = NULL, $module = NULL, $fallback = FALSE )
+	protected static function path( ?string $context = NULL, ?string $module = NULL, mixed $fallback = FALSE ): null|false|string
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return $fallback;
@@ -121,14 +121,14 @@ class Main extends Core\Base
 		return static::factory()->module( $module )->get_module_path( $context );
 	}
 
-	public static function bailWithError( $results, $code, $message = NULL, $error_key = NULL )
+	public static function bailWithError( array $results, string $code, ?string $message = NULL, ?string $error_key = NULL ): array
 	{
 		$results[( $error_key ?? 'error' )] = new Core\Error( $code, $message ?? '' );
 
 		return $results;
 	}
 
-	protected static function getString( $string, $posttype = 'post', $group = 'titles', $fallback = FALSE, $module = NULL )
+	protected static function getString( string $string, string $posttype = 'post', ?string $group = 'titles', mixed $fallback = FALSE, ?string $module = NULL ): null|false|string
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return $fallback;
@@ -136,7 +136,7 @@ class Main extends Core\Base
 		return static::factory()->module( $module )->get_string( $string, $posttype, $group, $fallback );
 	}
 
-	protected static function getPostMeta( $post_id, $field = FALSE, $default = [], $metakey = NULL, $module = NULL )
+	protected static function getPostMeta( int $post_id, string|false $field = FALSE, mixed $default = [], ?string $metakey = NULL, ?string $module = NULL ): mixed
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return $default;
@@ -146,7 +146,7 @@ class Main extends Core\Base
 			: static::factory()->module( $module )->get_postmeta_field( $post_id, $field, $default, $metakey );
 	}
 
-	protected static function posttypes( $posttypes = NULL, $check = FALSE, $module = NULL )
+	protected static function posttypes( string|array|null $posttypes = NULL, bool $check = FALSE, ?string $module = NULL ): array
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return [];

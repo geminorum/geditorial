@@ -565,10 +565,10 @@ class Post extends Core\Base
 	/**
 	 * Retrieves post rest route given a post ID or post object.
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @return false|string
 	 */
-	public static function getRestRoute( $post = NULL ): false|array
+	public static function getRestRoute( mixed $post = NULL ): false|string
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;

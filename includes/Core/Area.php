@@ -29,7 +29,7 @@ class Area extends Base
 	 * | `METRIC_SQUARE_KILOMETER`  | The area is measured in square kilometers.  |
 	 */
 
-	public static function is( $data )
+	public static function is( mixed $data ): bool
 	{
 		if ( self::empty( $data ) )
 			return FALSE;

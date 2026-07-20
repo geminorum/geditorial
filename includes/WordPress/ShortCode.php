@@ -9,15 +9,15 @@ class ShortCode extends Core\Base
 
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,}';
 
-	public static function exists( $tag )
+	public static function exists( string $tag ): bool
 	{
 		return empty( $tag ) ? FALSE : shortcode_exists( $tag );
 	}
 
 	// @SEE: https://konstantin.blog/2013/dont-do_shortcode/
-	public static function apply( $text, $ignore_html = FALSE )
+	public static function apply( string $text, bool $ignore_html = FALSE ): string
 	{
-		return empty( $text ) ? '' : apply_shortcodes( $text, $ignore_html );
+		return empty( $text ) ? '' : (string) apply_shortcodes( $text, $ignore_html );
 	}
 
 	/**
@@ -29,24 +29,24 @@ class ShortCode extends Core\Base
 	 * Simply pass the short-code's tag and an array of any attributes.
 	 *
 	 * @global array $shortcode_tags
-	 * @param string $shortcode The short-code tag name.
-	 * @param array $atts The attributes (optional).
-	 * @param array The short-code content (NULL by default).
 	 *
-	 * @return string|bool False on failure, the result of the short-code on success.
+	 * @param string $shortcode
+	 * @param array $attributes
+	 * @param string $content
+	 * @return mixed
 	 */
-	public static function tag( $shortcode, $atts = [], $content = NULL )
+	public static function tag( string $shortcode, array $attributes = [], ?string $content = NULL ): mixed
 	{
 		global $shortcode_tags;
 
 		if ( isset( $shortcode_tags[$shortcode] ) && is_callable( $shortcode_tags[$shortcode] ) )
-			return call_user_func( $shortcode_tags[$shortcode], $atts, $content, $shortcode );
+			return call_user_func( $shortcode_tags[$shortcode], $attributes, $content, $shortcode );
 
 		return $content;
 	}
 
 	// NOTE: like `Core\HTML::tag()`
-	public static function build( $tag, $atts = [], $content = NULL )
+	public static function build( string $tag, array $atts = [], ?string $content = NULL )
 	{
 		$args = '';
 
@@ -59,8 +59,15 @@ class ShortCode extends Core\Base
 		return sprintf( '[%1$s%2$s /]', $tag, $args );
 	}
 
-	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [], $base = '' )
-	{
+	public static function wrap(
+		?string $html,
+		false|string $suffix = FALSE,
+		array $args = [],
+		bool $block = TRUE,
+		array $extra = [],
+		string $base = '',
+	): ?string {
+
 		if ( is_null( $html ) )
 			return $html;
 

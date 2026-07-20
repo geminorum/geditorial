@@ -538,7 +538,7 @@ class Term extends Core\Base
 	 * @param string $taxonomy
 	 * @return false|string
 	 */
-	public static function getRestRoute( $term_or_id, $taxonomy = NULL )
+	public static function getRestRoute( mixed $term_or_id, ?string $taxonomy = NULL ): false|string
 	{
 		if ( ! $term = self::get( $term_or_id, $taxonomy ?: '' ) )
 			return FALSE;

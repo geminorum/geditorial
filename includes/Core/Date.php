@@ -297,7 +297,7 @@ class Date extends Base
 		];
 	}
 
-	public static function daysInMonth( int|string $month, int|string $year, ?string $calendar_type = NULL )
+	public static function daysInMonth( int|string $month, int|string $year, ?string $calendar_type = NULL ): int
 	{
 		// @source: https://www.php.net/manual/en/function.cal-days-in-month.php#38666
 		// return $month == 2 ? ( $year % 4 ? 28 : ( $year % 100 ? 29 : ( $year % 400 ? 28 : 29 ) ) ) : ( ( $month - 1 ) % 7 % 2 ? 30 : 31 );

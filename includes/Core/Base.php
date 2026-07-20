@@ -404,7 +404,7 @@ class Base
 	}
 
 	// NOTE: WP core function without `number_format_i18n()`
-	public static function timerStop( bool $verbose = FALSE, int $precision = 3 ): int|true
+	public static function timerStop( bool $verbose = FALSE, int $precision = 3 ): string|true
 	{
 		global $timestart;
 
@@ -452,7 +452,7 @@ class Base
 	 * @param int|string|array $input
 	 * @return array
 	 */
-	public static function list( int|string|array $input ): array
+	public static function parseList( int|string|array $input ): array
 	{
 		if ( ! is_array( $input ) )
 			return preg_split( '/[\s,]+/', $input, -1, PREG_SPLIT_NO_EMPTY );
@@ -468,9 +468,9 @@ class Base
 	 * @param int|string|array $input
 	 * @return array
 	 */
-	public static function ids( int|string|array $input ): array
+	public static function parseIDs( int|string|array $input ): array
 	{
-		return Arraay::prepNumeral( self::list( $input ) );
+		return Arraay::prepNumeral( self::parseList( $input ) );
 	}
 
 	// @REF: `shortcode_atts()`

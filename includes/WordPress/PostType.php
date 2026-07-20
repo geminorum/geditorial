@@ -702,10 +702,10 @@ class PostType extends Core\Base
 	 * Retrieves post-type rest route given post-type name or object.
 	 * @ref `rest_get_route_for_post_type_items()`
 	 *
-	 * @param string $posttype
-	 * @return string
+	 * @param string|object $posttype
+	 * @return false|string
 	 */
-	public static function getRestRoute( $posttype )
+	public static function getRestRoute( string|object $posttype ): false|string
 	{
 		if ( ! $object = self::object( $posttype ) )
 			return FALSE;
@@ -719,7 +719,7 @@ class PostType extends Core\Base
 		return apply_filters( 'rest_route_for_post_type_items', $route, $object );
 	}
 
-	public static function hasPosts( $posttypes, $published = TRUE, $extra = [] )
+	public static function hasPosts( string|array $posttypes, bool $published = TRUE, array $extra = [] ): bool
 	{
 		$args = array_merge( [
 			'post_type'   => $posttypes,
