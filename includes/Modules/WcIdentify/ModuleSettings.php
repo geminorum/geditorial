@@ -18,7 +18,7 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		echo self::toolboxCardOpen( _x( 'Attribute to GTIN', 'Card Title', 'geditorial-wc-identify' ) );
 
-			echo Core\HTML::button(
+			echo Core\Link::button(
 				_x( 'Migrate Data', 'Button', 'geditorial-wc-identify' ),
 				add_query_arg( [
 					'action' => static::ACTION_MIGRATE_GTIN,

@@ -21,8 +21,15 @@ trait CoreCapabilities
 	 * @param string $prefix
 	 * @return bool
 	 */
-	protected function corecaps_taxonomy_role_can( $constant, $whats, $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
-	{
+	protected function corecaps_taxonomy_role_can(
+		string $constant,
+		string|array $whats,
+		?int $user_id = NULL,
+		bool $fallback = FALSE,
+		bool $admins = TRUE,
+		?string $prefix = NULL,
+	): bool {
+
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return $fallback;
 
@@ -41,7 +48,7 @@ trait CoreCapabilities
 	 * @param string $constant
 	 * @return bool
 	 */
-	protected function corecaps__handle_taxonomy_metacaps_roles( $constant )
+	protected function corecaps__handle_taxonomy_metacaps_roles( $constant ): bool
 	{
 		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
@@ -88,16 +95,12 @@ trait CoreCapabilities
 							? [ 'exist' ]
 							: [ 'do_not_allow' ];
 
-						break;
-
 					case 'assign_'.$taxonomy[0]:  // NOTE: DEPRECATED
 					case 'assign_'.$taxonomy[1]:
 
 						return $this->corecaps_taxonomy_role_can( $constant, 'assign', $user_id )
 							? [ 'exist' ]
 							: [ 'do_not_allow' ];
-
-						break;
 
 					case 'assign_term':
 

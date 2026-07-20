@@ -22,7 +22,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Force Auto Audit', 'Card Title', 'geditorial-audit' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-audit' ),
 					$label

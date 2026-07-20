@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 trait Deprecated
 {
-
 	// DEPRECATED: use `$this->get_adminpage_url( FALSE )`
 	// OVERRIDE: if has no admin menu but using the hook
 	public function get_adminmenu( $page = TRUE, $extra = [] )

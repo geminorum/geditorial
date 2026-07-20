@@ -255,7 +255,7 @@ class Shortcodes extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/wpscholar/8969bb6e1cedb9be92140cc2efa9febb
-	public function the_content( $content )
+	public function the_content( string $content ): string
 	{
 		return strtr( $content, [
 			'<p>['    => '[',

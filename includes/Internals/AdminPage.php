@@ -80,14 +80,14 @@ trait AdminPage
 		return $slug;
 	}
 
-	public function load_menu_adminpage( ?string $context = 'mainpage' )
+	public function load_menu_adminpage( ?string $context = 'mainpage' ): void
 	{
 		$this->_load_menu_adminpage( $context );
 		// $this->enqueue_asset_js( [], $this->dotted( $context ), [ 'jquery', 'wp-api-request' ] );
 		// $this->enqueue_asset_style( $context );
 	}
 
-	protected function _load_menu_adminpage( ?string $context = 'mainpage' )
+	protected function _load_menu_adminpage( ?string $context = 'mainpage' ): void
 	{
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
@@ -105,9 +105,9 @@ trait AdminPage
 		);
 	}
 
-	public function render_menu_adminpage()
+	public function render_menu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'mainpage', 'update' );
+		return $this->render_default_mainpage( 'mainpage', 'update' );
 	}
 
 	protected function render_default_mainpage( ?string $context = 'mainpage', $action = 'update' ): bool
@@ -169,7 +169,7 @@ trait AdminPage
 		return $slug;
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'subpage' );
 	}

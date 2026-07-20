@@ -10,22 +10,23 @@ use geminorum\gEditorial\WordPress;
 trait Calendars
 {
 
-	public function get_calendar_mode( $default = NULL )
+	public function get_calendar_mode( array|string|null $default = NULL ): string
 	{
 		return 1 === count( $this->get_calendars( $default ) ) ? 'singular' : 'multiple';
 	}
 
-	public function get_calendars( $default = NULL )
+	public function get_calendars( array|string|null $default = NULL ): array
 	{
-		return $this->get_setting( 'calendar_list', $default ?? [ Core\L10n::calendar() ] );
+		return $this->get_setting( 'calendar_list', (array) ( $default ?? Core\L10n::calendar() ) );
 	}
 
 	// @old: `$this->get_calendars()`
-	public function list_calendars( $default = NULL, $filtered = TRUE )
+	public function list_calendars( array|string|null $default = NULL, bool $filtered = TRUE ): array
 	{
-		$settings = $this->get_setting( 'calendar_list', $default ?? [ Core\L10n::calendar() ] );
-		$defaults = Services\Calendars::getDefualts( $filtered );
-		return array_intersect_key( $defaults, array_flip( $settings ) );
+		return array_intersect_key(
+			Services\Calendars::getDefualts( $filtered ),
+			array_flip( $this->get_calendars( $default ) )
+		);
 	}
 }
 

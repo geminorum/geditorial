@@ -358,11 +358,11 @@ class CustomPostType extends gEditorial\Service
 	/**
 	 * Switches post-type with PAIRED API support
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param string|object $posttype
-	 * @return int|false
+	 * @return int|bool
 	 */
-	public static function switchType( $post, $posttype )
+	public static function switchType( mixed $post, object $posttype ): bool|int
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;

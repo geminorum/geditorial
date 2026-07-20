@@ -11,9 +11,9 @@ trait ContentReplace
 {
 
 	// NOTE: better to hook in `template_redirect` after `is_singular()` check
-	protected function contentreplace__autolink_terms( $constant, $setting = NULL, $only_parents = TRUE )
+	protected function contentreplace__autolink_terms( string $constant, ?string $setting_key = NULL, bool $only_parents = TRUE ): false|int
 	{
-		if ( ! $this->get_setting( $setting ?? 'autolink_terms' ) )
+		if ( ! $this->get_setting( $setting_key ?? 'autolink_terms' ) )
 			return FALSE;
 
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
@@ -70,7 +70,7 @@ trait ContentReplace
 		return count( $terms );
 	}
 
-	protected function contentreplace__callback_for_term( $matched, $term )
+	protected function contentreplace__callback_for_term( string $matched, object $term ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'           => WordPress\Term::link( $term ),
@@ -82,7 +82,7 @@ trait ContentReplace
 		], $matched );
 	}
 
-	protected function contentreplace__get_pattern_by_term( $term, $skip_links = TRUE )
+	protected function contentreplace__get_pattern_by_term( object $term, bool $skip_links = TRUE ): string
 	{
 		if ( empty( $term->name ) )
 			return FALSE;

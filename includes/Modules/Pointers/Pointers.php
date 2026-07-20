@@ -49,7 +49,7 @@ class Pointers extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
 
@@ -71,7 +71,7 @@ class Pointers extends gEditorial\Module
 		}
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context = $context ?? 'supportedbox';
 		$screen  = $screen ?? get_current_screen();

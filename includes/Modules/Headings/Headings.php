@@ -87,7 +87,7 @@ class Headings extends gEditorial\Module
 			$this->enqueue_styles(); // widget must add this itself!
 	}
 
-	public function the_content( $content )
+	public function the_content( string $content ): string
 	{
 		if ( ! $content )
 			return $content;
@@ -102,7 +102,7 @@ class Headings extends gEditorial\Module
 		return preg_replace_callback( $pattern, [ $this, 'toc_callback' ], $content );
 	}
 
-	public function toc_callback( $match )
+	public function toc_callback( ?array $match ): string
 	{
 		$title = Core\Text::stripTags( $match[3] );
 
@@ -163,7 +163,7 @@ class Headings extends gEditorial\Module
 		$this->render_headings( NULL, '-before' );
 	}
 
-	public function render_headings( $title = NULL, $class = '' )
+	public function render_headings( ?string $title = NULL, string|array $class = '' ): void
 	{
 		$toc = $this->filters( 'toc', $this->toc );
 

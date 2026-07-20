@@ -357,13 +357,15 @@ class Organization extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
 			$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
+
+		return TRUE;
 	}
 
 	/**
@@ -372,7 +374,7 @@ class Organization extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )

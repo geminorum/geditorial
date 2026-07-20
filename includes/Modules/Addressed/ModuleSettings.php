@@ -35,7 +35,7 @@ class ModuleSettings extends gEditorial\Settings
 				if ( Core\URL::isValid( $data['site'] ) )
 					$buttons[] = Core\HTML::tag( 'a', [
 						'href'   => $data['site'],
-						'class'  => Core\HTML::buttonClass( FALSE ),
+						'class'  => Core\Link::buttonClass( FALSE ),
 						'target' => '_blank',
 					], sprintf(
 						/* translators: `%s`: site URL title */
@@ -45,7 +45,7 @@ class ModuleSettings extends gEditorial\Settings
 
 				else
 					$buttons[] = Core\HTML::tag( 'span', [
-						'class' => Core\HTML::buttonClass( FALSE, '-is-not-valid' ),
+						'class' => Core\Link::buttonClass( FALSE, '-is-not-valid' ),
 						'title' => gEditorial\Plugin::invalid( FALSE ),
 					], $data['site'] );
 			}
@@ -55,12 +55,12 @@ class ModuleSettings extends gEditorial\Settings
 				if ( Core\LatLng::is( $data['latlng'] ) )
 					$buttons[] = Services\Lookup::htmlLatLng(
 						$data['latlng'],
-						Core\HTML::buttonClass( FALSE, '-is-valid' )
+						Core\Link::buttonClass( FALSE, '-is-valid' )
 					);
 
 				else
 					$buttons[] = Core\HTML::tag( 'span', [
-						'class' => Core\HTML::buttonClass( FALSE, '-is-not-valid' ),
+						'class' => Core\Link::buttonClass( FALSE, '-is-not-valid' ),
 						'title' => gEditorial\Plugin::invalid( FALSE ),
 					], $data['latlng'] );
 			}

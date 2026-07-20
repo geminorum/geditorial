@@ -41,7 +41,7 @@ class Ortho extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs( $context = 'settings' )
+	protected function settings_help_tabs( ?string $context = NULL ): array
 	{
 		return array_merge(
 			ModuleInfo::getHelpTabs( $context ),
@@ -108,7 +108,7 @@ class Ortho extends gEditorial\Module
 		];
 	}
 
-	public function tinymce_strings( $strings )
+	public function tinymce_strings( array $strings ): array
 	{
 		return array_merge( $strings, [
 			self::und( $this->key, 'virastar', 'title' ) => sprintf(
@@ -136,7 +136,7 @@ class Ortho extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -153,10 +153,10 @@ class Ortho extends gEditorial\Module
 		}
 	}
 
-	public function enqueueVirastar()
+	public function enqueueVirastar(): string
 	{
 		if ( $this->virastar_enqueued )
-			return TRUE;
+			return $this->virastar_enqueued;
 
 		$virastar = gEditorial\Scripts::registerPackage( 'virastar',
 			NULL, [], ModuleInfo::VIRASTAR_VERSION );
@@ -165,26 +165,28 @@ class Ortho extends gEditorial\Module
 		$settings = $this->options->settings ?? [];
 		unset( $settings['virastar_options'] );
 
-		$this->enqueue_asset_js( [
+		$handle = $this->enqueue_asset_js( [
 			'settings' => $settings,
 			'strings'  => $this->get_strings( 'virastar', 'js' ),
 			'virastar' => $this->prepare_virastar_options( 'js' ),
 		], NULL, [ 'jquery', $virastar ] );
 
-		return $this->virastar_enqueued = $this->register_editor_button( 'virastar', 2 );
+		$this->register_editor_button( 'virastar', 2 );
+
+		return $this->virastar_enqueued = $handle;
 	}
 
-	public function enqueuePersianTools()
+	public function enqueuePersianTools(): string
 	{
 		if ( $this->persiantools_enqueued )
-			return TRUE;
+			return $this->persiantools_enqueued;
 
 		$persiantools = gEditorial\Scripts::registerPackage( 'persiantools',
 			NULL, [], ModuleInfo::PERSIANTOOLS_VERSION );
 
-		$this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
+		$handle = $this->enqueue_asset_js( 'persiantools', NULL, [ 'jquery', $persiantools ] );
 
-		return $this->persiantools_enqueued = TRUE;
+		return $this->persiantools_enqueued = $handle;
 	}
 
 	private function prepare_virastar_options( $context = NULL )
@@ -216,7 +218,7 @@ class Ortho extends gEditorial\Module
 		return $value;
 	}
 
-	public function cleanup_post( $post )
+	public function cleanup_post( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -248,7 +250,7 @@ class Ortho extends gEditorial\Module
 	}
 
 	// FIXME
-	public function cleanup_chars( $string, $html = FALSE )
+	public function cleanup_chars( string $string, bool $html = FALSE ): string
 	{
 		return Orthography::cleanupPersianChars( $string );
 
@@ -277,7 +279,7 @@ class Ortho extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function renderCard_tools_sandbox()
+	private function renderCard_tools_sandbox(): void
 	{
 		echo gEditorial\Settings::toolboxCardOpen( _x( 'Data Sandbox', 'Card Title', 'geditorial-ortho' ), FALSE );
 
@@ -349,8 +351,6 @@ class Ortho extends gEditorial\Module
 			_x( 'Paste raw data and see how Orthography filters works!', 'Message', 'geditorial-ortho' ) );
 
 		echo '</div>';
-
-		return TRUE;
 	}
 
 	public function reports_settings( string $sub ): void

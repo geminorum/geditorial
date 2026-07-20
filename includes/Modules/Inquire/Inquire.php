@@ -169,7 +169,7 @@ class Inquire extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 

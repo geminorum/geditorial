@@ -53,7 +53,7 @@ class Unavailable extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit-comments' == $screen->base ) {
 

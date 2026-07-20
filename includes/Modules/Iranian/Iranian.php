@@ -144,9 +144,9 @@ class Iranian extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->restapi_register_route( 'identity', 'get', '(?P<code>.+)' );
+		return $this->restapi_register_route( 'identity', 'get', '(?P<code>.+)' );
 	}
 
 	public function restapi_identity_get_arguments()
@@ -169,13 +169,13 @@ class Iranian extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function restapi_identity_get_callback( $request )
+	public function restapi_identity_get_callback( object $request ): mixed
 	{
 		return rest_ensure_response( $this->get_identity_summary( urldecode( $request['code'] ) ) );
 	}
 
 	// @REF: `Core\Validation::sanitizeIdentityNumber()`
-	public function get_identity_summary( $identity )
+	public function get_identity_summary( string $identity ): array
 	{
 		$data      = $this->get_imports_raw_data( 'identity-locations', 'json' );
 		$queried   = $identity  ? Core\Text::stripNonNumeric( trim( $identity ) ) : $identity;
@@ -191,7 +191,7 @@ class Iranian extends gEditorial\Module
 		] );
 	}
 
-	private function _get_posttype_identity_metakey( $posttype )
+	private function _get_posttype_identity_metakey( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_identity_metakey' ) )
 			return $setting;
@@ -202,7 +202,7 @@ class Iranian extends gEditorial\Module
 		return $this->constant( 'metakey_identity_posttype' );
 	}
 
-	private function _get_posttype_location_metakey( $posttype )
+	private function _get_posttype_location_metakey( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_location_metakey' ) )
 			return $setting;

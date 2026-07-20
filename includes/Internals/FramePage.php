@@ -18,7 +18,7 @@ trait FramePage
 	 * @param string $context
 	 * @return string
 	 */
-	public function framepage_get_mainlink_url( $linked, $target = NULL, $context = NULL )
+	public function framepage_get_mainlink_url( int $linked, ?string $target = NULL, ?string $context = NULL ): string
 	{
 		return $this->get_adminpage_url( TRUE, [
 			'linked'   => $linked,
@@ -27,7 +27,7 @@ trait FramePage
 		], $context ?? 'framepage' );
 	}
 
-	protected function framepage_get_mainlink_for_post( $post, $atts = [] )
+	protected function framepage_get_mainlink_for_post( mixed $post, array $atts = [] ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -92,7 +92,7 @@ trait FramePage
 		], sprintf( $text, Services\Icons::get( $args['icon'] ?? $this->module->icon ), $name ) ).$args['after'];
 	}
 
-	protected function framepage_get_mainlink_for_term( $term, $atts = [] )
+	protected function framepage_get_mainlink_for_term( mixed $term, array $atts = [] ): false|string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;

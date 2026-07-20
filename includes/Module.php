@@ -482,7 +482,7 @@ class Module extends WordPress\Module
 		$html = Core\HTML::tag( 'a', [
 			'href'  => $link,
 			'id'    => $this->classs( 'mainbutton', $context ),
-			'class' => Core\HTML::buttonClass( FALSE, [ '-button-full', '-button-icon', '-mainbutton', 'thickbox' ] ),
+			'class' => Core\Link::buttonClass( FALSE, [ '-button-full', '-button-icon', '-mainbutton', 'thickbox' ] ),
 			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Services\Icons::get( $this->module->icon ), $name ) );
 
@@ -715,7 +715,7 @@ class Module extends WordPress\Module
 		false|string|array $target = FALSE,
 		?array $request = NULL,
 		string $key = 'post_type',
-	): bool {
+	): bool|string {
 
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
@@ -746,7 +746,7 @@ class Module extends WordPress\Module
 		false|string|array $target = FALSE,
 		?array $request = NULL,
 		string $key = 'taxonomy',
-	): bool {
+	): bool|string {
 
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;

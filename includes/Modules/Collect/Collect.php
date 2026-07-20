@@ -265,11 +265,12 @@ class Collect extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'collection_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'collection_posttype' ) )
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
-		}
+
+		return TRUE;
 	}
 
 	/**
@@ -278,7 +279,7 @@ class Collect extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'part_taxonomy' )

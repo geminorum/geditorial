@@ -27,7 +27,7 @@ class SystemHelp extends gEditorial\Service
 			);
 	}
 
-	public static function sidebar( $list )
+	public static function sidebar( array $list, ?string $context = NULL ): false|string
 	{
 		if ( ! is_array( $list ) )
 			return $list;
@@ -43,10 +43,11 @@ class SystemHelp extends gEditorial\Service
 	/**
 	 * Returns the help content for given module
 	 *
-	 * @param boolean|object $module
+	 * @param false|object $module
+	 * @param string $context
 	 * @return array
 	 */
-	public static function content( $module = FALSE )
+	public static function content( false|object $module = FALSE, ?string $context = NULL )
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
 			return [];

@@ -51,10 +51,12 @@ class Recount extends gEditorial\Module
 		$this->filter( 'taxonomy_term_count', 3, 10, FALSE, 'gnetwork' );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $this->taxonomy_supported( $taxonomy = $this->is_inline_save_taxonomy() ) )
 			$this->_edit_tags_screen( $taxonomy );
+
+		return TRUE;
 	}
 
 	/**
@@ -63,7 +65,7 @@ class Recount extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit-tags' === $screen->base
 			&& $this->taxonomy_supported( $screen->taxonomy ) ) {
@@ -79,10 +81,12 @@ class Recount extends gEditorial\Module
 		}
 	}
 
-	private function _edit_tags_screen( $taxonomy )
+	private function _edit_tags_screen( string $taxonomy ): true
 	{
 		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_taxonomy_columns' ], 12 );
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_taxonomy_column' ], 20, 3 );
+
+		return TRUE;
 	}
 
 	// TODO: maybe it's better to override the taxonomy callback for count

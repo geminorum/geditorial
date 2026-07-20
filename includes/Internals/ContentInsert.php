@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait ContentInsert
 {
 	// Should we insert content?
-	public function is_content_insert( $posttypes = '', $first_page = TRUE, $embed = FALSE )
+	public function is_content_insert( mixed $posttypes = '', bool $first_page = TRUE, bool $embed = FALSE ): bool
 	{
 		if ( ! $embed && is_embed() )
 			return FALSE;
@@ -36,7 +36,7 @@ trait ContentInsert
 		return is_singular( $posttypes );
 	}
 
-	protected function hook_content_insert( $default_priority = NULL, $setting_default = NULL )
+	protected function hook_content_insert( ?int $default_priority = NULL, ?string $setting_default = NULL ): bool
 	{
 		if ( 'none' === ( $insert = $this->get_setting( 'insert_content', $setting_default ?? 'none' ) ) )
 			return FALSE;
@@ -50,7 +50,7 @@ trait ContentInsert
 
 	// TODO: insert content settings for each post-type
 	// NOTE: Example Usage
-	/***
+	/***```
 	public function insert_content( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
@@ -63,9 +63,9 @@ trait ContentInsert
 
 		$this->wrap_content_insert( $html, 'before' );
 	}
-	***/
+	```***/
 
-	protected function wrap_content_insert( $html, $extra = [], $insert = NULL )
+	protected function wrap_content_insert( mixed $html, array|string $extra = [], string|false|null $insert = NULL ): void
 	{
 		if ( ! $html )
 			return;
@@ -80,7 +80,7 @@ trait ContentInsert
 		) );
 	}
 
-	protected function is_page_content_insert( $insert = NULL )
+	protected function is_page_content_insert( string|false|null $insert = NULL ): bool
 	{
 		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
 
@@ -92,10 +92,10 @@ trait ContentInsert
 		return FALSE;
 	}
 
-	protected function contentinsert__control_term_field_after( $setting = NULL )
+	protected function contentinsert__control_term_field_after( ?string $setting_key = NULL ): string
 	{
 		// NOTE: control term is not set!
-		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
+		if ( ! $setting = $this->get_setting( $setting_key ?? 'control_termid', 0 ) )
 			return '';
 
 		return gEditorial\Settings::fieldAfterText(
@@ -104,10 +104,10 @@ trait ContentInsert
 		);
 	}
 
-	protected function contentinsert__control_term_check( $post = NULL, $setting = NULL )
+	protected function contentinsert__control_term_check( mixed $post = NULL, ?string $setting_key = NULL ): bool
 	{
 		// NOTE: control term is not set!
-		if ( ! $setting = $this->get_setting( $setting ?? 'control_termid', 0 ) )
+		if ( ! $setting = $this->get_setting( $setting_key ?? 'control_termid', 0 ) )
 			return TRUE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

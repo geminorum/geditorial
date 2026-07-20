@@ -141,7 +141,7 @@ class Importer extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type )
@@ -201,9 +201,9 @@ class Importer extends gEditorial\Module
 				];
 	}
 
-	public function load_overview_adminpage( $context = 'overview' )
+	public function load_overview_adminpage(): void
 	{
-		$this->_load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'overview' );
 	}
 
 	public function render_submenu_adminpage(): bool
@@ -2324,7 +2324,7 @@ class Importer extends gEditorial\Module
 		], '' );
 	}
 
-	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	protected function framepageviews__config_script_for_post( object $post, ?string $context, array $data ): array
 	{
 		return [
 			'canimport' => $this->role_can( 'imports' ),

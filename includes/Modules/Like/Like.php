@@ -97,15 +97,17 @@ class Like extends gEditorial\Module
 		];
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+			return TRUE;
 
 		if ( $this->get_setting( 'like_count' ) )
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 50 );
+
+		return TRUE;
 	}
 
 	/**
@@ -114,7 +116,7 @@ class Like extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -494,7 +496,7 @@ class Like extends gEditorial\Module
 		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_total' ) );
 	}
 
-	public function tweaks_column_attr( $post, $before, $after )
+	public function tweaks_column_attr( object $post, string $before, string $after ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return;

@@ -105,7 +105,7 @@ trait PostDate
 
 			else if ( is_array( $supported_list ) && Core\Arraay::isAssoc( $supported_list ) )
 				foreach ( $supported_list as $posttype => $label )
-					echo Core\HTML::button( sprintf(
+					echo Core\Link::button( sprintf(
 						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						$label
@@ -117,7 +117,7 @@ trait PostDate
 
 			else if ( is_array( $supported_list ) )
 				foreach ( $supported_list as $posttype )
-					echo Core\HTML::button( sprintf(
+					echo Core\Link::button( sprintf(
 						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						Services\CustomPostType::getLabel( $posttype, 'name' )
@@ -128,7 +128,7 @@ trait PostDate
 					], $uri ) );
 
 			else if ( is_string( $supported_list ) )
-				echo Core\HTML::button(
+				echo Core\Link::button(
 					_x( 'Set Post-Date', 'Button', 'geditorial-admin' ),
 					add_query_arg( [
 						'sub'    => $sub,

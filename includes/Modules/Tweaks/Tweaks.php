@@ -35,7 +35,7 @@ class Tweaks extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs( $context = 'settings' )
+	protected function settings_help_tabs( ?string $context = NULL ): array
 	{
 		return array_merge(
 			ModuleInfo::getHelpTabs( $context ),
@@ -260,10 +260,12 @@ class Tweaks extends gEditorial\Module
 		return array_diff_key( $supported, array_flip( $excluded ) );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			$this->_edit_screen( $posttype );
+
+		return TRUE;
 	}
 
 	/**
@@ -272,7 +274,7 @@ class Tweaks extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$enqueue = FALSE;
 
@@ -341,7 +343,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	private function _edit_screen( $posttype )
+	private function _edit_screen( string $posttype ): void
 	{
 		$this->filter_unset( 'manage_taxonomies_for_'.$posttype.'_columns', $this->taxonomies(), 12 );
 
@@ -572,7 +574,7 @@ class Tweaks extends gEditorial\Module
 		return 'geditorial-tweaks-title';
 	}
 
-	public function posts_custom_column( $column, $post_id )
+	public function posts_custom_column( string $column, int $post_id ): void
 	{
 		global $post, $wp_list_table;
 
@@ -657,7 +659,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function sortable_columns( $columns )
+	public function sortable_columns( array $columns ): array
 	{
 		return array_merge( $columns, [
 			$this->classs( 'order' ) => 'menu_order',
@@ -666,7 +668,7 @@ class Tweaks extends gEditorial\Module
 		] );
 	}
 
-	public function manage_users_columns( $columns )
+	public function manage_users_columns( array $columns ): array
 	{
 		$new = [];
 
@@ -702,7 +704,7 @@ class Tweaks extends gEditorial\Module
 		return $new;
 	}
 
-	public function manage_users_custom_column( $output, $column, $user_id )
+	public function manage_users_custom_column( string $output, string $column, int $user_id ): string
 	{
 		if ( $this->classs( 'user' ) == $column ) {
 
@@ -761,7 +763,7 @@ class Tweaks extends gEditorial\Module
 		return $output;
 	}
 
-	public function manage_users_sortable_columns( $columns )
+	public function manage_users_sortable_columns( array $columns ): array
 	{
 		return array_merge( $columns, [
 			$this->classs( 'contacts' ) => 'email',
@@ -769,7 +771,7 @@ class Tweaks extends gEditorial\Module
 		] );
 	}
 
-	public function manage_comments_columns( $columns )
+	public function manage_comments_columns( array $columns ): array
 	{
 		$columns['user'] = $this->get_column_title( 'user', 'comments' );
 
@@ -783,7 +785,7 @@ class Tweaks extends gEditorial\Module
 		return $columns;
 	}
 
-	public function comments_custom_column( $column, $comment_id )
+	public function comments_custom_column( string $column, int $comment_id ): void
 	{
 		if ( 'user' !== $column )
 			return;
@@ -804,7 +806,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_taxonomies( $post, $before, $after, $module )
+	public function column_row_taxonomies( object $post, string $before, string $after, string $module_name ): void
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -835,7 +837,7 @@ class Tweaks extends gEditorial\Module
 	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
 	// FIXME: use `get_file_description( untrailingslashit( get_stylesheet_directory() ).'/'.get_page_template_slug() )`
-	public function column_attr_page_template( $post, $before, $after )
+	public function column_attr_page_template( object $post, string $before, string $after ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
@@ -860,7 +862,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_attr_comment_status( $post, $before, $after )
+	public function column_attr_comment_status( object $post, string $before, string $after ): void
 	{
 		if ( $filtered = comments_open( $post ) )
 			return;
@@ -889,7 +891,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_author( $post, $before, $after )
+	public function column_attr_author( object $post, string $before, string $after ): void
 	{
 		if ( empty( $this->_site_user_id ) )
 			$this->_site_user_id = gEditorial()->user();
@@ -900,10 +902,10 @@ class Tweaks extends gEditorial\Module
 		printf( $before, '-post-author' );
 			echo $this->get_column_icon( FALSE, 'admin-users', _x( 'Author', 'Row Icon Title', 'geditorial-tweaks' ) );
 			echo '<span class="-author">'.WordPress\PostType::authorEditMarkup( $post->post_type, $post->post_author ).'</span>';
-		echo '</li>';
+		echo $after;
 	}
 
-	public function column_attr_slug( $post, $before, $after )
+	public function column_attr_slug( object $post, string $before, string $after ): void
 	{
 		if ( ! $post->post_name )
 			return;
@@ -914,7 +916,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_status( $post, $before, $after )
+	public function column_attr_status( object $post, string $before, string $after ): void
 	{
 		if ( empty( $this->_post_statuses ) )
 			$this->_post_statuses = WordPress\Status::get();
@@ -939,7 +941,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_date( $post, $before, $after )
+	public function column_attr_date( object $post, string $before, string $after ): void
 	{
 		printf( $before, '-post-date' );
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
@@ -956,7 +958,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_sku( $post, $before, $after, $module )
+	public function column_row_sku( object $post, string $before, string $after, string $module_name ): void
 	{
 		global $product;
 
@@ -972,7 +974,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_stock( $post, $before, $after )
+	public function column_attr_stock( object $post, string $before, string $after ): void
 	{
 		global $product;
 
@@ -1006,7 +1008,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_cogs_value( $post, $before, $after )
+	public function column_attr_cogs_value( object $post, string $before, string $after ): void
 	{
 		global $product;
 
@@ -1022,7 +1024,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_user_default( $user, $before, $after )
+	public function column_user_default( object $user, string $before, string $after ): void
 	{
 		if ( $user->first_name || $user->last_name ) {
 			printf( $before, '-user-fullname' );
@@ -1031,16 +1033,21 @@ class Tweaks extends gEditorial\Module
 			echo $after;
 		}
 
-		$role = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
-		echo WordPress\Strings::getJoined( WordPress\Role::get( 0, [], $user ), '<li class="-row tweaks-user-atts -roles">'.$role, $after );
+		$icon = $this->get_column_icon( FALSE, 'businessman', _x( 'Roles', 'Row Icon Title', 'geditorial-tweaks' ) );
+
+		echo WordPress\Strings::getJoined(
+			WordPress\Role::get( 0, [], $user ),
+			sprintf( $before, '-roles' ).$icon,
+			$after
+		);
 	}
 
-	public function column_contacts_default( $user, $before, $after )
+	public function column_contacts_default( object $user, string $before, string $after ): void
 	{
 		if ( $user->user_email ) {
 			printf( $before, '-user-contact -email' );
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-tweaks' ) );
-				echo Core\HTML::mailto( $user->user_email );
+				echo Core\Link::mailto( $user->user_email );
 			echo $after;
 		}
 
@@ -1056,7 +1063,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function do_metabox_mainbox( $post, $box )
+	public function do_metabox_mainbox( object $post, array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -1090,7 +1097,7 @@ class Tweaks extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function do_mainbox_parent( $post, $posttype )
+	private function do_mainbox_parent( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_parent', $posttype->hierarchical, $posttype->name, $post ) )
 			return;
@@ -1098,7 +1105,7 @@ class Tweaks extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostParent( $post, FALSE );
 	}
 
-	private function do_mainbox_menuorder( $post, $posttype )
+	private function do_mainbox_menuorder( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_menuorder', TRUE, $posttype->name, $post ) )
 			return;
@@ -1106,7 +1113,7 @@ class Tweaks extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostMenuOrder( $post );
 	}
 
-	private function do_mainbox_slug( $post, $posttype )
+	private function do_mainbox_slug( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_slug', empty( $posttype->slug_disabled ), $posttype->name, $post ) )
 			return;
@@ -1114,7 +1121,7 @@ class Tweaks extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostSlug( $post );
 	}
 
-	private function do_mainbox_author( $post, $posttype )
+	private function do_mainbox_author( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_author', empty( $posttype->author_disabled ), $posttype->name, $post ) )
 			return;
@@ -1123,7 +1130,7 @@ class Tweaks extends gEditorial\Module
 	}
 
 	// @REF: `post_comment_status_meta_box()`
-	private function do_mainbox_comment_status( $post, $posttype )
+	private function do_mainbox_comment_status( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_commentstatus', TRUE, $posttype->name, $post ) )
 			return;
@@ -1154,7 +1161,7 @@ class Tweaks extends gEditorial\Module
 		echo '<input name="advanced_view" type="hidden" value="1" />'; // FIXME: check this
 	}
 
-	private function do_mainbox_templates( $post, $posttype )
+	private function do_mainbox_templates( object $post, object $posttype ): void
 	{
 		if ( ! $this->filters( 'metabox_templates', TRUE, $posttype->name, $post ) )
 			return;

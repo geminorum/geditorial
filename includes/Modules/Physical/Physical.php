@@ -183,7 +183,7 @@ class Physical extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_searchable_fields()
+	protected function subcontent_define_searchable_fields(): array
 	{
 		$posttypes = Core\Arraay::prepString( [
 			gEditorial()->constant( 'trained', 'primary_posttype' ),
@@ -198,7 +198,7 @@ class Physical extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_unique_fields()
+	protected function subcontent_define_unique_fields(): array
 	{
 		return [
 			'date',
@@ -232,7 +232,7 @@ class Physical extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
-	public function units_init()
+	public function units_init(): void
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, TRUE, 'units' );
 
@@ -245,7 +245,7 @@ class Physical extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'edit', 'post' ], TRUE ) ) {
 
@@ -278,7 +278,7 @@ class Physical extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 		$this->subcontent_do_enqueue_app();
@@ -295,12 +295,12 @@ class Physical extends gEditorial\Module
 		);
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->subcontent_restapi_register_routes();
+		return $this->subcontent_restapi_register_routes();
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
@@ -310,7 +310,7 @@ class Physical extends gEditorial\Module
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Athletics Data', 'Default Term: Audit', 'geditorial-physical' ),

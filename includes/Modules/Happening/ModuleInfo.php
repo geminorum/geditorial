@@ -11,7 +11,7 @@ class ModuleInfo extends gEditorial\Info
 	const MODULE = 'happening';
 
 	// @REF: https://support.cvent.com/s/communityarticle/What-does-my-Event-Status-mean
-	public static function getStatuses( $context = NULL )
+	public static function getStatuses( ?string $context = NULL ): array
 	{
 		return [
 			'processing' => [

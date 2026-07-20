@@ -31,7 +31,7 @@ class Attachments extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs( $context = 'settings' )
+	protected function settings_help_tabs( ?string $context = NULL ): array
 	{
 		return array_merge(
 			ModuleInfo::getHelpTabs( $context ),
@@ -155,16 +155,18 @@ class Attachments extends gEditorial\Module
 			$this->filter( 'get_attachment_image_attributes', 3, 8, FALSE, 'wp' );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $this->get_setting( 'restrict_library' ) )
 			$this->filter( 'ajax_query_attachments_args' );
 
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+			return TRUE;
 
 		if ( $this->get_setting( 'attachment_count', FALSE ) )
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20 );
+
+		return TRUE;
 	}
 
 	/**
@@ -173,7 +175,7 @@ class Attachments extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -451,7 +453,7 @@ class Attachments extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_attr( $post, $before, $after )
+	public function tweaks_column_attr( object $post, string $before, string $after ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
@@ -470,7 +472,7 @@ class Attachments extends gEditorial\Module
 		$this->_render_summary_row( $post, $before, $after );
 	}
 
-	private function _render_summary_row( $post, $before, $after )
+	private function _render_summary_row( object $post, string $before, string $after ): void
 	{
 		$attachments = WordPress\Attachment::list( $post->ID, '' );
 

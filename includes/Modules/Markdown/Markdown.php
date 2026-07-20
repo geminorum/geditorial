@@ -82,7 +82,7 @@ class Markdown extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -94,13 +94,15 @@ class Markdown extends gEditorial\Module
 		}
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
 		$this->restapi_register_route( 'from', 'POST' );  // HTML to Markdown
 		$this->restapi_register_route( 'to', 'POST' );    // Markdown to HTML
+
+		return TRUE;
 	}
 
-	public function restapi_from_post_callback( $request )
+	public function restapi_from_post_callback( object $request ): mixed
 	{
 		$data = '';
 		$type = $request->get_content_type();
@@ -119,7 +121,7 @@ class Markdown extends gEditorial\Module
 		return rest_ensure_response( $response );
 	}
 
-	public function restapi_to_post_callback( $request )
+	public function restapi_to_post_callback( object $request ): mixed
 	{
 		$data = '';
 		$type = $request->get_content_type();

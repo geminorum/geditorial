@@ -565,11 +565,12 @@ class Book extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) )
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
-		}
+
+		return TRUE;
 	}
 
 	/**
@@ -578,7 +579,7 @@ class Book extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -661,12 +662,12 @@ class Book extends gEditorial\Module
 		$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
-	public function tweaks_column_row_p2p_to( $post, $before, $after, $module ): void
+	public function tweaks_column_row_p2p_to( object $post, string $before, string $after, string $module_name ): void
 	{
 		$this->column_row_p2p_to_posttype( 'main_posttype', $post, $before, $after );
 	}
 
-	public function tweaks_column_row_p2p_from( $post, $before, $after, $module ): void
+	public function tweaks_column_row_p2p_from( object $post, string $before, string $after, string $module_name ): void
 	{
 		$this->column_row_p2p_from_posttype( 'main_posttype', $post, $before, $after );
 	}

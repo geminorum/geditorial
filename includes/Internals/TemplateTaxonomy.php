@@ -310,7 +310,7 @@ trait TemplateTaxonomy
 			$this->key
 		);
 
-		return Core\HTML::button(
+		return Core\Link::button(
 			$label ?? Services\CustomTaxonomy::getLabel( $object, 'add_new_item' ),
 			WordPress\Taxonomy::edit( $object, $extra )
 		);

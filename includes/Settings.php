@@ -3943,7 +3943,7 @@ class Settings extends WordPress\Main
 
 	public static function goBackButton( string|array|null $remove = NULL ): string
 	{
-		return Core\HTML::button(
+		return Core\Link::button(
 			_x( '&larr; Go-back', 'Settings: Button', 'geditorial-admin' ),
 			remove_query_arg( $remove ?? [
 				'action',
@@ -3987,7 +3987,7 @@ class Settings extends WordPress\Main
 			$buttons = [];
 
 			foreach ( $links as $link )
-				$buttons[] = Core\HTML::button( $link['title'], $link['url'] );
+				$buttons[] = Core\Link::button( $link['title'], $link['url'] );
 
 			echo Core\HTML::wrap( Core\HTML::rows( $buttons ), '-toolbox-links -centered' );
 

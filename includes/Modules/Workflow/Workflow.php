@@ -126,10 +126,12 @@ class Workflow extends gEditorial\Module
 			$this->filter( 'map_meta_cap', 4, 12 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy( 'main_taxonomy' ) )
 			$this->_edit_tags_screen( $taxonomy );
+
+		return TRUE;
 	}
 
 	public function map_meta_cap( array $caps, string $cap, int $user_id, array $args ): array
@@ -213,7 +215,7 @@ class Workflow extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -250,13 +252,15 @@ class Workflow extends gEditorial\Module
 		}
 	}
 
-	private function _edit_tags_screen( $taxonomy )
+	private function _edit_tags_screen( string $taxonomy ): true
 	{
 		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_columns' ] );
 		// add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
+
+		return TRUE;
 	}
 
-	public function manage_columns( $columns )
+	public function manage_columns( array $columns ): array
 	{
 		unset( $columns['posts'] );
 		return $columns;
@@ -386,7 +390,7 @@ class Workflow extends gEditorial\Module
 		return $states;
 	}
 
-	public function render_mainbox_metabox( $post, $box )
+	public function render_mainbox_metabox( object $post, array $box ): void
 	{
 		if ( empty( $post->post_type ) )
 			return; // FIXME: add notice
@@ -445,7 +449,7 @@ class Workflow extends gEditorial\Module
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
-			// 		'class' => Core\HTML::buttonClass(),
+			// 		'class' => Core\Link::buttonClass(),
 			// 		'value' => __( 'Save Draft' ),
 			// 	] );
 
@@ -454,7 +458,7 @@ class Workflow extends gEditorial\Module
 			// 		'type'  => 'submit',
 			// 		'id'    => 'save-post',
 			// 		'name'  => 'save',
-			// 		'class' => Core\HTML::buttonClass(),
+			// 		'class' => Core\Link::buttonClass(),
 			// 		'value' => __( 'Save as Pending' ),
 			// 	] );
 
@@ -462,7 +466,7 @@ class Workflow extends gEditorial\Module
 				echo Core\HTML::tag( 'a', [
 					'href'  => get_edit_post_link( $GLOBALS['publish_callback_args']['revision_id'] ),
 					'id'    => $this->classs( 'browse-revisions' ),
-					'class' => Core\HTML::buttonClass( TRUE, [ 'hide-if-no-js', '-browse-revisions' ] ),
+					'class' => Core\Link::buttonClass( TRUE, [ 'hide-if-no-js', '-browse-revisions' ] ),
 				], __( 'Browse revisions' ) );
 
 			echo gEditorial\Ajax::spinner();

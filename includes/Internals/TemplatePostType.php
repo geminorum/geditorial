@@ -268,7 +268,7 @@ trait TemplatePostType
 			$this->key
 		);
 
-		return Core\HTML::button(
+		return Core\Link::button(
 			$label ?? Services\CustomPostType::getLabel( $object, 'add_new_item' ),
 			WordPress\PostType::newLink( $object->name, $extra )
 		);
@@ -471,7 +471,7 @@ trait TemplatePostType
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => Core\HTML::buttonClass( FALSE, [ '-form-save-data', 'disabled' ] ),
+			'class' => Core\Link::buttonClass( FALSE, [ '-form-save-data', 'disabled' ] ),
 			'data'  => [
 				'target'   => $target,
 				'type'     => $posttype,

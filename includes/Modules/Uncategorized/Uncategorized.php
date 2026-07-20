@@ -71,7 +71,7 @@ class Uncategorized extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			// TODO: add separate list of post-types on settings for this

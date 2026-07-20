@@ -16,7 +16,7 @@ trait SettingsTaxonomies
 	 * @param array $fallback
 	 * @return array
 	 */
-	public function get_setting_taxonomies( $target, $fallback = [] )
+	public function get_setting_taxonomies( string $target, array $fallback = [] ): array
 	{
 		return $target ? $this->get_setting( self::und( $target, 'taxonomies' ), $fallback ): $fallback;
 	}
@@ -26,15 +26,15 @@ trait SettingsTaxonomies
 	 *
 	 * @param string $taxonomy
 	 * @param string $target
-	 * @param array $fallback
-	 * @return array
+	 * @param bool $fallback
+	 * @return bool
 	 */
-	public function in_setting_taxonomies( $taxonomy, $target, $fallback = FALSE )
+	public function in_setting_taxonomies( false|string $taxonomy, string $target, bool $fallback = FALSE ): bool
 	{
 		return ( $taxonomy && in_array( $taxonomy, $this->get_setting_taxonomies( $target ) ) ) || $fallback;
 	}
 
-	public function register_settings_taxonomies_option( $title = NULL )
+	public function register_settings_taxonomies_option( ?string $title = NULL ): bool
 	{
 		$option = $this->hook_base( $this->module->name );
 		$title  = $title ?? $this->get_string( 'taxonomies_title', FALSE, 'settings',
@@ -52,9 +52,11 @@ trait SettingsTaxonomies
 			$option,
 			self::und( $option, 'taxonomies' )
 		);
+
+		return TRUE;
 	}
 
-	public function settings_taxonomies_option()
+	public function settings_taxonomies_option(): void
 	{
 		if ( $before = $this->get_string( 'taxonomies_before', FALSE, 'settings', NULL ) )
 			Core\HTML::desc( $before );
@@ -84,7 +86,7 @@ trait SettingsTaxonomies
 	}
 
 	// enabled taxonomies for this module
-	public function taxonomies( $taxonomies = NULL )
+	public function taxonomies( string|array|null $taxonomies = NULL ): array
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = [];
@@ -102,12 +104,12 @@ trait SettingsTaxonomies
 			: $taxonomies;
 	}
 
-	public function taxonomy_supported( $taxonomy )
+	public function taxonomy_supported( false|string $taxonomy ): bool
 	{
 		return $taxonomy && in_array( $taxonomy, $this->taxonomies(), TRUE );
 	}
 
-	public function taxonomy_anchor( $taxonomy )
+	public function taxonomy_anchor( string $taxonomy ): string
 	{
 		$taxonomy = $this->constant( $taxonomy, $taxonomy );
 		$object   = WordPress\Taxonomy::object( $taxonomy );
@@ -118,23 +120,31 @@ trait SettingsTaxonomies
 		return Core\L10n::pluralize( $taxonomy );
 	}
 
-	public function screen_taxonomy_supported( $screen, $base = [ 'edit-tags', 'term' ] )
+	public function screen_taxonomy_supported( object $screen, string|array|false|null $base = NULL ): bool
 	{
+		$base = $base ?? [ 'edit-tags', 'term' ];
+
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
 			return FALSE;
 
 		return $this->taxonomy_supported( $screen->taxonomy );
 	}
 
-	public function list_taxonomies( $pre = NULL, $taxonomies = NULL, $capability = NULL, $args = [ 'show_ui' => TRUE ], $user_id = NULL )
-	{
+	public function list_taxonomies(
+		mixed $pre = NULL,
+		string|array|null $taxonomies = NULL,
+		?string $capability = NULL,
+		?array $args = NULL,
+		?int $user_id = NULL,
+	): array {
+
 		if ( is_null( $pre ) )
 			$pre = [];
 
 		else if ( TRUE === $pre )
 			$pre = [ 'all' => _x( 'All Taxonomies', 'Module', 'geditorial-admin' ) ];
 
-		$all = WordPress\Taxonomy::get( 0, $args, FALSE, $capability, $user_id );
+		$all = WordPress\Taxonomy::get( 0, $args ?? [ 'show_ui' => TRUE ], FALSE, $capability, $user_id );
 
 		foreach ( $this->taxonomies( $taxonomies ) as $taxonomy ) {
 
@@ -149,10 +159,10 @@ trait SettingsTaxonomies
 		return $pre;
 	}
 
-	public function all_taxonomies( $args = [ 'show_ui' => TRUE ], $exclude_extra = [] )
+	public function all_taxonomies( ?array $args = NULL, array $exclude_extra = [] ): array
 	{
 		return Core\Arraay::stripByKeys(
-			WordPress\Taxonomy::get( 0, $args ),
+			WordPress\Taxonomy::get( 0, $args ?? [ 'show_ui' => TRUE ] ),
 			Core\Arraay::prepString(
 				$this->taxonomies_excluded( $exclude_extra )
 			)
@@ -169,7 +179,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function _hook_taxonomies_excluded( $constant, $module = NULL )
+	protected function _hook_taxonomies_excluded( string $constant, ?string $module = NULL ): bool
 	{
 		return $this->filter_append(
 			$this->hook_base( $module ?? $this->module->name, 'taxonomies_excluded' ),
@@ -177,7 +187,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function get_taxonomy_autolink_terms_desc( $constant )
+	protected function get_taxonomy_autolink_terms_desc( string $constant ): string
 	{
 		return sprintf(
 			/* translators: `%s`: taxonomy name */
@@ -186,7 +196,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function get_taxonomy_show_in_navmenus_desc( $constant )
+	protected function get_taxonomy_show_in_navmenus_desc( string $constant ): string
 	{
 		return sprintf(
 			/* translators: `%s`: taxonomy name */
@@ -195,7 +205,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function get_taxonomy_show_in_quickedit_desc( $constant )
+	protected function get_taxonomy_show_in_quickedit_desc( string $constant ): string
 	{
 		return sprintf(
 			/* translators: `%s`: taxonomy name */
@@ -204,7 +214,7 @@ trait SettingsTaxonomies
 		);
 	}
 
-	protected function get_taxonomy_parents_as_views_desc( $constant )
+	protected function get_taxonomy_parents_as_views_desc( string $constant ): string
 	{
 		return sprintf(
 			/* translators: `%s`: taxonomy name */

@@ -187,12 +187,12 @@ class Units extends gEditorial\Module
 		$this->posttypefields__hook_importer_init();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->posttypefields__hook_setup_ajax( $posttype );
 
-		$this->posttypefields__hook_setup_ajax( $posttype );
+		return TRUE;
 	}
 
 	/**
@@ -201,7 +201,7 @@ class Units extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 

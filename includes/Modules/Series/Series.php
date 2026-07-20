@@ -119,7 +119,7 @@ class Series extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 

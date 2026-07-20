@@ -37,7 +37,7 @@ class ObjectHints extends gEditorial\Service
 
 	// TODO: support terms
 	// TODO: support users
-	public static function main_route_callback( $request )
+	public static function main_route_callback( object $request ): mixed
 	{
 		$queried = self::atts( [
 			'id'       => '',
@@ -78,7 +78,7 @@ class ObjectHints extends gEditorial\Service
 		return new \WP_REST_Response( $response, 200 );
 	}
 
-	private static function _get_tips_posts( $post, $queried )
+	private static function _get_tips_posts( object $post, array $queried ): array|object
 	{
 		//@hook: `geditorial_objecthints_tips_for_post`
 		$hints = apply_filters( self::hook( 'objecthints', 'tips_for_post' ),

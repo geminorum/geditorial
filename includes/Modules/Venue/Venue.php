@@ -284,11 +284,13 @@ class Venue extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
+
+		return TRUE;
 	}
 
 	/**
@@ -297,7 +299,7 @@ class Venue extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -407,7 +409,7 @@ class Venue extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 		$this->paired_assignment__load_submenu_adminpage( 'overview' );
@@ -457,7 +459,7 @@ class Venue extends gEditorial\Module
 		return $html;
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$this->pairedmetabox__render_supportedbox_content( $object, $box, $context, $screen );
 	}

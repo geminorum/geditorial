@@ -263,7 +263,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'email',
 				'title'    => _x( 'Email Address', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'mailto::{{code}}', // @SEE: `Core\HTML::mailto()`
+				'template' => 'mailto::{{code}}', // @SEE: `Core\Link::mailto()`
 				'cssclass' => '-email-address',
 				'icon'     => 'email',
 				'logo'     => '',
@@ -272,7 +272,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'phone',
 				'title'    => _x( 'Phone Number', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => 'tel::{{code}}', // @SEE: `Core\HTML::tel()`
+				'template' => 'tel::{{code}}', // @SEE: `Core\Link::tel()`
 				'cssclass' => '-phone-number',
 				'icon'     => 'phone',
 				'logo'     => '',

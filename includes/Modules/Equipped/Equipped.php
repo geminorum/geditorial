@@ -161,7 +161,7 @@ class Equipped extends gEditorial\Module
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 	}
 
-	public function units_init()
+	public function units_init(): void
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, TRUE, 'units' );
 	}
@@ -172,7 +172,7 @@ class Equipped extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 

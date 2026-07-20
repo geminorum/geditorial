@@ -116,7 +116,7 @@ trait TaxonomyTaxonomy
 		return TRUE;
 	}
 
-	protected function taxtax__edit_tags_screen( $taxonomy, $target )
+	protected function taxtax__edit_tags_screen( string $taxonomy, string|object $target ): bool
 	{
 		$singleselect = Services\TermHierarchy::isSingleTerm( $target );
 

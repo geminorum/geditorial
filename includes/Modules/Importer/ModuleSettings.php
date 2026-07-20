@@ -22,7 +22,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Clean-up Raw Data', 'Card Title', 'geditorial-importer' ) );
 
 		foreach ( $posttypes as $posttype => $label )
-			echo Core\HTML::button( sprintf(
+			echo Core\Link::button( sprintf(
 				/* translators: `%s`: post-type label */
 				_x( 'On %s', 'Button', 'geditorial-importer' ),
 				$label

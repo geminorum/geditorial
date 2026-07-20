@@ -9,14 +9,14 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsHelp
 {
-	protected function settings_help_tabs( $context = 'settings' )
+	protected function settings_help_tabs( ?string $context = NULL )
 	{
-		return Services\SystemHelp::content( $this->module );
+		return Services\SystemHelp::content( $this->module, $context );
 	}
 
-	protected function settings_help_sidebar( $context = 'settings' )
+	protected function settings_help_sidebar( ?string $context = NULL )
 	{
-		return Services\SystemHelp::sidebar( $this->get_module_links() );
+		return Services\SystemHelp::sidebar( $this->get_module_links(), $context );
 	}
 
 	protected function register_help_tabs( $screen = NULL, $context = 'settings' )

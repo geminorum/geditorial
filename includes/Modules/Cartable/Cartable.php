@@ -335,12 +335,12 @@ class Cartable extends gEditorial\Module
 		return $caps;
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->_hook_tweaks_column_attr( $posttype );
 
-		$this->_hook_tweaks_column_attr( $posttype );
+		return TRUE;
 	}
 
 	/**
@@ -349,7 +349,7 @@ class Cartable extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'type_taxonomy', $screen ) ) {
 
@@ -747,7 +747,7 @@ class Cartable extends gEditorial\Module
 			] );
 	}
 
-	public function add_user_to_blog( $user_id, $role, $blog_id )
+	public function add_user_to_blog( int $user_id, string $role, int $blog_id ): void
 	{
 		if ( $this->in_setting( $role, 'excluded_roles' ) )
 			return;
@@ -758,18 +758,24 @@ class Cartable extends gEditorial\Module
 		WordPress\Term::add( $user->user_login, $this->constant( 'user_taxonomy' ), FALSE );
 	}
 
-	public function render_widget_summary( $object, $box )
+	public function render_widget_summary( ?object $object, array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( ! $term = WordPress\Term::get( $box['args']['slug'], $this->constant( $box['args']['context'].'_taxonomy' ) ) )
-			return gEditorial\Info::renderSomethingIsWrong();
+		$term = WordPress\Term::get(
+			$box['args']['slug'],
+			$this->constant( self::und( $box['args']['context'], 'taxonomy' ) )
+		);
 
-		$this->tableCartableSummary( $term, $box['args']['context'] );
+		if ( $term )
+			$this->tableCartableSummary( $term, $box['args']['context'] );
+
+		else
+			gEditorial\Info::renderSomethingIsWrong();
 	}
 
-	public function render_mainbox_metabox( $post, $box )
+	public function render_mainbox_metabox( object $post, array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -788,7 +794,7 @@ class Cartable extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function _get_metabox_summary( $post, $check_groups = TRUE )
+	private function _get_metabox_summary( object $post, bool $check_groups = TRUE ): string
 	{
 		$rows  = [];
 		$user  = wp_get_current_user();
@@ -818,7 +824,7 @@ class Cartable extends gEditorial\Module
 		return Core\HTML::rows( $rows, 'field-wrap -summary' );
 	}
 
-	public function render_metabox_users( $post, $box )
+	public function render_metabox_users( object $post, array $box ): void
 	{
 		$users   = [];
 		$disable = ! $this->role_can( 'assign_user' );
@@ -854,7 +860,7 @@ class Cartable extends gEditorial\Module
 			echo $this->_get_metabox_summary( $post, FALSE );
 	}
 
-	public function render_metabox_groups( $post, $box )
+	public function render_metabox_groups( object $post, array $box ): void
 	{
 		$disable = ! $this->role_can( 'assign_group' );
 
@@ -868,7 +874,7 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	public function render_metabox_types( $post, $box )
+	public function render_metabox_types( object $post, array $box ): void
 	{
 		$disable = ! $this->role_can( 'assign_type' );
 
@@ -882,31 +888,31 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	private function get_users( $post_id, $object = FALSE, $key = 'slug' )
+	private function get_users( int $post_id, bool $object = FALSE, string $key = 'slug' ): array
 	{
 		return WordPress\Taxonomy::getPostTerms( $this->constant( 'user_taxonomy' ), $post_id, $object, $key );
 	}
 
-	private function get_groups( $post_id, $object = FALSE, $key = 'slug' )
+	private function get_groups( int $post_id, bool $object = FALSE, string $key = 'slug' ): array
 	{
 		return WordPress\Taxonomy::getPostTerms( $this->constant( 'group_taxonomy' ), $post_id, $object, $key );
 	}
 
-	private function get_types( $post_id, $object = FALSE, $key = 'slug' )
+	private function get_types( int $post_id, bool $object = FALSE, string $key = 'slug' ): array
 	{
 		return WordPress\Taxonomy::getPostTerms( $this->constant( 'type_taxonomy' ), $post_id, $object, $key );
 	}
 
-	private function get_user_groups( $user_id = NULL )
+	private function get_user_groups( ?int $user_id = NULL )
 	{
 		$user_id = $user_id ?? get_current_user_id();
 
 		return wp_get_object_terms( (int) $user_id, $this->constant( 'group_ref' ) );
 	}
 
-	private function tableCartable( $term, $context = 'user' )
+	private function tableCartable( object $term, string $cart_context = 'user' ): bool
 	{
-		if ( 'user' == $context )
+		if ( 'user' === $cart_context )
 			$title = _x( 'Your Cartable', 'Page Title', 'geditorial-cartable' );
 
 		else
@@ -921,13 +927,18 @@ class Cartable extends gEditorial\Module
 		$list  = $this->list_posttypes();
 		$query = [
 			'tax_query' => [ [
-				'taxonomy' => $this->constant( $context.'_taxonomy' ),
+				'taxonomy' => $this->constant( self::und( $cart_context, 'taxonomy' ) ),
 				'field'    => 'term_id',
 				'terms'    => [ $term->term_id ],
 			] ],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( NULL, $context ) );
+		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts(
+			$query,
+			[],
+			array_keys( $list ),
+			$this->get_sub_limit_option( NULL, $cart_context ),
+		);
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
 		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
@@ -954,12 +965,12 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	private function tableCartableSummary( $term, $context = 'user' )
+	private function tableCartableSummary( object $term, string $cart_context = 'user' ): bool
 	{
 		$args = [
 
 			'tax_query' => [ [
-				'taxonomy' => $this->constant( $context.'_taxonomy' ),
+				'taxonomy' => $this->constant( $cart_context.'_taxonomy' ),
 				'field'    => 'term_id',
 				'terms'    => [ $term->term_id ],
 			] ],
@@ -990,7 +1001,7 @@ class Cartable extends gEditorial\Module
 
 		$columns['modified'] = gEditorial\Tablelist::columnPostDateModified();
 
-		Core\HTML::tableList( $columns, $query->query( $args ), [
+		return Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'The cartable is empty!', 'Message', 'geditorial-cartable' ),
 		] );
 	}

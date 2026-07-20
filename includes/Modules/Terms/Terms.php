@@ -373,10 +373,12 @@ class Terms extends gEditorial\Module
 		$this->filter_module( 'datacodes', 'print_template_data', 4, 8 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $taxonomy = $this->is_inline_save_taxonomy() )
 			$this->_edit_tags_screen( $taxonomy );
+
+		return TRUE;
 	}
 
 	/**
@@ -385,7 +387,7 @@ class Terms extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$enqueue = FALSE;
 
@@ -499,10 +501,12 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	private function _edit_tags_screen( $taxonomy )
+	private function _edit_tags_screen( string $taxonomy ): true
 	{
 		add_filter( 'manage_edit-'.$taxonomy.'_columns', [ $this, 'manage_columns' ] );
 		add_filter( 'manage_'.$taxonomy.'_custom_column', [ $this, 'custom_column' ], 10, 3 );
+
+		return TRUE;
 	}
 
 	private function _get_supported_raw( $filtered = TRUE )
@@ -834,7 +838,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'manage_columns', $columns, $taxonomy, $supported );
 	}
 
-	public function sortable_columns( $columns )
+	public function sortable_columns( array $columns ): array
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
@@ -1485,11 +1489,11 @@ class Terms extends gEditorial\Module
 				] );
 
 				$html.= Core\HTML::tag( 'a', [
-					'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', '-modal' ] ),
+					'class' => Core\Link::buttonClass( TRUE, [ 'button-secondary', '-modal' ] ),
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
-					'class' => Core\HTML::buttonClass( TRUE, [ 'button-link-delete', '-remove' ] ),
+					'class' => Core\Link::buttonClass( TRUE, [ 'button-link-delete', '-remove' ] ),
 					'style' => empty( $meta ) ? 'display:none' : FALSE,
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) );
 
@@ -1767,12 +1771,12 @@ class Terms extends gEditorial\Module
 				$html.= '<input type="hidden" name="term-'.$field.'" value="" />';
 
 				$html.= Core\HTML::tag( 'button', [
-					'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', '-modal', '-quick' ] ),
+					'class' => Core\Link::buttonClass( TRUE, [ 'button-secondary', '-modal', '-quick' ] ),
 				], _x( 'Choose', 'Button', 'geditorial-terms' ) );
 
 				$html.= '&nbsp;'.Core\HTML::tag( 'a', [
 					'href'  => '',
-					'class' => Core\HTML::buttonClass( TRUE, [ 'button-link-delete', '-remove', '-quick' ] ),
+					'class' => Core\Link::buttonClass( TRUE, [ 'button-link-delete', '-remove', '-quick' ] ),
 					'style' => 'display:none',
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) ).'&nbsp;';
 

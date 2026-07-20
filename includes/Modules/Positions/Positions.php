@@ -170,7 +170,7 @@ class Positions extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_searchable_fields()
+	protected function subcontent_define_searchable_fields(): array
 	{
 		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
 			return [ 'fullname' => [ $human ] ];
@@ -178,7 +178,7 @@ class Positions extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_unique_fields()
+	protected function subcontent_define_unique_fields(): array
 	{
 		return [
 			'identity',
@@ -257,7 +257,7 @@ class Positions extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -342,7 +342,7 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	protected function rowaction_get_mainlink_for_post_checkprofile( $post )
+	protected function rowaction_get_mainlink_for_post_checkprofile( object $post ): string
 	{
 		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
 			return FALSE;
@@ -350,15 +350,15 @@ class Positions extends gEditorial\Module
 		return $this->rowaction_get_mainlink_for_post_subcontent( $post );
 	}
 
-	protected function tweaks_column_row_checkprofile( $post, $before, $after, $module )
+	protected function tweaks_column_row_checkprofile( object $post, string $before, string $after, string $module_name ): void
 	{
 		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
-			return FALSE;
+			return;
 
-		return $this->tweaks_column_row_subcontent( $post, $before, $after, $module );
+		$this->tweaks_column_row_subcontent( $post, $before, $after, $module_name );
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context = $context ?? 'supportedbox';
 
@@ -398,7 +398,7 @@ class Positions extends gEditorial\Module
 
 				$buttons[] = Core\HTML::tag( 'a', [
 					'href'  => $this->_get_mount_link( $object, $profile, $context ),
-					'class' => Core\HTML::buttonClass( FALSE, '-button-icon' ),
+					'class' => Core\Link::buttonClass( FALSE, '-button-icon' ),
 					'title' => _x( 'Click to Mount the Position Profile', 'Button Title', 'geditorial-positions' ),
 				], $label );
 			}
@@ -414,7 +414,7 @@ class Positions extends gEditorial\Module
 
 				$buttons[] = Core\HTML::tag( 'a', array_merge( [
 					'href'  => $this->_get_clear_link( $object, $profile, $context ),
-					'class' => Core\HTML::buttonClass( FALSE, [ '-button-icon', '-danger' ] ),
+					'class' => Core\Link::buttonClass( FALSE, [ '-button-icon', '-danger' ] ),
 					'title' => _x( 'Click to Clear the Position Profile', 'Button Title', 'geditorial-positions' ),
 				], gEditorial\Settings::getButtonConfirm() ), $label );
 			}
@@ -504,7 +504,7 @@ class Positions extends gEditorial\Module
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 
@@ -532,7 +532,7 @@ class Positions extends gEditorial\Module
 			}
 		}
 
-		$this->subcontent_do_enqueue_app( $args );
+		$this->subcontent_do_enqueue_app( $args ?? [] );
 	}
 
 	public function render_submenu_adminpage(): bool
@@ -546,9 +546,9 @@ class Positions extends gEditorial\Module
 		);
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->subcontent_restapi_register_routes();
+		return $this->subcontent_restapi_register_routes();
 	}
 
 	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
@@ -556,7 +556,7 @@ class Positions extends gEditorial\Module
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Position Data', 'Default Term: Audit', 'geditorial-positions' ),

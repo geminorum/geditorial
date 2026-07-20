@@ -9,6 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxSupported
 {
+	protected $base = NULL;
+	protected $key  = NULL;
+
 	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = NULL, $metabox_priority = NULL, $extra = [] )
 	{
 		$context  = $context ?? 'supportedbox';
@@ -112,7 +115,7 @@ trait MetaBoxSupported
 	}
 
 	// DEFAULT METHOD
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context = $context ?? 'supportedbox';
 		$screen  = $screen  ?? get_current_screen();

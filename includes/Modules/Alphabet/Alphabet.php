@@ -415,7 +415,7 @@ class Alphabet extends gEditorial\Module
 
 		foreach ( $alphabet as $key => $info )
 			$list[] = in_array( $info['letter'], $actives, TRUE )
-				? Core\HTML::scroll( $info['letter'], $info['key'], $info['name'] )
+				? Core\Link::scroll( $info['letter'], $info['key'], $info['name'] )
 				: Core\HTML::tag( 'span', $info['letter'] );
 
 		return '<li>'.implode( '</li><li>', $list ).'</li>';

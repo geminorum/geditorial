@@ -214,7 +214,7 @@ class Happening extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $this->constant( 'main_posttype' ) );
 	}
 
-	public function units_init()
+	public function units_init(): void
 	{
 		$this->add_posttype_fields_for( 'units', 'main_posttype' );
 	}
@@ -273,7 +273,7 @@ class Happening extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -309,7 +309,7 @@ class Happening extends gEditorial\Module
 		return $items;
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,

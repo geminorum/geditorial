@@ -46,7 +46,7 @@ class ProfileSummary extends gEditorial\Widget
 				echo '<li class="-row -email list-group-item">';
 					gEditorial\Info::renderIcon( 'email' );
 					echo ' ';
-					echo Core\HTML::mailto( $user->user_email );
+					echo Core\Link::mailto( $user->user_email );
 				echo '</li>';
 			}
 

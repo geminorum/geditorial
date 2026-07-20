@@ -17,12 +17,12 @@ class LateChores extends gEditorial\Service
 	}
 
 	// use this after disabling counts: `Services\LateChores::termCountCollect();`
-	public static function termCountCollect()
+	public static function termCountCollect(): bool
 	{
 		static $hooked = NULL;
 
 		if ( ! is_null( $hooked ) || WordPress\IsIt::cron() )
-			return $hooked;
+			return (bool) $hooked;
 
 		add_action( 'set_object_terms',
 			function ( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids ) {
@@ -40,10 +40,10 @@ class LateChores extends gEditorial\Service
 				self::termCountSchedule();
 			} );
 
-		$hooked = TRUE;
+		return $hooked = TRUE;
 	}
 
-	public static function termCount( $term_ids )
+	public static function termCount( int|array $term_ids ): void
 	{
 		global $gEditorialLateTerms;
 
@@ -53,25 +53,26 @@ class LateChores extends gEditorial\Service
 		$gEditorialLateTerms = array_merge( $gEditorialLateTerms, (array) $term_ids );
 	}
 
-	public static function termCountSchedule()
+	public static function termCountSchedule(): bool
 	{
 		global $gEditorialLateTerms;
 
-		if ( empty( $gEditorialLateTerms ) )
-			return;
+		$scheduled = FALSE;
 
-		$action = FALSE;
-		$list   = Core\Arraay::prepNumeral( $gEditorialLateTerms );
+		if ( empty( $gEditorialLateTerms ) )
+			return $scheduled;
+
+		$list = Core\Arraay::prepNumeral( $gEditorialLateTerms );
 
 		if ( ! empty( $list ) )
-			$action = self::scheduleSingle( static::TERMS_COUNT_ACTION, [ $list ] );
+			$scheduled = self::scheduleSingle( static::TERMS_COUNT_ACTION, [ $list ] );
 
 		$gEditorialLateTerms = []; // reset!
 
-		return $action;
+		return $scheduled;
 	}
 
-	public static function termCountDoCount( $term_ids )
+	public static function termCountDoCount( mixed $term_ids ): void
 	{
 		if ( empty( $term_ids ) )
 			return;
@@ -85,7 +86,7 @@ class LateChores extends gEditorial\Service
 	// @REF: https://actionscheduler.org/usage/
 	// @REF: https://github.com/woocommerce/woocommerce/wiki/WC_Queue---WooCommerce-Worker-Queue
 	// @SEE: https://rudrastyh.com/wordpress/wp_schedule_single_event.html
-	public static function scheduleSingle( $hook, $args, $group = NULL )
+	public static function scheduleSingle( string $hook, array $args, ?string $group = NULL ): bool|object
 	{
 		if ( function_exists( 'as_schedule_single_action' ) )
 			return as_schedule_single_action( time(), $hook, $args );
@@ -93,6 +94,11 @@ class LateChores extends gEditorial\Service
 		if ( function_exists( 'WC' ) )
 			return WC()->queue()->add( $hook, $args, $group ?? static::BASE );
 
-		return wp_schedule_single_event( time(), $hook, $args );
+		$scheduled = wp_schedule_single_event( time(), $hook, $args, TRUE );
+
+		if ( self::isError( $scheduled ) )
+			return gEditorial\Helper::log( sprintf( 'LATE CHORE CANNOT SCHEDULE EVENT: (%s): %s', $group, $hook ), static::BASE, 'WARNING', $args );
+
+		return $scheduled;
 	}
 }

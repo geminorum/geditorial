@@ -349,7 +349,7 @@ class Modulation extends gEditorial\Service
 			'type'  => 'submit',
 			'value' => _x( 'Enable', 'Service: Modulation: Button', 'geditorial-admin' ),
 			'style' => $enabled ? 'display:none' : FALSE,
-			'class' => Core\HTML::buttonClass( TRUE, [ 'button-primary', 'hide-if-no-js' ] ),
+			'class' => Core\Link::buttonClass( TRUE, [ 'button-primary', 'hide-if-no-js' ] ),
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'enable',
@@ -360,7 +360,7 @@ class Modulation extends gEditorial\Service
 			'type'  => 'submit',
 			'value' => _x( 'Disable', 'Service: Modulation: Button', 'geditorial-admin' ),
 			'style' => $enabled ? FALSE : 'display:none',
-			'class' => Core\HTML::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-danger' ] ),
+			'class' => Core\Link::buttonClass( TRUE, [ 'button-secondary', 'hide-if-no-js', '-danger' ] ),
 			'data'  => [
 				'module' => $module->name,
 				'do'     => 'disable',
@@ -368,7 +368,7 @@ class Modulation extends gEditorial\Service
 		] );
 
 		echo Core\HTML::tag( 'span', [
-			'class' => Core\HTML::buttonClass( TRUE, [ '-danger', 'hide-if-js' ] ),
+			'class' => Core\Link::buttonClass( TRUE, [ '-danger', 'hide-if-js' ] ),
 		], _x( 'You have to enable Javascript!', 'Service: Modulation: Notice', 'geditorial-admin' ) );
 	}
 
@@ -381,7 +381,7 @@ class Modulation extends gEditorial\Service
 			echo Core\HTML::tag( 'a', [
 				'href'  => gEditorial\Settings::getURLbyContext( 'tools', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'class' => Core\Link::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',
@@ -393,7 +393,7 @@ class Modulation extends gEditorial\Service
 			echo Core\HTML::tag( 'a', [
 				'href'  => gEditorial\Settings::getURLbyContext( 'reports', TRUE, [ 'sub' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'class' => Core\Link::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',
@@ -404,7 +404,7 @@ class Modulation extends gEditorial\Service
 			echo Core\HTML::tag( 'a', [
 				'href'  => gEditorial\Settings::getURLbyContext( 'settings', TRUE, [ 'module' => $module->name ] ),
 				'style' => $enabled ? FALSE : 'display:none',
-				'class' => Core\HTML::buttonClass( TRUE, 'button-primary' ),
+				'class' => Core\Link::buttonClass( TRUE, 'button-primary' ),
 				'data'  => [
 					'module' => $module->name,
 					'do'     => 'configure',

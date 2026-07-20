@@ -264,7 +264,7 @@ class Dashboard extends gEditorial\Module
 			: $title;
 	}
 
-	public function the_content( $content )
+	public function the_content( string $content ): string
 	{
 		$html = $before = $after = '';
 

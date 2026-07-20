@@ -77,13 +77,15 @@ class Revisions extends gEditorial\Module
 		$this->filter( 'wp_revisions_to_keep', 2, 12 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+			return FALSE;
 
 		if ( $this->get_setting( 'revision_summary', FALSE ) )
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 100 );
+
+		return TRUE;
 	}
 
 	/**
@@ -92,7 +94,7 @@ class Revisions extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -153,7 +155,7 @@ class Revisions extends gEditorial\Module
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $purged ) ) );
 	}
 
-	public function tweaks_column_attr( $post, $before, $after )
+	public function tweaks_column_attr( object $post, string $before, string $after ): void
 	{
 		if ( wp_revisions_enabled( $post ) ) {
 
@@ -260,7 +262,7 @@ class Revisions extends gEditorial\Module
 				get_edit_post_link( $revision->ID ),
 				Core\HTML::getDashicon( 'backup' ),
 				_x( 'Browse', 'Title Attr', 'geditorial-revisions' ),
-				implode( ' ', Core\HTML::buttonClass() ), // No need for `.-button-icon`
+				implode( ' ', Core\Link::buttonClass() ), // No need for `.-button-icon`
 			] );
 
 			// NOTE: `.-text` will hide if meta-box is on the side
@@ -269,7 +271,7 @@ class Revisions extends gEditorial\Module
 				$revision->post_parent,
 				Core\HTML::getDashicon( 'trash' ),
 				_x( 'Delete', 'Title Attr', 'geditorial-revisions' ),
-				implode( ' ', Core\HTML::buttonClass( TRUE, '-delete' ) ), // No need for `.-button-icon`
+				implode( ' ', Core\Link::buttonClass( TRUE, '-delete' ) ), // No need for `.-button-icon`
 			] );
 
 		} else {

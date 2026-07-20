@@ -69,7 +69,7 @@ class Switcher extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $this->in_setting_posttypes( $screen->post_type, 'bulk_from' ) ) {

@@ -276,7 +276,7 @@ class StaticCovers extends gEditorial\Module
 		$this->filter_module( 'importer', 'template_for_image', 2, 9 );
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
 		register_rest_field(
 			$this->posttypes(),
@@ -285,12 +285,16 @@ class StaticCovers extends gEditorial\Module
 				'get_callback' => [ $this, 'rest_field_callback' ],
 			]
 		);
+
+		return TRUE;
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
 			$this->filter_module( 'tweaks', 'column_thumb', 3, 9 );
+
+		return TRUE;
 	}
 
 	/**
@@ -299,7 +303,7 @@ class StaticCovers extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
 
@@ -346,22 +350,22 @@ class StaticCovers extends gEditorial\Module
 		}
 	}
 
-	public function render_overview_adminpage()
+	public function render_overview_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'overview', 'update' );
+		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function render_secondary_adminpage()
+	public function render_secondary_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'secondary', 'update' );
+		return $this->render_default_mainpage( 'secondary', 'update' );
 	}
 
-	protected function render_mainpage_content( $sub, $uri, $context, $subs )
+	protected function render_mainpage_content( ?string $sub, ?string $uri, ?string $context, ?array $subs ): bool
 	{
-		$this->framepageviews__render_context_content( $context );
+		return (bool) $this->framepageviews__render_context_content( $context );
 	}
 
-	protected function framepageviews__prep_data_for_term( $data, $term, $context )
+	protected function framepageviews__prep_data_for_term( array $data, object $term, ?string $context ): array
 	{
 		foreach ( (array) $this->_get_taxonomy_images( $term ) as $image )
 			$data['covers'][] = [
@@ -373,7 +377,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_hooks_for_term( $data, $term, $context )
+	protected function framepageviews__prep_hooks_for_term( array $data, object $term, ?string $context ): array
 	{
 		return array_fill_keys( [
 			'after-actions',
@@ -446,7 +450,7 @@ class StaticCovers extends gEditorial\Module
 		return $html;
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context = $context ?? 'supportedbox';
 		$screen  = $screen  ?? get_current_screen();

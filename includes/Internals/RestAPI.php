@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait RestAPI
 {
 
-	protected function restapi_get_namespace()
+	protected function restapi_get_namespace(): string
 	{
 		return sprintf( '%s/%s',
 			$this->constant( 'restapi_namespace', $this->classs() ),
@@ -18,7 +18,7 @@ trait RestAPI
 		);
 	}
 
-	protected function restapi_get_route()
+	protected function restapi_get_route(): string
 	{
 		$route = sprintf( '/%s', $this->restapi_get_namespace() );
 
@@ -31,7 +31,7 @@ trait RestAPI
 
 	// FIXME: add extra args
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
-	protected function restapi_register_route( $route, $methods = 'GET', $suffix = '', $extra = [] )
+	protected function restapi_register_route( string $route, string|array $methods = 'GET', string $suffix = '', array $extra = [] ): bool
 	{
 		$args = [];
 		$hook = Core\Text::sanitizeHook( $route );
@@ -114,9 +114,9 @@ trait RestAPI
 		);
 	}
 
-	// 'Authorization: Basic '. base64_encode("user:password")
+	// `'Authorization: Basic '. base64_encode("user:password")`
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/routes-and-endpoints/#permissions-callback
-	public function restapi_default_permission_callback( $request )
+	public function restapi_default_permission_callback( object $request ): bool|object
 	{
 		if ( self::const( 'GEDITORIAL_DISABLE_AUTH' ) )
 			return TRUE;

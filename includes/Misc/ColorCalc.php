@@ -801,7 +801,7 @@ class ColorCalc extends Core\Base
 			}
 		}
 
-		$this->hue        = round( $hue );
+		$this->hue        = round( $hue ?? 0 );
 		$this->saturation = round( $saturation * 100 );
 		$this->lightness  = round( $lightness * 100 );
 	}

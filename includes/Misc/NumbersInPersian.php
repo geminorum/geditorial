@@ -92,7 +92,7 @@ class NumbersInPersian extends Core\Base
 		'سیم' => 'سی‌ام',
 	];
 
-	public function number_format( $number, $precision = 0, $decimals_separator = '.', $thousands_separator = ',' )
+	public function number_format( mixed $number, int $precision = 0, string $decimals_separator = '.', string $thousands_separator = ',' ): string
 	{
 		$number    = explode( '.', str_replace( ' ', '', $number ) );
 		$number[0] = str_split( strrev( $number[0] ), 3 );
@@ -109,10 +109,10 @@ class NumbersInPersian extends Core\Base
 		return implode( $decimals_separator, $number );
 	}
 
-	protected function groupToWords( $group )
+	protected function groupToWords( $group ): false|array
 	{
-		$d3 = floor( $group / 100 );
-		$d2 = floor( ( $group - $d3 * 100 ) / 10 );
+		$d3 = (int) floor( $group / 100 );
+		$d2 = (int) floor( ( $group - $d3 * 100 ) / 10 );
 		$d1 = $group - $d3 * 100 - $d2 * 10;
 
 		$array = [];
@@ -143,7 +143,7 @@ class NumbersInPersian extends Core\Base
 		return count( $array ) ? $array : FALSE;
 	}
 
-	public function number_to_words( $number, $and_with_zwnj = FALSE )
+	public function number_to_words( mixed $number, bool $and_with_zwnj = FALSE ): string
 	{
 		if ( 0 === $number || 0.0 === $number || '0' === $number || empty( $number ) )
 			return $this->misc['zero'];

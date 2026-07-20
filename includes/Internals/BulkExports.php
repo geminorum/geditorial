@@ -14,7 +14,7 @@ trait BulkExports
 		$html = '';
 
 		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args )
-			$html.= Core\HTML::button(
+			$html.= Core\Link::button(
 				sprintf(
 					/* translators: `%1$s`: icon markup, `%2$s`: export type title */
 					_x( '%1$s Export: %2$s', 'Internal: Exports: Button Label', 'geditorial-admin' ),

@@ -169,7 +169,7 @@ class Users extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$groups     = $this->get_setting( 'user_groups' );
 		$types      = $this->get_setting( 'user_types' );
@@ -279,7 +279,7 @@ class Users extends gEditorial\Module
 			$wp_query->set( 'author', $GLOBALS['user_ID'] );
 	}
 
-	public function manage_users_columns( $columns )
+	public function manage_users_columns( array $columns ): array
 	{
 		$new = [];
 
@@ -304,7 +304,7 @@ class Users extends gEditorial\Module
 		return $new;
 	}
 
-	public function manage_users_custom_column( $output, $column, $user_id )
+	public function manage_users_custom_column( string $output, string $column, int $user_id ): string
 	{
 		if ( $this->classs( 'counts' ) != $column )
 			return $output;
@@ -336,7 +336,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: use `gEditorial\Helper::renderUserTermsEditRow()`
-	public function tweaks_column_user( $user, $before, $after )
+	public function tweaks_column_user( object $user, string $before, string $after ): void
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 
@@ -585,7 +585,7 @@ class Users extends gEditorial\Module
 		if ( $user->user_email ) {
 			printf( $before, '-email' );
 				echo $this->get_column_icon( FALSE, 'email', _x( 'Email', 'Row Icon Title', 'geditorial-users' ) );
-				echo Core\HTML::mailto( $user->user_email );
+				echo Core\Link::mailto( $user->user_email );
 			echo $after;
 		}
 

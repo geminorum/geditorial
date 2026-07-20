@@ -11,14 +11,14 @@ trait QuickPosts
 {
 	use AdminPage;
 
-	public function render_newpost_adminpage()
+	public function render_newpost_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'newpost', 'insert' );
+		return $this->render_default_mainpage( 'newpost', 'insert' );
 	}
 
 	// TODO: link to edit post-type screen
 	// TODO: get default post-type/status somehow!
-	protected function render_newpost_content()
+	protected function render_newpost_content(): bool
 	{
 		$posttype = self::req( 'type', 'post' );
 		$status   = self::req( 'status', 'draft' );
@@ -174,7 +174,7 @@ trait QuickPosts
 
 			echo Core\HTML::tag( 'a', [
 				'href'  => '#',
-				'class' => Core\HTML::buttonClass( FALSE, [ '-save-draft', 'disabled' ] ),
+				'class' => Core\Link::buttonClass( FALSE, [ '-save-draft', 'disabled' ] ),
 				'data'  => [
 					'target'   => $target,
 					'type'     => $posttype,
@@ -236,11 +236,13 @@ trait QuickPosts
 			'jquery',
 			'wp-api-request',
 		], '_newpost' );
+
+		return TRUE;
 	}
 
 	// DEFAULT FILTER
 	// USAGE: `$this->action_self( 'newpost_aftercontent', 4, 99, 'menu_order' );`
-	public function newpost_aftercontent_menu_order( $posttype, $post, $target, $linked )
+	public function newpost_aftercontent_menu_order( string $posttype, object $post, $target, $linked ): void
 	{
 		Core\HTML::inputHidden( 'menu_order', WordPress\PostType::getLastMenuOrder( $posttype, $post->ID ) + 1 );
 	}
@@ -281,7 +283,7 @@ trait QuickPosts
 		$html = Core\HTML::tag( 'a', [
 			'href'  => $link,
 			'id'    => $this->classs( 'newpostbutton', $context ),
-			'class' => Core\HTML::buttonClass( FALSE, [ '-button-full', '-button-icon', 'thickbox' ] ),
+			'class' => Core\Link::buttonClass( FALSE, [ '-button-full', '-button-icon', 'thickbox' ] ),
 			'title' => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
 		], sprintf( $text, Services\Icons::get( $this->module->icon ), $name ) );
 

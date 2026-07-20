@@ -115,12 +115,12 @@ class Drafts extends gEditorial\Module
 			$this->filter( 'the_posts', 2 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 90 );
 
-		$this->coreadmin__hook_tweaks_column_attr( $posttype, 90 );
+		return TRUE;
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Drafts extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return;
@@ -331,7 +331,7 @@ class Drafts extends gEditorial\Module
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-private' ] ),
+			'class' => Core\Link::buttonClass( TRUE, [ '-action', '-after-private' ] ),
 			'style' => $public ? 'display:none;' : FALSE,
 			'data'  => [
 				'action' => 'public',
@@ -342,7 +342,7 @@ class Drafts extends gEditorial\Module
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',
-			'class' => Core\HTML::buttonClass( TRUE, [ '-action', '-after-public' ] ),
+			'class' => Core\Link::buttonClass( TRUE, [ '-action', '-after-public' ] ),
 			'style' => $public ? FALSE : 'display:none;',
 			'data'  => [
 				'action' => 'private',
@@ -451,7 +451,7 @@ class Drafts extends gEditorial\Module
 		return $actions;
 	}
 
-	public function tweaks_column_attr( $post, $before, $after )
+	public function tweaks_column_attr( object $post, string $before, string $after ): void
 	{
 		if ( ! $this->_is_preview_status( $post ) )
 			return;

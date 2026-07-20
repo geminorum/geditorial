@@ -59,9 +59,9 @@ class Tabloid extends gEditorial\Module
 		$this->_hook_submenu_adminpage( 'overview' );
 	}
 
-	public function load_overview_adminpage( $context = 'overview' )
+	public function load_overview_adminpage(): void
 	{
-		$this->_load_submenu_adminpage( $context );
+		$this->_load_submenu_adminpage( 'overview' );
 		$this->_make_linked_viewable();
 	}
 
@@ -70,10 +70,12 @@ class Tabloid extends gEditorial\Module
 		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $this->role_can( 'overview' ) && ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) )
 			$this->rowactions__hook_mainlink_for_post( $posttype, 8, FALSE, TRUE );
+
+		return TRUE;
 	}
 
 	/**
@@ -82,7 +84,7 @@ class Tabloid extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( in_array( $screen->base, [ 'post', 'edit' ], TRUE ) ) {
 
@@ -289,7 +291,7 @@ class Tabloid extends gEditorial\Module
 		], '' );
 	}
 
-	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	protected function framepageviews__config_script_for_post( object $post, ?string $context, array $data ): array
 	{
 		return [
 			'printtitle'  => WordPress\Post::title( $post ),
@@ -304,7 +306,7 @@ class Tabloid extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_data_for_term( $data, $term, $context )
+	protected function framepageviews__prep_data_for_term( array $data, object $term, ?string $context ): array
 	{
 		$data['___sides'] = array_fill_keys( [
 			'term',
@@ -316,7 +318,7 @@ class Tabloid extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_hooks_for_term( $data, $term, $context )
+	protected function framepageviews__prep_hooks_for_term( array $data, object $term, ?string $context ): array
 	{
 		return array_fill_keys( [
 			'after-actions',
@@ -328,7 +330,7 @@ class Tabloid extends gEditorial\Module
 		], '' );
 	}
 
-	private function framepageviews__config_script_for_term( $term, $context, $data )
+	private function framepageviews__config_script_for_term( object $term, ?string $context, array $data ): array
 	{
 		return  [
 			'printtitle'  => WordPress\Term::title( $term ),

@@ -244,7 +244,7 @@ class Papered extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'primary_taxonomy', $screen ) ) {
 
@@ -890,7 +890,7 @@ class Papered extends gEditorial\Module
 		gEditorial\MetaBox::fieldEditorBox( $value, $this->classs( 'lonebox', $field ), $title, $atts );
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context  = $context ?? 'printingbox';
 		$posttype = $this->constant( 'primary_posttype' );

@@ -231,7 +231,7 @@ class WasBorn extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -976,7 +976,7 @@ class WasBorn extends gEditorial\Module
 		$this->actions( 'pointers_post_after', $post, $dob, $cal, $before, $after );
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_dob_data' ) => _x( 'Empty Date-of-Birth', 'Default Term: Audit', 'geditorial-was-born' ),
@@ -1119,7 +1119,7 @@ class WasBorn extends gEditorial\Module
 			], TRUE );
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

@@ -112,7 +112,7 @@ class WcConnected extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -288,7 +288,7 @@ class WcConnected extends gEditorial\Module
 		if ( ! $product = wc_get_product( $product ) )
 			return FALSE;
 
-		return WordPress\PostType::hasPosts( $this->posttypes(), NULL, [
+		return WordPress\PostType::hasPosts( $this->posttypes(), FALSE, [
 			'meta_query' => [ [
 				'key'     => $this->constant( 'metakey_connected' ),
 				'value'   => $product->get_id(),

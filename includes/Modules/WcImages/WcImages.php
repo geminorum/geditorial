@@ -66,7 +66,7 @@ class WcImages extends gEditorial\Module
 								break;
 						}
 
-						$product->set_image_id( $attachment_id );
+						$product->set_image_id( $attachment_id ?? '' );
 						$product->set_gallery_image_ids( $gallery );
 
 						if ( $product->save() )

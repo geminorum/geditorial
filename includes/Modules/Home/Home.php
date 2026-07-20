@@ -21,7 +21,7 @@ class Home extends gEditorial\Module
 		];
 	}
 
-	protected function settings_help_tabs( $context = 'settings' )
+	protected function settings_help_tabs( ?string $context = NULL ): array
 	{
 		return array_merge(
 			ModuleInfo::getHelpTabs( $context ),
@@ -127,9 +127,9 @@ class Home extends gEditorial\Module
 				$this->filter( 'search_404_posttypes', 1, 10, FALSE, 'gnetwork' );
 				$this->filter( 'content_rows_posttypes', 2, 9, FALSE, 'gtheme' );
 
-				$this->filter( 'widget_posts_args' );
-				$this->filter( 'widget_archives_args' );
-				$this->filter( 'widget_comments_args' );
+				$this->filter_if_not_set( 'widget_posts_args',    [ 'post_type' => $posttypes ] );
+				$this->filter_if_not_set( 'widget_archives_args', [ 'post_type' => $posttypes ] );
+				$this->filter_if_not_set( 'widget_comments_args', [ 'post_type' => $posttypes ] );
 			}
 		}
 
@@ -148,7 +148,7 @@ class Home extends gEditorial\Module
 		}
 	}
 
-	private function setup_featured( $posttypes = [], $tax = 'post_tag' )
+	private function setup_featured( array $posttypes = [], string $tax = 'post_tag' ): mixed
 	{
 		if ( ! $this->get_setting( 'featured_term', '' ) )
 			return FALSE;
@@ -188,7 +188,7 @@ class Home extends gEditorial\Module
 	}
 
 	// @SEE: https://developer.wordpress.org/reference/hooks/posts_where/#comment-3491
-	public function pre_get_posts( &$wp_query )
+	public function pre_get_posts( object &$wp_query ): void
 	{
 		if ( ! $wp_query->is_main_query()
 			|| ( $wp_query->is_feed() && ! $this->get_setting( 'posttypes_feed', FALSE ) ) )
@@ -233,7 +233,7 @@ class Home extends gEditorial\Module
 		}
 	}
 
-	public function get_featured_posts()
+	public function get_featured_posts(): array
 	{
 		$ids = $this->get_featured_post_ids();
 
@@ -247,7 +247,7 @@ class Home extends gEditorial\Module
 		] );
 	}
 
-	public function get_featured_post_ids()
+	public function get_featured_post_ids(): array
 	{
 		$featured_ids = get_transient( 'featured_content_ids' );
 
@@ -281,12 +281,12 @@ class Home extends gEditorial\Module
 		return apply_filters( 'featured_content_post_ids', $featured_ids );
 	}
 
-	public function delete_transient()
+	public function delete_transient(): void
 	{
 		delete_transient( 'featured_content_ids' );
 	}
 
-	public function delete_featured_taxonomy( $term, $tt_id, $deleted_term, $object_ids )
+	public function delete_featured_taxonomy( mixed $term, $tt_id, mixed $deleted_term, $object_ids ): void
 	{
 		if ( is_wp_error( $deleted_term ) )
 			return;
@@ -295,7 +295,7 @@ class Home extends gEditorial\Module
 			$this->update_option( 'featured_term', '' );
 	}
 
-	public function hide_featured_term( $terms, $taxonomies, $args )
+	public function hide_featured_term( array $terms, array $taxonomies, array $args ): array
 	{
 		if ( empty( $terms )
 			|| 'all' != $args['fields']
@@ -311,7 +311,7 @@ class Home extends gEditorial\Module
 		return $terms;
 	}
 
-	public function hide_the_featured_term( $terms, $id, $taxonomy )
+	public function hide_the_featured_term( array $terms, int $id, string $taxonomy ): array
 	{
 		if ( empty( $terms )
 			|| $taxonomy != $this->constant( 'featured_taxonomy' ) )
@@ -326,7 +326,7 @@ class Home extends gEditorial\Module
 		return $terms;
 	}
 
-	public function dashboard_recent_posts_query_args( $query_args )
+	public function dashboard_recent_posts_query_args( array $query_args ): array
 	{
 		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
 			$query_args['post_type'] = $this->posttypes();
@@ -334,7 +334,7 @@ class Home extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function dashboard_recent_drafts_query_args( $query_args )
+	public function dashboard_recent_drafts_query_args( array $query_args ): array
 	{
 		if ( isset( $query_args['post_type'] ) && 'post' == $query_args['post_type'] )
 			$query_args['post_type'] = $this->posttypes();
@@ -342,42 +342,18 @@ class Home extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function calendar_posttypes( $posttypes )
+	public function calendar_posttypes( string|array $posttypes ): array
 	{
-		return $posttypes === [ 'post' ] ? $this->posttypes() : $posttypes;
+		return $posttypes === [ 'post' ] ? $this->posttypes() : (array) $posttypes;
 	}
 
-	public function search_404_posttypes( $posttypes )
+	public function search_404_posttypes( string|array $posttypes ): array
 	{
 		return $this->posttypes();
 	}
 
-	public function content_rows_posttypes( $posttypes, $context )
+	public function content_rows_posttypes( string|array $posttypes, ?string $context ): array
 	{
-		return 'latest' == $context ? $this->posttypes() : $posttypes;
-	}
-
-	public function widget_archives_args( $args )
-	{
-		if ( ! isset( $args['post_type'] ) )
-			$args['post_type'] = $this->posttypes();
-
-		return $args;
-	}
-
-	public function widget_posts_args( $args )
-	{
-		if ( ! isset( $args['post_type'] ) )
-			$args['post_type'] = $this->posttypes();
-
-		return $args;
-	}
-
-	public function widget_comments_args( $args )
-	{
-		if ( ! isset( $args['post_type'] ) )
-			$args['post_type'] = $this->posttypes();
-
-		return $args;
+		return 'latest' == $context ? $this->posttypes() : (array) $posttypes;
 	}
 }

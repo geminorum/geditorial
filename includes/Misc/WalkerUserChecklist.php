@@ -62,7 +62,7 @@ class WalkerUserChecklist extends \Walker
 				.( get_option( 'show_avatars' ) ? get_avatar( $user->ID, 32 ) : '' )
 				.' <span class="-name">'.Core\HTML::escape( $user->display_name ).'</span>'
 				.' <code class="-login">&#8206;@'.$user->user_login.'&#8207;</code>'
-				.'<br /><span class="-email code">'.Core\HTML::mailto( $user->user_email ).'</span></label>';
+				.'<br /><span class="-email code">'.Core\Link::mailto( $user->user_email ).'</span></label>';
 		}
 	}
 

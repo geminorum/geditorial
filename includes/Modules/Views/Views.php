@@ -63,9 +63,9 @@ class Views extends gEditorial\Module
 		];
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		$this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
+		return $this->_hook_ajax( NULL, NULL, 'do_ajax_public' );
 	}
 
 	public function adminbar_init( array &$nodes, string $parent ): void

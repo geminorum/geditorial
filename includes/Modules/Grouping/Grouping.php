@@ -95,16 +95,18 @@ class Grouping extends gEditorial\Module
 		$this->init_custom_taxonomies();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( ! $taxonomy = $this->is_inline_save_taxonomy() )
-			return;
+			return FALSE;
 
 		if ( ! $customs = $this->get_custom_taxonomies() )
-			return;
+			return FALSE;
 
 		if ( array_key_exists( $taxonomy, $customs ) )
 			$this->_edit_tags_screen( $taxonomy );
+
+		return TRUE;
 	}
 
 	public function admin_menu(): void
@@ -134,7 +136,7 @@ class Grouping extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( ! $customs = $this->get_custom_taxonomies() )
 			return;
@@ -161,7 +163,7 @@ class Grouping extends gEditorial\Module
 		}
 	}
 
-	private function _edit_tags_screen( $taxonomy )
+	private function _edit_tags_screen( string $taxonomy ): true
 	{
 		add_filter( 'manage_edit-'.$taxonomy.'_columns',
 			function ( $columns ) use ( $taxonomy ) {
@@ -181,9 +183,11 @@ class Grouping extends gEditorial\Module
 
 				echo gEditorial\Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
 			}, 10, 3 );
+
+		return TRUE;
 	}
 
-	public function tweaks_column_user( $user, $before, $after )
+	public function tweaks_column_user( object $user, string $before, string $after ): void
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
 

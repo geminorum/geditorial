@@ -21,7 +21,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Re-attach Un-Parented', 'Card Title', 'geditorial-attachments' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-attachments' ),
 					$label
@@ -40,7 +40,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Empty Meta-data', 'Card Title', 'geditorial-attachments' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-attachments' ),
 					$label
@@ -59,7 +59,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Deletion by MIME', 'Card Title', 'geditorial-attachments' ) );
 
 			foreach ( $mimetypes as $mimetype )
-				echo Core\HTML::button(
+				echo Core\Link::button(
 					WordPress\Media::getExtension( $mimetype, $extensions ) ?: $mimetype,
 					add_query_arg( [
 						'action' => static::ACTION_DELETION_BY_MIME,

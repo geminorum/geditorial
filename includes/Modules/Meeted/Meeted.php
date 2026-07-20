@@ -295,7 +295,7 @@ class Meeted extends gEditorial\Module
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
 	}
 
-	public function units_init()
+	public function units_init(): void
 	{
 		$this->add_posttype_fields_for( 'units', 'primary_posttype' );
 	}
@@ -391,12 +391,14 @@ class Meeted extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
+
+		return TRUE;
 	}
 
 	/**
@@ -405,7 +407,7 @@ class Meeted extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -564,7 +566,7 @@ class Meeted extends gEditorial\Module
 		$this->posttypefields_connect_paired_by( 'meeting_code', $data['meeting_code'], $post );
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,

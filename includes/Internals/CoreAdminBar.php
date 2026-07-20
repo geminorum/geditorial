@@ -18,7 +18,7 @@ trait CoreAdminBar
 	 * @param bool $icon_only
 	 * @return string
 	 */
-	protected function adminbar__get_css_class( $extra = [], $icon_only = FALSE )
+	protected function adminbar__get_css_class( string|array $extra = [], bool $icon_only = FALSE ): string
 	{
 		return Core\HTML::prepClass(
 			$this->classs_base( 'adminbar', 'node', $icon_only ? 'icononly' : '' ),
@@ -34,7 +34,7 @@ trait CoreAdminBar
 	 * @param bool $check_for_mobile
 	 * @return bool
 	 */
-	protected function adminbar__check_general( $context = NULL, $check_for_mobile = NULL )
+	protected function adminbar__check_general( false|string|null $context = NULL, ?bool $check_for_mobile = NULL ): bool
 	{
 		if ( is_admin() )
 			return FALSE;
@@ -65,7 +65,7 @@ trait CoreAdminBar
 	 * @param bool $check_for_mobile
 	 * @return false|object
 	 */
-	protected function adminbar__check_singular_post( $posttypes = NULL, $capability = NULL, $check_for_mobile = NULL )
+	protected function adminbar__check_singular_post( string|array|null $posttypes = NULL, ?string $capability = NULL, ?bool $check_for_mobile = NULL ): false|object
 	{
 		if ( is_admin() )
 			return FALSE;
@@ -93,11 +93,11 @@ trait CoreAdminBar
 	 * NOTE: used before menu texts with `.blavatar`
 	 * NOTE: for icon only use `Services\Icons::adminBarMarkup()`
 	 *
-	 * @param false|string|array $icon
+	 * @param mixed $icon
 	 * @param string|array $extra
 	 * @return string
 	 */
-	protected function adminbar__get_icon( $icon = NULL, $extra = [] )
+	protected function adminbar__get_icon( mixed $icon = NULL, string|array $extra = [] ): string
 	{
 		if ( FALSE === $icon )
 			return '';
@@ -115,7 +115,7 @@ trait CoreAdminBar
 	 * @param false|string $spinner
 	 * @return string
 	 */
-	protected function adminbar__get_spinner( $spinner = NULL )
+	protected function adminbar__get_spinner( false|string|null $spinner = NULL ): string
 	{
 		if ( FALSE === $spinner )
 			return '';
@@ -136,8 +136,14 @@ trait CoreAdminBar
 	 * @param false|string|array $icon
 	 * @return array
 	 */
-	protected function adminbar__get_posttype_primary_taxonomy_nodes( $posttype, $taxonomy, $parent = NULL, $link_to_edit = FALSE, $icon = NULL )
-	{
+	protected function adminbar__get_posttype_primary_taxonomy_nodes(
+		string $posttype,
+		string $taxonomy,
+		?string $parent = NULL,
+		bool $link_to_edit = FALSE,
+		mixed $icon = NULL,
+	): array {
+
 		$nodes    = [];
 		$posttype = $this->constant( $posttype, $posttype );  // NOTE: can be array of post-types
 		$taxonomy = $this->constant( $taxonomy, $taxonomy );  // NOTE: must be single taxonomy

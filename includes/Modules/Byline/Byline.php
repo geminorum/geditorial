@@ -264,7 +264,7 @@ class Byline extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'users' === $screen->base ) {
 
@@ -310,7 +310,7 @@ class Byline extends gEditorial\Module
 			$this->_hook_menu_taxonomy( 'main_taxonomy', 'users.php' );
 	}
 
-	public function load_overview_adminpage()
+	public function load_overview_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 
@@ -458,7 +458,7 @@ class Byline extends gEditorial\Module
 		return array_fill_keys( array_map( 'absint', $user_ids ), 0 );
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		echo Core\HTML::tag( 'div', [
 			'id'    => $this->classs( 'rendered' ),
@@ -630,9 +630,9 @@ class Byline extends gEditorial\Module
 		], $context, $posttype );
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->_register_rest_fields();
+		return $this->_register_rest_fields();
 	}
 
 	private function _register_rest_fields()
@@ -649,6 +649,8 @@ class Byline extends gEditorial\Module
 				}
 			]
 		);
+
+		return TRUE;
 	}
 
 	// @FILTER: `geditorial_restapi_terms_rendered_html`

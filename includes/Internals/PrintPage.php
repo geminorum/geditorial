@@ -10,12 +10,12 @@ use geminorum\gEditorial\WordPress;
 trait PrintPage
 {
 	// USAGE: `$print = $this->_hook_submenu_adminpage( 'printpage' );`
-	public function render_printpage_adminpage()
+	public function render_printpage_adminpage(): bool
 	{
-		$this->render_content_printpage();
+		return $this->render_content_printpage();
 	}
 
-	public function load_printpage_adminpage()
+	public function load_printpage_adminpage(): void
 	{
 		$this->action_self( 'printpage_render_head', 1 );
 		$this->action_self( 'printpage_render_contents', 1 );
@@ -29,7 +29,7 @@ trait PrintPage
 	public function printpage_render_head( $profile = FALSE ) {}
 	public function printpage_render_contents( $profile = FALSE ) {}
 
-	public function render_content_printpage()
+	public function render_content_printpage(): bool
 	{
 		$profile = WordPress\Post::get( self::req( 'profile', FALSE ) );
 

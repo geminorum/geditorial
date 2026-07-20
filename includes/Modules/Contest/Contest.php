@@ -273,11 +273,12 @@ class Contest extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( $posttype = $this->is_inline_save_posttype( 'contest_posttype' ) ) {
+		if ( $posttype = $this->is_inline_save_posttype( 'contest_posttype' ) )
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
-		}
+
+		return TRUE;
 	}
 
 	/**
@@ -286,7 +287,7 @@ class Contest extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'section_taxonomy' )
@@ -449,7 +450,7 @@ class Contest extends gEditorial\Module
 		);
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,
@@ -564,7 +565,7 @@ class Contest extends gEditorial\Module
 		return $terms;
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_abandoned_apply' ) => _x( 'Apply Abandoned', 'Default Term: Audit', 'geditorial-contest' ),

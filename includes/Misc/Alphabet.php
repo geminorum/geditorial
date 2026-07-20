@@ -13,7 +13,7 @@ class Alphabet extends Core\Base
 	 * @param bool $site
 	 * @return string
 	 */
-	public static function locale( $site = FALSE )
+	public static function locale( bool $site = FALSE ): string
 	{
 		return $site ? get_locale() : determine_locale();
 	}
@@ -25,7 +25,7 @@ class Alphabet extends Core\Base
 	 * @param string $locale
 	 * @return array
 	 */
-	public static function get( $locale = NULL )
+	public static function get( ?string $locale = NULL ): array
 	{
 		switch ( $locale ?? self::locale() ) {
 
@@ -120,8 +120,14 @@ class Alphabet extends Core\Base
 	 * @param string $locale
 	 * @return array
 	 */
-	public static function sort( $array, $orderby = NULL, $order = 'ASC', $preserve_keys = FALSE, $locale = NULL )
-	{
+	public static function sort(
+		array $array,
+		string|array|null $orderby = NULL,
+		string $order = 'ASC',
+		bool $preserve_keys = FALSE,
+		?string $locale = NULL,
+	): array {
+
 		if ( is_null( $orderby ) )
 			return self::sortSimple( $array, $order, $preserve_keys, $locale );
 
@@ -174,13 +180,19 @@ class Alphabet extends Core\Base
 	}
 
 	// @old: `Core\L10n::sortAlphabetSimple()`
-	public static function sortSimple( $array, $order = 'ASC', $preserve_keys = FALSE, $locale = NULL )
-	{
+	public static function sortSimple(
+		array $array,
+		string $order = 'ASC',
+		bool $preserve_keys = FALSE,
+		?string $locale = NULL,
+	): array {
+
 		$alphabet = self::get( $locale );
 		$letters  = Core\Arraay::column( $alphabet, 'letter' );
 		$sort     = $preserve_keys ? 'uasort' : 'usort';
 
-		$sort( $array, static function ( $a, $b ) use ( $order, $alphabet, $letters ) {
+		$sort( $array, static function ( $a, $b )
+			use ( $order, $alphabet, $letters ) {
 
 			$results = 'DESC' === strtoupper( $order ) ? [ 1, -1 ] : [ -1, 1 ];
 
@@ -203,7 +215,7 @@ class Alphabet extends Core\Base
 		return $array;
 	}
 
-	public static function firstLetter( $string, $alphabet, $alternative = FALSE )
+	public static function firstLetter( string $string, array $alphabet, bool $alternative = FALSE ): string
 	{
 		$first = strtoupper( Core\Text::subStr( $string, 0, 1 ) );
 
@@ -226,7 +238,7 @@ class Alphabet extends Core\Base
 	}
 
 	// @old: `Core\L10n::getAlphabetKeysByNumber()`
-	public static function getKeysByNumber( $slice = FALSE, $locale = NULL )
+	public static function getKeysByNumber( bool $slice = FALSE, ?string $locale = NULL ): array|string
 	{
 		switch ( $locale ?? self::locale() ) {
 

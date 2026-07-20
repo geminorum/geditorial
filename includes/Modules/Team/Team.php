@@ -170,7 +170,7 @@ class Team extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'member_posttype', $screen ) ) {
 
@@ -191,8 +191,8 @@ class Team extends gEditorial\Module
 	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
 	{
 		switch ( $field_key ) {
-			case 'email_gravatar': return Core\HTML::mailto( $raw ?: $value );
-			case 'email_contact' : return Core\HTML::mailto( $raw ?: $value );
+			case 'email_gravatar': return Core\Link::mailto( $raw ?: $value );
+			case 'email_contact' : return Core\Link::mailto( $raw ?: $value );
 			case 'personal_site' : return Core\HTML::link( $raw ?: $value );
 		}
 

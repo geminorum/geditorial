@@ -640,6 +640,8 @@ trait SubContents
 				},
 			],
 		] );
+
+		return TRUE;
 	}
 
 	protected function subcontent_do_provide_summary( $comment, $context = NULL )
@@ -892,7 +894,7 @@ trait SubContents
 		], $args['asset'] );
 	}
 
-	protected function subcontent_do_enqueue_asset_js( $screen )
+	protected function subcontent_do_enqueue_asset_js( object $screen ): void
 	{
 		if ( ! $this->role_can( 'assign' ) )
 			return;
@@ -906,7 +908,7 @@ trait SubContents
 		// ] );
 	}
 
-	protected function subcontent_render_metabox_data_grid( $post, $context = NULL )
+	protected function subcontent_render_metabox_data_grid( mixed $post, ?string $context = NULL ): void
 	{
 		echo $this->wrap( $this->subcontent_do_main_shortcode( [
 			'id'      => $post,
@@ -915,7 +917,7 @@ trait SubContents
 		], $this->get_notice_for_empty( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
 	}
 
-	protected function tweaks_column_row_subcontent( $post, $before, $after, $module )
+	protected function tweaks_column_row_subcontent( object $post, string $before, string $after, string $module_name ): void
 	{
 		$thrift = $this->is_thrift_mode();
 
@@ -941,7 +943,7 @@ trait SubContents
 		echo $after;
 	}
 
-	protected function rowaction_get_mainlink_for_post_subcontent( $post )
+	protected function rowaction_get_mainlink_for_post_subcontent( object $post ): false|string
 	{
 		if ( ! $this->role_can_post( $post, [ 'reports', 'assign' ] ) )
 			return FALSE;
@@ -952,7 +954,7 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_do_render_supportedbox_content( $post, $context )
+	protected function subcontent_do_render_supportedbox_content( object $post, string $context ): void
 	{
 		$this->subcontent_render_metabox_data_grid( $post, $context );
 
@@ -970,7 +972,7 @@ trait SubContents
 			echo $this->get_notice_for_noaccess();
 	}
 
-	public function audit_auto_audit_save_post_subcontent( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post_subcontent( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->in_setting_posttypes( $post->post_type, 'subcontent' ) )
 			return $terms;

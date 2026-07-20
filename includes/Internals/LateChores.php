@@ -15,9 +15,9 @@ trait LateChores
 	 * NOTE: must be called on `init` e.g. always!
 	 *
 	 * @param string|array $posttypes
-	 * @return false|string
+	 * @return bool
 	 */
-	protected function latechores__init_post_aftercare( $posttypes )
+	protected function latechores__init_post_aftercare( string|array $posttypes ): bool
 	{
 		if ( empty( $posttypes ) || ! method_exists( $this, 'latechores_post_aftercare' ) )
 			return FALSE;
@@ -35,21 +35,20 @@ trait LateChores
 			add_action( $collectors[$posttype], [ $this, 'latechores__collector_post_aftercare' ], 20, 3 );
 		}
 
-		add_action( 'shutdown', function () use ( $action, $collectors ) {
+		return add_action( 'shutdown',
+			function () use ( $action, $collectors ) {
 
-			if ( ! empty( $this->process_disabled['aftercare'] ) )
-				return;
+				if ( ! empty( $this->process_disabled['aftercare'] ) )
+					return;
 
-			$this->latechores__schedule_post_aftercare( $action, $collectors );
-		} );
-
-		return $action;
+				$this->latechores__schedule_post_aftercare( $action, $collectors );
+			} );
 	}
 
 	// EXAMPLE CALLBACK
-	// `protected function latechores_post_aftercare( $post ) {}`
+	// `protected function latechores_post_aftercare( mixed $post ): bool|array {}`
 
-	public function latechores__collector_post_aftercare( $post_id, $post, $update )
+	public function latechores__collector_post_aftercare( int $post_id, object $post, bool $update ): void
 	{
 		if ( ! empty( $this->process_disabled['aftercare'] ) )
 			return;
@@ -58,10 +57,10 @@ trait LateChores
 			$this->latechores__collect_post_aftercare( $post_id );
 	}
 
-	public function latechores__do_post_aftercare( $list, $collectors )
+	public function latechores__do_post_aftercare( array $list, string $collectors ): void
 	{
 		foreach ( (array) $collectors as $collector )
-			remove_action( $collector, [ $this, 'latechores__collector_post_aftercare' ], 20, 3 );
+			remove_action( $collector, [ $this, 'latechores__collector_post_aftercare' ], 20 );
 
 		if ( empty( $list ) )
 			return;
@@ -75,7 +74,7 @@ trait LateChores
 		$this->log( 'NOTICE', sprintf( 'after-care process of posts (%s): %s', $count, implode( ',', $list ) ), $list );
 	}
 
-	private function latechores__do_post_aftercare_single( $post )
+	private function latechores__do_post_aftercare_single( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -94,7 +93,7 @@ trait LateChores
 		return TRUE;
 	}
 
-	public function latechores__collect_post_aftercare( $post_ids )
+	public function latechores__collect_post_aftercare( int|array $post_ids ): void
 	{
 		global $gEditorialLateChores;
 
@@ -113,25 +112,26 @@ trait LateChores
 		);
 	}
 
-	private function latechores__schedule_post_aftercare( $action, $collectors = [] )
+	private function latechores__schedule_post_aftercare( string $action, array $collectors = [] ): bool
 	{
 		global $gEditorialLateChores;
 
-		if ( empty( $gEditorialLateChores[$this->key]['post_aftercare'] ) )
-			return;
+		$scheduled = FALSE;
 
-		$ref  = FALSE;
+		if ( empty( $gEditorialLateChores[$this->key]['post_aftercare'] ) )
+			return $scheduled;
+
 		$list = Core\Arraay::prepNumeral( $gEditorialLateChores[$this->key]['post_aftercare'] );
 
 		if ( ! empty( $list ) )
-			$ref = Services\LateChores::scheduleSingle( $action, [ $list, $collectors ], $this->classs() );
+			$scheduled = Services\LateChores::scheduleSingle( $action, [ $list, $collectors ], $this->classs() );
 
 		$gEditorialLateChores[$this->key]['post_aftercare'] = []; // reset!
 
-		return $ref;
+		return $scheduled;
 	}
 
-	protected function latechores__hook_admin_bulkactions( $screen, $cap_check = NULL )
+	protected function latechores__hook_admin_bulkactions( object $screen, bool|string|null $cap_check = NULL ): bool
 	{
 		if ( ! $this->get_setting( 'admin_bulkactions' ) )
 			return FALSE;
@@ -148,9 +148,11 @@ trait LateChores
 		add_filter( 'bulk_actions-'.$screen->id, [ $this, 'latechores_bulk_actions' ] );
 		add_filter( 'handle_bulk_actions-'.$screen->id, [ $this, 'latechores_handle_bulk_actions' ], 20, 3 );
 		add_action( 'admin_notices', [ $this, 'latechores_admin_notices' ] );
+
+		return TRUE;
 	}
 
-	public function latechores_bulk_actions( $actions )
+	public function latechores_bulk_actions( array $actions ): array
 	{
 		return array_merge( $actions, [
 			$this->hook( 'aftercare' ) => sprintf(
@@ -161,7 +163,7 @@ trait LateChores
 		] );
 	}
 
-	public function latechores_handle_bulk_actions( $redirect_to, $doaction, $post_ids )
+	public function latechores_handle_bulk_actions( string $redirect_to, string $doaction, array $post_ids ): string
 	{
 		if ( $this->hook( 'aftercare' ) != $doaction )
 			return $redirect_to;
@@ -176,7 +178,7 @@ trait LateChores
 		return add_query_arg( $this->hook( 'aftercaremsg' ), $saved, $redirect_to );
 	}
 
-	public function latechores_admin_notices()
+	public function latechores_admin_notices(): void
 	{
 		if ( ! $saved = self::req( $this->hook( 'aftercaremsg' ) ) )
 			return;

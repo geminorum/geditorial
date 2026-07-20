@@ -23,21 +23,21 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		echo self::toolboxCardOpen( _x( 'Full-name Operations', 'Card Title', 'geditorial-personage' ) );
 
-			echo Core\HTML::button(
+			echo Core\Link::button(
 				_x( 'From Full-name', 'Button', 'geditorial-personage' ),
 				add_query_arg( [
 					'action' => static::ACTION_FROM_FULLNAME,
 				] )
 			);
 
-			echo Core\HTML::button(
+			echo Core\Link::button(
 				_x( 'Parse Full-name', 'Button', 'geditorial-personage' ),
 				add_query_arg( [
 					'action' => static::ACTION_PARSE_FULLNAME,
 				] )
 			);
 
-			echo Core\HTML::button(
+			echo Core\Link::button(
 				_x( 'Delete Full-name', 'Button', 'geditorial-personage' ),
 				add_query_arg( [
 					'action' => static::ACTION_DELETE_FULLNAME,

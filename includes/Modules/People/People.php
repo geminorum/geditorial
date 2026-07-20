@@ -212,7 +212,7 @@ class People extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -298,7 +298,7 @@ class People extends gEditorial\Module
 			return;
 
 		// Avoids the infinite loop!
-		remove_action( 'pre_get_terms', [ $this, 'pre_get_terms_admin' ], 99, 1 );
+		remove_action( 'pre_get_terms', [ $this, 'pre_get_terms_admin' ], 99 );
 
 		$side  = new \WP_Term_Query();
 		$terms = $side->query( [

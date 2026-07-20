@@ -179,7 +179,7 @@ trait ObjectsToObjects
 		return TRUE;
 	}
 
-	protected function column_row_o2o_to_posttype( $constant, $post, $before, $after )
+	protected function column_row_o2o_to_posttype( string $constant, object $post, string $before, string $after ): void
 	{
 		static $icons = [];
 
@@ -237,7 +237,7 @@ trait ObjectsToObjects
 		echo $after;
 	}
 
-	protected function column_row_o2o_from_posttype( $constant, $post, $before, $after )
+	protected function column_row_o2o_from_posttype( string $constant, object $post, string $before, string $after ): void
 	{
 		static $icons = [];
 

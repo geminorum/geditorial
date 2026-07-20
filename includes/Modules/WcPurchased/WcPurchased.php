@@ -53,7 +53,7 @@ class WcPurchased extends gEditorial\Module
 
 	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'reports', 'update' );
+		return $this->render_default_mainpage( 'reports', 'update' );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class WcPurchased extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {
 
@@ -123,7 +123,7 @@ class WcPurchased extends gEditorial\Module
 		echo $this->wrap_open( '-header' );
 
 			echo Core\HTML::tag( 'a', [
-				'class' => Core\HTML::buttonClass(),
+				'class' => Core\Link::buttonClass(),
 				'href'  => $this->get_adminpage_url( TRUE, [
 					'post'     => $product_id,
 					'noheader' => 1,

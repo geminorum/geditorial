@@ -19,7 +19,7 @@ trait CoreAdmin
 	 * @param string $order
 	 * @return bool
 	 */
-	protected function coreadmin__hook_admin_ordering( $posttype, $orderby = 'menu_order', $order = 'DESC' )
+	protected function coreadmin__hook_admin_ordering( string $posttype, string $orderby = 'menu_order', string $order = 'DESC' ): bool
 	{
 		if ( ! $this->get_setting( 'admin_ordering', TRUE ) )
 			return FALSE;
@@ -49,7 +49,7 @@ trait CoreAdmin
 	 * @param array $list
 	 * @return bool
 	 */
-	protected function coreadmin__unset_columns( $posttype, $list = NULL )
+	protected function coreadmin__unset_columns( string $posttype, ?array $list = NULL ): bool
 	{
 		$list = $list ?? [
 			'author',
@@ -68,7 +68,7 @@ trait CoreAdmin
 	 * @param array $list
 	 * @return bool
 	 */
-	protected function coreadmin__unset_views( $posttype, $list = NULL )
+	protected function coreadmin__unset_views( string $posttype, ?array $list = NULL ): bool
 	{
 		$list = $list ?? [
 			'mine',
@@ -80,7 +80,7 @@ trait CoreAdmin
 			} );
 	}
 
-	protected function coreadmin__hook_tweaks_column_row( $posttype, $priority = 20, $callback_suffix = FALSE )
+	protected function coreadmin__hook_tweaks_column_row( string $posttype, ?int $priority = NULL, string $callback_suffix = '' ): bool
 	{
 		$method = self::und( 'tweaks', 'column_row', $callback_suffix );
 
@@ -90,10 +90,10 @@ trait CoreAdmin
 		return add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
 			function ( $post, $before, $after, $module ) use ( $method ) {
 				call_user_func_array( [ $this, $method ], [ $post, $before, $after, $module ] );
-			}, $priority, 4 );
+			}, $priority ?? 20, 4 );
 	}
 
-	protected function coreadmin__hook_tweaks_column_attr( $posttype, $priority = 20, $callback_suffix = FALSE )
+	protected function coreadmin__hook_tweaks_column_attr( string $posttype, ?int $priority = NULL, string $callback_suffix = '' ): bool
 	{
 		$method = self::und( 'tweaks', 'column_attr', $callback_suffix );
 
@@ -103,13 +103,13 @@ trait CoreAdmin
 		return add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
 			function ( $post, $before, $after ) use ( $method ) {
 				call_user_func_array( [ $this, $method ], [ $post, $before, $after ] );
-			}, $priority, 3 );
+			}, $priority ?? 20, 3 );
 	}
 
 	// NOTE: on target post-type screen only
-	protected function coreadmin__hook_taxonomy_display_states( $constants, $setting = 'admin_displaystates', $default_setting = FALSE, $priority = 20 )
+	protected function coreadmin__hook_taxonomy_display_states( array|string $constants, true|string|null $setting = NULL, bool $default_setting = FALSE, ?int $priority = NULL ): bool
 	{
-		if ( TRUE !== $setting && ! $this->get_setting( $setting, $default_setting ) )
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'admin_displaystates', $default_setting ) )
 			return FALSE;
 
 		return add_filter( 'display_post_states',
@@ -152,10 +152,10 @@ trait CoreAdmin
 
 				return $states;
 
-			}, $priority, 2 );
+			}, $priority ?? 20, 2 );
 	}
 
-	protected function coreadmin__ajax_taxonomy_multiple_supported_column( $constant )
+	protected function coreadmin__ajax_taxonomy_multiple_supported_column( string $constant ): bool
 	{
 		if ( ! $constant || ! WordPress\IsIt::ajax() )
 			return FALSE;
@@ -166,7 +166,7 @@ trait CoreAdmin
 		return $this->coreadmin__do_taxonomy_multiple_supported_column( $taxonomy );
 	}
 
-	protected function coreadmin__hook_taxonomy_multiple_supported_column( $screen )
+	protected function coreadmin__hook_taxonomy_multiple_supported_column( object $screen ): bool
 	{
 		if ( 'edit-tags' !== $screen->base )
 			return FALSE;
@@ -180,7 +180,7 @@ trait CoreAdmin
 		return $this->coreadmin__do_taxonomy_multiple_supported_column( $object );
 	}
 
-	protected function coreadmin__do_taxonomy_multiple_supported_column( $taxonomy )
+	protected function coreadmin__do_taxonomy_multiple_supported_column( string|object $taxonomy ): bool
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
@@ -237,7 +237,7 @@ trait CoreAdmin
 		return TRUE;
 	}
 
-	protected function coreadmn__hook_posttype_default_status( $constant, $status )
+	protected function coreadmn__hook_posttype_default_status( string $constant, string $status ): bool
 	{
 		if ( ! $posttype = $this->constant( $constant, $constant ) )
 			return FALSE;

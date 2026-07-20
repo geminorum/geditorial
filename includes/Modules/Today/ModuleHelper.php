@@ -692,7 +692,7 @@ class ModuleHelper extends gEditorial\Helper
 		$today   = $today ?? TRUE;     // WTF: we should compare the day with!
 
 		if ( $today )
-			$buttons['today'] = Core\HTML::button(
+			$buttons['today'] = Core\Link::button(
 				_x( 'Today', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( [ 'cal' => $the_day['cal'] ], 'today' ),
 				_x( 'Today in this Calendar', 'Title Attr', 'geditorial-today' )
@@ -702,13 +702,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			// yearly: `/{cal}/year/{year}`
 
-			$buttons['next'] = Core\HTML::button(
+			$buttons['next'] = Core\Link::button(
 				_x( 'Next Year', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 year' ), $the_day['cal'] ), 'yearly' ),
 				_x( 'The Next Year in this Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['previous'] = Core\HTML::button(
+			$buttons['previous'] = Core\Link::button(
 				_x( 'Previous Year', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 year' ), $the_day['cal'] ), 'yearly' ),
 				_x( 'The Previous Year in this Calendar', 'Title Attr', 'geditorial-today' )
@@ -718,13 +718,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			// the-month: `/{cal}/{month}`
 
-			$buttons['next'] = Core\HTML::button(
+			$buttons['next'] = Core\Link::button(
 				_x( 'Next Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 month' ), $the_day['cal'] ), 'themonth' ),
 				_x( 'The Next Month in this Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['previous'] = Core\HTML::button(
+			$buttons['previous'] = Core\Link::button(
 				_x( 'Previous Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 month' ), $the_day['cal'] ), 'themonth' ),
 				_x( 'The Previous Month in this Calendar', 'Title Attr', 'geditorial-today' )
@@ -734,13 +734,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			// monthly: `/{cal}/year/{year}/{month}`
 
-			$buttons['next'] = Core\HTML::button(
+			$buttons['next'] = Core\Link::button(
 				_x( 'Next Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 month' ), $the_day['cal'] ), 'monthly' ),
 				_x( 'The Next Month in this Year', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['previous'] = Core\HTML::button(
+			$buttons['previous'] = Core\Link::button(
 				_x( 'Previous Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 month' ), $the_day['cal'] ), 'monthly' ),
 				_x( 'The Previous Month in this Year', 'Title Attr', 'geditorial-today' )
@@ -748,13 +748,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			$current = gEditorial\Datetime::getTheDay( $datetime, $the_day['cal'] );
 
-			$buttons['month'] = Core\HTML::button(
+			$buttons['month'] = Core\Link::button(
 				_x( 'This Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'themonth' ),
 				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['year'] = Core\HTML::button(
+			$buttons['year'] = Core\Link::button(
 				_x( 'This Year', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'yearly' ),
 				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
@@ -764,13 +764,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			// annual: `/{cal}/{month}/{day}`
 
-			$buttons['next'] = Core\HTML::button(
+			$buttons['next'] = Core\Link::button(
 				_x( 'Next Day', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 day' ), $the_day['cal'] ), 'annual' ),
 				_x( 'The Next Day in this Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['previous'] = Core\HTML::button(
+			$buttons['previous'] = Core\Link::button(
 				_x( 'Previous Day', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 day' ), $the_day['cal'] ), 'annual' ),
 				_x( 'The Previous Day in this Calendar', 'Title Attr', 'geditorial-today' )
@@ -778,13 +778,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			$current = gEditorial\Datetime::getTheDay( $datetime, $the_day['cal'] );
 
-			$buttons['month'] = Core\HTML::button(
+			$buttons['month'] = Core\Link::button(
 				_x( 'This Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'themonth' ),
 				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['year'] = Core\HTML::button(
+			$buttons['year'] = Core\Link::button(
 				_x( 'This Year', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'yearly' ),
 				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
@@ -794,13 +794,13 @@ class ModuleHelper extends gEditorial\Helper
 
 			// full-date: `/{cal}/{month}/{day}/{year}`
 
-			$buttons['next'] = Core\HTML::button(
+			$buttons['next'] = Core\Link::button(
 				_x( 'Next Day', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '+1 day' ), $the_day['cal'] ), 'full' ),
 				_x( 'The Next Day', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['previous'] = Core\HTML::button(
+			$buttons['previous'] = Core\Link::button(
 				_x( 'Previous Day', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( gEditorial\Datetime::getTheDay( $datetime->modify( '-1 day' ), $the_day['cal'] ), 'full' ),
 				_x( 'The Previous Day', 'Title Attr', 'geditorial-today' )
@@ -808,19 +808,19 @@ class ModuleHelper extends gEditorial\Helper
 
 			$current = gEditorial\Datetime::getTheDay( $datetime, $the_day['cal'] );
 
-			$buttons['day'] = Core\HTML::button(
+			$buttons['day'] = Core\Link::button(
 				_x( 'Anniversaries', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'annual' ),
 				_x( 'This Day in the Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['month'] = Core\HTML::button(
+			$buttons['month'] = Core\Link::button(
 				_x( 'This Month', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'monthly' ),
 				_x( 'This Month in the Calendar', 'Title Attr', 'geditorial-today' )
 			);
 
-			$buttons['year'] = Core\HTML::button(
+			$buttons['year'] = Core\Link::button(
 				_x( 'This Year', 'Button', 'geditorial-today' ),
 				self::getTheDayLink( $current, 'yearly' ),
 				_x( 'This Year in the Calendar', 'Title Attr', 'geditorial-today' )
@@ -852,7 +852,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( $admin )
 				$title = Services\Icons::posttypeMarkup( $object ).' '.$title;
 
-			$buttons[] = Core\HTML::button( $title,
+			$buttons[] = Core\Link::button( $title,
 				WordPress\PostType::newLink( $object->name, $the_day ),
 				sprintf(
 					/* translators: `%s`: singular name */
@@ -871,7 +871,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		if ( WordPress\PostType::can( $object, 'create_posts' ) ) {
 
-			$buttons[] = Core\HTML::button(
+			$buttons[] = Core\Link::button(
 				Core\Text::glued( [ $icon, $object->labels->add_new_item ] ),
 				WordPress\PostType::newLink( $object->name, $the_day ),
 				_x( 'New the Day!', 'Title Attr', 'geditorial-today' ),
@@ -884,7 +884,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( ! $edit = WordPress\Post::edit( $post ) )
 				continue;
 
-			$buttons[] = Core\HTML::button(
+			$buttons[] = Core\Link::button(
 				Core\Text::glued( [ $icon, $object->labels->edit_item ] ),
 				$edit,
 				_x( 'Edit the Day!', 'Title Attr', 'geditorial-today' ),

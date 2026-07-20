@@ -25,7 +25,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Compare Identity to Birth Certificate', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'Compare Identity for %s', 'Button', 'geditorial-iranian' ),
 					$label
@@ -135,7 +135,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Location by Identity', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
@@ -247,7 +247,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'Country Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
@@ -271,7 +271,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'City Summary', 'Card Title', 'geditorial-iranian' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-iranian' ),
 					$label
@@ -329,7 +329,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			echo self::toolboxAfterOpen( '', TRUE );
 
-				echo Core\HTML::button(
+				echo Core\Link::button(
 					_x( 'Next Batch', 'Button', 'geditorial-iranian' ),
 					add_query_arg( [
 						'action' => static::ACTION_CITY_SUMMARY,

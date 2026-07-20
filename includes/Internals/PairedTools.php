@@ -75,7 +75,7 @@ trait PairedTools
 			echo gEditorial\Settings::toolboxCardOpen( _x( 'Force Assign Paired Parents', 'Internal: PairedTools: Card Title', 'geditorial-admin' ) );
 
 				foreach ( $supported_list ?? $this->list_posttypes() as $posttype => $label )
-					echo Core\HTML::button( sprintf(
+					echo Core\Link::button( sprintf(
 						/* translators: `%s`: post-type label */
 						_x( 'On %s', 'Button', 'geditorial-admin' ),
 						$label

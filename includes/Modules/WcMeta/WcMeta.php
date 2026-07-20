@@ -109,7 +109,7 @@ class WcMeta extends gEditorial\Module
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 	}
 
-	// public function units_init()
+	// public function units_init(): void
 	// {
 	// 	$this->add_posttype_fields_for( 'units', 'primary_posttype' );
 	// }

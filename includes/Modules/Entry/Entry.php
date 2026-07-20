@@ -162,12 +162,14 @@ class Entry extends gEditorial\Module
 		$this->contentreplace__autolink_terms( 'category_taxonomy' );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) )
 			$this->_edit_screen( $posttype );
 
 		$this->filter_module( 'markdown', 'linking', 8, 8 );
+
+		return TRUE;
 	}
 
 	public function register_shortcode_ui()
@@ -192,7 +194,7 @@ class Entry extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'dashboard' === $screen->base ) {
 
@@ -220,7 +222,7 @@ class Entry extends gEditorial\Module
 		}
 	}
 
-	private function _edit_screen( $posttype )
+	private function _edit_screen( string $posttype ): void
 	{
 		if ( ! $this->get_setting( 'admin_columns' ) )
 			return;
@@ -228,7 +230,7 @@ class Entry extends gEditorial\Module
 		add_filter( 'manage_'.$posttype.'_posts_columns', [ $this, 'manage_posts_columns' ] );
 	}
 
-	public function dashboard_recent_drafts_query_args( $query_args )
+	public function dashboard_recent_drafts_query_args( array $query_args ): array
 	{
 		if ( 'post' == $query_args['post_type'] )
 			$query_args['post_type'] = [ 'post', $this->constant( 'main_posttype' ) ];
@@ -239,7 +241,7 @@ class Entry extends gEditorial\Module
 		return $query_args;
 	}
 
-	public function manage_posts_columns( $columns )
+	public function manage_posts_columns( array $columns ): array
 	{
 		return Core\Arraay::insert( $columns, [
 			'taxonomy-'.$this->constant( 'category_taxonomy' ) => $this->get_column_title_taxonomy( 'category_taxonomy', $this->constant( 'main_posttype' ) ),

@@ -20,7 +20,7 @@ trait FramePageViews
 	 * @param string $linked
 	 * @return string
 	 */
-	protected function framepageviews__render_context_content( $context, $target = NULL, $linked = NULL )
+	protected function framepageviews__render_context_content( ?string $context, ?string $target = NULL, ?string $linked = NULL ): string
 	{
 		$target = $target ?? 'post';    // the default target
 		$linked = $linked ?? 'linked';  // the request key
@@ -52,9 +52,9 @@ trait FramePageViews
 	 *
 	 * @param object $post
 	 * @param string $context
-	 * @return array
+	 * @return bool
 	 */
-	private function framepageviews__render_view_for_post( $post, $context )
+	private function framepageviews__render_view_for_post( object $post, ?string $context ): bool
 	{
 		if ( ! $view = $this->viewengine__view_by_post( $post, $context ) )
 			return gEditorial\Info::renderSomethingIsWrong();
@@ -78,10 +78,10 @@ trait FramePageViews
 			Core\HTML::tableSide( $data );
 		echo '</div>';
 
-		return $data;
+		return TRUE;
 	}
 
-	private function framepageviews__get_view_data_for_post( $post, $context )
+	private function framepageviews__get_view_data_for_post( object $post, ?string $context ): array
 	{
 		$data = [];
 
@@ -125,7 +125,7 @@ trait FramePageViews
 		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
-	private function framepageviews__cleanup_view_data_for_post( $data, $post, $context )
+	private function framepageviews__cleanup_view_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		unset( $data['guid'] );
 		unset( $data['class_list'] );
@@ -155,14 +155,14 @@ trait FramePageViews
 		return $this->filters( 'cleanup_view_data_for_post', $data, $post, $context );
 	}
 
-	private function framepageviews__print_script_for_post( $post, $context, $data )
+	private function framepageviews__print_script_for_post( object $post, ?string $context, array $data ): string
 	{
 		Core\HTML::wrapScript( sprintf( 'window.%s = %s;',
 			$this->hook( 'data' ),
 			wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		) );
 
-		$this->enqueue_asset_js( [
+		return $this->enqueue_asset_js( [
 			'_nonce'  => wp_create_nonce( $this->hook( $post->ID ) ),
 			'post_id' => $post->ID,
 			'config'  => $this->framepageviews__config_script_for_post( $post, $context, $data ),
@@ -172,7 +172,7 @@ trait FramePageViews
 		] );
 	}
 
-	protected function framepageviews__config_script_for_post( $post, $context, $data )
+	protected function framepageviews__config_script_for_post( object $post, ?string $context, array $data ): array
 	{
 		return [];
 	}
@@ -182,9 +182,9 @@ trait FramePageViews
 	 *
 	 * @param object $term
 	 * @param string $context
-	 * @return array
+	 * @return bool
 	 */
-	private function framepageviews__render_view_for_term( $term, $context )
+	private function framepageviews__render_view_for_term( object $term, ?string $context ): bool
 	{
 		if ( ! $view = $this->viewengine__view_by_term( $term, $context ) )
 			return gEditorial\Info::renderSomethingIsWrong();
@@ -208,10 +208,10 @@ trait FramePageViews
 			Core\HTML::tableSide( $data );
 		echo '</div>';
 
-		return $data;
+		return TRUE;
 	}
 
-	private function framepageviews__get_view_data_for_term( $term, $context )
+	private function framepageviews__get_view_data_for_term( object $term, ?string $context ): array
 	{
 		$data = [];
 
@@ -247,7 +247,7 @@ trait FramePageViews
 		return $this->filters( 'view_data_for_term', $data, $term, $context );
 	}
 
-	private function framepageviews__cleanup_view_data_for_term( $data, $term, $context )
+	private function framepageviews__cleanup_view_data_for_term( array $data, object $term, ?string $context ): array
 	{
 		unset( $data['meta_rendered'] );
 		unset( $data['units_rendered'] );
@@ -274,14 +274,14 @@ trait FramePageViews
 		return $this->filters( 'cleanup_view_data_for_term', $data, $term, $context );
 	}
 
-	private function framepageviews__print_script_for_term( $term, $context, $data )
+	private function framepageviews__print_script_for_term( object $term, ?string $context, array $data ): string
 	{
 		Core\HTML::wrapScript( sprintf( 'window.%s = %s;',
 			$this->hook( 'data' ),
 			wp_json_encode( $data, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		) );
 
-		$this->enqueue_asset_js( [
+		return $this->enqueue_asset_js( [
 			'_nonce'  => wp_create_nonce( $this->hook( $term->term_id ) ),
 			'term_id' => $term->term_id,
 			'config'  => $this->framepageviews__config_script_for_term( $term, $context, $data ),
@@ -291,7 +291,7 @@ trait FramePageViews
 		] );
 	}
 
-	private function framepageviews__config_script_for_term( $term, $context, $data )
+	private function framepageviews__config_script_for_term( object $term, ?string $context, array $data ): array
 	{
 		return  [];
 	}

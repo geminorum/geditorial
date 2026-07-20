@@ -226,8 +226,8 @@ class Schedule extends gEditorial\Module
 		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'date_cal',   'data-field' => 'cal',   'value' => $calendar ] );
 		$html.= Core\HTML::tag( 'input', [ 'type' => 'hidden', 'name' => 'nonce',      'data-field' => 'nonce', 'value' => wp_create_nonce( $this->hook( 'add-new' ) ) ] );
 
-		$actions = Core\HTML::button( Core\HTML::getDashicon( 'yes' ),    '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ),   TRUE, [ 'action' => 'save'  ] );
-		$actions.= Core\HTML::button( Core\HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
+		$actions = Core\Link::button( Core\HTML::getDashicon( 'yes' ),    '#', _x( 'Save', 'Title Attr', 'geditorial-schedule' ),   TRUE, [ 'action' => 'save'  ] );
+		$actions.= Core\Link::button( Core\HTML::getDashicon( 'no-alt' ), '#', _x( 'Cancel', 'Title Attr', 'geditorial-schedule' ), TRUE, [ 'action' => 'close' ] );
 
 		$html.= Core\HTML::wrap( $actions, '-actions' );
 

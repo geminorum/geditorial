@@ -37,7 +37,7 @@ class LineDiscovery extends gEditorial\Service
 
 	// TODO: support terms
 	// TODO: support users
-	public static function main_route_callback( $request )
+	public static function main_route_callback( object $request ): mixed
 	{
 		$queried = self::atts( [
 			'raw'      => [],
@@ -82,7 +82,7 @@ class LineDiscovery extends gEditorial\Service
 		return new \WP_REST_Response( $response, 200 );
 	}
 
-	private static function _get_bulk_posts( $queried )
+	private static function _get_bulk_posts( array $queried ): array|object
 	{
 		$data   = [];
 		$refkey = $queried['refkey'];

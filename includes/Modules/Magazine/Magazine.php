@@ -283,11 +283,13 @@ class Magazine extends gEditorial\Module
 		$this->_hook_paired_override_term_link();
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'primary_posttype' ) ) {
 			$this->pairedadmin__hook_tweaks_column_connected( $posttype );
 		}
+
+		return TRUE;
 	}
 
 	/**
@@ -296,7 +298,7 @@ class Magazine extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		$subterms = $this->get_setting( 'subterms_support' )
 			? $this->constant( 'primary_subterm' )
@@ -533,7 +535,7 @@ class Magazine extends gEditorial\Module
 		);
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,

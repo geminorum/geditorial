@@ -31,7 +31,7 @@ class ModuleSettings extends gEditorial\Settings
 		echo self::toolboxCardOpen( _x( 'From People Plugin', 'Card Title', 'geditorial-byline' ) );
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-byline' ),
 					$label
@@ -205,7 +205,7 @@ class ModuleSettings extends gEditorial\Settings
 			echo '<div class="-wrap -wrap-button-row">';
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-byline' ),
 					$label
@@ -413,7 +413,7 @@ class ModuleSettings extends gEditorial\Settings
 			echo '<div class="-wrap -wrap-button-row">';
 
 			foreach ( $posttypes as $posttype => $label )
-				echo Core\HTML::button( sprintf(
+				echo Core\Link::button( sprintf(
 					/* translators: `%s`: post-type label */
 					_x( 'On %s', 'Button', 'geditorial-byline' ),
 					$label

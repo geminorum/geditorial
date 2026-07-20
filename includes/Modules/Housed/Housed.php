@@ -214,7 +214,7 @@ class Housed extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_searchable_fields()
+	protected function subcontent_define_searchable_fields(): array
 	{
 		$posttypes = Core\Arraay::prepString( [
 			gEditorial()->constant( 'trained', 'primary_posttype' ),
@@ -273,7 +273,7 @@ class Housed extends gEditorial\Module
 		$this->filter_module( 'tabloid', 'post_summaries', 4, 40, 'subcontent' );
 	}
 
-	public function units_init()
+	public function units_init(): void
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'units' ), NULL, TRUE, 'units' );
 	}
@@ -284,7 +284,7 @@ class Housed extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -348,7 +348,7 @@ class Housed extends gEditorial\Module
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 		$this->subcontent_do_enqueue_app();
@@ -365,9 +365,9 @@ class Housed extends gEditorial\Module
 		);
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->subcontent_restapi_register_routes();
+		return $this->subcontent_restapi_register_routes();
 	}
 
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
@@ -382,7 +382,7 @@ class Housed extends gEditorial\Module
 			: $template;
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
@@ -392,7 +392,7 @@ class Housed extends gEditorial\Module
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Visiting Data', 'Default Term: Audit', 'geditorial-housed' ),

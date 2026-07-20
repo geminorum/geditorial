@@ -82,7 +82,7 @@ class DeadDrops extends gEditorial\Module
 		$this->rewrites__add_endpoint( 'main' );
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
 		$this->filter( 'wp_handle_sideload_prefilter', 1, 8 );
 	}
@@ -93,7 +93,7 @@ class DeadDrops extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -115,7 +115,7 @@ class DeadDrops extends gEditorial\Module
 
 	public function render_submenu_adminpage(): bool
 	{
-		$this->render_default_mainpage( 'signal', 'update' );
+		return $this->render_default_mainpage( 'signal', 'update' );
 	}
 
 	protected function render_signal_content()

@@ -247,7 +247,7 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 
@@ -257,11 +257,13 @@ class Today extends gEditorial\Module
 		} else if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) ) {
 
 			if ( ! $this->get_setting( 'admin_columns' ) )
-				return;
+				return FALSE;
 
 			$this->_edit_screen_supported( $posttype );
 			$this->_save_meta_supported( $posttype );
 		}
+
+		return TRUE;
 	}
 
 	public function admin_menu(): void
@@ -323,7 +325,7 @@ class Today extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'post' === $screen->base ) {
 
@@ -453,12 +455,12 @@ class Today extends gEditorial\Module
 		$this->_render_day_input( $object, $context ?? 'mainbox' );
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$this->_render_day_input( $object, $context ?? 'supportedbox' );
 	}
 
-	private function _render_day_input( $post, $context = NULL )
+	private function _render_day_input( object $post, ?string $context = NULL ): void
 	{
 		$calendars    = $this->list_calendars();
 		$default_type = $this->default_calendar();
@@ -503,16 +505,16 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function manage_posts_columns( $columns )
+	public function manage_posts_columns( array $columns ): array
 	{
 		return Core\Arraay::insert( $columns, [
 			'theday' => $this->get_column_title( 'theday', 'main_posttype' ),
 		], 'title', 'before' );
 	}
 
-	public function posts_custom_column( $column, $post_id )
+	public function posts_custom_column( string $column, int $post_id ): void
 	{
-		if ( 'theday' == $column ) {
+		if ( 'theday' === $column ) {
 
 			if ( $this->check_hidden_column( $column ) )
 				return;
@@ -545,7 +547,7 @@ class Today extends gEditorial\Module
 		$this->nonce_field( 'nobox' );
 	}
 
-	public function sortable_columns( $columns )
+	public function sortable_columns( array $columns ): array
 	{
 		return array_merge( $columns, [ 'theday' => 'theday' ] ); // FIXME: add var query
 	}
@@ -1491,7 +1493,7 @@ class Today extends gEditorial\Module
 		return $terms;
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_the_day' ) => _x( 'No day', 'Default Term: Audit', 'geditorial-today' ),

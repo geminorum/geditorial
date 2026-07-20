@@ -197,7 +197,7 @@ class Execution extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_searchable_fields()
+	protected function subcontent_define_searchable_fields(): array
 	{
 		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
 			return [ 'fullname' => [ $human ] ];
@@ -205,7 +205,7 @@ class Execution extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_unique_fields()
+	protected function subcontent_define_unique_fields(): array
 	{
 		return [
 			'identity',
@@ -277,7 +277,7 @@ class Execution extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -342,7 +342,7 @@ class Execution extends gEditorial\Module
 		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
 	}
 
-	public function load_submenu_adminpage()
+	public function load_submenu_adminpage(): void
 	{
 		$this->_load_submenu_adminpage( 'overview' );
 		$this->subcontent_do_enqueue_app();
@@ -359,9 +359,9 @@ class Execution extends gEditorial\Module
 		);
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->subcontent_restapi_register_routes();
+		return $this->subcontent_restapi_register_routes();
 	}
 
 	public function template_include( string $template ): string
@@ -371,7 +371,7 @@ class Execution extends gEditorial\Module
 			: $template;
 	}
 
-	protected function _render_supportedbox_content( $object, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
@@ -381,7 +381,7 @@ class Execution extends gEditorial\Module
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_subcontent_data' ) => _x( 'Empty Executives Data', 'Default Term: Audit', 'geditorial-execution' ),

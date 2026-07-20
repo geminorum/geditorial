@@ -202,7 +202,7 @@ class NationalLibrary extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( 'post' === $screen->base
 			&& $this->posttype_supported( $screen->post_type ) ) {
@@ -215,9 +215,9 @@ class NationalLibrary extends gEditorial\Module
 		}
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->restapi_register_route( 'query', 'get', '(?P<code>.+)' );
+		return $this->restapi_register_route( 'query', 'get', '(?P<code>.+)' );
 	}
 
 	public function restapi_query_get_arguments()
@@ -240,7 +240,7 @@ class NationalLibrary extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function restapi_query_get_callback( $request )
+	public function restapi_query_get_callback( object $request ): mixed
 	{
 		return rest_ensure_response(
 			$this->get_query_summary(

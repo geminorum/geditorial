@@ -235,7 +235,7 @@ class Identified extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -289,9 +289,9 @@ class Identified extends gEditorial\Module
 		}
 	}
 
-	public function setup_restapi()
+	public function setup_restapi(): bool
 	{
-		$this->restapi_register_route( 'query', 'get', '(?P<type>.+)/(?P<code>[a-z0-9 .\-]+)' );
+		return $this->restapi_register_route( 'query', 'get', '(?P<type>.+)/(?P<code>[a-z0-9 .\-]+)' );
 	}
 
 	public function restapi_query_get_arguments()
@@ -331,7 +331,7 @@ class Identified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function restapi_query_get_callback( $request )
+	public function restapi_query_get_callback( object $request ): mixed
 	{
 		$code = urldecode( $request['code'] );
 		$type = urldecode( $request['type'] );
@@ -696,7 +696,7 @@ class Identified extends gEditorial\Module
 		return $null;
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_identification' )     => _x( 'Empty Identification', 'Default Term: Audit', 'geditorial-identified' ),

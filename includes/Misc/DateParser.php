@@ -47,7 +47,7 @@ class DateParser extends Core\Base
 		'سپند'      => 12,
 	];
 
-	public static function parse( $input, $calendar = 'persian', $timezone = NULL )
+	public static function parse( mixed $input, string $calendar = 'persian', ?object $timezone = NULL )
 	{
 		if ( ! $input )
 			return FALSE;
@@ -91,7 +91,7 @@ class DateParser extends Core\Base
 				$parts[0] = (int) sprintf( '1%d', $parts[0] );
 		}
 
-		if ( ! $date = gEditorial\Datetime::makeMySQLFromInput( implode( '-', $parts ), NULL, $calendar ) )
+		if ( ! $date = gEditorial\Datetime::makeMySQLFromInput( implode( '-', $parts ?? [] ), NULL, $calendar ) )
 			return FALSE;
 
 		return date_create( $date, $timezone ?? new \DateTimeZone( wp_timezone_string() ) );

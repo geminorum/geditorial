@@ -107,12 +107,12 @@ class Estimated extends gEditorial\Module
 		$this->hook_content_insert( 22 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
-		if ( ! $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
-			return;
+		if ( $posttype = $this->is_inline_save_posttype( $this->posttypes() ) )
+			$this->coreadmin__hook_tweaks_column_attr( $posttype, 40 );
 
-		$this->coreadmin__hook_tweaks_column_attr( $posttype, 40 );
+		return TRUE;
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Estimated extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->posttype_supported( $screen->post_type ) ) {
 
@@ -136,7 +136,7 @@ class Estimated extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_attr( $post, $before, $after )
+	public function tweaks_column_attr( object $post, string $before, string $after ): void
 	{
 		if ( $wordcount = $this->_fetch_postmeta( $post->ID ) ) {
 

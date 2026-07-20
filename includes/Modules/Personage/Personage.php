@@ -417,12 +417,14 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'importer', 'insert', 8 );
 	}
 
-	public function setup_ajax(): void
+	public function setup_ajax(): bool
 	{
 		if ( $posttype = $this->is_inline_save_posttype( 'main_posttype' ) ) {
 			$this->coreadmin__unset_columns( $posttype );
 			$this->coreadmin__hook_taxonomy_display_states( 'status_taxonomy' );
 		}
+
+		return TRUE;
 	}
 
 	/**
@@ -431,7 +433,7 @@ class Personage extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	public function current_screen( $screen ): void
+	public function current_screen( object $screen ): void
 	{
 		if ( $this->is_screen_posttype( 'main_posttype', $screen ) ) {
 
@@ -552,7 +554,7 @@ class Personage extends gEditorial\Module
 		return $this->make_human_title( $post_id, 'display', $title, NULL, TRUE );
 	}
 
-	protected function latechores_post_aftercare( $post )
+	protected function latechores_post_aftercare( mixed $post ): bool|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -569,7 +571,7 @@ class Personage extends gEditorial\Module
 		];
 	}
 
-	public function audit_get_default_terms( $terms, $taxonomy )
+	public function audit_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyAudit( $taxonomy ) ? array_merge( $terms, [
 			$this->constant( 'term_empty_identity_number' ) => _x( 'Empty Identity Number', 'Default Term: Audit', 'geditorial-personage' ),
