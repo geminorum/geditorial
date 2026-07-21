@@ -77,7 +77,8 @@ class Plugin extends WordPress\Plugin
 
 		if ( ! is_admin() ) {
 
-			add_action( 'wp_footer', [ $this, 'footer_asset_config' ], 1 );
+			add_action( 'wp_footer', [ $this, 'footer_asset_config_early' ], 1 );
+			add_action( 'wp_footer', [ $this, 'footer_asset_config_late' ], 999 );
 			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 			add_filter( 'template_include', [ $this, 'template_include' ], 98 );  // before `gTheme`
 		}
@@ -88,7 +89,8 @@ class Plugin extends WordPress\Plugin
 	public function admin_init(): void
 	{
 		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 999 );
-		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config' ], 9 );
+		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_early' ], 1 );
+		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_late' ], 999 );
 	}
 
 	public function plugins_loaded(): void
@@ -624,10 +626,18 @@ class Plugin extends WordPress\Plugin
 
 	// used in front & admin
 	// TODO: Move to `AssetRegistry` Service
-	public function footer_asset_config(): void
+	public function footer_asset_config_early(): void
 	{
 		if ( $this->asset_config )
 			Scripts::printJSConfig( $this->asset_jsargs );
+	}
+
+	// used in front & admin
+	// TODO: Move to `AssetRegistry` Service
+	public function footer_asset_config_late(): void
+	{
+		if ( $this->asset_config )
+			Scripts::printJSDebug();
 
 		Core\Icon::printSprites( $this->asset_icons );
 	}

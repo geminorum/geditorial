@@ -820,7 +820,7 @@ JS;
 		);
 	}
 
-	public static function printJSConfig( $args, $object = 'gEditorial' )
+	public static function printJSConfig( array $args, string $object = 'gEditorial' ): void
 	{
 		$props = array_merge( $args, [
 			'_base' => static::BASE,
@@ -833,13 +833,18 @@ JS;
 			'_restNonce' => wp_create_nonce( 'wp_rest' ),
 		] );
 
-	?><script>
-	window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo Core\HTML::encode( $props ); ?>;
-	<?php if ( WordPress\IsIt::dev() ) {
+		?><script>window.<?php echo $object; ?> = <?php echo $object; ?> = <?php echo Core\HTML::encode( $props ); ?>;</script><?php
+	}
+
+	public static function printJSDebug( bool $check = TRUE, string $object = 'gEditorial' ): void
+	{
+		if ( $check && ! WordPress\IsIt::dev() )
+			return;
+
+		echo '<script>'."\n";
 		echo 'console.log("'.$object.'", '.$object.');'."\n";
 		echo "\t".'jQuery(document).on("gEditorialReady", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
 		echo "\t".'jQuery(document).on("gEditorial:Module:Loaded", function(e, module, app){console.log("'.$object.': "+module, app);});'."\n";
-	} ?>
-</script><?php
+		echo '</script>'."\n";
 	}
 }
