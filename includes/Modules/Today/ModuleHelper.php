@@ -34,7 +34,7 @@ class ModuleHelper extends gEditorial\Helper
 		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
 		$today = gEditorial\Datetime::getTheDay( NULL, $cal );
 
-		$array = self::atts( [
+		$array = self::parsed( [
 			'year'     => $today['year'],
 			'month'    => $today['month'],
 			'day'      => $today['day'],
@@ -87,7 +87,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $temp;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
 		self::_dev_dep( 'Datetime::getTheDay()' );
@@ -284,7 +284,7 @@ class ModuleHelper extends gEditorial\Helper
 		$path  = '';
 
 		// sorting the variables!
-		$the_day = self::atts( [
+		$the_day = self::parsed( [
 			'base'  => $admin ? '' : gEditorial()->module( static::MODULE )->get_link_base(),
 			'cal'   => '',
 			'month' => '',
@@ -386,7 +386,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		$constants = $constants ?? self::getTheDayConstants();
 		$posttype  = self::constant( 'main_posttype', 'day' );
-		$the_day   = self::atts( [
+		$the_day   = self::parsed( [
 			'cal'   => '',
 			'day'   => '',
 			'month' => '',
@@ -455,7 +455,7 @@ class ModuleHelper extends gEditorial\Helper
 			if ( ! $the_day = self::getTheDayFromPost( $id, $default_type, $constants ) )
 				continue;
 
-			$parts = self::atts( [
+			$parts = self::parsed( [
 				'month' => 0,
 				'day'   => 0,
 				'year'  => 0, // TODO: Use current year if it's empty
@@ -487,11 +487,12 @@ class ModuleHelper extends gEditorial\Helper
 	// NOTE: DEPRECATED: use `get_posts_connected()` on main module class
 	// NOTE: we can query multiple days at once but the db takes forever to respond!
 	// NOTE: does not handle sorting by the day data!
+	#[\Deprecated()]
 	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
 		self::_dep( 'get_posts_connected()' );
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'the_day' => [],
 			'today'   => [],
 			'type'    => 'any',
@@ -600,7 +601,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function theDaySelect( $atts = [], $year = TRUE, $default_type = NULL, $calendars = NULL )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'cal'   => $default_type ?? Core\L10n::calendar(),
 			'day'   => '',
 			'month' => '',

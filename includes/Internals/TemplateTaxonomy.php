@@ -256,7 +256,7 @@ trait TemplateTaxonomy
 
 		// NOTE: here to avoid further process
 		if ( $default = $this->templatetaxonomy_get_archive_content_default( $taxonomy ) )
-			return $this->templatetaxonomy_process_archive_content( $default, $this->current_queried );
+			return $default; // avoid `sprintf`/`tokens` for module defaults
 
 		if ( ! is_tax() )
 			return '';

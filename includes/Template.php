@@ -51,7 +51,7 @@ class Template extends WordPress\Main
 
 	public static function getTermImageTag( array $atts = [] ): false|string
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'       => NULL,
 			'taxonomy' => '',
 			'field'    => NULL,
@@ -109,7 +109,7 @@ class Template extends WordPress\Main
 	public static function termImage( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'field'        => NULL,                                 // NULL for `image`
 			'id'           => NULL,
 			'size'         => NULL,
@@ -202,7 +202,7 @@ class Template extends WordPress\Main
 	public static function termContact( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'field'    => 'contact',
 			'id'       => NULL,
 			'class'    => '-term-contact',
@@ -265,7 +265,7 @@ class Template extends WordPress\Main
 	{
 		$html = FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'           => NULL,
 			'thumbnail'    => NULL,
 			'size'         => NULL,
@@ -320,7 +320,7 @@ class Template extends WordPress\Main
 	{
 		$module = $module ?? static::MODULE;
 		$html   = '';
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'id'           => NULL,
 			'thumbnail'    => NULL,
 			'size'         => NULL,
@@ -429,7 +429,7 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function assocLink( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		self::_dep( 'Template::pairedLink()' );
@@ -443,7 +443,7 @@ class Template extends WordPress\Main
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'            => NULL,
 			'published'     => TRUE,
 			'single'        => FALSE,
@@ -703,7 +703,6 @@ class Template extends WordPress\Main
 		);
 	}
 
-	// NOTE: DEPRECATED
 	public static function metaLabel( array $atts = [], ?string $module = NULL ): bool|string
 	{
 		self::_dep( 'Must extend in sub template!' );
@@ -717,7 +716,7 @@ class Template extends WordPress\Main
 	): bool|string {
 
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'id'          => NULL,
 			'default'     => FALSE,
 			'filter'      => FALSE,
@@ -804,7 +803,7 @@ class Template extends WordPress\Main
 	): bool|string {
 
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'id'            => NULL,
 			'default'       => FALSE,
 			'filter'        => FALSE,
@@ -927,7 +926,7 @@ class Template extends WordPress\Main
 	): bool|string {
 
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'id'       => NULL,
 			'fields'   => NULL,
 			'excludes' => NULL,
@@ -1184,7 +1183,7 @@ class Template extends WordPress\Main
 		$html   = '';
 		$module = $module ?? static::MODULE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'taxonomy' => NULL,
 			'posttype' => NULL,
 			'fallback' => '',
@@ -1241,7 +1240,7 @@ class Template extends WordPress\Main
 			return FALSE;
 
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'heading'     => '3',     // heading level or `FALSE` to disable
 			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
 			'image_link'  => 'url',
@@ -1307,7 +1306,7 @@ class Template extends WordPress\Main
 			return FALSE;
 
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( [
+		$args   = self::parsed( [
 			'hide_empty' => TRUE,
 			'context'    => NULL,
 			'before'     => '',

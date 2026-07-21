@@ -290,7 +290,7 @@ class Bookmarked extends gEditorial\Module
 		return $this->subcontent_restapi_register_routes();
 	}
 
-	public function subcontent_provide_summary( $data, $item, $parent, $context )
+	public function subcontent_provide_summary( ?array $data, array $item, object $parent, ?string $context ): ?array
 	{
 		if ( ! is_null( $data ) )
 			return $data;
@@ -337,7 +337,7 @@ class Bookmarked extends gEditorial\Module
 	private function _generate_link( $atts, $parent = NULL, $context = NULL )
 	{
 		// TODO: maybe cache the arrays
-		$data = self::atts( array_fill_keys( array_keys( $this->subcontent_define_fields() ), NULL ), $atts );
+		$data = self::parsed( array_fill_keys( array_keys( $this->subcontent_define_fields() ), NULL ), $atts );
 		$post = WordPress\Post::get( $parent );
 		$link = FALSE;
 

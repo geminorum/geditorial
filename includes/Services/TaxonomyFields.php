@@ -87,7 +87,7 @@ class TaxonomyFields extends gEditorial\Service
 	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'terms' )
 	{
 		$field = FALSE;
-		$args  = self::atts( [
+		$args  = self::parsed( [
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,

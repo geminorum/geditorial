@@ -318,7 +318,7 @@ class Banking extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( $this->posttype_supported( $post->post_type ) ) {
 
@@ -358,7 +358,7 @@ class Banking extends gEditorial\Module
 		return $terms;
 	}
 
-	public function subcontent_provide_summary( $data, $item, $parent, $context )
+	public function subcontent_provide_summary( ?array $data, array $item, object $parent, ?string $context ): ?array
 	{
 		if ( ! is_null( $data ) )
 			return $data;

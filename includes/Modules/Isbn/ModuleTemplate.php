@@ -14,7 +14,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function barcode( array $atts = [] ): bool|string
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'       => isset( $atts['post'] ) ? $atts['post'] : NULL,
 			'filter'   => FALSE,
 			'default'  => FALSE,
@@ -29,7 +29,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( $args['validate'] && ! Core\ISBN::validate( $isbn ) )
 			return $args['default'];
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'link'   => NULL,
 			'before' => '',
 			'after'  => '',

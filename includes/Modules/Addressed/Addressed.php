@@ -256,7 +256,7 @@ class Addressed extends gEditorial\Module
 
 			foreach ( $fields as $raw ) {
 
-				$field = self::atts( [
+				$field = self::parsed( [
 					'key'         => FALSE,
 					'label'       => '',
 					'description' => '',

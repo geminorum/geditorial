@@ -442,7 +442,7 @@ class Phonebook extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $terms;

@@ -920,7 +920,7 @@ class Config extends gEditorial\Module
 			if ( ! $view = $this->viewengine__view_by_template( 'data-summary', 'imports' ) )
 				continue;
 
-			$data = self::atts( [
+			$data = self::parsed( [
 				'title'       => gEditorial\Plugin::untitled( FALSE ),
 				'description' => '',
 				'path'        => '',

@@ -70,7 +70,7 @@ trait PairedAssignment
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'app'     => defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock',
 			'asset'   => defined( 'self::APP_ASSET' ) ? constant( 'self::APP_ASSET' ) : '_assignment',
 			'can'     => 'paired',

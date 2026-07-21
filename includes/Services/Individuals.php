@@ -95,7 +95,7 @@ class Individuals extends gEditorial\Service
 		if ( ! $data )
 			return $fallback;
 
-		$parts = self::atts( [
+		$parts = self::parsed( [
 			'fullname'    => '',
 			'first_name'  => '',
 			'last_name'   => '',

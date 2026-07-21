@@ -194,7 +194,7 @@ class Estimated extends gEditorial\Module
 			$this->_get_post_wordcount( $post_id, TRUE );
 	}
 
-	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
 	{
 		if ( $new_post )
 			return;
@@ -227,7 +227,7 @@ class Estimated extends gEditorial\Module
 		);
 	}
 
-	private function _get_post_wordcount( $post_id, $update = FALSE )
+	private function _get_post_wordcount( int $post_id, bool $update = FALSE ): int
 	{
 		$content = get_post_field( 'post_content', $post_id, 'raw' );
 
@@ -248,20 +248,18 @@ class Estimated extends gEditorial\Module
 		return $wordcount;
 	}
 
-	private function _fetch_postmeta( $post_id, $fallback = FALSE )
+	private function _fetch_postmeta( int $post_id, mixed $fallback = FALSE ): mixed
 	{
 		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_post_wordcount' ) );
 	}
 
-	// NOTE: DEPRECATED
-	public function get_estimated( $post_id, $prefix = NULL )
+	#[\Deprecated('USE `get_estimated_for_post()`')]
+	public function get_estimated( int $post_id, ?string $prefix = NULL ): string
 	{
-		self::_dep( 'get_estimated_for_post()' );
-
 		return $this->get_estimated_for_post( $post_id, $prefix );
 	}
 
-	public function get_estimated_for_post( $post = NULL, $prefix = NULL, $check = TRUE )
+	public function get_estimated_for_post( mixed $post = NULL, ?string $prefix = NULL, bool $check = TRUE ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

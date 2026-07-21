@@ -412,7 +412,7 @@ JS;
 	// TODO: move to `Services\Barcodes`
 	public static function markupJSBarcode( $data, $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'format'     => 'CODE128',
 			'display'    => FALSE,
 			'width'      => 2,
@@ -490,7 +490,7 @@ JS;
 	 */
 	public static function markupQRCodeSVG( $data, $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'padding'    => 4,
 			'width'      => 256,
 			'height'     => 256,
@@ -693,7 +693,7 @@ JS;
 
 	public static function enqueueChartJS_Bar( $name, $data, $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'type'   => 'bar',
 			'label'  => '',
 			'labels' => array_keys( $data ),

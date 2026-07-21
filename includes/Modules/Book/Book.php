@@ -915,6 +915,7 @@ class Book extends gEditorial\Module
 
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
 	// NOTE: DEPRECATED: use `main_shortcode()`
+	#[\Deprecated()]
 	public function list_p2p( $post = NULL, $class = '' )
 	{
 		if ( ! $this->_p2p )

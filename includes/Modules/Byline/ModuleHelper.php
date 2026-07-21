@@ -24,7 +24,7 @@ class ModuleHelper extends gEditorial\Helper
 	// EXAMPLE: `John Updike (Editor, Contributor), Katrina Kenison (Editor)`
 	public static function bylineDefaultWalker( $list, $atts = [] )
 	{
-		$args = self::atts( static::filters( 'walker_default', [
+		$args = self::parsed( static::filters( 'walker_default', [
 			'post'    => NULL,
 			'default' => '',
 			'before'  => '',
@@ -113,7 +113,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function bylineTemplateWalker( $list, $atts = [] )
 	{
-		$args = self::atts( static::filters( 'walker_template', [
+		$args = self::parsed( static::filters( 'walker_template', [
 			'post'     => NULL,
 			'default'  => '',
 			'before'   => '',
@@ -195,7 +195,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function bylineIntroWalker( $list, $atts = [] )
 	{
-		$args = self::atts( static::filters( 'walker_intro', [
+		$args = self::parsed( static::filters( 'walker_intro', [
 			'post'     => NULL,
 			'default'  => '',
 			'before'   => '',

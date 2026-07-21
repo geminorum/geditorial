@@ -561,7 +561,7 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated('USE `WordPress\MetaBox::markupTitleAction()`')]
 	public static function getTitleAction( string $action ): string
 	{
 		self::_dev_dep( 'WordPress\MetaBox::markupTitleAction()' );
@@ -1066,7 +1066,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-textarea' ];
 
@@ -1137,7 +1137,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-inputgeneral' ];
 
@@ -1487,7 +1487,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
 
-		$args  = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-inputnumber' ];
 		$label = FALSE;
@@ -1582,7 +1582,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		$html     = '';
-		$args     = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args     = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$selected = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap     = [ 'field-wrap', '-select' ];
 		$label    = FALSE;
@@ -1664,7 +1664,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		if ( is_null( $args['posttype'] ) )
 			$args['posttype'] = $post->post_type;
@@ -1728,7 +1728,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
@@ -1793,7 +1793,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
@@ -1845,7 +1845,7 @@ class MetaBox extends WordPress\Main
 			return FALSE;
 
 		$html = '';
-		$args = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
 		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );

@@ -74,7 +74,7 @@ class Widget extends \WP_Widget
 
 	public function __construct()
 	{
-		$args = Template::atts( [
+		$args = Template::parsed( [
 			'module' => static::MODULE,
 			'name'   => static::WIDGET,
 			'class'   => '',

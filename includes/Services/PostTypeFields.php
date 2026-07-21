@@ -311,7 +311,7 @@ class PostTypeFields extends gEditorial\Service
 	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
 	{
 		$field = FALSE;
-		$args  = self::atts( [
+		$args  = self::parsed( [
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,

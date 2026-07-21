@@ -173,7 +173,7 @@ class Modulation extends gEditorial\Service
 	{
 		global $wp_settings_sections;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'            => FALSE,
 			'title'         => FALSE,
 			'description'   => FALSE,

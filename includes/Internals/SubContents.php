@@ -644,7 +644,7 @@ trait SubContents
 		return TRUE;
 	}
 
-	protected function subcontent_do_provide_summary( $comment, $context = NULL )
+	protected function subcontent_do_provide_summary( object $comment, ?string $context = NULL ): array
 	{
 		$na     = gEditorial\Plugin::na( FALSE );
 		$parent = WordPress\Post::get( (int) $comment->comment_post_ID );
@@ -844,7 +844,7 @@ trait SubContents
 
 	protected function subcontent_do_enqueue_app( $atts = [], $custom_app = NULL )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'app'        => $custom_app ?? 'subcontent-grid',
 			'asset'      => is_null( $custom_app ) ? '_subcontent' : NULL,
 			'can'        => 'assign',
@@ -995,7 +995,7 @@ trait SubContents
 
 	public function subcontent_data_summary( $atts = [], $post = NULL )
 	{
-		$args = $this->filters( 'data_summary_args', self::atts( [
+		$args = $this->filters( 'data_summary_args', self::parsed( [
 			'id'       => $post,
 			'fields'   => NULL,
 			'context'  => NULL,

@@ -222,7 +222,7 @@ trait TemplatePostType
 
 		// NOTE: here to avoid further process
 		if ( $default = $this->templateposttype_get_archive_content_default( $posttype ) )
-			return $this->templateposttype_process_archive_content( $default, $posttype );
+			return $default; // avoid `sprintf`/`tokens` for module defaults
 
 		// TODO: add widget area
 

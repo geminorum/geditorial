@@ -42,7 +42,7 @@ class Parser extends WordPress\Main
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-na-parser' ] ], $message ) : $message;
 	}
 
-	public static function getDefaultArgs( ?string $filepath = NULL ): array
+	public static function getDefaultArgs( string|false|null $file_path = NULL ): array
 	{
 		return [
 			'headers_only' => FALSE,   // headers only
@@ -61,10 +61,10 @@ class Parser extends WordPress\Main
 		];
 	}
 
-	public static function getInitialData( array $args, ?string $filepath = NULL ): array
+	public static function getInitialData( array $args, string|false|null $file_path = NULL ): array
 	{
 		return [
-			'file_path'   => Core\File::normalize( $filepath ),
+			'file_path'   => Core\File::normalize( $file_path ),
 			'file_ext'    => NULL,
 			'file_mime'   => NULL,
 			'file_url'    => NULL,
@@ -80,7 +80,7 @@ class Parser extends WordPress\Main
 		];
 	}
 
-	public static function getAdditionalData( array $data, array $args, ?string $filepath = NULL ): array
+	public static function getAdditionalData( array $data, array $args, string|false|null $file_path = NULL ): array
 	{
 		if ( $args['extra_url'] )
 			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
@@ -98,7 +98,8 @@ class Parser extends WordPress\Main
 		return $data;
 	}
 
-	// `public static function fromFile( string $filepath, $arguments = NULL ) {}`
+	// TODO
+	// `public static function fromFile( string|false $file_path, $arguments = NULL ) {}: array`
 
 	public static function fromAttachment( mixed $attachment, array $arguments = [] ): array
 	{
@@ -108,9 +109,9 @@ class Parser extends WordPress\Main
 				Plugin::invalid( FALSE )
 			);
 
-		if ( ! $filepath = get_attached_file( $post->ID ) )
+		if ( ! $file_path = get_attached_file( $post->ID ) )
 			return self::bailWithError( [],
-				'filepath_is_empty',
+				'file_path_is_empty',
 				Plugin::wrong( FALSE )
 			);
 
@@ -119,21 +120,21 @@ class Parser extends WordPress\Main
 			case 'text/csv':
 			case 'application/csv':
 			case 'text/comma-separated-values':
-				return self::fromCSV( $filepath, $arguments );
+				return self::fromCSV( $file_path, $arguments );
 
 			case 'application/vnd.ms-excel':
 			case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
-				return self::fromXLSX( $filepath, $arguments );
+				return self::fromXLSX( $file_path, $arguments );
 
 			case 'text/json':
 			case 'application/json':
-				return self::fromJSON( $filepath, $arguments );
+				return self::fromJSON( $file_path, $arguments );
 
 			case 'application/xml':
-				return self::fromXML( $filepath, $arguments );
+				return self::fromXML( $file_path, $arguments );
 
 			case 'text/plain':
-				return self::fromTXT( $filepath, $arguments );
+				return self::fromTXT( $file_path, $arguments );
 		}
 
 		return self::bailWithError( [],
@@ -142,10 +143,10 @@ class Parser extends WordPress\Main
 		);
 	}
 
-	public static function fromCSV( string $filepath, array $arguments = [] ): array
+	public static function fromCSV( string|false $file_path, array $arguments = [] ): array
 	{
-		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -153,7 +154,7 @@ class Parser extends WordPress\Main
 				Plugin::notreadable( FALSE )
 			);
 
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		if ( ! class_exists( 'League\\Csv\\Reader' ) )
 			return self::bailWithError( $data,
@@ -249,10 +250,10 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV_OLD( string $filepath, $arguments = [] )
+	public static function fromCSV_OLD( string|false $file_path, $arguments = [] )
 	{
-		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -260,7 +261,7 @@ class Parser extends WordPress\Main
 				Plugin::notreadable( FALSE )
 			);
 
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		if ( ! class_exists( 'EasyCSV\\Reader' ) )
 			return self::bailWithError( $data,
@@ -355,8 +356,8 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV_Legacy()`
-	#[Deprecated(message:'use Parser::fromCSV() instead')]
-	public static function fromCSV_Legacy( string $file_path, ?int $limit = NULL ): false|array
+	#[\Deprecated('use `Parser::fromCSV()` instead')]
+	public static function fromCSV_Legacy( string|false $file_path, ?int $limit = NULL ): false|array
 	{
 		self::_dep( 'Parser::fromCSV()' );
 
@@ -389,10 +390,10 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXLSX()`
-	public static function fromXLSX( string $filepath, array $arguments = [] ): array
+	public static function fromXLSX( string|false $file_path, array $arguments = [] ): array
 	{
-		$args = self::parsed( self::getDefaultArguments( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArguments( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -400,7 +401,7 @@ class Parser extends WordPress\Main
 				Plugin::notreadable( FALSE )
 			);
 
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		if ( ! class_exists( 'OpenSpout\\Reader\\Common\\Creator\\ReaderEntityFactory' ) )
 			return self::bailWithError( $data,
@@ -472,10 +473,10 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: implement all!
-	public static function fromTXT( string $filepath, array $arguments = [] ): array
+	public static function fromTXT( string|false $file_path, array $arguments = [] ): array
 	{
-		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -483,11 +484,11 @@ class Parser extends WordPress\Main
 				Plugin::notreadable( FALSE )
 			);
 
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		// `TXT` source has no headers!
 
-		$data['items'] = Core\Text::splitLines( Core\File::getContents( $filepath ) );
+		$data['items'] = Core\Text::splitLines( Core\File::getContents( $file_path ) );
 
 		return $data;
 	}
@@ -499,13 +500,13 @@ class Parser extends WordPress\Main
 		return Core\Text::splitLines( Core\File::getContents( $file_path ) );
 	}
 
-	public static function fromJSON( string $filepath, array $arguments = [] ): array
+	public static function fromJSON( string|false $file_path, array $arguments = [] ): array
 	{
 		static $parsed = [];
 		static $items  = [];
 
-		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -514,7 +515,7 @@ class Parser extends WordPress\Main
 			);
 
 		$hash = self::hash( $args ); // for items only
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		if ( ! extension_loaded( 'json' ) )
 			return self::bailWithError( $data,
@@ -522,9 +523,9 @@ class Parser extends WordPress\Main
 				self::na( FALSE )
 			);
 
-		if ( ! empty( $parsed[$filepath] ) ) {
+		if ( ! empty( $parsed[$file_path] ) ) {
 
-			$parser = $parsed[$filepath];
+			$parser = $parsed[$file_path];
 
 		} else {
 
@@ -606,13 +607,13 @@ class Parser extends WordPress\Main
 		$data['total'] = count( $data['items'] ); // TODO: better to get from parser
 
 		if ( $args['keep_alive'] )
-			$parsed[$filepath] = $parser;
+			$parsed[$file_path] = $parser;
 
 		return $data;
 	}
 
 	// OLD: `Helper::parseJSON()`
-	public static function fromJSON_Legacy( string $file_path ): false|array
+	public static function fromJSON_Legacy( string|false $file_path ): false|array
 	{
 		self::_dep( 'Parser::fromJSON()' );
 
@@ -623,10 +624,10 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: implement all!
-	public static function fromXML( string $filepath, array $arguments = [] ): array
+	public static function fromXML( string|false $file_path, array $arguments = [] ): array
 	{
-		$args = self::parsed( self::getDefaultArgs( $filepath ), $arguments );
-		$data = self::getInitialData( $args, $filepath );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
+		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
@@ -634,7 +635,7 @@ class Parser extends WordPress\Main
 				Plugin::notreadable( FALSE )
 			);
 
-		$data = self::getAdditionalData( $data, $args, $filepath );
+		$data = self::getAdditionalData( $data, $args, $file_path );
 
 		if ( ! function_exists( 'xml_parser_create' ) )
 			return self::bailWithError( $data,
@@ -642,13 +643,13 @@ class Parser extends WordPress\Main
 				self::na( FALSE )
 			);
 
-		$data['items'] = self::fromXML_Legacy( $filepath );
+		$data['items'] = self::fromXML_Legacy( $file_path );
 
 		return $data;
 	}
 
 	// OLD: `Helper::parseXML()`
-	public static function fromXML_Legacy( string $file_path ): false|array
+	public static function fromXML_Legacy( string|false $file_path ): false|array
 	{
 		self::_dep( 'Parser::fromXML()' );
 

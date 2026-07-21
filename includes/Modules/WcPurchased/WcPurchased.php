@@ -78,7 +78,7 @@ class WcPurchased extends gEditorial\Module
 		}
 	}
 
-	public function post_row_actions( $actions, $post )
+	public function post_row_actions( array $actions, object $post ): array
 	{
 		if ( ! $this->is_post_viewable( $post ) )
 			return $actions;
@@ -100,16 +100,16 @@ class WcPurchased extends gEditorial\Module
 		return $actions;
 	}
 
-	protected function render_mainpage_content()
+	protected function render_mainpage_content( ?string $sub, ?string $uri, ?string $context, ?array $subs ): bool
 	{
 		if ( ! $product_id = self::req( 'post' ) )
-			return Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
+			return (bool) Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( ! $product = wc_get_product( $product_id ) )
-			return Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
+			return (bool) Core\HTML::desc( _x( 'No Product!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( ! $orders = $this->get_product_purchased_orders( $product->get_id() ) )
-			return Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
+			return (bool) Core\HTML::desc( _x( 'No Orders!', 'Message', 'geditorial-wc-purchased' ) );
 
 		if ( isset( $_GET['export'] ) )
 			Core\Text::download(
@@ -138,7 +138,7 @@ class WcPurchased extends gEditorial\Module
 
 		echo '</div>';
 
-		Core\HTML::tableList( [
+		return Core\HTML::tableList( [
 			'order_number' => [
 				'title'    => _x( '#', 'Column Title', 'geditorial-wc-purchased' ),
 				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {

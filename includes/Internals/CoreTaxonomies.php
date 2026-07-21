@@ -88,7 +88,7 @@ trait CoreTaxonomies
 			$args['has_archive'] = $this->constant( $constant.'_archive', $plural );
 
 		// NOTE: ordering here is important!
-		$settings = self::atts( [
+		$settings = self::parsed( [
 			'parent_module'   => $this->key,
 			'target_object'   => 'post',   // `post`/`user`/`comment`/`taxonomy`/`none`
 			'custom_icon'     => TRUE,

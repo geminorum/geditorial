@@ -32,7 +32,7 @@ trait FramePage
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'context'      => 'mainbutton',
 			'link_context' => 'framepage',
 			'refkey'       => 'linked',
@@ -97,7 +97,7 @@ trait FramePage
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'context'      => 'mainbutton',
 			'link_context' => 'framepage',
 			'refkey'       => 'linked',

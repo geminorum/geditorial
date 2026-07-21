@@ -15,7 +15,7 @@ trait RawImports
 	// 	'default' => 'default.json',
 	// ];
 
-	protected function get_imports_datafile( $key = 'default' )
+	protected function get_imports_datafile( string $key = 'default' ): false|string
 	{
 		return empty( $this->imports_datafiles[$key] )
 			? FALSE
@@ -26,7 +26,7 @@ trait RawImports
 	}
 
 	// DEFAULT METHOD
-	protected function get_imports_raw_data( $key = 'default', $type = NULL )
+	protected function get_imports_raw_data( string $key = 'default', ?string $type = NULL ): mixed
 	{
 		if ( empty( $this->imports_datafiles[$key] ) )
 			return FALSE;
@@ -90,12 +90,12 @@ trait RawImports
 		return empty( $data ) ? NULL : $data;
 	}
 
-	protected function get_imports_page_url( $sub = NULL, $extra = [] )
+	protected function get_imports_page_url( ?string $sub = NULL, array $extra = [] ): string
 	{
 		return $this->get_module_url( 'imports', is_null( $sub ) ? $this->key : $sub, $extra );
 	}
 
-	protected function render_imports_toolbox_card( $imports_url = NULL )
+	protected function render_imports_toolbox_card( ?string $imports_url = NULL ): bool
 	{
 		$buttons = [];
 
@@ -112,6 +112,8 @@ trait RawImports
 			echo Core\HTML::wrap( Core\HTML::rows( $buttons ), '-toolbox-links' );
 
 		echo '</div>';
+
+		return TRUE;
 	}
 
 	protected function _hook_wp_register_importer()

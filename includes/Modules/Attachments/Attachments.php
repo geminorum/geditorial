@@ -461,7 +461,7 @@ class Attachments extends gEditorial\Module
 		$this->_render_summary_row( $post, $before, $after );
 	}
 
-	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
 	{
 		if ( $new_post )
 			return;

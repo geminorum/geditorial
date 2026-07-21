@@ -85,6 +85,8 @@ class DeadDrops extends gEditorial\Module
 	public function setup_restapi(): bool
 	{
 		$this->filter( 'wp_handle_sideload_prefilter', 1, 8 );
+
+		return TRUE;
 	}
 
 	/**
@@ -118,7 +120,7 @@ class DeadDrops extends gEditorial\Module
 		return $this->render_default_mainpage( 'signal', 'update' );
 	}
 
-	protected function render_signal_content()
+	protected function render_signal_content(): bool
 	{
 		if ( ! $linked = self::req( 'linked' ) )
 			return gEditorial\Info::renderNoPostsAvailable();
@@ -126,11 +128,12 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $linked ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
-		$this->_render_view_for_post( $post, 'signal' );
 		gEditorial\Scripts::enqueueQRCodeSVG();
+
+		return $this->_render_view_for_post( $post, 'signal' );
 	}
 
-	private function _render_view_for_post( $post, $context )
+	private function _render_view_for_post( object $post, string $context ): bool
 	{
 		// $drop = $this->make_private( $post );
 		$drop = $this->make_public( $post );
@@ -148,10 +151,18 @@ class DeadDrops extends gEditorial\Module
 				echo Core\HTML::wrap( Core\HTML::inputForCopy( $drop ), '-input-deaddrop' );
 			echo '</div>';
 		echo '</div>';
+
+		return TRUE;
 	}
 
-	// decodes the Unicode filename encoded with `encodeURI`/`encodeURIComponent`
-	public function wp_handle_sideload_prefilter( $file )
+	/**
+	 * Filters the data for a file before it is uploaded to WordPress.
+	 * NOTE: decodes the Unicode filename encoded with `encodeURI`/`encodeURIComponent`
+	 *
+	 * @param array $file
+	 * @return array
+	 */
+	public function wp_handle_sideload_prefilter( array $file ): array
 	{
 		if ( ! empty( $file['name'] )
 			&& $file['name'] !== ( $decoded = rawurldecode( $file['name'] ) ) )
@@ -161,7 +172,7 @@ class DeadDrops extends gEditorial\Module
 	}
 
 	// NOTE: the author must have upload cap to use the core endpoint.
-	public function determine_current_user( $user_id )
+	public function determine_current_user( int $user_id ): int
 	{
 		if ( $user_id || ! WordPress\IsIt::rest() )
 			return $user_id;
@@ -281,12 +292,12 @@ class DeadDrops extends gEditorial\Module
 		], $extra ), $context );
 	}
 
-	public function make_private( $post )
+	public function make_private( object $post ): bool
 	{
 		return delete_post_meta( $post->ID, $this->constant( 'metakey_secret' ) );
 	}
 
-	public function make_public( $post )
+	public function make_public( object $post ): false|string
 	{
 		if ( $secret = get_post_meta( $post->ID, $this->constant( 'metakey_secret' ), TRUE ) )
 			return $this->_get_deaddrop_link( $post, $secret );
@@ -297,7 +308,7 @@ class DeadDrops extends gEditorial\Module
 		return $added ? $this->_get_deaddrop_link( $post, $secret ) : FALSE;
 	}
 
-	private function _get_deaddrop_link( $post = NULL, $secret = NULL )
+	private function _get_deaddrop_link( mixed $post = NULL, ?string $secret = NULL ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -319,7 +330,7 @@ class DeadDrops extends gEditorial\Module
 
 	private function _render_page_dropzone( $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'user'   => 0,
 			'post'   => NULL,
 			'secret' => NULL,
@@ -347,7 +358,7 @@ class DeadDrops extends gEditorial\Module
 			 * have an `action` attribute).
 			 *
 			 * You can also provide a function that will be called with `files` and
-			 * `dataBlocks`  and must return the url as string.
+			 * `dataBlocks` and must return the URL as string.
 			 */
 			'url' => $rest,
 
@@ -357,18 +368,18 @@ class DeadDrops extends gEditorial\Module
 			 * It's an error to set this to `true` along with `uploadMultiple` since
 			 * multiple files cannot be in a single binary body.
 			 */
-			// 'binaryBody' => TRUE, // NOTE: wont work with filename as title/caption on formData
+			// `'binaryBody' => TRUE,` // NOTE: wont work with filename as title/caption on `formData`
 
 			// TODO: settings for this
-			// 'acceptedFiles' => 'image/*,application/pdf,.psd',
+			// `'acceptedFiles' => 'image/*,application/pdf,.psd',`
 
 			/**
-			 * If null, no capture type will be specified
-			 * If camera, mobile devices will skip the file selection and choose camera
-			 * If microphone, mobile devices will skip the file selection and choose the microphone
-			 * If camcorder, mobile devices will skip the file selection and choose the camera in video mode
-			 * On apple devices multiple must be set to false.  AcceptedFiles may need to
-			 * be set to an appropriate mime type (e.g. "image/*", "audio/*", or "video/*").
+			 * If null, no capture type will be specified.
+			 * If camera, mobile devices will skip the file selection and choose camera.
+			 * If microphone, mobile devices will skip the file selection and choose the microphone.
+			 * If camcorder, mobile devices will skip the file selection and choose the camera in video mode.
+			 * On apple devices multiple must be set to false.
+			 * Accepted Files may need to be set to an appropriate mime type (e.g. "image/*", "audio/*", or "video/*").
 			 */
 			// 'capture' => 'camera', // WTF?!
 
@@ -377,10 +388,13 @@ class DeadDrops extends gEditorial\Module
 			 * This function gets the `File` as argument and can use the `file.name`. The actual name of the
 			 * file that gets used during the upload can be accessed through `file.upload.filename`.
 			 */
-			// renameFile: null,
+			// `'renameFile' => NULL,`
 
-			'previewsContainer' => 'div.-wrap.dropzone-previews',   // Define the container to display the previews
-			// 'clickable'         => '#clickable',                    // Define the element that should be used as click trigger to select files.
+			// Define the container to display the previews
+			'previewsContainer' => 'div.-wrap.dropzone-previews',
+
+			// Define the element that should be used as click trigger to select files.
+			// 'clickable' => '#clickable',
 		] );
 
 		// TODO: move up the following!
@@ -421,12 +435,12 @@ class DeadDrops extends gEditorial\Module
 
 		Core\HTML::h2( $title, '-title' );
 
-		// Core\HTML::inputHidden( 'secret', $args['secret'] );
-		// Core\HTML::inputHidden( 'post', $args['post']->ID );
+		// `Core\HTML::inputHidden( 'secret', $args['secret'] );`
+		// `Core\HTML::inputHidden( 'post', $args['post']->ID );`
 
 		// Don't forget to give this container the `dropzone-previews` class so the previews are formatted correctly.
 		echo Core\HTML::wrap( gEditorial\Scripts::noScriptMessage( FALSE ), 'dropzone-previews', TRUE, [], 'previews' );
-		// echo '<button id="clickable">Click me to select files</button>';
+		// `echo '<button id="clickable">Click me to select files</button>';`
 
 		// FIXME: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent#encoding_for_content-disposition_and_link_headers
 		// TODO: append `content_md5` data: see: `WP_REST_Attachments_Controller::upload_from_data()`
@@ -457,7 +471,7 @@ class DeadDrops extends gEditorial\Module
 			});
 
 JS;
-		// echo '<script>'.$script.'</script>';
+		// `echo '<script>'.$script.'</script>';`
 		wp_print_inline_script_tag( $script );
 		echo '</body></html>';
 	}

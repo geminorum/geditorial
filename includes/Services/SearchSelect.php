@@ -40,7 +40,7 @@ class SearchSelect extends gEditorial\Service
 	// @REF: https://select2.org/data-sources/formats
 	public static function main_route_callback( object $request ): object
 	{
-		$queried = self::atts( [
+		$queried = self::parsed( [
 			'context'  => NULL,   // TODO / default is `select2` compatible
 			'search'   => '',
 			'target'   => '',

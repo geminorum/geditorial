@@ -101,11 +101,11 @@ class Alphabet extends gEditorial\Module
 			if ( $args['locale'] == $args['alternative'] )
 				$args['alternative'] = FALSE;
 
-			if ( 'any' === $args['posttypes'] )
+			if ( 'any' === $args['posttype'] )
 				$posttypes = WordPress\PostType::get( -1 );
 
 			else
-				$posttypes = WordPress\Strings::getSeparated( $args['posttypes'] );
+				$posttypes = WordPress\Strings::getSeparated( $args['posttype'] );
 
 			if ( $args['exclude_posttypes'] )
 				$posttypes = array_diff( $posttypes,
@@ -424,7 +424,7 @@ class Alphabet extends gEditorial\Module
 	// TODO: Move to `Core\HTML`
 	private function _get_alphabet_list_mode( $mode, $defaults )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'list_tag' => NULL,
 			'term_tag' => NULL,
 			'desc_tag' => NULL,

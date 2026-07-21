@@ -39,7 +39,7 @@ class ObjectHints extends gEditorial\Service
 	// TODO: support users
 	public static function main_route_callback( object $request ): mixed
 	{
-		$queried = self::atts( [
+		$queried = self::parsed( [
 			'id'       => '',
 			'target'   => '',          // `post`/`term`/`user`
 			'extend'   => 'default',
@@ -91,7 +91,7 @@ class ObjectHints extends gEditorial\Service
 
 		$data = array_map(
 			static function ( $hint ) {
-				return self::atts( [
+				return self::parsed( [
 					'html'     => '',
 					'text'     => '',
 					'title'    => '',

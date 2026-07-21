@@ -345,7 +345,7 @@ class Plugin extends WordPress\Plugin
 		return $default;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public function get_constant( string $module, string $key, mixed $default = NULL ): mixed
 	{
 		return $this->{$module}->constant( $key, $default );

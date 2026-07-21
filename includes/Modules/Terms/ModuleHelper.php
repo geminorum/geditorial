@@ -47,7 +47,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		$html   = '';
 		$module = $module ?? static::MODULE;
-		$args   = self::atts( self::getFieldDefaults( $field['name'], $module ), $field );
+		$args   = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		// NOTE: no need for `Select2` but passing in case JavaScript-disabled.
 		$html.= Core\HTML::tag( 'option', [

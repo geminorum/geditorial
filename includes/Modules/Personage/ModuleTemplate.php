@@ -14,7 +14,7 @@ class ModuleTemplate extends gEditorial\Template
 
 	public static function vcard( $atts = [], $check = TRUE )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'      => NULL,
 			'default' => FALSE,
 			'before'  => '',

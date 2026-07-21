@@ -294,7 +294,7 @@ class Identified extends gEditorial\Module
 		return $this->restapi_register_route( 'query', 'get', '(?P<type>.+)/(?P<code>[a-z0-9 .\-]+)' );
 	}
 
-	public function restapi_query_get_arguments()
+	public function restapi_query_get_arguments(): array
 	{
 		return [
 			'type' => [
@@ -312,7 +312,7 @@ class Identified extends gEditorial\Module
 		];
 	}
 
-	public function restapi_query_get_type_validate_callback( $param, $request, $key )
+	public function restapi_query_get_type_validate_callback( mixed $param, object $request, string $key ): bool|object
 	{
 		if ( empty( $param ) )
 			return Services\RestAPI::getErrorArgNotEmpty( $key );
@@ -323,7 +323,7 @@ class Identified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function restapi_query_get_code_validate_callback( $param, $request, $key )
+	public function restapi_query_get_code_validate_callback( mixed $param, object $request, string $key ): bool|object
 	{
 		if ( empty( $param ) )
 			return Services\RestAPI::getErrorArgNotEmpty( $key );
@@ -336,7 +336,7 @@ class Identified extends gEditorial\Module
 		$code = urldecode( $request['code'] );
 		$type = urldecode( $request['type'] );
 
-		$params = self::atts( [
+		$params = self::parsed( [
 			'context'  => NULL,
 			'posttype' => '',
 			'expect'   => '',
@@ -415,7 +415,7 @@ class Identified extends gEditorial\Module
 		return $this->constant( 'metakey_identifier_posttype' );
 	}
 
-	public function edit_form_after_title( $post )
+	public function edit_form_after_title( object $post ): void
 	{
 		$this->template_newpost_beforetitle( $post->post_type, $post, NULL, FALSE, NULL, [] );
 	}
@@ -547,7 +547,7 @@ class Identified extends gEditorial\Module
 		return $this->filters( 'sanitize_identifier', $sanitized, $value, $type, $post, $strict );
 	}
 
-	public function subcontent_provide_summary( $data, $item, $parent, $context )
+	public function subcontent_provide_summary( ?array $data, array $item, object $parent, ?string $context ): ?array
 	{
 		if ( ! is_null( $data ) )
 			return $data;
@@ -705,7 +705,7 @@ class Identified extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $terms;
@@ -828,7 +828,7 @@ class Identified extends gEditorial\Module
 			}, 999, 2 );
 	}
 
-	private function _search_criteria_discovery( $search, $type )
+	private function _search_criteria_discovery( string $search, string $type ): string
 	{
 		switch ( $type ) {
 			case 'gtin'    : return Core\ISBN::discovery( $search );
@@ -880,7 +880,7 @@ class Identified extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/carlodaniele/1ca4110fa06902123349a0651d454057
-	private function _init_queryable_types()
+	private function _init_queryable_types(): bool
 	{
 		$queryable = FALSE;
 
@@ -907,14 +907,16 @@ class Identified extends gEditorial\Module
 		}
 
 		if ( ! $queryable || is_admin() )
-			return;
+			return TRUE;
 
 		$this->action( 'pre_get_posts', 1, 10, 'queryable_types' );
 		$this->action( 'template_redirect', 0, 9, 'queryable_types' );
 		$this->filter_self( 'is_post_viewable', 2, 10, 'queryable_types' );
+
+		return TRUE;
 	}
 
-	public function pre_get_posts_queryable_types( &$query )
+	public function pre_get_posts_queryable_types( object &$query ): void
 	{
 		if ( $query->is_main_query() || ! $query->is_post_type_archive() )
 			return;
@@ -950,7 +952,7 @@ class Identified extends gEditorial\Module
 		}
 	}
 
-	public function template_redirect_queryable_types()
+	public function template_redirect_queryable_types(): void
 	{
 		if ( is_home() || is_404() ) {
 
@@ -1033,7 +1035,7 @@ class Identified extends gEditorial\Module
 		}
 	}
 
-	public function is_post_viewable_queryable_types( $viewable, $post )
+	public function is_post_viewable_queryable_types( bool $viewable, object $post ): bool
 	{
 		if ( $viewable )
 			return $viewable;
@@ -1066,7 +1068,7 @@ class Identified extends gEditorial\Module
 		);
 	}
 
-	public function post_row_actions( $actions, $post )
+	public function post_row_actions( array $actions, object $post ): array
 	{
 		if ( ! $this->is_post_viewable( $post ) )
 			return $actions;

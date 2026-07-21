@@ -355,10 +355,9 @@ class Helper extends WordPress\Main
 		], Core\HTML::escape( $title ) ).$after;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function getEditorialUserID( bool $fallback = FALSE )
 	{
-		self::_dep();
 		return gEditorial()->user( $fallback );
 	}
 

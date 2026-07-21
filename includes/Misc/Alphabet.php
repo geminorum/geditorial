@@ -215,7 +215,7 @@ class Alphabet extends Core\Base
 		return $array;
 	}
 
-	public static function firstLetter( string $string, array $alphabet, bool $alternative = FALSE ): string
+	public static function firstLetter( string $string, array $alphabet, false|array $alternative = FALSE ): string
 	{
 		$first = strtoupper( Core\Text::subStr( $string, 0, 1 ) );
 

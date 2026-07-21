@@ -176,7 +176,7 @@ trait QuantumComments
 		add_filter( 'pre_comment_author_email', 'sanitize_email' );
 		add_filter( 'pre_comment_author_url', 'sanitize_url' );
 
-		remove_filter( 'wp_update_comment_data', [ $this, 'quantumcomments__wp_update_comment_data' ], 99, 3 );
+		remove_filter( 'wp_update_comment_data', [ $this, 'quantumcomments__wp_update_comment_data' ], 99 );
 
 		unset( $this->cache[$prefix][( $comment_id ?: 'new' )] );
 	}

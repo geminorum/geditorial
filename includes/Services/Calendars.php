@@ -462,7 +462,7 @@ class Calendars extends gEditorial\Service
 
 			} else {
 
-				$venue = self::atts( [
+				$venue = self::parsed( [
 					'address' => '',
 					'title'   => '',
 					'latlng'  => '',
@@ -678,7 +678,7 @@ class Calendars extends gEditorial\Service
 
 			} else {
 
-				$venue = self::atts( [
+				$venue = self::parsed( [
 					'address' => '',
 					'title'   => '',
 					'latlng'  => '',

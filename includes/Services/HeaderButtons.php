@@ -29,7 +29,7 @@ class HeaderButtons extends gEditorial\Service
 		if ( ! $override && array_key_exists( $name, $gEditorialHeaderButtons ) )
 			return $name;
 
-		$gEditorialHeaderButtons[$name] = self::atts( [
+		$gEditorialHeaderButtons[$name] = self::parsed( [
 			'html'  => FALSE, // will override the whole link!
 			'name'  => $name,
 			'text'  => $name,

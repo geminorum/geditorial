@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait MainDownload
 {
 
-	public function maindownload__get_link( $post )
+	public function maindownload__get_link( object $post ): false|string
 	{
 		$link = $url = $attachment = FALSE;
 
@@ -23,23 +23,21 @@ trait MainDownload
 		return $this->filters( 'main_download', $link, $post, $url, $attachment );
 	}
 
-	public function maindownload__get_file_data_for_latechores( $post )
+	public function maindownload__get_file_data_for_latechores( mixed $post ): bool|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$verify   = ! WordPress\IsIt::dev();
 		$filesize = $httpstatus = FALSE;
 
 		if ( $url = gEditorial\Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
-			$filesize   = Core\HTTP::getSize( $url, $verify );
-			$httpstatus = Core\HTTP::getStatus( $url, $verify );
+			$filesize = Core\HTTP::getSize( $url, $httpstatus );
 
 		} else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
 
 			if ( $url = wp_get_attachment_url( (int) $attachment ) )
-				$httpstatus = Core\HTTP::getStatus( $url, $verify );
+				$httpstatus = Core\HTTP::getStatus( $url );
 
 			if ( $meta = wp_get_attachment_metadata( (int) $attachment ) ) {
 
@@ -48,7 +46,7 @@ trait MainDownload
 			}
 
 			if ( ! $filesize && $url )
-				$filesize = Core\HTTP::getSize( $url, $verify );
+				$filesize = Core\HTTP::getSize( $url );
 		}
 
 		if ( ! $filesize || $filesize < 0 )
@@ -63,13 +61,12 @@ trait MainDownload
 	}
 
 	// @REF: `WordPress\Media::getAttachmentFileSize()`
-	public function maindownload__get_filesize( $post = NULL, $format = FALSE, $template = NULL )
+	public function maindownload__get_filesize( mixed $post = NULL, bool $format = FALSE, ?string $template = NULL ): false|string|int
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$flush    = WordPress\IsIt::flush();
-		$verify   = ! WordPress\IsIt::dev();
 		$metakey  = $this->constant( 'maindownload_filesize', '_main_download_filesize' );
 		$filesize = '';
 
@@ -79,10 +76,13 @@ trait MainDownload
 
 		} else if ( $url = gEditorial\Template::getMetaFieldRaw( 'main_download_url', $post->ID ) ) {
 
-			$filesize = Core\HTTP::getSize( $url, $verify );
+			$filesize = Core\HTTP::getSize( $url );
 
 			if ( $filesize && $filesize > 0 )
 				update_post_meta( $post->ID, $metakey, $filesize );
+
+			else if ( $flush )
+				delete_post_meta( $post->ID, $metakey );
 
 		} else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) ) {
 
@@ -93,19 +93,22 @@ trait MainDownload
 			}
 
 			if ( ! $filesize && ( $url = wp_get_attachment_url( (int) $attachment ) ) )
-				$filesize = Core\HTTP::getSize( $url, $verify );
+				$filesize = Core\HTTP::getSize( $url );
 
 			if ( $filesize && $filesize > 0 )
 				update_post_meta( $post->ID, $metakey, $filesize );
+
+			else if ( $flush )
+				delete_post_meta( $post->ID, $metakey );
 		}
 
 		if ( ! $filesize )
-			return '';
+			return $format ? '' : 0;
 
 		return $format
 			? sprintf( $template ?? '<span class="-filesize text-nowrap" title="%1$s">%2$s</span>',
 				_x( 'File Size', 'Internal: Main Download: Title Attr', 'geditorial' ), Core\HTML::wrapLTR( Core\File::formatSize( $filesize ) ) )
-			: $filesize;
+			: (int) $filesize;
 	}
 
 	protected function maindownload__override_loop_before()
@@ -115,7 +118,7 @@ trait MainDownload
 
 	protected function maindownload__override_loop_after()
 	{
-		remove_filter( 'post_type_link', [ $this, 'maindownload__override_posttype_link' ], 9999, 4 );
+		remove_filter( 'post_type_link', [ $this, 'maindownload__override_posttype_link' ], 9999 );
 	}
 
 	public function maindownload__override_posttype_link( $post_link, $post, $leavename, $sample )

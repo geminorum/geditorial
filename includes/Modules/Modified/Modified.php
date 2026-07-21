@@ -217,7 +217,7 @@ class Modified extends gEditorial\Module
 		] );
 	}
 
-	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
 	{
 		if ( $new_post )
 			return;
@@ -478,7 +478,7 @@ class Modified extends gEditorial\Module
 	// @template https://codepen.io/geminorum/pen/yyJjaaP
 	public function modified_data_summary( $atts = [], $post = NULL )
 	{
-		$args = $this->filters( 'data_summary_args', self::atts( [
+		$args = $this->filters( 'data_summary_args', self::parsed( [
 			'id'       => $post,
 			'fields'   => NULL,
 			'context'  => NULL,

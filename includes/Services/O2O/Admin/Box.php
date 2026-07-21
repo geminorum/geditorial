@@ -30,7 +30,7 @@ class Box extends Core\Base
 		'post_status'            => 'any',
 	];
 
-	public function __construct( $args, $columns, $ctype )
+	public function __construct( object $args, $columns, object $ctype )
 	{
 		$this->args    = $args;
 		$this->columns = $columns;
@@ -39,13 +39,13 @@ class Box extends Core\Base
 		$this->labels = $this->ctype->get( 'opposite', 'labels' );
 	}
 
-	public static function add_templates()
+	public static function add_templates(): void
 	{
 		self::add_template( 'tab-list' );
 		self::add_template( 'table-row' );
 	}
 
-	private static function add_template( string $slug )
+	private static function add_template( string $slug ): void
 	{
 		echo Core\HTML::tag( 'script', [
 			'type' => 'text/html',
@@ -53,7 +53,7 @@ class Box extends Core\Base
 		], file_get_contents( dirname( __FILE__ )."/templates/$slug.mustache" ) );
 	}
 
-	public function render( mixed $item )
+	public function render( mixed $item ): void
 	{
 		$extra_qv = array_merge( self::$admin_box_qv, [
 			'o2o:context'  => 'admin_box',
@@ -72,7 +72,7 @@ class Box extends Core\Base
 		echo Mustache::render( 'box', $data );
 	}
 
-	protected function render_data_attributes()
+	protected function render_data_attributes(): string
 	{
 		$data_attr = [
 			'o2o_type'              => $this->ctype->name,
@@ -89,7 +89,7 @@ class Box extends Core\Base
 		return implode( ' ', $data_attr_str );
 	}
 
-	protected function render_connections_table( mixed $item )
+	protected function render_connections_table( mixed $item ): array
 	{
 		$data = [];
 
@@ -112,7 +112,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	protected function render_create_connections( $item )
+	protected function render_create_connections( mixed $item ): array
 	{
 		$data = [ 'label' => $this->labels->create ];
 
@@ -153,7 +153,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	protected function connection_row( int $o2o_id, mixed $item, bool $render = FALSE )
+	protected function connection_row( int $o2o_id, mixed $item, bool $render = FALSE ): string|array
 	{
 		$item->title = apply_filters( 'o2o_connected_title',
 			$item->get_title(),
@@ -174,7 +174,7 @@ class Box extends Core\Base
 			: $data;
 	}
 
-	protected function candidate_row( mixed $item )
+	protected function candidate_row( mixed $item ): array
 	{
 		$title = apply_filters( 'o2o_candidate_title',
 			$item->get_title(),
@@ -197,7 +197,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	protected function candidate_rows( int $current_post_id, $page = 1, $search = '' )
+	protected function candidate_rows( int $current_post_id, int $page = 1, string $search = '' ): string|array
 	{
 		$extra_qv = array_merge( self::$admin_box_qv, [
 			'o2o:context'  => 'admin_box_candidates',
@@ -232,7 +232,7 @@ class Box extends Core\Base
 		return $data;
 	}
 
-	public function ajax_create_post()
+	public function ajax_create_post(): void
 	{
 		if ( ! $this->can_create_post() )
 			die ( -1 );
@@ -249,12 +249,12 @@ class Box extends Core\Base
 		$this->safe_connect( wp_insert_post( $args ) );
 	}
 
-	public function ajax_connect()
+	public function ajax_connect(): void
 	{
 		$this->safe_connect( $_POST['to'] );
 	}
 
-	private function safe_connect( int $to )
+	private function safe_connect( int $to ): void
 	{
 		$from = absint( $_POST['from'] );
 		$to   = absint( $to );
@@ -273,14 +273,14 @@ class Box extends Core\Base
 		] ) );
 	}
 
-	public function ajax_disconnect()
+	public function ajax_disconnect(): void
 	{
 		O2O\API::deleteConnection( $_POST['o2o_id'] );
 
 		$this->refresh_candidates();
 	}
 
-	public function ajax_clear_connections()
+	public function ajax_clear_connections(): void
 	{
 		$r = $this->ctype->disconnect( $_POST['from'], 'any' );
 
@@ -289,7 +289,7 @@ class Box extends Core\Base
 		$this->refresh_candidates();
 	}
 
-	protected static function maybe_send_error( mixed $r )
+	protected static function maybe_send_error( mixed $r ): void
 	{
 		if ( ! is_wp_error( $r ) )
 			return;
@@ -299,12 +299,12 @@ class Box extends Core\Base
 		] ) );
 	}
 
-	public function ajax_search()
+	public function ajax_search(): void
 	{
 		$this->refresh_candidates();
 	}
 
-	private function refresh_candidates()
+	private function refresh_candidates(): void
 	{
 		die ( json_encode( $this->candidate_rows(
 			$_REQUEST['from'],
@@ -313,7 +313,7 @@ class Box extends Core\Base
 		) ) );
 	}
 
-	protected function can_create_post()
+	protected function can_create_post(): bool
 	{
 		if ( ! $this->args->can_create_post )
 			return FALSE;

@@ -83,7 +83,7 @@ class Pointers extends gEditorial\Module
 			$this->render_term_pointers( $object, $context, $screen );
 	}
 
-	public function render_post_pointers( $post, $context = 'box', $screen = NULL )
+	public function render_post_pointers( object $post, string $context = 'box', ?object $screen = NULL ): void
 	{
 		$action_context = self::und( $context, $post->post_type );
 
@@ -114,7 +114,7 @@ class Pointers extends gEditorial\Module
 		echo '</ul></div>';
 	}
 
-	public function render_term_pointers( $term, $context = 'box', $screen = NULL )
+	public function render_term_pointers( object $term, string $context = 'box', ?object $screen = NULL ): void
 	{
 		$action_context = self::und( $context, $term->taxonomy );
 

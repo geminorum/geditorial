@@ -145,7 +145,7 @@ class Terms extends gEditorial\Module
 			[
 				'field'       => 'user_roles',
 				'type'        => 'checkboxes',
-				'title'       => _x( 'User Roles', 'Settings: Setting Title', 'geditorial-terms' ),
+				'title'       => _x( 'User Roles', 'Setting Title', 'geditorial-terms' ),
 				'description' => _x( 'Users within selected roles will be available on fields.', 'Setting Description', 'geditorial-terms' ),
 				'values'      => $this->get_settings_default_roles( [], [ 'administrator' ] ),
 				'default'     => [

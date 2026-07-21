@@ -262,7 +262,7 @@ class WcRelated extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'posts_per_page' => 4,
 			'columns'        => 4,
 			'orderby'        => 'rand',

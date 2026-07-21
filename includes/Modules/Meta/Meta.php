@@ -238,7 +238,7 @@ class Meta extends gEditorial\Module
 		];
 
 		$strings['settings'] = [
-			'post_types_after' => _x( 'Define the fields after select and save the supported post-types.', 'Settings: Description', 'geditorial-meta' ),
+			'post_types_after' => _x( 'Define the fields after select and save the supported post-types.', 'Setting Description', 'geditorial-meta' ),
 		];
 
 		return $strings;

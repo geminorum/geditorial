@@ -492,7 +492,7 @@ class Socialite extends gEditorial\Module
 
 		foreach ( Core\Arraay::sortByPriority( $icons, 'priority' ) as $raw ) {
 
-			$row = self::atts( [
+			$row = self::parsed( [
 				'url'          => '#',
 				'name'         => FALSE,
 				'icon'         => '',

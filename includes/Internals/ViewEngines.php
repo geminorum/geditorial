@@ -63,7 +63,7 @@ trait ViewEngines
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
-	protected function render_view( $part, $data = [], $path = NULL, $verbose = TRUE )
+	protected function render_view( string $part, array $data = [], ?string $path = NULL, bool $verbose = TRUE ): true|string
 	{
 		self::_dep( '$this->viewengine__render()' );
 
@@ -79,10 +79,11 @@ trait ViewEngines
 			return $filtered;
 
 		echo $filtered;
+		return TRUE;
 	}
 
 	// NOTE: always gets a new instance
-	protected function viewengine__get( $path = FALSE )
+	protected function viewengine__get( string $path = '' ): object
 	{
 		$args = [
 			'cache_file_mode' => FS_CHMOD_FILE,
@@ -99,14 +100,16 @@ trait ViewEngines
 
 			$args['loader'] = new \Mustache\Loader\FilesystemLoader( $path );
 
-			if ( is_dir( $path.'partials' ) )
-				$args['partials_loader'] = new \Mustache\Loader\FilesystemLoader( $path.'partials' );
+			$partials = sprintf( '%spartials', Core\File::trail( $path ) );
+
+			if ( is_dir( $partials ) )
+				$args['partials_loader'] = new \Mustache\Loader\FilesystemLoader( $partials );
 		}
 
 		return new \Mustache\Engine( $args );
 	}
 
-	public function viewengine__view_by_template( $template, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_template( string $template, string $context, string $default = 'default', ?string $path = NULL ): false|array
 	{
 		$view     = FALSE;
 		$target   = self::dsh( $context, $template );
@@ -129,7 +132,7 @@ trait ViewEngines
 		return $this->filters( 'view_by_template', $view, $template, $context, $fallback, $roots, $target );
 	}
 
-	public function viewengine__view_by_post( $post, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_post( object $post, string $context, string $default = 'default', ?string $path = NULL ): false|array
 	{
 		$target   = $view = FALSE;
 		$fallback = self::dsh( $context, 'type', $default );
@@ -154,7 +157,7 @@ trait ViewEngines
 		return $this->filters( 'view_by_post', $view, $post, $context, $fallback, $roots, $target );
 	}
 
-	public function viewengine__view_by_term( $term, $context, $default = 'default', $path = NULL )
+	public function viewengine__view_by_term( object $term, string $context, string $default = 'default', ?string $path = NULL ): false|array
 	{
 		$target   = $view = FALSE;
 		$fallback = self::dsh( $context, 'tax', $default );
@@ -179,11 +182,9 @@ trait ViewEngines
 		return $this->filters( 'view_by_term', $view, $term, $context, $fallback, $roots, $target );
 	}
 
-	// NOTE: DEPRECATED
-	protected function get_view_part_by_post( $post, $context, $default = 'default' )
+	#[\Deprecated()]
+	protected function get_view_part_by_post( object $post, string $context, string $default = 'default' ): string
 	{
-		self::_dep();
-
 		$part = $fallback = self::dsh( $context, 'type', $default );
 
 		if ( $post = WordPress\Post::get( $post ) )
@@ -195,11 +196,9 @@ trait ViewEngines
 		return $this->filters( 'view_part_by_post', $part, $post, $context, $fallback );
 	}
 
-	// NOTE: DEPRECATED
-	protected function get_view_part_by_term( $term, $context, $default = 'default' )
+	#[\Deprecated()]
+	protected function get_view_part_by_term( object $term, string $context, string $default = 'default' ): string
 	{
-		self::_dep();
-
 		$part = $fallback = self::dsh( $context, 'tax', $default );
 
 		if ( $term = WordPress\Term::get( $term ) )
@@ -211,10 +210,9 @@ trait ViewEngines
 		return $this->filters( 'view_part_by_term', $part, $term, $context, $fallback );
 	}
 
-	protected function get_view_path( $part = FALSE, $path = NULL )
+	#[\Deprecated()]
+	protected function get_view_path( false|string $part = FALSE, ?string $path = NULL ): string
 	{
-		self::_dep();
-
 		$path = $path ?? ( $this->path.'views' );
 
 		return $part ? sprintf( '%s/%s.mustache', $path, $part ) : $path;

@@ -14,7 +14,7 @@ trait SettingsCore
 		return [
 			'field'   => self::und( 'insert_priority', $suffix ),
 			'type'    => 'priority',
-			'title'   => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial-admin' ),
+			'title'   => _x( 'Insert Priority', 'Setting Title', 'geditorial-admin' ),
 			'default' => $default,
 		];
 	}
@@ -33,12 +33,12 @@ trait SettingsCore
 			'type'  => 'text',
 			'title' => sprintf(
 				/* translators: `%s`: short-code name */
-				_x( '%s Shortcode', 'Settings: Setting Title', 'geditorial-admin' ),
+				_x( '%s Shortcode', 'Setting Title', 'geditorial-admin' ),
 				$title ?? Core\Text::titleCase( $name )
 			),
 			'description' => sprintf(
 				/* translators: `%s`: short-code name extended */
-				_x( 'Customizes the %s short-code tag. Leave blank for default.', 'Settings: Setting Description', 'geditorial-admin' ),
+				_x( 'Customizes the %s short-code tag. Leave blank for default.', 'Setting Description', 'geditorial-admin' ),
 				Core\HTML::strong( $extended ?? Core\Text::strToLower( $name ) )
 			),
 			'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
@@ -370,7 +370,7 @@ trait SettingsCore
 			? []
 			: $_REQUEST[$this->hook_base( $this->module->name )][$context];
 
-		return self::atts( $defaults, $req );
+		return self::parsed( $defaults, $req );
 	}
 
 	protected function fields_current_form( array $fields, ?string $context = NULL, array $excludes = [] ): void

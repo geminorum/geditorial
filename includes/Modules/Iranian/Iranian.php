@@ -149,7 +149,7 @@ class Iranian extends gEditorial\Module
 		return $this->restapi_register_route( 'identity', 'get', '(?P<code>.+)' );
 	}
 
-	public function restapi_identity_get_arguments()
+	public function restapi_identity_get_arguments(): array
 	{
 		return [
 			'code' => [
@@ -161,7 +161,7 @@ class Iranian extends gEditorial\Module
 		];
 	}
 
-	public function restapi_identity_get_code_validate_callback( $param, $request, $key )
+	public function restapi_identity_get_code_validate_callback( mixed $param, object $request, string $key ): bool|object
 	{
 		if ( empty( $param ) )
 			return Services\RestAPI::getErrorArgNotEmpty( $key );

@@ -68,7 +68,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function theIssueCover( $atts = [] )
 	{
 		self::_dep( 'gEditorialMagazineTemplates::theCover()' );
@@ -79,7 +79,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function issueCover( $atts = [] )
 	{
 		self::_dep( 'gEditorialMagazineTemplates::cover()' );
@@ -93,7 +93,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function sanitize_field( $field )
 	{
 		self::_dep( 'NO NEED!' );

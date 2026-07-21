@@ -39,7 +39,7 @@ class LineDiscovery extends gEditorial\Service
 	// TODO: support users
 	public static function main_route_callback( object $request ): mixed
 	{
-		$queried = self::atts( [
+		$queried = self::parsed( [
 			'raw'      => [],
 			'insert'   => FALSE,
 			'target'   => '',

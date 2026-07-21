@@ -244,22 +244,26 @@ class Tabloid extends gEditorial\Module
 		return (bool) $this->framepageviews__render_context_content( 'overview' );
 	}
 
-	protected function framepageviews__handle_flags_for_post( $flags, $post, $context, $data )
+	protected function framepageviews__handle_flags_for_post( array $flags, object $post, string $context, array $data ): bool
 	{
 		if ( in_array( 'needs-barcode', $flags, TRUE ) )
 			gEditorial\Scripts::enqueueJSBarcode();
 
 		if ( in_array( 'needs-qrcode', $flags, TRUE ) )
 			gEditorial\Scripts::enqueueQRCodeSVG();
+
+		return TRUE;
 	}
 
-	protected function framepageviews__handle_flags_for_term( $flags, $term, $context, $data )
+	protected function framepageviews__handle_flags_for_term( array $flags, object $term, string $context, array $data ): bool
 	{
 		if ( in_array( 'needs-barcode', $flags, TRUE ) )
 			gEditorial\Scripts::enqueueJSBarcode();
 
 		if ( in_array( 'needs-qrcode', $flags, TRUE ) )
 			gEditorial\Scripts::enqueueQRCodeSVG();
+
+		return TRUE;
 	}
 
 	protected function framepageviews__prep_data_for_post( $data, $post, $context )
@@ -332,7 +336,7 @@ class Tabloid extends gEditorial\Module
 
 	private function framepageviews__config_script_for_term( object $term, ?string $context, array $data ): array
 	{
-		return  [
+		return [
 			'printtitle'  => WordPress\Term::title( $term ),
 			'printstyles' => gEditorial\Scripts::getPrintStylesURL(),
 		];

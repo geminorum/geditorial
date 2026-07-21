@@ -237,10 +237,9 @@ trait PairedCore
 		return TRUE;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated('USE `$this->paired_register()`')]
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
-		self::_dep( '$this->paired_register()' );
 		return $this->paired_register( $extra, [], [], $supported );
 	}
 
@@ -375,17 +374,14 @@ trait PairedCore
 	 * Strips paired terms rendered for already added data into pointers.
 	 * @example `$this->filter_module( 'tabloid', 'view_data_for_post', 3, 9, 'paired_supported' );`
 	 *
-	 * NOTE: DEPRECATED: use `$this->hook_paired_tabloid_exclude_rendered()`
-	 *
 	 * @param array $data
 	 * @param object $post
 	 * @param string $context
 	 * @return array
 	 */
+	#[\Deprecated('USE `$this->hook_paired_tabloid_exclude_rendered()`')]
 	public function tabloid_view_data_for_post_paired_supported( $data, $post, $context )
 	{
-		self::_dep( 'hook_paired_tabloid_exclude_rendered()' );
-
 		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
 			return $data;
 
@@ -1044,43 +1040,11 @@ trait PairedCore
 		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
 	}
 
-	// NOTE: DEPRECATED
 	// OLD: `set_linked_term()`
+	#[\Deprecated('USE `Services\Paired::doPair()`')]
 	public function paired_set_to_term( $post, $term )
 	{
-		self::_dep( 'Services\Paired::doPair()' );
 		return Services\Paired::doPair( $post, $term );
-	}
-
-	// FIXME: DROP THIS!
-	public function paired_set_to_term_OLD( $post, $term_or_id, $posttype_key, $taxonomy_key )
-	{
-		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
-
-		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
-			return FALSE;
-
-		update_post_meta( $post->ID, '_'.$this->constant( $posttype_key ).'_term_id', $term->term_id );
-		update_term_meta( $term->term_id, $this->constant( $posttype_key ).'_linked', $post->ID );
-
-		// NO NEED: we use the main post date directly
-		// update_term_meta( $term->term_id, $this->constant( 'metakey_term_date', 'datetime' ), $post->post_date );
-
-		wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, FALSE );
-
-		if ( $this->get_setting( 'thumbnail_support' ) ) {
-
-			$image_metakey = $this->constant( 'metakey_term_image', 'image' );
-
-			if ( $thumbnail = get_post_thumbnail_id( $post->ID ) )
-				update_term_meta( $term->term_id, $image_metakey, $thumbnail );
-
-			else
-				delete_term_meta( $term->term_id, $image_metakey );
-		}
-
-		return TRUE;
 	}
 
 	// OLD: `remove_linked_term()`
@@ -1137,7 +1101,7 @@ trait PairedCore
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
-	// NOTE: DEPRECATED: use `paired_all_connected_to()`
+	#[\Deprecated('USE `paired_all_connected_to()`')]
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		self::_dep( 'paired_all_connected_to()' );
@@ -1175,7 +1139,7 @@ trait PairedCore
 
 	// NOTE: must be public
 	// NOTE: returns sorted results
-	// NOTE: DEPRECATED: use `paired_all_connected_from()`
+	#[\Deprecated('USE `paired_all_connected_from()`')]
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		self::_dep( 'paired_all_connected_from()' );

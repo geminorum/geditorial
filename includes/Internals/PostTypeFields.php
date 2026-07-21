@@ -248,7 +248,7 @@ trait PostTypeFields
 			if ( array_key_exists( 'autocomplete', $args ) && FALSE === $args['autocomplete'] )
 				$args['autocomplete'] = 'off';
 
-			$fields[$field] = self::atts( [
+			$fields[$field] = self::parsed( [
 				'type'        => 'text',
 				'name'        => $field,
 				'rest'        => $field, // `FALSE` to disable
@@ -1195,11 +1195,9 @@ trait PostTypeFields
 		do_action( $this->hook_base( 'posttypefields_import_raw_data' ), $post, $data, $override, $check_access, $module );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
 	protected function posttypefields_get_post_by( $field_key, $value, $posttype_constant, $sanitize = FALSE, $module = 'meta' )
 	{
-		self::_dep( 'Services\PostTypeFields::getPostByField()' );
-
 		if ( ! $field_key || ! $value || ! $posttype_constant || ! gEditorial()->enabled( $module ) )
 			return FALSE;
 
@@ -1254,11 +1252,9 @@ trait PostTypeFields
 		return $list;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
 	public function get_postid_by_field( $value, $field, $prefix = NULL )
 	{
-		self::_dep( 'Services\PostTypeFields::getPostByField()' );
-
 		if ( is_null( $prefix ) )
 			$prefix = 'meta'; // the exception!
 

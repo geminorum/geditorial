@@ -70,7 +70,7 @@ class Revisions extends gEditorial\Module
 		];
 	}
 
-	public function admin_init()
+	public function admin_init(): void
 	{
 		add_action( 'admin_post_'.$this->hook( 'purge' ), [ $this, 'admin_post' ] );
 
@@ -201,7 +201,7 @@ class Revisions extends gEditorial\Module
 		}
 	}
 
-	private function _get_author( $user_id )
+	private function _get_author( int $user_id ): array
 	{
 		if ( empty( $this->cache['authors'] ) )
 			$this->cache['authors'] = [];
@@ -216,7 +216,7 @@ class Revisions extends gEditorial\Module
 		];
 	}
 
-	public static function wordCount( $revision )
+	public static function wordCount( object $revision ): string
 	{
 		return vsprintf( '<span class="-wordcount" title="%4$s">[%1$s|%2$s|%3$s]</span>', [
 			gEditorial\Helper::htmlCount( Core\Text::wordCountUTF8( $revision->post_title ), NULL, '&ndash;' ),
@@ -330,7 +330,7 @@ class Revisions extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function purge( $post_id )
+	private function purge( int $post_id ): int
 	{
 		$count = 0;
 
@@ -352,7 +352,7 @@ class Revisions extends gEditorial\Module
 	}
 
 	// FIXME: use `bulk_post_updated_messages` for notices
-	public function admin_post()
+	public function admin_post(): void
 	{
 		if ( empty( $_REQUEST['post_id'] ) )
 			WordPress\Redirect::doReferer( 'wrong' );
@@ -484,7 +484,7 @@ class Revisions extends gEditorial\Module
 	}
 
 	// FIXME: better to use `Tablelist::getPosts()`
-	protected function getPostArray()
+	protected function getPostArray(): array
 	{
 		global $wpdb;
 

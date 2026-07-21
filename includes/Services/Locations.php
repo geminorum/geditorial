@@ -247,13 +247,13 @@ class Locations extends gEditorial\Service
 	 */
 	public static function formatAddress( $data = [], $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'format'    => NULL,
 			'separator' => NULL,
 			'context'   => NULL,
 		], $atts );
 
-		$parsed = Core\Arraay::trimText( self::atts( [
+		$parsed = Core\Arraay::trimText( self::parsed( [
 			'first_name' => '',
 			'last_name'  => '',
 			'company'    => '',

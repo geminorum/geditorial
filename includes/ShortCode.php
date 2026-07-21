@@ -37,7 +37,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ?: '' ) )
 			return '';
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'title'          => NULL,                             // '<a href="%2$s">%1$s</a>', // `FALSE` to disable
 			'title_cb'       => FALSE,                            // Call-back for title
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
@@ -139,7 +139,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'item_link'     => TRUE,
 			'item_text'     => NULL,                             // Call-back or use `%s` for post title
 			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
@@ -231,7 +231,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'item_link'           => TRUE,
 			'item_text'           => NULL,                             // Call-back or use `%s` for term title
 			'item_wrap'           => '',                               // Use `%s` for item title / or HTML tag
@@ -343,7 +343,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return '';
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'title'          => NULL,                             // `FALSE` to disable
 			'title_cb'       => FALSE,                            // The callback for title.
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
@@ -422,7 +422,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'title'          => NULL,                             // `FALSE` to disable
 			'title_cb'       => FALSE,                            // The callback for title.
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
@@ -498,7 +498,7 @@ class ShortCode extends WordPress\Main
 	 */
 	public static function postTitle( $post = NULL, $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'title'            => NULL,                             // `FALSE` to disable
 			'title_cb'         => FALSE,                            // Call-back for title
 			'title_link'       => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
@@ -587,7 +587,7 @@ class ShortCode extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'item_link'     => TRUE,
 			'item_text'     => NULL,                             // Call-back or use `%s` for post title
 			'item_wrap'     => '',                               // Use `%s` for item title / or HTML tag
@@ -737,12 +737,18 @@ class ShortCode extends WordPress\Main
 	 * @param string $fallback
 	 * @return string
 	 */
-	public static function postImage( $post = NULL, $atts = [], $before = '', $after = '', $fallback = '' )
-	{
+	public static function postImage(
+		mixed $post = NULL,
+		array $atts = [],
+		string $before = '',
+		string $after = '',
+		false|string $fallback = '',
+	): false|string {
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'item_link'           => TRUE,
 			'item_text'           => NULL,                             // Call-back or use `%s` for post title
 			'item_wrap'           => '',                               // Use `%s` for item title / or HTML tag
@@ -1358,6 +1364,7 @@ class ShortCode extends WordPress\Main
 	}
 
 	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'assigned' )`
+	#[\Deprecated()]
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		self::_dep( 'ShortCode::listPosts( \'assigned\' )' );
@@ -1517,6 +1524,7 @@ class ShortCode extends WordPress\Main
 
 	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'paired' )`
 	// OLD: `::getAssocPosts()`
+	#[\Deprecated()]
 	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
 		self::_dep( 'ShortCode::listPosts( \'paired\' )' );

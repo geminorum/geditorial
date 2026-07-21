@@ -437,7 +437,7 @@ class Drafts extends gEditorial\Module
 		return $this->post_row_actions( $actions, $post );
 	}
 
-	public function post_row_actions( $actions, $post )
+	public function post_row_actions( array $actions, object $post ): array
 	{
 		if ( ! $this->_is_preview_status( $post ) )
 			return $actions;

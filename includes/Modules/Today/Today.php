@@ -405,7 +405,7 @@ class Today extends gEditorial\Module
 		return $this->post_row_actions( $actions, $post );
 	}
 
-	public function post_row_actions( $actions, $post )
+	public function post_row_actions( array $actions, object $post ): array
 	{
 		if ( in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ] ) )
 			return $actions;
@@ -1470,7 +1470,7 @@ class Today extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $terms;

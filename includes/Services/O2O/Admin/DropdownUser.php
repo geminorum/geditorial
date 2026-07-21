@@ -5,7 +5,7 @@ use geminorum\gEditorial\Services\O2O;
 
 class DropdownUser extends DropdownPost
 {
-	public function __construct( $directed, $title )
+	public function __construct( object $directed, string $title )
 	{
 		parent::__construct( $directed, $title );
 
@@ -25,7 +25,7 @@ class DropdownUser extends DropdownPost
 		O2O\Utils::append( $query->query_vars, self::get_qv() );
 	}
 
-	protected function render_dropdown()
+	protected function render_dropdown(): string
 	{
 		$html = parent::render_dropdown();
 		$html.= Core\HTML::tag( 'input', [

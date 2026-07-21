@@ -297,6 +297,7 @@ trait ObjectsToObjects
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
 	// NOTE: DEPRECATED: use `main_shortcode()`
 	// OLD: `list_p2p()`
+	#[\Deprecated()]
 	public function o2o_list_connected( $o2o, $constant, $context = NULL, $post = NULL, $class = '' )
 	{
 		if ( ! $o2o )

@@ -63,7 +63,7 @@ class Settings extends WordPress\Main
 		return $extra ? add_query_arg( $extra, $url ) : $url;
 	}
 
-	public static function isScreenContext( $context, $screen = NULL )
+	public static function isScreenContext( string $context, ?object $screen = NULL ): bool
 	{
 		$screen = $screen ?? get_current_screen();
 
@@ -73,8 +73,8 @@ class Settings extends WordPress\Main
 		return FALSE;
 	}
 
-	// NOTE: DEPRECATED
 	// NOTE: better to use `$this->get_module_url()`
+	#[\Deprecated()]
 	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
 	{
 		self::_dep( 'Settings::getURLbyContext()' );
@@ -94,182 +94,8 @@ class Settings extends WordPress\Main
 		], $extra ), $url );
 	}
 
-	// NOTE: DEPRECATED
-	public static function reportsURL( $full = TRUE, $dashboard = FALSE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		$relative = 'index.php?page='.self::REPORTS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED
-	public static function settingsURL( $full = TRUE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		$relative = 'admin.php?page='.self::SETTINGS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED: problem with dashboard
-	public static function toolsURL( $full = TRUE, $tools_menu = FALSE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		$relative = $tools_menu ? 'tools.php?page='.self::TOOLS : 'admin.php?page='.self::TOOLS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED: problem with dashboard
-	public static function rolesURL( $full = TRUE, $users_menu = FALSE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		$relative = $users_menu ? 'users.php?page='.self::ROLES : 'admin.php?page='.self::ROLES;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED
-	public static function importsURL( $full = TRUE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		// NOTE: `tools.php` hard-coded for users with `edit_posts` cap!
-		if ( current_user_can( 'edit_posts' ) )
-			$relative = 'tools.php?page='.self::IMPORTS;
-
-		else
-			$relative = 'import.php?page='.self::IMPORTS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED
-	public static function customsURL( $full = TRUE )
-	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
-		$relative = 'themes.php?page='.self::CUSTOMS;
-
-		if ( $full )
-			return get_admin_url( NULL, $relative );
-
-		return $relative;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isReports( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::REPORTS ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isSettings( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::SETTINGS ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isTools( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::TOOLS ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isRoles( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::ROLES ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isImports( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::IMPORTS ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isCustoms( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::CUSTOMS ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
-	// NOTE: DEPRECATED
-	public static function isDashboard( $screen = NULL )
-	{
-		self::_dep( 'Settings::isScreenContext()' );
-
-		$screen = $screen ?? get_current_screen();
-
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, 'dashboard' ) )
-			return TRUE;
-
-		return FALSE;
-	}
-
 	// TODO: Move to `Fields` Service
-	public static function getPageExcludes( $include = [], $context = 'settings' )
+	public static function getPageExcludes( array $include = [], ?string $context = NULL ): array
 	{
 		$pages = [];
 
@@ -285,13 +111,13 @@ class Settings extends WordPress\Main
 		return Core\Arraay::prepNumeral(
 			apply_filters( self::und( static::BASE, 'page_excludes' ),
 				$pages,
-				$context
+				$context ?? 'settings'
 			)
 		);
 	}
 
 	// TODO: Move to `Fields` Service
-	public static function priorityOptions( $format = TRUE )
+	public static function priorityOptions( bool $format = TRUE ): array
 	{
 		return
 			array_reverse( Core\Arraay::range( -100, -1000, 100, $format ), TRUE ) +
@@ -301,7 +127,7 @@ class Settings extends WordPress\Main
 	}
 
 	// TODO: Move to `Fields` Service
-	public static function minutesOptions()
+	public static function minutesOptions(): array
 	{
 		return [
 			'5'    => _x( '5 Minutes', 'Settings: Option: Time in Minutes', 'geditorial-admin' ),
@@ -318,7 +144,7 @@ class Settings extends WordPress\Main
 	}
 
 	// TODO: Move to `CustomPostType` Service
-	public static function supportsOptions()
+	public static function supportsOptions(): array
 	{
 		return [
 			'title'           => _x( 'Title', 'Settings: Option: PostType Support', 'geditorial-admin' ),
@@ -343,7 +169,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function posttypesParents( $extra = [], $context = 'settings' )
+	public static function posttypesParents( string|array $extra = [], ?string $context = NULL ): array
 	{
 		$list = [
 			'human',
@@ -359,7 +185,7 @@ class Settings extends WordPress\Main
 					$list,
 					(array) $extra
 				),
-				$context
+				$context ?? 'settings'
 			)
 		);
 	}
@@ -367,11 +193,12 @@ class Settings extends WordPress\Main
 	/**
 	 * Returns the filtered list of general excluded post-types.
 	 *
-	 * @param array $extra
+	 * @param string|array $extra
+	 * @param string|array $keeps
 	 * @param string $context
 	 * @return array
 	 */
-	public static function posttypesExcluded( $extra = [], $keeps = [], $context = 'settings' )
+	public static function posttypesExcluded( string|array $extra = [], string|array $keeps = [], ?string $context = NULL ): array
 	{
 		$list = [
 			'attachment',          // WP Core
@@ -423,13 +250,13 @@ class Settings extends WordPress\Main
 		// @hook: `geditorial_posttypes_excluded`
 		return apply_filters( self::und( static::BASE, 'posttypes', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
-			$context,
+			$context ?? 'settings',
 			(array) $extra,
 			(array) $keeps
 		);
 	}
 
-	public static function taxonomiesExcluded( $extra = [], $keeps = [], $context = 'settings' )
+	public static function taxonomiesExcluded( string|array $extra = [], string|array $keeps = [], ?string $context = NULL ): array
 	{
 		$list = [
 			'nav_menu',               // WP Core
@@ -478,13 +305,13 @@ class Settings extends WordPress\Main
 		// @hook: `geditorial_taxonomies_excluded`
 		return apply_filters( self::und( static::BASE, 'taxonomies', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
-			$context,
+			$context ?? 'settings',
 			(array) $extra,
 			(array) $keeps
 		);
 	}
 
-	public static function rolesExcluded( $extra = [], $keeps = [], $context = 'settings' )
+	public static function rolesExcluded( string|array $extra = [], string|array $keeps = [], ?string $context = NULL ): array
 	{
 		$list = [
 			'administrator',  // WP Core
@@ -498,13 +325,13 @@ class Settings extends WordPress\Main
 		// @hook: `geditorial_roles_excluded`
 		return apply_filters( self::und( static::BASE, 'roles', 'excluded' ),
 			array_diff( array_merge( $list, (array) $extra ), (array) $keeps ),
-			$context,
+			$context ?? 'settings',
 			(array) $extra,
 			(array) $keeps
 		);
 	}
 
-	public static function showOptionNone( $string = NULL )
+	public static function showOptionNone( ?string $string = NULL ): string
 	{
 		if ( $string )
 			return sprintf(
@@ -516,7 +343,7 @@ class Settings extends WordPress\Main
 		return _x( '&ndash; Select &ndash;', 'Settings: Dropdown Select Option None', 'geditorial-admin' );
 	}
 
-	public static function showRadioNone( $string = NULL )
+	public static function showRadioNone( ?string $string = NULL ): string
 	{
 		if ( $string )
 			return sprintf(
@@ -528,7 +355,7 @@ class Settings extends WordPress\Main
 		return _x( 'None', 'Settings: Radio Select Option None', 'geditorial-admin' );
 	}
 
-	public static function showOptionAll( $string = NULL )
+	public static function showOptionAll( ?string $string = NULL ): string
 	{
 		if ( $string )
 			return sprintf(
@@ -540,14 +367,14 @@ class Settings extends WordPress\Main
 		return _x( '&ndash; All &ndash;', 'Settings: Dropdown Select Option All', 'geditorial-admin' );
 	}
 
-	public static function fieldSeparate( $string = 'from', $before = '', $after = '' )
+	public static function fieldSeparate( string $string = 'from', string $before = '', string $after = '' ): void
 	{
 		switch ( $string ) {
 			case 'count': $string = _x( 'count', 'Settings: Field Separate', 'geditorial-admin' ); break;
 			case 'from' : $string = _x( 'from', 'Settings: Field Separate', 'geditorial-admin' );  break;
 			case 'into' : $string = _x( 'into', 'Settings: Field Separate', 'geditorial-admin' );  break;
 			case 'like' : $string = _x( 'like', 'Settings: Field Separate', 'geditorial-admin' );  break;
-			case 'via' : $string  = _x( 'via', 'Settings: Field Separate', 'geditorial-admin' );  break;
+			case 'via'  : $string = _x( 'via', 'Settings: Field Separate', 'geditorial-admin' );   break;
 			case 'ex'   : $string = _x( 'ex', 'Settings: Field Separate', 'geditorial-admin' );    break;
 			case 'in'   : $string = _x( 'in', 'Settings: Field Separate', 'geditorial-admin' );    break;
 			case 'to'   : $string = _x( 'to', 'Settings: Field Separate', 'geditorial-admin' );    break;
@@ -559,12 +386,12 @@ class Settings extends WordPress\Main
 		printf( '%s<span class="-field-sep">&nbsp;&mdash; %s &mdash;&nbsp;</span>%s', $before, $string, $after );
 	}
 
-	public static function fieldAfterText( $text, $wrap = 'span', $class = '-text-wrap' )
+	public static function fieldAfterText( false|string $text, string $wrap = 'span', string $class = '-text-wrap' ): string
 	{
 		return $text ? Core\HTML::tag( $wrap, [ 'class' => '-field-after '.$class ], $text ) : '';
 	}
 
-	public static function fieldAfterIcon( $url = '', $title = NULL, $icon = 'info' )
+	public static function fieldAfterIcon( $url = '', $title = NULL, $icon = 'info' ): string
 	{
 		if ( ! $url )
 			return '';
@@ -583,1485 +410,24 @@ class Settings extends WordPress\Main
 	}
 
 	// NOTE: @see `WordPress\PostType::NAME_INPUT_PATTERN`
-	public static function fieldAfterPostTypeConstant()
+	public static function fieldAfterPostTypeConstant(): string
 	{
 		return self::fieldAfterIcon( '#',
 			_x( 'Must not exceed 20 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) );
 	}
 
 	// NOTE: @see `WordPress\Taxonomy::NAME_INPUT_PATTERN`
-	public static function fieldAfterTaxonomyConstant()
+	public static function fieldAfterTaxonomyConstant(): string
 	{
 		return self::fieldAfterIcon( '#',
 			_x( 'Must not exceed 32 characters and may only contain lowercase alphanumeric characters, dashes, and underscores.', 'Setting: Setting Info', 'geditorial-admin' ) );
 	}
 
 	// NOTE: @see `WordPress\ShortCode::NAME_INPUT_PATTERN`
-	public static function fieldAfterShortCodeConstant()
+	public static function fieldAfterShortCodeConstant(): string
 	{
 		return self::fieldAfterIcon( '#',
 			_x( 'Do not use spaces or reserved characters.', 'Setting: Setting Info', 'geditorial-admin' ) );
-	}
-
-	public static function getSetting_thrift_mode( $description = NULL )
-	{
-		return [
-			'field'       => 'thrift_mode',
-			'type'        => 'disabled',
-			'title'       => _x( 'Thrift Mode', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Tries to be more careful with system resources!', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_debug_mode( $description = NULL )
-	{
-		return [
-			'field'       => 'debug_mode',
-			'type'        => 'disabled',
-			'title'       => _x( 'Debug Mode', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Tries to figure out what happens behind the curtains!', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_editor_button( $description = NULL )
-	{
-		return [
-			'field'       => 'editor_button',
-			'title'       => _x( 'Editor Button', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '1',
-		];
-	}
-
-	public static function getSetting_quick_newpost( $description = NULL )
-	{
-		return [
-			'field'       => 'quick_newpost',
-			'title'       => _x( 'Quick New Post', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_admin_displaystates( $description = NULL, $default = 0 )
-	{
-		return [
-			'field'       => 'admin_displaystates',
-			'title'       => _x( 'Display States', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Appends assigned data as post state on post edit screen.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_widget_support( $description = NULL )
-	{
-		return [
-			'field'       => 'widget_support',
-			'title'       => _x( 'Default Widgets', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_shortcode_support( $description = NULL )
-	{
-		return [
-			'field'       => 'shortcode_support',
-			'title'       => _x( 'Default Shortcodes', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_tabs_support( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'tabs_support',
-			'title'       => _x( 'Tabs Support', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => $default ?? '1',
-		];
-	}
-
-	public static function getSetting_tab_title( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'tab_title',
-			'type'        => 'text',
-			'title'       => _x( 'Tab Title', 'Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Template for the custom tab title. Leave empty to use defaults.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?: '',
-			'placeholder' => $default ?: '',
-		];
-	}
-
-	public static function getSetting_tab_priority( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'tab_priority',
-			'type'        => 'priority',
-			'title'       => _x( 'Tab Priority', 'Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: zero placeholder */
-				_x( 'Priority of the custom tab. Leave at %s to use defaults.', 'Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( '0' )
-			),
-			'default' => $default ?: 0,
-		];
-	}
-
-	public static function getSetting_woocommerce_support( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'woocommerce_support',
-			'title'       => _x( 'WooCommerce Support', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? '',
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_buddybress_support( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'buddybress_support',
-			'title'       => _x( 'BuddyPress Support', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? '',
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_avatar_support( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'avatar_support',
-			'title'       => _x( 'Avatar Support', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? '',
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_thumbnail_support( $description = NULL )
-	{
-		return [
-			'field'       => 'thumbnail_support',
-			'title'       => _x( 'Default Image Sizes', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_thumbnail_fallback( $description = NULL )
-	{
-		return [
-			'field'       => 'thumbnail_fallback',
-			'title'       => _x( 'Thumbnail Fallback', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Sets the parent post thumbnail image as fallback for the child post.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_legacy_migration( $description = NULL )
-	{
-		return [
-			'field'       => 'legacy_migration',
-			'title'       => _x( 'Legacy Migration', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Imports metadata from legacy plugin system.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_assignment_dock( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'assignment_dock',
-			'title'       => _x( 'Assignment Dock', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Select to use advanced assignment UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_metabox_advanced( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'metabox_advanced',
-			'title'       => _x( 'Advanced Meta-Box', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Select to use advanced meta-box UI on edit post screen.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_show_in_quickedit( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'show_in_quickedit',
-			'title'       => _x( 'Show in Quick-Edit', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Whether to show the taxonomy in the quick/bulk edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_show_in_navmenus( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'show_in_navmenus',
-			'title'       => _x( 'Show in Navigation', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Makes available for selection in navigation menus.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_autolink_terms( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'autolink_terms',
-			'title'       => _x( 'Auto-link Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Tries to linkify the terms in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_selectmultiple_term( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'selectmultiple_term',
-			'title'       => _x( 'Multiple Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Whether to assign multiple terms in edit panel.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_assign_default_term( $description = NULL )
-	{
-		return [
-			'field'       => 'assign_default_term',
-			'title'       => _x( 'Assign Default Term', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Applies the fallback default term from primary taxonomy.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_multiple_instances( $description = NULL )
-	{
-		return [
-			'field'       => 'multiple_instances',
-			'title'       => _x( 'Multiple Instances', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '0',
-		];
-	}
-
-	public static function getSetting_comment_status( $description = NULL )
-	{
-		return [
-			'field'       => 'comment_status',
-			'type'        => 'select',
-			'title'       => _x( 'Comment Status', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Determines the default status of the new post comments.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => 'closed',
-			'values'      => [
-				'open'   => _x( 'Open', 'Settings: Setting Option', 'geditorial-admin' ),
-				'closed' => _x( 'Closed', 'Settings: Setting Option', 'geditorial-admin' ),
-			],
-		];
-	}
-
-	public static function getSetting_post_status( $description = NULL )
-	{
-		return [
-			'field'       => 'post_status',
-			'type'        => 'select',
-			'title'       => _x( 'Post Status', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => 'pending',
-			'values'      => Core\Arraay::stripByKeys( WordPress\Status::get(), [
-				'future',
-				'auto-draft',
-				'inherit',
-				'trash',
-			] ),
-		];
-	}
-
-	public static function getSetting_post_type( $description = NULL )
-	{
-		return [
-			'field'       => 'post_type',
-			'type'        => 'select',
-			'title'       => _x( 'Post Type', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => 'post',
-			'values'      => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ),
-			'exclude'     => [ 'attachment', 'wp_theme' ],
-		];
-	}
-
-	public static function getSetting_insert_content( $description = NULL )
-	{
-		return [
-			'field'       => 'insert_content',
-			'type'        => 'select',
-			'title'       => _x( 'Insert in Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Outputs automatically in the content.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => 'none',
-			'values'      => [
-				'none'   => _x( 'No', 'Settings: Setting Option', 'geditorial-admin' ),
-				'before' => _x( 'Before', 'Settings: Setting Option', 'geditorial-admin' ),
-				'after'  => _x( 'After', 'Settings: Setting Option', 'geditorial-admin' ),
-			],
-		];
-	}
-
-	public static function getSetting_insert_content_enabled( $description = NULL )
-	{
-		return array_merge( self:: getSetting_insert_content( $description ), [
-			'type'    => 'enabled',
-			'values'  => [],
-			'default' => '',
-		] );
-	}
-
-	public static function getSetting_insert_cover( $description = NULL )
-	{
-		return [
-			'field'       => 'insert_cover',
-			'title'       => _x( 'Insert Cover', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-		];
-	}
-
-	// FIXME: DEPRECATED: USE: `settings_insert_priority_option()`
-	public static function getSetting_insert_priority( $description = NULL )
-	{
-		return [
-			'field'       => 'insert_priority',
-			'type'        => 'priority',
-			'title'       => _x( 'Insert Priority', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => '10',
-		];
-	}
-
-	public static function getSetting_before_content( $description = NULL )
-	{
-		return [
-			'field'       => 'before_content',
-			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Before Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: code placeholder */
-				_x( 'Adds %s before start of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( 'HTML' )
-			),
-		];
-	}
-
-	public static function getSetting_after_content( $description = NULL )
-	{
-		return [
-			'field'       => 'after_content',
-			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'After Content', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: code placeholder */
-				_x( 'Adds %s after end of all the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( 'HTML' )
-			),
-		];
-	}
-
-	public static function getSetting_admin_ordering( $description = NULL )
-	{
-		return [
-			'field'       => 'admin_ordering',
-			'title'       => _x( 'Ordering', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances item ordering on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => '1',
-		];
-	}
-
-	public static function getSetting_admin_restrict( $description = NULL )
-	{
-		return [
-			'field'       => 'admin_restrict',
-			'title'       => _x( 'List Restrictions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances restrictions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_admin_columns( $description = NULL )
-	{
-		return [
-			'field'       => 'admin_columns',
-			'title'       => _x( 'List Columns', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances columns on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_admin_bulkactions( $description = NULL )
-	{
-		return [
-			'field'       => 'admin_bulkactions',
-			'title'       => _x( 'Bulk Actions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances bulk actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_admin_rowactions( $description = NULL )
-	{
-		return [
-			'field'       => 'admin_rowactions',
-			'title'       => _x( 'Row Actions', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances row actions on admin edit pages.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_adminbar_summary( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'adminbar_summary',
-			'title'       => _x( 'Adminbar Summary', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Summary for the current item as a node in admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '1',
-		];
-	}
-
-	public static function getSetting_adminbar_tools( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'adminbar_tools',
-			'title'       => _x( 'Adminbar Tools', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enabeles enhancement tools on the admin-bar.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_dashboard_widgets( $description = NULL )
-	{
-		return [
-			'field'       => 'dashboard_widgets',
-			'title'       => _x( 'Dashboard Widgets', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Enhances admin dashboard with customized widgets.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_dashboard_authors( $description = NULL )
-	{
-		return [
-			'field'       => 'dashboard_authors',
-			'title'       => _x( 'Dashboard Authors', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays author column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_dashboard_statuses( $description = NULL )
-	{
-		return [
-			'field'       => 'dashboard_statuses',
-			'title'       => _x( 'Dashboard Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays status column on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_dashboard_count( $description = NULL )
-	{
-		return [
-			'field'       => 'dashboard_count',
-			'type'        => 'number',
-			'title'       => _x( 'Dashboard Count', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Limits displaying rows of items on the dashboard widget.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => 10,
-		];
-	}
-
-	public static function getSetting_summary_scope( $description = NULL )
-	{
-		return [
-			'field'       => 'summary_scope',
-			'type'        => 'select',
-			'title'       => _x( 'Summary Scope', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'User scope for the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => 'all',
-			'values'      => [
-				'all'     => _x( 'All Users', 'Settings: Setting Option', 'geditorial-admin' ),
-				'current' => _x( 'Current User', 'Settings: Setting Option', 'geditorial-admin' ),
-				'roles'   => _x( 'Within the Roles', 'Settings: Setting Option', 'geditorial-admin' ),
-			],
-		];
-	}
-
-	public static function getSetting_summary_drafts( $description = NULL )
-	{
-		return [
-			'field'       => 'summary_drafts',
-			'title'       => _x( 'Include Drafts', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Include drafted items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_summary_excludes( $description = NULL, $values = [], $empty = NULL )
-	{
-		return [
-			'field'        => 'summary_excludes',
-			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Summary Excludes', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Selected terms will be excluded on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
-		];
-	}
-
-	public static function getSetting_summary_parents( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'summary_parents',
-			'title'       => _x( 'Summary Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays only parent terms on the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '1',
-		];
-	}
-
-	public static function getSetting_public_statuses( $description = NULL, $values = [], $empty = NULL )
-	{
-		return [
-			'field'        => 'public_statuses',
-			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Public Statuses', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Selected terms will be acceptable on the public content queries.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
-		];
-	}
-
-	public static function getSetting_paired_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'paired_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Paired Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can assign paired defenitions.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_paired_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
-	{
-		return [
-			'field'        => 'paired_exclude_terms',
-			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Items with selected terms will be excluded form dropdown on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no items available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
-		];
-	}
-
-	public static function getSetting_paired_force_parents( $description = NULL )
-	{
-		return [
-			'field'       => 'paired_force_parents',
-			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Includes parents on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_paired_globalsummary( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'paired_globalsummary',
-			'title'       => _x( 'Global Summary', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Includes connected main posts on the global summary for each supported item.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_display_globalsummary( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'display_globalsummary',
-			'title'       => _x( 'Global Summary', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays connected posts on the global summary on the main post edit screen.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_paired_manage_restricted( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'paired_manage_restricted',
-			'title'       => _x( 'Management Restricted', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Limits creation and deletion of the main posts to administrators.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_parents_as_views( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'parents_as_views',
-			'title'       => _x( 'Parents as Views', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Prepends the parent terms to views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_views_exclude_terms( $description = NULL, $taxonomy = 'post_tag', $empty = NULL )
-	{
-		return [
-			'field'        => 'views_exclude_terms',
-			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Exclude Terms', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Selected terms will be excluded form views on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_no_items', 'no_terms' ),
-			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
-		];
-	}
-
-	public static function getSetting_force_parents( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'force_parents',
-			'title'       => _x( 'Force Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Includes parents when selecting the main contents.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_count_not( $description = NULL )
-	{
-		return [
-			'field'       => 'count_not',
-			'title'       => _x( 'Count Not', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Counts not affected items in the content summary.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_posttype_feeds( $description = NULL )
-	{
-		return [
-			'field'       => 'posttype_feeds',
-			'title'       => _x( 'Feeds', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Supports feeds for the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_posttype_pages( $description = NULL )
-	{
-		return [
-			'field'       => 'posttype_pages',
-			'title'       => _x( 'Pages', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Supports pagination on the supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_units_posttypes( $description = NULL, $values = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'units_posttypes',
-			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Units Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Unit Fields will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no unit post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
-		];
-	}
-
-	public static function getSetting_main_posttype_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'main_posttype_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterPostTypeConstant(),
-			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_main_taxonomy_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'main_taxonomy_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterTaxonomyConstant(),
-			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_category_taxonomy_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'category_taxonomy_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterTaxonomyConstant(),
-			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_status_taxonomy_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'status_taxonomy_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Status Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the status taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterTaxonomyConstant(),
-			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_main_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'main_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_searchform_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'searchform_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Search Form Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the search form short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_span_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'span_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Span Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the span short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_cover_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'cover_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Cover Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the cover short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_subterm_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'subterm_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Sub-Term Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the sub-term short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_connected_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'connected_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Connected Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the connected short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_children_shortcode_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'children_shortcode_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Children Shortcode Tag', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the children short-code tag. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterShortCodeConstant(),
-			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_primary_posttype_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'primary_posttype_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Primary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the primary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterPostTypeConstant(),
-			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_primary_taxonomy_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'primary_taxonomy_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Primary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the primary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterTaxonomyConstant(),
-			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_secondary_posttype_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'secondary_posttype_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Secondary Post-Type Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the secondary post-type key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterPostTypeConstant(),
-			'pattern'     => WordPress\PostType::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_secondary_taxonomy_constant( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'secondary_taxonomy_constant',
-			'type'        => 'text',
-			'title'       => _x( 'Secondary Taxonomy Key', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the secondary taxonomy key. Leave blank for default.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterTaxonomyConstant(),
-			'pattern'     => WordPress\Taxonomy::NAME_INPUT_PATTERN,
-			'field_class' => [ 'medium-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_subcontent_posttypes( $description = NULL, $values = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'subcontent_posttypes',
-			'type'         => 'checkboxes-panel-expanded',
-			'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Will be available for selected post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
-		];
-	}
-
-	public static function getSetting_subcontent_fields( $description = NULL, $values = [], $empty = NULL, $default = TRUE )
-	{
-		return [
-			'field'        => 'subcontent_fields',
-			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Supported Fields', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Determines the optional fields for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no supported fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
-			'default'      => $default,
-		];
-	}
-
-	public static function getSetting_subcontent_types( $description = NULL, $values = [], $empty = NULL, $default = TRUE )
-	{
-		return [
-			'field'        => 'subcontent_types',
-			'type'         => 'checkboxes-panel-expanded',
-			'title'        => _x( 'Supported Types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Determines the optional types for each supported post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no supported types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values,
-			'default'      => $default,
-		];
-	}
-
-	public static function getSetting_parent_posttypes( $description = NULL, $values = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'parent_posttypes',
-			'type'         => 'checkboxes-values',
-			'title'        => _x( 'Parent Post-types', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Selected parents will be used on the selection box.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: _x( 'There are no parents available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-			'values'       => $values ?? WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ),
-		];
-	}
-
-	public static function getSetting_custom_archives( $description = NULL, $default = '' )
-	{
-		return [
-			'field'       => 'custom_archives',
-			'type'        => 'text',
-			'title'       => _x( 'Custom Archives', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: _x( 'Customizes the main archives page for the content.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'field_class' => [ 'regular-text', 'code-text' ],
-			'placeholder' => $default,
-		];
-	}
-
-	public static function getSetting_empty_content( $description = NULL )
-	{
-		return [
-			'field'       => 'empty_content',
-			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Empty Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			'default'     => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
-			'placeholder' => _x( 'There are no content by this title. Search again or create one.', 'Setting: Setting Default', 'geditorial-admin' ),
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: zero placeholder */
-				_x( 'Displays as empty content placeholder. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( '0' )
-			),
-		];
-	}
-
-	public static function getSetting_archive_empty_items( $description = NULL )
-	{
-		return [
-			'field'       => 'archive_empty_items',
-			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Empty Items', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Displays as empty items placeholder.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => _x( 'There are no contents available.', 'Setting: Setting Default', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_archive_override( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'archive_override',
-			'title'       => _x( 'Archive Override', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Overrides default template hierarchy for archive.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '1',
-		];
-	}
-
-	public static function getSetting_archive_title( $description = NULL, $placeholder = FALSE )
-	{
-		return [
-			'field'       => 'archive_title',
-			'type'        => 'text',
-			'title'       => _x( 'Archive Title', 'Setting: Setting Title', 'geditorial-admin' ),
-			'placeholder' => $placeholder,
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: zero placeholder */
-				_x( 'Displays as archive title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( '0' )
-			),
-		];
-	}
-
-	public static function getSetting_newpost_title( $description = NULL, $placeholder = FALSE )
-	{
-		return [
-			'field'       => 'newpost_title',
-			'type'        => 'text',
-			'title'       => _x( 'New-post Title', 'Setting: Setting Title', 'geditorial-admin' ),
-			'placeholder' => $placeholder,
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: zero placeholder */
-				_x( 'Displays as new-post title. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( '0' )
-			),
-		];
-	}
-
-	public static function getSetting_archive_content( $description = NULL )
-	{
-		return [
-			'field'       => 'archive_content',
-			'type'        => 'textarea-quicktags',
-			'title'       => _x( 'Archive Content', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? sprintf(
-				/* translators: `%s`: zero placeholder */
-				_x( 'Displays as archive content. Leave blank for default or %s to disable.', 'Setting: Setting Description', 'geditorial-admin' ),
-				Core\HTML::code( '0' )
-			),
-		];
-	}
-
-	public static function getSetting_archive_template( $description = NULL )
-	{
-		return [
-			'field'       => 'archive_template',
-			'type'        => 'select',
-			'title'       => _x( 'Archive Template', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Used as page template on the archive page.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'none_title'  => self::showOptionNone(),
-			'values'      => wp_get_theme()->get_page_templates(),
-		];
-	}
-
-	public static function getSetting_newpost_template( $description = NULL )
-	{
-		return [
-			'field'       => 'newpost_template',
-			'type'        => 'select',
-			'title'       => _x( 'New-post Template', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Used as page template on the new-post page.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'none_title'  => self::showOptionNone(),
-			'values'      => wp_get_theme()->get_page_templates(),
-		];
-	}
-
-	public static function getSetting_display_searchform( $description = NULL )
-	{
-		return [
-			'field'       => 'display_searchform',
-			'title'       => _x( 'Display Search Form', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Appends a search form to the content generated on front-end.', 'Setting: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_display_threshold( $description = NULL )
-	{
-		return [
-			'field'       => 'display_threshold',
-			'type'        => 'number',
-			'title'       => _x( 'Display Threshold', 'Setting: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Maximum number of items to consider as a long list.', 'Setting: Setting Description', 'geditorial-admin' ),
-			'default'     => '5',
-		];
-	}
-
-	public static function getSetting_display_perpage( $description = NULL )
-	{
-		return [
-			'field'       => 'display_perpage',
-			'type'        => 'number',
-			'title'       => _x( 'Display Per-Page', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Total rows of items per each page of the list.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => 15,
-		];
-	}
-
-	public static function getSetting_frontend_search( $description = NULL, $default = 0 )
-	{
-		return [
-			'field'       => 'frontend_search',
-			'title'       => _x( 'Front-end Search', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Adds results by the information on front-end search.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	// NOTE: DEPRECATED
-	public static function getSetting_posttype_viewable( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'       => 'posttype_viewable',
-			'title'       => _x( 'Viewable Post-Type', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Determines the visibility of the main post-type.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_contents_viewable( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'       => 'contents_viewable',
-			'title'       => _x( 'Viewable Contents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Determines whether the contents are publicly viewable.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_custom_captype( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'custom_captype',
-			'title'       => _x( 'Custom Capabilities', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Registers custom capability-type for the contents.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '0',
-		];
-	}
-
-	public static function getSetting_auto_term_parents( $description = NULL, $default = NULL )
-	{
-		return [
-			'field'       => 'auto_term_parents',
-			'title'       => _x( 'Auto Term Parents', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Auto-assigns parent terms on supported posts.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default ?? '1',
-		];
-	}
-
-	public static function getSetting_override_dates( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'        => 'override_dates',
-			'title'        => _x( 'Override Dates', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Tries to override post-date with provided date data on supported post-types.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_calendar_type( $description = NULL )
-	{
-		return [
-			'field'       => 'calendar_type',
-			'title'       => _x( 'Default Calendar', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'type'        => 'select',
-			'default'     => Core\L10n::calendar(),
-			'values'      => Services\Calendars::getDefualts( TRUE ),
-		];
-	}
-
-	public static function getSetting_calendar_list( $description = NULL )
-	{
-		return [
-			'field'       => 'calendar_list',
-			'title'       => _x( 'Calendar List', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'type'        => 'checkboxes',
-			'default'     => [ Core\L10n::calendar() ],
-			'values'      => Services\Calendars::getDefualts( TRUE ),
-		];
-	}
-
-	public static function getSetting_add_audit_attribute( $description = NULL, $module = 'audit' )
-	{
-		return [
-			'field'       => 'add_audit_attribute',
-			'title'       => _x( 'Add Audit Attribute', 'Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Appends an audit attribute to each item.', 'Setting Description', 'geditorial-admin' ),
-			'disabled'    => ! gEditorial()->enabled( $module ),
-		];
-	}
-
-	public static function getSetting_supported_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'supported_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Supported Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_excluded_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'excluded_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Excluded Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_adminmenu_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'adminmenu_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Admin Menu Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_metabox_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'metabox_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Meta Box Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_adminbar_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'adminbar_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Adminbar Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?: '',
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_reports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'reports_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Reports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can access data reports.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_tools_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'tools_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Tools Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can access data tools.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_imports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'imports_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Imports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can access data imports.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	// NOTE: DEPRECATED
-	public static function getSetting_exports_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'exports_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Exports Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can export data entries.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_prints_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'prints_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Prints Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can print data entries.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_uploads_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'uploads_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Uploads Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can upload data into the site.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_public_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'public_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Public Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can access the links to public endpoints in the site.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_overview_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'overview_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Overview Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can view data overviews.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_manage_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'manage_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Manage Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can manage, edit and delete entry defenitions.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_assign_roles( $description = NULL, $roles = NULL, $excludes = NULL )
-	{
-		return [
-			'field'       => 'assign_roles',
-			'type'        => 'checkboxes',
-			'title'       => _x( 'Assign Roles', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Roles that can assign entry defenitions.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => [],
-			'exclude'     => $excludes ?? ( is_null( $roles ) ? self::rolesExcluded() : '' ),
-			'values'      => $roles ?? WordPress\Role::get(),
-		];
-	}
-
-	public static function getSetting_reports_post_edit( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'       => 'reports_post_edit',
-			'title'       => _x( 'Edit Post Reports', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Also checks for <strong>edit-post</strong> capability for <em>reports</em> roles.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_assign_post_edit( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'       => 'assign_post_edit',
-			'title'       => _x( 'Edit Post Assign', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Also checks for <strong>edit-post</strong> capability for <em>assign</em> roles.', 'Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_overview_fields( $description = NULL, $fields = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'overview_fields',
-			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Overview Fields', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
-			'default'      => [],
-			'values'       => $fields ?? [],
-			'string_empty' => $empty ?? _x( 'There are no fields available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_overview_units( $description = NULL, $fields = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'overview_units',
-			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Overview Units', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
-			'default'      => [],
-			'values'       => $fields ?? [],
-			'string_empty' => $empty ?? _x( 'There are no units available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_overview_taxonomies( $description = NULL, $taxes = NULL, $empty = NULL )
-	{
-		return [
-			'field'        => 'overview_taxonomies',
-			'type'         => 'checkbox-panel',
-			'title'        => _x( 'Overview Taxonomies', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description'  => $description ?? _x( 'Whether to appear as columns on the overview.', 'Setting Description', 'geditorial-admin' ),
-			'default'      => [],
-			'values'       => $taxes ?? [],
-			'string_empty' => $empty ?? _x( 'There are no taxonomies available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_append_identifier_code( $description = NULL )
-	{
-		return [
-			'field'       => 'append_identifier_code',
-			'title'       => _x( 'Append Identifier', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Appends the identifier code field data to each item supported title.', 'Settings: Setting Description', 'geditorial-admin' ),
-		];
-	}
-
-	public static function getSetting_printpage_enqueue_librefonts( $description = NULL )
-	{
-		return [
-			'field'       => 'printpage_enqueue_librefonts',
-			'title'       => _x( 'Enqueue Libre Fonts', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Loads Libre Barcode fonts on print page html head.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'after'       => self::fieldAfterIcon( 'https://graphicore.github.io/librebarcode/' ),
-		];
-	}
-
-	public static function getSetting_force_sanitize( $description = NULL, $default = 0 )
-	{
-		return [
-			'field'       => 'force_sanitize',
-			'title'       => _x( 'Force Sanitize', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Tries to force the sanitization upon storing data.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
-	}
-
-	public static function getSetting_restapi_restricted( $description = NULL, $default = 1 )
-	{
-		return [
-			'field'       => 'restapi_restricted',
-			'title'       => _x( 'Restricted API', 'Settings: Setting Title', 'geditorial-admin' ),
-			'description' => $description ?? _x( 'Access Rest-API requires logged-in users.', 'Settings: Setting Description', 'geditorial-admin' ),
-			'default'     => $default,
-		];
 	}
 
 	/**
@@ -2075,7 +441,7 @@ class Settings extends WordPress\Main
 	 * @param string $none_value
 	 * @return array|string
 	 */
-	public static function getUserCapList( $single_title = NULL, $pseudo_caps = NULL, $none_title = NULL, $none_value = NULL )
+	public static function getUserCapList( ?string $single_title = NULL, ?bool $pseudo_caps = NULL, ?string $none_title = NULL, ?string $none_value = NULL ): array|string
 	{
 		$multisite   = is_multisite();
 		$pseudo_caps = $pseudo_caps ?? $multisite;
@@ -2116,13 +482,15 @@ class Settings extends WordPress\Main
 		return $single_title ? $list[$single_title] : $list;
 	}
 
-	public static function sub( $default = 'general' )
+	public static function sub( string|false $default = 'general' ): string
 	{
 		return trim( self::req( 'sub', $default ) );
 	}
 
-	public static function wrapOpen( $sub, $context = 'settings', $iframe_title = '' )
+	public static function wrapOpen( string $sub, ?string $context = NULL, string $iframe_title = '' ): void
 	{
+		$context = $context ?? 'settings';
+
 		if ( self::req( 'noheader' ) ) {
 
 			add_filter( 'show_admin_bar', '__return_false', 9999 );
@@ -2144,8 +512,10 @@ class Settings extends WordPress\Main
 		).'">';
 	}
 
-	public static function wrapClose( $iframe_exit = TRUE, ?string $context = NULL )
+	public static function wrapClose( bool $iframe_exit = TRUE, ?string $context = NULL ): void
 	{
+		$context = $context ?? 'settings';
+
 		echo '<div class="clear"></div></div>';
 
 		if ( self::req( 'noheader' ) ) {
@@ -2157,7 +527,7 @@ class Settings extends WordPress\Main
 		}
 	}
 
-	public static function wrapError( $message, $title = NULL )
+	public static function wrapError( string $message, ?string $title = NULL ): void
 	{
 		self::wrapOpen( 'error' );
 			self::headerTitle( 'error', $title );
@@ -2166,13 +536,20 @@ class Settings extends WordPress\Main
 	}
 
 	// @REF: `get_admin_page_title()`
-	public static function headerTitle( $context = NULL, $title = NULL, $back = NULL, $to = NULL, $icon = '', $count = FALSE, $search = FALSE, $filters = FALSE )
-	{
+	public static function headerTitle(
+		?string $context = NULL,
+		?string $title = NULL,
+		false|string|array|null $back = NULL,
+		?string $to = NULL,
+		string $icon = '',
+		false|int $count = FALSE,
+		bool $search = FALSE,
+		bool $filters = FALSE,
+	): void {
+
 		$system = Plugin::system();
 		$before = $class = '';
-
-		if ( is_null( $title ) )
-			$title = $system ?: _x( 'Editorial', 'Settings', 'geditorial-admin' );
+		$title  = $title ?? $system ?: _x( 'Editorial', 'Settings', 'geditorial-admin' );
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
@@ -2238,7 +615,7 @@ class Settings extends WordPress\Main
 		echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 	}
 
-	public static function sideOpen( $title = NULL, $uri = '', $active = '', $subs = [], $heading = NULL )
+	public static function sideOpen( ?string $title = NULL, ?string $uri = '', ?string $active = '', array $subs = [], ?string  $heading = NULL ): void
 	{
 		echo '<div class="side-nav-wrap">';
 
@@ -2272,7 +649,7 @@ class Settings extends WordPress\Main
 		// echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 	}
 
-	public static function sideClose()
+	public static function sideClose(): void
 	{
 		// echo '</div><div class="clear"></div></div>';
 		echo '</div></div>';
@@ -2280,7 +657,7 @@ class Settings extends WordPress\Main
 
 	// @SEE: `wp_admin_notice()` @since WP 6.4.0
 	// @SEE: https://core.trac.wordpress.org/ticket/57791
-	public static function message( $messages = NULL )
+	public static function message( ?array $messages = NULL ): void
 	{
 		$messages = $messages ?? self::messages();
 
@@ -2297,7 +674,7 @@ class Settings extends WordPress\Main
 
 	// `processed`
 	// `cleared`
-	public static function messages()
+	public static function messages(): array
 	{
 		return [
 			'resetting' => self::success( _x( 'Settings reset.', 'Settings: Message', 'geditorial-admin' ) ),
@@ -2340,7 +717,7 @@ class Settings extends WordPress\Main
 		];
 	}
 
-	public static function messageExtra()
+	public static function messageExtra(): string
 	{
 		$extra = [];
 
@@ -2468,7 +845,7 @@ class Settings extends WordPress\Main
 		echo Core\HTML::error( $message ?? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) );
 	}
 
-	public static function huh( $message = NULL )
+	public static function huh( ?string $message = NULL ): string
 	{
 		if ( $message )
 			return sprintf(
@@ -2483,12 +860,12 @@ class Settings extends WordPress\Main
 	// TODO: Move to `Fields` Service: `Fields::renderType()`
 	// TODO: support HTML `pattern`: https://input-pattern.com/en/tutorial.php
 	// TODO: support HTML `title_attr`
-	public static function fieldType( $atts, &$scripts )
+	public static function fieldType( array $atts, array &$scripts ): void
 	{
 		if ( FALSE === $atts )
 			return;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'title'       => '&nbsp;',
 			'description' => isset( $atts['desc'] ) ? $atts['desc'] : '',
 			'label_for'   => '',
@@ -3750,6 +2127,7 @@ class Settings extends WordPress\Main
 			echo '</'.$args['wrap'].'>';
 	}
 
+	// TODO: Move to `Fields` Service
 	// TODO: support more types!
 	// FIXME: WTF: not possible to pass fields with arrays (check-boxes/multiple-select)
 	private static function fieldType_getObjectForm( array $args, array $fields, string $name_prefix = '', array $options = [] ): string
@@ -3852,9 +2230,10 @@ class Settings extends WordPress\Main
 		], $group );
 	}
 
+	// TODO: Move to `Fields` Service
 	public static function fieldType_switchOnOff( array $atts = [] ): string|true
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'         => FALSE,
 			'name'       => '',
 			'class'      => FALSE,

@@ -188,7 +188,7 @@ class AdvancedQueries extends gEditorial\Service
 	public static function hookSearchPostTitleOnly( $unhook = FALSE )
 	{
 		if ( $unhook )
-			remove_filter( 'posts_search', [ __CLASS__, 'posts_search_posttitle_only' ], 10, 2 );
+			remove_filter( 'posts_search', [ __CLASS__, 'posts_search_posttitle_only' ], 10 );
 
 		else
 			add_filter( 'posts_search', [ __CLASS__, 'posts_search_posttitle_only' ], 10, 2 );

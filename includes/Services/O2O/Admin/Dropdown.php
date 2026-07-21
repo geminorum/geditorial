@@ -9,18 +9,18 @@ abstract class Dropdown {
 	protected $ctype;
 	protected $title;
 
-	public function __construct( $directed, $title )
+	public function __construct( object $directed, string $title )
 	{
 		$this->ctype = $directed;
 		$this->title = $title;
 	}
 
-	public function show_dropdown()
+	public function show_dropdown(): void
 	{
 		echo $this->render_dropdown();
 	}
 
-	protected function render_dropdown()
+	protected function render_dropdown(): string
 	{
 		$direction = $this->ctype->flip_direction()->get_direction();
 
@@ -42,7 +42,7 @@ abstract class Dropdown {
 		] );
 	}
 
-	protected static function get_qv()
+	protected static function get_qv(): array
 	{
 		if ( ! isset( $_GET['o2o'] ) )
 			return [];
@@ -61,7 +61,7 @@ abstract class Dropdown {
 		return $args;
 	}
 
-	protected static function get_choices( $directed )
+	protected static function get_choices( object $directed ): array
 	{
 		$extra_qv = [
 			'o2o:per_page' => -1,

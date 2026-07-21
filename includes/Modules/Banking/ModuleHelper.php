@@ -12,7 +12,7 @@ class ModuleHelper extends gEditorial\Helper
 	const MODULE = 'banking';
 
 	// NOTE: like `WordPress\Post::summary()`
-	public static function generateSummary( $info )
+	public static function generateSummary( array $info ): array
 	{
 		$summary     = [];
 		$description = [];

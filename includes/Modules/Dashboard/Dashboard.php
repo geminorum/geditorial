@@ -50,12 +50,12 @@ class Dashboard extends gEditorial\Module
 			'_frontend' => [
 				'before_content' => sprintf(
 					/* translators: `%s`: HTML word */
-					_x( 'Adds %s before contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
+					_x( 'Adds %s before contents on dashboard homepage.', 'Setting Description', 'geditorial-dashboard' ),
 					Core\HTML::code( 'HTML' )
 				),
 				'after_content' => sprintf(
 					/* translators: `%s`: HTML word */
-					_x( 'Adds %s after contents on dashboard homepage.', 'Settings: Setting Description', 'geditorial-dashboard' ),
+					_x( 'Adds %s after contents on dashboard homepage.', 'Setting Description', 'geditorial-dashboard' ),
 					Core\HTML::code( 'HTML' )
 				),
 			],

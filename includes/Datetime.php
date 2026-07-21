@@ -786,7 +786,7 @@ class Datetime extends WordPress\Main
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
 
-		$the_day = self::atts( [
+		$the_day = self::parsed( [
 			'cal'   => $default_calendar ?? Core\L10n::calendar(),
 			'year'  => NULL,
 			'month' => 1,

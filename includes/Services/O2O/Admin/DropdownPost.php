@@ -6,7 +6,7 @@ use geminorum\gEditorial\Services\O2O;
 class DropdownPost extends Dropdown
 {
 
-	public function __construct( $directed, $title )
+	public function __construct( object $directed, string $title )
 	{
 		parent::__construct( $directed, $title );
 

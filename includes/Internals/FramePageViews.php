@@ -81,6 +81,8 @@ trait FramePageViews
 		return TRUE;
 	}
 
+	// `protected function framepageviews__handle_flags_for_post( array $flags, object $post, string $context, array $data ): bool { return TRUE; }`
+
 	private function framepageviews__get_view_data_for_post( object $post, ?string $context ): array
 	{
 		$data = [];
@@ -211,6 +213,8 @@ trait FramePageViews
 		return TRUE;
 	}
 
+	// `protected function framepageviews__handle_flags_for_term( array $flags, object $term, string $context, array $data ): bool { return TRUE; }`
+
 	private function framepageviews__get_view_data_for_term( object $term, ?string $context ): array
 	{
 		$data = [];
@@ -219,11 +223,11 @@ trait FramePageViews
 			$data = $response;
 
 		$data = WordPress\Strings::stripByProp( $data, 'meta_rendered',  Core\Arraay::prepString( $this->filters( 'term_meta_exclude_rendered',  [], $term, $context ) ), 'name' );
-		// $data = WordPress\Strings::stripByProp( $data, 'units_rendered', Core\Arraay::prepString( $this->filters( 'term_units_exclude_rendered', [], $term, $context ) ), 'name' );
+		// `$data = WordPress\Strings::stripByProp( $data, 'units_rendered', Core\Arraay::prepString( $this->filters( 'term_units_exclude_rendered', [], $term, $context ) ), 'name' );`
 		$data = WordPress\Strings::stripByProp( $data, 'terms_rendered', Core\Arraay::prepString( $this->filters( 'term_terms_exclude_rendered', [], $term, $context ) ), 'name' );
 
 		$data = WordPress\Strings::stripEmptyValues( $data, 'meta_rendered',  'rendered' );
-		// $data = WordPress\Strings::stripEmptyValues( $data, 'units_rendered', 'rendered' );
+		// `$data = WordPress\Strings::stripEmptyValues( $data, 'units_rendered', 'rendered' );`
 		$data = WordPress\Strings::stripEmptyValues( $data, 'terms_rendered', 'rendered' );
 
 		if ( method_exists( $this, 'framepageviews__prep_data_for_term' ) )
@@ -293,6 +297,6 @@ trait FramePageViews
 
 	private function framepageviews__config_script_for_term( object $term, ?string $context, array $data ): array
 	{
-		return  [];
+		return [];
 	}
 }

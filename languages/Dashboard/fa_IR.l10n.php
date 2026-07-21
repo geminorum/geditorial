@@ -1,2 +1,0 @@
-<?php
-return ['domain'=>'geditorial-dashboard','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Dashboard','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:19+0330','x-generator'=>'Poedit 3.5','messages'=>['Setting TitleDashboard Page'=>'برگه پیشخوان','Setting TitleNavigation Menu'=>'فهرست راه‌بری','Setting ButtonDashboard Page'=>'برگه پیشخوان','Widget AreaEditorial: Dashboard'=>'تحریریه: پیشخوان','Page-StateDashboard'=>'پیشخوان']];

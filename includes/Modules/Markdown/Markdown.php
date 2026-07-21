@@ -570,7 +570,7 @@ class Markdown extends gEditorial\Module
 		return $value;
 	}
 
-	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
 	{
 		if ( $new_post ) {
 

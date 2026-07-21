@@ -586,7 +586,7 @@ class Personage extends gEditorial\Module
 		return $individual;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->is_posttype( 'main_posttype', $post ) )
 			return $terms;

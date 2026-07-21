@@ -10,7 +10,7 @@ class ConnectionTypeFactory extends Core\Base
 
 	public static function register( $atts )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'name'                  => FALSE,
 			'from'                  => 'post',
 			'to'                    => 'post',

@@ -182,7 +182,7 @@ trait O2OMetaBox
 		$module  = $this->key;
 		$options = [];
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'name'        => $type->name,
 			'title'       => NULL,
 			'description' => $type->get_desc(),

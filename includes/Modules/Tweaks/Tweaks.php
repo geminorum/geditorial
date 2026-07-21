@@ -397,7 +397,7 @@ class Tweaks extends gEditorial\Module
 
 		// Avoid error notice from woo-commerce
 		if ( ! empty( $GLOBALS['WC_Brands_Admin'] ) )
-			remove_filter( 'manage_product_posts_columns', [ $GLOBALS['WC_Brands_Admin'], 'product_columns' ], 20, 1 );
+			remove_filter( 'manage_product_posts_columns', [ $GLOBALS['WC_Brands_Admin'], 'product_columns' ], 20 );
 	}
 
 	// Using this hook to early control `current_screen` on other modules

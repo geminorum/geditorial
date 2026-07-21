@@ -75,9 +75,9 @@ class PagedContent extends gEditorial\Module
 				[
 					'field'        => $this->get_setting_key_posttypes_for_target( 'autopaging' ),
 					'type'         => 'checkboxes-values',
-					'title'        => _x( 'Supported Post-types', 'Settings: Setting Title', 'geditorial-paged-content' ),
-					'description'  => _x( 'Auto-paging will be available for the selected post-type.', 'Settings: Setting Description', 'geditorial-paged-content' ),
-					'string_empty' => _x( 'There are no supported post-types available!', 'Settings: Setting Empty String', 'geditorial-admin' ),
+					'title'        => _x( 'Supported Post-types', 'Setting Title', 'geditorial-paged-content' ),
+					'description'  => _x( 'Auto-paging will be available for the selected post-type.', 'Setting Description', 'geditorial-paged-content' ),
+					'string_empty' => _x( 'There are no supported post-types available!', 'Empty String', 'geditorial-admin' ),
 					'values'       => $this->get_settings_posttypes_for_target( 'autopaging' ),
 				],
 				[

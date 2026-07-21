@@ -9,7 +9,7 @@ abstract class Column
 	protected $column_id;
 	protected $connected = [];
 
-	public function __construct( $directed )
+	public function __construct( object $directed )
 	{
 		$this->ctype = $directed;
 
@@ -19,7 +19,7 @@ abstract class Column
 		);
 	}
 
-	public function add_column( $columns )
+	public function add_column( array $columns ): array
 	{
 		$this->prepare_items();
 
@@ -33,7 +33,7 @@ abstract class Column
 
 	protected abstract function get_items();
 
-	protected function prepare_items()
+	protected function prepare_items(): void
 	{
 		$items = $this->get_items();
 
@@ -47,7 +47,7 @@ abstract class Column
 		$this->connected = Core\Arraay::groupBy( $connected->items, [ '\\geminorum\\gEditorial\\Services\\O2O\\Utils', 'getOtherID' ] );
 	}
 
-	public function styles()
+	public function styles(): void
 	{
 ?><style>
 .column-<?php echo $this->column_id; ?> ul {
@@ -59,7 +59,7 @@ abstract class Column
 
 	abstract function get_admin_link( $item );
 
-	protected function render_column( $column, $item_id )
+	protected function render_column( $column, int $item_id ): string
 	{
 		if ( $this->column_id != $column )
 			return '';

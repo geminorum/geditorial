@@ -947,7 +947,7 @@ class WasBorn extends gEditorial\Module
 		return $average;
 	}
 
-	public function pointers_post( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
 	{
 		if ( $new_post )
 			return;
@@ -960,7 +960,7 @@ class WasBorn extends gEditorial\Module
 		$cal     = $this->default_calendar();
 
 		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
-			return FALSE;
+			return;
 
 		printf( $before, '-date-of-birth' );
 		echo $this->get_column_icon();
@@ -984,7 +984,7 @@ class WasBorn extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function audit_auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function audit_auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) )
 			return $terms;

@@ -83,7 +83,7 @@ trait CorePostTypes
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
 
-		$settings = self::atts( [
+		$settings = self::parsed( [
 			'parent_module'     => $this->key,
 			'block_editor'      => FALSE,
 			'quick_edit'        => NULL,
