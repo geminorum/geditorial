@@ -296,7 +296,7 @@ class Cine extends gEditorial\Module
 		$this->filter_module( 'genres', 'get_default_terms', 2 );
 	}
 
-	public function o2o_init()
+	public function o2o_init(): void
 	{
 		if ( ! $o2o = $this->o2o_register( 'main_posttype' ) )
 			return;
@@ -470,23 +470,23 @@ class Cine extends gEditorial\Module
 		] );
 	}
 
-	public function genres_get_default_terms( $terms, $taxonomy )
+	public function genres_get_default_terms( array $terms, string $taxonomy ): array
 	{
 		return Services\Modulation::isTaxonomyGenre( $taxonomy ) ? array_merge( $terms,
 			$this->get_default_terms( 'genre_taxonomy' ),
 		) : $terms;
 	}
 
-	public function the_title( $post_title, $post_id = NULL )
+	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		if ( ! $post = WordPress\Post::get( $post_id ) )
-			return $post_title;
+			return $title;
 
 		if ( $this->constant( 'main_posttype' ) !== $post->post_type )
-			return $post_title;
+			return $title;
 
 		if ( ! $terms = WordPress\Taxonomy::getPostTerms( $this->constant( 'year_taxonomy' ), $post ) )
-			return $post_title;
+			return $title;
 
 		$template = $this->get_setting_fallback( 'title_append_template', '[%s]' );
 
@@ -495,10 +495,10 @@ class Cine extends gEditorial\Module
 			if ( ! $name = WordPress\Term::title( $term, FALSE ) )
 				continue;
 
-			$post_title.= ' '.sprintf( $template, apply_filters( 'string_format_i18n', $name ) );
+			$title.= ' '.sprintf( $template, apply_filters( 'string_format_i18n', $name ) );
 		}
 
-		return $post_title;
+		return $title;
 	}
 
 	public function reports_settings( string $sub ): void

@@ -184,7 +184,7 @@ class Symposium extends gEditorial\Module
 		$this->register_posttype_thumbnail( 'main_posttype' );
 	}
 
-	public function o2o_init()
+	public function o2o_init(): void
 	{
 		if ( ! $o2o = $this->o2o_register( 'main_posttype' ) )
 			return;

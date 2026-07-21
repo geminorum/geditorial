@@ -362,7 +362,7 @@ class Isbn extends gEditorial\Module
 		return $fallback;
 	}
 
-	public function book_editform_meta_summary( $fields, $post )
+	public function book_editform_meta_summary( array $fields, object $post ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
@@ -376,7 +376,7 @@ class Isbn extends gEditorial\Module
 		return $fields;
 	}
 
-	public function national_library_default_posttype_bib_metakey( $default, $posttype )
+	public function national_library_default_posttype_bib_metakey( string $default, string $posttype ): string
 	{
 		if ( $this->posttype_supported( $posttype ) || $this->posttype_woocommerce( $posttype ) )
 			return Services\PostTypeFields::getPostMetaKey( 'bibliographic', 'meta' ) ?: $default;
@@ -384,17 +384,17 @@ class Isbn extends gEditorial\Module
 		return $default;
 	}
 
-	public function national_library_default_posttype_isbn_metakey( $default, $posttype )
+	public function national_library_default_posttype_isbn_metakey( string $default, string $posttype ): string
 	{
 		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
-	public function datacodes_default_posttype_barcode_metakey( $default, $posttype )
+	public function datacodes_default_posttype_barcode_metakey( string $default, string $posttype ): string
 	{
 		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
-	public function datacodes_default_posttype_barcode_type( $default, $posttype, $types )
+	public function datacodes_default_posttype_barcode_type( string $default, string $posttype, array $types ): string
 	{
 		if ( $this->posttype_supported( $posttype ) || $this->posttype_woocommerce( $posttype ) )
 			return ModuleHelper::BARCODE;
@@ -440,12 +440,12 @@ class Isbn extends gEditorial\Module
 		return $extra;
 	}
 
-	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	public function identified_default_posttype_identifier_metakey( string $default, string $posttype ): string
 	{
 		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
 
-	public function identified_default_posttype_identifier_type( $default, $posttype )
+	public function identified_default_posttype_identifier_type( string $default, string $posttype ): string
 	{
 		if ( $this->posttype_supported( $posttype ) )
 			return 'isbn';
@@ -509,7 +509,7 @@ class Isbn extends gEditorial\Module
 		return $meta;
 	}
 
-	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	public function static_covers_default_posttype_reference_metakey( string $default, string $posttype ): string
 	{
 		return $this->_get_main_isbn_metakey( $posttype ) ?: $default;
 	}
@@ -602,7 +602,7 @@ class Isbn extends gEditorial\Module
 	}
 
 	// NOTE: `isbn` field type will be handled by the service.
-	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -627,13 +627,13 @@ class Isbn extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}
 
 	// Makes sure all ISBN initiated on ISBN-13 format.
-	public function meta_initial_isbn( $meta, $field, $post, $module )
+	public function meta_initial_isbn( mixed $meta, array $field, object $post, string $module ): mixed
 	{
 		return $meta ? Core\ISBN::convertToISBN13( $meta ) : $meta;
 	}

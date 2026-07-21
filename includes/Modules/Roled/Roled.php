@@ -98,7 +98,7 @@ class Roled extends gEditorial\Module
 		];
 	}
 
-	private function get_roles_support_duplicate()
+	private function get_roles_support_duplicate(): array
 	{
 		$caps   = [];
 		$prefix = $this->constant( 'base_prefix' );
@@ -110,7 +110,7 @@ class Roled extends gEditorial\Module
 		return $caps;
 	}
 
-	private function get_posttypes_support_editorial()
+	private function get_posttypes_support_editorial(): array
 	{
 		$posttypes = [];
 		$supported = get_post_types_by_support( 'editorial-roles' );
@@ -152,6 +152,7 @@ class Roled extends gEditorial\Module
 	}
 
 	// OVERWRITE
+	// FIXME: WTF?!
 	public function post_types( $posttypes = NULL )
 	{
 		$supported = $this->get_setting( 'editorial_posttypes', [] );
@@ -167,7 +168,7 @@ class Roled extends gEditorial\Module
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/293207
-	public function register_post_post_type_args_disable( $args, $posttype_name )
+	public function register_post_post_type_args_disable( array $args, string $posttype_name ): array
 	{
 		$args['capabilities'] = [
             'create_posts'           => 'do_not_allow',
@@ -187,7 +188,7 @@ class Roled extends gEditorial\Module
 	}
 
 	// TODO: maybe `rewrite`/`publicly_queryable` FALSE
-	public function register_category_taxonomy_args_disable( $args, $taxonomy )
+	public function register_category_taxonomy_args_disable( array $args, string $taxonomy ): array
 	{
 		$args['capabilities'] = [
             'manage_terms' => 'do_not_allow',
@@ -200,16 +201,16 @@ class Roled extends gEditorial\Module
 	}
 
 	// @SEE: https://developer.wordpress.org/?p=1109
-	private function map( $base = NULL )
+	private function map( ?string $base = NULL ): array
 	{
 		$base = $base ?? $this->constant( 'base_type' );
 
 		return [
 
 			// Already mapped, no need to add them to this.
-			// 'edit_post'   => 'edit_'.$base[0],
-			// 'read_post'   => 'read_'.$base[0],
-			// 'delete_post' => 'delete_'.$base[0],
+			// `'edit_post'   => 'edit_'.$base[0],`
+			// `'read_post'   => 'read_'.$base[0],`
+			// `'delete_post' => 'delete_'.$base[0],`
 
 			// must add to roles
 			'create_posts'           => 'create_'.$base[1],
@@ -312,7 +313,7 @@ class Roled extends gEditorial\Module
 		$this->register_button( 'add_theme_to_editor', _x( 'Add Theme Caps to Editor Role', 'Button', 'geditorial-roled' ) );
 	}
 
-	private function duplicate_default_roles()
+	private function duplicate_default_roles(): int
 	{
 		$count  = 0;
 		$roles  = $this->get_settings_default_roles();
@@ -356,12 +357,12 @@ class Roled extends gEditorial\Module
 		return $count;
 	}
 
-	private function add_default_caps( $role )
+	private function add_default_caps( string $role ): int
 	{
 		if ( ! $object = get_role( $role ) )
 			return FALSE;
 
-		$count  = 0;
+		$count = 0;
 
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->has_cap( $cap ) )
@@ -376,7 +377,7 @@ class Roled extends gEditorial\Module
 		if ( ! $object = get_role( $role ) )
 			return FALSE;
 
-		$count  = 0;
+		$count = 0;
 
 		foreach ( $this->map() as $cap => $editorial )
 			if ( $object->remove_cap( $editorial ) )
@@ -385,7 +386,7 @@ class Roled extends gEditorial\Module
 		return $count;
 	}
 
-	private function remove_duplicate_roles()
+	private function remove_duplicate_roles(): int
 	{
 		$count  = 0;
 		$prefix = $this->constant( 'base_prefix' );
@@ -402,7 +403,7 @@ class Roled extends gEditorial\Module
 	}
 
 	// FIXME: move this to Network
-	private function add_theme_caps( $role )
+	private function add_theme_caps( string $role ): bool
 	{
 		if ( ! $object = get_role( $role ) )
 			return FALSE;

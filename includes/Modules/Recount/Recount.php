@@ -117,7 +117,7 @@ class Recount extends gEditorial\Module
 		return $count;
 	}
 
-	public function manage_taxonomy_columns( $columns )
+	public function manage_taxonomy_columns( array $columns ): array
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
@@ -131,7 +131,7 @@ class Recount extends gEditorial\Module
 		return $columns;
 	}
 
-	public function sortable_taxonomy_columns( $columns )
+	public function sortable_taxonomy_columns( array $columns ): array
 	{
 		return array_merge( $columns, [
 			$this->classs() => $this->key,
@@ -139,7 +139,7 @@ class Recount extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/scribu/906872
-	public function request( $query_vars )
+	public function request( array $query_vars ): array
 	{
 		if ( isset( $query_vars['orderby'] ) && $this->key === $query_vars['orderby'] ) {
 			$query_vars = array_merge( $query_vars, [
@@ -178,14 +178,14 @@ class Recount extends gEditorial\Module
 		echo ( $edit ? Core\HTML::link( $html, $edit, TRUE ) : $html );
 	}
 
-	public function taxonomy_bulk_actions( $actions, $taxonomy )
+	public function taxonomy_bulk_actions( array $actions, string $taxonomy ): array
 	{
 		return array_merge( $actions, [
 			'recount_recount_items' => _x( 'Re-count Items', 'Bulk Actions', 'geditorial-recount' ),
 		] );
 	}
 
-	public function taxonomy_bulk_callback( $callback, $action, $taxonomy )
+	public function taxonomy_bulk_callback( callable|false|null $callback, string $action, string $taxonomy ): callable|false|null
 	{
 		$actions = [
 			'recount_recount_items',
@@ -196,7 +196,7 @@ class Recount extends gEditorial\Module
 			: $callback;
 	}
 
-	public function bulk_action_recount_recount_items( $term_ids, $taxonomy, $action )
+	public function bulk_action_recount_recount_items( array $term_ids, string $taxonomy, string $action ): bool
 	{
 		if ( ! $this->taxonomy_supported( $taxonomy ) )
 			return FALSE;

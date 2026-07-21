@@ -151,7 +151,7 @@ class Team extends gEditorial\Module
 		] );
 	}
 
-	public function o2o_init()
+	public function o2o_init(): void
 	{
 		$this->_o2o = Services\O2O\API::registerConnectionType( [
 			'name' => $this->constant( 'o2o_name' ),
@@ -188,7 +188,7 @@ class Team extends gEditorial\Module
 		}
 	}
 
-	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
 	{
 		switch ( $field_key ) {
 			case 'email_gravatar': return Core\Link::mailto( $raw ?: $value );

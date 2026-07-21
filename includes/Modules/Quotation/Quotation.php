@@ -264,7 +264,7 @@ class Quotation extends gEditorial\Module
 		return $items;
 	}
 
-	public function meta_render_metabox( $post, $box, $fields = NULL, $context = 'mainbox' )
+	public function meta_render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = 'mainbox' ): void
 	{
 		gEditorial\MetaBox::fieldPostMenuOrder( $post );
 	}
@@ -288,7 +288,7 @@ class Quotation extends gEditorial\Module
 		echo '<hr />';
 	}
 
-	public function the_title( $title, $post_id )
+	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		if ( ! empty( $title ) )
 			return $title;
@@ -323,7 +323,7 @@ class Quotation extends gEditorial\Module
 		);
 	}
 
-	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -360,7 +360,7 @@ class Quotation extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}

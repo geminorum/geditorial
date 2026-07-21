@@ -1505,7 +1505,7 @@ class Settings extends WordPress\Main
 					] );
 
 					$html.= sprintf( '&nbsp;<span title="%s">&#8206;%s&#8207; &mdash; %s</span>',
-						Core\HTML::escapeAttr( $value_name ),
+						Core\HTML::escape( $value_name ),
 						Core\HTML::code( $value_title ),  // NOTE: `clicktoclip` does not work on labels!
 						Core\Date::get( $value_title )
 					);

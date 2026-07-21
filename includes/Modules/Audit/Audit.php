@@ -635,7 +635,7 @@ class Audit extends gEditorial\Module
 		echo '</div>';
 	}
 
-	protected function framepageviews__prep_data_for_post( $data, $post, $context )
+	protected function framepageviews__prep_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		if ( $post_route = WordPress\Post::getRestRoute( $post ) )
 			$data['post'] = WordPress\Rest::doInternalRequest( $post_route, [ 'context' => 'view' ] );

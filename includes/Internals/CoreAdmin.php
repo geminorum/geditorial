@@ -142,10 +142,10 @@ trait CoreAdmin
 						$states[$this->classs( $term->slug )] = sprintf(
 							'<span class="%s" title="%s" style="color:%s;background-color:%s">%s</span>',
 							'-custom-post-state',
-							Core\HTML::escapeAttr( $label ),
-							Core\HTML::escapeAttr( $color ?: 'inherit' ),
-							Core\HTML::escapeAttr( $color ? Core\Color::lightOrDark( $color ) : 'none' ),
-							Core\HTML::escapeAttr( WordPress\Term::title( $term ) )
+							Core\HTML::escape( $label ),
+							Core\HTML::escape( $color ?: 'inherit' ),
+							Core\HTML::escape( $color ? Core\Color::lightOrDark( $color ) : 'none' ),
+							Core\HTML::escape( WordPress\Term::title( $term ) )
 						);
 					}
 				}

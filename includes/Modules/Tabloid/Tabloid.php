@@ -138,7 +138,7 @@ class Tabloid extends gEditorial\Module
 		}
 	}
 
-	public function rowaction_get_mainlink_for_post( $post, $extra = NULL, $icon = FALSE )
+	public function rowaction_get_mainlink_for_post( object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return FALSE;
@@ -167,13 +167,16 @@ class Tabloid extends gEditorial\Module
 		] );
 	}
 
-	public function rowaction_get_mainlink_for_term( $term, $extra = NULL )
+	public function rowaction_get_mainlink_for_term( object $term, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! $term || ! WordPress\Term::can( $term, 'assign_term' ) )
 			return FALSE;
 
 		if ( ! $text = $this->filters( 'term_action', $this->is_term_viewable( $term ) ? _x( 'Overview', 'Action', 'geditorial-tabloid' ) : FALSE, $term ) )
 			return FALSE;
+
+		if ( FALSE !== $icon )
+			$text = Core\Text::glued( [ '%1$s', $text ] );
 
 		return $this->framepage_get_mainlink_for_term( $term, [
 			'title' => sprintf(
@@ -183,6 +186,7 @@ class Tabloid extends gEditorial\Module
 				Services\CustomTaxonomy::getLabel( $term, 'singular_name' )
 			),
 			'text'         => $text,
+			'icon'         => $icon,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',
@@ -192,7 +196,7 @@ class Tabloid extends gEditorial\Module
 		] );
 	}
 
-	public function post_overview_pre_link( $link, $post, $context )
+	public function post_overview_pre_link( ?string $link, object $post, ?string $context ): ?string
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $link;
@@ -207,7 +211,7 @@ class Tabloid extends gEditorial\Module
 		], 'overview' );
 	}
 
-	public function term_overview_pre_link( $link, $term, $context )
+	public function term_overview_pre_link( ?string $link, object $term, ?string $context ): ?string
 	{
 		if ( ! $this->taxonomy_supported( $term->taxonomy ) )
 			return $link;
@@ -222,7 +226,7 @@ class Tabloid extends gEditorial\Module
 		], 'overview' );
 	}
 
-	private function _make_linked_viewable()
+	private function _make_linked_viewable(): bool
 	{
 		if ( ! $linked = self::req( 'linked' ) )
 			return FALSE;
@@ -266,7 +270,7 @@ class Tabloid extends gEditorial\Module
 		return TRUE;
 	}
 
-	protected function framepageviews__prep_data_for_post( $data, $post, $context )
+	protected function framepageviews__prep_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		if ( $comments = Services\RestAPI::getCommentsResponse( $post, 'view' ) )
 			$data['comments_rendered'] = ModuleHelper::prepCommentsforPost( $comments, $this->default_calendar() );
@@ -282,7 +286,7 @@ class Tabloid extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	protected function framepageviews__prep_hooks_for_post( array $data, object $post, ?string $context ): array
 	{
 		return array_fill_keys( [
 			'after-actions',
@@ -303,7 +307,7 @@ class Tabloid extends gEditorial\Module
 		];
 	}
 
-	protected function framepageviews__cleanup_data_for_post( $data, $post, $context )
+	protected function framepageviews__cleanup_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		unset( $data['comments_rendered'] );
 

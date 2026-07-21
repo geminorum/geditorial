@@ -13,7 +13,9 @@ class Wysiwyg extends gEditorial\Module
 
 	protected $disable_no_taxonomies = FALSE;
 
-	protected $deafults = [ 'description_editor' => TRUE ];
+	protected $deafults = [
+		'description_editor' => TRUE,
+	];
 
 	public static function module(): array
 	{

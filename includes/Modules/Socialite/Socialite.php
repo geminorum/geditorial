@@ -437,7 +437,7 @@ class Socialite extends gEditorial\Module
 		}
 	}
 
-	public function prep_meta_row_module( $value, $field_key = NULL, $field = [], $raw = NULL )
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -468,7 +468,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
 	}

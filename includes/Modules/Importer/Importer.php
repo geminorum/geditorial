@@ -2246,7 +2246,7 @@ class Importer extends gEditorial\Module
 		return $count;
 	}
 
-	public function rowaction_get_mainlink_for_post( $post, $extra = NULL, $icon = FALSE )
+	public function rowaction_get_mainlink_for_post( object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return FALSE;
@@ -2281,7 +2281,7 @@ class Importer extends gEditorial\Module
 	}
 
 	// TODO: split to default/legacy blocks with prepping date/user/attachment
-	protected function framepageviews__prep_data_for_post( $data, $post, $context )
+	protected function framepageviews__prep_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		$meta = WordPress\Post::getMeta( $post, FALSE );
 		$data['raw_rendered'] = [];
@@ -2316,7 +2316,7 @@ class Importer extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	protected function framepageviews__prep_hooks_for_post( array $data, object $post, ?string $context ): array
 	{
 		return array_fill_keys( [
 			'after-actions',

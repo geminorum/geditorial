@@ -549,7 +549,7 @@ class Personage extends gEditorial\Module
 		self::_log( $data ); // FIXME
 	}
 
-	public function the_title( $title, $post_id = NULL )
+	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		return $this->make_human_title( $post_id, 'display', $title, NULL, TRUE );
 	}
@@ -616,7 +616,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// @REF: `Template::getMetaField()`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		switch ( $field ) {
 
@@ -636,7 +636,7 @@ class Personage extends gEditorial\Module
 		return $meta;
 	}
 
-	public function iranian_default_posttype_identity_metakey( $default, $posttype )
+	public function iranian_default_posttype_identity_metakey( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
@@ -644,7 +644,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	public function identified_default_posttype_identifier_metakey( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );
@@ -652,7 +652,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	public function identified_default_posttype_identifier_type( $default, $posttype )
+	public function identified_default_posttype_identifier_type( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return 'identity';
@@ -679,7 +679,7 @@ class Personage extends gEditorial\Module
 		return $keys;
 	}
 
-	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	public function static_covers_default_posttype_reference_metakey( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'identity_number' );

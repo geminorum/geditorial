@@ -9,9 +9,8 @@ use geminorum\gEditorial\WordPress;
 
 trait TaxonomyOverview
 {
-	// NOTE: DEPRECATED: use `modulelinks__register_headerbuttons()`
-	#[\Deprecated()]
-	protected function taxonomy_overview_register_headerbutton( $context, $link = NULL )
+	#[\Deprecated('USE `modulelinks__register_headerbuttons()`')]
+	protected function taxonomy_overview_register_headerbutton( ?string $context, ?string $link = NULL ): false|string
 	{
 		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
 			return FALSE;
@@ -26,8 +25,16 @@ trait TaxonomyOverview
 	// TODO: display term count
 	// TODO: display term meta-data
 	// TODO: link to support post-type: `coreadmin__hook_taxonomy_multiple_supported_column`
-	protected function taxonomy_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
-	{
+	protected function taxonomy_overview_render_table(
+		string $constant,
+		string $uri = '',
+		?string $sub = NULL,
+		?string $context = NULL,
+		?string $title = NULL,
+	): bool {
+
+		$context = $context ?? 'reports';
+
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
@@ -95,7 +102,7 @@ trait TaxonomyOverview
 		] );
 	}
 
-	public function taxonomy_overview_after_table( $columns, $data, $args )
+	public function taxonomy_overview_after_table( array $columns, array $data, array $args ): void
 	{
 		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;

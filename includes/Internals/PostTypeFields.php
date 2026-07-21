@@ -13,11 +13,11 @@ trait PostTypeFields
 	/**
 	 * Retrieves a registered field for a post-type.
 	 *
-	 * @param string $field_key
-	 * @param string $posttype
-	 * @return array
+	 * @param string|false|null $field_key
+	 * @param string|false|null $posttype
+	 * @return false|array
 	 */
-	public function get_posttype_field_args( $field_key, $posttype )
+	public function get_posttype_field_args( string|false|null $field_key, string|false|null $posttype ): false|array
 	{
 		if ( ! $posttype || ! $field_key )
 			return FALSE;
@@ -33,10 +33,11 @@ trait PostTypeFields
 	/**
 	 * Retrieves the export title for given field key.
 	 *
-	 * @param string $field_key
-	 * @return string
+	 * @param string|false|null $field_key
+	 * @param string|false|null $posttype
+	 * @return false|array
 	 */
-	public function get_posttype_field_export_title( $field_key, $posttype )
+	public function get_posttype_field_export_title( string|false|null $field_key, string|false|null $posttype ): false|string
 	{
 		if ( ! $field = $this->get_posttype_field_args( $field_key, $posttype ) )
 			return $field;
@@ -68,7 +69,7 @@ trait PostTypeFields
 	 * @param string $field_key
 	 * @return array
 	 */
-	public function get_posttype_field_supported( $field_key )
+	public function get_posttype_field_supported( string $field_key ): array
 	{
 		global $gEditorialPostTypeFields;
 
@@ -90,7 +91,7 @@ trait PostTypeFields
 	 * @param string $operator
 	 * @return array
 	 */
-	public function get_posttype_fields( $posttype, $filter = [], $operator = 'AND' )
+	public function get_posttype_fields( string|false $posttype, array $filter = [], string $operator = 'AND' ): array
 	{
 		global $gEditorialPostTypeFields;
 
@@ -122,7 +123,7 @@ trait PostTypeFields
 	 * @param array $enabled
 	 * @return array
 	 */
-	public function posttypefields_init_for_posttype( $posttype, $all, $enabled )
+	public function posttypefields_init_for_posttype( string $posttype, $all, $enabled )
 	{
 		$fields = [];
 
@@ -1054,7 +1055,7 @@ trait PostTypeFields
 	// @hook `manage_posts_columns`
 	// @hook `manage_pages_columns`
 	// @hook `manage_{$posttype}_posts_columns`
-	public function manage_posts_columns_posttypefields( $columns, $posttype )
+	public function manage_posts_columns_posttypefields( array $columns, string $posttype ): array
 	{
 		// meta only
 		// if ( in_array( 'byline', $this->posttype_fields( $posttype ) ) )
@@ -1133,19 +1134,19 @@ trait PostTypeFields
 		return $value;
 	}
 
-	protected function posttypefields_custom_column_position( $posttype )
+	protected function posttypefields_custom_column_position( string $posttype ): array
 	{
 		return [ 'comments', 'before' ];
 	}
 
 	// NOTE: excludes are for other modules
-	protected function posttypefields_custom_column_excludes( $fields )
+	protected function posttypefields_custom_column_excludes( array $fields ): array
 	{
 		return array_keys( $fields ); // By default we display all fields
 	}
 
 	// NOTE: helps devise actions to make room for other modules
-	protected function posttypefields__hook_default_rows( $posttype )
+	protected function posttypefields__hook_default_rows( string $posttype ): void
 	{
 		// By default we display all fields
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_all_posttypefields' ], 5, 6 );

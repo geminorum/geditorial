@@ -243,7 +243,7 @@ class Tube extends gEditorial\Module
 			$this->register_posttype_thumbnail( 'secondary_posttype' );
 	}
 
-	public function o2o_init()
+	public function o2o_init(): void
 	{
 		$posttypes = $this->get_setting( 'connected_posttypes', [] );
 

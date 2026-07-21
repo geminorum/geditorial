@@ -9,23 +9,22 @@ use geminorum\gEditorial\WordPress;
 
 trait Rewrites
 {
-
-	protected function rewrites__get_queryvar( $constant_prefix = 'main' )
+	protected function rewrites__get_queryvar( ?string $constant_prefix = 'main' ): string
 	{
 		return $this->constant( self::und( $constant_prefix, 'queryvar' ) );
 	}
 
-	protected function rewrites__get_endpoint( $constant_prefix = 'main', $query = NULL )
+	protected function rewrites__get_endpoint( ?string $constant_prefix = 'main', ?string $query = NULL ): string
 	{
 		return $this->constant( self::und( $constant_prefix, 'endpoint' ),
 			$query ?? $this->rewrites__get_queryvar( $constant_prefix )
 		);
 	}
 
-	// $constant_prefix.'_endpoint' => 'endpoint',
-	// $constant_prefix.'_queryvar' => 'endpoint',
+	// `$constant_prefix.'_endpoint' => 'endpoint',`
+	// `$constant_prefix.'_queryvar' => 'endpoint',`
 	// @SEE: on taxonomies: https://core.trac.wordpress.org/ticket/33728
-	protected function rewrites__add_endpoint( $constant_prefix = 'main' )
+	protected function rewrites__add_endpoint( ?string $constant_prefix = 'main' ): bool
 	{
 		if ( ! $query = $this->rewrites__get_queryvar( $constant_prefix ) )
 			return FALSE;
@@ -41,12 +40,14 @@ trait Rewrites
 		$this->rewrites__endpoint_verbose_page( $constant_prefix, $query, $endpoint );
 
 		$this->filter_append( 'query_vars', $query );
+
+		return TRUE;
 	}
 
 	// @source `View All Posts Pages` 0.9.4 by `Erick Hitter`
 	// @link https://wordpress.org/plugins/view-all-posts-pages/
 	// NOTE: Extra rules needed if verbose page rules are requested.
-	protected function rewrites__endpoint_verbose_page( $constant_prefix = 'main', $query = NULL, $endpoint = NULL )
+	protected function rewrites__endpoint_verbose_page( ?string $constant_prefix = 'main', ?string $query = NULL, ?string $endpoint = NULL ): void
 	{
 		global $wp_rewrite;
 
@@ -84,7 +85,7 @@ trait Rewrites
 		);
 	}
 
-	protected function rewrites__add_tag( $constant_prefix = 'main', $posttypes = NULL )
+	protected function rewrites__add_tag( ?string $constant_prefix = 'main', mixed $posttypes = NULL ): string
 	{
 		if ( ! $query = $this->rewrites__get_queryvar( $constant_prefix ) )
 			return FALSE;

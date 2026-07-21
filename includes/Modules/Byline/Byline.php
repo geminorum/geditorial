@@ -547,7 +547,7 @@ class Byline extends gEditorial\Module
 		return $fields;
 	}
 
-	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	public function objecthints_tips_for_post( array $tips, object $post, ?string $extend, ?string $context, array $queried ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $tips;

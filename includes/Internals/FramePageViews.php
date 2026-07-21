@@ -127,6 +127,9 @@ trait FramePageViews
 		return $this->filters( 'view_data_for_post', $data, $post, $context );
 	}
 
+	// `protected function framepageviews__prep_data_for_post( array $data, object $post, ?string $context ): array { return $data; }`
+	// `protected function framepageviews__prep_hooks_for_post( array $data, object $post, ?string $context ): array { return []; }`
+
 	private function framepageviews__cleanup_view_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		unset( $data['guid'] );
@@ -156,6 +159,8 @@ trait FramePageViews
 
 		return $this->filters( 'cleanup_view_data_for_post', $data, $post, $context );
 	}
+
+	// `protected function framepageviews__cleanup_data_for_post( array $data, object $post, ?string $context ): array { return $data; }`
 
 	private function framepageviews__print_script_for_post( object $post, ?string $context, array $data ): string
 	{
@@ -251,6 +256,9 @@ trait FramePageViews
 		return $this->filters( 'view_data_for_term', $data, $term, $context );
 	}
 
+	// `protected function framepageviews__prep_data_for_term( array $data, object $term, ?string $context ): array { return $data; }`
+	// `protected function framepageviews__prep_hooks_for_term( array $data, object $term, ?string $context ): array { return []; } `
+
 	private function framepageviews__cleanup_view_data_for_term( array $data, object $term, ?string $context ): array
 	{
 		unset( $data['meta_rendered'] );
@@ -277,6 +285,8 @@ trait FramePageViews
 
 		return $this->filters( 'cleanup_view_data_for_term', $data, $term, $context );
 	}
+
+	// `protected function framepageviews__cleanup_data_for_term( array $data, object $term, ?string $context ): array { return $data; }`
 
 	private function framepageviews__print_script_for_term( object $term, ?string $context, array $data ): string
 	{

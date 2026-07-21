@@ -634,7 +634,7 @@ class PostTypeFields extends gEditorial\Service
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
 						: sprintf( '<span title="%s">@%s</span>',
-							empty( $field['title'] ) ? $field_key : Core\HTML::escapeAttr( $field['title'] ),
+							empty( $field['title'] ) ? $field_key : Core\HTML::escape( $field['title'] ),
 							$raw ?: $value
 						);
 

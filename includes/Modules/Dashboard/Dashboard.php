@@ -248,7 +248,7 @@ class Dashboard extends gEditorial\Module
 	}
 
 	// Hides dashboard title for active theme
-	public function the_title( $title, $post_id )
+	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		if ( $post_id == $this->get_setting( 'dashboard_page_id', 0 ) )
 			return '';

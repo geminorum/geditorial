@@ -688,7 +688,7 @@ class Today extends gEditorial\Module
 		$this->set_today_meta( $post->ID, $postmeta, $constants );
 	}
 
-	public function the_title( $title, $post_id = NULL )
+	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		if ( $title )
 			return $title;

@@ -167,7 +167,7 @@ class TermHierarchy extends gEditorial\Service
 				continue;
 
 			$html.= sprintf( '<div title="%s">%s</div>',
-				Core\HTML::escapeAttr( CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ),
+				Core\HTML::escape( CustomTaxonomy::getLabel( $taxonomy, 'extended_label' ) ),
 				$dropdown
 			);
 		}

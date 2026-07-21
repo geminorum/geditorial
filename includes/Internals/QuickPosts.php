@@ -250,7 +250,7 @@ trait QuickPosts
 	// LEGACY: do not use thick-box anymore!
 	// NOTE: must `add_thickbox()` on load
 	// FIXME: use color box API
-	public function do_render_thickbox_newpostbutton( $post, $constant, $context = 'newpost', $extra = [], $inline = FALSE, $width = '600' )
+	public function do_render_thickbox_newpostbutton( object $post, string $constant, string $context = 'newpost', array $extra = [], bool $inline = FALSE, string $width = '600' ): bool
 	{
 		$posttype = $this->constant( $constant );
 		$object   = WordPress\PostType::object( $posttype );
@@ -288,5 +288,6 @@ trait QuickPosts
 		], sprintf( $text, Services\Icons::get( $this->module->icon ), $name ) );
 
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons hide-if-no-js' );
+		return TRUE;
 	}
 }

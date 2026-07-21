@@ -343,7 +343,7 @@ class Schedule extends gEditorial\Module
 		return wp_insert_post( $data );
 	}
 
-	public function get_calendar_link( $post )
+	public function get_calendar_link( int|object $post ): false|array
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'getByPost' ) )
 			return FALSE;
@@ -361,8 +361,15 @@ class Schedule extends gEditorial\Module
 		], 'adminmenu' );
 	}
 
-	private function can_reschedule( $post )
+	private function can_reschedule( int|object $post ): bool
 	{
-		return ! $this->in_setting( $post->post_status, 'noschedule_statuses', [ 'publish', 'future', 'private' ] );
+		return ! $this->in_setting(
+			get_post_status( $post ),
+			'noschedule_statuses',
+			[
+				'publish',
+				'future',
+				'private',
+			] );
 	}
 }

@@ -390,7 +390,7 @@ class StaticCovers extends gEditorial\Module
 		], '' );
 	}
 
-	protected function framepageviews__prep_data_for_post( $data, $post, $context )
+	protected function framepageviews__prep_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		switch ( $context ) {
 
@@ -422,7 +422,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	protected function framepageviews__prep_hooks_for_post( $data, $post, $context )
+	protected function framepageviews__prep_hooks_for_post( array $data, object $post, ?string $context ): array
 	{
 		return array_fill_keys( [
 			'after-actions',
@@ -436,7 +436,7 @@ class StaticCovers extends gEditorial\Module
 	}
 
 	// TODO: link to `framepage`
-	public function tweaks_column_thumb( $html, $post_id, $size )
+	public function tweaks_column_thumb( string $html, int $post_id, mixed $size ): string
 	{
 		if ( $html )
 			return $html;
@@ -478,12 +478,12 @@ class StaticCovers extends gEditorial\Module
 	}
 
 	// TODO: do the actual count!
-	private function _get_counter( $start = 1 )
+	private function _get_counter( $start = 1 ): string
 	{
 		return Core\Number::zeroise( $start, $this->get_setting( 'counter_threshold', 2 ) );
 	}
 
-	private function _get_html_image( $src, $title = FALSE, $class = '' )
+	private function _get_html_image( $src, $title = FALSE, $class = '' ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => $src,
@@ -734,7 +734,7 @@ class StaticCovers extends gEditorial\Module
 		return $joined ? WordPress\Strings::getJoined( $list ) : $list;
 	}
 
-	private function _get_posttype_metakey( $posttype )
+	private function _get_posttype_metakey( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_reference_metakey' ) )
 			return $setting;

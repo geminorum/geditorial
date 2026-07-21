@@ -879,9 +879,9 @@ class NationalLibrary extends gEditorial\Module
 		$this->template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta );
 	}
 
-	private function _do_enqueue_app( $atts = [] ) {} // FIXME
+	private function _do_enqueue_app( array $atts = [] ): void {} // FIXME
 
-	public function meta_initial_bibliographic( $meta, $field, $post, $module )
+	public function meta_initial_bibliographic( mixed $meta, array $field, object $post, string $module ): mixed
 	{
 		if ( $meta )
 			return $meta;
@@ -898,7 +898,7 @@ class NationalLibrary extends gEditorial\Module
 		return $meta;
 	}
 
-	public function meta_initial_isbn( $meta, $field, $post, $module )
+	public function meta_initial_isbn( mixed $meta, array $field, object $post, string $module ): mixed
 	{
 		if ( $meta )
 			return $meta;
@@ -915,7 +915,7 @@ class NationalLibrary extends gEditorial\Module
 		return $meta;
 	}
 
-	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	public function objecthints_tips_for_post( array $tips, object $post, ?string $extend, ?string $context, array $queried ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $tips;

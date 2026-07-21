@@ -13,13 +13,14 @@ use geminorum\gEditorial\WordPress;
 trait TaxonomyTaxonomy
 {
 	// NOTE: use on `init`
-	protected function taxtax__hook_init( $subjects, $constant, $column = TRUE )
+	protected function taxtax__hook_init( string|array $subjects, string $constant, $column = TRUE ): bool
 	{
 		if ( ! $target = $this->constant( $constant, $constant ) )
 			return FALSE;
 
 		// NOTE: no need to check `manage` capability on `edit_term`/`create_term` hooks
-		$callback = function ( $term_id, $tt_id, $taxonomy ) use ( $subjects, $target ) {
+		$callback = function ( $term_id, $tt_id, $taxonomy )
+			use ( $subjects, $target ) {
 
 			if ( ! in_array( $taxonomy, (array) $subjects, TRUE ) )
 				return;
@@ -58,7 +59,7 @@ trait TaxonomyTaxonomy
 
 	// TODO: auto-hook this via `taxtax__hook_init()`
 	// NOTE: use on `current_screen`
-	protected function taxtax__hook_screen( $screen, $constant, $column = TRUE, $priority = NULL )
+	protected function taxtax__hook_screen( object $screen, string $constant, bool $column = TRUE, ?int $priority = NULL ): bool
 	{
 		if ( ! $target = $this->constant( $constant, $constant ) )
 			return FALSE;
@@ -116,7 +117,7 @@ trait TaxonomyTaxonomy
 		return TRUE;
 	}
 
-	protected function taxtax__edit_tags_screen( string $taxonomy, string|object $target ): bool
+	protected function taxtax__edit_tags_screen( string $taxonomy, string|object $target ): true
 	{
 		$singleselect = Services\TermHierarchy::isSingleTerm( $target );
 

@@ -12,37 +12,37 @@ trait SubContents
 	use QuantumComments;
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__filter_prefix()
+	protected function quantumcomments__filter_prefix(): string
 	{
 		return 'subcontent';
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__get_comment_type()
+	protected function quantumcomments__get_comment_type(): string
 	{
 		return $this->subcontent_get_comment_type();
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__get_comment_status()
+	protected function quantumcomments__get_comment_status(): string
 	{
 		return $this->subcontent_get_comment_status();
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__define_fields()
+	protected function quantumcomments__define_fields(): array
 	{
 		return $this->subcontent_define_fields();
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__get_data_mapping( $context = NULL, $posttype = NULL )
+	protected function quantumcomments__get_data_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return $this->subcontent_get_data_mapping( $context, $posttype );
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__get_meta_mapping( $context = NULL, $posttype = NULL )
+	protected function quantumcomments__get_meta_mapping( $context = NULL, $posttype = NULL ): array
 	{
 		return $this->subcontent_get_meta_mapping( $context, $posttype );
 	}
@@ -78,7 +78,7 @@ trait SubContents
 		], $this->get_strings( 'subcontent', 'js' ), $extra );
 	}
 
-	protected function subcontent_get_comment_type()
+	protected function subcontent_get_comment_type(): string
 	{
 		return $this->constant( 'subcontent_type', $this->key );
 	}
@@ -94,18 +94,18 @@ trait SubContents
 		return $this->quantumcomments__is_comment_type( $data_or_comment, $type );
 	}
 
-	protected function subcontent_get_comment_status()
+	protected function subcontent_get_comment_status(): string
 	{
 		return $this->constant( 'subcontent_status', 'private' );
 	}
 
 	// NOTE: on strings API: `$strings['fields']['subcontent']`
-	protected function subcontent_define_fields()
+	protected function subcontent_define_fields(): array
 	{
 		return $this->get_strings( 'subcontent', 'fields' );
 	}
 
-	protected function subcontent_get_fields_for_settings()
+	protected function subcontent_get_fields_for_settings(): array
 	{
 		return Core\Arraay::stripByKeys(
 			$this->subcontent_define_fields(),
@@ -113,7 +113,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_get_types_for_settings()
+	protected function subcontent_get_types_for_settings(): array
 	{
 		return Core\Arraay::stripByKeys( Core\Arraay::pluck(
 			$this->subcontent_define_type_options( 'settings' ),
@@ -124,7 +124,7 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_define_type_options( $context, $posttype = NULL )
+	protected function subcontent_define_type_options( $context, $posttype = NULL ): array
 	{
 		return [
 			/// EXAMPLE
@@ -138,7 +138,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_get_type_options( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_type_options( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'type_options',
 			$this->subcontent_define_type_options( $context, $posttype ),
@@ -147,7 +147,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_available_type_options( $context = 'display', $posttype = NULL )
+	protected function subcontent_available_type_options( $context = 'display', $posttype = NULL ): array
 	{
 		// Tries not to fire the filter hook twice!
 		$defined = Core\Arraay::pluck( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
@@ -159,7 +159,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_list_type_options( $context = 'display', $posttype = NULL )
+	protected function subcontent_list_type_options( $context = 'display', $posttype = NULL ): array
 	{
 		return Core\Arraay::pluck(
 			$this->subcontent_available_type_options( $context, $posttype ),
@@ -168,7 +168,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' )
+	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' ): array
 	{
 		$all        = $this->subcontent_define_fields();
 		// $hidden     = $this->subcontent_get_hidden_fields( $context );
@@ -189,14 +189,14 @@ trait SubContents
 		return $this->filters( 'subcontent_fields', $fields, $enabled, $required, $context );
 	}
 
-	protected function subcontent_define_searchable_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_define_searchable_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return [
 			// 'fullname' => [ 'human', 'department' ], // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_searchable_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_searchable_fields( $context = 'display', $posttype = NULL ): array
 	{
 		$fields = $this->subcontent_define_searchable_fields();
 
@@ -214,7 +214,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_get_importable_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_importable_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'importable_fields',
 			$this->subcontent_define_required_fields(),
@@ -223,14 +223,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_importable_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_define_importable_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return [
 			// 'name' => 'type', // <---- EXAMPLE: 'target_key' => 'target_column'
 		];
 	}
 
-	protected function subcontent_get_required_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_required_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'required_fields',
 			$this->subcontent_define_required_fields(),
@@ -239,14 +239,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_readonly_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_define_readonly_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_readonly_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_readonly_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'readonly_fields',
 			$this->subcontent_define_readonly_fields(),
@@ -255,14 +255,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_selectable_fields( $context, $posttype = NULL )
+	protected function subcontent_define_selectable_fields( $context, $posttype = NULL ): array
 	{
 		return [
 			// 'field_key': { option1: 'Option 1', option2: 'Option 2' }  <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_selectable_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_selectable_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'selectable_fields',
 			$this->subcontent_define_selectable_fields( $context, $posttype ),
@@ -271,14 +271,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_hidden_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_define_hidden_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_hidden_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_hidden_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'hidden_fields',
 			Core\Arraay::prepString(
@@ -291,14 +291,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_unique_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_define_unique_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return [
 			// 'identity' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_unique_fields( $context = 'display', $posttype = NULL )
+	protected function subcontent_get_unique_fields( $context = 'display', $posttype = NULL ): array
 	{
 		return $this->filters( 'unique_fields',
 			$this->subcontent_define_unique_fields(),
@@ -307,7 +307,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_get_meta_mapping( $context = NULL, $posttype = NULL )
+	protected function subcontent_get_meta_mapping( $context = NULL, $posttype = NULL ): array
 	{
 		return [
 			// 'name' => '_metakey', // <---- EXAMPLE
@@ -316,7 +316,7 @@ trait SubContents
 	}
 
 	// NOTE: prevents from meta preparations
-	protected function subcontent_get_meta_untouchable( $context = NULL, $posttype = NULL )
+	protected function subcontent_get_meta_untouchable( $context = NULL, $posttype = NULL ): array
 	{
 		return [
 			// 'data',
@@ -325,7 +325,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL )
+	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL ): array
 	{
 		return array_merge( $this->quantumcomments__base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
@@ -339,7 +339,7 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_get_data_mapping( $context = NULL, $posttype = NULL )
+	protected function subcontent_get_data_mapping( $context = NULL, $posttype = NULL ): array
 	{
 		return $this->subcontent_base_data_mapping( $context, $posttype );
 	}
@@ -351,7 +351,7 @@ trait SubContents
 	 * @param string $context
 	 * @return array
 	 */
-	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL )
+	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL ): array
 	{
 		$data        = [];
 		$types       = $this->quantumcomments__get_field_types( $context );
@@ -402,7 +402,7 @@ trait SubContents
 	}
 
 	// NOTE: use on `importer_init()`
-	protected function subcontent__hook_importer_init()
+	protected function subcontent__hook_importer_init(): void
 	{
 		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );
 		$this->filter_module( 'importer', 'prepare', 7, 10, 'subcontent' );

@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 trait RestAPI
 {
-
 	protected function restapi_get_namespace(): string
 	{
 		return sprintf( '%s/%s',
@@ -29,10 +28,15 @@ trait RestAPI
 		return $route;
 	}
 
-	// FIXME: add extra args
+	// TODO: add extra args
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
-	protected function restapi_register_route( string $route, string|array $methods = 'GET', string $suffix = '', array $extra = [] ): bool
-	{
+	protected function restapi_register_route(
+		string $route,
+		string|array $methods = 'GET',
+		string $suffix = '',
+		array $extra = [],
+	): bool {
+
 		$args = [];
 		$hook = Core\Text::sanitizeHook( $route );
 

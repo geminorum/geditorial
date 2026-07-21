@@ -20,7 +20,7 @@ class Icons extends gEditorial\Service
 	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
 	 * - Pass `none` to leave `div.wp-menu-image` empty so an icon can be added via CSS.
 	 *
-	 * @param string|array $icon
+	 * @param string|array|false|null $icon
 	 * @param string $fallback
 	 * @param string|array $extra
 	 * @return string

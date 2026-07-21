@@ -16,7 +16,7 @@ class HeaderButtons extends gEditorial\Service
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
 	}
 
-	public static function register( $name, $atts = [], $override = FALSE )
+	public static function register( $name, $atts = [], $override = FALSE ): false|string
 	{
 		global $gEditorialHeaderButtons;
 

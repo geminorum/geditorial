@@ -16,13 +16,13 @@ class Scripts extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function handle( $name )
+	public static function handle( string $name ): string
 	{
 		return strtolower( self::dsh( static::BASE, str_replace( '.', '-', $name ) ) );
 	}
 
 	// TODO: move to `Services\Markup`
-	public static function noScriptMessage( $verbose = TRUE )
+	public static function noScriptMessage( $verbose = TRUE ): string|true
 	{
 		$html = Core\HTML::tag( 'noscript',
 			'<strong>'.
@@ -34,10 +34,11 @@ class Scripts extends WordPress\Main
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
 	// TODO: move to `Services\Markup`
-	public static function renderAppMounter( $name, $module = FALSE, $verbose = TRUE, $message = NULL )
+	public static function renderAppMounter( string $name, ?string $module = '', bool $verbose = TRUE, ?string $message = NULL ): string|true
 	{
 		$html = Core\HTML::tag( 'div', [
 			'id'    => self::dsh( static::BASE, 'app', $name ),
@@ -54,9 +55,10 @@ class Scripts extends WordPress\Main
 			return $html;
 
 		echo $html;
+		return TRUE;
 	}
 
-	public static function enqueueApp( $name, $dependencies = [], $version = NULL, $path = 'assets/apps', $base_path = NULL, $base_url = NULL )
+	public static function enqueueApp( string $name, array $dependencies = [], ?string $version = NULL, string $path = 'assets/apps', ?string $base_path = NULL, ?string $base_url = NULL ): string
 	{
 		$script = sprintf( '%s%s/%s/build/main.js',        $base_url  ?? static::URL,  $path, $name );
 		$style  = sprintf( '%s%s/%s/build/main.css',       $base_url  ?? static::URL,  $path, $name );

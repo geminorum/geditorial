@@ -169,7 +169,7 @@ class Remoted extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function dashboard_widgets()
+	public function dashboard_widgets(): void
 	{
 		if ( ! $this->role_can( 'uploads' ) )
 			return;

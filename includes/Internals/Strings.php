@@ -9,9 +9,14 @@ use geminorum\gEditorial\WordPress;
 
 trait Strings
 {
+	public function get_string(
+		string $string,
+		string|false $subgroup = 'post',
+		string $group = 'titles',
+		string|false|null $fallback = FALSE,
+		bool $moveup = TRUE,
+	): string|false|null {
 
-	public function get_string( $string, $subgroup = 'post', $group = 'titles', $fallback = FALSE, $moveup = TRUE )
-	{
 		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
 			return $this->strings[$group][$subgroup][$string];
 
@@ -27,11 +32,14 @@ trait Strings
 		return $fallback;
 	}
 
-	// NOTE: fallback will merge if is an array
 	// NOTE: merge numeric keys will rearrange them!
-	// NOTE: `moveup` is FALSE by default
-	public function get_strings( $subgroup, $group = 'titles', $fallback = [], $moveup = FALSE )
-	{
+	public function get_strings(
+		string|false $subgroup,
+		string $group = 'titles',
+		array|false|null $fallback = [],  // NOTE: fallback will merge if is an array
+		bool $moveup = FALSE,             // NOTE: `moveup` is FALSE by default
+	): array|false|null {
+
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
 			return is_array( $fallback ) && count( $fallback )
 				? array_merge( $fallback, $this->strings[$group][$subgroup] )
@@ -48,7 +56,7 @@ trait Strings
 	// NOTE: for post-type/taxonomy use:
 	// - `Services\CustomPostType::getLabel( $posttype, 'noop' );`
 	// - `Services\CustomTaxonomy::getLabel( $taxonomy, 'noop' );`
-	public function get_noop( $constant )
+	public function get_noop( string $constant ): array
 	{
 		if ( ! empty( $this->strings['noops'][$constant] ) )
 			return $this->strings['noops'][$constant];
@@ -57,7 +65,7 @@ trait Strings
 			return $pre;
 
 		$noop = [
-			// 'context' => ucwords( $module->name ).' Internal: Strings: Noop',   // no need
+			// `'context' => ucwords( $module->name ).' Internal: Strings: Noop',` // no need
 			'domain'  => 'geditorial',
 		];
 
@@ -74,7 +82,7 @@ trait Strings
 		return $noop;
 	}
 
-	public function nooped_count( $constant, $count )
+	public function nooped_count( string $constant, int $count ): string
 	{
 		return sprintf(
 			gEditorial\Helper::noopedCount( $count, $this->get_noop( $constant ) ),
@@ -82,8 +90,14 @@ trait Strings
 		);
 	}
 
-	protected function strings_metabox_noitems_via_posttype( $posttype, $context = 'default', $default = NULL, $post = NULL, $prop = 'empty', $group = 'metabox' )
-	{
+	protected function strings_metabox_noitems_via_posttype(
+		string $posttype,
+		?string $context = 'default',
+		?string $default = NULL,
+		mixed $post = NULL,
+		string $prop = 'empty',
+		string $group = 'metabox',
+	): string {
 		if ( is_null( $default ) ) {
 
 			switch ( $context ) {

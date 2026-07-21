@@ -162,7 +162,7 @@ class Tabs extends gEditorial\Module
 		// $this->enqueue_styles();
 	}
 
-	public function content_after( $content )
+	public function content_after( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;
@@ -170,10 +170,10 @@ class Tabs extends gEditorial\Module
 		$this->render_post_tabs( $this->current_queried );
 	}
 
-	public function render_post_tabs( $post = NULL )
+	public function render_post_tabs( mixed $post = NULL ): bool
 	{
 		if ( WordPress\Theme::compatActive() )
-			return;
+			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -188,7 +188,7 @@ class Tabs extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function get_post_tabs( $post = NULL )
+	public function get_post_tabs( mixed $post = NULL ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -218,7 +218,7 @@ class Tabs extends gEditorial\Module
 		return Core\Arraay::sortByPriority( $this->filters( 'post_tabs', $tabs, $post ), 'priority' );
 	}
 
-	public function viewable_post_comments( $post = NULL, $item_name = '', $item_args = [] )
+	public function viewable_post_comments( mixed $post = NULL, string $item_name = '', array $item_args = [] ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -229,15 +229,15 @@ class Tabs extends gEditorial\Module
 			: comments_open( $post );
 	}
 
-	public function callback_post_comments( $post = NULL, $item_name = '', $item_args = [] )
+	public function callback_post_comments( mixed $post = NULL, string $item_name = '', array $item_args = [] ): void
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return;
 
 		comments_template( '', FALSE );
 	}
 
-	public function viewable_post_meta_summary( $post = NULL, $item_name = '', $item_args = [] )
+	public function viewable_post_meta_summary( mixed $post = NULL, string $item_name = '', array $item_args = [] ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -250,10 +250,10 @@ class Tabs extends gEditorial\Module
 		);
 	}
 
-	public function callback_post_meta_summary( $post = NULL, $item_name = '', $item_args = [] )
+	public function callback_post_meta_summary( mixed $post = NULL, string $item_name = '', array $item_args = [] ): void
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return;
 
 		echo $this->wrap( gEditorial\Template::metaSummary( [
 			'echo'   => FALSE,
@@ -263,7 +263,7 @@ class Tabs extends gEditorial\Module
 		] ), '-meta-summary' );
 	}
 
-	public function viewable_post_attachment_summary( $post = NULL, $item_name = '', $item_args = [] )
+	public function viewable_post_attachment_summary( mixed $post = NULL, string $item_name = '', array $item_args = [] ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -276,7 +276,7 @@ class Tabs extends gEditorial\Module
 		return (bool) count( $attachemts );
 	}
 
-	public function callback_post_attachment_summary( $post = NULL, $item_name = '', $item_args = [] )
+	public function callback_post_attachment_summary( mixed $post = NULL, string $item_name = '', array $item_args = [] ): void
 	{
 		echo $this->wrap( gEditorial()->attachments->main_shortcode( [
 			'id'        => $post,
@@ -287,7 +287,7 @@ class Tabs extends gEditorial\Module
 	}
 
 	// @SEE: `wp_post_mime_type_where()`
-	public function mimetype_post_attachment_summary( $post = NULL )
+	public function mimetype_post_attachment_summary( mixed $post = NULL ): array
 	{
 		$defaults = [
 			'audio/mpeg',

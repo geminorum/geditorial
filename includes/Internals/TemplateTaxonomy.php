@@ -9,12 +9,11 @@ use geminorum\gEditorial\WordPress;
 
 trait TemplateTaxonomy
 {
-
-	// NOTE: check for not-admin before calling
 	// NOTE: since we override the archive, there are no admin-bar edit link available on the archives!
 	// NOTE: using on `init` since hooking on `template_include` is too late for `admin_bar_init`.
+	// NOTE: check for not-admin before calling
 	// @SEE: `hook_adminbar_node_for_taxonomy()` for admin taxonomy management
-	protected function templatetaxonomy__hook_adminbar( $constant, $option = 'archive_override' )
+	protected function templatetaxonomy__hook_adminbar( string $constant, string $option = 'archive_override' ): bool
 	{
 		if ( ! $this->get_setting( $option, TRUE ) )
 			return FALSE;
@@ -58,7 +57,7 @@ trait TemplateTaxonomy
 	 * @param string $option
 	 * @return false|string
 	 */
-	protected function templatetaxonomy__hook_custom_archives( $constant, $option = 'custom_archives' )
+	protected function templatetaxonomy__hook_custom_archives( string $constant, string $option = 'custom_archives' ): false|string
 	{
 		if ( ! $custom = $this->get_setting( $option ) )
 			return FALSE;
@@ -79,8 +78,13 @@ trait TemplateTaxonomy
 		return $custom;
 	}
 
-	protected function templatetaxonomy__include( $template, $taxonomies, $empty_callback = NULL, $archive_callback = NULL )
-	{
+	protected function templatetaxonomy__include(
+		string $template,
+		string|array $taxonomies,
+		callable|false|null $empty_callback = NULL,
+		callable|false|null $archive_callback = NULL,
+	): string {
+
 		global $wp_query;
 
 		if ( empty( $wp_query ) )
@@ -165,7 +169,7 @@ trait TemplateTaxonomy
 	}
 
 	// title for overridden empty page
-	public function templatetaxonomy_get_empty_title( $taxonomy, $fallback = NULL )
+	public function templatetaxonomy_get_empty_title( string $taxonomy, ?string $fallback = NULL ): string
 	{
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'term' ) ) )
 			return $title;
@@ -174,7 +178,7 @@ trait TemplateTaxonomy
 	}
 
 	// DEFAULT METHOD: content for overridden empty page
-	public function templatetaxonomy_get_empty_content( $taxonomy, $atts = [] )
+	public function templatetaxonomy_get_empty_content( string $taxonomy, array $atts = [] ): string
 	{
 		if ( $content = $this->get_setting_fallback( 'empty_content' ) )
 			return $this->templatetaxonomy_process_empty_content( $content, $taxonomy );
@@ -183,7 +187,7 @@ trait TemplateTaxonomy
 	}
 
 	// DEFAULT METHOD: title for overridden archive page
-	public function templatetaxonomy_get_archive_title( $taxonomy )
+	public function templatetaxonomy_get_archive_title( string $taxonomy ): string
 	{
 		// return $this->get_setting_fallback( 'archive_title',
 		// 	WordPress\Term::title( $this->current_queried ) );
@@ -192,7 +196,7 @@ trait TemplateTaxonomy
 	}
 
 	// DEFAULT METHOD: content for overridden empty items
-	public function templatetaxonomy_get_empty_items( $taxonomy, $atts = [] )
+	public function templatetaxonomy_get_empty_items( string $taxonomy, array $atts = [] ): string
 	{
 		if ( $content = $this->get_setting( 'archive_empty_items' ) )
 			return $this->templatetaxonomy_process_empty_content( $content, $taxonomy );
@@ -212,7 +216,7 @@ trait TemplateTaxonomy
 			WordPress\Term::title( $this->current_queried ) );
 	}
 
-	protected function templatetaxonomy_process_empty_content( $content, $queried, $wrap = FALSE )
+	protected function templatetaxonomy_process_empty_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
 		if ( ! $content )
 			return $content;
@@ -228,7 +232,7 @@ trait TemplateTaxonomy
 		return $wrap ? Core\HTML::wrap( $html, '-taxonomy-empty-content' ) : $html;
 	}
 
-	protected function templatetaxonomy_process_archive_content( $content, $queried, $wrap = FALSE )
+	protected function templatetaxonomy_process_archive_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
 		if ( ! $content )
 			return $content;
@@ -244,7 +248,7 @@ trait TemplateTaxonomy
 	}
 
 	// DEFAULT METHOD: content for overridden archive page
-	public function templatetaxonomy_get_archive_content( $taxonomy )
+	public function templatetaxonomy_get_archive_content( string $taxonomy ): string
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL, FALSE );
 
@@ -254,12 +258,14 @@ trait TemplateTaxonomy
 		if ( $setting )
 			return $this->templatetaxonomy_process_archive_content( $setting, $this->current_queried );
 
-		// NOTE: here to avoid further process
+		// NOTE: here to avoid further process/`sprintf`/`tokens` for module default
 		if ( $default = $this->templatetaxonomy_get_archive_content_default( $taxonomy ) )
-			return $default; // avoid `sprintf`/`tokens` for module defaults
+			return $default;
 
 		if ( ! is_tax() )
 			return '';
+
+		// TODO: add widget area
 
 		$html = self::buffer( [ gEditorial\Template::class, 'renderTermIntro' ], [
 			$this->current_queried,
@@ -288,13 +294,13 @@ trait TemplateTaxonomy
 		return $html;
 	}
 
-	public function templatetaxonomy_get_archive_content_default( $taxonomy )
+	public function templatetaxonomy_get_archive_content_default( string $taxonomy ): string
 	{
 		return '';
 	}
 
 	// DEFAULT METHOD: button for overridden empty/archive page
-	public function templatetaxonomy_get_add_new( $taxonomy, $title = FALSE, $label = NULL )
+	public function templatetaxonomy_get_add_new( string $taxonomy, string|false $title = FALSE, ?string $label = NULL ): string
 	{
 		$object = WordPress\Taxonomy::object( $taxonomy );
 
@@ -317,7 +323,7 @@ trait TemplateTaxonomy
 	}
 
 	// will hook to `the_content` filter on 404
-	public function templatetaxonomy_empty_content( $content )
+	public function templatetaxonomy_empty_content( string $content ): string
 	{
 		if ( ! $taxonomy = get_query_var( 'taxonomy' ) )
 			return $content;
@@ -333,7 +339,7 @@ trait TemplateTaxonomy
 	}
 
 	// will hook to `the_content` filter on archive
-	public function templatetaxonomy_archive_content( $content )
+	public function templatetaxonomy_archive_content( string $content ): string
 	{
 		return Core\HTML::wrap(
 			$this->templatetaxonomy_get_archive_content( get_query_var( 'taxonomy' ) ),

@@ -12,7 +12,7 @@ class CollectionPoster extends gEditorial\Widget
 	const MODULE = 'collect';
 	const WIDGET = 'collect_collection_poster';
 
-	public static function setup()
+	public static function setup(): array
 	{
 		return [
 			'title' => _x( 'Editorial: Collection Poster', 'Widget Title', 'geditorial-collect' ),

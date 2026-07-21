@@ -520,7 +520,7 @@ class Listed extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 	}
 
-	public function identified_default_posttype_identifier_metakey( $default, $posttype )
+	public function identified_default_posttype_identifier_metakey( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'listing_code' );
@@ -528,7 +528,7 @@ class Listed extends gEditorial\Module
 		return $default;
 	}
 
-	public function identified_default_posttype_identifier_type( $default, $posttype )
+	public function identified_default_posttype_identifier_type( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
 			return 'code';
@@ -536,7 +536,7 @@ class Listed extends gEditorial\Module
 		return $default;
 	}
 
-	public function static_covers_default_posttype_reference_metakey( $default, $posttype )
+	public function static_covers_default_posttype_reference_metakey( string $default, string $posttype ): string
 	{
 		if ( $posttype == $this->constant( 'primary_posttype' ) )
 			return Services\PostTypeFields::getPostMetaKey( 'listing_code' );
@@ -545,7 +545,7 @@ class Listed extends gEditorial\Module
 	}
 
 	// NOTE: only returns selected supported crossing fields
-	public function pairedimports_import_types( $types, $linked, $posttypes, $module_key )
+	public function pairedimports_import_types( array $types, false|int $linked, ?array $posttypes, string $module_key ): array
 	{
 		if ( ! Core\Arraay::exists( $this->posttypes(), $posttypes ) )
 			return $types;

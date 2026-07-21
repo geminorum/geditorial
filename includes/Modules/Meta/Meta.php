@@ -608,7 +608,7 @@ class Meta extends gEditorial\Module
 	}
 
 	// NOTE: excludes are for other modules
-	protected function posttypefields_custom_column_excludes( $fields )
+	protected function posttypefields_custom_column_excludes( array $fields ): array
 	{
 		$excludes = [];
 
@@ -627,13 +627,19 @@ class Meta extends gEditorial\Module
 		return $excludes;
 	}
 
-	public function objecthints_tips_for_post( $tips, $post, $extend, $context, $queried )
+	public function objecthints_tips_for_post( array $tips, object $post, ?string $extend, ?string $context, array $queried ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $tips;
 
-		return array_merge( $tips,
-			ModuleHelper::generateHints( $post, $extend, $context, $queried ) );
+		return array_merge(	$tips,
+			ModuleHelper::generateHints(
+				$post,
+				$extend,
+				$context,
+				$queried
+			)
+		);
 	}
 
 	public function calendars_post_summary( $summary, $post, $context, $final )
@@ -714,7 +720,7 @@ class Meta extends gEditorial\Module
 
 	// @REF: `Template::getMetaField()`
 	// TODO: move to `Services\PostTypeFields`
-	public function meta_field( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		switch ( $field ) {
 
@@ -1009,7 +1015,7 @@ class Meta extends gEditorial\Module
 		return Services\PostTypeFields::replaceTokens( $meta, $field_args, $post, $context );
 	}
 
-	public function content_before( $content )
+	public function content_before( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE ) )
 			return;
@@ -1020,7 +1026,7 @@ class Meta extends gEditorial\Module
 		] );
 	}
 
-	public function content_after( $content )
+	public function content_after( string $content ): void
 	{
 		if ( ! $this->is_content_insert( FALSE, FALSE ) )
 			return;

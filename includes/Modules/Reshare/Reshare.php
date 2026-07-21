@@ -107,7 +107,7 @@ class Reshare extends gEditorial\Module
 		] );
 	}
 
-	public function o2o_init()
+	public function o2o_init(): void
 	{
 		if ( ! $o2o = $this->o2o_register( 'primary_posttype' ) )
 			return;

@@ -195,22 +195,41 @@ class DeadDrops extends gEditorial\Module
 
 	// TODO: maybe use `base64_encode()`/`base64_decode()`
 	// @SEE: https://en.wikipedia.org/wiki/Cryptographic_hash_function
-	private function _get_hash( $secret, $user_id, $post_id )
-	{
-		require_once ABSPATH.WPINC.'/class-phpass.php';
-		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
-		$wp_salt   = wp_salt();
+	private function _get_hash(
+		#[\SensitiveParameter]
+		string $secret,
+		int $user_id,
+		int $post_id,
+	): string {
 
-		return $wp_hasher->HashPassword( trim( sprintf( '%s|%s|%s|%s', $secret, $user_id, $post_id, $wp_salt ) ) );
+		require_once ABSPATH.WPINC.'/class-phpass.php';
+		$wp_hasher = new \PasswordHash( 16, FALSE );
+
+		return $wp_hasher->HashPassword( trim( sprintf( '%s|%s|%s|%s',
+			$secret,
+			$user_id,
+			$post_id,
+			$this->salt()
+		) ) );
 	}
 
-	private function _check_hash( $hash, $secret, $user_id, $post_id )
-	{
-		require_once ABSPATH.WPINC.'/class-phpass.php';
-		$wp_hasher = new \PasswordHash( 16, FALSE, FALSE );
-		$wp_salt   = wp_salt();
+	private function _check_hash(
+		string $hash,
+		#[\SensitiveParameter]
+		string $secret,
+		int $user_id,
+		int $post_id,
+	): bool {
 
-		$plain = trim( sprintf( '%s|%s|%s|%s', $secret, $user_id, $post_id, $wp_salt ) );
+		require_once ABSPATH.WPINC.'/class-phpass.php';
+		$wp_hasher = new \PasswordHash( 16, FALSE );
+
+		$plain = trim( sprintf( '%s|%s|%s|%s',
+			$secret,
+			$user_id,
+			$post_id,
+			$this->salt()
+		) );
 
 		return $wp_hasher->CheckPassword( $plain, $hash );
 	}
@@ -246,7 +265,7 @@ class DeadDrops extends gEditorial\Module
 		exit();
 	}
 
-	private function _register_header_button( $post = NULL )
+	private function _register_header_button( mixed $post = NULL ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -280,7 +299,7 @@ class DeadDrops extends gEditorial\Module
 		return $button;
 	}
 
-	private function _get_signal_link( $post = NULL, $context = 'signal', $extra = [] )
+	private function _get_signal_link( $post = NULL, $context = 'signal', $extra = [] ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -308,8 +327,12 @@ class DeadDrops extends gEditorial\Module
 		return $added ? $this->_get_deaddrop_link( $post, $secret ) : FALSE;
 	}
 
-	private function _get_deaddrop_link( mixed $post = NULL, ?string $secret = NULL ): false|string
-	{
+	private function _get_deaddrop_link(
+		mixed $post = NULL,
+		#[\SensitiveParameter]
+		?string $secret = NULL
+	): false|string {
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
@@ -328,8 +351,11 @@ class DeadDrops extends gEditorial\Module
 		return $this->filters( 'deaddrop_link', $deaddrop, $post, $endpoint, $secret );
 	}
 
-	private function _render_page_dropzone( $atts = [] )
-	{
+	private function _render_page_dropzone(
+		#[\SensitiveParameter]
+		array $atts = [],
+	): void {
+
 		$args = self::parsed( [
 			'user'   => 0,
 			'post'   => NULL,
@@ -469,7 +495,6 @@ class DeadDrops extends gEditorial\Module
 				formData.append('title', name);
 				formData.append('caption', name);
 			});
-
 JS;
 		// `echo '<script>'.$script.'</script>';`
 		wp_print_inline_script_tag( $script );

@@ -422,7 +422,7 @@ class Drafts extends gEditorial\Module
 
 		$states[$query] = sprintf( '<span title="%2$s">%1$s</span>',
 			_x( 'Public Preview', 'State', 'geditorial-drafts' ),
-			Core\HTML::escapeAttr( sprintf(
+			Core\HTML::escape( sprintf(
 				/* translators: `%s`: post title */
 				_x( 'Open public preview of &#8220;%s&#8221;', 'State Title', 'geditorial-drafts' ),
 				_draft_or_post_title( $post )

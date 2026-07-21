@@ -363,7 +363,7 @@ class Chronicles extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function personage_editform_meta_summary( $fields, $post )
+	public function personage_editform_meta_summary( array $fields, object $post ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
@@ -375,7 +375,7 @@ class Chronicles extends gEditorial\Module
 		return $fields;
 	}
 
-	public function book_editform_meta_summary( $fields, $post )
+	public function book_editform_meta_summary( array $fields, object $post ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
@@ -385,7 +385,7 @@ class Chronicles extends gEditorial\Module
 		return $fields;
 	}
 
-	public function was_born_default_posttype_dob_metakey( $default, $posttype )
+	public function was_born_default_posttype_dob_metakey( string $default, string $posttype ): string
 	{
 		if ( $this->posttype_supported( $posttype ) )
 			return Services\PostTypeFields::getPostMetaKey( 'date_of_birth' );
@@ -393,7 +393,7 @@ class Chronicles extends gEditorial\Module
 		return $default;
 	}
 
-	public function iranian_default_posttype_location_metakey( $default, $posttype )
+	public function iranian_default_posttype_location_metakey( string $default, string $posttype ): string
 	{
 		if ( $this->posttype_supported( $posttype ) )
 			return Services\PostTypeFields::getPostMetaKey( 'place_of_birth' );
