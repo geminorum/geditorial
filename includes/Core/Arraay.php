@@ -41,7 +41,7 @@ class Arraay extends Base
 		return array_map( [ __CALSS__, 'prepNumeral' ], $input );
 	}
 
-	public static function prepSplitters( ?string $text, string $default = '|' )
+	public static function prepSplitters( ?string $text, string $default = '|' ): ?array
 	{
 		if ( is_null( $text ) )
 			return NULL;
@@ -782,7 +782,7 @@ class Arraay extends Base
 	 *
 	 * This answers a different question than {@see array_is_list()} and is
 	 * more flexible to handle situations where some numeric array indices
-	 * have been removed. A numeric-indexed array is only a “list” when the
+	 * have been removed. A numeric-indexed array is only a `list` when the
 	 * array keys form a contiguous range from zero to the highest key.
 	 *
 	 * Example:
@@ -947,7 +947,7 @@ class Arraay extends Base
 	}
 
 	// @SOURCE: https://www.php.net/manual/en/function.array-intersect.php#69762
-	public static function union( $a, $b )
+	public static function union( array $a, array $b ): array
 	{
                                         //  $a = 1 2 3 4
 		return                          //  $b =   2   4 5 6
@@ -962,30 +962,30 @@ class Arraay extends Base
 	 * Retrieves duplicate values of an array.
 	 * @source https://stackoverflow.com/a/3450063
 	 *
-	 * @param array $array
+	 * @param array $input
 	 * @return array
 	 */
-	public static function duplicates( $array )
+	public static function duplicates( array $input ): array
 	{
-		return array_diff_assoc( $array, array_unique( $array ) );
+		return array_diff_assoc( $input, array_unique( $input ) );
 	}
 
 	/**
 	 * Preps list of objects with provided keys.
 	 *
-	 * @param array $array
+	 * @param array $input
 	 * @param string $index_key
 	 * @param string $value_key
 	 * @return array
 	 */
-	public static function toObjectForJS( $array, $index_key = 'code', $value_key = 'label' )
+	public static function toObjectForJS( array $input, string $index_key = 'code', string $value_key = 'label' ): array
 	{
-		if ( empty( $array ) )
-			return $array;
+		if ( empty( $input ) )
+			return $input;
 
 		$list = [];
 
-		foreach ( $array as $index => $value )
+		foreach ( $input as $index => $value )
 			$list[] = (object) [
 				$index_key => $index,
 				$value_key => $value,
@@ -999,16 +999,16 @@ class Arraay extends Base
 	 *
 	 * @source https://stackoverflow.com/a/4345578
 	 *
-	 * @param object $object
+	 * @param object $input
 	 * @return array
 	 */
-	public static function fromObject( $object )
+	public static function fromObject( object $input ): array
 	{
-		if ( \is_array( $object ) || \is_object( $object ) ) {
+		if ( \is_array( $input ) || \is_object( $input ) ) {
 
 			$array = [];
 
-			foreach ( $object as $key => $value )
+			foreach ( $input as $key => $value )
 				$array[$key] = ( \is_array( $value ) || \is_object( $value ) )
 					? self::fromObject( $value )
 					: $value;
@@ -1016,7 +1016,7 @@ class Arraay extends Base
 			return $array;
 		}
 
-		return $object;
+		return $input;
 	}
 
 	/**

@@ -631,7 +631,7 @@ class HTTP extends Base
 
 	// @SEE: https://stackoverflow.com/a/12628971
 	// @REF: https://stackoverflow.com/a/12629254
-	public static function getStatus( $url )
+	public static function getStatus( string|false|null $url ): false|int
 	{
 		if ( self::empty( $url ) || ! extension_loaded( 'curl' ) )
 			return FALSE;
@@ -655,7 +655,7 @@ class HTTP extends Base
 		if ( PHP_VERSION_ID < 80000 )
 			curl_close( $handle );
 
-		return $status;
+		return (int) $status;
 	}
 
 	/**

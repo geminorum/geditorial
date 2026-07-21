@@ -237,7 +237,7 @@ class Strings extends Core\Base
 			'-count',
 			$count,
 			Core\Number::format( $count ),
-			Core\HTML::escapeAttr( $title ?: '' ),
+			Core\HTML::escape( $title ?: '' ),
 		];
 
 		$html = $title

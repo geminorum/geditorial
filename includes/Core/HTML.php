@@ -548,7 +548,7 @@ class HTML extends Base
 			: '';
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function escapeAttr( ?string $data ): string
 	{
 		return self::escape( $data );
@@ -927,7 +927,7 @@ class HTML extends Base
 			if ( is_array( $page ) ) {
 
 				$title = empty( $page['title'] ) ? $slug : sprintf( '<span class="-nav-link-title">%s</span>', $page['title'] );
-				$icon  = empty( $page['icon'] )  ? ''    : sprintf( '<span class="-nav-link-icon" title="%s">%s</span> ', self::escapeAttr( $page['title'] ?? $slug ), $page['icon'] );
+				$icon  = empty( $page['icon'] )  ? ''    : sprintf( '<span class="-nav-link-icon" title="%s">%s</span> ', self::escape( $page['title'] ?? $slug ), $page['icon'] );
 
 				$args = empty( $page['args'] ) ? [ 'sub' => $slug ] : $page['args'];
 				$hint = empty( $page['hint'] ) ? ( empty( $page['title'] ) ? $slug : $page['title'] ) : $page['hint'];
@@ -972,7 +972,7 @@ class HTML extends Base
 	}
 
 	public static function tabNav(
-		string $active = '',
+		?string $active = '',
 		array $tabs = [],
 		string $prefix = 'nav-tab-',
 		string $tag = 'div',
@@ -1002,7 +1002,7 @@ class HTML extends Base
 		if ( empty( $tabs ) )
 			return FALSE;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'active' => NULL, // TRUE forces first tab active
 			'title'  => FALSE,
 			'class'  => FALSE,
@@ -1024,7 +1024,7 @@ class HTML extends Base
 
 		foreach ( $tabs as $tab => $tab_atts ) {
 
-			$tab_args = self::atts( [
+			$tab_args = self::parsed( [
 				// 'active'  => FALSE, // not needed here, just for reference
 				'title'   => $tab,
 				'link'    => '#'.$tab,
@@ -1089,7 +1089,7 @@ class HTML extends Base
 		$empty = $alt = TRUE;
 		$hidden_columns = [];
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'empty'        => NULL,
 			'title'        => NULL,
 			'before'       => FALSE,
@@ -1146,7 +1146,7 @@ class HTML extends Base
 
 				if ( is_array( $column ) ) {
 
-					$parsed_column = self::atts( [
+					$parsed_column = self::parsed( [
 						'title'      => $key,
 						'class'      => [],
 						'hide_empty' => FALSE,
@@ -1357,7 +1357,7 @@ class HTML extends Base
 
 	public static function tableNavigation( array $pagination = [] ): void
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'actions'  => [],
 			'icons'    => [],
 			'before'   => [],
@@ -1374,7 +1374,7 @@ class HTML extends Base
 			'rtl'      => L10n::rtl(),
 		], $pagination );
 
-		$icons = self::atts( [
+		$icons = self::parsed( [
 			'action'   => self::getDashicon( 'update' ),
 			'filter'   => self::getDashicon( 'filter' ),
 			'last'     => self::getDashicon( $args['rtl'] ? 'controls-skipback' : 'controls-skipforward' ),
@@ -1678,7 +1678,7 @@ class HTML extends Base
 		if ( FALSE === $list ) // allows hiding
 			return $html;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'          => FALSE,
 			'name'        => '',
 			'title'       => FALSE,
@@ -1704,7 +1704,7 @@ class HTML extends Base
 
 			$id = self::dsh( $args['id'], $args['none_value'] );
 
-			$html.= '<'.$args['wrap'].'><label for"'.self::escapeAttr( $id ).'">';
+			$html.= '<'.$args['wrap'].'><label for"'.self::escape( $id ).'">';
 			$html.= self::tag( 'input', [
 				'type'     => 'radio',
 				'id'       => $id,
@@ -1742,7 +1742,7 @@ class HTML extends Base
 
 			$id = self::dsh( $args['id'], $key );
 
-			$html.= '<'.$args['wrap'].'><label for"'.self::escapeAttr( $id ).'">';
+			$html.= '<'.$args['wrap'].'><label for"'.self::escape( $id ).'">';
 			$html.= self::tag( 'input', [
 				'type'     => 'radio',
 				'id'       => $id,
@@ -1772,7 +1772,7 @@ class HTML extends Base
 		if ( FALSE === $list ) // allows hiding
 			return $html;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'          => FALSE,
 			'name'        => '',
 			'title'       => FALSE,
@@ -1841,7 +1841,7 @@ class HTML extends Base
 		if ( FALSE === $list ) // allows hiding
 			return $html;
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'id'       => FALSE,
 			'name'     => '',
 			'class'    => FALSE,
@@ -1940,7 +1940,7 @@ class HTML extends Base
 	): string {
 
 		return '<input type="text" value="'
-			.self::escapeAttr( $text )
+			.self::escape( $text )
 			.'" class="'.self::prepClass( '-input-for-copy', $class, $code ? 'code' : '' )
 			.'" onclick="this.focus();this.select()" '
 			.( $readonly ? 'readonly' : '' ).' />';

@@ -431,12 +431,14 @@ class Taxonomy extends Core\Base
 	}
 
 	// NOTE: DEPRECATED: use `Term::taxonomy()`
+	#[\Deprecated()]
 	public static function getTermTaxonomy( int|object $term_or_id, mixed $fallback = FALSE )
 	{
 		return Term::taxonomy( $term_or_id ) ?: $fallback;
 	}
 
 	// NOTE: DEPRECATED: use `Term::get()`
+	#[\Deprecated()]
 	public static function getTerm( int|object $term_or_id, string $taxonomy = '' )
 	{
 		return Term::get( $term_or_id, $taxonomy );
@@ -717,6 +719,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// NOTE: DEPRECATED: use `Term::add()`
+	#[\Deprecated()]
 	public static function addTerm( mixed $term, mixed $taxonomy, bool $sanitize = TRUE )
 	{
 		return Term::add( $term, $taxonomy, $sanitize );
@@ -951,7 +954,7 @@ class Taxonomy extends Core\Base
 		return get_term( $term['term_id'], $taxonomy );
 	}
 
-	public static function getObjectTerms( string $taxonomy, int $object_id, string $fields = 'ids', array $extra = [] )
+	public static function getObjectTerms( string $taxonomy, int $object_id, string $fields = 'ids', array $extra = [] ): array
 	{
 		$args = array_merge( [
 			'taxonomy'   => $taxonomy,
@@ -966,7 +969,8 @@ class Taxonomy extends Core\Base
 		], $extra );
 
 		$query = new \WP_Term_Query();
-		return $query->query( $args );
+
+		return (array) $query->query( $args );
 	}
 
 	/**
@@ -1431,6 +1435,7 @@ class Taxonomy extends Core\Base
 	}
 
 	// NOTE: DEPRECATED: use `Term::getMeta()`
+	#[\Deprecated()]
 	public static function getTermMeta( $term, $keys = FALSE, $single = TRUE )
 	{
 		return Term::getMeta( $term, $keys, $single );
@@ -1535,14 +1540,14 @@ class Taxonomy extends Core\Base
 		);
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function getArchiveLink( string $taxonomy )
 	{
 		self::_dep( 'WordPress\Taxonomy::link()' );
 		return self::link( $taxonomy );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function getTermTitle( int $term, mixed $fallback = NULL, bool $filter = TRUE )
 	{
 		self::_dep( 'Term::title()' );

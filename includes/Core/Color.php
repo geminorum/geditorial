@@ -34,8 +34,8 @@ class Color extends Base
 			$value = $raw;
 
 		$html = sprintf( '<i class="-color %s" title="%s" style="background-color:%s" data-color="%s"></i>',
-			'%s', // placeholder for css class
-			HTML::escapeAttr( $title ?? $value ),
+			'%s', // placeholder for CSS class
+			HTML::escape( $title ?? $value ),
 			$value,
 			$raw,
 		);

@@ -721,7 +721,7 @@ class Text extends Base
 			: self::trim( preg_replace( [ "/\n+/", "/[ \t]+/" ], [ "\n", ' ' ], $text ) );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function normalizeWhitespaceUTF8( $text, $check = FALSE )
 	{
 		if ( $check && ! self::seemsUTF8( $text ) )
@@ -2033,25 +2033,45 @@ class Text extends Base
 	 * be `iso88591_to_utf8`. If your text is not encoded in `ISO-8859-1`,
 	 * you do not need this function. If your text is already in `UTF-8`,
 	 * you do not need this function. In fact, applying this function
-	 * to text that is not encoded in `ISO-8859-1` will most likely simply
+	 * to text that is not encoded in `ISO-8859-1` will most-likely simply
 	 * garble that text.
 	 *
-	 * @param string $text
+	 * @param string $input
 	 * @return string
 	 */
-	public static function encodeUTF8( $text )
+	public static function encodeUTF8( string $input ): string
 	{
 		if ( function_exists( 'mb_convert_encoding' ) )
-			return mb_convert_encoding( $text, 'UTF-8', 'ISO-8859-1' );
+			return mb_convert_encoding( $input, 'UTF-8', 'ISO-8859-1' );
 
 		if ( is_callable( [ 'UConverter', 'transcode' ] ) )
-			return \UConverter::transcode( $text, 'UTF8', 'ISO-8859-1' );
+			return \UConverter::transcode( $input, 'UTF8', 'ISO-8859-1' );
 
 		if ( function_exists( 'iconv' ) )
-			return iconv( 'ISO-8859-1', 'UTF-8', $text );
+			return iconv( 'ISO-8859-1', 'UTF-8', $input );
 
-		if ( function_exists( 'utf8_encode' ) )
-			return utf8_encode( $text );
+		// if ( function_exists( 'utf8_encode' ) )
+		// 	return utf8_encode( $input );
+
+		return self::iso88591toUTF8( $input );
+	}
+
+	// Polyfill for `utf8_encode()`
+	// https://php.watch/versions/8.2/utf8_encode-utf8_decode-deprecated#replace
+	public static function iso88591toUTF8( string $s ): string
+	{
+		$s .= $s;
+		$len = \strlen($s);
+
+		for ($i = $len >> 1, $j = 0; $i < $len; ++$i, ++$j) {
+			switch (true) {
+				case $s[$i] < "\x80": $s[$j] = $s[$i]; break;
+				case $s[$i] < "\xC0": $s[$j] = "\xC2"; $s[++$j] = $s[$i]; break;
+				default: $s[$j] = "\xC3"; $s[++$j] = \chr(\ord($s[$i]) - 64); break;
+			}
+		}
+
+		return substr($s, 0, $j);
 	}
 
 	/**
@@ -2197,7 +2217,7 @@ class Text extends Base
 	public static function prepDescForICAL( $text )
 	{
 		if ( ! $text )
-			return  '';
+			return '';
 
 		$text = self::normalizeWhitespace( $text, TRUE );
 		$text = self::normalizeZWNJ( $text );
@@ -2242,7 +2262,7 @@ class Text extends Base
 	public static function icsEscaping( $text )
 	{
 		if ( ! $text )
-			return  '';
+			return '';
 
 		$text = self::normalizeWhitespace( $text, TRUE );
 		$text = self::normalizeZWNJ( $text );

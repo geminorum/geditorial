@@ -161,7 +161,7 @@ class Third extends Base
 	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
 	public static function getGoogleCalendarEvents( $atts )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'calendar_id' => FALSE,
 			'api_key'     => '',
 			'time_min'    => '',

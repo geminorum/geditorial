@@ -279,7 +279,7 @@ class User extends Core\Base
 	}
 
 	// @SEE: https://core.trac.wordpress.org/ticket/38741
-	public static function isLargeCount( ?int $network_id = NULL ): bool
+	public static function isLargeCount( int|null $network_id = NULL ): bool
 	{
 		if ( function_exists( 'wp_is_large_user_count' ) )
 			return wp_is_large_user_count( $network_id ); // @since WP 6.0.0

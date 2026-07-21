@@ -625,7 +625,7 @@ class Term extends Core\Base
 				return FALSE;
 		}
 
-		$args = self::atts( [
+		$args = self::parsed( [
 			'alias_of'    => '',   // Slug of the term to make this term an alias of. Accepts a term slug.
 			'description' => '',
 			'parent'      => 0,

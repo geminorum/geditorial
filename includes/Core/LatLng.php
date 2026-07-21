@@ -561,7 +561,7 @@ class LatLng extends Base
 	 */
 	public static function distanceBetween( $latitude1, $longitude1, $latitude2, $longitude2, $decimals = 1, $unit = 'km' )
 	{
-		// define calculation variables
+		// Defines calculation variables.
 		$theta    = $longitude1 - $longitude2;
 		$distance = ( sin( deg2rad( $latitude1 ) ) * sin( deg2rad( $latitude2 ) ) )
 			+ ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
@@ -571,14 +571,14 @@ class LatLng extends Base
 
 		// Kilometers
 		if ( 'km' === $unit )
-			$distance = $distance * 1.609344; // redefine distance
+			$distance = $distance * 1.609344; // Redefines distance.
 
 		// Nautical Miles
 		else if ( 'n' === $unit )
 			return $distance * 0.8684;
 
 		// Miles
-		return round( $distance, $decimals ); // return with one decimal
+		return round( $distance, $decimals ); // Returns with one decimal.
 	}
 
 	/**
@@ -589,16 +589,16 @@ class LatLng extends Base
 	 *
 	 * @source `JeroenDesloovere\Distance::getClosest()`
 	 * @link https://github.com/jeroendesloovere/distance
-	 * @author Jeroen Desloovere <info@jeroendesloovere.be>
+	 * @author `Jeroen Desloovere` <info@jeroendesloovere.be>
 	 *
 	 * @param float $latitude
 	 * @param float $longitude
 	 * @param array $items = `[ [ 'latitude' => 'x', 'longitude' => 'x' ], [...] ]`
-	 * @param int $decimals The amount of decimals
+	 * @param int $decimals
 	 * @param string $unit
 	 * @return array The item which is the closest + 'distance' to it.
 	 */
-	public static function distanceGetClosest( $latitude, $longitude, $items, $decimals = 1, $unit = 'km' )
+	public static function distanceGetClosest( float $latitude, float $longitude, array $items, int $decimals = 1, string $unit = 'km' ): array
 	{
 		$distances = [];
 
@@ -613,7 +613,7 @@ class LatLng extends Base
 				$unit
 			);
 
-			$distances[$distance] = $key;
+			$distances[(string) $distance] = $key;
 
 			// adds rounded distance to array
 			$items[$key]['distance'] = round( $distance, $decimals );
@@ -626,7 +626,7 @@ class LatLng extends Base
 	// @REF: https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/
 	// @REF: https://stackoverflow.com/a/46218890
 	// @REF: http://www.hackingwithphp.com/4/6/6/mathematical-constants
-	public static function haversine( $lat1, $lon1, $lat2, $lon2 )
+	public static function haversine( float $lat1, float $lon1, float $lat2, float $lon2 ): float
 	{
 		// distance between latitudes and longitudes
 		$dLat = ( $lat2 - $lat1 ) * M_PI / 180.0;
@@ -645,7 +645,7 @@ class LatLng extends Base
 	}
 
 	// @REF: https://snippets.ir/1269/calculate-distance-between-two-points-in-php.html
-	public static function getDistance( $latitude1, $longitude1, $latitude2, $longitude2 )
+	public static function getDistance( float $latitude1, float $longitude1, float $latitude2, float $longitude2 ): array
 	{
 		$theta      = $longitude1 - $longitude2;
 		$miles      = ( sin( deg2rad( $latitude1 ) ) * sin( deg2rad( $latitude2 ) ) ) + ( cos( deg2rad( $latitude1 ) ) * cos( deg2rad( $latitude2 ) ) * cos( deg2rad( $theta ) ) );
@@ -661,46 +661,58 @@ class LatLng extends Base
 	}
 
 	/**
-	 * Validates a given latitude $lat
+	 * Validates a given latitude
 	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
 	 *
-	 * @param float|int|string $lat Latitude
-	 * @return bool `true` if $lat is valid, `false` if not
+	 * @param float|int|string $latitude
+	 * @return bool
 	 */
-	public static function validateLatitude( $lat )
+	public static function validateLatitude( float|int|string $latitude ): bool
 	{
-		return preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat );
+		return (bool) preg_match(
+			'/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/',
+			(string) $latitude
+		);
 	}
 
 	/**
-	 * Validates a given longitude $long
+	 * Validates a given longitude
 	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
 	 *
-	 * @param float|int|string $long Longitude
-	 * @return bool `true` if $long is valid, `false` if not
+	 * @param float|int|string $longitude
+	 * @return bool
 	 */
-	public static function validateLongitude( $long )
+	public static function validateLongitude( $longitude )
 	{
-		return preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long );
+		return (bool) preg_match(
+			'/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/',
+			(string) $longitude
+		);
 	}
 
 	/**
-	 * Validates a given coordinate
+	 * Validates a given coordinates
 	 * @source https://gist.github.com/arubacao/b5683b1dab4e4a47ee18fd55d9efbdd1
 	 *
-	 * @param float|int|string $lat Latitude
-	 * @param float|int|string $long Longitude
-	 * @return bool `true` if the coordinate is valid, `false` if not
+	 * @param float|int|string $latitude
+	 * @param float|int|string $longitude
+	 * @return bool
 	 */
-	public static function validateLatLong( $lat, $long )
+	public static function validateLatLong( $latitude, $longitude )
 	{
-		return preg_match( '/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?),[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/', $lat.','.$long );
+		return (bool) preg_match(
+			'/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?),[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/',
+			sprintf( '%s,%s', $latitude, $longitude )
+		);
 	}
 
 	/**
-	 * Creating KMZ File on the Fly
+	 * Creating `KMZ` File on the Fly
 	 *
-	 * My KML file was getting large and consuming time/bandwidth to download. So needed a quick solution and found KMZ. KMZ is a compressed KML file which is treated like KML by Google Earth.  Here is a php code to create KMZ file from KML on the fly. My KML of 6.0 Mb was reduced to 600Kb.
+	 * My `KML` file was getting large and consuming time/bandwidth to download.
+	 * So needed a quick solution and found `KMZ`. `KMZ` is a compressed `KML`
+	 * file which is treated like `KML` by Google Earth. Here is a PHP code to
+	 * create `KMZ` file from `KML` on the fly. My `KML` of `6.0Mb` was reduced to `600Kb`.
 	 * @source https://shprabin.wordpress.com/2013/06/24/creating-kmz-file-on-the-fly-php/
 	 *
 	 * @param string $data
@@ -711,16 +723,16 @@ class LatLng extends Base
 		header( 'Content-Type: application/vnd.google-earth.kmz' );
 		header( 'Content-Disposition: attachment; filename="test.kmz"' );
 
-		$kmlString="This is your KML string";
+		$kmlString = "This is your KML string";
 
 		$file = "test.kmz";
-		$zip = new \ZipArchive();
+		$zip  = new \ZipArchive();
 
 		if ( $zip->open( $file, \ZIPARCHIVE::CREATE ) !== TRUE ) {
 			exit("cannot open <$file>\n");
 		}
 
-		$zip->addFromString("doc.kml", $kmlString);
+		$zip->addFromString( "doc.kml", $kmlString );
 		$zip->close();
 
 		echo file_get_contents( $file );

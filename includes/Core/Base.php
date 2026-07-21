@@ -294,6 +294,7 @@ class Base
 
 	// INTERNAL: used on anything deprecated
 	// TODO: new syntax on PHP 8.4: `#[\Deprecated(message)]`
+	// @SEE: https://php.watch/versions/8.4/Deprecated
 	protected static function _dep( string $note = '', string $prefix = 'DEP: ', int $offset = 1 ): void
 	{
 		if ( defined( 'WP_DEBUG_LOG' ) && ! WP_DEBUG_LOG )
@@ -474,7 +475,7 @@ class Base
 	}
 
 	// @REF: `shortcode_atts()`
-	// NOTE: DEPRECATED: use `Base::parsed()`
+	#[\Deprecated('USE `Core\Base::parsed()`')]
 	public static function atts( array $pairs, array $atts ): array
 	{
 		$out = [];
@@ -645,7 +646,7 @@ class Base
 		} );
 	}
 
-	// DEPRECATED: use `Base::bool()`
+	#[\Deprecated('use `Core\Base::bool()` instead')]
 	public static function validateBoolean( mixed $var ): bool
 	{
 		return self::bool( $var );

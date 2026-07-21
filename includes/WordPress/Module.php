@@ -115,6 +115,11 @@ class Module extends Core\Base
 		return Core\Text::sanitizeBase( $this->key ).$suffix;
 	}
 
+	protected function salt(): string
+	{
+		return wp_salt();
+	}
+
 	protected function hash(): string
 	{
 		$string = '';
@@ -395,6 +400,20 @@ class Module extends Core\Base
 			}, $priority, 1 );
 	}
 
+	// USAGE: `$this->filter_if_2_set_1( 'reference_metakey', 'vin', 'vehicle' );`
+	protected function filter_if_2_set_1( string $hook, mixed $override, mixed $target, int $priority = 10 ): true
+	{
+		return add_filter( $hook,
+			static function ( $first, $second )
+				use ( $override, $target ) {
+
+				if ( $second === $target )
+					return $override;
+
+				return $first;
+			}, $priority, 2 );
+	}
+
 	// USAGE: `$this->filter_unset( 'shortcode_atts_gallery', [ 'columns' ] );`
 	protected function filter_unset( string $hook, string|array $items, int $priority = 10 ): true
 	{
@@ -409,7 +428,7 @@ class Module extends Core\Base
 			}, $priority, 1 );
 	}
 
-	// USAGE: $this->filter_string( 'parent_file', 'options-general.php' );
+	// USAGE: `$this->filter_string( 'parent_file', 'options-general.php' );`
 	protected function filter_string( string $hook, string $string, int $priority = 10 ): true
 	{
 		return add_filter( $hook,

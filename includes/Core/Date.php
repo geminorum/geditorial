@@ -357,7 +357,7 @@ class Date extends Base
 		mixed $fallback = '',
 	)
 	{
-		$parts = self::atts( [
+		$parts = self::parsed( [
 			'year'     => 1,
 			'month'    => 1,
 			'day'      => 1,
@@ -602,7 +602,7 @@ class Date extends Base
 	// @REF: https://stackoverflow.com/a/43956977
 	public static function htmlFromSeconds( $seconds, $round = 2, $atts = [] )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'sep' => ', ',
 
 			'noop_seconds' => L10n::getNooped( '%s second', '%s seconds' ),
@@ -644,7 +644,7 @@ class Date extends Base
 	// @SOURCE: WP `human_time_diff()`
 	public static function humanTimeDiff( $datetime, $now = 0, $atts = [], $timezone_string = NULL )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'now'    => 'Now',
 			'_s_ago' => '%s ago',
 			'in__s'  => 'in %s',
@@ -823,7 +823,7 @@ class Date extends Base
 	// FIXME: correct last week : http://stackoverflow.com/a/7175802
 	public static function moment( mixed $datetime, int $now = 0, array $atts = [], ?string $timezone_string = NULL )
 	{
-		$args = self::atts( [
+		$args = self::parsed( [
 			'now'            => 'Now',
 			'just_now'       => 'Just now',
 			'one_minute_ago' => 'One minute ago',

@@ -162,7 +162,7 @@ class URL extends Core\Base
 	// @REF: `network_admin_url()`
 	// like core's but with custom network
 	// OLD: `Core\WordPress::networkAdminURL()`
-	public static function networkAdmin( ?int $network = NULL, string $path = '', ?string $scheme = 'admin' ): string
+	public static function networkAdmin( int|object|null $network = NULL, string $path = '', ?string $scheme = 'admin' ): string
 	{
 		if ( ! is_multisite() )
 			return admin_url( $path, $scheme );
@@ -178,7 +178,7 @@ class URL extends Core\Base
 	// @REF: `user_admin_url()`
 	// like core's but with custom network
 	// OLD: `Core\WordPress::userAdminURL()`
-	public static function userAdmin( ?int $network = NULL, string $path = '', ?string $scheme = 'admin' ): string
+	public static function userAdmin( int|object|null $network = NULL, string $path = '', ?string $scheme = 'admin' ): string
 	{
 		$url = self::networkSite( $network, 'wp-admin/user/', $scheme );
 
@@ -191,7 +191,7 @@ class URL extends Core\Base
 	// @REF: `network_site_url()`
 	// like core's but with custom network
 	// OLD: `Core\WordPress::networkSiteURL()`
-	public static function networkSite( ?int $network = NULL, string $path = '', ?string $scheme = NULL ): string
+	public static function networkSite( int|object|null $network = NULL, string $path = '', ?string $scheme = NULL ): string
 	{
 		if ( ! is_multisite() || ! function_exists( 'get_network' ) )
 			return site_url( $path, $scheme );
@@ -214,20 +214,18 @@ class URL extends Core\Base
 	// @REF: `network_home_url()`
 	// like core's but with custom network
 	// OLD: `Core\WordPress::networkHomeURL()`
-	public static function networkHome( ?int $network = NULL, string $path = '', ?string $scheme = NULL ): string
+	public static function networkHome( int|object|null $network = NULL, string $path = '', ?string $scheme = NULL ): string
 	{
 		if ( ! is_multisite() || ! function_exists( 'get_network' ) )
 			return home_url( $path, $scheme );
 
-		if ( ! $network )
-			$network = get_network();
-
+		$network         = $network ?? get_network();
 		$original_scheme = $scheme;
 
 		if ( ! in_array( $scheme, [ 'http', 'https', 'relative' ], TRUE ) )
 			$scheme = is_ssl() && ! is_admin() ? 'https' : 'http';
 
-		if ( 'relative' == $scheme )
+		if ( 'relative' === $scheme )
 			$url = $network->path;
 
 		else
