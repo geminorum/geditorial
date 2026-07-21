@@ -169,22 +169,22 @@ class Schedule extends gEditorial\Module
 
 	public function admin_mainpage_page()
 	{
-		$cal = self::req( 'cal', $this->default_calendar() );
+		$cal = self::req( 'cc', $this->default_calendar() );
 
 		$args = [
 			'id'                  => $this->classs( 'calendar' ),
 			'initial'             => FALSE,
-			'caption_link'        => remove_query_arg( [ 'year', 'month' ] ),
+			'caption_link'        => remove_query_arg( [ 'yy', 'mm' ] ),
 			'post_type'           => $this->posttypes(),
 			'exclude_statuses'    => [ 'private', 'trash', 'auto-draft', 'inherit' ],
 			'link_build_callback' => [ $this, 'calendar_link_build' ],
 			'the_day_callback'    => [ $this, 'calendar_the_day' ],
 		];
 
-		if ( $year = self::req( 'year', FALSE ) )
+		if ( $year = self::req( 'yy', FALSE ) )
 			$args['this_year'] = $year;
 
-		if ( $month = self::req( 'month', FALSE ) )
+		if ( $month = self::req( 'mm', FALSE ) )
 			$args['this_month'] = $month;
 
 		$calendars = $this->list_calendars();
@@ -194,7 +194,7 @@ class Schedule extends gEditorial\Module
 			$links = [];
 
 			foreach ( $calendars as $calendar => $calendar_title )
-				$links[add_query_arg( [ 'cal' => $calendar ], $args['caption_link'] )] = Core\HTML::escape( $calendar_title );
+				$links[add_query_arg( [ 'cc' => $calendar ], $args['caption_link'] )] = Core\HTML::escape( $calendar_title );
 
 		} else {
 
@@ -234,18 +234,19 @@ class Schedule extends gEditorial\Module
 		return '<div class="hidden" id="'.$this->classs( 'add-new' ).'">'.$html.'</div>';
 	}
 
+	// @REF: https://codex.wordpress.org/Reserved_Terms
 	public function calendar_link_build( $for, $year = NULL, $month = NULL, $day = NULL, $args = [] )
 	{
 		return add_query_arg( [
-			'year'  => $year,
-			'month' => $month,
-			'cal'   => self::req( 'cal', $this->default_calendar() ),
+			'yy' => $year,
+			'mm' => $month,
+			'cc' => self::req( 'cc', $this->default_calendar() ),
 		] );
 	}
 
 	public function calendar_the_day( $the_day, $data = [], $args = [], $today = FALSE )
 	{
-		$cal = self::req( 'cal', $this->default_calendar() );
+		$cal = self::req( 'cc', $this->default_calendar() );
 
 		$html = gEditorial\Ajax::spinner();
 		$html.= '<span class="-the-day-number">'.Core\Number::localize( $the_day ).'</span>';
@@ -354,9 +355,9 @@ class Schedule extends gEditorial\Module
 		$date = \gPersianDateDate::getByPost( $post, $cal );
 
 		return $this->get_adminpage_url( TRUE, [
-			'cal'   => $cal,
-			'year'  => $date['year'],
-			'month' => $date['mon'],
+			'cc' => $cal,
+			'yy' => $date['year'],
+			'mm' => $date['mon'],
 		], 'adminmenu' );
 	}
 
