@@ -10,8 +10,14 @@ use geminorum\gEditorial\WordPress;
 trait TemplatePostType
 {
 
-	protected function templateposttype__include( $template, $posttypes, $empty_callback = NULL, $archive_callback = NULL, $newpost_callback = NULL )
-	{
+	protected function templateposttype__include(
+		string $template,
+		string|array $posttypes,
+		callable|false|null $empty_callback = NULL,
+		callable|false|null $archive_callback = NULL,
+		callable|false|null $newpost_callback = NULL,
+	): string {
+
 		global $wp_query;
 
 		if ( empty( $wp_query ) )
@@ -131,7 +137,7 @@ trait TemplatePostType
 	}
 
 	// DEFAULT METHOD: title for overridden empty page
-	public function templateposttype_get_empty_title( $posttype, $fallback = NULL )
+	public function templateposttype_get_empty_title( string $posttype, ?string $fallback = NULL ): string
 	{
 		if ( $title = Core\URL::prepTitleQuery( $GLOBALS['wp_query']->get( 'name' ) ) )
 			return $title;
@@ -140,7 +146,7 @@ trait TemplatePostType
 	}
 
 	// DEFAULT METHOD: content for overridden empty page
-	public function templateposttype_get_empty_content( $posttype, $atts = [] )
+	public function templateposttype_get_empty_content( string $posttype, array $atts = [] ): string
 	{
 		if ( $content = $this->get_setting_fallback( 'empty_content' ) )
 			return $this->templateposttype_process_empty_content( $content, $posttype );
@@ -149,7 +155,7 @@ trait TemplatePostType
 	}
 
 	// DEFAULT METHOD: title for overridden archive page
-	public function templateposttype_get_archive_title( $posttype )
+	public function templateposttype_get_archive_title( string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'archive_title',
 			Services\CustomPostType::getLabel( $posttype, 'all_items' ) );
@@ -166,19 +172,19 @@ trait TemplatePostType
 	}
 
 	// no need to check for post-type
-	public function post_type_archive_title( $name, $posttype )
+	public function post_type_archive_title( string $name, string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'archive_title', $name );
 	}
 
 	// no need to check for post-type
-	public function post_type_archive_title_templateposttype_newpost( $name, $posttype )
+	public function post_type_archive_title_templateposttype_newpost( string $name, string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'newpost_title',
 			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $name ) );
 	}
 
-	protected function templateposttype_process_empty_content( $content, $queried, $wrap = FALSE )
+	protected function templateposttype_process_empty_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
 		if ( ! $content )
 			return $content;
@@ -197,7 +203,7 @@ trait TemplatePostType
 		return $wrap ? Core\HTML::wrap( $html, '-posttype-empty-content' ) : $html;
 	}
 
-	protected function templateposttype_process_archive_content( $content, $queried, $wrap = FALSE )
+	protected function templateposttype_process_archive_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
 		if ( ! $content )
 			return $content;
@@ -217,7 +223,7 @@ trait TemplatePostType
 	}
 
 	// DEFAULT METHOD: content for overridden archive page
-	public function templateposttype_get_archive_content( $posttype )
+	public function templateposttype_get_archive_content( string $posttype ): string
 	{
 		$setting = $this->get_setting_fallback( 'archive_content', NULL, FALSE );
 
@@ -227,9 +233,9 @@ trait TemplatePostType
 		if ( $setting )
 			return $this->templateposttype_process_archive_content( $setting, $posttype );
 
-		// NOTE: here to avoid further process
+		// NOTE: here to avoid further process/`sprintf`/`tokens` for module default
 		if ( $default = $this->templateposttype_get_archive_content_default( $posttype ) )
-			return $default; // avoid `sprintf`/`tokens` for module defaults
+			return $default;
 
 		// TODO: add widget area
 
@@ -250,13 +256,13 @@ trait TemplatePostType
 		return '';
 	}
 
-	public function templateposttype_get_archive_content_default( $posttype )
+	public function templateposttype_get_archive_content_default( string $posttype ): string
 	{
 		return '';
 	}
 
 	// DEFAULT METHOD: button for overridden empty/archive page
-	public function templateposttype_get_add_new( $posttype, $title = FALSE, $label = NULL )
+	public function templateposttype_get_add_new( string $posttype, false|string $title = FALSE, ?string $label = NULL ): string
 	{
 		$object = WordPress\PostType::object( $posttype );
 
@@ -282,7 +288,7 @@ trait TemplatePostType
 	}
 
 	// will hook to `the_content` filter on 404
-	public function templateposttype_empty_content( $content )
+	public function templateposttype_empty_content( string $content ): string
 	{
 		if ( ! $post = WordPress\Post::get() )
 			return $content;
@@ -300,7 +306,7 @@ trait TemplatePostType
 	}
 
 	// will hook to `the_content` filter on archive
-	public function templateposttype_archive_content( $content )
+	public function templateposttype_archive_content( string $content ): string
 	{
 		return Core\HTML::wrap(
 			$this->templateposttype_get_archive_content( get_query_var( 'post_type' ) ),
@@ -309,7 +315,7 @@ trait TemplatePostType
 	}
 
 	// will hook to `the_content` filter on new-post
-	public function templateposttype_newpost_content( $content )
+	public function templateposttype_newpost_content( string $content ): string
 	{
 		if ( ! $post = WordPress\Post::get() )
 			return $content;
@@ -319,7 +325,7 @@ trait TemplatePostType
 		return Core\HTML::wrap( $html, $this->base.'-newpost-content' );
 	}
 
-	protected function templateposttype_newpost_form( $posttype )
+	protected function templateposttype_newpost_form( string $posttype ): string
 	{
 		$status = $this->get_setting( 'post_status', 'pending' );  // `draft`
 		$target = 'none';                                          // self::req( 'target', 'none' );
@@ -504,7 +510,7 @@ trait TemplatePostType
 	}
 
 	// DEFAULT METHOD: title for overridden new-post page
-	public function templateposttype_get_newpost_title( $posttype )
+	public function templateposttype_get_newpost_title( string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'newpost_title',
 			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $posttype ) );

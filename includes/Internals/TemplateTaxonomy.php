@@ -226,8 +226,11 @@ trait TemplateTaxonomy
 		if ( $data = WordPress\Taxonomy::object( $queried ) )
 			$html = Core\Text::replaceTokens( $html, $data );
 
-		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
-		$html = Core\Text::autoP( $html );
+		else if ( is_string( $queried ) && Core\Text::has( $html, '%s' ) )
+			$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?: '' ) );
+
+		else
+			$html = Core\Text::autoP( $html );
 
 		return $wrap ? Core\HTML::wrap( $html, '-taxonomy-empty-content' ) : $html;
 	}
@@ -242,7 +245,11 @@ trait TemplateTaxonomy
 		if ( $term = WordPress\Term::get( $queried ) )
 			$html = Core\Text::replaceTokens( $html, WordPress\Term::summary( $term ) );
 
-		$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?? '' ) );
+		else if ( is_string( $queried ) && Core\Text::has( $html, '%s' ) )
+			$html = WordPress\ShortCode::apply( sprintf( $html, $queried ?: '' ) );
+
+		else
+			$html = Core\Text::autoP( $html );
 
 		return $wrap ? Core\HTML::wrap( $html, '-taxonomy-archives-content' ) : $html;
 	}
