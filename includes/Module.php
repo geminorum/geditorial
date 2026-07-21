@@ -9,6 +9,7 @@ class Module extends WordPress\Module
 	use Internals\CoreAdminBar;
 	use Internals\CoreComments;
 	use Internals\CoreConstants;
+	use Internals\CoreHooks;
 	use Internals\CoreIncludes;
 	use Internals\CorePostTypes;
 	use Internals\CoreRoles;

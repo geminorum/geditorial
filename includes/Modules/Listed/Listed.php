@@ -288,8 +288,9 @@ class Listed extends gEditorial\Module
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 
+		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
+		$this->filter_module_i2c( 'identified', 'default_posttype_identifier_type', 'code', 'primary_posttype' );
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
-		$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
 
 		$this->filter( 'pairedimports_import_types', 4, 20, FALSE, $this->base );
