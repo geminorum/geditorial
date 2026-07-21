@@ -11,12 +11,12 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'directorate';
 
-	public static function getLatestDepartmentID()
+	public static function getLatestDepartmentID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'committee' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'committee' ), '', 'ID', 'publish' );
 	}
 
-	public static function theDepartment( $atts = [] )
+	public static function theDepartment( array $atts = [] ): false|string
 	{
 		if ( ! array_key_exists( 'item_title_cb', $atts ) )
 			$atts['item_title_cb'] = [ __CLASS__, 'theCommitteeTitleCB' ];
@@ -27,7 +27,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::pairedLink( $atts, static::MODULE );
 	}
 
-	public static function theCommitteeTitleCB( $post, $args = [] )
+	public static function theCommitteeTitleCB( object $post, array $args = [] ): string
 	{
 		return Core\Text::stripTags( self::getMetaField( 'sub_title', [
 			'id'      => $post->ID,
@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 		] ) );
 	}
 
-	public static function theBadge( $atts = [] )
+	public static function theBadge( array $atts = [] ): false|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -43,7 +43,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::badge( $atts );
 	}
 
-	public static function badge( $atts = [] )
+	public static function badge( array $atts = [] ): false|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';

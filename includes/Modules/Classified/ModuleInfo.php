@@ -10,7 +10,7 @@ class ModuleInfo extends gEditorial\Info
 
 	const MODULE = 'classified';
 
-	public static function getClassifications( $context = NULL )
+	public static function getClassifications( ?string $context = NULL ): array
 	{
 		switch ( Core\L10n::locale( TRUE ) ) {
 

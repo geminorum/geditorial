@@ -264,7 +264,7 @@ class WcConnected extends gEditorial\Module
 		return $shortcode->get_content();
 	}
 
-	public function product_tabs( $tabs )
+	public function product_tabs( array $tabs ): array
 	{
 		global $product;
 

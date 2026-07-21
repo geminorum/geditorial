@@ -279,22 +279,22 @@ class People extends gEditorial\Module
 			: $template;
 	}
 
-	public function pre_get_terms_admin( &$query )
+	public function pre_get_terms_admin( object &$wp_query ): void
 	{
-		if ( empty( $query->query_vars['search'] ) )
+		if ( empty( $wp_query->query_vars['search'] ) )
 			return;
 
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
-		if ( ! in_array( $taxonomy, (array) $query->query_vars['taxonomy'], TRUE ) )
+		if ( ! in_array( $taxonomy, (array) $wp_query->query_vars['taxonomy'], TRUE ) )
 			return;
 
 		// Corrects the Arabic comma, here in case no target found for this search.
-		if ( Core\Text::has( $query->query_vars['search'], '،' ) )
-			$query->query_vars['search'] = str_ireplace( '،', ',', $query->query_vars['search'] );
+		if ( Core\Text::has( $wp_query->query_vars['search'], '،' ) )
+			$wp_query->query_vars['search'] = str_ireplace( '،', ',', $wp_query->query_vars['search'] );
 
 		// Bail if target is no different than the criteria and let the Service decide.
-		if ( FALSE === ( $target = ModuleHelper::getCriteria( $query->query_vars['search'] ) ) )
+		if ( FALSE === ( $target = ModuleHelper::getCriteria( $wp_query->query_vars['search'] ) ) )
 			return;
 
 		// Avoids the infinite loop!
@@ -317,8 +317,8 @@ class People extends gEditorial\Module
 		if ( ! $terms )
 			return;
 
-		$query->query_vars['include'] = $terms;
-		$query->query_vars['search']  = ''; // Turned out it's very important to clear the search!
+		$wp_query->query_vars['include'] = $terms;
+		$wp_query->query_vars['search']  = ''; // Turned out it's very important to clear the search!
 	}
 
 	public function get_name_familyfirst( $string, $term = NULL )
@@ -479,7 +479,7 @@ class People extends gEditorial\Module
 		return array_merge( $terms, $query->terms );
 	}
 
-	public function single_term_title( $title )
+	public function single_term_title( string $title ): string
 	{
 		return is_tax( $this->constant( 'main_taxonomy' ) )
 			? $this->get_name_familylast( $title )

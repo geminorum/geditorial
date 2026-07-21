@@ -765,7 +765,7 @@ class Byline extends gEditorial\Module
 		return $this->filters( 'term_relations', $relation, $term, $post, $fields, $legacy );
 	}
 
-	public function product_tabs( $tabs )
+	public function product_tabs( array $tabs ): array
 	{
 		global $product;
 

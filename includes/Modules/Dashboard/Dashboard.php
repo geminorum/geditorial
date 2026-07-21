@@ -130,9 +130,9 @@ class Dashboard extends gEditorial\Module
 		], $name ) );
 	}
 
-	// add_rewrite_rule( 'api/items/([0-9]+)/?', 'index.php?api_item_id=$matches[1]', 'top' );
-	// add_rewrite_rule( '^dashboard/([^/]*)/?', 'index.php?city=$matches[1]','top' );
-	private function _init_rewrite_rules()
+	// `add_rewrite_rule( 'api/items/([0-9]+)/?', 'index.php?api_item_id=$matches[1]', 'top' );`
+	// `add_rewrite_rule( '^dashboard/([^/]*)/?', 'index.php?city=$matches[1]','top' );`
+	private function _init_rewrite_rules(): bool
 	{
 		$key  = $this->classs();
 		$slug = $this->_get_dashboard_slug();
@@ -144,9 +144,11 @@ class Dashboard extends gEditorial\Module
 		foreach ( $this->_get_pages() as $page => $title )
 			add_rewrite_rule( ( $home ? ( '^'.$page.'/?$' ) : ( '^'.$slug.'/'.$page.'/?$' ) ),
 				sprintf( 'index.php?pagename=%s&%s=%s', $slug, $key, $page ), 'top' );
+	
+		return TRUE;
 	}
 
-	private function _get_dashboard_slug( $page = FALSE )
+	private function _get_dashboard_slug( bool $page = FALSE ): string
 	{
 		if ( ! $id = $this->get_setting( 'dashboard_page_id', 0 ) )
 			return FALSE;
@@ -157,18 +159,18 @@ class Dashboard extends gEditorial\Module
 		return $page ? ( $post->post_name.'/'.$page ) : $post->post_name;
 	}
 
-	private function _get_dashboard_permalink( $page = FALSE )
+	private function _get_dashboard_permalink( bool $page = FALSE ): string
 	{
 		$dashboard = get_permalink( $this->get_setting( 'dashboard_page_id', 0 ) );
 		return $page ? Core\URL::trail( $dashboard ).$page : Core\URL::untrail( $dashboard );
 	}
 
-	private function _get_pages()
+	private function _get_pages(): array
 	{
 		return $this->filters( 'pages', [] );
 	}
 
-	private function _dahboard_is_homepage()
+	private function _dahboard_is_homepage(): bool
 	{
 		if ( 'page' === get_option( 'show_on_front' )
 			&& $this->get_setting( 'dashboard_page_id', 0 ) == get_option( 'page_on_front' ) )
@@ -177,7 +179,7 @@ class Dashboard extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function display_post_states( $states, $post )
+	public function display_post_states( array $states, object $post ): array
 	{
 		if ( 'page' !== $post->post_type )
 			return $states;
@@ -188,7 +190,7 @@ class Dashboard extends gEditorial\Module
 		return $states;
 	}
 
-	private function _init_hooks()
+	private function _init_hooks(): bool
 	{
 		WordPress\Theme::resetQueryExtras( [
 			'disable_robots' => TRUE,

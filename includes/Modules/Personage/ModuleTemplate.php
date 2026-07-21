@@ -124,7 +124,7 @@ class ModuleTemplate extends gEditorial\Template
 		return TRUE;
 	}
 
-	public static function summary( $atts = [] )
+	public static function summary( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -135,7 +135,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::metaSummary( $atts );
 	}
 
-	public static function theCover( $atts = [] )
+	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -143,7 +143,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	public static function cover( $atts = [] )
+	public static function cover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';

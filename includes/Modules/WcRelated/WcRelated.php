@@ -209,7 +209,7 @@ class WcRelated extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/bekarice/0220adfc3e6ba8d0388714eabbb00adc
-	public function product_tabs( $tabs )
+	public function product_tabs( array $tabs ): array
 	{
 		global $product;
 

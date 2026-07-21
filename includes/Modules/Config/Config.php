@@ -102,7 +102,7 @@ class Config extends gEditorial\Module
 	 *
 	 * @return void
 	 */
-	public function import_filters()
+	public function import_filters(): void
 	{
 		// TODO: add more details for the end-user via `wp_importer` on strings API
 		$this->render_imports_toolbox_card(
@@ -117,7 +117,7 @@ class Config extends gEditorial\Module
 	 * @param string|array $extra
 	 * @return string
 	 */
-	public function _get_icon( $extra )
+	public function _get_icon( string|array $extra ): string
 	{
 		return $this->adminbar__get_icon( NULL, $extra );
 	}
@@ -253,7 +253,7 @@ class Config extends gEditorial\Module
 		}
 	}
 
-	public function admin_kiosks_page()
+	public function admin_kiosks_page(): bool
 	{
 		$context = 'kiosks';
 		$system  = gEditorial\Plugin::system();
@@ -291,6 +291,8 @@ class Config extends gEditorial\Module
 			);
 
 		gEditorial\Settings::wrapClose( TRUE, $context );
+
+		return TRUE;
 	}
 
 	private function _render_page_by_context( string $context, $title = NULL, $extra_subs = NULL ): bool
@@ -341,8 +343,8 @@ class Config extends gEditorial\Module
 
 		gEditorial\Settings::wrapOpen( $sub, $context );
 
-			// gEditorial\Settings::headerTitle( $context, _x( 'Editorial Config', 'Page Title', 'geditorial-admin' ) );
-			// Core\HTML::headerNav( $uri, $sub, $subs );
+			// `gEditorial\Settings::headerTitle( $context, _x( 'Editorial Config', 'Page Title', 'geditorial-admin' ) );`
+			// `Core\HTML::headerNav( $uri, $sub, $subs );`
 			gEditorial\Settings::sideOpen( $title, $uri, $sub, $subs, FALSE );
 			gEditorial\Settings::message( $messages );
 
@@ -376,7 +378,7 @@ class Config extends gEditorial\Module
 	}
 
 	// NOTE: maybe using `wp_dashboard()` on overview
-	protected function reports_overview( string $uri )
+	protected function reports_overview( string $uri ): void
 	{
 		Services\AdminScreen::renderLayout( 'reports',
 			function ( $context, $screen ) use ( $uri ) {
@@ -391,24 +393,24 @@ class Config extends gEditorial\Module
 		);
 	}
 
-	protected function tools_overview( string $uri )
+	protected function tools_overview( string $uri ): void
 	{
 		do_action( $this->hook_base( 'tools', 'overview' ), $uri );
 	}
 
-	public function tools_overview_notice( string $uri )
+	public function tools_overview_notice( string $uri ): void
 	{
 		if ( function_exists( 'gnetwork_update_notice' ) )
 			gnetwork_update_notice( GEDITORIAL_FILE );
 	}
 
-	public function tools_overview_readme( string $uri )
+	public function tools_overview_readme( string $uri ): void
 	{
 		if ( function_exists( 'gnetwork_github_readme' ) )
 			gnetwork_github_readme( 'geminorum/geditorial' );
 	}
 
-	protected function tools_options( string $uri )
+	protected function tools_options( string $uri ): void
 	{
 		WordPress\User::superAdminOnly();
 
@@ -428,7 +430,7 @@ class Config extends gEditorial\Module
 		);
 	}
 
-	protected function roles_overview( string $uri )
+	protected function roles_overview( string $uri ): void
 	{
 		do_action( $this->hook_base( 'roles', 'overview' ), $uri );
 	}
@@ -773,7 +775,7 @@ class Config extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function renderCard_tools_maintenance( $form, $system )
+	private function renderCard_tools_maintenance( array $form, ?string $system ): bool
 	{
 		$system = $system ?? gEditorial\Plugin::system();
 
@@ -801,7 +803,7 @@ class Config extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function renderCard_tools_o2o( $form, $system )
+	private function renderCard_tools_o2o( array $form, ?string $system ): bool
 	{
 		$system = $system ?? gEditorial\Plugin::system();
 		$counts = Services\O2O\API::getConnectionCounts();
@@ -852,6 +854,7 @@ class Config extends gEditorial\Module
 		}
 
 		echo '</div></div>';
+		return TRUE;
 	}
 
 	// TODO: add buttons to append `{$this->base}_{$context}` to current role
@@ -880,7 +883,7 @@ class Config extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function admin_imports_load()
+	public function admin_imports_load(): void
 	{
 		$context = $context ?? 'imports';
 		$sub     = gEditorial\Settings::sub();
@@ -900,20 +903,20 @@ class Config extends gEditorial\Module
 		Services\AdminScreen::enqueueValidator();
 	}
 
-	public function admin_imports_page()
+	public function admin_imports_page(): bool
 	{
-		$this->_render_page_by_context( 'imports',
+		return $this->_render_page_by_context( 'imports',
 			_x( 'Imports', 'Page Title', 'geditorial-admin' )
 		);
 	}
 
-	protected function imports_overview( $uri )
+	protected function imports_overview( string $uri ): void
 	{
 		do_action( $this->hook_base( 'imports', 'overview' ), $uri );
 	}
 
 	// TODO: download link
-	protected function imports_data( $uri )
+	protected function imports_data( string $uri ): void
 	{
 		foreach ( apply_filters( $this->hook_base( 'imports', 'data_summary' ), [] ) as $row ) {
 
@@ -964,7 +967,7 @@ class Config extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function admin_customs_load()
+	public function admin_customs_load(): void
 	{
 		$context = $context ?? 'customs';
 		$sub     = gEditorial\Settings::sub();
@@ -984,19 +987,19 @@ class Config extends gEditorial\Module
 		Services\AdminScreen::enqueueValidator();
 	}
 
-	public function admin_customs_page()
+	public function admin_customs_page(): bool
 	{
-		$this->_render_page_by_context( 'customs',
+		return $this->_render_page_by_context( 'customs',
 			_x( 'Customs', 'Page Title', 'geditorial-admin' )
 		);
 	}
 
-	protected function customs_overview( $uri )
+	protected function customs_overview( string $uri ): void
 	{
 		do_action( $this->hook_base( 'customs', 'overview' ), $uri );
 	}
 
-	public function settings_sidebox( $sub, $uri )
+	public function settings_sidebox( string $sub, string $uri ): void
 	{
 		if ( $user = gEditorial()->user() ) {
 
@@ -1047,12 +1050,12 @@ class Config extends gEditorial\Module
 		gEditorial\Ajax::errorWhat();
 	}
 
-	public function admin_settings_page()
+	public function admin_settings_page(): bool
 	{
-		if ( ! $key = self::req( 'module', FALSE ) )
+		if ( ! $module_key = self::req( 'module', FALSE ) )
 			$module = $this->module;
 
-		else if ( ! $module = gEditorial()->get_module_by( 'name', $key ) )
+		else if ( ! $module = gEditorial()->get_module_by( 'name', $module_key ) )
 			return gEditorial\Settings::wrapError( Core\HTML::warning( _x( 'Not a registered Editorial module.', 'Page Notice', 'geditorial-admin' ), FALSE ) );
 
 		if ( ! gEditorial()->enabled( $module->name, FALSE ) )
@@ -1061,6 +1064,8 @@ class Config extends gEditorial\Module
 		gEditorial()->module( $module->name )->settings_header();
 		gEditorial()->module( $module->name )->settings_from();
 		gEditorial()->module( $module->name )->settings_footer();
+
+		return TRUE;
 	}
 
 	public function settings_from(): void
@@ -1111,12 +1116,12 @@ class Config extends gEditorial\Module
 		echo '<div class="clear"></div></div>';
 	}
 
-	public function admin_settings_load()
+	public function admin_settings_load(): void
 	{
 		$context = $context ?? 'settings';
 
 		if ( ! $this->cuc( $context ) )
-			return FALSE;
+			return;
 
 		$module = self::req( 'module', FALSE );
 
@@ -1150,53 +1155,59 @@ class Config extends gEditorial\Module
 		$this->register_help_tabs();
 	}
 
-	private function _handle_settings_disable( $module = FALSE, $context = 'settings' )
+	private function _handle_settings_disable( string $module_key = '', ?string $context = NULL ): bool
 	{
+		$context = $context ?? 'settings';
+
 		if ( ! isset( $_POST['disable'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module_key ) ) ) )
 			return FALSE;
 
 		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
-			self::cheatin();
+			return self::cheatin();
 
 		if ( gEditorial()->update_module_option( $module->name, 'enabled', FALSE ) )
-			WordPress\Redirect::doReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
+			return WordPress\Redirect::doReferer( [ 'message' => 'disabled', 'module' => FALSE ] );
 
 		else
-			WordPress\Redirect::doReferer( 'error' );
+			return WordPress\Redirect::doReferer( 'error' );
 	}
 
-	private function _handle_settings_reset( $module = FALSE, $context = 'settings' )
+	private function _handle_settings_reset( string $module_key = '', ?string $context = NULL ): bool
 	{
+		$context = $context ?? 'settings';
+
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module_key ) ) ) )
 			return FALSE;
 
 		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
-			self::cheatin();
+			return self::cheatin();
 
 		gEditorial()->update_all_module_options( $module->name, [ 'enabled' => TRUE ] );
 
-		WordPress\Redirect::doReferer( 'resetting' );
+		return WordPress\Redirect::doReferer( 'resetting' );
 	}
 
-	private function _handle_settings_save( $module = FALSE, $context = 'settings' )
+	private function _handle_settings_save( string $module_key = '', ?string $context = NULL ): bool
 	{
+		$context = $context ?? 'settings';
+
 		if ( ! isset( $_POST['submit'], $_POST['action'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
 
 		if ( 'update' != $_POST['action'] )
 			return FALSE;
 
-		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module ) ) ) )
+		if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( self::req( 'geditorial_module_name', $module_key ) ) ) )
 			return FALSE;
 
 		if ( ! $this->nonce_verify( $context, NULL, $module->name ) )
-			self::cheatin();
+			return self::cheatin();
 
 		$option  = $this->hook_base( $module->name );
 		$posted  = empty( $_POST[$option] ) ? [] : $_POST[$option];
@@ -1206,6 +1217,6 @@ class Config extends gEditorial\Module
 
 		gEditorial()->update_all_module_options( $module->name, $options );
 
-		WordPress\Redirect::doReferer();
+		return WordPress\Redirect::doReferer();
 	}
 }

@@ -11,9 +11,9 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'organization';
 
-	public static function getLatestDepartmentID()
+	public static function getLatestDepartmentID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'department' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'department' ), '', 'ID', 'publish' );
 	}
 
 	public static function theDepartment( $atts = [] )
@@ -27,7 +27,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::pairedLink( $atts, static::MODULE );
 	}
 
-	public static function theDepartmentTitleCB( $post, $args = [] )
+	public static function theDepartmentTitleCB( object $post, array $args = [] ): string
 	{
 		return Core\Text::stripTags( self::getMetaField( 'sub_title', [
 			'id'      => $post->ID,
@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 		] ) );
 	}
 
-	public static function theBadge( $atts = [] )
+	public static function theBadge( array $atts = [] ): false|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -43,7 +43,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::badge( $atts );
 	}
 
-	public static function badge( $atts = [] )
+	public static function badge( array $atts = [] ): false|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';

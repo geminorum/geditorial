@@ -638,7 +638,7 @@ class NationalLibrary extends gEditorial\Module
 		return $meta;
 	}
 
-	public function product_tabs( $tabs )
+	public function product_tabs( array $tabs ): array
 	{
 		global $product;
 

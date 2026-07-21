@@ -401,12 +401,12 @@ class Phonebook extends gEditorial\Module
 	}
 
 	// NOTE: admin-only
-	public function pre_get_posts_sanitized( $query )
+	public function pre_get_posts_sanitized( object &$wp_query ): void
 	{
-		if ( ! $query->is_main_query() || ! $query->is_search )
+		if ( ! $wp_query->is_main_query() || ! $wp_query->is_search )
 			return;
 
-		if ( ! $search = $query->get( 's' ) )
+		if ( ! $search = $wp_query->get( 's' ) )
 			return;
 
 		if ( Core\Text::has( $search, Services\AdvancedQueries::SEARCH_OPERATOR_OR ) )
@@ -425,8 +425,8 @@ class Phonebook extends gEditorial\Module
 			return;
 
 		// TODO: make wp-query support `OR` operator on search-terms
-		// $query->set( 's', sprintf( '%s|%s', $sanitized, $search ) );
-		$query->set( 's', $sanitized );
+		// `$wp_query->set( 's', sprintf( '%s|%s', $sanitized, $search ) );`
+		$wp_query->set( 's', $sanitized );
 	}
 
 	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed

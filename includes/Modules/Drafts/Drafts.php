@@ -407,7 +407,7 @@ class Drafts extends gEditorial\Module
 		return $wpdb->get_results( $query->request );
 	}
 
-	public function display_post_states( $states, $post )
+	public function display_post_states( array $states, object $post ): array
 	{
 		$query = $this->constant( 'admin_queryvar' );
 

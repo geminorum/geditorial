@@ -247,7 +247,7 @@ class WcTerms extends gEditorial\Module
 		woocommerce_pagination(); // FIXME: WTF: paged posts on limited products
 	}
 
-	public function pre_get_posts_assigned( &$wp_query )
+	public function pre_get_posts_assigned( object &$wp_query ): void
 	{
 		if ( ! $wp_query->is_main_query() )
 			return;

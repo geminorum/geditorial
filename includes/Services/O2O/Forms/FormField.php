@@ -130,8 +130,8 @@ abstract class FormField implements FormFieldInterface
 	/**
 	 * Mutate the field arguments so that the value passed is rendered.
 	 *
-	 * @param array  $args
-	 * @param mixed  $value
+	 * @param array $args
+	 * @param mixed $value
 	 */
 	abstract protected function _set_value( &$args, $value );
 

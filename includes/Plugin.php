@@ -735,7 +735,7 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: move following into Info!
-	public static function system( false|string $wrap = FALSE, mixed $fallback = '' ): mixed
+	public static function system( false|string $wrap = FALSE, false|string $fallback = '' ): false|string
 	{
 		if ( ! $message = self::const( 'GEDITORIAL_SYSTEM_TITLE', NULL ) ?? _x( 'Editorial', 'Plugin: System Title', 'geditorial' ) ) return $fallback;
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => '-system', 'title' => self::const( 'GEDITORIAL_SYSTEM_DESC', NULL ) ?? _x( 'Our Editorial in WordPress', 'Plugin: System Description', 'geditorial' ) ], $message ) : $message;

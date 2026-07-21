@@ -916,9 +916,9 @@ class Identified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function pre_get_posts_queryable_types( object &$query ): void
+	public function pre_get_posts_queryable_types( object &$wp_query ): void
 	{
-		if ( $query->is_main_query() || ! $query->is_post_type_archive() )
+		if ( $wp_query->is_main_query() || ! $wp_query->is_post_type_archive() )
 			return;
 
 		if ( ! $types = $this->get_setting( 'queryable_types', [] ) )
@@ -926,7 +926,7 @@ class Identified extends gEditorial\Module
 
 		foreach ( $this->posttypes() as $posttype ) {
 
-			if ( ! $query->is_post_type_archive( $posttype ) )
+			if ( ! $wp_query->is_post_type_archive( $posttype ) )
 				continue;
 
 			if ( ! $type = $this->_get_posttype_identifier_type( $posttype ) )
@@ -935,7 +935,7 @@ class Identified extends gEditorial\Module
 			if ( ! in_array( $type, $types, TRUE ) )
 				continue;
 
-			if ( ! $criteria = $query->get( $type, FALSE ) )
+			if ( ! $criteria = $wp_query->get( $type, FALSE ) )
 				continue;
 
 			if ( ! $sanitized = $this->sanitize_identifier( $criteria, $type ) )
@@ -944,9 +944,9 @@ class Identified extends gEditorial\Module
 			if ( ! $metakey = $this->_get_posttype_identifier_metakey( $posttype ) )
 				continue;
 
-			$query->set( 'meta_key', $metakey );
-			$query->set( 'meta_value', $sanitized );
-			// $query->set( 'meta_compare', 'LIKE' );
+			$wp_query->set( 'meta_key', $metakey );
+			$wp_query->set( 'meta_value', $sanitized );
+			// `$wp_query->set( 'meta_compare', 'LIKE' );`
 
 			break;
 		}

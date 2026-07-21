@@ -455,7 +455,7 @@ trait BulkExports
 	}
 
 	// TODO: export target: `paired_by_term`
-	protected function exports_get_export_data( int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): false|array
+	protected function exports_get_export_data( int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): false|string
 	{
 		$data = FALSE;
 

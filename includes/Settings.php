@@ -527,12 +527,14 @@ class Settings extends WordPress\Main
 		}
 	}
 
-	public static function wrapError( string $message, ?string $title = NULL ): void
+	public static function wrapError( string $message, ?string $title = NULL, bool $returns = FALSE ): bool
 	{
 		self::wrapOpen( 'error' );
 			self::headerTitle( 'error', $title );
 			echo $message;
 		self::wrapClose();
+		
+		return $returns;
 	}
 
 	// @REF: `get_admin_page_title()`
@@ -541,7 +543,7 @@ class Settings extends WordPress\Main
 		?string $title = NULL,
 		false|string|array|null $back = NULL,
 		?string $to = NULL,
-		string $icon = '',
+		string|array|false $icon = '',
 		false|int $count = FALSE,
 		bool $search = FALSE,
 		bool $filters = FALSE,
@@ -615,8 +617,14 @@ class Settings extends WordPress\Main
 		echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
 	}
 
-	public static function sideOpen( ?string $title = NULL, ?string $uri = '', ?string $active = '', array $subs = [], ?string  $heading = NULL ): void
-	{
+	public static function sideOpen(
+		?string $title = NULL,
+		?string $uri = '',
+		?string $active = '',
+		array $subs = [],
+		string|false|null $heading = NULL,
+	): void {
+
 		echo '<div class="side-nav-wrap">';
 
 		$title = $title ?? ( Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) );
@@ -840,9 +848,11 @@ class Settings extends WordPress\Main
 		return Core\HTML::notice( sprintf( $message, Core\Number::format( $count ?? self::req( 'count', 0 ) ) ), $class.' fade' );
 	}
 
-	public static function cheatin( ?string $message = NULL ): void
+	public static function cheatin( ?string $message = NULL ): bool
 	{
 		echo Core\HTML::error( $message ?? _x( 'Cheatin&#8217; uh?', 'Settings: Message', 'geditorial-admin' ) );
+
+		return FALSE; // help the caller
 	}
 
 	public static function huh( ?string $message = NULL ): string

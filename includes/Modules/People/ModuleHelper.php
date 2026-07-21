@@ -14,7 +14,7 @@ class ModuleHelper extends gEditorial\Helper
 	// TODO: must returns array of options
 	// TODO: must filter to add/remove honorifics
 	// TODO: must query database directly!
-	public static function getCriteria( $string )
+	public static function getCriteria( string $string ): false|string
 	{
 		$criteria = FALSE;  // Means no need the search again!
 

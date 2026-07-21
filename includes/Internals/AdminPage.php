@@ -17,7 +17,6 @@ trait AdminPage
 	protected function get_adminpage_subs( ?string $context = 'mainpage' ): array
 	{
 		// `$subs = $this->list_posttypes( NULL, NULL, 'create_posts' );`
-		// `$subs = $this->get_string( 'subs', $context, 'adminpage', [] );`
 		$subs = $this->get_strings( 'subs', $context );
 
 		// FIXME: check capabilities

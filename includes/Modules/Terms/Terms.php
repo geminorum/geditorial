@@ -962,7 +962,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta ) {
 
-					$visibility = $this->get_string( 'visibility', FALSE, 'misc', [] );
+					$visibility = $this->get_strings( 'misc', 'visibility' );
 
 					if ( '2' == $meta )
 						$icon = Core\HTML::getDashicon( 'visibility', $visibility[$meta], '-icon-danger' );
@@ -984,7 +984,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta || 'undefined' === $meta ) {
 
-					$dirs = $this->get_string( 'arrow_directions', FALSE, 'misc', [] );
+					$dirs = $this->get_strings( 'misc', 'arrow_directions' );
 
 					if ( array_key_exists( $meta, $dirs ) )
 						$icon = Core\HTML::getDashicon( sprintf( 'arrow-%s-alt', $meta ), $dirs[$meta], 'icon-arrow' );
@@ -1657,7 +1657,7 @@ class Terms extends gEditorial\Module
 
 			case 'viewable':
 
-				$html.= Core\HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_strings( 'misc', 'visibility' ), [
 					'id'       => $this->classs( $field, 'id' ),
 					'name'     => 'term-'.$field,
 					'selected' => empty( $meta ) ? '0' : $meta,
@@ -1667,7 +1667,7 @@ class Terms extends gEditorial\Module
 
 			case 'arrow':
 
-				$html.= Core\HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_strings( 'misc', 'arrow_directions' ), [
 					'id'       => $this->classs( $field, 'id' ),
 					'name'     => 'term-'.$field,
 					'selected' => empty( $meta ) ? 'undefined' : $meta,
@@ -1881,7 +1881,7 @@ class Terms extends gEditorial\Module
 
 			case 'viewable':
 
-				$html.= Core\HTML::dropdown( $this->get_string( 'visibility', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_strings( 'misc', 'visibility' ), [
 					'name'     => 'term-'.$field,
 					'selected' => '0',
 				] );
@@ -1890,7 +1890,7 @@ class Terms extends gEditorial\Module
 
 			case 'arrow':
 
-				$html.= Core\HTML::dropdown( $this->get_string( 'arrow_directions', FALSE, 'misc', [] ), [
+				$html.= Core\HTML::dropdown( $this->get_strings( 'misc', 'arrow_directions' ), [
 					'name'     => 'term-'.$field,
 					'selected' => 'undefined',
 				] );
@@ -2594,11 +2594,11 @@ class Terms extends gEditorial\Module
 	 * Adds support to `get_terms()` for order by `menu_order`.
 	 * @source `wc_change_pre_get_terms()`
 	 *
-	 * @param WP_Term_Query $terms_query
+	 * @param \WP_Term_Query $wp_query
 	 */
-	public function pre_get_terms_ordering( $terms_query )
+	public function pre_get_terms_ordering( object &$wp_query ): void
 	{
-		$args = &$terms_query->query_vars;
+		$args = &$wp_query->query_vars;
 
 		// Put back valid `orderby` values.
 		if ( 'menu_order' === $args['orderby'] ) {
@@ -2627,7 +2627,7 @@ class Terms extends gEditorial\Module
 			$args['meta_key'] = $metakey;
 			$args['orderby']  = 'meta_value_num';
 
-			$terms_query->meta_query->parse_query_vars( $args );
+			$wp_query->meta_query->parse_query_vars( $args );
 		}
 	}
 

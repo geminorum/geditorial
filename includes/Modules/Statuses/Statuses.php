@@ -298,7 +298,7 @@ class Statuses extends gEditorial\Module
 		return $columns;
 	}
 
-	public function pre_get_posts_admin( &$wp_query )
+	public function pre_get_posts_admin( object &$wp_query ): void
 	{
  		if ( ! $wp_query->is_admin )
 			return;
@@ -382,7 +382,7 @@ class Statuses extends gEditorial\Module
 		return $data;
 	}
 
-	public function display_post_states( $states, $post )
+	public function display_post_states( array $states, object $post ): array
 	{
 		// bail if the view is set
 		if ( self::req( 'post_status' ) )
@@ -396,7 +396,7 @@ class Statuses extends gEditorial\Module
 		return $states;
 	}
 
-	public function pre_get_posts_front( &$wp_query )
+	public function pre_get_posts_front( object &$wp_query ): void
 	{
 		if ( ! $wp_query->is_main_query() )
 			return;

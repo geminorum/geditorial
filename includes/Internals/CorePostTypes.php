@@ -486,7 +486,7 @@ trait CorePostTypes
 		];
 	}
 
-	public function is_screen_posttype( string  $constant, ?object $screen = NULL ): bool
+	public function is_screen_posttype( string $constant, ?object $screen = NULL ): bool
 	{
 		if ( ! $screen = $screen ?? get_current_screen() )
 			return FALSE;
@@ -520,7 +520,7 @@ trait CorePostTypes
 		return WordPress\Taxonomy::get( 0, [ 'show_ui' => TRUE ], $this->constant( $constant ) );
 	}
 
-	public function get_posttype_fields_list( string  $constant, ?string $module = 'meta' ): array
+	public function get_posttype_fields_list( string $constant, ?string $module = 'meta' ): array
 	{
 		return Core\Arraay::pluck( Services\PostTypeFields::getEnabled( $this->constant( $constant ), $module ), 'title', 'name' );
 	}

@@ -11,12 +11,12 @@ class ModuleTemplate extends gEditorial\Template
 	const MODULE = 'happening';
 
 	// FIXME: must get latest from meta date
-	public static function getLatestEventID()
+	public static function getLatestEventID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'main_posttype', 'event' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'main_posttype', 'event' ), '', 'ID', 'publish' );
 	}
 
-	public static function theCover( $atts = [] )
+	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -24,7 +24,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	public static function cover( $atts = [] )
+	public static function cover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';

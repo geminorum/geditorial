@@ -636,7 +636,7 @@ class Listed extends gEditorial\Module
 		) )
 			return FALSE;
 
-		return $this->paired_tools_render_before( $uri, $sub );
+		return ! $this->paired_tools_render_before( $uri, $sub );
 	}
 
 	public function imports_settings( string $sub ): void

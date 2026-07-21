@@ -11,12 +11,12 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'magazine';
 
-	public static function getLatestIssueID()
+	public static function getLatestIssueID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'issue' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'primary_posttype', 'issue' ), '', 'ID', 'publish' );
 	}
 
-	public static function theIssue( $atts = [] )
+	public static function theIssue( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'item_title_cb', $atts ) )
 			$atts['item_title_cb'] = [ __CLASS__, 'theIssueTitleCB' ];
@@ -27,7 +27,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::pairedLink( $atts, static::MODULE );
 	}
 
-	public static function theIssueTitleCB( $post, $args = [] )
+	public static function theIssueTitleCB( object $post, array $args = [] ): string
 	{
 		return Core\Text::stripTags( self::getMetaField( 'number_line', [
 			'id'      => $post->ID,
@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 		] ) );
 	}
 
-	public static function theIssueMeta( $field = 'number_line', $atts = [] )
+	public static function theIssueMeta( string $field = 'number_line', array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'echo', $atts ) )
 			$atts['echo'] = TRUE;
@@ -49,7 +49,7 @@ class ModuleTemplate extends gEditorial\Template
 		return TRUE;
 	}
 
-	public static function theCover( $atts = [] )
+	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -57,7 +57,28 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	public static function cover( $atts = [] )
+	public static function cover( array $atts = [] ): bool|string
+	{
+		if ( ! array_key_exists( 'id', $atts ) )
+			$atts['id'] = 'paired';
+
+		if ( ! array_key_exists( 'type', $atts ) )
+			$atts['type'] = self::constant( 'primary_posttype', 'issue' );
+
+		return parent::postImage( $atts, static::MODULE );
+	}
+
+	#[\Deprecated('USE `Template::theCover()`')]
+	public static function theIssueCover( array $atts = [] ): bool|string
+	{
+		if ( ! array_key_exists( 'id', $atts ) )
+			$atts['id'] = NULL;
+
+		return self::cover( $atts );
+	}
+
+	#[\Deprecated('USE `Template::cover()`')]
+	public static function issueCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';
@@ -69,35 +90,8 @@ class ModuleTemplate extends gEditorial\Template
 	}
 
 	#[\Deprecated()]
-	public static function theIssueCover( $atts = [] )
+	public static function sanitize_field( array|string $field ): array
 	{
-		self::_dep( 'gEditorialMagazineTemplates::theCover()' );
-
-		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = NULL;
-
-		return self::cover( $atts );
-	}
-
-	#[\Deprecated()]
-	public static function issueCover( $atts = [] )
-	{
-		self::_dep( 'gEditorialMagazineTemplates::cover()' );
-
-		if ( ! array_key_exists( 'id', $atts ) )
-			$atts['id'] = 'paired';
-
-		if ( ! array_key_exists( 'type', $atts ) )
-			$atts['type'] = self::constant( 'primary_posttype', 'issue' );
-
-		return parent::postImage( $atts, static::MODULE );
-	}
-
-	#[\Deprecated()]
-	public static function sanitize_field( $field )
-	{
-		self::_dep( 'NO NEED!' );
-
 		if ( is_array( $field ) )
 			return $field;
 
@@ -116,7 +110,7 @@ class ModuleTemplate extends gEditorial\Template
 		return [ $field ];
 	}
 
-	public static function spanTiles( $atts = [] )
+	public static function spanTiles( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'taxonomy', $atts ) )
 			$atts['taxonomy'] = self::constant( 'span_taxonomy', 'issue_span' );

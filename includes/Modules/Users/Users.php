@@ -262,12 +262,12 @@ class Users extends gEditorial\Module
 	{
 		$this->add_dashboard_widget( 'profile-summary', NULL, [
 			'url'   => admin_url( 'profile.php' ),
-			'title' => $this->get_string( 'action_attr', NULL, 'dashboard', '' ),
-			'link'  => $this->get_string( 'action_link', NULL, 'dashboard', '' ),
+			'title' => $this->get_string( 'action_attr', FALSE, 'dashboard', '' ),
+			'link'  => $this->get_string( 'action_link', FALSE, 'dashboard', '' ),
 		] );
 	}
 
-	public function pre_get_posts( &$wp_query )
+	public function pre_get_posts( object &$wp_query ): void
 	{
 		if ( ! $wp_query->is_admin )
 			return;

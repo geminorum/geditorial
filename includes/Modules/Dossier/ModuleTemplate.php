@@ -11,12 +11,12 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'dossier';
 
-	public static function getLatestDossierID()
+	public static function getLatestDossierID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'dossier_posttype', 'dossier' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'dossier_posttype', 'dossier' ), '', 'ID', 'publish' );
 	}
 
-	public static function theDossier( $atts = [] )
+	public static function theDossier( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'item_title_cb', $atts ) )
 			$atts['item_title_cb'] = [ __CLASS__, 'theDossierTitleCB' ];
@@ -27,7 +27,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::pairedLink( $atts, static::MODULE );
 	}
 
-	public static function theDossierTitleCB( $post, $args = [] )
+	public static function theDossierTitleCB( object $post, array $args = [] ): string
 	{
 		return Core\Text::stripTags( self::getMetaField( 'number_line', [
 			'id'      => $post->ID,
@@ -49,7 +49,7 @@ class ModuleTemplate extends gEditorial\Template
 		return TRUE;
 	}
 
-	public static function theCover( $atts = [] )
+	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -57,7 +57,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	public static function cover( $atts = [] )
+	public static function cover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';
@@ -68,7 +68,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	public static function spanTiles( $atts = [] )
+	public static function spanTiles( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'taxonomy', $atts ) )
 			$atts['taxonomy'] = self::constant( 'span_taxonomy', 'dossier_span' );

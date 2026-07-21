@@ -412,7 +412,7 @@ class MetaBox extends WordPress\Main
 	// TODO: move to `WordPress\MetaBox`
 	public static function getChildrenPosts(
 		mixed $post,
-		?array $posttypes = NULL,
+		string|array|null $posttypes = NULL,
 		string|bool $title = FALSE,
 		int $current = 0,
 		array $exclude = []
@@ -459,7 +459,7 @@ class MetaBox extends WordPress\Main
 	public static function getTermPosts(
 		string $taxonomy,
 		int|object $term,
-		?array $posttypes = NULL,
+		string|array|null $posttypes = NULL,
 		string|bool $title = FALSE,
 		int $current = 0,
 		array $exclude = []

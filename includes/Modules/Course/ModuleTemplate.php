@@ -11,12 +11,12 @@ class ModuleTemplate extends gEditorial\Template
 
 	const MODULE = 'course';
 
-	public static function getLatestCourseID()
+	public static function getLatestCourseID(): int
 	{
-		return WordPress\PostType::getLastMenuOrder( self::constant( 'course_posttype', 'course' ), '', 'ID', 'publish' );
+		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'course_posttype', 'course' ), '', 'ID', 'publish' );
 	}
 
-	public static function theCourse( $atts = [] )
+	public static function theCourse( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'item_title_cb', $atts ) )
 			$atts['item_title_cb'] = [ __CLASS__, 'theCourseTitleCB' ];
@@ -27,7 +27,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::pairedLink( $atts, static::MODULE );
 	}
 
-	public static function theCourseTitleCB( $post, $args = [] )
+	public static function theCourseTitleCB( object $post, array $args = [] ): string
 	{
 		return Core\Text::stripTags( self::getMetaField( 'sub_title', [
 			'id'      => $post->ID,
@@ -35,7 +35,7 @@ class ModuleTemplate extends gEditorial\Template
 		] ) );
 	}
 
-	public static function theCover( $atts = [] )
+	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = NULL;
@@ -43,7 +43,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	public static function cover( $atts = [] )
+	public static function cover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
 			$atts['id'] = 'paired';
@@ -54,7 +54,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	public static function spanTiles( $atts = [] )
+	public static function spanTiles( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'taxonomy', $atts ) )
 			$atts['taxonomy'] = self::constant( 'span_taxonomy', 'course_span' );

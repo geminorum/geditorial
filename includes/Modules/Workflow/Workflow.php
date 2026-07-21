@@ -376,7 +376,7 @@ class Workflow extends gEditorial\Module
 		return array_merge( $post_statuses, wp_filter_object_list( $this->get_statuses(), [ 'viewable' => '2' ], 'and', 'name' ) );
 	}
 
-	public function display_post_states( $states, $post )
+	public function display_post_states( array $states, object $post ): array
 	{
 		// bail if the view is set
 		if ( self::req( 'post_status' ) )
