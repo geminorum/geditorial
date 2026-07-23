@@ -88,13 +88,13 @@ class Taxonomy extends Core\Base
 	 * Checks for taxonomy capability.
 	 * NOTE: caches the results
 	 *
-	 * @param string|object $taxonomy
-	 * @param null|string $capability
-	 * @param null|int|object $user_id
-	 * @param mixed $fallback
+	 * @param mixed $taxonomy
+	 * @param string $capability
+	 * @param int|object $user_id
+	 * @param bool $fallback
 	 * @return bool
 	 */
-	public static function can( string|object $taxonomy, ?string $capability = 'manage_terms', ?int $user_id = NULL, mixed $fallback = FALSE )
+	public static function can( mixed $taxonomy, ?string $capability = 'manage_terms', ?int $user_id = NULL, bool $fallback = FALSE )
 	{
 		static $cache = [];
 

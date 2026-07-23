@@ -502,8 +502,13 @@ class PostType extends Core\Base
 	}
 
 	// TODO: use db query
-	public static function getLastMenuOrder( $posttype = 'post', $exclude = '', $key = 'menu_order', $statuses = NULL )
-	{
+	public static function getLastMenuOrder(
+		string|array $posttype = 'post',
+		string|array $exclude = '',
+		string|false $prop = 'menu_order',
+		string|array|null $statuses = NULL,
+	): false|int|string|object {
+
 		$post = get_posts( [
 			'posts_per_page' => 1,
 			'orderby'        => 'menu_order',
@@ -519,20 +524,28 @@ class PostType extends Core\Base
 		] );
 
 		if ( empty( $post ) )
-			return 0;
+			return FALSE;
 
-		if ( 'menu_order' == $key )
-			return (int) $post[0]->menu_order;
+		if ( in_array( $prop, [
+			'ID',
+			'menu_order',
+		], TRUE ) )
+			return (int) $post[0]->{$prop};
 
-		return $post[0]->{$key};
+		return $post[0]->{$prop};
 	}
 
 	// TODO: use db query
-	public static function getRandomPostID( $posttype, $has_thumbnail = FALSE, $object = FALSE, $status = 'publish' )
-	{
+	public static function getRandomPostID(
+		string|array $posttype,
+		bool $has_thumbnail = FALSE,
+		bool $object = FALSE,
+		string|array|null $statuses = 'publish',
+	): false|int {
+
 		$args = [
 			'post_type'      => $posttype,
-			'post_status'    => $status,
+			'post_status'    => $statuses ?? Status::acceptable( $posttype, 'random', [ 'pending', 'draft' ] ),
 			'posts_per_page' => 1,
 			'orderby'        => 'rand',
 

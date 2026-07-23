@@ -13,6 +13,11 @@ class Module extends Core\Base
 	protected $site = NULL;
 	protected $icon = NULL; // `Dashicons` only
 
+	public static function factory()
+	{
+		throw new Core\Exception( 'The Factory is not defined!' );
+	}
+
 	public static function module(): array { return []; }
 	protected function setup( array $args = [] ): bool { return FALSE; }
 

@@ -241,9 +241,11 @@ class Base
 		die ();
 	}
 
-	public static function cheatin( ?string $message = NULL ): void
+	public static function cheatin( ?string $message = NULL ): bool
 	{
 		wp_die( $message ?? __( 'You don&#8217;t have permission to do this.' ), 403 );
+
+		return FALSE; // help the caller
 	}
 
 	public static function _log_req(): false

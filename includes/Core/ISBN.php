@@ -37,7 +37,7 @@ class ISBN extends Base
 			 */
 			$tools  = new \Nicebooks\Isbn\IsbnTools();
 			$string = $tools->format( self::sanitize( $input ) );
-			// $string = $tools->toFormattedString( self::sanitize( $input ) );
+			// `$string = $tools->toFormattedString( self::sanitize( $input ) );`
 
 		} else {
 
@@ -54,10 +54,10 @@ class ISBN extends Base
 	 * NOTE: converts ISBN-10 to ISBN-13.
 	 * NOTE: avoids validation to support fake ISBN numbers.
 	 *
-	 * @param string $criteria
+	 * @param mixed $criteria
 	 * @return string|false
 	 */
-	public static function discovery( $criteria )
+	public static function discovery( mixed $criteria ): string|false
 	{
 		if ( ! $sanitized = self::sanitize( $criteria ) )
 			return FALSE;
@@ -73,9 +73,9 @@ class ISBN extends Base
 		return self::convertToISBN13( $sanitized );
 	}
 
-	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
+	public static function sanitize( mixed $input, string $default = '', array $field = [], ?string $context = 'save' ): string
 	{
-		if ( self::empty( $input ) )
+		if ( ! $input = Text::force( $input ) )
 			return $default;
 
 		$sanitized = Text::trim( $input );
@@ -101,11 +101,14 @@ class ISBN extends Base
 	 * `9791090636071`          // return `2`
 	 * `ISBN:97811`             // return `FALSE`
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @return bool|int
 	 */
-	public static function validate( $input )
+	public static function validate( mixed $input ): bool
 	{
+		if ( ! $input = Text::force( $input ) )
+			return FALSE;
+
 		$data    = Text::trim( Number::translate( $input ) );
 		$pattern = '/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i';
 
@@ -121,15 +124,17 @@ class ISBN extends Base
 	 * Validates given ISBN-10.
 	 * @source http://stackoverflow.com/a/14096142
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @return bool
 	 */
-	public static function isValidISBN10( $input )
+	public static function isValidISBN10( $input ): bool
 	{
+		if ( ! $input = Text::force( $input ) )
+			return FALSE;
+
 		if ( ! preg_match( static::ISBN10, $input, $matches ) )
 			return FALSE;
 
-		$input = (string) $input;
 		$check = 0;
 
 		for ( $i = 0; $i < 10; $i++ ) {
@@ -151,15 +156,17 @@ class ISBN extends Base
 	 * Validates given ISBN-13.
 	 * @source http://stackoverflow.com/a/14096142
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @return bool
 	 */
-	public static function isValidISBN13( $input )
+	public static function isValidISBN13( $input ): bool
 	{
+		if ( ! $input = Text::force( $input ) )
+			return FALSE;
+
 		if ( ! preg_match( static::ISBN13, $input, $matches ) )
 			return FALSE;
 
-		$input = (string) $input;
 		$check = 0;
 
 		for ( $i = 0; $i < 13; $i += 2 )
@@ -175,11 +182,14 @@ class ISBN extends Base
 	 * Converts given ISBN-13 to ISBN-10.
 	 * @source https://github.com/nicebooks-com/isbn
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @return string
 	 */
 	public static function convertToISBN10( $input )
 	{
+		if ( ! Text::force( $input ) )
+			return (string) $input;
+
 		if ( ! preg_match( static::ISBN13, $input, $matches ) )
 			return $input;
 
@@ -213,11 +223,14 @@ class ISBN extends Base
 	 * Converts given ISBN-10 to ISBN-13.
 	 * @source https://github.com/nicebooks-com/isbn
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @return string
 	 */
 	public static function convertToISBN13( $input )
 	{
+		if ( ! Text::force( $input ) )
+			return (string) $input;
+
 		if ( ! preg_match( static::ISBN10, $input, $matches ) )
 			return $input;
 

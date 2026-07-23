@@ -39,7 +39,8 @@ class Date extends Base
 		string $format,
 		mixed $datetime = NULL,
 		?string $timezone_string = NULL,
-	) {
+	):string {
+
 		return \wp_date(
 			$format,
 			self::timestamp( $datetime, $timezone_string, NULL ),
@@ -61,7 +62,8 @@ class Date extends Base
 		string $format,
 		int|false $timestamp_with_offset = FALSE,
 		bool $gmt = FALSE,
-	) {
+	):string {
+
 		return \date_i18n( $format, $timestamp_with_offset, $gmt );
 	}
 
@@ -70,7 +72,7 @@ class Date extends Base
 	 * NOTE: fallback in case `gPersianDate` not activated.
 	 *
 	 * @param string $format
-	 * @param string $datetime_string
+	 * @param mixed $input
 	 * @param string $calendar_type
 	 * @param string $timezone_string
 	 * @param string $locale
@@ -78,21 +80,22 @@ class Date extends Base
 	 */
 	public static function formatByCalendar(
 		?string $format = NULL,
-		?string $datetime_string = NULL,
+		mixed $input = NULL,
 		?string $calendar_type = NULL,
 		?string $timezone_string = NULL,
 		?string $locale = NULL,
-	) {
+	): false|string {
+
 		$format        = $format        ?? 'm/d/Y';
 		$calendar_type = $calendar_type ?? L10n::calendar( $locale );
 
 		if ( 'gregorian' === $calendar_type ) {
 
-			if ( is_a( $datetime_string, 'DateTimeInterface' ) )
-				$datetime = $datetime_string;
+			if ( is_a( $input, 'DateTimeInterface' ) )
+				$datetime = $input;
 			else
 				$datetime = date_create(
-					$datetime_string ?? 'now',
+					$input ?? 'now',
 					new \DateTimeZone( $timezone_string ?? self::currentTimeZone() )
 				);
 
@@ -102,13 +105,13 @@ class Date extends Base
 		if ( ! extension_loaded( 'intl' ) )
 			return self::get(
 				$format,
-				$datetime_string,
+				$input,
 				$timezone_string
 			);
 
 		return self::formatByIntl(
 			self::convertFormatPHPtoISO( $format ),
-			$datetime_string,
+			$input,
 			$calendar_type,
 			$timezone_string,
 			$locale
@@ -128,8 +131,8 @@ class Date extends Base
 		string $datetime_string,
 		?string $format = NULL,
 		?string $timezone_string = NULL,
-	)
-	{
+	): false|object {
+
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );
 		$datetime = \date_create_immutable_from_format(
 			$format ?? static::MYSQL_FORMAT,
@@ -149,7 +152,7 @@ class Date extends Base
 	 *
 	 * @return string
 	 */
-	public static function currentTimeZone()
+	public static function currentTimeZone(): string
 	{
 		if ( function_exists( 'wp_timezone_string' ) )
 			return wp_timezone_string(); // @since WP 5.3
@@ -167,7 +170,7 @@ class Date extends Base
 	 * @param float $offset
 	 * @return string
 	 */
-	public static function fromOffset( int|float $offset )
+	public static function fromOffset( int|float $offset ): string
 	{
 		$offset  = (float) $offset;
 		$hours   = (int) $offset;
@@ -181,7 +184,7 @@ class Date extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/2524710
-	public static function isTimestamp( mixed $string )
+	public static function isTimestamp( mixed $string ): bool
 	{
 		return is_numeric( $string ) && (int) $string == $string;
 	}
@@ -199,7 +202,8 @@ class Date extends Base
 		string $datetime_string,
 		string $target_format = 'Y-m-d',
 		?string $timezone_string = NULL,
-	) {
+	): bool {
+
 		if ( self::empty( $datetime_string ) )
 			return FALSE;
 
@@ -348,7 +352,16 @@ class Date extends Base
 		// FIXME: needs sanity checks
 		$parts = explode( '/', Number::translate( (string) $input ) );
 
-		return self::make( 0, 0, 0, $parts[1], $parts[2], $parts[0], $calendar_type, $timezone_string );
+		return self::make(
+			0,
+			0,
+			0,
+			$parts[1],
+			$parts[2],
+			$parts[0],
+			$calendar_type,
+			$timezone_string
+		);
 	}
 
 	public static function makeMySQLFromArray(

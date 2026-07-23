@@ -1101,7 +1101,7 @@ class Arraay extends Base
 	 *
 	 * @param array $keys
 	 * @param array $values
-	 * @param bool  $pad
+	 * @param bool $pad
 	 * @return array
 	 */
 	public static function combine( $keys, $values, $pad = TRUE )

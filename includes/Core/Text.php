@@ -4,6 +4,16 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Text extends Base
 {
+	public static function force( mixed $input ): string
+	{
+		if ( self::empty( $input ) )
+			return '';
+
+		$input = trim( (string) $input );
+
+		return strlen( $input ) ? $input : '';
+	}
+
 	public static function glued( array $args, string $with = ' ' )
 	{
 		$parts = [];
@@ -77,7 +87,7 @@ class Text extends Base
 	}
 
 	// NOTE: the list must **not** be quoted!
-	public static function trimQuotes( $text, $list = NULL )
+	public static function trimQuotes( string $text, $list = NULL ): string
 	{
 		$list = $list ?? [
 			",", "،", //  Arabic Comma
@@ -103,7 +113,7 @@ class Text extends Base
 	 * @param bool $case_sensitive
 	 * @return string
 	 */
-	public static function rightTrim( $text, $needle, $case_sensitive = TRUE )
+	public static function rightTrim( string $text, string $needle, bool $case_sensitive = TRUE ): string
 	{
 		$strPosFunction = $case_sensitive ? 'strpos' : 'stripos';
 
@@ -122,7 +132,7 @@ class Text extends Base
 	 * @param bool $case_sensitive
 	 * @return string
 	 */
-	public static function leftTrim( $text, $needle, $case_sensitive = TRUE )
+	public static function leftTrim( string $text, string $needle, bool $case_sensitive = TRUE ): string
 	{
 		$strPosFunction = $case_sensitive ? 'strpos' : 'stripos';
 
@@ -140,7 +150,7 @@ class Text extends Base
 	 * @param string $needle
 	 * @return string
 	 */
-	public static function removeFromstart( $text, $needle )
+	public static function removeFromstart( string $text, string $needle ): string
 	{
 		if ( empty( $text ) || empty( $needle ) )
 			return $text;
@@ -156,7 +166,7 @@ class Text extends Base
 	 * @param string $needle
 	 * @return string
 	 */
-	public static function removeFromEnd( $text, $needle )
+	public static function removeFromEnd( string $text, string $needle ): string
 	{
 		if ( empty( $text ) || empty( $needle ) )
 			return $text;
@@ -164,7 +174,7 @@ class Text extends Base
 		return preg_replace( '/'.preg_quote( $needle, '/' ).'$/', '', $text );
 	}
 
-	public static function removeStartEnd( $text, $needle )
+	public static function removeStartEnd( string $text, string $needle ): string
 	{
 		if ( empty( $text ) || empty( $needle ) )
 			return $text;
@@ -175,7 +185,7 @@ class Text extends Base
 		return self::trim( $text );
 	}
 
-	public static function stripAllSpaces( $text )
+	public static function stripAllSpaces( string $text ): string
 	{
 		if ( empty( $text ) )
 			return '';
@@ -183,7 +193,7 @@ class Text extends Base
 		return self::trim( preg_replace( "/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u", '', $text ) );
 	}
 
-	public static function splitAllSpaces( $text )
+	public static function splitAllSpaces( string $text ): array
 	{
 		if ( empty( $text ) )
 			return [];
@@ -191,7 +201,7 @@ class Text extends Base
 		return array_filter( (array) preg_split( '/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u', $text ), 'strlen' );
 	}
 
-	public static function splitNormalSpaces( $text )
+	public static function splitNormalSpaces( string $text ): array
 	{
 		if ( empty( $text ) )
 			return [];
@@ -206,7 +216,7 @@ class Text extends Base
 	 * @param bool $normalize
 	 * @return array
 	 */
-	public static function splitLines( $text, $normalize = TRUE )
+	public static function splitLines( string $text, bool $normalize = TRUE ): array
 	{
 		if ( empty( $text ) )
 			return [];
@@ -217,28 +227,25 @@ class Text extends Base
 		return array_values( array_filter( array_map( [ __CLASS__, 'trim' ], preg_split( "/\r\n|\n|\r/", $text ) ) ) );
 	}
 
-	public static function stripNonNumeric( $text )
+	public static function stripNonNumeric( string $text ): string
 	{
 		return preg_replace( '/[^0-9۰-۹۰-۹]/miu', '', $text );
 	}
 
-	public static function sanitizeHook( $text )
+	public static function sanitizeHook( string $text ): string
 	{
 		return self::trim( str_ireplace( [ '-', '.', '/', '\\' ], '_', $text ) );
 	}
 
-	public static function sanitizeBase( $text )
+	public static function sanitizeBase( string $text ): string
 	{
 		return self::trim( str_ireplace( [ '_', '.' ], '-', $text ) );
 	}
 
 	// @SEE: `sanitize_title_with_dashes()`
-	public static function formatSlug( $text )
+	public static function formatSlug( mixed $text ): string
 	{
-		$text = (string) $text;
-		$text = trim( $text );
-
-		if ( 0 === strlen( $text ) )
+		if ( ! $text = self::force( $text ) )
 			return '';
 
 		$text = strtolower( $text );
@@ -301,7 +308,8 @@ class Text extends Base
 	}
 
 	// NOTE: Hex-encoded octets are case-insensitive.
-	public static function prepOctets( $text )
+	// TODO: move to `Core\Encoding`
+	public static function prepOctets( string $text ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -315,7 +323,7 @@ class Text extends Base
 			}, $text );
 	}
 
-	public static function nameFamilyFirst( string $text, ?string $separator = NULL )
+	public static function nameFamilyFirst( string $text, ?string $separator = NULL ): string
 	{
 		if ( empty( $text ) )
 			return $text;
@@ -335,7 +343,7 @@ class Text extends Base
 		return $parts[1].$separator.$parts[0];
 	}
 
-	public static function nameFamilyLast( string $text, ?string $separator = NULL )
+	public static function nameFamilyLast( string $text, ?string $separator = NULL ): string
 	{
 		if ( empty( $text ) )
 			return $text;
@@ -346,23 +354,24 @@ class Text extends Base
 		// return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', self::trim( $text ) ); // Wrong!
 	}
 
-	public static function formatName( string $text, ?string $separator = NULL )
+	public static function formatName( string $text, ?string $separator = NULL ): string
 	{
 		return self::nameFamilyFirst( $text, $separator );
 	}
 
-	public static function reFormatName( string $text, ?string $separator = NULL )
+	public static function reFormatName( string $text, ?string $separator = NULL ): string
 	{
 		return self::nameFamilyLast( $text, $separator );
 	}
 
-	public static function readableKey( string $text )
+	public static function readableKey( string $text ): string
 	{
 		return $text ? ucwords( trim( str_replace( [ '_', '-', '.' ], ' ', $text ) ) ) : $text;
 	}
 
 	// @REF: https://davidwalsh.name/php-email-encode-prevent-spam
-	public static function encodeEmail( string $text )
+	// TODO: move to `Core\Email`
+	public static function encodeEmail( string $text ): string
 	{
 		$encoded = '';
 
@@ -374,7 +383,8 @@ class Text extends Base
 
 	// @REF: http://php.net/manual/en/function.htmlspecialchars-decode.php#68962
 	// @REF: `htmlspecialchars_decode()`
-	public static function decodeHTML( string $text )
+	// TODO: move to `Core\Encoding`
+	public static function decodeHTML( string $text ): string
 	{
 		return strtr( $text, array_flip( get_html_translation_table() ) );
 	}
@@ -382,11 +392,9 @@ class Text extends Base
 	// simpler version of `wpautop()`
 	// @REF: https://stackoverflow.com/a/5240825
 	// @SEE: https://stackoverflow.com/a/7409591
-	public static function autoP( $text )
+	public static function autoP( mixed $text ): string
 	{
-		$text = (string) $text;
-
-		if ( 0 === strlen( $text ) )
+		if ( ! $text = self::force( $text ) )
 			return '';
 
 		// Standardize newline characters to "\n"
@@ -409,8 +417,11 @@ class Text extends Base
 	}
 
 	// @REF: https://github.com/michelf/php-markdown/issues/230#issuecomment-303023862
-	public static function removeP( $text )
+	public static function removeP( mixed $text ): string
 	{
+		if ( ! $text = self::force( $text ) )
+			return '';
+
 		return $text ? self::trim( str_replace( [
 			"</p>\n\n<p>",
 			'<p>',
@@ -427,13 +438,13 @@ class Text extends Base
 	 * @source https://gist.github.com/wpscholar/8969bb6e1cedb9be92140cc2efa9febb
 	 * @source https://github.com/ninnypants/remove-empty-p
 	 *
-	 * @param string $text
+	 * @param mixed $text
 	 * @return string
 	 */
-	public static function noEmptyP( $text )
+	public static function noEmptyP( mixed $text ): string
 	{
-		if ( ! $text )
-			return $text;
+		if ( ! $text = self::force( $text ) )
+			return '';
 
 		$text = strtr( $text, [
 			'<p>['    => '[',
@@ -460,6 +471,7 @@ class Text extends Base
 
 	/**
 	 * Extracts image and alignment within a paragraph then wraps with given tag.
+	 * TODO: move to `Core\Image`
 	 *
 	 * - `<p><img class="ALIGNMENT" /></p>`: `<figure class="EXTRA-CLASS ALIGNMENT"><img/></figure>`
 	 * - `<p><a><img class="ALIGNMENT" /></a></p>': `<figure class="EXTRA-CLASS ALIGNMENT"><a><img/></a></figure>`
@@ -467,13 +479,16 @@ class Text extends Base
 	 *
 	 * @see https://micahjon.com/2016/removing-wrapping-p-paragraph-tags-around-images-wordpress/
 	 *
-	 * @param string $text
+	 * @param mixed $text
 	 * @param string $tag
 	 * @param string $class
 	 * @return string
 	 */
-	public static function replaceImageP( $text, $tag = 'figure', $class = '' )
+	public static function replaceImageP( mixed $text, string|false $tag = 'figure', string $class = '' ): string
 	{
+		if ( ! $text = self::force( $text ) )
+			return '';
+
 		if ( ! $tag )
 			// @source https://css-tricks.com/?p=15293
 			return preg_replace( '/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $text );
@@ -499,7 +514,8 @@ class Text extends Base
 		);
 	}
 
-	public static function replaceImageP_extractAlignment( $text )
+	// TODO: move to `Core\Image`
+	public static function replaceImageP_extractAlignment( string $text ): array
 	{
 		if ( ! preg_match( "#class=\"(.*?)\"#s", $text, $matches ) )
 			return [ $text, '' ];
@@ -523,14 +539,15 @@ class Text extends Base
 
 	/**
 	 * Extracts image URLs from given text.
+	 * TODO: move to `Core\Image`
 	 *
-	 * @param string $text
+	 * @param mixed $text
 	 * @param bool $unique
 	 * @return array
 	 */
-	public static function extractImageURLs( $text, $unique = TRUE )
+	public static function extractImageURLs( mixed $text, bool $unique = TRUE ): array
 	{
-		if ( empty( $text ) )
+		if ( ! $text = self::force( $text ) )
 			return [];
 
 		if ( ! preg_match_all( '|<img.*?src=[\'"](.*?)[\'"].*?>|i', $text, $matches ) )
@@ -545,12 +562,13 @@ class Text extends Base
 	/**
 	 * Adds a default CSS class to images without one.
 	 * @source https://macarthur.me/posts/writing-a-regular-expression-to-target-images-without-a-class/
+	 * TODO: move to `Core\Image`
 	 *
 	 * @param string $text
 	 * @param string $class
 	 * @return string
 	 */
-	public static function addImageClass( $text, $class = 'img-fluid' )
+	public static function addImageClass( string $text, string $class = 'img-fluid' ): string
 	{
 		return $text ? preg_replace(
 			'/<img((.(?!class=))*)\/?>/i',
@@ -564,13 +582,14 @@ class Text extends Base
 	 * @source https://stackoverflow.com/a/317081
 	 * @source https://regex101.com/r/KlXqb3/1
 	 * @see https://www.codemzy.com/blog/get-html-attributes-regex
+	 * TODO: move to `Core\HTML`
 	 *
-	 * @param string $text
+	 * @param mixed $text
 	 * @return array
 	 */
-	public static function parseHTMLattributes( $text )
+	public static function parseHTMLattributes( mixed $text ): array
 	{
-		if ( empty( $text ) || ! is_string( $text ) )
+		if ( ! $text = self::force( $text ) )
 			return [];
 
 		$pattern = '/([\w|data-]+)=["\']?((?:.(?!["\']?\s+(?:\S+)=|\s*\/?[>"\']))+.)["\']?/';
@@ -589,7 +608,8 @@ class Text extends Base
 	// Like core's but without check for `func_overload`
 	// @SOURCE: `seems_utf8()`
 	// NOTE: DEPRECATED: in favor of `wp_is_valid_utf8()`
-	public static function seemsUTF8( $text )
+	// TODO: move to `Core\Encoding`
+	public static function seemsUTF8( string $text ): string
 	{
 		$length = strlen( $text );
 
@@ -629,22 +649,24 @@ class Text extends Base
 
 	/**
 	 * String contains multibyte (non-ASCII/non-single-byte) `UTF-8` characters.
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function containsUTF8( $text )
+	public static function containsUTF8( string $text ): string
 	{
 		return strlen( $text ) !== mb_strlen( $text, 'UTF-8' );
 	}
 
 	/**
 	 * String is strictly `UTF-8` encoded.
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function strictUTF8( $text )
+	public static function strictUTF8( string $text ): string
 	{
 		return 'UTF-8' === mb_detect_encoding( $text, 'UTF-8', TRUE );
 	}
@@ -652,11 +674,14 @@ class Text extends Base
 	/**
 	 * Consolidates contiguous whitespace.
 	 *
-	 * @param string $text
+	 * @param mixed $text
 	 * @return string
 	 */
-	public static function singleWhitespace( $text )
+	public static function singleWhitespace( mixed $text ): string
 	{
+		if ( ! $text = self::force( $text ) )
+			return '';
+
 		$text = preg_replace( '/\x{200C}+/u', '‌', $text );
 		$text = preg_replace( '/\s+/', ' ', $text );
 
@@ -667,11 +692,9 @@ class Text extends Base
 	}
 
 	// props `@ebraminio/persiantools`
-	public static function normalizeZWNJ( $text )
+	public static function normalizeZWNJ( mixed $text ): string
 	{
-		$text = (string) $text;
-
-		if ( 0 === strlen( $text ) )
+		if ( ! $text = self::force( $text ) )
 			return '';
 
 		// Removes all `ZWJ`.
@@ -705,9 +728,26 @@ class Text extends Base
 		return self::trim( $text );
 	}
 
-	// @REF: `normalize_whitespace()`
-	public static function normalizeWhitespace( $text, $multiline = FALSE )
+	/**
+	 * Replaces line breaks, carriage returns, tabs with a space,
+	 * then remove double spaces.
+	 *
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::standardize_whitespace()`
+	 *
+	 * @param string $text
+	 * @return string
+	 */
+	public static function standardizeWhitespace( string $text ): string
 	{
+		return self::trim( str_replace( '  ', ' ', str_replace( [ "\t", "\n", "\r", "\f" ], ' ', $text ) ) );
+	}
+
+	// @REF: `normalize_whitespace()`
+	public static function normalizeWhitespace( mixed $text, bool $multiline = FALSE ): string
+	{
+		if ( ! $text )
+			return '';
+
 		$text = (string) $text;
 
 		if ( 0 === strlen( $text ) )
@@ -722,7 +762,7 @@ class Text extends Base
 	}
 
 	#[\Deprecated()]
-	public static function normalizeWhitespaceUTF8( $text, $check = FALSE )
+	public static function normalizeWhitespaceUTF8( string $text, bool $check = FALSE ): string
 	{
 		if ( $check && ! self::seemsUTF8( $text ) )
 			return self::normalizeWhitespace( $text );
@@ -730,7 +770,7 @@ class Text extends Base
 		return self::singleWhitespaceUTF8( $text );
 	}
 
-	public static function singleWhitespaceUTF8( $text )
+	public static function singleWhitespaceUTF8( string $text ): string
 	{
 		// @source http://stackoverflow.com/a/3226746
 		// return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );
@@ -762,13 +802,13 @@ class Text extends Base
 	 * @param string $newline
 	 * @return string
 	 */
-	public static function normalizeLineEndings( $text, $newline = NULL )
+	public static function normalizeLineEndings( string $text, ?string $newline = NULL ): string
 	{
 		return preg_replace( '/\R/u', $newline ?? "\n", $text );
 	}
 
 	// NOTE: see `Text::removeFromstart()`
-	public static function stripPrefix( $text, $prefixes )
+	public static function stripPrefix( string $text, string|array $prefixes ): string
 	{
 		if ( empty( $text ) || empty( $prefixes ) )
 			return $text;
@@ -780,7 +820,7 @@ class Text extends Base
 		return $text;
 	}
 
-	public static function extractSuffix( $text )
+	public static function extractSuffix( string $text ): array
 	{
 		if ( ! $text = self::trim( $text ) )
 			return [ '', '' ];
@@ -803,7 +843,7 @@ class Text extends Base
 	 * @param string $needle
 	 * @return bool
 	 */
-	public static function contains( $haystack, $needle )
+	public static function contains( string $haystack, string|array $needle ): string
 	{
 		// @since PHP 8.0.0
 		if ( function_exists( 'str_contains' ) )
@@ -812,7 +852,7 @@ class Text extends Base
 		return '' !== $needle && FALSE !== strpos( $haystack, $needle );
 	}
 
-	public static function has( $haystack, $needles, $operator = 'OR' )
+	public static function has( string $haystack, string|array $needles, string $operator = 'OR' ): string
 	{
 		if ( ! $haystack || empty( $needles ) )
 			return FALSE;
@@ -844,7 +884,7 @@ class Text extends Base
 	 * @param string|array $needles
 	 * @return bool
 	 */
-	public static function starts( $haystack, $needles )
+	public static function starts( string $haystack, string|array $needles ): string
 	{
 		if ( ! $haystack )
 			return FALSE;
@@ -868,7 +908,7 @@ class Text extends Base
 	 * @param string|array $needles
 	 * @return bool
 	 */
-	public static function ends( $haystack, $needles )
+	public static function ends( string $haystack, string|array $needles ): string
 	{
 		if ( ! $haystack )
 			return FALSE;
@@ -884,28 +924,28 @@ class Text extends Base
 	}
 
 	// @SEE: `mb_convert_case()`
-	public static function strToLower( $text, $encoding = 'UTF-8' )
+	public static function strToLower( string $text, string $encoding = 'UTF-8' ): string
 	{
 		return function_exists( 'mb_strtolower' )
 			? mb_strtolower( $text ?? '', $encoding )
 			: strtolower( $text ?? '' );
 	}
 
-	public static function strToUpper( $text, $encoding = 'UTF-8' )
+	public static function strToUpper( string $text, string $encoding = 'UTF-8' ): string
 	{
 		return function_exists( 'mb_strtoupper' )
 			? mb_strtoupper( $text ?? '', $encoding )
 			: strtoupper( $text ?? '' );
 	}
 
-	public static function strLen( $text, $encoding = 'UTF-8' )
+	public static function strLen( string $text, string $encoding = 'UTF-8' ): string
 	{
 		return function_exists( 'mb_strlen' )
 			? mb_strlen( $text ?? '', $encoding )
 			: strlen( $text ?? '' );
 	}
 
-	public static function subStr( $text, $start = 0, $length = 1, $encoding = 'UTF-8' )
+	public static function subStr( string $text, int $start = 0, int $length = 1, string $encoding = 'UTF-8' ): string
 	{
 		return function_exists( 'mb_substr' )
 			? mb_substr( $text ?? '', $start, $length, $encoding )
@@ -913,7 +953,7 @@ class Text extends Base
 	}
 
 	// @SOURCE: https://github.com/alecgorge/PHP-String-Class
-	public static function strReplace( $search, $replace, $text )
+	public static function strReplace( string $search, string $replace, string $text ): string
 	{
 		if ( empty( $search ) || empty( $text ) )
 			return $text;
@@ -926,10 +966,10 @@ class Text extends Base
 	}
 
 	// @SOURCE: https://github.com/alecgorge/PHP-String-Class
-	public static function strSplit( $text, $length = 1 )
+	public static function strSplit( string $text, int $length = 1 ): array
 	{
-		if ( empty( $text ) || $length < 1 )
-			return $text;
+		if ( $length < 1 )
+			return [ $text ];
 
 		preg_match_all(
 			'/.{1,'.$length.'}/us',
@@ -951,7 +991,7 @@ class Text extends Base
 	 * @param string $encoding
 	 * @return string
 	 */
-	public static function strPad( $text, $length, $pad_string, $pad_type, $encoding = 'UTF-8' )
+	public static function strPad( string $text, int $length, ?string $pad_string = NULL, ?int $pad_type = NULL, string $encoding = 'UTF-8' ): string
 	{
 		if ( empty( $text ) )
 			return $text;
@@ -959,11 +999,12 @@ class Text extends Base
 		return str_pad(
 			$text,
 			strlen( $text ) - mb_strlen( $text, $encoding ) + $length,
-			$pad_string,
-			$pad_type
+			$pad_string ?? ' ',
+			$pad_type ?? STR_PAD_RIGHT
 		);
 	}
 
+	// TODO: move to `Core\Encoding`
 	public static function internalEncoding( $encoding = 'UTF-8' )
 	{
 		if ( function_exists( 'mb_internal_encoding' ) )
@@ -975,7 +1016,8 @@ class Text extends Base
 	// @SEE: https://github.com/GaryJones/Simple-PHP-CSS-Minification/
 	// @SEE: http://blog.ostermiller.org/find-comment
 	// @REF: http://www.catswhocode.com/blog/3-ways-to-compress-css-files-using-php
-	public static function minifyCSS( $buffer )
+	// TODO: move to `Core\CSS`
+	public static function minifyCSS( string $buffer ): string
 	{
 		if ( empty( $buffer ) )
 			return '';
@@ -998,7 +1040,8 @@ class Text extends Base
 	// @REF: http://php.net/manual/en/function.ob-start.php#71953
 	// @REF: http://stackoverflow.com/a/6225706
 	// @REF: https://coderwall.com/p/fatjmw/compressing-html-output-with-php
-	public static function minifyHTML( $buffer )
+	// TODO: move to `Core\HTML`
+	public static function minifyHTML( string $buffer ): string
 	{
 		if ( empty( $buffer ) )
 			return '';
@@ -1042,7 +1085,7 @@ class Text extends Base
 	 * @param int $minimum
 	 * @return string
 	 */
-	public static function wordWrap( $text, $minimum = 2 )
+	public static function wordWrap( string $text, int $minimum = 2 ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1075,7 +1118,7 @@ class Text extends Base
 	 * @param string $append: String to append to end, when trimmed; defaults to ellipsis.
 	 * @return string: String of words trimmed at specified character length.
 	 */
-	public static function trimChars( $text, $length = 45, $append = '&hellip;' )
+	public static function trimChars( string $text, int $length = 45, string $append = '&hellip;' ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1109,7 +1152,7 @@ class Text extends Base
 	 * @param string $ellipsis
 	 * @return string
 	 */
-	public static function truncate( $text, $chars = 50, $ellipsis = '&hellip;' )
+	public static function truncate( string $text, int $chars = 50, string $ellipsis = '&hellip;' ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1135,7 +1178,7 @@ class Text extends Base
 	}
 
 	// http://stackoverflow.com/a/3161830
-	public static function truncateString( $text, $length = 15, $dots = '&hellip;' )
+	public static function truncateString( string $text, int $length = 15, string $dots = '&hellip;' ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1145,7 +1188,7 @@ class Text extends Base
 			: $text;
 	}
 
-	public static function firstSentence( $text )
+	public static function firstSentence( string $text ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1161,7 +1204,7 @@ class Text extends Base
 	}
 
 	// @REF: https://gist.github.com/geminorum/fe2a9ba25db5cf2e5ad6718423d00f8a
-	public static function titleCase( $title )
+	public static function titleCase( string $title ): string
 	{
 		if ( ! $title )
 			return $title;
@@ -1247,7 +1290,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function stripPunctuation( $text )
+	public static function stripPunctuation( string $text ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1294,11 +1337,12 @@ class Text extends Base
 
 	/**
 	 * Strips the `UTF-8` BOM,
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @param string $text
 	 * @return string
 	 */
-	public static function utf8StripBOM( $text )
+	public static function utf8StripBOM( string $text ): string
 	{
 		return preg_replace( '/\x{FEFF}/u', '', $text ?? '' );
 	}
@@ -1308,10 +1352,11 @@ class Text extends Base
 	 * @source https://core.trac.wordpress.org/attachment/ticket/24661/24661.6.patch
 	 * @source https://github.com/BeAPI/bea-sanitize-filename/pull/15/changes
 	 * @see `_wp_can_use_pcre_u()`
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @return bool
 	 */
-	public static function availablePCREUnicode()
+	public static function availablePCREUnicode(): bool
 	{
 		return FALSE !== @preg_match( '/\p{L}/u', '' );
 	}
@@ -1321,11 +1366,12 @@ class Text extends Base
 	 * @source http://web.archive.org/web/20110215015142/http://www.phpwact.org/php/i18n/charsets#checking_utf-8_for_well_formedness
 	 * @ref http://www.php.net/manual/en/reference.pcre.pattern.modifiers.php#54805
 	 * @see `wp_check_invalid_utf8()`
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function utf8Compliant( $text )
+	public static function utf8Compliant( string $text ): bool
 	{
 		if ( 0 === strlen( $text ?? '' ) )
 			return TRUE;
@@ -1350,7 +1396,7 @@ class Text extends Base
 	 * @param int $flags
 	 * @return string
 	 */
-	public static function utf8SpecialChars( $text, $flags = ENT_COMPAT )
+	public static function utf8SpecialChars( string $text, ?int $flags = ENT_COMPAT ): string
 	{
 		if ( ! $text )
 			return $text;
@@ -1369,7 +1415,7 @@ class Text extends Base
 	// @SOURCE: http://php.net/manual/en/function.ord.php#109812
 	// As `ord()` doesn't work with `utf-8`,
 	// and if you do not have access to `mb_*` functions
-	public static function utf8Ord( $text, &$offset )
+	public static function utf8Ord( string $text, int &$offset ): string
 	{
 		$code = ord( substr( $text, $offset, 1 ) );
 
@@ -1417,7 +1463,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return int
 	 */
-	public static function utf8Len( $text )
+	public static function utf8Len( string $text ): int
 	{
 		return preg_match_all( '/[[:print:]\pL]/u', $text );
 	}
@@ -1429,7 +1475,7 @@ class Text extends Base
 	 * @param bool $normalize
 	 * @return int
 	 */
-	public static function wordCount( $text, $normalize = TRUE )
+	public static function wordCount( string $text, bool $normalize = TRUE ): int
 	{
 		if ( $normalize )
 			$text = self::wordCountNormalize( $text );
@@ -1444,7 +1490,7 @@ class Text extends Base
 		return count( $parts );
 	}
 
-	public static function wordCountUTF8( $text, $normalize = TRUE )
+	public static function wordCountUTF8( string $text, bool $normalize = TRUE ): int
 	{
 		if ( $normalize )
 			$text = self::wordCountNormalize( $text );
@@ -1470,7 +1516,7 @@ class Text extends Base
 		return count( preg_split( '~[^\p{L}\p{N}\']+~u', $text ) );
 	}
 
-	public static function wordCountNormalize( $html )
+	public static function wordCountNormalize( string $html ): string
 	{
 		if ( ! $html )
 			return $html;
@@ -1512,12 +1558,13 @@ class Text extends Base
 		return trim( $html );
 	}
 
-	public static function noLineBreak( $text )
+	public static function noLineBreak( string $text ): string
 	{
 		return preg_replace( '/[\r\n\t ]+/', ' ', $text );
 	}
 
-	public static function stripWidthHeight( $text )
+	// TODO: move to `Core\Image`
+	public static function stripWidthHeight( string $text ): string
 	{
 		return preg_replace( '/(width|height)="\d*"\s/', '', $text );
 	}
@@ -1530,13 +1577,14 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function stripTags( $text )
+	public static function stripTags( string $text ): string
 	{
 		return $text ? self::trim( strip_tags( preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) ) : $text;
 	}
 
 	// @SEE: [wp_strip_all_tags()](https://developer.wordpress.org/reference/functions/wp_strip_all_tags/)
-	public static function stripHTMLforEmail( $html )
+	// TODO: move to `Core\HTML`
+	public static function stripHTMLforEmail( string $html ): string
 	{
 		$html = preg_replace( [
 			'@<head[^>]*?>.*?</head>@siu',
@@ -1557,21 +1605,22 @@ class Text extends Base
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#96899
-	public static function hex2str( $text )
+	public static function hex2str( string $text ): string
 	{
-		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#', static function ( $hex ) {
-			$hex = substr( $hex[0], 1 );
-			$str = '';
-			for ( $i = 0; $i < strlen( $hex ); $i += 2 )
-				$str.= chr( hexdec( substr( $hex, $i, 2 ) ) );
-			return $str;
-		}, (string) $text );
+		return preg_replace_callback( '#\%[a-zA-Z0-9]{2}#',
+			static function ( $hex ) {
+				$hex = substr( $hex[0], 1 );
+				$str = '';
+				for ( $i = 0; $i < strlen( $hex ); $i += 2 )
+					$str.= chr( hexdec( substr( $hex, $i, 2 ) ) );
+				return $str;
+			}, (string) $text );
 	}
 
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
 	// USAGE: `Text::replaceWords( $text, $words, static function ( $matched ) { return '<strong>{$matched}</strong>'; } );`
 	// FIXME: maybe space before/after the words
-	public static function replaceWords( $text, $words, $callback, $skip_links = TRUE )
+	public static function replaceWords( string $text, array $words, ?callable $callback, bool $skip_links = TRUE ): string
 	{
 		if ( empty( $text ) || empty( $words ) )
 			return $text;
@@ -1583,7 +1632,9 @@ class Text extends Base
 
 		return preg_replace_callback(
 			'/'.$pattern.'/miu',
-			static function ( $matched ) use ( $callback ) {
+			static function ( $matched )
+				use ( $callback ) {
+
 				return $matched[1].call_user_func( $callback, $matched[2] ).$matched[3];
 			},
 			$text
@@ -1591,11 +1642,13 @@ class Text extends Base
 	}
 
 	// USAGE: `Text::replaceSymbols( [ '#', '$' ], $text, static function ( $matched, $text ) { return "<strong>{$matched}</strong>"; });`
-	public static function replaceSymbols( $symbols, $text, $callback, $skip_links = TRUE )
+	public static function replaceSymbols( string|array $symbols, string $text, ?callable $callback, bool $skip_links = TRUE ): string
 	{
 		return preg_replace_callback(
 			self::replaceSymbolsPattern( implode( ',', (array) $symbols ), $skip_links ),
-			static function ( $matches ) use ( $callback ) {
+			static function ( $matches )
+				use ( $callback ) {
+
 				return call_user_func( $callback, $matches[0], $matches[1] );
 			},
 			$text
@@ -1605,7 +1658,7 @@ class Text extends Base
 	// @REF: https://stackoverflow.com/a/381001/
 	// @REF: https://stackoverflow.com/a/311904/
 	// @REF: not in html tag: https://stackoverflow.com/a/16679278/
-	public static function replaceSymbolsPattern( $symbols, $skip_links = TRUE )
+	public static function replaceSymbolsPattern( string $symbols, bool $skip_links = TRUE ): string
 	{
 		return $skip_links
 			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
@@ -1620,18 +1673,22 @@ class Text extends Base
 
 	// @REF: https://regex101.com/r/5K24IU/1
 	// @REF: https://stackoverflow.com/a/42551826
-	public static function linkifyHashtags( $text, $callback )
+	// TODO: move to `Core\Link`
+	public static function linkifyHashtags( string $text, ?callable $callback ): string
 	{
 		return preg_replace_callback(
 			"/(?:^|\B)#(?![0-9_]+\b)([a-zA-Z0-9_]{1,})(?:\b|\r)/gmu",
-			static function ( $matches ) use ( $callback ) {
+			static function ( $matches )
+				use ( $callback ) {
+
 				return call_user_func( $callback, $matches[0], $matches[1] );
 			},
 			$text
 		);
 	}
 
-	public static function stripHashtags( $text )
+	// TODO: move to `Core\Link`
+	public static function stripHashtags( string $text ): string
 	{
 		if ( ! $text = self::trim( $text ) )
 			return $text;
@@ -1642,13 +1699,14 @@ class Text extends Base
 			}, $text );
 	}
 
-	public static function replaceOnce( $search, $replace, $text )
+	public static function replaceOnce( string $search, string $replace, string $text ): string
 	{
 		return preg_replace( ( '/'.preg_quote( $search, '/' ).'/' ), $replace, $text, 1 );
 	}
 
-	// @SOURCE: http://snipplr.com/view/3618/
-	public static function closeHTMLTags( $html )
+	// @SOURCE: http://snipplr.com/view/3618
+	// TODO: move to `Core\HTML`
+	public static function closeHTMLTags( string $html ): string
 	{
 		// put all opened tags into an array
 		preg_match_all( "#<([a-z]+)( .*)?(?!/)>#iU", $html, $matches );
@@ -1676,86 +1734,20 @@ class Text extends Base
 		return $html;
 	}
 
-	// OLD: `genRandomKey()`
-	// ALT: `wp_generate_password()`
-	public static function hash( $salt )
+	#[\Deprecated('USE `Core\Crypto::hash()`')]
+	public static function hash( string $salt ): string
 	{
-		$chr = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		$len = 32;
-		$key = '';
-
-		for ( $i = 0; $i < $len; $i++ )
-			$key.= $chr[( rand( 0, ( strlen( $chr ) - 1 ) ) )];
-
-		return md5( $salt.$key );
+		return Crypto::hash( $salt );
 	}
 
-	/**
-	 * Generates limited Hash string.
-	 * @author Kyle Coots
-	 * @source https://stackoverflow.com/a/15193543
-	 *
-	 * Allow you to create a unique hash with a maximum value of 32.
-	 * Hash Gen uses PHP `substr`, `md5`, `uniqid`, and rand to generate a unique
-	 * id or hash and allow you to have some added functionality.
-	 *
-	 * You can also supply a hash to be prefixed or appended
-	 * to the hash. `hash` is by default appended to the hash
-	 * unless the param `prefix` is set to prefix[true].
-	 *
-	 * @param int $start
-	 * @param int $end
-	 * @param bool $hash
-	 * @param bool $prefix
-	 * @return string
-	 */
-	public static function hashLimited( $start = NULL, $end = 0, $hash = FALSE, $prefix = FALSE )
+	#[\Deprecated('USE `Core\Crypto::hashLimited()`')]
+	public static function hashLimited( ?int $start = NULL, ?int $end = 0, bool $hash = FALSE, bool $prefix = FALSE ): string
 	{
-		if ( isset( $start, $end ) && FALSE === $hash ) {
-
-			// `start` IS set NO `hash`
-
-			$md_hash  = substr( md5( uniqid( rand(), TRUE ) ), $start, $end );
-			$new_hash = $md_hash;
-
-		} else if ( isset( $start, $end ) && FALSE !== $hash && FALSE === $prefix ) {
-
-			// `start` IS set WITH `hash` NOT prefixing
-
-			$md_hash  = substr( md5( uniqid( rand(), TRUE ) ), $start, $end );
-			$new_hash = $md_hash.$hash;
-
-		} else if ( ! isset( $start, $end ) && FALSE !== $hash && FALSE === $prefix ) {
-
-			// `start` NOT set WITH `hash` NOT prefixing
-
-			$md_hash  = md5( uniqid( rand(), TRUE ) );
-			$new_hash = $md_hash.$hash;
-
-		} else if ( isset( $start, $end ) && FALSE !== $hash && TRUE === $prefix ) {
-
-			// `start` IS set WITH `hash` IS prefixing
-
-			$md_hash  = substr( md5( uniqid( rand(), TRUE ) ), $start, $end );
-			$new_hash = $hash.$md_hash;
-
-		} else if ( ! isset( $start, $end ) && FALSE !== $hash && TRUE === $prefix ) {
-
-			// `start` NOT set WITH `hash` IS prefixing
-
-			$md_hash  = md5( uniqid( rand(), TRUE ) );
-			$new_hash = $hash.$md_hash;
-
-		} else {
-
-			$new_hash = md5( uniqid( rand(), TRUE ) );
-		}
-
-		return $new_hash;
+		return Crypto::hashLimited( $start, $end, $hash, $prefix );
 	}
 
 	// @SOURCE: `_deep_replace()`
-	public static function deepStrip( $search, $text )
+	public static function deepStrip( string $search, string $text ): string
 	{
 		$text  = (string) $text;
 		$count = 1;
@@ -1769,7 +1761,7 @@ class Text extends Base
 	// @REF: https://en.wikipedia.org/wiki/Control_character
 	// @REF: https://en.wikipedia.org/wiki/Unicode_control_characters
 	// @SEE: `wp_kses_no_null()`
-	public static function stripControlChars( $text )
+	public static function stripControlChars( string $text ): string
 	{
 		// remove control chars, the first 32 ascii characters and \x7F
 		// @REF: http://stackoverflow.com/a/1497928
@@ -1783,7 +1775,8 @@ class Text extends Base
 	}
 
 	// @SOURCE: https://wp.me/p1ylL1-9
-	public static function stripImages( $text )
+	// TODO: move to `Core\Image`
+	public static function stripImages( string $text ): string
 	{
 		return preg_replace( '/<img[^>]+./', '', $text );
 	}
@@ -1798,7 +1791,7 @@ class Text extends Base
 	 * @param callback $general_callback
 	 * @return string
 	 */
-	public static function replaceTokens( $text, $tokens, $callback_args = [], $general_callback = NULL )
+	public static function replaceTokens( string $text, array $tokens, array $callback_args = [], ?callable $general_callback = NULL ): string
 	{
 		// bail early if it has not have tokens!
 		if ( ! self::has( $text, '{{' ) )
@@ -1831,7 +1824,7 @@ class Text extends Base
 	}
 
 	// NOTE: the order is important!
-	public static function convertFormatToToken( $template, $keys )
+	public static function convertFormatToToken( string $template, array $keys ): string
 	{
 		foreach ( $keys as $offset => $key )
 			$template = str_ireplace( '%'.( $offset + 1 ).'$s', '{{'.$key.'}}', $template );
@@ -1840,7 +1833,7 @@ class Text extends Base
 	}
 
 	// @REF: http://php.net/manual/en/function.fputcsv.php#87120
-	public static function toCSV( $data, $delimiter = ',', $enclosure = '"', $null = FALSE, $pipe = '|' )
+	public static function toCSV( array $data, string $delimiter = ',', string $enclosure = '"', bool $null = FALSE, string $pipe = '|' ): string
 	{
 		$delimiter_esc = preg_quote( $delimiter, '/' );
 		$enclosure_esc = preg_quote( $enclosure, '/' );
@@ -1875,7 +1868,7 @@ class Text extends Base
 		return "\xEF\xBB\xBF".$output; // UTF8 Bom for the Damn Excel!
 	}
 
-	public static function download( $contents, $name, $mime = 'application/octet-stream' )
+	public static function download( string $contents, string $name, string $mime = 'application/octet-stream' ): bool
 	{
 		if ( ! $contents )
 			return FALSE;
@@ -1896,14 +1889,16 @@ class Text extends Base
 		echo $contents;
 
 		exit;
+		return TRUE;
 	}
 
+	// TODO: move to `Core\Encoding`
 	// USAGE: `Text::correctMixedEncoding( 'Ù…Ø­ØªÙˆØ§ÛŒ Ù…ÛŒÚ©Ø³ Ø´Ø¯Ù‡ و بخش سالم' );`
 	// @REF: https://stackoverflow.com/questions/48948340/mixed-encoding-and-make-everything-utf-8
 	// @REF: https://gist.github.com/man4toman/029f43b802f4ee52d5fab2526cdd3cbd
 	// @SEE: https://gist.github.com/man4toman/f69a8bbf0c51b77f4202af7f2c0e7754
 	// @SEE: https://github.com/neitanod/forceutf8
-	public static function correctMixedEncoding( $text )
+	public static function correctMixedEncoding( string $text ): string
 	{
 		return preg_replace_callback( '/\\P{Arabic}+/u', static function ( $matches ) {
 			return iconv( 'UTF-8', 'ISO-8859-1', $matches[0] );
@@ -1912,13 +1907,14 @@ class Text extends Base
 
 	// FIXME: address the other attributes
 	// @REF: https://gist.github.com/man4toman/a645c4022f741c879110d09834f73d12
-	public static function unlinkify( $text )
+	// TODO: move to `Core\Link`
+	public static function unlinkify( string $text ): string
 	{
 		// return preg_replace( '/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $text );
 		return preg_replace( '/<a.*?>(.*?)</a>/i', '\1', $text );
 	}
 
-	public static function dashify( $string, $chunk, $separator = NULL )
+	public static function dashify( string $string, $chunk, ?string $separator = NULL )
 	{
 		return implode( $separator ?? '-', str_split( $string, $chunk ) );
 	}
@@ -1926,7 +1922,7 @@ class Text extends Base
 	// case insensitive version of `strtr()`
 	// by `Alexander Peev`
 	// @REF: https://www.php.net/manual/en/function.strtr.php#82051
-	public static function strtr( $text, $one = NULL, $two = NULL )
+	public static function strtr( string $text, $one = NULL, $two = NULL ): string
 	{
 		if ( is_string( $one ) ) {
 
@@ -1979,13 +1975,13 @@ class Text extends Base
 	 * @param string $text The input string.
 	 * @param int $split_length Maximum length of the chunk. If specified, the returned array will be broken down
 	 *        into chunks with each being split_length in length, otherwise each chunk will be one character in length.
-	 * @return array|boolean
+	 * @return bool|array
 	 *         -
 	 *         - If the split_length length exceeds the length of string, the entire string is returned
 	 *           as the first (and only) array element.
 	 *         - False is returned if split_length is less than 1.
 	 */
-	public static function str_split( $text, $split_length = 1 )
+	public static function str_split( string $text, int $split_length = 1 ): bool|array
 	{
 		if ( 1 === $split_length )
 			return preg_split( '//u', $text, -1, PREG_SPLIT_NO_EMPTY );
@@ -2016,7 +2012,7 @@ class Text extends Base
 	 * @param string $string
 	 * @return string
 	 */
-	public static function filterSanitizeString( $string )
+	public static function filterSanitizeString( string $string ): string
 	{
 		return str_replace( [ "'", '"' ], [ '&#39;', '&#34;' ], preg_replace( '/\x00|<[^>]*>?/', '', $string ) );
 	}
@@ -2024,6 +2020,7 @@ class Text extends Base
 	/**
 	 * Converts a string encoded in `ISO-8859-1` to `UTF-8`.
 	 * NOTE: wrapper for deprecated `utf8_encode()`
+	 * TODO: move to `Core\Encoding`
 	 * @source https://www.php.net/manual/en/function.utf8-encode.php
 	 * @SEE https://wiki.php.net/rfc/remove_utf8_decode_and_utf8_encode#alternatives_to_removed_functionality
 	 * @SEE https://core.trac.wordpress.org/ticket/55603
@@ -2058,6 +2055,7 @@ class Text extends Base
 
 	// Polyfill for `utf8_encode()`
 	// https://php.watch/versions/8.2/utf8_encode-utf8_decode-deprecated#replace
+	// TODO: move to `Core\Encoding`
 	public static function iso88591toUTF8( string $s ): string
 	{
 		$s .= $s;
@@ -2077,6 +2075,7 @@ class Text extends Base
 	/**
 	 * Converses given text from `Windows-1250` to `UTF-8`.
 	 * @source https://www.php.net/manual/en/function.mb-convert-encoding.php#112547
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * @REF: http://konfiguracja.c0.pl/iso02vscp1250en.html
 	 * @REF: http://konfiguracja.c0.pl/webpl/index_en.html#examp
@@ -2085,7 +2084,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function encodeWindows1250toUTF8( $text )
+	public static function encodeWindows1250toUTF8( string $text ): string
 	{
 		$map = [
 			chr(0x8A) => chr(0xA9),
@@ -2137,6 +2136,7 @@ class Text extends Base
 	/**
 	 * Tries to decode all entities.
 	 * @source https://www.php.net/manual/en/function.html-entity-decode.php#117876
+	 * TODO: move to `Core\Encoding`
 	 *
 	 * I've checked these special entities:
 	 * - double quotes (&#34;)
@@ -2149,7 +2149,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function decodeEntities( $text )
+	public static function decodeEntities( string $text ): string
 	{
 		return html_entity_decode( $text, ENT_QUOTES | ENT_XML1, 'UTF-8' );
 	}
@@ -2172,7 +2172,7 @@ class Text extends Base
 	 *
 	 * @return array|false
 	 */
-	public static function splitGrapheme( string $string, int $length = 1 )
+	public static function splitGrapheme( string $string, int $length = 1 ): false|array
 	{
 		if ( $length < 0 || $length > 1073741823 )
 			throw new \ValueError( 'grapheme_str_split(): Argument #2 ($length) must be greater than 0 and less than or equal to 1073741823.' );
@@ -2214,7 +2214,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function prepDescForICAL( $text )
+	public static function prepDescForICAL( string $text ): string
 	{
 		if ( ! $text )
 			return '';
@@ -2226,15 +2226,19 @@ class Text extends Base
 		$text = preg_replace( '/([\,;])/', '\\\$1', $text );
 
 		// https://stackoverflow.com/q/6191503
+		///```
 		// $search = array('\\', ';', ',', "\r\n", "\n", "\r");
 		// $replace = array('\\\\', '\;', '\,', '\n', '\n', '\n');
 		// $text = str_replace($search, $replace, $text);
+		///```
 
-		// // https://stackoverflow.com/a/6192156
-		// // Note the mixture of single and double quotes for the line break (Double quotes interpret the line breaks whereas single ones don't)
+		///```
+		// https://stackoverflow.com/a/6192156
+		// Note the mixture of single and double quotes for the line break (Double quotes interpret the line breaks whereas single ones don't)
 		// $search = array('/',';',',',"\N","\n");
 		// $replace = array('\/','\;','\,','\n','\n');
 		// $text = str_replace($search,$replace,$text);
+		///```
 
 		return self::trim( $text );
 	}
@@ -2245,10 +2249,10 @@ class Text extends Base
 	 * The backslash must be escaped first, otherwise the backslashes introduced
 	 * by the subsequent replacements would themselves be escaped a second time.
 	 *
-	 * - A comma must be escaped as "\,".
-	 * - A semicolon must be escaped as "\;", not "\:".
-	 * - A backslash must be escaped as "\\".
-	 * - Newlines must be escaped as "\n" to avoid breaking the feed structure.
+	 * - A comma must be escaped as `\,`.
+	 * - A semicolon must be escaped as `\;`, not `\:`.
+	 * - A backslash must be escaped as `\\`.
+	 * - Newlines must be escaped as `\n` to avoid breaking the feed structure.
 	 * - Backslashes must be escaped first so the escape character introduced by
 	 * subsequent replacements is not itself doubled.
 	 * - A plaintext string with none of the special characters must pass through untouched.
@@ -2259,9 +2263,9 @@ class Text extends Base
 	 * @param string $text
 	 * @return string
 	 */
-	public static function icsEscaping( $text )
+	public static function icsEscaping( string $text ): string
 	{
-		if ( ! $text )
+		if ( ! $text = self::force( $text ) )
 			return '';
 
 		$text = self::normalizeWhitespace( $text, TRUE );
@@ -2285,7 +2289,7 @@ class Text extends Base
 	 * @param string $string
 	 * @return string
 	 */
-	public static function removeCombinedAccents( $string )
+	public static function removeCombinedAccents( string $string ): string
 	{
 		if ( self::availablePCREUnicode() ) {
 

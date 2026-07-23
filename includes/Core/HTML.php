@@ -155,10 +155,10 @@ class HTML extends Base
 		bool $block = TRUE,
 		string|array $class = '',
 		bool $nl2br = TRUE,
-	): void {
+	): false {
 
 		if ( ! $html )
-			return;
+			return FALSE;
 
 		if ( is_array( $html ) ) {
 
@@ -167,11 +167,11 @@ class HTML extends Base
 			foreach ( $html as $desc_class => $desc_html )
 				self::desc( $desc_html, $block, $assoc ? $desc_class : $class, $nl2br );
 
-			return;
+			return FALSE;
 		}
 
 		if ( ! $html = trim( $html ) )
-			return;
+			return FALSE;
 
 		$tag = $block ? 'p' : 'span';
 
@@ -182,6 +182,8 @@ class HTML extends Base
 			// .Text::wordWrap( $nl2br ? nl2br( $string ) : $string ) // FIXME: messes with HTML attributes!
 			.( $nl2br ? nl2br( $html ) : $html )
 		.'</'.$tag.'>';
+
+		return FALSE;
 	}
 
 	public static function dieMessage( string $html ): false

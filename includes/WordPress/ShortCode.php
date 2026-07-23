@@ -97,4 +97,24 @@ class ShortCode extends Core\Base
 
 		return Core\HTML::tag( $wrap, array_merge( [ 'class' => $classes ], $extra ), $before.$html );
 	}
+
+	/**
+	 * First strip out registered and enclosing short-codes using native
+	 * WordPress `strip_shortcodes()` function. Then strip out the short-codes
+	 * with a filthy regex, because people don't properly register
+	 * their short-codes.
+	 *
+	 * @old `WordPress\Strings::stripShortCode()`
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::strip_shortcode()`
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function strip( mixed $input ): string
+	{
+		if ( ! $input = Core\Text::force( $input ) )
+			return '';
+
+		return preg_replace( '`\[[^\]]+\]`s', '', \strip_shortcodes( $input ) );
+	}
 }

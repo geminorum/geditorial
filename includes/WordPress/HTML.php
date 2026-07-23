@@ -7,15 +7,28 @@ use geminorum\gEditorial\Core;
 class HTML extends Core\Base
 {
 
-	// same as `html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );`
-	public static function entityDecode( $text )
+	/**
+	 * Strips all HTML tags including script and style.
+	 *
+	 * @source `Yoast\WP\SEO\Helpers\String_Helper::strip_all_tags()`
+	 *
+	 * @param string $input
+	 * @return string
+	 */
+	public static function stripAllTags( mixed $input ): string
 	{
-		return \WP_HTML_Decoder::decode_attribute( $text );
+		return \wp_strip_all_tags( Core\Text::force( $input ) );
 	}
 
-	public static function extractRootText( $html )
+	// same as `html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );`
+	public static function entityDecode( mixed $input ): string
 	{
-		if ( ! $html )
+		return \WP_HTML_Decoder::decode_attribute( Core\Text::force( $input ) );
+	}
+
+	public static function extractRootText( mixed $html ): string
+	{
+		if ( ! $html = Core\Text::force( $html ) )
 			return '';
 
 		$processor = new \WP_HTML_Tag_Processor( $html );
@@ -54,9 +67,9 @@ class HTML extends Core\Base
 		return trim( implode( '', $parts ) );
 	}
 
-	public static function stripTags( $html )
+	public static function stripTags( string $html ): string
 	{
-		if ( ! $html )
+		if ( ! $html = Core\Text::force( $html ) )
 			return '';
 
 		$processor = new \WP_HTML_Tag_Processor( $html );
