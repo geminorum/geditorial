@@ -7,6 +7,7 @@ class Module extends WordPress\Module
 	use Internals\Assets;
 	use Internals\ContentInsert;
 	use Internals\CoreAdminBar;
+	use Internals\CoreColumns;
 	use Internals\CoreComments;
 	use Internals\CoreConstants;
 	use Internals\CoreHooks;
@@ -626,179 +627,6 @@ class Module extends WordPress\Module
 		return $title;
 	}
 
-	public function get_column_title( string $column, ?string $constant = NULL, mixed $fallback = NULL ): string
-	{
-		return $this->filters( 'column_title',
-			$this->get_string(
-				self::und( $column, 'column_title' ),
-				$constant,
-				'misc',
-				$fallback ?? $column
-			),
-			$column,
-			$constant,
-			$fallback
-		);
-	}
-
-	public function get_column_title_posttype( string $constant, false|string $taxonomy = FALSE, mixed $fallback = NULL ): string
-	{
-		return $this->filters( 'column_title',
-			Services\CustomPostType::getLabel(
-				$this->constant( $constant ),
-				'column_title',
-				'name',
-				$fallback
-			),
-			$taxonomy,
-			$constant,
-			$fallback
-		);
-	}
-
-	public function get_column_title_taxonomy(
-		string $constant,
-		false|string $posttype = FALSE,
-		mixed $fallback = NULL,
-	): string {
-
-		return $this->filters( 'column_title',
-			Services\CustomTaxonomy::getLabel(
-				$this->constant( $constant ),
-				'column_title',
-				'name',
-				$fallback
-			),
-			$posttype,
-			$constant,
-			$fallback
-		);
-	}
-
-	public function get_column_title_icon(
-		string $column,
-		?string $constant = NULL,
-		mixed $fallback = NULL,
-	): string {
-
-		$title = $this->get_column_title( $column, $constant, $fallback );
-
-		return sprintf(
-			'<span class="-column-icon %3$s" title="%2$s">%1$s</span>',
-			$title,
-			esc_attr( $title ),
-			$this->classs( $column )
-		);
-	}
-
-	public function is_save_post(
-		object $post,
-		false|string|array $constant = FALSE,
-	): bool {
-
-		if ( $constant ) {
-
-			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant, TRUE ) )
-				return FALSE;
-
-			if ( ! is_array( $constant ) && $post->post_type != $this->constant( $constant ) )
-				return FALSE;
-		}
-
-		if ( wp_is_post_autosave( $post ) || wp_is_post_revision( $post ) )
-			return FALSE;
-
-		return TRUE;
-	}
-
-	// NOTE: for Ajax calls on quick-edit
-	public function is_inline_save_posttype(
-		false|string|array $target = FALSE,
-		?array $request = NULL,
-		string $key = 'post_type',
-	): bool|string {
-
-		if ( ! WordPress\IsIt::ajaxAdmin() )
-			return FALSE;
-
-		$request = $request ?? $_REQUEST;
-
-		if ( empty( $request['bulk_edit'] )
-			&& ( empty( $request['action'] ) || 'inline-save' != $request['action'] ) )
-				return FALSE;
-
-		if ( empty( $request[$key] ) )
-			return FALSE;
-
-		if ( is_array( $target )
-			&& ! in_array( $request[$key], $target, TRUE ) )
-				return FALSE;
-
-		if ( $target
-			&& ! is_array( $target )
-			&& $request[$key] != $this->constant( $target ) )
-				return FALSE;
-
-		return $request[$key];
-	}
-
-	// NOTE: for Ajax calls on quick-edit
-	public function is_inline_save_taxonomy(
-		false|string|array $target = FALSE,
-		?array $request = NULL,
-		string $key = 'taxonomy',
-	): bool|string {
-
-		if ( ! WordPress\IsIt::ajaxAdmin() )
-			return FALSE;
-
-		if ( is_null( $request ) )
-			$request = $_REQUEST;
-
-		if ( empty( $request['action'] )
-			|| ! in_array( $request['action'], [ 'add-tag', 'inline-save-tax' ], TRUE ) )
-				return FALSE;
-
-		if ( empty( $request[$key] ) )
-			return FALSE;
-
-		if ( is_array( $target )
-			&& ! in_array( $request[$key], $target, TRUE ) )
-				return FALSE;
-
-		if ( $target
-			&& ! is_array( $target )
-			&& $request[$key] != $this->constant( $target ) )
-				return FALSE;
-
-		return $request[$key];
-	}
-
-	public function get_column_icon(
-		false|string $link = FALSE,
-		null|string|array $icon = NULL,
-		?string $title = NULL,
-		string $posttype = 'post',
-		array|string $extra = [],
-	): string {
-
-		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [
-			'href'   => $link ?: FALSE,
-			'title'  => $title ?? $this->get_string( 'column_icon_title', $posttype, 'misc', $this->module->title ),
-			'class'  => array_merge( [ '-icon', ( $link ? '-link' : '-info' ) ], (array) $extra ),
-			'target' => $link ? '_blank' : FALSE,
-		], Services\Icons::get( $icon ?? $this->module->icon ) );
-	}
-
-	// NOTE: adds the `{$module_key}-enabled` class to body in admin
-	public function _admin_enabled( array $extra = [] ): void
-	{
-		add_filter( 'admin_body_class',
-			function ( $classes ) use ( $extra ) {
-				return trim( $classes ).' '.Core\HTML::prepClass( $this->classs( 'enabled' ), $extra );
-			} );
-	}
-
 	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false
 	{
 		return gEditorial()->icon(
@@ -819,18 +647,6 @@ class Module extends WordPress\Module
 			empty( $box['id'] ) ? $this->classs( $box ) : $box['id'],
 			$after,
 			$posttype
-		);
-	}
-
-	// Checks to bail early if column is hidden
-	protected function check_hidden_column( false|string $column, string $after = '' ): bool
-	{
-		if ( FALSE === $column )
-			return FALSE;
-
-		return Listtable::checkHidden(
-			$column ?? $this->classs(),
-			$after
 		);
 	}
 
