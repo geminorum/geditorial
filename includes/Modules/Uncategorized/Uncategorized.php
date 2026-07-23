@@ -166,7 +166,7 @@ class Uncategorized extends gEditorial\Module
 
 	// NOTE: already cap checked!
 	// TODO: pointer for all supported post-types
-	public function dashboard_pointers( $items )
+	public function dashboard_pointers( array $items ): array
 	{
 		if ( ! $count = $this->_get_post_count() )
 			return $items;
@@ -390,7 +390,7 @@ class Uncategorized extends gEditorial\Module
 	}
 
 	// TODO: option to delete orphaned terms
-	protected function renderCard_imports_dead_taxes( $form )
+	protected function renderCard_imports_dead_taxes( array $form ): bool
 	{
 		$db_taxes   = WordPress\Database::getTaxonomies( TRUE );
 		$live_taxes = WordPress\Taxonomy::get( 6 );
@@ -475,7 +475,7 @@ class Uncategorized extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_clean_unattached( $post, $taxonomies = NULL )
+	private function _do_clean_unattached( mixed $post, ?array $taxonomies = NULL ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -494,7 +494,7 @@ class Uncategorized extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_clean_unregistered( $post )
+	private function _do_clean_unregistered( mixed $post ): bool
 	{
 		global $wpdb;
 
@@ -525,7 +525,7 @@ class Uncategorized extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_clean_uncategorized( $post, $taxonomies = NULL )
+	private function _do_clean_uncategorized( mixed $post, ?array $taxonomies = NULL ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -560,7 +560,7 @@ class Uncategorized extends gEditorial\Module
 		return $count;
 	}
 
-	private function _get_uncategorized_tax_query( $taxonomies = NULL )
+	private function _get_uncategorized_tax_query( ?array $taxonomies = NULL ): array
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -578,7 +578,7 @@ class Uncategorized extends gEditorial\Module
 		return $tax_query;
 	}
 
-	private function _get_count_cache_key( $taxonomies = NULL )
+	private function _get_count_cache_key( ?array $taxonomies = NULL ): string
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = $this->taxonomies();
@@ -587,7 +587,7 @@ class Uncategorized extends gEditorial\Module
 	}
 
 	// NOTE: only for `post` post-type
-	private function _get_post_count()
+	private function _get_post_count(): int
 	{
 		$taxonomies = $this->taxonomies();
 		$cache_key  = $this->_get_count_cache_key( $taxonomies );
@@ -621,7 +621,7 @@ class Uncategorized extends gEditorial\Module
 		return $count;
 	}
 
-	private function _get_posttype_view( $posttype )
+	private function _get_posttype_view( string $posttype ): array
 	{
 		if ( ! $taxonomy = Services\PrimaryTaxonomy::get( $posttype ) )
 			return [];

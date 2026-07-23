@@ -10,8 +10,13 @@ use geminorum\gEditorial\WordPress;
 trait CoreTaxonomies
 {
 	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	public function register_taxonomy( $constant, $atts = [], $targets = NULL, $settings_atts = [] )
-	{
+	public function register_taxonomy(
+		string $constant,
+		array $atts = [],
+		mixed $targets = NULL,
+		array $settings_atts = [],
+	): false|object {
+
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
 
@@ -453,7 +458,7 @@ trait CoreTaxonomies
 		return $object;
 	}
 
-	public function get_taxonomy_labels( $constant )
+	public function get_taxonomy_labels( string $constant ): false|array
 	{
 		if ( isset( $this->strings['labels'] )
 			&& array_key_exists( $constant, $this->strings['labels'] ) )
@@ -480,7 +485,7 @@ trait CoreTaxonomies
 
 	// WTF: the core default term system is messed-up!
 	// @REF: https://core.trac.wordpress.org/ticket/43517
-	protected function _get_taxonomy_default_term( $constant, $passed_arg = NULL )
+	protected function _get_taxonomy_default_term( string $constant, $passed_arg = NULL )
 	{
 		return FALSE; // FIXME <------------------------------------------------
 
@@ -514,7 +519,7 @@ trait CoreTaxonomies
 	 * @param string $taxonomy
 	 * @return void
 	 */
-	public function taxonomy_meta_box_checklist_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	public function taxonomy_meta_box_checklist_terms_cb( object $post, false|array $box = FALSE, ?string $taxonomy = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -557,7 +562,7 @@ trait CoreTaxonomies
 	 * @param string $taxonomy
 	 * @return void
 	 */
-	public function taxonomy_meta_box_checklist_reverse_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	public function taxonomy_meta_box_checklist_reverse_terms_cb( object $post, false|array $box = FALSE, ?string $taxonomy = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -602,7 +607,7 @@ trait CoreTaxonomies
 	 * @param string $taxonomy
 	 * @return void
 	 */
-	public function taxonomy_meta_box_checklist_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	public function taxonomy_meta_box_checklist_restricted_terms_cb( object $post, false|array $box = FALSE, ?string $taxonomy = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -647,7 +652,7 @@ trait CoreTaxonomies
 	 * @param string $taxonomy
 	 * @return void
 	 */
-	public function taxonomy_meta_box_singleselect_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	public function taxonomy_meta_box_singleselect_terms_cb( object $post, false|array $box = FALSE, ?string $taxonomy = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -695,7 +700,7 @@ trait CoreTaxonomies
 	 * @param string $taxonomy
 	 * @return void
 	 */
-	public function taxonomy_meta_box_singleselect_restricted_terms_cb( $post, $box = FALSE, $taxonomy = NULL )
+	public function taxonomy_meta_box_singleselect_restricted_terms_cb( object $post, false|array $box = FALSE, ?string $taxonomy = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -737,7 +742,7 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	public function is_screen_taxonomy( $constant, $screen = NULL )
+	public function is_screen_taxonomy( string $constant, ?object $screen = NULL ): bool
 	{
 		if ( ! $screen = $screen ?? get_current_screen() )
 			return FALSE;
@@ -745,7 +750,7 @@ trait CoreTaxonomies
 		return $this->constant( $constant ) === $screen->taxonomy;
 	}
 
-	public function is_taxonomy( $constant, $term = NULL )
+	public function is_taxonomy( string $constant, mixed $term = NULL ): bool
 	{
 		if ( ! $constant )
 			return FALSE;
@@ -757,8 +762,13 @@ trait CoreTaxonomies
 	}
 
 	// NOTE: reversed `$fallback`/`$fallback_key`
-	public function get_taxonomy_label( $constant, $label = 'name', $fallback = '', $fallback_key = NULL )
-	{
+	public function get_taxonomy_label(
+		string $constant,
+		string $label = 'name',
+		mixed $fallback = '',
+		?string $fallback_key = NULL,
+	): mixed {
+
 		return Services\CustomTaxonomy::getLabel(
 			$this->constant( $constant, $constant ),
 			$label,
@@ -767,7 +777,7 @@ trait CoreTaxonomies
 		);
 	}
 
-	public function is_term_viewable( $term = NULL )
+	public function is_term_viewable( mixed $term = NULL ): bool
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
@@ -775,7 +785,7 @@ trait CoreTaxonomies
 		return $this->filters( 'is_term_viewable', WordPress\Term::viewable( $term ), $term );
 	}
 
-	protected function do_force_assign_parents( $post, $taxonomy )
+	protected function do_force_assign_parents( object $post, string $taxonomy ): mixed
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -799,7 +809,7 @@ trait CoreTaxonomies
 	 * @param string $constant
 	 * @return bool
 	 */
-	protected function hook_taxonomy_sitemap_show_empty( $constant )
+	protected function hook_taxonomy_sitemap_show_empty( string $constant ): bool
 	{
 		if ( ! $target = $this->constant( $constant ) )
 			return FALSE;
@@ -814,7 +824,7 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	protected function determine_taxonomy_meta_box_cb( $constant, $arg = NULL, $hierarchical = FALSE )
+	protected function determine_taxonomy_meta_box_cb( string $constant, mixed $arg = NULL, bool $hierarchical = FALSE ): callable|false|null
 	{
 		if ( ! $arg && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
 			return [ $this, self::und( 'meta_box_cb', $constant ) ];
@@ -846,11 +856,12 @@ trait CoreTaxonomies
 	}
 
 	// @REF: `register_and_do_post_meta_boxes()`
-	protected function add_taxonomy_meta_box( $constant, $callback = NULL )
+	protected function add_taxonomy_meta_box( string $constant, mixed $callback = NULL ): false|string
 	{
 		$taxonomy = get_taxonomy( $this->constant( $constant, $constant ) );
+		$metabox  = sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name );
 
-		add_meta_box( sprintf( $taxonomy->hierarchical ? '%sdiv' : 'tagsdiv-%s', $taxonomy->name ),
+		add_meta_box( $metabox,
 			empty( $taxonomy->{Services\TermHierarchy::SINGLE_TERM_SELECT} ) ? $taxonomy->labels->name : $taxonomy->labels->singular_name,
 			$this->determine_taxonomy_meta_box_cb( $constant, $callback ?: FALSE, $taxonomy->hierarchical ),
 			NULL,
@@ -861,6 +872,8 @@ trait CoreTaxonomies
 				'__back_compat_meta_box' => TRUE,
 			]
 		);
+
+		return $metabox;
 	}
 
 	/**
@@ -874,10 +887,14 @@ trait CoreTaxonomies
 	 * @param bool $check_advanced
 	 * @return bool
 	 */
-	protected function coretax__hook_posttype_mainbox( $constant, $screen = NULL, $default_multiple_term = FALSE, $default_advanced = FALSE, $restricted = TRUE, $check_advanced = TRUE )
-	{
-		if ( ! $constant )
-			return FALSE;
+	protected function coretax__hook_posttype_mainbox(
+		string $constant,
+		?object $screen = NULL,
+		bool $default_multiple_term = FALSE,
+		bool $default_advanced = FALSE,
+		bool $restricted = TRUE,
+		bool $check_advanced = TRUE
+	): false|string {
 
 		if ( $check_advanced && $this->get_setting( 'metabox_advanced', $default_advanced ) )
 			return FALSE;
@@ -904,8 +921,14 @@ trait CoreTaxonomies
 	 * @param string $context
 	 * @return bool
 	 */
-	protected function hook_taxonomy_metabox_mainbox( $constant, $posttype, $callback = NULL, $priority = 80, $context = NULL )
-	{
+	protected function hook_taxonomy_metabox_mainbox(
+		string $constant,
+		string|object $posttype,
+		mixed $callback = NULL,
+		?int $priority = NULL,
+		?string $context = NULL,
+	): false|string {
+
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
 
@@ -924,15 +947,17 @@ trait CoreTaxonomies
 			$constant, $callback, is_taxonomy_hierarchical( $taxonomy ) );
 
 		add_action( $this->hook_base( 'metabox', $context ?? 'mainbox', $posttype ),
-			function ( $post, $box, $context, $screen ) use ( $taxonomy, $callback ) {
+			function ( $post, $box, $context, $screen )
+				use ( $taxonomy, $callback ) {
+
 				call_user_func_array( $callback, [ $post, FALSE, $taxonomy ] );
-			}, $priority, 4 );
+			}, $priority ?? 80, 4 );
 
 		return TRUE;
 	}
 
 	// TODO: apply hook on our own callbacks!
-	public function coretax__core_categories_metabox( $post, $box )
+	public function coretax__core_categories_metabox( object $post, false|array $box ): void
 	{
 		$taxonomy = empty( $box['args']['taxonomy'] ) ? 'category' : $box['args']['taxonomy'];
 
@@ -957,7 +982,7 @@ trait CoreTaxonomies
 			echo '</div>';
 	}
 
-	public function coretax__core_tags_metabox( $post, $box )
+	public function coretax__core_tags_metabox( object $post, false|array $box ): void
 	{
 		$taxonomy = empty( $box['args']['taxonomy'] ) ? 'post_tag' : $box['args']['taxonomy'];
 
@@ -985,7 +1010,7 @@ trait CoreTaxonomies
 	// NOTE: check for not-admin before calling
 	// NOTE: links to taxonomy management
 	// @SEE: `templatetaxonomy__hook_adminbar()` for admin term edit
-	protected function hook_adminbar_node_for_taxonomy( $constant, $parent = NULL, $priority = NULL )
+	protected function hook_adminbar_node_for_taxonomy( string $constant, ?string $parent = NULL, ?int $priority = NULL ): bool
 	{
 		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) )
 			return FALSE;
@@ -1015,7 +1040,7 @@ trait CoreTaxonomies
 		return TRUE;
 	}
 
-	protected function register_headerbutton_for_taxonomy( $constant, $priority = NULL )
+	protected function register_headerbutton_for_taxonomy( string $constant, ?int $priority = NULL ): bool|string
 	{
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
 			return FALSE;
@@ -1032,7 +1057,7 @@ trait CoreTaxonomies
 		] );
 	}
 
-	protected function register_headerbutton_for_taxonomy_queried( $constant, $priority = NULL )
+	protected function register_headerbutton_for_taxonomy_queried( string $constant,?int $priority = NULL ): bool|string
 	{
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
 			return FALSE;
@@ -1066,7 +1091,7 @@ trait CoreTaxonomies
 		] );
 	}
 
-	protected function register_headerbutton_for_taxonomy_archives( $constant, $priority = NULL )
+	protected function register_headerbutton_for_taxonomy_archives( string $constant, ?int $priority = NULL ): bool|string
 	{
 		if ( ! $taxonomy = $this->constant( $constant, $constant ) )
 			return FALSE;
@@ -1084,9 +1109,9 @@ trait CoreTaxonomies
 	}
 
 	// TODO: support term colors. @see `coreadmin__hook_taxonomy_display_states()`
-	protected function hook_taxonomy_parents_as_views( $screen, $constant, $setting = 'parents_as_views' )
+	protected function hook_taxonomy_parents_as_views( object $screen, string $constant, true|string|null $setting = NULL ): bool
 	{
-		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'parents_as_views' ) )
 			return FALSE;
 
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $this->constant( $constant ) ) )
@@ -1149,12 +1174,12 @@ trait CoreTaxonomies
 	 * @param bool|string $setting
 	 * @return bool
 	 */
-	protected function hook_taxonomy_importer_term_parents( $taxonomy, $setting = 'force_parents' )
+	protected function hook_taxonomy_importer_term_parents( string $taxonomy, true|string|null $setting = NULL ): bool
 	{
-		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'force_parents' ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
+		return add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
 			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append )
 				use ( $taxonomy ) {
 
@@ -1170,19 +1195,18 @@ trait CoreTaxonomies
 
 			}, 12, 7 );
 
-		return TRUE;
 	}
 
-	protected function hook_taxonomy_tabloid_exclude_rendered( $constants )
+	protected function hook_taxonomy_tabloid_exclude_rendered( string|array $constants ): bool
 	{
-		$this->filter_append(
+		return $this->filter_append(
 			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
 			$this->constants( $constants )
 		);
 	}
 
 	// @REF: `post_type_supports()`
-	protected function is_taxonomy_support( $taxonomy, $feature, $fallback = TRUE )
+	protected function is_taxonomy_support( string $taxonomy, string $feature, mixed $fallback = TRUE ): mixed
 	{
 		$taxonomy_features = [
 			'name'        => TRUE,

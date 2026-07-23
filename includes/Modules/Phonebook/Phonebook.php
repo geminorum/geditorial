@@ -277,7 +277,7 @@ class Phonebook extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_importable_fields()
+	protected function subcontent_define_importable_fields(): array
 	{
 		return [
 			'phone'   => 'label',
@@ -478,9 +478,9 @@ class Phonebook extends gEditorial\Module
 		return $fields;
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
+	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
 	{
-		if ( empty( $posttypes ) )
+		if ( empty( $queried ) )
 			return $meta;
 
 		if ( ! $discovery = Core\Phone::discovery( $search ) )
@@ -488,6 +488,15 @@ class Phonebook extends gEditorial\Module
 
 		if ( 'any' === $posttypes )
 			$posttypes = $this->posttypes();
+
+		else if ( is_array( $posttypes ) )
+			$posttypes = $posttypes;
+
+		else if ( ! self::empty( $posttypes ) )
+			$posttypes = WordPress\Strings::getSeparated( $posttypes );
+
+		else
+			return $meta;
 
 		$input  = Core\Number::translate( Core\Text::trim( $search ) );
 		$fields = [
@@ -497,7 +506,7 @@ class Phonebook extends gEditorial\Module
 			'phone_secondary',
 		];
 
-		foreach ( (array) $posttypes as $posttype ) {
+		foreach ( $posttypes as $posttype ) {
 
 			if ( ! $this->posttype_supported( $posttype ) )
 				continue;

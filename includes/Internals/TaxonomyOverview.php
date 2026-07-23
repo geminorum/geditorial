@@ -27,7 +27,7 @@ trait TaxonomyOverview
 	// TODO: link to support post-type: `coreadmin__hook_taxonomy_multiple_supported_column`
 	protected function taxonomy_overview_render_table(
 		string $constant,
-		string $uri = '',
+		?string $uri = NULL,
 		?string $sub = NULL,
 		?string $context = NULL,
 		?string $title = NULL,
@@ -52,7 +52,8 @@ trait TaxonomyOverview
 			'_cb'  => 'term_id',
 			'name' => [
 				'title'    => _x( 'Name', 'Internal: TaxonomyOverview: Column', 'geditorial-admin' ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $description ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+					use ( $description ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )
 						return gEditorial\Plugin::na( FALSE );
@@ -64,7 +65,8 @@ trait TaxonomyOverview
 
 					return $html;
 				},
-				'actions' => function ( $value, $row, $column, $index, $key, $args ) use ( $exports, $context ) {
+				'actions' => function ( $value, $row, $column, $index, $key, $args )
+					use ( $exports, $context ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )
 						return [];

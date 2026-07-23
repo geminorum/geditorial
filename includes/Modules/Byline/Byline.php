@@ -213,7 +213,7 @@ class Byline extends gEditorial\Module
 		}
 	}
 
-	private function _init_post_tabs()
+	private function _init_post_tabs(): bool
 	{
 		if ( ! gEditorial()->enabled( 'tabs' ) )
 			return FALSE;
@@ -250,12 +250,14 @@ class Byline extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _init_woocommerce()
+	private function _init_woocommerce(): bool
 	{
 		if ( is_admin() )
-			return;
+			return FALSE;
 
 		$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 12 ), FALSE, 'woocommerce' );
+
+		return TRUE;
 	}
 
 	/**
@@ -323,7 +325,7 @@ class Byline extends gEditorial\Module
 			$this->action( 'admin_print_styles', 0, 99, 'summaryreport' );
 	}
 
-	private function _do_enqueue_app( $atts = [] )
+	private function _do_enqueue_app( array $atts = [] ): false|string
 	{
 		$args = self::parsed( [
 			'app'     => defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock',
@@ -337,13 +339,13 @@ class Byline extends gEditorial\Module
 		], $atts );
 
 		if ( ! $this->role_can( $args['can'] ) || empty( $args['targets'] ) )
-			return;
+			return FALSE;
 
 		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
-			return;
+			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $linked ) )
-			return;
+			return FALSE;
 
 		$targets = $routes = [];
 
@@ -382,7 +384,7 @@ class Byline extends gEditorial\Module
 			],
 		];
 
-		$this->enqueue_asset_js( $asset, FALSE, [
+		return $this->enqueue_asset_js( $asset, FALSE, [
 			gEditorial\Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
@@ -438,7 +440,7 @@ class Byline extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function admin_print_styles_summaryreport()
+	public function admin_print_styles_summaryreport(): void
 	{
 		gEditorial\Scripts::linkBootstrap5();
 	}
@@ -453,7 +455,7 @@ class Byline extends gEditorial\Module
 	 * @param array $user_ids
 	 * @return array
 	 */
-	public function pre_count_many_users_posts( $counts, $user_ids )
+	public function pre_count_many_users_posts( array $counts, array $user_ids ): array
 	{
 		return array_fill_keys( array_map( 'absint', $user_ids ), 0 );
 	}
@@ -476,7 +478,7 @@ class Byline extends gEditorial\Module
 			] ), 'field-wrap -buttons' );
 	}
 
-	public function searchselect_result_extra_for_term( $data, $term, $queried )
+	public function searchselect_result_extra_for_term( array $data, object $term, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -491,7 +493,7 @@ class Byline extends gEditorial\Module
 		return $data;
 	}
 
-	public function meta_summary_rows( $rows, $list, $post, $args )
+	public function meta_summary_rows( array $rows, $list, object $post, array $args ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $rows;
@@ -539,7 +541,7 @@ class Byline extends gEditorial\Module
 		return $data + $rows;
 	}
 
-	public function termrelations_supported( $fields, $taxonomy, $context, $posttype )
+	public function termrelations_supported( array $fields, string $taxonomy, ?string $context, string|false $posttype ): array
 	{
 		if ( $this->taxonomy_supported( $taxonomy ) )
 			return array_merge( $fields, $this->_get_supported_fields( $context, $posttype ) );
@@ -563,7 +565,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _get_registered_relations( $context = NULL )
+	private function _get_registered_relations( ?string $context = NULL, string|false $posttype = FALSE ): array
 	{
 		return $this->filters( 'registered_relations',
 			Core\Arraay::pluck(
@@ -571,63 +573,67 @@ class Byline extends gEditorial\Module
 				'name',
 				'slug'
 			),
-			$context
+			$context,
+			$posttype,
 		);
 	}
 
-	private function _get_supported_fields( $context = NULL, $posttype = FALSe )
+	private function _get_supported_fields( ?string $context = NULL, string|false $posttype = FALSE ): array
 	{
-		return $this->filters( 'supported_fields', [
+		return $this->filters( 'supported_fields',
+			[
+				// OLD: `rel`
+				'relation' => [
+					'title'   => _x( 'Relation', 'Field Title', 'geditorial-byline' ),
+					'desc'    => _x( 'Subject of relation to the post.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'string',
+					'default' => '',
+					// TODO: use `Terms` module `posttypes` meta to filter by
+					'options' => $this->_get_registered_relations( $context, $posttype ),
+				],
 
-			// OLD: `rel`
-			'relation' => [
-				'title'   => _x( 'Relation', 'Field Title', 'geditorial-byline' ),
-				'desc'    => _x( 'Subject of relation to the post.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'string',
-				'default' => '',
-				// TODO: use `Terms` module `posttypes` meta to filter by
-				'options' => $this->_get_registered_relations( $context, $posttype ),
-			],
+				'filter' => [
+					'title'   => _x( 'Filter', 'Field Title', 'geditorial-byline' ),
+					/* translators: do not translate `%s` */
+					'desc'    => _x( 'String to use before or with `%s` as name.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'string',
+					'default' => '',
+				],
 
-			'filter' => [
-				'title'   => _x( 'Filter', 'Field Title', 'geditorial-byline' ),
-				/* translators: do not translate `%s` */
-				'desc'    => _x( 'String to use before or with `%s` as name.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'string',
-				'default' => '',
-			],
+				// OLD: `override`
+				'overwrite' => [
+					'title'   => _x( 'Overwrite', 'Field Title', 'geditorial-byline' ),
+					'desc'    => _x( 'String to override the name.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'string',
+					'default' => '',
+				],
 
-			// OLD: `override`
-			'overwrite' => [
-				'title'   => _x( 'Overwrite', 'Field Title', 'geditorial-byline' ),
-				'desc'    => _x( 'String to override the name.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'string',
-				'default' => '',
-			],
+				'notes' => [
+					'title'   => _x( 'Notes', 'Field Title', 'geditorial-byline' ),
+					'desc'    => _x( 'About relation to the post.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'string',
+					'default' => '',
+				],
 
-			'notes' => [
-				'title'   => _x( 'Notes', 'Field Title', 'geditorial-byline' ),
-				'desc'    => _x( 'About relation to the post.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'string',
-				'default' => '',
-			],
+				// OLD: `feat`
+				'featured' => [
+					'title'   => _x( 'Featured', 'Field Title', 'geditorial-byline' ),
+					'desc'    => _x( 'Features the individual on the extended list.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'boolean',
+					'default' => FALSE,
+				],
 
-			// OLD: `feat`
-			'featured' => [
-				'title'   => _x( 'Featured', 'Field Title', 'geditorial-byline' ),
-				'desc'    => _x( 'Features the individual on the extended list.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'boolean',
-				'default' => FALSE,
+				// OLD: `visibility`
+				'hidden' => [
+					'title'   => _x( 'Hidden', 'Field Title', 'geditorial-byline' ),
+					'desc'    => _x( 'Hides the name from byline but assignes the term.', 'Field Description', 'geditorial-byline' ),
+					'type'    => 'boolean',
+					'default' => FALSE,
+				],
 			],
-
-			// OLD: `visibility`
-			'hidden' => [
-				'title'   => _x( 'Hidden', 'Field Title', 'geditorial-byline' ),
-				'desc'    => _x( 'Hides the name from byline but assignes the term.', 'Field Description', 'geditorial-byline' ),
-				'type'    => 'boolean',
-				'default' => FALSE,
-			],
-		], $context, $posttype );
+			$context,
+			$posttype,
+		);
 	}
 
 	public function setup_restapi(): bool
@@ -635,7 +641,7 @@ class Byline extends gEditorial\Module
 		return $this->_register_rest_fields();
 	}
 
-	private function _register_rest_fields()
+	private function _register_rest_fields(): bool
 	{
 		$this->filter( 'restapi_terms_rendered_html', 5, 8, FALSE, $this->base );
 		$this->filter( 'rest_terms_rendered_html', 4, 8, FALSE, 'gnetwork' ); // DEPRECATED
@@ -654,7 +660,7 @@ class Byline extends gEditorial\Module
 	}
 
 	// @FILTER: `geditorial_restapi_terms_rendered_html`
-	public function restapi_terms_rendered_html( $rows, $taxonomy, $params, $object_type, $post )
+	public function restapi_terms_rendered_html( string $rows, object $taxonomy, $params, $object_type, mixed $post ): string
 	{
 		return $this->taxonomy_supported( $taxonomy->name )
 			? $this->get_byline_for_post( $post, [], $rows )
@@ -662,7 +668,7 @@ class Byline extends gEditorial\Module
 	}
 
 	// @FILTER: `gnetwork_rest_terms_rendered_html`
-	public function rest_terms_rendered_html( $html, $taxonomy, $post, $object_type )
+	public function rest_terms_rendered_html( string $html, object $taxonomy, array $post, $object_type ): string
 	{
 		return $this->taxonomy_supported( $taxonomy->name )
 			? $this->get_byline_for_post( $post['id'] )
@@ -670,7 +676,7 @@ class Byline extends gEditorial\Module
 	}
 
 	// NOTE: checks for assigned supported terms to the post
-	public function has_content_for_post( $post = NULL, $context = NULL )
+	public function has_content_for_post( mixed $post = NULL, ?string $context = NULL ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -682,7 +688,7 @@ class Byline extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function get_byline_for_post( $post = NULL, $atts = [], $fallback = '' )
+	public function get_byline_for_post( mixed $post = NULL, array $atts = [], false|string $fallback = '' ): false|string|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
@@ -715,7 +721,7 @@ class Byline extends gEditorial\Module
 		return call_user_func_array( $atts['walker'], [ $rows, $atts ] );
 	}
 
-	public function get_term_relations( $term, $post, $fields, $legacy = [] )
+	public function get_term_relations( object $term, object $post, array $fields, array $legacy = [] ): array
 	{
 		$relation = [];
 		$meta     = WordPress\Term::getMeta( $term );
@@ -794,7 +800,7 @@ class Byline extends gEditorial\Module
 	}
 
 	// NOTE: check for access before
-	private function _register_header_button( $post = NULL, $target = NULL )
+	private function _register_header_button( $post = NULL, ?string $target = NULL ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -821,7 +827,7 @@ class Byline extends gEditorial\Module
 		return $button;
 	}
 
-	private function _hook_tweaks_column( $screen )
+	private function _hook_tweaks_column( object $screen ): bool
 	{
 		add_action( $this->hook_base( 'tweaks', 'column_row', $screen->post_type ),
 			function ( $post, $before, $after, $module ) {
@@ -1003,7 +1009,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _get_supported_simple_metakeys( $context = NULL )
+	private function _get_supported_simple_metakeys( ?string $context = NULL ): array
 	{
 		return $this->filters( 'supported_simple_metakeys',
 			array_merge(
@@ -1014,7 +1020,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _get_supported_byline_metakeys( $context = NULL )
+	private function _get_supported_byline_metakeys( ?string $context = NULL ): array
 	{
 		return $this->filters( 'supported_byline_metakeys',
 			[
@@ -1080,7 +1086,7 @@ class Byline extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_import_from_byline_meta( $sub )
+	private function _do_import_from_byline_meta( ?string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_FROM_BYLINE_META ) )
 			return FALSE;
@@ -1123,7 +1129,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _do_import_from_simple_meta( $sub )
+	private function _do_import_from_simple_meta( ?string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_FROM_SIMPLE_META ) )
 			return FALSE;
@@ -1166,7 +1172,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _do_import_from_people_plugin( $sub )
+	private function _do_import_from_people_plugin( ?string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_FROM_PEOPLE_PLUGIN ) )
 			return FALSE;

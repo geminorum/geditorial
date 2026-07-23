@@ -380,7 +380,7 @@ class Identified extends gEditorial\Module
 		return rest_ensure_response( $response ?? Services\RestAPI::getErrorSomethingIsWrong() );
 	}
 
-	private function _get_supported_by_identifier_type( $type )
+	private function _get_supported_by_identifier_type( string $type ): array
 	{
 		$list = [];
 
@@ -391,7 +391,7 @@ class Identified extends gEditorial\Module
 		return $list;
 	}
 
-	private function _get_posttype_identifier_type( $posttype )
+	private function _get_posttype_identifier_type( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( self::und( $posttype, 'posttype', 'type' ) ) )
 			return $setting;
@@ -404,7 +404,7 @@ class Identified extends gEditorial\Module
 		return 'code';
 	}
 
-	private function _get_posttype_identifier_metakey( $posttype )
+	private function _get_posttype_identifier_metakey( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( self::und( $posttype, 'posttype', 'identifier_metakey' ) ) )
 			return $setting;
@@ -420,7 +420,7 @@ class Identified extends gEditorial\Module
 		$this->template_newpost_beforetitle( $post->post_type, $post, NULL, FALSE, NULL, [] );
 	}
 
-	public function template_newpost_beforetitle( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_beforetitle( string $posttype, mixed $post, $target, $linked, $status, $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -452,7 +452,7 @@ class Identified extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function pairedrest_prepped_post( $prepped, $post, $parent )
+	public function pairedrest_prepped_post( $prepped, object $post, $parent )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $prepped;
@@ -746,7 +746,7 @@ class Identified extends gEditorial\Module
 		return $terms;
 	}
 
-	public function get_identified( $code, $type, $posttypes = NULL )
+	public function get_identified( string $code, string $type, ?array $posttypes = NULL ): bool|object
 	{
 		foreach ( $posttypes ?? $this->posttypes() as $posttype ) {
 
@@ -765,7 +765,7 @@ class Identified extends gEditorial\Module
 		return FALSE;
 	}
 
-	private function _get_post_identified( $code, $metakey, $posttype = NULL )
+	private function _get_post_identified( string $code, string $metakey, ?string $posttype = NULL ): false|object
 	{
 		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $code, FALSE ) )
 			return FALSE;
@@ -785,7 +785,7 @@ class Identified extends gEditorial\Module
 		return FALSE;
 	}
 
-	private function _hook_not_found_posts( $posttype )
+	private function _hook_not_found_posts( string $posttype ): bool
 	{
 		if ( ! $criteria = self::req( 's' ) )
 			return FALSE;
@@ -793,7 +793,7 @@ class Identified extends gEditorial\Module
 		if ( ! WordPress\PostType::can( $posttype, 'create_posts' ) )
 			return FALSE;
 
-		add_filter( 'the_posts',
+		return add_filter( 'the_posts',
 			function ( $posts, $query ) use ( $posttype, $criteria ) {
 
 				if ( ! $query->is_main_query() )
@@ -843,16 +843,16 @@ class Identified extends gEditorial\Module
 		return $search;
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $queried )
+	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
 	{
-		if ( 'any' === $queried )
+		if ( 'any' === $posttypes )
 			$posttypes = $this->posttypes();
 
-		else if ( is_array( $queried ) )
-			$posttypes = $queried;
+		else if ( is_array( $posttypes ) )
+			$posttypes = $posttypes;
 
-		else if ( ! self::empty( $queried ) )
-			$posttypes = WordPress\Strings::getSeparated( $queried );
+		else if ( ! self::empty( $posttypes ) )
+			$posttypes = WordPress\Strings::getSeparated( $posttypes );
 
 		else
 			return $meta;

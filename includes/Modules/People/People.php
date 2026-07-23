@@ -405,7 +405,7 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `geditorial_prep_individual`
-	public function prep_individual_admin( $individual, $raw, $value )
+	public function prep_individual_admin( string $individual, string $raw, mixed $value )
 	{
 		if ( $link = WordPress\URL::searchAdminTerm( $individual, $this->constant( 'main_taxonomy' ) ) )
 			return Core\HTML::link( $individual, $link, TRUE );
@@ -424,7 +424,7 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `gnetwork_taxonomy_term_rewrite_slug`
-	public function taxonomy_term_rewrite_slug( $name, $term, $taxonomy )
+	public function taxonomy_term_rewrite_slug( string $name, object $term, string $taxonomy ): string
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
 			? Core\Text::formatSlug( $this->get_name_familylast( $term->name ) )
@@ -432,14 +432,14 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `geditorial_terms_sanitize_name`
-	public function terms_sanitize_name( $name, $term, $action )
+	public function terms_sanitize_name( string $name, object $term, string $action ): string
 	{
 		return $term->taxonomy == $this->constant( 'main_taxonomy' )
 			? $this->get_name_familylast( $name, $term )
 			: $name;
 	}
 
-	public function get_terms_defaults_front( $defaults, $taxonomies )
+	public function get_terms_defaults_front( array $defaults, array $taxonomies )
 	{
 		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
 			return $defaults;
@@ -454,7 +454,7 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `geditorial_search_terms_widget_results`
-	public function search_terms_widget_results( $terms, $criteria, $taxonomies, $args, $instance )
+	public function search_terms_widget_results( array $terms, string $criteria, array $taxonomies, array $args, array $instance ): array
 	{
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
@@ -486,7 +486,7 @@ class People extends gEditorial\Module
 			: $title;
 	}
 
-	public function people_term_name( $value, $term_id, $context )
+	public function people_term_name( string $value, int $term_id, string $context ): string
 	{
 		return 'display' == $context
 			? $this->get_name_familylast( $value, $term_id )
@@ -503,7 +503,7 @@ class People extends gEditorial\Module
 	 * @param array $args
 	 * @return array
 	 */
-	public function insert_term_data( $data, $taxonomy, $args )
+	public function insert_term_data( array $data, string $taxonomy, array $args ): array
 	{
 		if ( $this->constant( 'main_taxonomy' ) !== $taxonomy )
 			return $data;

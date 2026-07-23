@@ -95,9 +95,10 @@ trait Strings
 		?string $context = 'default',
 		?string $default = NULL,
 		mixed $post = NULL,
-		string $prop = 'empty',
-		string $group = 'metabox',
+		string|false $prop = 'empty',
+		string|false $group = 'metabox',
 	): string {
+
 		if ( is_null( $default ) ) {
 
 			switch ( $context ) {
@@ -117,8 +118,15 @@ trait Strings
 		return sprintf( $template, $title, $singular );
 	}
 
-	protected function strings_metabox_title_via_posttype( $posttype, $context = 'default', $default = NULL, $post = NULL, $prop = 'title', $group = 'metabox' )
-	{
+	protected function strings_metabox_title_via_posttype(
+		string $posttype,
+		?string $context = 'default',
+		?string $default = NULL,
+		mixed $post = NULL,
+		string|false $prop = 'title',
+		string|false $group = 'metabox',
+	): string {
+
 		if ( is_null( $default ) ) {
 
 			switch ( $context ) {
@@ -176,8 +184,15 @@ trait Strings
 		return sprintf( $template, $title ?: gEditorial\Plugin::untitled( FALSE ), $singular );
 	}
 
-	protected function strings_metabox_title_via_taxonomy( $taxonomy, $context = 'default', $default = NULL, $term = NULL, $prop = 'title', $group = 'metabox' )
-	{
+	protected function strings_metabox_title_via_taxonomy(
+		string $taxonomy,
+		?string $context = 'default',
+		?string $default = NULL,
+		mixed $term = NULL,
+		string|false $prop = 'title',
+		string|false $group = 'metabox',
+	): string {
+
 		if ( is_null( $default ) ) {
 
 			switch ( $context ) {
@@ -204,8 +219,12 @@ trait Strings
 	}
 
 	// OLD: `subcontent_get_empty_notice()`
-	protected function get_notice_for_empty( $context = 'display', $string_key = NULL, $check_thrift = TRUE )
-	{
+	protected function get_notice_for_empty(
+		?string $context = 'display',
+		?string $string_key = NULL,
+		bool $check_thrift = TRUE,
+	): string {
+
 		if ( $check_thrift && $this->is_thrift_mode() )
 			return '<div class="-placeholder-empty"></div>';
 
@@ -215,8 +234,12 @@ trait Strings
 	}
 
 	// OLD: `subcontent_get_noaccess_notice()`
-	protected function get_notice_for_noaccess( $context = 'display', $string_key = NULL, $check_thrift = TRUE )
-	{
+	protected function get_notice_for_noaccess(
+		?string $context = 'display',
+		?string $string_key = NULL,
+		bool $check_thrift = TRUE,
+	): string {
+
 		$default = _x( 'You do not have the necessary permission to manage the information.', 'Internal: Strings: No-Access Notice', 'geditorial' );
 
 		return Core\HTML::tag( 'p', [
@@ -224,9 +247,9 @@ trait Strings
 		], $this->get_string( $string_key ?? 'noaccess', $context, 'notices', $default ) );
 	}
 
-	protected function _hook_post_updated_messages( $constant )
+	protected function _hook_post_updated_messages( string $constant ): bool
 	{
-		add_filter( 'post_updated_messages',
+		return add_filter( 'post_updated_messages',
 			function ( $messages )
 				use ( $constant ) {
 
@@ -242,9 +265,9 @@ trait Strings
 			} );
 	}
 
-	protected function _hook_bulk_post_updated_messages( $constant )
+	protected function _hook_bulk_post_updated_messages( string $constant ): bool
 	{
-		add_filter( 'bulk_post_updated_messages',
+		return add_filter( 'bulk_post_updated_messages',
 			function ( $messages, $counts )
 				use ( $constant ) {
 
@@ -259,5 +282,40 @@ trait Strings
 					$posttype => $generated,
 				] );
 			}, 10, 2 );
+	}
+
+	// TODO: filter the results
+	// TODO: MUST DEPRECATE
+	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL ): string
+	{
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
+
+		// DEPRECATED: for back-comp only
+		if ( is_null( $title ) )
+			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial-admin' ) );
+
+		return $title; // <-- // FIXME: problems with block editor
+
+		// TODO: 'metabox_icon'
+		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
+			$title.= WordPress\MetaBox::markupTitleHelp( $info );
+
+		if ( FALSE === $url || FALSE === $edit_cap )
+			return $title;
+
+		if ( is_null( $edit_cap ) )
+			$edit_cap = $this->caps['settings'] ?? 'manage_options';
+
+		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
+
+			if ( is_null( $url ) )
+				$url = $this->get_module_url( 'settings' );
+
+			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial-admin' ) );
+			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
+		}
+
+		return $title;
 	}
 }

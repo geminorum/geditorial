@@ -19,7 +19,7 @@ trait PairedImports
 	 * @param string $posttype
 	 * @return bool
 	 */
-	protected function pairedimports__hook_append_import_button( $posttype )
+	protected function pairedimports__hook_append_import_button( string $posttype ): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
@@ -44,7 +44,7 @@ trait PairedImports
 					WordPress\Post::title( $post )
 				);
 
-				$button = $this->pairedimports_get_import_buttons( $post, 'importitems', 'NULL', $label, 'page-title-action' );
+				$button = $this->pairedimports_get_import_buttons( $post, NULL, NULL, $label, 'page-title-action' );
 				$id     = $this->classs( 'hidden-importbutton' );
 
 				echo $this->wrap( $button, 'hidden', TRUE, $id, TRUE );
@@ -61,8 +61,14 @@ trait PairedImports
 	}
 
 	// NOTE: default context is `importitems`
-	protected function pairedimports_get_import_buttons( $post, $context, $target = NULL, $label = NULL, $button_class = NULL )
-	{
+	protected function pairedimports_get_import_buttons(
+		object $post,
+		?string $context = NULL,
+		?string $target = NULL,
+		?string $label = NULL,
+		?string $button_class = NULL,
+	): string {
+
 		$link = $this->get_adminpage_url( TRUE, [
 			'target'   => $target ?? 'paired',
 			'linked'   => $post->ID,
@@ -96,7 +102,7 @@ trait PairedImports
 	}
 
 	// NOTE: on strings API: `$strings['import_types']['pairedimports']`
-	protected function pairedimports_define_import_types( $linked = FALSE, $posttypes = NULL )
+	protected function pairedimports_define_import_types( false|object $linked = FALSE, ?array $posttypes = NULL ): array
 	{
 		return apply_filters( $this->hook_base( 'pairedimports', 'import_types' ),
 			$this->get_strings( 'pairedimports', 'import_types', [
@@ -108,7 +114,7 @@ trait PairedImports
 		);
 	}
 
-	protected function pairedimports_define_fields()
+	protected function pairedimports_define_fields(): array
 	{
 		return $this->get_strings( 'pairedimports', 'fields', [
 			'identifier' => _x( 'Identifier', 'Internal: PairedImports: Field', 'geditorial' ),
@@ -116,22 +122,29 @@ trait PairedImports
 		] );
 	}
 
-	protected function pairedimports_get_fields( $context = 'display', $settings_key = 'pairedimports_fields' )
+	protected function pairedimports_get_fields( ?string $context = NULL, ?string $settings_key = NULL )
 	{
 		$all      = $this->pairedimports_define_fields();
 		$required = [ 'title' ];
-		$enabled  = $this->get_setting( $settings_key, array_keys( $all ) );
+		$enabled  = $this->get_setting( $settings_key ?? 'pairedimports_fields', array_keys( $all ) );
 		$fields   = [];
 
 		foreach ( $all as $field => $label )
 			if ( in_array( $field, $required, TRUE ) || in_array( $field, $enabled, TRUE ) )
 				$fields[$field] = $label;
 
-		return $this->filters( 'pairedimports_fields', $fields, $enabled, $required, $context );
+		return $this->filters( 'pairedimports_fields',
+			$fields,
+			$enabled,
+			$required,
+			$context ?? 'display'
+		);
 	}
 
-	public function load_importitems_adminpage( $context = 'importitems' )
+	public function load_importitems_adminpage( ?string $context = NULL ): void
 	{
+		$context = $context ?? 'importitems';
+
 		$this->_load_submenu_adminpage( $context );
 
 		if ( ! $this->role_can( 'import', NULL, TRUE ) )
@@ -203,7 +216,7 @@ trait PairedImports
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
-		$context = 'importitems';
+		$context = $context ?? 'importitems';
 
 		if ( WordPress\Post::can( $post, 'edit_post' ) ) {
 

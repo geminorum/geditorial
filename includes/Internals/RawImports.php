@@ -116,20 +116,25 @@ trait RawImports
 		return TRUE;
 	}
 
-	protected function _hook_wp_register_importer()
+	protected function _hook_wp_register_importer(): bool
 	{
 		if ( ! function_exists( 'register_importer' ) )
 			return FALSE;
 
-		return register_importer(
+		$error = register_importer(
 			$this->classs(),
 			$this->get_string( 'title', 'wp_importer', 'misc', $this->module->title ),
 			$this->get_string( 'description', 'wp_importer', 'misc', '' ),
 			[ $this, '_callback_wp_register_importer' ]
 		);
+
+		if ( self::isError( $error ) )
+			return $this->log( 'NOTICE', 'IMPORTER: REGISTRATION FAILED: '.$error->get_error_message() );
+
+		return TRUE;
 	}
 
-	public function _callback_wp_register_importer()
+	public function _callback_wp_register_importer(): void
 	{
 		$url = $this->get_imports_page_url();
 

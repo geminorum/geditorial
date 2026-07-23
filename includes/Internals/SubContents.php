@@ -42,7 +42,7 @@ trait SubContents
 	}
 
 	// CAUTION: OVERRIDE
-	protected function quantumcomments__get_meta_mapping( $context = NULL, $posttype = NULL ): array
+	protected function quantumcomments__get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return $this->subcontent_get_meta_mapping( $context, $posttype );
 	}
@@ -89,7 +89,7 @@ trait SubContents
 		$this->quantumcomments__enable_comment_avatar();
 	}
 
-	protected function subcontent_is_comment_type( $data_or_comment, $type = NULL )
+	protected function subcontent_is_comment_type( mixed $data_or_comment, ?string $type = NULL ): bool
 	{
 		return $this->quantumcomments__is_comment_type( $data_or_comment, $type );
 	}
@@ -124,21 +124,25 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_define_type_options( $context, $posttype = NULL ): array
+	protected function subcontent_define_type_options( ?string $context, ?string $posttype = NULL ): array
 	{
 		return [
+			/***
 			/// EXAMPLE
-			// [
-			// 	'name'     => 'default',
-			// 	'title'    => _x( 'Default', 'Type Option', 'geditorial-admin' ),
-			// 	'icon'     => 'external',
-			//  'logo'     => '',
-			//  'desc'     => '',
-			// ],
+			```
+			[
+				'name'     => 'default',
+				'title'    => _x( 'Default', 'Type Option', 'geditorial-admin' ),
+				'icon'     => 'external',
+				'logo'     => '',
+				'desc'     => '',
+			],
+			```
+			 */
 		];
 	}
 
-	protected function subcontent_get_type_options( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_type_options( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'type_options',
 			$this->subcontent_define_type_options( $context, $posttype ),
@@ -147,7 +151,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_available_type_options( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_available_type_options( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		// Tries not to fire the filter hook twice!
 		$defined = Core\Arraay::pluck( $this->subcontent_define_type_options( $context, $posttype ), 'name' );
@@ -159,7 +163,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_list_type_options( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_list_type_options( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return Core\Arraay::pluck(
 			$this->subcontent_available_type_options( $context, $posttype ),
@@ -168,7 +172,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_get_fields( $context = 'display', $settings_key = 'subcontent_fields' ): array
+	protected function subcontent_get_fields( ?string $context = 'display', ?string $settings_key = NULL ): array
 	{
 		$all        = $this->subcontent_define_fields();
 		// $hidden     = $this->subcontent_get_hidden_fields( $context );
@@ -179,7 +183,7 @@ trait SubContents
 		// $selectable = $this->subcontent_get_selectable_fields( $context );
 		// $importable = $this->subcontent_get_importable_fields( $context );
 		$required   = $this->subcontent_get_required_fields( $context );
-		$enabled    = $this->get_setting( $settings_key, array_keys( $all ) );
+		$enabled    = $this->get_setting( $settings_key ?? 'subcontent_fields', array_keys( $all ) );
 		$fields     = [];
 
 		foreach ( $all as $field => $label )
@@ -189,14 +193,14 @@ trait SubContents
 		return $this->filters( 'subcontent_fields', $fields, $enabled, $required, $context );
 	}
 
-	protected function subcontent_define_searchable_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_define_searchable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return [
-			// 'fullname' => [ 'human', 'department' ], // <---- EXAMPLE
+			// `'fullname' => [ 'human', 'department' ],` <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_searchable_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_searchable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		$fields = $this->subcontent_define_searchable_fields();
 
@@ -214,7 +218,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_get_importable_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_importable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'importable_fields',
 			$this->subcontent_define_required_fields(),
@@ -223,14 +227,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_importable_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_define_importable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' => 'type', // <---- EXAMPLE: 'target_key' => 'target_column'
 		];
 	}
 
-	protected function subcontent_get_required_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_required_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'required_fields',
 			$this->subcontent_define_required_fields(),
@@ -239,14 +243,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_readonly_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_define_readonly_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_readonly_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_readonly_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'readonly_fields',
 			$this->subcontent_define_readonly_fields(),
@@ -255,14 +259,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_selectable_fields( $context, $posttype = NULL ): array
+	protected function subcontent_define_selectable_fields( ?string $context, ?string $posttype = NULL ): array
 	{
 		return [
-			// 'field_key': { option1: 'Option 1', option2: 'Option 2' }  <---- EXAMPLE
+			// `'field_key': { option1: 'Option 1', option2: 'Option 2' }` <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_selectable_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_selectable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'selectable_fields',
 			$this->subcontent_define_selectable_fields( $context, $posttype ),
@@ -271,14 +275,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_hidden_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_define_hidden_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_hidden_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_hidden_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'hidden_fields',
 			Core\Arraay::prepString(
@@ -291,14 +295,14 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_unique_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_define_unique_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return [
 			// 'identity' // <---- EXAMPLE
 		];
 	}
 
-	protected function subcontent_get_unique_fields( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_get_unique_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'unique_fields',
 			$this->subcontent_define_unique_fields(),
@@ -307,16 +311,16 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_get_meta_mapping( $context = NULL, $posttype = NULL ): array
+	protected function subcontent_get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
-			// 'name' => '_metakey', // <---- EXAMPLE
+			// `'name' => '_metakey',` // <---- EXAMPLE
 			'postid' => '_post_ref',
 		];
 	}
 
 	// NOTE: prevents from meta preparations
-	protected function subcontent_get_meta_untouchable( $context = NULL, $posttype = NULL ): array
+	protected function subcontent_get_meta_untouchable( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'data',
@@ -325,7 +329,7 @@ trait SubContents
 		];
 	}
 
-	protected function subcontent_base_data_mapping( $context = 'display', $posttype = NULL ): array
+	protected function subcontent_base_data_mapping( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return array_merge( $this->quantumcomments__base_data_mapping(), [
 			'comment_content' => 'desc',    // `text`
@@ -339,7 +343,7 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_get_data_mapping( $context = NULL, $posttype = NULL ): array
+	protected function subcontent_get_data_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return $this->subcontent_base_data_mapping( $context, $posttype );
 	}
@@ -349,9 +353,10 @@ trait SubContents
 	 *
 	 * @param array $raw
 	 * @param string $context
+	 * @param mixed $post
 	 * @return array
 	 */
-	protected function subcontent_get_prepped_data( $raw, $context = 'display', $post = NULL ): array
+	protected function subcontent_get_prepped_data( array $raw, ?string $context = 'display', mixed $post = NULL ): array
 	{
 		$data        = [];
 		$types       = $this->quantumcomments__get_field_types( $context );
@@ -426,7 +431,7 @@ trait SubContents
 		return $fields;
 	}
 
-	public function importer_fields_subcontent( $fields, $posttype )
+	public function importer_fields_subcontent( $fields, ?string $posttype )
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
 			return $fields;
@@ -434,7 +439,7 @@ trait SubContents
 		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare_subcontent( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	public function importer_prepare_subcontent( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) || empty( $value ) )
 			return $value;
@@ -453,7 +458,7 @@ trait SubContents
 		], $raw[$field] );
 	}
 
-	public function importer_saved_subcontent( $post, $atts = [] )
+	public function importer_saved_subcontent( mixed $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->in_setting_posttypes( $post->post_type, 'subcontent' ) )
 			return;
@@ -484,8 +489,14 @@ trait SubContents
 		}
 	}
 
-	protected function subcontent_prep_data_from_import( $raw, $field, $post = FALSE, $column_title = '', $source_title = '' )
-	{
+	protected function subcontent_prep_data_from_import(
+		mixed $raw,
+		string $field,
+		mixed $post = FALSE,
+		string $column_title = '',
+		string $source_title = '',
+	): bool|string {
+
 		if ( empty( $raw ) )
 			return FALSE;
 
@@ -507,7 +518,7 @@ trait SubContents
 	}
 
 	// TODO: `total`: count with HTML markup
-	protected function subcontent_restapi_register_routes()
+	protected function subcontent_restapi_register_routes(): bool
 	{
 		$namespace = $this->restapi_get_namespace();
 		$arguments = [
@@ -685,7 +696,7 @@ trait SubContents
 		return $this->filters( 'provide_summary', $summary, $parent, $item, $context );
 	}
 
-	protected function subcontent_do_provide_markup( $parent, $context = NULL )
+	protected function subcontent_do_provide_markup( mixed $parent, ?string $context = NULL ): ?string
 	{
 		$markup = [];
 
@@ -732,7 +743,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_hook__post_tabs( $priority = NULL )
+	protected function subcontent_hook__post_tabs( ?int $priority = NULL ): bool
 	{
 		if ( ! $this->get_setting( 'tabs_support', TRUE ) )
 			return FALSE;
@@ -740,7 +751,7 @@ trait SubContents
 		if ( ! gEditorial()->enabled( 'tabs' ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
+		return add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
 			function ( $tabs, $posttype ) use ( $priority ) {
 
 				if ( $this->in_setting_posttypes( $posttype, 'subcontent' ) )
@@ -767,8 +778,6 @@ trait SubContents
 
 				return $tabs;
 			}, 10, 2 );
-
-		return TRUE;
 	}
 
 	/**
@@ -781,7 +790,7 @@ trait SubContents
 	 * @param string $context
 	 * @return array
 	 */
-	public function tabloid_post_summaries_subcontent( $list, $data, $post, $context )
+	public function tabloid_post_summaries_subcontent( array $list, array $data, object $post, ?string $context ): array
 	{
 		if ( $this->in_setting_posttypes( $post->post_type, 'subcontent' ) && $this->role_can( 'reports' ) )
 			$list[] = [
@@ -842,7 +851,7 @@ trait SubContents
 		return TRUE;
 	}
 
-	protected function subcontent_do_enqueue_app( $atts = [], $custom_app = NULL )
+	protected function subcontent_do_enqueue_app( array $atts = [], ?string $custom_app = NULL ): false|string
 	{
 		$args = self::parsed( [
 			'app'        => $custom_app ?? 'subcontent-grid',
@@ -859,13 +868,13 @@ trait SubContents
 		], $atts );
 
 		if ( ! $linked = $args['linked'] ?? self::req( 'linked', FALSE ) )
-			return;
+			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( (int) $linked ) )
-			return;
+			return FALSE;
 
 		if ( ! $this->role_can_post( $post, $args['can'] ) )
-			return;
+			return FALSE;
 
 		$asset = [
 			'strings' => $this->subcontent_get_strings_for_js( $args['strings'] ),
@@ -889,23 +898,25 @@ trait SubContents
 			],
 		];
 
-		$this->enqueue_asset_js( $asset, FALSE, [
+		return $this->enqueue_asset_js( $asset, FALSE, [
 			gEditorial\Scripts::enqueueApp( $args['app'] )
 		], $args['asset'] );
 	}
 
-	protected function subcontent_do_enqueue_asset_js( object $screen ): void
+	protected function subcontent_do_enqueue_asset_js( object $screen ): bool|string
 	{
 		if ( ! $this->role_can( 'assign' ) )
-			return;
+			return FALSE;
 
 		gEditorial\Scripts::enqueueColorBox();
 
-		// $this->enqueue_asset_js( [], $screen, [
+		// return $this->enqueue_asset_js( [], $screen, [
 		// 	'jquery',
 		// 	'wp-api-request',
 		// 	gEditorial\Scripts::enqueueColorBox(),
 		// ] );
+
+		return TRUE;
 	}
 
 	protected function subcontent_render_metabox_data_grid( mixed $post, ?string $context = NULL ): void
@@ -993,7 +1004,7 @@ trait SubContents
 		return $terms;
 	}
 
-	public function subcontent_data_summary( $atts = [], $post = NULL )
+	public function subcontent_data_summary( array $atts = [], mixed $post = NULL ): bool|string
 	{
 		$args = $this->filters( 'data_summary_args', self::parsed( [
 			'id'       => $post,
@@ -1037,8 +1048,14 @@ trait SubContents
 	}
 
 	// NOTE: mocking the `Tablelist::getPosts()`
-	protected function subcontent_get_data_with_pagination( $atts = [], $extra = [], $parent = FALSE, $context = NULL, $perpage = 25 )
-	{
+	protected function subcontent_get_data_with_pagination(
+		array $atts = [],
+		array $extra = [],
+		mixed $parent = FALSE,
+		?string $context = NULL,
+		?int $perpage = 25,
+	): array {
+
 		$post  = WordPress\Post::get( $parent );
 		$limit = self::limit( $perpage );
 		$paged = self::paged();
@@ -1079,12 +1096,18 @@ trait SubContents
 		return [ $items, $pagination ];
 	}
 
-	protected function subcontent_reports_render_table( $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
-	{
+	protected function subcontent_reports_render_table(
+		?string $uri = NULL,
+		?string $sub = NULL,
+		?string $context = NULL,
+		?string $title = NULL,
+	): bool {
+
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
 
-		$query = [];
+		$query   = [];
+		$context = $context ?? 'reports';
 
 		list( $items, $pagination ) = $this->subcontent_get_data_with_pagination( $query, [], FALSE, $context, $this->get_sub_limit_option( $sub, $context ) );
 

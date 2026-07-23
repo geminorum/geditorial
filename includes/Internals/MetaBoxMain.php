@@ -9,9 +9,15 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxMain
 {
+	protected function _hook_general_mainbox(
+		object $screen,
+		string $constant_key = 'post',
+		bool $remove_parent_order = TRUE,
+		?string $context = NULL,
+		?string $metabox_context = 'side',
+		string|array $extra = [],
+	): false|string {
 
-	protected function _hook_general_mainbox( $screen, $constant_key = 'post', $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
-	{
 		$context = $context ?? 'mainbox';
 
 		if ( ! empty( $screen->post_type ) && method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
@@ -85,6 +91,8 @@ trait MetaBoxMain
 					'-'.$this->key.'-'.$context,
 				], $extra );
 			} );
+
+		return $metabox;
 	}
 
 	// DEFAULT METHOD

@@ -56,7 +56,7 @@ class WcAttributes extends gEditorial\Module
 	{
 		parent::init();
 
-		// $this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+		// `$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );`
 
 		if ( $this->get_setting( 'linkable_attributes' ) )
 			$this->_init_linkable_attributes();
@@ -65,14 +65,17 @@ class WcAttributes extends gEditorial\Module
 			$this->filter( 'attribute', 3, 20, 'localize_join_values', 'woocommerce' );
 	}
 
-	public function display_product_attributes( $attributes, $product )
+	public function display_product_attributes( array $attributes, object $product ): array
 	{
 		$before = $after = [];
+
+		// WTF?!
+
 		return $before + $attributes + $after;
 	}
 
 	// NOTE: double used!
-	public function attribute_localize_join_values( $filtered, $attribute, $values )
+	public function attribute_localize_join_values( string $filtered, object $attribute, array $values ): string
 	{
 		return wpautop( wptexturize( WordPress\Strings::getJoined( $values ) ) );
 	}
@@ -84,7 +87,7 @@ class WcAttributes extends gEditorial\Module
 	 *
 	 * @return void
 	 */
-	private function _init_linkable_attributes()
+	private function _init_linkable_attributes(): void
 	{
 		foreach ( wc_get_attribute_taxonomies() as $attribute ) {
 
@@ -104,7 +107,7 @@ class WcAttributes extends gEditorial\Module
 	 *
 	 * @return void
 	 */
-	public function add_attribute_url_meta_field()
+	public function add_attribute_url_meta_field(): void
 	{
 		$field = 'url';
 
@@ -135,7 +138,7 @@ class WcAttributes extends gEditorial\Module
 	 * @param object $term
 	 * @return void
 	 */
-	public function edit_attribute_url_meta_field( $term )
+	public function edit_attribute_url_meta_field( object $term ): void
 	{
 		$field = 'url';
 		$data  = get_term_meta( $term->term_id, $this->constant( 'metakey_attribute_url' ), TRUE );
@@ -168,7 +171,7 @@ class WcAttributes extends gEditorial\Module
 	 * @param int $term_id
 	 * @return void
 	 */
-	public function save_attribute_url( $term_id )
+	public function save_attribute_url( int $term_id ): void
 	{
 		$field = 'url';
 		$key   = 'attribute-'.$field;
@@ -198,9 +201,9 @@ class WcAttributes extends gEditorial\Module
 	 * @param string $filtered
 	 * @param object $attribute
 	 * @param array $values
-	 * @return void
+	 * @return string
 	 */
-	public function attribute_linkable_attributes( $filtered, $attribute, $values )
+	public function attribute_linkable_attributes( string $filtered, object $attribute, array $values ): string
 	{
 		$linked  = [];
 		$metakey = $this->constant( 'metakey_attribute_url' );

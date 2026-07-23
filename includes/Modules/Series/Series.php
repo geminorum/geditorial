@@ -146,7 +146,7 @@ class Series extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	public function store_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -162,7 +162,7 @@ class Series extends gEditorial\Module
 		// wp_cache_flush();
 	}
 
-	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
+	private function sanitize_post_meta( array $postmeta, array $fields, int $post_id, string $posttype ): array
 	{
 		if ( ! $this->nonce_verify( 'mainbox' ) )
 			return $postmeta;
@@ -218,7 +218,7 @@ class Series extends gEditorial\Module
 	}
 
 	// TODO: list other post in this series by the order and link to their edit pages
-	public function render_supportedbox_metabox( $post, $box )
+	public function render_supportedbox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -233,12 +233,14 @@ class Series extends gEditorial\Module
 		$this->nonce_field( 'mainbox' );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
+	public function render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
 	{
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
-		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) ) {
+			gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+			return;
+		}
 
 		$posttypes = $this->posttypes();
 		$terms     = WordPress\Taxonomy::getPostTerms( $taxonomy, $post );

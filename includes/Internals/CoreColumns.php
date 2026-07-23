@@ -15,7 +15,7 @@ trait CoreColumns
 		if ( FALSE === $column )
 			return FALSE;
 
-		return Listtable::checkHidden(
+		return gEditorial\Listtable::checkHidden(
 			$column ?? $this->classs(),
 			$after
 		);

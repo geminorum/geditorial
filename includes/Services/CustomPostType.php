@@ -147,8 +147,13 @@ class CustomPostType extends gEditorial\Service
 	}
 
 	// NOTE: OLD: `Helper::getPostTypeLabel()`
-	public static function getLabel( $post_or_posttype, $label, $fallback_key = NULL, $fallback = '' )
-	{
+	public static function getLabel(
+		string|object $post_or_posttype,
+		string $label,
+		?string $fallback_key = NULL,
+		mixed $fallback = '',
+	): mixed {
+
 		if ( ! $object = WordPress\PostType::object( $post_or_posttype ) )
 			return $fallback ?? gEditorial\Plugin::na();
 

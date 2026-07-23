@@ -137,7 +137,7 @@ class Specs extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	public function store_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -239,7 +239,7 @@ class Specs extends gEditorial\Module
 		return FALSE;
 	}
 
-	private function sanitize_post_meta( $postmeta, $fields, $post_id, $posttype )
+	private function sanitize_post_meta( array $postmeta, array $fields, int $post_id, string $posttype ): array
 	{
 		if ( ! $this->nonce_verify( 'mainbox' ) )
 			return $postmeta;
@@ -294,7 +294,7 @@ class Specs extends gEditorial\Module
 		return $this->filters( 'sanitize_post_meta', $postmeta, $fields, $post_id, $posttype );
 	}
 
-	public function render_supportedbox_metabox( $post, $box )
+	public function render_supportedbox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -309,12 +309,14 @@ class Specs extends gEditorial\Module
 		$this->nonce_field( 'mainbox' );
 	}
 
-	public function render_metabox( $post, $box, $fields = NULL, $context = NULL )
+	public function render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
 	{
 		$taxonomy = $this->constant( 'main_taxonomy' );
 
-		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) )
-			return gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy ) ) {
+			gEditorial\MetaBox::fieldEmptyTaxonomy( $taxonomy, NULL, $post->post_type );
+			return;
+		}
 
 		$terms = WordPress\Taxonomy::getPostTerms( $taxonomy, $post, TRUE, 'term_id' );
 		$metas = $this->get_postmeta_legacy( $post->ID );

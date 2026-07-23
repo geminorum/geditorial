@@ -363,7 +363,7 @@ class Tweaks extends gEditorial\Module
 
 		// INTERNAL HOOKS
 		if ( $this->in_setting( $posttype, 'group_taxonomies' ) )
-			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_taxonomies' ], 10, 4 );
+			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_taxonomies' ], 10, 6 );
 
 		if ( $this->in_setting( $posttype, 'author_attribute' ) && $this->is_posttype_support( $posttype, 'author' ) )
 			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_author' ], 1, 3 );
@@ -387,7 +387,7 @@ class Tweaks extends gEditorial\Module
 			return;
 
 		if ( WordPress\WooCommerce::skuEnabled() )
-			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_sku' ], 99, 4 );
+			add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_sku' ], 99, 6 );
 
 		if ( WordPress\WooCommerce::manageStock() )
 			add_action( $this->hook( 'column_attr', $posttype ), [ $this, 'column_attr_stock' ], -10, 3 );
@@ -806,7 +806,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_taxonomies( object $post, string $before, string $after, string $module_name ): void
+	public function column_row_taxonomies( object $post, string $before = '', string $after = '', ?string $module_name = '', ?array $fields = [], ?array $excludes = [] ): void
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -958,7 +958,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_sku( object $post, string $before, string $after, string $module_name ): void
+	public function column_row_sku( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		global $product;
 
@@ -1183,7 +1183,7 @@ class Tweaks extends gEditorial\Module
 		echo '</select></div>';
 	}
 
-	public function do_metabox_excerpt( $post, $box )
+	public function do_metabox_excerpt( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;

@@ -202,7 +202,7 @@ class Isbn extends gEditorial\Module
 		}
 	}
 
-	public function current_screen_woocommerce( $screen )
+	public function current_screen_woocommerce( object $screen ): void
 	{
 		if ( 'edit' === $screen->base
 			&& $screen->post_type === WordPress\WooCommerce::PRODUCT_POSTTYPE ) {
@@ -217,21 +217,21 @@ class Isbn extends gEditorial\Module
 				[ $this, 'manage_custom_column' ], 10, 2 );
 
 			add_action( $this->hook( 'column_row', $screen->post_type ),
-				[ $this, 'column_row_global_unique_id' ], 5, 4 );
+				[ $this, 'column_row_global_unique_id' ], 5, 6 );
 
 			add_action( $this->hook( 'column_row', $screen->post_type ),
-				[ $this, 'column_row_posttype_fields' ], 9, 4 );
+				[ $this, 'column_row_posttype_fields' ], 9, 6 );
 		}
 	}
 
-	public function manage_sortable_columns( $columns )
+	public function manage_sortable_columns( array $columns ): array
 	{
 		return array_merge( $columns, [
 			$this->classs() => 'global_unique_id',
 		] );
 	}
 
-	public function manage_products_columns( $columns )
+	public function manage_products_columns( array $columns ): array
 	{
 		unset( $columns['global_unique_id'] );
 
@@ -245,7 +245,7 @@ class Isbn extends gEditorial\Module
 	}
 
 	// NOTE: maybe double used (in future!)
-	public function manage_custom_column( $column, $post_id )
+	public function manage_custom_column( string $column, int $post_id ): void
 	{
 		global $post;
 
@@ -271,7 +271,7 @@ class Isbn extends gEditorial\Module
 		echo '</ul></div>';
 	}
 
-	public function column_row_global_unique_id( object $post, string $before, string $after, string $module_name ): void
+	public function column_row_global_unique_id( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		global $product;
 
@@ -287,7 +287,7 @@ class Isbn extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_row_posttype_fields( object $post, string $before, string $after, string $module_name ): void
+	public function column_row_posttype_fields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		$title  = _x( 'ISBN', 'Row Icon Title', 'geditorial-isbn' );
 		$fields = [
@@ -348,7 +348,7 @@ class Isbn extends gEditorial\Module
 		);
 	}
 
-	private function _get_main_isbn_metakey( $posttype, $fallback = FALSE )
+	private function _get_main_isbn_metakey( string $posttype, string|false|null $fallback = FALSE ): string|false|null
 	{
 		if ( $this->posttype_woocommerce( $posttype ) )
 			return WordPress\WooCommerce::GTIN_METAKEY;
@@ -402,7 +402,7 @@ class Isbn extends gEditorial\Module
 		return $default;
 	}
 
-	public function identified_identifier_notfound( $type, $sanitized, $supported )
+	public function identified_identifier_notfound( string $type, string $sanitized, array $supported ): void
 	{
 		if ( 'isbn' !== $type )
 			return;
@@ -427,7 +427,7 @@ class Isbn extends gEditorial\Module
 		], $archive ), 307 );
 	}
 
-	public function template_posttype_addnew_extra( $extra, $posttype, $title, $module )
+	public function template_posttype_addnew_extra( array $extra, string $posttype, string $title, ?string $module ): array
 	{
 		if ( ! $isbn = self::req( 'isbn' ) )
 			return $extra;
@@ -456,7 +456,7 @@ class Isbn extends gEditorial\Module
 		return $default;
 	}
 
-	public function identified_possible_keys_for_identifier( $keys, $posttype )
+	public function identified_possible_keys_for_identifier( array $keys, string $posttype ): array
 	{
 		if ( $this->posttype_supported( $posttype ) )
 			return array_merge( $keys, [
@@ -473,16 +473,22 @@ class Isbn extends gEditorial\Module
 		return $keys;
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $posttypes )
+	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
 	{
-		if ( empty( $posttypes ) )
-			return $meta;
-
 		if ( ! $discovery = Core\ISBN::discovery( $search ) )
 			return $meta; // criteria is not an ISBN
 
 		if ( 'any' === $posttypes )
 			$posttypes = $this->posttypes();
+
+		else if ( is_array( $posttypes ) )
+			$posttypes = $posttypes;
+
+		else if ( ! self::empty( $posttypes ) )
+			$posttypes = WordPress\Strings::getSeparated( $posttypes );
+
+		else
+			return $meta;
 
 		$fields = [
 			'isbn',
@@ -492,7 +498,7 @@ class Isbn extends gEditorial\Module
 			'isbn5',
 		];
 
-		foreach ( (array) $posttypes as $posttype ) {
+		foreach ( $posttypes as $posttype ) {
 
 			if ( ! $this->posttype_woocommerce( $posttype )
 				&& ! $this->posttype_supported( $posttype ) )
@@ -533,7 +539,7 @@ class Isbn extends gEditorial\Module
 		return $data;
 	}
 
-	public function display_product_attributes( $attributes, $product )
+	public function display_product_attributes( array $attributes, object $product ): array
 	{
 		$post_id = $product->get_id();
 

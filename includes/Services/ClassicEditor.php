@@ -73,7 +73,7 @@ class ClassicEditor extends gEditorial\Service
 
 	public static function registerButton( string $button, string $filepath, ?int $level = NULL ): string
 	{
-		return static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', self::factory()->get_url(), $filepath );
+		return static::$tinymce_buttons[( $level ?? 1 )][$button] = sprintf( '%s%s', static::factory()->get_url(), $filepath );
 	}
 
 	public static function mce_external_plugins( array $plugin_array ): array
@@ -91,7 +91,7 @@ class ClassicEditor extends gEditorial\Service
 	public static function mce_external_languages( array $languages ): array
 	{
 		return array_merge( $languages, [
-			static::BASE => sprintf( '%sincludes/Misc/TinyMceStrings.php', self::factory()->get_dir() ),
+			static::BASE => sprintf( '%sincludes/Misc/TinyMceStrings.php', static::factory()->get_dir() ),
 		] );
 	}
 

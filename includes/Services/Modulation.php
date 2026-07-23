@@ -236,7 +236,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// NOTE: THE OLD CLASSIC WAY!
-	public static function renderSections_OLD( $page ): void
+	public static function renderSections_OLD( string $page ): void
 	{
 		global $wp_settings_sections, $wp_settings_fields;
 
@@ -270,7 +270,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// @SOURCE: `do_settings_fields()`
-	public static function sectionFields( $page, $section ): void
+	public static function sectionFields( string $page, string $section ): void
 	{
 		global $wp_settings_fields;
 
@@ -304,14 +304,14 @@ class Modulation extends gEditorial\Service
 		Core\HTML::desc( $description, TRUE, '-section-description -section-empty' );
 	}
 
-	public static function fieldSection( $section, $tag = 'h2' ): void
+	public static function fieldSection( array $section, string $tag = 'h2' ): void
 	{
 		echo Core\HTML::tag( $tag, ( $section['title'] ?? '' ).gEditorial\Settings::fieldAfterIcon( $section['link'] ?? '' ) );
 
 		Core\HTML::desc( ( $section['description'] ?? '' ) );
 	}
 
-	public static function fieldSectionAdopted( $source, $author = NULL, $link = NULL ): string
+	public static function fieldSectionAdopted( string $source, ?string $author = NULL, ?string $link = NULL ): string
 	{
 		$template = $author
 			/* translators: `%1$s`: source name, `%2$s`: author name */
@@ -338,7 +338,7 @@ class Modulation extends gEditorial\Service
 		);
 	}
 
-	public static function renderButtons( $module, $enabled = FALSE )
+	public static function renderButtons( object $module, bool $enabled = FALSE ): void
 	{
 		if ( $module->autoload ) {
 			echo Core\HTML::wrap( _x( 'Auto-loaded!', 'Service: Modulation: Notice', 'geditorial-admin' ), '-autoloaded -warning', FALSE );
@@ -372,7 +372,7 @@ class Modulation extends gEditorial\Service
 		], _x( 'You have to enable Javascript!', 'Service: Modulation: Notice', 'geditorial-admin' ) );
 	}
 
-	public static function renderConfigure( $module, $enabled = FALSE )
+	public static function renderConfigure( object $module, bool $enabled = FALSE ): void
 	{
 		if ( ! $module->configure )
 			return;
@@ -412,7 +412,7 @@ class Modulation extends gEditorial\Service
 			], _x( 'Configure', 'Service: Modulation: Button', 'geditorial-admin' ) );
 	}
 
-	public static function renderInfo( $module, $enabled = FALSE, $tag = 'h3' )
+	public static function renderInfo( object $module, bool $enabled = FALSE, string $tag = 'h3' ): void
 	{
 		$access = ( ! empty( $module->access ) && 'stable' !== $module->access )
 			? sprintf( ' <code title="%3$s" class="-acccess -access-%1$s">%2$s</code>',
@@ -447,21 +447,21 @@ class Modulation extends gEditorial\Service
 	}
 
 	// TODO: must check for minimum version of WooCommerce
-	public static function moduleCheckWooCommerce( $message = NULL )
+	public static function moduleCheckWooCommerce( ?string $message = NULL ): false|string
 	{
 		return WordPress\WooCommerce::isActive()
 			? FALSE
 			: ( is_null( $message ) ? _x( 'Needs WooCommerce', 'Service: Modulation', 'geditorial-admin' ) : $message );
 	}
 
-	public static function moduleCheckPersianDate( $message = NULL )
+	public static function moduleCheckPersianDate( ?string $message = NULL ): false|string
 	{
 		return self::const( 'GPERSIANDATE_VERSION' )
 			? FALSE
 			: _x( 'Needs gPersianDate', 'Service: Modulation', 'geditorial-admin' );
 	}
 
-	public static function moduleCheckDocumentRevisions( $message = NULL )
+	public static function moduleCheckDocumentRevisions( ?string $message = NULL ): false|string
 	{
 		return class_exists( 'WP_Document_Revisions' )
 			? FALSE
@@ -472,7 +472,7 @@ class Modulation extends gEditorial\Service
 			);
 	}
 
-	public static function moduleCheckLocale( $locale, $message = NULL )
+	public static function moduleCheckLocale( string|array $locale, ?string $message = NULL ): false|string
 	{
 		$current = Core\L10n::locale( TRUE );
 
@@ -483,7 +483,7 @@ class Modulation extends gEditorial\Service
 		return $message ?? _x( 'Not Available on Current Locale', 'Service: Modulation', 'geditorial-admin' );
 	}
 
-	public static function enqueueVirastar()
+	public static function enqueueVirastar(): false|string
 	{
 		if ( ! gEditorial()->enabled( 'ortho' ) )
 			return FALSE;
@@ -491,7 +491,7 @@ class Modulation extends gEditorial\Service
 		return gEditorial()->module( 'ortho' )->enqueueVirastar();
 	}
 
-	public static function hasByline( $post, $context = NULL )
+	public static function hasByline( mixed $post, $context = NULL ): bool
 	{
 		if ( ! gEditorial()->enabled( 'byline' ) )
 			return FALSE;
@@ -499,17 +499,17 @@ class Modulation extends gEditorial\Service
 		return (bool) gEditorial()->module( 'byline' )->has_content_for_post( $post, $context );
 	}
 
-	public static function isTaxonomyGenre( $taxonomy, $fallback = 'genre' )
+	public static function isTaxonomyGenre( string $taxonomy, string $fallback = 'genre' ): bool
 	{
 		return $taxonomy === gEditorial()->constant( 'genres', 'main_taxonomy', $fallback );
 	}
 
-	public static function isTaxonomyAudit( $taxonomy, $fallback = 'audit_attribute' )
+	public static function isTaxonomyAudit( string $taxonomy, string $fallback = 'audit_attribute' ): bool
 	{
 		return $taxonomy === gEditorial()->constant( 'audit', 'main_taxonomy', $fallback );
 	}
 
-	public static function setTaxonomyAudit( $post, $term_ids, $append = TRUE, $fallback = 'audit_attribute' )
+	public static function setTaxonomyAudit( mixed $post, int|string|array $term_ids, bool $append = TRUE, string $fallback = 'audit_attribute' ): false|array
 	{
 		if ( ! gEditorial()->enabled( 'audit' ) )
 			return FALSE;

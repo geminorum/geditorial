@@ -18,21 +18,21 @@ class PostTypeFields extends gEditorial\Service
 
 	// TODO: move to `Meta` Module
 	// NOTE: runs only on `fa_IR` locale
-	public static function posts_search_append_meta( $meta, $criteria, $posttypes )
+	public static function posts_search_append_meta( array $meta, string $search, mixed $posttypes ): array
 	{
 		if ( 'any' === $posttypes || empty( $posttypes ) )
 			return $meta;
 
-		$sanitized = Core\Number::translate( $criteria );
-		$calendar  = self::getDefaultCalendar( 'meta' );
+		$criteria = Core\Number::translate( $search );
+		$calendar = self::getDefaultCalendar( 'meta' );
 
-		if ( $date = gEditorial\Datetime::makeMySQLFromInput( $sanitized, 'Y-m-d', $calendar ) )
+		if ( $date = gEditorial\Datetime::makeMySQLFromInput( $criteria, 'Y-m-d', $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'date' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
 						$meta[$field['metakey']] = $date;
 
-		if ( $datetime = gEditorial\Datetime::makeMySQLFromInput( $sanitized, NULL, $calendar ) )
+		if ( $datetime = gEditorial\Datetime::makeMySQLFromInput( $criteria, NULL, $calendar ) )
 			foreach ( (array) $posttypes as $posttype )
 				foreach ( self::getEnabled( $posttype, 'meta', [ 'type' => 'datetime' ] ) as $field )
 					if ( $field['metakey'] && ! array_key_exists( $field['metakey'], $meta ) )
@@ -41,7 +41,7 @@ class PostTypeFields extends gEditorial\Service
 		return $meta;
 	}
 
-	public static function getDefaultCalendar( $module = 'meta', $check = TRUE )
+	public static function getDefaultCalendar( string $module = 'meta', bool $check = TRUE ): string
 	{
 		if ( $check && ! gEditorial()->enabled( $module ) )
 			return Core\L10n::calendar();
@@ -58,7 +58,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param bool $check
 	 * @return string
 	 */
-	public static function getPostMetaKey( $field_key, $module = 'meta', $check = TRUE )
+	public static function getPostMetaKey( string $field_key, string $module = 'meta', bool $check = TRUE ): string
 	{
 		if ( ! $field_key )
 			return FALSE;
@@ -76,9 +76,9 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $field_key
 	 * @param string $posttype
 	 * @param string $module
-	 * @return mixed $available
+	 * @return false|array
 	 */
-	public static function isAvailable( $field_key, $posttype, $module = 'meta' )
+	public static function isAvailable( string $field_key, string $posttype, string $module = 'meta' ): false|array
 	{
 		if ( ! $posttype || ! $field_key )
 			return FALSE;
@@ -97,7 +97,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $module
 	 * @return string
 	 */
-	public static function getExportTitle( $field_key, $posttype, $module = 'meta' )
+	public static function getExportTitle( string $field_key, string $posttype, string $module = 'meta' ): string
 	{
 		if ( ! $posttype )
 			return $field_key;
@@ -116,7 +116,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $module
 	 * @return array
 	 */
-	public static function getSupported( $field_key, $module = 'meta' )
+	public static function getSupported( string $field_key, string $module = 'meta' ): array
 	{
 		if ( ! $field_key )
 			return [];
@@ -136,7 +136,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $operator
 	 * @return array
 	 */
-	public static function getEnabled( $posttype, $module = 'meta', $filter = [], $operator = 'AND' )
+	public static function getEnabled( string $posttype, string $module = 'meta', array $filter = [], string $operator = 'AND' ): array
 	{
 		if ( ! $posttype )
 			return [];
@@ -153,13 +153,13 @@ class PostTypeFields extends gEditorial\Service
 	 * OLD: `posttypefields_get_post_by()`
 	 *
 	 * @param string $field_key
-	 * @param string $value
+	 * @param mixed $value
 	 * @param string $posttype
 	 * @param bool $sanitize
 	 * @param string $module
-	 * @return bool|int
+	 * @return false|int
 	 */
-	public static function getPostByField( $field_key, $value, $posttype, $sanitize = FALSE, $module = 'meta' )
+	public static function getPostByField( string $field_key, mixed $value, string $posttype, bool $sanitize = FALSE, string $module = 'meta' ): false|int
 	{
 		if ( ! $field_key || ! $value || ! $posttype )
 			return FALSE;
@@ -198,7 +198,7 @@ class PostTypeFields extends gEditorial\Service
 	 * @param string $posttype
 	 * @return string|array
 	 */
-	public static function getFieldIcon( $field_key, $args = [], $posttype = NULL )
+	public static function getFieldIcon( string $field_key, array $args = [], ?string $posttype = NULL ): string|array
 	{
 		if ( ! empty( $args['icon'] ) )
 			return $args['icon'];
@@ -288,7 +288,7 @@ class PostTypeFields extends gEditorial\Service
 		return 'admin-post';
 	}
 
-	public static function getPostDateMetaKeys( $extra = [], $module = 'meta', $check = TRUE )
+	public static function getPostDateMetaKeys( array $extra = [], string $module = 'meta', bool $check = TRUE ): array
 	{
 		if ( $check && ! gEditorial()->enabled( $module ) )
 			return [];
@@ -308,7 +308,7 @@ class PostTypeFields extends gEditorial\Service
 	}
 
 	// OLD: `Template::getMetaField()`
-	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'meta' )
+	public static function getField( mixed $field_key, array $atts = [], bool $check = TRUE, string $module = 'meta' ): mixed
 	{
 		$field = FALSE;
 		$args  = self::parsed( [
@@ -391,7 +391,7 @@ class PostTypeFields extends gEditorial\Service
 
 	// OLD: `Template::getMetaFieldRaw()`
 	// NOTE: does not check for `access_view` arg
-	public static function getFieldRaw( $field_key, $post_id, $module = 'meta', $check = FALSE, $default = FALSE )
+	public static function getFieldRaw( string $field_key, int $post_id, string $module = 'meta', bool $check = FALSE, mixed $default = FALSE ): mixed
 	{
 		if ( $check ) {
 
@@ -404,7 +404,9 @@ class PostTypeFields extends gEditorial\Service
 			$post_id = $post->ID;
 		}
 
-		$meta = gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default );
+		$meta = $module
+			? gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default )
+			: $default;
 
 		return apply_filters( self::und( static::BASE, 'get_meta_field' ),
 			$meta,
@@ -415,7 +417,7 @@ class PostTypeFields extends gEditorial\Service
 		);
 	}
 
-	public static function getFieldDate( $field_key, $post_id, $module = 'meta', $check = TRUE, $default = FALSE, $default_calendar = NULL )
+	public static function getFieldDate( string $field_key, int $post_id, string $module = 'meta', bool $check = TRUE, mixed $default = FALSE, ?string $default_calendar = NULL ): mixed
 	{
 		if ( ! $date = self::getFieldRaw( $field_key, $post_id, $module, $check, $default ) )
 			return $default;
@@ -428,7 +430,7 @@ class PostTypeFields extends gEditorial\Service
 
 	// OLD: `Helper::prepMetaRow()`
 	// TODO: support: `dob`,`date`,`datetime`
-	public static function prepFieldRow( $value, $field_key = NULL, $field = [], $raw = NULL, $module = 'meta' )
+	public static function prepFieldRow( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, string $module = 'meta' ): mixed
 	{
 		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw );
 
@@ -691,7 +693,10 @@ class PostTypeFields extends gEditorial\Service
 
 					return gEditorial\Helper::getAuthorsEditRow(
 						(int) $raw ?: $value,
-						self::req( 'post_type', 'post' )
+						self::req( 'post_type', 'post' ),
+						'',
+						'',
+						FALSE,
 					);
 			}
 		}
@@ -729,8 +734,11 @@ class PostTypeFields extends gEditorial\Service
 		return Core\HTML::escape( trim( $value ) );
 	}
 
-	public static function replaceTokens( $meta, $field, $post, $context = NULL )
+	public static function replaceTokens( mixed $meta, array $field, object $post, ?string $context = NULL ): mixed
 	{
+		if ( ! $meta || ! is_string( $meta ) )
+			return $meta;
+
 		// Do bail early if it has not have tokens!
 		if ( ! Core\Text::has( $meta, '{{' ) )
 			return $meta;
@@ -758,7 +766,7 @@ class PostTypeFields extends gEditorial\Service
 		], [ __CLASS__, '_meta_field_replace_token' ] );
 	}
 
-	private static function _meta_field_replace_token( $token, $args )
+	private static function _meta_field_replace_token( string $token, array $args ): string
 	{
 		switch ( strtolower( $token ) ) {
 

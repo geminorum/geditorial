@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait ObjectsToObjects
 {
 
-	protected function o2o_register( $constant, $context = NULL, $posttypes = NULL, $extra = NULL )
+	protected function o2o_register( string $constant, ?string $context = NULL, string|array|null $posttypes = NULL, ?array $extra = NULL ): false|string
 	{
 		if ( ! $from = $this->constant( $constant ) )
 			return FALSE;
@@ -58,7 +58,7 @@ trait ObjectsToObjects
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
-	protected function o2o_register_Legacy( $constant, $posttypes = NULL )
+	protected function o2o_register_Legacy( string $constant, string|array|null $posttypes = NULL ): bool|string
 	{
 		if ( ! $posttypes = $posttypes ?? $this->posttypes() )
 			return FALSE;
@@ -88,7 +88,7 @@ trait ObjectsToObjects
 		return $this->_o2o = $o2o;
 	}
 
-	protected function o2o__hook_insert_content( $o2o, $constant, $context = NULL )
+	protected function o2o__hook_insert_content( string $o2o, string $constant, ?string $context = NULL ): false|string
 	{
 		if ( ! $o2o || is_admin() )
 			return FALSE;
@@ -117,7 +117,7 @@ trait ObjectsToObjects
 	 * @param string $description
 	 * @return array
 	 */
-	protected function settings_o2o_field_desc( $context = NULL, $title = NULL, $description = NULL )
+	protected function settings_o2o_field_desc( ?string $context = NULL, ?string $title = NULL, ?string $description = NULL ): array
 	{
 		return [
 			'field'       => self::und( $context ?? 'o2o', 'field_desc' ),
@@ -126,7 +126,7 @@ trait ObjectsToObjects
 		];
 	}
 
-	public function o2o_get_meta( $o2o_id, $meta_key, $before = '', $after = '', $args = [] )
+	public function o2o_get_meta( int $o2o_id, string $meta_key, string $before = '', string $after = '', array $args = [] ): string
 	{
 		if ( ! $this->_o2o )
 			return '';
@@ -146,7 +146,7 @@ trait ObjectsToObjects
 		return $before.$meta.$after;
 	}
 
-	public function o2o_get_meta_row( $constant, $o2o_id, $before = '', $after = '' )
+	public function o2o_get_meta_row( string $constant, int $o2o_id, string $before = '', string $after = '' ): string
 	{
 		if ( ! $this->_o2o )
 			return '';
@@ -161,7 +161,7 @@ trait ObjectsToObjects
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
-	public function o2o_connect( $constant, $from, $to, $meta = [] )
+	public function o2o_connect( string $constant, int $from, int $to, array $meta = [] ): bool
 	{
 		if ( ! $this->_o2o )
 			return FALSE;
@@ -298,7 +298,7 @@ trait ObjectsToObjects
 	// NOTE: DEPRECATED: use `main_shortcode()`
 	// OLD: `list_p2p()`
 	#[\Deprecated()]
-	public function o2o_list_connected( $o2o, $constant, $context = NULL, $post = NULL, $class = '' )
+	public function o2o_list_connected( string $o2o, string $constant, ?string $context = NULL, mixed $post = NULL, string $class = '' ): void
 	{
 		if ( ! $o2o )
 			return;

@@ -70,7 +70,9 @@ trait TaxonomyTaxonomy
 				return FALSE;
 
 			add_action( $screen->taxonomy.'_add_form_fields',
-				function ( $taxonomy ) use ( $target ) {
+				function ( $taxonomy )
+					use ( $target ) {
+
 					gEditorial\Settings::fieldType(
 						Services\TaxonomyTaxonomy::getSettingsFieldArgs( $target, 'addnew' ),
 						$this->scripts
@@ -83,7 +85,9 @@ trait TaxonomyTaxonomy
 				$this->taxtax__edit_tags_screen( $screen->taxonomy, $target );
 
 				add_action( 'quick_edit_custom_box',
-					function ( $column, $screen, $taxonomy ) use ( $target ) {
+					function ( $column, $screen, $taxonomy )
+						use ( $target ) {
+
 						if ( $this->classs( $target ) !== $column )
 							return;
 
@@ -102,7 +106,9 @@ trait TaxonomyTaxonomy
 				return FALSE;
 
 			add_action( $screen->taxonomy.'_edit_form_fields',
-				function ( $term, $taxonomy ) use ( $target ) {
+				function ( $term, $taxonomy )
+					use ( $target ) {
+
 					gEditorial\Settings::fieldType(
 						Services\TaxonomyTaxonomy::getSettingsFieldArgs( $target, 'editterm', $term ),
 						$this->scripts
@@ -122,14 +128,17 @@ trait TaxonomyTaxonomy
 		$singleselect = Services\TermHierarchy::isSingleTerm( $target );
 
 		add_filter( sprintf( 'manage_edit-%s_columns', $taxonomy ),
-			function ( $columns ) use ( $target ) {
+			function ( $columns )
+				use ( $target ) {
+
 				return Core\Arraay::insert( $columns, [
 					$this->classs( $target ) => Services\CustomTaxonomy::getLabel( $target, 'column_title' ),
 				], 'name', 'after' );
 			} );
 
 		add_filter( sprintf( 'manage_%s_custom_column', $taxonomy ),
-			function ( $string, $column, $term_id ) use ( $target, $singleselect ) {
+			function ( $string, $column, $term_id )
+				use ( $target, $singleselect ) {
 
 				if ( $this->classs( $target ) !== $column )
 					return;
@@ -156,12 +165,10 @@ trait TaxonomyTaxonomy
 				} else {
 
 					$rows = array_map( function ( $term ) {
-						return Core\HTML::row( WordPress\Term::htmlLink( $term ) );
+						return WordPress\Term::htmlLink( $term );
 					}, $terms );
 
-					echo Core\HTML::tag( 'ul', [
-						'class' => '-rows',
-					], implode( "\n", $rows ) );
+					echo Core\HTML::rows( $rows );
 
 					$this->hidden( implode( ',', Core\Arraay::pluck( $terms, 'term_id' ) ), [
 						'name'         => $name,

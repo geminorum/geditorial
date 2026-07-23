@@ -66,7 +66,7 @@ trait Deprecated
 		);
 	}
 
-	public function add_meta_box_checklist_terms_cb( $post, $box )
+	public function add_meta_box_checklist_terms_cb( object $post, false|array $box ): void
 	{
 		self::_dep();
 
@@ -145,7 +145,7 @@ trait Deprecated
 	}
 
 	// DEFAULT METHOD
-	public function dISABLED_render_metabox( $post, $box, $fields = NULL, $context = NULL )
+	public function dISABLED_render_metabox( object $post, false|array $box, array $fields = NULL, ?string $context = NULL ): void
 	{
 		self::_dep();
 

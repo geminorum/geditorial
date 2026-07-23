@@ -264,14 +264,14 @@ class Quotation extends gEditorial\Module
 		return $items;
 	}
 
-	public function meta_render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = 'mainbox' ): void
+	public function meta_render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
 	{
 		gEditorial\MetaBox::fieldPostMenuOrder( $post );
 	}
 
 	// @REF: `MetaBox::fieldPostParent()`
 	// @REF: `page_attributes_misc_attributes`
-	public function meta_render_metabox_OLD( $post, $box, $fields = NULL, $context = 'mainbox' )
+	public function meta_render_metabox_OLD( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'name'        => 'menu_order',

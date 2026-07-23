@@ -595,12 +595,8 @@ class Book extends gEditorial\Module
 				] );
 
 				$this->_hook_general_mainbox( $screen, 'main_posttype' );
-
-				if ( post_type_supports( $screen->post_type, 'author' ) )
-					$this->metaboxcustom_add_metabox_author( $screen, 'main_posttype' );
-
-				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
+				$this->metaboxcustom_add_metabox_author( $screen, 'main_posttype' );
+				$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
 
 				$this->comments__handle_default_status( $screen->post_type );
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
@@ -727,7 +723,7 @@ class Book extends gEditorial\Module
 		return $this->templateposttype__include( $template, $this->constant( 'main_posttype' ) );
 	}
 
-	public function templateposttype_get_archive_content_default( $posttype )
+	public function templateposttype_get_archive_content_default( string $posttype ): string
 	{
 		$html = $this->get_search_form( 'main_posttype' );
 
@@ -813,7 +809,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function shortcode_title_cb( $post, $args, $text, $link )
+	public function shortcode_title_cb( mixed $post, array $args, string $text, string $link ): false|string
 	{
 		if ( FALSE === $args['title'] )
 			return FALSE;
@@ -831,7 +827,7 @@ class Book extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function shortcode_item_after_cb( $post, $args, $item )
+	public function shortcode_item_after_cb( object $post, array $args, mixed $item ): string
 	{
 		return $this->_p2p ? $this->p2p_get_meta_row( 'main_posttype', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
@@ -883,7 +879,7 @@ class Book extends gEditorial\Module
 		$this->list_p2p( NULL, '-after' );
 	}
 
-	public function get_linked_to_posts_p2p( $post = NULL, $single = FALSE, $published = TRUE )
+	public function get_linked_to_posts_p2p( mixed $post = NULL, bool $single = FALSE, bool $published = TRUE ): false|int|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -916,7 +912,7 @@ class Book extends gEditorial\Module
 	// TODO: https://github.com/scribu/wp-posts-to-posts/wiki/Related-posts
 	// NOTE: DEPRECATED: use `main_shortcode()`
 	#[\Deprecated()]
-	public function list_p2p( $post = NULL, $class = '' )
+	public function list_p2p( mixed $post = NULL, string $class = '' ): void
 	{
 		if ( ! $this->_p2p )
 			return;
@@ -1037,7 +1033,7 @@ class Book extends gEditorial\Module
 
 	// @REF: http://wordpress.stackexchange.com/a/246358/3687
 	// NOTE: UNFINISHED: just displays the imported connected data (not handling)
-	protected function render_tools_html_OLD( $uri, $sub )
+	protected function render_tools_html_OLD( ?string $uri, ?string $sub ): bool
 	{
 		$list  = Core\Arraay::keepByKeys( WordPress\PostType::get( 0, [ 'show_ui' => TRUE ] ), $this->get_setting( 'p2p_posttypes', [] ) );
 		$query = [
@@ -1132,7 +1128,7 @@ class Book extends gEditorial\Module
 		return $meta;
 	}
 
-	public function pairedimports_define_import_types( $types, $linked, $posttypes, $module_key )
+	public function pairedimports_define_import_types( array $types, false|object $linked, array $posttypes, string $module_key ): array
 	{
 		$posttype = $this->constant( 'main_posttype' );
 
@@ -1168,7 +1164,7 @@ class Book extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	public function importer_prepare( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 

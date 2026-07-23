@@ -35,7 +35,7 @@ class Datetime extends WordPress\Main
 
 	// NOTE: Here the signature is different: supporting the calendar-type and locale with using `Intl` methods.
 	public static function htmlDateTime(
-		?string $datetime_string = NULL,
+		mixed $input = NULL,
 		?string $format = NULL,
 		string|false $title = FALSE,
 		?string $calendar_type = NULL,
@@ -43,13 +43,13 @@ class Datetime extends WordPress\Main
 		?string $locale = NULL
 	): string {
 		return Core\HTML::tag( 'time', [
-			'datetime'       => Core\Date::getISO8601( $datetime_string, $timezone_string, FALSE ),
+			'datetime'       => Core\Date::getISO8601( $input, $timezone_string, FALSE ),
 			'title'          => $title,
 			'data-bs-toggle' => $title ? 'tooltip' : FALSE,
 			'class'          => 'do-timeago', // @SEE: https://github.com/rmm5t/jquery-timeago
 		], self::formatByCalendar(
 			$format ?? self::dateFormats( 'daydate' ),
-			$datetime_string,
+			$input,
 			$calendar_type,
 			$timezone_string,
 			$locale
@@ -443,7 +443,7 @@ class Datetime extends WordPress\Main
 	 * Retrieves the date, by given calendar in localized format.
 	 *
 	 * @param string $format
-	 * @param string $datetime_string
+	 * @param mixed $input
 	 * @param string $calendar_type
 	 * @param string $timezone_string
 	 * @param string $locale
@@ -451,7 +451,7 @@ class Datetime extends WordPress\Main
 	 */
 	public static function formatByCalendar(
 		?string $format = NULL,
-		?string $datetime_string = NULL,
+		mixed $input = NULL,
 		?string $calendar_type = NULL,
 		?string $timezone_string = NULL,
 		?string $locale = NULL,
@@ -464,7 +464,7 @@ class Datetime extends WordPress\Main
 
 		return call_user_func_array( $callback, [
 			$format ?? self::dateFormats( 'default' ),
-			$datetime_string,
+			$input,
 			$calendar_type ?? Core\L10n::calendar( $locale ),
 			$timezone_string,
 			$locale,

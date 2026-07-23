@@ -141,8 +141,13 @@ class CustomTaxonomy extends gEditorial\Service
 	}
 
 	// NOTE: OLD: `Helper::getTaxonomyLabel()`
-	public static function getLabel( $term_or_taxonomy, $label, $fallback_key = NULL, $fallback = '' )
-	{
+	public static function getLabel(
+		string|object $term_or_taxonomy,
+		string $label,
+		?string $fallback_key = NULL,
+		mixed $fallback = '',
+	): mixed {
+
 		if ( ! $object = WordPress\Taxonomy::object( $term_or_taxonomy ) )
 			return $fallback ?? gEditorial\Plugin::na();
 

@@ -533,7 +533,7 @@ class Users extends gEditorial\Module
 		return $false;
 	}
 
-	public function render_metabox_categories( $post, $box )
+	public function render_metabox_categories( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -556,7 +556,7 @@ class Users extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function render_widget_profile_summary( $object, $box )
+	public function render_widget_profile_summary( mixed $object, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -570,7 +570,7 @@ class Users extends gEditorial\Module
 
 		echo '<div class="geditorial-wrap -admin-widget -users -contacts">';
 
-		// echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );
+		// `echo Core\HTML::wrap( get_avatar( $user->user_email, 125 ), '-avatar' );`
 		echo Core\HTML::wrap( Services\Avatars::getByUser( $user ), '-avatar' );
 
 		echo '<ul class="-rows">';

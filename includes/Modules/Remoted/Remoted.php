@@ -191,13 +191,15 @@ class Remoted extends gEditorial\Module
 		);
 	}
 
-	public function render_widget_upload( $object, $box )
+	public function render_widget_upload( mixed $object, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
 
-		if ( empty( $box['args']['remote'] ) || empty( $box['args']['context'] ) )
-			return gEditorial\Info::renderSomethingIsWrong();
+		if ( empty( $box['args']['remote'] ) || empty( $box['args']['context'] ) ) {
+			gEditorial\Info::renderSomethingIsWrong();
+			return;
+		}
 
 		echo $this->wrap_open(
 			[

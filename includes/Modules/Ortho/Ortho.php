@@ -189,7 +189,7 @@ class Ortho extends gEditorial\Module
 		return $this->persiantools_enqueued = $handle;
 	}
 
-	private function prepare_virastar_options( $context = NULL )
+	private function prepare_virastar_options( ?string $context = NULL ): array
 	{
 		$options  = ModuleInfo::virastarOptions( $context );
 		$defaults = array_keys( array_filter( $options ) );
@@ -202,7 +202,7 @@ class Ortho extends gEditorial\Module
 		return $prepared;
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	public function importer_prepare( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

@@ -19,9 +19,9 @@ class AdvancedQueries extends gEditorial\Service
 		add_filter( 'terms_clauses', [ __CLASS__, 'terms_clauses' ], 8, 3 );
 
 		// WORKING BUT DISABLED
-		// add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );
+		// `add_filter( 'posts_where', [ __CLASS__, 'posts_where_metakey_like' ] );`
 
-		// add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts_empty_compare' ] );
+		// `add_action( 'pre_get_posts', [ __CLASS__, 'pre_get_posts_empty_compare' ] );`
 
 		if ( is_admin() )
 			return;
@@ -34,7 +34,7 @@ class AdvancedQueries extends gEditorial\Service
 		self::_init_term_search();
 	}
 
-	public static function pre_get_posts( $query )
+	public static function pre_get_posts( object $query ): void
 	{
 		if ( ! $query->is_main_query() )
 			return;
@@ -44,7 +44,7 @@ class AdvancedQueries extends gEditorial\Service
 	}
 
 	// TODO: filter for search on sub-contents (comments)
-	public static function posts_search( $search, $query )
+	public static function posts_search( string $search, object $query ): string
 	{
 		global $wpdb;
 
@@ -102,7 +102,7 @@ class AdvancedQueries extends gEditorial\Service
 		return $search;
 	}
 
-	public static function terms_clauses( $clauses, $taxonomies, $args )
+	public static function terms_clauses( array $clauses, mixed $taxonomies, array $args ): array
 	{
 		global $wpdb;
 
@@ -174,7 +174,7 @@ class AdvancedQueries extends gEditorial\Service
     //         'compare' => 'BETWEEN'
     //     ],
     // ],
-	public static function posts_where_metakey_like( $where )
+	public static function posts_where_metakey_like( string $where ): string
 	{
 		return preg_replace(
 			'/meta_key = \'([a-zA-Z1-9_]+)?{GEDITORIAL_METAKEY_LIKE_POSITION}([a-zA-Z1-9_]+)?\'/',
@@ -185,7 +185,7 @@ class AdvancedQueries extends gEditorial\Service
 
 	// @SEE: https://core.trac.wordpress.org/ticket/43867
 	// NOTE: @since WP 6.2.3 we can use `'search_columns' => 'post_title'` on query args
-	public static function hookSearchPostTitleOnly( $unhook = FALSE )
+	public static function hookSearchPostTitleOnly( bool $unhook = FALSE ): void
 	{
 		if ( $unhook )
 			remove_filter( 'posts_search', [ __CLASS__, 'posts_search_posttitle_only' ], 10 );
@@ -201,16 +201,16 @@ class AdvancedQueries extends gEditorial\Service
 	 *
 	 *
 	 * @param string $search
-	 * @param \WP_Query $wp_query
+	 * @param \WP_Query $query
 	 * @return string
 	 */
-	public static function posts_search_posttitle_only( $search, $wp_query )
+	public static function posts_search_posttitle_only( string $search, object $query ): string
 	{
 		global $wpdb;
 
-		if ( ! empty( $search ) && ! empty( $wp_query->query_vars['search_terms'] ) ) {
+		if ( ! empty( $search ) && ! empty( $query->query_vars['search_terms'] ) ) {
 
-			$q = $wp_query->query_vars;
+			$q = $query->query_vars;
 			$n = ! empty( $q['exact'] ) ? '' : '%';
 
 			$search = [];
@@ -235,7 +235,7 @@ class AdvancedQueries extends gEditorial\Service
 	 * @param object $query
 	 * @return void
 	 */
-	public static function pre_get_posts_empty_compare( &$query )
+	public static function pre_get_posts_empty_compare( object &$query ): void
 	{
 		$the_meta_query = $query->get( 'meta_query' );
 
@@ -260,19 +260,19 @@ class AdvancedQueries extends gEditorial\Service
 		}
 	}
 
-	private static function _init_term_search()
+	private static function _init_term_search(): bool
 	{
 		if ( ! $taxonomies = self::getTaxonomies() )
 			return FALSE;
 
 		add_filter( 'posts_join',
 			// @REF: https://stackoverflow.com/a/13493126
-			static function ( $join, $wp_query )
+			static function ( $join, $query )
 				use ( $taxonomies ) {
 
 				global $wpdb;
 
-				if ( $wp_query->is_search() ) {
+				if ( $query->is_search() ) {
 					$join.= " INNER JOIN {$wpdb->term_relationships} ON {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id ";
 					$join.= " INNER JOIN {$wpdb->term_taxonomy} ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id ";
 					$join.= " INNER JOIN {$wpdb->terms} ON {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id ";
@@ -282,20 +282,20 @@ class AdvancedQueries extends gEditorial\Service
 			}, 99, 2 );
 
 		add_filter( 'posts_where',
-			static function ( $where, $wp_query )
+			static function ( $where, $query )
 				use ( $taxonomies ) {
 
 				global $wpdb;
 
-				if ( $wp_query->is_search() ) {
+				if ( $query->is_search() ) {
 
 					foreach ( $taxonomies as $taxonomy ) {
 
 						$taxonomy = $wpdb->prepare( '%s', $taxonomy );
 						$clause   = $sep = '';
 
-						foreach ( self::parseCriteria( $wp_query ) as $searched ) {
-							$escaped = $wpdb->prepare( '%s', empty( $wp_query->query_vars['exact'] ) ? '%'.$searched.'%' : $searched );
+						foreach ( self::parseCriteria( $query ) as $searched ) {
+							$escaped = $wpdb->prepare( '%s', empty( $query->query_vars['exact'] ) ? '%'.$searched.'%' : $searched );
 							$clause.= $sep."( ( {$wpdb->term_taxonomy}.taxonomy LIKE {$taxonomy} ) AND ( {$wpdb->terms}.name LIKE {$escaped} ) ) ";
 							$sep = ' AND ';
 						}
@@ -310,13 +310,13 @@ class AdvancedQueries extends gEditorial\Service
 
 		add_filter( 'posts_groupby',
 			// @REF: https://wordpress.stackexchange.com/a/5404
-			static function ( $groupby, $wp_query ) use ( $taxonomies ) {
+			static function ( $groupby, $query ) use ( $taxonomies ) {
 
 				global $wpdb;
 
 				$bypostid = "{$wpdb->posts}.ID";
 
-				if ( ! $wp_query->is_search() || Core\Text::has( $groupby, $bypostid ) )
+				if ( ! $query->is_search() || Core\Text::has( $groupby, $bypostid ) )
 					return $groupby;
 
 				return empty( trim( $groupby ) )
@@ -327,7 +327,7 @@ class AdvancedQueries extends gEditorial\Service
 		return TRUE;
 	}
 
-	public static function getTaxonomies()
+	public static function getTaxonomies(): array
 	{
 		return WordPress\Taxonomy::get( -1, [
 			// 'show_ui'      => TRUE,
@@ -343,21 +343,21 @@ class AdvancedQueries extends gEditorial\Service
 	 * Retrieves the list of search keywords from the `s` parameter.
 	 * @source `se_get_search_terms()`
 	 *
-	 * @param object $wp_query
+	 * @param object $query
 	 * @return array
 	 */
-	public static function parseCriteria( $wp_query )
+	public static function parseCriteria( object $query ): array
 	{
-		if ( empty( $wp_query->query_vars['s'] ) )
+		if ( empty( $query->query_vars['s'] ) )
 			return [];
 
 		// Added slashes screw with quote grouping when done early, so done later.
-		$criteria = stripslashes( $wp_query->query_vars['s'] );
+		$criteria = stripslashes( $query->query_vars['s'] );
 
-		if ( ! empty( $wp_query->query_vars['sentence'] ) )
+		if ( ! empty( $query->query_vars['sentence'] ) )
 			return [ $criteria ];
 
-		// preg_match_all( '/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $criteria, $matches );
+		// `preg_match_all( '/".*?("|$)|((?<=[\\s",+])|^)[^\\s",+]+/', $criteria, $matches );`
 		preg_match_all( '/(".*?)("|$)|((?<=[\s",+])|^)[^\s",+]+/', $criteria, $matches );
 
 		return array_filter( array_map(

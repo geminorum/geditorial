@@ -26,7 +26,7 @@ trait CoreMenuPage
 	 * Network Settings: `settings.php`
 	 */
 
-	protected function _hook_menu_posttype( $constant, $parent_slug = 'index.php', $context = 'adminpage' )
+	protected function _hook_menu_posttype( string $constant, string $parent_slug = 'index.php', ?string $context = 'adminpage' ): false|string
 	{
 		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
 			return FALSE;
@@ -45,7 +45,7 @@ trait CoreMenuPage
 	// $parent_slug options: `options-general.php`, `users.php`
 	// also: `$this->_hook_parentfile_for_optionsgeneralphp();`
 	// also: `$this->_hook_parentfile_for_usersphp();`
-	protected function _hook_menu_taxonomy( $constant, $parent_slug = 'index.php', $context = 'submenu' )
+	protected function _hook_menu_taxonomy( string $constant, string $parent_slug = 'index.php', ?string $context = 'submenu' ): false|string
 	{
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
 			return FALSE;
@@ -61,8 +61,17 @@ trait CoreMenuPage
 		return $this->screens[$constant];
 	}
 
-	protected function _hook_wp_submenu_page( $context, $parent_slug, $page_title, $menu_title = NULL, $capability = NULL, $menu_slug = '', $callback = '', $position = NULL )
-	{
+	protected function _hook_wp_submenu_page(
+		string $context,
+		string $parent_slug,
+		?string $page_title,
+		?string $menu_title = NULL,
+		?string $capability = NULL,
+		string $menu_slug = '',
+		string|callable $callback = '',
+		?int $position = NULL,
+	): false|string {
+
 		if ( ! $context )
 			return FALSE;
 
@@ -86,8 +95,7 @@ trait CoreMenuPage
 		);
 
 		if ( $this->screens[$context] && is_callable( $default_loading ) )
-			add_action(
-				self::dsh( 'load', $this->screens[$context] ),
+			add_action( self::dsh( 'load', $this->screens[$context] ),
 				$default_loading,
 				10,
 				0
@@ -109,13 +117,12 @@ trait CoreMenuPage
 
 	// NOTE: hack to keep the sub-menu only on primary paired post-type
 	// for hiding the menu just set `show_in_menu` to `FALSE` on taxonomy arguments
-	protected function remove_taxonomy_submenu( $taxonomies, $posttypes = NULL )
+	protected function remove_taxonomy_submenu( string|array $taxonomies, ?array $posttypes = NULL ): void
 	{
 		if ( ! $taxonomies )
 			return;
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
+		$posttypes = $posttypes ?? $this->posttypes();
 
 		foreach ( (array) $taxonomies as $taxonomy )
 			foreach ( $posttypes as $posttype )
@@ -125,15 +132,15 @@ trait CoreMenuPage
 				);
 	}
 
-	protected function _hook_parentfile_for_usersphp()
+	protected function _hook_parentfile_for_usersphp(): true
 	{
-		$this->filter_string( 'parent_file', current_user_can( 'list_users' ) ? 'users.php' : 'profile.php' );
+		return $this->filter_string( 'parent_file', current_user_can( 'list_users' ) ? 'users.php' : 'profile.php' );
 	}
 
-	protected function _hook_parentfile_for_optionsgeneralphp()
+	protected function _hook_parentfile_for_optionsgeneralphp(): true
 	{
-		// $this->filter_string( 'parent_file', current_user_can( 'manage_options' ) ? 'options-general.php' : 'tools.php' );
-		$this->filter_string( 'parent_file', 'options-general.php' ); // WTF: Working without cap?!
+		// return $this->filter_string( 'parent_file', current_user_can( 'manage_options' ) ? 'options-general.php' : 'tools.php' );
+		return $this->filter_string( 'parent_file', 'options-general.php' ); // WTF: Working without cap?!
 	}
 
 	/**
@@ -149,7 +156,7 @@ trait CoreMenuPage
 	 * @param string|object $posttype
 	 * @return bool
 	 */
-	protected function _hack_adminmenu_no_create_posts( $posttype )
+	protected function _hack_adminmenu_no_create_posts( string|object $posttype ): bool
 	{
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -163,9 +170,13 @@ trait CoreMenuPage
 		);
 
 		add_filter( 'add_menu_classes',
-			function ( $menu ) use ( $object ) {
+			function ( $menu )
+				use ( $object ) {
+
 				remove_submenu_page( 'edit.php?post_type='.$object->name, $this->classs( $object->name ) );
 				return $menu;
 			} );
+
+		return TRUE;
 	}
 }

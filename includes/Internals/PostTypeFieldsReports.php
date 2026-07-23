@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait PostTypeFieldsReports
 {
-	protected function posttypefields_reports_handle_tablelist( $sub = NULL )
+	protected function posttypefields_reports_handle_tablelist( ?String $sub = NULL ): bool
 	{
 		if ( gEditorial\Tablelist::isAction( 'check_empty_fields', TRUE ) ) {
 
@@ -67,7 +67,7 @@ trait PostTypeFieldsReports
 		return TRUE;
 	}
 
-	protected function posttypefields_reports_render_tablelist( $uri = '', $sub = NULL, $actions = NULL, $title = NULL )
+	protected function posttypefields_reports_render_tablelist( string $uri = '', ?string $sub = NULL, ?array $actions = NULL, ?string $title = NULL ): bool
 	{
 		$context = 'reports';
 		$query   = $extra = $fields = [];

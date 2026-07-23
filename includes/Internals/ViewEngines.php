@@ -17,19 +17,19 @@ trait ViewEngines
 	protected $view_engines = [];
 
 	// @SEE: https://github.com/GaryJones/Gamajo-Template-Loader
-	protected function viewengine__roots( $path = NULL )
+	protected function viewengine__roots( ?string $path = NULL ): array
 	{
 		return [
 			sprintf( '%s/editorial/views/%s/', STYLESHEETPATH, $this->key ),
 			sprintf( '%s/editorial/views/%s/', TEMPLATEPATH, $this->key ),
 			$path ?? sprintf( '%sviews/', $this->path ),
-			sprintf( '%sassets/views/', GEDITORIAL_DIR ),
+			sprintf( '%sassets/views/', static::factory()->get_dir() ),
 		];
 	}
 
-	public function viewengine__render_string( $template, $data = [], $verbose = TRUE )
+	public function viewengine__render_string( mixed $template, array $data = [], bool $verbose = TRUE ): bool|string
 	{
-		if ( empty( $template ) )
+		if ( self::empty( $template ) )
 			return $verbose ? FALSE : '';
 
 		// with no `Mustache_Loader_FilesystemLoader`
@@ -43,10 +43,14 @@ trait ViewEngines
 			return $filtered;
 
 		echo $filtered;
+		return TRUE;
 	}
 
-	public function viewengine__render( $view, $data = [], $verbose = TRUE )
+	public function viewengine__render( mixed $view, array $data = [], bool $verbose = TRUE ): bool|string
 	{
+		if ( empty( $view ) || ! is_array( $view ) )
+			return $verbose ? FALSE : '';
+
 		$key = $this->hash( $view );
 		list( $part, $root ) = $view;
 
@@ -60,13 +64,13 @@ trait ViewEngines
 			return $filtered;
 
 		echo $filtered;
+		return TRUE;
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
+	#[\Deprecated('USE `$this->viewengine__render()`')]
 	protected function render_view( string $part, array $data = [], ?string $path = NULL, bool $verbose = TRUE ): true|string
 	{
-		self::_dep( '$this->viewengine__render()' );
-
 		$path = $path ?? $this->get_view_path();
 
 		if ( empty( $this->view_engines[$path] ) )

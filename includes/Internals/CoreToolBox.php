@@ -11,10 +11,10 @@ trait CoreToolBox
 {
 
 	// DEFAULT CALLBACK: use in module for descriptions
-	// protected function tool_box_content(): void {}
+	// `protected function tool_box_content(): void {}`
 
 	// TODO: add context
-	public function tool_box()
+	public function tool_box(): void
 	{
 		echo $this->wrap_open( [ 'card', '-toolbox-card' ] );
 			$this->tool_box_title();
@@ -33,7 +33,7 @@ trait CoreToolBox
 	}
 
 	// DEFAULT CALLBACK
-	protected function tool_box_title()
+	protected function tool_box_title(): void
 	{
 		Core\HTML::h2( sprintf(
 			/* translators: `%1$s`: system title, `%2$s`: module title */

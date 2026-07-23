@@ -179,7 +179,7 @@ class Modified extends gEditorial\Module
 		$this->add_dashboard_widget( 'latest-summary', _x( 'Latest Changes', 'Dashboard Widget Title', 'geditorial-modified' ) );
 	}
 
-	public function render_widget_latest_summary( $object, $box )
+	public function render_widget_latest_summary( mixed $object, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -233,7 +233,7 @@ class Modified extends gEditorial\Module
 		echo $after;
 	}
 
-	public function dashboard_pointers( $items )
+	public function dashboard_pointers( array $items ): array
 	{
 		if ( $content = $this->site_modified_shortcode( [ 'title' => NULL, 'format_context' => 'printdate' ] ) )
 			$items[] = Core\HTML::tag( 'span', [
@@ -333,7 +333,7 @@ class Modified extends gEditorial\Module
 		);
 	}
 
-	public function get_post_modified( $format = NULL, $post = NULL, $prefix = NULL )
+	public function get_post_modified( ?string $format = NULL, mixed $post = NULL, ?string $prefix = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -354,7 +354,7 @@ class Modified extends gEditorial\Module
 	}
 
 	// NOTE: just put `{SITE_LAST_MODIFIED}` on a menu item text!
-	public function wp_nav_menu_items( $items, $args )
+	public function wp_nav_menu_items( string $items, array $args ): string
 	{
 		if ( ! Core\Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
@@ -363,7 +363,7 @@ class Modified extends gEditorial\Module
 	}
 
 	//@hook: `gnetwork_navigation_help_placeholders`
-	public function navigation_help_placeholders( $before, $after )
+	public function navigation_help_placeholders( string $before, string $after ): void
 	{
 		echo $before.Core\HTML::code( '{SITE_LAST_MODIFIED}', FALSE, TRUE ).$after;
 	}
@@ -413,7 +413,7 @@ class Modified extends gEditorial\Module
 		);
 	}
 
-	public function get_site_modified( $format = NULL, $posttypes = NULL, $published = NULL )
+	public function get_site_modified( string|bool|null $format = NULL, mixed $posttypes = NULL, ?bool $published = NULL ): false|string|array
 	{
 		global $wpdb;
 
@@ -476,7 +476,7 @@ class Modified extends gEditorial\Module
 
 	// @source https://make.wordpress.org/core/handbook/tutorials/installing-wordpress-locally/
 	// @template https://codepen.io/geminorum/pen/yyJjaaP
-	public function modified_data_summary( $atts = [], $post = NULL )
+	public function modified_data_summary( array $atts = [], mixed $post = NULL ): bool|string
 	{
 		$args = $this->filters( 'data_summary_args', self::parsed( [
 			'id'       => $post,
@@ -517,7 +517,7 @@ class Modified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function modified_get_data_for_post( $post = NULL, $context = NULL, $format = NULL )
+	public function modified_get_data_for_post( mixed $post = NULL, ?string $context = NULL, ?string $format = NULL ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

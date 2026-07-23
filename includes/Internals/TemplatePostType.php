@@ -91,7 +91,7 @@ trait TemplatePostType
 
 			$this->filter_append( 'post_class', [ 'newpost-posttype', 'newpost-'.$posttype ] );
 			$this->filter( 'post_type_archive_title', 2, 0, 'templateposttype_newpost' );
-			// $this->filter( 'gtheme_navigation_crumb_archive', 2, 10, 'templateposttype_newpost' );
+			// `$this->filter( 'gtheme_navigation_crumb_archive', 2, 10, 'templateposttype_newpost' );`
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'newpost_template' ) );
 
@@ -126,7 +126,7 @@ trait TemplatePostType
 
 			$this->filter_append( 'post_class', [ 'archive-posttype', 'archive-'.$posttype ] );
 			$this->filter( 'post_type_archive_title', 2 );
-			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
+			// `$this->filter( 'gtheme_navigation_crumb_archive', 2 );`
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'archive_template' ) );
 		}
@@ -161,12 +161,12 @@ trait TemplatePostType
 			Services\CustomPostType::getLabel( $posttype, 'all_items' ) );
 	}
 
-	public function gtheme_navigation_crumb_archive( $crumb, $args )
+	public function gtheme_navigation_crumb_archive( false|string $crumb, array $args ): false|string
 	{
 		return $this->get_setting_fallback( 'archive_title', $crumb );
 	}
 
-	public function gtheme_navigation_crumb_archive_templateposttype_newpost( $crumb, $args )
+	public function gtheme_navigation_crumb_archive_templateposttype_newpost( false|string $crumb, array $args ): false|string
 	{
 		return $this->get_setting_fallback( 'newpost_title', $crumb );
 	}
@@ -414,7 +414,7 @@ trait TemplatePostType
 				'placeholder'  => $label,
 				'class'        => [ 'mceEditor', 'large-text', 'form-control' ],
 				'rows'         => 2,
-				// 'cols'         => 15,
+				// `'cols'         => 15,`
 				'autocomplete' => 'off',
 			], Core\HTML::escapeTextarea( $value ) );
 
@@ -442,7 +442,7 @@ trait TemplatePostType
 				'placeholder'  => $label,
 				'class'        => [ 'mceEditor', 'large-text', 'form-control' ],
 				'rows'         => 6,
-				// 'cols'         => 15,
+				// `'cols'         => 15,`
 				'autocomplete' => 'off',
 			], Core\HTML::escapeTextarea( $value ) );
 
@@ -464,7 +464,7 @@ trait TemplatePostType
 		);
 
 		Core\HTML::inputHidden( 'type', $posttype );
-		// Core\HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft
+		// `Core\HTML::inputHidden( 'status', $status === 'publish' ? 'publish' : 'draft' ); // only publish/draft`
 		Core\HTML::inputHidden( 'status', $status );
 		Core\HTML::inputHiddenArray( $meta, 'meta' );
 

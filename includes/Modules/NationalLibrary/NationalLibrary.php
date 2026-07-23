@@ -601,7 +601,7 @@ class NationalLibrary extends gEditorial\Module
 		return ModuleHelper::parseFipa( $data );
 	}
 
-	public function posts_search_append_meta_frontend( $meta, $search, $queried )
+	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
 	{
 		$criteria = Core\Number::translate( $search );
 
@@ -609,14 +609,14 @@ class NationalLibrary extends gEditorial\Module
 		if ( ! preg_match( '/^[0-9]+$/', $criteria ) )
 			return $meta;
 
-		if ( 'any' === $queried )
+		if ( 'any' === $posttypes )
 			$posttypes = $this->posttypes();
 
-		else if ( is_array( $queried ) )
-			$posttypes = $queried;
+		else if ( is_array( $posttypes ) )
+			$posttypes = $posttypes;
 
-		else if ( ! self::empty( $queried ) )
-			$posttypes = WordPress\Strings::getSeparated( $queried );
+		else if ( ! self::empty( $posttypes ) )
+			$posttypes = WordPress\Strings::getSeparated( $posttypes );
 
 		else
 			return $meta;
@@ -938,7 +938,7 @@ class NationalLibrary extends gEditorial\Module
 			ModuleHelper::generateHints( $fipa, $post, $context, $queried ) );
 	}
 
-	public function render_metabox_fipa( $post, $box )
+	public function render_metabox_fipa( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;

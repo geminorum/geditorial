@@ -12,11 +12,18 @@ trait MetaBoxSupported
 	protected $base = NULL;
 	protected $key  = NULL;
 
-	protected function _hook_term_supportedbox( $screen, $context = NULL, $metabox_context = NULL, $metabox_priority = NULL, $extra = [] )
-	{
+	protected function _hook_term_supportedbox(
+		object $screen,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		?string $metabox_priority = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		$context  = $context ?? 'supportedbox';
 		$metabox  = $this->classs( $context );
-		$callback = function ( $object, $box ) use ( $context, $screen ) {
+		$callback = function ( $object, $box )
+			use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->taxonomy ) )
 				return;
@@ -61,13 +68,22 @@ trait MetaBoxSupported
 					'-'.$this->key.'-'.$context,
 				], $extra );
 			} );
+
+		return $metabox;
 	}
 
-	protected function _hook_general_supportedbox( $screen, $context = NULL, $metabox_context = NULL, $metabox_priority = NULL, $extra = [] )
-	{
+	protected function _hook_general_supportedbox(
+		object $screen,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		?string $metabox_priority = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		$context  = $context ?? 'supportedbox';
 		$metabox  = $this->classs( $context );
-		$callback = function ( $object, $box ) use ( $context, $screen ) {
+		$callback = function ( $object, $box )
+			use ( $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -112,11 +128,18 @@ trait MetaBoxSupported
 					'-'.$this->key.'-'.$context,
 				], $extra );
 			} );
+
+		return $metabox;
 	}
 
 	// DEFAULT METHOD
-	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
-	{
+	protected function _render_supportedbox_content(
+		?object $object,
+		false|array $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$context = $context ?? 'supportedbox';
 		$screen  = $screen  ?? get_current_screen();
 

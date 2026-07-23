@@ -434,7 +434,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	protected function posttypefields_custom_column_position( $posttype )
+	protected function posttypefields_custom_column_position( string $posttype ): array
 	{
 		switch ( $posttype ) {
 
@@ -449,14 +449,14 @@ class Meta extends gEditorial\Module
 		return [ 'title', 'after' ];
 	}
 
-	protected function posttypefields__hook_default_rows( $posttype )
+	protected function posttypefields__hook_default_rows( string $posttype ): void
 	{
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_quickedit_posttypefields' ], 5, 6 );
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_extra' ], 15, 6 );
 		add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_excerpt' ], 20, 6 );
 	}
 
-	public function render_nobox_fields( $post )
+	public function render_nobox_fields( object $post ): void
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
 
@@ -487,7 +487,7 @@ class Meta extends gEditorial\Module
 		$this->nonce_field( 'nobox' );
 	}
 
-	public function register_lonebox_fields( $screen )
+	public function register_lonebox_fields( object $screen ): void
 	{
 		$fields = $this->get_posttype_fields( $screen->post_type );
 
@@ -528,7 +528,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function render_lonebox_metabox( $post, $box )
+	public function render_lonebox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -549,25 +549,25 @@ class Meta extends gEditorial\Module
 		return ModuleHelper::getPostTypeFieldKeyMap();
 	}
 
-	public function column_row_extra( $post, $before, $after, $module, $fields, $excludes )
+	public function column_row_extra( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
 			ModuleTemplate::metaSource( [
-				'before' => sprintf( $before, '-'.$module.'-source' )
+				'before' => sprintf( $before, '-'.$module_name.'-source' )
 					.$this->get_column_icon( FALSE, 'external', $this->get_string( 'source', $post->post_type, 'titles', 'source' ) ),
 				'after'  => $after,
 			] );
 
 		if ( array_key_exists( 'action_title', $fields ) || array_key_exists( 'action_url', $fields ) )
 			ModuleTemplate::metaAction( [
-				'before' => sprintf( $before, '-'.$module.'-action' )
+				'before' => sprintf( $before, '-'.$module_name.'-action' )
 					.$this->get_column_icon( FALSE, 'cart', $this->get_string( 'action', $post->post_type, 'titles', 'action' ) ),
 				'after'  => $after,
 			] );
 	}
 
 	// NOTE: only on excerpt mode
-	public function column_row_excerpt( $post, $before, $after, $module, $fields, $excludes )
+	public function column_row_excerpt( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		if ( 'excerpt' !== $GLOBALS['mode'] )
 			return;
@@ -580,7 +580,7 @@ class Meta extends gEditorial\Module
 			$icon = $this->get_column_icon( FALSE, $args['icon'], $args['title'] );
 
 			ModuleTemplate::metaFieldHTML( $field, [
-				'before' => sprintf( $before, '-'.$module.'-'.$field ).$icon,
+				'before' => sprintf( $before, '-'.$module_name.'-'.$field ).$icon,
 				'after'  => $after,
 				'filter' => FALSE,
 				'trim'   => 450,
@@ -588,7 +588,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function tableColumnPostMeta( $posttypes )
+	public function tableColumnPostMeta( string|array $posttypes ): array
 	{
 		foreach ( (array) $posttypes as $posttype )
 			$this->posttypefields__hook_default_rows( $posttype );
@@ -642,7 +642,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function calendars_post_summary( $summary, $post, $context, $final )
+	public function calendars_post_summary( $summary, object $post, $context, $final )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $summary;
@@ -659,7 +659,7 @@ class Meta extends gEditorial\Module
 		return $summary;
 	}
 
-	public function modified_data_summary( $data, $post, $context, $format )
+	public function modified_data_summary( $data, object $post, $context, $format )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $data;
@@ -1010,7 +1010,7 @@ class Meta extends gEditorial\Module
 		return $meta;
 	}
 
-	public function meta_field_tokens( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field_tokens( $meta, $field, object $post, $args, $raw, $field_args, $context )
 	{
 		return Services\PostTypeFields::replaceTokens( $meta, $field_args, $post, $context );
 	}

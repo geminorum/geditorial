@@ -9,8 +9,13 @@ use geminorum\gEditorial\WordPress;
 
 trait CorePostTypes
 {
-	public function register_posttype( string $constant, array $atts = [], array $settings_atts = [], array $taxonomies = [ 'post_tag' ] ): false|object
-	{
+	public function register_posttype(
+		string $constant,
+		array $atts = [],
+		array $settings_atts = [],
+		array $taxonomies = [ 'post_tag' ],
+	): false|object {
+
 		$posttype = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
 
@@ -505,12 +510,18 @@ trait CorePostTypes
 		return $this->constant( $constant ) === $post->post_type;
 	}
 
-	public function get_posttype_label( string $constant, string $label = 'name', string $fallback = '' ): string
-	{
+	// NOTE: reversed `$fallback`/`$fallback_key`
+	public function get_posttype_label(
+		string $constant,
+		string $label = 'name',
+		mixed $fallback = '',
+		?string $fallback_key = NULL,
+	): mixed {
+
 		return Services\CustomPostType::getLabel(
 			$this->constant( $constant, $constant ),
 			$label,
-			NULL,
+			$fallback_key,
 			$fallback
 		);
 	}

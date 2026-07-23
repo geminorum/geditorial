@@ -304,7 +304,7 @@ class Papered extends gEditorial\Module
 	}
 
 	// TODO: use static cache
-	private function _get_profile_config( $post, $default = NULL )
+	private function _get_profile_config( mixed $post, ?array $default = NULL ): array
 	{
 		if ( is_null( $default ) )
 			$default = [
@@ -477,7 +477,7 @@ class Papered extends gEditorial\Module
 		return $default;
 	}
 
-	protected function printpage_get_layout_bodyclass( $profile = FALSE )
+	protected function printpage_get_layout_bodyclass( false|object $profile = FALSE ): array
 	{
 		$list   = [];
 		$config = $this->_get_profile_config( $profile );
@@ -485,7 +485,7 @@ class Papered extends gEditorial\Module
 		return array_merge( $list, (array) $config['body_class'] );
 	}
 
-	protected function printpage_get_layout_wrapclass( $profile = FALSE )
+	protected function printpage_get_layout_wrapclass( false|object $profile = FALSE ): array
 	{
 		$config = $this->_get_profile_config( $profile );
 
@@ -497,7 +497,7 @@ class Papered extends gEditorial\Module
 		return $list;
 	}
 
-	public function _load_printpage_adminpage()
+	public function _load_printpage_adminpage(): void
 	{
 		if ( ! $profile = WordPress\Post::get( self::req( 'profile', FALSE ) ) )
 			return;
@@ -511,7 +511,7 @@ class Papered extends gEditorial\Module
 			gEditorial\Scripts::enqueueQRCodeSVG();
 	}
 
-	public function printpage_render_head( $profile = FALSE )
+	public function printpage_render_head( false|object $profile = FALSE ): void
 	{
 		Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_HASH, 'all' );
 
@@ -535,7 +535,7 @@ class Papered extends gEditorial\Module
 	}
 
 	// NOTE: prepend source title before print-page HTML title
-	public function printpage_get_layout_pagetitle( $profile = FALSE )
+	public function printpage_get_layout_pagetitle( false|object $profile = FALSE ): string
 	{
 		$title = WordPress\Post::title( $profile );
 
@@ -545,7 +545,7 @@ class Papered extends gEditorial\Module
 		return $title;
 	}
 
-	public function printpage_render_contents( $profile = FALSE )
+	public function printpage_render_contents( false|object $profile = FALSE ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $profile ) )
 			return Core\HTML::desc( _x( 'There are no print profiles available!', 'Message', 'geditorial-papered' ) );
@@ -553,11 +553,11 @@ class Papered extends gEditorial\Module
 		$source = WordPress\Post::get( self::req( 'source', FALSE ) );
 		$config = $this->_get_profile_config( $profile );
 
-		$this->_render_view_for_post( $post, $source, 'printpage', $config );
+		return $this->_render_view_for_post( $post, $source, 'printpage', $config );
 	}
 
 	// NOTE: better to not have any wrapper!
-	private function _render_view_for_post( $profile, $source, $context, $config )
+	private function _render_view_for_post( false|object $profile, false|object $source, ?string $context, array $config ): bool
 	{
 		$before = $this->_get_view_part_before( $profile, $context );
 		$after  = $this->_get_view_part_after( $profile, $context );
@@ -609,9 +609,11 @@ class Papered extends gEditorial\Module
 			$this->viewengine__render_string( $sheet, $data_sheet );
 			$this->viewengine__render_string( $after, $data_sheet );
 		}
+
+		return TRUE;
 	}
 
-	private function _get_view_list_for_post( $profile, $source, $context, $config, $flags = [] )
+	private function _get_view_list_for_post( false|object $profile, false|object $source, ?String $context, array $config, array $flags = [] ): array
 	{
 		$data  = [];
 		$meta  = gEditorial()->enabled( 'meta' );
@@ -648,7 +650,7 @@ class Papered extends gEditorial\Module
 	}
 
 	// TODO: token for page-break
-	private function _get_view_data_for_post( $profile, $source, $context, $config )
+	private function _get_view_data_for_post( false|object $profile, false|object $source, ?string $context, array $config ): array
 	{
 		$data  = [];
 		$meta  = gEditorial()->enabled( 'meta' );
@@ -696,27 +698,27 @@ class Papered extends gEditorial\Module
 		return $this->filters( 'view_data_for_post', $data, $profile, $source, $context );
 	}
 
-	private function _get_view_part_for_sheet( $profile, $context )
+	private function _get_view_part_for_sheet( object $profile, ?string $context ): string
 	{
 		return $profile->post_content;
 	}
 
-	private function _get_view_part_for_rows( $profile, $context )
+	private function _get_view_part_for_rows( object $profile, ?string $context ): string
 	{
 		return $this->fetch_postmeta( $profile->ID, '', $this->get_postmeta_key( 'template_rows' ) ) ?: '';
 	}
 
-	private function _get_view_part_before( $profile, $context )
+	private function _get_view_part_before( object $profile, ?string $context ): string
 	{
 		return $this->fetch_postmeta( $profile->ID, '', $this->get_postmeta_key( 'template_before' ) ) ?: '';
 	}
 
-	private function _get_view_part_after( $profile, $context )
+	private function _get_view_part_after( object $profile, ?string $context ): string
 	{
 		return $this->fetch_postmeta( $profile->ID, '', $this->get_postmeta_key( 'template_after' ) ) ?: '';
 	}
 
-	private function _get_template_styles( $profile, $context )
+	private function _get_template_styles( object $profile, ?string $context ): string
 	{
 		return $this->fetch_postmeta( $profile->ID, '', $this->get_postmeta_key( 'template_styles' ) ) ?: '';
 	}
@@ -735,7 +737,7 @@ class Papered extends gEditorial\Module
 
 		$field   = 'papersize';
 		$default = 'undefined';
-		$html    = Core\HTML::dropdown( $this->_get_papersizes(), [
+		$html    = Core\HTML::dropdown( $this->_get_papersizes( $context ), [
 			'none_title' => _x( '&ndash; Select Peper Size &ndash;', 'None Title', 'geditorial-papered' ),
 			'none_value' => $default,
 			'name'       => $this->classs( $context, $field ),
@@ -746,7 +748,7 @@ class Papered extends gEditorial\Module
 
 		$field   = 'sheetpadding';
 		$default = 'undefined';
-		$html    = Core\HTML::dropdown( $this->_get_sheetpaddings(), [
+		$html    = Core\HTML::dropdown( $this->_get_sheetpaddings( $context ), [
 			'none_title' => _x( '&ndash; Select Sheet Padding &ndash;', 'None Title', 'geditorial-papered' ),
 			'none_value' => $default,
 			'name'       => $this->classs( $context, $field ),
@@ -788,7 +790,7 @@ class Papered extends gEditorial\Module
 		$this->_render_printbuttons( $object );
 	}
 
-	public function store_mainbox_metabox( $post_id, $post, $update, $context = NULL )
+	public function store_mainbox_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
 	{
 		if ( ! $this->is_save_post( $post, 'primary_posttype' ) || empty( $_POST ) )
 			return;
@@ -829,7 +831,7 @@ class Papered extends gEditorial\Module
 		}
 	}
 
-	protected function _register_lonebox_fields( $screen )
+	protected function _register_lonebox_fields( object $screen ): bool
 	{
 		$selectors = [];
 		$fields    = [
@@ -864,14 +866,19 @@ class Papered extends gEditorial\Module
 		}
 
 		if ( ! Core\L10n::rtl() )
-			return;
+			return TRUE;
 
 		$selectors[] = '#qt_content_textdirection'; // default content editor
 
-		gEditorial\Scripts::inlineScript( $this->classs( 'quicktags' ), 'jQuery(function($){$(window).on("load",function(){$("'.implode( ',', $selectors ).'").click();});});' );
+		gEditorial\Scripts::inlineScript(
+			$this->classs( 'quicktags' ),
+			'jQuery(function($){$(window).on("load",function(){$("'.implode( ',', $selectors ).'").click();});});'
+		);
+
+		return TRUE;
 	}
 
-	public function render_lonebox_metabox( $post, $box )
+	public function render_lonebox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -905,7 +912,7 @@ class Papered extends gEditorial\Module
 			'none_title' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 		] ), 'field-wrap -select' );
 
-		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 		$default = _x( '%1$s Preview Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_preview_title', $object->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_preview_text', $object->post_type, 'metabox', $default );
@@ -918,7 +925,7 @@ class Papered extends gEditorial\Module
 			'disabled' => TRUE,
 		], sprintf( $text, Services\Icons::get( 'welcome-view-site' ), $name ) );
 
-		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_print_title', $object->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_print_text', $object->post_type, 'metabox', $default );
@@ -944,7 +951,7 @@ class Papered extends gEditorial\Module
 	}
 
 	// @REF: `render_print_button()`
-	private function _render_printbuttons( $profile, $source = FALSE, $context = NULL )
+	private function _render_printbuttons( object $profile, false|object $source = FALSE, ?string $context = NULL ): void
 	{
 		$context = $context ?? 'printingbox';
 		$args    = [
@@ -960,7 +967,7 @@ class Papered extends gEditorial\Module
 		$name = Services\CustomPostType::getLabel( $source ? $source->post_type : $profile->post_type, 'singular_name' );
 		$post = WordPress\Post::title( $source, '' );
 
-		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 		$default = _x( '%1$s Preview Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_preview_title', $source ? $source->post_type : $profile->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_preview_text', $source ? $source->post_type : $profile->post_type, 'metabox', $default );
@@ -982,7 +989,7 @@ class Papered extends gEditorial\Module
 			],
 		] );
 
-		/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+		/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_print_title', $source ? $source->post_type : $profile->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_print_text', $source ? $source->post_type : $profile->post_type, 'metabox', $default );
@@ -1018,7 +1025,7 @@ class Papered extends gEditorial\Module
 		echo '<script>function '.$func.'(id){var frm=document.getElementById(id).contentWindow;frm.focus();frm.print();return false;}</script>';
 	}
 
-	private function _get_profiles_for_posttype( $post )
+	private function _get_profiles_for_posttype( object $post ): array
 	{
 		$args = [
 			'posts_per_page' => -1,
@@ -1036,12 +1043,12 @@ class Papered extends gEditorial\Module
 		return $this->filters( 'profiles_for_posttype', $profiles, $post );
 	}
 
-	private function _get_papersizes()
+	private function _get_papersizes( ?string $context = NULL ): array
 	{
 		return $this->get_strings( 'papersizes', 'fields' );
 	}
 
-	private function _get_sheetpaddings()
+	private function _get_sheetpaddings( ?string $context = NULL ): array
 	{
 		return $this->get_strings( 'sheetpaddings', 'fields' );
 	}

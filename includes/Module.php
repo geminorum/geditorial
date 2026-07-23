@@ -158,6 +158,11 @@ class Module extends WordPress\Module
 			$this->setup();
 	}
 
+	public static function factory()
+	{
+		return gEditorial();
+	}
+
 	protected function setup_textdomain( ?string $locale = NULL, ?string $domain = NULL ): bool
 	{
 		global $wp_textdomain_registry;
@@ -179,9 +184,16 @@ class Module extends WordPress\Module
 		if ( ! $domain )
 			return FALSE;
 
-		$locale = $locale ?? apply_filters( 'plugin_locale', Core\L10n::locale(), $this->base );
+		$locale = $locale ?? apply_filters( 'plugin_locale',
+			Core\L10n::locale(),
+			$this->base
+		);
 
-		$path = GEDITORIAL_DIR."languages/{$this->module->folder}";
+		$path = sprintf( '%slanguages/%s',
+			static::factory()->get_dir(),
+			$this->module->folder,
+		);
+
 		$wp_textdomain_registry->set_custom_path( $domain, $path );
 
 		return load_textdomain( $domain, $path."/{$locale}.mo" );
@@ -565,66 +577,6 @@ class Module extends WordPress\Module
 	{
 		if ( $subterms )
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
-	}
-
-	protected function _hook_store_metabox( string $posttype, false|string $prefix = FALSE ): void
-	{
-		if ( $posttype )
-			add_action(
-				sprintf( 'save_post_%s', $posttype ),
-				[ $this, self::und( 'store_metabox', $prefix ) ],
-				20,
-				3
-			);
-	}
-
-	protected function class_metabox( object $screen, string $context = 'mainbox' ): void
-	{
-		add_filter( self::und( 'postbox_classes', $screen->id, $this->classs( $context ) ),
-			function ( $classes )
-				use ( $context ) {
-				return Core\Arraay::prepString( $classes, [
-					$this->base.'-wrap',
-					'-admin-postbox',
-					'-'.$this->key,
-					'-'.$this->key.'-'.$context,
-				] );
-			} );
-	}
-
-	// TODO: filter the results
-	// TODO: MUST DEPRECATE
-	public function get_meta_box_title( $constant = 'post', $url = NULL, $edit_cap = NULL, $title = NULL ): string
-	{
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'metabox_title', $constant, 'metabox', NULL );
-
-		// DEPRECATED: for back-comp only
-		if ( is_null( $title ) )
-			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial-admin' ) );
-
-		return $title; // <-- // FIXME: problems with block editor
-
-		// TODO: 'metabox_icon'
-		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
-			$title.= WordPress\MetaBox::markupTitleHelp( $info );
-
-		if ( FALSE === $url || FALSE === $edit_cap )
-			return $title;
-
-		if ( is_null( $edit_cap ) )
-			$edit_cap = $this->caps['settings'] ?? 'manage_options';
-
-		if ( TRUE === $edit_cap || current_user_can( $edit_cap ) ) {
-
-			if ( is_null( $url ) )
-				$url = $this->get_module_url( 'settings' );
-
-			$action = $this->get_string( 'metabox_action', $constant, 'metabox', _x( 'Configure', 'Module: MetaBox Default Action', 'geditorial-admin' ) );
-			$title.= ' <span class="postbox-title-action"><a href="'.esc_url( $url ).'" target="_blank">'.$action.'</a></span>';
-		}
-
-		return $title;
 	}
 
 	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false

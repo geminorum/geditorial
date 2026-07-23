@@ -11,7 +11,7 @@ trait PostsToPosts
 {
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
-	protected function p2p_register( $constant, $posttypes = NULL )
+	protected function p2p_register( string $constant, string|array|null $posttypes = NULL ): bool|string
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();
@@ -44,7 +44,7 @@ trait PostsToPosts
 		return $this->_p2p = $p2p;
 	}
 
-	public function p2p_get_meta( $p2p_id, $meta_key, $before = '', $after = '', $args = [] )
+	public function p2p_get_meta( int $p2p_id, string $meta_key, string $before = '', string $after = '', array $args = [] ): string
 	{
 		if ( ! $this->_p2p )
 			return '';
@@ -64,7 +64,7 @@ trait PostsToPosts
 		return $before.$meta.$after;
 	}
 
-	public function p2p_get_meta_row( $constant, $p2p_id, $before = '', $after = '' )
+	public function p2p_get_meta_row( string $constant, int $p2p_id, string $before = '', string $after = '' ): string
 	{
 		if ( ! $this->_p2p )
 			return '';
@@ -79,7 +79,7 @@ trait PostsToPosts
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki/Creating-connections-programmatically
-	public function p2p_connect( $constant, $from, $to, $meta = [] )
+	public function p2p_connect( string $constant, int $from, int $to, array $meta = [] ): bool
 	{
 		if ( ! $this->_p2p )
 			return FALSE;

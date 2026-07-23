@@ -36,7 +36,7 @@ class Individuals extends gEditorial\Service
 		add_filter( self::und( static::BASE, 'prep_individual' ), [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
 	}
 
-	public static function isParserAvailable()
+	public static function isParserAvailable(): bool
 	{
 		return in_array(
 			Core\L10n::locale( TRUE ),
@@ -45,21 +45,21 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function prepPeople( $value, $empty = '', $separator = NULL )
+	public static function prepPeople( mixed $value, string|false|null $empty = '', string|array|null $separator = NULL ): string|false|null
 	{
 		if ( self::empty( $value ) )
 			return $empty;
 
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value ) as $individual )
+		foreach ( Markup::getSeparated( $value, $separator ) as $individual )
 			if ( $prepared = apply_filters( self::und( static::BASE, 'prep_individual' ), $individual, $individual, $value ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function filter_people_format_name( $formatted, $raw, $term = NULL )
+	public static function filter_people_format_name( string $formatted, string $raw, ?object $term = NULL ): string
 	{
 		// already formatted
 		if ( Core\Text::has( $raw, trim( static::SEPARATOR_TEMPLATE ) ) )
@@ -78,7 +78,7 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function filter_prep_individual_front( $individual, $raw, $value )
+	public static function filter_prep_individual_front( string $individual, string $raw, mixed $value ): string
 	{
 		// late check for REST-API
 		if ( WordPress\IsIt::rest() )
@@ -90,7 +90,7 @@ class Individuals extends gEditorial\Service
 		return $individual;
 	}
 
-	public static function makeFullname( $data, $context = 'display', $fallback = FALSE )
+	public static function makeFullname( array $data, ?string $context = 'display', string|false|null $fallback = FALSE ): string|false|null
 	{
 		if ( ! $data )
 			return $fallback;
@@ -104,7 +104,8 @@ class Individuals extends gEditorial\Service
 			'mother_name' => '',
 		], $data );
 
-		$parser = self::isParserAvailable();
+		$fullname = '';
+		$parser   = self::isParserAvailable();
 
 		foreach ( $parts as $key => $value )
 			$parts[$key] = $parser
@@ -171,6 +172,6 @@ class Individuals extends gEditorial\Service
 				);
 		}
 
-		return Core\Text::normalizeWhitespace( $fullname, FALSE );
+		return $fullname ? Core\Text::normalizeWhitespace( $fullname, FALSE ) : $fallback;
 	}
 }

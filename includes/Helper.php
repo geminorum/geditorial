@@ -201,10 +201,11 @@ class Helper extends WordPress\Main
 		string $posttype = 'post',
 		string $before = '',
 		string $after = '',
-	): void {
+		bool $verbose = TRUE,
+	): true|string {
 
 		if ( empty( $authors ) )
-			return;
+			return '';
 
 		$list = [];
 
@@ -212,7 +213,13 @@ class Helper extends WordPress\Main
 			if ( $html = WordPress\PostType::authorEditMarkup( $posttype, $author ) )
 				$list[] = $html;
 
-		echo WordPress\Strings::getJoined( $list, $before, $after );
+		$html = WordPress\Strings::getJoined( $list, $before, $after );
+
+		if ( ! $verbose )
+			return $html;
+
+		echo $verbose;
+		return TRUE;
 	}
 
 	// TODO: move to `Tablelist`
@@ -473,8 +480,9 @@ class Helper extends WordPress\Main
 		bool $no_cache = FALSE,
 	): string|true {
 
+		$dir     = static::factory()->get_dir(); // `GEDITORIAL_DIR`
 		$content = WP_CONTENT_DIR.'/'.$name.'.php';
-		$plugin  = GEDITORIAL_DIR.'includes/Layouts/'.$name.'.php';
+		$plugin  = $dir.'includes/Layouts/'.$name.'.php';
 		$layout  = locate_template( 'editorial/layouts/'.$name );
 
 		if ( ! $layout && Core\File::readable( $content ) )

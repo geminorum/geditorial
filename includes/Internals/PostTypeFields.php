@@ -326,7 +326,7 @@ trait PostTypeFields
 	 * @param null|int $user_id
 	 * @return bool
 	 */
-	public function access_posttype_field( $field, $post = NULL, $context = 'view', $user_id = NULL )
+	public function access_posttype_field( array|false|null $field, mixed $post = NULL, ?string $context = 'view', ?int $user_id = NULL ): bool
 	{
 		if ( ! $field )
 			return FALSE; // no field, no access!
@@ -419,7 +419,7 @@ trait PostTypeFields
 	 * @param mixed $post
 	 * @return mixed $sanitized
 	 */
-	public function sanitize_posttype_field( $data, $field, $post = FALSE )
+	public function sanitize_posttype_field( mixed $data, array $field, mixed $post = FALSE ): mixed
 	{
 		if ( ! empty( $field['sanitize'] ) && is_callable( $field['sanitize'] ) )
 			return $this->filters( 'sanitize_posttype_field',
@@ -548,12 +548,18 @@ trait PostTypeFields
 
 			case 'phone':
 
-				$sanitized = Core\Phone::sanitize( $data );
+				$sanitized = WordPress\Strings::isEmpty( $data )
+					? ''
+					: Core\Phone::sanitize( $data );
+
 				break;
 
 			case 'mobile':
 
-			 	$sanitized = Core\Mobile::sanitize( $data );
+				$sanitized = WordPress\Strings::isEmpty( $data )
+					? ''
+					: Core\Mobile::sanitize( $data );
+
 				break;
 
 			case 'year':
@@ -658,7 +664,7 @@ trait PostTypeFields
 		return $this->filters( 'sanitize_posttype_field', $sanitized, $field, $post, $data );
 	}
 
-	protected function posttypefields__hook_metabox( $screen, $fields = NULL, $context = NULL )
+	protected function posttypefields__hook_metabox( object $screen, ?array $fields = NULL, ?string $context = NULL )
 	{
 		$context = $context ?? 'mainbox';
 		$fields  = $fields  ?? $this->get_posttype_fields( $screen->post_type );
@@ -703,7 +709,7 @@ trait PostTypeFields
 		add_action( $this->hook( 'render_metabox' ), [ $this, 'render_posttype_fields' ], 10, 4 );
 	}
 
-	public function render_metabox_posttypefields( $post, $box )
+	public function render_metabox_posttypefields( object $post, false|array $box ): void
 	{
 		echo $this->wrap_open( '-admin-metabox' );
 
@@ -727,7 +733,7 @@ trait PostTypeFields
 		echo '</div>';
 	}
 
-	public function render_posttype_fields( $post, $box = FALSE, $fields = NULL, $context = NULL, $extra = [] )
+	public function render_posttype_fields( object $post, false|array $box = FALSE, ?array $fields = NULL, ?string $context = NULL, array $extra = [] ): void
 	{
 		$user_id  = get_current_user_id();
 		$calendar = $this->default_calendar();
@@ -883,7 +889,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `store_metabox()`
-	public function store_metabox_posttypefields( $post_id, $post, $update )
+	public function store_metabox_posttypefields( int $post_id, object $post, bool $update ): void
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -899,13 +905,13 @@ trait PostTypeFields
 		$this->store_posttype_fields( $post );
 	}
 
-	public function bulk_edit_posts_posttypefields( $updated, $data )
+	public function bulk_edit_posts_posttypefields( array $updated, mixed $data ): void
 	{
 		foreach ( $updated as $post_id )
 			$this->store_posttype_fields( WordPress\Post::get( $post_id ), FALSE );
 	}
 
-	protected function store_posttype_fields( $post, $override = TRUE )
+	protected function store_posttype_fields( object $post, bool $override = TRUE ): void
 	{
 		$fields = $this->get_posttype_fields( $post->post_type );
 
@@ -940,7 +946,7 @@ trait PostTypeFields
 			$this->clean_postmeta_legacy( $post->ID, $fields, $legacies );
 	}
 
-	protected function posttypefields__enqueue_edit_screen( $posttype, $fields = NULL )
+	protected function posttypefields__enqueue_edit_screen( string $posttype, ?array $fields = NULL ): false|string
 	{
 		// NOTE: this is wp-core hook
 		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
@@ -951,21 +957,23 @@ trait PostTypeFields
 		if ( ! $quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) )
 			return FALSE;
 
-		$this->enqueue_asset_js( [
+		return $this->enqueue_asset_js( [
 			'fields' => Core\Arraay::pluck( $quickedits, 'type', 'name' ),
 		], $this->dotted( 'edit' ) );
 	}
 
-	protected function posttypefields__hook_setup_ajax( $posttype )
+	protected function posttypefields__hook_setup_ajax( string $posttype ): bool
 	{
 		if ( ! $this->get_posttype_fields( $posttype ) )
-			return;
+			return FALSE;
 
 		$this->posttypefields__hook_edit_screen( $posttype );
 		$this->_hook_store_metabox( $posttype, 'posttypefields' );
+
+		return TRUE;
 	}
 
-	protected function posttypefields__hook_edit_screen( $posttype )
+	protected function posttypefields__hook_edit_screen( string $posttype ): bool
 	{
 		if ( WordPress\IsIt::compatWP( '6.3.0' ) ) { // @since WP 6.3.0
 			$this->action( 'bulk_edit_posts', 2, 12, 'posttypefields' );
@@ -983,17 +991,19 @@ trait PostTypeFields
 			[ $this, 'posts_custom_column_posttypefields' ], 10, 2 );
 
 		$this->posttypefields__hook_default_rows( $posttype );
+
+		return TRUE;
 	}
 
-	public function bulk_edit_custom_box_posttypefields( $column, $posttype )
+	public function bulk_edit_custom_box_posttypefields( string $column, string $posttype ): void
 	{
 		$this->quick_edit_custom_box_posttypefields( $column, $posttype, TRUE );
 	}
 
-	public function quick_edit_custom_box_posttypefields( $column, $posttype, $bulkedit = FALSE )
+	public function quick_edit_custom_box_posttypefields( string $column, string $posttype, bool $bulkedit = FALSE ): void
 	{
 		if ( $this->classs() != $column )
-			return FALSE;
+			return;
 
 		$fields = $this->get_posttype_fields( $posttype );
 		$prefix = $this->classs(); // to protect key underlines
@@ -1068,7 +1078,7 @@ trait PostTypeFields
 		], $position[0], $position[1] );
 	}
 
-	public function posts_custom_column_posttypefields( $column, $post_id )
+	public function posts_custom_column_posttypefields( string $column, int $post_id ): void
 	{
 		if ( $this->classs() != $column )
 			return;
@@ -1117,7 +1127,7 @@ trait PostTypeFields
 	}
 
 	// NOTE: for more `MetaBox::renderFieldInput()`
-	protected function posttypefields_prep_posttype_field_for_input( $value, $field_key, $field )
+	protected function posttypefields_prep_posttype_field_for_input( mixed $value, string $field_key, array $field ): mixed
 	{
 		if ( empty( $field['type'] ) )
 			return $value;
@@ -1155,14 +1165,14 @@ trait PostTypeFields
 		// `add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_quickedit_posttypefields' ], 5, 6 );`
 	}
 
-	public function column_row_all_posttypefields( $post, $before, $after, $module, $fields, $excludes )
+	public function column_row_all_posttypefields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			printf( $before, sprintf( '-%s-%s', $module, $field_key ) );
+			printf( $before, sprintf( '-%s-%s', $module_name, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;
@@ -1170,7 +1180,7 @@ trait PostTypeFields
 	}
 
 	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_quickedit_posttypefields( $post, $before, $after, $module, $fields, $excludes )
+	public function column_row_quickedit_posttypefields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 
@@ -1180,7 +1190,7 @@ trait PostTypeFields
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key ) )
 				continue;
 
-			printf( $before, sprintf( '-%s-%s', $module, $field_key ) );
+			printf( $before, sprintf( '-%s-%s', $module_name, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;
@@ -1188,16 +1198,22 @@ trait PostTypeFields
 	}
 
 	// NOTE: `$data` maybe empty
-	protected function posttypefields__do_action_import_data( $post, $data, $override = FALSE, $check_access = TRUE, $module = 'meta' )
+	protected function posttypefields__do_action_import_data( object $post, mixed $data, bool $override = FALSE, bool $check_access = TRUE, ?string $module = 'meta' ): void
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
-			return FALSE;
+			return;
 
-		do_action( $this->hook_base( 'posttypefields_import_raw_data' ), $post, $data, $override, $check_access, $module );
+		do_action( $this->hook_base( 'posttypefields_import_raw_data' ),
+			$post,
+			$data,
+			$override,
+			$check_access,
+			$module
+		);
 	}
 
 	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
-	protected function posttypefields_get_post_by( $field_key, $value, $posttype_constant, $sanitize = FALSE, $module = 'meta' )
+	protected function posttypefields_get_post_by( string $field_key, mixed $value, string $posttype_constant, bool $sanitize = FALSE, ?string $module = 'meta' ): false|object
 	{
 		if ( ! $field_key || ! $value || ! $posttype_constant || ! gEditorial()->enabled( $module ) )
 			return FALSE;
@@ -1225,7 +1241,7 @@ trait PostTypeFields
 		return FALSE;
 	}
 
-	protected function posttypefields_connect_paired_by( $field_key, $data, $post )
+	protected function posttypefields_connect_paired_by( string $field_key, mixed $data, object $post ): FALSE|array
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -1254,7 +1270,7 @@ trait PostTypeFields
 	}
 
 	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
-	public function get_postid_by_field( $value, $field, $prefix = NULL )
+	public function get_postid_by_field( mixed $value, string $field, ?string $prefix = NULL ): false
 	{
 		if ( is_null( $prefix ) )
 			$prefix = 'meta'; // the exception!
@@ -1265,7 +1281,7 @@ trait PostTypeFields
 		return FALSE;
 	}
 
-	protected function posttypefields_support_posttypes()
+	protected function posttypefields_support_posttypes(): array
 	{
 		$posttypes = [ 'post' ];
 		$supported = get_post_types_by_support( self::dsh( 'editorial', $this->key ) );
@@ -1280,7 +1296,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `init_meta_fields()`
-	protected function posttypefields_init_meta_fields()
+	protected function posttypefields_init_meta_fields(): void
 	{
 		foreach ( $this->posttypefields_support_posttypes() as $posttype )
 			$this->add_posttype_fields( $posttype, $this->fields[$this->key]['_supported'], TRUE, $this->key );
@@ -1290,7 +1306,7 @@ trait PostTypeFields
 		$this->action( 'wp_loaded', 0, 9, 'posttypefields' );
 	}
 
-	public function wp_loaded_posttypefields()
+	public function wp_loaded_posttypefields(): void
 	{
 		// Initiate the post-type fields for each post-type
 		foreach ( $this->posttypes() as $posttype )
@@ -1300,7 +1316,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `register_meta_fields()`
-	protected function posttypefields_register_meta_fields()
+	protected function posttypefields_register_meta_fields(): void
 	{
 		$this->filter( 'pairedrest_prepped_post', 3, 9, 'posttypefields', $this->base );
 		$this->filter( 'pairedimports_import_types', 4, 5, 'posttypefields', $this->base );
@@ -1448,7 +1464,7 @@ trait PostTypeFields
 		}
 	}
 
-	public function pairedrest_prepped_post_posttypefields( $prepped, $post, $parent )
+	public function pairedrest_prepped_post_posttypefields( $prepped, $post, $parent ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $prepped;
@@ -1460,7 +1476,7 @@ trait PostTypeFields
 		] );
 	}
 
-	public function pairedimports_import_types_posttypefields( $types, $linked, $posttypes, $module_key )
+	public function pairedimports_import_types_posttypefields( $types, $linked, $posttypes, $module_key ): array
 	{
 		foreach ( $this->posttypes() as $posttype ) {
 
@@ -1478,7 +1494,7 @@ trait PostTypeFields
 		return $types;
 	}
 
-	public function attribute_get_callback_posttypefields( $params, $attr, $request, $object_type )
+	public function attribute_get_callback_posttypefields( $params, $attr, $request, $object_type ): array
 	{
 		return $this->get_posttype_fields_data(
 			(int) $params['id'],
@@ -1494,7 +1510,7 @@ trait PostTypeFields
 	 * - This filter is to call when performing `edit_post_meta`, `add_post_meta`, and `delete_post_meta` capability checks
 	 * - Returns `true` to have the mapped meta caps from `edit_{$object_type}` apply
 	*/
-	public function register_auth_callback_posttypefields( $allowed, $meta_key, $object_id, $user_id, $cap, $caps )
+	public function register_auth_callback_posttypefields( mixed $allowed, $meta_key, $object_id, $user_id, $cap, $caps ): mixed
 	{
 		// FIXME: find a better way than `stripprefix()`
 		if ( ! $field = $this->get_posttype_field_args( $this->stripprefix( $meta_key ), get_object_subtype( 'post', $object_id ) ) )
@@ -1598,7 +1614,7 @@ trait PostTypeFields
 		return $fields;
 	}
 
-	public function importer_fields_posttypefields( $fields, $posttype )
+	public function importer_fields_posttypefields( array $fields, string $posttype )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
@@ -1606,8 +1622,16 @@ trait PostTypeFields
 		return array_merge( $fields, $this->posttypefields_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare_posttypefields( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
-	{
+	public function importer_prepare_posttypefields(
+		mixed $value,
+		?string $posttype,
+		string $field,
+		array $header,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
 		if ( ! $field || ! $this->posttype_supported( $posttype ) )
 			return $value;
 

@@ -204,7 +204,7 @@ trait TemplateTaxonomy
 		return '';
 	}
 
-	public function gtheme_navigation_crumb_archive( $crumb, $args )
+	public function gtheme_navigation_crumb_archive( false|string $crumb, array $args ): false|string
 	{
 		return $this->get_setting_fallback( 'archive_title',
 			WordPress\Term::title( $this->current_queried ) );

@@ -58,6 +58,8 @@ class Schedule extends gEditorial\Module
 	{
 		parent::init();
 
+		$this->cache['default_calendar'] = $this->default_calendar();
+
 		// has no frontend
 
 		if ( $this->get_setting( 'admin_rowactions' ) ) {
@@ -111,10 +113,19 @@ class Schedule extends gEditorial\Module
 
 				// gEditorial\Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
 
-				if ( ! $new = $this->_add_new_post( $data['post_type'], $data['date_cal'], $data['date_year'], $data['date_month'], $data['date_day'], $data['post_title'] ) )
+				$inserted = $this->_add_new_post(
+					$data['post_type'],
+					$data['date_cal'],
+					$data['date_year'],
+					$data['date_month'],
+					$data['date_day'],
+					$data['post_title'],
+				);
+
+				if ( ! $inserted )
 					gEditorial\Ajax::errorMessage();
 
-				gEditorial\Ajax::success( $this->_get_post_row( $data['date_day'], $new ) );
+				gEditorial\Ajax::success( $this->_get_post_row( $data['date_day'], $inserted ) );
 		}
 
 		gEditorial\Ajax::errorWhat();
@@ -169,7 +180,7 @@ class Schedule extends gEditorial\Module
 
 	public function admin_mainpage_page()
 	{
-		$cal = self::req( 'cc', $this->default_calendar() );
+		$cal = self::req( 'cc', $this->cache['default_calendar'] );
 
 		$args = [
 			'id'                  => $this->classs( 'calendar' ),
@@ -240,13 +251,13 @@ class Schedule extends gEditorial\Module
 		return add_query_arg( [
 			'yy' => $year,
 			'mm' => $month,
-			'cc' => self::req( 'cc', $this->default_calendar() ),
+			'cc' => self::req( 'cc', $this->cache['default_calendar'] ),
 		] );
 	}
 
-	public function calendar_the_day( $the_day, $data = [], $args = [], $today = FALSE )
+	public function calendar_the_day( int $the_day, array $data = [], array $args = [], bool $today = FALSE ): string
 	{
-		$cal = self::req( 'cc', $this->default_calendar() );
+		// $cal = self::req( 'cc', $this->cache['default_calendar'] );
 
 		$html = gEditorial\Ajax::spinner();
 		$html.= '<span class="-the-day-number">'.Core\Number::localize( $the_day ).'</span>';
@@ -271,7 +282,7 @@ class Schedule extends gEditorial\Module
 		return $html;
 	}
 
-	private function _get_post_row( $the_day, $post, $calendar_args = [] )
+	private function _get_post_row( int $the_day, mixed $post, array $calendar_args = [] ): string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
@@ -328,7 +339,7 @@ class Schedule extends gEditorial\Module
 		return $buttons;
 	}
 
-	private function _add_new_post( $posttype, $cal, $year, $month, $day, $title )
+	private function _add_new_post( string $posttype, string $cal, int|string $year, int|string $month, int|string $day, string $title ): false|int
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'makeMySQL' ) )
 			return FALSE;
@@ -337,13 +348,13 @@ class Schedule extends gEditorial\Module
 			'post_title'  => self::unslash( $title ),
 			'post_type'   => $posttype,
 			'post_status' => 'draft',
-			'post_date'   => \gPersianDateDate::makeMySQL( 0, 0, 0, $month, $day, $year, $cal ),
+			'post_date'   => \gPersianDateDate::makeMySQL( 0, 0, 0, (int) $month, (int) $day, (int) $year, $cal ),
 		];
 
 		return wp_insert_post( $data );
 	}
 
-	public function get_calendar_link( int|object $post ): false|array
+	public function get_calendar_link( mixed $post ): false|string
 	{
 		if ( ! is_callable( 'gPersianDateDate', 'getByPost' ) )
 			return FALSE;
@@ -351,11 +362,10 @@ class Schedule extends gEditorial\Module
 		if ( ! $this->role_can( 'adminmenu' ) )
 			return FALSE;
 
-		$cal  = $this->default_calendar();
-		$date = \gPersianDateDate::getByPost( $post, $cal );
+		$date = \gPersianDateDate::getByPost( $post, $this->cache['default_calendar'] );
 
 		return $this->get_adminpage_url( TRUE, [
-			'cc' => $cal,
+			'cc' => $this->cache['default_calendar'],
 			'yy' => $date['year'],
 			'mm' => $date['mon'],
 		], 'adminmenu' );

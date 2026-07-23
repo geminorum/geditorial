@@ -10,12 +10,15 @@ use geminorum\gEditorial\WordPress;
 trait MetaBoxCustom
 {
 
-	public function metaboxcustom_add_metabox_author( $screen, $constant, $callback = 'post_author_meta_box' )
+	public function metaboxcustom_add_metabox_author( object $screen, string $constant, ?string $metabox_context = NULL, bool $check_Support = TRUE, ?callable $callback = NULL ): false|string
 	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return FALSE;
 
 		$posttype = WordPress\PostType::object( $this->constant( $constant ) );
+
+		if ( $check_Support && ! post_type_supports( $posttype->name, 'author' ) )
+			return FALSE;
 
 		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_author' ), TRUE, $posttype->name ) )
 			return FALSE;
@@ -23,30 +26,37 @@ trait MetaBoxCustom
 		if ( ! current_user_can( $posttype->cap->edit_others_posts ) )
 			return FALSE;
 
-		add_meta_box( 'authordiv', // same as core to override
-			$this->get_posttype_label( $constant, 'author_label', __( 'Author' ) ),
-			$callback,
+		$metabox = 'authordiv'; // same as core to override
+		$label   = $this->get_posttype_label( $constant, 'author_label', __( 'Author' ) );
+
+		add_meta_box( $metabox,
+			$label,
+			$callback ?? 'post_author_meta_box', // core's default
 			$screen,
-			'normal',
+			$metabox_context ?? 'normal', // 'after_title'
 			'core'
 		);
 
-		return TRUE;
+		return $metabox;
 	}
 
-	public function metaboxcustom_add_metabox_excerpt( $screen, $constant, $metabox_context = NULL, $callback = NULL )
+	public function metaboxcustom_add_metabox_excerpt( object $screen, string $constant, ?string $metabox_context = NULL, bool $check_Support = TRUE, ?callable $callback = NULL ): false|string
 	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return FALSE;
 
 		$posttype = $this->constant( $constant );
 
+		if ( $check_Support && ! post_type_supports( $posttype, 'excerpt' ) )
+			return FALSE;
+
 		if ( ! apply_filters( $this->hook_base( 'module', 'metabox_excerpt' ), TRUE, $posttype ) )
 			return FALSE;
 
-		$label = $this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) );
+		$metabox = 'postexcerpt'; // same as core to override
+		$label   = $this->get_posttype_label( $constant, 'excerpt_label', __( 'Excerpt' ) );
 
-		add_meta_box( 'postexcerpt', // same as core to override
+		add_meta_box( $metabox,
 			$label,
 			$callback ?? [ $this, 'metaboxcustom_do_metabox_excerpt' ],
 			$screen,
@@ -61,10 +71,10 @@ trait MetaBoxCustom
 
 		gEditorial\MetaBox::classEditorBox( $screen, 'postexcerpt' );
 
-		return TRUE;
+		return $metabox;
 	}
 
-	public function metaboxcustom_do_metabox_excerpt( $post, $box )
+	public function metaboxcustom_do_metabox_excerpt( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;

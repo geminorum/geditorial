@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait PairedRowActions
 {
-	protected function _hook_paired_taxonomy_bulk_actions( $posttype_origin, $taxonomy_origin )
+	protected function _hook_paired_taxonomy_bulk_actions( string $posttype_origin, string $taxonomy_origin ): bool|string
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -59,7 +59,7 @@ trait PairedRowActions
 		return $key;
 	}
 
-	public function paired_bulk_input_add_new_item( $taxonomy, $action )
+	public function paired_bulk_input_add_new_item( string $taxonomy, string $action ): void
 	{
 		printf(
 			/* translators: `%s`: clone into input */
@@ -79,7 +79,7 @@ trait PairedRowActions
 		] );
 	}
 
-	public function paired_bulk_action_add_new_item( $term_ids, $taxonomy, $action )
+	public function paired_bulk_action_add_new_item( array $term_ids, string $taxonomy, string $action ): bool
 	{
 		global $wpdb;
 
@@ -207,6 +207,7 @@ trait PairedRowActions
 					wp_set_object_terms( $object_id, $cloned->term_id, $paired_taxonomy, FALSE ); // overrides!
 
 				break;
+
 			default:
 			case 'separeted-terms':
 
@@ -262,25 +263,25 @@ trait PairedRowActions
 		return TRUE;
 	}
 
-	protected function pairedrowactions__hook_for_supported_posttypes( $screen, $cap_check = NULL )
+	protected function pairedrowactions__hook_for_supported_posttypes( object $screen, ?string $cap_check = NULL ): bool
 	{
 		if ( ! $this->get_setting( 'admin_bulkactions' ) )
-			return;
+			return FALSE;
 
 		if ( FALSE === $cap_check )
-			return;
+			return FALSE;
 
 		if ( ! $constants = $this->paired_get_constants() )
-			return;
+			return FALSE;
 
 		if ( TRUE !== $cap_check && ! WordPress\PostType::can( $this->constant( $constants[0] ), is_null( $cap_check ) ? 'edit_posts' : $cap_check ) )
-			return;
+			return FALSE;
 
 		add_filter( 'bulk_actions-'.$screen->id,
 			function ( $actions ) use ( $constants ) {
 				return array_merge( $actions, [
 
-					// bulk action to strip all paired terms for selected supported posts
+					// Bulk action to strip all paired terms for selected supported posts.
 					$this->classs( 'do_abandon' ) => sprintf(
 						/* translators: `%s`: post-type plural label  */
 						_x( 'Abandon All %s', 'Internal: PairedRowAction: Action', 'geditorial-admin' ),
@@ -328,5 +329,7 @@ trait PairedRowActions
 					Core\Number::format( $count ) )
 				);
 			} );
+
+		return TRUE;
 	}
 }

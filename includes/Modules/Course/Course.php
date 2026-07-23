@@ -460,7 +460,7 @@ class Course extends gEditorial\Module
 		return $this->templateposttype__include( $template, $this->constant( 'course_posttype' ), FALSE );
 	}
 
-	public function templateposttype_get_archive_content_default( $posttype )
+	public function templateposttype_get_archive_content_default( string $posttype ): string
 	{
 		return ModuleTemplate::spanTiles();
 	}

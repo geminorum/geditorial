@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait DashboardSummary
 {
 	// USAGE: `$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );`
-	public function render_widget_dashboard_summary( $object, $box )
+	public function render_widget_dashboard_summary( mixed $object, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -25,8 +25,10 @@ trait DashboardSummary
 
 		if ( FALSE === ( $html = get_transient( $key ) ) ) {
 
-			if ( ! method_exists( $this, 'get_dashboard_summary_content' ) )
-				return $this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
+			if ( ! method_exists( $this, 'get_dashboard_summary_content' ) ) {
+				$this->log( 'CRITICAL', sprintf( 'MISSING CALLBACK: %s', 'get_dashboard_summary_content()' ) );
+				return;
+			}
 
 			if ( $summary = $this->get_dashboard_summary_content( $scope, NULL, NULL, 'li' ) ) {
 
@@ -45,7 +47,7 @@ trait DashboardSummary
 		echo '</div>';
 	}
 
-	protected function add_dashboard_term_summary( $constant, $posttypes = NULL, $role_check = TRUE, $title = NULL, $context = 'reports' )
+	protected function add_dashboard_term_summary( string $constant, $posttypes = NULL, $role_check = TRUE, ?string $title = NULL, ?string $context = 'reports' )
 	{
 		if ( $role_check && ! $this->corecaps_taxonomy_role_can( $constant, $context ) )
 			return FALSE;
@@ -58,12 +60,14 @@ trait DashboardSummary
 			);
 
 		$this->add_dashboard_widget( 'term-summary', $title, 'refresh', [],
-			function ( $object, $box ) use ( $constant, $posttypes ) {
+			function ( $object, $box )
+				use ( $constant, $posttypes ) {
+
 				$this->do_dashboard_term_summary( $constant, $box, $posttypes );
 			} );
 	}
 
-	protected function do_dashboard_term_summary( $constant, $box, $posttypes = NULL, $edit = NULL )
+	protected function do_dashboard_term_summary( string $constant, false|array $box, $posttypes = NULL, $edit = NULL )
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -119,7 +123,7 @@ trait DashboardSummary
 	}
 
 	// TODO: support nooped term title via term meta from Terms module
-	protected function get_dashboard_term_summary( $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
+	protected function get_dashboard_term_summary( string $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
 	{
 		$html     = '';
 		$check    = FALSE;
@@ -307,7 +311,7 @@ trait DashboardSummary
 		return $html;
 	}
 
-	protected function hook_dashboardsummary_paired_post_summaries( $constant, $supported = NULL, $setting = NULL, $priority = NULL )
+	protected function hook_dashboardsummary_paired_post_summaries( string $constant, $supported = NULL, ?string $setting = NULL, ?int $priority = NULL )
 	{
 		if ( $setting !== TRUE && ! $this->get_setting( $setting ?? 'dashboard_widgets', FALSE ) )
 			return FALSE;

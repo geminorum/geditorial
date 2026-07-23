@@ -44,7 +44,7 @@ trait O2OMetaBox
 		$this->class_metabox( $screen, 'connectedbox' );
 	}
 
-	public function o2o_render_from_connectedbox( $post, $box )
+	public function o2o_render_from_connectedbox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -102,7 +102,7 @@ trait O2OMetaBox
 		$this->class_metabox( $screen, 'connectedbox' );
 	}
 
-	public function o2o_render_to_connectedbox( $post, $box )
+	public function o2o_render_to_connectedbox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;

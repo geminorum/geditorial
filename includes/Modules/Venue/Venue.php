@@ -439,7 +439,7 @@ class Venue extends gEditorial\Module
 		return $this->templateposttype__include( $template, $this->constant( 'primary_posttype' ) );
 	}
 
-	public function templateposttype_get_archive_content_default( $posttype )
+	public function templateposttype_get_archive_content_default( string $posttype ): string
 	{
 		$html = $this->get_search_form( 'primary_posttype' );
 

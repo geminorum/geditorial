@@ -26,8 +26,8 @@ trait PrintPage
 			$this->_load_printpage_adminpage();
 	}
 
-	public function printpage_render_head( $profile = FALSE ) {}
-	public function printpage_render_contents( $profile = FALSE ) {}
+	public function printpage_render_head( false|object $profile = FALSE ): void {}
+	public function printpage_render_contents( false|object $profile = FALSE ): void {}
 
 	public function render_content_printpage(): bool
 	{
@@ -53,7 +53,7 @@ trait PrintPage
 		exit; // avoiding query monitor output
 	}
 
-	protected function printpage__render_head( $profile = FALSE )
+	protected function printpage__render_head( false|object $profile = FALSE ): void
 	{
 		wp_print_head_scripts();
 
@@ -68,14 +68,14 @@ trait PrintPage
 		$this->actions( 'printpage_render_head', $profile );
 	}
 
-	protected function printpage__render_foot( $profile = FALSE )
+	protected function printpage__render_foot( false|object $profile = FALSE ): void
 	{
 		$this->actions( 'printpage_render_foot', $profile );
 
 		wp_print_footer_scripts();
 	}
 
-	protected function printpage__get_layout_pagetitle( $profile = FALSE )
+	protected function printpage__get_layout_pagetitle( false|object $profile = FALSE ): string
 	{
 		if ( method_exists( $this, 'printpage_get_layout_pagetitle' ) )
 			$pagettitle = $this->printpage_get_layout_pagetitle( $profile );
@@ -87,7 +87,7 @@ trait PrintPage
 			$pagettitle ?? _x( 'Print Me!', 'Internal: PrintPage: Page Title', 'geditorial' ), $profile );
 	}
 
-	protected function printpage__get_layout_bodyclass( $profile = FALSE, $extra = [] )
+	protected function printpage__get_layout_bodyclass( false|object $profile = FALSE, array $extra = [] ): array
 	{
 		if ( method_exists( $this, 'printpage_get_layout_bodyclass' ) )
 			$list = $this->printpage_get_layout_bodyclass( $profile );
@@ -99,7 +99,7 @@ trait PrintPage
 	}
 
 	// FIXME: handle padding
-	protected function printpage__get_layout_wrapclass( $profile = FALSE, $extra = [] )
+	protected function printpage__get_layout_wrapclass( false|object $profile = FALSE, array $extra = [] ): string
 	{
 		if ( method_exists( $this, 'printpage_get_layout_wrapclass' ) )
 			$list = $this->printpage_get_layout_wrapclass( $profile );
@@ -110,7 +110,7 @@ trait PrintPage
 			Core\HTML::prepClass( 'wrap', $list, $extra ), $profile );
 	}
 
-	protected function printpage__render_pagebreak( $profile )
+	protected function printpage__render_pagebreak( false|object $profile ): void
 	{
 		$wrap_class = $this->printpage__get_layout_wrapclass( $profile );
 
@@ -118,22 +118,19 @@ trait PrintPage
 			echo '</div><div class="'.$wrap_class.'">';
 	}
 
-	protected function get_printpage_url( $extra = [], $context = 'printpage' )
+	protected function get_printpage_url( array $extra = [], ?string $context = 'printpage' ): string
 	{
 		$extra['noheader'] = 1;
 		return $this->get_adminpage_url( TRUE, $extra, $context );
 	}
 
 	// @SEE: https://stackoverflow.com/questions/819416/adjust-width-and-height-of-iframe-to-fit-with-content-in-it
-	protected function render_print_iframe( $printpage = NULL )
+	protected function render_print_iframe( ?string $printpage = NULL ): void
 	{
-		if ( is_null( $printpage ) )
-			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
-
 		// prefix to avoid conflicts
 		$func = $this->hook( 'resizeIframe' );
 		$html = Core\HTML::tag( 'iframe', [
-			'src'    => $printpage,
+			'src'    => $printpage ?? $this->get_printpage_url( [ 'single' => '1' ] ),
 			'width'  => '100%',
 			'height' => '0',
 			'border' => '0',
@@ -146,18 +143,15 @@ trait PrintPage
 		echo '<script>function '.$func.'(obj){obj.style.height=obj.contentWindow.document.documentElement.scrollHeight+"px";}</script>';
 	}
 
-	protected function render_print_button( $printpage = NULL, $button_class = '' )
+	protected function render_print_button( ?string $printpage = NULL, string $button_class = '' ): void
 	{
-		if ( is_null( $printpage ) )
-			$printpage = $this->get_printpage_url( [ 'single' => '1' ] );
-
 		// prefix to avoid conflicts
 		$func = $this->hook( 'printIframe' );
 		$id   = $this->classs( 'printiframe' );
 
 		echo Core\HTML::tag( 'iframe', [
 			'id'     => $id,
-			'src'    => $printpage,
+			'src'    => $printpage ?? $this->get_printpage_url( [ 'single' => '1' ] ),
 			'class'  => '-hidden-print-iframe',
 			'width'  => '0',
 			'height' => '0',

@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait PostTypeOverview
 {
 	#[\Deprecated('USE `modulelinks__register_headerbuttons()`')]
-	protected function posttype_overview_register_headerbutton( $context, $link = NULL )
+	protected function posttype_overview_register_headerbutton( string $context, ?string $link = NULL ): false|string
 	{
 		if ( ! $this->role_can( $context ) && ! $this->cuc( $context ) )
 			return FALSE;
@@ -22,7 +22,7 @@ trait PostTypeOverview
 		] );
 	}
 
-	protected function posttype_overview_render_table( $constant, $uri = '', $sub = NULL, $context = 'reports', $title = NULL )
+	protected function posttype_overview_render_table( string $constant, string $uri = '', ?string $sub = NULL, ?string $context = 'reports', ?string $title = NULL ): bool
 	{
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
@@ -50,7 +50,9 @@ trait PostTypeOverview
 			$columns['tax__'.$taxonomy] = [
 				'title'    => $object->label,
 				'class'    => sprintf( '-field-%s-%s', 'tax', $taxonomy ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $taxonomy, $object ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+					use ( $taxonomy, $object ) {
+
 					gEditorial\Helper::renderPostTermsEditRow( $row, $object );
 					return '';
 				},
@@ -60,7 +62,9 @@ trait PostTypeOverview
 			$columns['meta__'.$field_key] = [
 				'title'    => $field['title'],
 				'class'    => sprintf( '-field-%s-%s', 'meta', $field_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $field_key, $field, $context ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+					use ( $field_key, $field, $context ) {
+
 					return gEditorial\Template::getMetaField( $field_key, [
 						'id'      => $row->ID,
 						'default' => $field['default'],
@@ -73,7 +77,9 @@ trait PostTypeOverview
 			$columns['unit__'.$unit_key] = [
 				'title'    => $unit['title'],
 				'class'    => sprintf( '-field-%s-%s', 'unit', $unit_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $unit_key, $unit, $context ) {
+				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+					use ( $unit_key, $unit, $context ) {
+
 					return gEditorial\Template::getMetaField( $unit_key, [
 						'id'      => $row->ID,
 						'default' => $unit['default'],
@@ -87,7 +93,8 @@ trait PostTypeOverview
 			$columns['paired_connected'] = [
 				'title'    => _x( 'Connected', 'Internal: PostTypeOverview: Column Header', 'geditorial-admin' ),
 				'class'    => '-paired-connected-to',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $context ) {
+				'callback' => function ( $value, $row, $column, $index, $key, $args )
+					use ( $context ) {
 
 					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, $context ) ) )
 						return gEditorial\Helper::htmlEmpty();
@@ -119,14 +126,13 @@ trait PostTypeOverview
 		] );
 	}
 
-	public function posttype_overview_after_table( $columns, $data, $args )
+	public function posttype_overview_after_table( array $columns, array $data, array $args ): void
 	{
 		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;
 
-		// already checked
-		// if ( ! $this->role_can( $args['extra']['context'], NULL, TRUE ) )
-		// 	return;
+		// Already checked
+		// `if ( ! $this->role_can( $args['extra']['context'], NULL, TRUE ) ) return;`
 
 		echo Core\HTML::wrap(
 			$this->exports_get_export_buttons(
@@ -136,7 +142,7 @@ trait PostTypeOverview
 			), 'field-wrap -buttons' );
 	}
 
-	protected function posttype_overview_get_available_fields( $posttype, $field_module = 'meta', $option_key = NULL )
+	protected function posttype_overview_get_available_fields( string $posttype, string $field_module = 'meta', ?string $option_key = NULL ): array
 	{
 		return Core\Arraay::keepByKeys(
 			Services\PostTypeFields::getEnabled( $posttype, $field_module ),
@@ -144,7 +150,7 @@ trait PostTypeOverview
 		);
 	}
 
-	protected function posttype_overview_get_available_taxonomies( $posttype, $option_key = NULL )
+	protected function posttype_overview_get_available_taxonomies( string $posttype, ?string $option_key = NULL ): array
 	{
 		return Core\Arraay::keepByKeys(
 			WordPress\Taxonomy::get( 4, [ 'show_ui' => TRUE ], $posttype ),

@@ -9,34 +9,36 @@ use geminorum\gEditorial\WordPress;
 
 trait PairedThumbnail
 {
-	protected function _hook_paired_thumbnail_fallback( $posttypes = NULL )
+	protected function _hook_paired_thumbnail_fallback( ?array $posttypes = NULL ): bool
 	{
 		if ( ! $this->_paired )
-			return;
+			return FALSE;
 
 		if ( ! $this->get_setting( 'thumbnail_support', FALSE ) )
-			return;
+			return FALSE;
 
 		if ( ! $this->get_setting( 'thumbnail_fallback', FALSE ) )
-			return;
-
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
+			return FALSE;
 
 		// NOTE: this is a core filter @since WP 5.9.0
-		add_filter( 'post_thumbnail_id',
-			function ( $thumbnail_id, $post ) use ( $posttypes ) {
-				return $this->get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes );
+		return add_filter( 'post_thumbnail_id',
+			function ( $thumbnail_id, $post )
+				use ( $posttypes ) {
+
+				return $this->get_paired_fallback_thumbnail_id(
+					$thumbnail_id,
+					$post,
+					$posttypes ?? $this->posttypes(),
+				);
 			}, 8, 2 );
 	}
 
-	protected function get_paired_fallback_thumbnail_id( $thumbnail_id, $post, $posttypes = NULL )
+	protected function get_paired_fallback_thumbnail_id( ?int $thumbnail_id, mixed $post, ?array $posttypes = NULL )
 	{
 		if ( $thumbnail_id || FALSE === $post )
 			return $thumbnail_id;
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
+		$posttypes = $posttypes ?? $this->posttypes();
 
 		if ( ! in_array( get_post_type( $post ), $posttypes, TRUE ) )
 			return $thumbnail_id;

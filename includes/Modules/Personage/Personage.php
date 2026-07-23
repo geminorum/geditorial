@@ -451,9 +451,7 @@ class Personage extends gEditorial\Module
 				$this->_hook_post_updated_messages( 'main_posttype' );
 				$this->_hook_general_mainbox( $screen, 'main_posttype' );
 				$this->_hook_editform_globalsummary();
-
-				if ( post_type_supports( $screen->post_type, 'excerpt' ) )
-					$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
+				$this->metaboxcustom_add_metabox_excerpt( $screen, 'main_posttype' );
 
 			} else if ( 'edit' === $screen->base ) {
 

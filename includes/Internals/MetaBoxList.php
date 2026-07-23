@@ -9,9 +9,15 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxList
 {
-	protected function _hook_children_listbox( $screen, $posttypes = NULL, $context = NULL, $metabox_context = NULL, $extra = [] )
-	{
-		$context   = $context ?? 'listbox';
+	protected function _hook_children_listbox(
+		object $screen,
+		?array $posttypes = NULL,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		string|array $extra = [],
+	): false|string {
+
+		$context   = $context   ?? 'listbox';
 		$posttypes = $posttypes ?? $this->posttypes();
 		$metabox   = $this->classs( $context );
 
@@ -71,11 +77,18 @@ trait MetaBoxList
 					'-'.$this->key.'-'.$context,
 				], $extra );
 			} );
+
+		return $metabox;
 	}
 
 	// DEFAULT METHOD
-	protected function _render_children_listbox_extra( $object, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_children_listbox_extra(
+		object $object,
+		false|array $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$context = $context ?? 'listbox';
 
 		// WTF?!

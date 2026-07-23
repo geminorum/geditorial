@@ -267,7 +267,7 @@ class Archives extends gEditorial\Module
 	}
 
 	// not used yet!
-	private function _posttype_archive_slug( $posttype )
+	private function _posttype_archive_slug( string $posttype ): string
 	{
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -284,7 +284,7 @@ class Archives extends gEditorial\Module
 		return $posttype;
 	}
 
-	private function _taxonomy_archive_slug( $taxonomy, $settings = TRUE )
+	private function _taxonomy_archive_slug( string $taxonomy, bool $settings = TRUE ): string
 	{
 		if ( $settings && ( $custom = $this->get_setting( 'taxonomy_'.$taxonomy.'_slug' ) ) )
 			return trim( $custom );
@@ -387,23 +387,23 @@ class Archives extends gEditorial\Module
 		return $template;
 	}
 
-	public function get_the_archive_title_posttype( $name )
+	public function get_the_archive_title_posttype( string $name ): string
 	{
 		return $this->_get_posttype_archive_title( $this->current_queried );
 	}
 
-	public function document_title_parts_posttype( $title )
+	public function document_title_parts_posttype( array $title ): array
 	{
 		$title['title'] = $this->_get_posttype_archive_title( $this->current_queried );
 		return $title;
 	}
 
-	public function templateposttype_get_archive_title( $posttype )
+	public function templateposttype_get_archive_title( string $posttype ): string
 	{
 		return _get_posttype_archive_title( $posttype );
 	}
 
-	private function _get_posttype_archive_title( $posttype, $settings = TRUE )
+	private function _get_posttype_archive_title( string $posttype, bool $settings = TRUE ): string
 	{
 		$default = Services\CustomPostType::getLabel( $posttype, 'all_items' );
 		$custom  = $settings ? $this->get_setting( 'posttype_'.$posttype.'_title', $default ) : $default;
@@ -411,7 +411,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'posttype_archive_title', $custom ?: $default, $posttype );
 	}
 
-	public function templateposttype_get_archive_content( $posttype )
+	public function templateposttype_get_archive_content( string $posttype ): string
 	{
 		$setting = $this->get_setting( 'posttype_'.$this->current_queried.'_content',
 			$this->_get_default_posttype_content( $this->current_queried ) );
@@ -423,29 +423,29 @@ class Archives extends gEditorial\Module
 		return Core\HTML::wrap( $form.$html, '-posttype-archives-content' );
 	}
 
-	public function get_the_archive_title_term( $title )
+	public function get_the_archive_title_term( string $title ): string
 	{
 		return WordPress\Term::title( $this->current_queried );
 	}
 
-	public function document_title_parts_term( $title )
+	public function document_title_parts_term( array $title ): array
 	{
 		$title['title'] = WordPress\Term::title( $this->current_queried );
 		return $title;
 	}
 
-	public function get_the_archive_title_taxonomy( $title )
+	public function get_the_archive_title_taxonomy( string $title ): string
 	{
 		return $this->_get_taxonomy_archive_title( $this->current_queried );
 	}
 
-	public function document_title_parts_taxonomy( $title )
+	public function document_title_parts_taxonomy( array $title ): array
 	{
 		$title['title'] = $this->_get_taxonomy_archive_title( $this->current_queried );
 		return $title;
 	}
 
-	private function _get_taxonomy_archive_title( $taxonomy, $settings = TRUE )
+	private function _get_taxonomy_archive_title( string $taxonomy, bool $settings = TRUE ): string
 	{
 		$default = Services\CustomTaxonomy::getLabel( $taxonomy, 'all_items' );
 		$custom  = $settings ? $this->get_setting( 'taxonomy_'.$taxonomy.'_title', $default ) : $default;
@@ -453,7 +453,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'taxonomy_archive_title', $custom ?: $default, $taxonomy );
 	}
 
-	private function _get_term_archive_title( $term, $taxonomy = NULL )
+	private function _get_term_archive_title( object $term, ?string $taxonomy = NULL ): string
 	{
 		return $this->filters( 'term_archive_title',
 			WordPress\Term::title( $term ),
@@ -462,7 +462,7 @@ class Archives extends gEditorial\Module
 		);
 	}
 
-	public function template_term_archives( $content )
+	public function template_term_archives( ?string $content ): string
 	{
 		$html    = '';
 		$setting = $this->get_setting( 'term_'.$this->current_queried->taxonomy.'_content',
@@ -489,7 +489,7 @@ class Archives extends gEditorial\Module
 		return Core\HTML::wrap( $html, '-term-archives-content' );
 	}
 
-	public function template_taxonomy_archives( $content )
+	public function template_taxonomy_archives( ?string $content ): string
 	{
 		$setting = $this->get_setting( 'taxonomy_'.$this->current_queried.'_content',
 			$this->_get_default_taxonomy_content( $this->current_queried ) );
@@ -500,7 +500,7 @@ class Archives extends gEditorial\Module
 		return Core\HTML::wrap( $html, '-taxonomy-archives-content' );
 	}
 
-	public function get_posttype_archive_link( $posttype )
+	public function get_posttype_archive_link( string $posttype ): bool|string
 	{
 		if ( ! in_array( $posttype, $this->posttypes() ) )
 			return FALSE;
@@ -511,7 +511,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'posttype_archive_link', $link, $posttype, $slug );
 	}
 
-	public function get_taxonomy_archive_link( $taxonomy )
+	public function get_taxonomy_archive_link( string $taxonomy ): bool|string
 	{
 		if ( ! in_array( $taxonomy, $this->taxonomies() ) )
 			return FALSE;
@@ -524,7 +524,7 @@ class Archives extends gEditorial\Module
 		return $this->filters( 'taxonomy_archive_link', $link, $taxonomy, $slug );
 	}
 
-	public function countables_taxonomy_countbox_tokens( $tokens, $taxonomy, $count, $args )
+	public function countables_taxonomy_countbox_tokens( array $tokens, string $taxonomy, int $count, array $args ): array
 	{
 		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
 			$tokens['link'] = $link;
@@ -532,7 +532,7 @@ class Archives extends gEditorial\Module
 		return $tokens;
 	}
 
-	public function taxonomy_archive_link( $false, $taxonomy, $fallback )
+	public function taxonomy_archive_link( false|string $false, string $taxonomy, mixed $fallback ): false|string
 	{
 		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
 			return $link;
@@ -540,7 +540,7 @@ class Archives extends gEditorial\Module
 		return $false;
 	}
 
-	public function navigation_taxonomy_archive_link( $false, $taxonomy )
+	public function navigation_taxonomy_archive_link( false|string $false, string $taxonomy ): false|string
 	{
 		if ( $link = $this->get_taxonomy_archive_link( $taxonomy ) )
 			return $link;
@@ -548,7 +548,7 @@ class Archives extends gEditorial\Module
 		return $false;
 	}
 
-	public function navigation_general_items( $items )
+	public function navigation_general_items( array $items ): array
 	{
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label )
 			$items[] = [

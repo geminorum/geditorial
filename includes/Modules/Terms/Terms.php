@@ -2524,12 +2524,12 @@ class Terms extends gEditorial\Module
 		return $delete;
 	}
 
-	public function terms_search_append_meta_frontend( $meta, $search, $taxonomies, $args )
+	public function terms_search_append_meta_frontend( array $meta, string $search, mixed $taxonomies, array $args ): array
 	{
 		if ( empty( $taxonomies ) )
 			return $meta;
 
-		foreach ( $taxonomies as $taxonomy ) {
+		foreach ( (array) $taxonomies as $taxonomy ) {
 
 			foreach ( $this->get_supported( $taxonomy ) as $field ) {
 

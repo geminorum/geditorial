@@ -16,7 +16,7 @@ trait PairedMetaBox
 	 *
 	 * @return array
 	 */
-	protected function paired_get_dropdown_excludes()
+	protected function paired_get_dropdown_excludes(): array
 	{
 		if ( ! $terms = $this->get_setting( 'paired_exclude_terms' ) )
 			return [];
@@ -46,8 +46,14 @@ trait PairedMetaBox
 	// NOTE: sub-terms must be hierarchical
 	// OLD: `do_render_metabox_assoc()`
 	// FIXME: rewrite to accept `$constants`
-	protected function paired_do_render_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE, $display_empty = FALSE )
-	{
+	protected function paired_do_render_metabox(
+		object $post,
+		string $posttype_constant,
+		string $paired_constant,
+		string|false $subterm_constant = FALSE,
+		bool $display_empty = FALSE,
+	): void {
+
 		$subterm   = FALSE;
 		$dropdowns = $displayed = $parents = $subterms = [];
 		$excludes  = $this->paired_get_dropdown_excludes();
@@ -128,8 +134,14 @@ trait PairedMetaBox
 			$this->enqueue_asset_js( 'subterms', 'module' );
 	}
 
-	protected function _hook_paired_mainbox( $screen, $remove_parent_order = TRUE, $context = NULL, $metabox_context = 'side', $extra = [] )
-	{
+	protected function _hook_paired_mainbox(
+		object $screen,
+		bool $remove_parent_order = TRUE,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
@@ -153,7 +165,8 @@ trait PairedMetaBox
 		}
 
 		$metabox  = $this->classs( $context );
-		$callback = function ( $post, $box ) use ( $constants, $context, $screen ) {
+		$callback = function ( $post, $box )
+			use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 				return;
@@ -188,7 +201,7 @@ trait PairedMetaBox
 			$this->strings_metabox_title_via_posttype( $screen->post_type, $context ),
 			$callback,
 			$screen,
-			$metabox_context,
+			$metabox_context ?? 'side',
 			'high'
 		);
 
@@ -201,10 +214,17 @@ trait PairedMetaBox
 					'-'.$this->key.'-'.$context,
 				], $extra );
 			} );
+
+		return $metabox;
 	}
 
-	protected function _hook_paired_listbox( $screen, $context = NULL, $metabox_context = NULL, $extra = [] )
-	{
+	protected function _hook_paired_listbox(
+		object $screen,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
@@ -213,7 +233,8 @@ trait PairedMetaBox
 
 		$context  = $context ?? 'listbox';
 		$metabox  = $this->classs( $context );
-		$callback = function ( $object, $box ) use ( $constants, $context, $screen ) {
+		$callback = function ( $object, $box )
+			use ( $constants, $context, $screen ) {
 
 			if ( $this->check_hidden_metabox( $box, $object->post_type ) )
 				return;
@@ -265,13 +286,20 @@ trait PairedMetaBox
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
 			gEditorial\Scripts::enqueueColorBox();
+
+		return $metabox;
 	}
 
 	// DEFAULT METHOD
 	// TODO: support for `post_actions` on Actions module
-	// TODO: support for empty paired items with js button confirmation
-	protected function _render_paired_listbox_extra( $post, $box, $context = NULL, $screen = NULL )
-	{
+	// TODO: support for empty paired items with JS button confirmation
+	protected function _render_paired_listbox_extra(
+		object $post,
+		false|array $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$html    = '';
 		$context = $context ?? 'listbox';
 
@@ -284,8 +312,13 @@ trait PairedMetaBox
 		echo Core\HTML::wrap( $html, 'field-wrap -buttons' );
 	}
 
-	protected function _hook_paired_pairedbox( $screen, $menuorder = FALSE, $context = NULL, $extra = [] )
-	{
+	protected function _hook_paired_pairedbox(
+		object $screen,
+		bool $menuorder = FALSE,
+		?string $context = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		if ( ! $this->_paired )
 			return FALSE;
 
@@ -374,10 +407,12 @@ trait PairedMetaBox
 
 		if ( $this->get_setting( 'quick_newpost' ) )
 			gEditorial\Scripts::enqueueThickBox();
+
+		return $metabox;
 	}
 
 	// NOTE: logic separated for the use on edit screen
-	protected function _hook_paired_store_metabox( $posttype )
+	protected function _hook_paired_store_metabox( string $posttype ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -400,13 +435,18 @@ trait PairedMetaBox
 	}
 
 	// OLD: `do_store_metabox_assoc()`
-	protected function paired_do_store_metabox( $post, $posttype_constant, $paired_constant, $subterm_constant = FALSE )
-	{
+	protected function paired_do_store_metabox(
+		object $post,
+		string $posttype_constant,
+		string $paired_constant,
+		string|false $subterm_constant = FALSE,
+	): mixed {
+
 		$posttype = $this->constant( $posttype_constant );
 		$paired   = self::req( $this->classs().'-'.$posttype, FALSE ); // NOTE: post-type may contain underline
 
 		if ( FALSE === $paired )
-			return;
+			return NULL;
 
 		$terms = $this->paired_do_connection( 'store', $post->ID, $paired, $posttype_constant, $paired_constant );
 
@@ -414,7 +454,7 @@ trait PairedMetaBox
 			return FALSE;
 
 		if ( ! $subterm_constant || ! $this->get_setting( 'subterms_support' ) )
-			return;
+			return TRUE;
 
 		$subterm = $this->constant( $subterm_constant );
 
@@ -425,7 +465,7 @@ trait PairedMetaBox
 		$request = self::req( $this->classs( $subterm ), FALSE );
 
 		if ( FALSE === $request || ! is_array( $request ) )
-			return;
+			return TRUE;
 
 		$subterms = [];
 		$multiple = $this->get_setting( 'multiple_instances', FALSE );
@@ -454,12 +494,17 @@ trait PairedMetaBox
 				$subterms[] = (int) $sub_paired;
 		}
 
-		wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $subterms ), $subterm, FALSE );
+		return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $subterms ), $subterm, FALSE );
 	}
 
 	// NOTE: alternative to `pairedbox`
-	protected function _hook_paired_overviewbox( $screen, $menuorder = FALSE, $context = NULL, $extra = [] )
-	{
+	protected function _hook_paired_overviewbox(
+		object $screen,
+		bool $menuorder = FALSE,
+		?string $context = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		if ( ! $this->_paired )
 			return FALSE;
 
@@ -538,11 +583,18 @@ trait PairedMetaBox
 				echo '</ol></div>';
 
 			}, 10, 4 );
+
+		return $metabox;
 	}
 
 	// NOTE: alternative to `listbox`
-	protected function pairedmetabox__hook_megabox( $screen, $context = NULL, $metabox_context = 'advanced', $extra = [] )
-	{
+	protected function pairedmetabox__hook_megabox(
+		object $screen,
+		?string $context = NULL,
+		?string $metabox_context = NULL,
+		string|array $extra = [],
+	): false|string {
+
 		if ( ! $this->_paired || empty( $screen->post_type ) )
 			return FALSE;
 
@@ -601,7 +653,7 @@ trait PairedMetaBox
 			sprintf( $title, $post_title ?: gEditorial\Plugin::untitled( FALSE ), $singular_name ),
 			$callback,
 			$screen,
-			$metabox_context,
+			$metabox_context ?? 'advanced',
 			'low'
 		);
 
@@ -617,13 +669,20 @@ trait PairedMetaBox
 
 		if ( $this->role_can( 'import', NULL, TRUE ) )
 			gEditorial\Scripts::enqueueColorBox();
+
+		return $metabox;
 	}
 
 	// DEFAULT METHOD
 	// https://codepen.io/geminorum/pen/yLQqYVX
 	// NOTE: alternative to `listbox`
-	protected function _render_paired_megabox_extra( $post, $box, $context = NULL, $screen = NULL )
-	{
+	protected function _render_paired_megabox_extra(
+		object $post,
+		false|array $box,
+		?string $context = NULL,
+		?object $screen = NULL,
+	): void {
+
 		$context = $context ?? 'megabox';
 
 		$this->_render_paired_listbox_extra( $post, $box, $context, $screen );

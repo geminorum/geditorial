@@ -188,7 +188,7 @@ class Estimated extends gEditorial\Module
 		}
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	public function store_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
 	{
 		if ( $this->is_save_post( $post, $this->posttypes() ) )
 			$this->_get_post_wordcount( $post_id, TRUE );

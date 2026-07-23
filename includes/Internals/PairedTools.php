@@ -11,13 +11,13 @@ trait PairedTools
 {
 	public static $pairedtools__action_move_from_to = 'pairedtools_do_move_from_to';
 
-	protected function paired_tools_render_card( $uri = '', $sub = NULL, $supported_list = NULL )
+	protected function paired_tools_render_card( string $uri = '', ?string $sub = NULL, ?string $supported_list = NULL ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
 
 		if ( ! $constants = $this->paired_get_constants() )
-			return;
+			return FALSE;
 
 		echo gEditorial\Settings::toolboxCardOpen( _x( 'Paired Move From-To', 'Internal: PairedTools: Card Title', 'geditorial-admin' ), FALSE );
 
@@ -57,7 +57,8 @@ trait PairedTools
 			Core\HTML::desc( _x( 'Tries to set the paired term for all the main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
 		echo '</div>';
 
-		// NO NEED: we use the main post date directly
+		// NO NEED: we use the main postdate directly
+		// ```
 		// echo $this->wrap_open( '-wrap-button-row' );
 		// 	gEditorial\Settings::submitButton( 'sync_paired_dates', _x( 'Sync Paired Dates', 'Internal: PairedTools: Button', 'geditorial-admin' ), 'small' );
 		// 	Core\HTML::desc( _x( 'Tries to set the paired term date based on main posts.', 'Internal: PairedTools: Button Description', 'geditorial-admin' ), FALSE );
@@ -88,6 +89,8 @@ trait PairedTools
 
 			echo '</div></div>';
 		}
+
+		return TRUE;
 	}
 
 	protected function paired_tools_render_before( string $uri = '', ?string $sub = NULL ): bool

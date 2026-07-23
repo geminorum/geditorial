@@ -24,7 +24,7 @@ class FileCache extends gEditorial\Service
 			return FALSE;
 
 		// FIXME: check if the folder is writable
-		Core\File::putIndexHTML( $path, GEDITORIAL_DIR.'index.html' );
+		Core\File::putIndexHTML( $path, static::factory()->get_dir().'index.html' );
 		Core\File::putDoNotBackup( $path );
 
 		return $path;

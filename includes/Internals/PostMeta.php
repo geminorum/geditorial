@@ -9,20 +9,17 @@ use geminorum\gEditorial\WordPress;
 
 trait PostMeta
 {
-	public function get_postmeta_key( $field, $prefix = NULL )
+	public function get_postmeta_key( string $field, ?string $prefix = NULL ): string
 	{
 		return sprintf( '_%s_%s', $prefix ?? $this->key, $field );
 	}
 
-	public function get_postmeta_field( $post_id, $field, $default = FALSE, $prefix = NULL, $metakey = NULL )
+	public function get_postmeta_field( false|int $post_id, string $field, mixed $default = FALSE, ?string $prefix = NULL, ?string $meta_key = NULL ): mixed
 	{
 		if ( ! $post_id )
 			return $default;
 
-		if ( is_null( $prefix ) )
-			$prefix = $this->key;
-
-		$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
+		$legacy = $this->get_postmeta_legacy( $post_id, [], $meta_key );
 
 		foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key ) {
 
@@ -36,11 +33,8 @@ trait PostMeta
 		return $default;
 	}
 
-	public function set_postmeta_field( $post_id, $field, $data, $prefix = NULL )
+	public function set_postmeta_field( int $post_id, string $field, mixed $data, ?string $prefix = NULL ): bool
 	{
-		if ( is_null( $prefix ) )
-			$prefix = $this->key;
-
 		if ( ! $this->store_postmeta( $post_id, $data, $this->get_postmeta_key( $field, $prefix ) ) )
 			return FALSE;
 
@@ -54,45 +48,41 @@ trait PostMeta
 
 	// Fetch module meta array
 	// back-comp only
-	public function get_postmeta_legacy( $post_id, $default = [], $metakey = NULL )
+	public function get_postmeta_legacy( int $post_id, array $default = [], ?string $meta_key = NULL ): mixed
 	{
 		global $gEditorialPostMetaLegacy;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key;
+		$meta_key = $meta_key ?? $this->meta_key;
 
-		if ( ! isset( $gEditorialPostMetaLegacy[$post_id][$metakey] ) )
-			$gEditorialPostMetaLegacy[$post_id][$metakey] = $this->fetch_postmeta( $post_id, $default, $metakey );
+		if ( ! isset( $gEditorialPostMetaLegacy[$post_id][$meta_key] ) )
+			$gEditorialPostMetaLegacy[$post_id][$meta_key] = $this->fetch_postmeta( $post_id, $default, $meta_key );
 
-		return $gEditorialPostMetaLegacy[$post_id][$metakey];
+		return $gEditorialPostMetaLegacy[$post_id][$meta_key];
 	}
 
-	public function clean_postmeta_legacy( $post_id, $fields, $legacy = NULL, $metakey = NULL )
+	public function clean_postmeta_legacy( int $post_id, array $fields, ?array $legacy = NULL, ?string $meta_key = NULL ): bool
 	{
 		global $gEditorialPostMetaLegacy;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key;
-
-		if ( is_null( $legacy ) )
-			$legacy = $this->get_postmeta_legacy( $post_id, [], $metakey );
+		$meta_key = $meta_key ?? $this->meta_key;
+		$legacy   = $legacy   ?? $this->get_postmeta_legacy( $post_id, [], $meta_key );
 
 		foreach ( $fields as $field => $args )
 			foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key )
 				if ( array_key_exists( $field_key, $legacy ) )
 					unset( $legacy[$field_key] );
 
-		unset( $gEditorialPostMetaLegacy[$post_id][$metakey] );
+		unset( $gEditorialPostMetaLegacy[$post_id][$meta_key] );
 
-		return $this->store_postmeta( $post_id, array_filter( $legacy ), $metakey );
+		return $this->store_postmeta( $post_id, array_filter( $legacy ), $meta_key );
 	}
 
-	public function sanitize_postmeta_field_key_map()
+	public function sanitize_postmeta_field_key_map(): array
 	{
 		return [];
 	}
 
-	public function sanitize_postmeta_field_key( $field_key )
+	public function sanitize_postmeta_field_key( string|array $field_key ): array
 	{
 		if ( is_array( $field_key ) )
 			return $field_key;
@@ -105,32 +95,35 @@ trait PostMeta
 		return [ $field_key ];
 	}
 
-	public function store_postmeta( $post_id, $data, $metakey = NULL )
+	public function store_postmeta( int $post_id, mixed $data, ?string $meta_key = NULL ): bool
 	{
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key; // back-comp
+		$meta_key = $meta_key ?? $this->meta_key; // back-comp
 
 		if ( empty( $data ) )
-			return delete_post_meta( $post_id, $metakey );
+			return delete_post_meta( $post_id, $meta_key );
 
-		return (bool) update_post_meta( $post_id, $metakey, $data );
+		return (bool) update_post_meta( $post_id, $meta_key, $data );
 	}
 
-	public function fetch_postmeta( $post_id, $default = '', $metakey = NULL )
+	public function fetch_postmeta( int $post_id, mixed $default = '', ?string $meta_key = NULL ): mixed
 	{
 		if ( ! $post_id )
 			return $default;
 
-		if ( is_null( $metakey ) )
-			$metakey = $this->meta_key; // back-comp
-
-		$data = get_metadata( 'post', $post_id, $metakey, TRUE );
+		$meta_key = $meta_key ?? $this->meta_key; // back-comp
+		$data     = get_metadata( 'post', $post_id, $meta_key, TRUE );
 
 		return $data ?: $default;
 	}
 
-	protected function postmeta__hook_meta_column_row( $posttype, $fields, $priority = 20, $callback_suffix = FALSE, $module = NULL )
-	{
+	protected function postmeta__hook_meta_column_row(
+		string $posttype,
+		true|array $fields,
+		?int $priority = NULL,
+		string $callback_suffix = '',
+		?string $module = NULL,
+	): bool {
+
 		if ( ! $posttype || empty( $fields ) )
 			return FALSE;
 
@@ -159,14 +152,14 @@ trait PostMeta
 					[ $this, $method ],
 					[ $post, $before, $after, $module, ( $target === TRUE ? $fields : $target ), $excludes ]
 				);
-			}, $priority, 6 );
+			}, $priority ?? 20, 6 );
 
 		return TRUE;
 	}
 
 	// DEFAULT FILTER
 	// NOTE: used when module defines `_supported` meta fields
-	public function general_column_row( $post, $before, $after, $module, $fields, $excludes )
+	public function general_column_row( object $post, string $before, string $after, string $module, array $fields, array $excludes ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 

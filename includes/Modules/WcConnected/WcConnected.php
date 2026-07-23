@@ -132,12 +132,12 @@ class WcConnected extends gEditorial\Module
 		}
 	}
 
-	private function _save_meta_supported( $posttype )
+	private function _save_meta_supported( string $posttype ): void
 	{
 		$this->_hook_store_metabox( $posttype );
 	}
 
-	public function store_metabox( $post_id, $post, $update, $context = NULL )
+	public function store_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
 			return;
@@ -176,7 +176,7 @@ class WcConnected extends gEditorial\Module
 		}
 	}
 
-	protected function _render_supportedbox_content( $post, $box, $context = NULL, $screen = NULL )
+	protected function _render_supportedbox_content( object $post, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context   = $context ?? 'supportedbox';
 		$metakey   = $this->constant( 'metakey_connected' );
@@ -297,7 +297,7 @@ class WcConnected extends gEditorial\Module
 		] );
 	}
 
-	public function product_tabs_connected_callback()
+	public function product_tabs_connected_callback(): void
 	{
 		global $product;
 

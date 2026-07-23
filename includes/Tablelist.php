@@ -347,7 +347,8 @@ class Tablelist extends WordPress\Main
 			'args'  => [
 				'types' => WordPress\PostType::get( 2, [ 'show_ui' => TRUE ] ),
 			],
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $post_id_prop ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $post_id_prop ) {
 
 				if ( ! $post = WordPress\Post::get( $post_id_prop ? $row->{$post_id_prop} : $row ) )
 					return Helper::htmlEmpty();
@@ -380,7 +381,8 @@ class Tablelist extends WordPress\Main
 			'args'  => [
 				'statuses' => WordPress\Status::get(),
 			],
-			'callback' => static function ( $value, $row, $column, $index, $key, $args ) use ( $excerpt ) {
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $excerpt ) {
 
 				$title = WordPress\Post::title( $row );
 
@@ -412,7 +414,9 @@ class Tablelist extends WordPress\Main
 
 				return $title;
 			},
-			'actions' => static function ( $value, $row, $column, $index, $key, $args ) use ( $actions, $custom ) {
+			'actions' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $actions, $custom ) {
+
 				return array_merge( self::getPostRowActions( $row->ID, $actions ), $custom );
 			},
 		];

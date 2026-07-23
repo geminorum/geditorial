@@ -7,17 +7,16 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
+// TODO: endpoints for adding paired by identifier
+
 trait PairedRest
 {
-	// TODO: endpoints for adding paired by identifier
-
-
-	protected function pairedrest_register_rest_route( $object )
+	protected function pairedrest_register_rest_route( mixed $object ): bool
 	{
 		if ( empty( $object ) || empty( $object->show_in_rest ) )
 			return FALSE;
 
-		add_action( 'rest_api_init',
+		return add_action( 'rest_api_init',
 			function () use ( $object ) {
 				register_rest_route( $object->rest_namespace,
 					'/'.$object->rest_base.'/(?P<parent>[\d]+)/'.Services\Paired::PAIRED_REST_FROM,
@@ -49,7 +48,7 @@ trait PairedRest
 			}, 999 );
 	}
 
-	public function pairedrest_get_posts_permissions_check( $request )
+	public function pairedrest_get_posts_permissions_check( object $request ): bool|object
 	{
 		if ( ! WordPress\Post::can( (int) $request['parent'], 'read_post' ) )
 			return Services\RestAPI::getErrorForbidden();
@@ -60,7 +59,7 @@ trait PairedRest
 		return TRUE;
 	}
 
-	public function pairedrest_connect_post_permissions_check( $request )
+	public function pairedrest_connect_post_permissions_check( object $request ): bool|object
 	{
 		if ( ! WordPress\Post::can( (int) $request['parent'], 'edit_post' ) )
 			return Services\RestAPI::getErrorForbidden();
@@ -71,7 +70,7 @@ trait PairedRest
 		return TRUE;
 	}
 
-	public function pairedrest_disconnect_post_permissions_check( $request )
+	public function pairedrest_disconnect_post_permissions_check( object $request ): bool|object
 	{
 		if ( ! WordPress\Post::can( (int) $request['parent'], 'edit_post' ) )
 			return Services\RestAPI::getErrorForbidden();
@@ -82,7 +81,7 @@ trait PairedRest
 		return TRUE;
 	}
 
-	public function pairedrest_get_posts( $request )
+	public function pairedrest_get_posts( object $request ): mixed
 	{
 		if ( ! $parent = WordPress\Post::get( (int) $request['parent'] ) )
 			return Services\RestAPI::getErrorSomethingIsWrong();
@@ -107,7 +106,7 @@ trait PairedRest
 		return rest_ensure_response( $data );
 	}
 
-	public function pairedrest_connect_post( $request )
+	public function pairedrest_connect_post( object $request ): mixed
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return Services\RestAPI::getErrorSomethingIsWrong();
@@ -137,7 +136,7 @@ trait PairedRest
 		return $this->pairedrest_get_posts( $request );
 	}
 
-	public function pairedrest_disconnect_post( $request )
+	public function pairedrest_disconnect_post( object $request ): mixed
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return Services\RestAPI::getErrorSomethingIsWrong();

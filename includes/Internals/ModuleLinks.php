@@ -199,9 +199,11 @@ trait ModuleLinks
 	protected function get_adminpage_url(
 		bool $full = TRUE,
 		array $extra = [],
-		?string $context = 'mainpage',
+		?string $context = NULL,
 		?string $admin_base = NULL,
 	): string {
+
+		$context = $context ?? 'mainpage';
 
 		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
 			? $this->classs()

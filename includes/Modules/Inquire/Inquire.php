@@ -218,12 +218,12 @@ class Inquire extends gEditorial\Module
 		return $items;
 	}
 
-	public function enter_title_here( $title, $post )
+	public function enter_title_here( string $title, object $post ): string
 	{
 		return _x( 'Enter question title here', 'Placeholder', 'geditorial-inquire' );
 	}
 
-	public function do_metabox_excerpt( $post, $box )
+	public function do_metabox_excerpt( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
@@ -239,15 +239,15 @@ class Inquire extends gEditorial\Module
 			echo Core\HTML::wrap( Core\Text::autoP( $post->post_excerpt ), '-excerpt -readonly' );
 	}
 
-	public function dashboard_pages( $pages )
+	public function dashboard_pages( array $pages ): array
 	{
 		return array_merge( $pages, [
 			$this->key => _x( 'Inquiries', 'Dashboard Title', 'geditorial-inquire' ),
 		] );
 	}
 
-	public function dashboard_content_page_inquire( $page )
+	public function dashboard_content_page_inquire( string $page ): void
 	{
-		// ModuleTemplate::templateMain();
+		// `ModuleTemplate::templateMain();`
 	}
 }

@@ -597,7 +597,7 @@ class Directorate extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( $value, $posttype, $field, $header, $raw, $source_id, $all_taxonomies )
+	public function importer_prepare( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
@@ -664,7 +664,7 @@ class Directorate extends gEditorial\Module
 	}
 
 	// TODO: move up!
-	public function importer_posttype_taxonomies_after( $posttype, $taxonomies, $name_template, $before, $after, $after_title )
+	public function importer_posttype_taxonomies_after( string $posttype, array $taxonomies, string $name_template, string $before, string $after, string $after_title ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;

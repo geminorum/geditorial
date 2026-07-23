@@ -65,7 +65,7 @@ class Uploader extends gEditorial\Module
 
 	// @REF: https://github.com/deliciousbrains/wp-dbi-file-uploader
 	// @REF: https://deliciousbrains.com/?p=26646
-	public function render_widget_largefile( $object, $box )
+	public function render_widget_largefile( mixed $object, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
