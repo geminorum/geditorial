@@ -36,7 +36,7 @@ trait ViewEngines
 		if ( empty( $this->view_engines['__string__'] ) )
 			$this->view_engines['__string__'] = $this->viewengine__get();
 
-		$html     = $this->view_engines[0]->render( $template, $data );
+		$html     = $this->view_engines['__string__']->render( $template, $data );
 		$filtered = $this->filters( 'render_view_string', $html, $template, $data );
 
 		if ( ! $verbose )
