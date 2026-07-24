@@ -55,6 +55,21 @@ class DateParser extends Core\Base
 		if ( ! $sanitized = Core\Number::translate( Core\Text::trim( Core\Text::singleWhitespace( $input ) ) ) )
 			return FALSE;
 
+		if ( Core\Date::MYSQL_EMPTY === $sanitized )
+			return date_create( 'now', self::timezone( $timezone ) );
+
+		if ( preg_match( '/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/', $sanitized ) ) {
+
+			$mm = substr( $sanitized, 5, 2 );
+			$jj = substr( $sanitized, 8, 2 );
+			$aa = substr( $sanitized, 0, 4 );
+
+			if ( ! checkdate( $mm, $jj, $aa ) )
+				return FALSE;
+
+			return date_create( $sanitized, self::timezone( $timezone ) );
+		}
+
 		if ( 'gregorian' === $calendar ) {
 
 			preg_match( '/^(\d{4})-(\d{1,2})-(\d{1,2})/', $sanitized, $matches );
