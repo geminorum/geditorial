@@ -194,7 +194,16 @@ class Audit extends gEditorial\Module
 
 				$terms = empty( $data['tax_input'][$taxonomy] ) ? [] : $data['tax_input'][$taxonomy];
 
-				wp_set_object_terms( $post['post_id'], Core\Arraay::prepNumeral( $terms ), $taxonomy, FALSE );
+				$result = wp_set_object_terms(
+					$post['post_id'],
+					Core\Arraay::prepNumeral( $terms ),
+					$taxonomy,
+					FALSE,
+				);
+
+				if ( self::isError( $result ) )
+					gEditorial\Ajax::errorMessage( $result );
+
 				clean_object_term_cache( $post['post_id'], $taxonomy );
 
 				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
