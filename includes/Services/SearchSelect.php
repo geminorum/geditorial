@@ -112,7 +112,7 @@ class SearchSelect extends gEditorial\Service
 	private static function _get_select2_posts( array $queried ): array|object
 	{
 		$found = 0;
-		$posts = [];
+		$list  = [];
 		$args  = [
 			'post_type'      => $queried['posttype'],
 			'posts_per_page' => $queried['per'],
@@ -159,25 +159,25 @@ class SearchSelect extends gEditorial\Service
 				AdvancedQueries::hookSearchPostTitleOnly();
 
 			$query = new \WP_Query();
-			$posts = $query->query( $args );
+			$list  = $query->query( $args );
 			$found = $query->found_posts;
 
 			AdvancedQueries::hookSearchPostTitleOnly( TRUE );
 
 		} else if ( is_numeric( $pre ) ) {
 
-			$posts = [ $pre ];
+			$list  = [ $pre ];
 			$found = 1;
 
 		} else if ( is_array( $pre ) ) {
 
-			$posts = $pre;
+			$list  = $pre;
 			$found = count( $pre );
 		}
 
 		$results = [];
 
-		foreach ( $posts as $post )
+		foreach ( $list as $post )
 			$results[] = (object) [
 				'id'    => $post,
 				'text'  => WordPress\Post::title( $post ),
@@ -208,7 +208,7 @@ class SearchSelect extends gEditorial\Service
 	private static function _get_select2_terms( array $queried ): array|object
 	{
 		$found = 0;
-		$terms = [];
+		$list  = [];
 		$args  = [
 			'taxonomy' => $queried['taxonomy'],
 			'number'   => $queried['per'],
@@ -248,7 +248,7 @@ class SearchSelect extends gEditorial\Service
 			$found = count( $terms );
 
 			foreach ( $terms as $term )
-				$terms[] = (object) [
+				$list[] = (object) [
 					'id'    => $term->term_id,
 					'text'  => WordPress\Term::title( $term ),
 					'extra' => self::getExtraForTerm( $term, $queried ),
@@ -262,7 +262,7 @@ class SearchSelect extends gEditorial\Service
 		} else if ( is_numeric( $pre ) || $pre instanceof \WP_Term ) {
 
 			$found = 1;
-			$terms = [ (object) [
+			$list  = [ (object) [
 				'id'    => is_object( $pre ) ? $pre->term_id : $pre,
 				'text'  => WordPress\Term::title( $pre ),
 				'extra' => self::getExtraForTerm( $pre, $queried ),
@@ -292,7 +292,7 @@ class SearchSelect extends gEditorial\Service
 				];
 
 				$added[] = $term_id;
-				$terms[] = (object) $result;
+				$list[]  = (object) $result;
 			}
 
 			// WTF?!: count must be all not paged results.
@@ -304,7 +304,7 @@ class SearchSelect extends gEditorial\Service
 		}
 
 		return [
-			'results'    => $terms,
+			'results'    => $list,
 			'pagination' => [
 				// 'more' => ( $found - $args['number'] ) > 0
 				'more' => $found >= $args['number']
@@ -327,7 +327,7 @@ class SearchSelect extends gEditorial\Service
 	private static function _get_select2_users( array $queried ): array|object
 	{
 		$found = 0;
-		$users = [];
+		$list  = [];
 		$args  = [
 			'login__not_in'  => get_super_admins(),
 			'role__not_in'   => [ 'administrator', 'subscriber' ],
@@ -370,7 +370,7 @@ class SearchSelect extends gEditorial\Service
 			$query = new \WP_User_Query( $args );
 
 			foreach ( (array) $query->get_results() as $user )
-				$users[] = (object) [
+				$list[] = (object) [
 					'id'   => $user->ID,
 					'text' => WordPress\User::getTitleRow( $user ),
 				];
@@ -380,7 +380,7 @@ class SearchSelect extends gEditorial\Service
 		} else if ( is_numeric( $pre ) ) {
 
 			$found = 1;
-			$users = [ (object) [
+			$list  = [ (object) [
 				'id'   => $pre,
 				'text' => WordPress\User::getTitleRow( $pre ),
 			] ];
@@ -390,14 +390,14 @@ class SearchSelect extends gEditorial\Service
 			$found = count( $pre );
 
 			foreach ( $pre as $user )
-				$users[] = (object) [
+				$list[] = (object) [
 					'id'   => $user,
 					'text' => WordPress\User::getTitleRow( $user ),
 				];
 		}
 
 		return [
-			'results'    => $users,
+			'results'    => $list,
 			'pagination' => [
 				'more' => ( $found - $args['number'] ) > 0
 			],
