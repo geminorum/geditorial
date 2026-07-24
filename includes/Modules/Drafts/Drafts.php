@@ -192,7 +192,7 @@ class Drafts extends gEditorial\Module
 			case 'private':
 
 				if ( empty( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage();
+					gEditorial\Ajax::errorInvalid();
 
 				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 					gEditorial\Ajax::errorUserCant();
@@ -210,7 +210,7 @@ class Drafts extends gEditorial\Module
 			case 'public':
 
 				if ( empty( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage();
+					gEditorial\Ajax::errorInvalid();
 
 				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 					gEditorial\Ajax::errorUserCant();

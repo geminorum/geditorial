@@ -61,6 +61,11 @@ class Ajax extends WordPress\Main
 			self::error();
 	}
 
+	public static function errorInvalid(): void
+	{
+		self::errorMessage( Plugin::invalid( FALSE ) );
+	}
+
 	public static function errorUserCant(): void
 	{
 		self::errorMessage( Plugin::denied( FALSE ) );

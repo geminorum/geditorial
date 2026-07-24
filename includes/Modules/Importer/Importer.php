@@ -217,7 +217,7 @@ class Importer extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
+			gEditorial\Ajax::errorInvalid();
 
 		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
 			gEditorial\Ajax::errorUserCant();

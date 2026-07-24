@@ -374,7 +374,7 @@ class Revisions extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorMessage();
+			gEditorial\Ajax::errorInvalid();
 
 		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 

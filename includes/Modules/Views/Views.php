@@ -127,7 +127,7 @@ class Views extends gEditorial\Module
 		$what = $post['what'] ?? 'nothing';
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorMessage();
+			gEditorial\Ajax::errorInvalid();
 
 		gEditorial\Ajax::checkReferer( $this->classs( $post['post_id'] ) );
 
