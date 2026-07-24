@@ -147,7 +147,8 @@ class Tabloid extends gEditorial\Module
 			return FALSE;
 
 		if ( FALSE !== $icon )
-			$text = Core\Text::glued( [ '%1$s', $text ] );
+			// NOTE: better not to have space between icon and text
+			$text = sprintf( '%s<span class="-text">%s</span>', '%1$s', $text );
 
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'title' => sprintf(
@@ -176,7 +177,8 @@ class Tabloid extends gEditorial\Module
 			return FALSE;
 
 		if ( FALSE !== $icon )
-			$text = Core\Text::glued( [ '%1$s', $text ] );
+			// NOTE: better not to have space between icon and text
+			$text = sprintf( '%s<span class="-text">%s</span>', '%1$s', $text );
 
 		return $this->framepage_get_mainlink_for_term( $term, [
 			'title' => sprintf(

@@ -73,7 +73,7 @@ class HeaderButtons extends gEditorial\Service
 
 			if ( ! empty( $button['icon'] ) )
 				// NOTE: better not to have space between icon and text
-				$button['text'] = sprintf( '%s%s', Icons::get( $button['icon'] ), $button['text'] );
+				$button['text'] = sprintf( '%s<span class="-text">%s</span>', Icons::get( $button['icon'] ), $button['text'] );
 
 			if ( ! empty( $button['html'] ) )
 				$args['buttons'][] = $button['html'];

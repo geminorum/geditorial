@@ -74,6 +74,9 @@ trait FramePage
 				'-mainbutton',
 			] );
 
+		if ( FALSE !== $args['icon'] )
+			$class[] = '-has-icon';
+
 		return $args['before'].Core\HTML::tag( 'a', [
 			'href'   => $link,
 			'title'  => $title ? sprintf( $title, WordPress\Post::title( $post, $name ), $name ) : FALSE,
@@ -135,6 +138,9 @@ trait FramePage
 				'-button-icon',
 				'-mainbutton',
 			] );
+
+		if ( FALSE !== $args['icon'] )
+			$class[] = '-has-icon';
 
 		return $args['before'].Core\HTML::tag( 'a', [
 			'href'   => $link,
