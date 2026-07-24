@@ -71,7 +71,7 @@ class DateParser extends Core\Base
 				$matches[3],
 			];
 
-			return date_create( implode( '-', $parts ), $timezone ?? new \DateTimeZone( wp_timezone_string() ) );
+			return date_create( implode( '-', $parts ), self::timezone( $timezone ) );
 
 		} else if ( 'persian' === $calendar ) {
 
@@ -94,7 +94,7 @@ class DateParser extends Core\Base
 		if ( ! $date = gEditorial\Datetime::makeMySQLFromInput( implode( '-', $parts ?? [] ), NULL, $calendar ) )
 			return FALSE;
 
-		return date_create( $date, $timezone ?? new \DateTimeZone( wp_timezone_string() ) );
+		return date_create( $date, self::timezone( $timezone ) );
 	}
 
 	public static function extractParts( $input )
@@ -129,5 +129,22 @@ class DateParser extends Core\Base
 			static::MONTH_NAMES[$month],
 			trim( $matches[4] ) ?: '|'
 		);
+	}
+
+	public static function timezone( mixed $timezone, ?string $fallback = NULL )
+	{
+		if ( $timezone instanceof \DateTimeZone )
+			return $timezone;
+
+		if ( is_string( $timezone ) && ! empty( $timezone ) )
+			return new \DateTimeZone( $timezone );
+
+		if ( is_int( $timezone ) || is_float( $timezone ) )
+			return new \DateTimeZone( Core\Date::fromOffset( $timezone ) );
+
+		if ( function_exists( 'wp_timezone_string' ) )
+			return new \DateTimeZone( wp_timezone_string() );
+
+		return $fallback; // `NULL` for the current PHP timezone.
 	}
 }
