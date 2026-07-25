@@ -50,7 +50,7 @@ trait CorePostTypes
 
 			'can_export'          => TRUE,
 			'delete_with_user'    => FALSE,
-			'exclude_from_search' => $this->get_setting( $constant.'_exclude_search', FALSE ),
+			'exclude_from_search' => $this->get_setting( self::und( $constant, 'exclude_search' ), FALSE ),
 
 			/// gEditorial Props // TODO: move to settings
 			Services\Paired::PAIRED_TAXONOMY_PROP     => FALSE,  // @SEE: `Paired::isPostType()`
@@ -58,16 +58,16 @@ trait CorePostTypes
 
 			/// Misc Props
 			// @SEE: https://github.com/torounit/custom-post-type-permalinks
-			'cptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
+			'cptp_permalink_structure' => $this->constant( self::und( $constant, 'permalink' ), FALSE ), // will lock the permalink
 
 			// only `%post_id%` and `%postname%`
 			// @SEE: https://github.com/torounit/simple-post-type-permalinks
-			'sptp_permalink_structure' => $this->constant( $constant.'_permalink', FALSE ), // will lock the permalink
+			'sptp_permalink_structure' => $this->constant( self::und( $constant, 'permalink' ), FALSE ), // will lock the permalink
 		] );
 
 		$rewrite = [
-			'slug'       => $this->constant( $constant.'_slug', str_replace( '_', '-', $posttype ) ),
-			'ep_mask'    => $this->constant( $constant.'_endpoint', EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
+			'slug'       => $this->constant( self::und( $constant, 'slug' ), str_replace( '_', '-', $posttype ) ),
+			'ep_mask'    => $this->constant( self::und( $constant, 'endpoint' ), EP_PERMALINK | EP_PAGES ), // https://make.wordpress.org/plugins?p=29
 			'with_front' => FALSE,
 			'feeds'      => TRUE,
 			'pages'      => TRUE,

@@ -7,6 +7,7 @@ use geminorum\gEditorial\WordPress;
 WordPress\User::superAdminOnly();
 
 $files = [
+	// 'Test_Hash',
 	// 'Test_Composer',
 
 	// 'Test_Array-Keys',

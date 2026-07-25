@@ -50,9 +50,11 @@ trait AdminPage
 		$default = $this->get_adminpage_default_sub( $subs, $context );
 		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 
-		$cap      = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
+		/** @disregard */
 		$position = $position   ?? empty( $this->positions[$context] ) ? 3 : $this->positions[$context];
+		$cap      = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 
+		/** @disregard */
 		$this->screens[$context] = add_menu_page(
 			$this->get_string( 'page_title', $context, 'adminpage', $this->key ),
 			$menu,
@@ -78,6 +80,7 @@ trait AdminPage
 				[ $this, 'render_menu_adminpage' ]
 			);
 
+		/** @disregard */
 		if ( $this->screens[$context] )
 			add_action(
 				self::dsh( 'load', $this->screens[$context] ),

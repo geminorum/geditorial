@@ -1646,8 +1646,16 @@ class Importer extends gEditorial\Module
 		return $this->filters( 'fields', $fields, $posttype );
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
-	{
+	public function importer_prepare(
+		mixed $value,
+		?string $posttype,
+		string $field,
+		array $header,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
 		switch ( $field ) {
 
 			case 'importer_menu_order'     : return Core\Number::intval( $value );
@@ -2254,7 +2262,7 @@ class Importer extends gEditorial\Module
 		return $count;
 	}
 
-	public function rowaction_get_mainlink_for_post( object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
+	public function rowaction_get_mainlink_for_post( ?object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return FALSE;
@@ -2364,8 +2372,7 @@ class Importer extends gEditorial\Module
 	 */
 	private function _do_cleanup_post( int $post_id ): bool
 	{
-		// NOTE: settings return `FALSE` on success!
-		return ! ModuleSettings::post_cleanup_raw_data(
+		return ModuleSettings::post_cleanup_raw_data(
 			$post_id,
 			$this->_get_metakeys()
 		);

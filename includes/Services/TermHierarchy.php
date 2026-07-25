@@ -26,13 +26,13 @@ class TermHierarchy extends gEditorial\Service
 		add_action( 'current_screen', [ __CLASS__, 'current_screen' ], 999 );
 	}
 
-	public static function current_screen( $screen )
+	public static function current_screen( object $screen ): void
 	{
 		if ( 'edit' === $screen->base && ! empty( $screen->post_type ) )
 			self::_hook_edit_screen_single_term_select( $screen->post_type );
 	}
 
-	private static function _hook_edit_screen_single_term_select( $posttype )
+	private static function _hook_edit_screen_single_term_select( string $posttype ): bool
 	{
 		// NOTE: this is WordPress's core hook
 		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
@@ -94,7 +94,7 @@ class TermHierarchy extends gEditorial\Service
 		gEditorial\Scripts::enqueue( self::dot( 'admin', 'singleselect', 'edit' ) );
 
 		if ( ! WordPress\IsIt::compatWP( '6.3.0' ) ) // @since WP 6.3.0
-			return;
+			return TRUE;
 
 		add_action( 'bulk_edit_posts',
 			static function ( $updated, $data ) use ( $posttype, $taxonomies ) {
@@ -138,9 +138,11 @@ class TermHierarchy extends gEditorial\Service
 				$added = $column;
 
 			}, 1, 2 );
+
+		return TRUE;
 	}
 
-	private static function _renderCustomBoxDropdowns( $taxonomies, $bulkedit = FALSE )
+	private static function _renderCustomBoxDropdowns( array $taxonomies, bool $bulkedit = FALSE ): void
 	{
 		$html = '';
 
@@ -192,7 +194,7 @@ class TermHierarchy extends gEditorial\Service
 	 * @param string|object $taxonomy
 	 * @return bool
 	 */
-	public static function isSingleTerm( $taxonomy )
+	public static function isSingleTerm( string|object $taxonomy ): bool
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
@@ -204,11 +206,11 @@ class TermHierarchy extends gEditorial\Service
 	 * Retrieves a single targeted term form a taxonomy with select-single prop.
 	 *
 	 * @param string|object $taxonomy
-	 * @param array $terms
-	 * @param bool|object $post
+	 * @param array|false $terms
+	 * @param object|false $post
 	 * @return false|object
 	 */
-	public static function getSingleSelectTerm( $taxonomy, $terms, $post = FALSE )
+	public static function getSingleSelectTerm( string|object $taxonomy, array|false $terms, mixed $post = FALSE ): false|object
 	{
 		// if ( is_null( $terms ) )
 		// 	return NULL; // Maybe in the process of clearing!
@@ -261,8 +263,15 @@ class TermHierarchy extends gEditorial\Service
 	 * @param bool $append
 	 * @param array $old_tt_ids
 	 */
-	public static function set_object_terms_auto_set_parent_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
-	{
+	public static function set_object_terms_auto_set_parent_terms(
+		int $object_id,
+		array $terms,
+		array $tt_ids,
+		string $taxonomy,
+		bool $append,
+		array $old_tt_ids,
+	): void {
+
 		if ( empty( $tt_ids ) )
 			return;
 
@@ -293,8 +302,15 @@ class TermHierarchy extends gEditorial\Service
 	 * @param bool $append
 	 * @param array $old_tt_ids
 	 */
-	public static function set_object_terms_auto_set_child_terms( $object_id, $terms, $tt_ids, $taxonomy, $append, $old_tt_ids )
-	{
+	public static function set_object_terms_auto_set_child_terms(
+		int $object_id,
+		array $terms,
+		array $tt_ids,
+		string $taxonomy,
+		bool $append,
+		array $old_tt_ids,
+	): void {
+
 		if ( empty( $tt_ids ) )
 			return;
 
@@ -317,10 +333,10 @@ class TermHierarchy extends gEditorial\Service
 	 * Filters the terms query default arguments.
 	 *
 	 * @param array $defaults
-	 * @param null|array $taxonomies
+	 * @param array $taxonomies
 	 * @return array
 	 */
-	public static function get_terms_defaults( $defaults, $taxonomies )
+	public static function get_terms_defaults( array $defaults, ?array $taxonomies ): array
 	{
 		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
 			return $defaults;

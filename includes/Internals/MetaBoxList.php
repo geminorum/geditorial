@@ -11,7 +11,7 @@ trait MetaBoxList
 {
 	protected function _hook_children_listbox(
 		object $screen,
-		?array $posttypes = NULL,
+		string|array|null $posttypes = NULL,
 		?string $context = NULL,
 		?string $metabox_context = NULL,
 		string|array $extra = [],

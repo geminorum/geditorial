@@ -11,8 +11,14 @@ trait PostDate
 {
 	public static $postdate__action_override_dates = 'postdate_do_override_dates';
 
-	protected function postdate__render_before_override_dates( string|array $supported, array $metakeys, string $uri = '', ?string $sub = NULL, ?string $context = 'tools' ): bool
-	{
+	protected function postdate__render_before_override_dates(
+		string|array $supported,
+		string|array $metakeys,
+		?string $uri = '',
+		?string $sub = NULL,
+		?string $context = 'tools',
+	): bool {
+
 		if ( self::do( self::$postdate__action_override_dates )
 			&& $this->get_setting( 'override_dates', TRUE ) ) {
 
@@ -23,8 +29,12 @@ trait PostDate
 		return TRUE;
 	}
 
-	public function postdate__do_override_dates( string|array $supported, array $metakeys, int $limit = 25 ): bool
-	{
+	public function postdate__do_override_dates(
+		string|array $supported,
+		string|array $metakeys,
+		?int $limit = 25,
+	): bool {
+
 		if ( ! $posttype = self::req( 'type' ) )
 			return ! gEditorial\Info::renderEmptyPosttype(
 				gEditorial\Settings::processingErrorOpen(), '</div></div>', FALSE );
@@ -69,8 +79,12 @@ trait PostDate
 		] ) );
 	}
 
-	public function postdate__post_override_date( mixed $post, array $metakeys, bool $verbose = FALSE ): bool
-	{
+	public function postdate__post_override_date(
+		mixed $post,
+		string|array $metakeys,
+		bool $verbose = FALSE,
+	): bool {
+
 		if ( TRUE === ( $data = $this->postdate__get_post_data_for_latechores( $post, $metakeys, $verbose ) ) )
 			return TRUE;
 
@@ -97,8 +111,13 @@ trait PostDate
 			], TRUE );
 	}
 
-	public function postdate__render_card_override_dates( string $uri = '', ?string $sub = NULL, ?array $supported_list = NULL, ?string $card_title = NULL ): bool
-	{
+	public function postdate__render_card_override_dates(
+		?string $uri = '',
+		?string $sub = NULL,
+		string|array|null $supported_list = NULL,
+		?string $card_title = NULL,
+	): bool {
+
 		echo gEditorial\Settings::toolboxCardOpen( $card_title ?? _x( 'Post-date by Meta-fields', 'Internal: PostDate: Card Title', 'geditorial-admin' ) );
 
 			if ( is_null( $supported_list ) )
@@ -147,8 +166,12 @@ trait PostDate
 	}
 
 	// CAUTION: used in multiple callbacks
-	public function postdate__get_post_data_for_latechores( mixed $post, array $metakeys, bool $verbose = FALSE ): bool|array
-	{
+	public function postdate__get_post_data_for_latechores(
+		mixed $post,
+		string|array $metakeys,
+		bool $verbose = FALSE,
+	): bool|array {
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return gEditorial\Settings::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 

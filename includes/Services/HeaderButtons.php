@@ -72,8 +72,12 @@ class HeaderButtons extends gEditorial\Service
 				continue;
 
 			if ( ! empty( $button['icon'] ) )
-				// NOTE: better not to have space between icon and text
-				$button['text'] = sprintf( '%s<span class="-text">%s</span>', Icons::get( $button['icon'] ), $button['text'] );
+				$button['text'] = sprintf(
+					// NOTE: better not to have space between icon and text
+					'%s<span class="-text">%s</span>',
+					Icons::get( $button['icon'] ),
+					$button['text']
+				);
 
 			if ( ! empty( $button['html'] ) )
 				$args['buttons'][] = $button['html'];
@@ -86,8 +90,8 @@ class HeaderButtons extends gEditorial\Service
 					'title'  => $button['title'] ?: FALSE,
 					'target' => $button['newtab'] ? '_blank': FALSE,
 					'class'  => Core\HTML::attrClass(
-						// NOTE: should not use `.button`!
-						'page-title-action',
+						'-header-button'   ,  // should not use `.button`!
+						'page-title-action',  // wp core class
 						empty( $button['icon'] ) ? '' : '-has-icon',
 						$button['class']
 					),

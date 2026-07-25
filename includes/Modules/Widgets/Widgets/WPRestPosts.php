@@ -45,7 +45,7 @@ class WPRestPosts extends gEditorial\Widget
 		if ( $extra )
 			$resource.= '&'.$extra;
 
-		$data = Core\HTTP::getJSON( $resource, [], FALSE );
+		$data = WordPress\Remote::getJSON( $resource, [], FALSE );
 
 		if ( empty( $data ) && ! $empty )
 			return TRUE;

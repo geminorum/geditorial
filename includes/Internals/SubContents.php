@@ -414,7 +414,7 @@ trait SubContents
 		$this->action_module( 'importer', 'saved', 2, 10, 'subcontent' );
 	}
 
-	protected function subcontent_get_importer_fields( $posttype = NULL, $object = FALSE )
+	protected function subcontent_get_importer_fields( ?string $posttype = NULL ): array
 	{
 		$fields     = [];
 		$enabled    = $this->subcontent_get_fields( 'import' );
@@ -431,7 +431,7 @@ trait SubContents
 		return $fields;
 	}
 
-	public function importer_fields_subcontent( $fields, ?string $posttype )
+	public function importer_fields_subcontent( array $fields, string $posttype ): array
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
 			return $fields;
@@ -495,7 +495,7 @@ trait SubContents
 		mixed $post = FALSE,
 		string $column_title = '',
 		string $source_title = '',
-	): bool|string {
+	): bool|array {
 
 		if ( empty( $raw ) )
 			return FALSE;

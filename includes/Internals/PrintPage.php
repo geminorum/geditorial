@@ -87,7 +87,7 @@ trait PrintPage
 			$pagettitle ?? _x( 'Print Me!', 'Internal: PrintPage: Page Title', 'geditorial' ), $profile );
 	}
 
-	protected function printpage__get_layout_bodyclass( false|object $profile = FALSE, array $extra = [] ): array
+	protected function printpage__get_layout_bodyclass( false|object $profile = FALSE, array $extra = [] ): string
 	{
 		if ( method_exists( $this, 'printpage_get_layout_bodyclass' ) )
 			$list = $this->printpage_get_layout_bodyclass( $profile );
@@ -161,7 +161,7 @@ trait PrintPage
 
 		echo Core\HTML::tag( 'a', [
 			'href'    => '#',
-			'class'   => [ 'button', $button_class ], //  button-small',
+			'class'   => [ 'button', $button_class ], //  `button-small`
 			'onclick' => $func.'("'.$id.'")',
 		], _x( 'Print', 'Module', 'geditorial' ) );
 

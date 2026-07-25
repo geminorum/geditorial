@@ -12,12 +12,18 @@ class Template extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function perPageItems( ?int $default = NULL ): int|string
+	public static function perPageItems( ?int $default = NULL ): int
 	{
-		if ( WordPress\WooCommerce::isActive() )
-			return WordPress\WooCommerce::getDefaultColumns() * WordPress\WooCommerce::getDefaultRows();
+		$perpage = $default ?? 10;
 
-		return get_option( 'posts_per_page', $default ?? 10 );
+		if ( WordPress\WooCommerce::isActive() )
+			$perpage = WordPress\WooCommerce::getDefaultColumns()
+				* WordPress\WooCommerce::getDefaultRows();
+
+		else if ( $option = get_option( 'posts_per_page' ) )
+			$perpage = $option;
+
+		return absint( $perpage );
 	}
 
 	public static function perRowColumns( ?int $default = NULL ): int|string

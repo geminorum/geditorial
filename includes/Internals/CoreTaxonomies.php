@@ -800,7 +800,12 @@ trait CoreTaxonomies
 		if ( empty( $currents ) || self::isError( $currents ) )
 			return FALSE;
 
-		return wp_set_object_terms( $post->ID, WordPress\Taxonomy::appendParentTermIDs( $currents, $taxonomy ), $taxonomy, TRUE );
+		return wp_set_object_terms(
+			$post->ID,
+			WordPress\Taxonomy::appendParentTermIDs( $currents, $taxonomy ),
+			$taxonomy,
+			TRUE,
+		);
 	}
 
 	/**
@@ -814,45 +819,47 @@ trait CoreTaxonomies
 		if ( ! $target = $this->constant( $constant ) )
 			return FALSE;
 
-		add_filter( 'wp_sitemaps_taxonomies_query_args',
+		return add_filter( 'wp_sitemaps_taxonomies_query_args',
 			static function ( $args, $taxonomy ) use ( $target ) {
 				if ( $target === $taxonomy )
 					$args['hide_empty'] = FALSE;
 				return $args;
 			}, 10, 2 );
-
-		return TRUE;
 	}
 
-	protected function determine_taxonomy_meta_box_cb( string $constant, mixed $arg = NULL, bool $hierarchical = FALSE ): callable|false|null
-	{
-		if ( ! $arg && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
+	protected function determine_taxonomy_meta_box_cb(
+		string $constant,
+		mixed $passed_argument = NULL,
+		bool $hierarchical = FALSE,
+	): callable|false|null {
+
+		if ( ! $passed_argument && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
 			return [ $this, self::und( 'meta_box_cb', $constant ) ];
 
-		if ( is_null( $arg ) )
+		if ( is_null( $passed_argument ) )
 			return $hierarchical
 				? [ $this, 'coretax__core_categories_metabox' ]
 				: [ $this, 'coretax__core_tags_metabox' ];
 
-		if ( ! $arg || is_array( $arg ) )
-			return $arg;
+		if ( ! $passed_argument || is_array( $passed_argument ) )
+			return $passed_argument;
 
-		if ( '__checklist_terms_callback' === $arg )
+		if ( '__checklist_terms_callback' === $passed_argument )
 			return [ $this, 'taxonomy_meta_box_checklist_terms_cb' ];
 
-		if ( '__checklist_reverse_terms_callback' === $arg )
+		if ( '__checklist_reverse_terms_callback' === $passed_argument )
 			return [ $this, 'taxonomy_meta_box_checklist_reverse_terms_cb' ];
 
-		if ( '__checklist_restricted_terms_callback' === $arg )
+		if ( '__checklist_restricted_terms_callback' === $passed_argument )
 			return [ $this, 'taxonomy_meta_box_checklist_restricted_terms_cb' ];
 
-		if ( '__singleselect_terms_callback' === $arg )
+		if ( '__singleselect_terms_callback' === $passed_argument )
 			return [ $this, 'taxonomy_meta_box_singleselect_terms_cb' ];
 
-		if ( '__singleselect_restricted_terms_callback' === $arg )
+		if ( '__singleselect_restricted_terms_callback' === $passed_argument )
 			return [ $this, 'taxonomy_meta_box_singleselect_restricted_terms_cb' ];
 
-		return $arg;
+		return $passed_argument;
 	}
 
 	// @REF: `register_and_do_post_meta_boxes()`
@@ -1021,7 +1028,7 @@ trait CoreTaxonomies
 		if ( ! $edit = WordPress\Taxonomy::edit( $taxonomy ) )
 			return FALSE;
 
-		add_action( 'admin_bar_menu',
+		return add_action( 'admin_bar_menu',
 			function ( $wp_admin_bar )
 				use ( $taxonomy, $parent, $edit ) {
 
@@ -1036,8 +1043,6 @@ trait CoreTaxonomies
 				] );
 
 			}, $priority ?? 32, 1 );
-
-		return TRUE;
 	}
 
 	protected function register_headerbutton_for_taxonomy( string $constant, ?int $priority = NULL ): bool|string

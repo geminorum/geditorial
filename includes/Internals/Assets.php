@@ -93,7 +93,7 @@ trait Assets
 
 		gEditorial()->enqueue_asset_config( $args, $key );
 
-		return $handle;
+		return $handle ?? '';
 	}
 
 	// CAUTION: front only

@@ -138,7 +138,7 @@ class Tabloid extends gEditorial\Module
 		}
 	}
 
-	public function rowaction_get_mainlink_for_post( object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
+	public function rowaction_get_mainlink_for_post( ?object $post, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return FALSE;
@@ -168,7 +168,7 @@ class Tabloid extends gEditorial\Module
 		] );
 	}
 
-	public function rowaction_get_mainlink_for_term( object $term, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
+	public function rowaction_get_mainlink_for_term( ?object $term, string|array|null $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! $term || ! WordPress\Term::can( $term, 'assign_term' ) )
 			return FALSE;

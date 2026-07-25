@@ -1588,7 +1588,7 @@ trait PostTypeFields
 		$this->action_module( 'importer', 'saved', 2, 10, 'posttypefields' );
 	}
 
-	protected function posttypefields_get_importer_fields( $posttype = NULL, $object = FALSE )
+	protected function posttypefields_get_importer_fields( $posttype = NULL, $return_object = FALSE )
 	{
 		$fields = [];
 
@@ -1605,10 +1605,10 @@ trait PostTypeFields
 			if ( in_array( $args['type'], [ 'term' ] ) )
 				continue;
 
-			$fields[sprintf( '%s__%s', $this->key, $field )] = $object ? $args : sprintf( $template, $args['title'] );
+			$fields[sprintf( '%s__%s', $this->key, $field )] = $return_object ? $args : sprintf( $template, $args['title'] );
 
 			if ( ! empty( $args['import_ignored'] ) )
-				$fields[sprintf( '%s_ignored__%s', $this->key, $field )] = $object ? $args : sprintf( $ignored, $args['title'] );
+				$fields[sprintf( '%s_ignored__%s', $this->key, $field )] = $return_object ? $args : sprintf( $ignored, $args['title'] );
 		}
 
 		return $fields;

@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsFields
 {
-	public function register_settings_fields_option( $section_title = NULL )
+	public function register_settings_fields_option( ?string $section_title = NULL ): void
 	{
 		if ( is_null( $section_title ) )
 			/* translators: `%s`: post-type label */
@@ -73,7 +73,7 @@ trait SettingsFields
 	}
 
 	// helps with renamed fields
-	private function get_settings_fields_option_val( $args )
+	private function get_settings_fields_option_val( array $args ): false|string
 	{
 		$fields = array_reverse( $this->sanitize_postmeta_field_key( $args['field'] ) );
 
@@ -90,7 +90,7 @@ trait SettingsFields
 		return FALSE;
 	}
 
-	public function settings_fields_option( $args )
+	public function settings_fields_option( array $args ): void
 	{
 		$name  = $this->hook_base( $this->module->name ).'[fields]['.$args['post_type'].']['.$args['field'].']';
 		$id    = $this->hook_base( $this->module->name ).'-fields-'.$args['post_type'].'-'.$args['field'];
@@ -111,7 +111,7 @@ trait SettingsFields
 		echo '</div>';
 	}
 
-	public function settings_fields_option_all( $args )
+	public function settings_fields_option_all( array $args ): void
 	{
 		$html = Core\HTML::tag( 'input', [
 			'type'  => 'checkbox',
@@ -124,17 +124,17 @@ trait SettingsFields
 		Core\HTML::label( $html, $args['post_type'].'_fields_all', FALSE );
 	}
 
-	public function settings_fields_option_none( $args )
+	public function settings_fields_option_none( array $args ): void
 	{
 		Services\Modulation::sectionEmpty( _x( 'No fields supported', 'Module', 'geditorial-admin' ) );
 	}
 
-	public function posttype_fields_all( $posttype = 'post', $module = NULL )
+	public function posttype_fields_all( string $posttype = 'post', ?string $module = NULL ): array
 	{
 		return WordPress\PostType::supports( $posttype, self::und( $module ?? $this->module->name, 'fields' ) );
 	}
 
-	public function posttype_fields_list( $posttype = 'post', $extra = [] )
+	public function posttype_fields_list( string $posttype = 'post', array $extra = [] ): array
 	{
 		$list = [];
 
@@ -150,7 +150,7 @@ trait SettingsFields
 	}
 
 	// Retrieves enabled fields for given post-type.
-	public function posttype_fields( $posttype = 'post', $js = FALSE )
+	public function posttype_fields( string $posttype = 'post', bool $js = FALSE ): array
 	{
 		$fields = [];
 
@@ -173,10 +173,9 @@ trait SettingsFields
 	}
 
 	// for fields only in connection to the caller module
-	public function add_posttype_fields_supported( $posttypes = NULL, $fields = NULL, $append = TRUE, $type = 'meta' )
+	public function add_posttype_fields_supported( array|string|null $posttypes = NULL, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
 	{
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
+		$posttypes = $posttypes ?? $this->posttypes();
 
 		if ( is_null( $fields ) ) {
 
@@ -202,7 +201,7 @@ trait SettingsFields
 		return $this->add_posttype_fields( $this->constant( $constant ), $fields, $append, $type ?? 'meta' );
 	}
 
-	public function add_posttype_fields( $posttype, $fields = NULL, $append = TRUE, $type = 'meta' )
+	public function add_posttype_fields( string $posttype, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
 	{
 		if ( is_null( $fields ) ) {
 

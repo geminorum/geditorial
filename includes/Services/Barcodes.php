@@ -101,7 +101,7 @@ class Barcodes extends gEditorial\Service
 
 			$bypass = $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
 
-			if ( ! $image = Core\HTTP::getContents( $direct ) )
+			if ( ! $image = WordPress\Remote::getContents( $direct ) )
 				return $bypass;
 
 			if ( FALSE === Core\File::putContents( $file, $image, $path ) )

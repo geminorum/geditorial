@@ -426,7 +426,7 @@ trait BulkExports
 		if ( ! $average = WordPress\PostType::getMetaAverageDataLength( $metakey ) )
 			return $default;
 
-		return Core\Number::round( $average + $padding ) ?: $default ?? 20;
+		return (int) Core\Number::round( $average + $padding ) ?: $default ?? 20;
 	}
 
 	// TODO: support field meta from paired

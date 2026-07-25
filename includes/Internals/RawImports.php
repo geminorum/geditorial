@@ -17,6 +17,7 @@ trait RawImports
 
 	protected function get_imports_datafile( string $key = 'default' ): false|string
 	{
+		/** @disregard */
 		return empty( $this->imports_datafiles[$key] )
 			? FALSE
 			: sprintf( '%sdata/%s',
@@ -40,6 +41,7 @@ trait RawImports
 
 		if ( is_null( $type ) ) {
 
+			/** @disregard */
 			$filetype = Core\File::type( $this->imports_datafiles[$key], [
 				'csv'  => 'text/csv',
 				'json' => 'application/json',

@@ -185,7 +185,8 @@ class Audit extends gEditorial\Module
 
 				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
 
-			break;
+				break;
+
 			case 'store':
 
 				$taxonomy = $this->constant( 'main_taxonomy' );

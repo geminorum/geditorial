@@ -47,7 +47,7 @@ class DateParser extends Core\Base
 		'سپند'      => 12,
 	];
 
-	public static function parse( mixed $input, string $calendar = 'persian', ?object $timezone = NULL )
+	public static function parse( mixed $input, string $calendar = 'persian', mixed $timezone = NULL ): false|object
 	{
 		if ( ! $input )
 			return FALSE;
@@ -106,13 +106,14 @@ class DateParser extends Core\Base
 				$parts[0] = (int) sprintf( '1%d', $parts[0] );
 		}
 
+		// WTF?!: `gEditorial\Datetime`
 		if ( ! $date = gEditorial\Datetime::makeMySQLFromInput( implode( '-', $parts ?? [] ), NULL, $calendar ) )
 			return FALSE;
 
 		return date_create( $date, self::timezone( $timezone ) );
 	}
 
-	public static function extractParts( $input )
+	public static function extractParts( string $input ): array
 	{
 		$sanitized = $input;
 
@@ -120,19 +121,22 @@ class DateParser extends Core\Base
 		$sanitized = Core\Text::trim( str_ireplace( static::MONTH_STRING , '', $sanitized ) );
 		$sanitized = Core\Text::trim( str_ireplace( [ '\\', '/', '-', '،', ',', ';', '؛' ], '|', $sanitized ) );
 		$sanitized = Core\Text::trim( str_ireplace( [ ' |', '| ', ' | ', '  |  ' ], '|', $sanitized ) );
-		// $sanitized = Core\Text::trim( preg_replace( '/\s+[|]\s+/u', '|', $sanitized ) );
+		// `$sanitized = Core\Text::trim( preg_replace( '/\s+[|]\s+/u', '|', $sanitized ) );`
 
 		$sanitized = NumbersInPersian::textOrdinalToNumbers( $sanitized, 31 );
 
 		$months  = array_map( 'preg_quote', array_keys( static::MONTH_NAMES ) );
 		$pattern = '/(?=(^|.*))([|\s]?)('.implode( '|', $months ).')([|\s]?)(?=($|.*))/iu';
 
-		$sanitized = preg_replace_callback( $pattern, [ __CLASS__, 'extractParts_months_callback' ], ' '.$sanitized.' ' );
+		$sanitized = preg_replace_callback( $pattern,
+			[ __CLASS__, 'extractParts_months_callback' ],
+			' '.$sanitized.' ' // padded!
+		);
 
 		return Core\Arraay::prepNumeral( array_reverse( explode( '|', Core\Text::trim( $sanitized ) ) ) );
 	}
 
-	public static function extractParts_months_callback( $matches )
+	public static function extractParts_months_callback( array $matches ): string
 	{
 		$month = trim( $matches[3], ' |' );
 

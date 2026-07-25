@@ -541,7 +541,7 @@ class StaticCovers extends gEditorial\Module
 
 				$url = Core\Text::replaceTokens( $url_template, $tokens );
 
-				if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+				if ( 200 !== Core\HTTP::getStatus( $url ) )
 					if ( 0 === $i )
 						continue;
 					else
@@ -588,7 +588,7 @@ class StaticCovers extends gEditorial\Module
 
 			$url = Core\Text::replaceTokens( $url_template, $tokens );
 
-			if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+			if ( 200 !== Core\HTTP::getStatus( $url ) )
 				return FALSE;
 		}
 
@@ -643,7 +643,7 @@ class StaticCovers extends gEditorial\Module
 
 				$url = Core\Text::replaceTokens( $url_template, $tokens );
 
-				if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+				if ( 200 !== Core\HTTP::getStatus( $url ) )
 					if ( 0 === $i )
 						continue;
 					else
@@ -691,7 +691,7 @@ class StaticCovers extends gEditorial\Module
 
 			$url = Core\Text::replaceTokens( $url_template, $tokens );
 
-			if ( 200 !== Core\HTTP::getStatus( $url, FALSE ) )
+			if ( 200 !== Core\HTTP::getStatus( $url ) )
 				return FALSE;
 		}
 
