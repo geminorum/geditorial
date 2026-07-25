@@ -150,6 +150,14 @@ class Date extends Base
 	 * Retrieves the timezone of the site as a string.
 	 * NOTE: returns PHP timezone name or a `±HH:MM` offset.
 	 *
+	 * @example
+     *  - 'Europe/Rome'
+     *  - 'America/North_Dakota/New_Salem'
+     *  - 'UTC'
+     *  - '-06:30'
+     *  - '+00:00'
+     *  - '+08:45'
+	 *
 	 * @return string
 	 */
 	public static function currentTimeZone(): string

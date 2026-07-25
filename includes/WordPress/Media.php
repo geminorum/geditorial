@@ -647,9 +647,9 @@ class Media extends Core\Base
 			'caption'   => wp_get_attachment_caption( $attachment_id ),
 			'mime_type' => get_post_mime_type( $attachment_id ),
 			'url'       => $uploads['baseurl'].'/'.$metadata['file'],
-			'width'     => empty( $metadata['width'] ) ? NULL : $metadata['width'],
-			'height'    => empty( $metadata['height'] ) ? NULL : $metadata['height'],
-			'filesize'  => empty( $metadata['filesize'] ) ? NULL : $metadata['filesize'],
+			'width'     => empty( $metadata['width'] ) ? NULL : (int) $metadata['width'],
+			'height'    => empty( $metadata['height'] ) ? NULL : (int) $metadata['height'],
+			'filesize'  => empty( $metadata['filesize'] ) ? NULL : (int) $metadata['filesize'],
 			'sizes'     => [],
 		];
 
@@ -746,14 +746,19 @@ class Media extends Core\Base
 		return $deleted;
 	}
 
-	public static function getAttachmentFileSize( int $attachment_id, bool $format = FALSE, ?string $template = NULL, string|false $fallback = '' ): string|false
-	{
+	public static function getAttachmentFileSize(
+		int $attachment_id,
+		bool $format = FALSE,
+		?string $template = NULL,
+		string|false $fallback = ''
+	): false|string|int {
+
 		if ( ! $filesize = Core\File::size( get_attached_file( $attachment_id ) ) )
 			return $fallback;
 
 		return $format
 			? sprintf( $template ?? '<span class="-filesize">%s</span>', Core\HTML::wrapLTR( Core\File::formatSize( $filesize ) ) )
-			: $filesize;
+			: (int) $filesize;
 	}
 
 	public static function emptyAttachmentImageMeta( int $attachment_id ): int|bool

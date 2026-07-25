@@ -452,7 +452,7 @@ class Post extends Core\Base
 	}
 
 	// @old: `WordPress\PostType::getIDbySlug()`
-	public static function getIDbySlug( $slug, $posttype = 'post' ): false|int
+	public static function getIDbySlug( string $slug, string $posttype = 'post' ): false|int
 	{
 		static $cache = [];
 
@@ -471,18 +471,18 @@ class Post extends Core\Base
 			AND post_type = %s
 		", $slug, $posttype ) );
 
-		return $cache[$posttype][$slug] = $id;
+		return $cache[$posttype][$slug] = $id ?: FALSE;
 	}
 
 	// @old: `WordPress\PostType::getLastRevisionID()`
-	public static function getLastRevisionID( $post ): false|int
+	public static function getLastRevisionID( mixed $post ): false|int
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;
 
 		global $wpdb;
 
-		return $wpdb->get_var(
+		$id = $wpdb->get_var(
 			$wpdb->prepare( "
 				SELECT ID
 				FROM {$wpdb->posts}
@@ -492,6 +492,8 @@ class Post extends Core\Base
 				ORDER BY post_date DESC
 			", $post->ID )
 		);
+
+		return $id ?: FALSE;
 	}
 
 	/**
@@ -525,7 +527,7 @@ class Post extends Core\Base
 
 		clean_post_cache( $post );
 
-		return $success;
+		return (bool) $success;
 	}
 
 	/**

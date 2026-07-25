@@ -9,16 +9,16 @@ class Duration extends Base
 	// @SEE: `Timespan` DataType
 
 
-	public static function is( $text )
+	public static function is( mixed $input ): bool
 	{
-		if ( self::empty( $text ) )
+		if ( self::empty( $input ) )
 			return FALSE;
 
 		return TRUE; // FIXME!
 	}
 
 	// NOTE: returns in seconds
-	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
+	public static function sanitize( mixed $input, mixed $default = '', ?array $field = [], ?string $context = 'save' ): mixed
 	{
 		if ( self::empty( $input ) )
 			return $default;
@@ -56,7 +56,7 @@ class Duration extends Base
 		return self::timeToSeconds( $sanitized );
 	}
 
-	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
+	public static function prep( mixed $value, ?array $field = [], ?string $context = 'display', mixed $icon = NULL ): string
 	{
 		if ( self::empty( $value ) )
 			return '';

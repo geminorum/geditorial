@@ -532,7 +532,7 @@ class File extends Base
 	}
 
 	// @REF: https://gist.github.com/eusonlito/5099936
-	public static function getFolderSize( $path, $format = TRUE )
+	public static function getFolderSize( string $path, bool $format = TRUE ): int|string
 	{
 		$size = 0;
 
@@ -550,14 +550,14 @@ class File extends Base
 	 * @param bool $format
 	 * @return int|string
 	 */
-	public static function getSize( $path, $format = TRUE )
+	public static function getSize( string $path, bool $format = TRUE ): int|string
 	{
 		$size = 0;
 
 		if ( $path && ( $fh = fopen( $path, 'r+' ) ) ) {
 			$stat = fstat( $fh );
 			fclose( $fh );
-			$size = $stat['size'];
+			$size = Number::notNegative( $stat['size'] );
 		}
 
 		return $format ? self::formatSize( $size ) : $size;
@@ -570,15 +570,15 @@ class File extends Base
 	 * @param string $path
 	 * @return int
 	 */
-	public static function size( $path )
+	public static function size( string $path ): int
 	{
 		if ( function_exists( 'wp_filesize' ) )
-			return wp_filesize( $path );
+			return (int) wp_filesize( $path );
 
 		if ( ! $path || ! file_exists( $path ) )
 			return 0;
 
-		return (int) @filesize( $path );
+		return Number::notNegative( @filesize( $path ) );
 	}
 
 	/**

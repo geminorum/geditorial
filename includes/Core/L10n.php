@@ -45,7 +45,7 @@ class L10n extends Base
 		return $language;
 	}
 
-	public static function sanitize( $locale = NULL )
+	public static function sanitize( ?string $locale = NULL ): string
 	{
 		if ( '' === $locale || 'en' === $locale )
 			return 'en_US';

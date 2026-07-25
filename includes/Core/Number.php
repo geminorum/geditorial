@@ -35,12 +35,12 @@ class Number extends Base
 	 * Determines whether a string contains only of digits.
 	 * @source https://stackoverflow.com/a/4878242
 	 *
-	 * @param string $string
+	 * @param mixed $input
 	 * @return bool
 	 */
-	public static function is( $string )
+	public static function is( mixed $input ): bool
 	{
-		return (bool) preg_match( '/^[0-9]+$/', self::translate( Text::trim( $string ) ) );
+		return (bool) preg_match( '/^[0-9]+$/', self::translate( Text::trim( $input ) ) );
 	}
 
 	/**
@@ -635,59 +635,46 @@ class Number extends Base
 	 * If the value is within the bounds, the original value is returned.
 	 * If it is not within the bounds, the closest bound is returned.
 	 *
-	 * @since WP 7.1.0
-	 *
 	 * @param mixed $value The value to clamp.
 	 * @param mixed $min   The minimum bound. Must be less than or equal to `$max`.
 	 * @param mixed $max   The maximum bound. Must be greater than or equal to `$min`.
 	 * @return mixed The clamped value. Either `$value`, `$min`, or `$max`.
 	 *
-	 * @throws ValueError               If `$min` is greater than `$max`, or if `$min` or `$max` is NAN, and the ValueError class exists (PHP 8.0+ or polyfilled).
-	 * @throws InvalidArgumentException If `$min` is greater than `$max`, or if `$min` or `$max` is NAN, and the ValueError class does not exist (PHP 7.x).
-	 *
-	 * @phpstan-template TValue
-	 * @phpstan-template TMin
-	 * @phpstan-template TMax
-	 * @phpstan-param TValue $value
-	 * @phpstan-param TMin   $min
-	 * @phpstan-param TMax   $max
-	 * @phpstan-return TValue|TMin|TMax
+	 * @throws \ValueError               If `$min` is greater than `$max`, or if `$min` or `$max` is `NAN`, and the `ValueError` class exists (PHP 8.0+ or polyfilled).
+	 * @throws \InvalidArgumentException If `$min` is greater than `$max`, or if `$min` or `$max` is `NAN`, and the `ValueError` class does not exist (PHP 7.x).
 	 */
 	public static function clamp( $value, $min, $max )
 	{
 		$throw_value_error = static function ( string $message ) {
-			// The ValueError class was introduced in PHP 8, so in 7.4 throw InvalidArgumentException instead.
-			if ( ! class_exists( 'ValueError', false ) ) {
-				throw new InvalidArgumentException( $message );
-			}
-			throw new ValueError( $message );
+
+			// The `ValueError` class was introduced in PHP 8,
+			// so in 7.4 throw `InvalidArgumentException` instead.
+			if ( ! class_exists( 'ValueError', false ) )
+				throw new \InvalidArgumentException( $message );
+
+			throw new \ValueError( $message );
 		};
 
-		if ( is_float( $min ) && is_nan( $min ) ) {
+		if ( is_float( $min ) && is_nan( $min ) )
 			$throw_value_error( 'clamp(): Argument #2 ($min) must not be NAN' );
-		}
 
-		if ( is_float( $max ) && is_nan( $max ) ) {
+		if ( is_float( $max ) && is_nan( $max ) )
 			$throw_value_error( 'clamp(): Argument #3 ($max) must not be NAN' );
-		}
 
-		if ( $max < $min ) {
+		if ( $max < $min )
 			$throw_value_error( 'clamp(): Argument #2 ($min) must be smaller than or equal to argument #3 ($max)' );
-		}
 
-		/*
+		/**
 		 * The upper bound is checked before the lower bound to match the order in PHP's
 		 * implementation. Comparison in PHP is not transitive when operands of different
 		 * types are mixed (for example, comparing against a bool coerces both operands to
 		 * bool), so both bounds can compare as exceeded at once, and the first check wins.
 		 */
-		if ( $value > $max ) {
+		if ( $value > $max )
 			return $max;
-		}
 
-		if ( $value < $min ) {
+		if ( $value < $min )
 			return $min;
-		}
 
 		return $value;
 	}

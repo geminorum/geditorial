@@ -928,7 +928,7 @@ class HTML extends Base
 
 			if ( is_array( $page ) ) {
 
-				$title = empty( $page['title'] ) ? $slug : sprintf( '<span class="-nav-link-title">%s</span>', $page['title'] );
+				$title = empty( $page['title'] ) ? $slug : sprintf( '<span class="-nav-link-text">%s</span>', $page['title'] );
 				$icon  = empty( $page['icon'] )  ? ''    : sprintf( '<span class="-nav-link-icon" title="%s">%s</span> ', self::escape( $page['title'] ?? $slug ), $page['icon'] );
 
 				$args = empty( $page['args'] ) ? [ 'sub' => $slug ] : $page['args'];
@@ -946,7 +946,7 @@ class HTML extends Base
 
 			} else {
 
-				$title = sprintf( '<span class="-nav-link-title">%s</span>', $page );
+				$title = sprintf( '<span class="-nav-link-text">%s</span>', $page );
 				$icon  = '';
 				$args  = [ 'sub' => $slug ];
 			}

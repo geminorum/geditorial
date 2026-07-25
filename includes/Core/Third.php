@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\WordPress;
+
 class Third extends Base
 {
 
@@ -181,7 +183,7 @@ class Third extends Base
 			.'&singleEvents=true'
 			.'&timeMin='.$time.'T00:00:00Z';
 
-		return HTTP::getJSON( $url, [], FALSE );
+		return WordPress\Remote::getJSON( $url, [], FALSE );
 	}
 
 	// @REF: https://generatewp.com/easy-custom-mobile-chrome-address-bar-colors-wordpress/

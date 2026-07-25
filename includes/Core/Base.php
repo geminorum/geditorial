@@ -648,7 +648,7 @@ class Base
 		} );
 	}
 
-	#[\Deprecated('use `Core\Base::bool()` instead')]
+	#[\Deprecated('USE `Core\Base::bool()`')]
 	public static function validateBoolean( mixed $var ): bool
 	{
 		return self::bool( $var );

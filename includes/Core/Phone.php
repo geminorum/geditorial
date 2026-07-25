@@ -36,7 +36,7 @@ class Phone extends Base
 		return TRUE;
 	}
 
-	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
+	public static function sanitize( mixed $input, mixed $default = '', ?array $field = [], ?string $context = 'save' ): mixed
 	{
 		if ( self::empty( $input ) )
 			return $default;
@@ -113,7 +113,7 @@ class Phone extends Base
 	 * @param string $icon
 	 * @return string
 	 */
-	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
+	public static function prep( mixed $value, ?array $field = [], ?string $context = 'display', mixed $icon = NULL ): string
 	{
 		if ( self::empty( $value ) )
 			return '';

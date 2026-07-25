@@ -73,7 +73,7 @@ class ISBN extends Base
 		return self::convertToISBN13( $sanitized );
 	}
 
-	public static function sanitize( mixed $input, string $default = '', array $field = [], ?string $context = 'save' ): string
+	public static function sanitize( mixed $input, mixed $default = '', ?array $field = [], ?string $context = 'save' ): mixed
 	{
 		if ( ! $input = Text::force( $input ) )
 			return $default;

@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\WordPress;
+
 class LatLng extends Base
 {
 	// @SEE: `DataType::LatLng`
@@ -9,18 +11,18 @@ class LatLng extends Base
 	/**
 	 * Verifies that a coordinate is valid.
 	 *
-	 * @param string|array $data
+	 * @param mixed $input
 	 * @return bool
 	 */
-	public static function is( $data )
+	public static function is( mixed $input ): bool
 	{
-		if ( self::empty( $data ) )
+		if ( self::empty( $input ) )
 			return FALSE;
 
-		if ( ! is_array( $data ) )
-			$data = self::extract( $data );
+		if ( ! is_array( $input ) )
+			$input = self::extract( $input );
 
-		return self::validate( $data[0], $data[1] );
+		return self::validate( $input[0], $input[1] );
 	}
 
 	/**
@@ -67,7 +69,7 @@ class LatLng extends Base
 	}
 
 	// @SEE: https://github.com/jakubvalenta/geoshare
-	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
+	public static function sanitize( mixed $input, mixed $default = '', ?array $field = [], ?string $context = 'save' ): mixed
 	{
 		if ( self::empty( $input ) )
 			return $default;
@@ -103,7 +105,7 @@ class LatLng extends Base
 		if ( $utm = self::extractFromUTM( $sanitized ) )
 			return $utm;
 
-		// Extracts `lat/lng` from https://plus.codes
+		// Extracts `lat/lng` from plus.codes format
 		if ( $pluscode = self::extractFromPlusCode( $sanitized ) )
 			return $pluscode;
 
@@ -330,24 +332,34 @@ class LatLng extends Base
 			if ( \preg_match( $pattern, $data, $matches ) )
 				return sprintf( '%s,%s', $matches[1], $matches[2] );
 
+		} else if ( Text::starts( $data, static::NESHAN_PREFIXES ) ) {
+
+			// EXAMPLE: `https://nshn.ir/6a_bs-tSIxQN1b`
+			if ( $loc = self::extractFromNeshan( Text::stripPrefix( $data, static::NESHAN_PREFIXES ) ) )
+				return $loc;
+
 		} else if ( Text::starts( $data, 'https://balad.ir/p/' ) ) {
 
 			if ( ! empty( $url['fragment'] ) )
 				return vsprintf( '%s,%s', array_slice( explode( '/', $url['fragment'] ), 1 ) );
 
-		} else if ( Text::starts( $data, 'https://plus.codes/' ) ) {
+		} else if ( Text::starts( $data, static::PLUSCODE_PREFIXES ) ) {
 
 			// EXAMPLE: `https://plus.codes/8H7HHR42+M6`
-			if ( $pluscode = self::extractFromPlusCode( Text::stripPrefix( $data, 'https://plus.codes/' ) ) )
+			if ( $pluscode = self::extractFromPlusCode( Text::stripPrefix( $data, static::PLUSCODE_PREFIXES ) ) )
 				return $pluscode;
 		}
 
 		return $fallback;
 	}
 
-	public static function extractFromPlusCode( $data, $fallback = FALSE, $reference = NULL )
+	const PLUSCODE_PREFIXES = [
+		'https://plus.codes/',
+	];
+
+	public static function extractFromPlusCode( mixed $data, $fallback = FALSE, $reference = NULL )
 	{
-		if ( self::empty( $data ) )
+		if ( ! $data = Text::force( $data ) )
 			return $fallback;
 
 		/**
@@ -391,6 +403,47 @@ class LatLng extends Base
 		}
 
 		return $fallback;
+	}
+
+	const NESHAN_PREFIXES = [
+		'https://nshn.ir/',
+		'https://neshan.org/maps/share/',
+		'https://neshan.org/maps/places/',
+	];
+
+	/**
+	 * Extracts coordinates from given Neshan.org identifier.
+	 * @example `6a_bs-tSIxQN1b` from `https://nshn.ir/6a_bs-tSIxQN1b`
+	 *
+	 * @param  string            $data
+	 * @param  bool              $fallback
+	 * @param  mixed             $reference
+	 * @return string|false|null
+	 */
+	public static function extractFromNeshan(
+		string $data,
+		string|false|null $fallback = FALSE,
+		mixed $reference = NULL
+	): string|false|null {
+
+		if ( ! $data = Text::force( $data ) )
+			return $fallback;
+
+		// $canonical = sprintf( 'https://neshan.org/maps/places/%s', $data );
+		$canonical = sprintf( 'https://neshan.org/maps/share/%s', $data );
+
+		if ( ! $html = WordPress\Remote::getHTML( $canonical ) )
+			return $fallback;
+
+		// `<div id="map" data-ssr-loc="lat,long"></div>`
+		$extracted = WordPress\HTML::extractData( $html, [
+			'map' => 'data-ssr-loc',
+		], [
+			'tag_name'    => 'DIV',
+			'breadcrumbs' => [ 'HTML', 'BODY' ],
+		], TRUE );
+
+		return $extracted ?: $fallback;
 	}
 
 	/**

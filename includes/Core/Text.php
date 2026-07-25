@@ -295,12 +295,12 @@ class Text extends Base
 			"\\",
 		], '', $text );
 
-		// $text = self::stripPunctuation( $text );
+		// `$text = self::stripPunctuation( $text );`
 
 		$text = str_replace( [ '%20', '+', '–', '—' ], '-', $text );
 		$text = preg_replace( '/[\r\n\t -]+/', '-', $text );
 		$text = preg_replace( '/\.{2,}/', '.', $text );
-		// $text = preg_replace( '/-{2,}/', '-', $text );
+		// `$text = preg_replace( '/-{2,}/', '-', $text );`
 		$text = preg_replace( '/-(?=-)/', '', $text ); // contiguous dashes
 		$text = trim( $text, '.-_' );
 
@@ -351,7 +351,7 @@ class Text extends Base
 		$separator = $separator ?? ', ';
 
 		return preg_replace( '/(.*), (.*)/', '$2 $1', self::trim( $text ) );
-		// return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', self::trim( $text ) ); // Wrong!
+		// `return preg_replace( '/(.*)([,،;؛]) (.*)/u', '$3'.$separator.'$1', self::trim( $text ) ); // Wrong!`
 	}
 
 	public static function formatName( string $text, ?string $separator = NULL ): string
@@ -609,6 +609,7 @@ class Text extends Base
 	// @SOURCE: `seems_utf8()`
 	// NOTE: DEPRECATED: in favor of `wp_is_valid_utf8()`
 	// TODO: move to `Core\Encoding`
+	#[\Deprecated()]
 	public static function seemsUTF8( string $text ): string
 	{
 		$length = strlen( $text );
@@ -654,7 +655,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function containsUTF8( string $text ): string
+	public static function containsUTF8( string $text ): bool
 	{
 		return strlen( $text ) !== mb_strlen( $text, 'UTF-8' );
 	}
@@ -666,7 +667,7 @@ class Text extends Base
 	 * @param string $text
 	 * @return bool
 	 */
-	public static function strictUTF8( string $text ): string
+	public static function strictUTF8( string $text ): bool
 	{
 		return 'UTF-8' === mb_detect_encoding( $text, 'UTF-8', TRUE );
 	}
@@ -773,7 +774,7 @@ class Text extends Base
 	public static function singleWhitespaceUTF8( string $text ): string
 	{
 		// @source http://stackoverflow.com/a/3226746
-		// return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );
+		// `return preg_replace( '/[\p{Z}\s]{2,}/u', ' ', $text );`
 
 		// Replaces each sequence of spaces, tabs, and/or line breaks
 		// with the first character in that sequence.
@@ -843,7 +844,7 @@ class Text extends Base
 	 * @param string $needle
 	 * @return bool
 	 */
-	public static function contains( string $haystack, string|array $needle ): string
+	public static function contains( string $haystack, string|array $needle ): bool
 	{
 		// @since PHP 8.0.0
 		if ( function_exists( 'str_contains' ) )
@@ -1763,41 +1764,52 @@ class Text extends Base
 	// @SEE: `wp_kses_no_null()`
 	public static function stripControlChars( string $text ): string
 	{
-		// remove control chars, the first 32 ascii characters and \x7F
+		// Removes control chars, the first 32 ascii characters and `\x7F`
 		// @REF: http://stackoverflow.com/a/1497928
 		$text = preg_replace( '/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', $text );
-		// $text = preg_replace('/[\p{Cc}]/', '', $text );
+		// `$text = preg_replace('/[\p{Cc}]/', '', $text );`
 
-		// removes any instance of the '\0' string
+		// Removes any instance of the `\0` string.
 		$text = preg_replace( '/\\\\+0+/', '', $text );
 
 		return $text;
 	}
 
 	// @SOURCE: https://wp.me/p1ylL1-9
-	// TODO: move to `Core\Image`
+	// TODO: move to `Core\Image::htmlStrip()`
 	public static function stripImages( string $text ): string
 	{
 		return preg_replace( '/<img[^>]+./', '', $text );
 	}
 
 	/**
-	 * Replaces all tokens in the input text with appropriate values.
+	 * Replaces tokens in the input with appropriate values.
 	 * @source `bp_core_replace_tokens_in_text()`
 	 *
-	 * @param string $text
-	 * @param array $tokens
-	 * @param array $callback_args
-	 * @param callback $general_callback
+	 * @param string $input
+	 * @param iterable|object $tokens
+	 * @param array $callback_arguments
+	 * @param callable $general_callback
 	 * @return string
 	 */
-	public static function replaceTokens( string $text, array $tokens, array $callback_args = [], ?callable $general_callback = NULL ): string
-	{
-		// bail early if it has not have tokens!
-		if ( ! self::has( $text, '{{' ) )
-			return $text;
+	public static function replaceTokens(
+		string $input,
+		iterable|object $tokens,
+		array $callback_arguments = [],
+		?callable $general_callback = NULL,
+	): string {
+
+		if ( ! $input = self::force( $input ) )
+			return '';
+
+		// Bails early if it has not have tokens!
+		if ( ! self::has( $input, '{{' ) )
+			return $input;
 
 		$unescaped = $escaped = [];
+
+		if ( is_object( $tokens ) )
+			$tokens = get_object_vars( $tokens );
 
 		foreach ( $tokens as $token => $value ) {
 
@@ -1807,7 +1819,7 @@ class Text extends Base
 			}
 
 			if ( ! is_string( $value ) && is_callable( $value ) )
-				$value = call_user_func_array( $value, [ $token, $callback_args ] );
+				$value = call_user_func_array( $value, [ $token, $callback_arguments ] );
 
 			// NOTE: tokens can not be objects or arrays
 			if ( ! is_scalar( $value ) )
@@ -1817,10 +1829,10 @@ class Text extends Base
 			$escaped['{{'.$token.'}}']     = self::utf8SpecialChars( $value, ENT_QUOTES );
 		}
 
-		$text = strtr( $text, $unescaped );  // do first
-		$text = strtr( $text, $escaped );
+		$input = strtr( $input, $unescaped );  // do first
+		$input = strtr( $input, $escaped );
 
-		return $text;
+		return $input;
 	}
 
 	// NOTE: the order is important!

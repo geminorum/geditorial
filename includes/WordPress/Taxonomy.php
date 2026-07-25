@@ -9,7 +9,7 @@ class Taxonomy extends Core\Base
 
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,32}';
 
-	public static function object( mixed $taxonomy_or_term )
+	public static function object( mixed $taxonomy_or_term ): false|object
 	{
 		if ( ! $taxonomy_or_term )
 			return FALSE;
@@ -20,7 +20,7 @@ class Taxonomy extends Core\Base
 		if ( $taxonomy_or_term instanceof \WP_Taxonomy )
 			return $taxonomy_or_term;
 
-		return get_taxonomy( $taxonomy_or_term );
+		return get_taxonomy( $taxonomy_or_term ) ?: FALSE;
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Taxonomy extends Core\Base
 	 * @param mixed $taxonomy_or_term
 	 * @return bool
 	 */
-	public static function exists( mixed $taxonomy_or_term )
+	public static function exists( mixed $taxonomy_or_term ): bool
 	{
 		return (bool) self::object( $taxonomy_or_term );
 	}
@@ -41,7 +41,7 @@ class Taxonomy extends Core\Base
 	 * @param mixed $taxonomy
 	 * @return bool
 	 */
-	public static function viewable( mixed $taxonomy )
+	public static function viewable( mixed $taxonomy ): bool
 	{
 		if ( ! $object = self::object( $taxonomy ) )
 			return FALSE;
@@ -49,7 +49,7 @@ class Taxonomy extends Core\Base
 		return is_taxonomy_viewable( $object );
 	}
 
-	public static function queryVar( mixed $taxonomy )
+	public static function queryVar( mixed $taxonomy ): false|string
 	{
 		if ( ! $object = self::object( $taxonomy ) )
 			return FALSE;
@@ -59,7 +59,7 @@ class Taxonomy extends Core\Base
 			: $object->query_var;
 	}
 
-	public static function types( mixed $taxonomy )
+	public static function types( mixed $taxonomy ): array
 	{
 		if ( ! $object = self::object( $taxonomy ) )
 			return [];
@@ -76,10 +76,10 @@ class Taxonomy extends Core\Base
 	 * @param mixed $taxonomy
 	 * @return bool
 	 */
-	public static function hierarchical( mixed $taxonomy )
+	public static function hierarchical( mixed $taxonomy ): bool
 	{
 		if ( $object = self::object( $taxonomy ) )
-			return $object->hierarchical;
+			return (bool) $object->hierarchical;
 
 		return FALSE;
 	}
@@ -94,8 +94,13 @@ class Taxonomy extends Core\Base
 	 * @param bool $fallback
 	 * @return bool
 	 */
-	public static function can( mixed $taxonomy, ?string $capability = 'manage_terms', ?int $user_id = NULL, bool $fallback = FALSE )
-	{
+	public static function can(
+		mixed $taxonomy,
+		?string $capability = 'manage_terms',
+		?int $user_id = NULL,
+		bool $fallback = FALSE,
+	): bool {
+
 		static $cache = [];
 
 		if ( is_null( $capability ) )
@@ -130,12 +135,12 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves the capability assigned to the taxonomy.
 	 *
-	 * @param string|object $taxonomy
-	 * @param null|string $capability
-	 * @param mixed $fallback
-	 * @return string
+	 * @param mixed $taxonomy
+	 * @param string|null $capability
+	 * @param bool|string|null $fallback
+	 * @return bool|string
 	 */
-	public static function cap( string|object $taxonomy, ?string $capability = 'manage_terms', mixed $fallback = NULL )
+	public static function cap( mixed $taxonomy, ?string $capability = 'manage_terms', bool|string|null $fallback = NULL ): bool|string|null
 	{
 		if ( is_null( $capability ) )
 			return TRUE;
@@ -255,7 +260,7 @@ class Taxonomy extends Core\Base
 		if ( ! $object = self::object( $taxonomy ) )
 			return $fallback;
 
-		$link = $fallback; // WTF: WordPress does not support archives for terms
+		$link = $fallback ?: FALSE; // WTF: WordPress does not support archives for terms!
 
 		return apply_filters( 'nucleus_taxonomy_archive_link',
 			$link,

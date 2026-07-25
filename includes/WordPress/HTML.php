@@ -67,7 +67,7 @@ class HTML extends Core\Base
 		return trim( implode( '', $parts ) );
 	}
 
-	public static function stripTags( string $html ): string
+	public static function stripTags( mixed $html ): string
 	{
 		if ( ! $html = Core\Text::force( $html ) )
 			return '';
@@ -89,10 +89,10 @@ class HTML extends Core\Base
 		return $text;
 	}
 
-	public static function setAtts( $html, $attributes )
+	public static function setAtts( mixed $input, array $attributes ): mixed
 	{
-		if ( ! $html )
-			return '';
+		if ( ! $html = Core\Text::force( $input ) )
+			return $input;
 
 		$processor = new \WP_HTML_Tag_Processor( $html );
 
@@ -105,5 +105,37 @@ class HTML extends Core\Base
 		}
 
 		return $html;
+	}
+
+	public static function extractData( mixed $input, array $lookup = [], ?array $tag_query = NULL, bool $single = FALSE ): mixed
+	{
+		if ( ! $html = Core\Text::force( $input ) )
+			return $input;
+
+		$data      = [];
+		$processor = new \WP_HTML_Tag_Processor( $html );
+		$tag_query = $tag_query ?? [
+			'tag_name'    => 'DIV',
+			'breadcrumbs' => [ 'HTML', 'BODY' ],
+		];
+
+		while ( $processor->next_tag( $tag_query ) ) {
+
+			foreach ( $lookup as $target_id => $target_attribute ) {
+
+				if ( $target_id !== $processor->get_attribute( 'id' ) )
+					continue;
+
+				if ( ! $attribute = $processor->get_attribute( $target_attribute ) )
+					continue;
+
+				if ( $single )
+					return $attribute;
+
+				$data[$target_id] = $attribute;
+			}
+		}
+
+		return $single ? FALSE : $data;
 	}
 }

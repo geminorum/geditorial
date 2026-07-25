@@ -29,9 +29,9 @@ class Area extends Base
 	 * | `METRIC_SQUARE_KILOMETER`  | The area is measured in square kilometers.  |
 	 */
 
-	public static function is( mixed $data ): bool
+	public static function is( mixed $input ): bool
 	{
-		if ( self::empty( $data ) )
+		if ( self::empty( $input ) )
 			return FALSE;
 
 		return TRUE; // FIXME!
@@ -39,7 +39,7 @@ class Area extends Base
 
 	// FIXME: check for suffix and compare to data_unit
 	// -- convert to the target unit: @SEE https://github.com/lvivier/meters/blob/master/index.js
-	public static function sanitize( $input, $default = '', $field = [], $context = 'save' )
+	public static function sanitize( mixed $input, mixed $default = '', ?array $field = [], ?string $context = 'save' ): mixed
 	{
 		if ( self::empty( $input ) )
 			return $default;
@@ -63,7 +63,7 @@ class Area extends Base
 		return $sanitized;
 	}
 
-	public static function prep( $value, $field = [], $context = 'display', $icon = NULL )
+	public static function prep( mixed $value, ?array $field = [], ?string $context = 'display', mixed $icon = NULL ): string
 	{
 		if ( self::empty( $value ) )
 			return '';
@@ -97,8 +97,6 @@ class Area extends Base
 					],
 				], $value );
 		}
-
-		return $value;
 	}
 
 	public static function getHTMLPattern()
