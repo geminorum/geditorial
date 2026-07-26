@@ -783,6 +783,13 @@ class Plugin extends WordPress\Plugin
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-noinfo' ] ], $message ) : $message;
 	}
 
+	public static function nojs( false|string $wrap = 'p' ): string
+	{
+		// $message = __( 'This requires JavaScript.', 'geditorial' );
+		$message = __( 'You have to enable JavaScript!', 'geditorial' );
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-nojs-available' ] ], $message ) : $message;
+	}
+
 	public static function notreadable( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Data source is not readable!', 'geditorial' );

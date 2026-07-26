@@ -22,6 +22,7 @@ class Scripts extends WordPress\Main
 	}
 
 	// TODO: move to `Services\Markup`
+	// NOTE: simpler version: `gEditorial\Plugin::nojs()`
 	public static function noScriptMessage( $verbose = TRUE ): string|true
 	{
 		$html = Core\HTML::tag( 'noscript',

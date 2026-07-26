@@ -369,7 +369,7 @@ class Modulation extends gEditorial\Service
 
 		echo Core\HTML::tag( 'span', [
 			'class' => Core\Link::buttonClass( TRUE, [ '-danger', 'hide-if-js' ] ),
-		], _x( 'You have to enable Javascript!', 'Service: Modulation: Notice', 'geditorial-admin' ) );
+		], gEditorial\Plugin::nojs() );
 	}
 
 	public static function renderConfigure( object $module, bool $enabled = FALSE ): void
