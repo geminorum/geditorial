@@ -113,4 +113,70 @@ trait Rewrites
 
 		return $query;
 	}
+
+	// @REF: https://core.trac.wordpress.org/ticket/33728
+	protected function rewrites__add_taxonomy_endpoint( string $taxonomy_constant, ?string $constant_prefix = 'main' ): bool
+	{
+		if ( ! $query = $this->rewrites__get_queryvar( $constant_prefix ) )
+			return FALSE;
+
+		if ( ! $object = WordPress\Taxonomy::object( $taxonomy_constant ) )
+			return FALSE;
+
+		$endpoint = $this->rewrites__get_endpoint( $constant_prefix, $query );
+
+		add_rewrite_rule(
+			sprintf( '%s/(.+?)/%s(/(.*))?/?$', $object->rewrite['slug'] ?? $object->name, $endpoint ),
+			sprintf( 'index.php?%s=$matches[1]&%s=$matches[3]', $object->query_var ?? $object->name, $query ),
+			'top',
+		);
+
+		return TRUE;
+	}
+
+	// @source https://alex.blog/2011/10/07/code-snippet-helper-class-to-add-custom-taxonomy-to-post-permalinks/
+	protected function rewrites__add_taxonomy_tag( string $taxonomy_constant ): bool
+	{
+		if ( ! $object = WordPress\Taxonomy::object( $this->constant( $taxonomy_constant ) ) )
+			return FALSE;
+
+		$rewrite_tag = '%'.$this->constant(
+			self::und( $taxonomy_constant, 'rewritetag' ),
+			$object->rewrite['slug'] ?? $object->name,
+		).'%';
+
+		add_rewrite_tag(
+			$rewrite_tag,  // The rewrite tag to use. Defaults to the taxonomy slug.
+			'([^/]+)'   ,  // What regex to use to validate the value of the tag. Defaults to anything but a forward slash.
+		);
+
+		$callback = function ( $permalink, $post )
+			use ( $rewrite_tag, $object ) {
+
+			if ( ! Core\Text::has( $permalink, $rewrite_tag ) )
+				return $permalink;
+
+			// Get the custom taxonomy terms in use by this post
+			$terms = WordPress\Taxonomy::getPostTerms( $object->name, $post );
+
+			if ( empty( $terms ) ) {
+
+				// If no terms are assigned to this post, use the taxonomy slug instead (can't leave the placeholder there)
+				$permalink = str_replace( $rewrite_tag, $object->name, $permalink );
+
+			} else {
+
+				// Replace the placeholder rewrite tag with the first term's slug
+				$first_term = array_shift( $terms );
+				$permalink  = str_replace( $rewrite_tag, $first_term->slug, $permalink );
+			}
+
+			return $permalink;
+		};
+
+		add_filter( 'post_link',      $callback, 10, 2 );  // normal posts
+		add_filter( 'post_type_link', $callback, 10, 2 );  // custom post types
+
+		return TRUE;
+	}
 }
