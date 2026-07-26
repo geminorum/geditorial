@@ -10,6 +10,7 @@ class Calendars extends gEditorial\Service
 {
 	const REWRITE_ENDPOINT_NAME  = 'ics';
 	const REWRITE_ENDPOINT_QUERY = 'ical';
+	const ICAL_CONTENT_TYPE      = 'text/calendar; charset=utf-8';
 	const ICAL_DEFAULT_CONTEXT   = 'calendar';
 	const ICAL_TIMESPAN_CONTEXT  = 'timespan';
 	const POSTTYPE_ICAL_SOURCE   = 'ical_source';
@@ -31,11 +32,36 @@ class Calendars extends gEditorial\Service
 	// @SEE: on taxonomies: https://core.trac.wordpress.org/ticket/33728
 	public static function init()
 	{
+		self::_init_feeds();
+
 		add_rewrite_endpoint(
 			static::REWRITE_ENDPOINT_NAME,
 			EP_PERMALINK | EP_PAGES | EP_CATEGORIES | EP_TAGS,
 			static::REWRITE_ENDPOINT_QUERY
 		);
+	}
+
+	// `/feed/%feedname%`
+	private static function _init_feeds()
+	{
+		add_feed(
+			static::REWRITE_ENDPOINT_NAME,
+			[ __CLASS__, 'render_feed_content' ]
+		);
+
+		add_filter( 'feed_content_type',
+			static function ( $content_type, $type ) {
+				return  static::REWRITE_ENDPOINT_NAME === $type
+					? static::ICAL_CONTENT_TYPE
+					: $content_type;
+			}, 10, 2 );
+
+		return TRUE;
+	}
+
+	public static function render_feed_content()
+	{
+		self::template_redirect();
 	}
 
 	// https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
@@ -169,7 +195,7 @@ class Calendars extends gEditorial\Service
 		// );
 
 		Core\HTTP::headers( [
-			'Content-Type'        => 'text/calendar; charset=utf-8',
+			'Content-Type'        => static::ICAL_CONTENT_TYPE,
 			'Content-Disposition' => sprintf( 'attachment; filename="%s.ics"', $filename ),
 		] );
 
