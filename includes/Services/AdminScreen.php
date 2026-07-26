@@ -15,6 +15,7 @@ class AdminScreen extends gEditorial\Service
 
 		add_action( 'init', [ __CLASS__, 'init_late_admin' ], 999 );
 		add_action( 'current_screen', [ __CLASS__, 'current_screen' ], 1, 1 );
+		add_action( 'wp_enqueue_scripts', [ __CLASS__, 'wp_enqueue_scripts' ], 1, 0 );
 		add_action( 'admin_print_styles', [ __CLASS__, 'admin_print_styles' ], 1, 0 );
 	}
 
@@ -71,6 +72,12 @@ class AdminScreen extends gEditorial\Service
 				self::_handle_posttype_body_class( $screen );
 			}
 		}
+	}
+
+	public static function wp_enqueue_scripts(): void
+	{
+		if ( ! defined( 'GNETWORK_VERSION' ) )
+			Scripts::enqueue( 'admin.gnetwork', [ 'jquery' ] );
 	}
 
 	public static function admin_print_styles(): void
