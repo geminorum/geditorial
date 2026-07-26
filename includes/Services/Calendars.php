@@ -61,20 +61,26 @@ class Calendars extends gEditorial\Service
 
 	public static function render_feed_content()
 	{
-		self::template_redirect();
+		if ( ! self::_do_ical_redirect() )
+			wp_die(); // something's wrong!
+	}
+
+	public static function template_redirect()
+	{
+		self::_do_ical_redirect();
 	}
 
 	// https://make.wordpress.org/plugins/2012/06/07/rewrite-endpoints-api/
 	// https://gist.github.com/joncave/2891111
-	public static function template_redirect()
+	private static function _do_ical_redirect(): bool
 	{
 		global $wp_query;
 
 		if ( ! WordPress\IsIt::singularUI( FALSE ) )
-			return;
+			return FALSE;
 
 		if ( ! array_key_exists( static::REWRITE_ENDPOINT_QUERY, $wp_query->query_vars ) )
-			return;
+			return FALSE;
 
 		$events  = $filename = FALSE;
 		$context = get_query_var( static::REWRITE_ENDPOINT_QUERY ) ?: static::ICAL_DEFAULT_CONTEXT;
@@ -82,16 +88,16 @@ class Calendars extends gEditorial\Service
 		if ( is_singular() ) {
 
 			if ( ! $post = WordPress\Post::get() )
-				return;
+				return FALSE;
 
 			if ( ! $object = WordPress\PostType::object( $post ) )
-				return;
+				return FALSE;
 
 			if ( ! WordPress\PostType::viewable( $object ) )
-				return;
+				return FALSE;
 
 			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $object->name )
-				return;
+				return FALSE;
 
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'post', 'events' ), NULL, $post, $context ) ) )
 				$events = $filtered;
@@ -113,13 +119,13 @@ class Calendars extends gEditorial\Service
 		} else if ( is_post_type_archive() ) {
 
 			if ( ! $posttype = WordPress\PostType::object( get_queried_object() ) )
-				return;
+				return FALSE;
 
 			if ( ! WordPress\PostType::viewable( $posttype ) )
-				return;
+				return FALSE;
 
 			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $posttype )
-				return;
+				return FALSE;
 
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'posttype', 'events' ), NULL, $posttype->name, $context ) ) )
 				$events = $filtered;
@@ -138,16 +144,16 @@ class Calendars extends gEditorial\Service
 		} else if ( is_tax() || is_tag() || is_category() ) {
 
 			if ( ! $term = WordPress\Term::get() )
-				return;
+				return FALSE;
 
 			if ( ! $object = WordPress\Taxonomy::object( $term ) )
-				return;
+				return FALSE;
 
 			if ( ! WordPress\Taxonomy::viewable( $object ) )
-				return;
+				return FALSE;
 
 			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) && 'category' !== $object->name )
-				return;
+				return FALSE;
 
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'term', 'events' ), NULL, $term, $context ) ) )
 				$events = $filtered;
@@ -167,6 +173,8 @@ class Calendars extends gEditorial\Service
 		do_action( self::und( static::BASE, 'calendars', 'ical', 'notfound' ), $context );
 
 		WordPress\Theme::set404();
+
+		return FALSE;
 	}
 
 	// NOTE: may return empty calendar markup!
