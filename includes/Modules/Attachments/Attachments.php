@@ -453,7 +453,7 @@ class Attachments extends gEditorial\Module
 		}
 	}
 
-	public function tweaks_column_attr( object $post, string $before, string $after ): void
+	public function tweaks_column_attr( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
@@ -461,7 +461,7 @@ class Attachments extends gEditorial\Module
 		$this->_render_summary_row( $post, $before, $after );
 	}
 
-	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post )
 			return;
@@ -472,7 +472,7 @@ class Attachments extends gEditorial\Module
 		$this->_render_summary_row( $post, $before, $after );
 	}
 
-	private function _render_summary_row( object $post, string $before, string $after ): void
+	private function _render_summary_row( object $post, string $before = '', string $after = '' ): void
 	{
 		$attachments = WordPress\Attachment::list( $post->ID, '' );
 

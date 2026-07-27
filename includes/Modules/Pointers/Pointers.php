@@ -20,7 +20,9 @@ class Pointers extends gEditorial\Module
 			'i18n'     => FALSE, // NOTE: strings in this module are loaded via plugin
 			'icon'     => 'sticky',
 			'access'   => 'beta',
-			'keywords' => [],
+			'keywords' => [
+				'service-module',
+			],
 		];
 	}
 

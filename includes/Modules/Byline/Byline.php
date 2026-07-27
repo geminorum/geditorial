@@ -106,16 +106,16 @@ class Byline extends gEditorial\Module
 
 		$strings['js'] = [
 			static::APP_ASSET => [
-				'initial'     => _x( 'Search the directory and add as byline to this post.', 'Javascript String', 'geditorial-byline' ),
-				'loading'     => _x( 'Loading', 'Javascript String', 'geditorial-byline' ),
-				'newname'     => _x( 'New Name …', 'Javascript String', 'geditorial-byline' ),
-				'newslug'     => _x( 'Slug', 'Javascript String', 'geditorial-byline' ),
-				'placeholder' => _x( 'Type and press enter …', 'Javascript String', 'geditorial-byline' ),
-				'search'      => _x( 'Search', 'Javascript String', 'geditorial-byline' ),
-				'select'      => _x( '– Select –', 'Javascript String', 'geditorial-byline' ),
-				'store'       => _x( 'Save', 'Javascript String', 'geditorial-byline' ),
-				'offline'     => _x( 'You are Offline …', 'Javascript String', 'geditorial-byline' ),
-				'online'      => _x( 'Back Online …', 'Javascript String', 'geditorial-byline' ),
+				'initial'     => _x( 'Search the directory and add as byline to this post.', 'JavaScript String', 'geditorial-byline' ),
+				'loading'     => _x( 'Loading', 'JavaScript String', 'geditorial-byline' ),
+				'newname'     => _x( 'New Name …', 'JavaScript String', 'geditorial-byline' ),
+				'newslug'     => _x( 'Slug', 'JavaScript String', 'geditorial-byline' ),
+				'placeholder' => _x( 'Type and press enter …', 'JavaScript String', 'geditorial-byline' ),
+				'search'      => _x( 'Search', 'JavaScript String', 'geditorial-byline' ),
+				'select'      => _x( '– Select –', 'JavaScript String', 'geditorial-byline' ),
+				'store'       => _x( 'Save', 'JavaScript String', 'geditorial-byline' ),
+				'offline'     => _x( 'You are Offline …', 'JavaScript String', 'geditorial-byline' ),
+				'online'      => _x( 'Back Online …', 'JavaScript String', 'geditorial-byline' ),
 			],
 		];
 

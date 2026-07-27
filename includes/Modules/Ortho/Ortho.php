@@ -92,17 +92,17 @@ class Ortho extends gEditorial\Module
 		return [
 			'js' => [
 				'virastar' => [
-					'button_virastar_title'  => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_virastar'          => _x( 'Virastar!', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_virastar_title'    => _x( 'Apply Virastar!', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_swapquotes'        => _x( 'Swap Quotes', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_mswordnotes'       => _x( 'Word Footnotes', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_download'          => _x( 'Download', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_download_title'    => _x( 'Download text as markdown', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_nbsp'              => _x( 'nbsp', 'Javascript String', 'geditorial-ortho' ),
-					'qtag_nbsp_title'        => _x( 'Non-Breaking Space', 'Javascript String', 'geditorial-ortho' ),
+					'button_virastar_title'  => _x( 'Apply Virastar!', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_virastar'          => _x( 'Virastar!', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_virastar_title'    => _x( 'Apply Virastar!', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_swapquotes'        => _x( 'Swap Quotes', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_swapquotes_title'  => _x( 'Swap Not-Correct Quotes', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_mswordnotes'       => _x( 'Word Footnotes', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_mswordnotes_title' => _x( 'MS Word Footnotes to WordPress [ref]', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_download'          => _x( 'Download', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_download_title'    => _x( 'Download text as markdown', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_nbsp'              => _x( 'nbsp', 'JavaScript String', 'geditorial-ortho' ),
+					'qtag_nbsp_title'        => _x( 'Non-Breaking Space', 'JavaScript String', 'geditorial-ortho' ),
 				],
 			],
 		];

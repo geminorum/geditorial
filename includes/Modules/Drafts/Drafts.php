@@ -451,7 +451,7 @@ class Drafts extends gEditorial\Module
 		return $actions;
 	}
 
-	public function tweaks_column_attr( object $post, string $before, string $after ): void
+	public function tweaks_column_attr( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! $this->_is_preview_status( $post ) )
 			return;

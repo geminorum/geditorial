@@ -350,7 +350,7 @@ class Positions extends gEditorial\Module
 		return $this->rowaction_get_mainlink_for_post_subcontent( $post );
 	}
 
-	protected function tweaks_column_row_checkprofile( object $post, string $before, string $after, string $module_name ): void
+	protected function tweaks_column_row_checkprofile( object $post, string $before = '', string $after = '', ?string $module_name = NULL ): void
 	{
 		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
 			return;
@@ -520,7 +520,7 @@ class Positions extends gEditorial\Module
 					'required'   => [ 'label' ],
 					'readonly'   => array_values( Core\Arraay::stripByValue( array_keys( $enabled ), 'label' ) ),   // all but `Position Title`
 					'strings'    => [
-						'message' => _x( 'Here you can define the position profile by titles with custom ordering.', 'Javascript String', 'geditorial-positions' ),
+						'message' => _x( 'Here you can define the position profile by titles with custom ordering.', 'JavaScript String', 'geditorial-positions' ),
 					],
 				];
 

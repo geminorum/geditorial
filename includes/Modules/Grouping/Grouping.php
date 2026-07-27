@@ -187,7 +187,7 @@ class Grouping extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function tweaks_column_user( object $user, string $before, string $after ): void
+	public function tweaks_column_user( object $user, string $before = '', string $after = '' ): void
 	{
 		foreach ( $this->get_custom_taxonomies() as $custom ) {
 

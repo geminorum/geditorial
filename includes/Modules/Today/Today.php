@@ -1587,8 +1587,16 @@ class Today extends gEditorial\Module
 			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
 	}
 
-	public function importer_posttype_extra_all( string $posttype, array $taxonomies, string $name_template, string $before, string $after, string $after_title, ?string $context ): void
-	{
+	public function importer_posttype_extra_all(
+		string $posttype,
+		array $taxonomies,
+		string $name_template,
+		string $before = '',
+		string $after = '',
+		string $after_title = '',
+		?string $context = NULL,
+	): void {
+
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 

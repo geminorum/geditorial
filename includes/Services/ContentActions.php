@@ -22,7 +22,7 @@ class ContentActions extends gEditorial\Service
 	}
 
 	// @example: `$this->filter( 'post_actions', 2, 10, FALSE, $this->base );`
-	public static function post_submitbox_start( $post )
+	public static function post_submitbox_start( mixed $post ): void
 	{
 		if ( ! $actions = apply_filters( self::und( static::BASE, 'post_actions' ), [], $post ) )
 			return;
@@ -47,7 +47,7 @@ class ContentActions extends gEditorial\Service
 	}
 
 	// @example: `$this->action( 'post_actions_{$action}', 3, 10, FALSE, $this->base );`
-	public static function save_post( $post_id, $post, $update )
+	public static function save_post( int $post_id, object $post, bool $update ): void
 	{
 		if ( ! $action = self::req( self::classs( 'post-action' ) ) )
 			return;
@@ -66,7 +66,7 @@ class ContentActions extends gEditorial\Service
 		do_action( $hook, $post, $action );
 	}
 
-	public static function the_content( $content )
+	public static function the_content( ?string $content ): string
 	{
 		if ( defined( 'GEDITORIAL_DISABLE_CONTENT_ACTIONS' )
 			&& GEDITORIAL_DISABLE_CONTENT_ACTIONS )

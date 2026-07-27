@@ -664,7 +664,7 @@ class Directorate extends gEditorial\Module
 	}
 
 	// TODO: move up!
-	public function importer_posttype_taxonomies_after( string $posttype, array $taxonomies, string $name_template, string $before, string $after, string $after_title ): void
+	public function importer_posttype_taxonomies_after( string $posttype, array $taxonomies, string $name_template, string $before = '', string $after = '', string $after_title = '', ?string $context = NULL ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;

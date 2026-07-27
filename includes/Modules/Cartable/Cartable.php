@@ -517,7 +517,7 @@ class Cartable extends gEditorial\Module
 			$this->coreadmin__hook_tweaks_column_attr( $posttype, 20, 'types' );
 	}
 
-	public function tweaks_column_attr_users( object $post, string $before, string $after ): void
+	public function tweaks_column_attr_users( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! $users = $this->get_users( $post->ID ) )
 			return;
@@ -536,7 +536,7 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	public function tweaks_column_attr_groups( object $post, string $before, string $after ): void
+	public function tweaks_column_attr_groups( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! $groups = $this->get_groups( $post->ID ) )
 			return;
@@ -555,7 +555,7 @@ class Cartable extends gEditorial\Module
 		echo $after;
 	}
 
-	public function tweaks_column_attr_types( object $post, string $before, string $after ): void
+	public function tweaks_column_attr_types( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! $types = $this->get_types( $post->ID ) )
 			return;

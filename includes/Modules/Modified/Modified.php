@@ -217,7 +217,7 @@ class Modified extends gEditorial\Module
 		] );
 	}
 
-	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post )
 			return;
@@ -354,7 +354,7 @@ class Modified extends gEditorial\Module
 	}
 
 	// NOTE: just put `{SITE_LAST_MODIFIED}` on a menu item text!
-	public function wp_nav_menu_items( string $items, array $args ): string
+	public function wp_nav_menu_items( string $items, object $args ): string
 	{
 		if ( ! Core\Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
@@ -363,7 +363,7 @@ class Modified extends gEditorial\Module
 	}
 
 	//@hook: `gnetwork_navigation_help_placeholders`
-	public function navigation_help_placeholders( string $before, string $after ): void
+	public function navigation_help_placeholders( string $before = '', string $after = '' ): void
 	{
 		echo $before.Core\HTML::code( '{SITE_LAST_MODIFIED}', FALSE, TRUE ).$after;
 	}

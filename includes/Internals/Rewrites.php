@@ -7,6 +7,25 @@ use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
+/**
+ * `EP_NONE`: Endpoint Mask for default, which is nothing. Bitwise value: 0
+ * `EP_PERMALINK`: Endpoint Mask for Permalink. Bitwise value: 1
+ * `EP_ATTACHMENT`: Endpoint Mask for Attachment. Bitwise value: 2
+ * `EP_DATE`: Endpoint Mask for date. Bitwise value: 4
+ * `EP_YEAR`: Endpoint Mask for year. Bitwise value: 8
+ * `EP_MONTH`: Endpoint Mask for month. Bitwise value: 16
+ * `EP_DAY`: Endpoint Mask for day. Bitwise value: 32
+ * `EP_ROOT`: Endpoint Mask for root. Bitwise value: 64
+ * `EP_COMMENTS`: Endpoint Mask for comments. Bitwise value: 128
+ * `EP_SEARCH`: Endpoint Mask for searches. Bitwise value: 256
+ * `EP_CATEGORIES`: Endpoint Mask for categories. Bitwise value: 512
+ * `EP_TAGS`: Endpoint Mask for tags. Bitwise value: 1024
+ * `EP_AUTHORS`: Endpoint Mask for authors. Bitwise value: 2048
+ * `EP_PAGES`: Endpoint Mask for pages. Bitwise value: 4096
+ * `EP_ALL_ARCHIVES`: Endpoint Mask for all archive views. Same as using `EP_DATE|EP_YEAR|EP_MONTH|EP_DAY|EP_CATEGORIES|EP_TAGS|EP_AUTHORS`
+ * `EP_ALL`: Endpoint Mask for everything. Same as using `EP_PERMALINK|EP_ATTACHMENT|EP_ROOT|EP_COMMENTS|EP_SEARCH|EP_PAGES|EP_ALL_ARCHIVES`
+**/
+
 trait Rewrites
 {
 	protected function rewrites__get_queryvar( ?string $constant_prefix = 'main' ): string

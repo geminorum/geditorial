@@ -496,7 +496,7 @@ class Like extends gEditorial\Module
 		return $this->store_postmeta( $post_id, $data, $this->constant( 'metakey_liked_total' ) );
 	}
 
-	public function tweaks_column_attr( object $post, string $before, string $after ): void
+	public function tweaks_column_attr( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return;

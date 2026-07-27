@@ -658,12 +658,12 @@ class Book extends gEditorial\Module
 		$this->add_dashboard_term_summary( 'status_taxonomy', [ $this->constant( 'main_posttype' ) ], FALSE );
 	}
 
-	public function tweaks_column_row_p2p_to( object $post, string $before, string $after, string $module_name ): void
+	public function tweaks_column_row_p2p_to( object $post, string $before = '', string $after = '', ?string $module_name = NULL ): void
 	{
 		$this->column_row_p2p_to_posttype( 'main_posttype', $post, $before, $after );
 	}
 
-	public function tweaks_column_row_p2p_from( object $post, string $before, string $after, string $module_name ): void
+	public function tweaks_column_row_p2p_from( object $post, string $before = '', string $after = '', ?string $module_name = NULL ): void
 	{
 		$this->column_row_p2p_from_posttype( 'main_posttype', $post, $before, $after );
 	}

@@ -30,6 +30,7 @@ class Calendars extends gEditorial\Service
 	}
 
 	// @SEE: on taxonomies: https://core.trac.wordpress.org/ticket/33728
+	// @SEE: `rewrites__add_taxonomy_endpoint()`
 	public static function init()
 	{
 		self::_init_feeds();
@@ -62,7 +63,7 @@ class Calendars extends gEditorial\Service
 	public static function render_feed_content()
 	{
 		if ( ! self::_do_ical_redirect() )
-			wp_die(); // something's wrong!
+			self::exitICS( [], 'notfound' );
 	}
 
 	public static function template_redirect()
@@ -178,8 +179,12 @@ class Calendars extends gEditorial\Service
 	}
 
 	// NOTE: may return empty calendar markup!
-	public static function exitICS( $events, $filename = FALSE, $context = NULL )
-	{
+	public static function exitICS(
+		mixed $events,
+		string|false $filename = FALSE,
+		?string $context = NULL,
+	): never {
+
 		if ( $events && ! is_array( $events ) )
 			$events = [ $events ];
 
@@ -411,7 +416,7 @@ class Calendars extends gEditorial\Service
 
 		} else {
 
-			// no extra field data: using the post date
+			// no extra field data: using the postdate
 			$final = Core\Date::getObject( $post->post_date );
 
 			$event->setOccurrence(
@@ -750,7 +755,7 @@ class Calendars extends gEditorial\Service
 
 		if ( ! in_array( $filtered, [
 			static::ICAL_TIMESPAN_CONTEXT,
-			// 'woocommerce', // MAYBE: for products
+			// `'woocommerce'`, // MAYBE: for products
 		], TRUE ) )
 			return NULL;
 
@@ -828,16 +833,14 @@ class Calendars extends gEditorial\Service
 
 	/**
 	 * Sanitizes given calendar type string.
-	 * NOTE: DEPRECATED
 	 *
 	 * @param string $calendar
 	 * @param string $default
 	 * @return string
 	 */
+	#[\Deprecated('USE `Core\Date::sanitizeCalendar()`')]
 	public static function sanitize( $calendar, $default = NULL )
 	{
-		self::_dev_dep( 'Core\Date::sanitizeCalendar()' );
-
 		$default   = $default ?? Core\L10n::calendar();
 		$calendars = self::getDefualts( FALSE );
 		$sanitized = $calendar;

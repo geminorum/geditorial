@@ -159,17 +159,17 @@ trait PostMeta
 
 	// DEFAULT FILTER
 	// NOTE: used when module defines `_supported` meta fields
-	public function general_column_row( object $post, string $before, string $after, string $module, array $fields, array $excludes ): void
+	public function general_column_row( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 
 			if ( in_array( $field_key, $excludes ) )
 				continue;
 
-			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key, FALSE, $module ) )
+			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key, FALSE, $module_name ) )
 				continue;
 
-			printf( $before, sprintf( '-%s -%s-%s', $this->module->name, $module, $field_key ) );
+			printf( $before, sprintf( '-%s -%s-%s', $this->module->name, $module_name, $field_key ) );
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;

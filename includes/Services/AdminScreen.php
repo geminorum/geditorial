@@ -88,7 +88,7 @@ class AdminScreen extends gEditorial\Service
 	// @REF: https://wordpress.stackexchange.com/a/369713
 	// @SEE: https://github.com/WordPress/gutenberg/blob/trunk/packages/components/src/utils/theme-variables.scss
 	// @SEE: https://make.wordpress.org/core/2021/01/29/introducing-css-custom-properties/
-	private static function _print_user_colors(): false|string
+	private static function _print_user_colors( ?object $screen = NULL ): false|string
 	{
 		global $_wp_admin_css_colors;
 

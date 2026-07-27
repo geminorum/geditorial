@@ -44,7 +44,7 @@ trait PostsToPosts
 		return $this->_p2p = $p2p;
 	}
 
-	public function p2p_get_meta( int $p2p_id, string $meta_key, string $before = '', string $after = '', array $args = [] ): string
+	public function p2p_get_meta( int $p2p_id, string $meta_key, string $before = '', string $after = '', ?array $args = [] ): string
 	{
 		if ( ! $this->_p2p )
 			return '';
@@ -97,7 +97,7 @@ trait PostsToPosts
 		return TRUE;
 	}
 
-	protected function column_row_p2p_to_posttype( string $constant, object $post, string $before, string $after ): void
+	protected function column_row_p2p_to_posttype( string $constant, object $post, string $before = '', string $after = '' ): void
 	{
 		static $icons = [];
 
@@ -155,7 +155,7 @@ trait PostsToPosts
 		echo $after;
 	}
 
-	protected function column_row_p2p_from_posttype( string $constant, object $post, string $before, string $after ): void
+	protected function column_row_p2p_from_posttype( string $constant, object $post, string $before = '', string $after = '' ): void
 	{
 		static $icons = [];
 

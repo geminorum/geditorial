@@ -155,7 +155,7 @@ class Revisions extends gEditorial\Module
 		echo Core\HTML::success( sprintf( $message, Core\Number::format( $purged ) ) );
 	}
 
-	public function tweaks_column_attr( object $post, string $before, string $after ): void
+	public function tweaks_column_attr( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( wp_revisions_enabled( $post ) ) {
 

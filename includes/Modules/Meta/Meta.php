@@ -549,7 +549,7 @@ class Meta extends gEditorial\Module
 		return ModuleHelper::getPostTypeFieldKeyMap();
 	}
 
-	public function column_row_extra( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_extra( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		if ( array_key_exists( 'source_title', $fields ) || array_key_exists( 'source_url', $fields ) )
 			ModuleTemplate::metaSource( [
@@ -567,7 +567,7 @@ class Meta extends gEditorial\Module
 	}
 
 	// NOTE: only on excerpt mode
-	public function column_row_excerpt( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_excerpt( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		if ( 'excerpt' !== $GLOBALS['mode'] )
 			return;

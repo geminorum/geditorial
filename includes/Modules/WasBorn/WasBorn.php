@@ -947,7 +947,7 @@ class WasBorn extends gEditorial\Module
 		return $average;
 	}
 
-	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post )
 			return;

@@ -293,8 +293,8 @@ class Terms extends gEditorial\Module
 				],
 			],
 			'js' => [
-				'modal_title'  => _x( 'Choose an Image', 'Javascript String', 'geditorial-terms' ),
-				'modal_button' => _x( 'Set as image', 'Javascript String', 'geditorial-terms' ),
+				'modal_title'  => _x( 'Choose an Image', 'JavaScript String', 'geditorial-terms' ),
+				'modal_button' => _x( 'Set as image', 'JavaScript String', 'geditorial-terms' ),
 			],
 		];
 	}

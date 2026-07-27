@@ -336,7 +336,7 @@ class Users extends gEditorial\Module
 	}
 
 	// FIXME: use `gEditorial\Helper::renderUserTermsEditRow()`
-	public function tweaks_column_user( object $user, string $before, string $after ): void
+	public function tweaks_column_user( object $user, string $before = '', string $after = '' ): void
 	{
 		if ( $this->get_setting( 'user_groups', FALSE ) ) {
 

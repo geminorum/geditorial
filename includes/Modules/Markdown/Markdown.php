@@ -344,8 +344,11 @@ class Markdown extends gEditorial\Module
 	 * @param int $post_id
 	 * @return string
 	 */
-	private function process_content( $content, $post_id )
+	public function process_content( ?string $content, int $post_id ): ?string
 	{
+		if ( ! $content )
+			return $content;
+
 		// `$content` is slashed, but Markdown parser hates it precious.
 		$content = stripslashes( $content );
 		$content = Services\Markup::mdExtra( $content, TRUE, FALSE );
@@ -368,7 +371,7 @@ class Markdown extends gEditorial\Module
 	 * @param int $post_id
 	 * @return string
 	 */
-	private function _do_convert_content( $content, $post_id )
+	private function _do_convert_content( ?string $content, int $post_id ): ?string
 	{
 		return Services\Markup::markdownFromHTML( $content, TRUE );
 	}
@@ -381,30 +384,41 @@ class Markdown extends gEditorial\Module
 	 * @param int $post_id
 	 * @return string
 	 */
-	private function _do_cleanup_content( $content, $post_id )
+	private function _do_cleanup_content( ?string $content, int $post_id ): ?string
 	{
 		return $content;
 	}
 
 	// @REF: https://en.wikipedia.org/wiki/Help:Wiki_markup#Links_and_URLs
-	private function _do_wiki_linking( $content, $post )
+	private function _do_wiki_linking( ?string $content, object $post ): ?string
 	{
 		// $pattern = '/\[\[(.+?)\]\]/u';
 		$pattern = '/\[\[(.*?)\]\]/u';
 
 		return preg_replace_callback( $pattern,
-			function ( $match ) use ( $content, $post ) {
+			function ( $match )
+				use ( $content, $post ) {
 
 				list( $text, $link, $slug, $post_id ) = $this->_make_the_link( $match[1], $post, $content );
 
 				$html = '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound' ).'">'.$text.'</a>';
 
-				return $this->filters( 'linking', $html, $text, $link, $slug, $post_id, $match, $post, $content );
+				return $this->filters( 'linking',
+					$html,
+					$text,
+					$link,
+					$slug,
+					$post_id,
+					$match,
+					$post,
+					$content,
+				);
+
 			}, $content );
 	}
 
 	// TODO: name-space with `:` for taxonomies
-	public function _make_the_link( $text, $post, $content )
+	private function _make_the_link( string $text, object $post, ?string $content ): array
 	{
 		$slug = $text;
 		$link = $post_id = FALSE;
@@ -426,7 +440,7 @@ class Markdown extends gEditorial\Module
 		return [ $text, $link, $slug, $post_id ];
 	}
 
-	public function process_post( $post )
+	public function process_post( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -450,7 +464,7 @@ class Markdown extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function convert_post( $post )
+	public function convert_post( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -479,7 +493,7 @@ class Markdown extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function cleanup_post( $post )
+	public function cleanup_post( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -508,7 +522,7 @@ class Markdown extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function discard_post( $post )
+	public function discard_post( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -536,12 +550,12 @@ class Markdown extends gEditorial\Module
 	 * @param int $post_id
 	 * @return bool
 	 */
-	private function _post_is_markdown( $post_id )
+	private function _post_is_markdown( int $post_id ): bool
 	{
 		return (bool) get_post_meta( $post_id, $this->constant( 'metakey_is_markdown' ), TRUE );
 	}
 
-	public function wp_insert_post_data( $data, $postarr )
+	public function wp_insert_post_data( array $data, array $postarr ): array
 	{
 		$post_id = empty( $postarr['ID'] ) ? 0 : $postarr['ID'];
 
@@ -557,7 +571,7 @@ class Markdown extends gEditorial\Module
 		return $data;
 	}
 
-	public function edit_post_content( $value, $post_id )
+	public function edit_post_content( mixed $value, int $post_id ): mixed
 	{
 		if ( ! $this->_post_is_markdown( $post_id ) )
 			return $value;
@@ -570,7 +584,7 @@ class Markdown extends gEditorial\Module
 		return $value;
 	}
 
-	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post ) {
 

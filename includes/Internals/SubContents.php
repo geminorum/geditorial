@@ -50,30 +50,30 @@ trait SubContents
 	protected function subcontent_get_strings_for_js( array $extra = [] ): array
 	{
 		return array_merge( [
-			'index'    => _x( '#', 'Internal: Subcontents: Javascript String: `index`', 'geditorial-admin' ),
-			'plus'     => _x( '+', 'Internal: Subcontents: Javascript String: `plus`', 'geditorial-admin' ),
-			'search'   => _x( 'Search', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'actions'  => _x( 'Actions', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'info'     => _x( 'Information', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'insert'   => _x( 'Insert', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'sort'     => _x( 'Sort', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'edit'     => _x( 'Edit', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'moveup'   => _x( 'Move Up', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'movedown' => _x( 'Move Down', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'remove'   => _x( 'Remove', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'loading'  => _x( 'Loading', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'message'  => _x( 'Here you can add, edit and manage the information.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'edited'   => _x( 'The entry edited successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'saved'    => _x( 'New entry saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'sorted'   => _x( 'The Sorting saved successfully.', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'invalid'  => _x( 'The entry data are not valid!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
-			'select'   => _x( 'Select', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'index'    => _x( '#', 'Internal: Subcontents: JavaScript String: `index`', 'geditorial-admin' ),
+			'plus'     => _x( '+', 'Internal: Subcontents: JavaScript String: `plus`', 'geditorial-admin' ),
+			'search'   => _x( 'Search', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'actions'  => _x( 'Actions', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'info'     => _x( 'Information', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'insert'   => _x( 'Insert', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'sort'     => _x( 'Sort', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'edit'     => _x( 'Edit', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'moveup'   => _x( 'Move Up', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'movedown' => _x( 'Move Down', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'remove'   => _x( 'Remove', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'loading'  => _x( 'Loading', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'message'  => _x( 'Here you can add, edit and manage the information.', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'edited'   => _x( 'The entry edited successfully.', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'saved'    => _x( 'New entry saved successfully.', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'sorted'   => _x( 'The Sorting saved successfully.', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'invalid'  => _x( 'The entry data are not valid!', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'readonly' => _x( 'The field is in read-only mode!', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
+			'select'   => _x( 'Select', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
 
 			/* translators: `%s`: count number */
-			'countitems' => _x( '%s items', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'countitems' => _x( '%s items', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
 			/* translators: `%s`: time string */
-			'timeago' => _x( '%s ago', 'Internal: Subcontents: Javascript String', 'geditorial-admin' ),
+			'timeago' => _x( '%s ago', 'Internal: Subcontents: JavaScript String', 'geditorial-admin' ),
 
 		], $this->get_strings( 'subcontent', 'js' ), $extra );
 	}
@@ -928,7 +928,7 @@ trait SubContents
 		], $this->get_notice_for_empty( $context ) ), '', TRUE, $this->classs( 'data-grid' ) );
 	}
 
-	protected function tweaks_column_row_subcontent( object $post, string $before, string $after, string $module_name ): void
+	protected function tweaks_column_row_subcontent( object $post, string $before = '', string $after = '', ?string $module_name = NULL ): void
 	{
 		$thrift = $this->is_thrift_mode();
 

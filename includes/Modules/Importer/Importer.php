@@ -113,8 +113,8 @@ class Importer extends gEditorial\Module
 		return [
 			'js' => [
 				'media' => [
-					'modal_title'  => _x( 'Choose a Datasheet', 'Javascript String', 'geditorial-importer' ),
-					'modal_button' => _x( 'Select as Source', 'Javascript String', 'geditorial-importer' ),
+					'modal_title'  => _x( 'Choose a Datasheet', 'JavaScript String', 'geditorial-importer' ),
+					'modal_button' => _x( 'Select as Source', 'JavaScript String', 'geditorial-importer' ),
 				],
 			],
 		];

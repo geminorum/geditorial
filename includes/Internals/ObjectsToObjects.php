@@ -126,7 +126,7 @@ trait ObjectsToObjects
 		];
 	}
 
-	public function o2o_get_meta( int $o2o_id, string $meta_key, string $before = '', string $after = '', array $args = [] ): string
+	public function o2o_get_meta( int $o2o_id, string $meta_key, string $before = '', string $after = '', ?array $args = [] ): string
 	{
 		if ( ! $this->_o2o )
 			return '';
@@ -179,7 +179,7 @@ trait ObjectsToObjects
 		return TRUE;
 	}
 
-	protected function column_row_o2o_to_posttype( string $constant, object $post, string $before, string $after ): void
+	protected function column_row_o2o_to_posttype( string $constant, object $post, string $before = '', string $after = '' ): void
 	{
 		static $icons = [];
 
@@ -237,7 +237,7 @@ trait ObjectsToObjects
 		echo $after;
 	}
 
-	protected function column_row_o2o_from_posttype( string $constant, object $post, string $before, string $after ): void
+	protected function column_row_o2o_from_posttype( string $constant, object $post, string $before = '', string $after = '' ): void
 	{
 		static $icons = [];
 

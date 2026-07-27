@@ -318,7 +318,7 @@ class Physical extends gEditorial\Module
 	}
 
 	// TODO: append data to `Papered`
-	public function pointers_post( object $post, string $before, string $after, bool $new_post, ?string $context, ?object $screen ): void
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post )
 			return;

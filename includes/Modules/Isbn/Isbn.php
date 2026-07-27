@@ -271,7 +271,7 @@ class Isbn extends gEditorial\Module
 		echo '</ul></div>';
 	}
 
-	public function column_row_global_unique_id( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_global_unique_id( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		global $product;
 
@@ -287,7 +287,7 @@ class Isbn extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_row_posttype_fields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_posttype_fields( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		$title  = _x( 'ISBN', 'Row Icon Title', 'geditorial-isbn' );
 		$fields = [

@@ -806,7 +806,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_taxonomies( object $post, string $before = '', string $after = '', ?string $module_name = '', ?array $fields = [], ?array $excludes = [] ): void
+	public function column_row_taxonomies( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = [], ?array $excludes = [] ): void
 	{
 		$taxonomies = get_object_taxonomies( $post->post_type );
 
@@ -837,7 +837,7 @@ class Tweaks extends gEditorial\Module
 	// @SEE: [Post Type Templates in 4.7](https://make.wordpress.org/core/?p=20437)
 	// @SEE: [#18375 (Post type templates)](https://core.trac.wordpress.org/ticket/18375)
 	// FIXME: use `get_file_description( untrailingslashit( get_stylesheet_directory() ).'/'.get_page_template_slug() )`
-	public function column_attr_page_template( object $post, string $before, string $after ): void
+	public function column_attr_page_template( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return;
@@ -862,7 +862,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_attr_comment_status( object $post, string $before, string $after ): void
+	public function column_attr_comment_status( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( $filtered = comments_open( $post ) )
 			return;
@@ -891,7 +891,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_author( object $post, string $before, string $after ): void
+	public function column_attr_author( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( empty( $this->_site_user_id ) )
 			$this->_site_user_id = gEditorial()->user();
@@ -905,7 +905,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_slug( object $post, string $before, string $after ): void
+	public function column_attr_slug( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( ! $post->post_name )
 			return;
@@ -916,7 +916,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_status( object $post, string $before, string $after ): void
+	public function column_attr_status( object $post, string $before = '', string $after = '' ): void
 	{
 		if ( empty( $this->_post_statuses ) )
 			$this->_post_statuses = WordPress\Status::get();
@@ -941,7 +941,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_date( object $post, string $before, string $after ): void
+	public function column_attr_date( object $post, string $before = '', string $after = '' ): void
 	{
 		printf( $before, '-post-date' );
 			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
@@ -958,7 +958,7 @@ class Tweaks extends gEditorial\Module
 		}
 	}
 
-	public function column_row_sku( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_sku( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		global $product;
 
@@ -974,7 +974,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_stock( object $post, string $before, string $after ): void
+	public function column_attr_stock( object $post, string $before = '', string $after = '' ): void
 	{
 		global $product;
 
@@ -1008,7 +1008,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_attr_cogs_value( object $post, string $before, string $after ): void
+	public function column_attr_cogs_value( object $post, string $before = '', string $after = '' ): void
 	{
 		global $product;
 
@@ -1024,7 +1024,7 @@ class Tweaks extends gEditorial\Module
 		echo $after;
 	}
 
-	public function column_user_default( object $user, string $before, string $after ): void
+	public function column_user_default( object $user, string $before = '', string $after = '' ): void
 	{
 		if ( $user->first_name || $user->last_name ) {
 			printf( $before, '-user-fullname' );
@@ -1042,7 +1042,7 @@ class Tweaks extends gEditorial\Module
 		);
 	}
 
-	public function column_contacts_default( object $user, string $before, string $after ): void
+	public function column_contacts_default( object $user, string $before = '', string $after = '' ): void
 	{
 		if ( $user->user_email ) {
 			printf( $before, '-user-contact -email' );

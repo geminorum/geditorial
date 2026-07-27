@@ -8,8 +8,14 @@ use geminorum\gEditorial\WordPress;
 
 class ContentBrand extends gEditorial\Service
 {
-	public static function siteIcon( $size = NULL, $fallback = '' )
-	{
-		return get_site_icon_url( $size ?? 'full', $fallback );
+	public static function siteIcon(
+		?int $size = NULL,
+		string|false|null $fallback = '',
+	): string|false|null {
+
+		return get_site_icon_url(
+			$size ?? 512,  // TODO: handle strings
+			$fallback,
+		);
 	}
 }

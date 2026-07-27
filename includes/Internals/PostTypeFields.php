@@ -1165,7 +1165,7 @@ trait PostTypeFields
 		// `add_action( $this->hook( 'column_row', $posttype ), [ $this, 'column_row_quickedit_posttypefields' ], 5, 6 );`
 	}
 
-	public function column_row_all_posttypefields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_all_posttypefields( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 
@@ -1180,7 +1180,7 @@ trait PostTypeFields
 	}
 
 	// NOTE: only renders `quickedit` enabled fields
-	public function column_row_quickedit_posttypefields( object $post, string $before, string $after, ?string $module_name, ?array $fields, ?array $excludes ): void
+	public function column_row_quickedit_posttypefields( object $post, string $before = '', string $after = '', ?string $module_name = NULL, ?array $fields = NULL, ?array $excludes = [] ): void
 	{
 		foreach ( $fields as $field_key => $field ) {
 
