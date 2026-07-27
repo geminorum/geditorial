@@ -88,7 +88,6 @@ class Plugin extends WordPress\Plugin
 
 	public function admin_init(): void
 	{
-		add_action( 'admin_print_styles', [ $this, 'admin_print_styles' ], 999 );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_early' ], 1 );
 		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_late' ], 999 );
 	}
@@ -443,62 +442,6 @@ class Plugin extends WordPress\Plugin
 			update_option( $key, $options, TRUE );
 
 		return $upgraded;
-	}
-
-	// TODO: Move to `AdminScreen` Service
-	public function admin_print_styles(): void
-	{
-		$screen = get_current_screen();
-
-		// NOTE: renders before this plugin styles
-		if ( ! defined( 'GNETWORK_VERSION' ) )
-			Helper::linkStyleSheetAdmin( 'gnetwork' );
-
-		// NOTE: must check before IFRAME
-		if ( WordPress\IsIt::customize() )
-			Helper::linkStyleSheetAdmin( 'customize' );
-
-		else if ( WordPress\IsIt::iFrame() )
-			Helper::linkStyleSheetAdmin( 'iframe' );
-
-		else if ( in_array( $screen->base, [
-			'post',
-			'edit',
-			'widgets',
-			'term',
-			'edit-tags',
-			'edit-comments',
-			'users',
-			'dashboard',
-		] ) )
-			Helper::linkStyleSheetAdmin( $screen->base );
-
-		else if ( Core\Text::starts( $screen->base, 'dashboard_page' )
-			&& ! Core\Text::ends( $screen->base, [ 'reports' ] ) ) // NOTE: contexts displaying under dashboard-page
-			Helper::linkStyleSheetAdmin( 'dashboard' );
-
-		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
-			Helper::linkStyleSheetAdmin( 'woocommerce' );
-
-		else {
-
-			foreach ( [
-				'reports',
-				'tools',
-				'imports',
-				'customs',
-				'settings',
-				'dashboard',
-			] as $context )
-				if ( Settings::isScreenContext( $context, $screen ) ) {
-					Helper::linkStyleSheetAdmin( $context );
-					break;
-				}
-		}
-
-		// Always add admin-bar styles to admin
-		if ( is_admin_bar_showing() )
-			Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
 	}
 
 	public function wp_default_autoload_value( mixed $autoload, string $option, mixed $value, string $serialized_value ): mixed

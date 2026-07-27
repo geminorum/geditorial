@@ -82,7 +82,70 @@ class AdminScreen extends gEditorial\Service
 
 	public static function admin_print_styles(): void
 	{
-		self::_print_user_colors();
+		$screen = get_current_screen();
+
+		self::_print_user_colors( $screen );
+		self::_print_admin_styles( $screen );
+	}
+
+	public static function _print_admin_styles( ?object $screen = NULL ): bool
+	{
+		$screen = $screen ?? get_current_screen();
+
+		// NOTE: renders before this plugin styles
+		if ( ! defined( 'GNETWORK_VERSION' ) )
+			gEditorial\Helper::linkStyleSheetAdmin( 'gnetwork' );
+
+		// NOTE: must check before IFRAME
+		if ( WordPress\IsIt::customize() )
+			gEditorial\Helper::linkStyleSheetAdmin( 'customize' );
+
+		else if ( WordPress\IsIt::iFrame() )
+			gEditorial\Helper::linkStyleSheetAdmin( 'iframe' );
+
+		else if ( in_array( $screen->base, [
+			'post',
+			'edit',
+			'widgets',
+			'term',
+			'edit-tags',
+			'edit-comments',
+			'users',
+			'dashboard',
+		] ) )
+			gEditorial\Helper::linkStyleSheetAdmin( $screen->base );
+
+		else if ( Core\Text::starts( $screen->base, 'dashboard_page' )
+			&& ! Core\Text::ends( $screen->base, [
+				// NOTE: contexts displaying under dashboard-page
+				'reports',
+			] ) )
+			gEditorial\Helper::linkStyleSheetAdmin( 'dashboard' );
+
+		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
+			gEditorial\Helper::linkStyleSheetAdmin( 'woocommerce' );
+
+		else {
+
+			foreach ( [
+				'reports',
+				'tools',
+				'imports',
+				'customs',
+				'settings',
+				'dashboard',
+			] as $context )
+				if ( gEditorial\Settings::isScreenContext( $context, $screen ) ) {
+					gEditorial\Helper::linkStyleSheetAdmin( $context );
+					break;
+				}
+		}
+
+		// NOTE: always add admin-bar styles to admin
+		if ( is_admin_bar_showing() )
+			gEditorial\Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
+
+		return TRUE;
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/369713
