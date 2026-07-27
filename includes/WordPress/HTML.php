@@ -107,7 +107,26 @@ class HTML extends Core\Base
 		return $html;
 	}
 
-	public static function extractData( mixed $input, array $lookup = [], ?array $tag_query = NULL, bool $single = FALSE ): mixed
+	public static function extractAttribute( mixed $input, string $target_attribute, ?string $tag_name = NULL ): string|false 
+	{
+		if ( ! $html = Core\Text::force( $input ) )
+			return $input;
+
+		$processor = new \WP_HTML_Tag_Processor( $html );
+		$tag_query = $tag_name ? [
+			'tag_name' => $tag_name,
+		] : [];
+
+		while ( $processor->next_tag( $tag_query ) ) {
+
+			if ( $attribute = $processor->get_attribute( $target_attribute ) )
+				return $attribute;
+		}
+
+		return FALSE;
+	}
+
+	public static function extractAttributes( mixed $input, array $lookup = [], ?array $tag_query = NULL, bool $single = FALSE ): mixed
 	{
 		if ( ! $html = Core\Text::force( $input ) )
 			return $input;

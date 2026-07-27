@@ -83,14 +83,11 @@ class LatLng extends Base
 		$original  = $input;
 		$sanitized = Number::translate( Text::trim( htmlspecialchars_decode( $input ) ) );
 
-		if ( Text::starts( $sanitized, 'geo:' ) ) {
+		if ( $geo_link = self::extractFromGeoLink( $sanitized, '' ) )
+			return $geo_link;
 
-			// EXAMPLE: `geo:41.40338,2.17403?q=41.40338%2C2.17403`
-			if ( Text::has( $sanitized, '?' ) )
-				list( $sanitized ) = explode( '?', $sanitized );
-
-			return Text::stripPrefix( $sanitized, 'geo:' );
-		}
+		if ( $custom_scheme = self::extractFromCustomScheme( $sanitized, '' ) )
+			return $custom_scheme;
 
 		// Extracts `lat/lng` from URLs
 		if ( URL::isValid( $sanitized ) )
@@ -105,14 +102,22 @@ class LatLng extends Base
 		if ( $utm = self::extractFromUTM( $sanitized ) )
 			return $utm;
 
-		// Extracts `lat/lng` from plus.codes format
+		// Extracts `lat/lng` from plus codes format
 		if ( $pluscode = self::extractFromPlusCode( $sanitized ) )
 			return $pluscode;
 
-		return Text::trim( str_ireplace( [ '-', ':', ' ' ], '', $sanitized ) );
+		$sanitized = Text::trim( str_ireplace( [ '-', ':', ' ' ], '', $sanitized ) );
+
+		return apply_filters( 'nucleus_datatype_latlng_sanitize',
+			$sanitized,
+			$original,
+			$default,
+			$field,
+			$context,
+		);
 	}
 
-	public static function extractFromArray( $data, $fallback = FALSE )
+	public static function extractFromArray( array $data, mixed $fallback = FALSE ): mixed
 	{
 		if ( self::empty( $data ) )
 			return $fallback;
@@ -137,11 +142,11 @@ class LatLng extends Base
 
 	// Standard Formats
 	// https://www.npmjs.com/package/haversine-distance
-	// { latitude: 37.8136, longitude: 144.9631 } // (object)
-	// { lat: 37.8136, lng: 144.9631 } // lat, lng (object)
-	// { lat: 33.8650, lon: 151.2094 } // lat, lon (object)
-	// [ 144.9631, 37.8136 ]; // GeoJSON (array)
-	public static function extractFromObject( $data, $fallback = FALSE )
+	// `{ latitude: 37.8136, longitude: 144.9631 }` // (object)
+	// `{ lat: 37.8136, lng: 144.9631 }` // lat, lng (object)
+	// `{ lat: 33.8650, lon: 151.2094 }` // lat, lon (object)
+	// `[ 144.9631, 37.8136 ];` // GeoJSON (array)
+	public static function extractFromObject( object $data, mixed $fallback = FALSE ): mixed
 	{
 		if ( self::empty( $data ) )
 			return $fallback;
@@ -161,9 +166,28 @@ class LatLng extends Base
 		return $fallback;
 	}
 
-	public static function extractFromUTM( $data, $fallback = FALSE )
+	// EXAMPLE: `geo:52.05539,-2.71519?Z=6`
+	// EXAMPLE: `geo:41.40338,2.17403?q=41.40338%2C2.17403`
+	public static function extractFromGeoLink( mixed $data, mixed $fallback = FALSE ): mixed
 	{
-		if ( self::empty( $data ) )
+		if ( ! $data = Text::force( $data ) )
+			return $fallback;
+
+		if ( Text::starts( $data, 'geo:' ) ) {
+
+
+			if ( Text::has( $data, '?' ) )
+				list( $data ) = explode( '?', $data );
+
+			return Text::stripPrefix( $data, 'geo:' );
+		}
+
+		return $fallback;
+	}
+
+	public static function extractFromUTM( mixed $data, mixed $fallback = FALSE ): mixed
+	{
+		if ( ! $data = Text::force( $data ) )
 			return $fallback;
 
 		if ( ! class_exists( 'geminorum\\gEditorial\\Misc\\LangLongUTM' ) )
@@ -183,9 +207,9 @@ class LatLng extends Base
 		return vsprintf( '%s,%s', $latlng );
 	}
 
-	public static function extractFromDMS( $data, $fallback = FALSE )
+	public static function extractFromDMS( mixed $data, mixed $fallback = FALSE ): mixed
 	{
-		if ( self::empty( $data ) )
+		if ( ! $data = Text::force( $data ) )
 			return $fallback;
 
 		$sanitized = Text::normalizeWhitespace( $data );
@@ -225,9 +249,9 @@ class LatLng extends Base
 		return sprintf( '%s,%s', $lat, $long );
 	}
 
-	public static function extractFromURL( $data, $fallback = FALSE )
+	public static function extractFromURL( string $data, mixed $fallback = FALSE ): mixed
 	{
-		if ( self::empty( $data ) )
+		if ( ! $data = Text::force( $data ) )
 			return $fallback;
 
 		$url = URL::parseDeep( $data );
@@ -294,8 +318,13 @@ class LatLng extends Base
 
 				break;
 
+			// @SEE: https://wiki.openstreetmap.org/wiki/Shortlink
 			case 'openstreetmap.org':
 			case 'www.openstreetmap.org':
+			case 'osm.org/query':
+			case 'www.osm.org/query':
+			case 'openstreetmap.org/query':
+			case 'www.openstreetmap.org/query':
 
 				if ( isset( $url['query']['mlat'] ) && isset( $url['query']['mlon'] ) )
 					return sprintf( '%s,%s', $url['query']['mlat'], $url['query']['mlon'] );
@@ -331,6 +360,11 @@ class LatLng extends Base
 
 			if ( \preg_match( $pattern, $data, $matches ) )
 				return sprintf( '%s,%s', $matches[1], $matches[2] );
+
+		} else if ( Text::starts( $data, static::COMAPS_PREFIXES ) ) {
+
+			if ( $loc = self::extractFromCoMaps( Text::stripPrefix( $data, static::COMAPS_PREFIXES ) ) )
+				return $loc;
 
 		} else if ( Text::starts( $data, static::NESHAN_PREFIXES ) ) {
 
@@ -415,9 +449,9 @@ class LatLng extends Base
 	 * Extracts coordinates from given Neshan.org identifier.
 	 * @example `6a_bs-tSIxQN1b` from `https://nshn.ir/6a_bs-tSIxQN1b`
 	 *
-	 * @param  string            $data
-	 * @param  bool              $fallback
-	 * @param  mixed             $reference
+	 * @param string $data
+	 * @param bool $fallback
+	 * @param mixed $reference
 	 * @return string|false|null
 	 */
 	public static function extractFromNeshan(
@@ -436,7 +470,7 @@ class LatLng extends Base
 			return $fallback;
 
 		// `<div id="map" data-ssr-loc="lat,long"></div>`
-		$extracted = WordPress\HTML::extractData( $html, [
+		$extracted = WordPress\HTML::extractAttributes( $html, [
 			'map' => 'data-ssr-loc',
 		], [
 			'tag_name'    => 'DIV',
@@ -444,6 +478,51 @@ class LatLng extends Base
 		], TRUE );
 
 		return $extracted ?: $fallback;
+	}
+
+	// `MAPS.ME`/`OrganicMaps`/`COMAPS`
+	const COMAPS_PREFIXES = [
+		'https://comaps.at/',    // `https://comaps.at/ItdwBgeWW1/Hereford`
+		'cm://'              ,   // `cm://ItdwBgeWW1/Hereford`
+		'ge0://'            ,    // `ge0://B4srhdHVVt/Some_Name`
+		'https://ge0.me/',
+		'http://ge0.me/',
+		'om://',
+		'https://omaps.app/',  // `https://omaps.app/ZCoordba64/Name`
+		'http://omaps.app/',
+	];
+
+	// https://codeberg.org/comaps/url-processor/
+	// https://comaps.app/
+	// https://organicmaps.app/
+	public static function extractFromCoMaps(
+		string $data,
+		string|false|null $fallback = FALSE,
+		mixed $reference = NULL
+	): string|false|null {
+
+		if ( ! $data = Text::force( $data ) )
+			return $fallback;
+
+		if ( ! ( $code = explode( '/', $data, 2 )[0] ?? '' ) )
+			return $fallback;
+
+		$canonical = sprintf( 'https://comaps.at/%s', $code );
+
+		if ( ! $html = WordPress\Remote::getHTML( $canonical ) )
+			return $fallback;
+
+		// `<a class="button" id="geolink" href="geo:52.05539,-2.71519?Z=6">`
+		$extracted = WordPress\HTML::extractAttributes( $html, [
+			'geolink' => 'href',
+		], [
+			'tag_name'    => 'A',
+			'breadcrumbs' => [ 'HTML', 'BODY', 'DIV', 'DIV', 'DIV' ],
+		], TRUE );
+
+		return $extracted
+			? self::extractFromGeoLink( $sanitized, $fallback )
+			: $fallback;
 	}
 
 	/**

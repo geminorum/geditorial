@@ -190,7 +190,11 @@ class Text extends Base
 		if ( empty( $text ) )
 			return '';
 
-		return self::trim( preg_replace( "/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u", '', $text ) );
+		return self::trim( preg_replace(
+			'/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u',
+			'',
+			$text
+		) );
 	}
 
 	public static function splitAllSpaces( string $text ): array
@@ -198,7 +202,10 @@ class Text extends Base
 		if ( empty( $text ) )
 			return [];
 
-		return array_filter( (array) preg_split( '/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u', $text ), 'strlen' );
+		return array_filter( (array) preg_split(
+			'/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u',
+			$text,
+		), 'strlen' );
 	}
 
 	public static function splitNormalSpaces( string $text ): array
@@ -206,7 +213,10 @@ class Text extends Base
 		if ( empty( $text ) )
 			return [];
 
-		return array_filter( (array) preg_split( '/\s/u', $text ), 'strlen' );
+		return array_filter( (array) preg_split(
+			'/\s/u',
+			$text,
+		), 'strlen' );
 	}
 
 	/**
@@ -1621,7 +1631,7 @@ class Text extends Base
 	// @SOURCE: http://php.net/manual/en/function.preg-replace-callback.php#91950
 	// USAGE: `Text::replaceWords( $text, $words, static function ( $matched ) { return '<strong>{$matched}</strong>'; } );`
 	// FIXME: maybe space before/after the words
-	public static function replaceWords( string $text, array $words, ?callable $callback, bool $skip_links = TRUE ): string
+	public static function replaceWords( string $text, string|array $words, ?callable $callback, bool $skip_links = TRUE ): string
 	{
 		if ( empty( $text ) || empty( $words ) )
 			return $text;

@@ -8,6 +8,40 @@ class Phone extends Base
 	// TODO: must convert to `DataType`
 	// @SEE: https://github.com/brick/phonenumber
 
+	// https://en.wikipedia.org/wiki/Trunk_prefix
+	// https://en.wikipedia.org/wiki/List_of_telephone_country_codes
+	// https://en.wikipedia.org/wiki/List_of_international_call_prefixes
+	// https://en.wikipedia.org/wiki/Telephone_numbers_in_Iran
+
+	/**
+	 * When dialing a number within the country you are in, you still need to
+	 * dial the [national trunk number](http://en.wikipedia.org/wiki/Trunk_prefix)
+	 * before the rest of the number. For example, in Australia one would dial:
+	 * `0` - trunk prefix
+	 * `2` - Area code for New South Wales
+	 * `6555` - STD code for a specific telephone exchange
+	 * `1234` - Telephone Exchange specific extension.
+	 *
+	 * For a cellphone this becomes:
+	 * `0` - trunk prefix
+	 * `4` - Area code for a mobile telephone
+	 * `1234 5678` - Mobile telephone number
+	 *
+	 * This is why you often find that the first digit of a telephone number is
+	 * dropped when dialing internationally, even when using international
+	 * prefixing to dial within the same country.
+	 * @source https://stackoverflow.com/a/19020248
+	 */
+
+	/**
+	 * This is covered by RFC 3966. The [_section 5.1_](https://www.rfc-editor.org/rfc/rfc3966#section-5.1) specifies:
+	 * The 'telephone-subscriber' part of the URI indicates the number. The phone number can be represented in either global `(E.164)` or local notation. All phone numbers **MUST** use the global form unless they cannot be represented as such.
+	 * Write it as a foreigner calls you, beginning from the numbers of the country code and prefix it with a plus sign.
+	 * Test it as some countries have special mobile number prefixing based en state/province location and other prefix numbers. Fall to local number if this global format can't be reached.
+	 * @source https://stackoverflow.com/a/78628266
+	 */
+
+
 	/**
 	 * Validates a phone number using a regular expression.
 	 *
@@ -194,6 +228,7 @@ class Phone extends Base
 		// `maxlength="16"`
 		// return '^\+\d{1,3}\s\d{1,4}-\d{1,4}-\d{4}$';
 
+		// return '[0-9]{3}-[0-9]{2}-[0-9]{3}';
 		return '[0-9]{3}-[0-9]{3}-[0-9]{4}';
 	}
 

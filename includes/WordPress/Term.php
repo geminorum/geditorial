@@ -19,7 +19,7 @@ class Term extends Core\Base
 	public static function get( mixed $term_or_id = NULL, string $taxonomy = '' ): false|object
 	{
 		if ( FALSE === $term_or_id || 0 === $term_or_id )
-			return $term_or_id;
+			return FALSE;
 
 		if ( $term_or_id instanceof \WP_Term )
 			return $term_or_id;

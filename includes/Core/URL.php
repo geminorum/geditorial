@@ -61,7 +61,7 @@ class URL extends Base
 	}
 
 	// @SOURCE: `add_query_arg()`
-	public static function parseDeep( $url )
+	public static function parseDeep( string $url ): array
 	{
 		if ( $frag = strstr( $url, '#' ) )
 			$url = substr( $url, 0, -strlen( $frag ) );
@@ -92,23 +92,31 @@ class URL extends Base
 
 		return [
 			'base'     => $base,
-			'query'    => $args,
 			'protocol' => $pro,
+			'scheme'   => $pro, // back-compatibility with `parse_url`
 			'fragment' => $frag,
+			'host'     => explode( '/', $base, 2 )[0] ?? '',
+			'path'     => strrchr( $base, '/' ),
+			'query'    => $args,
 		];
 	}
 
-	// strips the #fragment from a URL, if one is present
-	// @REF: `strip_fragment_from_url()`
-	public static function stripFragment( $url )
+	/**
+	 * Strips the fragment from a URL, if one is present.
+	 * @REF: `strip_fragment_from_url()`
+	 *
+	 * @param string $url
+	 * @return string
+	 */
+	public static function stripFragment( string $url ): string
 	{
 		$parsed = self::parse( $url );
 
 		if ( empty( $parsed['host'] ) )
 			return $url;
 
-		// this mirrors code in `redirect_canonical()`
-		// it does not handle every case
+		// This mirrors code in `redirect_canonical()`
+		// it does not handle every case.
 		$url = $parsed['scheme'].'://'.$parsed['host'];
 
 		if ( ! empty( $parsed['port'] ) )

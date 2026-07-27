@@ -214,7 +214,7 @@ class HTTP extends Base
 		return WordPress\Remote::getContents( $url, $atts );
 	}
 
-	// TODO: rename back after deprecation priod!
+	// TODO: rename back after deprecation period!
 	public static function getContents_OLD( string $url ): false|string
 	{
 		if ( ! extension_loaded( 'curl' ) )
@@ -260,9 +260,9 @@ class HTTP extends Base
 	public static function clientIP(): string
 	{
 		$headers = [
-			'HTTP_CF_CONNECTING_IP' ,  // Cloudflare // @REF: https://github.com/10up/restricted-site-access/issues/109
-			'HTTP_INCAP_CLIENT_IP'  ,  // Incapsula
-			'HTTP_X_SUCURI_CLIENTIP',  // Sucuri
+			'HTTP_CF_CONNECTING_IP' ,  // `Cloudflare` // @REF: https://github.com/10up/restricted-site-access/issues/109
+			'HTTP_INCAP_CLIENT_IP'  ,  // `Incapsula`
+			'HTTP_X_SUCURI_CLIENTIP',  // `Sucuri`
 			'HTTP_CLIENT_IP',
 			'HTTP_X_FORWARDED_FOR'  ,  // Any Proxy
 			'HTTP_X_FORWARDED',

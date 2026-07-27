@@ -39,7 +39,7 @@ class Date extends Base
 		string $format,
 		mixed $datetime = NULL,
 		?string $timezone_string = NULL,
-	):string {
+	): string {
 
 		return \wp_date(
 			$format,
@@ -62,7 +62,7 @@ class Date extends Base
 		string $format,
 		int|false $timestamp_with_offset = FALSE,
 		bool $gmt = FALSE,
-	):string {
+	): string {
 
 		return \date_i18n( $format, $timestamp_with_offset, $gmt );
 	}
