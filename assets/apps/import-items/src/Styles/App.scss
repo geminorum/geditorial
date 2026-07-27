@@ -46,12 +46,14 @@
     width: calc(100% - 34px);
     border-radius: 0;
     margin-bottom: .125rem;
-    min-height: auto !important;
     font-size: small;
+    min-height: 32px !important;
+    padding: 0 8px;
   }
 
   button {
     padding: 0.25rem;
+    line-height: 1.8;
   }
 }
 
@@ -103,7 +105,7 @@
     }
   }
 
-  .-file-name {}
+  // .-file-name {}
 }
 
 .table-actions {

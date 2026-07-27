@@ -378,7 +378,6 @@ export default {
         path: addQueryArgs( this.config.searchselect + '/query', {
             search: this.queried,
             target: 'term',
-            // context: ,
             context: this.plugin.appname ? this.plugin.appname : 'assignment-dock',
             // context: this.plugin.appname,
             taxonomy: this.config.targets.join(','),

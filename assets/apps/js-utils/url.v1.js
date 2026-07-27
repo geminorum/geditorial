@@ -77,10 +77,58 @@ const isValidHTTP = (input) => {
   return url.protocol === 'http:' || url.protocol === 'https:';
 };
 
+// @source https://github.com/organicmaps/url-processor/blob/master/src/ge0.ts
+// @SEE https://github.com/mathiasbynens/windows-1251
+// @SEE https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder/decode
+// `%EF%F0%EE%E3%F0%E0%EC%EC%E8%F0%EE%E2%E0%ED%E8%E5 (программирование)`
+function fromWindows1251 (percentEncoded) {
+  const decoder = new TextDecoder('windows-1251', {
+    fatal: true,
+    ignoreBOM: false
+  });
+  // https://stackoverflow.com/a/69769015
+  return percentEncoded.replace(/(?:%[0-9A-F]{2})+/g, s =>
+    decoder.decode(
+      Uint8Array.from(
+        s
+          .replaceAll('%', ',0x')
+          .slice(1)
+          .split(','),
+        h => Number(h)
+      )
+    )
+  );
+}
+
+// @source https://github.com/organicmaps/url-processor/blob/master/src/ge0.ts
+function normalizeTitle (title, fallback) {
+  if (title) {
+    title = title.replace(/\+|_/g, ' '); // Convert underscores back to spaces.
+    try {
+      title = decodeURIComponent(title);
+    } catch {
+      try {
+        // There are some cases when coordinates are correct, but the title is not encoded properly, for example:
+        // `%DF%F0%EA%EE%E2%F1%EA%EE%E5_%F3%F7%E0%F1%F2%EA%EE%E2%EE%E5_%EB%E5%F1%ED%E8%F7%E5%F1%F2%E2%EE`
+        // `%C8%EB%EE%E2%E0%E9%F1%EA%EE%E5_%F3%F7%E0%F1%F2%EA%EE%E2%EE%E5_%EB%E5%F1%ED%E8%F7%E5%F1%F2%E2%EE`
+        // Looks like vk.com incorrectly uses Windows-1251 to encode some shared links when querying previews.
+        title = fromWindows1251(title);
+      } catch {
+        title = fallback;
+      }
+    }
+  } else {
+    return fallback;
+  }
+  return title;
+}
+
 export {
   isValid,
   isValidHTTP,
   getQuery,
   sanitize,
-  SAFE_URL_PATTERN
+  SAFE_URL_PATTERN,
+  normalizeTitle,
+  fromWindows1251
 };

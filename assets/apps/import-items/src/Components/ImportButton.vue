@@ -18,7 +18,7 @@
 </style>
 
 <template>
-  <button class="button small-button import-button" v-prevent-enter-tab>
+  <button class="button button-compact small-button import-button" v-prevent-enter-tab>
     <span class="dashicons" :class="classObject"></span>
     <slot></slot>
   </button>
