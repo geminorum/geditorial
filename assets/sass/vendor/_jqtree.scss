@@ -1,4 +1,4 @@
-// JqTree 1.7.0
+// JqTree 1.9.0 - 2026-07-28
 
 ul.jqtree-tree {
   list-style: none outside;
@@ -57,6 +57,10 @@ ul.jqtree-tree .jqtree-element {
   cursor: pointer;
   position: relative;
   display: flex;
+}
+
+ul.jqtree-tree .jqtree-element:has(.jqtree-title-button-right) {
+  display: block;
 }
 
 ul.jqtree-tree .jqtree-title {
