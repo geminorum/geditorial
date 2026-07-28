@@ -13,9 +13,9 @@
     // path: '[data-' + mainkey + '=\'path\']', // TODO!
     // pattern: '[data-' + mainkey + '=\'pattern\']', // TODO!
     // url: '[data-' + mainkey + '=\'url\']', // TODO!: support relative paths
-    // email: '[data-' + mainkey + '=\'email\']',
+    // email: '[data-' + mainkey + '=\'email\'], input[type="email"]',
     identity: '[data-' + mainkey + '=\'identity\']',
-    phone: '[data-' + mainkey + '=\'phone\']',
+    phone: '[data-' + mainkey + '=\'phone\'], input[type="tel"]',
     isbn: '[data-' + mainkey + '=\'isbn\']',
     vin: '[data-' + mainkey + '=\'vin\']',
     plate: '[data-' + mainkey + '=\'plate\']',
@@ -28,7 +28,7 @@
     duration: '[data-' + mainkey + '=\'duration\']',
     area: '[data-' + mainkey + '=\'area\']'
     // postcode: '[data-' + mainkey + '=\'postcode\']',
-    // latlng: '[data-' + mainkey + '=\'latlng\']',
+    // latlng: '[data-' + mainkey + '=\'latlng\']', // @see `Coordinates` Service
     // code: '[data-' + mainkey + '=\'code\']',
     // color: '[data-' + mainkey + '=\'color\']',
     // currency: '[data-' + mainkey + '=\'currency\']',
@@ -497,6 +497,9 @@
   $(function () {
     for (const input in inputs) {
       $(inputs[input]).each(function () {
+        // if ($(this).prop('disabled')) return;
+        if ($(this).is(':disabled')) return;
+        if ($(this).prop('readonly')) return;
         inputCallbacks[input].call(this);
       });
     }

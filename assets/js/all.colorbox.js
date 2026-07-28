@@ -75,6 +75,7 @@
         $instance.on('click', function (event) {
           event.preventDefault();
 
+          // @ref https://www.jacklmoore.com/colorbox/
           const options = {
             href: $instance.attr('href'),
             title: mobile ? false : $instance.attr('title'),
