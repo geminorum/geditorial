@@ -20,7 +20,14 @@ class HTML extends Core\Base
 		return \wp_strip_all_tags( Core\Text::force( $input ) );
 	}
 
-	// same as `html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );`
+	/**
+	 * Convert HTML entities to their corresponding characters.
+	 * NOTE: same as `html_entity_decode( $text, ENT_QUOTES, get_bloginfo( 'charset' ) );`
+	 * NOTE: `WP_HTML_Decoder` @since WP 6.6.0
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
 	public static function entityDecode( mixed $input ): string
 	{
 		return \WP_HTML_Decoder::decode_attribute( Core\Text::force( $input ) );

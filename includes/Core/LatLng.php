@@ -86,8 +86,8 @@ class LatLng extends Base
 		if ( $geo_link = self::extractFromGeoLink( $sanitized, '' ) )
 			return $geo_link;
 
-		if ( $custom_scheme = self::extractFromCustomScheme( $sanitized, '' ) )
-			return $custom_scheme;
+		// if ( $custom_scheme = self::extractFromCustomScheme( $sanitized, '' ) )
+		// 	return $custom_scheme;
 
 		// Extracts `lat/lng` from URLs
 		if ( URL::isValid( $sanitized ) )
@@ -495,6 +495,7 @@ class LatLng extends Base
 	// https://codeberg.org/comaps/url-processor/
 	// https://comaps.app/
 	// https://organicmaps.app/
+	// Regex("""((?:(?:https?://)?(?:comaps\.at|ge0\.me|omaps\.app)|ge0:/)/$URI_REST)""")
 	public static function extractFromCoMaps(
 		string $data,
 		string|false|null $fallback = FALSE,
