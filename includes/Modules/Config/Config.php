@@ -43,7 +43,7 @@ class Config extends gEditorial\Module
 			'frontend' => FALSE,
 			'autoload' => TRUE,
 			'access'   => 'stable',
-			'icon'     => [ 'misc-16', 'perekrestok' ],
+			'icon'     => [ 'misc-16', 'perekrestok' ], // [ 'misc-24', 'xray-view-modified' ],
 		];
 	}
 

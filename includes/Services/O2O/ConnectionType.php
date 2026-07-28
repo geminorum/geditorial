@@ -127,10 +127,10 @@ class ConnectionType extends Core\Base
 		);
 	}
 
-	public function __call( $method, $args )
+	public function __call( string $method, $args )
 	{
 		if ( ! method_exists( __NAMESPACE__.'\\DirectedConnectionType', $method ) ) {
-			trigger_error( "Method '$method' does not exist.", E_USER_ERROR );
+			trigger_error( "Method '$method' does not exist.", E_ERROR );
 			return;
 		}
 
@@ -145,18 +145,17 @@ class ConnectionType extends Core\Base
 		return call_user_func_array( [ $this->set_direction( $direction ), $method ], $args );
 	}
 
-	public function set_direction( $direction, $instantiate = TRUE )
+	public function set_direction( string $direction, $instantiate = TRUE ): false|string|object
 	{
 		if ( ! in_array( $direction, [ 'from', 'to', 'any' ] ) )
 			return FALSE;
 
-		if ( $instantiate ) {
-			$class = $this->strategy->get_directed_class();
+		if ( ! $instantiate )
+			return $direction;
 
-			return new $class( $this, $direction );
-		}
+		$class = $this->strategy->get_directed_class();
 
-		return $direction;
+		return new $class( $this, $direction );
 	}
 
 	// Attempt to guess direction based on a parameter

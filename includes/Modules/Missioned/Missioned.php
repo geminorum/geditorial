@@ -538,7 +538,7 @@ class Missioned extends gEditorial\Module
 	}
 
 	// NOTE: only returns selected supported crossing fields
-	public function pairedimports_import_types( array $types, false|int $linked, ?array $posttypes, string $module_key ): array
+	public function pairedimports_import_types( array $types, mixed $linked, ?array $posttypes, string $module_key ): array
 	{
 		if ( ! Core\Arraay::exists( $this->posttypes(), $posttypes ) )
 			return $types;
