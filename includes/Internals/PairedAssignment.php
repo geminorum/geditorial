@@ -181,7 +181,7 @@ trait PairedAssignment
 	}
 
 	// `$this->filter( 'searchselect_result_image_for_term', 3, 12, 'paired_assignment', $this->base );`
-	public function searchselect_result_image_for_term_paired_assignment( $data, $term, $queried )
+	public function searchselect_result_image_for_term_paired_assignment( string|false $data, mixed $term, array $queried ): string|false
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -203,7 +203,7 @@ trait PairedAssignment
 	}
 
 	// `$this->filter( 'searchselect_result_extra_for_term', 3, 12, 'paired_assignment', $this->base );`
-	public function searchselect_result_extra_for_term_paired_assignment( $data, $term, $queried )
+	public function searchselect_result_extra_for_term_paired_assignment( array $data, mixed $term, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -257,10 +257,10 @@ trait PairedAssignment
 		], $context, $posttype );
 	}
 
-	protected function pairedmetabox__render_supportedbox_content( 
-		?object $object, 
-		array|false $box, 
-		?string $context = NULL, 
+	protected function pairedmetabox__render_supportedbox_content(
+		?object $object,
+		array|false $box,
+		?string $context = NULL,
 		?object $screen = NULL,
 	): bool {
 		if ( ! $paired = $this->paired_get_constants() )

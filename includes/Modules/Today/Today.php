@@ -1212,9 +1212,9 @@ class Today extends gEditorial\Module
 		return $events;
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'cal'       => $this->default_calendar(),
 			'day'       => '',
 			'month'     => '',
@@ -1247,9 +1247,9 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function title_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function title_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'cal'     => $this->default_calendar(),
 			'day'     => '',
 			'month'   => '',
@@ -1281,9 +1281,9 @@ class Today extends gEditorial\Module
 		);
 	}
 
-	public function buttons_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function buttons_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'cal'        => $this->default_calendar(),
 			'day'        => '',
 			'month'      => '',

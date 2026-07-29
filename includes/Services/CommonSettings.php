@@ -620,7 +620,7 @@ class CommonSettings extends gEditorial\Service
 			'type'         => 'checkbox-panel',
 			'title'        => _x( 'Exclude Terms', 'Setting Title', 'geditorial-admin' ),
 			'description'  => $description ?? _x( 'Selected terms will be excluded form views on supported post-types.', 'Setting Description', 'geditorial-admin' ),
-			'string_empty' => $empty ?: Services\CustomTaxonomy::getLabel( $taxonomy, 'extended_no_items', 'no_terms' ),
+			'string_empty' => $empty ?: CustomTaxonomy::getLabel( $taxonomy, 'extended_no_items', 'no_terms' ),
 			'values'       => WordPress\Taxonomy::listTerms( $taxonomy ),
 		];
 	}
@@ -1151,7 +1151,7 @@ class CommonSettings extends gEditorial\Service
 			'description' => $description ?: '',
 			'type'        => 'select',
 			'default'     => Core\L10n::calendar(),
-			'values'      => Services\Calendars::getDefualts( TRUE ),
+			'values'      => Calendars::getDefualts( TRUE ),
 		];
 	}
 
@@ -1163,7 +1163,7 @@ class CommonSettings extends gEditorial\Service
 			'description' => $description ?: '',
 			'type'        => 'checkboxes',
 			'default'     => [ Core\L10n::calendar() ],
-			'values'      => Services\Calendars::getDefualts( TRUE ),
+			'values'      => Calendars::getDefualts( TRUE ),
 		];
 	}
 

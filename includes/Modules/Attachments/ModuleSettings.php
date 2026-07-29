@@ -9,14 +9,13 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
 {
-
 	const MODULE = 'attachments';
 
 	const ACTION_REATTACH_THUMBNAILS = 'do_tool_reattach_thumbnails';
 	const ACTION_EMPTY_RAW_METADATA  = 'do_tool_empty_raw_metadata';
 	const ACTION_DELETION_BY_MIME    = 'do_tool_deletion_by_mime';
 
-	public static function renderCard_reattach_thumbnails( $posttypes )
+	public static function renderCard_reattach_thumbnails( array $posttypes ): bool
 	{
 		echo self::toolboxCardOpen( _x( 'Re-attach Un-Parented', 'Card Title', 'geditorial-attachments' ) );
 
@@ -33,9 +32,10 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to re-attach un-parented via thumbnail meta-data.', 'Button Description', 'geditorial-attachments' ) );
 
 		echo '</div></div>';
+		return TRUE;
 	}
 
-	public static function renderCard_empty_raw_metadata( $posttypes )
+	public static function renderCard_empty_raw_metadata( array $posttypes ): bool
 	{
 		echo self::toolboxCardOpen( _x( 'Empty Meta-data', 'Card Title', 'geditorial-attachments' ) );
 
@@ -52,9 +52,10 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to clean attachemnt raw meta-data.', 'Button Description', 'geditorial-attachments' ) );
 
 		echo '</div></div>';
+		return TRUE;
 	}
 
-	public static function renderCard_deletion_by_mime( $mimetypes, $extensions = NULL )
+	public static function renderCard_deletion_by_mime( array $mimetypes, ?array $extensions = NULL ): bool
 	{
 		echo self::toolboxCardOpen( _x( 'Deletion by MIME', 'Card Title', 'geditorial-attachments' ) );
 
@@ -70,9 +71,10 @@ class ModuleSettings extends gEditorial\Settings
 			Core\HTML::desc( _x( 'Tries to delete attachemnts by MIME types.', 'Button Description', 'geditorial-attachments' ) );
 
 		echo '</div></div>';
+		return TRUE;
 	}
 
-	public static function handleTool_empty_raw_metadata( $posttype, $limit = 25 )
+	public static function handleTool_empty_raw_metadata( string $posttype, int $limit = 25 ): bool
 	{
 		global $wpdb;
 
@@ -108,7 +110,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function handleTool_deletion_by_mime( $mimetype, $limit = 25 )
+	public static function handleTool_deletion_by_mime( string $mimetype, int $limit = 25 ): bool
 	{
 		list( $attachments, $pagination ) = Tablelist::getAttachments( [
 			'post_mime_type' => $mimetype,
@@ -130,7 +132,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function attachment_empty_raw_metadata( $attachment_id, $verbose = FALSE )
+	public static function attachment_empty_raw_metadata( int $attachment_id, bool $verbose = FALSE ): bool
 	{
 		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
 			return self::processingListItem( $verbose,
@@ -155,7 +157,7 @@ class ModuleSettings extends gEditorial\Settings
 			], TRUE );
 	}
 
-	public static function attachment_delete_by_mime( $attachment, $verbose = FALSE )
+	public static function attachment_delete_by_mime( mixed $attachment, bool $verbose = FALSE ): bool
 	{
 		if ( ! $attachment = WordPress\Post::get( $attachment ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
@@ -176,7 +178,7 @@ class ModuleSettings extends gEditorial\Settings
 			], TRUE );
 	}
 
-	public static function handleTool_reattach_thumbnails( $posttype, $limit = 25 )
+	public static function handleTool_reattach_thumbnails( string $posttype, int $limit = 25 ): bool
 	{
 		global $wpdb;
 
@@ -211,7 +213,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function attachment_set_parent_data( $attachment_id, $parent_id, $verbose = FALSE )
+	public static function attachment_set_parent_data( int $attachment_id, int $parent_id, bool $verbose = FALSE ): bool
 	{
 		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
 			return self::processingListItem( $verbose,

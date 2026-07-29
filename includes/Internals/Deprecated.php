@@ -9,8 +9,8 @@ use geminorum\gEditorial\WordPress;
 
 trait Deprecated
 {
-	// DEPRECATED: use `$this->get_adminpage_url( FALSE )`
 	// OVERRIDE: if has no admin menu but using the hook
+	#[\Deprecated('USE `$this->get_adminpage_url( FALSE )`')]
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
 		self::_dep( '$this->get_adminpage_url( FALSE )' );
@@ -23,10 +23,9 @@ trait Deprecated
 		return add_query_arg( array_merge( [ 'page' => $this->classs() ], $extra ), $url );
 	}
 
+	#[\Deprecated()]
 	public function get_image_size_key( $constant, $size = 'thumbnail' )
 	{
-		self::_dep();
-
 		$posttype = $this->constant( $constant );
 
 		if ( isset( $this->image_sizes[$posttype][$posttype.'-'.$size] ) )
@@ -39,10 +38,9 @@ trait Deprecated
 	}
 
 	// CAUTION: tax must be hierarchical
+	#[\Deprecated()]
 	public function add_meta_box_checklist_terms( $constant, $posttype, $role = NULL, $type = FALSE )
 	{
-		self::_dep();
-
 		$taxonomy = $this->constant( $constant );
 		$metabox  = $this->classs( $taxonomy );
 		$edit     = WordPress\Taxonomy::edit( $taxonomy );
@@ -66,10 +64,9 @@ trait Deprecated
 		);
 	}
 
+	#[\Deprecated()]
 	public function add_meta_box_checklist_terms_cb( object $post, false|array $box ): void
 	{
-		self::_dep();
-
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
 			return;
 
@@ -78,10 +75,9 @@ trait Deprecated
 		echo '</div>';
 	}
 
+	#[\Deprecated()]
 	public function remove_meta_box( $constant, $posttype, $type = 'tag' )
 	{
-		self::_dep();
-
 		if ( 'tag' == $type )
 			remove_meta_box( 'tagsdiv-'.$this->constant( $constant ), $posttype, 'side' );
 
@@ -105,10 +101,9 @@ trait Deprecated
 	}
 
 	// get stored post meta by the field
+	#[\Deprecated('USE `$this->get_postmeta_legacy() || $this->get_postmeta_field()`')]
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $metakey = NULL )
 	{
-		self::_dep( '$this->get_postmeta_legacy() || $this->get_postmeta_field()' );
-
 		global $gEditorialPostMeta;
 
 		if ( is_null( $metakey ) )
@@ -130,10 +125,9 @@ trait Deprecated
 		return $default;
 	}
 
+	#[\Deprecated('USE `$this->store_postmeta()`')]
 	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
 	{
-		self::_dep( '$this->store_postmeta()' );
-
 		global $gEditorialPostMeta;
 
 		if ( ! empty( $postmeta ) )
@@ -145,10 +139,9 @@ trait Deprecated
 	}
 
 	// DEFAULT METHOD
+	#[\Deprecated()]
 	public function dISABLED_render_metabox( object $post, false|array $box, array $fields = NULL, ?string $context = NULL ): void
 	{
-		self::_dep();
-
 		$fields = $fields ?? $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
@@ -175,6 +168,7 @@ trait Deprecated
 		}
 	}
 
+	#[\Deprecated()]
 	public function do_posttype_field( $atts = [], $post = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -212,25 +206,22 @@ trait Deprecated
 	}
 
 	// PAIRED API
+	#[\Deprecated('USE `$this->paired_get_to_post_id()`')]
 	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
-		self::_dep( '$this->paired_get_to_post_id()' );
-
 		return $this->paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug );
 	}
 
 	// PAIRED API
+	#[\Deprecated('USE `$this->paired_get_from_posts()`')]
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
-		self::_dep( '$this->paired_get_from_posts()' );
-
 		return $this->paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count, $term_id );
 	}
 
+	#[\Deprecated('USE `restrict_manage_posts_restrict_taxonomy()`')]
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
-		self::_dev_dep( 'restrict_manage_posts_restrict_taxonomy()' );
-
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
@@ -239,10 +230,9 @@ trait Deprecated
 		}
 	}
 
+	#[\Deprecated('USE `parse_query_restrict_taxonomy()`')]
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
 	{
-		self::_dev_dep( 'parse_query_restrict_taxonomy()' );
-
 		if ( TRUE === $posttype_constant_key ||
 			$this->is_current_posttype( $posttype_constant_key ) ) {
 
@@ -251,16 +241,16 @@ trait Deprecated
 		}
 	}
 
+	#[\Deprecated('USE `restrict_manage_posts_restrict_paired()`')]
 	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
 	{
-		self::_dev_dep( 'restrict_manage_posts_restrict_paired()' );
-
 		Listtable::restrictByPosttype(
 			$this->constant( $tax_constant_key ),
 			$this->constant( $posttype_constant_key )
 		);
 	}
 
+	#[\Deprecated()]
 	public function is_current_posttype( $constant )
 	{
 		return WordPress\PostType::current() == $this->constant( $constant );
@@ -268,6 +258,7 @@ trait Deprecated
 
 	// DEFAULT METHOD
 	// INTENDED HOOK: `save_post`, `save_post_[post_type]`
+	#[\Deprecated()]
 	public function dISABLED_store_metabox( $post_id, $post, $update, $context = NULL )
 	{
 		if ( ! $this->is_save_post( $post, $this->posttypes() ) )
@@ -286,10 +277,9 @@ trait Deprecated
 		}
 	}
 
+	#[\Deprecated('USE `$this->strings_metabox_title_via_posttype()`')]
 	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
 	{
-		self::_dep( '$this->strings_metabox_title_via_posttype()' );
-
 		$object = WordPress\PostType::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
@@ -320,10 +310,9 @@ trait Deprecated
 		return $title;
 	}
 
+	#[\Deprecated('USE `$this->strings_metabox_title_via_taxonomy()`')]
 	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
 	{
-		self::_dep( '$this->strings_metabox_title_via_taxonomy()' );
-
 		$object = WordPress\Taxonomy::object( $this->constant( $constant ) );
 
 		if ( is_null( $title ) )
@@ -352,7 +341,7 @@ trait Deprecated
 		return $title;
 	}
 
-	// DEPRECATED: use `paired_do_connection()`
+	#[\Deprecated('USE `paired_do_connection()`')]
 	protected function paired_do_store_connection( $post_ids, $paired_ids, $posttype_constant, $paired_constant, $append = FALSE, $forced = NULL )
 	{
 		$forced = $forced ?? $this->get_setting( 'paired_force_parents', FALSE );
@@ -398,7 +387,7 @@ trait Deprecated
 		return is_array( $post_ids ) ? $stored : reset( $stored );
 	}
 
-	// DEPRECATED: use `$this->register_default_terms()`
+	#[\Deprecated('USE `$this->register_default_terms()`')]
 	protected function insert_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! $this->nonce_verify( 'settings' ) )
@@ -427,8 +416,8 @@ trait Deprecated
 		WordPress\Redirect::doReferer( $message );
 	}
 
-	// NOTE: DEPRECATED
 	// @REF: https://make.wordpress.org/core/2012/12/01/more-hooks-on-the-edit-screen/
+	#[\Deprecated()]
 	protected function _hook_editform_readonly_title()
 	{
 		add_action( 'edit_form_after_title', function ( $post ) {
@@ -443,7 +432,7 @@ trait Deprecated
 		}, 1, 1 );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	protected function _get_taxonomy_caps( $taxonomy, $caps, $posttypes )
 	{
 		if ( is_array( $caps ) )
@@ -516,10 +505,10 @@ trait Deprecated
 		];
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	protected function get_module_icons() { return []; }
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public function get_taxonomy_icon( $constant = NULL, $hierarchical = FALSE, $fallback = FALSE )
 	{
 		$icons   = $this->get_module_icons();
@@ -550,7 +539,7 @@ trait Deprecated
 		return $icon ?: 'dashicons-'.$default;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public function get_posttype_icon( $constant = NULL, $default = 'welcome-write-blog' )
 	{
 		$icon  = $this->module->icon ? $this->module->icon : $default;
@@ -568,7 +557,7 @@ trait Deprecated
 		return $icon ?: 'dashicons-'.$default;
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public function get_posttype_cap_type( $constant )
 	{
 		$default = $this->constant( $constant.'_cap_type', 'post' );
@@ -582,8 +571,8 @@ trait Deprecated
 		return gEditorial()->module( 'roled' )->constant( 'base_type' );
 	}
 
-	// NOTE: DEPRECATED
 	// NOTE: only applies if the setting is `disabled`
+	#[\Deprecated()]
 	protected function _hook_posttype_viewable( $posttype, $default = TRUE, $setting = 'posttype_viewable' )
 	{
 		if ( $this->get_setting( $setting, $default ) )
@@ -619,8 +608,8 @@ trait Deprecated
 			}, 12, 2 );
 	}
 
-	// NOTE: DEPRECATED: use `comments__handle_default_status()`
 	// USAGE: `$this->filter( 'get_default_comment_status', 3 );`
+	#[\Deprecated('USE `comments__handle_default_status()`')]
 	public function get_default_comment_status( $status, $posttype, $comment_type )
 	{
 		self::_dep( '$this->comments__handle_default_status()' );
@@ -628,8 +617,9 @@ trait Deprecated
 		return $this->get_setting( 'comment_status', $status );
 	}
 
-	// NOTE: DEPRECATED: increases last menu_order for new posts
+	// NOTE: increases last menu_order for new posts
 	// USAGE: `$this->filter( 'wp_insert_post_data', 2, 9, 'menu_order' );`
+	#[\Deprecated()]
 	public function wp_insert_post_data_menu_order( $data, $postarr )
 	{
 		if ( ! $data['menu_order'] && $postarr['post_type'] )

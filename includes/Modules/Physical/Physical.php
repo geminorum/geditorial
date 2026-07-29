@@ -305,7 +305,7 @@ class Physical extends gEditorial\Module
 		$this->subcontent_do_render_supportedbox_content( $object, $context ?? 'supportedbox' );
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}

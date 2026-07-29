@@ -308,7 +308,7 @@ class Shortcodes extends gEditorial\Module
 	}
 
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
-	public function display_terms_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function display_terms_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listTerms( 'allitems',
 			'',
@@ -321,7 +321,7 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function term_tiles_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function term_tiles_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listTerms( 'allitems',
 			'',
@@ -335,7 +335,7 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function posts_assigned_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function posts_assigned_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return ShortCode::listPosts( 'assigned',
 			'',
@@ -347,9 +347,9 @@ class Shortcodes extends gEditorial\Module
 		);
 	}
 
-	public function circle_progress_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function circle_progress_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'completed' => FALSE,
 			'total'     => FALSE,
 			'hint'      => FALSE,

@@ -309,7 +309,7 @@ class Bookmarked extends gEditorial\Module
 		return $data;
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_data_summary( array_merge( [
 			'default' => '',

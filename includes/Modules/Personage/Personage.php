@@ -1001,7 +1001,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: late overrides of the fields values and keys
-	public function searchselect_result_extra_for_post( $data, $post, $queried )
+	public function searchselect_result_extra_for_post( array $data, mixed $post, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )

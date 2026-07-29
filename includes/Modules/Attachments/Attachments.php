@@ -523,7 +523,7 @@ class Attachments extends gEditorial\Module
 		return $attr;
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'attached',
 			'attachment',

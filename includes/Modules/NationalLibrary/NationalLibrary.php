@@ -947,9 +947,9 @@ class NationalLibrary extends gEditorial\Module
 			echo $this->wrap( $html, '-fipa-summary' );
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),
 			'bib'     => NULL,
 			'isbn'    => NULL,
@@ -984,9 +984,9 @@ class NationalLibrary extends gEditorial\Module
 		);
 	}
 
-	public function searchform_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function searchform_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'enqueue' => TRUE,
 			'context' => NULL,
 			'wrap'    => TRUE,

@@ -755,7 +755,7 @@ class Book extends gEditorial\Module
 		return $html;
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'main_posttype' ),
@@ -771,7 +771,7 @@ class Book extends gEditorial\Module
 		);
 	}
 
-	public function serie_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function serie_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),
@@ -786,7 +786,7 @@ class Book extends gEditorial\Module
 	}
 
 	// TODO: use `connected_shortcode` constant
-	public function p2p_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function p2p_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		if ( ! $this->_p2p )
 			return $content;
@@ -832,7 +832,7 @@ class Book extends gEditorial\Module
 		return $this->_p2p ? $this->p2p_get_meta_row( 'main_posttype', $post->p2p_id, ' &ndash; ', '' ) : '';
 	}
 
-	public function cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'main_posttype' );
 		$args = [

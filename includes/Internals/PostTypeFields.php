@@ -1710,7 +1710,7 @@ trait PostTypeFields
 	// OLD: `import_field_meta()`
 	protected function posttypefields_do_migrate_field( $metakey, $field, $limit = FALSE )
 	{
-		$rows = WordPress\Database::getPostMetaRows( $metakey, $limit );
+		$rows = WordPress\PostMeta::listByKey( $metakey, $limit );
 
 		foreach ( $rows as $row )
 			$this->posttypefields_do_migrate_field_raw(
@@ -2050,7 +2050,7 @@ trait PostTypeFields
 	}
 
 	// `$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );`
-	public function searchselect_result_extra_for_post_filter( $data, $post, $queried )
+	public function searchselect_result_extra_for_post_filter( array $data, mixed $post, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )

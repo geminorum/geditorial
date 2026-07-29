@@ -474,9 +474,9 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'context' => NULL,
 			'wrap'    => TRUE,
 			'before'  => '',

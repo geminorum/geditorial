@@ -10,7 +10,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
 {
-
 	const MODULE = 'personage';
 
 	const ACTION_PARSE_FULLNAME  = 'do_import_parse_fullname';
@@ -19,7 +18,7 @@ class ModuleSettings extends gEditorial\Settings
 	const ACTION_PARSE_POOL      = 'do_tool_parse_pool';
 	const INPUT_PARSE_POOL       = 'parse_pool_raw_data';
 
-	public static function renderCard_from_fullname( $field )
+	public static function renderCard_from_fullname( array $field ): bool
 	{
 		echo self::toolboxCardOpen( _x( 'Full-name Operations', 'Card Title', 'geditorial-personage' ) );
 
@@ -51,6 +50,7 @@ class ModuleSettings extends gEditorial\Settings
 			) );
 
 		echo '</div></div>';
+		return TRUE;
 	}
 
 	public static function handleImport_from_fullname( $posttype, $fullname, $first_name, $middle_name, $last_name, $limit = 25 )

@@ -888,7 +888,7 @@ class Config extends gEditorial\Module
 		$context = $context ?? 'imports';
 		$sub     = gEditorial\Settings::sub();
 
-		if ( 'general' == $sub ) {
+		if ( 'general' === $sub ) {
 
 			add_action( $this->hook_base( $context, 'sub', 'general' ), [ $this, 'imports_sub' ], 10, 2 );
 

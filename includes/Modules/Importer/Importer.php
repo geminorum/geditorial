@@ -1761,7 +1761,7 @@ class Importer extends gEditorial\Module
 	private function _get_metakeys_for_image( ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'metakeys_for_image',
-			WordPress\Database::getPostMetaKeys( TRUE ),
+			Core\Arraay::sameKey( WordPress\PostMeta::listAvailable() ),
 			$posttype ?? $this->get_setting( 'post_type', 'post' ),
 		);
 	}

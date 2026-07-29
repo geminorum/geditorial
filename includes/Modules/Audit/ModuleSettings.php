@@ -4,11 +4,11 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
 {
-
 	const MODULE = 'audit';
 
 	const ACTION_FORCE_AUTO_AUDIT   = 'do_tools_force_auto_audit';

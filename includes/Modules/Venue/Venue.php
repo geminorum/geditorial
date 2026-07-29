@@ -464,7 +464,7 @@ class Venue extends gEditorial\Module
 		$this->pairedmetabox__render_supportedbox_content( $object, $box, $context, $screen );
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),

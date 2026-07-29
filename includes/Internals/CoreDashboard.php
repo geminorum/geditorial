@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreDashboard
 {
-	protected function dashboard_glance_post( $constant, $roles = NULL )
+	protected function dashboard_glance_post( string $constant, string|array|null $roles = NULL ): false|string
 	{
 		if ( ! $this->role_can( $roles ) )
 			return FALSE;
@@ -23,7 +23,7 @@ trait CoreDashboard
 		);
 	}
 
-	protected function dashboard_glance_taxonomy( $constant, $roles = NULL )
+	protected function dashboard_glance_taxonomy( string $constant, string|array|null $roles = NULL ): false|string
 	{
 		if ( ! $this->role_can( $roles ) )
 			return FALSE;
@@ -38,7 +38,7 @@ trait CoreDashboard
 	}
 
 	// @REF: `wp_add_dashboard_widget()`
-	protected function add_dashboard_widget( $name, $title = NULL, $action = FALSE, $extra = [], $callback = NULL, $context = 'dashboard' )
+	protected function add_dashboard_widget( string $name, ?string $title = NULL, string|array|false $action = FALSE, array $extra = [], ?callable $callback = NULL, ?string $context = 'dashboard' ): bool
 	{
 		// FIXME: test this
 		// if ( ! $this->cuc( $context ) )
@@ -61,7 +61,7 @@ trait CoreDashboard
 
 		if ( is_array( $action ) ) {
 
-			$title.= WordPress\MetaBox::markupTitleAction( $action );
+			$title.= WordPress\MetaBox::markupTitleAction( $action, $context );
 
 		} else if ( $action ) {
 
@@ -69,7 +69,7 @@ trait CoreDashboard
 
 				case 'refresh':
 
-					$title.= gEditorial\MetaBox::titleActionRefresh( $hook );
+					$title.= gEditorial\MetaBox::titleActionRefresh( $context );
 
 					break;
 

@@ -60,9 +60,9 @@ class Countables extends gEditorial\Module
 		return $this->filters( 'countbox_default_template', $template, $type );
 	}
 
-	public function posttype_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function posttype_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'counter'    => FALSE, // FIXME
 			'title'      => NULL,
 			'link'       => NULL,
@@ -113,9 +113,9 @@ class Countables extends gEditorial\Module
 		);
 	}
 
-	public function taxonomy_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function taxonomy_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'counter'    => FALSE, // FIXME
 			'title'      => NULL,
 			'link'       => NULL,

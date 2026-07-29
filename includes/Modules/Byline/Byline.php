@@ -974,9 +974,9 @@ class Byline extends gEditorial\Module
 				];
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'       => get_queried_object_id(),
 			'featured' => NULL,
 			'hidden'   => NULL,
@@ -1033,6 +1033,13 @@ class Byline extends gEditorial\Module
 		);
 	}
 
+	/**
+	 * Returns whether the current user has the specified capability for given context.
+	 *
+	 * @param string|null $context
+	 * @param string $fallback_capability
+	 * @return bool
+	 */
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback_capability, [ 'reports', 'imports' ] );

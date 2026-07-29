@@ -2766,7 +2766,7 @@ class Terms extends gEditorial\Module
 		return $metakeys;
 	}
 
-	public function searchselect_result_image_for_term( $data, $term, $queried )
+	public function searchselect_result_image_for_term( string|false $data, mixed $term, array $queried ): string|false
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -2922,7 +2922,7 @@ class Terms extends gEditorial\Module
 
 	// TODO: also add anniversary events. (apparently `eluceo/ical` does not support reoccurring)
 	// NOTE: applies only if the context is `timespan` e.g. `?ical=timespan`
-	public function calendars_term_events( $null, $term, $context )
+	public function calendars_term_events( mixed $null, object $term, ?string $context ): mixed
 	{
 		if ( $null || Services\Calendars::ICAL_TIMESPAN_CONTEXT !== $context )
 			return $null;
@@ -2989,6 +2989,13 @@ class Terms extends gEditorial\Module
 		return FALSE;
 	}
 
+	/**
+	 * Returns whether the current user has the specified capability for given context.
+	 *
+	 * @param string|null $context
+	 * @param string $fallback_capability
+	 * @return bool
+	 */
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_override_module_cuc( $context, $fallback_capability );

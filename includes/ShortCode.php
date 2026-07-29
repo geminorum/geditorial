@@ -12,11 +12,11 @@ class ShortCode extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function wrap( $html, $suffix = FALSE, $args = [], $block = TRUE, $extra = [] )
+	public static function wrap( ?string $html, string|false $suffix = '', array $args = [], bool $block = TRUE, string|array $extra = [] )
 	{
 		return WordPress\ShortCode::wrap(
 			$html,
-			$suffix,
+			$suffix ?: '',
 			$args,
 			$block,
 			$extra,
@@ -948,7 +948,7 @@ class ShortCode extends WordPress\Main
 	// list: `custom`: posts by id list // TODO!
 	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$args = shortcode_atts(
+		$args = WordPress\ShortCode::attributes(
 			self::getDefaults(
 				$posttype,
 				$taxonomy,
@@ -1369,7 +1369,7 @@ class ShortCode extends WordPress\Main
 	{
 		self::_dep( 'ShortCode::listPosts( \'assigned\' )' );
 
-		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
+		$args = WordPress\ShortCode::attributes( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -1529,7 +1529,7 @@ class ShortCode extends WordPress\Main
 	{
 		self::_dep( 'ShortCode::listPosts( \'paired\' )' );
 
-		$args = shortcode_atts( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
+		$args = WordPress\ShortCode::attributes( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
 			return NULL;
@@ -1688,7 +1688,7 @@ class ShortCode extends WordPress\Main
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
 	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
 	{
-		$args = shortcode_atts(
+		$args = WordPress\ShortCode::attributes(
 			self::getDefaults(
 				'',
 				$taxonomy,

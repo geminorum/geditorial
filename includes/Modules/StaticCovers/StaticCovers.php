@@ -790,7 +790,7 @@ class StaticCovers extends gEditorial\Module
 		return $pre;
 	}
 
-	public function searchselect_result_image_for_post( $data, $post, $queried )
+	public function searchselect_result_image_for_post( string|false $data, mixed $post, array $queried ): string|false
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -869,9 +869,9 @@ class StaticCovers extends gEditorial\Module
 		], $url_template );
 	}
 
-	public function post_cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function post_cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id' => is_singular() ? get_queried_object_id() : NULL,
 
 			'check'     => NULL,     // cap check, `NULL` for default, `FALSE` to disable
@@ -946,9 +946,9 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	public function term_cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function term_cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id' => ( is_tax() || is_tag() || is_category() ) ? get_queried_object_id() : NULL,
 
 			'check'     => NULL,     // cap check, `NULL` for default, `FALSE` to disable

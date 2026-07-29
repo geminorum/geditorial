@@ -414,9 +414,9 @@ class Addendum extends gEditorial\Module
 
 	// TODO: must sort appendages by menu_order
 	// TODO: optional append child appendages
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'       => get_queried_object_id(),
 			'render'   => NULL,
 			'template' => NULL,

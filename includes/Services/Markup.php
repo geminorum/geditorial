@@ -131,7 +131,7 @@ class Markup extends gEditorial\Service
 			'loader'          => new \Mustache\Loader\FilesystemLoader( $base.'assets/views' ),
 			'partials_loader' => new \Mustache\Loader\FilesystemLoader( $base.'assets/views/partials' ),
 			'escape'          => static function ( $value ) {
-				return htmlspecialchars( $value, ENT_COMPAT, 'UTF-8' );
+				return Core\Coding::entityEncodeCOMPAT( $value );
 			},
 		] );
 

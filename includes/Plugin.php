@@ -457,8 +457,10 @@ class Plugin extends WordPress\Plugin
 		if ( $in_theme = locate_template( 'editorial/templates/'.$custom ) )
 			return $in_theme;
 
-		if ( file_exists( GEDITORIAL_DIR.'includes/templates/'.$custom ) )
-			return GEDITORIAL_DIR.'includes/templates/'.$custom;
+		$base_dir = $this->get_dir();
+
+		if ( file_exists( $base_dir.'includes/templates/'.$custom ) )
+			return $base_dir.'includes/templates/'.$custom;
 
 		return $template;
 	}

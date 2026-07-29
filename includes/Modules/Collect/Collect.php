@@ -467,7 +467,7 @@ class Collect extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'collection_posttype' ),
@@ -485,7 +485,7 @@ class Collect extends gEditorial\Module
 		);
 	}
 
-	public function group_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function group_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'collection_posttype' ),
@@ -498,7 +498,7 @@ class Collect extends gEditorial\Module
 		);
 	}
 
-	public function poster_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function poster_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'collection_posttype' );
 		$args = [

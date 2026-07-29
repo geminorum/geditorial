@@ -442,7 +442,7 @@ class Specs extends gEditorial\Module
 	{
 		global $post;
 
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'slug'      => '',
 			'id'        => '',
 			'title'     => '<a href="%2$s" title="%3$s">%1$s</a>',
@@ -488,7 +488,7 @@ class Specs extends gEditorial\Module
 	{
 		global $post;
 
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'ids'       => [],
 			'title'     => '',
 			'title_tag' => 'h3',

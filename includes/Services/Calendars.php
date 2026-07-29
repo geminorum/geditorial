@@ -43,7 +43,7 @@ class Calendars extends gEditorial\Service
 	}
 
 	// `/feed/%feedname%`
-	private static function _init_feeds()
+	private static function _init_feeds(): bool
 	{
 		add_feed(
 			static::REWRITE_ENDPOINT_NAME,
@@ -60,13 +60,13 @@ class Calendars extends gEditorial\Service
 		return TRUE;
 	}
 
-	public static function render_feed_content()
+	public static function render_feed_content(): void
 	{
 		if ( ! self::_do_ical_redirect() )
 			self::exitICS( [], 'notfound' );
 	}
 
-	public static function template_redirect()
+	public static function template_redirect(): void
 	{
 		self::_do_ical_redirect();
 	}
@@ -100,6 +100,7 @@ class Calendars extends gEditorial\Service
 			if ( empty( $object->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $object->name )
 				return FALSE;
 
+			// @hook `geditorial_calendars_post_events`
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'post', 'events' ), NULL, $post, $context ) ) )
 				$events = $filtered;
 
@@ -128,6 +129,7 @@ class Calendars extends gEditorial\Service
 			if ( empty( $posttype->{static::POSTTYPE_ICAL_SOURCE} ) && 'post' !== $posttype )
 				return FALSE;
 
+			// @hook `geditorial_calendars_posttype_events`
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'posttype', 'events' ), NULL, $posttype->name, $context ) ) )
 				$events = $filtered;
 
@@ -156,6 +158,7 @@ class Calendars extends gEditorial\Service
 			if ( empty( $object->{static::TAXONOMY_ICAL_SOURCE} ) && 'category' !== $object->name )
 				return FALSE;
 
+			// @hook `geditorial_calendars_term_events`
 			if ( NULL !== ( $filtered = apply_filters( self::und( static::BASE, 'calendars', 'term', 'events' ), NULL, $term, $context ) ) )
 				$events = $filtered;
 
@@ -216,7 +219,7 @@ class Calendars extends gEditorial\Service
 		exit;
 	}
 
-	public static function getPairedEvents( $post = NULL, $context = NULL )
+	public static function getPairedEvents( mixed $post = NULL, ?string $context = NULL ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -243,7 +246,7 @@ class Calendars extends gEditorial\Service
 		return $events;
 	}
 
-	public static function getPostTypeEvents( $posttype, $context = NULL, $the_date = NULL )
+	public static function getPostTypeEvents( string|object $posttype, ?string $context = NULL, mixed $the_date = NULL ): false|array
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -259,7 +262,7 @@ class Calendars extends gEditorial\Service
 		return $events;
 	}
 
-	public static function getTaxonomyEvents( $term, $context = NULL, $the_date = NULL )
+	public static function getTaxonomyEvents( mixed $term, ?string $context = NULL, mixed $the_date = NULL ): false|array
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
@@ -283,15 +286,21 @@ class Calendars extends gEditorial\Service
 	 * Retrieves calendar events based on a singular post.
 	 * OLD: `Services\Calendars::getSingularCalendar()`
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param string $context
 	 * @param mixed $the_date
 	 * @param mixed $the_summary
 	 * @param mixed $the_location
 	 * @return false|object
 	 */
-	public static function getPostEvent( $post = NULL, $context = NULL, $the_date = NULL, $the_summary = NULL, $the_location = NULL )
-	{
+	public static function getPostEvent(
+		mixed $post = NULL,
+		?string $context = NULL,
+		mixed $the_date = NULL,
+		mixed $the_summary = NULL,
+		mixed $the_location = NULL,
+	): false|object {
+
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
@@ -529,15 +538,21 @@ class Calendars extends gEditorial\Service
 	 * Retrieves calendar events based on a singular term.
 	 * TODO: handle `touch`
 	 *
-	 * @param int|object $term
+	 * @param mixed $term
 	 * @param string $context
 	 * @param mixed $the_date
 	 * @param mixed $the_summary
 	 * @param mixed $the_location
 	 * @return false|object
 	 */
-	public static function getTermEvent( $term, $context = NULL, $the_date = NULL, $the_summary = NULL, $the_location = NULL )
-	{
+	public static function getTermEvent(
+		mixed $term,
+		?string $context = NULL,
+		mixed $the_date = NULL,
+		mixed $the_summary = NULL,
+		mixed $the_location = NULL,
+	): false|object {
+
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
@@ -740,7 +755,7 @@ class Calendars extends gEditorial\Service
 		return $event;
 	}
 
-	public static function sanitizeContextForLink( $context = NULL, $target = NULL, $object = NULL )
+	public static function sanitizeContextForLink( mixed $context = NULL, mixed $target = NULL, mixed $object = NULL ): null|string
 	{
 		$filtered = apply_filters( self::und( static::BASE, 'calendars', 'sanitize_ical_context' ),
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
@@ -751,7 +766,7 @@ class Calendars extends gEditorial\Service
 		if ( ! $filtered || static::ICAL_DEFAULT_CONTEXT === $filtered )
 			return NULL;
 
-		$filtered = Core\Text::trim( $filtered );
+		$filtered = Core\Text::force( $filtered );
 
 		if ( ! in_array( $filtered, [
 			static::ICAL_TIMESPAN_CONTEXT,
@@ -762,7 +777,7 @@ class Calendars extends gEditorial\Service
 		return $filtered;
 	}
 
-	public static function linkPostCalendar( $post = NULL, $context = NULL )
+	public static function linkPostCalendar( mixed $post = NULL, ?string $context = NULL ): false|string
 	{
 		if ( self::const( 'GEDITORIAL_DISABLE_ICAL' ) )
 			return FALSE;
@@ -783,7 +798,7 @@ class Calendars extends gEditorial\Service
 		);
 	}
 
-	public static function linkTermCalendar( $term = NULL, $context = NULL )
+	public static function linkTermCalendar( mixed $term = NULL, ?string $context = NULL ): false|string
 	{
 		if ( self::const( 'GEDITORIAL_DISABLE_ICAL' ) )
 			return FALSE;
@@ -813,7 +828,7 @@ class Calendars extends gEditorial\Service
 	 * @param bool $filtered
 	 * @return array
 	 */
-	public static function getDefualts( $filtered = FALSE )
+	public static function getDefualts( bool $filtered = FALSE ): array
 	{
 		$calendars = [
 			'gregorian'     => _x( 'Gregorian', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
@@ -839,7 +854,7 @@ class Calendars extends gEditorial\Service
 	 * @return string
 	 */
 	#[\Deprecated('USE `Core\Date::sanitizeCalendar()`')]
-	public static function sanitize( $calendar, $default = NULL )
+	public static function sanitize( ?string $calendar, ?string $default = NULL ): string|null
 	{
 		$default   = $default ?? Core\L10n::calendar();
 		$calendars = self::getDefualts( FALSE );

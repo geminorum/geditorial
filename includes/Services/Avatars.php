@@ -80,9 +80,9 @@ class Avatars extends gEditorial\Service
 	) {
 
 		$params = [
-			's' => Core\Encoding::entityEncode( $size ),
-			'd' => Core\Encoding::entityEncode( $default_image_type ),
-			'r' => Core\Encoding::entityEncode( $rating ),
+			's' => Core\Coding::entityEncode( $size ),
+			'd' => Core\Coding::entityEncode( $default_image_type ),
+			'r' => Core\Coding::entityEncode( $rating ),
 		];
 
 		if ( $force_default )
@@ -100,7 +100,7 @@ class Avatars extends gEditorial\Service
 		$attributes = '';
 
 		foreach ( $html_tag_attributes as $key => $value )
-			$attributes.= sprintf( '%s="%s" ', $key, Core\Encoding::entityEncode( $value ) );
+			$attributes.= sprintf( '%s="%s" ', $key, Core\Coding::entityEncode( $value ) );
 
 		return sprintf( '<img src="%s" %s/>', $url, $attributes );
 	}

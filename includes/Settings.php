@@ -533,7 +533,7 @@ class Settings extends WordPress\Main
 			self::headerTitle( 'error', $title );
 			echo $message;
 		self::wrapClose();
-		
+
 		return $returns;
 	}
 

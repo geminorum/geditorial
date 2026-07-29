@@ -562,14 +562,14 @@ class MetaBox extends WordPress\Main
 	}
 
 	#[\Deprecated('USE `WordPress\MetaBox::markupTitleAction()`')]
-	public static function getTitleAction( string $action ): string
+	public static function getTitleAction( string|array|false $action ): string
 	{
 		self::_dev_dep( 'WordPress\MetaBox::markupTitleAction()' );
 
 		return WordPress\MetaBox::markupTitleAction( $action );
 	}
 
-	public static function titleActionRefresh(): string
+	public static function titleActionRefresh( ?string $context = NULL ): string
 	{
 		return WordPress\MetaBox::markupTitleAction( [
 			'url'   => add_query_arg( 'flush', '' ),

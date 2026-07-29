@@ -325,6 +325,13 @@ class Module extends WordPress\Module
 		return TRUE;
 	}
 
+	/**
+	 * Returns whether the current user has the specified capability for given context.
+	 *
+	 * @param string|null $context
+	 * @param string $fallback_capability
+	 * @return bool
+	 */
 	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
 		return $this->_cuc( $context, $fallback_capability );

@@ -212,7 +212,7 @@ class WcConnected extends gEditorial\Module
 		Core\HTML::inputHidden( $atts['name'], '0' );
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'metadata',
 			WordPress\WooCommerce::PRODUCT_POSTTYPE,
@@ -232,9 +232,9 @@ class WcConnected extends gEditorial\Module
 		);
 	}
 
-	public function connected_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function connected_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),
 			'columns' => wc_get_default_products_per_row(),
 			'limit'   => '-1',

@@ -409,7 +409,7 @@ class Contest extends gEditorial\Module
 		}
 	}
 
-	public function contest_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function contest_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'contest_posttype' ),
@@ -425,7 +425,7 @@ class Contest extends gEditorial\Module
 		);
 	}
 
-	public function cover_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'contest_posttype' );
 		$args = [

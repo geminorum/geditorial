@@ -1064,9 +1064,9 @@ class Meta extends gEditorial\Module
 		return $display_name;
 	}
 
-	private function _get_metakeys_for_imports( $context = NULL )
+	private function _get_metakeys_for_imports( ?string $context = NULL ): array
 	{
-		$available = WordPress\Database::getPostMetaKeys( TRUE );
+		$available = Core\Arraay::sameKey( WordPress\PostMeta::listAvailable() );
 		$excludes  = [
 			'classic-editor-remember', // Classic Editor Plugin
 			'extra-disable-autop',
@@ -1074,7 +1074,7 @@ class Meta extends gEditorial\Module
 
 		return $this->filters( 'metakeys_for_imports',
 			Core\Arraay::stripByKeys( $available, $excludes ),
-			$context,
+			$context ?? 'imports',
 			$excludes,
 			$available
 		);
@@ -1148,9 +1148,9 @@ class Meta extends gEditorial\Module
 				'custom_field_limit' => '',
 				'custom_field_type'  => 'post',
 				'custom_field_into'  => '',
-			], 'imports' );
+			], $context );
 
-			$metakeys  = $this->_get_metakeys_for_imports( 'imports' );
+			$metakeys  = $this->_get_metakeys_for_imports( $context );
 			$available = FALSE;
 
 			if ( $this->renderCard_imports_custom_fields( $form, $metakeys ) )
@@ -1165,7 +1165,7 @@ class Meta extends gEditorial\Module
 		return TRUE;
 	}
 
-	protected function renderCard_imports_custom_fields( $form, $metakeys )
+	protected function renderCard_imports_custom_fields( array $form, array $metakeys ): bool
 	{
 		if ( isset( $_POST['custom_fields_check'] ) ) {
 
@@ -1190,7 +1190,7 @@ class Meta extends gEditorial\Module
 						return Core\HTML::sanitizeDisplay( $value );
 					},
 				],
-			], WordPress\Database::getPostMetaRows(
+			], WordPress\PostMeta::listByKey(
 				stripslashes( $form['custom_field'] ),
 				stripslashes( $form['custom_field_limit'] )
 			), [

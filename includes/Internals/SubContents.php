@@ -709,12 +709,12 @@ trait SubContents
 		return $this->filters( 'provide_markup', $markup, $parent, $context );
 	}
 
-	protected function subcontent_do_main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	protected function subcontent_do_main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		// NOTE: falls back into name-space
 		$constant = $this->constant( 'main_shortcode', $this->constant( 'restapi_namespace' ) );
 
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),
 			'fields'  => NULL,
 			'context' => NULL,

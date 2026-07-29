@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait CoreRoles
 {
 	// NOTE: accepts array and performs `OR` check
-	protected function role_can( $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
+	protected function role_can( mixed $whats = 'supported', ?int $user_id = NULL, bool $fallback = FALSE, bool $admins = TRUE, ?string $suffix = NULL )
 	{
 		if ( is_null( $whats ) )
 			return TRUE;
@@ -29,7 +29,7 @@ trait CoreRoles
 
 		foreach ( (array) $whats as $what ) {
 
-			$setting = $this->get_setting( sprintf( '%s%s', $what, $prefix ?? '_roles' ), [] );
+			$setting = $this->get_setting( sprintf( '%s%s', $what, $suffix ?? '_roles' ), [] );
 
 			if ( TRUE === $setting )
 				return $setting;
@@ -48,7 +48,7 @@ trait CoreRoles
 	}
 
 	// NOTE: accepts array and performs `OR` check
-	protected function role_can_post( $post, $whats = 'supported', $user_id = NULL, $fallback = FALSE, $admins = TRUE, $prefix = NULL )
+	protected function role_can_post( mixed $post, mixed $whats = 'supported', ?int $user_id = NULL, bool $fallback = FALSE, bool $admins = TRUE, ?string $suffix = NULL )
 	{
 		if ( is_null( $whats ) )
 			return TRUE;
@@ -79,7 +79,7 @@ trait CoreRoles
 			if ( ! $edit && $this->get_setting( self::und( $what, 'post', 'edit' ), TRUE ) )
 				continue;
 
-			if ( $this->role_can( $what, $user_id, FALSE, FALSE, $prefix ) )
+			if ( $this->role_can( $what, $user_id, FALSE, FALSE, $suffix ) )
 				return TRUE;
 		}
 
@@ -90,15 +90,15 @@ trait CoreRoles
 	 * Overrides the current-user-check for customized contexts.
 	 *
 	 * @param string $context
-	 * @param string $fallback
+	 * @param string $fallback_capability
 	 * @param array $customized
 	 * @return mixed
 	 */
-	protected function _override_module_cuc( $context = 'settings', $fallback = '', $customized = NULL )
+	protected function _override_module_cuc( $context = 'settings', $fallback_capability = '', $customized = NULL )
 	{
 		return in_array( $context, $customized ?? [ 'reports' ], TRUE )
-			? $this->role_can( $context, NULL, $fallback )
-			: $this->_cuc( $context, $fallback );
+			? $this->role_can( $context )
+			: $this->_cuc( $context, $fallback_capability );
 	}
 
 	/**

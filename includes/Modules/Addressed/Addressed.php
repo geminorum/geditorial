@@ -349,9 +349,9 @@ class Addressed extends gEditorial\Module
 		);
 	}
 
-	public function main_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'type'      => NULL,
 			'format'    => NULL,
 			'separator' => NULL,

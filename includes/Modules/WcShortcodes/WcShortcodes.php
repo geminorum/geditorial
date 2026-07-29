@@ -113,9 +113,9 @@ class WcShortcodes extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/hamidrezayazdani/c0e2f0be5142ee12691dca0b09337114
-	public function wc_stock_status_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_stock_status_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),
 			'context' => NULL,
 			'wrap'    => TRUE,
@@ -152,10 +152,10 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_scheduled_on_sales_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_scheduled_on_sales_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$columns = wc_get_default_products_per_row();
-		$args    = shortcode_atts( [
+		$args    = WordPress\ShortCode::attributes( [
 			'limit'     => $columns * wc_get_default_product_rows_per_page(),
 			'columns'   => $columns,
 			'paged'     => get_query_var( 'paged' ) ?: 1,
@@ -239,9 +239,9 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_order_count_shortcode( array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_order_count_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		$args = shortcode_atts( [
+		$args = WordPress\ShortCode::attributes( [
 			'status'  => 'completed',
 			'context' => NULL,
 			'wrap'    => TRUE,

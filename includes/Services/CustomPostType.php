@@ -378,15 +378,15 @@ class CustomPostType extends gEditorial\Service
 		if ( $posttype->name === $post->post_type )
 			return TRUE;
 
-		$paired_from = Services\Paired::isPostType( $post->post_type );
-		$paired_to   = Services\Paired::isPostType( $posttype->name );
+		$paired_from = Paired::isPostType( $post->post_type );
+		$paired_to   = Paired::isPostType( $posttype->name );
 
 		// neither is paired
 		if ( ! $paired_from && ! $paired_to )
 			return WordPress\Post::setPostType( $post, $posttype );
 
 		// Bail if paired term not defined
-		if ( ! $term = Services\Paired::getToTerm( $post->ID, $post->post_type, $paired_from ) )
+		if ( ! $term = Paired::getToTerm( $post->ID, $post->post_type, $paired_from ) )
 			return WordPress\Post::setPostType( $post, $posttype );
 
 		// NOTE: the `term_id` remains intact
@@ -416,7 +416,7 @@ class CustomPostType extends gEditorial\Service
 		if ( ! $post_id || self::isError( $post_id ) )
 			return FALSE;
 
-		if ( $paired = Services\Paired::isPostType( $posttype ) ) {
+		if ( $paired = Paired::isPostType( $posttype ) ) {
 
 			if ( ! $converted = WordPress\Term::updateTaxonomy( $term, $paired ) )
 				return FALSE;
