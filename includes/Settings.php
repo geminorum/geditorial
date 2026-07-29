@@ -811,14 +811,24 @@ class Settings extends WordPress\Main
 		else if ( 'link' === $primary || 'link-small' === $primary )
 			$link = TRUE;
 
-		if ( TRUE === $primary )
+		if ( TRUE === $primary ) {
+
 			$classes[] = 'button-primary';
+			$classes[] = 'button-compact';
 
-		else if ( $primary && 'link' !== $primary && 'link-small' !== $primary )
+		} else if ( $primary && 'link' !== $primary && 'link-small' !== $primary ) {
+
 			$classes[] = 'button-'.$primary;
+			$classes[] = 'button-compact';
 
-		else if ( 'link-small' === $primary )
+		} else if ( 'link-small' === $primary ) {
+
 			$classes[] = 'button-small';
+
+		} else if ( 'small' !== $primary ) {
+
+			$classes[] = 'button-compact';
+		}
 
 		if ( $link )
 			echo Core\HTML::tag( 'a', array_merge( $atts, [
