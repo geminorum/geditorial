@@ -2388,4 +2388,61 @@ class Settings extends WordPress\Main
 		return '<div class="-wrap '.static::BASE.'-wrap -toolbox-column">'
 			.( $title ? sprintf( '<h3 class="-title">%s</h3>', $title ) : '' );
 	}
+
+	// @ALSO `$this->get_current_form()`
+	public static function getCurrentForm( array $defaults, ?string $context = NULL ): array
+	{
+		$context  = $context ?? 'settings';
+		$base_key = self::hook();
+
+		$req = empty( $_REQUEST[$base_key][$context] )
+			? []
+			: $_REQUEST[$base_key][$context];
+
+		return self::parsed( $defaults, $req );
+	}
+
+	// @ALSO `$this->fields_current_form()`
+	public static function fieldsCurrentForm( array $fields, ?string $context = NULL, array $excludes = [] ): void
+	{
+		$context  = $context ?? 'settings';
+		$base_key = self::hook();
+
+		foreach ( $fields as $key => $value ) {
+
+			if ( in_array( $key, $excludes ) )
+				continue;
+
+			Core\HTML::inputHidden( $base_key.'['.$context.']['.$key.']', $value );
+		}
+	}
+
+	// @ALSO `$this->do_settings_field()`
+	public static function fieldCurrentForm( $atts = [] )
+	{
+		$field = array_merge( [
+			'option_base'  => self::hook(),
+			'option_group' => 'settings',
+			'id_name_cb'   => [ __CLASS__, 'settings_id_name_callback' ],
+		], $atts );
+
+		$scripts = []; // FIXME: WTF: not handling scripts?!
+
+		self::fieldType( $field, $scripts );
+	}
+
+	// CAUTION: used more than once
+	public static function settings_id_name_callback( array $args ): array
+	{
+		if ( $args['option_group'] )
+			return [
+				$args['id_attr'] ?: self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
+				$args['name_attr'] ?: sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
+			];
+
+		return [
+			$args['id_attr'] ?: self::dsh( $args['option_base'], $args['field'] ),
+			$args['name_attr'] ?: sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
+		];
+	}
 }

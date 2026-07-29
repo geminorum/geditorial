@@ -362,27 +362,33 @@ trait SettingsCore
 	protected function render_customs_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 	protected function render_customs_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
 
+	// @ALSO: `ModuleSettings::getCurrentForm()`
 	protected function get_current_form( array $defaults, ?string $context = NULL ): array
 	{
-		$context = $context ?? 'settings';
+		$context  = $context ?? 'settings';
+		// $base_key = $this->hook_base( $this->module->name );
+		$base_key = $this->hook();
 
-		$req = empty( $_REQUEST[$this->hook_base( $this->module->name )][$context] )
+		$req = empty( $_REQUEST[$base_key][$context] )
 			? []
-			: $_REQUEST[$this->hook_base( $this->module->name )][$context];
+			: $_REQUEST[$base_key][$context];
 
 		return self::parsed( $defaults, $req );
 	}
 
+	// @ALSO: `ModuleSettings::fieldsCurrentForm()`
 	protected function fields_current_form( array $fields, ?string $context = NULL, array $excludes = [] ): void
 	{
-		$context = $context ?? 'settings';
+		$context  = $context ?? 'settings';
+		// $base_key = $this->hook_base( $this->module->name );
+		$base_key = $this->hook();
 
 		foreach ( $fields as $key => $value ) {
 
 			if ( in_array( $key, $excludes ) )
 				continue;
 
-			Core\HTML::inputHidden( $this->hook_base( $this->module->name ).'['.$context.']['.$key.']', $value );
+			Core\HTML::inputHidden( $base_key.'['.$context.']['.$key.']', $value );
 		}
 	}
 
@@ -871,33 +877,22 @@ trait SettingsCore
 		);
 	}
 
-	public function settings_id_name_cb( $args )
-	{
-		if ( $args['option_group'] )
-			return [
-				$args['id_attr'] ?: self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
-				$args['name_attr'] ?: sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
-			];
-
-		return [
-			$args['id_attr'] ?: self::dsh( $args['option_base'], $args['field'] ),
-			$args['name_attr'] ?: sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
-		];
-	}
-
+	// @ALSO `ModuleSettings::fieldCurrentForm()`
 	public function do_settings_field( $atts = [] )
 	{
-		$args = array_merge( [
+		$field = array_merge( [
 			'options'      => $this->options->settings ?? [],
-			'option_base'  => $this->hook_base( $this->module->name ),
+			// 'option_base'  => $this->hook_base( $this->module->name ),
+			'option_base'  => $this->hook(),
 			'option_group' => 'settings',
-			'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
+			// 'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
+			'id_name_cb'   => [ gEditorial\Settings::class, 'settings_id_name_callback' ],
 		], $atts );
 
-		if ( empty( $args['cap'] ) )
-			$args['cap'] = empty( $this->caps[$args['option_group']] ) ? NULL : $this->caps[$args['option_group']];
+		if ( empty( $field['cap'] ) )
+			$field['cap'] = empty( $this->caps[$field['option_group']] ) ? NULL : $this->caps[$field['option_group']];
 
-		gEditorial\Settings::fieldType( $args, $this->scripts );
+		gEditorial\Settings::fieldType( $field, $this->scripts );
 	}
 
 	public function settings_print_scripts()

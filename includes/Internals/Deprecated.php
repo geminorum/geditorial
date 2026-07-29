@@ -196,6 +196,21 @@ trait Deprecated
 		Settings::fieldType( $args, $this->scripts );
 	}
 
+	#[\Deprecated()]
+	public function settings_id_name_cb( $args )
+	{
+		if ( $args['option_group'] )
+			return [
+				$args['id_attr'] ?: self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
+				$args['name_attr'] ?: sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
+			];
+
+		return [
+			$args['id_attr'] ?: self::dsh( $args['option_base'], $args['field'] ),
+			$args['name_attr'] ?: sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
+		];
+	}
+
 	// PAIRED API
 	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
