@@ -13,8 +13,9 @@ trait ModuleLinks
 	// TODO: link to the `Customizer`
 	protected function get_module_links( bool $compact = FALSE ): array
 	{
-		$links  = [];
-		$screen = get_current_screen();
+		$links    = [];
+		$screen   = get_current_screen();
+		$disabled = $this->setup_disabled();
 
 		// already registered links
 		foreach ( $this->module_links as $module_link ) {
@@ -39,7 +40,7 @@ trait ModuleLinks
 			}
 		}
 
-		if ( method_exists( $this, 'reports_settings' )
+		if ( ! $disabled && method_exists( $this, 'reports_settings' )
 			&& ! gEditorial\Settings::isScreenContext( 'reports', $screen )
 			&& current_user_can( gEditorial\Plugin::CAPABILITY_REPORTS ) ) {
 
@@ -59,7 +60,7 @@ trait ModuleLinks
 				];
 		}
 
-		if ( method_exists( $this, 'tools_settings' )
+		if ( ! $disabled && method_exists( $this, 'tools_settings' )
 			&& ! gEditorial\Settings::isScreenContext( 'tools', $screen )
 			&& current_user_can( gEditorial\Plugin::CAPABILITY_TOOLS ) ) {
 
@@ -79,7 +80,7 @@ trait ModuleLinks
 				];
 		}
 
-		if ( method_exists( $this, 'roles_settings' )
+		if ( ! $disabled && method_exists( $this, 'roles_settings' )
 			&& ! gEditorial\Settings::isScreenContext( 'roles', $screen )
 			&& current_user_can( gEditorial\Plugin::CAPABILITY_ROLES ) ) {
 
@@ -97,10 +98,9 @@ trait ModuleLinks
 						is_array( $title ) ? $title['title'] : $title,
 					),
 				];
-
 		}
 
-		if ( method_exists( $this, 'imports_settings' )
+		if ( ! $disabled && method_exists( $this, 'imports_settings' )
 			&& ! gEditorial\Settings::isScreenContext( 'imports', $screen )
 			&& current_user_can( gEditorial\Plugin::CAPABILITY_IMPORTS ) ) {
 
