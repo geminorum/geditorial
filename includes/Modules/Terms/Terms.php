@@ -1341,68 +1341,79 @@ class Terms extends gEditorial\Module
 
 	public function edit_term( $term_id, $tt_id, $taxonomy )
 	{
-		$calendar = $this->default_calendar();
-
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			if ( ! array_key_exists( 'term-'.$field, $_REQUEST ) )
 				continue;
 
-			$metakey = $this->get_supported_metakey( $field, $taxonomy );
-			$meta    = empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field];
-			$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
-
-			if ( $meta ) {
-
-				$meta = is_array( $meta ) ? array_filter( $meta ) : trim( Core\HTML::escape( $meta ) );
-
-				if ( 'image' == $field ) {
-
-					update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
-					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
-
-				} else if ( in_array( $field, [ 'days', 'hours', 'amount', 'unit', 'min', 'max' ] ) ) {
-
-					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
-
-				} else if ( in_array( $field, [ 'viewable' ] ) ) {
-
-					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
-
-				} else if ( in_array( $field, [ 'date', 'born', 'dead', 'establish', 'abolish' ] ) ) {
-
-					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
-
-					// accepts year only
-					if ( strlen( $meta ) > 4 )
-						$meta = gEditorial\Datetime::makeMySQLFromInput( $meta, 'Y-m-d', $calendar, NULL, $meta );
-
-				} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
-
-					$meta = Core\Text::trim( Core\Number::translate( $meta ) );
-					$meta = gEditorial\Datetime::makeMySQLFromInput( $meta, NULL, $calendar, NULL, $meta );
-
-				} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
-
-					$meta = Core\URL::sanitize( $meta );
-				}
-
-				update_term_meta( $term_id, $metakey, $meta );
-
-			} else {
-
-				if ( 'image' == $field && $meta = get_term_meta( $term_id, $metakey, TRUE ) ) {
-
-					delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
-					do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
-				}
-
-				delete_term_meta( $term_id, $metakey );
-			}
+			$this->store_supported_field(
+				(int) $term_id,
+				$field,
+				empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field],
+				$taxonomy,
+			);
 
 			// FIXME: experiment: since the action may trigger twice
 			unset( $_REQUEST['term-'.$field] );
 		}
+	}
+
+	public function store_supported_field( int $term_id, string $field, mixed $meta, string $taxonomy, ?string $context = NULL ): bool
+	{
+		$metakey = $this->get_supported_metakey( $field, $taxonomy );
+		$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
+
+		if ( $meta ) {
+
+			$meta = is_array( $meta ) ? array_filter( $meta ) : trim( Core\HTML::escape( $meta ) );
+
+			if ( 'image' == $field ) {
+
+				update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
+				do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
+
+			} else if ( in_array( $field, [ 'days', 'hours', 'amount', 'unit', 'min', 'max' ] ) ) {
+
+				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
+
+			} else if ( in_array( $field, [ 'viewable' ] ) ) {
+
+				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
+
+			} else if ( in_array( $field, [ 'date', 'born', 'dead', 'establish', 'abolish' ] ) ) {
+
+				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
+
+				// accepts year only
+				if ( strlen( $meta ) > 4 )
+					$meta = gEditorial\Datetime::makeMySQLFromInput( $meta,
+						'Y-m-d', $this->default_calendar(), NULL, $meta );
+
+			} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
+
+				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
+				$meta = gEditorial\Datetime::makeMySQLFromInput( $meta,
+					NULL, $this->default_calendar(), NULL, $meta );
+
+			} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
+
+				$meta = Core\URL::sanitize( $meta );
+			}
+
+			update_term_meta( $term_id, $metakey, $meta );
+
+		} else {
+
+			if ( 'image' == $field && $meta = get_term_meta( $term_id, $metakey, TRUE ) ) {
+
+				delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
+				do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
+			}
+
+			delete_term_meta( $term_id, $metakey );
+		}
+
+		return TRUE;
 	}
 
 	/**
