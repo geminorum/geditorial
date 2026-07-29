@@ -85,8 +85,8 @@ class Terms extends gEditorial\Module
 
 	protected function get_global_settings(): array
 	{
+		$fields = $this->_get_supported_fields_taxonomies( 'settings' );
 		$roles  = $this->get_settings_default_roles();
-		$fields = $this->_get_supported_raw();
 
 		$settings = [
 			'_general' => [
@@ -125,13 +125,13 @@ class Terms extends gEditorial\Module
 			],
 		];
 
-		foreach ( $fields as $field )
-			$settings[sprintf( '_field_%s', $field )] = [
+		foreach ( $fields as $field_key => $field_taxonomies )
+			$settings[sprintf( '_field_%s', $field_key )] = [
 				[
-					'field'  => 'term_'.$field,
+					'field'  => self::und( 'term', $field_key ),
 					'type'   => 'checkboxes-values',
 					'title'  => _x( 'Supported Taxonomies', 'Setting Title', 'geditorial-terms' ),
-					'values' => $this->get_taxonomies_support( $field ),
+					'values' => $field_taxonomies,
 				]
 			];
 
@@ -299,12 +299,25 @@ class Terms extends gEditorial\Module
 		];
 	}
 
-	protected function get_taxonomies_support( $field )
+	protected function _get_supported_fields_taxonomies( ?string $context = NULL )
 	{
-		$supported = WordPress\Taxonomy::get();
-		$excluded  = Core\Arraay::prepString( $this->taxonomies_excluded() );
+		$list = [];
 
-		switch ( $field ) {
+		foreach ( $this->_get_supported_raw() as $field_key )
+			$list[$field_key] = $this->_get_taxonomies_support( $field_key, $context );
+
+		return $this->filters( 'supported_fields_taxonomies', $list, $context );
+	}
+
+	private function _get_taxonomies_support( string $field_key, ?string $context = NULL ): array
+	{
+		$this->cache['taxonomy_supported'] = $this->cache['taxonomy_supported'] ?? WordPress\Taxonomy::get();
+		$this->cache['taxonomy_excluded']  = $this->cache['taxonomy_supported'] ?? Core\Arraay::prepString( $this->taxonomies_excluded() );
+
+		$supported = $this->cache['taxonomy_supported'];
+		$excluded  = $this->cache['taxonomy_excluded'];
+
+		switch ( $field_key ) {
 			case 'role'     : $excluded = array_merge( $excluded, [ 'audit_attribute' ] ); break;
 			case 'plural'   : $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
 			case 'overwrite': $excluded = array_merge( $excluded, [ 'post_tag', 'product_tag' ] ); break;
