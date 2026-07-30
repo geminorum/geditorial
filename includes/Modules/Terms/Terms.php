@@ -1351,6 +1351,7 @@ class Terms extends gEditorial\Module
 				$field,
 				empty( $_REQUEST['term-'.$field] ) ? FALSE : $_REQUEST['term-'.$field],
 				$taxonomy,
+				TRUE,
 			);
 
 			// FIXME: experiment: since the action may trigger twice
@@ -1358,10 +1359,13 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function store_supported_field( int $term_id, string $field, mixed $meta, string $taxonomy, ?string $context = NULL ): bool
+	public function store_supported_field( int $term_id, string $field, mixed $meta, string $taxonomy, bool $update = TRUE, ?string $context = NULL ): bool
 	{
 		$metakey = $this->get_supported_metakey( $field, $taxonomy );
 		$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
+
+		if ( ! $update && ! self::empty( get_term_meta( $term_id, $metakey, TRUE ) ) )
+			return FALSE;
 
 		if ( $meta ) {
 

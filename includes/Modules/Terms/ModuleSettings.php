@@ -15,6 +15,9 @@ class ModuleSettings extends gEditorial\Settings
 	const ACTION_CUSTOM_FIELDS_CONVERT = 'custom_fields_convert';
 	const ACTION_CUSTOM_FIELDS_DELETE  = 'custom_fields_delete';
 
+	const ACTION_UPDATE_EXISTING_METADATA = 'custom_fields_update_existsing';
+	const ACTION_CLEANUP_AFTER_IMPORT     = 'custom_fields_cleanup_adter_import';
+
 	const CURRENT_FORM = [
 		'imports' => [
 			'custom_field'       => '',
@@ -114,6 +117,14 @@ class ModuleSettings extends gEditorial\Settings
 
 				Core\HTML::desc( _x( 'Import into any of available meta fields.', 'Message', 'geditorial-terms' ) );
 
+			echo '</div><br /><div class="-wrap field-wrap -checkboxes">';
+
+				self::submitCheckBox( static::ACTION_UPDATE_EXISTING_METADATA,
+					_x( 'Upon conversion also update <b>existing</b> meta-data.', 'CheckBox', 'geditorial-terms' ), [], '<div>', '</div>' );
+
+				self::submitCheckBox( static::ACTION_CLEANUP_AFTER_IMPORT,
+					_x( 'After conversion <b>cleanup</b> old residual meta-data.', 'CheckBox', 'geditorial-terms' ), [], '<div>', '</div>' );
+
 			echo '</div><div class="-wrap -wrap-button-row">';
 
 				self::submitButton( static::ACTION_CUSTOM_FIELDS_CHECK,
@@ -142,8 +153,10 @@ class ModuleSettings extends gEditorial\Settings
 
 			self::raiseResources();
 
-			$form  = self::getCurrentForm( static::CURRENT_FORM[$context] , $context );
-			$count = 0;
+			$form    = self::getCurrentForm( static::CURRENT_FORM[$context] , $context );
+			$update  = self::req( static::ACTION_UPDATE_EXISTING_METADATA, FALSE );
+			$cleanup = self::req( static::ACTION_CLEANUP_AFTER_IMPORT, FALSE );
+			$count   = 0;
 
 			if ( ! $form['custom_field'] || !$form['custom_field_into'] )
 				return ! WordPress\Redirect::doReferer( 'wrong' );
@@ -155,13 +168,19 @@ class ModuleSettings extends gEditorial\Settings
 
 			foreach ( $rows as $row ) {
 
+				$term_id = (int) $row->term_id;
+
 				$result = self::factory()->module( static::MODULE )->store_supported_field(
-					(int) $row->term_id,
+					$term_id,
 					$form['custom_field_into'],
 					Services\Markup::getSeparated( $row->meta ),
-					WordPress\Term::taxonomy( (int) $row->term_id ),
+					WordPress\Term::taxonomy( $term_id ),
+					$update,
 					$context,
 				);
+
+				if ( $result && $cleanup )
+					delete_term_meta( $term_id, $form['custom_field'] );
 
 				if ( $result )
 					$count++;
