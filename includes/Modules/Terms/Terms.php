@@ -10,6 +10,11 @@ use geminorum\gEditorial\WordPress;
 
 class Terms extends gEditorial\Module
 {
+	/**
+	 * Holds the module supported fields information.
+	 *
+	 * @var array
+	 */
 	protected $supported = [
 		'parent',
 		'order',
@@ -344,7 +349,7 @@ class Terms extends gEditorial\Module
 
 		$this->register_meta_fields();
 
-		$this->action( [ 'edit_term', 'create_term' ], 3 );
+		$this->action( [ 'edit_term', 'create_term' ], 4 );
 		$this->action( 'delete_attachment', 2, 12 );
 
 		if ( $this->get_setting( 'frontend_search', TRUE ) )
@@ -776,7 +781,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'supported_field_edit', $meta_value, $meta_key, $object_type, NULL );
 	}
 
-	public function manage_columns( $columns )
+	public function manage_columns( array $columns ): array
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $columns;
@@ -901,7 +906,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
 	}
 
-	public function custom_column( $string, $column, $term_id )
+	public function custom_column( string $string, string $column, int $term_id ): string
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $string;
@@ -923,6 +928,8 @@ class Terms extends gEditorial\Module
 
 		// NOTE: here for custom column with multiple fields support
 		$this->actions( 'custom_column', $column, $taxonomy, $supported, $term );
+
+		return $string;
 	}
 
 	// TODO: use read-only inputs on non-columns
@@ -1327,10 +1334,18 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 		}
 
-		echo $this->filters( 'supported_field_column', $html, $field, $taxonomy, $term, $meta, $metakey, $metatype );
+		echo $this->filters( 'supported_field_column',
+			$html,
+			$field,
+			$taxonomy,
+			$term,
+			$meta,
+			$metakey,
+			$metatype,
+		);
 	}
 
-	private function field_empty( $field, $value = '0', $column = TRUE )
+	private function field_empty( string $field, string $value = '0', bool $column = TRUE ): string
 	{
 		if ( $column )
 			return '<span class="column-'.$field.'-empty -empty">&mdash;</span>'
@@ -1339,7 +1354,7 @@ class Terms extends gEditorial\Module
 		return gEditorial\Plugin::na();
 	}
 
-	public function edit_term( $term_id, $tt_id, $taxonomy )
+	public function edit_term( int $term_id, int $tt_id, string $taxonomy, array $args = [] ): void
 	{
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
@@ -2326,7 +2341,7 @@ class Terms extends gEditorial\Module
 		return empty( $meta ) ? get_current_user_id() : $meta;
 	}
 
-	public function display_media_states( $states, $post )
+	public function display_media_states( array $states, object $post ): array
 	{
 		// NOTE: in some cases we assign featured image of a post-type into paired taxonomy
 		if ( $post->post_parent )
@@ -2702,12 +2717,12 @@ class Terms extends gEditorial\Module
 		return $clauses;
 	}
 
-	public function woocommerce_sortable_taxonomies( $taxonomies )
+	public function woocommerce_sortable_taxonomies( array $taxonomies ): array
 	{
 		return array_merge( $taxonomies, $this->get_supported_taxonomies( 'order' ) );
 	}
 
-	private function _hook_overwrite_titles( $taxonomies )
+	private function _hook_overwrite_titles( array $taxonomies ): bool|int
 	{
 		if ( is_admin() || empty( $taxonomies ))
 			return FALSE;
@@ -2744,7 +2759,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// @FILTER: `geditorial_terms_sanitize_name`
-	public function sanitize_name( $name, $term, $action )
+	public function sanitize_name( string $name, object $term, $action ): string
 	{
 		if ( ! in_array( 'overwrite', $this->get_supported( $term->taxonomy ), TRUE ) )
 			return $name;
@@ -2758,11 +2773,11 @@ class Terms extends gEditorial\Module
 	/**
 	 * Filters proper field as title for terms on the `alphabet` short-code.
 	 *
-	 * @param array $meta-keys
+	 * @param array $metakeys
 	 * @param array $taxonomies
-	 * @return false|string
+	 * @return array
 	 */
-	public function alphabet_term_title_metakeys( $metakeys, $taxonomies )
+	public function alphabet_term_title_metakeys( array $metakeys, array $taxonomies ): array
 	{
 		foreach ( $taxonomies as $taxonomy ) {
 
@@ -2802,7 +2817,7 @@ class Terms extends gEditorial\Module
 		return $data;
 	}
 
-	public function term_intro_title_suffix( $suffix, $term, $desc, $args, $module )
+	public function term_intro_title_suffix( string $suffix, $term, $desc, $args, $module ): string
 	{
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $suffix;
@@ -2837,7 +2852,7 @@ class Terms extends gEditorial\Module
 		return $suffix;
 	}
 
-	public function term_intro_description_before( $term, $desc, $image, $args, $module )
+	public function term_intro_description_before( $term, $desc, $image, $args, $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
@@ -2851,7 +2866,7 @@ class Terms extends gEditorial\Module
 			echo Core\HTML::wrap( get_term_meta( $term->term_id, $this->get_supported_metakey( 'subtitle', $taxonomy ), TRUE ) ?: '', '-term-subtitle' );
 	}
 
-	public function term_intro_description_after( $term, $desc, $image, $args, $module )
+	public function term_intro_description_after( $term, $desc, $image, $args, $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
@@ -2868,9 +2883,11 @@ class Terms extends gEditorial\Module
 			echo gEditorial\Template::doMediaShortCode( get_term_meta( $term->term_id, $this->get_supported_metakey( 'embed', $taxonomy ), TRUE ) ?: '' );
 	}
 
-	private function _render_source_link( $term, $field = 'source' )
+	private function _render_source_link( object $term, string $field = 'source' ): void
 	{
-		if ( ! $title = $this->get_setting_fallback( $field.'_link_title', _x( 'Source', 'Setting Default', 'geditorial-terms' ) ) )
+		$default = _x( 'Source', 'Setting Default', 'geditorial-terms' );
+
+		if ( ! $title = $this->get_setting_fallback( self::und( $field, 'link_title' ), $default ) )
 			return;
 
 		if ( $meta = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE ) )
@@ -2878,7 +2895,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// NOTE: `timespan` only if taxonomy supported.
-	public function calendars_sanitize_ical_context( $context, $target, $object )
+	public function calendars_sanitize_ical_context( ?string $context, string $target, mixed $object ): string
 	{
 		if ( 'term' !== $target )
 			return $context;
@@ -2903,7 +2920,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// NOTE: `timespan` only if terms has data.
-	public function calendars_term_link( $url, $term, $context )
+	public function calendars_term_link( string $url, object $term, ?string $context ): string|false
 	{
 		if ( Services\Calendars::ICAL_TIMESPAN_CONTEXT !== $context )
 			return $url;
@@ -2973,7 +2990,7 @@ class Terms extends gEditorial\Module
 		return $null;
 	}
 
-	private function _calendars_term_event( $term, $field, $context, $default_calendar = NULL )
+	private function _calendars_term_event( object $term, string $field, ?string $context, ?string $default_calendar = NULL ): mixed
 	{
 		$data = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE );
 

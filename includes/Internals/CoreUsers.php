@@ -13,7 +13,7 @@ trait CoreUsers
 	// TODO: SEE: `CoreRoles::role_can()`
 	// protected function user_can( $context, $user_id = NULL, $fallback = FALSE ) {}
 
-	protected function get_blog_users( $fields = NULL, $list = FALSE, $admins = FALSE )
+	protected function get_blog_users( ?array $fields = NULL, string|array $object = '', bool $admins = FALSE )
 	{
 		$excludes = $this->get_setting( 'excluded_roles', [] );
 		$fields   = $fields ?? [
@@ -34,8 +34,8 @@ trait CoreUsers
 			'count_total'  => FALSE,
 		];
 
-		if ( $list )
-			$args['include'] = (array) $list;
+		if ( $object )
+			$args['include'] = (array) $object;
 
 		$query = new \WP_User_Query( $args );
 

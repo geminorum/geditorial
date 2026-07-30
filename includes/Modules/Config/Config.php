@@ -569,7 +569,7 @@ class Config extends gEditorial\Module
 
 					if ( $post['empty_module'] && isset( gEditorial()->module( $post['empty_module'] )->meta_key ) ) {
 
-						$result = WordPress\Database::deleteEmptyMeta( gEditorial()->module( $post['empty_module'] )->meta_key );
+						$result = WordPress\PostMeta::deleteEmpty( gEditorial()->module( $post['empty_module'] )->meta_key );
 
 						if ( $result )
 							WordPress\Redirect::doReferer( [

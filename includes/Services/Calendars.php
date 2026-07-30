@@ -819,6 +819,29 @@ class Calendars extends gEditorial\Service
 		);
 	}
 
+	// https://github.com/christianwach/event-organiser-apple-cal/blob/master/includes/class-eo-apple-cal-shortcode.php
+	public static function linkFeedCalendar( ?string $context = NULL, bool $auto_subscription = TRUE ): false|string
+	{
+		if ( self::const( 'GEDITORIAL_DISABLE_ICAL' ) )
+			return FALSE;
+
+		$sanitized = self::sanitizeContextForLink( $context, 'feed', NULL );
+		$link      = get_feed_link( static::REWRITE_ENDPOINT_NAME );
+
+		// $link = sprintf( '%1$s?id=%2$s', $link, get_the_ID() );
+
+		// Format URL for auto-subscription.
+		if ( $auto_subscription )
+			$link = Core\URL::toScheme( $link, 'webcal' );
+
+		return apply_filters( self::und( static::BASE, 'calendars', 'feed', 'link' ),
+			$link,
+			NULL,
+			$sanitized,
+			$auto_subscription,
+		);
+	}
+
 	/**
 	 * Retrieves the list of supported calendars.
 	 * @see `Almanac` Module

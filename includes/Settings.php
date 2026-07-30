@@ -767,7 +767,7 @@ class Settings extends WordPress\Main
 		) ];
 	}
 
-	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $after = '' )
+	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $before = '', $after = '' )
 	{
 		$id = Core\Text::sanitizeBase( $name );
 
@@ -778,8 +778,8 @@ class Settings extends WordPress\Main
 			'id'    => $id,
 		], $atts ) );
 
-		Core\HTML::label( $input.$text, $id, FALSE );
-
+		echo $before;
+			Core\HTML::label( self::spc( $input, $text ), $id, FALSE );
 		echo $after;
 	}
 

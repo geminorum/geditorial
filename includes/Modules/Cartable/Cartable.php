@@ -845,6 +845,7 @@ class Cartable extends gEditorial\Module
 			}
 
 		} else {
+
 			$users = $this->get_blog_users();
 		}
 

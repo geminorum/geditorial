@@ -1124,7 +1124,7 @@ class Meta extends gEditorial\Module
 					$this->raise_resources();
 
 					if ( $post['custom_field'] )
-						$result = WordPress\Database::deletePostMeta( $post['custom_field'], $post['custom_field_limit'] );
+						$result = WordPress\PostMeta::deleteByKey( $post['custom_field'], $post['custom_field_limit'] );
 
 					if ( $result )
 						WordPress\Redirect::doReferer( [

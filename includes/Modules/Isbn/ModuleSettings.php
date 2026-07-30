@@ -48,7 +48,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )
 			WordPress\Redirect::doReferer( 'wrong' );
 
-		$count = WordPress\Database::changePostMetaKey(
+		$count = WordPress\PostMeta::changeKey(
 			static::METAKEY_BOOK_MODULE_ISBN,
 			$metakey
 		);
