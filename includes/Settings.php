@@ -2399,6 +2399,20 @@ class Settings extends WordPress\Main
 			.( $title ? sprintf( '<h3 class="-title">%s</h3>', $title ) : '' );
 	}
 
+	// @ALSO `$this->raise_resources()`
+	public static function raiseResources(
+		int $count = 1,
+		int $per = 60,
+		?string $context = NULL,
+		?string $module = NULL,
+	): int|string|false {
+
+		if ( ! $module = $module ?? static::MODULE )
+			return FALSE;
+
+		return self::factory()->module( $module )->raise_resources( $count, $per, $context );
+	}
+
 	// @ALSO `$this->get_current_form()`
 	public static function getCurrentForm( array $defaults, ?string $context = NULL ): array
 	{
