@@ -3011,4 +3011,59 @@ class Terms extends gEditorial\Module
 	{
 		return $this->_override_module_cuc( $context, $fallback_capability );
 	}
+
+	private function _get_metakeys_for_imports( ?string $context = NULL ): array
+	{
+		$supported = $this->_get_supported_raw( TRUE );
+		$available = Core\Arraay::sameKey( WordPress\TermMeta::listAvailable() );
+		$linked    = Core\Arraay::getByKeyLike( $available, '/.+_linked$/' ); // linked by paired
+		$extra     = [];
+
+		$excludes = array_merge( $supported, $extra, array_keys( $linked ) );
+
+		return $this->filters( 'metakeys_for_imports',
+			Core\Arraay::stripByKeys( $available, $excludes ),
+			$context ?? 'imports',
+			$excludes,
+			$available
+		);
+	}
+
+	public function imports_settings( string $sub ): void
+	{
+		$context = $context ?? 'imports';
+
+		if ( $this->check_settings( $sub, $context, 'per_page' ) ) {
+
+			if ( ! empty( $_POST ) ) {
+
+				$this->nonce_check( $context, $sub );
+
+				if ( ! ModuleSettings::handlePost_import_custom_fields( $context ) )
+					WordPress\Redirect::doReferer( 'huh' );
+			}
+		}
+	}
+
+	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
+	{
+		echo gEditorial\Settings::toolboxColumnOpen(
+			_x( 'Terms Imports', 'Header', 'geditorial-terms' ) );
+
+			$available  = FALSE;
+			$metakeys   = $this->_get_metakeys_for_imports( $context );
+			$supported  = $this->_get_supported_fields_taxonomies( $context );
+			$taxonomies = $this->list_taxonomies();
+
+			if ( ModuleSettings::renderCard_import_custom_fields( $metakeys, $supported, $taxonomies, $context ) )
+				$available = TRUE;
+
+			if ( ! $available )
+				gEditorial\Info::renderNoImportsAvailable();
+
+			ModuleSettings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
+
+		echo '</div>';
+		return TRUE;
+	}
 }
