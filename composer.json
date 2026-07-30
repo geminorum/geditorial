@@ -36,7 +36,8 @@
     "adhocore/jwt": "^1.1",
     "eluceo/ical": "^2.15.0",
     "yocto/yoclib-openlocationcode": "^1.0",
-    "nicebooks/isbn": "^0.7.2"
+    "nicebooks/isbn": "^0.7.2",
+    "beste/latlon-geohash": "^1.5"
   },
   "require-dev": {
     "phpstan/phpstan": "^2.2",
