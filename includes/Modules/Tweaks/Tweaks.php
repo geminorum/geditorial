@@ -943,13 +943,20 @@ class Tweaks extends gEditorial\Module
 
 	public function column_attr_date( object $post, string $before = '', string $after = '' ): void
 	{
-		printf( $before, '-post-date' );
-			echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
-			echo gEditorial\Helper::getDateEditRow( $post->post_date, '-date' );
-		echo $after;
+		// NOTE: the post is published!
+		if ( $post->post_date_gmt !== Core\Date::MYSQL_EMPTY ) {
+			printf( $before, '-post-date' );
+				echo $this->get_column_icon( FALSE, 'calendar-alt', _x( 'Publish Date', 'Row Icon Title', 'geditorial-tweaks' ) );
+				echo gEditorial\Helper::getDateEditRow( $post->post_date, '-date' );
+			echo $after;
+		}
 
-		if ( $post->post_modified != $post->post_date
-			&& WordPress\Post::can( $post, 'edit_post' ) )  {
+		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
+			return;
+
+		// NOTE: the post is published with different modified or not published.
+		if ( $post->post_modified !== $post->post_date
+			|| $post->post_date_gmt === Core\Date::MYSQL_EMPTY ) {
 
 			printf( $before, '-post-modified' );
 				echo $this->get_column_icon( FALSE, 'edit', _x( 'Last Edit', 'Row Icon Title', 'geditorial-tweaks' ) );
