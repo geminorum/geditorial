@@ -773,7 +773,7 @@ class Module extends Core\Base
 	}
 
 	// `self::dump( ini_get( 'memory_limit' ) );`
-	protected function raise_memory_limit(
+	public function raise_memory_limit(
 		int $count = 1,
 		int $per = 60,
 		?string $context = NULL,

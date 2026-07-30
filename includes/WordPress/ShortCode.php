@@ -9,6 +9,33 @@ class ShortCode extends Core\Base
 
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,}';
 
+	/**
+	 * Combines user attributes with known attributes and fill in defaults when needed.
+	 * NOTE: wrapper for `shortcode_atts()` with string handling
+	 *
+	 * @param string|array|null $input
+	 * @param array $defaults
+	 * @param string $shortcode
+	 * @param string $single_fallback
+	 * @return array
+	 */
+	public static function attributes( string|array|null $input, array $defaults, string $shortcode = '', $single_fallback = '' ): array
+	{
+		$attributes = [];
+
+		if ( $single_fallback && is_string( $input ) )
+			$attributes[$single_fallback] = $input;
+
+		else if ( is_array( $input ) )
+			$attributes = $input;
+
+		return shortcode_atts(
+			$attributes ?? [],
+			$defaults,
+			$shortcode,
+		);
+	}
+
 	public static function exists( string $tag ): bool
 	{
 		return empty( $tag ) ? FALSE : shortcode_exists( $tag );
@@ -61,10 +88,10 @@ class ShortCode extends Core\Base
 
 	public static function wrap(
 		?string $html,
-		false|string $suffix = FALSE,
+		string $suffix = '',
 		array $args = [],
 		bool $block = TRUE,
-		array $extra = [],
+		string|array $extra = [],
 		string $base = '',
 	): ?string {
 

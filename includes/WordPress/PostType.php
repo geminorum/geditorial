@@ -770,7 +770,7 @@ class PostType extends Core\Base
 		return get_object_vars( $count );
 	}
 
-	public static function sortByTitle( $posts )
+	public static function sortByTitle( array $posts ): array
 	{
 		usort( $posts, function ( $a, $b ) {
 

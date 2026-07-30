@@ -170,6 +170,7 @@ class User extends Core\Base
 			self::cheatin();
 	}
 
+	// TODO: Move to `UserMeta`
 	public static function getObjectbyMeta( string $meta, mixed $value, bool $network = TRUE ): false|object
 	{
 		$args = [
@@ -189,6 +190,7 @@ class User extends Core\Base
 		return reset( $users );
 	}
 
+	// TODO: Move to `UserMeta`
 	public static function getIDbyMeta( string $key, mixed $value, bool $single = TRUE ): false|int
 	{
 		global $wpdb, $NucleusUserIDbyMeta;
@@ -218,6 +220,7 @@ class User extends Core\Base
 		return $NucleusUserIDbyMeta[$key][$group][$value] = $results ?? FALSE;
 	}
 
+	// TODO: Move to `UserMeta`
 	public static function invalidateIDbyMeta( string $meta, false|string $value = FALSE ): bool
 	{
 		global $NucleusUserIDbyMeta;

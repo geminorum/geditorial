@@ -321,8 +321,8 @@ class Text extends Base
 	// TODO: move to `Core\Encoding`
 	public static function prepOctets( string $text ): string
 	{
-		if ( ! $text )
-			return $text;
+		if ( ! $text = self::force( $text ) )
+			return '';
 
 		if ( ! str_contains( $text, '%' ) )
 			return $text;
@@ -754,15 +754,10 @@ class Text extends Base
 	}
 
 	// @REF: `normalize_whitespace()`
-	public static function normalizeWhitespace( mixed $text, bool $multiline = FALSE ): string
+	public static function normalizeWhitespace( mixed $input, bool $multiline = FALSE ): string
 	{
-		if ( ! $text )
-			return '';
-
-		$text = (string) $text;
-
-		if ( 0 === strlen( $text ) )
-			return '';
+		if ( ! $text = self::force( $input ) )
+			return $input;
 
 		$text = self::normalizeZWNJ( $text );
 		$text = str_replace( "\r", "\n", self::trim( $text ) );
@@ -849,6 +844,7 @@ class Text extends Base
 
 	/**
 	 * Determines if a string contains a given substring.
+	 * @see https://php.watch/versions/8.0/str_contains
 	 *
 	 * @param string $haystack
 	 * @param string $needle
@@ -856,6 +852,9 @@ class Text extends Base
 	 */
 	public static function contains( string $haystack, string|array $needle ): bool
 	{
+		if ( ( ! $haystack = self::force( $haystack ) ) || empty( $needle ) )
+			return FALSE;
+
 		// @since PHP 8.0.0
 		if ( function_exists( 'str_contains' ) )
 			return str_contains( $haystack, $needle );
@@ -863,24 +862,24 @@ class Text extends Base
 		return '' !== $needle && FALSE !== strpos( $haystack, $needle );
 	}
 
-	public static function has( string $haystack, string|array $needles, string $operator = 'OR' ): string
+	public static function has( string $haystack, string|array $needles, string $operator = 'OR' ): bool
 	{
-		if ( ! $haystack || empty( $needles ) )
+		if ( ( ! $haystack = self::force( $haystack ) ) || empty( $needles ) )
 			return FALSE;
 
 		if ( ! is_array( $needles ) )
-			return FALSE !== stripos( $haystack, $needles );
+			return FALSE !== stripos( $haystack, (string) $needles );
 
 		if ( 'OR' === strtoupper( $operator ) ) {
 			foreach ( $needles as $needle )
-				if ( FALSE !== stripos( $haystack, $needle ) )
+				if ( FALSE !== stripos( $haystack, (string) $needle ) )
 					return TRUE;
 
 			return FALSE;
 		}
 
 		foreach ( $needles as $needle )
-			if ( FALSE === stripos( $haystack, $needle ) )
+			if ( FALSE === stripos( $haystack, (string) $needle ) )
 				return FALSE;
 
 		return TRUE;
@@ -895,16 +894,16 @@ class Text extends Base
 	 * @param string|array $needles
 	 * @return bool
 	 */
-	public static function starts( string $haystack, string|array $needles ): string
+	public static function starts( string $haystack, string|array $needles ): bool
 	{
-		if ( ! $haystack )
+		if ( ( ! $haystack = self::force( $haystack ) ) || empty( $needles ) )
 			return FALSE;
 
 		if ( ! is_array( $needles ) )
-			return 0 === stripos( $haystack, $needles );
+			return 0 === stripos( $haystack, (string) $needles );
 
 		foreach ( $needles as $needle )
-			if ( 0 === stripos( $haystack, $needle ) )
+			if ( 0 === stripos( $haystack, (string) $needle ) )
 				return TRUE;
 
 		return FALSE;
@@ -919,16 +918,16 @@ class Text extends Base
 	 * @param string|array $needles
 	 * @return bool
 	 */
-	public static function ends( string $haystack, string|array $needles ): string
+	public static function ends( string $haystack, string|array $needles ): bool
 	{
-		if ( ! $haystack )
+		if ( ( ! $haystack = self::force( $haystack ) ) || empty( $needles ) )
 			return FALSE;
 
 		if ( ! is_array( $needles ) )
-			return $needles === substr( $haystack, ( strlen( $needles ) * -1 ) );
+			return $needles === substr( $haystack, ( strlen( (string) $needles ) * -1 ) );
 
 		foreach ( $needles as $needle )
-			if ( $needle === substr( $haystack, ( strlen( $needle ) * -1 ) ) )
+			if ( $needle === substr( $haystack, ( strlen( (string) $needle ) * -1 ) ) )
 				return TRUE;
 
 		return FALSE;

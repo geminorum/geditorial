@@ -263,7 +263,7 @@ class Arraay extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/56428184
-	public static function getByKeyLike( $array, $pattern )
+	public static function getByKeyLike( array $array, string $pattern ): array
 	{
 		return array_intersect_key( $array, array_flip( array_filter( (array) preg_grep( $pattern, array_keys( $array ) ) ) ) );
 	}
