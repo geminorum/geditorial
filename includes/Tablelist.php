@@ -504,6 +504,24 @@ class Tablelist extends WordPress\Main
 		return $column_title ?? _x( 'ID', 'Tablelist: Column: Term ID', 'geditorial' );
 	}
 
+	public static function columnTermTaxonomy( ?string $taxonomy_prop = NULL, ?string $column_title = NULL ): array
+	{
+		return [
+			'title' => $column_title ?? _x( 'Taxonomy', 'Tablelist: Column: Term Taxonomy', 'geditorial' ),
+			'args'  => [
+				'taxes' => WordPress\Taxonomy::get( 2, [ 'show_ui' => TRUE ] ),
+			],
+			'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				use ( $taxonomy_prop ) {
+
+				if ( ! $term = WordPress\Term::get( $taxonomy_prop ? $row->{$taxonomy_prop} : $row ) )
+					return Helper::htmlEmpty();
+
+				return $column['args']['taxes'][$term->taxonomy] ?? $term->taxonomy;
+			},
+		];
+	}
+
 	public static function columnTermTaxonomyCode( bool $link = TRUE, $column_title = NULL ): array
 	{
 		return [
