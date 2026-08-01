@@ -26,7 +26,7 @@ class Info extends WordPress\Main
 
 		} catch ( \Exception $e ) {
 
-			self::_log( 'Exception: `Info::fromIBAN()` :: '.$e->getMessage() );
+			Helper::log( 'Exception: `Info::fromIBAN()` :: '.$e->getMessage(), NULL, 'FAILED' );
 
 			$info = FALSE;
 		}
@@ -64,6 +64,7 @@ class Info extends WordPress\Main
 			} catch ( \Brick\Postcode\UnknownCountryException $e ) {
 
 				// Exception thrown when an unknown country code is provided
+				Helper::log( 'Exception: `Info::fromPostCode()` :: '.$e->getMessage(), NULL, 'FAILED' );
 
 				$info['raw']     = $raw;
 				$info['country'] = $country;
@@ -71,6 +72,7 @@ class Info extends WordPress\Main
 			} catch ( \Brick\Postcode\InvalidPostcodeException $e ) {
 
 				// Exception thrown when trying to format an invalid postcode
+				Helper::log( 'Exception: `Info::fromPostCode()` :: '.$e->getMessage(), NULL, 'FAILED' );
 
 				$info = FALSE;
 			}
