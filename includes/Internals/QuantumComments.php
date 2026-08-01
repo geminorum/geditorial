@@ -493,6 +493,12 @@ trait QuantumComments
 					$data[$raw_key] = WordPress\Strings::cleanupChars( WordPress\Strings::kses( $raw_value, 'none' ), TRUE );
 					break;
 
+				case 'url':
+				case 'link':
+
+					$data[$raw_key] = rawurldecode( Core\Text::trim( $raw_value ) );
+					break;
+
 				case 'html':
 
 					$data[$raw_key] = Core\Text::normalizeWhitespace( WordPress\Strings::kses( $raw_value, 'text' ), TRUE );
