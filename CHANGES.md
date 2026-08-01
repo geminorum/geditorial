@@ -2,6 +2,51 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### [3.35.0] - 2026-08-01
+* internal/core-columns: 🆕 internal
+* internal/core-hooks: 🆕 internal
+* internal/module-links: check for disabled on contexts
+* internal/post-type-fields: register meta args revised
+* internal/rewrites: tag/endpoint support for taxonomies
+* internal/view-engines: handle exceptions on rendering
+* internal/view-engines: missing engine key for strings
+* main/ajax: handling error object as message
+* main/ajax: invalid message wrapper
+* main/datetime: check for timestamp before human time diff
+* main/plugin: late check for debugging js
+* main/plugin: no-js message
+* main/plugin: woo-commerce compatibility declarations
+* main/settings: compact as default submit button style
+* main/settings: static current form helpers
+* main/settings: static raise resources
+* main/tablelist: term taxonomy column
+* misc/date-parser: better handling mysql formats
+* misc/date-parser: better handling time-zones
+* module/audit: handling errors on setting object terms
+* module/byline: passing default column per row
+* module/importer: handle empty on overview
+* module/national-library: search form short-code
+* module/ortho: context for lib options
+* module/schedule: avoid using reserved terms in query
+* module/terms: filter available taxonomies for each field
+* module/terms: import only non-existing/cleanup after checkboxes
+* module/terms: 🆕 import from custom fields
+* module/terms: store logic separated
+* module/territories: renamed from territory
+* module/tweaks: handle modified dates for unpublished
+* module/wc-checkout: check for shipping on simplify
+* service/admin-screen: fallback for gnetwork admin script
+* service/admin-screen: styles via service
+* service/admin-screen: validator script separated from ortho
+* service/calendars: add `ics` as feed for post-types
+* service/calendars: handle unknown queries
+* service/common-settings: 🆕 service
+* service/header-buttons: hide text on icon button on auto-fold
+* service/lookup: 🆕 service
+* service/search-select: avoid data overrides
+* 🆙 jqTree 1.9.0
+* 🆙 libre-barcode 5.3.0
+
 ## [3.34.0] - 2026-06-27
 * 🔧 change license to GPLv2 or later
 * internal/content-insert: check content paged before insert
