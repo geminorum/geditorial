@@ -20,8 +20,7 @@
   "scripts": {
     "gulp": "./node_modules/gulp/bin/gulp.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "md .build && cd .build && git clone https://github.com/geminorum/geditorial . && composer install --no-dev --optimize-autoloader --prefer-dist -v && yarn install && gulp build",
-    "ready:old": "gulp ready",
+    "build": "md .build && cd .build && git clone https://github.com/geminorum/geditorial . && composer install --no-dev --optimize-autoloader --prefer-dist -v && npm install --legacy-peer-deps && gulp build",
     "ready": "gulp dev:scripts ready",
     "refresh": "gulp dev:styles dev:scripts i18n:php --stack-size=1000",
     "i18n:gulp": "gulp pot",
@@ -137,6 +136,5 @@
     ]
   },
   "readme": "ERROR: No README data found!",
-  "private": true,
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  "private": true
 }
