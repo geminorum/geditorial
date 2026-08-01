@@ -69,6 +69,12 @@ class Attachments extends gEditorial\Module
 				],
 			],
 			'_frontend' => [
+				[
+					'field'       => 'attachment_pages',
+					'title'       => _x( 'Attachment Pages', 'Setting Title', 'geditorial-attachments' ),
+					'description' => _x( 'Enables core attachment pages for each media item.', 'Setting Description', 'geditorial-attachments' ),
+					'after'       => gEditorial\Settings::fieldAfterIcon( 'https://make.wordpress.org/core/2023/10/16/changes-to-attachment-pages/' ),
+				],
 				'adminbar_summary',
 				[
 					'field'       => 'rewrite_permalink',
@@ -122,13 +128,16 @@ class Attachments extends gEditorial\Module
 	protected function get_global_constants(): array
 	{
 		return [
-			'main_shortcode' => 'attachments',
+			'download_queryvar' => 'download',      // TODO: override via settings @see `settings_shortcode_constant()`
+			'main_shortcode'    => 'attachments',
 		];
 	}
 
 	public function init(): void
 	{
 		parent::init();
+
+		$this->_init_attachment_pages();
 
 		$this->filter( 'get_default_comment_status', 3, 12 );
 
@@ -191,6 +200,31 @@ class Attachments extends gEditorial\Module
 
 			$this->corerestrictposts__hook_screen_authors();
 			$this->_hook_header_buttons();
+		}
+	}
+
+	// @REF: https://core.trac.wordpress.org/ticket/57913
+	private function _init_attachment_pages()
+	{
+		$query    = $this->constant( 'download_queryvar' );
+		$download = array_key_exists( $query, $_GET );
+
+		if ( ! $this->get_setting( 'attachment_pages' )
+			|| $download ) {
+
+			$this->filter_false( 'pre_option_wp_attachment_pages_enabled', 12 );
+
+			if ( $download )
+				add_filter( 'redirect_canonical',
+					static function ( $redirect_url, $requested_url )
+						use ( $query ) {
+
+						return remove_query_arg( $query, $redirect_url );
+					}, 22, 2 );
+
+		} else {
+
+			$this->filter_true( 'pre_option_wp_attachment_pages_enabled', 12 );
 		}
 	}
 
