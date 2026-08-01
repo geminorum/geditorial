@@ -18,6 +18,9 @@ class ModuleTemplate extends gEditorial\Template
 		if ( ! array_key_exists( 'default', $atts ) )
 			$atts['default'] = FALSE;
 
+		if ( ! array_key_exists( 'columns', $atts ) )
+			$atts['columns'] = self::perRowColumns();
+
 		$html = \gEditorial()->module( static::MODULE )->get_byline_for_post( $post, $atts, $atts['default'] );
 
 		if ( ! $atts['echo'] )
