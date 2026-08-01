@@ -334,7 +334,10 @@ class Color extends Base
 
 	public static function get( $color = '#ffffff' )
 	{
-		return \geminorum\gEditorial\Misc\ColorCalc::newColor( $color, 'auto' );
+		if ( ! class_exists( 'geminorum\\gEditorial\\Misc\\ColorCalc' ) )
+			return \geminorum\gEditorial\Misc\ColorCalc::newColor( $color, 'auto' );
+
+		return FALSE;
 	}
 
 	// returns a CSS value, using the auto-detected mode

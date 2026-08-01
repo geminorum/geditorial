@@ -712,7 +712,7 @@ class Taxonomy extends Core\Base
 	// NOTE: hits cached terms for the post
 	public static function theTermCount( string $taxonomy, null|int|object $post = NULL )
 	{
-		if ( ! empty( $taxonomy ) )
+		if ( empty( $taxonomy ) )
 			return 0;
 
 		$terms = get_the_terms( $post, $taxonomy );
