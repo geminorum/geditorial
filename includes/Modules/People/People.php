@@ -439,7 +439,7 @@ class People extends gEditorial\Module
 			: $name;
 	}
 
-	public function get_terms_defaults_front( array $defaults, array $taxonomies )
+	public function get_terms_defaults_front( array $defaults, ?array $taxonomies )
 	{
 		if ( empty( $taxonomies ) || count( (array) $taxonomies ) > 1 )
 			return $defaults;

@@ -43,6 +43,7 @@ trait SettingsCore
 			),
 			'after'       => gEditorial\Settings::fieldAfterShortCodeConstant(),
 			'pattern'     => WordPress\ShortCode::NAME_INPUT_PATTERN,
+			'validator'   => 'slug',
 			'placeholder' => $unfiltered[$constant],
 			'field_class' => [
 				'medium-text',

@@ -87,7 +87,7 @@ class Attachments extends gEditorial\Module
 					'title'       => _x( 'Prefix Permalinks', 'Setting Title', 'geditorial-attachments' ),
 					'description' => _x( 'Adds to the permalink of attachments, before id.', 'Setting Description', 'geditorial-attachments' ),
 					'field_class' => [ 'medium-text', 'code-text' ],
-					'placeholder' => 'media',
+					'placeholder' => 'media', // TODO: move to constants and override via settings
 					'validator'   => 'slug',
 				],
 			],
@@ -579,7 +579,7 @@ class Attachments extends gEditorial\Module
 	}
 
 	// @SEE: `wp_prepare_attachment_for_js()`
-	public function main_shortcode_item_after_cb( $post, $args, $item )
+	public function main_shortcode_item_after_cb( object $post, $args, $item ): string
 	{
 		$html = '';
 
@@ -842,7 +842,7 @@ class Attachments extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_tool_deletion_by_mime( $sub )
+	private function _do_tool_deletion_by_mime( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_DELETION_BY_MIME ) )
 			return FALSE;
@@ -858,7 +858,7 @@ class Attachments extends gEditorial\Module
 		);
 	}
 
-	private function _do_tool_empty_raw_metadata( $sub )
+	private function _do_tool_empty_raw_metadata( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_EMPTY_RAW_METADATA ) )
 			return FALSE;
@@ -879,7 +879,7 @@ class Attachments extends gEditorial\Module
 		);
 	}
 
-	private function _do_tool_reattach_thumbnails( $sub )
+	private function _do_tool_reattach_thumbnails( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_REATTACH_THUMBNAILS ) )
 			return FALSE;

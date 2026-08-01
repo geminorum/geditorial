@@ -696,7 +696,7 @@ trait SubContents
 		return $this->filters( 'provide_summary', $summary, $parent, $item, $context );
 	}
 
-	protected function subcontent_do_provide_markup( mixed $parent, ?string $context = NULL ): ?string
+	protected function subcontent_do_provide_markup( mixed $parent, ?string $context = NULL ): array
 	{
 		$markup = [];
 

@@ -42,7 +42,8 @@ trait ViewEngines
 
 		} catch ( \Exception $e ) {
 
-			self::_log( 'Exception: `ViewEngines::render()` :: '.$e->getMessage() );
+			$this->log( 'CRITICAL', sprintf( 'Exception: `ViewEngines::render(): %s', $e->getMessage() ), [ $template, $data ] );
+
 			$html = '';
 		}
 
@@ -72,7 +73,8 @@ trait ViewEngines
 
 		} catch ( \Exception $e ) {
 
-			self::_log( 'Exception: `ViewEngines::loadTemplate()` :: '.$e->getMessage() );
+			$this->log( 'CRITICAL', sprintf( 'Exception: `ViewEngines::loadTemplate(): %s', $e->getMessage() ), [ $part, $data ] );
+
 			$html = '';
 		}
 

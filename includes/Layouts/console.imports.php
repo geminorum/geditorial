@@ -7,6 +7,8 @@ use geminorum\gEditorial\WordPress;
 WordPress\User::superAdminOnly();
 
 $files = [
+	// 'Test_Slug',
+	// 'Test_URL',
 	// 'Test_Hash',
 	// 'Test_Composer',
 

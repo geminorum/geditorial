@@ -131,6 +131,7 @@ class Modulation extends gEditorial\Service
 			case '_editpost'   : return [ _x( 'Admin Edit Post', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_edittags'   : return [ _x( 'Admin Edit Terms', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_columns'    : return [ _x( 'Admin List Columns', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_adminbar'   : return [ _x( 'Admin-bar', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_import'     : return [ _x( 'Import Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_reports'    : return [ _x( 'Report Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_printpage'  : return [ _x( 'Print Preferences', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
