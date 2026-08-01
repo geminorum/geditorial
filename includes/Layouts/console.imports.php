@@ -28,6 +28,7 @@ $files = [
 	// 'Test_IBAN',
 	// 'Test_ISBN',
 	// 'Test_LatLng',
+	// 'Test_GeoHash',
 	// 'Test_Gpx',
 	// 'Test_Mime',
 	// 'Test_Names',

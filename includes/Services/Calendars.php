@@ -455,6 +455,7 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::fullTitle( $post );
 		}
 
+		// @hook `geditorial_calendars_post_summary`
 		if ( $summary = apply_filters( self::und( static::BASE, 'calendars', 'post', 'summary' ),
 			$summary,
 			$post,
@@ -463,6 +464,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
+		// @hook `geditorial_calendars_post_url`
 		if ( $link = apply_filters( self::und( static::BASE, 'calendars', 'post', 'url' ),
 			WordPress\Post::shortlink( $post ),
 			$post,
@@ -471,6 +473,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
+		// @hook `geditorial_calendars_post_description`
 		if ( $desc = apply_filters( self::und( static::BASE, 'calendars', 'post', 'description' ),
 			WordPress\Strings::prepDescription( $post->post_excerpt, TRUE, FALSE ),
 			$post,
@@ -677,6 +680,7 @@ class Calendars extends gEditorial\Service
 			$summary = WordPress\Post::title( $term );
 		}
 
+		// @hook `geditorial_calendars_term_summary`
 		if ( $summary = apply_filters( self::und( static::BASE, 'calendars', 'term', 'summary' ),
 			$summary,
 			$term,
@@ -685,6 +689,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
+		// @hook `geditorial_calendars_term_url`
 		if ( $link = apply_filters( self::und( static::BASE, 'calendars', 'term', 'url' ),
 			WordPress\Term::shortlink( $term ),
 			$term,
@@ -693,6 +698,7 @@ class Calendars extends gEditorial\Service
 		) )
 			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
+		// @hook `geditorial_calendars_term_description`
 		if ( $desc = apply_filters( self::und( static::BASE, 'calendars', 'term', 'description' ),
 			WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ),
 			$term,
@@ -757,6 +763,7 @@ class Calendars extends gEditorial\Service
 
 	public static function sanitizeContextForLink( mixed $context = NULL, mixed $target = NULL, mixed $object = NULL ): null|string
 	{
+		// @hook `geditorial_calendars_sanitize_ical_context`
 		$filtered = apply_filters( self::und( static::BASE, 'calendars', 'sanitize_ical_context' ),
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
 			$target,
@@ -787,6 +794,7 @@ class Calendars extends gEditorial\Service
 
 		$sanitized = self::sanitizeContextForLink( $context, 'post', $post );
 
+		// @hook `geditorial_calendars_post_link`
 		return apply_filters( self::und( static::BASE, 'calendars', 'post', 'link' ),
 			WordPress\Post::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
@@ -808,6 +816,7 @@ class Calendars extends gEditorial\Service
 
 		$sanitized = self::sanitizeContextForLink( $context, 'term', $term );
 
+		// @hook `geditorial_calendars_term_link`
 		return apply_filters( self::und( static::BASE, 'calendars', 'term', 'link' ),
 			WordPress\Term::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
@@ -828,12 +837,13 @@ class Calendars extends gEditorial\Service
 		$sanitized = self::sanitizeContextForLink( $context, 'feed', NULL );
 		$link      = get_feed_link( static::REWRITE_ENDPOINT_NAME );
 
-		// $link = sprintf( '%1$s?id=%2$s', $link, get_the_ID() );
+		// `$link = sprintf( '%1$s?id=%2$s', $link, get_the_ID() );`
 
 		// Format URL for auto-subscription.
 		if ( $auto_subscription )
 			$link = Core\URL::toScheme( $link, 'webcal' );
 
+		// @hook `geditorial_calendars_feed_link`
 		return apply_filters( self::und( static::BASE, 'calendars', 'feed', 'link' ),
 			$link,
 			NULL,
@@ -866,7 +876,10 @@ class Calendars extends gEditorial\Service
 			// 'ethiopic'      => _x( 'Ethiopic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
 		];
 
-		return $filtered ? apply_filters( self::und( static::BASE, 'default_calendars' ), $calendars ) : $calendars;
+		// @hook `geditorial_default_calendars`
+		return $filtered ? apply_filters( self::und( static::BASE, 'default_calendars' ),
+			$calendars,
+		) : $calendars;
 	}
 
 	/**
@@ -904,6 +917,7 @@ class Calendars extends gEditorial\Service
 		else
 			$sanitized = $default;
 
+		// @hook `geditorial_sanitize_calendar`
 		return apply_filters( self::und( static::BASE, 'sanitize_calendar' ),
 			$sanitized,
 			$default,

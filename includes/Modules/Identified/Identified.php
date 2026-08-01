@@ -812,6 +812,9 @@ class Identified extends gEditorial\Module
 				if ( ! $metakey = $this->_get_posttype_identifier_metakey( $posttype ) )
 					return $posts;
 
+				// TODO: check if post already exists but not on search results!
+				// NOTE: the phone sanitizer messing with the number!
+
 				Services\HeaderButtons::register( $this->key, [
 					'link' => WordPress\PostType::newLink( $posttype, [ $metakey => $sanitized ] ),
 					'text' => sprintf(

@@ -704,7 +704,7 @@ class Tweaks extends gEditorial\Module
 		return $new;
 	}
 
-	public function manage_users_custom_column( string $output, string $column, int $user_id ): string
+	public function manage_users_custom_column( ?string $output, string $column, int $user_id ): ?string
 	{
 		if ( $this->classs( 'user' ) == $column ) {
 

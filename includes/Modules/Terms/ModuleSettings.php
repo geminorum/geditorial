@@ -163,12 +163,13 @@ class ModuleSettings extends gEditorial\Settings
 
 			$rows = WordPress\TermMeta::listByKey(
 				$form['custom_field'],
-				$form['custom_field_limit'],
+				(int) $form['custom_field_limit'],
 			);
 
 			foreach ( $rows as $row ) {
 
-				$term_id = (int) $row->term_id;
+				if ( ! $term_id = (int) $row->term_id )
+					continue;
 
 				$result = self::factory()->module( static::MODULE )->store_supported_field(
 					$term_id,
@@ -206,7 +207,7 @@ class ModuleSettings extends gEditorial\Settings
 
 			$count = WordPress\TermMeta::deleteByKey(
 				$form['custom_field'],
-				$form['custom_field_limit'],
+				(int) $form['custom_field_limit'],
 			);
 
 			if ( FALSE === $count )

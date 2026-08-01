@@ -19,7 +19,6 @@ class Lingo extends gEditorial\Module
 	use Internals\CoreToolBox;
 	use Internals\RawImports;
 
-	protected $disable_no_customs = TRUE;
 	protected $imports_datafiles  = [
 		'default' => 'languages-ISO639.json', // @updated `2026-02-12`
 	];
@@ -94,11 +93,12 @@ class Lingo extends gEditorial\Module
 		if ( ! is_admin() )
 			return $strings;
 
+		$strings['settings'] = [
+			'taxonomies_title' => _x( 'Source Taxonomies', 'Setting Title', 'geditorial-lingo' ),
+			'taxonomies_after' => _x( 'Selected taxonomies will be available on conversion via tools.', 'Setting Description', 'geditorial-lingo' ),
+		];
+
 		$strings['misc'] = [
-			'settings' => [
-				'taxonomies_title' => _x( 'Source Taxonomies', 'Setting Title', 'geditorial-lingo' ),
-				'taxonomies_after' => _x( 'Selected taxonomies will be available on conversion via tools.', 'Setting Description', 'geditorial-lingo' ),
-			],
 			'wp_importer' => [
 				'title'       => _x( 'Import Language Identifiers', 'Importer: Title', 'geditorial-lingo' ),
 				'description' => sprintf(
@@ -377,7 +377,7 @@ class Lingo extends gEditorial\Module
 		$supported = $this->list_taxonomies();
 		$available = FALSE;
 
-		echo ModuleSettings::toolboxColumnOpen( 
+		echo ModuleSettings::toolboxColumnOpen(
 			_x( 'Language Tools', 'Header', 'geditorial-lingo' ) );
 
 			if ( ModuleSettings::renderCard_tool_convert_terms( $taxonomy, $rawdata, $metakeys, $supported ) )
@@ -482,7 +482,7 @@ class Lingo extends gEditorial\Module
 		$metakeys  = $this->_get_supported_metakeys( $context );
 		$available = FALSE;
 
-		echo ModuleSettings::toolboxColumnOpen( 
+		echo ModuleSettings::toolboxColumnOpen(
 			_x( 'Language Imports', 'Header', 'geditorial-lingo' ) );
 
 			if ( ModuleSettings::renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys ) )

@@ -317,7 +317,7 @@ class Terms extends gEditorial\Module
 	private function _get_taxonomies_support( string $field_key, ?string $context = NULL ): array
 	{
 		$this->cache['taxonomy_supported'] = $this->cache['taxonomy_supported'] ?? WordPress\Taxonomy::get();
-		$this->cache['taxonomy_excluded']  = $this->cache['taxonomy_supported'] ?? Core\Arraay::prepString( $this->taxonomies_excluded() );
+		$this->cache['taxonomy_excluded']  = $this->cache['taxonomy_excluded']  ?? Core\Arraay::prepString( $this->taxonomies_excluded() );
 
 		$supported = $this->cache['taxonomy_supported'];
 		$excluded  = $this->cache['taxonomy_excluded'];
@@ -336,8 +336,8 @@ class Terms extends gEditorial\Module
 			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );
 			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
 			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
-			case 'establish': return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publication_publisher', 'provider_brand', 'vehicle_manufacturer' ] );
-			case 'abolish'  : return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publication_publisher', 'provider_brand', 'vehicle_manufacturer' ] );
+			case 'establish': return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer' ] );
+			case 'abolish'  : return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer' ] );
 		}
 
 		return array_unique( array_diff_key( $supported, array_flip( $excluded ) ) );
@@ -906,7 +906,7 @@ class Terms extends gEditorial\Module
 		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
 	}
 
-	public function custom_column( string $string, string $column, int $term_id ): string
+	public function custom_column( ?string $string, string $column, int $term_id ): ?string
 	{
 		if ( ! $taxonomy = self::req( 'taxonomy' ) )
 			return $string;
@@ -3074,7 +3074,7 @@ class Terms extends gEditorial\Module
 			$available  = FALSE;
 			$metakeys   = $this->_get_metakeys_for_imports( $context );
 			$supported  = $this->_get_supported_fields_taxonomies( $context );
-			$taxonomies = $this->list_taxonomies();
+			$taxonomies = $this->all_taxonomies();
 
 			if ( ModuleSettings::renderCard_import_custom_fields( $metakeys, $supported, $taxonomies, $context ) )
 				$available = TRUE;

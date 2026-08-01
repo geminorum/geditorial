@@ -642,7 +642,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function calendars_post_summary( $summary, object $post, $context, $final )
+	public function calendars_post_summary( string $summary, object $post, ?string $context, object|false $final )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $summary;
@@ -659,7 +659,7 @@ class Meta extends gEditorial\Module
 		return $summary;
 	}
 
-	public function modified_data_summary( $data, object $post, $context, $format )
+	public function modified_data_summary( array $data, object $post, ?string $context, ?string $format ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $data;
@@ -1010,7 +1010,7 @@ class Meta extends gEditorial\Module
 		return $meta;
 	}
 
-	public function meta_field_tokens( $meta, $field, object $post, $args, $raw, $field_args, $context )
+	public function meta_field_tokens( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		return Services\PostTypeFields::replaceTokens( $meta, $field_args, $post, $context );
 	}
@@ -1049,7 +1049,7 @@ class Meta extends gEditorial\Module
 		}
 	}
 
-	public function the_author( $display_name )
+	public function the_author( string $display_name ): string
 	{
 		if ( ! $post = WordPress\Post::get() )
 			return $display_name;
@@ -1103,7 +1103,8 @@ class Meta extends gEditorial\Module
 						$result = $this->posttypefields_do_migrate_field(
 							$post['custom_field'],
 							$post['custom_field_into'],
-							$post['custom_field_limit'] );
+							(int) $post['custom_field_limit'],
+						);
 
 					if ( $result )
 						WordPress\Redirect::doReferer( [
@@ -1124,7 +1125,10 @@ class Meta extends gEditorial\Module
 					$this->raise_resources();
 
 					if ( $post['custom_field'] )
-						$result = WordPress\PostMeta::deleteByKey( $post['custom_field'], $post['custom_field_limit'] );
+						$result = WordPress\PostMeta::deleteByKey(
+							$post['custom_field'],
+							(int) $post['custom_field_limit'],
+						);
 
 					if ( $result )
 						WordPress\Redirect::doReferer( [
