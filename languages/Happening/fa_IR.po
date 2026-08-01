@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Happening\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-02-14 02:57+0330\n"
+"PO-Revision-Date: 2026-07-25 14:30+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,206 +11,246 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Happening\n"
 "X-Domain: geditorial-happening\n"
 
-#: Happening.php:75
+#: Happening.php:76
 msgid "Event"
 msgid_plural "Events"
 msgstr[0] "رویدادها"
 msgstr[1] "رویداد"
 
-#: Happening.php:76
+#: Happening.php:77
 msgid "Event Category"
 msgid_plural "Event Categories"
 msgstr[0] "دسته‌های رویداد"
 msgstr[1] "دسته رویداد"
 
-#: Happening.php:77
+#: Happening.php:78
 msgid "Event Type"
 msgid_plural "Event Types"
 msgstr[0] "انواع رویداد"
 msgstr[1] "نوع رویداد"
 
-#: Happening.php:78
+#: Happening.php:79
 msgid "Event Calendar"
 msgid_plural "Event Calendars"
 msgstr[0] "تقویم‌های رویداد"
 msgstr[1] "تقویم رویداد"
 
-#: Happening.php:79
+#: Happening.php:80
 msgid "Event Status"
 msgid_plural "Event Statuses"
 msgstr[0] "وضعیت‌های رویداد"
 msgstr[1] "وضعیت رویداد"
 
-#: Happening.php:83
+#: Happening.php:84
 msgctxt "Menu Title"
 msgid "Categories"
 msgstr "دسته‌ها"
 
-#: Happening.php:84
+#: Happening.php:85
 msgctxt "Label: Featured Image"
 msgid "Poster Image"
 msgstr "تصویر اعلان"
 
-#: Happening.php:87
+#: Happening.php:88
 msgctxt "Menu Title"
 msgid "Types"
 msgstr "انواع"
 
-#: Happening.php:90
+#: Happening.php:91
 msgctxt "Menu Title"
 msgid "Calendars"
 msgstr "تقویم‌ها"
 
-#: Happening.php:93
+#: Happening.php:94
 msgctxt "Label: Menu Name"
 msgid "Statuses"
 msgstr "وضعیت‌ها"
 
-#: Happening.php:106
+#: Happening.php:107
 msgctxt "Default Term"
 msgid "Holiday"
 msgstr "تعطیلات"
 
-#: Happening.php:107
+#: Happening.php:108
 msgctxt "Default Term"
 msgid "Birth"
 msgstr "زادروز"
 
-#: Happening.php:108
+#: Happening.php:109
 msgctxt "Default Term"
 msgid "Death"
 msgstr "درگذشت"
 
-#: Happening.php:109
+#: Happening.php:110
 msgctxt "Default Term"
 msgid "Start"
 msgstr "شروع"
 
-#: Happening.php:110
+#: Happening.php:111
 msgctxt "Default Term"
 msgid "End"
 msgstr "پایان"
 
-#: Happening.php:128
+#: Happening.php:129
 msgctxt "Fields"
 msgid "Event Date"
 msgstr "تاریخ رویداد"
 
-#: Happening.php:129
+#: Happening.php:130
 msgctxt "Fields"
 msgid "Determines the date in which the Event is scheduled."
 msgstr ""
 
-#: Happening.php:134
+#: Happening.php:135
 msgctxt "Fields"
 msgid "Date-Time"
 msgstr "تاریخ و زمان"
 
-#: Happening.php:135
+#: Happening.php:136
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled."
 msgstr ""
 
-#: Happening.php:140
+#: Happening.php:141
 msgctxt "Fields"
 msgid "Event Start"
 msgstr "شروع رویداد"
 
-#: Happening.php:141
+#: Happening.php:142
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled to commence."
 msgstr ""
 
-#: Happening.php:146
+#: Happening.php:147
 msgctxt "Fields"
 msgid "Event End"
 msgstr "پایان رویداد"
 
-#: Happening.php:147
+#: Happening.php:148
 msgctxt "Fields"
 msgid "Determines the date and time in which the Event is scheduled to conclude."
 msgstr ""
 
-#: Happening.php:153
+#: Happening.php:154
 msgctxt "Fields"
 msgid "Event All-Day"
 msgstr "رویداد روز"
 
-#: Happening.php:154
+#: Happening.php:155
 msgctxt "Fields"
 msgid "Determines that is an all-day event."
 msgstr ""
 
-#: Happening.php:161 Happening.php:162
+#: Happening.php:162 Happening.php:163
 msgctxt "Fields"
 msgid "Event Repeat"
 msgstr "تکرار رویداد"
 
-#: Happening.php:167
+#: Happening.php:168
 msgctxt "Fields"
 msgid "Never"
 msgstr "هرگز"
 
-#: Happening.php:168
+#: Happening.php:169
 msgctxt "Fields"
 msgid "Weekly"
 msgstr "هفتگی"
 
-#: Happening.php:169
+#: Happening.php:170
 msgctxt "Fields"
 msgid "Monthly"
 msgstr "ماهیانه"
 
-#: Happening.php:170
+#: Happening.php:171
 msgctxt "Fields"
 msgid "Yearly"
 msgstr "سالیانه"
 
-#: Happening.php:174 Happening.php:175
+#: Happening.php:175 Happening.php:176
 msgctxt "Fields"
 msgid "Event Expire"
 msgstr "سرآمد رویداد"
 
-#: Happening.php:322
+#: Happening.php:328
 msgctxt "Header"
 msgid "Happening Tools"
 msgstr ""
 
-#: Happening.php:331
+#: Happening.php:337
 msgctxt "Card"
 msgid "Event Date from Meta-data"
 msgstr ""
+
+#: ModuleInfo.php:19
+msgctxt "Info: Default Term for Status"
+msgid "Processing"
+msgstr "پردازش"
 
 #: ModuleInfo.php:20
 msgctxt "Info: Default Term for Status"
 msgid "The event is being created."
 msgstr ""
 
+#: ModuleInfo.php:24
+msgctxt "Info: Default Term for Status"
+msgid "Tentative"
+msgstr "مقدماتی"
+
 #: ModuleInfo.php:25
+msgctxt "Info: Default Term for Status"
+msgid "The event is tentative and may change in the future."
+msgstr ""
+
+#: ModuleInfo.php:29
+msgctxt "Info: Default Term for Status"
+msgid "Upcoming"
+msgstr "به‌زودی"
+
+#: ModuleInfo.php:30
 msgctxt "Info: Default Term for Status"
 msgid "The event start date and time is in the future."
 msgstr ""
 
-#: ModuleInfo.php:30
+#: ModuleInfo.php:34
+msgctxt "Info: Default Term for Status"
+msgid "Ongoing"
+msgstr "در حال"
+
+#: ModuleInfo.php:35
 msgctxt "Info: Default Term for Status"
 msgid "The event start date and time is in the past, and the event end date and time is in the future."
 msgstr ""
 
-#: ModuleInfo.php:35
+#: ModuleInfo.php:39
+msgctxt "Info: Default Term for Status"
+msgid "Completed"
+msgstr "پایان‌یافته"
+
+#: ModuleInfo.php:40
 msgctxt "Info: Default Term for Status"
 msgid "The event's end date and time is in the past."
 msgstr ""
 
-#: ModuleInfo.php:40
+#: ModuleInfo.php:44
+msgctxt "Info: Default Term for Status"
+msgid "Archived"
+msgstr "بایگانی"
+
+#: ModuleInfo.php:45
 msgctxt "Info: Default Term for Status"
 msgid "The event's archive date is in the past."
 msgstr ""
 
-#: ModuleInfo.php:45
+#: ModuleInfo.php:49
+msgctxt "Info: Default Term for Status"
+msgid "Cancelled"
+msgstr "لغوشده"
+
+#: ModuleInfo.php:50
 msgctxt "Info: Default Term for Status"
 msgid "A planner has Canceled the event."
 msgstr ""
@@ -225,17 +265,17 @@ msgctxt "Widget Description"
 msgid "Displays selected, connected or current event poster."
 msgstr "اعلان رویداد آخر، منتخب، مرتبط و یا فعلی را نمایش می‌دهد."
 
-#: Widgets/EventPoster.php:93
+#: Widgets/EventPoster.php:90
 msgctxt "Widget: Event Poster"
 msgid "The Event:"
 msgstr "رویداد:"
 
-#: Widgets/EventPoster.php:96
+#: Widgets/EventPoster.php:93
 msgctxt "Widget: Event Poster"
 msgid "Always the latest event"
 msgstr "استفاده از آخرین رویداد"
 
-#: Widgets/EventPoster.php:97
+#: Widgets/EventPoster.php:94
 msgctxt "Widget: Event Poster"
 msgid "Link to the event"
 msgstr "پیوند به رویداد"

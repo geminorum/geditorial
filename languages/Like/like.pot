@@ -51,7 +51,7 @@ msgid "Title attribute of the like button."
 msgstr ""
 
 #: Like.php:71
-#: Like.php:151
+#: Like.php:153
 msgctxt "Setting Default"
 msgid "Loading &hellip;"
 msgstr ""
@@ -62,7 +62,7 @@ msgid "Like Title"
 msgstr ""
 
 #: Like.php:78
-#: Like.php:307
+#: Like.php:309
 msgctxt "Setting Default"
 msgid "Like"
 msgstr ""
@@ -73,32 +73,32 @@ msgid "Unlike Title"
 msgstr ""
 
 #: Like.php:85
-#: Like.php:305
+#: Like.php:307
 msgctxt "Setting Default"
 msgid "Unlike"
 msgstr ""
 
 #. translators: `%s`: count placeholder
-#: Like.php:191
+#: Like.php:193
 #, php-format
 msgctxt "Node: Title"
 msgid "Like Summary: Users %s"
 msgstr ""
 
 #. translators: `%s`: count placeholder
-#: Like.php:220
+#: Like.php:222
 #, php-format
 msgctxt "Node: Title"
 msgid "Like Summary: Guests %s"
 msgstr ""
 
-#: Like.php:509
+#: Like.php:511
 msgctxt "Row Icon Title"
 msgid "Likes"
 msgstr ""
 
 #. translators: `%s`: likes count
-#: Like.php:513
+#: Like.php:515
 #, php-format
 msgctxt "Noop"
 msgid "%s Like"
@@ -107,7 +107,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: `%s`: users count
-#: Like.php:524
+#: Like.php:526
 #, php-format
 msgctxt "Noop"
 msgid "%s User"
@@ -116,7 +116,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: `%s`: guests count
-#: Like.php:531
+#: Like.php:533
 #, php-format
 msgctxt "Noop"
 msgid "%s Guest"
@@ -124,37 +124,37 @@ msgid_plural "%s Guests"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Like.php:609
+#: Like.php:611
 msgctxt "Table Action"
 msgid "Sync Counts"
 msgstr ""
 
-#: Like.php:610
+#: Like.php:612
 msgctxt "Table Action"
 msgid "Sync All Counts"
 msgstr ""
 
-#: Like.php:623
+#: Like.php:625
 msgctxt "Table Column"
 msgid "Total"
 msgstr ""
 
-#: Like.php:629
+#: Like.php:631
 msgctxt "Table Column"
 msgid "Guests"
 msgstr ""
 
-#: Like.php:635
+#: Like.php:637
 msgctxt "Table Column"
 msgid "Users"
 msgstr ""
 
-#: Like.php:641
+#: Like.php:643
 msgctxt "Table Column"
 msgid "Avatars"
 msgstr ""
 
-#: Like.php:650
+#: Like.php:652
 msgctxt "Header"
 msgid "Overview of Post Likes"
 msgstr ""

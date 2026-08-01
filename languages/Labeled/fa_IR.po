@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Labeled\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-31 17:02+0330\n"
+"PO-Revision-Date: 2026-07-05 16:31+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Labeled\n"
 "X-Domain: geditorial-labeled\n"
 
@@ -61,22 +61,27 @@ msgctxt "Main Taxonomy: Default Term"
 msgid "Report"
 msgstr "گزارش"
 
-#: Labeled.php:112
+#: Labeled.php:102
+msgctxt "Main Taxonomy: Default Term"
+msgid "Reportage"
+msgstr "رپورتاژ"
+
+#: Labeled.php:113
 msgctxt "Field Title"
 msgid "Label"
 msgstr "سرستون"
 
-#: Labeled.php:113
+#: Labeled.php:114
 msgctxt "Field Description"
 msgid "Text to indicate that the content is part of an editorial column."
 msgstr "متنی برای نشان‌دادن این‌که محتوا بخشی از یک ستون تحریریه است."
 
-#: Labeled.php:116
+#: Labeled.php:117
 msgctxt "Field Title"
 msgid "Label Taxonomy"
 msgstr "رده‌بندی سرستون"
 
-#: Labeled.php:117
+#: Labeled.php:118
 msgctxt "Field Description"
 msgid "Taxonomy for better categorizing editorial columns."
 msgstr "رده‌بندی برای دسته‌بندی بهتر ستون‌های تحریریه."

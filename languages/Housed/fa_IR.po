@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Housed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-06 21:20+0330\n"
+"PO-Revision-Date: 2026-07-05 16:18+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Housed\n"
 "X-Domain: geditorial-housed\n"
 
@@ -172,20 +172,20 @@ msgid "Homeless"
 msgstr "بی‌خانه"
 
 #. translators: `%s`: post title
-#: Housed.php:356
+#: Housed.php:362
 #, php-format
 msgctxt "Page Title"
 msgid "Visiting Grid for %s"
 msgstr "جدول بازدیدها از %s"
 
 #. translators: `%s`: post title
-#: Housed.php:358
+#: Housed.php:364
 #, php-format
 msgctxt "Page Title"
 msgid "Visiting Overview for %s"
 msgstr "جدول بازدیدها از %s"
 
-#: Housed.php:392
+#: Housed.php:398
 msgctxt "Default Term: Audit"
 msgid "Empty Visiting Data"
 msgstr "اطلاعات بازدید خالی"

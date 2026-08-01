@@ -81,12 +81,12 @@ msgid "If chosen, each page will contain approximately this many words, dependin
 msgstr ""
 
 #: PagedContent.php:78
-msgctxt "Settings: Setting Title"
+msgctxt "Setting Title"
 msgid "Supported Post-types"
 msgstr ""
 
 #: PagedContent.php:79
-msgctxt "Settings: Setting Description"
+msgctxt "Setting Description"
 msgid "Auto-paging will be available for the selected post-type."
 msgstr ""
 

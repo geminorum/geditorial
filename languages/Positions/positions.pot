@@ -168,7 +168,7 @@ msgid "No Position Profile assigned to this content."
 msgstr ""
 
 #: Positions.php:523
-msgctxt "Javascript String"
+msgctxt "JavaScript String"
 msgid "Here you can define the position profile by titles with custom ordering."
 msgstr ""
 

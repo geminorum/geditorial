@@ -246,27 +246,27 @@ msgstr "مروری بر خودروها"
 #~ msgid "The id of the parent post."
 #~ msgstr "شناسه برای فرسته مادر."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Actions"
 #~ msgstr "کنش‌ها"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Information"
 #~ msgstr "اطلاعات"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Insert"
 #~ msgstr "درج"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Edit"
 #~ msgstr "ویرایش"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Remove"
 #~ msgstr "حذف"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Loading"
 #~ msgstr "در حال بارگذاری"
 

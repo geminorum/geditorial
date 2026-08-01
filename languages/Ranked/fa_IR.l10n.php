@@ -1,2 +1,25 @@
 <?php
-return ['domain'=>'geditorial-ranked','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Ranked','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:26+0330','x-generator'=>'Poedit 3.5','messages'=>['Ranking Definition'=>'تعاریف رتبه' . "\0" . 'تعریف رتبه','Label: Menu NameContent Rankings'=>'رتبه‌بندی محتوا','Label: Show Option AllRankings'=>'رتبه‌بندی','Label: Show Option No Terms(Unranked)'=>'(بی‌رتبه)','Default TermPublisher'=>'ناشر','Default TermEditor in Chief'=>'سردبیر','Default TermEditorial Director'=>'مدیر تحریریه','Default TermManaging Editor'=>'دبیر اجرایی','Default TermSenior Editor'=>'دبیر ارشد','Default TermDigital Producer'=>'تولیدکننده دیجیتال','Default TermCopy Editor'=>'دبیر رونوشت','Default TermProofreader'=>'نمونه‌خوان','Default TermExecutive'=>'مدیر اجرایی']];
+return [
+	'domain' => 'geditorial-ranked',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Ranked',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 15:57+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Ranking Definition' => 'تعاریف رتبه' . "\0" . 'تعریف رتبه',
+		'Label: Menu NameContent Rankings' => 'رتبه‌بندی محتوا',
+		'Label: Show Option AllRankings' => 'رتبه‌بندی',
+		'Label: Show Option No Terms(Unranked)' => '(بی‌رتبه)',
+		'Default TermPublisher' => 'ناشر',
+		'Default TermEditor in Chief' => 'سردبیر',
+		'Default TermEditorial Director' => 'مدیر تحریریه',
+		'Default TermManaging Editor' => 'دبیر اجرایی',
+		'Default TermSenior Editor' => 'دبیر ارشد',
+		'Default TermDigital Producer' => 'تولیدکننده دیجیتال',
+		'Default TermCopy Editor' => 'دبیر رونوشت',
+		'Default TermProofreader' => 'نمونه‌خوان',
+		'Default TermExecutive' => 'مدیر اجرایی',
+	],
+];

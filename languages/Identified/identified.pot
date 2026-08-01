@@ -280,14 +280,14 @@ msgid "Invalid Identification"
 msgstr ""
 
 #. translators: `%1$s`: add new label, `%2$s`: identifier code
-#: Identified.php:823
+#: Identified.php:822
 #, php-format
 msgctxt "Header Button"
 msgid "%1$s with %2$s"
 msgstr ""
 
 #. translators: `%1$s`: identifier type label, `%2$s`: posttype singular label
-#: Identified.php:1098
+#: Identified.php:1099
 #, php-format
 msgctxt "Title Attr"
 msgid "%1$s Link to this %2$s"

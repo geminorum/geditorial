@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Programmed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-06 21:33+0330\n"
+"PO-Revision-Date: 2026-07-05 16:14+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Programmed\n"
 "X-Domain: geditorial-programmed\n"
 
@@ -178,12 +178,12 @@ msgctxt "Field Description"
 msgid "Unique Program Code"
 msgstr "کد برنامه یکتا"
 
-#: Programmed.php:586
+#: Programmed.php:592
 msgctxt "Header"
 msgid "Program Tools"
 msgstr "ابزارهای برنامه"
 
-#: Programmed.php:595
+#: Programmed.php:601
 msgctxt "Card"
 msgid "Program Date from Meta-data"
 msgstr "تاریخ برنامه از داده‌های متا"

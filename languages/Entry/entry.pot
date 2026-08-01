@@ -50,12 +50,12 @@ msgctxt "Default Term: Description"
 msgid "Unsectioned Entries"
 msgstr ""
 
-#: Entry.php:176
+#: Entry.php:178
 msgctxt "UI: Label"
 msgid "Entry Section"
 msgstr ""
 
-#: Entry.php:180
+#: Entry.php:182
 msgctxt "UI: Label"
 msgid "Section"
 msgstr ""

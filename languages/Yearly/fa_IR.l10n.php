@@ -1,2 +1,17 @@
 <?php
-return ['domain'=>'geditorial-yearly','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Yearly','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2026-03-28 11:39+0330','x-generator'=>'Poedit 3.9','messages'=>['Setting TitleAppend to Titles'=>'الحاق به عنوان‌ها','Year Span'=>'دوره‌های سالیانه' . "\0" . 'دوره سالیانه','Label: Show Option AllYears'=>'سال‌ها','Label: Show Option No Terms(Undefined)'=>'(تعریف‌نشده)','Meta FieldYear'=>'سال']];
+return [
+	'domain' => 'geditorial-yearly',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Yearly',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-03-28 11:39+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Setting TitleAppend to Titles' => 'الحاق به عنوان‌ها',
+		'Year Span' => 'دوره‌های سالیانه' . "\0" . 'دوره سالیانه',
+		'Label: Show Option AllYears' => 'سال‌ها',
+		'Label: Show Option No Terms(Undefined)' => '(تعریف‌نشده)',
+		'Meta FieldYear' => 'سال',
+	],
+];

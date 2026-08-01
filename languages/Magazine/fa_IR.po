@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Magazine\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-01-29 00:44+0330\n"
+"PO-Revision-Date: 2026-07-05 16:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: geditorial-magazine\n"
 "X-Poedit-Basepath: ../../includes/Modules/Magazine\n"
 
@@ -129,32 +129,32 @@ msgid "Post total pages on issue (printed)"
 msgstr "مجموع صفحات این نوشته در شماره"
 
 #. translators: `%s`: order
-#: Magazine.php:449
+#: Magazine.php:458
 #, php-format
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr "چیدمان در شماره: %s"
 
 #. translators: `%s`: page
-#: Magazine.php:456
+#: Magazine.php:465
 #, php-format
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr "صفحه شروع: %s"
 
 #. translators: `%s`: total count
-#: Magazine.php:462
+#: Magazine.php:471
 #, php-format
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr "مجموع صفحات: %s"
 
-#: Magazine.php:551
+#: Magazine.php:561
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr "ابزارهای مجله"
 
-#: Magazine.php:560
+#: Magazine.php:570
 msgctxt "Card"
 msgid "Issue Date from Meta-data"
 msgstr ""

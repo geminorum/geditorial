@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NextOfKin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-06 21:27+0330\n"
+"PO-Revision-Date: 2026-07-05 16:20+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/NextOfKin\n"
 "X-Domain: geditorial-next-of-kin\n"
 
@@ -182,25 +182,25 @@ msgid "10"
 msgstr "5"
 
 #. translators: `%s`: post title
-#: NextOfKin.php:340
+#: NextOfKin.php:346
 #, php-format
 msgctxt "Page Title"
 msgid "Family Grid for %s"
 msgstr "شبکه خانوادگی برای %s"
 
 #. translators: `%s`: post title
-#: NextOfKin.php:342
+#: NextOfKin.php:348
 #, php-format
 msgctxt "Page Title"
 msgid "Family Overview for %s"
 msgstr "بررسی خانواده %s"
 
-#: NextOfKin.php:366
+#: NextOfKin.php:372
 msgctxt "Default Term: Audit"
 msgid "Empty Family Data"
 msgstr "داده‌های خانواده خالی"
 
-#: NextOfKin.php:377
+#: NextOfKin.php:383
 msgctxt "Header"
 msgid "Overview of the Families"
 msgstr ""
@@ -250,43 +250,43 @@ msgstr ""
 #~ msgstr[0] "%s عضو"
 #~ msgstr[1] "%s عضو"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Actions"
 #~ msgstr "کنش‌ها"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Information"
 #~ msgstr "اطلاعات"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Insert"
 #~ msgstr "جای‌گذاری"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Edit"
 #~ msgstr "ویرایش"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Remove"
 #~ msgstr "حذف"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Loading"
 #~ msgstr "بارگیری"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Here you can add, edit and manage the related members of the family."
 #~ msgstr "اینجا می‌توانید اعضای مرتبط خانواده را اضافه، ویرایش و مدیریت کنید."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "The member edited successfully."
 #~ msgstr "عضو خانواده با موفقیت ویرایش شد."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "New member saved successfully."
 #~ msgstr "عضو تازه با موفقیت ذخیره شد."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "The member data are not valid!"
 #~ msgstr "اطلاعات عضو نامعتبر است!"
 
@@ -350,6 +350,6 @@ msgstr ""
 #~ msgid "No family information available."
 #~ msgstr "اطلاعات خانواده در دسترس نیست."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Delete"
 #~ msgstr "حذف"

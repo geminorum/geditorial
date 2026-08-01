@@ -1,2 +1,15 @@
 <?php
-return ['domain'=>'geditorial-pitches','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Pitches','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-01-06 19:11+0330','x-generator'=>'Poedit 3.5','messages'=>['Idea'=>'ایده‌ها' . "\0" . 'ایده','Idea Category'=>'دسته‌های ایده' . "\0" . 'دسته ایده','Idea Pool'=>'مخازن ایده' . "\0" . 'مخزن ایده']];
+return [
+	'domain' => 'geditorial-pitches',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Pitches',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 15:55+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Idea' => 'ایده‌ها' . "\0" . 'ایده',
+		'Idea Category' => 'دسته‌های ایده' . "\0" . 'دسته ایده',
+		'Idea Pool' => 'مخازن ایده' . "\0" . 'مخزن ایده',
+	],
+];

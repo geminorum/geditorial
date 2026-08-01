@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Contest\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-28 22:43+0330\n"
+"PO-Revision-Date: 2026-07-05 16:26+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: geditorial-contest\n"
 "X-Poedit-Basepath: ../../includes/Modules/Contest\n"
 
@@ -141,17 +141,17 @@ msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr "تاریخ صحت‌سنجی‌شده برای ارسال این درخواست."
 
-#: Contest.php:468
+#: Contest.php:477
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr "ابزارهای فراخوان"
 
-#: Contest.php:480
+#: Contest.php:489
 msgctxt "Card"
 msgid "Contest/Apply Date from Meta-data"
 msgstr ""
 
-#: Contest.php:554
+#: Contest.php:565
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr "درخواست رهاشده"

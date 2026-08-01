@@ -135,12 +135,12 @@ msgctxt "Meta Field Column"
 msgid "Alpha-2"
 msgstr ""
 
-#: Lingo.php:377
+#: Lingo.php:381
 msgctxt "Header"
 msgid "Language Tools"
 msgstr ""
 
-#: Lingo.php:476
+#: Lingo.php:486
 msgctxt "Header"
 msgid "Language Imports"
 msgstr ""

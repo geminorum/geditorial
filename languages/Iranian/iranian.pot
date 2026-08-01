@@ -62,12 +62,12 @@ msgctxt "Header"
 msgid "Iranian Imports"
 msgstr ""
 
-#: Iranian.php:287
+#: Iranian.php:291
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr ""
 
-#: Iranian.php:430
+#: Iranian.php:438
 #: ModuleSettings.php:295
 msgctxt "Header"
 msgid "Iranian Reports"

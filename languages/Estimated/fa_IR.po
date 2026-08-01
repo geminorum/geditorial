@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Estimated\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-27 11:55+0330\n"
+"PO-Revision-Date: 2026-07-21 03:25+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -67,34 +67,34 @@ msgctxt "Setting Description"
 msgid "Custom string before the estimated time on the content. Leave blank for default or %s to disable."
 msgstr "رشته سفارشی که قبل از برآورد زمان نمایش داده خواهد شد. برای پیش‌فرض خالی، یا غیرفعال‌سازی %s بگذارید."
 
-#: Estimated.php:71 Estimated.php:270
+#: Estimated.php:71 Estimated.php:274
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr "برآورد زمان مطالعه:‌"
 
-#: Estimated.php:139
+#: Estimated.php:145
 msgctxt "Row Icon Title"
 msgid "Estimated Time"
 msgstr "برآورد زمانی"
 
-#: Estimated.php:142
+#: Estimated.php:148
 msgctxt "Row Title"
 msgid "Word Count"
 msgstr "شمار واژه‌ها"
 
 #. translators: `%s`: average word count
-#: Estimated.php:177 Estimated.php:292
+#: Estimated.php:183 Estimated.php:296
 #, php-format
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute."
 msgstr "اگر تلاش کنید در هر دقیقه %s کلمه بخوانید."
 
-#: Estimated.php:281
+#: Estimated.php:285
 msgid "less than 1 minute"
 msgstr "کمتر از ۱ دقیقه"
 
 #. translators: `%s`: number of minutes
-#: Estimated.php:285
+#: Estimated.php:289
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"

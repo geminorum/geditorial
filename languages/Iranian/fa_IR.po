@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial Iranian\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-01-13 17:34+0330\n"
+"PO-Revision-Date: 2026-07-05 16:33+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Iranian\n"
 "X-Domain: geditorial-iranian\n"
 
@@ -63,15 +63,170 @@ msgctxt "Header"
 msgid "Iranian Imports"
 msgstr "درون‌ریزی‌های ایرانی"
 
-#: Iranian.php:285
+#: Iranian.php:287
 msgctxt "Header"
 msgid "Iranian Tools"
 msgstr "ابزارهای ایرانی"
 
-#: Iranian.php:426 ModuleSettings.php:295
+#: Iranian.php:430 ModuleSettings.php:295
 msgctxt "Header"
 msgid "Iranian Reports"
 msgstr "گزارش‌های ایرانی"
+
+#: ModuleInfo.php:52
+msgctxt "Province Name"
+msgid "Alborz"
+msgstr ""
+
+#: ModuleInfo.php:53
+msgctxt "Province Name"
+msgid "Ardabil"
+msgstr ""
+
+#: ModuleInfo.php:54
+msgctxt "Province Name"
+msgid "Bushehr"
+msgstr ""
+
+#: ModuleInfo.php:55
+msgctxt "Province Name"
+msgid "Chaharmahal and Bakhtiari"
+msgstr ""
+
+#: ModuleInfo.php:56
+msgctxt "Province Name"
+msgid "East Azarbaijan"
+msgstr ""
+
+#: ModuleInfo.php:57
+msgctxt "Province Name"
+msgid "Isfahan"
+msgstr ""
+
+#: ModuleInfo.php:58
+msgctxt "Province Name"
+msgid "Fars"
+msgstr ""
+
+#: ModuleInfo.php:59
+msgctxt "Province Name"
+msgid "Gilan"
+msgstr ""
+
+#: ModuleInfo.php:60
+msgctxt "Province Name"
+msgid "Golestan"
+msgstr ""
+
+#: ModuleInfo.php:61
+msgctxt "Province Name"
+msgid "Ghazvin"
+msgstr ""
+
+#: ModuleInfo.php:62
+msgctxt "Province Name"
+msgid "Hamadan"
+msgstr ""
+
+#: ModuleInfo.php:63
+msgctxt "Province Name"
+msgid "Hormozgan"
+msgstr ""
+
+#: ModuleInfo.php:64
+msgctxt "Province Name"
+msgid "Ilaam"
+msgstr ""
+
+#: ModuleInfo.php:65
+msgctxt "Province Name"
+msgid "Kohgiluyeh and BoyerAhmad"
+msgstr ""
+
+#: ModuleInfo.php:66
+msgctxt "Province Name"
+msgid "Khuzestan"
+msgstr ""
+
+#: ModuleInfo.php:67
+msgctxt "Province Name"
+msgid "Kurdistan"
+msgstr ""
+
+#: ModuleInfo.php:68
+msgctxt "Province Name"
+msgid "Kermanshah"
+msgstr ""
+
+#: ModuleInfo.php:69
+msgctxt "Province Name"
+msgid "Kerman"
+msgstr ""
+
+#: ModuleInfo.php:70
+msgctxt "Province Name"
+msgid "Luristan"
+msgstr ""
+
+#: ModuleInfo.php:71
+msgctxt "Province Name"
+msgid "Markazi"
+msgstr ""
+
+#: ModuleInfo.php:72
+msgctxt "Province Name"
+msgid "Mazandaran"
+msgstr ""
+
+#: ModuleInfo.php:73
+msgctxt "Province Name"
+msgid "North Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:74
+msgctxt "Province Name"
+msgid "Qom"
+msgstr ""
+
+#: ModuleInfo.php:75
+msgctxt "Province Name"
+msgid "Razavi Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:76
+msgctxt "Province Name"
+msgid "Sistan and Baluchestan"
+msgstr ""
+
+#: ModuleInfo.php:77
+msgctxt "Province Name"
+msgid "South Khorasan"
+msgstr ""
+
+#: ModuleInfo.php:78
+msgctxt "Province Name"
+msgid "Semnan"
+msgstr ""
+
+#: ModuleInfo.php:79
+msgctxt "Province Name"
+msgid "Tehran"
+msgstr ""
+
+#: ModuleInfo.php:80
+msgctxt "Province Name"
+msgid "West Azarbaijan"
+msgstr ""
+
+#: ModuleInfo.php:81
+msgctxt "Province Name"
+msgid "Yazd"
+msgstr ""
+
+#: ModuleInfo.php:82
+msgctxt "Province Name"
+msgid "Zanjan"
+msgstr ""
 
 #: ModuleSettings.php:25
 msgctxt "Card Title"

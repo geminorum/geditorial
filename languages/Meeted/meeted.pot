@@ -182,12 +182,12 @@ msgctxt "Field Description"
 msgid "Unique Meeting Code"
 msgstr ""
 
-#: Meeted.php:594
+#: Meeted.php:603
 msgctxt "Header"
 msgid "Meeting Tools"
 msgstr ""
 
-#: Meeted.php:603
+#: Meeted.php:612
 msgctxt "Card"
 msgid "Meeting Date from Meta-data"
 msgstr ""

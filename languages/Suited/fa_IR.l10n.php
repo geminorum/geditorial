@@ -1,2 +1,15 @@
 <?php
-return ['domain'=>'geditorial-suited','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Suited','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:28+0330','x-generator'=>'Poedit 3.5','messages'=>['Suitable Target'=>'مخاطبین شایسته' . "\0" . 'مخاطب شایسته','Label: Show Option AllSuitable'=>'شایسته‌گان','Label: Show Option No Terms(Unsuitable)'=>'(ناشایسته)']];
+return [
+	'domain' => 'geditorial-suited',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Suited',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:04+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Suitable Target' => 'مخاطبین شایسته' . "\0" . 'مخاطب شایسته',
+		'Label: Show Option AllSuitable' => 'شایسته‌گان',
+		'Label: Show Option No Terms(Unsuitable)' => '(ناشایسته)',
+	],
+];

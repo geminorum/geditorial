@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Sufficed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:27+0330\n"
+"PO-Revision-Date: 2026-07-05 16:06+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,27 +11,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Sufficed\n"
 "X-Domain: geditorial-sufficed\n"
 
-#: Sufficed.php:90
+#: Sufficed.php:83
 msgid "Deficiency"
 msgid_plural "Deficiencies"
 msgstr[0] "نواقص"
 msgstr[1] "ناقصی"
 
-#: Sufficed.php:94
+#: Sufficed.php:87
 msgctxt "Label: Menu Name"
 msgid "Content Deficiencies"
 msgstr "نواقص محتوا"
 
-#: Sufficed.php:95
+#: Sufficed.php:88
 msgctxt "Label: Show Option All"
 msgid "Deficiencies"
 msgstr "نواقص"
 
-#: Sufficed.php:96
+#: Sufficed.php:89
 msgctxt "Label: Show Option No Terms"
 msgid "(Sufficient)"
 msgstr "(تکمیل)"

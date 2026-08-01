@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Employed\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:20+0330\n"
+"PO-Revision-Date: 2026-07-05 15:59+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,22 +11,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Employed\n"
 "X-Domain: geditorial-employed\n"
 
-#: Employed.php:88
+#: Employed.php:87
 msgid "Employment"
 msgid_plural "Employments"
 msgstr[0] "استخدامات"
 msgstr[1] "استخدام"
 
-#: Employed.php:92
+#: Employed.php:91
 msgctxt "Label: Show Option All"
 msgid "Employments"
 msgstr "شغلی"
 
-#: Employed.php:93
+#: Employed.php:92
 msgctxt "Label: Show Option No Terms"
 msgid "(UnEmployed)"
 msgstr "(بی‌کار)"

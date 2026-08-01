@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Gallery\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:12+0330\n"
+"PO-Revision-Date: 2026-07-05 16:00+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,34 +11,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Domain: geditorial-gallery\n"
 "X-Poedit-Basepath: ../../includes/Modules/Gallery\n"
 
-#: Gallery.php:64
+#: Gallery.php:59
 msgid "Photo Album"
 msgid_plural "Photo Albums"
 msgstr[0] "مجموعه‌های تصویری"
 msgstr[1] "مجموعه تصویری"
 
-#: Gallery.php:65
+#: Gallery.php:60
 msgid "Album Gallery"
 msgid_plural "Album Galleries"
 msgstr[0] "مجموعه‌های گالری"
 msgstr[1] "مجموعه گالری"
 
-#: Gallery.php:66
+#: Gallery.php:61
 msgid "Photo Tag"
 msgid_plural "Photo Tags"
 msgstr[0] "برچسب‌های تصویر"
 msgstr[1] "برچسب تصویر"
 
-#: Gallery.php:70
+#: Gallery.php:65
 msgctxt "Label: Menu Name"
 msgid "Gallery"
 msgstr "گالری"
 
-#: Gallery.php:71
+#: Gallery.php:66
 msgctxt "Label: Featured Image"
 msgid "Featured Photo"
 msgstr "تصویر برگزیده"

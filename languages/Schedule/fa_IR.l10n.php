@@ -1,2 +1,22 @@
 <?php
-return ['domain'=>'geditorial-schedule','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Schedule','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-01-06 19:15+0330','x-generator'=>'Poedit 3.5','messages'=>['MessagePost not found.'=>'نوشته‌ای پیدا نشد.','MessageUpdating the post date dynamically doesn\'t work for published content.'=>'به‌روزرسانی تاریخ نوشته‌های منتشرشده امکان‌پذیر نیست.','Page TitleEditorial Calendar'=>'تقویم تحریریه','Menu TitleMy Calendar'=>'تقویم من','Title AttrView on Calendar'=>'روی تقویم ببینید','ActionCalendar'=>'تقویم','Title AttrSave'=>'ذخیره','Title AttrCancel'=>'لغو','IndicatorToday'=>'امروز','SortableDrag me!'=>'مرتب کن!']];
+return [
+	'domain' => 'geditorial-schedule',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Schedule',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-21 03:26+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'MessagePost not found.' => 'نوشته‌ای پیدا نشد.',
+		'MessageUpdating the post date dynamically doesn\'t work for published content.' => 'به‌روزرسانی تاریخ نوشته‌های منتشرشده امکان‌پذیر نیست.',
+		'Page TitleEditorial Calendar' => 'تقویم تحریریه',
+		'Menu TitleMy Calendar' => 'تقویم من',
+		'Title AttrView on Calendar' => 'روی تقویم ببینید',
+		'ActionCalendar' => 'تقویم',
+		'Title AttrSave' => 'ذخیره',
+		'Title AttrCancel' => 'لغو',
+		'IndicatorToday' => 'امروز',
+		'SortableDrag me!' => 'مرتب کن!',
+	],
+];

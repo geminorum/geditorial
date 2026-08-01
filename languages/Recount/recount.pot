@@ -23,17 +23,17 @@ msgctxt "Setting Description"
 msgid "Tries to re-count posts on empty data display."
 msgstr ""
 
-#: Recount.php:180
+#: Recount.php:184
 msgctxt "Bulk Actions"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:215
+#: Recount.php:219
 msgctxt "Tab Tools"
 msgid "Re-count Items"
 msgstr ""
 
-#: Recount.php:223
+#: Recount.php:227
 msgctxt "Tab Tools"
 msgid "Re-count Items for all Terms"
 msgstr ""

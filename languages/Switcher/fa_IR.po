@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Switcher\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:23+0330\n"
+"PO-Revision-Date: 2026-07-05 16:04+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,48 +11,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Switcher\n"
 "X-Domain: geditorial-switcher\n"
 
-#: Switcher.php:43
+#: Switcher.php:44
 msgctxt "Setting Title"
 msgid "Bulk Action Roles"
 msgstr "نقش‌های کنش انبوه"
 
-#: Switcher.php:44
+#: Switcher.php:45
 msgctxt "Setting Description"
 msgid "Roles that can use bulk-actions to switch post-types."
 msgstr "نقش‌هایی که می‌توانند از کنش‌های جمعی برای تبدیل نوع‌فرسته‌ها استفاده کنند."
 
-#: Switcher.php:50
+#: Switcher.php:51
 msgctxt "Setting Title"
 msgid "Bulk Action From"
 msgstr "کنش انبوه از"
 
-#: Switcher.php:51
+#: Switcher.php:52
 msgctxt "Setting Description"
 msgid "Select post-types to be available for the switch."
 msgstr "نوع‌فرسته‌های در دسترس برای تبدیل را انتخاب کنید."
 
-#: Switcher.php:57
+#: Switcher.php:58
 msgctxt "Setting Title"
 msgid "Bulk Action To"
 msgstr "کنش انبوه به"
 
-#: Switcher.php:58
+#: Switcher.php:59
 msgctxt "Setting Description"
 msgid "Select post-types to be targeted for the switch."
 msgstr "نوع‌فرسته‌های هدف برای مقصد تبدیل را انتخاب کنید."
 
-#. translators: %1$s: module title, `%2$s`: posttype label
-#: Switcher.php:84
+#. translators: `%1$s`: module title, `%2$s`: post-type label
+#: Switcher.php:94
+#, php-format
 msgctxt "Bulk Action"
 msgid "[%1$s] Switch to %2$s"
 msgstr "[%1$s] تبدیل به %2$s"
 
-#. translators: %1$s: count, `%2$s`: posttype
-#: Switcher.php:136
+#. translators: `%1$s`: count, `%2$s`: post-type
+#: Switcher.php:151
+#, php-format
 msgctxt "Message"
 msgid "%1$s items(s) switched to %2$s!"
 msgstr "%s مورد تبدیل به %s شد!"

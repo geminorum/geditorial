@@ -79,18 +79,18 @@ msgctxt "Default Term"
 msgid "Weight"
 msgstr ""
 
-#: Specs.php:323
+#: Specs.php:325
 msgctxt "Sortable Handler"
 msgid "Sort me!"
 msgstr ""
 
-#: Specs.php:326
+#: Specs.php:328
 msgctxt "Sortable Trash"
 msgid "Trash me!"
 msgstr ""
 
-#: Specs.php:342
-#: Specs.php:474
+#: Specs.php:344
+#: Specs.php:476
 msgctxt "Modules: Specs"
 msgid "Unknown Field"
 msgstr ""

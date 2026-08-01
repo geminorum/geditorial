@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Overwrite\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:09+0330\n"
+"PO-Revision-Date: 2026-07-05 16:01+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,134 +11,129 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Overwrite\n"
 "X-Domain: geditorial-overwrite\n"
 
-#. translators: %s: supported object label
-#: Overwrite.php:41 Overwrite.php:84
+#. translators: `%s`: supported object label
+#: Overwrite.php:42 Overwrite.php:97
+#, php-format
 msgctxt "Setting Title"
 msgid "Plural Name for %s"
 msgstr "نام جمع برای %s"
 
-#: Overwrite.php:42
+#: Overwrite.php:45
 msgctxt "Setting Description"
 msgid "Used as plural name on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Overwrite.php:50 Overwrite.php:93
+#. translators: `%s`: supported object label
+#: Overwrite.php:54 Overwrite.php:109
+#, php-format
 msgctxt "Setting Title"
 msgid "Singular Name for %s"
 msgstr "نام مفرد برای %s"
 
-#: Overwrite.php:51
+#: Overwrite.php:57
 msgctxt "Setting Description"
 msgid "Used as singular name on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Overwrite.php:59
+#. translators: `%s`: supported object label
+#: Overwrite.php:66
+#, php-format
 msgctxt "Setting Title"
 msgid "Featured Image Title for %s"
 msgstr "عنوان تصویر برگزیده برای %s"
 
-#: Overwrite.php:60
+#: Overwrite.php:69
 msgctxt "Setting Description"
-msgid ""
-"Used as featured image title on the posttype labels. Must be in title case."
+msgid "Used as featured image title on the posttype labels. Must be in title case."
 msgstr ""
 
-#. translators: %s: supported object label
-#: Overwrite.php:68 Overwrite.php:102
+#. translators: `%s`: supported object label
+#: Overwrite.php:78 Overwrite.php:121
+#, php-format
 msgctxt "Setting Title"
 msgid "Menu Name for %s"
 msgstr "عنوان فهرست برای %s"
 
-#: Overwrite.php:69
+#: Overwrite.php:81
 msgctxt "Setting Description"
 msgid "Used as menu name title on the posttype labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:85
+#: Overwrite.php:100
 msgctxt "Setting Description"
 msgid "Used as plural name on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:94
+#: Overwrite.php:112
 msgctxt "Setting Description"
 msgid "Used as singular name on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:103
+#: Overwrite.php:124
 msgctxt "Setting Description"
 msgid "Used as menu name title on the taxonomy labels. Must be in title case."
 msgstr ""
 
-#: Overwrite.php:112
+#: Overwrite.php:133
 msgctxt "Setting Title"
 msgid "Target"
 msgstr "هدف"
 
-#: Overwrite.php:113
+#: Overwrite.php:134
 msgctxt "Setting Description"
 msgid "Replaces with the translation string on the filter. Skips if empty."
 msgstr ""
 
-#: Overwrite.php:118
+#: Overwrite.php:139
 msgctxt "Setting Title"
 msgid "Translation"
 msgstr "ترجمه"
 
-#: Overwrite.php:119
+#: Overwrite.php:140
 msgctxt "Setting Description"
-msgid ""
-"Checks against the translation string on the filter. Leave empty to disable "
-"checks."
+msgid "Checks against the translation string on the filter. Leave empty to disable checks."
 msgstr ""
 
-#: Overwrite.php:124
+#: Overwrite.php:145
 msgctxt "Setting Title"
 msgid "Source"
 msgstr "منبع"
 
-#: Overwrite.php:125
+#: Overwrite.php:146
 msgctxt "Setting Description"
-msgid ""
-"Checks against the original string on the filter. Leave empty to disable "
-"checks"
+msgid "Checks against the original string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:131
+#: Overwrite.php:152
 msgctxt "Setting Title"
 msgid "Context"
 msgstr "زمینه"
 
-#: Overwrite.php:132
+#: Overwrite.php:153
 msgctxt "Setting Description"
-msgid ""
-"Checks against the context of the string on the filter. Leave empty to "
-"disable checks"
+msgid "Checks against the context of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:139
+#: Overwrite.php:159
 msgctxt "Setting Title"
 msgid "Domain"
 msgstr "دامنه"
 
-#: Overwrite.php:140
+#: Overwrite.php:160
 msgctxt "Setting Description"
-msgid ""
-"Checks against the domain of the string on the filter. Leave empty to "
-"disable checks"
+msgid "Checks against the domain of the string on the filter. Leave empty to disable checks"
 msgstr ""
 
-#: Overwrite.php:151
+#: Overwrite.php:170
 msgctxt "Setting Title"
 msgid "Back-end Strings"
 msgstr "رشته‌های پشت سایت"
 
-#: Overwrite.php:160
+#: Overwrite.php:179
 msgctxt "Setting Title"
 msgid "Front-end Strings"
 msgstr "رشته‌های روی سایت"

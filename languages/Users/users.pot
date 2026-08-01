@@ -255,7 +255,7 @@ msgctxt "Message"
 msgid "Checks for post authors via a %1$s file and re-map them with current registered users. Maximum upload size: %2$s"
 msgstr ""
 
-#: Users.php:817
+#: Users.php:818
 msgctxt "Caption"
 msgid "Available Roles"
 msgstr ""

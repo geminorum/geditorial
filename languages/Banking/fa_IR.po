@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Banking\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-09-24 01:23+0330\n"
+"PO-Revision-Date: 2026-07-05 16:11+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,170 +11,170 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Banking\n"
 "X-Domain: geditorial-banking\n"
 
-#: Banking.php:50
+#: Banking.php:49
 msgctxt "Setting Description"
 msgid "Roles that can view bank accounts."
 msgstr "نقش‌هایی که می‌توانند حساب‌های بانکی را مشاهده کنند."
 
-#: Banking.php:51
+#: Banking.php:50
 msgctxt "Setting Description"
 msgid "Roles that can assign bank accounts."
 msgstr "نقش‌هایی که می‌توانند حساب‌های بانکی را تخصیص دهند."
 
-#: Banking.php:90
+#: Banking.php:91
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Banking.php:91
+#: Banking.php:92
 msgctxt "Field Label: `fullname`"
 msgid "Account Owner"
 msgstr "مالک حساب"
 
-#: Banking.php:92
+#: Banking.php:93
 msgctxt "Field Label: `card`"
 msgid "Card Number"
 msgstr "شماره کارت"
 
-#: Banking.php:93
+#: Banking.php:94
 msgctxt "Field Label: `iban`"
 msgid "IBAN"
 msgstr "شبا"
 
-#: Banking.php:94
+#: Banking.php:95
 msgctxt "Field Label: `account`"
 msgid "Account Number"
 msgstr "شماره حساب"
 
-#: Banking.php:95
+#: Banking.php:96
 msgctxt "Field Label: `bankname`"
 msgid "Bank Name"
 msgstr "نام بانک"
 
-#: Banking.php:96
+#: Banking.php:97
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Banking.php:102
+#: Banking.php:103
 msgctxt "Tab Title"
 msgid "Banking"
 msgstr "بانک‌داری"
 
-#: Banking.php:106
+#: Banking.php:107
 msgctxt "Notice"
 msgid "There is no account information available!"
 msgstr "هیچ اطلاعات بانکی در دسترس نیست!"
 
-#: Banking.php:107
+#: Banking.php:108
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the bank accounts."
 msgstr "شما مجوز لازم برای مدیریت حساب‌های بانکی را ندارید."
 
-#: Banking.php:114
+#: Banking.php:115
 msgctxt "MetaBox Title"
 msgid "Banking"
 msgstr "بانک‌داری"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Banking.php:118
+#: Banking.php:119
 #, php-format
 msgctxt "Button Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Banking.php:120
+#: Banking.php:121
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Accounts of %2$s"
 msgstr "%1$s مدیریت حساب‌های %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Banking.php:123
+#: Banking.php:124
 #, php-format
 msgctxt "Action Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Banking.php:125
+#: Banking.php:126
 msgctxt "Action Text"
 msgid "Bank Accounts"
 msgstr "حساب‌های بانکی"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Banking.php:128
+#: Banking.php:129
 #, php-format
 msgctxt "Row Title"
 msgid "Bank Accounts of %1$s"
 msgstr "حساب‌های بانکی %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Banking.php:130
+#: Banking.php:131
 msgctxt "Row Text"
 msgid "Bank Accounts"
 msgstr "حساب‌های بانکی"
 
-#: Banking.php:142
+#: Banking.php:143
 msgctxt "Field Title"
 msgid "IBAN"
 msgstr "شبا"
 
-#: Banking.php:143
+#: Banking.php:144
 msgctxt "Field Description"
 msgid "International Bank Account Number"
 msgstr "شماره حساب بانکی بین‌المللی"
 
-#: Banking.php:148
+#: Banking.php:149
 msgctxt "Field Title"
 msgid "Card Number"
 msgstr "شماره کارت"
 
-#: Banking.php:149
+#: Banking.php:150
 msgctxt "Field Description"
 msgid "Bank Card Number"
 msgstr "شماره کارت بانکی"
 
 #. translators: `%s`: post title
-#: Banking.php:287
+#: Banking.php:294
 #, php-format
 msgctxt "Page Title"
 msgid "Bank Grid for %s"
 msgstr "شبکه بانکی برای %s"
 
 #. translators: `%s`: post title
-#: Banking.php:289
+#: Banking.php:296
 #, php-format
 msgctxt "Page Title"
 msgid "Bank Overview for %s"
 msgstr "بررسی بانک %s"
 
-#: Banking.php:306
+#: Banking.php:313
 msgctxt "Default Term: Audit"
 msgid "Empty Banking Data"
 msgstr "داده‌های بانک خالی"
 
-#: Banking.php:308
+#: Banking.php:315
 msgctxt "Default Term: Audit"
 msgid "Empty IBAN"
 msgstr "شبا خالی"
 
-#: Banking.php:309
+#: Banking.php:316
 msgctxt "Default Term: Audit"
 msgid "Invalid IBAN"
 msgstr "شبا نامعتبر"
 
-#: Banking.php:310
+#: Banking.php:317
 msgctxt "Default Term: Audit"
 msgid "Duplicate IBAN"
 msgstr "شبا تکراری"
 
-#: Banking.php:470
+#: Banking.php:477
 msgctxt "Header"
 msgid "Overview of the Bank Accounts"
 msgstr "مروری بر حساب‌های بانکی"
@@ -265,43 +265,43 @@ msgstr "از %s"
 #~ msgid "Via Country %s"
 #~ msgstr "کشور %s"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Actions"
 #~ msgstr "کنش‌ها"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Information"
 #~ msgstr "اطلاعات"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Insert"
 #~ msgstr "درج"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Edit"
 #~ msgstr "ویرایش"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Remove"
 #~ msgstr "حذف"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Loading"
 #~ msgstr "در حال بارگذاری"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "Here you can add, edit and manage the bank accounts."
 #~ msgstr "اینجا می‌توانید حساب‌های بانکی را اضافه، ویرایش و مدیریت کنید."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "The account edited successfully."
 #~ msgstr "حساب با موفقیت ویرایش شد."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "New account saved successfully."
 #~ msgstr "حساب تازه با موفقیت ذخیره شد."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "The account data are not valid!"
 #~ msgstr "اطلاعات حساب نامعتبر است!"
 

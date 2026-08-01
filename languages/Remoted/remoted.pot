@@ -174,7 +174,7 @@ msgid "Displays as title of the root destination on the widget select."
 msgstr ""
 
 #: Remoted.php:151
-#: Remoted.php:273
+#: Remoted.php:275
 msgctxt "Setting Default"
 msgid "Root Destination"
 msgstr ""
@@ -199,37 +199,37 @@ msgctxt "Dashboard Widget Title"
 msgid "Remote Uploads"
 msgstr ""
 
-#: Remoted.php:286
+#: Remoted.php:288
 msgctxt "Button"
 msgid "Upload Files"
 msgstr ""
 
-#: Remoted.php:289
+#: Remoted.php:291
 msgctxt "Notice"
 msgid "Your browser does not support HTML5 upload."
 msgstr ""
 
-#: Remoted.php:311
+#: Remoted.php:313
 msgctxt "Filter Title"
 msgid "Supported Extensions"
 msgstr ""
 
-#: Remoted.php:380
+#: Remoted.php:382
 msgctxt "Button"
 msgid "Download Receiver"
 msgstr ""
 
-#: Remoted.php:386
+#: Remoted.php:388
 msgctxt "Button"
 msgid "Cleanup Receiver"
 msgstr ""
 
-#: Remoted.php:394
+#: Remoted.php:396
 msgctxt "Button"
 msgid "Generate Receiver"
 msgstr ""
 
-#: Remoted.php:438
+#: Remoted.php:440
 msgctxt "Setting Default"
 msgid "You will be returned to the main site."
 msgstr ""

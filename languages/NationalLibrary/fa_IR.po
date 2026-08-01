@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial NationalLibrary\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-28 22:42+0330\n"
+"PO-Revision-Date: 2026-07-05 16:34+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/NationalLibrary\n"
 "X-Domain: geditorial-national-library\n"
 
@@ -25,7 +25,7 @@ msgctxt "Helper: Title Attr"
 msgid "Search ISBN on Nali.ir"
 msgstr "جست‌وجوی شابک در سایت کتابخانه ملی"
 
-#: ModuleHelper.php:430
+#: ModuleHelper.php:436
 msgctxt "Helper: Title Attr"
 msgid "Search People on Nali.ir"
 msgstr "جست‌وجوی سرشناسه در سایت کتابخانه ملی"
@@ -48,92 +48,97 @@ msgid "Generates a %s file with scraped parts of each book."
 msgstr "یک پرونده %s با بخش‌های استخراج‌شده از هر کتاب تولید می‌کند."
 
 #. translators: `%s`: supported object label
-#: NationalLibrary.php:57
+#: NationalLibrary.php:58
 #, php-format
 msgctxt "Setting Title"
 msgid "Bib Meta-key for %s"
 msgstr "متاکلید کتابشناسی برای %s"
 
-#: NationalLibrary.php:60
+#: NationalLibrary.php:61
 msgctxt "Setting Description"
 msgid "Defines Bib meta-key for the post-type."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: NationalLibrary.php:72
+#: NationalLibrary.php:73
 #, php-format
 msgctxt "Setting Title"
 msgid "ISBN Meta-key for %s"
 msgstr "متاکلید شابک برای %s"
 
-#: NationalLibrary.php:75
+#: NationalLibrary.php:76
 msgctxt "Setting Description"
 msgid "Defines ISBN meta-key for the post-type."
 msgstr ""
 
-#: NationalLibrary.php:90
+#: NationalLibrary.php:91
 msgctxt "Setting Description"
 msgid "Select to display data as tab for the products."
 msgstr ""
 
-#: NationalLibrary.php:96
+#: NationalLibrary.php:97
 msgctxt "Setting Title"
 msgid "New-Post Hints"
 msgstr "اشارات برای فرسته تازه"
 
-#: NationalLibrary.php:97
+#: NationalLibrary.php:98
 msgctxt "Setting Description"
 msgid "Displays Bibliographic information on new post edit screen."
 msgstr ""
 
-#: NationalLibrary.php:104
+#: NationalLibrary.php:105 NationalLibrary.php:653
+msgctxt "Setting Default"
+msgid "Fipa"
+msgstr "فیپا"
+
+#: NationalLibrary.php:107
 msgctxt "Setting Description"
 msgid "Adds results by Bibliographic information on front-end search."
 msgstr ""
 
-#: NationalLibrary.php:107
+#: NationalLibrary.php:110
 msgctxt "Setting Title"
 msgid "Custom Queries"
 msgstr "پرس‌وجوهای سفارشی"
 
-#: NationalLibrary.php:108
+#: NationalLibrary.php:111
 msgctxt "Setting Description"
 msgid "Appends end-points for Bib/Fipa numbers on front-end."
 msgstr ""
 
-#: NationalLibrary.php:211
+#: NationalLibrary.php:228
 msgctxt "RestAPI: Arg Description"
 msgid "The ISBN or Biblio Code to process."
 msgstr "شابک یا کد کتابشناسی که برای پردازش استفاده خواهد شد."
 
-#: NationalLibrary.php:326
+#: NationalLibrary.php:342
 msgctxt "Meta-Box Title"
 msgid "Fipa"
 msgstr "فیپا"
 
-#: NationalLibrary.php:341 NationalLibrary.php:350 NationalLibrary.php:412
-#: NationalLibrary.php:421
+#: NationalLibrary.php:357 NationalLibrary.php:366 NationalLibrary.php:428
+#: NationalLibrary.php:437
 msgctxt "Button Text"
 msgid "National Library"
 msgstr "کتابخانه ملی"
 
-#: NationalLibrary.php:342 NationalLibrary.php:351 NationalLibrary.php:413
-#: NationalLibrary.php:422
+#: NationalLibrary.php:358 NationalLibrary.php:367 NationalLibrary.php:429
+#: NationalLibrary.php:438
 msgctxt "Button Title Attr"
 msgid "Book Page on Opac.Nali.ir"
 msgstr "صفحه کتاب در سایت کتابخانه ملی"
 
-#: NationalLibrary.php:606 NationalLibrary.php:682
+#: NationalLibrary.php:729
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr "فیپا"
 
-#: NationalLibrary.php:683
+#: NationalLibrary.php:730
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
 msgstr "اطلاعات کامل فیپا از کتابخانه ملی را نمایش می‌دهد."
 
-#: NationalLibrary.php:957
+#: NationalLibrary.php:1105
 msgctxt "Header"
 msgid "National Library Tools"
 msgstr "ابزارهای کتابخانه ملی"

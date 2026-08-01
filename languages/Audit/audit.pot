@@ -44,27 +44,27 @@ msgctxt "Label: Show Option No Terms"
 msgid "(Unaudited)"
 msgstr ""
 
-#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Audit.php:110
 #, php-format
 msgctxt "Action Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
-#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Audit.php:112
 msgctxt "Action Text"
 msgid "Audit"
 msgstr ""
 
-#. translators: `%1$s`: current post title, `%2$s`: posttype singular name
+#. translators: `%1$s`: current post title, `%2$s`: post-type singular name
 #: Audit.php:115
 #, php-format
 msgctxt "Row Title"
 msgid "Audit Attributes of %1$s"
 msgstr ""
 
-#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
 #: Audit.php:117
 msgctxt "Row Text"
 msgid "Audit"
@@ -130,54 +130,54 @@ msgctxt "Default Term"
 msgid "Imported"
 msgstr ""
 
-#: Audit.php:287
+#: Audit.php:304
 msgctxt "Node: Title"
 msgid "Audit Attributes"
 msgstr ""
 
-#: Audit.php:344
+#: Audit.php:361
 msgctxt "Node: Title"
 msgid "Auditing"
 msgstr ""
 
-#: Audit.php:354
+#: Audit.php:371
 msgctxt "Node: Title"
 msgid "Click to load attributes &hellip;"
 msgstr ""
 
-#: Audit.php:438
+#: Audit.php:455
 msgctxt "Action"
 msgid "Force Auto-Audit"
 msgstr ""
 
 #. translators: `%s`: count
-#: Audit.php:476
+#: Audit.php:493
 #, php-format
 msgctxt "Message"
 msgid "%s items(s) Audited!"
 msgstr ""
 
-#: Audit.php:516
+#: Audit.php:533
 msgctxt "Header"
 msgid "Content Audit Tools"
 msgstr ""
 
-#: Audit.php:595
+#: Audit.php:616
 msgctxt "Header"
 msgid "Audit Reports"
 msgstr ""
 
-#: Audit.php:611
+#: Audit.php:634
 msgctxt "Card Title"
 msgid "Summary by User"
 msgstr ""
 
-#: Audit.php:616
+#: Audit.php:639
 msgctxt "Card: None-Title"
 msgid "All Users"
 msgstr ""
 
-#: Audit.php:623
+#: Audit.php:646
 msgctxt "Card: Button"
 msgid "Apply Filter"
 msgstr ""

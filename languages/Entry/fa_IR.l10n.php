@@ -1,2 +1,21 @@
 <?php
-return ['domain'=>'geditorial-entry','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Entry','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2026-03-28 14:20+0330','x-generator'=>'Poedit 3.9','messages'=>['Entry'=>'ورودیه‌ها' . "\0" . 'ورودیه','Section'=>'بخش‌ها' . "\0" . 'بخش','Label: Featured ImageCover Image'=>'تصویر کاور','Label: Column TitleSection'=>'بخش','Label: UncategorizedUnsectioned'=>'بخش‌بندی‌نشده','Default Term: Name[Unsectioned]'=>'بخش‌بندی‌نشده‌ها','Default Term: DescriptionUnsectioned Entries'=>'ورودیه‌های بخش‌بندی‌نشده','UI: LabelEntry Section'=>'بخش ورودیه','UI: LabelSection'=>'بخش']];
+return [
+	'domain' => 'geditorial-entry',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Entry',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-03-28 14:20+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Entry' => 'ورودیه‌ها' . "\0" . 'ورودیه',
+		'Section' => 'بخش‌ها' . "\0" . 'بخش',
+		'Label: Featured ImageCover Image' => 'تصویر کاور',
+		'Label: Column TitleSection' => 'بخش',
+		'Label: UncategorizedUnsectioned' => 'بخش‌بندی‌نشده',
+		'Default Term: Name[Unsectioned]' => 'بخش‌بندی‌نشده‌ها',
+		'Default Term: DescriptionUnsectioned Entries' => 'ورودیه‌های بخش‌بندی‌نشده',
+		'UI: LabelEntry Section' => 'بخش ورودیه',
+		'UI: LabelSection' => 'بخش',
+	],
+];

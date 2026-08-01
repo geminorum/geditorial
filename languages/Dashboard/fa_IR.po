@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Dashboard\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2024-11-27 02:19+0330\n"
+"PO-Revision-Date: 2026-07-21 03:35+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,61 +11,69 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Dashboard\n"
 "X-Domain: geditorial-dashboard\n"
 
-#: Dashboard.php:33
+#: Dashboard.php:37
 msgctxt "Setting Title"
 msgid "Dashboard Page"
 msgstr "برگه پیشخوان"
 
-#: Dashboard.php:34
+#: Dashboard.php:38
 msgctxt "Setting Description"
 msgid "Displays the selected page as dashboard page."
 msgstr ""
 
-#: Dashboard.php:41
+#: Dashboard.php:45
 msgctxt "Setting Title"
 msgid "Navigation Menu"
 msgstr "فهرست راه‌بری"
 
-#: Dashboard.php:42
+#: Dashboard.php:46
 msgctxt "Setting Description"
 msgid "Displays the selected nav-menu as dashboard navigation."
 msgstr ""
 
-#. translators: %s: HTML word
-#: Dashboard.php:48
-msgctxt "Settings: Setting Description"
+#. translators: `%s`: HTML word
+#: Dashboard.php:53
+#, php-format
+msgctxt "Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
-#. translators: %s: HTML word
-#: Dashboard.php:50
-msgctxt "Settings: Setting Description"
+#. translators: `%s`: HTML word
+#: Dashboard.php:58
+#, php-format
+msgctxt "Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""
 
-#: Dashboard.php:60
+#: Dashboard.php:69
 msgctxt "Setting Button"
 msgid "Dashboard Page"
 msgstr "برگه پیشخوان"
 
-#: Dashboard.php:107
+#. translators: `%s`: system string
+#: Dashboard.php:120
+#, php-format
 msgctxt "Widget Area"
-msgid "Editorial: Dashboard"
-msgstr "تحریریه: پیشخوان"
+msgid "%s: Dashboard"
+msgstr "%s: پیشخوان"
 
-#: Dashboard.php:108
+#: Dashboard.php:123
 msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:171
+#: Dashboard.php:186
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr "پیشخوان"
+
+#~ msgctxt "Widget Area"
+#~ msgid "Editorial: Dashboard"
+#~ msgstr "تحریریه: پیشخوان"
 
 #~ msgctxt "Setting Title"
 #~ msgid "Profile Support"

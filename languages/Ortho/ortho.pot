@@ -13,135 +13,135 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: ModuleInfo.php:19
+#: ModuleInfo.php:70
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr ""
 
-#: ModuleInfo.php:24
+#: ModuleInfo.php:75
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr ""
 
-#: Ortho.php:126
+#: Ortho.php:63
 msgctxt "Setting Title"
 msgid "Virastar Options"
 msgstr ""
 
-#: Ortho.php:127
+#: Ortho.php:64
 msgctxt "Setting Description"
 msgid "For more information, please see the library documentations."
 msgstr ""
 
-#: Ortho.php:133
+#: Ortho.php:70
 msgctxt "Setting Title"
 msgid "Virastar on Paste"
 msgstr ""
 
-#: Ortho.php:134
+#: Ortho.php:71
 msgctxt "Setting Description"
 msgid "Applies Virastar to pasted texts on targeted inputs."
 msgstr ""
 
-#: Ortho.php:144
+#: Ortho.php:82
 msgctxt "Setting Section Title"
 msgid "Virastar!"
 msgstr ""
 
-#: Ortho.php:145
+#: Ortho.php:83
 msgctxt "Setting Section Description"
 msgid "Customize the behavior of Virastar library."
 msgstr ""
 
-#: Ortho.php:157
-#: Ortho.php:159
-msgctxt "Javascript String"
+#: Ortho.php:95
+#: Ortho.php:97
+msgctxt "JavaScript String"
 msgid "Apply Virastar!"
 msgstr ""
 
-#: Ortho.php:158
-msgctxt "Javascript String"
+#: Ortho.php:96
+msgctxt "JavaScript String"
 msgid "Virastar!"
 msgstr ""
 
-#: Ortho.php:160
-msgctxt "Javascript String"
+#: Ortho.php:98
+msgctxt "JavaScript String"
 msgid "Swap Quotes"
 msgstr ""
 
-#: Ortho.php:161
-msgctxt "Javascript String"
+#: Ortho.php:99
+msgctxt "JavaScript String"
 msgid "Swap Not-Correct Quotes"
 msgstr ""
 
-#: Ortho.php:162
-msgctxt "Javascript String"
+#: Ortho.php:100
+msgctxt "JavaScript String"
 msgid "Word Footnotes"
 msgstr ""
 
-#: Ortho.php:163
-msgctxt "Javascript String"
+#: Ortho.php:101
+msgctxt "JavaScript String"
 msgid "MS Word Footnotes to WordPress [ref]"
 msgstr ""
 
-#: Ortho.php:164
-msgctxt "Javascript String"
+#: Ortho.php:102
+msgctxt "JavaScript String"
 msgid "Download"
 msgstr ""
 
-#: Ortho.php:165
-msgctxt "Javascript String"
+#: Ortho.php:103
+msgctxt "JavaScript String"
 msgid "Download text as markdown"
 msgstr ""
 
-#: Ortho.php:166
-msgctxt "Javascript String"
+#: Ortho.php:104
+msgctxt "JavaScript String"
 msgid "nbsp"
 msgstr ""
 
-#: Ortho.php:167
-msgctxt "Javascript String"
-msgid "Non-Breaking SPace"
+#: Ortho.php:105
+msgctxt "JavaScript String"
+msgid "Non-Breaking Space"
 msgstr ""
 
 #. translators: `%s`: keyboard shortcut
-#: Ortho.php:178
+#: Ortho.php:116
 #, php-format
 msgctxt "TinyMCE String"
 msgid "Virastar! (%s)"
 msgstr ""
 
-#: Ortho.php:332
+#: Ortho.php:272
 msgctxt "Header"
 msgid "Orthography Tools"
 msgstr ""
 
-#: Ortho.php:343
+#: Ortho.php:284
 msgctxt "Card Title"
 msgid "Data Sandbox"
 msgstr ""
 
-#: Ortho.php:410
+#: Ortho.php:351
 msgctxt "Message"
 msgid "Paste raw data and see how Orthography filters works!"
 msgstr ""
 
-#: Ortho.php:444
+#: Ortho.php:383
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr ""
 
-#: Ortho.php:460
+#: Ortho.php:399
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr ""
 
-#: Ortho.php:461
+#: Ortho.php:400
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr ""
 
-#: Ortho.php:488
+#: Ortho.php:427
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr ""

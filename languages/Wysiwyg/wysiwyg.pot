@@ -13,22 +13,22 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Wysiwyg\n"
 "X-Domain: geditorial-wysiwyg\n"
 
-#: Wysiwyg.php:44
+#: Wysiwyg.php:46
 msgctxt "Setting Title"
 msgid "Description Roles"
 msgstr ""
 
-#: Wysiwyg.php:45
+#: Wysiwyg.php:47
 msgctxt "Setting Description"
 msgid "Editor will be available on descriptions for selected Roles."
 msgstr ""
 
-#: Wysiwyg.php:120
+#: Wysiwyg.php:122
 msgctxt "Taxonomy Description: Label"
 msgid "Description"
 msgstr ""
 
-#: Wysiwyg.php:129
+#: Wysiwyg.php:131
 msgctxt "Taxonomy Description: Description"
 msgid "The description is not prominent by default; however, some themes may show it."
 msgstr ""

@@ -177,12 +177,12 @@ msgctxt "Field Description"
 msgid "Unique Mission Code"
 msgstr ""
 
-#: Missioned.php:593
+#: Missioned.php:602
 msgctxt "Header"
 msgid "Mission Tools"
 msgstr ""
 
-#: Missioned.php:602
+#: Missioned.php:611
 msgctxt "Card"
 msgid "Mission Date from Meta-data"
 msgstr ""

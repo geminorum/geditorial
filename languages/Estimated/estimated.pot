@@ -66,7 +66,7 @@ msgid "Custom string before the estimated time on the content. Leave blank for d
 msgstr ""
 
 #: Estimated.php:71
-#: Estimated.php:276
+#: Estimated.php:274
 msgctxt "Setting Default"
 msgid "Estimated read time:"
 msgstr ""
@@ -83,18 +83,18 @@ msgstr ""
 
 #. translators: `%s`: average word count
 #: Estimated.php:183
-#: Estimated.php:298
+#: Estimated.php:296
 #, php-format
 msgctxt "Title Attr"
 msgid "If you try to read %s words per minute."
 msgstr ""
 
-#: Estimated.php:287
+#: Estimated.php:285
 msgid "less than 1 minute"
 msgstr ""
 
 #. translators: `%s`: number of minutes
-#: Estimated.php:291
+#: Estimated.php:289
 #, php-format
 msgid "%s minute"
 msgid_plural "%s minutes"

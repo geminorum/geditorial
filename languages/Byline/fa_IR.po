@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Byline\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-01-28 22:16+0330\n"
+"PO-Revision-Date: 2026-07-26 20:53+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Byline\n"
 "X-Domain: geditorial-byline\n"
 
@@ -20,381 +20,381 @@ msgctxt "Setting Description"
 msgid "Roles that can manage, edit and delete <strong>relations</strong>."
 msgstr "نقش‌هایی که امکان مدیریت، ویرایش و حذف <strong>نسبت‌ها</strong> را دارند."
 
-#: Byline.php:68 Byline.php:227 Byline.php:770
+#: Byline.php:69 Byline.php:228 Byline.php:788
 msgctxt "Setting Default"
 msgid "People"
 msgstr "پدیدآورندگان"
 
-#: Byline.php:91
+#: Byline.php:92
 msgid "Relation"
 msgid_plural "Relations"
 msgstr[0] "نسبت‌ها"
 msgstr[1] "نسبت"
 
-#: Byline.php:95
+#: Byline.php:96
 msgctxt "Label: `extended_label`"
 msgid "Byline Relations"
 msgstr "نسبت‌های تألیفی"
 
-#: Byline.php:96
+#: Byline.php:97
 msgctxt "Label: `show_option_all`"
 msgid "Byline Relations"
 msgstr "نسبت‌های تألیفی"
 
-#: Byline.php:97
+#: Byline.php:98
 msgctxt "Label: `show_option_no_items`"
 msgid "(Unrelated)"
 msgstr "(بدون نسبت)"
 
-#: Byline.php:98
+#: Byline.php:99
 msgctxt "Label: `assign_description`"
 msgid "Defines the relation on the byline."
 msgstr "نسبت خط تألیف را تعریف می‌کند."
 
-#: Byline.php:108
-msgctxt "Javascript String"
+#: Byline.php:109
+msgctxt "JavaScript String"
 msgid "Search the directory and add as byline to this post."
 msgstr "در فهرست جست‌وجو و نتایج آن را به عنوان خط تألیف این فرسته اضافه کنید."
 
-#: Byline.php:109
-msgctxt "Javascript String"
+#: Byline.php:110
+msgctxt "JavaScript String"
 msgid "Loading"
 msgstr "بارگیری"
 
-#: Byline.php:110
-msgctxt "Javascript String"
+#: Byline.php:111
+msgctxt "JavaScript String"
 msgid "New Name …"
 msgstr "نام تازه …"
 
-#: Byline.php:111
-msgctxt "Javascript String"
+#: Byline.php:112
+msgctxt "JavaScript String"
 msgid "Slug"
 msgstr "نامک"
 
-#: Byline.php:112
-msgctxt "Javascript String"
+#: Byline.php:113
+msgctxt "JavaScript String"
 msgid "Type and press enter …"
 msgstr "برای جست‌وجو وارد کنید …"
 
-#: Byline.php:113
-msgctxt "Javascript String"
+#: Byline.php:114
+msgctxt "JavaScript String"
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: Byline.php:114
-msgctxt "Javascript String"
+#: Byline.php:115
+msgctxt "JavaScript String"
 msgid "– Select –"
 msgstr "– انتخاب –"
 
-#: Byline.php:115
-msgctxt "Javascript String"
+#: Byline.php:116
+msgctxt "JavaScript String"
 msgid "Save"
 msgstr "ذخیره"
 
-#: Byline.php:116
-msgctxt "Javascript String"
+#: Byline.php:117
+msgctxt "JavaScript String"
 msgid "You are Offline …"
 msgstr "آفلاین هستید …"
 
-#: Byline.php:117
-msgctxt "Javascript String"
+#: Byline.php:118
+msgctxt "JavaScript String"
 msgid "Back Online …"
 msgstr "بازگشت به آنلاین …"
 
-#: Byline.php:122
+#: Byline.php:123
 msgctxt "Misc: `column_icon_title`"
 msgid "Byline"
 msgstr "خط تألیف"
 
-#: Byline.php:126
+#: Byline.php:127
 msgctxt "MetaBox Title"
 msgid "Byline"
 msgstr "خط تألیف"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Byline.php:129
+#: Byline.php:130
 #, php-format
 msgctxt "Button Title"
 msgid "By-line of %2$s"
 msgstr "خط تألیف %2$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Byline.php:131
+#: Byline.php:132
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage %2$s By-line"
 msgstr "%1$s مدیریت خط تألیف %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Byline.php:134
+#: Byline.php:135
 #, php-format
 msgctxt "Button Title"
 msgid "Byline Report for %1$s"
 msgstr "گزارش خط تألیف %2$s برای %1$s"
 
-#: Byline.php:144
+#: Byline.php:145
 msgctxt "Main Taxonomy: Default Term"
 msgid "Author"
 msgstr "مؤلف"
 
-#: Byline.php:145
+#: Byline.php:146
 msgctxt "Main Taxonomy: Default Term"
 msgid "Translator"
 msgstr "مترجم"
 
-#: Byline.php:146
+#: Byline.php:147
 msgctxt "Main Taxonomy: Default Term"
 msgid "Reporter"
 msgstr "گزارش‌گر"
 
-#: Byline.php:147
+#: Byline.php:148
 msgctxt "Main Taxonomy: Default Term"
 msgid "Editor"
 msgstr "ویرایشگر"
 
-#: Byline.php:148
+#: Byline.php:149
 msgctxt "Main Taxonomy: Default Term"
 msgid "Prefacer"
 msgstr "مقدمه‌نویس"
 
-#: Byline.php:149
+#: Byline.php:150
 msgctxt "Main Taxonomy: Default Term"
 msgid "Subject"
 msgstr "موضوع"
 
-#: Byline.php:150
+#: Byline.php:151
 msgctxt "Main Taxonomy: Default Term"
 msgid "Guest"
 msgstr "مهمان"
 
-#: Byline.php:151
+#: Byline.php:152
 msgctxt "Main Taxonomy: Default Term"
 msgid "Host"
 msgstr "میزبان"
 
-#: Byline.php:152
+#: Byline.php:153
 msgctxt "Main Taxonomy: Default Term"
 msgid "Photographer"
 msgstr "عکاس"
 
-#: Byline.php:153
+#: Byline.php:154
 msgctxt "Main Taxonomy: Default Term"
 msgid "Commentator"
 msgstr "مفسر"
 
-#: Byline.php:154
+#: Byline.php:155
 msgctxt "Main Taxonomy: Default Term"
 msgid "Artist"
 msgstr "هنرمند"
 
-#: Byline.php:155
+#: Byline.php:156
 msgctxt "Main Taxonomy: Default Term"
 msgid "Co-Artist"
 msgstr "هنرمند همکار"
 
-#: Byline.php:156
+#: Byline.php:157
 msgctxt "Main Taxonomy: Default Term"
 msgid "Illustrator"
 msgstr "تصویرگر"
 
-#: Byline.php:157
+#: Byline.php:158
 msgctxt "Main Taxonomy: Default Term"
 msgid "Collector"
 msgstr "گردآورنده"
 
-#: Byline.php:158
+#: Byline.php:159
 msgctxt "Main Taxonomy: Default Term"
 msgid "Curator"
 msgstr "کتابدار"
 
-#: Byline.php:159
+#: Byline.php:160
 msgctxt "Main Taxonomy: Default Term"
 msgid "Poet"
 msgstr "شاعر"
 
-#: Byline.php:160
+#: Byline.php:161
 msgctxt "Main Taxonomy: Default Term"
 msgid "Interviewer"
 msgstr "گفت‌وگو کننده"
 
-#: Byline.php:161
+#: Byline.php:162
 msgctxt "Main Taxonomy: Default Term"
 msgid "Interviewee"
 msgstr "گفت‌وگو شونده"
 
-#: Byline.php:162
+#: Byline.php:163
 msgctxt "Main Taxonomy: Default Term"
 msgid "Director"
 msgstr "کارگردان"
 
-#: Byline.php:163
+#: Byline.php:164
 msgctxt "Main Taxonomy: Default Term"
 msgid "Selector"
 msgstr "انتخاب کننده"
 
-#: Byline.php:164
+#: Byline.php:165
 msgctxt "Main Taxonomy: Default Term"
 msgid "Conductor"
 msgstr "تنظیم کننده"
 
-#: Byline.php:165
+#: Byline.php:166
 msgctxt "Main Taxonomy: Default Term"
 msgid "Speaker"
 msgstr "سخنران"
 
-#: Byline.php:166
+#: Byline.php:167
 msgctxt "Main Taxonomy: Default Term"
 msgid "Critic"
 msgstr "منتقد"
 
-#: Byline.php:167
+#: Byline.php:168
 msgctxt "Main Taxonomy: Default Term"
 msgid "Proofreader"
 msgstr "ویراستار"
 
-#: Byline.php:168
+#: Byline.php:169
 msgctxt "Main Taxonomy: Default Term"
 msgid "Co-Author"
 msgstr "مؤلف همکار"
 
 #. translators: `%s`: post title
-#: Byline.php:396
+#: Byline.php:406
 #, php-format
 msgctxt "Page Title"
 msgid "Byline Dock for %s"
 msgstr "سکوی خط تألیف برای %s"
 
 #. translators: `%s`: post title
-#: Byline.php:408
+#: Byline.php:418
 #, php-format
 msgctxt "Page Title"
 msgid "Byline Overview for %s"
 msgstr "نمای کلی خط تألیف %s"
 
-#: Byline.php:456
+#: Byline.php:468
 msgctxt "Message"
 msgid "The Byline is Empty"
 msgstr "خط تألیف خالی‌ست"
 
-#: Byline.php:574
+#: Byline.php:587
 msgctxt "Field Title"
 msgid "Relation"
 msgstr "نسبت"
 
-#: Byline.php:575
+#: Byline.php:588
 msgctxt "Field Description"
 msgid "Subject of relation to the post."
 msgstr "موضوع نسبت با این فرسته."
 
-#: Byline.php:583
+#: Byline.php:596
 msgctxt "Field Title"
 msgid "Filter"
 msgstr "پالایه"
 
 #. translators: do not translate `%s`
-#: Byline.php:585
+#: Byline.php:598
 #, php-format
 msgctxt "Field Description"
 msgid "String to use before or with `%s` as name."
 msgstr "رشته‌ای برای استفاده پیش از و یا همراه `%s` به عنوان نام."
 
-#: Byline.php:592
+#: Byline.php:605
 msgctxt "Field Title"
 msgid "Overwrite"
 msgstr "رونویسی"
 
-#: Byline.php:593
+#: Byline.php:606
 msgctxt "Field Description"
 msgid "String to override the name."
 msgstr "رشته‌ای برای رونویسی نام."
 
-#: Byline.php:599
+#: Byline.php:612
 msgctxt "Field Title"
 msgid "Notes"
 msgstr "یادداشت"
 
-#: Byline.php:600
+#: Byline.php:613
 msgctxt "Field Description"
 msgid "About relation to the post."
 msgstr "درباره نسبت با این فرسته."
 
-#: Byline.php:607
+#: Byline.php:620
 msgctxt "Field Title"
 msgid "Featured"
 msgstr "برگزیده"
 
-#: Byline.php:608
+#: Byline.php:621
 msgctxt "Field Description"
 msgid "Features the individual on the extended list."
 msgstr "فرد را به صورت برگزیده در فهرست گسترده‌تری قرار می‌دهد."
 
-#: Byline.php:615
+#: Byline.php:628
 msgctxt "Field Title"
 msgid "Hidden"
 msgstr "پنهانی"
 
-#: Byline.php:616
+#: Byline.php:629
 msgctxt "Field Description"
 msgid "Hides the name from byline but assignes the term."
 msgstr "نام را از خط تألیف حذف، اما رده را به فرسته اختصاص می‌دهد."
 
-#: Byline.php:791
+#: Byline.php:809
 msgctxt "Header Button"
 msgid "Byline Report"
 msgstr "گزارش خط تألیف"
 
 #. translators: `%s`: singular post-type label
-#: Byline.php:870
+#: Byline.php:888
 #, php-format
 msgctxt "Node: Title"
 msgid "Manage byline for this %s"
 msgstr "مدیریت خط تألیف برای این %s"
 
 #. translators: `%s`: singular post-type label
-#: Byline.php:881
+#: Byline.php:899
 #, php-format
 msgctxt "Node: Title"
 msgid "Byline for this %s"
 msgstr "خط تألیف برای این %s"
 
-#: Byline.php:912
+#: Byline.php:930
 msgctxt "Node: Title"
 msgid "Byline"
 msgstr "خط تألیف"
 
 #. translators: `%s`: singular post-type label
-#: Byline.php:918
+#: Byline.php:936
 #, php-format
 msgctxt "Node: Title"
 msgid "View Byline Reports for this %s"
 msgstr "مشاهده گزارش خط تألیف برای این %s"
 
-#: Byline.php:953
+#: Byline.php:971
 msgctxt "Node: Title"
 msgid "[Unrelated]"
 msgstr "[بدون نسبت]"
 
-#: Byline.php:1009
+#: Byline.php:1027
 msgctxt "Metakey"
 msgid "Meta Byline"
 msgstr "متای خط تألیف"
 
-#: Byline.php:1010
+#: Byline.php:1028
 msgctxt "Metakey"
 msgid "Publication Byline"
 msgstr "متای منشورات"
 
-#: Byline.php:1011
+#: Byline.php:1029
 msgctxt "Metakey"
 msgid "Featured People"
 msgstr "افراد برجسته"
 
-#: Byline.php:1012
+#: Byline.php:1030
 msgctxt "Metakey"
 msgid "Custom Meta Byline"
 msgstr "متای سفارشی خط تألیف"
 
-#: Byline.php:1025
+#: Byline.php:1048
 msgctxt "Header"
 msgid "Byline Imports"
 msgstr "درون‌ریزی‌های خط تألیف"
@@ -444,28 +444,28 @@ msgid "Migrate meta-data of found %s rows into current module system."
 msgstr "%s مورد از فراداده‌های پیداشده به سیستم پودمان فعلی انتقال دهید."
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:143 ModuleSettings.php:335 ModuleSettings.php:598
+#: ModuleSettings.php:143 ModuleSettings.php:335 ModuleSettings.php:599
 #, php-format
 msgctxt "Notice"
 msgid "No byline meta-data available for &ldquo;%s&rdquo;."
 msgstr "هیچ فراداده‌ای برای &rdquo;%s&ldquo;. در دسترس نیست."
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:150 ModuleSettings.php:342 ModuleSettings.php:605
+#: ModuleSettings.php:150 ModuleSettings.php:342 ModuleSettings.php:606
 #, php-format
 msgctxt "Notice"
 msgid "There is problem updating byline meta-data for &ldquo;%s&rdquo;."
 msgstr "مشکلی در هنگام به‌روزرسانی فراداده‌های خط تألیف &rdquo;%s&ldquo;. پیش آمده است."
 
 #. translators: `%s`: post title
-#: ModuleSettings.php:157 ModuleSettings.php:349 ModuleSettings.php:612
+#: ModuleSettings.php:157 ModuleSettings.php:349 ModuleSettings.php:613
 #, php-format
 msgctxt "Notice"
 msgid "There is problem removing byline meta-data for &ldquo;%s&rdquo;."
 msgstr "مشکلی در هنگام حذف فراداده‌های خط تألیف &rdquo;%s&ldquo;. پیش آمده است."
 
 #. translators: `%1$s`: byline string, `%2$s`: post title
-#: ModuleSettings.php:163 ModuleSettings.php:355 ModuleSettings.php:618
+#: ModuleSettings.php:163 ModuleSettings.php:355 ModuleSettings.php:619
 #, php-format
 msgctxt "Notice"
 msgid "Byline %1$s migrated for &ldquo;%2$s&rdquo;."
@@ -541,7 +541,7 @@ msgstr "الگو:"
 #~ msgid "Priority of the custom byline tab."
 #~ msgstr "اولویت زبانه سفارشی خط تألیف را مشخص می‌کند."
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "OFFLINE!"
 #~ msgstr "آفلاین!"
 
@@ -553,6 +553,6 @@ msgstr "الگو:"
 #~ msgid "Collected by"
 #~ msgstr "جمع‌آور"
 
-#~ msgctxt "Javascript String"
+#~ msgctxt "JavaScript String"
 #~ msgid "New Slug …"
 #~ msgstr "نامک تازه …"

@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial Uploader\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-10-05 04:12+0330\n"
+"PO-Revision-Date: 2026-07-05 16:13+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Uploader\n"
 "X-Domain: geditorial-uploader\n"
 
@@ -97,7 +97,7 @@ msgid "Can not put contents into file!"
 msgstr "ذخیره محتوا در پرونده امکان‌پذیر نیست!"
 
 #. translators: `%1$s`: link markup start, `%2$s`: link markup end
-#: Uploader.php:260
+#: Uploader.php:261
 #, php-format
 msgctxt "Message"
 msgid "Alternatively, you can use %1$sLarge File Uploader%2$s widget on the dashoard."

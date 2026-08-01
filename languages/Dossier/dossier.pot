@@ -103,13 +103,13 @@ msgid "Post order in dossier list"
 msgstr ""
 
 #. translators: `%s`: order
-#: Dossier.php:403
+#: Dossier.php:405
 #, php-format
 msgctxt "Display"
 msgid "Order in Dossier: %s"
 msgstr ""
 
-#: Dossier.php:483
+#: Dossier.php:485
 msgctxt "Header"
 msgid "Dossiers Tools"
 msgstr ""

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Execution\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-06 21:21+0330\n"
+"PO-Revision-Date: 2026-07-05 16:15+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Execution\n"
 "X-Domain: geditorial-execution\n"
 
@@ -137,20 +137,20 @@ msgid "Executives"
 msgstr "مجریان"
 
 #. translators: `%s`: post title
-#: Execution.php:357
+#: Execution.php:356
 #, php-format
 msgctxt "Page Title"
 msgid "Executives Grid for %s"
 msgstr "هیئت اجرائی %s"
 
 #. translators: `%s`: post title
-#: Execution.php:359
+#: Execution.php:358
 #, php-format
 msgctxt "Page Title"
 msgid "Executives Overview for %s"
 msgstr "مروری بر مجریان %s"
 
-#: Execution.php:388
+#: Execution.php:387
 msgctxt "Default Term: Audit"
 msgid "Empty Executives Data"
 msgstr "داده‌های اجرائی خالی"

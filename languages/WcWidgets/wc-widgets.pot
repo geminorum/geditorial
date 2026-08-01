@@ -97,22 +97,22 @@ msgctxt "Widget Description"
 msgid "Displays a custom message in WooCommerce mark-up."
 msgstr ""
 
-#: Widgets/WCMessage.php:55
+#: Widgets/WCMessage.php:56
 msgctxt "Widget: WCMessage"
 msgid "Notice"
 msgstr ""
 
-#: Widgets/WCMessage.php:56
+#: Widgets/WCMessage.php:57
 msgctxt "Widget: WCMessage"
 msgid "Success"
 msgstr ""
 
-#: Widgets/WCMessage.php:57
+#: Widgets/WCMessage.php:58
 msgctxt "Widget: WCMessage"
 msgid "Error"
 msgstr ""
 
-#: Widgets/WCMessage.php:70
+#: Widgets/WCMessage.php:71
 msgctxt "Widget: WCMessage"
 msgid "Notice Type:"
 msgstr ""

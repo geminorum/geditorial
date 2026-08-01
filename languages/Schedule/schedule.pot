@@ -23,53 +23,53 @@ msgctxt "Setting Description"
 msgid "Posts in these statuses can <b>not</b> be rescheduled."
 msgstr ""
 
-#: Schedule.php:87
+#: Schedule.php:89
 msgctxt "Message"
 msgid "Post not found."
 msgstr ""
 
-#: Schedule.php:90
+#: Schedule.php:92
 msgctxt "Message"
 msgid "Updating the post date dynamically doesn't work for published content."
 msgstr ""
 
-#: Schedule.php:127
-#: Schedule.php:206
+#: Schedule.php:138
+#: Schedule.php:217
 msgctxt "Page Title"
 msgid "Editorial Calendar"
 msgstr ""
 
-#: Schedule.php:128
+#: Schedule.php:139
 msgctxt "Menu Title"
 msgid "My Calendar"
 msgstr ""
 
-#: Schedule.php:161
+#: Schedule.php:172
 msgctxt "Title Attr"
 msgid "View on Calendar"
 msgstr ""
 
-#: Schedule.php:164
+#: Schedule.php:175
 msgctxt "Action"
 msgid "Calendar"
 msgstr ""
 
-#: Schedule.php:229
+#: Schedule.php:240
 msgctxt "Title Attr"
 msgid "Save"
 msgstr ""
 
-#: Schedule.php:230
+#: Schedule.php:241
 msgctxt "Title Attr"
 msgid "Cancel"
 msgstr ""
 
-#: Schedule.php:254
+#: Schedule.php:266
 msgctxt "Indicator"
 msgid "Today"
 msgstr ""
 
-#: Schedule.php:283
+#: Schedule.php:295
 msgctxt "Sortable"
 msgid "Drag me!"
 msgstr ""

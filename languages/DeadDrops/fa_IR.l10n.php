@@ -1,2 +1,18 @@
 <?php
-return ['domain'=>'geditorial-dead-drops','plural-forms'=>NULL,'language'=>'fa_IR','project-id-version'=>'gEditorial DeadDrops','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-11-13 22:07+0330','x-generator'=>'Poedit 3.8','messages'=>['Setting TitleSignal Instructions'=>'راهنمای سیگنال','Setting DescriptionDisplays beside the qr-code on the signalling pop-up. Leave blank for default.'=>'در کنار کد کی‌آر در صفحه سیگنال نمایش داده خواهد شد. برای پیش‌فرض خالی بگذارید.','MessageScan this with your phone and open it to upload files anonymously.'=>'برای بارگذاری به صورت ناشناس، با استفاده از گوشی، شکل کناری را اسکن و در مرورگر باز کنید.','Button TitleDead Drop for %1$s'=>'سقوط آزاد برای %1$s','Header ButtonDead Drop'=>'سقوط آزاد','ButtonDiscard'=>'لغو']];
+return [
+	'domain' => 'geditorial-dead-drops',
+	'plural-forms' => NULL,
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial DeadDrops',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:17+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Setting TitleSignal Instructions' => 'راهنمای سیگنال',
+		'Setting DescriptionDisplays beside the qr-code on the signalling pop-up. Leave blank for default.' => 'در کنار کد کی‌آر در صفحه سیگنال نمایش داده خواهد شد. برای پیش‌فرض خالی بگذارید.',
+		'MessageScan this with your phone and open it to upload files anonymously.' => 'برای بارگذاری به صورت ناشناس، با استفاده از گوشی، شکل کناری را اسکن و در مرورگر باز کنید.',
+		'Button TitleDead Drop for %1$s' => 'سقوط آزاد برای %1$s',
+		'Header ButtonDead Drop' => 'سقوط آزاد',
+		'ButtonDiscard' => 'لغو',
+	],
+];

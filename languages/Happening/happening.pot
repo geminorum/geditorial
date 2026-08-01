@@ -185,32 +185,72 @@ msgctxt "Card"
 msgid "Event Date from Meta-data"
 msgstr ""
 
+#: ModuleInfo.php:19
+msgctxt "Info: Default Term for Status"
+msgid "Processing"
+msgstr ""
+
 #: ModuleInfo.php:20
 msgctxt "Info: Default Term for Status"
 msgid "The event is being created."
 msgstr ""
 
+#: ModuleInfo.php:24
+msgctxt "Info: Default Term for Status"
+msgid "Tentative"
+msgstr ""
+
 #: ModuleInfo.php:25
 msgctxt "Info: Default Term for Status"
-msgid "The event start date and time is in the future."
+msgid "The event is tentative and may change in the future."
+msgstr ""
+
+#: ModuleInfo.php:29
+msgctxt "Info: Default Term for Status"
+msgid "Upcoming"
 msgstr ""
 
 #: ModuleInfo.php:30
 msgctxt "Info: Default Term for Status"
-msgid "The event start date and time is in the past, and the event end date and time is in the future."
+msgid "The event start date and time is in the future."
+msgstr ""
+
+#: ModuleInfo.php:34
+msgctxt "Info: Default Term for Status"
+msgid "Ongoing"
 msgstr ""
 
 #: ModuleInfo.php:35
 msgctxt "Info: Default Term for Status"
-msgid "The event's end date and time is in the past."
+msgid "The event start date and time is in the past, and the event end date and time is in the future."
+msgstr ""
+
+#: ModuleInfo.php:39
+msgctxt "Info: Default Term for Status"
+msgid "Completed"
 msgstr ""
 
 #: ModuleInfo.php:40
 msgctxt "Info: Default Term for Status"
-msgid "The event's archive date is in the past."
+msgid "The event's end date and time is in the past."
+msgstr ""
+
+#: ModuleInfo.php:44
+msgctxt "Info: Default Term for Status"
+msgid "Archived"
 msgstr ""
 
 #: ModuleInfo.php:45
+msgctxt "Info: Default Term for Status"
+msgid "The event's archive date is in the past."
+msgstr ""
+
+#: ModuleInfo.php:49
+msgctxt "Info: Default Term for Status"
+msgid "Cancelled"
+msgstr ""
+
+#: ModuleInfo.php:50
 msgctxt "Info: Default Term for Status"
 msgid "A planner has Canceled the event."
 msgstr ""

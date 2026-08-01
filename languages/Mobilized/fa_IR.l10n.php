@@ -1,2 +1,16 @@
 <?php
-return ['domain'=>'geditorial-mobilized','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Mobilized','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2026-03-28 15:01+0330','x-generator'=>'Poedit 3.9','messages'=>['Mobilization'=>'پیش‌اقدام‌ها' . "\0" . 'پیش‌اقدام','Label: Menu NameContent Mobilizations'=>'پیش‌قدم‌های محتوا','Label: Show Option AllMobilizations'=>'پیش‌اقدام','Label: Show Option No Terms(Undefined)'=>'(تعریف‌نشده)']];
+return [
+	'domain' => 'geditorial-mobilized',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Mobilized',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-03-28 15:01+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Mobilization' => 'پیش‌اقدام‌ها' . "\0" . 'پیش‌اقدام',
+		'Label: Menu NameContent Mobilizations' => 'پیش‌قدم‌های محتوا',
+		'Label: Show Option AllMobilizations' => 'پیش‌اقدام',
+		'Label: Show Option No Terms(Undefined)' => '(تعریف‌نشده)',
+	],
+];

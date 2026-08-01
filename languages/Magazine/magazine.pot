@@ -129,32 +129,32 @@ msgid "Post total pages on issue (printed)"
 msgstr ""
 
 #. translators: `%s`: order
-#: Magazine.php:458
+#: Magazine.php:460
 #, php-format
 msgctxt "Display"
 msgid "Order in Issue: %s"
 msgstr ""
 
 #. translators: `%s`: page
-#: Magazine.php:465
+#: Magazine.php:467
 #, php-format
 msgctxt "Display"
 msgid "Page in Issue: %s"
 msgstr ""
 
 #. translators: `%s`: total count
-#: Magazine.php:471
+#: Magazine.php:473
 #, php-format
 msgctxt "Display"
 msgid "Total Pages: %s"
 msgstr ""
 
-#: Magazine.php:561
+#: Magazine.php:563
 msgctxt "Header"
 msgid "Magazine Tools"
 msgstr ""
 
-#: Magazine.php:570
+#: Magazine.php:572
 msgctxt "Card"
 msgid "Issue Date from Meta-data"
 msgstr ""

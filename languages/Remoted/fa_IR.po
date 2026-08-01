@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: gEditorial Remoted\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-01-16 22:28+0330\n"
+"PO-Revision-Date: 2026-07-05 16:17+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Remoted\n"
 "X-Domain: geditorial-remoted\n"
 
@@ -133,13 +133,13 @@ msgstr "کلیک دکمه برای هر پرونده بارگذاری شده ا�
 
 #: Remoted.php:113
 msgctxt "Setting Option"
-msgid "Automatically stores file uploaded into the library."
-msgstr "پرونده بارگذاری‌شده را به صورت خودکار در کتابخانه ذخیره می‌کند."
+msgid "Only provides the final URL of the file uploaded."
+msgstr "فقط نشانی نهایی پرونده بارگذاری شده را ارائه دهد."
 
 #: Remoted.php:114
 msgctxt "Setting Option"
-msgid "Only provides the final URL of the file uploaded."
-msgstr "فقط نشانی نهایی پرونده بارگذاری شده را ارائه دهد."
+msgid "Automatically stores file uploaded into the library."
+msgstr "پرونده بارگذاری‌شده را به صورت خودکار در کتابخانه ذخیره می‌کند."
 
 #: Remoted.php:122
 msgctxt "Setting Title"
@@ -186,7 +186,7 @@ msgctxt "Setting Description"
 msgid "Displays as title of the root destination on the widget select."
 msgstr ""
 
-#: Remoted.php:151 Remoted.php:272
+#: Remoted.php:151 Remoted.php:273
 msgctxt "Setting Default"
 msgid "Root Destination"
 msgstr "مقصد ریشه"
@@ -209,42 +209,42 @@ msgctxt "Message"
 msgid "The mime-type is not allowed on this site!"
 msgstr "این نوع‌مایم روی این سایت مجاز نیست!"
 
-#: Remoted.php:233
+#: Remoted.php:234
 msgctxt "Dashboard Widget Title"
 msgid "Remote Uploads"
 msgstr "بارگذاری‌های دوردست"
 
-#: Remoted.php:285
+#: Remoted.php:286
 msgctxt "Button"
 msgid "Upload Files"
 msgstr "بارگذاری پرونده‌ها"
 
-#: Remoted.php:288
+#: Remoted.php:289
 msgctxt "Notice"
 msgid "Your browser does not support HTML5 upload."
 msgstr "مرورگر شما بارگذاری HTML5 را پشتیبانی نمی‌کند."
 
-#: Remoted.php:308
+#: Remoted.php:311
 msgctxt "Filter Title"
 msgid "Supported Extensions"
 msgstr "پسوندهای پشتیبانی‌شده"
 
-#: Remoted.php:377
+#: Remoted.php:380
 msgctxt "Button"
 msgid "Download Receiver"
 msgstr "دریافت گیرنده"
 
-#: Remoted.php:383
+#: Remoted.php:386
 msgctxt "Button"
 msgid "Cleanup Receiver"
 msgstr "پاک‌سازی گیرنده"
 
-#: Remoted.php:391
+#: Remoted.php:394
 msgctxt "Button"
 msgid "Generate Receiver"
 msgstr "تولید گیرنده"
 
-#: Remoted.php:435
+#: Remoted.php:438
 msgctxt "Setting Default"
 msgid "You will be returned to the main site."
 msgstr "به سایت اصلی بازگردان می‌شوید …"

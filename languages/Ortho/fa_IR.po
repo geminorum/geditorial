@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Ortho\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-28 11:23+0330\n"
+"PO-Revision-Date: 2026-07-26 20:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -15,135 +15,135 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Ortho\n"
 "X-Domain: geditorial-ortho\n"
 
-#: ModuleInfo.php:19
+#: ModuleInfo.php:70
 msgctxt "Help Tab Title"
 msgid "Virastar"
 msgstr "ویراستار"
 
-#: ModuleInfo.php:24
+#: ModuleInfo.php:75
 msgctxt "Help Tab Title"
 msgid "PersianTools"
 msgstr "ابزارهای ایرانی"
 
-#: Ortho.php:121
+#: Ortho.php:63
 msgctxt "Setting Title"
 msgid "Virastar Options"
 msgstr "تنظیمات ویراستار"
 
-#: Ortho.php:122
+#: Ortho.php:64
 msgctxt "Setting Description"
 msgid "For more information, please see the library documentations."
 msgstr "برای اطلاعات بیشتر، مستندات ویراستار را ببینید."
 
-#: Ortho.php:128
+#: Ortho.php:70
 msgctxt "Setting Title"
 msgid "Virastar on Paste"
 msgstr "ویراستار با پیست"
 
-#: Ortho.php:129
+#: Ortho.php:71
 msgctxt "Setting Description"
 msgid "Applies Virastar to pasted texts on targeted inputs."
 msgstr "ویراستار را در هنگام چسباندن (پیست)‌ متن اعمال میکند."
 
-#: Ortho.php:139
+#: Ortho.php:82
 msgctxt "Setting Section Title"
 msgid "Virastar!"
 msgstr "ویراستار!"
 
-#: Ortho.php:140
+#: Ortho.php:83
 msgctxt "Setting Section Description"
 msgid "Customize the behavior of Virastar library."
 msgstr "رفتار کتابخانه ویراستار را سفارشی‌سازی کنید."
 
-#: Ortho.php:152 Ortho.php:154
-msgctxt "Javascript String"
+#: Ortho.php:95 Ortho.php:97
+msgctxt "JavaScript String"
 msgid "Apply Virastar!"
 msgstr "اعمال ویراستار!"
 
-#: Ortho.php:153
-msgctxt "Javascript String"
+#: Ortho.php:96
+msgctxt "JavaScript String"
 msgid "Virastar!"
 msgstr "ویراستار!"
 
-#: Ortho.php:155
-msgctxt "Javascript String"
+#: Ortho.php:98
+msgctxt "JavaScript String"
 msgid "Swap Quotes"
 msgstr "جابه‌جایی نقل‌ها"
 
-#: Ortho.php:156
-msgctxt "Javascript String"
+#: Ortho.php:99
+msgctxt "JavaScript String"
 msgid "Swap Not-Correct Quotes"
 msgstr "جابه‌جایی علامت‌های نقل قول"
 
-#: Ortho.php:157
-msgctxt "Javascript String"
+#: Ortho.php:100
+msgctxt "JavaScript String"
 msgid "Word Footnotes"
 msgstr "پانویس‌های ورد"
 
-#: Ortho.php:158
-msgctxt "Javascript String"
+#: Ortho.php:101
+msgctxt "JavaScript String"
 msgid "MS Word Footnotes to WordPress [ref]"
 msgstr "تبدیل پانویس‌های مایکروسافت ورد به وردپرس"
 
-#: Ortho.php:159
-msgctxt "Javascript String"
+#: Ortho.php:102
+msgctxt "JavaScript String"
 msgid "Download"
 msgstr "دریافت"
 
-#: Ortho.php:160
-msgctxt "Javascript String"
+#: Ortho.php:103
+msgctxt "JavaScript String"
 msgid "Download text as markdown"
 msgstr "دریافت متن در قالب مارک‌داون"
 
-#: Ortho.php:161
-msgctxt "Javascript String"
+#: Ortho.php:104
+msgctxt "JavaScript String"
 msgid "nbsp"
 msgstr "nbsp"
 
-#: Ortho.php:162
-msgctxt "Javascript String"
-msgid "Non-Breaking SPace"
+#: Ortho.php:105
+msgctxt "JavaScript String"
+msgid "Non-Breaking Space"
 msgstr "فاصلهٔ بدون شکست"
 
 # displayed on LTR
 #. translators: `%s`: keyboard shortcut
-#: Ortho.php:173
+#: Ortho.php:116
 #, php-format
 msgctxt "TinyMCE String"
 msgid "Virastar! (%s)"
 msgstr "!ویراستار (%s)"
 
-#: Ortho.php:323
+#: Ortho.php:272
 msgctxt "Header"
 msgid "Orthography Tools"
 msgstr "ابزارهای املاء"
 
-#: Ortho.php:334
+#: Ortho.php:284
 msgctxt "Card Title"
 msgid "Data Sandbox"
 msgstr "جعبه‌شنی برای داده‌ها"
 
-#: Ortho.php:401
+#: Ortho.php:351
 msgctxt "Message"
 msgid "Paste raw data and see how Orthography filters works!"
 msgstr "داده‌های خام را بچسبانید و ببینید پالایه‌های املاء چگونه کار می‌کنند!"
 
-#: Ortho.php:435
+#: Ortho.php:383
 msgctxt "Button"
 msgid "Cleanup Chars"
 msgstr "پالایش نویسه‌ها"
 
-#: Ortho.php:451
+#: Ortho.php:399
 msgctxt "Char Title"
 msgid "Arabic Yeh U+064A"
 msgstr "یاء عربی U+064A"
 
-#: Ortho.php:452
+#: Ortho.php:400
 msgctxt "Char Title"
 msgid "Arabic Kaf U+0643"
 msgstr "کاف عربی U+0643"
 
-#: Ortho.php:479
+#: Ortho.php:427
 msgctxt "Header"
 msgid "Overview of Post Orthography"
 msgstr "مروری بر املای فرسته‌ها"

@@ -36,14 +36,14 @@ msgstr ""
 #. translators: `%s`: HTML word
 #: Dashboard.php:53
 #, php-format
-msgctxt "Settings: Setting Description"
+msgctxt "Setting Description"
 msgid "Adds %s before contents on dashboard homepage."
 msgstr ""
 
 #. translators: `%s`: HTML word
 #: Dashboard.php:58
 #, php-format
-msgctxt "Settings: Setting Description"
+msgctxt "Setting Description"
 msgid "Adds %s after contents on dashboard homepage."
 msgstr ""
 
@@ -64,7 +64,7 @@ msgctxt "Widget Area"
 msgid "Widgets appear on Front-end Dashboard"
 msgstr ""
 
-#: Dashboard.php:186
+#: Dashboard.php:188
 msgctxt "Page-State"
 msgid "Dashboard"
 msgstr ""

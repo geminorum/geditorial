@@ -44,7 +44,7 @@ msgid "National Bibliographic Number"
 msgstr ""
 
 #: Isbn.php:89
-#: Isbn.php:542
+#: Isbn.php:548
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr ""
@@ -59,7 +59,7 @@ msgid "International Standard Book Number"
 msgstr ""
 
 #: Isbn.php:98
-#: Isbn.php:548
+#: Isbn.php:554
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr ""
@@ -75,7 +75,7 @@ msgid "Label to use on ISBN #2"
 msgstr ""
 
 #: Isbn.php:109
-#: Isbn.php:554
+#: Isbn.php:560
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "Label to use on ISBN #3"
 msgstr ""
 
 #: Isbn.php:120
-#: Isbn.php:560
+#: Isbn.php:566
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr ""
@@ -107,7 +107,7 @@ msgid "Label to use on ISBN #4"
 msgstr ""
 
 #: Isbn.php:131
-#: Isbn.php:566
+#: Isbn.php:572
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr ""
@@ -137,14 +137,49 @@ msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:589
+#: Isbn.php:595
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr ""
 
-#: Isbn.php:619
+#: Isbn.php:626
 msgctxt "Field Title Attr"
 msgid "See the page about this on National Library website."
+msgstr ""
+
+#: ModuleHelper.php:35
+msgctxt "Lookup: Name"
+msgid "Wikipedia"
+msgstr ""
+
+#: ModuleHelper.php:43
+msgctxt "Lookup: Name"
+msgid "OpenLibrary"
+msgstr ""
+
+#: ModuleHelper.php:51
+msgctxt "Lookup: Name"
+msgid "Google Books"
+msgstr ""
+
+#: ModuleHelper.php:59
+msgctxt "Lookup: Name"
+msgid "Google Search"
+msgstr ""
+
+#: ModuleHelper.php:68
+msgctxt "Lookup: Name"
+msgid "Goodreads"
+msgstr ""
+
+#: ModuleHelper.php:69
+msgctxt "Lookup: Description"
+msgid "Search Goodreads for Books via ISBN"
+msgstr ""
+
+#: ModuleHelper.php:82
+msgctxt "Lookup: Name"
+msgid "Ketab.IR"
 msgstr ""
 
 #: ModuleSettings.php:27

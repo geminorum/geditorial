@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Like\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-02-03 16:06+0330\n"
+"PO-Revision-Date: 2026-07-05 16:18+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Like\n"
 "X-Domain: geditorial-like\n"
 
@@ -50,7 +50,7 @@ msgctxt "Setting Description"
 msgid "Title attribute of the like button."
 msgstr ""
 
-#: Like.php:71 Like.php:154
+#: Like.php:71 Like.php:151
 msgctxt "Setting Default"
 msgid "Loading &hellip;"
 msgstr "بارگیری &hellip;"
@@ -60,7 +60,7 @@ msgctxt "Setting Title"
 msgid "Like Title"
 msgstr "عنوان پسند"
 
-#: Like.php:78 Like.php:310
+#: Like.php:78 Like.php:307
 msgctxt "Setting Default"
 msgid "Like"
 msgstr "پسند"
@@ -70,32 +70,32 @@ msgctxt "Setting Title"
 msgid "Unlike Title"
 msgstr "عنوان ناپسند"
 
-#: Like.php:85 Like.php:308
+#: Like.php:85 Like.php:305
 msgctxt "Setting Default"
 msgid "Unlike"
 msgstr "ناپسند"
 
 #. translators: `%s`: count placeholder
-#: Like.php:194
+#: Like.php:191
 #, php-format
 msgctxt "Node: Title"
 msgid "Like Summary: Users %s"
 msgstr "پسند‌ها: کاربران %s"
 
 #. translators: `%s`: count placeholder
-#: Like.php:223
+#: Like.php:220
 #, php-format
 msgctxt "Node: Title"
 msgid "Like Summary: Guests %s"
 msgstr "پسند‌ها: مهمان‌ها %s"
 
-#: Like.php:504
+#: Like.php:509
 msgctxt "Row Icon Title"
 msgid "Likes"
 msgstr "پسندها"
 
 #. translators: `%s`: likes count
-#: Like.php:508
+#: Like.php:513
 #, php-format
 msgctxt "Noop"
 msgid "%s Like"
@@ -104,7 +104,7 @@ msgstr[0] "%s پسند"
 msgstr[1] "%s پسند"
 
 #. translators: `%s`: users count
-#: Like.php:519
+#: Like.php:524
 #, php-format
 msgctxt "Noop"
 msgid "%s User"
@@ -113,7 +113,7 @@ msgstr[0] "%s کاربر"
 msgstr[1] "%s کاربر"
 
 #. translators: `%s`: guests count
-#: Like.php:526
+#: Like.php:531
 #, php-format
 msgctxt "Noop"
 msgid "%s Guest"
@@ -121,37 +121,37 @@ msgid_plural "%s Guests"
 msgstr[0] "%s مهمان"
 msgstr[1] "%s مهمان"
 
-#: Like.php:604
+#: Like.php:609
 msgctxt "Table Action"
 msgid "Sync Counts"
 msgstr "همگام‌سازی شمارها"
 
-#: Like.php:605
+#: Like.php:610
 msgctxt "Table Action"
 msgid "Sync All Counts"
 msgstr "همگام‌سازی همه شمارها"
 
-#: Like.php:618
+#: Like.php:623
 msgctxt "Table Column"
 msgid "Total"
 msgstr "مجموع"
 
-#: Like.php:624
+#: Like.php:629
 msgctxt "Table Column"
 msgid "Guests"
 msgstr "مهمانان"
 
-#: Like.php:630
+#: Like.php:635
 msgctxt "Table Column"
 msgid "Users"
 msgstr "کاربران"
 
-#: Like.php:636
+#: Like.php:641
 msgctxt "Table Column"
 msgid "Avatars"
 msgstr "آواتارها"
 
-#: Like.php:645
+#: Like.php:650
 msgctxt "Header"
 msgid "Overview of Post Likes"
 msgstr "مروری بر پسند‌ها در نوشته‌ها"

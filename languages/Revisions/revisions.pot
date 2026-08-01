@@ -45,25 +45,25 @@ msgctxt "Setting Description"
 msgid "The maximum number of revisions to save for each post. %s for every revision."
 msgstr ""
 
-#: Revisions.php:124
+#: Revisions.php:126
 msgctxt "Bulk Action"
 msgid "Purge Revisions"
 msgstr ""
 
 #. translators: `%s`: revisions count
-#: Revisions.php:152
+#: Revisions.php:154
 #, php-format
 msgctxt "Message"
 msgid "%s items(s) revisions purged!"
 msgstr ""
 
-#: Revisions.php:172
+#: Revisions.php:174
 msgctxt "Row Icon Title"
 msgid "Revisions"
 msgstr ""
 
 #. translators: `%s`: revisions count
-#: Revisions.php:177
+#: Revisions.php:179
 #, php-format
 msgctxt "Row"
 msgid "%s Revision"
@@ -71,74 +71,74 @@ msgid_plural "%s Revisions"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Revisions.php:184
+#: Revisions.php:186
 msgctxt "Title Attr"
 msgid "View the last revision"
 msgstr ""
 
-#: Revisions.php:223
+#: Revisions.php:225
 msgctxt "Title Attribute"
 msgid "[Title|Content|Excerpt] Word Counts"
 msgstr ""
 
-#: Revisions.php:248
+#: Revisions.php:250
 msgctxt "Indicator"
 msgid "[Current]"
 msgstr ""
 
-#: Revisions.php:262
+#: Revisions.php:264
 msgctxt "Title Attr"
 msgid "Browse"
 msgstr ""
 
-#: Revisions.php:271
+#: Revisions.php:273
 msgctxt "Title Attr"
 msgid "Delete"
 msgstr ""
 
-#: Revisions.php:281
+#: Revisions.php:283
 msgctxt "Indicator"
 msgid "[Autosave]"
 msgstr ""
 
-#: Revisions.php:307
+#: Revisions.php:309
 msgctxt "Title Attr"
 msgid "Purge all revisions"
 msgstr ""
 
-#: Revisions.php:313
+#: Revisions.php:315
 msgctxt "Button"
 msgid "Purge Revisions"
 msgstr ""
 
-#: Revisions.php:320
+#: Revisions.php:322
 msgctxt "Title Attr"
 msgid "Browse all revisions"
 msgstr ""
 
 #. translators: `%s`: revisions count
-#: Revisions.php:324
+#: Revisions.php:326
 #, php-format
 msgctxt "Button"
 msgid "Browse %s Revisions"
 msgstr ""
 
-#: Revisions.php:442
+#: Revisions.php:444
 msgctxt "Table Action"
 msgid "Cleanup Revisions"
 msgstr ""
 
-#: Revisions.php:453
+#: Revisions.php:455
 msgctxt "Table Column"
 msgid "Revisions"
 msgstr ""
 
-#: Revisions.php:478
+#: Revisions.php:480
 msgctxt "Header"
 msgid "Overview of Post Revisions"
 msgstr ""
 
-#: Revisions.php:479
+#: Revisions.php:481
 msgctxt "Message"
 msgid "No post revisions found."
 msgstr ""

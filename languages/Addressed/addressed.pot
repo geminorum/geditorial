@@ -13,214 +13,214 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Addressed\n"
 "X-Domain: geditorial-addressed\n"
 
-#: Addressed.php:46
+#: Addressed.php:47
 msgctxt "Setting Title"
 msgid "Base Country"
 msgstr ""
 
-#: Addressed.php:47
+#: Addressed.php:48
 msgctxt "Setting Description"
 msgid "Defines the base country of site for supported contents."
 msgstr ""
 
-#: Addressed.php:54
+#: Addressed.php:55
 msgctxt "Setting Title"
 msgid "Base Province"
 msgstr ""
 
-#: Addressed.php:55
+#: Addressed.php:56
 msgctxt "Setting Description"
 msgid "Defines the base state or province of site for supported contents."
 msgstr ""
 
-#: Addressed.php:64
+#: Addressed.php:65
 msgctxt "Setting Title"
 msgid "Default Format"
 msgstr ""
 
-#: Addressed.php:65
+#: Addressed.php:66
 msgctxt "Setting Description"
 msgid "Defines the default address format for supported contents."
 msgstr ""
 
-#: Addressed.php:71
+#: Addressed.php:72
 msgctxt "Setting Title"
 msgid "Override Base Country"
 msgstr ""
 
-#: Addressed.php:72
+#: Addressed.php:73
 msgctxt "Setting Description"
 msgid "Also overrides the address format of the base country of site."
 msgstr ""
 
-#: Addressed.php:77
+#: Addressed.php:78
 msgctxt "Setting Title"
 msgid "Override Woo-Commerce"
 msgstr ""
 
-#: Addressed.php:78
+#: Addressed.php:79
 msgctxt "Setting Description"
 msgid "Also overrides the default format of Woo-Commerce adressess."
 msgstr ""
 
-#: Addressed.php:86
+#: Addressed.php:87
 msgctxt "Setting Title"
 msgid "Address Types"
 msgstr ""
 
-#: Addressed.php:91
+#: Addressed.php:92
 msgctxt "Setting Title"
 msgid "Title"
 msgstr ""
 
-#: Addressed.php:92
+#: Addressed.php:93
 msgctxt "Setting Description"
 msgid "Defines the title on the address type."
 msgstr ""
 
-#: Addressed.php:97
+#: Addressed.php:98
 msgctxt "Setting Title"
 msgid "Description"
 msgstr ""
 
-#: Addressed.php:98
+#: Addressed.php:99
 msgctxt "Setting Description"
 msgid "Defines the description on the address type."
 msgstr ""
 
-#: Addressed.php:103
+#: Addressed.php:104
 msgctxt "Setting Title"
 msgid "Identifier"
 msgstr ""
 
-#: Addressed.php:104
+#: Addressed.php:105
 msgctxt "Setting Description"
 msgid "Defines the unique identifier on the address type."
 msgstr ""
 
-#: Addressed.php:111
+#: Addressed.php:112
 msgctxt "Setting Title"
 msgid "Priority"
 msgstr ""
 
-#: Addressed.php:112
+#: Addressed.php:113
 msgctxt "Setting Description"
 msgid "Sets as the sort priority where the address display on the list."
 msgstr ""
 
-#: Addressed.php:121
+#: Addressed.php:122
 msgctxt "Setting Title"
 msgid "Supported Fields"
 msgstr ""
 
-#: Addressed.php:122
+#: Addressed.php:123
 msgctxt "Setting Description"
 msgid "Defines supported address fields for all type."
 msgstr ""
 
-#: Addressed.php:123
+#: Addressed.php:124
 msgctxt "Setting Empty String"
 msgid "There are no address fields available!"
 msgstr ""
 
-#: Addressed.php:154
+#: Addressed.php:155
 msgctxt "Control label"
 msgid "Address line 1"
 msgstr ""
 
-#: Addressed.php:155
+#: Addressed.php:156
 msgctxt "Control Description"
 msgid "The street address for the location."
 msgstr ""
 
-#: Addressed.php:160
+#: Addressed.php:161
 msgctxt "Control label"
 msgid "Address Line 2"
 msgstr ""
 
-#: Addressed.php:161
+#: Addressed.php:162
 msgctxt "Control Description"
 msgid "An additional, optional address line for the location."
 msgstr ""
 
-#: Addressed.php:166
+#: Addressed.php:167
 msgctxt "Control label"
 msgid "Company"
 msgstr ""
 
-#: Addressed.php:167
+#: Addressed.php:168
 msgctxt "Control Description"
 msgid "The organization in which this address is located."
 msgstr ""
 
-#: Addressed.php:172
+#: Addressed.php:173
 msgctxt "Control label"
 msgid "City"
 msgstr ""
 
-#: Addressed.php:173
+#: Addressed.php:174
 msgctxt "Control Description"
 msgid "The city in which this address is located."
 msgstr ""
 
-#: Addressed.php:178
+#: Addressed.php:179
 msgctxt "Control label"
 msgid "Province"
 msgstr ""
 
-#: Addressed.php:179
+#: Addressed.php:180
 msgctxt "Control Description"
 msgid "The state or province in which this address is located."
 msgstr ""
 
-#: Addressed.php:184
+#: Addressed.php:185
 msgctxt "Control label"
 msgid "Country"
 msgstr ""
 
-#: Addressed.php:185
+#: Addressed.php:186
 msgctxt "Control Description"
 msgid "The country in which this address is located."
 msgstr ""
 
-#: Addressed.php:190
+#: Addressed.php:191
 msgctxt "Control label"
 msgid "Coordinates"
 msgstr ""
 
-#: Addressed.php:191
+#: Addressed.php:192
 msgctxt "Control Description"
 msgid "The Latitude and Longitude to this address."
 msgstr ""
 
-#: Addressed.php:196
+#: Addressed.php:197
 msgctxt "Control label"
 msgid "Site URL"
 msgstr ""
 
-#: Addressed.php:197
+#: Addressed.php:198
 msgctxt "Control Description"
 msgid "The site URL of this address."
 msgstr ""
 
-#: Addressed.php:202
+#: Addressed.php:203
 msgctxt "Control label"
 msgid "Embed URL"
 msgstr ""
 
-#: Addressed.php:203
+#: Addressed.php:204
 msgctxt "Control Description"
 msgid "An embeddable resource URL about this address."
 msgstr ""
 
 #. translators: `%s`: address type title
-#: Addressed.php:246
+#: Addressed.php:247
 #, php-format
 msgctxt "Customizer: Section Title"
 msgid "Address: %s"
 msgstr ""
 
-#: Addressed.php:390
+#: Addressed.php:391
 msgctxt "Header"
 msgid "Address Reports"
 msgstr ""

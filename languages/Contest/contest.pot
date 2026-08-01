@@ -140,17 +140,17 @@ msgctxt "Field Description"
 msgid "Verified date for the submitted application."
 msgstr ""
 
-#: Contest.php:477
+#: Contest.php:478
 msgctxt "Header"
 msgid "Contest Tools"
 msgstr ""
 
-#: Contest.php:489
+#: Contest.php:490
 msgctxt "Card"
 msgid "Contest/Apply Date from Meta-data"
 msgstr ""
 
-#: Contest.php:565
+#: Contest.php:571
 msgctxt "Default Term: Audit"
 msgid "Apply Abandoned"
 msgstr ""

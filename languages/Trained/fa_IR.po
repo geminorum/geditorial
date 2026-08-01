@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Trained\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-03-06 21:31+0330\n"
+"PO-Revision-Date: 2026-07-05 16:19+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Trained\n"
 "X-Domain: geditorial-trained\n"
 
@@ -203,12 +203,12 @@ msgctxt "Field Description"
 msgid "Unique Training Code"
 msgstr "کد آموزشی یکتا"
 
-#: Trained.php:609
+#: Trained.php:615
 msgctxt "Header"
 msgid "Training Course Tools"
 msgstr "ابزارهایی برای دوره‌های آموزشی"
 
-#: Trained.php:618
+#: Trained.php:624
 msgctxt "Card"
 msgid "Training Course Date from Meta-data"
 msgstr "تاریخ دوره‌های آموزشی بر اساس داده‌های متا"

@@ -1,2 +1,14 @@
 <?php
-return ['domain'=>'geditorial-alphabet','plural-forms'=>NULL,'language'=>'fa_IR','project-id-version'=>'gEditorial Alphabet','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2026-05-06 02:27+0330','x-generator'=>'Poedit 3.9','messages'=>['Setting: Short-code TitlePosts'=>'فرسته‌ها','Setting: Short-code TitleTerms'=>'رده‌ها']];
+return [
+	'domain' => 'geditorial-alphabet',
+	'plural-forms' => NULL,
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Alphabet',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-05-06 02:27+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Setting: Short-code TitlePosts' => 'فرسته‌ها',
+		'Setting: Short-code TitleTerms' => 'رده‌ها',
+	],
+];

@@ -1,2 +1,16 @@
 <?php
-return ['domain'=>'geditorial-jobbed','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Jobbed','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:23+0330','x-generator'=>'Poedit 3.5','messages'=>['Job Title'=>'عناوین شغلی' . "\0" . 'عنوان شغلی','Label: Menu NameJob Titles'=>'عنوان شغلی','Label: Show Option AllJob Titles'=>'عنوان شغلی','Label: Show Option No Terms(Unknown)'=>'(نامعلوم)']];
+return [
+	'domain' => 'geditorial-jobbed',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Jobbed',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:02+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Job Title' => 'عناوین شغلی' . "\0" . 'عنوان شغلی',
+		'Label: Menu NameJob Titles' => 'عنوان شغلی',
+		'Label: Show Option AllJob Titles' => 'عنوان شغلی',
+		'Label: Show Option No Terms(Unknown)' => '(نامعلوم)',
+	],
+];

@@ -1,2 +1,21 @@
 <?php
-return ['domain'=>'geditorial-educated','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Educated','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-02-12 01:50+0330','x-generator'=>'Poedit 3.5','messages'=>['Education Definition'=>'سطوح تحصیلی' . "\0" . 'سطح تحصیلی','Label: Show Option AllEducations'=>'تحصیلات','Label: Show Option No Terms(Uneducated)'=>'(تحصیلات نامعلوم)','Default TermIlliterate'=>'بی‌سواد','Default TermPrimary'=>'ابتدائی','Default TermSecondary'=>'متوسطه','Default TermBachelor'=>'کارشناسی','Default TermMaster'=>'کارشناسی ارشد','Default TermDoctorate'=>'دکترا']];
+return [
+	'domain' => 'geditorial-educated',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Educated',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:01+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Education Definition' => 'سطوح تحصیلی' . "\0" . 'سطح تحصیلی',
+		'Label: Show Option AllEducations' => 'تحصیلات',
+		'Label: Show Option No Terms(Uneducated)' => '(تحصیلات نامعلوم)',
+		'Default TermIlliterate' => 'بی‌سواد',
+		'Default TermPrimary' => 'ابتدائی',
+		'Default TermSecondary' => 'متوسطه',
+		'Default TermBachelor' => 'کارشناسی',
+		'Default TermMaster' => 'کارشناسی ارشد',
+		'Default TermDoctorate' => 'دکترا',
+	],
+];

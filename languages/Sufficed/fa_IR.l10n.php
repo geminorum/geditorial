@@ -1,2 +1,16 @@
 <?php
-return ['domain'=>'geditorial-sufficed','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Sufficed','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2024-11-27 02:27+0330','x-generator'=>'Poedit 3.5','messages'=>['Deficiency'=>'نواقص' . "\0" . 'ناقصی','Label: Menu NameContent Deficiencies'=>'نواقص محتوا','Label: Show Option AllDeficiencies'=>'نواقص','Label: Show Option No Terms(Sufficient)'=>'(تکمیل)']];
+return [
+	'domain' => 'geditorial-sufficed',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Sufficed',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:06+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Deficiency' => 'نواقص' . "\0" . 'ناقصی',
+		'Label: Menu NameContent Deficiencies' => 'نواقص محتوا',
+		'Label: Show Option AllDeficiencies' => 'نواقص',
+		'Label: Show Option No Terms(Sufficient)' => '(تکمیل)',
+	],
+];

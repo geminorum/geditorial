@@ -18,77 +18,77 @@ msgctxt "Setting Section Notice"
 msgid "Current theme supports Featured Contents"
 msgstr ""
 
-#: Home.php:37
+#: Home.php:38
 msgctxt "Setting Section Notice"
 msgid "Current theme does not support Featured Contents"
 msgstr ""
 
-#: Home.php:47
+#: Home.php:48
 msgctxt "Setting Title"
 msgid "Posttypes on Feeds"
 msgstr ""
 
-#: Home.php:48
+#: Home.php:49
 msgctxt "Setting Description"
 msgid "Whether to appear supported posttypes on the main feeds of the site."
 msgstr ""
 
-#: Home.php:53
+#: Home.php:54
 msgctxt "Setting Title"
 msgid "Exclude from Search"
 msgstr ""
 
-#: Home.php:54
+#: Home.php:55
 msgctxt "Setting Description"
 msgid "Excludes selected posttypes from the search results."
 msgstr ""
 
-#: Home.php:62
+#: Home.php:63
 msgctxt "Setting Title"
 msgid "Featured Term"
 msgstr ""
 
-#: Home.php:63
+#: Home.php:64
 msgctxt "Setting Description"
 msgid "Specify a term slug to use for theme-designated featured content area."
 msgstr ""
 
-#: Home.php:71
+#: Home.php:72
 msgctxt "Setting Title"
 msgid "Featured Max Count"
 msgstr ""
 
-#: Home.php:72
+#: Home.php:73
 msgctxt "Setting Description"
 msgid "The maximum number of posts that a Featured Content area can contain."
 msgstr ""
 
-#: Home.php:77
+#: Home.php:78
 msgctxt "Setting Title"
 msgid "Exclude Featured Posts"
 msgstr ""
 
-#: Home.php:78
+#: Home.php:79
 msgctxt "Setting Description"
 msgid "Exclude featured contents on the main query."
 msgstr ""
 
-#: Home.php:82
+#: Home.php:83
 msgctxt "Setting Title"
 msgid "Hide Featured Term"
 msgstr ""
 
-#: Home.php:83
+#: Home.php:84
 msgctxt "Setting Description"
 msgid "Hide the term on the front-end."
 msgstr ""
 
-#: Home.php:100
+#: Home.php:101
 msgctxt "Setting Info"
 msgid "Front-end Posttypes"
 msgstr ""
 
-#: Home.php:101
+#: Home.php:102
 msgctxt "Setting Info"
 msgid "Will include in front-end main query."
 msgstr ""

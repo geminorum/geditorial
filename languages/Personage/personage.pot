@@ -13,28 +13,28 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Personage\n"
 "X-Domain: geditorial-personage\n"
 
-#: ModuleSettings.php:24
+#: ModuleSettings.php:23
 msgctxt "Card Title"
 msgid "Full-name Operations"
 msgstr ""
 
-#: ModuleSettings.php:27
+#: ModuleSettings.php:26
 msgctxt "Button"
 msgid "From Full-name"
 msgstr ""
 
-#: ModuleSettings.php:34
+#: ModuleSettings.php:33
 msgctxt "Button"
 msgid "Parse Full-name"
 msgstr ""
 
-#: ModuleSettings.php:41
+#: ModuleSettings.php:40
 msgctxt "Button"
 msgid "Delete Full-name"
 msgstr ""
 
 #. translators: `%s`: field key placeholder
-#: ModuleSettings.php:49
+#: ModuleSettings.php:48
 #, php-format
 msgctxt "Message"
 msgid "Tries to fill the name fields base on %s field data."
@@ -417,22 +417,22 @@ msgctxt "Field Description"
 msgid "Personagel Passport Number"
 msgstr ""
 
-#: Personage.php:569
+#: Personage.php:575
 msgctxt "Default Term: Audit"
 msgid "Empty Identity Number"
 msgstr ""
 
-#: Personage.php:663
+#: Personage.php:669
 msgctxt "Possible Identifier Key"
 msgid "Identity"
 msgstr ""
 
-#: Personage.php:1059
+#: Personage.php:1065
 msgctxt "Header"
 msgid "Personage Tools"
 msgstr ""
 
-#: Personage.php:1085
+#: Personage.php:1094
 msgctxt "Header"
 msgid "Personage Imports"
 msgstr ""

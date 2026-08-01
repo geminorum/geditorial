@@ -67,63 +67,63 @@ msgstr ""
 
 #. translators: `%s`: role name
 #: Roled.php:85
-#: Roled.php:336
+#: Roled.php:337
 #, php-format
 msgctxt "Setting Default"
 msgid "Editorial: %s"
 msgstr ""
 
-#: Roled.php:308
+#: Roled.php:309
 msgctxt "Button"
 msgid "Duplicate Default Roles"
 msgstr ""
 
-#: Roled.php:309
+#: Roled.php:310
 msgctxt "Button"
 msgid "Remove Duplicated Roles"
 msgstr ""
 
-#: Roled.php:310
+#: Roled.php:311
 msgctxt "Button"
 msgid "Add Default Caps to Editor Role"
 msgstr ""
 
-#: Roled.php:312
+#: Roled.php:313
 msgctxt "Button"
 msgid "Add Theme Caps to Editor Role"
 msgstr ""
 
-#: Roled.php:441
+#: Roled.php:442
 msgctxt "Header"
 msgid "Editorial Roles"
 msgstr ""
 
-#: Roled.php:445
+#: Roled.php:446
 msgctxt "Header"
 msgid "Current Roles"
 msgstr ""
 
-#: Roled.php:447
+#: Roled.php:448
 msgctxt "Button"
 msgid "Check Roles"
 msgstr ""
 
-#: Roled.php:448
+#: Roled.php:449
 msgctxt "Button"
 msgid "Check Capabilities"
 msgstr ""
 
-#: Roled.php:449
+#: Roled.php:450
 msgctxt "Button"
 msgid "Duplicate Defaults"
 msgstr ""
 
-#: Roled.php:450
+#: Roled.php:451
 msgctxt "Button"
 msgid "Add Default Caps to Editors"
 msgstr ""
 
-#: Roled.php:451
+#: Roled.php:452
 msgctxt "Button"
 msgid "Remove Duplicates"
 msgstr ""

@@ -145,19 +145,3 @@ msgstr "آخرین به‌روزرسانی"
 msgctxt "View Title"
 msgid "Lastly edited on"
 msgstr "اخیراً ویرایش شده در"
-
-#~ msgctxt "Setting: Setting Title"
-#~ msgid "Post Shortcode Tag"
-#~ msgstr "کلید شورت‌کد فرسته"
-
-#~ msgctxt "Setting: Setting Description"
-#~ msgid "Customizes the post modified short-code tag. Leave blank for default."
-#~ msgstr "کلید شورت‌کد تغییرات فرسته را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."
-
-#~ msgctxt "Setting: Setting Title"
-#~ msgid "Site Shortcode Tag"
-#~ msgstr "کلید شورت‌کد سایت"
-
-#~ msgctxt "Setting: Setting Description"
-#~ msgid "Customizes the site modified short-code tag. Leave blank for default."
-#~ msgstr "کلید شورت‌کد تغییرات سایت را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."

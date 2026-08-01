@@ -77,47 +77,47 @@ msgctxt "Header"
 msgid "Uncategorized Imports"
 msgstr ""
 
-#: Uncategorized.php:407
+#: Uncategorized.php:408
 msgctxt "Card Title"
 msgid "Queried Dead Taxonomy"
 msgstr ""
 
-#: Uncategorized.php:426
+#: Uncategorized.php:427
 msgctxt "Table Empty"
 msgid "There are no term-data available!"
 msgstr ""
 
-#: Uncategorized.php:435
+#: Uncategorized.php:436
 msgctxt "Card Title"
 msgid "Convert Orphaned Terms"
 msgstr ""
 
-#: Uncategorized.php:448
+#: Uncategorized.php:449
 msgctxt "Message"
 msgid "Select from any of currently un-registered taxonomy terms."
 msgstr ""
 
-#: Uncategorized.php:461
+#: Uncategorized.php:462
 msgctxt "Message"
 msgid "Import to any of currently registered taxonomy."
 msgstr ""
 
-#: Uncategorized.php:466
+#: Uncategorized.php:467
 msgctxt "Button"
 msgid "Check Terms"
 msgstr ""
 
-#: Uncategorized.php:469
+#: Uncategorized.php:470
 msgctxt "Button"
 msgid "Convert Terms"
 msgstr ""
 
-#: Uncategorized.php:471
+#: Uncategorized.php:472
 msgctxt "Message"
 msgid "Converts orphaned terms into currently registered taxonomies."
 msgstr ""
 
-#: Uncategorized.php:645
+#: Uncategorized.php:646
 msgctxt "Default Label"
 msgid "Uncategorized"
 msgstr ""

@@ -87,8 +87,8 @@ msgid "Overrides the default label for the global unique id on product attribute
 msgstr ""
 
 #: WcIdentify.php:62
-#: WcIdentify.php:102
-#: WcIdentify.php:119
+#: WcIdentify.php:107
+#: WcIdentify.php:124
 msgctxt "Attribute Label"
 msgid "GTIN"
 msgstr ""
@@ -103,12 +103,12 @@ msgctxt "Setting Description"
 msgid "Instructs output structured data that a valid identifier for the product doesn't exist."
 msgstr ""
 
-#: WcIdentify.php:103
+#: WcIdentify.php:108
 msgctxt "Notice"
 msgid "Click to Copy"
 msgstr ""
 
-#: WcIdentify.php:167
+#: WcIdentify.php:172
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr ""

@@ -1,2 +1,19 @@
 <?php
-return ['domain'=>'geditorial-conditioned','plural-forms'=>'nplurals=2; plural=(n==0 || n==1);','language'=>'fa_IR','project-id-version'=>'gEditorial Conditioned','pot-creation-date'=>'YEAR-MO-DA HO:MI+ZONE','po-revision-date'=>'2025-02-12 00:59+0330','x-generator'=>'Poedit 3.5','messages'=>['Condition'=>'شرایط' . "\0" . 'شرط','Label: Menu NameCondition Ranks'=>'رتبه‌های شرایط','Label: Show Option AllCondition Ranks'=>'رتبه‌های شرایط','Label: Show Option No Terms(Unranked)'=>'(بی‌رتبه)','Condition Rank: NameBrand New'=>'کاملا تازه','Condition Rank: NameUnused'=>'استفاده‌نشده','Condition Rank: NameAlmost New'=>'تقریبا تازه']];
+return [
+	'domain' => 'geditorial-conditioned',
+	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
+	'language' => 'fa_IR',
+	'project-id-version' => 'gEditorial Conditioned',
+	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
+	'po-revision-date' => '2026-07-05 16:07+0330',
+	'x-generator' => 'Poedit 3.9',
+	'messages' => [
+		'Condition' => 'شرایط' . "\0" . 'شرط',
+		'Label: Menu NameCondition Ranks' => 'رتبه‌های شرایط',
+		'Label: Show Option AllCondition Ranks' => 'رتبه‌های شرایط',
+		'Label: Show Option No Terms(Unranked)' => '(بی‌رتبه)',
+		'Condition Rank: NameBrand New' => 'کاملا تازه',
+		'Condition Rank: NameUnused' => 'استفاده‌نشده',
+		'Condition Rank: NameAlmost New' => 'تقریبا تازه',
+	],
+];

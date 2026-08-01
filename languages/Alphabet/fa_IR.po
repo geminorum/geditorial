@@ -23,19 +23,3 @@ msgstr "فرسته‌ها"
 msgctxt "Setting: Short-code Title"
 msgid "Terms"
 msgstr "رده‌ها"
-
-#~ msgctxt "Setting: Setting Title"
-#~ msgid "Posts Shortcode Tag"
-#~ msgstr "کلید شورت‌کد فرسته‌ها"
-
-#~ msgctxt "Setting: Setting Description"
-#~ msgid "Customizes the alphabet list of posts short-code tag. Leave blank for default."
-#~ msgstr "کلید شورت‌کد فهرست الفبایی فرسته‌ها را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."
-
-#~ msgctxt "Setting: Setting Title"
-#~ msgid "Terms Shortcode Tag"
-#~ msgstr "کلید شورت‌کد رده‌ها"
-
-#~ msgctxt "Setting: Setting Description"
-#~ msgid "Customizes the alphabet list of terms short-code tag. Leave blank for default."
-#~ msgstr "کلید شورت‌کد فهرست الفبایی رده‌ها را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."

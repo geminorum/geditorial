@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Schedule\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2025-01-06 19:15+0330\n"
+"PO-Revision-Date: 2026-07-21 03:26+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -11,66 +11,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 "X-Poedit-Basepath: ../../includes/Modules/Schedule\n"
 "X-Domain: geditorial-schedule\n"
 
-#: Schedule.php:47
+#: Schedule.php:46
 msgctxt "Setting Title"
 msgid "Non-Reschedulable Statuses"
 msgstr ""
 
-#: Schedule.php:48
+#: Schedule.php:47
 msgctxt "Setting Description"
 msgid "Posts in these statuses can <b>not</b> be rescheduled."
 msgstr ""
 
-#: Schedule.php:88
+#: Schedule.php:87
 msgctxt "Message"
 msgid "Post not found."
 msgstr "نوشته‌ای پیدا نشد."
 
-#: Schedule.php:91
+#: Schedule.php:90
 msgctxt "Message"
 msgid "Updating the post date dynamically doesn't work for published content."
 msgstr "به‌روزرسانی تاریخ نوشته‌های منتشرشده امکان‌پذیر نیست."
 
-#: Schedule.php:129 Schedule.php:211
+#: Schedule.php:127 Schedule.php:206
 msgctxt "Page Title"
 msgid "Editorial Calendar"
 msgstr "تقویم تحریریه"
 
-#: Schedule.php:130
+#: Schedule.php:128
 msgctxt "Menu Title"
 msgid "My Calendar"
 msgstr "تقویم من"
 
-#: Schedule.php:166
+#: Schedule.php:161
 msgctxt "Title Attr"
 msgid "View on Calendar"
 msgstr "روی تقویم ببینید"
 
-#: Schedule.php:169
+#: Schedule.php:164
 msgctxt "Action"
 msgid "Calendar"
 msgstr "تقویم"
 
-#: Schedule.php:234
+#: Schedule.php:229
 msgctxt "Title Attr"
 msgid "Save"
 msgstr "ذخیره"
 
-#: Schedule.php:235
+#: Schedule.php:230
 msgctxt "Title Attr"
 msgid "Cancel"
 msgstr "لغو"
 
-#: Schedule.php:259
+#: Schedule.php:254
 msgctxt "Indicator"
 msgid "Today"
 msgstr "امروز"
 
-#: Schedule.php:288
+#: Schedule.php:283
 msgctxt "Sortable"
 msgid "Drag me!"
 msgstr "مرتب کن!"

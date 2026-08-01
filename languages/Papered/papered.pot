@@ -193,57 +193,57 @@ msgctxt "Message"
 msgid "There are no print profiles available!"
 msgstr ""
 
-#: Papered.php:734
+#: Papered.php:741
 msgctxt "None Title"
 msgid "&ndash; Select Peper Size &ndash;"
 msgstr ""
 
-#: Papered.php:745
+#: Papered.php:752
 msgctxt "None Title"
 msgid "&ndash; Select Sheet Padding &ndash;"
 msgstr ""
 
-#: Papered.php:756
+#: Papered.php:763
 msgctxt "Input Title"
 msgid "Row per Sheet"
 msgstr ""
 
-#: Papered.php:774
+#: Papered.php:781
 msgctxt "None Title"
 msgid "&ndash; Select Direct Post-Type &ndash;"
 msgstr ""
 
-#: Papered.php:831
+#: Papered.php:838
 msgctxt "MetaBox Title"
 msgid "Template for Rows"
 msgstr ""
 
-#: Papered.php:832
+#: Papered.php:839
 msgctxt "MetaBox Title"
 msgid "Template Before"
 msgstr ""
 
-#: Papered.php:833
+#: Papered.php:840
 msgctxt "MetaBox Title"
 msgid "Template After"
 msgstr ""
 
-#: Papered.php:834
+#: Papered.php:841
 msgctxt "MetaBox Title"
 msgid "Template Styles"
 msgstr ""
 
-#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
-#: Papered.php:904
-#: Papered.php:959
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Papered.php:916
+#: Papered.php:971
 #, php-format
 msgctxt "Button"
 msgid "%1$s Preview Profile"
 msgstr ""
 
-#. translators: `%1$s`: icon markup, `%2$s`: posttype singular name
-#: Papered.php:917
-#: Papered.php:981
+#. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
+#: Papered.php:929
+#: Papered.php:993
 #, php-format
 msgctxt "Button"
 msgid "%1$s Print Profile"

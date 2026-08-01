@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcCheckout 1.0.1\n"
+"Project-Id-Version: gEditorial WcCheckout\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "Last-Translator: NULL\n"
 "Language-Team: NULL\n"
@@ -12,31 +12,6 @@ msgstr ""
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Poedit-Basepath: ../../includes/Modules/WcCheckout\n"
 "X-Domain: geditorial-wc-checkout\n"
-
-#. Plugin Name of the plugin
-#: WcCheckout.php:190
-msgid "Remove WooCommerce billing address for free checkout"
-msgstr ""
-
-#. Plugin URI of the plugin
-#: WcCheckout.php:191
-msgid "https://github.com/helgatheviking/wc-remove-billing-address-on-free-checkout"
-msgstr ""
-
-#. Description of the plugin
-#: WcCheckout.php:192
-msgid "Remove billing address fields fro checkout when cart total is free."
-msgstr ""
-
-#. Author of the plugin
-#: WcCheckout.php:194
-msgid "Kathy Darling"
-msgstr ""
-
-#. Author URI of the plugin
-#: WcCheckout.php:195
-msgid "https://kathyisawesome.com"
-msgstr ""
 
 #: WcCheckout.php:37
 msgctxt "Setting Title"
