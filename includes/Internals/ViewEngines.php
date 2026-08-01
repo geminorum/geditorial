@@ -36,7 +36,16 @@ trait ViewEngines
 		if ( empty( $this->view_engines['__string__'] ) )
 			$this->view_engines['__string__'] = $this->viewengine__get();
 
-		$html     = $this->view_engines['__string__']->render( $template, $data );
+		try {
+
+			$html = $this->view_engines['__string__']->render( $template, $data );
+
+		} catch ( \Exception $e ) {
+
+			self::_log( 'Exception: `ViewEngines::render()` :: '.$e->getMessage() );
+			$html = '';
+		}
+
 		$filtered = $this->filters( 'render_view_string', $html, $template, $data );
 
 		if ( ! $verbose )
@@ -57,7 +66,16 @@ trait ViewEngines
 		if ( empty( $this->view_engines[$key] ) )
 			$this->view_engines[$key] = $this->viewengine__get( $root );
 
-		$html     = $this->view_engines[$key]->loadTemplate( $part )->render( $data );
+		try {
+
+			$html = $this->view_engines[$key]->loadTemplate( $part )->render( $data );
+
+		} catch ( \Exception $e ) {
+
+			self::_log( 'Exception: `ViewEngines::loadTemplate()` :: '.$e->getMessage() );
+			$html = '';
+		}
+
 		$filtered = $this->filters( 'render_view', $html, $part, $data );
 
 		if ( ! $verbose )
