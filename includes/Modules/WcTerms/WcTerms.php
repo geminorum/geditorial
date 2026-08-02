@@ -125,6 +125,10 @@ class WcTerms extends gEditorial\Module
 
 	public function init(): void
 	{
+		$this->restrict_taxonomies = [
+			WordPress\WooCommerce::PRODUCT_POSTTYPE,
+		];
+
 		parent::init();
 
 		if ( is_admin() )

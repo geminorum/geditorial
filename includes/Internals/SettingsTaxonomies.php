@@ -162,7 +162,10 @@ trait SettingsTaxonomies
 	public function all_taxonomies( ?array $args = NULL, array $exclude_extra = [] ): array
 	{
 		return Core\Arraay::stripByKeys(
-			WordPress\Taxonomy::get( 0, $args ?? [ 'show_ui' => TRUE ] ),
+			WordPress\Taxonomy::get( 0,
+				$args ?? [ 'show_ui' => TRUE ],
+				$this->restrict_taxonomies ?? FALSE
+			),
 			Core\Arraay::prepString(
 				$this->taxonomies_excluded( $exclude_extra )
 			)

@@ -93,6 +93,8 @@ class Module extends WordPress\Module
 	protected $keep_taxonomies = [];  // keeps from excludes
 	protected $keep_roles      = [];  // keeps from excludes
 
+	protected $restrict_taxonomies = []; // restrict to this objects
+
 	protected $image_sizes  = [];
 	protected $kses_allowed = [];
 	protected $module_links = [];
