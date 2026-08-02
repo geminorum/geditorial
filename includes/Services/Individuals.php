@@ -27,8 +27,10 @@ class Individuals extends gEditorial\Service
 
 	public static function setup(): void
 	{
-		if ( self::isParserAvailable() )
+		if ( self::isParserAvailable() ) {
+			add_filter( 'nucleus_taxonomy_target_term', [ __CLASS__, 'taxonomy_target_term' ], 18, 4 );
 			add_filter( self::und( static::BASE, 'people_format_name' ), [ __CLASS__, 'filter_people_format_name' ], 9, 3 );
+		}
 
 		if ( is_admin() )
 			return;
@@ -57,6 +59,34 @@ class Individuals extends gEditorial\Service
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
+	}
+
+	public static function taxonomy_target_term( mixed $filtred, string $target, string $taxonomy, array $args ): mixed
+	{
+		// already found
+		if ( ! is_null( $filtred ) )
+			return $filtred;
+
+		// already formatted
+		if ( Core\Text::has( $target, trim( static::SEPARATOR_TEMPLATE ) ) )
+			return $filtred;
+
+		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $target ) )
+			return $filtred;
+
+		if ( WordPress\Strings::isEmpty( $parsed['first_name'] )
+			|| WordPress\Strings::isEmpty( $parsed['last_name'] ) )
+				return $filtred;
+
+		$formatted = sprintf( static::FORMAT_TEMPLATE,
+			$parsed['first_name'],
+			$parsed['last_name']
+		);
+
+		if ( $term = term_exists( $formatted, $taxonomy ) )
+			return $term['term_id'];
+
+		return $filtred;
 	}
 
 	public static function filter_people_format_name( string $formatted, string $raw, ?object $term = NULL ): string
