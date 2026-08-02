@@ -484,11 +484,12 @@ class Socialite extends gEditorial\Module
 	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
-			'context' => NULL,
-			'wrap'    => TRUE,
-			'before'  => '',
-			'after'   => '',
-			'class'   => '',
+			'fallback_icon' => NULL,
+			'context'       => NULL,
+			'wrap'          => TRUE,
+			'before'        => '',
+			'after'         => '',
+			'class'         => '',
 		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
 
 		if ( FALSE === $args['context'] )
@@ -512,16 +513,18 @@ class Socialite extends gEditorial\Module
 			if ( empty( $row['icon'] ) )
 				continue;
 
-			$src = Core\Text::has( $row['icon'], ':' )
-				? Core\Icon::getBase64( ...explode( ':', $row['icon'], 2 ) ) // `icon_name:icon_set`
-				: $row['icon']; // raw URL
+			$image = Services\Icons::get(
+				$row['icon'],
+				$args['fallback_icon'] ?? 'admin-links',
+				'-'.$this->module->name
+			);
 
 			$list[] = $row['before_link']
 				.Core\HTML::tag( 'a', [
 					'href'  => $row['url'],
 					'title' => $row['name'],
 				], $row['before_image']
-					.Core\HTML::img( $src, '-socialite', $row['name'] ?: '' )
+					.$image
 				.$row['after_image'] )
 				.$row['after_link'];
 		}
