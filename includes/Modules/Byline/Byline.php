@@ -256,6 +256,7 @@ class Byline extends gEditorial\Module
 			return FALSE;
 
 		$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 12 ), FALSE, 'woocommerce' );
+		$this->filter( 'excerpt_search_result', 3, 22, FALSE, 'aws' );
 
 		return TRUE;
 	}
@@ -799,6 +800,23 @@ class Byline extends gEditorial\Module
 				},
 			],
 		] );
+	}
+
+	// @ref https://advanced-woo-search.com/guide/customize-results/
+	// @hook `aws_excerpt_search_result`
+	public function excerpt_search_result( string $excerpt, mixed $post_id, mixed $product ): string
+	{
+		$byline = $this->get_byline_for_post( $post_id, [
+			'featured' => TRUE, // only `featured`
+			'link'     => FALSE,
+			'before'   => '<div class="-byline mb-1">',
+			'after'    => '</div>',
+		] );
+
+		if ( $byline )
+			$excerpt = $byline.$excerpt;
+
+		return $excerpt;
 	}
 
 	// NOTE: check for access before
