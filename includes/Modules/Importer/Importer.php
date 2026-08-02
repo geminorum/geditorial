@@ -762,400 +762,7 @@ class Importer extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 
 				$this->nonce_check( 'imports', $sub );
-
-				if ( gEditorial\Tablelist::isAction( [
-					'images_import',
-					'images_import_as_thumbnail',
-				], TRUE ) ) {
-
-					$count = 0;
-					$args  = $this->_get_current_form_images();
-
-					$this->raise_resources();
-
-					foreach ( $_POST['_cb'] as $post_id ) {
-
-						if ( ! $id = get_post_meta( $post_id, $args['metakey'], TRUE ) )
-							continue;
-
-						if ( ! $post = get_post( $post_id ) )
-							continue;
-
-						$extra = [ 'post_author' => $args['user_id'] ];
-
-						// TODO: make this optional
-						// FIXME: filter the title for here
-						if ( ! empty( $post->post_title ) ) {
-							$extra['post_title'] = $post->post_title;
-							$extra['meta_input']['_wp_attachment_image_alt'] = $post->post_title;
-						}
-
-						$attachment = WordPress\Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, $extra );
-
-						if ( is_wp_error( $attachment ) ) {
-							$this->log( 'NOTICE', $attachment->get_error_message() );
-							continue;
-						}
-
-						if ( isset( $_POST['images_import_as_thumbnail'] ) )
-							set_post_thumbnail( $post_id, $attachment );
-
-						++$count;
-					}
-
-					WordPress\Redirect::doReferer( [
-						'message' => 'imported',
-						'count'   => $count,
-					] );
-
-				} else if ( gEditorial\Tablelist::isAction( [
-					'terms_import_newonly',
-					'terms_import_append',
-					'terms_import_override',
-				], TRUE ) ) {
-
-					if ( FALSE === ( $count = $this->_handle_terms_import() ) )
-						WordPress\Redirect::doReferer( 'wrong' );
-
-					else
-						WordPress\Redirect::doReferer( [
-							'message' => 'imported',
-							'count'   => $count,
-						] );
-
-				} else if ( gEditorial\Tablelist::isAction( [
-					'posts_import_newonly',
-					'posts_import_override',
-				], TRUE ) ) {
-
-					$count         = 0;
-					$field_map     = self::req( 'field_map', [] );
-					$terms_all     = self::req( 'terms_all', [] );
-					$extra_all     = self::req( 'extra_all', [] );
-					$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
-					$attach_id     = self::req( 'attach_id', FALSE );
-					$user_id       = self::req( 'user_id', $this->_get_user_id() );
-					$source_column = self::req( 'source_column', '' );
-					$source_postid = self::req( 'source_postid', '' );
-					$override      = isset( $_POST['posts_import_override'] );
-
-					$this->raise_resources();
-
-					$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [
-						'headers_only' => TRUE,
-						'keep_alive'   => TRUE,
-					] );
-
-					if ( $rawdata['error'] )
-						WordPress\Redirect::doRefererWithLog( $rawdata['error'], 'wrong' );
-
-					$post_status    = $this->filters( 'default_post_status', $this->get_setting( 'post_status', 'pending' ), $posttype, $override );
-					$comment_status = $this->filters( 'default_comment_status', $this->get_setting( 'comment_status', 'closed' ), $posttype, $override );
-					$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all of them and must be unfiltered!
-					$terms_all      = Core\Arraay::prepItemsNumeral( $terms_all );
-					$headers        = $rawdata['headers'];
-
-					// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
-					add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
-
-					$this->actions( 'posts_before', $posttype );
-
-					foreach ( $_POST['_cb'] as $_index ) {
-
-						$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index + 1 ] );
-
-						if ( $rowdata['error'] ) {
-							self::_log_error( $rowdata['error'] );
-							continue;
-						}
-
-						$raw        = $rowdata['single'];
-						$data       = []; // [ 'tax_input' => [] ];
-						$prepared   = [];
-						$comments   = [];
-						$taxonomies = [];
-						$oldpost    = $post_id = FALSE;
-
-						// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
-						$source_id = $this->filters( 'source_id',
-							( $source_column && array_key_exists( $source_column, $raw )
-								? $raw[$source_column]
-								: NULL
-							),
-							$posttype,
-							$raw
-						);
-
-						// skipped by filter
-						if ( FALSE === $source_id )
-							continue;
-
-						if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && $source_column )
-							continue;
-
-						if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $source_postid, $raw ) )
-							if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
-								$data['ID'] = $oldpost->ID;
-
-						foreach ( $field_map as $header => $field ) {
-
-							if ( ! $field )
-								continue;
-
-							$value = $this->filters( 'prepare',
-								Core\Text::trim( $raw[$header] ),
-								$posttype,
-								$field,
-								$header,
-								$raw,
-								$source_id,
-								$all_taxonomies
-							);
-
-							// filter bail-out!
-							if ( FALSE === $value )
-								continue;
-
-							if ( WordPress\Strings::isEmpty( $value ) ) {
-
-								if ( ! $override )
-									continue;
-
-								if ( ! is_array( $value ) )
-									$value = '';
-							}
-
-							if ( $value && $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
-
-								$posts = WordPress\Post::getByTitle( $value, $posttype );
-
-								if ( ! empty( $posts ) )
-									continue 2;
-							}
-
-							switch ( $field ) {
-
-								case 'importer_custom_meta':
-
-									if ( $custom_metakey = $this->filters( 'custom_metakey', $header, $posttype, $field, $raw, $all_taxonomies ) )
-										$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = Core\Text::normalizeWhitespace( $value );
-
-									continue 2;
-
-								case 'importer_menu_order':
-
-									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
-										$data['menu_order'] = $prepared[$field] = Core\Number::translate( trim( $value ) );
-
-									continue 2;
-
-								case 'importer_post_title':
-
-									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_title ) )
-										$data['post_title'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value );
-
-									continue 2;
-
-								case 'importer_post_content':
-
-									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_content ) )
-										$data['post_content'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
-
-									continue 2;
-
-								case 'importer_post_excerpt':
-
-									if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_excerpt ) )
-										$data['post_excerpt'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
-
-									continue 2;
-
-								case 'importer_comment_content':
-
-									// NOTE: comments have no overrides!
-									// TODO: support multiple comment fields
-
-									// skip empty values on comments
-									if ( ! $value ) {
-
-										$prepared[$field] = '';
-
-									} else {
-
-										$prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
-
-										$comments[] = [
-											// Prefixes the comment content with column name
-											'comment_content' => sprintf( '[%s]: %s', $header, $prepared[$field] ),
-										];
-									}
-
-									continue 2;
-							}
-
-							foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
-
-								// skip empty values on terms
-								if ( ! $value )
-									break;
-
-								if ( $field != self::und( $this->key, 'tax', $taxonomy ) )
-									continue;
-
-								// Allows filters to import multiple columns for one taxonomy.
-								$already = array_key_exists( $taxonomy, $taxonomies ) ? $taxonomies[$taxonomy] : [];
-
-								if ( $taxonomy_object->hierarchical ) {
-
-									if ( $terms = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, Core\Arraay::sameKey( $value ), FALSE ) )
-										$taxonomies[$taxonomy] = Core\Arraay::prepNumeral( $already, Core\Arraay::pluck( $terms, 'term_taxonomy_id' ) );
-
-								} else {
-
-									$taxonomies[$taxonomy] = Core\Arraay::prepString( $already, $value );
-								}
-
-								$prepared[sprintf( 'taxonomy__%s', $taxonomy )] = $taxonomies[$taxonomy];
-
-								continue 2;
-							}
-
-							// Otherwise, store prepared-value
-							$prepared[$field] = $value;
-						}
-
-						if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw, $override ) ) ) {
-
-							$this->log( 'NOTICE', ( $source_id
-								? sprintf( 'ID: %s :: %s', $source_id, 'SKIPPED BY `insert` FILTER' )
-								: 'SKIPPED BY `insert` FILTER'
-							) );
-
-							continue;
-						}
-
-						if ( empty( $insert['ID'] ) ) {
-
-							// only if it's new!
-							$insert = array_merge( [
-								// 'post_name'      => '', // The name (slug) for your post
-								// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
-								// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
-								// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
-
-								'post_type'      => $posttype,
-								'post_status'    => $post_status,
-								'comment_status' => $comment_status,
-								'post_author'    => $user_id,
-							], $insert );
-
-							if ( $source_id && ! $source_postid )
-								$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
-
-							$post_id = wp_insert_post( $insert, TRUE, FALSE );
-
-						} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
-
-							// TODO: maybe manually store: `meta_input` to avoid `wp_insert_post`
-
-							if ( $post = WordPress\Post::get( $insert['ID'] ) ) {
-
-								$post_id = $post->ID;
-
-							} else {
-
-								$this->log( 'NOTICE', ( $source_id
-									? sprintf( 'ID: %s :: %s', $source_id, 'PROVIDED POST-ID NOT FOUND' )
-									: 'PROVIDED POST-ID NOT FOUND'
-								) );
-
-								continue;
-							}
-
-						} else {
-
-							$post_id = wp_insert_post( $insert, TRUE, FALSE );
-						}
-
-						if ( ! $post_id ) {
-
-							$this->log( 'NOTICE', ( $source_id
-								? sprintf( 'ID: %s :: %s', $source_id, 'SOMETHING IS WRONG!' )
-								: 'SOMETHING IS WRONG!'
-							) );
-
-							continue;
-
-						} else if ( is_wp_error( $post_id ) ) {
-
-							$this->log( 'NOTICE', ( $source_id
-								? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
-								: $post_id->get_error_message()
-							) );
-
-							continue;
-						}
-
-						// NOTE: `wp_insert_post()` overrides existing terms
-						$this->_set_terms_for_post( $post_id, $taxonomies, $source_id, $oldpost, $override, FALSE );
-						$this->_set_terms_for_post( $post_id, $terms_all, $source_id, $oldpost );
-
-						if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
-
-							foreach ( $comments as $comment ) {
-
-								if ( empty( $comment ) )
-									continue;
-
-								if ( empty( $comment['comment_post_ID'] ) )
-									$comment['comment_post_ID'] = $post_id;
-
-								if ( empty( $comment['user_id'] ) )
-									$comment['user_id'] = $user_id;
-
-								// TODO: maybe add the custom bot title on `comment_author` from settings
-
-								if ( ! wp_insert_comment( $comment ) )
-									$this->log( 'NOTICE', ( $source_id
-										? sprintf( 'ID: %s :: %s', $source_id, 'FAILED STORING COMMENT' )
-										: 'FAILED STORING COMMENT'
-									) );
-							}
-						}
-
-						$this->actions( 'saved', WordPress\Post::get( $post_id ), [
-							'updated'    => ( ! empty( $insert['ID'] ) ),
-							'data'       => $insert,
-							'prepared'   => $prepared,
-							'headers'    => $headers,
-							'raw'        => $raw,
-							'map'        => $field_map,
-							'source_id'  => $source_id,
-							'attach_id'  => $attach_id,
-							'user_id'    => $user_id,
-							'terms_all'  => $terms_all,
-							'extra_all'  => $extra_all,
-							'taxonomies' => $taxonomies,
-							'override'   => $override,
-							'oldpost'    => $oldpost,
-						] );
-
-						// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
-						wp_after_insert_post( $post_id, $oldpost ? TRUE : FALSE, $oldpost ?: NULL );
-
-						++$count;
-					}
-
-					$this->actions( 'posts_after', $posttype );
-
-					remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
-					unset( $iterator );
-
-					WordPress\Redirect::doReferer( [
-						'message' => 'imported',
-						'count'   => $count,
-					] );
-				}
+				$this->_handle_imports_actions( $sub );
 			}
 
 			gEditorial\Scripts::enqueueThickBox();
@@ -1168,6 +775,422 @@ class Importer extends gEditorial\Module
 				],
 			], $this->dotted( 'media' ), [ 'jquery', 'media-upload' ] );
 		}
+	}
+
+	private function _handle_imports_actions( string $sub ): void
+	{
+		if ( $this->_handle_imports_action_images( $sub ) )
+			return;
+
+		if ( $this->_handle_imports_action_terms( $sub ) )
+			return;
+
+		if ( $this->_handle_imports_action_posts( $sub ) )
+			return;
+	}
+
+	private function _handle_imports_action_images( string $sub ): bool
+	{
+		if ( ! gEditorial\Tablelist::isAction( [
+			'images_import',
+			'images_import_as_thumbnail',
+		], TRUE ) )
+			return FALSE;
+
+		$count = 0;
+		$args  = $this->_get_current_form_images();
+
+		$this->raise_resources();
+
+		foreach ( $_POST['_cb'] as $post_id ) {
+
+			if ( ! $id = get_post_meta( $post_id, $args['metakey'], TRUE ) )
+				continue;
+
+			if ( ! $post = get_post( $post_id ) )
+				continue;
+
+			$extra = [ 'post_author' => $args['user_id'] ];
+
+			// TODO: make this optional
+			// FIXME: filter the title for here
+			if ( ! empty( $post->post_title ) ) {
+				$extra['post_title'] = $post->post_title;
+				$extra['meta_input']['_wp_attachment_image_alt'] = $post->post_title;
+			}
+
+			$attachment = WordPress\Media::sideloadImageURL( sprintf( $args['template'], $id ), $post_id, $extra );
+
+			if ( is_wp_error( $attachment ) ) {
+				$this->log( 'NOTICE', $attachment->get_error_message() );
+				continue;
+			}
+
+			if ( isset( $_POST['images_import_as_thumbnail'] ) )
+				set_post_thumbnail( $post_id, $attachment );
+
+			++$count;
+		}
+
+		return WordPress\Redirect::doReferer( [
+			'message' => 'imported',
+			'count'   => $count,
+		] );
+	}
+
+	private function _handle_imports_action_terms( string $sub ): bool
+	{
+		if ( ! gEditorial\Tablelist::isAction( [
+			'terms_import_newonly',
+			'terms_import_append',
+			'terms_import_override',
+		], TRUE ) )
+			return FALSE;
+
+		if ( FALSE === ( $count = $this->_handle_terms_import() ) )
+			return WordPress\Redirect::doReferer( 'wrong' );
+
+		return WordPress\Redirect::doReferer( [
+			'message' => 'imported',
+			'count'   => $count,
+		] );
+	}
+
+	private function _handle_imports_action_posts( string $sub ): bool
+	{
+		if ( ! gEditorial\Tablelist::isAction( [
+			'posts_import_newonly',
+			'posts_import_override',
+		], TRUE ) )
+			return FALSE;
+
+		$count         = 0;
+		$field_map     = self::req( 'field_map', [] );
+		$terms_all     = self::req( 'terms_all', [] );
+		$extra_all     = self::req( 'extra_all', [] );
+		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
+		$attach_id     = self::req( 'attach_id', FALSE );
+		$user_id       = self::req( 'user_id', $this->_get_user_id() );
+		$source_column = self::req( 'source_column', '' );
+		$source_postid = self::req( 'source_postid', '' );
+		$override      = isset( $_POST['posts_import_override'] );
+
+		$this->raise_resources();
+
+		$rawdata = gEditorial\Parser::fromAttachment( $attach_id, [
+			'headers_only' => TRUE,
+			'keep_alive'   => TRUE,
+		] );
+
+		if ( $rawdata['error'] )
+			WordPress\Redirect::doRefererWithLog( $rawdata['error'], 'wrong' );
+
+		$post_status    = $this->filters( 'default_post_status', $this->get_setting( 'post_status', 'pending' ), $posttype, $override );
+		$comment_status = $this->filters( 'default_comment_status', $this->get_setting( 'comment_status', 'closed' ), $posttype, $override );
+		$all_taxonomies = WordPress\Taxonomy::get( 4, [], $posttype ); // NOTE: all of them and must be unfiltered!
+		$terms_all      = Core\Arraay::prepItemsNumeral( $terms_all );
+		$headers        = $rawdata['headers'];
+
+		// NOTE: to avoid `Content, title, and excerpt are empty.` Error on `wp_insert_post()`
+		add_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
+
+		$this->actions( 'posts_before', $posttype );
+
+		foreach ( $_POST['_cb'] as $_index ) {
+
+			$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index + 1 ] );
+
+			if ( $rowdata['error'] ) {
+				self::_log_error( $rowdata['error'] );
+				continue;
+			}
+
+			$raw        = $rowdata['single'];
+			$data       = []; // [ 'tax_input' => [] ];
+			$prepared   = [];
+			$comments   = [];
+			$taxonomies = [];
+			$oldpost    = $post_id = FALSE;
+
+			// @EXAMPLE: `$this->filter_module( 'importer', 'source_id', 3 );`
+			$source_id = $this->filters( 'source_id',
+				( $source_column && array_key_exists( $source_column, $raw )
+					? $raw[$source_column]
+					: NULL
+				),
+				$posttype,
+				$raw
+			);
+
+			// skipped by filter
+			if ( FALSE === $source_id )
+				continue;
+
+			if ( ! $source_id && $this->get_setting( 'skip_no_source_id', TRUE ) && $source_column )
+				continue;
+
+			if ( $matched = $this->_get_source_id_matched( $source_id, $posttype, $source_postid, $raw ) )
+				if ( $oldpost = WordPress\Post::get( intval( $matched ) ) )
+					$data['ID'] = $oldpost->ID;
+
+			foreach ( $field_map as $header => $field ) {
+
+				if ( ! $field )
+					continue;
+
+				$value = $this->filters( 'prepare',
+					Core\Text::trim( $raw[$header] ),
+					$posttype,
+					$field,
+					$header,
+					$raw,
+					$source_id,
+					$all_taxonomies
+				);
+
+				// filter bail-out!
+				if ( FALSE === $value )
+					continue;
+
+				if ( WordPress\Strings::isEmpty( $value ) ) {
+
+					if ( ! $override )
+						continue;
+
+					if ( ! is_array( $value ) )
+						$value = '';
+				}
+
+				if ( $value && $field == 'importer_post_title' && $this->get_setting( 'skip_same_title' ) ) {
+
+					$posts = WordPress\Post::getByTitle( $value, $posttype );
+
+					if ( ! empty( $posts ) )
+						continue 2;
+				}
+
+				switch ( $field ) {
+
+					case 'importer_custom_meta':
+
+						if ( $custom_metakey = $this->filters( 'custom_metakey', $header, $posttype, $field, $raw, $all_taxonomies ) )
+							$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = Core\Text::normalizeWhitespace( $value );
+
+						continue 2;
+
+					case 'importer_menu_order':
+
+						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
+							$data['menu_order'] = $prepared[$field] = Core\Number::translate( trim( $value ) );
+
+						continue 2;
+
+					case 'importer_post_title':
+
+						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_title ) )
+							$data['post_title'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value );
+
+						continue 2;
+
+					case 'importer_post_content':
+
+						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_content ) )
+							$data['post_content'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+
+						continue 2;
+
+					case 'importer_post_excerpt':
+
+						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_excerpt ) )
+							$data['post_excerpt'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+
+						continue 2;
+
+					case 'importer_comment_content':
+
+						// NOTE: comments have no overrides!
+						// TODO: support multiple comment fields
+
+						// skip empty values on comments
+						if ( ! $value ) {
+
+							$prepared[$field] = '';
+
+						} else {
+
+							$prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+
+							$comments[] = [
+								// Prefixes the comment content with column name
+								'comment_content' => sprintf( '[%s]: %s', $header, $prepared[$field] ),
+							];
+						}
+
+						continue 2;
+				}
+
+				foreach ( $all_taxonomies as $taxonomy => $taxonomy_object ) {
+
+					// skip empty values on terms
+					if ( ! $value )
+						break;
+
+					if ( $field != self::und( $this->key, 'tax', $taxonomy ) )
+						continue;
+
+					// Allows filters to import multiple columns for one taxonomy.
+					$already = array_key_exists( $taxonomy, $taxonomies ) ? $taxonomies[$taxonomy] : [];
+
+					if ( $taxonomy_object->hierarchical ) {
+
+						if ( $terms = WordPress\Taxonomy::insertDefaultTerms( $taxonomy, Core\Arraay::sameKey( $value ), FALSE ) )
+							$taxonomies[$taxonomy] = Core\Arraay::prepNumeral( $already, Core\Arraay::pluck( $terms, 'term_taxonomy_id' ) );
+
+					} else {
+
+						$taxonomies[$taxonomy] = Core\Arraay::prepString( $already, $value );
+					}
+
+					$prepared[sprintf( 'taxonomy__%s', $taxonomy )] = $taxonomies[$taxonomy];
+
+					continue 2;
+				}
+
+				// Otherwise, store prepared-value
+				$prepared[$field] = $value;
+			}
+
+			if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw, $override ) ) ) {
+
+				$this->log( 'NOTICE', ( $source_id
+					? sprintf( 'ID: %s :: %s', $source_id, 'SKIPPED BY `insert` FILTER' )
+					: 'SKIPPED BY `insert` FILTER'
+				) );
+
+				continue;
+			}
+
+			if ( empty( $insert['ID'] ) ) {
+
+				// only if it's new!
+				$insert = array_merge( [
+					// 'post_name'      => '', // The name (slug) for your post
+					// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
+					// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
+					// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
+
+					'post_type'      => $posttype,
+					'post_status'    => $post_status,
+					'comment_status' => $comment_status,
+					'post_author'    => $user_id,
+				], $insert );
+
+				if ( $source_id && ! $source_postid )
+					$insert['meta_input'][$this->constant( 'metakey_source_id' )] = $source_id;
+
+				$post_id = wp_insert_post( $insert, TRUE, FALSE );
+
+			} else if ( $this->_check_insert_is_empty( $insert, $insert['ID'] ) ) {
+
+				// TODO: maybe manually store: `meta_input` to avoid `wp_insert_post`
+
+				if ( $post = WordPress\Post::get( $insert['ID'] ) ) {
+
+					$post_id = $post->ID;
+
+				} else {
+
+					$this->log( 'NOTICE', ( $source_id
+						? sprintf( 'ID: %s :: %s', $source_id, 'PROVIDED POST-ID NOT FOUND' )
+						: 'PROVIDED POST-ID NOT FOUND'
+					) );
+
+					continue;
+				}
+
+			} else {
+
+				$post_id = wp_insert_post( $insert, TRUE, FALSE );
+			}
+
+			if ( ! $post_id ) {
+
+				$this->log( 'NOTICE', ( $source_id
+					? sprintf( 'ID: %s :: %s', $source_id, 'SOMETHING IS WRONG!' )
+					: 'SOMETHING IS WRONG!'
+				) );
+
+				continue;
+
+			} else if ( is_wp_error( $post_id ) ) {
+
+				$this->log( 'NOTICE', ( $source_id
+					? sprintf( 'ID: %s :: %s', $source_id, $post_id->get_error_message() )
+					: $post_id->get_error_message()
+				) );
+
+				continue;
+			}
+
+			// NOTE: `wp_insert_post()` overrides existing terms
+			$this->_set_terms_for_post( $post_id, $taxonomies, $source_id, $oldpost, $override, FALSE );
+			$this->_set_terms_for_post( $post_id, $terms_all, $source_id, $oldpost );
+
+			if ( FALSE !== ( $comments = $this->filters( 'comments', $comments, $data, $prepared, $posttype, $source_id, $attach_id, $raw ) ) ) {
+
+				foreach ( $comments as $comment ) {
+
+					if ( empty( $comment ) )
+						continue;
+
+					if ( empty( $comment['comment_post_ID'] ) )
+						$comment['comment_post_ID'] = $post_id;
+
+					if ( empty( $comment['user_id'] ) )
+						$comment['user_id'] = $user_id;
+
+					// TODO: maybe add the custom bot title on `comment_author` from settings
+
+					if ( ! wp_insert_comment( $comment ) )
+						$this->log( 'NOTICE', ( $source_id
+							? sprintf( 'ID: %s :: %s', $source_id, 'FAILED STORING COMMENT' )
+							: 'FAILED STORING COMMENT'
+						) );
+				}
+			}
+
+			$this->actions( 'saved', WordPress\Post::get( $post_id ), [
+				'updated'    => ( ! empty( $insert['ID'] ) ),
+				'data'       => $insert,
+				'prepared'   => $prepared,
+				'headers'    => $headers,
+				'raw'        => $raw,
+				'map'        => $field_map,
+				'source_id'  => $source_id,
+				'attach_id'  => $attach_id,
+				'user_id'    => $user_id,
+				'terms_all'  => $terms_all,
+				'extra_all'  => $extra_all,
+				'taxonomies' => $taxonomies,
+				'override'   => $override,
+				'oldpost'    => $oldpost,
+			] );
+
+			// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
+			wp_after_insert_post( $post_id, $oldpost ? TRUE : FALSE, $oldpost ?: NULL );
+
+			++$count;
+		}
+
+		$this->actions( 'posts_after', $posttype );
+
+		remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
+		unset( $iterator );
+
+		return WordPress\Redirect::doReferer( [
+			'message' => 'imported',
+			'count'   => $count,
+		] );
 	}
 
 	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
