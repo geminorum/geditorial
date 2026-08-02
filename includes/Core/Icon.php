@@ -336,10 +336,19 @@ class Icon extends Base
 		).'"><svg><use xlink:href="#icon-'.$group.'-'.$icon.'"></use></svg></span>';
 	}
 
+	public static function getLink( string $id, string|array $extra = [] ): string
+	{
+		return '<span data-icon="svg" class="'.HTML::prepClass(
+			self::dsh( static::BASE, 'icon' ),
+			'-iconsvg',
+			$extra
+		).'"><svg><use xlink:href="#'.Text::stripPrefix( $id, '#' ).'"></use></svg></span>';
+	}
+
 	// FIXME: use CSS background
 	// SEE: `#adminmenu div.wp-menu-image.svg`
 	// SEE: https://stackoverflow.com/a/19570011
-	public static function wrapBase64( $data, $extra = [] )
+	public static function wrapBase64( string $data, string|array $extra = [] ): string
 	{
 		return '<span data-icon="base64" class="'.HTML::prepClass(
 			self::dsh( static::BASE, 'icon' ),
@@ -348,7 +357,7 @@ class Icon extends Base
 		).'"><img src="'.$data.'" /></span>';
 	}
 
-	public static function wrapURL( $url, $extra = [] )
+	public static function wrapURL( string $url, string|array $extra = [] ): string
 	{
 		return '<span data-icon="url" class="'.HTML::prepClass(
 			self::dsh( static::BASE, 'icon' ),

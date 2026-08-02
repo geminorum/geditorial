@@ -7,14 +7,15 @@ class URL extends Base
 
 	/**
 	 * Sanitizes a URL for storage or redirect.
-	 * @source `sanitize_url()`
+	 * @source `sanitize_url()`/`esc_url_raw()`
 	 *
-	 * @param string $url
+	 * @param mixed $input
 	 * @return string
 	 */
-	public static function sanitize( $url )
+	public static function sanitize( mixed $input ): string
 	{
-		$sanitized = Text::trim( $url );
+		if ( ! $sanitized = Text::force( $input ) )
+			return '';
 
 		// @SEE: `esc_url()`
 		if ( $sanitized && ! preg_match( '/^http(s)?:\/\//', $sanitized ) )
@@ -23,8 +24,47 @@ class URL extends Base
 		return esc_url( $sanitized, NULL, 'db' );
 	}
 
+	public static function sanitizeForStorage( mixed $input ): string
+	{
+		$raw = $input;
+
+		if ( ! $sanitized = Text::force( $input ) )
+			return '';
+
+		$sanitized = Core\Text::trim( rawurldecode( $sanitized ) );
+
+		if ( self::isRelative( $sanitized ) )
+			$sanitized = sanitize_url( $sanitized ); // avoid forced scheme
+
+		else if ( self::isLocal( $sanitized ) )
+			$sanitized = sanitize_url( self::relative( $sanitized ) ); // avoid forced scheme
+
+		else
+			$sanitized = self::sanitize( $sanitized );
+
+		return apply_filters( 'nucleus_url_sanitize',
+			$sanitized,
+			$raw,
+		);
+	}
+
+	/**
+	 * Validates a URL as safe for use in the HTTP API.
+	 * NOTE: wrapper for `wp_http_validate_url()`
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function validate( mixed $input ): string
+	{
+		if ( ! $url = Text::force( $input ) )
+			return '';
+
+		return wp_http_validate_url( $url ) ?: '';
+	}
+
 	// @SOURCE: http://stackoverflow.com/a/8891890
-	public static function current( $trailingslashit = FALSE, $forwarded_host = FALSE )
+	public static function current( bool $trailingslashit = FALSE, bool $forwarded_host = FALSE ): string
 	{
 		$ssl = ( ! empty( $_SERVER['HTTPS'] ) && 'on' == $_SERVER['HTTPS'] );
 
@@ -42,20 +82,20 @@ class URL extends Base
 	}
 
 	// like twitter links
-	public static function prepTitle( $url, $convert_slash = FALSE )
+	public static function prepTitle( string $url, bool $convert_slash = FALSE ): string
 	{
 		$title = preg_replace( '|^http(s)?://(www\.)?|i', '', $url );
 		$title = self::untrail( $title );
 		return $convert_slash ? str_ireplace( [ '/', '\/' ], '-', $title ) : $title;
 	}
 
-	public static function prepTitleQuery( $string )
+	public static function prepTitleQuery( string $string ): string
 	{
 		return str_ireplace( [ '_', '-' ], ' ', urldecode( $string ) );
 	}
 
 	// wrapper for `wp_parse_url()`
-	public static function parse( $url, $component = -1 )
+	public static function parse( string $url, int $component = -1 ): mixed
 	{
 		return wp_parse_url( $url, $component );
 	}
@@ -332,10 +372,18 @@ class URL extends Base
 		return $target ?: FALSE;
 	}
 
-	// converts a URL to just the domain
-	// @SOURCE: https://gist.github.com/davejamesmiller/1965937
-	public static function getDomain( $url )
+	/**
+	 * Converts a URL to just the domain.
+	 * @source: https://gist.github.com/davejamesmiller/1965937
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function getDomain( mixed $input ): string
 	{
+		if ( ! $url = Text::force( $input ) )
+			return '';
+
 		$host = self::parse( $url, PHP_URL_HOST );
 
 		if ( ! $host )

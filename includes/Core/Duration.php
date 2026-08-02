@@ -94,7 +94,7 @@ class Duration extends Base
 		return $value;
 	}
 
-	public static function getHTMLPattern()
+	public static function getHTMLPattern(): string|false
 	{
 		return FALSE; // FIXME!
 	}

@@ -13,7 +13,7 @@ class ISBN extends Base
 	// Matches an un-formatted `ISBN-13`.
 	public const ISBN13 = '/^97[89][0-9]{10}$/';
 
-	public static function getHTMLPattern()
+	public static function getHTMLPattern(): string|false
 	{
 		// @source https://input-pattern.com/en/training.php#isbn
 		return '(97[89])?\d{10}|(97[89]-)?(?=.{13}$)(\d+-){3}\d';
