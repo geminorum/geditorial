@@ -19,7 +19,7 @@ class ModuleSettings extends gEditorial\Settings
 	const ACTION_CREATE_LANG_TAXONOMY = 'do_import_language_taxonomy_create';
 	const ACTION_UPDATE_LANG_TAXONOMY = 'do_import_language_taxonomy_update';
 
-	public static function renderCard_import_identifiers( $taxonomy, $rawdata, $metakeys )
+	public static function renderCard_import_identifiers( string $taxonomy, mixed $rawdata, array $metakeys ): bool
 	{
 		if ( empty( $rawdata ) )
 			return FALSE;
@@ -89,7 +89,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function renderCard_tool_convert_terms_step2( $queried, $rawdata, $metakeys )
+	public static function renderCard_tool_convert_terms_step2( string $queried, mixed $rawdata, array $metakeys ): bool
 	{
 		if ( ! isset( $_POST[static::ACTION_INVESTIGATE_TERMS] ) )
 			return FALSE;
@@ -183,7 +183,7 @@ class ModuleSettings extends gEditorial\Settings
 		return $row;
 	}
 
-	public static function renderCard_tool_convert_terms( $taxonomy, $rawdata, $metakeys, $supported )
+	public static function renderCard_tool_convert_terms( string $taxonomy, mixed $rawdata, array $metakeys, array $supported ): bool
 	{
 		if ( empty( $rawdata ) || empty( $supported ) )
 			return FALSE;

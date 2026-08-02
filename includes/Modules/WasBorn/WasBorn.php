@@ -968,8 +968,10 @@ class WasBorn extends gEditorial\Module
 		echo gEditorial\Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
 
 		if ( Core\Date::isUnderAged( $dob, $legal, $cal ) )
-			printf( ' (<span class="%s">%s</span>)', '-color-danger -is-under-aged',
-				_x( 'Under-Aged!', 'Pointer Notice', 'geditorial-was-born' ) );
+			printf( ' (<span class="%s">%s</span>)',
+				'-color-danger -is-under-aged',
+				_x( 'Under-Aged!', 'Pointer Notice', 'geditorial-was-born' ),
+			);
 
 		echo $after;
 

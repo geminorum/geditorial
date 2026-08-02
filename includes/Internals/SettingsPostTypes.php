@@ -61,10 +61,10 @@ trait SettingsPostTypes
 	 *
 	 * @param string $posttype
 	 * @param string $target
-	 * @param array $fallback
-	 * @return array
+	 * @param bool $fallback
+	 * @return bool
 	 */
-	public function in_setting_posttypes( $posttype, $target, $fallback = FALSE )
+	public function in_setting_posttypes( false|string $posttype, string $target, bool $fallback = FALSE ): bool
 	{
 		return ( $posttype && in_array( $posttype, $this->get_setting_posttypes( $target ) ) ) || $fallback;
 	}
@@ -270,7 +270,7 @@ trait SettingsPostTypes
 	}
 
 	/**
-	 * Gets target post-type for use in settings.
+	 * Gets target post-types for use in settings.
 	 *
 	 * @param string $target
 	 * @param array $extra

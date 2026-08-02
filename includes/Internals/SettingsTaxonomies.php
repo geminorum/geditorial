@@ -10,6 +10,36 @@ use geminorum\gEditorial\WordPress;
 trait SettingsTaxonomies
 {
 	/**
+	 * Retrieves settings key for the target taxonomies.
+	 *
+	 * @param string $target
+	 * @return string
+	 */
+	protected function get_setting_key_taxonomies_for_target( $target )
+	{
+		return self::und( $target, 'taxonomies' );
+	}
+
+	/**
+	 * Retrieves settings field for the target taxonomies.
+	 *
+	 * @param string $target
+	 * @param string $title
+	 * @param string $description
+	 * @return array
+	 */
+	protected function settings_taxonomies_for_target( $target, $title = NULL, $description = NULL )
+	{
+		return [
+			'type'        => 'checkboxes-panel-expanded',
+			'field'       => $this->get_setting_key_taxonomies_for_target( $target ),
+			'values'      => $this->get_settings_taxonomies_for_target( $target ),
+			'title'       => $title ?? _x( 'Supported Taxonomies', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? '',
+		];
+	}
+
+	/**
 	 * Retrieves settings option for the target taxonomies.
 	 *
 	 * @param string $target
@@ -18,7 +48,9 @@ trait SettingsTaxonomies
 	 */
 	public function get_setting_taxonomies( string $target, array $fallback = [] ): array
 	{
-		return $target ? $this->get_setting( self::und( $target, 'taxonomies' ), $fallback ): $fallback;
+		return $target
+			? $this->get_setting( $this->get_setting_key_taxonomies_for_target( $target ), $fallback ):
+			$fallback;
 	}
 
 	/**
@@ -188,6 +220,45 @@ trait SettingsTaxonomies
 			$this->hook_base( $module ?? $this->module->name, 'taxonomies_excluded' ),
 			$this->constant( $constant )
 		);
+	}
+
+	// DEFAULT METHOD
+	protected function taxonomies_for_target( string $target, string|array $extra = [] ): array
+	{
+		return $this->filters( 'taxonomies_for_target',
+			array_merge( array_keys( $this->all_taxonomies() ), (array) $extra ),
+			$target
+		);
+	}
+
+	/**
+	 * Gets target taxonomies for use in settings.
+	 *
+	 * @param string $target
+	 * @param array $extra
+	 * @param string $capability
+	 * @return array
+	 */
+	protected function get_settings_taxonomies_for_target( string $target, string|array $extra = [], ?string $capability = NULL ): array
+	{
+		$list       = [];
+		$taxonomies = WordPress\Taxonomy::get( 0,
+			[ 'show_ui' => TRUE ],
+			$this->restrict_taxonomies ?? FALSE,
+			$capability,
+		);
+
+		foreach ( $this->taxonomies_for_target( $target, $extra ) as $taxonomy ) {
+
+			if ( array_key_exists( $taxonomy, $taxonomies ) )
+				$list[$taxonomy] = $taxonomies[$taxonomy];
+
+			// only if no checks required
+			else if ( is_null( $capability ) && WordPress\Taxonomy::exists( $taxonomy ) )
+				$list[$taxonomy] = $taxonomy;
+		}
+
+		return $list;
 	}
 
 	protected function get_taxonomy_autolink_terms_desc( string $constant ): string

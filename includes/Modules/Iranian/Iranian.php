@@ -431,7 +431,7 @@ class Iranian extends gEditorial\Module
 		if ( ! $ranges = $this->get_imports_raw_data( 'postcode-ranges', 'json' ) )
 			return $info;
 
-		if ( ! empty( $info['country'] ) && 'IR' !== $info['country'] )
+		if ( ! empty( $info['country'] ) && static::COUNTRY_CODE !== $info['country'] )
 			return $info;
 
 		$prefix = substr( Core\Text::trim( $raw ), 0, 5 );
