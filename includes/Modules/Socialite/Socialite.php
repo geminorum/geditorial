@@ -338,6 +338,8 @@ class Socialite extends gEditorial\Module
 		$fields = $fields ?? array_merge( [
 			// adds before the list
 			'_contact',
+			'_email',
+			'_url',
 		], $this->supported, [
 			// adds after the list
 			'_ical',
@@ -355,7 +357,7 @@ class Socialite extends gEditorial\Module
 		if ( '_ical' === $field )
 			return Services\Calendars::linkTermCalendar( $term, $context );
 
-		if ( in_array( $field, [ '_contact' ], TRUE ) )
+		if ( in_array( $field, [ '_contact', '_email', '_url' ], TRUE ) )
 			$field = Core\Text::stripPrefix( $field, '_' );
 
 		if ( ! $metakey = Services\TaxonomyFields::getTermMetaKey( $field, $term->taxonomy ) )
@@ -382,6 +384,8 @@ class Socialite extends gEditorial\Module
 
 			// Extra support for front-end only.
 			case 'contact':
+			case 'email':
+			case 'url':
 				return Core\Text::trim( $meta );
 		}
 
@@ -418,6 +422,9 @@ class Socialite extends gEditorial\Module
 
 			// Extra support for front-end only.
 			case '_contact':
+			case '_email':
+			case '_url':
+
 				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
 
 			case '_ical':
