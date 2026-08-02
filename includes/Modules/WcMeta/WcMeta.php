@@ -113,4 +113,34 @@ class WcMeta extends gEditorial\Module
 	// {
 	// 	$this->add_posttype_fields_for( 'units', 'primary_posttype' );
 	// }
+
+	public function init(): void
+	{
+		parent::init();
+
+		if ( is_admin() )
+			return;
+
+		$this->filter( 'excerpt_search_result', 3, 12, FALSE, 'aws' );
+	}
+
+	// @ref https://advanced-woo-search.com/guide/customize-results/
+	// @hook `aws_excerpt_search_result`
+	public function excerpt_search_result( string $excerpt, mixed $post_id, mixed $product ): string
+	{
+		if ( empty( $product )  )
+			return $excerpt;
+
+		$subtitle = gEditorial\Template::getMetaField( 'sub_title', [
+			'id'      => $post_id,
+			'context' => FALSE, // disable access checks
+			'before'  => '<div class="-subtitle mb-1">',
+			'after'   => '</div>',
+		] );
+
+		if ( $subtitle )
+			$excerpt = $subtitle.$excerpt;
+
+		return $excerpt;
+	}
 }
