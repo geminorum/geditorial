@@ -556,7 +556,8 @@ class Template extends WordPress\Main
 	{
 		global $wp_embed;
 
-		$url = trim( $meta );
+		if ( ! $url = WordPress\URL::absolute( $meta ) )
+			return $meta;
 
 		if ( ! Core\URL::isValid( $url ) )
 			return $meta;
