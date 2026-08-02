@@ -270,7 +270,7 @@ class Byline extends gEditorial\Module
 	{
 		if ( 'users' === $screen->base ) {
 
-			$this->filter( 'pre_count_many_users_posts', 2 );
+			$this->filter( 'pre_count_many_users_posts', 4 );
 
 		} else if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
 
@@ -451,13 +451,15 @@ class Byline extends gEditorial\Module
 	 * @source https://github.com/Automattic/Co-Authors-Plus/pull/1098/files
 	 * @ticket https://core.trac.wordpress.org/ticket/63004
 	 *
-	 * @param array $counts
-	 * @param array $user_ids
+	 * @param array|null $count
+	 * @param array $users
+	 * @param string $posttype
+	 * @param bool $public_only
 	 * @return array
 	 */
-	public function pre_count_many_users_posts( array $counts, array $user_ids ): array
+	public function pre_count_many_users_posts( $count, array $users, $posttype, $public_only ): array
 	{
-		return array_fill_keys( array_map( 'absint', $user_ids ), 0 );
+		return array_fill_keys( array_map( 'absint', $users ), 0 );
 	}
 
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void

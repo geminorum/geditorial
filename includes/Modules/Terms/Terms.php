@@ -336,8 +336,8 @@ class Terms extends gEditorial\Module
 			case 'arrow'    : return Core\Arraay::keepByKeys( $supported, [ 'warehouse_placement' ] );
 			case 'born'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
 			case 'dead'     : return Core\Arraay::keepByKeys( $supported, [ 'people' ] );
-			case 'establish': return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer' ] );
-			case 'abolish'  : return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer' ] );
+			case 'establish': return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer', 'product_brand' ] );
+			case 'abolish'  : return Core\Arraay::keepByKeys( $supported, [ 'drone_manufacturer', 'publisher', 'provider_brand', 'vehicle_manufacturer', 'product_brand' ] );
 		}
 
 		return array_unique( array_diff_key( $supported, array_flip( $excluded ) ) );

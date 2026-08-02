@@ -323,7 +323,7 @@ class Socialite extends gEditorial\Module
 		return $columns; // TODO
 	}
 
-	public function terms_custom_column( string $column, $taxonomy, $supported, $term ): void
+	public function terms_custom_column( string $column, $taxonomy, $supported, mixed $term ): void
 	{
 		if ( $column === $this->classs() )
 			echo $this->_get_term_icons( $term, 'column', $this->supported, [
@@ -332,8 +332,11 @@ class Socialite extends gEditorial\Module
 			] );
 	}
 
-	private function _get_term_icons( $term, $context = NULL, $fields = NULL, $extra = [] )
+	private function _get_term_icons( mixed $term, ?string $context = NULL, $fields = NULL, $extra = [] ): string
 	{
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return '';
+
 		$list   = [];
 		$fields = $fields ?? array_merge( [
 			// adds before the list
@@ -352,7 +355,7 @@ class Socialite extends gEditorial\Module
 		return $this->wrap( Core\HTML::rows( $list ), $extra );
 	}
 
-	private function _get_field_url( $field, $term, $context = NULL )
+	private function _get_field_url( string $field, object $term, ?string $context = NULL ): false|string
 	{
 		if ( '_ical' === $field )
 			return Services\Calendars::linkTermCalendar( $term, $context );
@@ -393,7 +396,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// better to define here!
-	private function _get_field_icon( $field, $taxonomy = FALSE, $context = NULL )
+	private function _get_field_icon( string $field, string|false $taxonomy = FALSE, ?string $context = NULL ): mixed
 	{
 		$default = [ 'gridicons', 'share' ];
 
@@ -416,7 +419,7 @@ class Socialite extends gEditorial\Module
 		return Core\Icon::guess( $field, $default );
 	}
 
-	private function _get_field_link( $field, $url, $term, $context = NULL )
+	private function _get_field_link( string $field, string $url, object $term, ?string $context = NULL ): string
 	{
 		switch ( $field ) {
 
@@ -429,6 +432,7 @@ class Socialite extends gEditorial\Module
 
 			case '_ical':
 			default:
+
 				return $this->get_column_icon( $url,
 					$this->_get_field_icon( $field, $term->taxonomy, $context ),
 					$this->get_string( $field, $term->taxonomy, 'titles', $field ),

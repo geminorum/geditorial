@@ -496,7 +496,7 @@ trait QuantumComments
 				case 'url':
 				case 'link':
 
-					$data[$raw_key] = rawurldecode( Core\Text::trim( $raw_value ) );
+					$data[$raw_key] = Core\URL::sanitizeForStorage( $raw_value );
 					break;
 
 				case 'html':

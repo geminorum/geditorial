@@ -335,9 +335,8 @@ class Bookmarked extends gEditorial\Module
 	}
 
 	// TODO: support: `Core\Third::getHandleURL()`
-	private function _generate_link( $atts, $parent = NULL, $context = NULL )
+	private function _generate_link( array $atts, mixed $parent = NULL, ?string $context = NULL ): false|string
 	{
-		// TODO: maybe cache the arrays
 		$data = self::parsed( array_fill_keys( array_keys( $this->subcontent_define_fields() ), NULL ), $atts );
 		$post = WordPress\Post::get( $parent );
 		$link = FALSE;
@@ -363,7 +362,7 @@ class Bookmarked extends gEditorial\Module
 		return $this->filters( 'generate_link', $link, $data, $post, $context );
 	}
 
-	public function prepped_data( $data, $context, $post, $raw, $types )
+	public function prepped_data( array $data, ?string $context, mixed $post, $raw, $types ): array
 	{
 		if ( in_array( $context, [ 'summary', 'tabs' ] ) )
 			return ModuleHelper::prepDataForSummary(

@@ -20,36 +20,43 @@ class Icons extends gEditorial\Service
 	 * - Pass the name of a `Dashicons` helper class to use a font icon, e.g. `dashicons-chart-pie`.
 	 * - Pass `none` to leave `div.wp-menu-image` empty so an icon can be added via CSS.
 	 *
-	 * @param string|array|false|null $icon
-	 * @param string $fallback
-	 * @param string|array $extra
+	 * @param mixed $icon
+	 * @param string $fallback_icon
+	 * @param string|array $extra_class
 	 * @return string
 	 */
-	public static function get( $icon, $fallback = 'admin-post', $extra = [] )
+	public static function get( mixed $icon, string $fallback_icon = 'admin-post', string|array $extra_class = [] ): string
 	{
 		if ( ! $icon || 'none' === $icon )
-			return Core\HTML::getDashicon( $fallback, FALSE, $extra );
+			return Core\HTML::getDashicon( $fallback_icon, FALSE, $extra_class );
 
 		if ( is_array( $icon ) )
-			return gEditorial()->icon( $icon[1], $icon[0], $extra );
+			return gEditorial()->icon( $icon[1], $icon[0], $extra_class );
+
+		if ( Core\Text::starts( $icon, '#' ) )
+			return Core\Icon::getLink( $icon, $extra_class );
 
 		if ( Core\Text::starts( $icon, 'data:image/' ) )
-			return Core\HTML::img( $icon, Core\HTML::attrClass( '-icon', '-encoded', $extra ) );
+			return Core\HTML::img( $icon, Core\HTML::attrClass( '-icon', '-encoded', $extra_class ) );
 
 		if ( Core\Text::starts( $icon, 'dashicons-' ) )
-			$icon = Core\Text::stripPrefix( $icon, 'dashicons-' );
+			return Core\HTML::getDashicon( Core\Text::stripPrefix( $icon, 'dashicons-' ) );
 
-		else if ( Core\URL::isValid( $icon ) )
-			return Core\Icon::wrapURL( Core\HTML::escapeURL( $icon ), $extra );
+		if ( Core\URL::isValid( $icon ) )
+			return Core\Icon::wrapURL( Core\HTML::escapeURL( $icon ), $extra_class );
 
-		return Core\HTML::getDashicon( $icon, FALSE, $extra );
+		// `icon-name:icon-set`
+		if ( Core\Text::has( $icon, ':' ) )
+			return Core\Icon::wrapBase64( Core\Icon::getBase64( ...explode( ':', $icon, 2 ) ), $extra_class ); // better to return hashed
+
+		return Core\HTML::getDashicon( $icon, FALSE, $extra_class );
 	}
 
 	// OLD: `Visual::getMenuIcon()`
-	public static function menu( $icon, $fallback = NULL )
+	public static function menu( array|string $icon, ?string $fallback_icon = NULL ): string
 	{
 		if ( ! $icon )
-			$icon = $fallback ?? 'screenoptions';
+			$icon = $fallback_icon ?? 'screenoptions';
 
 		return is_array( $icon )
 			? Core\Icon::getBase64( $icon[1], $icon[0] )
@@ -57,12 +64,12 @@ class Icons extends gEditorial\Service
 	}
 
 	// OLD: `Visual::getPostTypeIconMarkup()`
-	public static function posttypeMarkup( $posttype, $fallback = NULL, $raw = FALSE )
+	public static function posttypeMarkup( string|object $posttype, ?string $fallback_icon = NULL, bool $raw = FALSE ): mixed
 	{
+		$fallback_icon = $fallback_icon ?? 'admin-post';
+
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
-			return $raw
-				? ( $fallback ?? 'admin-post' )
-				: Core\HTML::getIcon( $fallback ?? 'admin-post' );
+			return $raw ? $fallback_icon : Core\HTML::getDashicon( $fallback_icon );
 
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
@@ -79,26 +86,24 @@ class Icons extends gEditorial\Service
 
 			if ( Core\Text::starts( $object->menu_icon, 'dashicons-' ) )
 				return $raw
-					? str_ireplace( 'dashicons-', '', $object->menu_icon )
-					: Core\HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
+					? Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' )
+					: Core\HTML::getDashicon( Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' ) );
 
 			return $raw
 				? $object->menu_icon
 				: Core\Icon::wrapURL( esc_url( $object->menu_icon ) );
 		}
 
-		return $raw
-			? ( $fallback ?? 'admin-post' )
-			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
+		return $raw ? $fallback_icon : Core\HTML::getDashicon( $fallback_icon );
 	}
 
 	// OLD: `Visual::getTaxonomyIconMarkup()`
-	public static function taxonomyMarkup( $taxonomy, $fallback = NULL, $raw = FALSE )
+	public static function taxonomyMarkup( string|object $taxonomy, ?string $fallback_icon = NULL, bool $raw = FALSE ): mixed
 	{
+		$fallback_icon = $fallback_icon ?? 'admin-post';
+
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
-			return $raw
-				? ( $fallback ?? 'admin-post' )
-				: Core\HTML::getIcon( $fallback ?? 'admin-post' );
+			return $raw ? $fallback_icon	: Core\HTML::getDashicon( $fallback_icon );
 
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw
@@ -115,24 +120,22 @@ class Icons extends gEditorial\Service
 
 			if ( Core\Text::starts( $object->menu_icon, 'dashicons-' ) )
 				return $raw
-					? str_ireplace( 'dashicons-', '', $object->menu_icon )
-					: Core\HTML::getDashicon( str_ireplace( 'dashicons-', '', $object->menu_icon ) );
+					? Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' )
+					: Core\HTML::getDashicon( Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' ) );
 
 			return $raw
 				? $object->menu_icon
 				: Core\Icon::wrapURL( esc_url( $object->menu_icon ) );
 		}
 
-		return $raw
-			? ( $fallback ?? 'admin-post' )
-			: Core\HTML::getIcon( $fallback ?? 'admin-post' );
+		return $raw ? $fallback_icon : Core\HTML::getDashicon( $fallback_icon );
 	}
 
 	// OLD: `Visual::getAdminBarIconMarkup()`
 	// NOTE: for `dashicons` only, not supporting SVG!
 	// NOTE: must use in parent with `.geditorial-adminbar-node-icononly` for icon only
 	// NOTE: must use in parent with `.geditorial-adminbar-node.-has-icon` for icon + label
-	public static function adminBarMarkup( $icon = 'screenoptions', $style = FALSE )
+	public static function adminBarMarkup( string $icon = 'screenoptions', string $style = '' ): string
 	{
 		return Core\HTML::tag( 'span', [
 			'class' => [
@@ -140,25 +143,25 @@ class Icons extends gEditorial\Service
 				'dashicons',
 				'dashicons-'.$icon,
 			],
-			'style' => $style,
+			'style' => $style ?: FALSE,
 		], NULL );
 	}
 
-	public static function ltrMarkup( $icon = NULL, $extra = [] )
+	public static function ltrMarkup( ?string $icon = NULL, string|array $extra_class = [] ): string
 	{
 		return Core\HTML::getDashicon(
 			$icon ?? 'arrow-right-alt',
 			_x( 'Left-to-Right', 'Service: Icons', 'geditorial' ),
-			Core\HTML::attrClass( '-direction-icon', $extra )
+			Core\HTML::attrClass( '-direction-icon', $extra_class )
 		);
 	}
 
-	public static function rtlMarkup( $icon = NULL, $extra = [] )
+	public static function rtlMarkup( ?string $icon = NULL, string|array $extra_class = [] ): string
 	{
 		return Core\HTML::getDashicon(
 			$icon ?? 'arrow-left-alt',
 			_x( 'Right-to-Left', 'Service: Icons', 'geditorial' ),
-			Core\HTML::attrClass( '-direction-icon', $extra )
+			Core\HTML::attrClass( '-direction-icon', $extra_class )
 		);
 	}
 }

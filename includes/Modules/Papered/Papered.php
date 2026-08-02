@@ -613,7 +613,7 @@ class Papered extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _get_view_list_for_post( false|object $profile, false|object $source, ?String $context, array $config, array $flags = [] ): array
+	private function _get_view_list_for_post( false|object $profile, false|object $source, ?string $context, array $config, array $flags = [] ): array
 	{
 		$data  = [];
 		$meta  = gEditorial()->enabled( 'meta' );

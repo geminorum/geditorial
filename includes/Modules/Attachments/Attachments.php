@@ -214,12 +214,16 @@ class Attachments extends gEditorial\Module
 
 			$this->filter_false( 'pre_option_wp_attachment_pages_enabled', 12 );
 
-			if ( $download )
+			if ( ! is_admin() && $download )
 				add_filter( 'redirect_canonical',
 					static function ( $redirect_url, $requested_url )
 						use ( $query ) {
 
-						return remove_query_arg( $query, $redirect_url );
+						// only if not short-link
+						return array_key_exists( 'p', $_GET )
+							? $redirect_url
+							: remove_query_arg( $query, $redirect_url );
+
 					}, 22, 2 );
 
 		} else {

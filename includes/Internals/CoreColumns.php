@@ -88,7 +88,7 @@ trait CoreColumns
 
 	public function get_column_icon(
 		false|string $link = FALSE,
-		null|string|array $icon = NULL,
+		mixed $icon = NULL,
 		?string $title = NULL,
 		string $posttype = 'post',
 		array|string $extra = [],
