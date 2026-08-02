@@ -1145,6 +1145,7 @@ trait SubContents
 			'search'     => 'before',
 			'title'      => Core\HTML::tag( 'h3', $title ?? _x( 'Overview of Sub-contents', 'Internal: Subcontents: Header', 'geditorial-admin' ) ),
 			'empty'      => $this->get_string( 'empty', $context, 'notices', gEditorial\Plugin::noinfo( FALSE ) ),
+			'row_class' => [ $this, 'subcontent_reports_tablelist_row_class' ],
 			'pagination' => $pagination,
 			'extra'      => [
 				'na'      => gEditorial()->na(),
@@ -1152,5 +1153,11 @@ trait SubContents
 				'context' => $context,
 			],
 		] );
+	}
+
+	// NOTE: DEFAULT CALLBACK: for additional checks on the row
+	public function subcontent_reports_tablelist_row_class( array $row_class, array|object $row, int|string $index, array $args ): array
+	{
+		return $row_class;
 	}
 }
