@@ -290,6 +290,7 @@ class Bookmarked extends gEditorial\Module
 		return $this->subcontent_restapi_register_routes();
 	}
 
+	// TODO: warn if has no code and no link
 	public function subcontent_provide_summary( ?array $data, array $item, object $parent, ?string $context ): ?array
 	{
 		if ( ! is_null( $data ) )

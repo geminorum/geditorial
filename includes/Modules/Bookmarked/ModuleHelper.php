@@ -40,7 +40,10 @@ class ModuleHelper extends gEditorial\Helper
 				$item['label'] = Core\Text::wordWrap( $option['title'] );
 
 			if ( ! empty( $row['__link'] ) )
-				$item['link'] = Core\URL::sanitize( $row['__link'] );
+				$item['link'] = Core\HTML::escapeURL( $row['__link'] );
+
+			else if ( empty( $row['code'] ) )
+				continue; // Bail if no code and no link!
 
 			else if ( ! empty( $option['template'] ) )
 				$item['link'] = Core\Text::replaceTokens( $option['template'], $row );
