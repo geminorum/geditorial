@@ -46,6 +46,16 @@ class WcPurchased extends gEditorial\Module
 		];
 	}
 
+	public function init(): void
+	{
+		parent::init();
+
+		if ( ! is_admin() )
+			return;
+
+		$this->action_module( 'pointers', 'post', 6, 600 );
+	}
+
 	public function admin_menu(): void
 	{
 		$this->_hook_submenu_adminpage( 'reports' );
@@ -76,6 +86,30 @@ class WcPurchased extends gEditorial\Module
 				}
 			}
 		}
+	}
+
+	public function pointers_post( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
+	{
+		if ( $new_post )
+			return;
+
+		if ( $post->post_type !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+			return;
+
+		$total_sales = get_post_meta( $post->ID, 'total_sales', TRUE );
+
+		printf( $before, '-product-total-sales' );
+			echo self::spc(
+				$this->get_column_icon(),
+				$total_sales
+					? sprintf(
+						/* translators: `%s`: total number of sales */
+						_x( 'Total sales number is <b>%s</b>', 'Pointer Notice', 'geditorial-wc-purchased' ),
+						gEditorial\Helper::htmlCount( $total_sales ?: 0 )
+					)
+					: _x( '<b>No</b> record of sale!', 'Pointer Notice', 'geditorial-wc-purchased' ),
+			);
+		echo $after;
 	}
 
 	public function post_row_actions( array $actions, object $post ): array
