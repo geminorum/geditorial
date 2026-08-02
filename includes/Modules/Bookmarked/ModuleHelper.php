@@ -96,7 +96,7 @@ class ModuleHelper extends gEditorial\Helper
 			[
 				'name'     => 'attachment',
 				'title'    => _x( 'Site Attachment', 'Type Option', 'geditorial-bookmarked' ),
-				'template' => add_query_arg( [ 'p' => '{{code}}' ], get_bloginfo( 'url' ) ),
+				'template' => add_query_arg( [ 'p' => '{{code}}', 'download' => '' ], get_bloginfo( 'url' ) ),
 				'cssclass' => '-internal-attachment',
 				'icon'     => 'media-default',
 				'logo'     => '',
