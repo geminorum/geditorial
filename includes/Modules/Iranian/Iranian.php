@@ -13,6 +13,8 @@ class Iranian extends gEditorial\Module
 	use Internals\RawImports;
 	use Internals\RestAPI;
 
+	const COUNTRY_CODE = 'IR';
+
 	protected $imports_datafiles = [
 		'identity-locations' => 'identity-locations.json',   // 2023-10-03 23:32:42
 		'postcode-ranges'    => 'postcode-ranges.json',      // 2025-08-13
@@ -82,6 +84,7 @@ class Iranian extends gEditorial\Module
 
 		$settings['posttypes_option'] = 'posttypes_option';
 		$settings['_supports'][]      = 'restapi_restricted';
+		$settings['_supports'][]      = 'woocommerce_support';
 
 		$settings['_roles']['reports_roles'] = [ NULL, $roles ];
 		$settings['_roles']['tools_roles']   = [ NULL, $roles ];
@@ -137,11 +140,35 @@ class Iranian extends gEditorial\Module
 		$this->filter( 'info_from_card_number', 4, 8, FALSE, $this->base );
 		$this->filter( 'info_from_postcode', 4, 8, FALSE, $this->base );
 		$this->filter_module( 'banking', 'subcontent_pre_prep_data', 5, 8 );
+
+		if ( $this->get_setting( 'woocommerce_support' ) )
+			$this->_init_woocommerce();
 	}
 
 	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported();
+	}
+
+	private function _init_woocommerce()
+	{
+		$this->filter( 'states', 1, 99, 'woocommerce', 'woocommerce' );
+	}
+
+	/**
+	 * Modifies states on WooCommerce.
+	 *
+	 * @hook `woocommerce_states`
+	 * @doc https://developer.woocommerce.com/docs/code-snippets/add-or-modify-states/
+	 *
+	 * @param array $states
+	 * @return array
+	 */
+	public function states_woocommerce( array $states ): array
+	{
+		$states[static::COUNTRY_CODE] = ModuleInfo::getProvinces( 'woocommerce' );
+
+		return $states;
 	}
 
 	public function setup_restapi(): bool
