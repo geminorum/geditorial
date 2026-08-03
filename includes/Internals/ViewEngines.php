@@ -107,6 +107,7 @@ trait ViewEngines
 	}
 
 	// NOTE: always gets a new instance
+	// @SEE https://github.com/bobthecow/mustache.php/wiki
 	protected function viewengine__get( string $path = '' ): object
 	{
 		$args = [
@@ -118,6 +119,16 @@ trait ViewEngines
 			'escape' => static function ( $value ) {
 				return Core\Coding::entityEncodeCOMPAT( $value );
 			},
+
+			// To decrease the chance of Cross-site scripting vulnerability.
+			'entity_flags' => ENT_QUOTES,
+
+			'debug_rendering' => WordPress\IsIt::dev()
+
+				// Keeps successful renders fast, but failed templates render twice,
+				// so watch out for side effects in lambdas, helpers, or custom escaping callbacks.
+				? \Mustache\Engine::DEBUG_RENDERING_ON_EXCEPTION
+				: \Mustache\Engine::DEBUG_RENDERING_NEVER,
 		];
 
 		if ( $path ) {
