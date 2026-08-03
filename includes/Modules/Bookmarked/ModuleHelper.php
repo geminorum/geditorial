@@ -13,7 +13,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const DEFAULT_TYPE_OPTION = 'default';
 
-	public static function prepDataForSummary( array $data, array $options, ?string $context ): array
+	public static function prepDataForSummary( array $data, array $options, array $labels, array $descriptions, ?string $context ): array
 	{
 		$prepped = [];
 
@@ -35,8 +35,14 @@ class ModuleHelper extends gEditorial\Helper
 				'bgcolor' => 'transparent',
 			];
 
-			if ( ! empty( $row['__label'] ) )
-				$item['label'] = Core\Text::wordWrap( Core\Text::trim( $row['__label'] ) );
+			if ( ! empty( $row['__label'] ) && ( $the_label = Core\Text::trim( $row['__label'] ) ) )
+				$item['label'] = Core\Text::wordWrap( $the_label );
+
+			else if ( array_key_exists( $type, $labels ) && ( $custom_label = Core\Text::trim( $labels[$type] ) ) )
+				$item['label'] = Core\Text::wordWrap( $custom_label );
+
+			else if ( ! empty( $option['label'] ) )
+				$item['label'] = Core\Text::wordWrap( $option['label'] );
 
 			else if ( ! empty( $option['title'] ) )
 				$item['label'] = Core\Text::wordWrap( $option['title'] );
@@ -56,6 +62,9 @@ class ModuleHelper extends gEditorial\Helper
 			else if ( 'attachment' === $type && ! empty( $row['__code'] ) )
 				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( WordPress\Attachment::caption( (int) $row['__code'], '' ) ) );
 
+			if ( empty( $item['desc'] ) && array_key_exists( $type, $descriptions ) && ( $custom_desc = Core\Text::trim( $descriptions[$type] ) ) )
+				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( Core\Text::replaceTokens( $custom_desc, $row ) ) );
+
 			if ( empty( $item['desc'] ) && ! empty( $option['desc'] ) )
 				$item['desc'] = Core\Text::wordWrap( WordPress\Strings::prepDescription( Core\Text::replaceTokens( $option['desc'], $row ) ) );
 
@@ -73,6 +82,34 @@ class ModuleHelper extends gEditorial\Helper
 		}
 
 		return $prepped;
+	}
+
+	public static function getDefaultLabelsForTypeOptions( ?array $type_options = NULL, ?string $context = NULL ): array
+	{
+		$list         = [];
+		$type_options = $type_options ?? self::getTypeOptions( $context );
+
+		foreach ( $type_options as $type_option )
+			$list[$type_option['name']] = [
+				$type_option['title'],
+				$type_option['label'] ?? '',
+			];
+
+		return self::filters( 'type_options_default_labels', $list, $context, $type_options );
+	}
+
+	public static function getDefaultDescriptionsForTypeOptions( ?array $type_options = NULL, ?string $context = NULL ): array
+	{
+		$list         = [];
+		$type_options = $type_options ?? self::getTypeOptions( $context );
+
+		foreach ( $type_options as $type_option )
+			$list[$type_option['name']] = [
+				$type_option['title'],
+				$type_option['desc'] ?? '',
+			];
+
+		return self::filters( 'type_options_default_descriptions', $list, $context, $type_options );
 	}
 
 	// @SEE: `subcontent_define_type_options()`

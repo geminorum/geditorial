@@ -38,12 +38,33 @@ class Bookmarked extends gEditorial\Module
 	protected function get_global_settings(): array
 	{
 		$roles = $this->get_settings_default_roles();
+		$types = ModuleHelper::getTypeOptions( 'settings' );
 
 		return [
 			'_subcontent' => [
-				'subcontent_posttypes' => [ NULL, $this->all_posttypes() ],
 				'subcontent_fields'    => [ NULL, $this->subcontent_get_fields_for_settings() ],
-				'subcontent_types'     => [ NULL, $this->subcontent_get_types_for_settings() ],
+				'subcontent_posttypes' => [ NULL, $this->all_posttypes() ],
+			],
+			'_types' => [
+				'subcontent_types' => [ NULL, $this->subcontent_get_types_for_settings() ],
+			],
+			'_defaults' => [
+				[
+					'field'       => 'subcontent_default_labels',
+					'type'        => 'text',
+					'title'       => _x( 'Default Labels', 'Setting Title', 'geditorial-bookmarked' ),
+					'description' => _x( 'Fills empty labels base on type option upon display.', 'Setting Description', 'geditorial-bookmarked' ),
+					'values'      => ModuleHelper::getDefaultLabelsForTypeOptions( $types, 'settings' ),
+					'field_class' => [ 'regular-text' ],
+				],
+				[
+					'field'       => 'subcontent_default_descriptions',
+					'type'        => 'text',
+					'title'       => _x( 'Default Descriptions', 'Setting Title', 'geditorial-bookmarked' ),
+					'description' => _x( 'Fills empty descriptions base on type option upon display.', 'Setting Description', 'geditorial-bookmarked' ),
+					'values'      => ModuleHelper::getDefaultDescriptionsForTypeOptions( $types, 'settings' ),
+					'field_class' => [ 'semi-large-text' ],
+				],
 			],
 			'_roles' => [
 				'reports_roles' => [ NULL, $roles ],
@@ -172,7 +193,7 @@ class Bookmarked extends gEditorial\Module
 	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
-			'label',
+			// 'label',
 			'type',
 		];
 	}
@@ -376,7 +397,9 @@ class Bookmarked extends gEditorial\Module
 			return ModuleHelper::prepDataForSummary(
 				$data,
 				Core\Arraay::reKey( $this->subcontent_define_type_options( $context, WordPress\Post::type( $post ) ), 'name' ),
-				$context
+				$this->get_setting( 'subcontent_default_labels', [] ),
+				$this->get_setting( 'subcontent_default_descriptions', [] ),
+				$context,
 			);
 
 		return $data;
