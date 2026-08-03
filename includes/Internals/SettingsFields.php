@@ -172,7 +172,7 @@ trait SettingsFields
 		return $fields;
 	}
 
-	// for fields only in connection to the caller module
+	// NOTE: for fields only in connection to the caller module!
 	public function add_posttype_fields_supported( array|string|null $posttypes = NULL, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
 	{
 		$posttypes = $posttypes ?? $this->posttypes();
@@ -196,9 +196,14 @@ trait SettingsFields
 			$this->add_posttype_fields( $posttype, $fields, $append, $type );
 	}
 
-	public function add_posttype_fields_for( $type, $constant, $fields = NULL, $append = TRUE )
+	public function add_posttype_fields_for( string $type, string $constant, ?array $fields = NULL, bool $append = TRUE ): void
 	{
-		return $this->add_posttype_fields( $this->constant( $constant ), $fields, $append, $type ?? 'meta' );
+		$this->add_posttype_fields(
+			$this->constant( $constant, $constant ),
+			$fields,
+			$append,
+			$type ?? 'meta',
+		);
 	}
 
 	public function add_posttype_fields( string $posttype, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
@@ -218,15 +223,20 @@ trait SettingsFields
 		if ( empty( $fields ) )
 			return;
 
-		if ( $append )
-			$fields = array_merge( WordPress\PostType::supports( $posttype, $type.'_fields' ), $fields );
+		$feature = self::und( $type, 'fields' );
 
-		add_post_type_support( $posttype, [ $type.'_fields' ], $fields );
-		add_post_type_support( $posttype, 'custom-fields' ); // must for rest meta fields
+		if ( $append )
+			$fields = array_merge( WordPress\PostType::supports( $posttype, $feature ), $fields );
+
+		add_post_type_support( $posttype, $feature, $fields );
+		add_post_type_support( $posttype, 'custom-fields' ); // Must for meta fields on REST-API!
 	}
 
-	public function has_posttype_fields_support( $constant, $type = 'meta' )
+	protected function has_posttype_fields_support( string $constant, string $type = 'meta' ): bool
 	{
-		return post_type_supports( $this->constant( $constant, $constant ), $type.'_fields' );
+		return post_type_supports(
+			$this->constant( $constant, $constant ),
+			self::und( $type, 'fields' ),
+		);
 	}
 }

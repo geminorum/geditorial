@@ -161,7 +161,7 @@ class Bookmarked extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_get_meta_mapping(): array
+	protected function subcontent_get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'cssclass' => 'cssclass',
@@ -169,7 +169,7 @@ class Bookmarked extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'label',
@@ -177,14 +177,14 @@ class Bookmarked extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_selectable_fields( $context, $posttype = NULL )
+	protected function subcontent_define_selectable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'type' => $this->subcontent_list_type_options( $context, $posttype ),
 		];
 	}
 
-	protected function subcontent_define_type_options( $context, $posttype = NULL )
+	protected function subcontent_define_type_options( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return ModuleHelper::getTypeOptions( $context );
 	}

@@ -202,7 +202,7 @@ class Ortho extends gEditorial\Module
 		return $prepared;
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

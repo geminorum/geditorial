@@ -11,7 +11,9 @@ class ModuleHelper extends gEditorial\Helper
 {
 	const MODULE = 'bookmarked';
 
-	public static function prepDataForSummary( $data, $options, $context )
+	const DEFAULT_TYPE_OPTION = 'default';
+
+	public static function prepDataForSummary( array $data, array $options, ?string $context ): array
 	{
 		$prepped = [];
 
@@ -74,7 +76,7 @@ class ModuleHelper extends gEditorial\Helper
 	}
 
 	// @SEE: `subcontent_define_type_options()`
-	public static function getTypeOptions( $context = NULL, $path = NULL )
+	public static function getTypeOptions( ?string $context = NULL, ?string $path = NULL ): array
 	{
 		return [
 			[
@@ -321,7 +323,7 @@ class ModuleHelper extends gEditorial\Helper
 		];
 	}
 
-	public static function getLinkLogo( $key, $ext = NULL, $context = NULL, $path = NULL )
+	public static function getLinkLogo( string $key, ?string $ext = NULL, ?string $context = NULL, ?string $path = NULL ): string
 	{
 		return sprintf( '%s%s%s.%s',
 			Core\URL::fromPath( $path ?? self::path( $context ) ),

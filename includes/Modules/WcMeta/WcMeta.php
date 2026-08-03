@@ -24,6 +24,7 @@ class WcMeta extends gEditorial\Module
 			'keywords' => [
 				'metafields',
 				'woocommerce',
+				'aws',
 			],
 		];
 	}

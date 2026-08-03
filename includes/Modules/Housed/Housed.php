@@ -214,7 +214,7 @@ class Housed extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_searchable_fields(): array
+	protected function subcontent_define_searchable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		$posttypes = Core\Arraay::prepString( [
 			gEditorial()->constant( 'trained', 'primary_posttype' ),
@@ -229,7 +229,7 @@ class Housed extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'label',

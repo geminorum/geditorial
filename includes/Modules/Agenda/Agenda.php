@@ -160,7 +160,7 @@ class Agenda extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_get_meta_mapping(): array
+	protected function subcontent_get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'timestart' => 'timestart',
@@ -171,7 +171,7 @@ class Agenda extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'label',

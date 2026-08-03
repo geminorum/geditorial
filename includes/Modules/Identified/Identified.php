@@ -1057,7 +1057,7 @@ class Identified extends gEditorial\Module
 		return WordPress\Post::can( $post, 'read_post' );
 	}
 
-	private function _get_url_for_identifier_notfound( $type, $data, $supported = [] )
+	private function _get_url_for_identifier_notfound( string $type, mixed $data, array $supported = [] ): string
 	{
 		if ( ! is_user_logged_in() )
 			return FALSE;
@@ -1102,7 +1102,7 @@ class Identified extends gEditorial\Module
 				'class'  => '-identifier-link',
 				'target' => '_blank',
 				'title'  => sprintf(
-					/* translators: `%1$s`: identifier type label, `%2$s`: posttype singular label */
+					/* translators: `%1$s`: identifier type label, `%2$s`: post-type singular label */
 					_x( '%1$s Link to this %2$s', 'Title Attr', 'geditorial-identified' ),
 					$label,
 					Services\CustomPostType::getLabel( $post->post_type, 'singular_name' )

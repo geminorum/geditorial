@@ -187,7 +187,7 @@ class Parser extends WordPress\Main
 			if ( $args['delimiter'] )
 				@$parser->setDelimiter( $args['delimiter'] );
 
-			if ( @\League\Csv\Bom::tryFromSequence( $parser )->isUtf16() ?? FALSE )
+			if ( @\League\Csv\Bom::tryFromSequence( $parser )?->isUtf16() ?? FALSE )
 				@$parser->appendStreamFilterOnRead( 'convert.iconv.UTF-16/UTF-8' );
 
 			$data['headers'] = @$parser->getHeader();

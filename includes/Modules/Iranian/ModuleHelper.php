@@ -834,14 +834,14 @@ class ModuleHelper extends gEditorial\Helper
 		return $fallback;
 	}
 
-	public static function getBankLogo( $key, $context = NULL, $path = NULL )
+	public static function getBankLogo( string $key, ?string $context = NULL, ?string $path = NULL ): string
 	{
-		return $path ? sprintf( '%s%s%s.%s',
+		return sprintf( '%s%s%s.%s',
 			Core\URL::fromPath( $path ?? self::path( $context ) ),
 			'data/banklogos/',
 			$key,
 			self::const( 'SCRIPT_DEBUG' ) ? 'svg' : 'min.svg'
-		) : FALSE;
+		);
 	}
 
 	// NOTE: assumes the identity is “sanitized”!

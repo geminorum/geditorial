@@ -206,7 +206,7 @@ class Diagnosed extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'age',

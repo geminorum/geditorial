@@ -170,7 +170,7 @@ class Banking extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_get_meta_mapping(): array
+	protected function subcontent_get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'country'  => 'country',
@@ -180,7 +180,7 @@ class Banking extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_hidden_fields()
+	protected function subcontent_define_hidden_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'bank',
@@ -188,7 +188,7 @@ class Banking extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_unique_fields(): array
+	protected function subcontent_define_unique_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'iban',
@@ -196,7 +196,7 @@ class Banking extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'label',
@@ -204,7 +204,7 @@ class Banking extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_readonly_fields()
+	protected function subcontent_define_readonly_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'bankname',

@@ -147,7 +147,7 @@ class WcIdentify extends gEditorial\Module
 	}
 
 	// @REF: https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/
-	public function structured_data_product_exemptions( $markup, $product )
+	public function structured_data_product_exemptions( array $markup, object $product ): array
 	{
 		if ( ! $gtin = $product->get_global_unique_id() )
 			return $markup;
@@ -194,7 +194,7 @@ class WcIdentify extends gEditorial\Module
 	}
 
 	// https://woocommerce.com/document/google-for-woocommerce/attribute-mapping/gtin/
-	private function _do_tool_migrate_gtin( $sub )
+	private function _do_tool_migrate_gtin( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_MIGRATE_GTIN ) )
 			return FALSE;

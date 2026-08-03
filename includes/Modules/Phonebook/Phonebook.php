@@ -269,7 +269,7 @@ class Phonebook extends gEditorial\Module
 		] );
 	}
 
-	protected function subcontent_define_searchable_fields(): array
+	protected function subcontent_define_searchable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
 			return [ 'fullname' => [ $human ] ];
@@ -277,7 +277,7 @@ class Phonebook extends gEditorial\Module
 		return [];
 	}
 
-	protected function subcontent_define_importable_fields(): array
+	protected function subcontent_define_importable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'phone'   => 'label',
@@ -285,7 +285,7 @@ class Phonebook extends gEditorial\Module
 		];
 	}
 
-	protected function subcontent_define_unique_fields(): array
+	protected function subcontent_define_unique_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			'phone',

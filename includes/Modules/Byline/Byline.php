@@ -38,6 +38,7 @@ class Byline extends gEditorial\Module
 				'woocommerce',
 				'has-adminbar',
 				'tabmodule',
+				'aws',
 			],
 		];
 	}

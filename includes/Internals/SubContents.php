@@ -124,7 +124,7 @@ trait SubContents
 		] );
 	}
 
-	protected function subcontent_define_type_options( ?string $context, ?string $posttype = NULL ): array
+	protected function subcontent_define_type_options( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			/***
@@ -193,7 +193,7 @@ trait SubContents
 		return $this->filters( 'subcontent_fields', $fields, $enabled, $required, $context );
 	}
 
-	protected function subcontent_define_searchable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
+	protected function subcontent_define_searchable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// `'fullname' => [ 'human', 'department' ],` <---- EXAMPLE
@@ -210,7 +210,7 @@ trait SubContents
 		return $this->filters( 'searchable_fields', $fields, $context, $posttype );
 	}
 
-	protected function subcontent_define_required_fields(): array
+	protected function subcontent_define_required_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
@@ -227,7 +227,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_importable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
+	protected function subcontent_define_importable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' => 'type', // <---- EXAMPLE: 'target_key' => 'target_column'
@@ -237,13 +237,13 @@ trait SubContents
 	protected function subcontent_get_required_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'required_fields',
-			$this->subcontent_define_required_fields(),
+			$this->subcontent_define_required_fields( $context, $posttype ),
 			$context,
 			$posttype
 		);
 	}
 
-	protected function subcontent_define_readonly_fields( ?string $context = 'display', ?string $posttype = NULL ): array
+	protected function subcontent_define_readonly_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
@@ -253,13 +253,13 @@ trait SubContents
 	protected function subcontent_get_readonly_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'readonly_fields',
-			$this->subcontent_define_readonly_fields(),
+			$this->subcontent_define_readonly_fields( $context, $posttype ),
 			$context,
 			$posttype
 		);
 	}
 
-	protected function subcontent_define_selectable_fields( ?string $context, ?string $posttype = NULL ): array
+	protected function subcontent_define_selectable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// `'field_key': { option1: 'Option 1', option2: 'Option 2' }` <---- EXAMPLE
@@ -275,7 +275,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_hidden_fields( ?string $context = 'display', ?string $posttype = NULL ): array
+	protected function subcontent_define_hidden_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'name' // <---- EXAMPLE
@@ -295,7 +295,7 @@ trait SubContents
 		);
 	}
 
-	protected function subcontent_define_unique_fields( ?string $context = 'display', ?string $posttype = NULL ): array
+	protected function subcontent_define_unique_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
 			// 'identity' // <---- EXAMPLE
@@ -305,7 +305,7 @@ trait SubContents
 	protected function subcontent_get_unique_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'unique_fields',
-			$this->subcontent_define_unique_fields(),
+			$this->subcontent_define_unique_fields( $context, $posttype ),
 			$context,
 			$posttype
 		);
@@ -456,7 +456,7 @@ trait SubContents
 		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare_subcontent( mixed $value, ?string $posttype, string $field, array $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_prepare_subcontent( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) || empty( $value ) )
 			return $value;
@@ -521,7 +521,7 @@ trait SubContents
 			$data[$importable[$field]] = Core\Text::normalizeWhitespace( $column_title );
 
 		if ( $source_title && array_key_exists( 'desc', $enabled ) )
-			$data['desc'] = \sprintf(
+			$data['desc'] = sprintf(
 				/* translators: `%s`: source title */
 				_x( '[Imported]: %s', 'Internal: Subcontents: Import Desc', 'geditorial-admin' ),
 				Core\Text::normalizeWhitespace( $source_title )

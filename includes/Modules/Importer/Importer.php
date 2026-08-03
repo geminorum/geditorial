@@ -669,7 +669,7 @@ class Importer extends gEditorial\Module
 					Core\Text::trim( $row[$title_key] ),
 					$args['extra']['post_type'],
 					'importer_post_title',
-					$title_key,
+					(string) $title_key,
 					$row,
 					$row['___source_id'],
 					$args['extra']['taxonomies']
@@ -735,7 +735,7 @@ class Importer extends gEditorial\Module
 			Core\Text::trim( $value ),
 			$args['extra']['post_type'],
 			$args['extra']['mapped'][$key],
-			$key,
+			(string) $key,
 			$row,
 			$row['___source_id'],
 			$args['extra']['taxonomies']
@@ -944,7 +944,7 @@ class Importer extends gEditorial\Module
 					Core\Text::trim( $raw[$header] ),
 					$posttype,
 					$field,
-					$header,
+					(string) $header,
 					$raw,
 					$source_id,
 					$all_taxonomies
@@ -1077,7 +1077,7 @@ class Importer extends gEditorial\Module
 				// only if it's new!
 				$insert = array_merge( [
 					// 'post_name'      => '', // The name (slug) for your post
-					// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Pingbacks or trackbacks allowed. Default is the option 'default_ping_status'.
+					// 'ping_status'    => 'closed', //[ 'closed' | 'open' ] // Ping-backs or track-backs allowed. Default is the option `default_ping_status`
 					// 'post_date'      => current_time( 'mysql' ), //[ Y-m-d H:i:s ] // The time post was made.
 					// 'post_parent'    => 0, // Sets the parent of the new post, if any. Default 0.
 
@@ -1187,7 +1187,6 @@ class Importer extends gEditorial\Module
 		$this->actions( 'posts_after', $posttype );
 
 		remove_filter( 'wp_insert_post_empty_content', '__return_false', 12 );
-		unset( $iterator );
 
 		return WordPress\Redirect::doReferer( [
 			'message' => 'imported',
@@ -1675,7 +1674,7 @@ class Importer extends gEditorial\Module
 		mixed $value,
 		?string $posttype,
 		string $field,
-		array $header,
+		?string $header,
 		mixed $raw,
 		mixed $source_id,
 		array $all_taxonomies,
