@@ -601,17 +601,19 @@ class Importer extends gEditorial\Module
 			if ( ! $field )
 				continue;
 
-			$columns[$key] = [
+			$column = [
 				'title' => $fields[$field],
 				'class' => self::dsh( 'importfield', $field ),
 			];
 
 			if ( 'importer_custom_meta' === $field )
-				$columns[$key]['title'] = sprintf(
+				$column['title'] = sprintf(
 					/* translators: `%s`: custom meta-key */
 					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
 					Core\HTML::code( $key )
 				);
+
+			$columns[$key] = $this->filters( 'form_posts_table_column', $column, $field, $key, $posttype );
 		}
 
 		return Core\HTML::tableList( $columns, $rawdata['items'], [
