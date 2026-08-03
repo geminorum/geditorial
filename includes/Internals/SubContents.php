@@ -221,7 +221,7 @@ trait SubContents
 	protected function subcontent_get_importable_fields( ?string $context = 'display', ?string $posttype = NULL ): array
 	{
 		return $this->filters( 'importable_fields',
-			$this->subcontent_define_required_fields(),
+			$this->subcontent_define_importable_fields( $context, $posttype ),
 			$context,
 			$posttype
 		);
@@ -409,6 +409,7 @@ trait SubContents
 	// NOTE: use on `importer_init()`
 	protected function subcontent__hook_importer_init(): void
 	{
+		$this->filter_module( 'importer', 'form_posts_table_column', 4, 10, 'subcontent' );
 		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );
 		$this->filter_module( 'importer', 'prepare', 7, 10, 'subcontent' );
 		$this->action_module( 'importer', 'saved', 2, 10, 'subcontent' );
@@ -431,6 +432,22 @@ trait SubContents
 		return $fields;
 	}
 
+	public function importer_form_posts_table_column_subcontent( array $column, string $field, string $key, string $posttype ): array
+	{
+		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
+			return $column;
+
+		if ( ! in_array( $field, array_keys( $this->subcontent_get_importer_fields( $posttype ) ) ) )
+			return $column;
+
+		$column['title'] = sprintf( '<span title="%s">[%s]</span>',
+			_x( 'SubContent Field', 'Internal: Subcontents: Import Column', 'geditorial-admin' ),
+			Core\HTML::code( $key )
+		);
+
+		return $column;
+	}
+
 	public function importer_fields_subcontent( array $fields, string $posttype ): array
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
@@ -450,12 +467,15 @@ trait SubContents
 		if ( WordPress\Strings::isEmpty( $value ) )
 			return gEditorial\Helper::htmlEmpty();
 
-		$types   = $this->quantumcomments__get_field_types( 'import' );
 		$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
 
+		$this->cache['subcontent_field_types'] = $this->cache['subcontent_field_types']
+			?? $this->quantumcomments__get_field_types( 'import' );
+
 		return $this->prep_meta_row( $value, $current, [
-			'type' => array_key_exists( $current, $types ) ? $types[$current] : $current,
-		], $raw[$field] );
+			'type' => array_key_exists( $current, $this->cache['subcontent_field_types'] )
+				? $this->cache['subcontent_field_types'][$current] : $current,
+		], $raw[$header] );
 	}
 
 	public function importer_saved_subcontent( mixed $post, array $atts = [] ): void
@@ -464,24 +484,20 @@ trait SubContents
 			return;
 
 		$fields = $this->subcontent_get_importer_fields( $post->post_type );
-		$types  = $this->quantumcomments__get_field_types( 'import' );
 		$title  = WordPress\Post::title( (int) $atts['attach_id'] );
 
 		foreach ( $atts['map'] as $offset => $field ) {
 
-			if ( ! in_array( $field, $fields ) )
+			if ( ! array_key_exists( $field, $fields ) )
 				continue;
 
 			if ( WordPress\Strings::isEmpty( $value = $atts['raw'][$offset] ) )
 				continue;
 
-			$column  = empty( $atts['headers'][$offset] ) ? '' : $atts['headers'][$offset];
+			$column  = Core\Text::trim( empty( $atts['headers'][$offset] ) ? $offset : $atts['headers'][$offset] );
 			$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
-			$prepped = $this->prep_meta_row( $value, $current, [
-				'type' => array_key_exists( $current, $types ) ? $types[$current] : $current,
-			], $atts['raw'][$offset] );
 
-			if ( FALSE === ( $data = $this->subcontent_prep_data_from_import( $prepped, $current, $post, $column, $title ) ) )
+			if ( FALSE === ( $data = $this->subcontent_do_sanitize_data_from_import( $value, $current, $post, $column, $title ) ) )
 				continue;
 
 			if ( FALSE === $this->quantumcomments__insert_data_row( $data, 'import', $post ) )
@@ -489,16 +505,13 @@ trait SubContents
 		}
 	}
 
-	protected function subcontent_prep_data_from_import(
+	protected function subcontent_do_sanitize_data_from_import(
 		mixed $raw,
 		string $field,
 		mixed $post = FALSE,
 		string $column_title = '',
 		string $source_title = '',
-	): bool|array {
-
-		if ( empty( $raw ) )
-			return FALSE;
+	): array|false {
 
 		$enabled    = $this->subcontent_get_fields( 'import' );
 		$importable = $this->subcontent_get_importable_fields( 'import' );
@@ -514,7 +527,14 @@ trait SubContents
 				Core\Text::normalizeWhitespace( $source_title )
 			);
 
-		return $this->filters( 'subcontent_prep_data_from_import', $data, $raw, $field, $post, $column_title, $source_title );
+		return $this->filters( 'subcontent_sanitize_data_from_import',
+			$this->quantumcomments__sanitize_data( $data, 'import' ),
+			$field,
+			$raw,
+			$post,
+			$column_title,
+			$source_title
+		);
 	}
 
 	// TODO: `total`: count with HTML markup
