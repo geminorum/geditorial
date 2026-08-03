@@ -212,7 +212,7 @@ class Parser extends WordPress\Main
 					$row = @$parser->last();
 
 				else if ( $args['by_offset'] )
-					$row = @$parser->nth( (int) $args['by_offset'] );
+					$row = @$parser->nth( ( (int) $args['by_offset'] - 1 ) ); // starts at `0`
 
 				$data['single'] = is_null( $args['mapping'] )
 					? $row

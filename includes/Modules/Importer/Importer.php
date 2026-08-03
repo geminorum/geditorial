@@ -900,7 +900,7 @@ class Importer extends gEditorial\Module
 
 		foreach ( $_POST['_cb'] as $_index ) {
 
-			$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index + 1 ] );
+			$rowdata = gEditorial\Parser::fromAttachment( $attach_id, [ 'by_offset' => $_index ] );
 
 			if ( $rowdata['error'] ) {
 				self::_log_error( $rowdata['error'] );
