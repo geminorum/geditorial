@@ -229,6 +229,13 @@ class Identified extends gEditorial\Module
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
 	}
 
+	public function importer_init(): void
+	{
+		$this->filter_module( 'importer', 'source_id', 3, 8 );
+		$this->filter_module( 'importer', 'matched', 4, 8 );
+		$this->filter_module( 'importer', 'insert', 8, 8 );
+	}
+
 	/**
 	 * Fires after the current screen has been set.
 	 *
@@ -1102,5 +1109,58 @@ class Identified extends gEditorial\Module
 				),
 			], $label ),
 		], 'view', 'after' );
+	}
+
+	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
+	{
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $source_id;
+
+		if ( self::empty( $source_id ) )
+			return NULL;
+
+		return $this->sanitize_identifier(
+			$source_id,
+			$this->_get_posttype_identifier_type( $posttype ),
+			FALSE,
+			TRUE,
+		);
+	}
+
+	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
+	{
+		if ( ! empty( $matched ) )
+			return $matched;
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $matched;
+
+		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
+
+		if ( $post = $this->_get_post_identified( $source_id, $metakey, $posttype ) )
+			return $post->ID;
+
+		return $matched;
+	}
+
+	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	{
+		if ( FALSE === $data )
+			return $data; // already aborted!
+
+		if ( ! $override && ! empty( $data['ID'] ) )
+			return $data; // already found!
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $data;
+
+		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
+
+		if ( ! empty( $data['meta_input'][$metakey] ) )
+			return $data; // already added!
+
+		$data['meta_input'][$metakey] = $source_id;
+
+		return $data;
 	}
 }

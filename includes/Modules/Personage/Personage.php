@@ -412,8 +412,8 @@ class Personage extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'source_id', 3 );
-		$this->filter_module( 'importer', 'matched', 4 );
+		// $this->filter_module( 'importer', 'source_id', 3 );
+		// $this->filter_module( 'importer', 'matched', 4 );
 		$this->filter_module( 'importer', 'insert', 8 );
 	}
 
@@ -756,8 +756,8 @@ class Personage extends gEditorial\Module
 		return $row;
 	}
 
-	// FIXME: add setting for using source id as identity
-	public function importer_source_id( $source_id, $posttype, $raw )
+	// NO NEED: @see `Identified` Module
+	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
 	{
 		if ( empty( $source_id ) )
 			return NULL;
@@ -768,7 +768,8 @@ class Personage extends gEditorial\Module
 		return Core\Validation::sanitizeIdentityNumber( $source_id );
 	}
 
-	public function importer_matched( $matched, $source_id, $posttype, $raw )
+	// NO NEED: @see `Identified` Module
+	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
 	{
 		if ( ! empty( $matched ) )
 			return $matched;
@@ -782,11 +783,13 @@ class Personage extends gEditorial\Module
 		return $matched;
 	}
 
-	public function importer_insert( $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw, $override )
+	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
 	{
-		// already found
+		if ( FALSE === $data )
+			return $data; // already aborted!
+
 		if ( ! empty( $data['ID'] ) )
-			return $data;
+			return $data; // already found!
 
 		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $data;
@@ -796,6 +799,8 @@ class Personage extends gEditorial\Module
 			return $data;
 
 		if ( ! empty( $prepared['meta__identity_number'] ) ) {
+
+			// NOTE: here connects in absence of the source-id mechanism!
 
 			if ( $existing = Services\PostTypeFields::getPostByField( 'identity_number', $prepared['meta__identity_number'], $posttype, TRUE ) )
 				$data['ID'] = $existing;
