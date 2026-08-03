@@ -250,7 +250,7 @@ class Module extends Core\Base
 	 */
 	protected function filter_self( $hook, $arguments = 1, $priority = 10, $suffix = '' ): bool
 	{
-		if ( $method = Core\Text::sanitizeHook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+		if ( $method = Core\Text::sanitizeHook( self::und( $hook, $suffix ) ) )
 			return add_filter( $this->hook_base( $this->key, $hook ), [ $this, $method ], $priority, $arguments );
 
 		return FALSE;
@@ -271,7 +271,7 @@ class Module extends Core\Base
 	 */
 	protected function filter_once( $hook, $arguments = 1, $priority = 10, $suffix = '' ): bool
 	{
-		if ( $method = Core\Text::sanitizeHook( ( $suffix ? $hook.'_'.$suffix : $hook ) ) )
+		if ( $method = Core\Text::sanitizeHook( self::und( $hook, $suffix ) ) )
 			return add_filter( $hook, function () use ( $method ) {
 				static $ran = FALSE;
 

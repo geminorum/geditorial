@@ -1193,6 +1193,9 @@ class HTML extends Base
 
 				$row_class = [ '-row', '-row-'.$index ];
 
+				if ( self::empty( $row ) )
+					$row_class[] = '-row-is-empty';
+
 				if ( $alt )
 					$row_class[] = 'alternate';
 

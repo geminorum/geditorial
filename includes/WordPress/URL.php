@@ -30,6 +30,37 @@ class URL extends Core\Base
 	}
 
 	/**
+	 * Validates a URL as safe for use in the HTTP API.
+	 * NOTE: wrapper for `wp_http_validate_url()`
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function validate( mixed $input ): string
+	{
+		if ( ! $url = Text::force( $input ) )
+			return '';
+
+		return wp_http_validate_url( $url ) ?: '';
+	}
+
+	/**
+	 * Converts a relative URL to an absolute URL relative to a given URL.
+	 * If an Absolute URL is provided, no processing of that URL is done.
+	 *
+	 * @param mixed $input
+	 * @param string $domain
+	 * @return string
+	 */
+	public static function absolute( mixed $input, ?string $domain = NULL ): string
+	{
+		if ( ! $path = Core\Text::force( $input ) )
+			return '';
+
+		return \WP_Http::make_absolute_url( $path, $domain ?? home_url() );
+	}
+
+	/**
 	 * Retrieves the login URL.
 	 * NOTE: wrapper for `wp_login_url()`
 	 * OLD: `Core\WordPress::loginURL()`

@@ -31,7 +31,7 @@ class URL extends Base
 		if ( ! $sanitized = Text::force( $input ) )
 			return '';
 
-		$sanitized = Core\Text::trim( rawurldecode( $sanitized ) );
+		$sanitized = Text::trim( rawurldecode( $sanitized ) );
 
 		if ( self::isRelative( $sanitized ) )
 			$sanitized = sanitize_url( $sanitized ); // avoid forced scheme
@@ -46,21 +46,6 @@ class URL extends Base
 			$sanitized,
 			$raw,
 		);
-	}
-
-	/**
-	 * Validates a URL as safe for use in the HTTP API.
-	 * NOTE: wrapper for `wp_http_validate_url()`
-	 *
-	 * @param mixed $input
-	 * @return string
-	 */
-	public static function validate( mixed $input ): string
-	{
-		if ( ! $url = Text::force( $input ) )
-			return '';
-
-		return wp_http_validate_url( $url ) ?: '';
 	}
 
 	// @SOURCE: http://stackoverflow.com/a/8891890
@@ -208,9 +193,18 @@ class URL extends Base
 		return strtolower( $parts[0] );
 	}
 
-	// @SOURCE: `wp_make_link_relative()`
-	public static function relative( $url )
+	/**
+	 * Converts full URL paths to absolute paths.
+	 * @source `wp_make_link_relative()`
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function relative( mixed $input ): string
 	{
+		if ( ! $url = Text::force( $input ) )
+			return '';
+
 		return preg_replace( '|^(https?:)?//[^/]+(/?.*)|i', '$2', $url );
 	}
 

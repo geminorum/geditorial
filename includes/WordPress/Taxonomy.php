@@ -182,16 +182,16 @@ class Taxonomy extends Core\Base
 	 *
 	 * @param int $mod
 	 * @param array $args
-	 * @param bool|string $object
+	 * @param false|string|array $object
 	 * @param null|string $capability
 	 * @param null|int $user_id
 	 * @return array
 	 */
-	public static function get( int $mod = 0, array $args = [], false|string $object = FALSE, ?string $capability = NULL, ?int $user_id = NULL )
+	public static function get( int $mod = 0, array $args = [], false|string|array $object = FALSE, ?string $capability = NULL, ?int $user_id = NULL )
 	{
 		$list = [];
 
-		if ( FALSE === $object || 'any' == $object )
+		if ( FALSE === $object || 'any' === $object )
 			$objects = get_taxonomies( $args, 'objects' );
 		else
 			$objects = Core\Arraay::filter( get_object_taxonomies( $object, 'objects' ), $args );
@@ -945,6 +945,10 @@ class Taxonomy extends Core\Base
 		} else if ( $term = term_exists( Core\Text::nameFamilyLast( $target ), $taxonomy ) ) {
 
 			return get_term( $term['term_id'], $taxonomy );
+
+		} else if ( $filtred = apply_filters( 'nucleus_taxonomy_target_term', NULL, $target, $taxonomy, $args ) ) {
+
+			return Term::get( $filtred, $taxonomy );
 		}
 
 		// avoid filtering the new term

@@ -254,4 +254,11 @@ class ISBN extends Base
 
 		return ( ( 10 - ( $sum % 10 ) ) % 10 );
 	}
+
+	// `wc_get_product_id_by_global_unique_id()`
+	// X is only valid as the final ISBN-10 check digit character (ISO 2108) — reject anywhere else.
+	public static function checkX( $input )
+	{
+		return preg_match( '/^[0-9\-]*[0-9Xx]?$/', $input );
+	}
 }
