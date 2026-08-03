@@ -1133,13 +1133,27 @@ class Settings extends WordPress\Main
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
+						$placeholder = $args['placeholder'];
+
+						if ( is_array( $value_title ) ) {
+
+							if ( isset( $value_title[1] ) )
+								$placeholder = $value_title[1];
+
+							if ( isset( $value_title[0] ) )
+								$value_title = $value_title[0];
+
+							else
+								$value_title = Core\HTML::code( $value_name );
+						}
+
 						$html = Core\HTML::tag( 'input', [
 							'type'           => 'text',
 							'id'             => $id.'-'.$value_name,
 							'name'           => $name.'['.$value_name.']',
 							'value'          => $value[$value_name] ?? '',
 							'class'          => Core\HTML::attrClass( $args['field_class'], '-type-text' ),
-							'placeholder'    => $args['placeholder'],
+							'placeholder'    => $placeholder,
 							'disabled'       => Core\HTML::attrBoolean( $args['disabled'], $value_name ),
 							'readonly'       => Core\HTML::attrBoolean( $args['readonly'], $value_name ),
 							'dir'            => $args['dir'],
