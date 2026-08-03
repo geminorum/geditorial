@@ -165,6 +165,15 @@ class Parser extends WordPress\Main
 		try {
 
 			/**
+			 * If your CSV document was created or is read on a Legacy Macintosh computer,
+			 * add the following lines before using the library to help PHP detect line ending.
+			 * @see http://php.net/manual/en/function.fgetcsv.php#refsect1-function.fgetcsv-returnvalues
+			 * @see https://php.watch/versions/8.1/auto_detect_line_endings-ini-deprecated
+			 */
+			if ( ! ini_get( 'auto_detect_line_endings' ) )
+    			@ini_set( 'auto_detect_line_endings', '1' );
+
+			/**
 			 * @package `league/csv`
 			 * @source https://github.com/thephpleague/csv
 			 * @link https://csv.thephpleague.com
