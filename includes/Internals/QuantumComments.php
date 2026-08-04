@@ -441,76 +441,78 @@ trait QuantumComments
 
 			$type = array_key_exists( $raw_key, $types ) ? $types[$raw_key] : $raw_key;
 
-			switch ( $type ) {
-				case 'phone':    $data[$raw_key] = Core\Phone::sanitize( $raw_value ); break;
-				case 'mobile':   $data[$raw_key] = Core\Phone::Mobile( $raw_value ); break;
-				case 'country':  $data[$raw_key] = Core\Validation::sanitizeCountry( $raw_value, TRUE ); break;   // NOTE: skips the base country
-				case 'vin':      $data[$raw_key] = Core\Validation::sanitizeVIN( $raw_value ); break;
-				case 'plate':    $data[$raw_key] = Core\Validation::sanitizePlateNumber( $raw_value ); break;
-				case 'iban':     $data[$raw_key] = Core\Validation::sanitizeIBAN( $raw_value ); break;
-				case 'isbn':     $data[$raw_key] = Core\ISBN::sanitize( $raw_value ); break;
-				case 'bankcard': $data[$raw_key] = Core\Validation::sanitizeCardNumber( $raw_value ); break;
-				case 'identity': $data[$raw_key] = Core\Validation::sanitizeIdentityNumber( $raw_value ); break;
-				case 'distance': $data[$raw_key] = Core\Distance::sanitize( $raw_value ); break;
-				case 'duration': $data[$raw_key] = Core\Duration::sanitize( $raw_value ); break;
-				case 'area':     $data[$raw_key] = Core\Area::sanitize( $raw_value ); break;
-				case 'cssclass': $data[$raw_key] = Core\HTML::prepClass( $raw_value ); break;
-
-				case 'code'    : // WTF
-				case 'date'    : // WTF
-				case 'time'    : // WTF
-				case 'contact' : // WTF: maybe: phone/mobile/email/url
-				case 'stature' :
-				case 'mass'    :
-				case 'age'     : // WTF: maybe: year-only
-				case 'dob'     : // WTF: maybe: year-only
-				case 'year'    :
-				case 'grade'   :
-				case 'days'    :
-				case 'hours'   :
-				case 'account' :
-				case 'count'   :
-
-					$data[$raw_key] = Core\Number::translate( Core\Text::trim( $raw_value ) );
-					break;
-
-				case 'location':
-				case 'people'  :
-
-					$data[$raw_key] = WordPress\Strings::getPiped( Services\Markup::getSeparated( WordPress\Strings::kses( $raw_value, 'none' ) ) );
-					break;
-
-				case 'bankname'  :
-				case 'label'     :
-				case 'topic'     :
-				case 'fullname'  :
-				case 'relation'  :
-				case 'evaluation':
-				case 'occupation':
-				case 'education' :
-				case 'address'   :
-
-					$data[$raw_key] = WordPress\Strings::cleanupChars( WordPress\Strings::kses( $raw_value, 'none' ), TRUE );
-					break;
-
-				case 'url':
-				case 'link':
-
-					$data[$raw_key] = Core\URL::sanitizeForStorage( $raw_value );
-					break;
-
-				case 'html':
-
-					$data[$raw_key] = Core\Text::normalizeWhitespace( WordPress\Strings::kses( $raw_value, 'text' ), TRUE );
-					break;
-
-				default:
-
-					$data[$raw_key] = WordPress\Strings::kses( $raw_value, 'none' );
-			}
+			$data[$raw_key] = $this->quantumcomments__sanitize_data_value( $raw_value, $type, $context );
 		}
 
 		return $this->filters( $prefix.'_sanitize_data', $data, $context, $post, $raw, $mapping, $metas, $allowed_raw );
+	}
+
+	protected function quantumcomments__sanitize_data_value( mixed $value, string $type, ?string $context = NULL )
+	{
+		switch ( $type ) {
+			case 'phone':    return Core\Phone::sanitize( $value );
+			case 'mobile':   return Core\Phone::Mobile( $value );
+			case 'country':  return Core\Validation::sanitizeCountry( $value, TRUE );   // NOTE: skips the base country
+			case 'vin':      return Core\Validation::sanitizeVIN( $value );
+			case 'plate':    return Core\Validation::sanitizePlateNumber( $value );
+			case 'iban':     return Core\Validation::sanitizeIBAN( $value );
+			case 'isbn':     return Core\ISBN::sanitize( $value );
+			case 'bankcard': return Core\Validation::sanitizeCardNumber( $value );
+			case 'identity': return Core\Validation::sanitizeIdentityNumber( $value );
+			case 'distance': return Core\Distance::sanitize( $value );
+			case 'duration': return Core\Duration::sanitize( $value );
+			case 'area':     return Core\Area::sanitize( $value );
+			case 'cssclass': return Core\HTML::prepClass( $value );
+
+			case 'code'    : // WTF
+			case 'date'    : // WTF
+			case 'time'    : // WTF
+			case 'contact' : // WTF: maybe: phone/mobile/email/url
+			case 'stature' :
+			case 'mass'    :
+			case 'age'     : // WTF: maybe: year-only
+			case 'dob'     : // WTF: maybe: year-only
+			case 'year'    :
+			case 'grade'   :
+			case 'days'    :
+			case 'hours'   :
+			case 'account' :
+			case 'count'   :
+
+				return Core\Number::translate( Core\Text::trim( $value ) );
+
+			case 'location':
+			case 'people'  :
+
+				return WordPress\Strings::getPiped( Services\Markup::getSeparated( WordPress\Strings::kses( $value, 'none' ) ) );
+
+			case 'bankname'  :
+			case 'label'     :
+			case 'topic'     :
+			case 'fullname'  :
+			case 'relation'  :
+			case 'evaluation':
+			case 'occupation':
+			case 'education' :
+			case 'address'   :
+
+				return WordPress\Strings::cleanupChars( WordPress\Strings::kses( $value, 'none' ), TRUE );
+
+			case 'url':
+			case 'link':
+
+				return Core\URL::sanitizeForStorage( $value );
+
+			case 'html':
+
+				return Core\Text::normalizeWhitespace( WordPress\Strings::kses( $value, 'text' ), TRUE );
+
+			default:
+
+				return WordPress\Strings::kses( $value, 'none' );
+		}
+
+		return $value;
 	}
 
 	protected function quantumcomments__get_data_all(
