@@ -110,11 +110,13 @@ class Personage extends gEditorial\Module
 					'field'       => 'import_check_identity_number',
 					'title'       => _x( 'Check Identity Number', 'Setting Title', 'geditorial-personage' ),
 					'description' => _x( 'Validates Identity Number prior to importing data.', 'Setting Description', 'geditorial-personage' ),
+					'default'     => '1',
 				],
 				[
 					'field'       => 'import_fill_post_title',
 					'title'       => _x( 'Fill Post Title', 'Setting Title', 'geditorial-personage' ),
 					'description' => _x( 'Tries to fill the post title with meta-data prior to importing data.', 'Setting Description', 'geditorial-personage' ),
+					'default'     => '1',
 				],
 			],
 			'_constants' => [
@@ -412,8 +414,13 @@ class Personage extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		// $this->filter_module( 'importer', 'source_id', 3 );
-		// $this->filter_module( 'importer', 'matched', 4 );
+		$this->filter_module( 'importer', 'insert', 8, 20, 'maketitle' );
+
+		if ( ! static::factory()->enabled( 'identified', FALSE ) )
+			return;
+
+		$this->filter_module( 'importer', 'source_id', 3 );
+		$this->filter_module( 'importer', 'matched', 4 );
 		$this->filter_module( 'importer', 'insert', 8 );
 	}
 
@@ -756,7 +763,7 @@ class Personage extends gEditorial\Module
 		return $row;
 	}
 
-	// NO NEED: @see `Identified` Module
+	// NOTE: only runs in lieu of `Identified` module on import!
 	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
 	{
 		if ( empty( $source_id ) )
@@ -765,10 +772,13 @@ class Personage extends gEditorial\Module
 		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $source_id;
 
-		return Core\Validation::sanitizeIdentityNumber( $source_id );
+		if ( $this->get_setting( 'import_check_identity_number', TRUE ) )
+			return Core\Validation::sanitizeIdentityNumber( $source_id );
+
+		return $source_id;
 	}
 
-	// NO NEED: @see `Identified` Module
+	// NOTE: only runs in lieu of `Identified` module on import!
 	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
 	{
 		if ( ! empty( $matched ) )
@@ -777,12 +787,14 @@ class Personage extends gEditorial\Module
 		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $matched;
 
+		// NOTE: checks for post-type matched!
 		if ( $post_id = Services\PostTypeFields::getPostByField( 'identity_number', $source_id, $posttype, TRUE ) )
 			return $post_id;
 
 		return $matched;
 	}
 
+	// NOTE: only runs in lieu of `Identified` module on import!
 	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
 	{
 		if ( FALSE === $data )
@@ -798,24 +810,38 @@ class Personage extends gEditorial\Module
 		if ( ! $this->has_posttype_fields_support( 'main_posttype', 'meta' ) )
 			return $data;
 
-		if ( ! empty( $prepared['meta__identity_number'] ) ) {
+		// Only if post is new and no identity being saved!
+		if ( empty( $prepared['meta__identity_number'][0] ) && ! empty( $source_id ) ) {
 
-			// NOTE: here connects in absence of the source-id mechanism!
+			$metakey   = Services\PostTypeFields::getPostMetaKey( 'identity_number' );
+			$sanitized = $this->get_setting( 'import_check_identity_number', TRUE )
+				? Core\Validation::sanitizeIdentityNumber( $source_id )
+				: Core\Text::trim( Core\Number::translate( $source_id ) );
 
-			if ( $existing = Services\PostTypeFields::getPostByField( 'identity_number', $prepared['meta__identity_number'], $posttype, TRUE ) )
-				$data['ID'] = $existing;
+			if ( $sanitized && $metakey && empty( $data['meta_input'][$metakey] ) )
+				$data['meta_input'][$metakey] = $sanitized;
 		}
 
+		return $data;
+	}
+
+	// NOTE: always runs on import!
+	public function importer_insert_maketitle( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	{
+		if ( FALSE === $data )
+			return $data; // already aborted!
+
 		if ( ! empty( $data['ID'] ) )
+			return $data; // already found!
+
+		if ( $posttype !== $this->constant( 'main_posttype' ) )
 			return $data;
 
-		// no source id present
-		if ( ! $source_id && $this->get_setting( 'import_check_identity_number' ) )
-			return FALSE;
-
-		// generate title by meta fields
-		if ( ! empty( $data['post_title'] ) || ! $this->get_setting( 'import_fill_post_title' ) )
+		if ( ! empty( $data['post_title'] ) || ! $this->get_setting( 'import_fill_post_title', TRUE ) )
 			return $data;
+
+		if ( ! $this->has_posttype_fields_support( 'main_posttype', 'meta' ) )
+			return $data; // meta-fields are not supported!
 
 		$names = [];
 
@@ -823,10 +849,12 @@ class Personage extends gEditorial\Module
 
 			$metakey = sprintf( 'meta__%s', $key );
 
-			$names[$key] = \array_key_exists( $metakey, $prepared )
-				? $prepared[$metakey] : '';
+			$names[$key] = ( array_key_exists( $metakey, $prepared ) && ! empty( $prepared[$metakey][0] ) )
+				? $prepared[$metakey][0]
+				: '';
 		}
 
+		// Generates title by meta fields with name prepared parts.
 		$data['post_title'] = $this->make_human_title( FALSE, 'import', '', $names );
 
 		return $data;
