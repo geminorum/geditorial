@@ -84,6 +84,13 @@ class WcIdentify extends gEditorial\Module
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
 	}
 
+	public function importer_init(): void
+	{
+		$this->filter_module( 'importer', 'source_id', 3 );
+		$this->filter_module( 'importer', 'matched', 4 );
+		$this->filter_module( 'importer', 'insert', 8, 18 );
+	}
+
 	public function render_product_gtin(
 		mixed $product,
 		string $before = '',
@@ -160,6 +167,49 @@ class WcIdentify extends gEditorial\Module
 			$markup['identifier_exists'] = 'no';
 
 		return $markup;
+	}
+
+	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
+	{
+		if ( empty( $source_id ) )
+			return NULL;
+
+		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+			return $source_id;
+
+		return Core\ISBN::discovery( $source_id );
+	}
+
+	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
+	{
+		if ( ! empty( $matched ) )
+			return $matched;
+
+		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+			return $matched;
+
+		if ( $post_id = WordPress\PostType::getIDbyMeta( WordPress\WooCommerce::GTIN_METAKEY, $source_id, TRUE ) )
+			return (int) $post_id;
+
+		return $matched;
+	}
+
+	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	{
+		if ( FALSE === $data )
+			return $data; // already aborted!
+
+		if ( ! empty( $data['ID'] ) )
+			return $data; // already found!
+
+		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+			return $data;
+
+		// store source_id as GTIN
+		if ( empty( $data['meta_input'][WordPress\WooCommerce::GTIN_METAKEY] ) )
+			$data['meta_input'][WordPress\WooCommerce::GTIN_METAKEY] = $source_id;
+
+		return $data;
 	}
 
 	public function tools_settings( string $sub ): void
