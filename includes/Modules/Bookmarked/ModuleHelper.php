@@ -112,6 +112,109 @@ class ModuleHelper extends gEditorial\Helper
 		return self::filters( 'type_options_default_descriptions', $list, $context, $type_options );
 	}
 
+	// NOTE: assumes link already sanitized and valid!
+	public static function extractTypeOptionFromLink( string $link, ?array $type_options = NULL, ?string $context = NULL ): string
+	{
+		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$relative     = Core\URL::isRelative( $link );
+		$local        = $relative ?: Core\URL::isLocal( $link );
+
+		foreach ( $type_options as $type_option ) {
+
+			if ( ! $local && ! empty( $type_option['discovery'] ) ) {
+
+				foreach ( (array) $type_option['discovery'] as $pattern )
+					if ( preg_match( $pattern, $link, $matches ) )
+						return $type_option['name'];
+			}
+
+			if ( ! $relative && ! empty( $type_option['domains'] ) ) {
+
+				if ( $parsed = WordPress\URL::parse( $link ) ) {
+
+					if ( ! empty( $parsed['host'] ) && in_array( $parsed['host'], (array) $type_option['domains'], TRUE ) )
+						return $type_option['name'];
+				}
+			}
+		}
+
+		// NOTE: after loop through all types
+		// foreach ( $type_options as $type_option ) {
+		// 	if ( ! empty( $type_option['extension'] ) ) {
+				// TODO
+		// 	}
+		// }
+
+		return static::DEFAULT_TYPE_OPTION;
+	}
+
+	// NOTE: assumes link already sanitized and valid!
+	public static function extractCodeOptionFromLink( string $link, string $type, ?array $type_options = NULL, ?string $context = NULL ): false|string
+	{
+		if ( static::DEFAULT_TYPE_OPTION === $type )
+			return '';
+
+		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$relative     = Core\URL::isRelative( $link );
+		$local        = $relative ?: Core\URL::isLocal( $link );
+
+		foreach ( $type_options as $type_option ) {
+
+			if ( empty( $type_option['name'] ) || $type !== $type_option['name'] )
+				continue;
+
+			if ( ! $local && ! empty( $type_option['extraction'] ) ) {
+
+				foreach ( (array) $type_option['extraction'] as $pattern ) {
+					if ( preg_match( $pattern, $link, $matches ) ) {
+						if ( ! empty( $matches['code'] ) )
+							return $matches['code'];
+					}
+				}
+			}
+
+			if ( ! empty( $type_option['local'] ) ) {
+
+				// TODO
+				// switch ( $type_option['name'] ) {
+				// 	case 'post':
+				// 	case 'term':
+				// 	case 'attachment':
+				// }
+			}
+		}
+
+		return '';
+	}
+
+	// NOTE: assumes link already sanitized and valid!
+	public static function extractLinkOptionFromLink( string $link, string $type, ?array $type_options = NULL, ?string $context = NULL ): false|string
+	{
+		if ( static::DEFAULT_TYPE_OPTION === $type )
+			return $link;
+
+		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$relative     = Core\URL::isRelative( $link );
+		$local        = $relative ?: Core\URL::isLocal( $link );
+
+		foreach ( $type_options as $type_option ) {
+
+			if ( empty( $type_option['name'] ) || $type !== $type_option['name'] )
+				continue;
+
+			if ( ! empty( $type_option['local'] ) ) {
+
+				// TODO: strip with whitelist
+
+				return $link;
+			}
+
+			return Core\URL::unquery( $link );
+		}
+
+		return $link;
+	}
+
 	// @SEE: `subcontent_define_type_options()`
 	public static function getTypeOptions( ?string $context = NULL, ?string $path = NULL ): array
 	{

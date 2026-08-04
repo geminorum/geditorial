@@ -210,6 +210,14 @@ class Bookmarked extends gEditorial\Module
 		return ModuleHelper::getTypeOptions( $context );
 	}
 
+	protected function subcontent_define_importable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
+	{
+		return [
+			'link' => 'label',
+			'code' => 'label',
+		];
+	}
+
 	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
@@ -246,6 +254,12 @@ class Bookmarked extends gEditorial\Module
 	public function meta_init(): void
 	{
 		$this->add_posttype_fields_supported( $this->get_setting_posttypes( 'subcontent' ) );
+	}
+
+	public function importer_init(): void
+	{
+		$this->subcontent__hook_importer_init();
+		$this->filter_self( 'subcontent_sanitize_data_from_import', 6, 8 );
 	}
 
 	/**
@@ -337,6 +351,83 @@ class Bookmarked extends gEditorial\Module
 			$row_class[] = '-row-color-danger';
 
 		return $row_class;
+	}
+
+	public function subcontent_sanitize_data_from_import(
+		array|false $data,
+		string $field,
+		mixed $raw,
+		mixed $post,
+		string $column_title,
+		string $source_title
+	): array|false {
+
+		$context = $context ?? 'import';
+
+		$this->cache['subcontent_type_options'] = $this->cache['subcontent_type_options']
+			?? ModuleHelper::getTypeOptions( $context );
+
+		if ( empty( $data['type'] ) ) {
+
+			$titles = Core\Arraay::pluck(
+				$this->cache['subcontent_type_options'],
+				'title',
+				'name',
+			);
+
+			// NOTE: contents of the column may be different unless explicitly says the type in CODE!
+			if ( array_key_exists( $column_title, $titles ) )
+				$data['type'] = $column_title;
+
+			// Too risky!
+			// else if ( $index = array_search( $column_title, $titles ) )
+			// 	$data['type'] = $titles[$index];
+
+			else if ( ! empty( $data['link'] ) )
+				$data['type'] = ModuleHelper::extractTypeOptionFromLink(
+					(string) $data['link'],
+					$this->cache['subcontent_type_options'],
+					'import',
+				);
+
+			else
+				$data['type'] = ModuleHelper::DEFAULT_TYPE_OPTION;
+		}
+
+		if ( empty( $data['code'] ) && ! empty( $data['link'] ) ) {
+
+			$code = ModuleHelper::extractCodeOptionFromLink(
+				$data['link'],
+				$data['type'],
+				$this->cache['subcontent_type_options'],
+				$context,
+			);
+
+			if ( FALSE === $code ) {
+
+				unset( $data['link'] ); // log the link/code
+
+			} else if ( $code ) {
+
+				$data['code'] = $code;
+				unset( $data['link'] ); // log the link/code
+			}
+		}
+
+		if ( ! empty( $data['link'] ) )
+			$data['link'] = ModuleHelper::extractLinkOptionFromLink(
+				$data['link'],
+				$data['type'],
+				$this->cache['subcontent_type_options'],
+				$context,
+			);
+
+		if ( $data['type'] !== ModuleHelper::DEFAULT_TYPE_OPTION )
+			unset( $data['label'] ); // Only if type is not default!
+
+		unset( $data['desc'] ); // Don't store imported info for bookmarks!
+
+		return $data;
 	}
 
 	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
