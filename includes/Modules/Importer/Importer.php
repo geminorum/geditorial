@@ -976,35 +976,35 @@ class Importer extends gEditorial\Module
 					case 'importer_custom_meta':
 
 						if ( $custom_metakey = $this->filters( 'custom_metakey', $header, $posttype, $field, $raw, $all_taxonomies ) )
-							$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )] = Core\Text::normalizeWhitespace( $value );
+							$data['meta_input'][$custom_metakey] = $prepared[sprintf( '%s__%s', $field, $custom_metakey )][] = Core\Text::normalizeWhitespace( $value );
 
 						continue 2;
 
 					case 'importer_menu_order':
 
 						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->menu_order ) )
-							$data['menu_order'] = $prepared[$field] = Core\Number::translate( trim( $value ) );
+							$data['menu_order'] = $prepared[$field][] = Core\Number::translate( trim( $value ) );
 
 						continue 2;
 
 					case 'importer_post_title':
 
 						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_title ) )
-							$data['post_title'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value );
+							$data['post_title'] = $prepared[$field][] = Core\Text::normalizeWhitespace( $value );
 
 						continue 2;
 
 					case 'importer_post_content':
 
 						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_content ) )
-							$data['post_content'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+							$data['post_content'] = $prepared[$field][] = Core\Text::normalizeWhitespace( $value, TRUE );
 
 						continue 2;
 
 					case 'importer_post_excerpt':
 
 						if ( $override || ! $oldpost || ( $oldpost && '' == $oldpost->post_excerpt ) )
-							$data['post_excerpt'] = $prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+							$data['post_excerpt'] = $prepared[$field][] = Core\Text::normalizeWhitespace( $value, TRUE );
 
 						continue 2;
 
@@ -1016,15 +1016,17 @@ class Importer extends gEditorial\Module
 						// skip empty values on comments
 						if ( ! $value ) {
 
-							$prepared[$field] = '';
+							$prepared[$field][] = '';
 
 						} else {
 
-							$prepared[$field] = Core\Text::normalizeWhitespace( $value, TRUE );
+							$_comment = Core\Text::normalizeWhitespace( $value, TRUE );
+
+							$prepared[$field][] = $_comment;
 
 							$comments[] = [
 								// Prefixes the comment content with column name
-								'comment_content' => sprintf( '[%s]: %s', $header, $prepared[$field] ),
+								'comment_content' => sprintf( '[%s]: %s', $header, $_comment ),
 							];
 						}
 
@@ -1059,7 +1061,7 @@ class Importer extends gEditorial\Module
 				}
 
 				// Otherwise, store prepared-value
-				$prepared[$field] = $value;
+				$prepared[$field][] = $value;
 			}
 
 			if ( FALSE === ( $insert = $this->filters( 'insert', $data, $prepared, $taxonomies, $posttype, $source_id, $attach_id, $raw, $override ) ) ) {
