@@ -469,13 +469,16 @@ trait SubContents
 
 		$current = Core\Text::stripPrefix( $field, sprintf( '%s__', $this->key ) );
 
-		$this->cache['subcontent_field_types'] = $this->cache['subcontent_field_types']
+		$this->cache['_subcontent_field_types'] = $this->cache['_subcontent_field_types']
 			?? $this->quantumcomments__get_field_types( 'import' );
 
-		return $this->prep_meta_row( $value, $current, [
-			'type' => array_key_exists( $current, $this->cache['subcontent_field_types'] )
-				? $this->cache['subcontent_field_types'][$current] : $current,
-		], $raw[$header] );
+		return $this->quantumcomments__sanitize_data_value(
+			$value,
+			array_key_exists( $current, $this->cache['_subcontent_field_types'] )
+				? $this->cache['_subcontent_field_types'][$current]
+				: $current,
+			'import',
+		);
 	}
 
 	public function importer_saved_subcontent( mixed $post, array $atts = [] ): void
