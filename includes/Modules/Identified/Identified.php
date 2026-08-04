@@ -233,7 +233,7 @@ class Identified extends gEditorial\Module
 	{
 		$this->filter_module( 'importer', 'source_id', 3, 8 );
 		$this->filter_module( 'importer', 'matched', 4, 8 );
-		$this->filter_module( 'importer', 'insert', 8, 8 );
+		$this->filter_module( 'importer', 'insert', 8, 18 );
 	}
 
 	/**

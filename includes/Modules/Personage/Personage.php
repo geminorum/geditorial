@@ -861,7 +861,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: `$post` may not be available!
-	public function make_human_title( $post = NULL, $context = NULL, $fallback = FALSE, $names = NULL, $checks = FALSE )
+	public function make_human_title( mixed $post = NULL, ?string $context = NULL, false|string $fallback = FALSE, ?array $names = NULL, bool $checks = FALSE ): false|string
 	{
 		if ( $checks ) {
 
@@ -886,7 +886,8 @@ class Personage extends gEditorial\Module
 		if ( empty( $this->cache['fullnames'][$context] ) )
 			$this->cache['fullnames'][$context] = [];
 
-		$names = $names ?? $this->_get_human_names( $post );
+		if ( ! ( $names = $names ?? $this->_get_human_names( $post ) ) )
+			return $fallback;
 
 		$fullname = $this->filters( 'make_human_title',
 			Services\Individuals::makeFullname( $names, $context, $fallback ),
@@ -903,7 +904,7 @@ class Personage extends gEditorial\Module
 		return $this->cache['fullnames'][$context][$post->ID] = $fullname;
 	}
 
-	private function _get_human_names( $post, $checks = FALSE )
+	private function _get_human_names( mixed $post, bool $checks = FALSE ): false|array
 	{
 		static $cache = [];
 
@@ -933,7 +934,7 @@ class Personage extends gEditorial\Module
 		return $cache[$post->ID] = $names;
 	}
 
-	private function _get_human_name_metakeys( $post = NULL, $filtered = TRUE )
+	private function _get_human_name_metakeys( mixed $post = NULL, bool $filtered = TRUE ): array
 	{
 		$keys  = [
 			'first_name',
@@ -1055,6 +1056,7 @@ class Personage extends gEditorial\Module
 		return $data;
 	}
 
+	// TODO: move this up!
 	public function sanitize_passport_number( $data, $field, $post )
 	{
 		$sanitized = Core\Number::translate( trim( $data ) );
@@ -1154,7 +1156,7 @@ class Personage extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_import_from_fullname( $sub )
+	private function _do_import_from_fullname( ?string $sub ): bool
 	{
 		if ( ! self::do( [
 			ModuleSettings::ACTION_PARSE_FULLNAME,

@@ -84,6 +84,7 @@ class WcAttributes extends gEditorial\Module
 	 * Registers term fields for Woo Commerce attributes.
 	 * @source https://nicolamustone.blog/2016/03/11/make-product-attributes-linkable/
 	 * @source https://gist.github.com/SiR-DanieL/317b77c110016b1a3b3d
+	 * @see https://buthonestly.io/make-product-attributes-linkable-woocommerce/
 	 *
 	 * @return void
 	 */
@@ -227,6 +228,8 @@ class WcAttributes extends gEditorial\Module
 
 				// NOTE: Markdown syntax: `[text](url)`
 				if ( preg_match( '/\[(.*?)\]\((.*?)\)/', $value, $matches ) ) {
+				// NOTE: Markdown syntax: `[text](url)` / `[Text shown](https://example.com){blank}`
+				// if ( preg_match( '/[(.*?)]((.*?))(?:{(blank)})?/', $value, $matches ) ) {
 
 					if ( WordPress\Strings::isEmpty( $matches[1] ) )
 						continue;

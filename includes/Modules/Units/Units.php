@@ -353,12 +353,9 @@ class Units extends gEditorial\Module
 		return $value;
 	}
 
-	// TODO: Move to `ModuleHelper`
 	public function sanitize_postmeta_field_key_map()
 	{
-		return [
-			'distance_in_metres' => [ 'distance_in_metres', 'distance_in_meter' ],
-		];
+		return ModuleHelper::getPostTypeFieldKeyMap();
 	}
 
 	public function reports_settings( string $sub ): void

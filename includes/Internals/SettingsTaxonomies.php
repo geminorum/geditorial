@@ -196,7 +196,7 @@ trait SettingsTaxonomies
 		return Core\Arraay::stripByKeys(
 			WordPress\Taxonomy::get( 0,
 				$args ?? [ 'show_ui' => TRUE ],
-				$this->restrict_taxonomies ?? FALSE
+				$this->restrict_taxonomies ?: FALSE
 			),
 			Core\Arraay::prepString(
 				$this->taxonomies_excluded( $exclude_extra )
