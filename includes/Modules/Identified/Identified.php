@@ -231,9 +231,9 @@ class Identified extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'source_id', 3, 8 );
-		$this->filter_module( 'importer', 'matched', 4, 8 );
-		$this->filter_module( 'importer', 'insert', 8, 18 );
+		$this->filter_module( 'importer', 'posts_source_id', 3, 8 );
+		$this->filter_module( 'importer', 'posts_matched', 4, 8 );
+		$this->filter_module( 'importer', 'posts_insert', 2, 18 );
 	}
 
 	/**
@@ -1111,7 +1111,7 @@ class Identified extends gEditorial\Module
 		], 'view', 'after' );
 	}
 
-	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
+	public function importer_posts_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $source_id;
@@ -1127,7 +1127,7 @@ class Identified extends gEditorial\Module
 		);
 	}
 
-	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
+	public function importer_posts_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
 	{
 		if ( ! empty( $matched ) )
 			return $matched;
@@ -1143,23 +1143,26 @@ class Identified extends gEditorial\Module
 		return $matched;
 	}
 
-	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	public function importer_posts_insert( array|false $data, array $arguments ): array|false
 	{
 		if ( FALSE === $data )
 			return $data; // already aborted!
 
-		if ( ! $override && ! empty( $data['ID'] ) )
+		if ( ! $arguments['override'] && ! empty( $data['ID'] ) )
 			return $data; // already found!
 
-		if ( ! $this->posttype_supported( $posttype ) )
+		if ( ! $this->posttype_supported( $arguments['posttype'] ) )
 			return $data;
 
-		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
+		if ( empty( $arguments['source_id'] ) )
+			return $data;
+
+		$metakey = $this->_get_posttype_identifier_metakey( $arguments['posttype'] );
 
 		if ( ! empty( $data['meta_input'][$metakey] ) )
 			return $data; // already added!
 
-		$data['meta_input'][$metakey] = $source_id;
+		$data['meta_input'][$metakey] = $arguments['source_id'];
 
 		return $data;
 	}

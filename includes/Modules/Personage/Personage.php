@@ -414,14 +414,14 @@ class Personage extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'insert', 8, 20, 'maketitle' );
+		$this->filter_module( 'importer', 'posts_insert', 2, 20, 'maketitle' );
 
 		if ( ! static::factory()->enabled( 'identified', FALSE ) )
 			return;
 
-		$this->filter_module( 'importer', 'source_id', 3 );
-		$this->filter_module( 'importer', 'matched', 4 );
-		$this->filter_module( 'importer', 'insert', 8 );
+		$this->filter_module( 'importer', 'posts_source_id', 3 );
+		$this->filter_module( 'importer', 'posts_matched', 4 );
+		$this->filter_module( 'importer', 'posts_insert', 2 );
 	}
 
 	public function setup_ajax(): bool
@@ -764,7 +764,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: only runs in lieu of `Identified` module on import!
-	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
+	public function importer_posts_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
 	{
 		if ( empty( $source_id ) )
 			return NULL;
@@ -779,7 +779,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: only runs in lieu of `Identified` module on import!
-	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
+	public function importer_posts_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
 	{
 		if ( ! empty( $matched ) )
 			return $matched;
@@ -795,7 +795,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: only runs in lieu of `Identified` module on import!
-	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	public function importer_posts_insert( array|false $data, array $arguments ): array|false
 	{
 		if ( FALSE === $data )
 			return $data; // already aborted!
@@ -803,7 +803,7 @@ class Personage extends gEditorial\Module
 		if ( ! empty( $data['ID'] ) )
 			return $data; // already found!
 
-		if ( $posttype !== $this->constant( 'main_posttype' ) )
+		if ( $arguments['posttype'] !== $this->constant( 'main_posttype' ) )
 			return $data;
 
 		// meta fields not supported
@@ -811,12 +811,12 @@ class Personage extends gEditorial\Module
 			return $data;
 
 		// Only if post is new and no identity being saved!
-		if ( empty( $prepared['meta__identity_number'][0] ) && ! empty( $source_id ) ) {
+		if ( empty( $arguments['prepared']['meta__identity_number'][0] ) && ! empty( $arguments['source_id'] ) ) {
 
 			$metakey   = Services\PostTypeFields::getPostMetaKey( 'identity_number' );
 			$sanitized = $this->get_setting( 'import_check_identity_number', TRUE )
-				? Core\Validation::sanitizeIdentityNumber( $source_id )
-				: Core\Text::trim( Core\Number::translate( $source_id ) );
+				? Core\Validation::sanitizeIdentityNumber( $arguments['source_id'] )
+				: Core\Text::trim( Core\Number::translate( $arguments['source_id'] ) );
 
 			if ( $sanitized && $metakey && empty( $data['meta_input'][$metakey] ) )
 				$data['meta_input'][$metakey] = $sanitized;
@@ -826,7 +826,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// NOTE: always runs on import!
-	public function importer_insert_maketitle( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	public function importer_posts_insert_maketitle( array|false $data, array $arguments ): array|false
 	{
 		if ( FALSE === $data )
 			return $data; // already aborted!
@@ -834,7 +834,7 @@ class Personage extends gEditorial\Module
 		if ( ! empty( $data['ID'] ) )
 			return $data; // already found!
 
-		if ( $posttype !== $this->constant( 'main_posttype' ) )
+		if ( $arguments['posttype'] !== $this->constant( 'main_posttype' ) )
 			return $data;
 
 		if ( ! empty( $data['post_title'] ) || ! $this->get_setting( 'import_fill_post_title', TRUE ) )
@@ -849,8 +849,8 @@ class Personage extends gEditorial\Module
 
 			$metakey = sprintf( 'meta__%s', $key );
 
-			$names[$key] = ( array_key_exists( $metakey, $prepared ) && ! empty( $prepared[$metakey][0] ) )
-				? $prepared[$metakey][0]
+			$names[$key] = ( array_key_exists( $metakey, $arguments['prepared'] ) && ! empty( $arguments['prepared'][$metakey][0] ) )
+				? $arguments['prepared'][$metakey][0]
 				: '';
 		}
 

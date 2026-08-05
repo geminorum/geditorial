@@ -201,9 +201,9 @@ class Today extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 2 );
+		$this->filter_module( 'importer', 'posts_fields', 2 );
+		$this->filter_module( 'importer', 'posts_prepare', 7 );
+		$this->action_module( 'importer', 'posts_saved', 2 );
 
 		$this->action_module( 'importer', 'posttype_extra_all', 7 );
 	}
@@ -1509,7 +1509,7 @@ class Today extends gEditorial\Module
 		];
 	}
 
-	public function importer_fields( array $fields, string $posttype ): array
+	public function importer_posts_fields( array $fields, string $posttype ): array
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
@@ -1517,7 +1517,7 @@ class Today extends gEditorial\Module
 		return array_merge( $fields, $this->_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
@@ -1537,8 +1537,7 @@ class Today extends gEditorial\Module
 		return $value;
 	}
 
-	// FIXME: use `$atts['prepared'][$field]`
-	public function importer_saved( object $post, array $atts = [] ): void
+	public function importer_posts_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

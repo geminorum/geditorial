@@ -127,7 +127,7 @@ class Ortho extends gEditorial\Module
 			return;
 
 		if ( class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
-			$this->filter_module( 'importer', 'prepare', 7, 8 );
+			$this->filter_module( 'importer', 'posts_prepare', 7, 8 );
 	}
 
 	/**
@@ -202,7 +202,7 @@ class Ortho extends gEditorial\Module
 		return $prepared;
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $value;

@@ -1184,7 +1184,7 @@ trait CoreTaxonomies
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'force_parents' ) )
 			return FALSE;
 
-		return add_filter( $this->hook_base( 'importer', 'set_terms', $taxonomy ),
+		return add_filter( $this->hook_base( 'importer', 'posts_set_terms', $taxonomy ),
 			static function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append )
 				use ( $taxonomy ) {
 

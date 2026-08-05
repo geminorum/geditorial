@@ -536,9 +536,9 @@ class Book extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 2 );
+		$this->filter_module( 'importer', 'posts_fields', 2 );
+		$this->filter_module( 'importer', 'posts_prepare', 7 );
+		$this->action_module( 'importer', 'posts_saved', 2 );
 	}
 
 	public function template_redirect(): void
@@ -1159,12 +1159,12 @@ class Book extends gEditorial\Module
 		return [];
 	}
 
-	public function importer_fields( array $fields, string $posttype ): array
+	public function importer_posts_fields( array $fields, string $posttype ): array
 	{
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 
@@ -1174,8 +1174,7 @@ class Book extends gEditorial\Module
 		return WordPress\Strings::kses( $value, 'none' );
 	}
 
-	// FIXME: use `$atts['prepared'][$field]`
-	public function importer_saved( object $post, array $atts = [] ): void
+	public function importer_posts_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

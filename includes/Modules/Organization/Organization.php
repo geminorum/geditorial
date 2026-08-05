@@ -275,9 +275,9 @@ class Organization extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'fields', 2 );
-		$this->filter_module( 'importer', 'prepare', 7 );
-		$this->action_module( 'importer', 'saved', 2 );
+		$this->filter_module( 'importer', 'posts_fields', 2 );
+		$this->filter_module( 'importer', 'posts_prepare', 7 );
+		$this->action_module( 'importer', 'posts_saved', 2 );
 
 		$this->pairedcore__hook_importer_before_import();
 		$this->pairedcore__hook_importer_term_parents();
@@ -592,7 +592,7 @@ class Organization extends gEditorial\Module
 		return [];
 	}
 
-	public function importer_fields( array $fields, string $posttype ): array
+	public function importer_posts_fields( array $fields, string $posttype ): array
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
@@ -600,7 +600,7 @@ class Organization extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
@@ -622,7 +622,7 @@ class Organization extends gEditorial\Module
 		return WordPress\Strings::getJoined( $list, '', '', $value );
 	}
 
-	public function importer_saved( object $post, array $atts = [] ): void
+	public function importer_posts_saved( object $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

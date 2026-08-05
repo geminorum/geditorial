@@ -410,9 +410,9 @@ trait SubContents
 	protected function subcontent__hook_importer_init(): void
 	{
 		$this->filter_module( 'importer', 'form_posts_table_column', 4, 10, 'subcontent' );
-		$this->filter_module( 'importer', 'fields', 2, 10, 'subcontent' );
-		$this->filter_module( 'importer', 'prepare', 7, 10, 'subcontent' );
-		$this->action_module( 'importer', 'saved', 2, 10, 'subcontent' );
+		$this->filter_module( 'importer', 'posts_fields', 2, 10, 'subcontent' );
+		$this->filter_module( 'importer', 'posts_prepare', 7, 10, 'subcontent' );
+		$this->action_module( 'importer', 'posts_saved', 2, 10, 'subcontent' );
 	}
 
 	protected function subcontent_get_importer_fields( ?string $posttype = NULL ): array
@@ -448,7 +448,7 @@ trait SubContents
 		return $column;
 	}
 
-	public function importer_fields_subcontent( array $fields, string $posttype ): array
+	public function importer_posts_fields_subcontent( array $fields, string $posttype ): array
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) )
 			return $fields;
@@ -456,7 +456,7 @@ trait SubContents
 		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare_subcontent( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
+	public function importer_posts_prepare_subcontent( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
 	{
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) || empty( $value ) )
 			return $value;
@@ -481,7 +481,7 @@ trait SubContents
 		);
 	}
 
-	public function importer_saved_subcontent( mixed $post, array $atts = [] ): void
+	public function importer_posts_saved_subcontent( mixed $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->in_setting_posttypes( $post->post_type, 'subcontent' ) )
 			return;

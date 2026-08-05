@@ -1584,9 +1584,9 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_importer_init()
 	{
-		$this->filter_module( 'importer', 'fields', 2, 10, 'posttypefields' );
-		$this->filter_module( 'importer', 'prepare', 7, 10, 'posttypefields' );
-		$this->action_module( 'importer', 'saved', 2, 10, 'posttypefields' );
+		$this->filter_module( 'importer', 'posts_fields', 2, 10, 'posttypefields' );
+		$this->filter_module( 'importer', 'posts_prepare', 7, 10, 'posttypefields' );
+		$this->action_module( 'importer', 'posts_saved', 2, 10, 'posttypefields' );
 	}
 
 	protected function posttypefields_get_importer_fields( $posttype = NULL, $return_object = FALSE )
@@ -1615,7 +1615,7 @@ trait PostTypeFields
 		return $fields;
 	}
 
-	public function importer_fields_posttypefields( array $fields, string $posttype )
+	public function importer_posts_fields_posttypefields( array $fields, string $posttype )
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fields;
@@ -1623,7 +1623,7 @@ trait PostTypeFields
 		return array_merge( $fields, $this->posttypefields_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_prepare_posttypefields(
+	public function importer_posts_prepare_posttypefields(
 		mixed $value,
 		?string $posttype,
 		string $field,
@@ -1644,7 +1644,7 @@ trait PostTypeFields
 		return $this->sanitize_posttype_field( $value, $fields[$field] );
 	}
 
-	public function importer_saved_posttypefields( $post, $atts = [] )
+	public function importer_posts_saved_posttypefields( mixed $post, array $atts = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;

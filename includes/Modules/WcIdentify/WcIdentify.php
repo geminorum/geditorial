@@ -103,9 +103,9 @@ class WcIdentify extends gEditorial\Module
 
 	public function importer_init(): void
 	{
-		$this->filter_module( 'importer', 'source_id', 3 );
-		$this->filter_module( 'importer', 'matched', 4 );
-		$this->filter_module( 'importer', 'insert', 8, 18 );
+		$this->filter_module( 'importer', 'posts_source_id', 3 );
+		$this->filter_module( 'importer', 'posts_matched', 4 );
+		$this->filter_module( 'importer', 'posts_insert', 2, 18 );
 	}
 
 	private function _get_uniqueid_label( ?string $context = NULL )
@@ -271,7 +271,7 @@ class WcIdentify extends gEditorial\Module
 		return $markup;
 	}
 
-	public function importer_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
+	public function importer_posts_source_id( mixed $source_id, string $posttype, mixed $raw ): mixed
 	{
 		if ( empty( $source_id ) )
 			return NULL;
@@ -282,7 +282,7 @@ class WcIdentify extends gEditorial\Module
 		return Core\ISBN::discovery( $source_id );
 	}
 
-	public function importer_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
+	public function importer_posts_matched( false|int $matched, mixed $source_id, string $posttype, mixed $raw ): false|int
 	{
 		if ( ! empty( $matched ) )
 			return $matched;
@@ -296,7 +296,7 @@ class WcIdentify extends gEditorial\Module
 		return $matched;
 	}
 
-	public function importer_insert( array|false $data, array $prepared, array $taxonomies, string $posttype, mixed $source_id, int $attach_id, mixed $raw, bool $override ): array|false
+	public function importer_posts_insert( array|false $data, array $arguments ): array|false
 	{
 		if ( FALSE === $data )
 			return $data; // already aborted!
@@ -304,12 +304,15 @@ class WcIdentify extends gEditorial\Module
 		if ( ! empty( $data['ID'] ) )
 			return $data; // already found!
 
-		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+		if ( $arguments['posttype'] !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
+			return $data;
+
+		if ( empty( $arguments['source_id'] ) )
 			return $data;
 
 		// Store source-id as Unique-ID
 		if ( empty( $data['meta_input'][WordPress\WooCommerce::UNIQUEID_METAKEY] ) )
-			$data['meta_input'][WordPress\WooCommerce::UNIQUEID_METAKEY] = $source_id;
+			$data['meta_input'][WordPress\WooCommerce::UNIQUEID_METAKEY] = $arguments['source_id'];
 
 		return $data;
 	}
