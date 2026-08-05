@@ -1152,16 +1152,24 @@ trait SubContents
 
 					return Helper::getPostTitleRow( $row, 'edit' );
 				},
-				'actions' => static function ( $value, $row, $column, $index, $key, $args )
+				'actions' => function ( $value, $row, $column, $index, $key, $args )
 					use ( $custom ) {
 
+					if ( ! $post = WordPress\Post::get( (int) $value ) )
+						return [];
+
+					if ( $row_action = $this->rowaction_get_mainlink_for_post_subcontent( $post ) )
+						$custom['subcontent'] = $row_action;
+
 					return array_merge(
-						gEditorial\Tablelist::getPostRowActions( (int) $value, NULL ),
+						gEditorial\Tablelist::getPostRowActions( $post->ID, NULL ),
 						$custom
 					);
 				},
 			],
 		];
+
+		gEditorial\Scripts::enqueueColorBox();
 
 		return Core\HTML::tableList( array_merge( $columns, $fields ), $data, [
 			'navigation' => 'before',
