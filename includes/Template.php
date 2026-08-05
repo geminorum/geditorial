@@ -1247,38 +1247,55 @@ class Template extends WordPress\Main
 	// `WordPress\Taxonomy::link( $term->taxonomy )`
 	public static function renderTermIntro(
 		mixed $term,
-		array $atts = [],
+		array $arguments = [],
 		?string $module = NULL,
 	): bool {
 
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		$module = $module ?? static::MODULE;
-		$args   = self::parsed( [
+		$renderer = 'termintro';                // renderer context
+		$module   = $module ?? static::MODULE;
+
+		$args = self::parsed( [
 			'heading'     => '3',     // heading level or `FALSE` to disable
-			'secondary'   => NULL,    // `NULL` for filter: `geditorial_term_intro_title_suffix`
+			'secondary'   => NULL,    // `NULL` for filter: `geditorial_termintro_title_suffix`
 			'image_link'  => 'url',
 			'image_field' => Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ),
 			'name_only'   => FALSE,   // Avoids the name-only data (no description/image)
 			'context'     => NULL,
 			'before'      => '',
 			'after'       => '',
-		], $atts );
+		], $arguments );
 
 		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$desc   = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
-		$suffix = $args['secondary'] ?? apply_filters( self::und( static::BASE, 'term_intro_title_suffix' ), '', $term, $desc, $args, $module );
+		$suffix = $args['secondary'] ?? apply_filters( self::und( static::BASE, $renderer, 'title_suffix' ),
+			'',
+			$term,
+			$desc,
+			$args,
+			$module,
+		);
 
-		$image = self::termImage( [
-			'id'       => $term,
-			'taxonomy' => $term->taxonomy,
-			'context'  => $args['context'],
-			'link'     => $args['image_link'],
-			'field'    => $args['image_field'],
-			'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
-			'after'    => '</div>',
-		], $module );
+		$image = self::termImage(
+			apply_filters( self::und( static::BASE, $renderer, 'term_image', 'args' ),
+				[
+					'id'       => $term,
+					'taxonomy' => $term->taxonomy,
+					'context'  => $args['context'],
+					'link'     => $args['image_link'],
+					'field'    => $args['image_field'],
+					'before'   => $wrap.'<div class="col-sm-4 text-center -term-thumbnail">',
+					'after'    => '</div>',
+				],
+				$term,
+				$desc,
+				$args,
+				$module,
+			),
+			$module
+		);
 
 		if ( ! $image && ! $desc && ( ! $args['heading'] || ! $args['name_only'] ) )
 			return FALSE;
@@ -1288,19 +1305,39 @@ class Template extends WordPress\Main
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
-			do_action( self::und( static::BASE, 'term_intro', 'title', 'before' ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, $renderer, 'title', 'before' ),
+				$term,
+				$desc,
+				(bool)
+				$image,
+				$args,
+				$module,
+			);
 
 			if ( $args['heading'] )
 				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ).Core\HTML::small( $suffix, '-secondary', TRUE ) );
 
-			do_action( self::und( static::BASE, 'term_intro', 'description', 'before' ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, $renderer, 'description', 'before' ),
+				$term,
+				$desc,
+				(bool) $image,
+				$args,
+				$module,
+			);
 
-			echo Core\HTML::wrap(
-				WordPress\Strings::prepDescription(
-					WordPress\Strings::kses( $desc, 'html' )
-				), 'term-description -term-description' );
+			if ( $desc )
+				echo Core\HTML::wrap(
+					WordPress\Strings::prepDescription(
+						WordPress\Strings::kses( $desc, 'html' )
+					), 'term-description -term-description' );
 
-			do_action( self::und( static::BASE, 'term_intro', 'description', 'after' ), $term, $desc, (bool) $image, $args, $module );
+			do_action( self::und( static::BASE, $renderer, 'description', 'after' ),
+				$term,
+				$desc,
+				(bool) $image,
+				$args,
+				$module,
+			);
 
 		echo '</div>'; // `.col`
 		echo '</div>'; // `.row`

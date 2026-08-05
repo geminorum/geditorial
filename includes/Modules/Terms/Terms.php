@@ -377,9 +377,9 @@ class Terms extends gEditorial\Module
 
 		$this->filter_module( 'alphabet', 'term_title_metakeys', 2, 8 );
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, FALSE, $this->base );
-		$this->filter( 'term_intro_title_suffix', 5, 8, FALSE, $this->base );
-		$this->action( 'term_intro_description_before', 5, 2, FALSE, $this->base );
-		$this->action( 'term_intro_description_after', 5, 5, FALSE, $this->base );
+		$this->filter( 'termintro_title_suffix', 5, 8, FALSE, $this->base );
+		$this->action( 'termintro_description_before', 5, 2, FALSE, $this->base );
+		$this->action( 'termintro_description_after', 5, 5, FALSE, $this->base );
 		$this->filter( 'calendars_sanitize_ical_context', 3, 8, FALSE, $this->base );
 		$this->filter( 'calendars_term_link', 3, 8, FALSE, $this->base );
 		$this->filter( 'calendars_term_events', 3, 8, FALSE, $this->base );
@@ -2817,7 +2817,7 @@ class Terms extends gEditorial\Module
 		return $data;
 	}
 
-	public function term_intro_title_suffix( string $suffix, $term, $desc, $args, $module ): string
+	public function termintro_title_suffix( string $suffix, $term, $desc, $args, $module ): string
 	{
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $suffix;
@@ -2852,7 +2852,7 @@ class Terms extends gEditorial\Module
 		return $suffix;
 	}
 
-	public function term_intro_description_before( $term, $desc, $image, $args, $module ): void
+	public function termintro_description_before( $term, $desc, $image, $args, $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
@@ -2866,7 +2866,7 @@ class Terms extends gEditorial\Module
 			echo Core\HTML::wrap( get_term_meta( $term->term_id, $this->get_supported_metakey( 'subtitle', $taxonomy ), TRUE ) ?: '', '-term-subtitle' );
 	}
 
-	public function term_intro_description_after( $term, $desc, $image, $args, $module ): void
+	public function termintro_description_after( $term, $desc, $image, $args, $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;

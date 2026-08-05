@@ -221,7 +221,7 @@ class Socialite extends gEditorial\Module
 			return;
 
 		$this->action( 'widget_the_term_after', 5, 22, FALSE, 'gtheme' );
-		$this->action( 'term_intro_description_after', 5, 8, FALSE, $this->base );
+		$this->action( 'termintro_description_after', 5, 8, FALSE, $this->base );
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
@@ -271,7 +271,7 @@ class Socialite extends gEditorial\Module
 		] );
 	}
 
-	public function term_intro_description_after( $term, $desc, $image, $args, $module )
+	public function termintro_description_after( $term, $desc, $image, $args, $module )
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
