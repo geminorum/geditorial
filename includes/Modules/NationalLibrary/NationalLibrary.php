@@ -703,7 +703,7 @@ class NationalLibrary extends gEditorial\Module
 		return $bib;
 	}
 
-	// NOTE: falls back to product GTIN
+	// NOTE: falls back to product Unique-ID
 	public function get_product_isbn( $product = NULL, $type = NULL )
 	{
 		if ( ! $product = wc_get_product( $product ) )
@@ -711,9 +711,12 @@ class NationalLibrary extends gEditorial\Module
 
 		$metakey = $this->_get_posttype_isbn_metakey( $type ?? WordPress\WooCommerce::PRODUCT_POSTTYPE );
 
-		// Woo-Commerce nags about direct use of it's internal meta-keys
-		if ( $metakey && $metakey === WordPress\WooCommerce::GTIN_METAKEY )
-			return $product->get_global_unique_id( 'edit' ) ?: FALSE;
+		if ( method_exists( $product, 'get_global_unique_id' ) ) {
+
+			// Woo-Commerce nags about direct use of it's internal meta-keys
+			if ( $metakey && $metakey === WordPress\WooCommerce::UNIQUEID_METAKEY )
+				return $product->get_global_unique_id( 'edit' ) ?: FALSE;
+		}
 
 		if ( $metakey && ( $isbn = $product->get_meta( $metakey, TRUE, 'edit' ) ) )
 			return $isbn;

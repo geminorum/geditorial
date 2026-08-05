@@ -114,6 +114,7 @@ class Modulation extends gEditorial\Service
 		switch ( $suffix ) {
 			case '_general'    : return [ _x( 'General', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_setup'      : return [ _x( 'Setup', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
+			case '_manage'     : return [ _x( 'Management', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_config'     : return [ _x( 'Configuration', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_defaults'   : return [ _x( 'Defaults', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];
 			case '_tweaks'     : return [ _x( 'Tweaks', 'Service: Modulation: Section Title', 'geditorial-admin' ), NULL ];

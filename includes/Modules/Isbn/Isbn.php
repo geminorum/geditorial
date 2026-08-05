@@ -278,12 +278,15 @@ class Isbn extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return;
 
-		if ( ! $gtin = $product->get_global_unique_id() )
+		if ( ! method_exists( $product, 'get_global_unique_id' ) )
 			return;
 
-		printf( $before, '-product-gtin' );
+		if ( ! $uniqueid = $product->get_global_unique_id() )
+			return;
+
+		printf( $before, '-product-uniqueid' );
 			echo $this->get_column_icon( FALSE, $this->module->icon, __( 'GTIN, UPC, EAN, or ISBN', 'woocommerce' ), $post->post_type );
-			echo Core\HTML::code( $gtin, '-gtin', Core\ISBN::sanitize( $gtin ) );
+			echo Core\HTML::code( $uniqueid, '-uniqueid', Core\ISBN::sanitize( $uniqueid ) );
 		echo $after;
 	}
 
@@ -307,7 +310,7 @@ class Isbn extends gEditorial\Module
 
 			printf( $before, '-product-isbn -'.$field );
 				echo $this->get_column_icon( FALSE, $this->module->icon, $label ?: $title, $post->post_type );
-				echo Core\HTML::code( $data, '-gtin', TRUE );
+				echo Core\HTML::code( $data, [ '-uniqueid', '-isbn' ], TRUE );
 			echo $after;
 		}
 	}
@@ -351,7 +354,7 @@ class Isbn extends gEditorial\Module
 	private function _get_main_isbn_metakey( string $posttype, string|false|null $fallback = FALSE ): string|false|null
 	{
 		if ( $this->posttype_woocommerce( $posttype ) )
-			return WordPress\WooCommerce::GTIN_METAKEY;
+			return WordPress\WooCommerce::UNIQUEID_METAKEY;
 
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $fallback;

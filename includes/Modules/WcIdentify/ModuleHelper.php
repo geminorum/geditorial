@@ -12,7 +12,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'wc_identify';
 
-	public static function possibleAttributeForGTIN( $attribute )
+	public static function possibleAttributeForUniqueID( mixed $attribute ): false|string
 	{
 		if ( empty( $attribute ) )
 			return FALSE;
@@ -24,6 +24,7 @@ class ModuleHelper extends gEditorial\Helper
 			return FALSE;
 
 		$keys = [
+			'uniqueid',
 			'gtin',
 			'isbn',
 			'کد',

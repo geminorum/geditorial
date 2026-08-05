@@ -34,7 +34,9 @@ class WcIdentify extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
 			'keywords' => [
+				'isbn',
 				'gtin',
+				'uniqueid',
 				'woocommerce',
 			],
 		];
@@ -45,33 +47,33 @@ class WcIdentify extends gEditorial\Module
 		return [
 			'_general' => [
 				[
-					'field'       => 'gtin_display',
-					'title'       => _x( 'Display GTIN', 'Setting Title', 'geditorial-wc-identify' ),
+					'field'       => 'uniqueid_display',
+					'title'       => _x( 'Display Unique-ID', 'Setting Title', 'geditorial-wc-identify' ),
 					'description' => _x( 'Prepends the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-identify' ),
 				],
 				[
-					'field'       => 'gtin_lookup',
-					'title'       => _x( 'GTIN lookup', 'Setting Title', 'geditorial-wc-identify' ),
+					'field'       => 'uniqueid_lookup',
+					'title'       => _x( 'Unique-ID lookup', 'Setting Title', 'geditorial-wc-identify' ),
 					'description' => _x( 'Makes the value for the global unique id clickable on product attributes table.', 'Setting Description', 'geditorial-wc-identify' ),
 				],
 				[
-					'field'       => 'gtin_label',
+					'field'       => 'uniqueid_label',
 					'type'        => 'text',
-					'title'       => _x( 'GTIN Label', 'Setting Title', 'geditorial-wc-identify' ),
-					'description' => _x( 'Overrides the default label for the global unique id on product attributes table.', 'Setting Description', 'geditorial-wc-identify' ),
-					'placeholder' => _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ),
+					'title'       => _x( 'Unique-ID Label', 'Setting Title', 'geditorial-wc-identify' ),
+					'description' => _x( 'Overrides the default label for the global unique-id on product attributes table.', 'Setting Description', 'geditorial-wc-identify' ),
+					'placeholder' => _x( 'Unique-ID', 'Attribute Label', 'geditorial-wc-identify' ),
 					'field_class' => [ 'medium-text' ],
 				],
 			],
 			'_misc' => [
 				[
-					'field'       => 'gtin_display_order_details',
+					'field'       => 'uniqueid_display_order_details',
 					'title'       => _x( 'Display on Order Details', 'Setting Title', 'geditorial-wc-identify' ),
-					'description' => _x( 'Appends the global unique id on order details and preview.', 'Setting Description', 'geditorial-wc-identify' ),
+					'description' => _x( 'Appends the global unique-id on order details and preview.', 'Setting Description', 'geditorial-wc-identify' ),
 				],
 				[
-					'field'       => 'gtin_exemptions',
-					'title'       => _x( 'GTIN Exemptions', 'Setting Title', 'geditorial-wc-identify' ),
+					'field'       => 'uniqueid_exemptions',
+					'title'       => _x( 'Unique-ID Exemptions', 'Setting Title', 'geditorial-wc-identify' ),
 					'description' => _x( 'Instructs output structured data that a valid identifier for the product doesn\'t exist.', 'Setting Description', 'geditorial-wc-identify' ),
 					'after'       => gEditorial\Settings::fieldAfterIcon( 'https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/' ),
 				],
@@ -85,15 +87,15 @@ class WcIdentify extends gEditorial\Module
 
 		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
 		$this->filter( 'search_results_products_ids', 3, 12, FALSE, 'aws' );
-		$this->action_self( 'render_product_gtin', 4 );
+		$this->action_self( 'render_product_uniqueid', 4 );
 
-		if ( $this->get_setting( 'gtin_exemptions' ) )
+		if ( $this->get_setting( 'uniqueid_exemptions' ) )
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
 
 		if ( ! is_admin() )
 			return;
 
-		if ( $this->get_setting( 'gtin_display_order_details' ) ) {
+		if ( $this->get_setting( 'uniqueid_display_order_details' ) ) {
 			$this->action( 'after_order_itemmeta', 3, 8, FALSE, 'woocommerce' );
 			$this->filter( 'admin_order_preview_get_order_details', 2, 8, FALSE, 'woocommerce' );
 		}
@@ -106,12 +108,12 @@ class WcIdentify extends gEditorial\Module
 		$this->filter_module( 'importer', 'insert', 8, 18 );
 	}
 
-	private function _get_gtin_label( ?string $context = NULL )
+	private function _get_uniqueid_label( ?string $context = NULL )
 	{
-		return $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) );
+		return $this->get_setting_fallback( 'uniqueid_label', _x( 'Unique-ID', 'Attribute Label', 'geditorial-wc-identify' ) );
 	}
 
-	public function render_product_gtin(
+	public function render_product_uniqueid(
 		mixed $product,
 		string $before = '',
 		string $after = '',
@@ -127,19 +129,19 @@ class WcIdentify extends gEditorial\Module
 		if ( ! $raw = $product->get_global_unique_id() )
 			return;
 
-		$gtin = Core\ISBN::sanitize( $raw );
+		$uniqueid = Core\ISBN::sanitize( $raw );
 
 		$tokens = [
 			'raw'    => $raw,
-			'gtin'   => $gtin,
+			'uniqueid'   => $uniqueid,
 			'prep'   => Core\ISBN::prep( $raw, TRUE ),
-			'link'   => Services\Lookup::htmlISBN( $gtin ),
-			'label'  => $this->_get_gtin_label( 'action' ),
+			'link'   => Services\Lookup::htmlISBN( $uniqueid ),
+			'label'  => $this->_get_uniqueid_label( 'action' ),
 			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
 		];
 
 		echo $before.Core\Text::replaceTokens(
-			$template ?? '<span class="gtin_wrapper do-clicktoclip span-copy-link" data-clipboard-text="{{gtin}}" data-value="{{gtin}}" title="{{notice}}">{{label}}&nbsp;<span class="gtin" data-gtin="{{gtin}}">{{{link}}}</span></span>',
+			$template ?? '<span class="uniqueid_wrapper do-clicktoclip span-copy-link" data-clipboard-text="{{uniqueid}}" data-value="{{uniqueid}}" title="{{notice}}">{{label}}&nbsp;<span class="uniqueid" data-uniqueid="{{uniqueid}}">{{{link}}}</span></span>',
 			$tokens ).$after;
 	}
 
@@ -147,16 +149,16 @@ class WcIdentify extends gEditorial\Module
 	{
 		$before = $after = [];
 
-		if ( $this->get_setting( 'gtin_display' ) ) {
+		if ( $this->get_setting( 'uniqueid_display' ) ) {
 
 			if ( method_exists( $product, 'get_global_unique_id' ) ) {
 
-				if ( $gtin = $product->get_global_unique_id() )
-					$before[$this->classs( 'gtin' )] = [
-						'label' => $this->_get_gtin_label( 'attributes' ),
-						'value' => $this->get_setting( 'gtin_lookup' )
-							? Services\Lookup::htmlISBN( $gtin )
-							: Core\ISBN::prep( $gtin, TRUE ),
+				if ( $uniqueid = $product->get_global_unique_id() )
+					$before[$this->classs( 'uniqueid' )] = [
+						'label' => $this->_get_uniqueid_label( 'attributes' ),
+						'value' => $this->get_setting( 'uniqueid_lookup' )
+							? Services\Lookup::htmlISBN( $uniqueid )
+							: Core\ISBN::prep( $uniqueid, TRUE ),
 					];
 			}
 		}
@@ -174,7 +176,7 @@ class WcIdentify extends gEditorial\Module
 
 		$posts = $wpdb->get_col( $wpdb->prepare(
 			"SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '%s' AND meta_value = '%s'",
-			WordPress\WooCommerce::GTIN_METAKEY,
+			WordPress\WooCommerce::UNIQUEID_METAKEY,
 			$discovery
 		) );
 
@@ -198,7 +200,7 @@ class WcIdentify extends gEditorial\Module
 			return;
 
 		echo Core\HTML::wrap( Core\Text::glued( [
-			Core\HTML::strong( $this->_get_gtin_label( 'itemmeta' ) ),
+			Core\HTML::strong( $this->_get_uniqueid_label( 'itemmeta' ) ),
 			Core\HTML::code( $uniqueid, '-uniqueid', TRUE ),
 		], '&nbsp;' ), '-additional-info' );
 	}
@@ -225,7 +227,7 @@ class WcIdentify extends gEditorial\Module
 			return $order_details;
 
 		$items = $order_details['item_html'];
-		$label = $this->_get_gtin_label( 'itemmeta' );
+		$label = $this->_get_uniqueid_label( 'itemmeta' );
 
 		foreach ( $list as $item_id => $uniqueid ) {
 
@@ -256,10 +258,10 @@ class WcIdentify extends gEditorial\Module
 		if ( ! method_exists( $product, 'get_global_unique_id' ) )
 			return $markup;
 
-		if ( ! $gtin = $product->get_global_unique_id() )
+		if ( ! $uniqueid = $product->get_global_unique_id() )
 			return $markup;
 
-		if ( ! Core\ISBN::validate( $gtin ) )
+		if ( ! Core\ISBN::validate( $uniqueid ) )
 			/**
 			 * Instructs Woo Commerce to output structured data that indicates
 			 * to Google that an identifier for the product doesn’t exist and isn’t necessary.
@@ -288,7 +290,7 @@ class WcIdentify extends gEditorial\Module
 		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
 			return $matched;
 
-		if ( $post_id = WordPress\PostType::getIDbyMeta( WordPress\WooCommerce::GTIN_METAKEY, $source_id, TRUE ) )
+		if ( $post_id = WordPress\PostType::getIDbyMeta( WordPress\WooCommerce::UNIQUEID_METAKEY, $source_id, TRUE ) )
 			return (int) $post_id;
 
 		return $matched;
@@ -305,9 +307,9 @@ class WcIdentify extends gEditorial\Module
 		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
 			return $data;
 
-		// store source_id as GTIN
-		if ( empty( $data['meta_input'][WordPress\WooCommerce::GTIN_METAKEY] ) )
-			$data['meta_input'][WordPress\WooCommerce::GTIN_METAKEY] = $source_id;
+		// Store source-id as Unique-ID
+		if ( empty( $data['meta_input'][WordPress\WooCommerce::UNIQUEID_METAKEY] ) )
+			$data['meta_input'][WordPress\WooCommerce::UNIQUEID_METAKEY] = $source_id;
 
 		return $data;
 	}
@@ -323,7 +325,7 @@ class WcIdentify extends gEditorial\Module
 
 			$available = FALSE;
 
-			if ( ModuleSettings::renderCard_tool_migrate_gtin() )
+			if ( ModuleSettings::renderCard_tool_migrate_uniqueid() )
 				$available = TRUE;
 
 			if ( ! $available )
@@ -337,21 +339,21 @@ class WcIdentify extends gEditorial\Module
 
 	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool
 	{
-		if ( $this->_do_tool_migrate_gtin( $sub ) )
+		if ( $this->_do_tool_migrate_uniqueid( $sub ) )
 			return FALSE; // avoid further UI
 
 		return TRUE;
 	}
 
 	// https://woocommerce.com/document/google-for-woocommerce/attribute-mapping/gtin/
-	private function _do_tool_migrate_gtin( string $sub ): bool
+	private function _do_tool_migrate_uniqueid( string $sub ): bool
 	{
-		if ( ! self::do( ModuleSettings::ACTION_MIGRATE_GTIN ) )
+		if ( ! self::do( ModuleSettings::ACTION_MIGRATE_UNIQUEID ) )
 			return FALSE;
 
 		$this->raise_resources();
 
-		return ModuleSettings::handleTool_migrate_gtin(
+		return ModuleSettings::handleTool_migrate_uniqueid(
 			WordPress\WooCommerce::PRODUCT_POSTTYPE,
 			$this->get_sub_limit_option( $sub, 'tools' )
 		);
