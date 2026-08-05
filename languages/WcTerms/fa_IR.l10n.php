@@ -3,7 +3,7 @@ return [
 	'domain' => 'geditorial-wc-terms',
 	'plural-forms' => NULL,
 	'language' => 'fa_IR',
-	'project-id-version' => 'gEditorial WC Terms',
+	'project-id-version' => 'gEditorial WC-Terms',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
 	'po-revision-date' => '2026-07-05 16:35+0330',
 	'x-generator' => 'Poedit 3.9',

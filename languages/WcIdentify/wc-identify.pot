@@ -15,7 +15,7 @@ msgstr ""
 
 #: ModuleSettings.php:19
 msgctxt "Card Title"
-msgid "Attribute to GTIN"
+msgid "Attribute to Unique-ID"
 msgstr ""
 
 #: ModuleSettings.php:22
@@ -25,90 +25,99 @@ msgstr ""
 
 #: ModuleSettings.php:28
 msgctxt "Message"
-msgid "Imports GTIN product attributes into built-in global unique ID fields."
+msgid "Imports Unique-ID product attributes into built-in global unique ID fields."
 msgstr ""
 
-#. translators: `%1$s`: gtin placeholder, `%2$s`: product title
-#: ModuleSettings.php:67
+#. translators: `%1$s`: unique-id placeholder, `%2$s`: product title
+#: ModuleSettings.php:70
 #, php-format
 msgctxt "Notice"
-msgid "%1$s GTIN already saved for &ldquo;%2$s&rdquo;."
+msgid "%1$s Unique-ID already saved for &ldquo;%2$s&rdquo;."
 msgstr ""
 
-#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
-#: ModuleSettings.php:85
+#. translators: `%1$s`: unique-id placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:88
 #, php-format
 msgctxt "Notice"
-msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
+msgid "%1$s Unique-ID migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute has more than one option!"
 msgstr ""
 
-#. translators: `%1$s`: gtin placeholder, `%2$s`: attribute name, `%3$s`: product title
-#: ModuleSettings.php:99
+#. translators: `%1$s`: unique-id placeholder, `%2$s`: attribute name, `%3$s`: product title
+#: ModuleSettings.php:102
 #, php-format
 msgctxt "Notice"
-msgid "%1$s GTIN migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
+msgid "%1$s Unique-ID migrated from &ldquo;%2$s&rdquo; attribute for &ldquo;%3$s&rdquo;. The attribute successfully deleted!"
 msgstr ""
 
 #. translators: `%s`: product title
-#: ModuleSettings.php:108
+#: ModuleSettings.php:111
 #, php-format
 msgctxt "Notice"
-msgid "No relevant GTIN attribute found for &ldquo;%s&rdquo;."
+msgid "No relevant Unique-ID attribute found for &ldquo;%s&rdquo;."
 msgstr ""
 
-#: WcIdentify.php:49
+#: WcIdentify.php:51
 msgctxt "Setting Title"
-msgid "Display GTIN"
+msgid "Display Unique-ID"
 msgstr ""
 
-#: WcIdentify.php:50
+#: WcIdentify.php:52
 msgctxt "Setting Description"
 msgid "Prepends the global unique id on product attributes table."
 msgstr ""
 
-#: WcIdentify.php:54
+#: WcIdentify.php:56
 msgctxt "Setting Title"
-msgid "GTIN lookup"
+msgid "Unique-ID lookup"
 msgstr ""
 
-#: WcIdentify.php:55
+#: WcIdentify.php:57
 msgctxt "Setting Description"
 msgid "Makes the value for the global unique id clickable on product attributes table."
 msgstr ""
 
-#: WcIdentify.php:60
-msgctxt "Setting Title"
-msgid "GTIN Label"
-msgstr ""
-
-#: WcIdentify.php:61
-msgctxt "Setting Description"
-msgid "Overrides the default label for the global unique id on product attributes table."
-msgstr ""
-
 #: WcIdentify.php:62
-#: WcIdentify.php:107
-#: WcIdentify.php:124
-msgctxt "Attribute Label"
-msgid "GTIN"
-msgstr ""
-
-#: WcIdentify.php:67
 msgctxt "Setting Title"
-msgid "GTIN Exemptions"
+msgid "Unique-ID Label"
 msgstr ""
 
-#: WcIdentify.php:68
+#: WcIdentify.php:63
+msgctxt "Setting Description"
+msgid "Overrides the default label for the global unique-id on product attributes table."
+msgstr ""
+
+#: WcIdentify.php:64
+#: WcIdentify.php:113
+msgctxt "Attribute Label"
+msgid "Unique-ID"
+msgstr ""
+
+#: WcIdentify.php:71
+msgctxt "Setting Title"
+msgid "Display on Order Details"
+msgstr ""
+
+#: WcIdentify.php:72
+msgctxt "Setting Description"
+msgid "Appends the global unique-id on order details and preview."
+msgstr ""
+
+#: WcIdentify.php:76
+msgctxt "Setting Title"
+msgid "Unique-ID Exemptions"
+msgstr ""
+
+#: WcIdentify.php:77
 msgctxt "Setting Description"
 msgid "Instructs output structured data that a valid identifier for the product doesn't exist."
 msgstr ""
 
-#: WcIdentify.php:108
+#: WcIdentify.php:140
 msgctxt "Notice"
 msgid "Click to Copy"
 msgstr ""
 
-#: WcIdentify.php:172
+#: WcIdentify.php:324
 msgctxt "Header"
 msgid "Product Identification Tools"
 msgstr ""

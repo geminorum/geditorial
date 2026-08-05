@@ -5,7 +5,7 @@ return [
 	'language' => 'fa',
 	'project-id-version' => 'gEditorial',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
-	'po-revision-date' => '2026-08-01 08:13+0330',
+	'po-revision-date' => '2026-08-05 05:19+0330',
 	'x-generator' => 'Poedit 3.9',
 	'messages' => [
 		'gEditorial' => 'تحریریه',

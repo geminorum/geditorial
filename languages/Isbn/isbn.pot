@@ -44,7 +44,7 @@ msgid "National Bibliographic Number"
 msgstr ""
 
 #: Isbn.php:89
-#: Isbn.php:548
+#: Isbn.php:551
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr ""
@@ -59,7 +59,7 @@ msgid "International Standard Book Number"
 msgstr ""
 
 #: Isbn.php:98
-#: Isbn.php:554
+#: Isbn.php:557
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr ""
@@ -75,7 +75,7 @@ msgid "Label to use on ISBN #2"
 msgstr ""
 
 #: Isbn.php:109
-#: Isbn.php:560
+#: Isbn.php:563
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr ""
@@ -91,7 +91,7 @@ msgid "Label to use on ISBN #3"
 msgstr ""
 
 #: Isbn.php:120
-#: Isbn.php:566
+#: Isbn.php:569
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr ""
@@ -107,7 +107,7 @@ msgid "Label to use on ISBN #4"
 msgstr ""
 
 #: Isbn.php:131
-#: Isbn.php:572
+#: Isbn.php:575
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr ""
@@ -127,22 +127,22 @@ msgctxt "Column Title"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:292
+#: Isbn.php:295
 msgctxt "Row Icon Title"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:466
+#: Isbn.php:469
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr ""
 
-#: Isbn.php:595
+#: Isbn.php:598
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr ""
 
-#: Isbn.php:626
+#: Isbn.php:629
 msgctxt "Field Title Attr"
 msgid "See the page about this on National Library website."
 msgstr ""

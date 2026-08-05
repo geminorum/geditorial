@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Isbn\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-07-05 17:31+0330\n"
+"PO-Revision-Date: 2026-08-05 05:24+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -44,7 +44,7 @@ msgctxt "Field Description"
 msgid "National Bibliographic Number"
 msgstr "شماره کتابشناسی ملی"
 
-#: Isbn.php:89 Isbn.php:542
+#: Isbn.php:89 Isbn.php:551
 msgctxt "Field Title"
 msgid "ISBN"
 msgstr "شابک"
@@ -54,7 +54,7 @@ msgctxt "Field Description"
 msgid "International Standard Book Number"
 msgstr "شماره استاندارد بین‌المللی کتاب"
 
-#: Isbn.php:98 Isbn.php:548
+#: Isbn.php:98 Isbn.php:557
 msgctxt "Field Title"
 msgid "ISBN #2"
 msgstr "شابک #۲"
@@ -69,7 +69,7 @@ msgctxt "Field Description"
 msgid "Label to use on ISBN #2"
 msgstr "عنوان برای استفاده با شابک #۲"
 
-#: Isbn.php:109 Isbn.php:554
+#: Isbn.php:109 Isbn.php:563
 msgctxt "Field Title"
 msgid "ISBN #3"
 msgstr "شابک #۳"
@@ -84,7 +84,7 @@ msgctxt "Field Description"
 msgid "Label to use on ISBN #3"
 msgstr "عنوان برای استفاده با شابک #۳"
 
-#: Isbn.php:120 Isbn.php:560
+#: Isbn.php:120 Isbn.php:569
 msgctxt "Field Title"
 msgid "ISBN #4"
 msgstr "شابک #۴"
@@ -99,7 +99,7 @@ msgctxt "Field Description"
 msgid "Label to use on ISBN #4"
 msgstr "عنوان برای استفاده با شابک #۴"
 
-#: Isbn.php:131 Isbn.php:566
+#: Isbn.php:131 Isbn.php:575
 msgctxt "Field Title"
 msgid "ISBN #5"
 msgstr "شابک #۵"
@@ -119,22 +119,22 @@ msgctxt "Column Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:292
+#: Isbn.php:295
 msgctxt "Row Icon Title"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:466
+#: Isbn.php:469
 msgctxt "Possible Identifier Key"
 msgid "ISBN"
 msgstr "شابک"
 
-#: Isbn.php:589
+#: Isbn.php:598
 msgctxt "Header"
 msgid "ISBN Imports"
 msgstr "درون‌ریزی‌های شابک"
 
-#: Isbn.php:619
+#: Isbn.php:629
 msgctxt "Field Title Attr"
 msgid "See the page about this on National Library website."
 msgstr "به صفحه مربوط به این کتاب در سایت کتابخانه ملی مراجعه کنید."

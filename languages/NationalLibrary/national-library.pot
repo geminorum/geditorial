@@ -131,17 +131,17 @@ msgctxt "Button Title Attr"
 msgid "Book Page on Opac.Nali.ir"
 msgstr ""
 
-#: NationalLibrary.php:729
+#: NationalLibrary.php:732
 msgctxt "Tab Title"
 msgid "Fipa"
 msgstr ""
 
-#: NationalLibrary.php:730
+#: NationalLibrary.php:733
 msgctxt "Tab Description"
 msgid "Exact Fipa data from The National Library."
 msgstr ""
 
-#: NationalLibrary.php:1041
+#: NationalLibrary.php:1044
 msgctxt "Header"
 msgid "National Library Tools"
 msgstr ""

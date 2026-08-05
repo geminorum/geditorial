@@ -3,9 +3,9 @@ return [
 	'domain' => 'geditorial-wc-identity',
 	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
 	'language' => 'fa_IR',
-	'project-id-version' => 'gEditorial WcIdentity',
+	'project-id-version' => 'gEditorial WC-Identity',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
-	'po-revision-date' => '2026-07-05 16:39+0330',
+	'po-revision-date' => '2026-08-03 03:41+0330',
 	'x-generator' => 'Poedit 3.9',
 	'messages' => [
 		'Setting TitleIdentity Number Field' => 'فیلد شماره هویتی',

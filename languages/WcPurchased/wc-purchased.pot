@@ -23,48 +23,60 @@ msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
 msgstr ""
 
-#: WcPurchased.php:94
+#. translators: `%s`: total number of sales
+#: WcPurchased.php:107
+#, php-format
+msgctxt "Pointer Notice"
+msgid "Total sales number is <b>%s</b>"
+msgstr ""
+
+#: WcPurchased.php:110
+msgctxt "Pointer Notice"
+msgid "<b>No</b> record of sale!"
+msgstr ""
+
+#: WcPurchased.php:128
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr ""
 
-#: WcPurchased.php:97
+#: WcPurchased.php:131
 msgctxt "Action"
 msgid "Purchases"
 msgstr ""
 
-#: WcPurchased.php:106
-#: WcPurchased.php:109
+#: WcPurchased.php:140
+#: WcPurchased.php:143
 msgctxt "Message"
 msgid "No Product!"
 msgstr ""
 
-#: WcPurchased.php:112
+#: WcPurchased.php:146
 msgctxt "Message"
 msgid "No Orders!"
 msgstr ""
 
-#: WcPurchased.php:132
+#: WcPurchased.php:166
 msgctxt "Button"
 msgid "Export CSV"
 msgstr ""
 
-#: WcPurchased.php:143
+#: WcPurchased.php:177
 msgctxt "Column Title"
 msgid "#"
 msgstr ""
 
-#: WcPurchased.php:149
+#: WcPurchased.php:183
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr ""
 
-#: WcPurchased.php:156
+#: WcPurchased.php:190
 msgctxt "Column Title"
 msgid "Address"
 msgstr ""
 
-#: WcPurchased.php:162
+#: WcPurchased.php:196
 msgctxt "Column Title"
 msgid "Total"
 msgstr ""

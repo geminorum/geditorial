@@ -5,7 +5,7 @@ return [
 	'language' => 'fa_IR',
 	'project-id-version' => 'gEditorial Byline',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
-	'po-revision-date' => '2026-07-26 20:53+0330',
+	'po-revision-date' => '2026-08-05 06:50+0330',
 	'x-generator' => 'Poedit 3.9',
 	'messages' => [
 		'Setting DescriptionRoles that can manage, edit and delete <strong>relations</strong>.' => 'نقش‌هایی که امکان مدیریت، ویرایش و حذف <strong>نسبت‌ها</strong> را دارند.',

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Bookmarked\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-07-05 16:35+0330\n"
+"PO-Revision-Date: 2026-08-05 06:49+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -14,361 +14,381 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/Bookmarked\n"
 "X-Domain: geditorial-bookmarked\n"
 
-#: Bookmarked.php:89
+#: Bookmarked.php:55
+msgctxt "Setting Title"
+msgid "Default Labels"
+msgstr "شاخص‌های پیش‌فرض"
+
+#: Bookmarked.php:56
+msgctxt "Setting Description"
+msgid "Fills empty labels base on type option upon display."
+msgstr "شاخص‌های خالی را بر اساس گزینه نوع در هنگام نمایش پر می‌کند."
+
+#: Bookmarked.php:63
+msgctxt "Setting Title"
+msgid "Default Descriptions"
+msgstr "توضیحات پیش‌فرض"
+
+#: Bookmarked.php:64
+msgctxt "Setting Description"
+msgid "Fills empty descriptions base on type option upon display."
+msgstr "توضیحات خالی را بر اساس گزینه نوع در هنگام نمایش پر می‌کند."
+
+#: Bookmarked.php:110
 msgctxt "Field Label: `label`"
 msgid "Label"
 msgstr "شاخص"
 
-#: Bookmarked.php:90
+#: Bookmarked.php:111
 msgctxt "Field Label: `link`"
 msgid "Bookmark"
 msgstr "نشانک"
 
-#: Bookmarked.php:91
+#: Bookmarked.php:112
 msgctxt "Field Label: `type`"
 msgid "Type"
 msgstr "نوع"
 
-#: Bookmarked.php:92
+#: Bookmarked.php:113
 msgctxt "Field Label: `code`"
 msgid "Code"
 msgstr "کد"
 
-#: Bookmarked.php:95
+#: Bookmarked.php:116
 msgctxt "Field Label: `desc`"
 msgid "Description"
 msgstr "توضیحات"
 
-#: Bookmarked.php:101
+#: Bookmarked.php:122
 msgctxt "Tab Title"
 msgid "Bookmarks"
 msgstr "نشانک‌ها"
 
-#: Bookmarked.php:105
+#: Bookmarked.php:126
 msgctxt "Notice"
 msgid "There is no bookmarks information available!"
 msgstr "هیچ اطلاعات نشانک‌گذاری در دسترس نیست!"
 
-#: Bookmarked.php:106
+#: Bookmarked.php:127
 msgctxt "Notice"
 msgid "You do not have the necessary permission to manage the bookmarks data."
 msgstr "شما مجوز لازم برای دسترسی به اطلاعات نشانک‌گذاری را ندارید."
 
-#: Bookmarked.php:113
+#: Bookmarked.php:134
 msgctxt "MetaBox Title"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:117
+#: Bookmarked.php:138
 #, php-format
 msgctxt "Button Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌های %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:119
+#: Bookmarked.php:140
 #, php-format
 msgctxt "Button Text"
 msgid "%1$s Manage the Bookmarks of %2$s"
 msgstr "%1$s مدیریت نشانک‌گذاری‌های %2$s"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:122
+#: Bookmarked.php:143
 #, php-format
 msgctxt "Action Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌های %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:124
+#: Bookmarked.php:145
 msgctxt "Action Text"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
 #. translators: `%1$s`: current post title, `%2$s`: post-type singular name
-#: Bookmarked.php:127
+#: Bookmarked.php:148
 #, php-format
 msgctxt "Row Title"
 msgid "Bookmarks of %1$s"
 msgstr "نشانک‌گذاری‌ها برای %1$s"
 
 #. translators: `%1$s`: icon markup, `%2$s`: post-type singular name
-#: Bookmarked.php:129
+#: Bookmarked.php:150
 msgctxt "Row Text"
 msgid "Bookmarks"
 msgstr "نشانک‌گذاری"
 
-#: Bookmarked.php:141
+#: Bookmarked.php:162
 msgctxt "Field Title"
 msgid "Bookmarks Title"
 msgstr "عنوان نشانک‌گذاری‌ها"
 
-#: Bookmarked.php:142
+#: Bookmarked.php:163
 msgctxt "Field Description"
 msgid "The Bookmarks Table Caption"
 msgstr "برنگاشت جدول نشانک‌گذاری‌ها"
 
 #. translators: `%s`: post title
-#: Bookmarked.php:282
+#: Bookmarked.php:317
 #, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Grid for %s"
 msgstr "جدول نشانک‌گذاری‌ها برای %s"
 
 #. translators: `%s`: post title
-#: Bookmarked.php:284
+#: Bookmarked.php:319
 #, php-format
 msgctxt "Page Title"
 msgid "Bookmarks Overview for %s"
 msgstr "مروری بر نشانک‌گذاری‌ها برای %s"
 
-#: Bookmarked.php:332
+#: Bookmarked.php:453
 msgctxt "Default Term: Audit"
 msgid "Empty Bookmarks Data"
 msgstr "داده‌های نشانک‌گذاری خالی"
 
-#: Bookmarked.php:384
+#: Bookmarked.php:506
 msgctxt "Header"
 msgid "Overview of the Bookmarks"
 msgstr "مروری بر نشانک‌گذاری‌ها"
 
-#: ModuleHelper.php:79
+#: ModuleHelper.php:234
 msgctxt "Type Option"
 msgid "Custom Link"
 msgstr "پیوند سفارشی"
 
-#: ModuleHelper.php:87
+#: ModuleHelper.php:242
 msgctxt "Type Option"
 msgid "Site Post"
 msgstr "فرسته سایت"
 
-#: ModuleHelper.php:95
+#: ModuleHelper.php:251
 msgctxt "Type Option"
 msgid "Site Attachment"
 msgstr "پیوست سایت"
 
-#: ModuleHelper.php:103
+#: ModuleHelper.php:260
 msgctxt "Type Option"
 msgid "Site Term"
 msgstr "رده سایت"
 
-#: ModuleHelper.php:111
+#: ModuleHelper.php:269
 msgctxt "Type Option"
 msgid "National Library"
 msgstr "کتابخانه ملی"
 
-#: ModuleHelper.php:116
+#: ModuleHelper.php:276
 msgctxt "Type Description"
 msgid "See the page about this on National Library website."
 msgstr "برگه مربوط را در سایت کتابخانه ملی ایران نگاه کنید."
 
-#: ModuleHelper.php:121
+#: ModuleHelper.php:281
 msgctxt "Type Option"
 msgid "Goodreads Book"
 msgstr "کتاب Goodreads"
 
-#: ModuleHelper.php:126
+#: ModuleHelper.php:288
 msgctxt "Type Description"
 msgid "More about this on Goodreads network."
 msgstr "اطلاعات بیشتری را در شبکه گودریدز نگاه کنید."
 
-#: ModuleHelper.php:131
+#: ModuleHelper.php:293
 msgctxt "Type Option"
 msgid "Fidibo Book"
 msgstr "کتاب فیدیبو"
 
-#: ModuleHelper.php:136
+#: ModuleHelper.php:300
 msgctxt "Type Description"
 msgid "Read this on Fidibo e-book platform."
 msgstr "نسخه الکترونیک را در سایت فیدیبو نگاه کنید."
 
-#: ModuleHelper.php:141
+#: ModuleHelper.php:305
 msgctxt "Type Option"
 msgid "Taaghche Book"
 msgstr "کتاب طاقچه"
 
-#: ModuleHelper.php:146
+#: ModuleHelper.php:312
 msgctxt "Type Description"
 msgid "Read this on Taaghche e-book platform."
 msgstr "نسخه الکترونیک را در سایت طاقچه نگاه کنید."
 
-#: ModuleHelper.php:151
+#: ModuleHelper.php:317
 msgctxt "Type Option"
 msgid "Behkhaan Book"
 msgstr "کتاب بهخوان"
 
-#: ModuleHelper.php:156
+#: ModuleHelper.php:325
 msgctxt "Type Description"
 msgid "More about this book on Behkhaan network."
 msgstr "اطلاعات بیشتری درباره این کتاب را در شبکه بهخوان نگاه کنید."
 
-#: ModuleHelper.php:161
+#: ModuleHelper.php:330
 msgctxt "Type Option"
 msgid "Behkhaan Profile"
 msgstr "نمایه بهخوان"
 
-#: ModuleHelper.php:166
+#: ModuleHelper.php:338
 msgctxt "Type Description"
 msgid "More about this person on Behkhaan network."
 msgstr "اطلاعات بیشتری درباره این فرد را در شبکه بهخوان نگاه کنید."
 
-#: ModuleHelper.php:171
+#: ModuleHelper.php:343
 msgctxt "Type Option"
 msgid "Neshan Map"
 msgstr "نقشه نشان"
 
-#: ModuleHelper.php:176
+#: ModuleHelper.php:349
 msgctxt "Type Description"
 msgid "More about this on Neshan maps."
 msgstr "اطلاعات بیشتری را در نقشه نشان نگاه کنید."
 
-#: ModuleHelper.php:180
+#: ModuleHelper.php:353
 msgctxt "Type Option"
 msgid "Balad Map"
 msgstr "نقشه بلد"
 
-#: ModuleHelper.php:185
+#: ModuleHelper.php:359
 msgctxt "Type Description"
 msgid "More about this on Balad maps."
 msgstr "اطلاعات بیشتری را در نقشه بلد نگاه کنید."
 
-#: ModuleHelper.php:189
+#: ModuleHelper.php:363
 msgctxt "Type Option"
 msgid "Aparat Video"
 msgstr "ویدئوی آپارات"
 
-#: ModuleHelper.php:194
+#: ModuleHelper.php:369
 msgctxt "Type Description"
 msgid "More about this on Aparat video platform."
 msgstr "اطلاعات بیشتری را در سایت آپارات نگاه کنید."
 
-#: ModuleHelper.php:198
+#: ModuleHelper.php:373
 msgctxt "Type Option"
 msgid "Youtube Video"
 msgstr "ویدئوی یوتوب"
 
-#: ModuleHelper.php:203
+#: ModuleHelper.php:379
 msgctxt "Type Description"
 msgid "More about this on Youtube video platform."
 msgstr "اطلاعات بیشتری را در سایت یوتوب نگاه کنید."
 
-#: ModuleHelper.php:207
+#: ModuleHelper.php:383
 msgctxt "Type Option"
 msgid "Wikipedia Page"
 msgstr "صفحه ویکی‌پدیا"
 
-#: ModuleHelper.php:212
+#: ModuleHelper.php:388
 msgctxt "Type Description"
 msgid "More about this on an Wikipedia page."
 msgstr "اطلاعات بیشتری را در صفحه ویکیپدیا نگاه کنید."
 
-#: ModuleHelper.php:216
+#: ModuleHelper.php:392
 msgctxt "Type Option"
 msgid "Letterboxd Page"
 msgstr "صفحه لترباکسد"
 
-#: ModuleHelper.php:221
+#: ModuleHelper.php:398
 msgctxt "Type Description"
 msgid "More about this on a Letterboxd page."
 msgstr "اطلاعات بیشتری را در صفحه لترباکسد نگاه کنید."
 
-#: ModuleHelper.php:225
+#: ModuleHelper.php:402
 msgctxt "Type Option"
 msgid "IMDB Page"
 msgstr "صفحه IMDB"
 
-#: ModuleHelper.php:230
+#: ModuleHelper.php:408
 msgctxt "Type Description"
 msgid "More about this on an IMDB page."
 msgstr "اطلاعات بیشتری را در صفحه IMDB نگاه کنید."
 
-#: ModuleHelper.php:235
+#: ModuleHelper.php:413
 msgctxt "Type Option"
 msgid "TMDB Movie"
 msgstr "فیلم TMDB"
 
-#: ModuleHelper.php:240
+#: ModuleHelper.php:419
 msgctxt "Type Description"
 msgid "More about this film on The Movie Database."
 msgstr "اطلاعات بیشتری درباره این فیلم را در سایت TMDB نگاه کنید."
 
-#: ModuleHelper.php:245
+#: ModuleHelper.php:424
 msgctxt "Type Option"
 msgid "TMDB Person"
 msgstr "فرد TMDB"
 
-#: ModuleHelper.php:250
+#: ModuleHelper.php:430
 msgctxt "Type Description"
 msgid "More about this person on The Movie Database."
 msgstr "اطلاعات بیشتری درباره این فرد را در سایت TMDB نگاه کنید."
 
-#: ModuleHelper.php:255
+#: ModuleHelper.php:435
 msgctxt "Type Option"
 msgid "Navaar Audio"
 msgstr "صوت نوار"
 
-#: ModuleHelper.php:260
+#: ModuleHelper.php:441
 msgctxt "Type Description"
 msgid "More about this on an Navaar audio."
 msgstr "اطلاعات بیشتری را در صوت نوار نگاه کنید."
 
-#: ModuleHelper.php:265
+#: ModuleHelper.php:446
 msgctxt "Type Option"
 msgid "Email Address"
 msgstr "نشانی ایمیل"
 
-#: ModuleHelper.php:270
+#: ModuleHelper.php:451
 msgctxt "Type Description"
 msgid "Contact someone about this via email."
 msgstr "از طریق ایمیل، با کسی درباره این تماس بگیرید."
 
-#: ModuleHelper.php:274
+#: ModuleHelper.php:455
 msgctxt "Type Option"
 msgid "Phone Number"
 msgstr "شماره تلفن"
 
-#: ModuleHelper.php:279
+#: ModuleHelper.php:460
 msgctxt "Type Description"
 msgid "Contact someone about this via phone."
 msgstr "از طریق تلفن، با کسی درباره این تماس بگیرید."
 
-#: ModuleHelper.php:283
+#: ModuleHelper.php:464
 msgctxt "Type Option"
 msgid "Mobile Number"
 msgstr "شماره همراه"
 
-#: ModuleHelper.php:288
+#: ModuleHelper.php:469
 msgctxt "Type Description"
 msgid "Contact someone about this via mobile phone."
 msgstr "از طریق تلفن همراه، با کسی درباره این تماس بگیرید."
 
-#: ModuleHelper.php:292
+#: ModuleHelper.php:473
 msgctxt "Type Option"
 msgid "SMS Number"
 msgstr "شماره SMS"
 
-#: ModuleHelper.php:297
+#: ModuleHelper.php:478
 msgctxt "Type Description"
 msgid "Contact someone about this via short message."
 msgstr "از طریق پیام کوتاه، با کسی درباره این تماس بگیرید."
 
-#: ModuleHelper.php:301
+#: ModuleHelper.php:482
 msgctxt "Type Option"
 msgid "PDF Document"
 msgstr "سند PDF"
 
-#: ModuleHelper.php:306
+#: ModuleHelper.php:488
 msgctxt "Type Description"
 msgid "Read more about this as PDF format."
 msgstr "در این باره، در پیوست PDF بیشتر بخوانید."
 
-#: ModuleHelper.php:310
+#: ModuleHelper.php:492
 msgctxt "Type Option"
 msgid "ePub Book"
 msgstr "کتاب ePub"
 
-#: ModuleHelper.php:315
+#: ModuleHelper.php:498
 msgctxt "Type Description"
 msgid "Read more about this as ePub book."
 msgstr "در این باره، در کتاب ePub بیشتر بخوانید."

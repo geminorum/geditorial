@@ -5,7 +5,7 @@ return [
 	'language' => 'fa_IR',
 	'project-id-version' => 'gEditorial Attachments',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
-	'po-revision-date' => '2026-05-22 13:08+0330',
+	'po-revision-date' => '2026-08-02 23:24+0330',
 	'x-generator' => 'Poedit 3.9',
 	'messages' => [
 		'Setting DescriptionDetermines the default status of the new attachment comments.' => 'وضعیت پیش‌فرض دیدگاه‌ها در پیوست تازه را تعیین می‌کند.',
@@ -15,6 +15,8 @@ return [
 		'Setting DescriptionFixes the rotation of JPEG images using %s extension, immediately after the upload.' => 'بلافاصله پس از بارگزاری، چرخش تصاویر JPEG را با استفاده از افزونه %s اصلاح می‌کند.',
 		'Setting TitleFallback %s to Title' => 'پس‌نشینی %s به عنوان',
 		'Setting DescriptionTries to fill empty alt attribute with attachment title on images.' => 'برای پر کردن ویژگی alt خالی به کمک عنوان پیوست تلاش می‌کند.',
+		'Setting TitleAttachment Pages' => 'برگه‌های پیوست',
+		'Setting DescriptionEnables core attachment pages for each media item.' => 'برگه‌های پیوست را برای هر مورد از رسانه فعال می‌کند.',
 		'Setting TitleRewrite Permalinks' => 'بازنویسی پایاپیوندها',
 		'Setting DescriptionChanges default permalinks into attachment id.' => 'پایاپیوندهای پیش‌فرض را به شناسه پیوست تغییر می‌دهد.',
 		'Setting TitlePrefix Permalinks' => 'پیشوند پایاپیوندها',

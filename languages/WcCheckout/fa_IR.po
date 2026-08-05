@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: gEditorial WcCheckout\n"
+"Project-Id-Version: gEditorial WC-Checkout\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "PO-Revision-Date: 2026-07-05 17:15+0330\n"

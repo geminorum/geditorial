@@ -1,0 +1,49 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial WcImports\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/WcImports\n"
+"X-Domain: geditorial-wc-imports\n"
+
+#: WcImports.php:56
+msgctxt "Import Field"
+msgid "Product Unique-ID"
+msgstr ""
+
+#: WcImports.php:57
+msgctxt "Import Field"
+msgid "Product SKU"
+msgstr ""
+
+#: WcImports.php:58
+msgctxt "Import Field"
+msgid "Product Stock"
+msgstr ""
+
+#: WcImports.php:60
+msgctxt "Import Field"
+msgid "Product Weight"
+msgstr ""
+
+#: WcImports.php:61
+msgctxt "Import Field"
+msgid "Product Length"
+msgstr ""
+
+#: WcImports.php:62
+msgctxt "Import Field"
+msgid "Product Height"
+msgstr ""
+
+#: WcImports.php:63
+msgctxt "Import Field"
+msgid "Product Width"
+msgstr ""

@@ -3,7 +3,7 @@ return [
 	'domain' => 'geditorial-wc-checkout',
 	'plural-forms' => 'nplurals=2; plural=(n==0 || n==1);',
 	'language' => 'fa_IR',
-	'project-id-version' => 'gEditorial WcCheckout',
+	'project-id-version' => 'gEditorial WC-Checkout',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
 	'po-revision-date' => '2026-07-05 17:15+0330',
 	'x-generator' => 'Poedit 3.9',

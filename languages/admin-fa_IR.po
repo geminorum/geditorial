@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial Admin\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-08-01 08:12+0330\n"
+"PO-Revision-Date: 2026-08-05 06:52+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -84,90 +84,90 @@ msgid "Add new item"
 msgstr "افزودن مورد تازه"
 
 #. translators: `%1$s`: plugin URL, `%2$s`: plugin URL
-#: includes/Info.php:115
+#: includes/Info.php:117
 #, php-format
 msgctxt "Info: P2P"
 msgid "Please consider installing <a href=\"%1$s\" target=\"_blank\">Posts to Posts</a> or <a href=\"%2$s\" target=\"_blank\">Objects to Objects</a>."
 msgstr "لطفاً نصب <a href=\"%1$s\" target=\"_blank\">Posts to Posts</a> یا <a href=\"%2$s\" target=\"_blank\">Objects to Objects</a> را در نظر بگیرید."
 
 #. translators: `%s`: code placeholder
-#: includes/Info.php:126
+#: includes/Info.php:128
 #, php-format
 msgctxt "Info: P2P"
 msgid "Connected via %s"
 msgstr "مرتبط به کمک %s"
 
-#: includes/Info.php:156
+#: includes/Info.php:158
 msgctxt "Info: Message"
 msgid "There are no reports available!"
 msgstr "هیچ گزارشی در دسترس نیست!"
 
-#: includes/Info.php:167
+#: includes/Info.php:169
 msgctxt "Info: Message"
 msgid "There are no imports available!"
 msgstr "هیچ درو‌ن‌ریزی در دسترس نیست!"
 
-#: includes/Info.php:178
+#: includes/Info.php:180
 msgctxt "Info: Message"
 msgid "There are no exports available!"
 msgstr "هیچ برون‌بری در دسترس نیست!"
 
-#: includes/Info.php:189
+#: includes/Info.php:191
 msgctxt "Info: Message"
 msgid "There are no customs available!"
 msgstr "هیچ تنظیمات سفارشی در دسترس نیست!"
 
-#: includes/Info.php:200
+#: includes/Info.php:202
 msgctxt "Info: Message"
 msgid "There are no tools available!"
 msgstr "هیچ ابزاری در دسترس نیست!"
 
-#: includes/Info.php:211
+#: includes/Info.php:213
 msgctxt "Info: Message"
 msgid "There are no roles available!"
 msgstr "هیچ نقشی در دسترس نیست!"
 
-#: includes/Info.php:222
+#: includes/Info.php:224
 msgctxt "Info: Message"
 msgid "There are no posts available!"
 msgstr "هیچ فرسته‌ای در دسترس نیست!"
 
-#: includes/Info.php:233
+#: includes/Info.php:235
 msgctxt "Info: Message"
 msgid "There are no terms available!"
 msgstr "هیچ رده‌ای در دسترس نیست!"
 
-#: includes/Info.php:244
+#: includes/Info.php:246
 msgctxt "Info: Message"
 msgid "There are no data available!"
 msgstr "هیچ داده‌ای در دسترس نیست!"
 
-#: includes/Info.php:255
+#: includes/Info.php:257
 msgctxt "Info: Message"
 msgid "The MIME-type is not provided!"
 msgstr "نوع فایل ارائه نشده است!"
 
-#: includes/Info.php:266
+#: includes/Info.php:268
 msgctxt "Info: Message"
 msgid "The post-type is not provided!"
 msgstr "نوع‌فرسته ارائه نشده است!"
 
-#: includes/Info.php:277
+#: includes/Info.php:279
 msgctxt "Info: Message"
 msgid "The taxonomy is not provided!"
 msgstr "رده‌بندی ارائه نشده است!"
 
-#: includes/Info.php:288
+#: includes/Info.php:290
 msgctxt "Info: Message"
 msgid "The post-type is not supported!"
 msgstr "نوع‌فرسته پشتیبانی نمی‌شود!"
 
-#: includes/Info.php:299
+#: includes/Info.php:301
 msgctxt "Info: Message"
 msgid "The taxonomy is not supported!"
 msgstr "رده‌بندی پشتیبانی نمی‌شود!"
 
-#: includes/Info.php:310
+#: includes/Info.php:312
 msgctxt "Info: Message"
 msgid "The field is not supported!"
 msgstr "فیلد پشتیبانی نمی‌شود!"
@@ -825,14 +825,14 @@ msgid "Date data (%1$s) already is set for &ldquo;%2$s&rdquo;!"
 msgstr "داده‌ تاریخ (%1$s) ارائه‌شده برای &rdquo;%2$s&ldquo; پیش از این تنظیم شده است!"
 
 #. translators: `%s`: field title
-#: includes/Internals/PostTypeFields.php:1597
+#: includes/Internals/PostTypeFields.php:1598
 #, php-format
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s"
 msgstr "فیلد: %s"
 
 #. translators: `%s`: field title
-#: includes/Internals/PostTypeFields.php:1601
+#: includes/Internals/PostTypeFields.php:1602
 #, php-format
 msgctxt "Internal: PostTypeFields: Import Title"
 msgid "Field: %s [Ignored]"
@@ -951,32 +951,32 @@ msgctxt "Setting Description"
 msgid "Customizes the %s short-code tag. Leave blank for default."
 msgstr "کلید شورت‌کد %s را سفارشی‌سازی می‌کند. برای پیش‌فرض خالی بگذارید."
 
-#: includes/Internals/SettingsCore.php:156
+#: includes/Internals/SettingsCore.php:157
 msgctxt "Module: Button"
 msgid "Disable Module"
 msgstr "غیرفعال کردن پودمان"
 
 #. translators: `%1$s`: system title, `%2$s`: module title
-#: includes/Internals/SettingsCore.php:813
+#: includes/Internals/SettingsCore.php:814
 #, php-format
 msgctxt "Module"
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: includes/Internals/SettingsCore.php:825
+#: includes/Internals/SettingsCore.php:826
 msgctxt "Module"
 msgid "You need to flush rewrite rules!"
 msgstr "پایاپیوندها نیاز به بازسازی دارند!"
 
 #. translators: `%s`: error message
-#: includes/Internals/SettingsCore.php:927
+#: includes/Internals/SettingsCore.php:928
 #, php-format
 msgctxt "Internal: Settings Core: Message"
 msgid "Before you can upload a file, you will need to fix the following error: %s"
 msgstr "پیش از بارگزاری یک پرونده، شما باید این خطا را برطرف کنید: %s"
 
 #. translators: `%s`: file size
-#: includes/Internals/SettingsCore.php:951
+#: includes/Internals/SettingsCore.php:952
 #, php-format
 msgctxt "Internal: Settings Core: Message"
 msgid "Maximum upload size: %s"
@@ -1039,44 +1039,49 @@ msgctxt "Module"
 msgid "All PostTypes"
 msgstr "همه نوع‌فرسته‌ها"
 
-#: includes/Internals/SettingsTaxonomies.php:41
+#: includes/Internals/SettingsTaxonomies.php:37
+msgctxt "Setting Title"
+msgid "Supported Taxonomies"
+msgstr "رده‌بندی‌های پشتیبانی‌شده"
+
+#: includes/Internals/SettingsTaxonomies.php:73
 msgctxt "Internal: SettingsTaxonomies: Field Title"
 msgid "Supported Taxonomies"
 msgstr "رده‌بندی‌های پشتیبانی‌شده"
 
-#: includes/Internals/SettingsTaxonomies.php:45
+#: includes/Internals/SettingsTaxonomies.php:77
 msgctxt "Internal: SettingsTaxonomies: Section Title"
 msgid "Taxonomies"
 msgstr "رده‌بندی‌ها"
 
-#: includes/Internals/SettingsTaxonomies.php:145
+#: includes/Internals/SettingsTaxonomies.php:177
 msgctxt "Module"
 msgid "All Taxonomies"
 msgstr "همهٔ رده‌بندی‌ها"
 
 #. translators: `%s`: taxonomy name
-#: includes/Internals/SettingsTaxonomies.php:194
+#: includes/Internals/SettingsTaxonomies.php:268
 #, php-format
 msgctxt "Setting Description"
 msgid "Tries to linkify the string of %s in the contents of supported post-types."
 msgstr "برای پیوند‌دهی رشته‌های %s در محتوای فرسته‌های پشتیبانی‌شده تلاش می‌کند."
 
 #. translators: `%s`: taxonomy name
-#: includes/Internals/SettingsTaxonomies.php:203
+#: includes/Internals/SettingsTaxonomies.php:277
 #, php-format
 msgctxt "Setting Description"
 msgid "Makes %s available for selection in navigation menus."
 msgstr "%s برای انتخاب در فهرست‌های راه‌بری در دسترس باشد."
 
 #. translators: `%s`: taxonomy name
-#: includes/Internals/SettingsTaxonomies.php:212
+#: includes/Internals/SettingsTaxonomies.php:286
 #, php-format
 msgctxt "Setting Description"
 msgid "Whether to show the %s in the quick/bulk edit panel."
 msgstr "%s در ویرایش سریع/جمعی نمایش داده شود."
 
 #. translators: `%s`: taxonomy name
-#: includes/Internals/SettingsTaxonomies.php:221
+#: includes/Internals/SettingsTaxonomies.php:295
 #, php-format
 msgctxt "Setting Description"
 msgid "Prepends the parent terms of %s to views on supported post-types."
@@ -1272,42 +1277,47 @@ msgid "%s ago"
 msgstr "%s پیش"
 
 #. translators: `%s`: field title
-#: includes/Internals/SubContents.php:424
+#: includes/Internals/SubContents.php:425
 #, php-format
 msgctxt "Internal: Subcontents: Import Title"
 msgid "SubContent: %s"
 msgstr "زیرمحتوا: %s"
 
+#: includes/Internals/SubContents.php:444
+msgctxt "Internal: Subcontents: Import Column"
+msgid "SubContent Field"
+msgstr "فیلد زیرمحتوا"
+
 #. translators: `%s`: source title
-#: includes/Internals/SubContents.php:513
+#: includes/Internals/SubContents.php:529
 #, php-format
 msgctxt "Internal: Subcontents: Import Desc"
 msgid "[Imported]: %s"
 msgstr "[درون‌ریزی‌شده]: %s"
 
-#: includes/Internals/SubContents.php:525
+#: includes/Internals/SubContents.php:548
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the parent post."
 msgstr "شناسه برای فرسته والد."
 
-#: includes/Internals/SubContents.php:627
+#: includes/Internals/SubContents.php:650
 msgctxt "Internal: SubContent: Rest Argument"
 msgid "The id of the subcontent comment."
 msgstr "شناسه برای زیرمحتوای دیدگاهی."
 
 #. translators: `%s`: user display-name (user email)
-#: includes/Internals/SubContents.php:670
+#: includes/Internals/SubContents.php:693
 #, php-format
 msgctxt "Internal: Subcontents: User Row"
 msgid "By %s"
 msgstr "توسط %s"
 
-#: includes/Internals/SubContents.php:1124
+#: includes/Internals/SubContents.php:1151
 msgctxt "Internal: Subcontents: Column"
 msgid "Parent Post"
 msgstr "فرسته والد"
 
-#: includes/Internals/SubContents.php:1146
+#: includes/Internals/SubContents.php:1173
 msgctxt "Internal: Subcontents: Header"
 msgid "Overview of Sub-contents"
 msgstr "مروری بر زیرمحتوا"
@@ -1383,6 +1393,16 @@ msgstr "نشانی"
 msgctxt "Modules: Addressed"
 msgid "Bearing the Intended Recipient"
 msgstr "دریافت‌کننده مورد نظر"
+
+#: includes/Modules/AdvancedWooSearch/AdvancedWooSearch.php:18
+msgctxt "Modules: Advanced Woo Search"
+msgid "Advanced Woo Search"
+msgstr "جست‌وجوی پیشرفته وو"
+
+#: includes/Modules/AdvancedWooSearch/AdvancedWooSearch.php:19
+msgctxt "Modules: Advanced Woo Search"
+msgid "Advanced Woo Search Companion"
+msgstr "هم‌نشین برای جست‌وجوی پیشرفته وو"
 
 #: includes/Modules/Aerodrome/Aerodrome.php:27
 msgctxt "Modules: Aerodrome"
@@ -1623,6 +1643,16 @@ msgstr "تقویم"
 msgctxt "Modules: Calendar"
 msgid "Front-End Calendar of Contents"
 msgstr "تقویم محتوا برای روی سایت"
+
+#: includes/Modules/Capacitated/Capacitated.php:54
+msgctxt "Modules: Capacitated"
+msgid "Capacitated"
+msgstr "ظرفیت‌دار"
+
+#: includes/Modules/Capacitated/Capacitated.php:55
+msgctxt "Modules: Capacitated"
+msgid "Types Of Batteries"
+msgstr "گونه‌های باتری"
 
 #: includes/Modules/Careers/Careers.php:19
 msgctxt "Modules: Careers"
@@ -2154,6 +2184,16 @@ msgstr "ساختارهای محتوا"
 msgctxt "Modules: Content Formats"
 msgid "Editorial Custom Formats"
 msgstr "ساختارهای سفارشی تحریریه"
+
+#: includes/Modules/ContentProtection/ContentProtection.php:33
+msgctxt "Modules: Content Protection"
+msgid "Content Protection"
+msgstr "حفاظت از محتوا"
+
+#: includes/Modules/ContentProtection/ContentProtection.php:34
+msgctxt "Modules: Content Protection"
+msgid "[CHANGE ME]"
+msgstr ""
 
 #: includes/Modules/Contents/Contents.php:21
 msgctxt "Modules: Contents"
@@ -2840,12 +2880,12 @@ msgctxt "Modules: Invoiced"
 msgid "Accounting and Invoice Management"
 msgstr "حسابداری و مدیریت فاکتور"
 
-#: includes/Modules/Iranian/Iranian.php:26
+#: includes/Modules/Iranian/Iranian.php:28
 msgctxt "Modules: Iranian"
 msgid "Iranian"
 msgstr "ایرانی"
 
-#: includes/Modules/Iranian/Iranian.php:27
+#: includes/Modules/Iranian/Iranian.php:29
 msgctxt "Modules: Iranian"
 msgid "Tools for Iranian Editorial"
 msgstr "ابزارهایی برای تحریریه ایرانی"
@@ -3577,12 +3617,12 @@ msgctxt "Modules: Reporter"
 msgid "Editorial Report Generator"
 msgstr "تولیدکننده گزارش‌های تحریریه"
 
-#: includes/Modules/Request/Request.php:19
+#: includes/Modules/Request/Request.php:22
 msgctxt "Modules: Request"
 msgid "Request"
 msgstr "خواسته"
 
-#: includes/Modules/Request/Request.php:20
+#: includes/Modules/Request/Request.php:23
 msgctxt "Modules: Request"
 msgid "Editorial Requisition Management"
 msgstr "مدیریت درخواست‌های تحریریه"
@@ -4332,7 +4372,7 @@ msgctxt "Modules: WC Audit"
 msgid "Product Inventory Tools for WooCommerce"
 msgstr "ابزارهایی برای انبارگردانی کالاهای ووکامرس"
 
-#: includes/Modules/WcBackorders/WcBackorders.php:33
+#: includes/Modules/WcBackorders/WcBackorders.php:35
 msgctxt "Modules: WC Backorders"
 msgid "WC Backorders"
 msgstr "وکـ پیش‌خرید"
@@ -4347,7 +4387,7 @@ msgctxt "Modules: WC Banking"
 msgid "Banking Card Enhancements for WooCommerce"
 msgstr "بهینه‌سازی کارت‌های بانکی برای ووکامرس"
 
-#: includes/Modules/WcBranding/WcBranding.php:31
+#: includes/Modules/WcBranding/WcBranding.php:37
 msgctxt "Modules: WC Branding"
 msgid "WC Branding"
 msgstr "وکـ برندینگ"
@@ -4372,6 +4412,11 @@ msgctxt "Modules: WC Connected"
 msgid "Content Connected Products"
 msgstr "کالاهای مرتبط با محتوا"
 
+#: includes/Modules/WcCustomers/WcCustomers.php:20
+msgctxt "Modules: WC Customers"
+msgid "WC Customers"
+msgstr "وکـ مشتریان"
+
 #: includes/Modules/WcDashboard/WcDashboard.php:17
 msgctxt "Modules: WC Dashboard"
 msgid "WC Dashboard"
@@ -4382,12 +4427,12 @@ msgctxt "Modules: WC Dashboard"
 msgid "Customer Dashboard Enhancements for WooCommerce"
 msgstr "بهینه‌سازی پیشخوان مشتریان برای ووکامرس"
 
-#: includes/Modules/WcDiscounts/WcDiscounts.php:18
+#: includes/Modules/WcDiscounts/WcDiscounts.php:21
 msgctxt "Modules: WC Discounts"
 msgid "WC Discounts"
 msgstr "وکـ تخفیف"
 
-#: includes/Modules/WcDiscounts/WcDiscounts.php:19
+#: includes/Modules/WcDiscounts/WcDiscounts.php:22
 msgctxt "Modules: WC Discounts"
 msgid "Discount Enhancements for WooCommerce"
 msgstr "بهینه‌سازی تخفیف‌ها برای ووکامرس"
@@ -4427,6 +4472,16 @@ msgctxt "Modules: WC Images"
 msgid "Tools for Product Galleries"
 msgstr "ابزارهایی برای گالری کالاها"
 
+#: includes/Modules/WcImports/WcImports.php:18
+msgctxt "Modules: WC Imports"
+msgid "WC Imports"
+msgstr "وکـ درون‌ریزی"
+
+#: includes/Modules/WcImports/WcImports.php:19
+msgctxt "Modules: WC Imports"
+msgid "Product Import Enhancements"
+msgstr "بهینه‌سازی درون‌ریزی کالا"
+
 #: includes/Modules/WcLimited/WcLimited.php:18
 msgctxt "Modules: WC Limited"
 msgid "WC Limited"
@@ -4462,6 +4517,31 @@ msgctxt "Modules: WC Nuanced"
 msgid "Front-end Enhancements for WooCommerce"
 msgstr "بهینه‌سازی سمت کاربری برای ووکامرس"
 
+#: includes/Modules/WcOrders/WcOrders.php:28
+msgctxt "Modules: WC Orders"
+msgid "WC Orders"
+msgstr "وکـ سفارش‌ها"
+
+#: includes/Modules/WcPayments/WcPayments.php:22
+msgctxt "Modules: WC Payments"
+msgid "WC Payments"
+msgstr "وکـ پرداخت‌ها"
+
+#: includes/Modules/WcPayments/WcPayments.php:23
+msgctxt "Modules: WC Payments"
+msgid "Payment Enhancements for WooCommerce"
+msgstr "بهینه‌سازی پرداخت برای ووکامرس"
+
+#: includes/Modules/WcProducts/WcProducts.php:39
+msgctxt "Modules: WC Products"
+msgid "WC Products"
+msgstr "وکـ کالا"
+
+#: includes/Modules/WcProducts/WcProducts.php:40
+msgctxt "Modules: WC Products"
+msgid "Product Enhancements for WooCommerce"
+msgstr "بهینه‌سازی کالا برای ووکامرس"
+
 #: includes/Modules/WcPurchased/WcPurchased.php:19
 msgctxt "Modules: WC Purchased"
 msgid "WC Purchased"
@@ -4472,12 +4552,12 @@ msgctxt "Modules: WC Purchased"
 msgid "Product Purchase Reports for WooCommerce"
 msgstr "گزارشات خرید کالا برای ووکامرس"
 
-#: includes/Modules/WcRegistration/WcRegistration.php:23
+#: includes/Modules/WcRegistration/WcRegistration.php:27
 msgctxt "Modules: WC Registration"
 msgid "WC Registration"
 msgstr "وکـ نام‌نویسی"
 
-#: includes/Modules/WcRegistration/WcRegistration.php:24
+#: includes/Modules/WcRegistration/WcRegistration.php:28
 msgctxt "Modules: WC Registration"
 msgid "Managing Registrations for WooCommerce"
 msgstr "مدیریت ثبت‌نام‌ها برای ووکامرس"
@@ -4492,7 +4572,7 @@ msgctxt "Modules: WC Related"
 msgid "Related Product Enhancements for WooCommerce"
 msgstr "بهینه‌سازی کالاهای مرتبط برای ووکامرس"
 
-#: includes/Modules/WcShipping/WcShipping.php:20
+#: includes/Modules/WcShipping/WcShipping.php:34
 msgctxt "Modules: WC Shipping"
 msgid "WC Shipping"
 msgstr "وکـ ارسال"
@@ -4517,25 +4597,30 @@ msgctxt "Modules: WC Statuses"
 msgid "Managing Statuses for WooCommerce"
 msgstr "مدیریت وضعیت‌ها برای ووکامرس"
 
-#: includes/Modules/WcStocks/WcStocks.php:20
+#: includes/Modules/WcStocks/WcStocks.php:28
 msgctxt "Modules: WC Stocks"
 msgid "WC Stocks"
 msgstr "وکـ موجودی"
 
-#: includes/Modules/WcStocks/WcStocks.php:21
+#: includes/Modules/WcStocks/WcStocks.php:29
 msgctxt "Modules: WC Stocks"
 msgid "Stock Enhancements for WooCommerce"
 msgstr "بهینه‌سازی موجودی برای ووکامرس"
 
-#: includes/Modules/WcSubscriptions/WcSubscriptions.php:21
-msgctxt "Modules: Wc Subscriptions"
-msgid "Wc Subscriptions"
+#: includes/Modules/WcSubscriptions/WcSubscriptions.php:17
+msgctxt "Modules: WC Subscriptions"
+msgid "WC Subscriptions"
 msgstr "وکـ اشتراک‌ها"
 
-#: includes/Modules/WcSubscriptions/WcSubscriptions.php:22
-msgctxt "Modules: Wc Subscriptions"
+#: includes/Modules/WcSubscriptions/WcSubscriptions.php:18
+msgctxt "Modules: WC Subscriptions"
 msgid "Subscription Enhancements for WooCommerce"
 msgstr "بهینه‌سازی اشتراک برای ووکامرس"
+
+#: includes/Modules/WcTaxes/WcTaxes.php:24
+msgctxt "Modules: WC Taxes"
+msgid "WC Taxes"
+msgstr "وکـ مالیات"
 
 #: includes/Modules/WcTerms/WcTerms.php:18
 msgctxt "Modules: WC Terms"
@@ -5950,283 +6035,293 @@ msgstr "راه‌اندازی"
 
 #: includes/Services/Modulation.php:117
 msgctxt "Service: Modulation: Section Title"
+msgid "Management"
+msgstr "مدیریت"
+
+#: includes/Services/Modulation.php:118
+msgctxt "Service: Modulation: Section Title"
 msgid "Configuration"
 msgstr "پیکربندی"
 
-#: includes/Services/Modulation.php:118
+#: includes/Services/Modulation.php:119
 msgctxt "Service: Modulation: Section Title"
 msgid "Defaults"
 msgstr "پیش‌فرض‌ها"
 
-#: includes/Services/Modulation.php:119
+#: includes/Services/Modulation.php:120
 msgctxt "Service: Modulation: Section Title"
 msgid "Tweaks"
 msgstr "ظرافت‌ها"
 
-#: includes/Services/Modulation.php:120
+#: includes/Services/Modulation.php:121
 msgctxt "Service: Modulation: Section Title"
 msgid "Miscellaneous"
 msgstr "متفرقه"
 
-#: includes/Services/Modulation.php:121
+#: includes/Services/Modulation.php:122
 msgctxt "Service: Modulation: Section Title"
 msgid "Archives"
 msgstr "بایگانی"
 
-#: includes/Services/Modulation.php:122
+#: includes/Services/Modulation.php:123
 msgctxt "Service: Modulation: Section Title"
 msgid "Front-end"
 msgstr "سمت کاربری"
 
-#: includes/Services/Modulation.php:123
+#: includes/Services/Modulation.php:124
 msgctxt "Service: Modulation: Section Title"
 msgid "Back-end"
 msgstr "سمت مدیریت"
 
-#: includes/Services/Modulation.php:124
+#: includes/Services/Modulation.php:125
 msgctxt "Service: Modulation: Section Title"
 msgid "Generated Contents"
 msgstr "محتوای تولیدشده"
 
-#: includes/Services/Modulation.php:125
+#: includes/Services/Modulation.php:126
 msgctxt "Service: Modulation: Section Title"
 msgid "Featured Contents"
 msgstr "محتوای برگزیده"
 
-#: includes/Services/Modulation.php:126
+#: includes/Services/Modulation.php:127
 msgctxt "Service: Modulation: Section Title"
 msgid "Connected Contents"
 msgstr "محتوای مرتبط"
 
-#: includes/Services/Modulation.php:127
+#: includes/Services/Modulation.php:128
 msgctxt "Service: Modulation: Section Title"
 msgid "Feature Support"
 msgstr "گزینه‌های پشتیبانی"
 
-#: includes/Services/Modulation.php:128
+#: includes/Services/Modulation.php:129
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin Dashboard"
 msgstr "پیشخوان مدیریت"
 
-#: includes/Services/Modulation.php:129
+#: includes/Services/Modulation.php:130
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin Edit List"
 msgstr "فهرست مدیریت فرسته‌ها"
 
-#: includes/Services/Modulation.php:130
+#: includes/Services/Modulation.php:131
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin Comment List"
 msgstr "فهرست مدیریت دیدگاه‌ها"
 
-#: includes/Services/Modulation.php:131
+#: includes/Services/Modulation.php:132
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin Edit Post"
 msgstr "مدیریت ویرایش فرسته"
 
-#: includes/Services/Modulation.php:132
+#: includes/Services/Modulation.php:133
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin Edit Terms"
 msgstr "مدیریت فهرست رده‌ها"
 
-#: includes/Services/Modulation.php:133
+#: includes/Services/Modulation.php:134
 msgctxt "Service: Modulation: Section Title"
 msgid "Admin List Columns"
 msgstr "مدیریت ستون‌های فهرست"
 
-#: includes/Services/Modulation.php:134
+#: includes/Services/Modulation.php:135
+msgctxt "Service: Modulation: Section Title"
+msgid "Admin-bar"
+msgstr "نوارابزار مدیریت"
+
+#: includes/Services/Modulation.php:136
 msgctxt "Service: Modulation: Section Title"
 msgid "Import Preferences"
 msgstr "ترجیحات درون‌ریزی"
 
-#: includes/Services/Modulation.php:135
+#: includes/Services/Modulation.php:137
 msgctxt "Service: Modulation: Section Title"
 msgid "Report Preferences"
 msgstr "ترجیحات گزارشات"
 
-#: includes/Services/Modulation.php:136
+#: includes/Services/Modulation.php:138
 msgctxt "Service: Modulation: Section Title"
 msgid "Print Preferences"
 msgstr "ترجیحات چاپ"
 
-#: includes/Services/Modulation.php:137
+#: includes/Services/Modulation.php:139
 msgctxt "Service: Modulation: Section Title"
 msgid "ShortCode Preferences"
 msgstr "ترجیحات شورت‌کد"
 
-#: includes/Services/Modulation.php:138
+#: includes/Services/Modulation.php:140
 msgctxt "Service: Modulation: Section Title"
 msgid "Custom Strings"
 msgstr "رشته‌های سفارشی"
 
-#: includes/Services/Modulation.php:139
+#: includes/Services/Modulation.php:141
 msgctxt "Service: Modulation: Section Title"
 msgid "Custom Formats"
 msgstr "ساختارهای سفارشی"
 
-#: includes/Services/Modulation.php:140
+#: includes/Services/Modulation.php:142
 msgctxt "Service: Modulation: Section Title"
 msgid "User Avatars"
 msgstr "آواتارهای کاربران"
 
-#: includes/Services/Modulation.php:141
+#: includes/Services/Modulation.php:143
 msgctxt "Service: Modulation: Section Title"
 msgid "Content Tabs"
 msgstr "زبانه‌های محتوا"
 
-#: includes/Services/Modulation.php:142
+#: includes/Services/Modulation.php:144
 msgctxt "Service: Modulation: Section Title"
 msgid "Data Types"
 msgstr "انواع داده"
 
-#: includes/Services/Modulation.php:143
+#: includes/Services/Modulation.php:145
 msgctxt "Service: Modulation: Section Title"
 msgid "Data Fields"
 msgstr "زمینه‌های داده"
 
-#: includes/Services/Modulation.php:144
+#: includes/Services/Modulation.php:146
 msgctxt "Service: Modulation: Section Title"
 msgid "Custom Constants"
 msgstr "ثابت‌های سفارشی"
 
-#: includes/Services/Modulation.php:145
+#: includes/Services/Modulation.php:147
 msgctxt "Service: Modulation: Section Title"
 msgid "Post-Types"
 msgstr "نوع‌فرسته‌ها"
 
-#: includes/Services/Modulation.php:146
+#: includes/Services/Modulation.php:148
 msgctxt "Service: Modulation: Section Title"
 msgid "Taxonomies"
 msgstr "رده‌بندی‌ها"
 
-#: includes/Services/Modulation.php:147
+#: includes/Services/Modulation.php:149
 msgctxt "Service: Modulation: Section Title"
 msgid "Sub-Contents"
 msgstr "زیرمحتوا"
 
-#: includes/Services/Modulation.php:148
+#: includes/Services/Modulation.php:150
 msgctxt "Service: Modulation: Section Title"
 msgid "Bulk Actions"
 msgstr "کنش‌های انبوه"
 
-#: includes/Services/Modulation.php:149
+#: includes/Services/Modulation.php:151
 msgctxt "Service: Modulation: Section Title"
 msgid "Custom Tabs"
 msgstr "زبانه‌های سفارشی"
 
-#: includes/Services/Modulation.php:150
+#: includes/Services/Modulation.php:152
 msgctxt "Service: Modulation: Section Title"
 msgid "Availability"
 msgstr "دسترسی"
 
-#: includes/Services/Modulation.php:150
+#: includes/Services/Modulation.php:152
 msgctxt "Service: Modulation: Section Description"
 msgid "Though Administrators have it all!"
 msgstr "هرچند مدیران به همه چیز دسترسی دارند!"
 
-#: includes/Services/Modulation.php:151
+#: includes/Services/Modulation.php:153
 msgctxt "Service: Modulation: Section Title"
 msgid "Units Fields"
 msgstr "فیلدهای واحدها"
 
-#: includes/Services/Modulation.php:152
+#: includes/Services/Modulation.php:154
 msgctxt "Service: Modulation: Section Title"
 msgid "Geo Fields"
 msgstr "فیلدهای جغرافیایی"
 
-#: includes/Services/Modulation.php:153
+#: includes/Services/Modulation.php:155
 msgctxt "Service: Modulation: Section Title"
 msgid "WooCommerce"
 msgstr "ووکامرس"
 
-#: includes/Services/Modulation.php:154
+#: includes/Services/Modulation.php:156
 msgctxt "Service: Modulation: Section Title"
 msgid "Posts-to-Posts"
 msgstr "فرسته‌ها به فرسته‌ها"
 
-#: includes/Services/Modulation.php:155
+#: includes/Services/Modulation.php:157
 msgctxt "Service: Modulation: Section Title"
 msgid "Objects-to-Objects"
 msgstr "ابژه‌ها به ابژه‌ها"
 
 #. translators: `%1$s`: source name, `%2$s`: author name
-#: includes/Services/Modulation.php:318
+#: includes/Services/Modulation.php:320
 #, php-format
 msgctxt "Service: Modulation: Section Description"
 msgid "Adopted from %1$s by %2$s."
 msgstr "برگرفته از %1$s توسط %2$s."
 
 #. translators: `%1$s`: source name
-#: includes/Services/Modulation.php:320
+#: includes/Services/Modulation.php:322
 #, php-format
 msgctxt "Service: Modulation: Section Description"
 msgid "Adopted from %1$s."
 msgstr "برگرفته از %1$s."
 
 #. translators: `%1$s`: link start, `%2$s`: link end
-#: includes/Services/Modulation.php:334
+#: includes/Services/Modulation.php:336
 #, php-format
 msgctxt "Service: Modulation: Section Description"
 msgid "Visit %1$shere%2$s for more information."
 msgstr "برای اطلاعات بیشتر به %1$sاینجا%2$s مراجعه کنید."
 
-#: includes/Services/Modulation.php:344
+#: includes/Services/Modulation.php:346
 msgctxt "Service: Modulation: Notice"
 msgid "Auto-loaded!"
 msgstr "بارگیری خودکار!"
 
-#: includes/Services/Modulation.php:350
+#: includes/Services/Modulation.php:352
 msgctxt "Service: Modulation: Button"
 msgid "Enable"
 msgstr "فعال‌سازی"
 
-#: includes/Services/Modulation.php:361
+#: includes/Services/Modulation.php:363
 msgctxt "Service: Modulation: Button"
 msgid "Disable"
 msgstr "غیرفعال‌سازی"
 
-#: includes/Services/Modulation.php:389
+#: includes/Services/Modulation.php:391
 msgctxt "Service: Modulation: Button"
 msgid "Tools"
 msgstr "ابزارها"
 
-#: includes/Services/Modulation.php:401
+#: includes/Services/Modulation.php:403
 msgctxt "Service: Modulation: Button"
 msgid "Reports"
 msgstr "گزارشات"
 
-#: includes/Services/Modulation.php:412
+#: includes/Services/Modulation.php:414
 msgctxt "Service: Modulation: Button"
 msgid "Configure"
 msgstr "پیکربندی"
 
-#: includes/Services/Modulation.php:421
+#: includes/Services/Modulation.php:423
 msgctxt "Service: Modulation"
 msgid "Access Code"
 msgstr "کد دسترسی"
 
 #. translators: `%s`: module title
-#: includes/Services/Modulation.php:430
+#: includes/Services/Modulation.php:432
 #, php-format
 msgctxt "Service: Modulation"
 msgid "%s Documentation"
 msgstr "مستندات %s"
 
-#: includes/Services/Modulation.php:454
+#: includes/Services/Modulation.php:456
 msgctxt "Service: Modulation"
 msgid "Needs WooCommerce"
 msgstr "نیازمند ووکامرس"
 
-#: includes/Services/Modulation.php:461
+#: includes/Services/Modulation.php:463
 msgctxt "Service: Modulation"
 msgid "Needs gPersianDate"
 msgstr "افزونه تاریخ ایرانی پیدا نشد"
 
-#: includes/Services/Modulation.php:469
+#: includes/Services/Modulation.php:471
 msgctxt "Service: Modulation"
 msgid "Needs WP-Document-Revisions"
 msgstr "نیازمند WP-Document-Revisions"
 
-#: includes/Services/Modulation.php:483
+#: includes/Services/Modulation.php:485
 msgctxt "Service: Modulation"
 msgid "Not Available on Current Locale"
 msgstr "با زبان فعلی در دسترس نیست"
@@ -6813,22 +6908,22 @@ msgctxt "Settings"
 msgid "You do not have access to change this option."
 msgstr "شما دسترسی لازم برای تغییر این گزینه را ندارید."
 
-#: includes/Settings.php:2262
+#: includes/Settings.php:2276
 msgctxt "Settings: Switch On-Off"
 msgid "On"
 msgstr "روشن"
 
-#: includes/Settings.php:2263
+#: includes/Settings.php:2277
 msgctxt "Settings: Switch On-Off"
 msgid "Off"
 msgstr "خاموش"
 
-#: includes/Settings.php:2302
+#: includes/Settings.php:2316
 msgctxt "Settings: Tab Panel"
 msgid "Select All"
 msgstr "انتخاب همه"
 
-#: includes/Settings.php:2346
+#: includes/Settings.php:2360
 msgctxt "Settings: Button"
 msgid "&larr; Go-back"
 msgstr "&rarr; بازگشت"
@@ -7336,14 +7431,6 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgctxt "Modules: Person"
 #~ msgid "People, the Way Involved in Your Site"
 #~ msgstr "افراد، آن‌چنان که در سایت شما مشارکت میکنند"
-
-#~ msgctxt "Modules: WC Tabs"
-#~ msgid "WC Tabs"
-#~ msgstr "وکـ زبانه‌ها"
-
-#~ msgctxt "Modules: WC Tabs"
-#~ msgid "Product Tab Enhancements for WooCommerce"
-#~ msgstr "بهینه‌سازی زبانه‌های کالا برای ووکامرس"
 
 #~ msgctxt "Modules: Attachments"
 #~ msgid "Attachment Management"
@@ -10991,10 +11078,6 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgstr "کنش دست‌کاری"
 
 #~ msgctxt "Modules: Tweaks: Setting Title"
-#~ msgid "Advanced Excerpt"
-#~ msgstr "چکیده پیشرفته"
-
-#~ msgctxt "Modules: Tweaks: Setting Title"
 #~ msgid "Excerpt After Title"
 #~ msgstr "چکیده بعد از عنوان"
 
@@ -13997,10 +14080,6 @@ msgstr "لفافه‌بندی مانند فهرست موارد"
 #~ msgctxt "Modules: Series: MetaBox Title"
 #~ msgid "Series"
 #~ msgstr "مجموعه‌ها"
-
-#~ msgctxt "Modules: Series: MetaBox Action"
-#~ msgid "Management"
-#~ msgstr "مدیریت"
 
 #~ msgctxt "Helper: Table Arg: Empty Posts"
 #~ msgid "No Posts?!"

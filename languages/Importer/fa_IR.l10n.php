@@ -5,7 +5,7 @@ return [
 	'language' => 'fa_IR',
 	'project-id-version' => 'gEditorial Importer',
 	'pot-creation-date' => 'YEAR-MO-DA HO:MI+ZONE',
-	'po-revision-date' => '2026-07-26 20:53+0330',
+	'po-revision-date' => '2026-08-05 05:24+0330',
 	'x-generator' => 'Poedit 3.9',
 	'messages' => [
 		'Setting TitleSkip No Source ID' => 'گذر از بدون شناسه منبع',

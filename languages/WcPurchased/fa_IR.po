@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: gEditorial WC-Purchased\n"
 "Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2026-07-05 16:39+0330\n"
+"PO-Revision-Date: 2026-08-05 05:26+0330\n"
 "Last-Translator: geminorum <contact@geminorum.ir>\n"
 "Language-Team: NULL\n"
 "Language: fa_IR\n"
@@ -23,49 +23,61 @@ msgstr "وضعیت‌های سفارش"
 #: WcPurchased.php:38
 msgctxt "Setting Description"
 msgid "Accepted statuses on order list reports."
-msgstr ""
+msgstr "وضعیت‌های قابل قبول در فهرست گزارشات سفارش."
 
-#: WcPurchased.php:94
+#. translators: `%s`: total number of sales
+#: WcPurchased.php:107
+#, php-format
+msgctxt "Pointer Notice"
+msgid "Total sales number is <b>%s</b>"
+msgstr "مجموعاً <b>%s</b> فروش داشته است"
+
+#: WcPurchased.php:110
+msgctxt "Pointer Notice"
+msgid "<b>No</b> record of sale!"
+msgstr "<b>هیچ</b> سابقه فروشی ندارد!"
+
+#: WcPurchased.php:128
 msgctxt "Title Attr"
 msgid "Product Purchase Reports"
 msgstr "گزارش خرید کالا"
 
-#: WcPurchased.php:97
+#: WcPurchased.php:131
 msgctxt "Action"
 msgid "Purchases"
 msgstr "خریدها"
 
-#: WcPurchased.php:106 WcPurchased.php:109
+#: WcPurchased.php:140 WcPurchased.php:143
 msgctxt "Message"
 msgid "No Product!"
 msgstr "بدون کالا!"
 
-#: WcPurchased.php:112
+#: WcPurchased.php:146
 msgctxt "Message"
 msgid "No Orders!"
 msgstr "بدون سفارش!"
 
-#: WcPurchased.php:132
+#: WcPurchased.php:166
 msgctxt "Button"
 msgid "Export CSV"
 msgstr "برون‌بری CSV"
 
-#: WcPurchased.php:143
+#: WcPurchased.php:177
 msgctxt "Column Title"
 msgid "#"
-msgstr ""
+msgstr "#"
 
-#: WcPurchased.php:149
+#: WcPurchased.php:183
 msgctxt "Column Title"
 msgid "Paid On"
 msgstr "پرداخت"
 
-#: WcPurchased.php:156
+#: WcPurchased.php:190
 msgctxt "Column Title"
 msgid "Address"
 msgstr "نشانی"
 
-#: WcPurchased.php:162
+#: WcPurchased.php:196
 msgctxt "Column Title"
 msgid "Total"
 msgstr "مبلغ"

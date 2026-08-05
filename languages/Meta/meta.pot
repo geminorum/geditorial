@@ -642,62 +642,62 @@ msgctxt "Title Attribute"
 msgid "The Original Date for this Entry"
 msgstr ""
 
-#: Meta.php:1144
+#: Meta.php:1148
 msgctxt "Header"
 msgid "Meta Imports"
 msgstr ""
 
-#: Meta.php:1176
+#: Meta.php:1180
 msgctxt "Card Title"
 msgid "Queried Custom Fields"
 msgstr ""
 
-#: Meta.php:1182
+#: Meta.php:1186
 msgctxt "Table Column"
 msgid "Title"
 msgstr ""
 
-#: Meta.php:1188
+#: Meta.php:1192
 msgctxt "Table Column"
 msgid "Raw Data"
 msgstr ""
 
-#: Meta.php:1197
+#: Meta.php:1201
 msgctxt "Table Empty"
 msgid "There are no meta-data available!"
 msgstr ""
 
-#: Meta.php:1209
+#: Meta.php:1213
 msgctxt "Card Title"
 msgid "Import Custom Fields"
 msgstr ""
 
-#: Meta.php:1239
+#: Meta.php:1243
 msgctxt "Message"
 msgid "Non-protect custom fields limited by post-type and total count."
 msgstr ""
 
-#: Meta.php:1251
+#: Meta.php:1255
 msgctxt "Message"
 msgid "Import into any of available meta fields."
 msgstr ""
 
-#: Meta.php:1256
+#: Meta.php:1260
 msgctxt "Button"
 msgid "Check"
 msgstr ""
 
-#: Meta.php:1259
+#: Meta.php:1263
 msgctxt "Button"
 msgid "Covert"
 msgstr ""
 
-#: Meta.php:1262
+#: Meta.php:1266
 msgctxt "Button"
 msgid "Delete"
 msgstr ""
 
-#: Meta.php:1264
+#: Meta.php:1268
 msgctxt "Message"
 msgid "Check for custom fields and import them into meta fields."
 msgstr ""

@@ -13,72 +13,72 @@ msgstr ""
 "X-Poedit-Basepath: ../../includes/Modules/WcMeta\n"
 "X-Domain: geditorial-wc-meta\n"
 
-#: WcMeta.php:44
+#: WcMeta.php:45
 msgctxt "Field Title"
 msgid "Tagline"
 msgstr ""
 
-#: WcMeta.php:45
+#: WcMeta.php:46
 msgctxt "Field Description"
 msgid "Promotional Text on the Cover of the Product"
 msgstr ""
 
-#: WcMeta.php:49
+#: WcMeta.php:50
 msgctxt "Field Title"
 msgid "Subtitle"
 msgstr ""
 
-#: WcMeta.php:50
+#: WcMeta.php:51
 msgctxt "Field Description"
 msgid "Subtitle of the Product"
 msgstr ""
 
-#: WcMeta.php:54
+#: WcMeta.php:55
 msgctxt "Field Title"
 msgid "Alternative Title"
 msgstr ""
 
-#: WcMeta.php:55
+#: WcMeta.php:56
 msgctxt "Field Description"
 msgid "The Original Title or Title in Another Language"
 msgstr ""
 
-#: WcMeta.php:58
+#: WcMeta.php:59
 msgctxt "Field Title"
 msgid "Collection Title"
 msgstr ""
 
-#: WcMeta.php:59
+#: WcMeta.php:60
 msgctxt "Field Description"
 msgid "The Product Is Part of a Collection"
 msgstr ""
 
-#: WcMeta.php:62
+#: WcMeta.php:63
 msgctxt "Field Title"
 msgid "By-Line"
 msgstr ""
 
-#: WcMeta.php:63
+#: WcMeta.php:64
 msgctxt "Field Description"
 msgid "Text To Override the Product Author"
 msgstr ""
 
-#: WcMeta.php:70
+#: WcMeta.php:71
 msgctxt "Field Title"
 msgid "Production Location"
 msgstr ""
 
-#: WcMeta.php:71
+#: WcMeta.php:72
 msgctxt "Field Description"
 msgid "The Space Where Goods Roll Out"
 msgstr ""
 
-#: WcMeta.php:76
+#: WcMeta.php:77
 msgctxt "Field Title"
 msgid "Production Date"
 msgstr ""
 
-#: WcMeta.php:77
+#: WcMeta.php:78
 msgctxt "Field Description"
 msgid "The Date Determined by the Manufacturer"
 msgstr ""

@@ -33,14 +33,14 @@ msgctxt "Setting Description"
 msgid "Tries to join attribute values with a localized separator."
 msgstr ""
 
-#: WcAttributes.php:117
-#: WcAttributes.php:149
+#: WcAttributes.php:118
+#: WcAttributes.php:150
 msgctxt "Field Label"
 msgid "URL"
 msgstr ""
 
-#: WcAttributes.php:128
-#: WcAttributes.php:161
+#: WcAttributes.php:129
+#: WcAttributes.php:162
 msgctxt "Field Description"
 msgid "External link for this attribute."
 msgstr ""

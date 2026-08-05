@@ -14,54 +14,54 @@ msgstr ""
 "X-Domain: geditorial-lingo\n"
 
 #. translators: `%s`: ISO code
-#: Lingo.php:66
+#: Lingo.php:65
 #, php-format
 msgctxt "Tool Box"
 msgid "Helps with Importing Language Identifiers from %s into WordPress."
 msgstr ""
 
-#: Lingo.php:75
+#: Lingo.php:74
 msgid "Language"
 msgid_plural "Languages"
 msgstr[0] ""
 msgstr[1] ""
 
-#: Lingo.php:79
+#: Lingo.php:78
 msgctxt "Label: `extended_label`"
 msgid "Language Identifiers"
 msgstr ""
 
-#: Lingo.php:80
+#: Lingo.php:79
 msgctxt "Label: `show_option_all`"
 msgid "Languages"
 msgstr ""
 
-#: Lingo.php:81
+#: Lingo.php:80
 msgctxt "Label: `show_option_none`"
 msgid "(Unidentified)"
 msgstr ""
 
-#: Lingo.php:82
+#: Lingo.php:81
 msgctxt "Label: `uncategorized`"
 msgid "Unidentified"
 msgstr ""
 
-#: Lingo.php:87
+#: Lingo.php:86
 msgctxt "Default Term: Name"
 msgid "[Unidentified]"
 msgstr ""
 
-#: Lingo.php:88
+#: Lingo.php:87
 msgctxt "Default Term: Description"
 msgid "Unidentified Languages"
 msgstr ""
 
-#: Lingo.php:99
+#: Lingo.php:97
 msgctxt "Setting Title"
 msgid "Source Taxonomies"
 msgstr ""
 
-#: Lingo.php:100
+#: Lingo.php:98
 msgctxt "Setting Description"
 msgid "Selected taxonomies will be available on conversion via tools."
 msgstr ""

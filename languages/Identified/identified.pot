@@ -236,58 +236,58 @@ msgid "Supports identifiers for the selected post-types."
 msgstr ""
 
 #. translators: `%s`: identifier type
-#: Identified.php:284
+#: Identified.php:291
 #, php-format
 msgctxt "Node Title"
 msgid "Scan %s"
 msgstr ""
 
-#: Identified.php:302
+#: Identified.php:309
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier type to process."
 msgstr ""
 
-#: Identified.php:308
+#: Identified.php:315
 msgctxt "RestAPI: Arg Description"
 msgid "The identifier code to process."
 msgstr ""
 
 #. translators: `%s`: supported object label
-#: Identified.php:448
+#: Identified.php:455
 #, php-format
 msgctxt "Message"
 msgid "Warning: Already an entry identified: %s"
 msgstr ""
 
-#: Identified.php:501
+#: Identified.php:508
 msgctxt "Possible Identifier Key"
 msgid "Identifier"
 msgstr ""
 
-#: Identified.php:702
+#: Identified.php:709
 msgctxt "Default Term: Audit"
 msgid "Empty Identification"
 msgstr ""
 
-#: Identified.php:703
+#: Identified.php:710
 msgctxt "Default Term: Audit"
 msgid "Duplicate Identification"
 msgstr ""
 
-#: Identified.php:704
+#: Identified.php:711
 msgctxt "Default Term: Audit"
 msgid "Invalid Identification"
 msgstr ""
 
 #. translators: `%1$s`: add new label, `%2$s`: identifier code
-#: Identified.php:822
+#: Identified.php:829
 #, php-format
 msgctxt "Header Button"
 msgid "%1$s with %2$s"
 msgstr ""
 
-#. translators: `%1$s`: identifier type label, `%2$s`: posttype singular label
-#: Identified.php:1099
+#. translators: `%1$s`: identifier type label, `%2$s`: post-type singular label
+#: Identified.php:1106
 #, php-format
 msgctxt "Title Attr"
 msgid "%1$s Link to this %2$s"
