@@ -117,14 +117,16 @@ class Plugin extends WordPress\Plugin
 
 	protected function late_constants(): array
 	{
+		$development = WordPress\IsIt::dev();
+
 		return [
 			'GEDITORIAL_SYSTEM_TITLE'      => NULL,
 			'GEDITORIAL_SYSTEM_DESC'       => NULL,
 			'GEDITORIAL_BETA_FEATURES'     => TRUE,
-			'GEDITORIAL_CRM_FEATURES'      => FALSE,
-			'GEDITORIAL_LOAD_PRIVATES'     => FALSE,
-			'GEDITORIAL_DEBUG_MODE'        => FALSE,
-			'GEDITORIAL_ALPHA_FEATURES'    => FALSE,
+			'GEDITORIAL_ALPHA_FEATURES'    => $development,
+			'GEDITORIAL_CRM_FEATURES'      => $development,
+			'GEDITORIAL_LOAD_PRIVATES'     => $development,
+			'GEDITORIAL_DEBUG_MODE'        => $development,
 			'GEDITORIAL_THRIFT_MODE'       => FALSE,
 			'GEDITORIAL_DISABLE_ICAL'      => FALSE,
 			'GEDITORIAL_DISABLE_CREDITS'   => FALSE,
