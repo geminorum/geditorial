@@ -1,3 +1,38 @@
+### [3.35.1] - 2025-08-05
+* internal/quantum-comments: sanitize logic separated
+* internal/quantum-comments: sanitizing url/link fields
+* internal/sub-contents: additional checks on the table rows
+* internal/sub-contents: importer support revised
+* internal/sub-contents: using sanitization on import prep
+* internal/view-engines: renderer settings tuned
+* main/info: handle exceptions on more info
+* main/module: restrict taxonomies to objects
+* main/parser: correct set for single offset csv row
+* main/parser: setting detect line endings for csv
+* main/settings: support for place holder on multiple-text fields
+* main/template: make embed url absolute
+* module/attachments: support for pages with download query
+* module/bookmarked: avoid no link no code data
+* module/bookmarked: force download on attachment codes
+* module/bookmarked: support for default label/desc for fields
+* module/bookmarked: support for importer module
+* module/bookmarked: type options revised
+* module/byline: support aws
+* module/identified: support importer module
+* module/importer: avoid overriding prepped data
+* module/importer: filter table column header
+* module/importer: handle imports logics separated
+* module/iranian: support states on wc
+* module/personage: importer support revised
+* module/socialite: support more default term fields on social row
+* module/socialite: support various icon identifiers
+* module/wc-identify: check for method on older versions
+* module/wc-identify: support for importer module
+* module/wc-identify: support order details
+* module/wc-meta: support aws
+* module/wc-purchased: total sales on pointers
+* service/individuals: filter taxonomy target term with parser
+
 # gEditorial Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
