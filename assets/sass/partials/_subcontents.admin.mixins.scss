@@ -126,10 +126,16 @@
       text-align: center;
     }
 
+    td[data-key="code"],
+    td[data-key="link"],
+    td[data-key="card"],
+    td[data-key="iban"],
     td[data-key="account"],
     td[data-key="identity"] {
       /*rtl:ignore*/
       text-align: left;
+      /*rtl:ignore*/
+      direction: ltr;
     }
   }
 }
