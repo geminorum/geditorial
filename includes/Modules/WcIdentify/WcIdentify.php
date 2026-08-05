@@ -62,6 +62,13 @@ class WcIdentify extends gEditorial\Module
 					'placeholder' => _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ),
 					'field_class' => [ 'medium-text' ],
 				],
+			],
+			'_misc' => [
+				[
+					'field'       => 'gtin_display_order_details',
+					'title'       => _x( 'Display on Order Details', 'Setting Title', 'geditorial-wc-identify' ),
+					'description' => _x( 'Appends the global unique id on order details and preview.', 'Setting Description', 'geditorial-wc-identify' ),
+				],
 				[
 					'field'       => 'gtin_exemptions',
 					'title'       => _x( 'GTIN Exemptions', 'Setting Title', 'geditorial-wc-identify' ),
@@ -82,6 +89,14 @@ class WcIdentify extends gEditorial\Module
 
 		if ( $this->get_setting( 'gtin_exemptions' ) )
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
+
+		if ( ! is_admin() )
+			return;
+
+		if ( $this->get_setting( 'gtin_display_order_details' ) ) {
+			$this->action( 'after_order_itemmeta', 3, 8, FALSE, 'woocommerce' );
+			$this->filter( 'admin_order_preview_get_order_details', 2, 8, FALSE, 'woocommerce' );
+		}
 	}
 
 	public function importer_init(): void
@@ -89,6 +104,11 @@ class WcIdentify extends gEditorial\Module
 		$this->filter_module( 'importer', 'source_id', 3 );
 		$this->filter_module( 'importer', 'matched', 4 );
 		$this->filter_module( 'importer', 'insert', 8, 18 );
+	}
+
+	private function _get_gtin_label( ?string $context = NULL )
+	{
+		return $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) );
 	}
 
 	public function render_product_gtin(
@@ -151,6 +171,75 @@ class WcIdentify extends gEditorial\Module
 		) );
 
 		return Core\Arraay::prepNumeral( $posts_ids, $posts );
+	}
+
+	// @hook `Woocommerce_after_order_itemmeta`
+	public function after_order_itemmeta( ?int $item_id, object $item, ?object $product ): void
+	{
+		if ( ! $item->is_type( 'line_item' ) )
+			return;
+
+		// product/variation
+		if ( ! $product = $item->get_product() )
+			return;
+
+		if ( ! method_exists( $product, 'get_global_unique_id' ) )
+			return;
+
+		if ( ! $uniqueid = $product->get_global_unique_id() )
+			return;
+
+		echo Core\HTML::wrap( Core\Text::glued( [
+			Core\HTML::strong( $this->_get_gtin_label( 'itemmeta' ) ),
+			Core\HTML::code( $uniqueid, '-uniqueid', TRUE ),
+		], '&nbsp;' ), '-additional-info' );
+	}
+
+	// @source https://gist.github.com/shameemreza/d5843f10c29fa46711d2c3cb903046d3
+	// @hook `woocommerce_admin_order_preview_get_order_details`
+	public function admin_order_preview_get_order_details( array $order_details, object $order ): array
+	{
+		$list = [];
+
+		foreach ( $order->get_items() as $item_id => $item ) {
+
+			if ( ! $product = $item->get_product() )
+				continue;
+
+			if ( ! method_exists( $product, 'get_global_unique_id' ) )
+				continue;
+
+			if ( $uniqueid = $product->get_global_unique_id() )
+				$list[$item_id] = $uniqueid;
+		}
+
+		if ( ! count( $list ) )
+			return $order_details;
+
+		$items = $order_details['item_html'];
+		$label = $this->_get_gtin_label( 'itemmeta' );
+
+		foreach ( $list as $item_id => $uniqueid ) {
+
+			// Each item row has a unique class `wc-order-preview-table__item--{item_id}`
+			// NOTE: the `SKU` div always exists within this specific row.
+			$pattern = sprintf(
+				'/(<tr[^>]*wc-order-preview-table__item--%s[^>]*>.*?<div class="wc-order-item-sku">.*?<\/div>)/s',
+				preg_quote( $item_id, '/' )
+			);
+
+			$html = Core\HTML::wrap( Core\Text::glued( [
+				Core\HTML::strong( $label ),
+				Core\HTML::code( $uniqueid, '-uniqueid', TRUE ),
+			], '&nbsp;' ), '-additional-info' );
+
+			// Replace by adding data div after the `SKU` div for this specific item.
+			$items = preg_replace( $pattern, '$1'.$html, $items, 1 );
+		}
+
+		$order_details['item_html'] = $items;
+
+		return $order_details;
 	}
 
 	// @REF: https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/
