@@ -82,7 +82,7 @@ class Template extends WordPress\Main
 	): false|string {
 
 		if ( ! $image )
-			return $args['default'];
+			return $args['fallback'];
 
 		$html = $image;
 
@@ -179,13 +179,17 @@ class Template extends WordPress\Main
 				'data'  => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
-		} else if ( $args['fallback'] && $viewable ) {
+		} else if ( TRUE === $args['fallback'] && $viewable ) {
 
 			$html = Core\HTML::tag( 'a', [
 				'href'  => WordPress\Term::link( (int) $args['id'] ),
 				'title' => $title,
 				'data'  => $args['data'],
 			], WordPress\Term::title( $term ) );
+
+		} else if ( $args['fallback'] ) {
+
+			$html = $args['fallback'];
 		}
 
 		if ( $html ) {
@@ -295,7 +299,7 @@ class Template extends WordPress\Main
 	public static function postImageCallback( $image, $link, $args, $status, $title, $module )
 	{
 		if ( ! $image )
-			return $args['default'];
+			return $args['fallback'];
 
 		$html = $image;
 
@@ -413,7 +417,7 @@ class Template extends WordPress\Main
 				'data'   => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
-		} else if ( $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
+		} else if ( TRUE === $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
 
 			$html = Core\HTML::tag( 'a', [
 				'href'   => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
@@ -421,6 +425,10 @@ class Template extends WordPress\Main
 				'title'  => $title,
 				'data'   => $args['data'],
 			], get_the_title( $post ) );
+
+		} else if ( $args['fallback'] ) {
+
+			$html = $args['fallback'];
 		}
 
 		if ( ! $html )
