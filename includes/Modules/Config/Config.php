@@ -209,6 +209,7 @@ class Config extends gEditorial\Module
 			gEditorial\Plugin::CAPABILITY_IMPORTS
 		);
 
+		if ( GEDITORIAL_ALPHA_FEATURES )
 		$this->_hook_wp_submenu_page( 'customs',
 			current_user_can( 'edit_theme_options' ) ? 'themes.php' : $slug,
 			sprintf(

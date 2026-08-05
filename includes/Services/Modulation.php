@@ -79,6 +79,9 @@ class Modulation extends gEditorial\Service
 		if ( 'private' === $module->access && ! GEDITORIAL_LOAD_PRIVATES )
 			return FALSE;
 
+		if ( 'alpha' === $module->access && ! GEDITORIAL_ALPHA_FEATURES )
+			return FALSE;
+
 		if ( 'beta' === $module->access && ! GEDITORIAL_BETA_FEATURES )
 			return FALSE;
 
