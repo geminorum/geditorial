@@ -30,6 +30,38 @@ class URL extends Core\Base
 	}
 
 	/**
+	 * A wrapper for PHP’s `parse_url()` function that handles consistency
+	 * in the return values across PHP versions.
+	 * NOTE: wrapper for `wp_parse_url()`
+	 *
+	 * Components:
+	 * - `PHP_URL_SCHEME`: `scheme`
+	 * - `PHP_URL_HOST`: `host`
+	 * - `PHP_URL_PORT`: `port`
+	 * - `PHP_URL_USER`: `user`
+	 * - `PHP_URL_PASS`: `pass`
+	 * - `PHP_URL_PATH`: `path`
+	 * - `PHP_URL_QUERY`: `query`
+	 * - `PHP_URL_FRAGMENT`: `fragment`
+	 *
+	 * @example
+	 * - [scheme] => https
+	 * - [host] => developer.wordpress.org
+	 * - [path] => /reference/functions/wp_parse_url/
+	 *
+	 * @param mixed $input
+	 * @param int $component
+	 * @return mixed
+	 */
+	public static function parse( mixed $input, int $component = -1 ): mixed
+	{
+		if ( ! $url = Core\Text::force( $input ) )
+			return '';
+
+		return wp_parse_url( $url, $component );
+	}
+
+	/**
 	 * Validates a URL as safe for use in the HTTP API.
 	 * NOTE: wrapper for `wp_http_validate_url()`
 	 *
@@ -38,7 +70,7 @@ class URL extends Core\Base
 	 */
 	public static function validate( mixed $input ): string
 	{
-		if ( ! $url = Text::force( $input ) )
+		if ( ! $url = Core\Text::force( $input ) )
 			return '';
 
 		return wp_http_validate_url( $url ) ?: '';

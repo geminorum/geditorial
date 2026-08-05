@@ -449,7 +449,7 @@ class Media extends Core\Base
 			Core\Arraay::reKey( $attachments, 'ID' ),
 			array(
 				'name'       => $name,
-				'none_title' => __( 'Select an item' ), // `Settings::showOptionNone(),`
+				'none_title' => __( 'Select' ), // `Settings::showOptionNone(),`
 				'class'      => '-attachment',
 				'selected'   => $selected,
 				'prop'       => 'post_title',

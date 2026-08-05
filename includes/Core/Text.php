@@ -16,7 +16,14 @@ class Text extends Base
 
 	public static function glued( array $args, string $with = ' ' )
 	{
+		if ( empty( $args ) )
+			return '';
+
+		$args  = array_values( $args );
 		$parts = [];
+
+		$multi = $with === ' ' || 1 !== strlen( $with );
+		$start = ! $multi && str_starts_with( $args[0], $with );
 
 		foreach ( $args as $arg )
 
@@ -26,9 +33,9 @@ class Text extends Base
 			else if ( $arg && TRUE !== $arg )
 				$parts[] = trim( $arg );
 
-		return $with === ' ' || 1 !== strlen( $with )
+		return ( $start ? $with : '' ).( $multi
 			? self::trim( implode( $with, $parts ) )
-			: self::trim( implode( $with, $parts ), $with );
+			: self::trim( implode( $with, $parts ), $with ) );
 	}
 
 	public static function gluedNBSP()

@@ -2,6 +2,8 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
+use geminorum\gEditorial\WordPress;
+
 class URL extends Base
 {
 
@@ -24,6 +26,7 @@ class URL extends Base
 		return esc_url( $sanitized, NULL, 'db' );
 	}
 
+	// TODO: support schemes: `geo:`
 	public static function sanitizeForStorage( mixed $input ): string
 	{
 		$raw = $input;
@@ -79,7 +82,7 @@ class URL extends Base
 		return str_ireplace( [ '_', '-' ], ' ', urldecode( $string ) );
 	}
 
-	// wrapper for `wp_parse_url()`
+	#[\Deprecated('USE `WordPress\URL::parse()`')]
 	public static function parse( string $url, int $component = -1 ): mixed
 	{
 		return wp_parse_url( $url, $component );
@@ -135,7 +138,7 @@ class URL extends Base
 	 */
 	public static function stripFragment( string $url ): string
 	{
-		$parsed = self::parse( $url );
+		$parsed = WordPress\URL::parse( $url );
 
 		if ( empty( $parsed['host'] ) )
 			return $url;
@@ -183,6 +186,13 @@ class URL extends Base
 		return $path ? rtrim( $path, '/\\' ) : $path;
 	}
 
+	// https://wp-mix.com/wordpress-remove-query-strings-scripts-styles/
+	// https://wordpress.stackexchange.com/a/224300
+	public static function unquery( string $input ): string
+	{
+		return explode( '?', $input, 2 )[0] ?? $input;
+	}
+
 	// FIXME: strip all the path
 	public static function domain( $path )
 	{
@@ -215,7 +225,7 @@ class URL extends Base
 		return dirname( $parsed ['path'] ).'/'.rawurlencode( basename( $parsed['path'] ) );
 	}
 
-	public static function fromPath( $path, $base = ABSPATH )
+	public static function fromPath( string $path, string $base = ABSPATH ): string
 	{
 		return str_ireplace(
 			File::normalize( $base ),
@@ -225,7 +235,7 @@ class URL extends Base
 		);
 	}
 
-	public static function toPath( $url, $base = ABSPATH )
+	public static function toPath( string $url, string $base = ABSPATH ): string
 	{
 		return str_ireplace(
 			self::trail( get_bloginfo( 'url' ) ),
@@ -247,13 +257,13 @@ class URL extends Base
 	// Checks whether the given URL belongs to this site.
 	public static function isLocal( string $url, $domain = NULL ): bool
 	{
-		return self::parse( $url, PHP_URL_HOST ) === self::parse( ( is_null( $domain ) ? home_url() : $domain ), PHP_URL_HOST );
+		return parse_url( $url, PHP_URL_HOST ) === parse_url( ( is_null( $domain ) ? home_url() : $domain ), PHP_URL_HOST );
 	}
 
 	// Checks whether the given URL is relative or not.
 	public static function isRelative( string $url ): bool
 	{
-		$parsed = self::parse( $url );
+		$parsed = parse_url( $url );
 		return empty( $parsed['host'] ) && empty( $parsed['scheme'] );
 	}
 
@@ -378,7 +388,7 @@ class URL extends Base
 		if ( ! $url = Text::force( $input ) )
 			return '';
 
-		$host = self::parse( $url, PHP_URL_HOST );
+		$host = parse_url( $url, PHP_URL_HOST );
 
 		if ( ! $host )
 			$host = $url;
