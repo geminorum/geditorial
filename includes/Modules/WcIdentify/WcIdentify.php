@@ -121,6 +121,9 @@ class WcIdentify extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return;
 
+		if ( ! method_exists( $product, 'get_global_unique_id' ) )
+			return;
+
 		if ( ! $raw = $product->get_global_unique_id() )
 			return;
 
@@ -131,7 +134,7 @@ class WcIdentify extends gEditorial\Module
 			'gtin'   => $gtin,
 			'prep'   => Core\ISBN::prep( $raw, TRUE ),
 			'link'   => Services\Lookup::htmlISBN( $gtin ),
-			'label'  => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
+			'label'  => $this->_get_gtin_label( 'action' ),
 			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
 		];
 
@@ -146,11 +149,16 @@ class WcIdentify extends gEditorial\Module
 
 		if ( $this->get_setting( 'gtin_display' ) ) {
 
-			if ( $gtin = $product->get_global_unique_id() )
-				$before[$this->classs( 'gtin' )] = [
-					'label' => $this->get_setting_fallback( 'gtin_label', _x( 'GTIN', 'Attribute Label', 'geditorial-wc-identify' ) ),
-					'value' => $this->get_setting( 'gtin_lookup' ) ? Services\Lookup::htmlISBN( $gtin ) : Core\ISBN::prep( $gtin, TRUE ),
-				];
+			if ( method_exists( $product, 'get_global_unique_id' ) ) {
+
+				if ( $gtin = $product->get_global_unique_id() )
+					$before[$this->classs( 'gtin' )] = [
+						'label' => $this->_get_gtin_label( 'attributes' ),
+						'value' => $this->get_setting( 'gtin_lookup' )
+							? Services\Lookup::htmlISBN( $gtin )
+							: Core\ISBN::prep( $gtin, TRUE ),
+					];
+			}
 		}
 
 		return $before + $attributes + $after;
@@ -245,6 +253,9 @@ class WcIdentify extends gEditorial\Module
 	// @REF: https://nicolamustone.blog/2023/11/20/how-to-disable-gtin-requirements-for-non-eligible-woocommerce-products/
 	public function structured_data_product_exemptions( array $markup, object $product ): array
 	{
+		if ( ! method_exists( $product, 'get_global_unique_id' ) )
+			return $markup;
+
 		if ( ! $gtin = $product->get_global_unique_id() )
 			return $markup;
 
