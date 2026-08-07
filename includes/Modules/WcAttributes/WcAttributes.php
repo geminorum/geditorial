@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class WcAttributes extends gEditorial\Module
 {
+	use Internals\WooCommerceAttributes;
 
 	public static function module(): array
 	{
@@ -56,6 +57,7 @@ class WcAttributes extends gEditorial\Module
 	{
 		parent::init();
 
+		// `$this->wc_attributes__check_for_additional_tab();`
 		// `$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );`
 
 		if ( $this->get_setting( 'linkable_attributes' ) )

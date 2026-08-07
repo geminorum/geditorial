@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Isbn extends gEditorial\Module
 {
 	use Internals\RawImports;
+	use Internals\WooCommerceAttributes;
 
 	protected $imports_datafiles = [
 		'range-message' => 'RangeMessage.xml'  // Tue, 4 Nov 2025 23:31:28 GMT @source https://www.isbn-international.org/range_file_generation
@@ -199,6 +200,7 @@ class Isbn extends gEditorial\Module
 
 		} else {
 
+			$this->wc_attributes__check_for_additional_tab();
 			$this->filter( 'display_product_attributes', 2, 99, FALSE, 'woocommerce' );
 		}
 	}
@@ -545,39 +547,45 @@ class Isbn extends gEditorial\Module
 
 	public function display_product_attributes( array $attributes, object $product ): array
 	{
+		$insert  = [];
 		$post_id = $product->get_id();
 
 		if ( $isbn = Services\PostTypeFields::getField( 'isbn', [ 'id' => $post_id ] ) )
-			$attributes[$this->classs( 'primary' )] = [
+			$insert[$this->classs( 'primary' )] = [
 				'label' => _x( 'ISBN', 'Field Title', 'geditorial-isbn' ),
 				'value' => $isbn,
 			];
 
 		if ( $isbn2 = Services\PostTypeFields::getField( 'isbn2', [ 'id' => $post_id ] ) )
-			$attributes[$this->classs( 'second' )] = [
+			$insert[$this->classs( 'second' )] = [
 				'label' => Services\PostTypeFields::getFieldRaw( 'isbn2_label', $post_id, 'meta', FALSE, _x( 'ISBN #2', 'Field Title', 'geditorial-isbn' ) ),
 				'value' => $isbn2,
 			];
 
 		if ( $isbn3 = Services\PostTypeFields::getField( 'isbn3', [ 'id' => $post_id ] ) )
-			$attributes[$this->classs( 'third' )] = [
+			$insert[$this->classs( 'third' )] = [
 				'label' => Services\PostTypeFields::getFieldRaw( 'isbn3_label', $post_id, 'meta', FALSE, _x( 'ISBN #3', 'Field Title', 'geditorial-isbn' ) ),
 				'value' => $isbn3,
 			];
 
 		if ( $isbn4 = Services\PostTypeFields::getField( 'isbn4', [ 'id' => $post_id ] ) )
-			$attributes[$this->classs( 'fourth' )] = [
+			$insert[$this->classs( 'fourth' )] = [
 				'label' => Services\PostTypeFields::getFieldRaw( 'isbn4_label', $post_id, 'meta', FALSE, _x( 'ISBN #4', 'Field Title', 'geditorial-isbn' ) ),
 				'value' => $isbn4,
 			];
 
 		if ( $isbn5 = Services\PostTypeFields::getField( 'isbn5', [ 'id' => $post_id ] ) )
-			$attributes[$this->classs( 'fifth' )] = [
+			$insert[$this->classs( 'fifth' )] = [
 				'label' => Services\PostTypeFields::getFieldRaw( 'isbn5_label', $post_id, 'meta', FALSE, _x( 'ISBN #5', 'Field Title', 'geditorial-isbn' ) ),
 				'value' => $isbn5,
 			];
 
-		return $attributes;
+		if ( ! count( $insert ) )
+			return $attributes;
+
+		$this->wc_has_attributes = TRUE;
+
+		return $insert + $attributes;
 	}
 
 	public function imports_settings( string $sub ): void

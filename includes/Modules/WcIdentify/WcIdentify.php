@@ -24,6 +24,8 @@ class WcIdentify extends gEditorial\Module
 	 * @see https://support.google.com/merchants/answer/160161?hl=en
 	 */
 
+	use Internals\WooCommerceAttributes;
+
 	public static function module(): array
 	{
 		return [
@@ -99,6 +101,7 @@ class WcIdentify extends gEditorial\Module
 
 		} else {
 
+			$this->wc_attributes__check_for_additional_tab();
 			$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
 			$this->filter( 'search_results_products_ids', 3, 12, FALSE, 'aws' );
 		}
@@ -165,6 +168,9 @@ class WcIdentify extends gEditorial\Module
 					];
 			}
 		}
+
+		if ( $before || $after )
+			$this->wc_has_attributes = TRUE;
 
 		return $before + $attributes + $after;
 	}
