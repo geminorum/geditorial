@@ -98,7 +98,7 @@ class WcConnected extends gEditorial\Module
 		$this->register_shortcode( 'connected_shortcode' );
 
 		if ( $this->get_setting( 'tabs_support', TRUE ) )
-			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 65 ), FALSE, 'woocommerce' );
+			$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 	}
 
 	public function widgets_init(): void
@@ -276,7 +276,7 @@ class WcConnected extends gEditorial\Module
 
 		$tabs['connected_posts'] = [
 			'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Related Posts', 'Setting Default', 'geditorial-wc-connected' ) ),
-			'priority' => $this->get_setting( 'tab_priority', 65 ), // NOTE: `priority` does not applied on this filter!
+			'priority' => $this->get_setting( 'tab_priority', 65 ),
 			'callback' => [ $this, 'product_tabs_connected_callback' ],
 		];
 

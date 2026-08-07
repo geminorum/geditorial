@@ -33,7 +33,7 @@ trait PairedThumbnail
 			}, 8, 2 );
 	}
 
-	protected function get_paired_fallback_thumbnail_id( ?int $thumbnail_id, mixed $post, ?array $posttypes = NULL )
+	protected function get_paired_fallback_thumbnail_id( ?int $thumbnail_id, mixed $post, ?array $posttypes = NULL ): ?int
 	{
 		if ( $thumbnail_id || FALSE === $post )
 			return $thumbnail_id;

@@ -187,6 +187,7 @@ class Config extends gEditorial\Module
 			[ $this, 'admin_tools_page' ]
 		);
 
+		if ( GEDITORIAL_ALPHA_FEATURES )
 		$this->_hook_wp_submenu_page( 'roles',
 			current_user_can( 'list_users' ) ? 'users.php' : $slug,
 			sprintf(

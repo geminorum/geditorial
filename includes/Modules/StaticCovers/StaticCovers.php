@@ -346,7 +346,7 @@ class StaticCovers extends gEditorial\Module
 	{
 		if ( $this->role_can( 'reports' ) ) {
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
-			$this->_hook_submenu_adminpage( 'secondary', 'exist' );
+			$this->_hook_submenu_adminpage( 'secondary', 'exist' ); // maybe rename to `collection` (css-class for template:`photoarray`)
 		}
 	}
 

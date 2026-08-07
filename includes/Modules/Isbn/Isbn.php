@@ -76,6 +76,7 @@ class Isbn extends gEditorial\Module
 			'meta' => [
 				'_supported' => [
 					'bibliographic' => [
+						// TODO: support importer extract `biblographic` from URL in column data. @SEE `Bookmarked` Module
 						// @REF: `https://opac.nlai.ir/opac-prod/bibliographic/{$publication_bib}`
 						'title'       => _x( 'Bibliographic', 'Field Title', 'geditorial-isbn' ),
 						'description' => _x( 'National Bibliographic Number', 'Field Description', 'geditorial-isbn' ),

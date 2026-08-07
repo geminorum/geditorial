@@ -130,7 +130,7 @@ class WcRelated extends gEditorial\Module
 			$this->filter( 'get_related_product_tag_terms', 2, 12, FALSE, 'woocommerce' );
 
 		if ( $this->get_setting( 'tabs_support', FALSE ) )
-			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 25 ), FALSE, 'woocommerce' );
+			$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 
 		// if not on tabs
 		else if ( ! empty( $this->get_setting( 'related_by_taxonomy' ) ) ) {
@@ -222,7 +222,7 @@ class WcRelated extends gEditorial\Module
 
 			$tabs['related'] = [
 				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Related Products', 'Setting Default', 'geditorial-wc-related' ) ),
-				'priority' => $this->get_setting( 'tab_priority', 25 ), // NOTE: `priority` does not applied on this filter!
+				'priority' => $this->get_setting( 'tab_priority', 25 ),
 				'callback' => [ $this, 'product_tabs_related_callback' ],
 			];
 

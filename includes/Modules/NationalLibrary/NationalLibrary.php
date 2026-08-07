@@ -138,7 +138,7 @@ class NationalLibrary extends gEditorial\Module
 		];
 	}
 
-	private function _get_posttype_bib_metakey( $posttype, $fallback = NULL )
+	private function _get_posttype_bib_metakey( string $posttype, ?string $fallback = NULL ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_bib_metakey' ) )
 			return $setting;
@@ -149,7 +149,7 @@ class NationalLibrary extends gEditorial\Module
 		return $fallback ?? $this->constant( 'metakey_bib_posttype' );
 	}
 
-	private function _get_posttype_isbn_metakey( $posttype, $fallback = NULL )
+	private function _get_posttype_isbn_metakey( string $posttype, ?string $fallback = NULL ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_isbn_metakey' ) )
 			return $setting;
@@ -170,7 +170,7 @@ class NationalLibrary extends gEditorial\Module
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
 		if ( $this->get_setting( 'woocommerce_support' ) && ! is_admin() )
-			$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 90 ), FALSE, 'woocommerce' );
+			$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 
 		if ( $this->get_setting( 'newpost_hints' ) ) {
 
@@ -651,7 +651,7 @@ class NationalLibrary extends gEditorial\Module
 		return Core\Arraay::insert( $tabs, [
 			$this->classs( 'fipa' ) => [
 				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Fipa', 'Setting Default', 'geditorial-national-library' ) ),
-				'priority' => $this->get_setting( 'tab_priority', 90 ), // NOTE: `priority` does not applied on this filter!
+				'priority' => $this->get_setting( 'tab_priority', 90 ),
 				'callback' => function () use ( $data ) {
 					$this->_render_fipa_data( $data, 'tabs' );
 				},

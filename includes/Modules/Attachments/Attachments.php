@@ -141,11 +141,6 @@ class Attachments extends gEditorial\Module
 
 		$this->filter( 'get_default_comment_status', 3, 12 );
 
-		if ( $this->get_setting( 'comment_control' ) ) {
-			$this->filter( 'attachment_fields_to_edit', 2, 8 );
-			$this->filter( 'attachment_fields_to_save', 2, 8 );
-		}
-
 		if ( $this->get_setting( 'auto_rotation' ) )
 			$this->action( 'add_attachment', 1, 4, 'auto_rotation' );
 
@@ -229,6 +224,11 @@ class Attachments extends gEditorial\Module
 		} else {
 
 			$this->filter_true( 'pre_option_wp_attachment_pages_enabled', 12 );
+
+			if ( $this->get_setting( 'comment_control' ) ) {
+				$this->filter( 'attachment_fields_to_edit', 2, 8 );
+				$this->filter( 'attachment_fields_to_save', 2, 8 );
+			}
 		}
 	}
 

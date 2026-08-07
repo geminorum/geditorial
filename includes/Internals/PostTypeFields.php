@@ -1313,6 +1313,7 @@ trait PostTypeFields
 		foreach ( $this->posttypes() as $posttype )
 			$this->get_posttype_fields( $posttype );
 
+		$this->options->fields = NULL; // unload initial data
 		$this->fields = NULL; // unload initial data
 	}
 

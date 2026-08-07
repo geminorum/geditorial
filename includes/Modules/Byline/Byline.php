@@ -256,7 +256,7 @@ class Byline extends gEditorial\Module
 		if ( is_admin() )
 			return FALSE;
 
-		$this->filter( 'product_tabs', 1, $this->get_setting( 'tab_priority', 12 ), FALSE, 'woocommerce' );
+		$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 		$this->filter( 'excerpt_search_result', 3, 22, FALSE, 'aws' );
 
 		return TRUE;
@@ -790,7 +790,7 @@ class Byline extends gEditorial\Module
 		return array_merge( $tabs, [
 			$this->key => [
 				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'People', 'Setting Default', 'geditorial-byline' ) ),
-				'priority' => $this->get_setting( 'tab_priority', 20 ), // NOTE: `priority` does not applied on this filter!
+				'priority' => $this->get_setting( 'tab_priority', 20 ),
 				'callback' => function () use ( $post_id ) {
 					ModuleTemplate::renderDefault( [
 						'default'  => $this->get_notice_for_empty( 'woocommerce', NULL, FALSE ),

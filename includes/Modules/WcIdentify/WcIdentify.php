@@ -85,19 +85,22 @@ class WcIdentify extends gEditorial\Module
 	{
 		parent::init();
 
-		$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
-		$this->filter( 'search_results_products_ids', 3, 12, FALSE, 'aws' );
 		$this->action_self( 'render_product_uniqueid', 4 );
 
 		if ( $this->get_setting( 'uniqueid_exemptions' ) )
 			$this->filter( 'structured_data_product', 2, 20, 'exemptions', 'woocommerce' );
 
-		if ( ! is_admin() )
-			return;
+		if ( is_admin() ) {
 
-		if ( $this->get_setting( 'uniqueid_display_order_details' ) ) {
-			$this->action( 'after_order_itemmeta', 3, 8, FALSE, 'woocommerce' );
-			$this->filter( 'admin_order_preview_get_order_details', 2, 8, FALSE, 'woocommerce' );
+			if ( $this->get_setting( 'uniqueid_display_order_details' ) ) {
+				$this->action( 'after_order_itemmeta', 3, 8, FALSE, 'woocommerce' );
+				$this->filter( 'admin_order_preview_get_order_details', 2, 8, FALSE, 'woocommerce' );
+			}
+
+		} else {
+
+			$this->filter( 'display_product_attributes', 2, 8, FALSE, 'woocommerce' );
+			$this->filter( 'search_results_products_ids', 3, 12, FALSE, 'aws' );
 		}
 	}
 

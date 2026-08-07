@@ -5,6 +5,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\WordPress;
 
+// https://en.wikipedia.org/wiki/List_of_date_formats_by_country
+
 class DateFormat extends Core\Base
 {
 	const PHP_TIME_TO_ISO = [

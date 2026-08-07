@@ -14,14 +14,15 @@ class WcMeta extends gEditorial\Module
 	public static function module(): array
 	{
 		return [
-			'name'     => 'wc_meta',
-			'title'    => _x( 'WC Meta', 'Modules: WC Meta', 'geditorial-admin' ),
-			'desc'     => _x( 'Curated Meta-data for WooCommerce', 'Modules: WC Meta', 'geditorial-admin' ),
-			'icon'     => 'tag',
-			'i18n'     => 'adminonly',
-			'access'   => 'beta',
-			'disabled' => Services\Modulation::moduleCheckWooCommerce(),
-			'keywords' => [
+			'name'      => 'wc_meta',
+			'title'     => _x( 'WC Meta', 'Modules: WC Meta', 'geditorial-admin' ),
+			'desc'      => _x( 'Curated Meta-data for WooCommerce', 'Modules: WC Meta', 'geditorial-admin' ),
+			'icon'      => 'tag',
+			'i18n'      => 'adminonly',
+			'access'    => 'beta',
+			'configure' => FALSE,
+			'disabled'  => Services\Modulation::moduleCheckWooCommerce(),
+			'keywords'  => [
 				'metafields',
 				'woocommerce',
 				'aws',

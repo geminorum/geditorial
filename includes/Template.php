@@ -835,6 +835,7 @@ class Template extends WordPress\Main
 			'url_filter'    => FALSE,
 			'span_class'    => FALSE,
 			'link_class'    => FALSE,
+			'hide_empty'    => FALSE, // hide when no URL available
 		], $atts );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
@@ -860,6 +861,9 @@ class Template extends WordPress\Main
 
 			$url = $args['url_default'];
 		}
+
+		if ( ! $url && $args['hide_empty'] )
+			return $args['default'];
 
 		$prepared = $url ? Core\URL::prepTitle( $url ) : '';
 
@@ -898,6 +902,9 @@ class Template extends WordPress\Main
 
 	public static function metaSource( array $atts = [], ?string $module = NULL ): bool|string
 	{
+		if ( ! array_key_exists( 'hide_empty', $atts ) )
+			$atts['hide_empty'] = FALSE; // NOTE: display if URL not available!
+
 		if ( ! array_key_exists( 'check_paged', $atts ) )
 			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
 
@@ -918,6 +925,9 @@ class Template extends WordPress\Main
 
 	public static function metaAction( array $atts = [], ?string $module = NULL ): bool|string
 	{
+		if ( ! array_key_exists( 'hide_empty', $atts ) )
+			$atts['hide_empty'] = TRUE; // NOTE: hide when no URL available!
+
 		if ( ! array_key_exists( 'check_paged', $atts ) )
 			$atts['check_paged'] = 'after'; // NOTE: displays only on the last paged content.
 
@@ -1347,7 +1357,7 @@ class Template extends WordPress\Main
 
 	public static function renderTermSubTerms(
 		mixed $term,
-		array $atts = [],
+		array $arguments = [],
 		?string $module = NULL
 	): bool {
 
@@ -1363,7 +1373,7 @@ class Template extends WordPress\Main
 			'context'    => NULL,
 			'before'     => '',
 			'after'      => '',
-		], $atts );
+		], $arguments );
 
 		$extra   = [
 			'parent'     => $term->term_id,
@@ -1378,8 +1388,8 @@ class Template extends WordPress\Main
 		$wrap = '<div class="-wrap '.static::BASE.'-wrap -term-listsubterms'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
 		$list = [];
 
-		foreach ( $terms as $term )
-			$list[] = WordPress\Term::htmlLink( $term );
+		foreach ( $terms as $_term )
+			$list[] = WordPress\Term::htmlLink( $_term );
 
 		echo $args['before'].$wrap.Core\HTML::rows( $list ).'</div>'.$args['after'];
 		return TRUE;
@@ -1387,7 +1397,7 @@ class Template extends WordPress\Main
 
 	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
-	public static function eventDate( string $start, string $end ): string|false
+	public static function eventDate( int $start, int $end ): string|false
 	{
 		// Only a start date
 		if ( empty( $end ) )
@@ -1414,7 +1424,7 @@ class Template extends WordPress\Main
 
 	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
-	public static function eventTime( string $start, string $end ): false|string
+	public static function eventTime( int $start, int $end ): false|string
 	{
 		// Same date, same am/pm
 		if ( date( 'F j', $start ) == date( 'F j', $end ) && date( 'a', $start ) == date( 'a', $end ) )

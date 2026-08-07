@@ -100,14 +100,15 @@ class Quotation extends gEditorial\Module
 
 	public function get_global_fields(): array
 	{
-		$rtl = Core\L10n::rtl();
+		$posttype = $this->constant( 'main_posttype' );
+		$rtl      = Core\L10n::rtl();
 
 		return [
 			'meta' => [
-				$this->constant( 'main_posttype' ) => [
+				$posttype => [
 					'parent_post_id' => [
 						'title'       => _x( 'Parent', 'Field Title', 'geditorial-quotation' ),
-						'description' => _x( 'Parent post of the Quote', 'Field Description', 'geditorial-quotation' ),
+						'description' => _x( 'Parent Post of the Quote', 'Field Description', 'geditorial-quotation' ),
 						'type'        => 'parent_post',
 						'posttype'    => $this->posttypes(),
 					],
@@ -235,6 +236,7 @@ class Quotation extends gEditorial\Module
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'main_posttype' );
 				}
 
+				$this->modulelinks__register_headerbuttons();
 				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
 				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}

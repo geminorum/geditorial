@@ -86,8 +86,8 @@ class Icons extends gEditorial\Service
 
 			if ( Core\Text::starts( $object->menu_icon, 'dashicons-' ) )
 				return $raw
-					? Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' )
-					: Core\HTML::getDashicon( Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' ) );
+					? Core\Text::stripPrefix( $object->menu_icon, 'dashicons-' )
+					: Core\HTML::getDashicon( Core\Text::stripPrefix( $object->menu_icon, 'dashicons-' ) );
 
 			return $raw
 				? $object->menu_icon
@@ -120,8 +120,8 @@ class Icons extends gEditorial\Service
 
 			if ( Core\Text::starts( $object->menu_icon, 'dashicons-' ) )
 				return $raw
-					? Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' )
-					: Core\HTML::getDashicon( Core\Text::stripPrefix( $$object->menu_icon, 'dashicons-' ) );
+					? Core\Text::stripPrefix( $object->menu_icon, 'dashicons-' )
+					: Core\HTML::getDashicon( Core\Text::stripPrefix( $object->menu_icon, 'dashicons-' ) );
 
 			return $raw
 				? $object->menu_icon

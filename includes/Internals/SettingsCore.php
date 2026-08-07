@@ -46,7 +46,8 @@ trait SettingsCore
 			'validator'   => 'slug',
 			'placeholder' => $unfiltered[$constant],
 			'field_class' => [
-				'medium-text',
+				// 'medium-text',
+				'regular-text',
 				'code-text',
 			],
 		];

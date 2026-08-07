@@ -1104,8 +1104,6 @@ trait PairedCore
 	#[\Deprecated('USE `paired_all_connected_to()`')]
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
-		self::_dep( 'paired_all_connected_to()' );
-
 		if ( is_null( $term_id ) )
 			$term_id = get_post_meta( $post_id, '_'.$this->constant( $posttype_constant_key ).'_term_id', TRUE );
 
@@ -1142,8 +1140,6 @@ trait PairedCore
 	#[\Deprecated('USE `paired_all_connected_from()`')]
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
-		self::_dep( 'paired_all_connected_from()' );
-
 		$admin   = is_admin();
 		$posts   = $dates = $parents = [];
 		$terms   = WordPress\Taxonomy::getPostTerms( $this->constant( $tax_constant_key ), $post );
@@ -1155,7 +1151,7 @@ trait PairedCore
 			if ( $term->parent )
 				$parents[] = $term->parent;
 
-			// avoid if has child in the list
+			// Avoid if it has child in the list!
 			if ( $forced && in_array( $term->term_id, $parents, TRUE ) )
 				continue;
 
@@ -1182,7 +1178,7 @@ trait PairedCore
 
 		$parets = Core\Arraay::prepNumeral( $parents );
 
-		// final check if had children in the list
+		// Final checks if had children in the list!
 		if ( $forced && count( $parents ) ) {
 			$posts  = Core\Arraay::stripByKeys( $posts, $parets );
 			$dates  = Core\Arraay::stripByKeys( $dates, $parets );
