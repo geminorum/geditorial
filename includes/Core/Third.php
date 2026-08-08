@@ -94,7 +94,7 @@ class Third extends Base
 	// @REF: https://gist.github.com/boonebgorges/5537311
 	public static function getHandle( $string, $url = FALSE, $base = '', $prefix = '@' )
 	{
-		$parts = URL::parse( $string );
+		$parts = parse_url( $string );
 
 		if ( empty( $parts['host'] ) )
 			$handle = 0 === strpos( $string, '@' ) ? substr( $string, 1 ) : $string;
@@ -145,11 +145,10 @@ class Third extends Base
 	 * @param string $base prefix if the URL
 	 * @return string handle or the URL
 	 */
+	#[\Deprecated('USE `Core\Third::getHandle()`')]
 	public static function getTwitter( $string, $url = FALSE, $base = 'https://x.com/' )
 	{
-		self::_dep( 'Third::getHandle()' );
-
-		$parts = URL::parse( $string );
+		$parts = parse_url( $string );
 
 		if ( empty( $parts['host'] ) )
 			$handle = 0 === strpos( $string, '@' ) ? substr( $string, 1 ) : $string;

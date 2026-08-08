@@ -903,13 +903,13 @@ $kml = <<<KML
 KML;
 
 $zip = new \ZipArchive();
-if ($zip->open('GoogleEarth.kmz', \ZIPARCHIVE::CREATE)) {
+if ( $zip->open('GoogleEarth.kmz', \ZIPARCHIVE::CREATE ) ) {
     $zip->addEmptyDir('files');
 
-    foreach (glob('icons/*') as $file) {
-        $zip->addFile($file, 'files/'.basename( $file ) );
+    foreach (glob('icons/*') as $file ) {
+        $zip->addFile( $file, 'files/'.basename( $file ) );
 	}
-    $zip->addFromString('doc.kml', $kml);
+    $zip->addFromString( 'doc.kml', $kml );
     $zip->close();
 }
 	}

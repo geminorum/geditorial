@@ -15,7 +15,7 @@ class Taxonomy extends Core\Base
 			return FALSE;
 
 		if ( $taxonomy_or_term instanceof \WP_Term )
-			return get_taxonomy( $taxonomy_or_term->taxonomy );
+			return get_taxonomy( $taxonomy_or_term->taxonomy ) ?: FALSE;
 
 		if ( $taxonomy_or_term instanceof \WP_Taxonomy )
 			return $taxonomy_or_term;

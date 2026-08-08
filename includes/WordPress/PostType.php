@@ -16,7 +16,7 @@ class PostType extends Core\Base
 			return FALSE;
 
 		if ( $type_or_post instanceof \WP_Post )
-			return get_post_type_object( $type_or_post->post_type );
+			return get_post_type_object( $type_or_post->post_type ) ?: FALSE;
 
 		if ( $type_or_post instanceof \WP_Post_Type )
 			return $type_or_post;

@@ -2257,7 +2257,7 @@ class Text extends Base
 		///```
 		// $search = array('\\', ';', ',', "\r\n", "\n", "\r");
 		// $replace = array('\\\\', '\;', '\,', '\n', '\n', '\n');
-		// $text = str_replace($search, $replace, $text);
+		// $text = str_replace( $search, $replace, $text );
 		///```
 
 		///```
@@ -2265,7 +2265,7 @@ class Text extends Base
 		// Note the mixture of single and double quotes for the line break (Double quotes interpret the line breaks whereas single ones don't)
 		// $search = array('/',';',',',"\N","\n");
 		// $replace = array('\/','\;','\,','\n','\n');
-		// $text = str_replace($search,$replace,$text);
+		// $text = str_replace( $search,$replace,$text );
 		///```
 
 		return self::trim( $text );

@@ -183,7 +183,7 @@ class Module extends Core\Base
 	/**
 	 * Hooks an action for an internal module.
 	 *
-	 * @example `$this->action_module( 'importer', 'saved', 8 );`
+	 * @example `$this->action_module( 'importer', 'posts_saved', 8 );`
 	 *
 	 * @param string $module
 	 * @param string $hook
@@ -203,7 +203,7 @@ class Module extends Core\Base
 	/**
 	 * Hooks a filter for an internal module.
 	 *
-	 * @example `$this->filter_module( 'importer', 'prepare', 7 );`
+	 * @example `$this->filter_module( 'importer', 'posts_prepare', 7 );`
 	 *
 	 * @param string $module
 	 * @param string $hook
@@ -222,7 +222,7 @@ class Module extends Core\Base
 
 	/**
 	 * Hooks a self action for an internal module.
-	 * @example `$this->action_self( 'saved', 8 );`
+	 * @example `$this->action_self( 'posts_saved', 8 );`
 	 *
 	 * @param string $hook
 	 * @param int $arguments
@@ -240,7 +240,7 @@ class Module extends Core\Base
 
 	/**
 	 * Hooks a self filter for an internal module.
-	 * @example `$this->filter_self( 'prepare', 7 );`
+	 * @example `$this->filter_self( 'posts_prepare', 7 );`
 	 *
 	 * @param string $hook
 	 * @param int $arguments
