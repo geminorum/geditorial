@@ -222,6 +222,7 @@ class Socialite extends gEditorial\Module
 
 		$this->action( 'widget_the_term_after', 5, 22, FALSE, 'gtheme' );
 		$this->action( 'termintro_description_after', 5, 8, FALSE, $this->base );
+		$this->filter( 'meta_summary_excludes', 4, 22, FALSE, $this->base );
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
@@ -280,6 +281,17 @@ class Socialite extends gEditorial\Module
 			'-icon-list',
 			'-social-links',
 		] );
+	}
+
+	public function meta_summary_excludes( mixed $excludes, string $posttype, object $post, array $args ): mixed
+	{
+		if ( ! is_array( $excludes ) )
+			return $excludes;
+
+		if ( ! $this->posttype_supported( $posttype ) )
+			return $excludes;
+
+		return array_merge( $excludes, $this->supported );
 	}
 
 	public function terms_field_title( $string, $taxonomy, $field, $term )

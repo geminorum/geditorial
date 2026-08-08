@@ -1004,9 +1004,18 @@ class Template extends WordPress\Main
 				'byline',
 			] );
 
+		// NOTE: `TRUE` for force display all fields!
+		// @hook: `geditorial_meta_summary_excludes`
+		$excludes = apply_filters( self::und( static::BASE, 'meta_summary_excludes' ),
+			$excludes,
+			$post->post_type,
+			$post,
+			$args
+		);
+
 		foreach ( $list as $key => $title ) {
 
-			if ( in_array( $key, $excludes ) )
+			if ( TRUE !== $excludes && in_array( $key, (array) $excludes, TRUE ) )
 				continue;
 
 			if ( ! array_key_exists( $key, $fields ) ) {
