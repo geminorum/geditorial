@@ -461,7 +461,7 @@ class Venue extends gEditorial\Module
 
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
-		$this->pairedmetabox__render_supportedbox_content( $object, $box, $context, $screen );
+		$this->pairedmetabox__render_supportedbox_content( 'overview', $object, $box, $context, $screen );
 	}
 
 	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed

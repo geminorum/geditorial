@@ -258,6 +258,7 @@ trait PairedAssignment
 	}
 
 	protected function pairedmetabox__render_supportedbox_content(
+		string $linked_context,
 		?object $object,
 		array|false $box,
 		?string $context = NULL,
@@ -285,10 +286,11 @@ trait PairedAssignment
 		}
 
 		echo Core\HTML::wrap( $this->framepage_get_mainlink_for_post( $object, [
-			'context'  => 'mainbutton',
-			'target'   => 'mainapp',                                                                                           // OR: `summaryreport`
-			'maxwidth' => '800px',
-			'refresh'  => sprintf( 'terms_rendered.%s.ordered', get_taxonomy( $this->constant( $paired[1] ) )->rest_base ),
+			'link_context' => $linked_context,
+			'context'      => 'mainbutton',
+			'target'       => 'mainapp', // OR: `summaryreport`
+			'maxwidth'     => '800px',
+			'refresh'      => sprintf( 'terms_rendered.%s.ordered', get_taxonomy( $this->constant( $paired[1] ) )->rest_base ),
 		] ), 'field-wrap -buttons' );
 
 		return TRUE;
