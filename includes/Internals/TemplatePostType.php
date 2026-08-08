@@ -32,6 +32,10 @@ trait TemplatePostType
 		if ( ! $posttype = $wp_query->get( 'post_type' ) )
 			return $template;
 
+		// NOTE: multiple post-types means not post-type archives!
+		if ( is_array( $posttype ) )
+			return $template;
+
 		if ( ! in_array( $posttype, (array) $posttypes, TRUE ) )
 			return $template;
 

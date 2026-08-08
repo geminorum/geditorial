@@ -770,6 +770,7 @@ class Datetime extends WordPress\Main
 	// change the timestamp. `publish` posts will become scheduled if moved past
 	// today and `future` posts will be published if moved before today.
 	// @REF: `handle_ajax_drag_and_drop()`
+	// @SEE: [Keep `post_date_gmt` in sync when dragging posts on the calendar](https://github.com/Automattic/edit-flow/pull/1009)
 	// FIXME: NEEDS fallback
 	public static function reSchedulePost(
 		mixed $post,

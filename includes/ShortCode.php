@@ -631,7 +631,7 @@ class ShortCode extends WordPress\Main
 		if ( $item ) {
 
 			if ( $args['trim_chars'] )
-				$item = Core\Text::trimChars( $item, ( TRUE === $args['trim_chars'] ? 45 : $args['trim_chars'] ) );
+				$item = Core\Text::trimChars( $item, ( WordPress\Strings::isTruthy( $args['trim_chars'] ) ? 45 : $args['trim_chars'] ) );
 
 			if ( $args['item_title_cb'] && is_callable( $args['item_title_cb'] ) )
 				$attr = call_user_func_array( $args['item_title_cb'], [ $post, $args, $text ] );
@@ -648,7 +648,7 @@ class ShortCode extends WordPress\Main
 			else
 				$attr = FALSE;
 
-			if ( TRUE === $args['item_link'] ) {
+			if ( WordPress\Strings::isTruthy( $args['item_link'] ) ) {
 
 				// Avoid linking to the same page.
 				// NOTE: `setup_postdata()` maybe used!
@@ -694,7 +694,7 @@ class ShortCode extends WordPress\Main
 			$item.= WordPress\Media::getAttachmentFileSize(
 				$post->ID,
 				TRUE,
-				TRUE === $args['item_filesize']
+				WordPress\Strings::isTruthy( $args['item_filesize'] )
 					? '&nbsp;<span class="-filesize">(%s)</span>'
 					: $args['item_filesize']
 			);

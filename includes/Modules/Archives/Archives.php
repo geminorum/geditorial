@@ -361,6 +361,10 @@ class Archives extends gEditorial\Module
 			return $template;
 		}
 
+		// NOTE: multiple post-types means not post-type archives!
+		if ( is_array( $posttype ) )
+			return $template;
+
 		if ( $this->posttype_supported( $posttype ) && is_post_type_archive( $posttype ) ) {
 
 			$this->current_queried = $posttype;

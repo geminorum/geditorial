@@ -138,14 +138,17 @@ trait SettingsPostTypes
 			: $posttypes;
 	}
 
-	public function posttype_supported( string $posttype ): bool
-	{
-		return $posttype && in_array( $posttype, $this->posttypes(), TRUE );
-	}
-
-	public function posttype_woocommerce( string $posttype, bool $supported_default = TRUE ): bool
+	public function posttype_supported( mixed $posttype ): bool
 	{
 		return $posttype
+			&& is_string( $posttype )
+			&& in_array( $posttype, $this->posttypes(), TRUE );
+	}
+
+	public function posttype_woocommerce( mixed $posttype, bool $supported_default = TRUE ): bool
+	{
+		return $posttype
+			&& is_string( $posttype )
 			&& $posttype === WordPress\WooCommerce::PRODUCT_POSTTYPE
 			&& $this->get_setting( 'woocommerce_support', $supported_default );
 	}

@@ -1313,7 +1313,11 @@ trait PostTypeFields
 		foreach ( $this->posttypes() as $posttype )
 			$this->get_posttype_fields( $posttype );
 
-		$this->options->fields = NULL; // unload initial data
+		// WTF: `get_current_screen()` not available yet!
+		// if ( ! gEditorial\Settings::isScreenContext( 'settings' ) )
+		if ( ! is_admin() )
+			$this->options->fields = NULL; // unload initial data
+
 		$this->fields = NULL; // unload initial data
 	}
 

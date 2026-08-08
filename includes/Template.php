@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Template extends WordPress\Main
 {
-
 	const BASE = 'geditorial';
 
 	public static function factory()
@@ -97,13 +96,13 @@ class Template extends WordPress\Main
 
 			$caption = trim( ( $args['caption_text'] ?: $title ) );
 
-			if ( TRUE === $args['caption_link'] && $link )
+			if ( WordPress\Strings::isTruthy( $args['caption_link'] ) && $link )
 				$caption = Core\HTML::link( $caption, $link );
 
 			else if ( $args['caption_link'] )
 				$caption = Core\HTML::link( $caption, $args['caption_link'] );
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( WordPress\Strings::isTruthy( args['figure'] ) ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( empty( $args['wrap'] ) )
@@ -179,7 +178,7 @@ class Template extends WordPress\Main
 				'data'  => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
-		} else if ( TRUE === $args['fallback'] && $viewable ) {
+		} else if ( WordPress\Strings::isTruthy( $args['fallback'] ) && $viewable ) {
 
 			$html = Core\HTML::tag( 'a', [
 				'href'  => WordPress\Term::link( (int) $args['id'] ),
@@ -308,7 +307,7 @@ class Template extends WordPress\Main
 
 		if ( $title && $args['figure'] ) {
 
-			if ( TRUE === $args['caption_link'] && $link )
+			if ( WordPress\Strings::isTruthy( $args['caption_link'] ) && $link )
 				$caption = Core\HTML::link( $title, $link );
 
 			else if ( $args['caption_link'] )
@@ -317,7 +316,7 @@ class Template extends WordPress\Main
 			else
 				$caption = $title;
 
-			$html = '<figure'.( TRUE === $args['figure'] ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
+			$html = '<figure'.( WordPress\Strings::isTruthy( $args['figure'] ) ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
 		if ( ! $args['wrap'] )
@@ -417,7 +416,7 @@ class Template extends WordPress\Main
 				'data'   => $args['link'] ? $args['data'] : FALSE,
 			], $image );
 
-		} else if ( TRUE === $args['fallback'] && in_array( $status, [ 'publish', 'inherit' ] ) ) {
+		} else if ( WordPress\Strings::isTruthy( $args['fallback'] ) && in_array( $status, [ 'publish', 'inherit' ] ) ) {
 
 			$html = Core\HTML::tag( 'a', [
 				'href'   => apply_filters( 'the_permalink', get_permalink( $post ), $post ),
@@ -975,6 +974,9 @@ class Template extends WordPress\Main
 		$fields   = gEditorial()->module( 'meta' )->get_posttype_fields( $posttype );
 		$list     = $args['fields'] ?: Core\Arraay::pluck( $fields, 'title', 'name' );
 		$excludes = is_null( $args['excludes'] ) ? [
+			'parent_post_id',
+			'owner_postid',
+			'owner_userid',
 			'over_title',
 			'sub_title',
 			'highlight',

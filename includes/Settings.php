@@ -63,12 +63,13 @@ class Settings extends WordPress\Main
 		return $extra ? add_query_arg( $extra, $url ) : $url;
 	}
 
-	public static function isScreenContext( string $context, ?object $screen = NULL ): bool
+	public static function isScreenContext( string|array $contexts, ?object $screen = NULL ): bool
 	{
 		$screen = $screen ?? get_current_screen();
 
-		if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::classs( $context ) ) )
-			return TRUE;
+		foreach ( (array) $contexts as $context )
+			if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::classs( $context ) ) )
+				return TRUE;
 
 		return FALSE;
 	}

@@ -240,7 +240,7 @@ class Helper extends WordPress\Main
 
 		if ( $status ) {
 
-			$statuses = TRUE === $status ? WordPress\Status::get() : $status;
+			$statuses = WordPress\Strings::isTruthy( $status ) ? WordPress\Status::get() : $status;
 
 			if ( 'publish' != $post->post_status ) {
 

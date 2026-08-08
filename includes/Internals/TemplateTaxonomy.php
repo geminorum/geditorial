@@ -99,6 +99,10 @@ trait TemplateTaxonomy
 		if ( ! $taxonomy = $wp_query->get( 'taxonomy' ) )
 			return $template;
 
+		// NOTE: multiple taxonomies means not taxonomy archives!
+		if ( is_array( $taxonomy ) )
+			return $template;
+
 		if ( ! in_array( $taxonomy, (array) $taxonomies, TRUE ) )
 			return $template;
 

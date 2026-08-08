@@ -136,9 +136,11 @@ trait SettingsTaxonomies
 			: $taxonomies;
 	}
 
-	public function taxonomy_supported( false|string $taxonomy ): bool
+	public function taxonomy_supported( mixed $taxonomy ): bool
 	{
-		return $taxonomy && in_array( $taxonomy, $this->taxonomies(), TRUE );
+		return $taxonomy
+			&& is_string( $taxonomy )
+			&& in_array( $taxonomy, $this->taxonomies(), TRUE );
 	}
 
 	public function taxonomy_anchor( string $taxonomy ): string

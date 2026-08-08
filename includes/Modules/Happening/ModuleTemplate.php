@@ -16,6 +16,17 @@ class ModuleTemplate extends gEditorial\Template
 		return (int) WordPress\PostType::getLastMenuOrder( self::constant( 'main_posttype', 'event' ), '', 'ID', 'publish' );
 	}
 
+	public static function summary( array $atts = [] ): bool|string
+	{
+		if ( ! array_key_exists( 'id', $atts ) )
+			$atts['id'] = NULL;
+
+		if ( ! array_key_exists( 'type', $atts ) )
+			$atts['type'] = self::constant( 'primary_posttype', 'event' );
+
+		return self::metaSummary( $atts );
+	}
+
 	public static function theCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )

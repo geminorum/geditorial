@@ -184,6 +184,11 @@ class Happening extends gEditorial\Module
 					'wiki_url'       => [ 'type' => 'link' ],
 					'email_address'  => [ 'type' => 'email', 'quickedit' => TRUE ],
 
+					'street_address' => [
+						'title'       => _x( 'Location Address', 'Field Title', 'geditorial-happening' ),
+						'description' => _x( 'Full location address, including city, state etc.', 'Field Description', 'geditorial-happening' ),
+						'type'        => 'address',
+					],
 				],
 			],
 			'units' => [

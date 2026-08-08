@@ -196,7 +196,7 @@ trait AdminPage
 	{
 		$context = $context ?? 'subpage';
 
-		$this->_load_submenu_adminpage(  $context );
+		$this->_load_submenu_adminpage( $context );
 	}
 
 	protected function _load_submenu_adminpage( ?string $context = NULL ): void

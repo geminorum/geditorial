@@ -187,7 +187,7 @@ class MetaBox extends WordPress\Main
 			'atts'     => $args,
 		];
 
-		if ( TRUE === $args['header'] )
+		if ( WordPress\Strings::isTruthy( $args['header'] ) )
 			$args['header'] = '<h4 class="-title">%s</h4>';
 
 		else if ( is_null( $args['header'] ) )
@@ -441,7 +441,7 @@ class MetaBox extends WordPress\Main
 		$html     = '';
 		$statuses = WordPress\Status::get();
 
-		if ( TRUE === $title )
+		if ( WordPress\Strings::isTruthy( $title ) )
 			$html.= Core\HTML::tag( 'h4', Helper::getPostTitleRow( $post ) );
 
 		else if ( $title )
@@ -494,7 +494,7 @@ class MetaBox extends WordPress\Main
 		$html     = '';
 		$statuses = WordPress\Status::get();
 
-		if ( TRUE === $title )
+		if ( WordPress\Strings::isTruthy( $title ) )
 			$html.= Core\HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
 
 		else if ( $title )

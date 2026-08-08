@@ -502,12 +502,12 @@ class Byline extends gEditorial\Module
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $rows;
 
-		$raw = $this->get_byline_for_post( $post, [
+		$raw = $this->get_byline_for_post( $post, $this->filters( 'meta_summary_rows_args', [
 			'context' => 'rawdata',
 			'default'  => FALSE,
 			'hidden'   => TRUE,
 			'walker'   => [ __NAMESPACE__.'\\ModuleHelper', 'bylineTemplateWalker' ],
-		], FALSE );
+		], $post ), FALSE );
 
 		if ( empty( $raw ) )
 			return $rows;
@@ -772,7 +772,13 @@ class Byline extends gEditorial\Module
 		if ( ! empty( $fallback['temp'] ) )
 			$relation['_temp'] = $fallback['temp'];
 
-		return $this->filters( 'term_relations', $relation, $term, $post, $fields, $legacy );
+		return $this->filters( 'term_relations',
+			$relation,
+			$term,
+			$post,
+			$fields,
+			$legacy,
+		);
 	}
 
 	public function product_tabs( array $tabs ): array
