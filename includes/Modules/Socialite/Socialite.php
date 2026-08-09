@@ -25,6 +25,8 @@ class Socialite extends gEditorial\Module
 		'goodreads',
 		'eitaa',
 		'wikipedia',
+		'neshan',
+		'balad',
 	];
 
 	public static function module(): array
@@ -147,6 +149,8 @@ class Socialite extends gEditorial\Module
 				'goodreads' => _x( 'Goodreads', 'Title', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Wikipedia', 'Title', 'geditorial-socialite' ),
+				'neshan'    => _x( 'Neshan', 'Title', 'geditorial-socialite' ),
+				'balad'     => _x( 'Neshan', 'Title', 'geditorial-socialite' ),
 				'_ical'     => _x( 'iCal', 'Title', 'geditorial-socialite' ),
 			],
 			'descriptions' => [
@@ -162,6 +166,8 @@ class Socialite extends gEditorial\Module
 				'goodreads' => _x( 'URL to a Goodreads profile page.', 'Description', 'geditorial-socialite' ),
 				'eitaa'     => _x( 'Handle or URL to an Eitaa user or channel.', 'Description', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Handle or URL to a Wikipedia page.', 'Description', 'geditorial-socialite' ),
+				'neshan'    => _x( 'URL to a Neshan Map profile page.', 'Description', 'geditorial-socialite' ),
+				'balad'     => _x( 'URL to a Balad Map profile page.', 'Description', 'geditorial-socialite' ),
 			],
 			'settings' => [
 				'post_types_after' => _x( 'Appends custom meta fields for social services to post-types. <em>Meta</em> module needs to be enabled.', 'Setting Description', 'geditorial-socialite' ),
@@ -394,6 +400,8 @@ class Socialite extends gEditorial\Module
 			case 'goodreads':
 			case 'eitaa'    :
 			case 'wikipedia':
+			case 'neshan':
+			case 'balad':
 
 				return Core\Third::getHandleURL( $meta, $field );
 
@@ -426,6 +434,8 @@ class Socialite extends gEditorial\Module
 			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
 			case 'wikipedia': return [ 'misc-16', 'wikipedia' ];
 			case '_ical':     return [ 'misc-16', 'calendar-plus-fill' ];
+			case 'neshan'   : return [ 'misc-16', 'octicons-location' ];
+			case 'balad'    : return [ 'misc-16', 'octicons-location' ];
 		}
 
 		return Core\Icon::guess( $field, $default );
@@ -476,6 +486,8 @@ class Socialite extends gEditorial\Module
 			case 'goodreads':
 			case 'eitaa'    :
 			case 'wikipedia':
+			case 'neshan'   :
+			case 'balad'    :
 
 				$url = Core\Third::getHandleURL( $raw ?: $value, $field_key );
 
