@@ -621,6 +621,9 @@ trait PairedCore
 		if ( ! $constants = $this->paired_get_constants() )
 			return $count ? 0 : FALSE;
 
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return $count ? 0 : FALSE;
+
 		$type    = $this->constant( $constants[0] );
 		$paired  = $this->constant( $constants[1] );
 		$forced  = $this->get_setting( 'paired_force_parents', FALSE );
@@ -683,7 +686,7 @@ trait PairedCore
 		return $this->paired_sort_posts_by_term_relation( $constants, $posts, $terms, $post, $context, $fields );
 	}
 
-	protected function paired_sort_posts_by_term_relation( $constants, $posts, $terms, $post, $context, $fields = NULL )
+	protected function paired_sort_posts_by_term_relation( array $constants, array $posts, array $terms, object $post, ?string $context = NULL, $fields = NULL )
 	{
 		if ( empty( $posts ) )
 			return [];
@@ -709,7 +712,7 @@ trait PairedCore
 		if ( empty( $mapping ) )
 			return $posts;
 
-		return WordPress\PostType::reorderPostsByMeta( $posts, $mapping, $fields );
+		return WordPress\PostType::reorderPostsByMeta( $posts, $mapping, $fields ?? '' );
 	}
 
 	// `$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );`

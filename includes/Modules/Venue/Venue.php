@@ -51,15 +51,14 @@ class Venue extends gEditorial\Module
 	{
 		return [
 			'_general' => [
+				'assignment_dock',
 				'multiple_instances',
 				'paired_force_parents',
-				'assignment_dock',
 				[
 					'field'       => 'subterms_support',
 					'title'       => _x( 'Place Facilities', 'Settings', 'geditorial-venue' ),
 					'description' => _x( 'Facility taxonomy for the places and supported post-types.', 'Settings', 'geditorial-venue' ),
 				],
-				'comment_status',
 				'paired_exclude_terms' => [
 					NULL,
 					$this->constant( 'category_taxonomy' ),
@@ -98,6 +97,7 @@ class Venue extends gEditorial\Module
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_supports' => [
+				'comment_status',
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',

@@ -228,7 +228,6 @@ class Socialite extends gEditorial\Module
 
 		$this->action( 'widget_the_term_after', 5, 22, FALSE, 'gtheme' );
 		$this->action( 'termintro_description_after', 5, 8, FALSE, $this->base );
-		$this->filter( 'meta_summary_excludes', 4, 22, FALSE, $this->base );
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
@@ -251,6 +250,7 @@ class Socialite extends gEditorial\Module
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
+		$this->filter( 'meta_summary_excludes', 4, 22, FALSE, $this->base );
 	}
 
 	private function _prep_fields_for_settings()
@@ -367,13 +367,13 @@ class Socialite extends gEditorial\Module
 		] );
 
 		foreach ( $fields as $field )
-			if ( $url = $this->_get_field_url( $field, $term, $context ) )
-				$list[$field] = $this->_get_field_link( $field, $url, $term, $context );
+			if ( $url = $this->_get_field_url_for_term( $field, $term, $context ) )
+				$list[$field] = $this->_get_field_link_for_term( $field, $url, $term, $context );
 
 		return $this->wrap( Core\HTML::rows( $list ), $extra );
 	}
 
-	private function _get_field_url( string $field, object $term, ?string $context = NULL ): false|string
+	private function _get_field_url_for_term( string $field, object $term, ?string $context = NULL ): false|string
 	{
 		if ( '_ical' === $field )
 			return Services\Calendars::linkTermCalendar( $term, $context );
@@ -433,15 +433,15 @@ class Socialite extends gEditorial\Module
 			case 'goodreads': return [ 'misc-24', 'goodreads' ];
 			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
 			case 'wikipedia': return [ 'misc-16', 'wikipedia' ];
-			case '_ical':     return [ 'misc-16', 'calendar-plus-fill' ];
 			case 'neshan'   : return [ 'misc-16', 'octicons-location' ];
 			case 'balad'    : return [ 'misc-16', 'octicons-location' ];
+			case '_ical'    : return [ 'misc-16', 'calendar-plus-fill' ];
 		}
 
 		return Core\Icon::guess( $field, $default );
 	}
 
-	private function _get_field_link( string $field, string $url, object $term, ?string $context = NULL ): string
+	private function _get_field_link_for_term( string $field, string $url, object $term, ?string $context = NULL ): string
 	{
 		switch ( $field ) {
 

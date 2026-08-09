@@ -1135,6 +1135,15 @@ trait SubContents
 		list( $items, $pagination ) = $this->subcontent_get_data_with_pagination( $query, [], FALSE, $context, $this->get_sub_limit_option( $sub, $context ) );
 
 		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+		$pagination['actions']  = $this->filters( 'subcontent_reports_bulk_action_list', [
+			'check_empty_fields'    => _x( 'Check Empty Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'convert_legacy_fields' => _x( 'Convert Legacy Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'sanitize_fields'       => _x( 'Sanitize Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'remove_dupliactes'     => _x( 'Remove Duplicate Rows', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'empty_label_field'     => _x( 'Empty Label Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'empty_desc_field'      => _x( 'Empty Description Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+			'delete_rows'           => _x( 'Delete Rows', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
+		], $context );
 
 		$data   = $this->quantumcomments__get_data_mapped( $items, $context );
 		$data   = $this->subcontent_get_prepped_data( $data, $context, FALSE );
