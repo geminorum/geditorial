@@ -129,6 +129,14 @@ class Socialite extends gEditorial\Module
 			],
 			'_constants' => [
 				'main_shortcode_constant' => [ NULL, 'socialite' ],
+				$this->settings_shortcode_constant(
+					'shortcode_posts',
+					_x( 'Posts', 'Setting: Short-code Title', 'geditorial-socialite' )
+				),
+				$this->settings_shortcode_constant(
+					'shortcode_terms',
+					_x( 'Terms', 'Setting: Short-code Title', 'geditorial-socialite' )
+				),
 			],
 		];
 	}
@@ -195,7 +203,7 @@ class Socialite extends gEditorial\Module
 			$supported[$field] = [
 				'title'       => $strings['titles'][$field] ?? $field,
 				'description' => $strings['descriptions'][$field] ?? '',
-				'icon'        => $this->_get_field_icon( $field, '_supported' ),
+				'icon'        => ModuleHelper::getIcon( $field, 'posttypefields' ),
 				'type'        => 'code',
 				'order'       => 1800,
 			];
@@ -210,7 +218,9 @@ class Socialite extends gEditorial\Module
 	protected function get_global_constants(): array
 	{
 		return [
-			'main_shortcode' => 'socialite',
+			'main_shortcode'  => 'socialite',
+			'shortcode_posts' => 'socialite-post',
+			'shortcode_terms' => 'socialite-term',
 		];
 	}
 
@@ -219,6 +229,8 @@ class Socialite extends gEditorial\Module
 		parent::init();
 
 		$this->register_shortcode( 'main_shortcode' );
+		$this->register_shortcode( 'shortcode_posts', TRUE );
+		$this->register_shortcode( 'shortcode_terms', TRUE );
 	}
 
 	public function terms_init(): void
@@ -368,78 +380,10 @@ class Socialite extends gEditorial\Module
 		] );
 
 		foreach ( $fields as $field )
-			if ( $url = $this->_get_field_url_for_term( $field, $term, $context ) )
+			if ( $url = ModuleHelper::getURLforTerm( $field, $term, $context ) )
 				$list[$field] = $this->_get_field_link_for_term( $field, $url, $term, $context );
 
 		return $this->wrap( Core\HTML::rows( $list ), $extra );
-	}
-
-	private function _get_field_url_for_term( string $field, object $term, ?string $context = NULL ): false|string
-	{
-		if ( '_ical' === $field )
-			return Services\Calendars::linkTermCalendar( $term, $context );
-
-		if ( in_array( $field, [ '_contact', '_email', '_url' ], TRUE ) )
-			$field = Core\Text::stripPrefix( $field, '_' );
-
-		if ( ! $metakey = Services\TaxonomyFields::getTermMetaKey( $field, $term->taxonomy ) )
-			return FALSE;
-
-		if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-			return FALSE;
-
-		switch ( $field ) {
-			case 'twitter'  :
-			case 'tiktok'   :
-			case 'facebook' :
-			case 'instagram':
-			case 'telegram' :
-			case 'youtube'  :
-			case 'aparat'   :
-			case 'behkhaan' :
-			case 'fidibo'   :
-			case 'goodreads':
-			case 'eitaa'    :
-			case 'wikipedia':
-			case 'neshan':
-			case 'balad':
-
-				return Core\Third::getHandleURL( $meta, $field );
-
-			// Extra support for front-end only.
-			case 'contact':
-			case 'email':
-			case 'url':
-				return Core\Text::trim( $meta );
-		}
-
-		return Core\HTML::escapeURL( $meta );
-	}
-
-	// better to define here!
-	private function _get_field_icon( string $field, string|false $taxonomy = FALSE, ?string $context = NULL ): mixed
-	{
-		$default = [ 'gridicons', 'share' ];
-
-		switch ( $field ) {
-			case 'twitter'  : return [ 'social-logos', 'x' ];
-			case 'tiktok'   : return [ 'social-logos', 'tiktok' ];
-			case 'instagram': return [ 'social-logos', 'instagram' ];
-			case 'telegram' : return [ 'social-logos', 'telegram' ];
-			case 'facebook' : return [ 'social-logos', 'facebook' ];
-			case 'youtube'  : return [ 'social-logos', 'youtube' ];
-			case 'aparat'   : return [ 'misc-24', 'aparat' ];
-			case 'behkhaan' : return [ 'misc-32', 'behkhaan' ];
-			case 'fidibo'   : return [ 'misc-16', 'fidibo' ];
-			case 'goodreads': return [ 'misc-24', 'goodreads' ];
-			case 'eitaa'    : return [ 'misc-48', 'eitaa' ];
-			case 'wikipedia': return [ 'misc-16', 'wikipedia' ];
-			case 'neshan'   : return [ 'misc-16', 'octicons-location' ];
-			case 'balad'    : return [ 'misc-16', 'octicons-location' ];
-			case '_ical'    : return [ 'misc-16', 'calendar-plus-fill' ];
-		}
-
-		return Core\Icon::guess( $field, $default );
 	}
 
 	private function _get_field_link_for_term( string $field, string $url, object $term, ?string $context = NULL ): string
@@ -457,13 +401,66 @@ class Socialite extends gEditorial\Module
 			default:
 
 				return $this->get_column_icon( $url,
-					$this->_get_field_icon( $field, $term->taxonomy, $context ),
+					ModuleHelper::getIcon( $field, $context ),
 					$this->get_string( $field, $term->taxonomy, 'titles', $field ),
 					$term->taxonomy,
 					[
 						$this->classs( 'field' ),
 						sprintf( '-field-%s', $field ),
 						sprintf( '-taxonomy-%s', $term->taxonomy ),
+						$context ? sprintf( '-%s', $context ) : '',
+						Core\URL::isValid( $url ) ? '-valid-url' : '-invalid-url',
+					]
+				);
+		}
+	}
+
+	// NOTE: check for `Meta` module first!
+	private function _get_post_icons( mixed $post, ?string $context = NULL, $fields = NULL, $extra = [] ): string
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return '';
+
+		$list   = [];
+		$fields = $fields ?? array_merge( [
+			// adds before the list
+			'_contact',
+			'_email',
+			'_url',
+		], $this->supported, [
+			// adds after the list
+			'_ical',
+		] );
+
+		foreach ( $fields as $field )
+			if ( $url = ModuleHelper::getURLforPost( $field, $post, $context ) )
+				$list[$field] = $this->_get_field_link_for_post( $field, $url, $post, $context );
+
+		return $this->wrap( Core\HTML::rows( $list ), $extra );
+	}
+
+	private function _get_field_link_for_post( string $field, string $url, object $post, ?string $context = NULL ): string
+	{
+		switch ( $field ) {
+
+			// Extra support for front-end only.
+			case '_contact':
+			case '_email':
+			case '_url':
+
+				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
+
+			case '_ical':
+			default:
+
+				return $this->get_column_icon( $url,
+					ModuleHelper::getIcon( $field, $context ),
+					$this->get_string( $field, $post->post_type, 'titles', $field ),
+					$post->post_type,
+					[
+						$this->classs( 'field' ),
+						sprintf( '-field-%s', $field ),
+						sprintf( '-posttype-%s', $post->post_type ),
 						$context ? sprintf( '-%s', $context ) : '',
 						Core\URL::isValid( $url ) ? '-valid-url' : '-invalid-url',
 					]
@@ -563,6 +560,62 @@ class Socialite extends gEditorial\Module
 
 		return gEditorial\ShortCode::wrap(
 			Core\HTML::rows( $list ),
+			$tag,
+			$args
+		);
+	}
+
+	public function shortcode_posts( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	{
+		$args = WordPress\ShortCode::attributes( [
+			'id'      => NULL,
+			'fields'  => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'before'  => '',
+			'after'   => '',
+			'class'   => '',
+		], $atts, $tag ?: $this->constant( 'shortcode_posts' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		if ( ! gEditorial()->enabled( 'meta' ) )
+			return $content;
+
+		return gEditorial\ShortCode::wrap(
+			$this->_get_post_icons( $post, $args['context'] ?? 'display', $args['fields'] ) ?: NULL,
+			$tag,
+			$args
+		);
+	}
+
+	public function shortcode_terms( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	{
+		$args = WordPress\ShortCode::attributes( [
+			'id'      => NULL,
+			'fields'  => NULL,
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'before'  => '',
+			'after'   => '',
+			'class'   => '',
+		], $atts, $tag ?: $this->constant( 'shortcode_terms' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $term = WordPress\Term::get( $args['id'] ) )
+			return $content;
+
+		if ( ! gEditorial()->enabled( 'terms' ) )
+			return $content;
+
+		return gEditorial\ShortCode::wrap(
+			$this->_get_term_icons( $term, $args['context'] ?? 'display', $args['fields'] ) ?: NULL,
 			$tag,
 			$args
 		);
