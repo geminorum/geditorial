@@ -66,7 +66,7 @@ class Strings extends Core\Base
 		if ( TRUE === $input || 1 === $input )
 			return TRUE;
 
-		if ( self::empty( $input ) )
+		if ( self::empty( $input ) || ! is_scalar( $input ) )
 			return FALSE;
 
 		if ( ! $trimmed = Core\Text::trim( (string) $input ) )

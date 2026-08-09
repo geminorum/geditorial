@@ -806,7 +806,7 @@ class PostType extends Core\Base
 		if ( in_array( $fields, [ 'ids' ], TRUE ) )
 			$type = 'array';
 
-		else if ( Core\Text::starts( $fields, 'id=>' ) )
+		else if ( $fields && Core\Text::starts( $fields, 'id=>' ) )
 			$type = 'assoc';
 
 		foreach ( $posts as $index => $data ) {

@@ -615,7 +615,7 @@ class Taxonomy extends Core\Base
 		if ( in_array( $fields, [ 'ids', 'tt_ids' ], TRUE ) )
 			$type = 'array';
 
-		else if ( Core\Text::starts( $fields, 'id=>' ) )
+		else if ( $fields && Core\Text::starts( $fields, 'id=>' ) )
 			$type = 'assoc';
 
 		foreach ( $terms as $index => $data ) {
