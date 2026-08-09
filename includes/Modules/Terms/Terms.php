@@ -1091,7 +1091,10 @@ class Terms extends gEditorial\Module
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
-						.gEditorial\Helper::prepContact( $meta, NULL, '', TRUE ).'</span>';
+						.Core\HTML::rows( Services\Contacts::prepContactIcons(
+							$meta,
+							$column ? 'column' : 'disabled',
+						) ).'</span>';
 
 				} else {
 
@@ -2222,7 +2225,7 @@ class Terms extends gEditorial\Module
 
 					case 'contact':
 
-						$child['meta']['html']  = Core\HTML::wrap( gEditorial\Helper::prepContact( $meta ), '-contact' );
+						$child['meta']['html']  = Core\HTML::wrap( Services\Contacts::prepContact( $meta, 'adminbar' ) );
 						$child['meta']['class'] = $this->adminbar__get_css_class( '-has-description' );
 						// NOTE: `$child['meta']['title']` has no effect here!
 

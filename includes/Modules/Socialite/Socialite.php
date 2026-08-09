@@ -363,7 +363,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// NOTE: check for `Terms` module first!
-	private function _get_term_icons( mixed $term, ?string $context = NULL, $fields = NULL, $extra = [] ): string
+	private function _get_term_icons( mixed $term, ?string $context = NULL, $fields = NULL, null|string|array $extra = NULL ): string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return '';
@@ -379,14 +379,27 @@ class Socialite extends gEditorial\Module
 			'_ical',
 		] );
 
-		foreach ( $fields as $field )
-			if ( $url = ModuleHelper::getURLforTerm( $field, $term, $context ) )
-				$list[$field] = $this->_get_field_link_for_term( $field, $url, $term, $context );
+		foreach ( $fields as $field ) {
 
-		return $this->wrap( Core\HTML::rows( $list ), $extra );
+			if ( ! $url = ModuleHelper::getURLforTerm( $field, $term, $context ) )
+				continue;
+
+			if ( ! $link = $this->_get_field_link_for_term( $field, $url, $term, $context ) )
+				continue;
+
+			$list = array_merge( $list, (array) $link );
+		}
+
+		return $this->wrap(
+			Core\HTML::rows( $list ),
+			$extra ?? [
+				'-icon-list',
+				'-social-links',
+			],
+		);
 	}
 
-	private function _get_field_link_for_term( string $field, string $url, object $term, ?string $context = NULL ): string
+	private function _get_field_link_for_term( string $field, string $url, object $term, ?string $context = NULL ): string|array
 	{
 		switch ( $field ) {
 
@@ -395,7 +408,7 @@ class Socialite extends gEditorial\Module
 			case '_email':
 			case '_url':
 
-				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
+				return Services\Contacts::prepContactIcons( $url, $context );
 
 			case '_ical':
 			default:
@@ -416,7 +429,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// NOTE: check for `Meta` module first!
-	private function _get_post_icons( mixed $post, ?string $context = NULL, $fields = NULL, $extra = [] ): string
+	private function _get_post_icons( mixed $post, ?string $context = NULL, $fields = NULL, null|string|array $extra = NULL ): string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
@@ -432,14 +445,27 @@ class Socialite extends gEditorial\Module
 			'_ical',
 		] );
 
-		foreach ( $fields as $field )
-			if ( $url = ModuleHelper::getURLforPost( $field, $post, $context ) )
-				$list[$field] = $this->_get_field_link_for_post( $field, $url, $post, $context );
+		foreach ( $fields as $field ) {
 
-		return $this->wrap( Core\HTML::rows( $list ), $extra );
+			if ( ! $url = ModuleHelper::getURLforPost( $field, $post, $context ) )
+				continue;
+
+			if ( ! $link = $this->_get_field_link_for_post( $field, $url, $post, $context ) )
+				continue;
+
+			$list = array_merge( $list, (array) $link );
+		}
+
+		return $this->wrap(
+			Core\HTML::rows( $list ),
+			$extra ?? [
+				'-icon-list',
+				'-social-links',
+			],
+		);
 	}
 
-	private function _get_field_link_for_post( string $field, string $url, object $post, ?string $context = NULL ): string
+	private function _get_field_link_for_post( string $field, string $url, object $post, ?string $context = NULL ): string|array
 	{
 		switch ( $field ) {
 
@@ -448,7 +474,7 @@ class Socialite extends gEditorial\Module
 			case '_email':
 			case '_url':
 
-				return gEditorial\Helper::prepContact( $url, NULL, '', TRUE );
+				return Services\Contacts::prepContactIcons( $url, $context );
 
 			case '_ical':
 			default:

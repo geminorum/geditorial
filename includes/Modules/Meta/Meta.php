@@ -833,7 +833,7 @@ class Meta extends gEditorial\Module
 					);
 
 			case 'contact':
-				return gEditorial\Helper::prepContact( trim( $raw ) );
+				return Services\Contacts::prepContact( $raw, $context );
 
 			case 'email':
 				return Core\Email::prep( $raw, $field_args, $context );

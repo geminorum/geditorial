@@ -724,7 +724,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
-			case 'contact'    : return gEditorial\Helper::prepContact( $raw ?: $value );
+			case 'contact'    : return Services\Contacts::prepContact( $raw ?: $value );
 		}
 
 		// NOTE: fifth priority: last resorts

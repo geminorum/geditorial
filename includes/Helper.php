@@ -45,7 +45,6 @@ class Helper extends WordPress\Main
 
 	/**
 	 * Prepares data for display as a contact.
-	 * TODO: Move to `Contacts` Service
 	 *
 	 * @param string $value
 	 * @param string $title
@@ -53,6 +52,7 @@ class Helper extends WordPress\Main
 	 * @param bool $icon
 	 * @return string
 	 */
+	#[\Deprecated('USE `Services\Contacts::prepContact_Legacy()`')]
 	public static function prepContact(
 		string $value,
 		?string $title = NULL,
@@ -60,42 +60,7 @@ class Helper extends WordPress\Main
 		bool $icon = FALSE,
 	): mixed {
 
-		if ( self::empty( $value ) )
-			return $empty;
-
-		if ( Core\Email::is( $value ) )
-			$prepared = Core\Email::prep(
-				$value,
-				[ 'title' => $title ?? $value ],
-				$icon ? 'icon' : 'display',
-				$icon ? Services\Icons::get( [ 'misc-16', 'envelope-fill' ] ) : NULL
-			);
-
-		else if ( Core\URL::isValid( $value ) )
-			$prepared = Core\HTML::link(
-				$icon ? Services\Icons::get( [ 'misc-16', 'link-45deg' ] ) : Core\URL::prepTitle( $value ),
-				$value,
-				TRUE
-			);
-
-		else if ( Core\Phone::is( $value ) )
-			$prepared = Core\Phone::prep(
-				$value,
-				[ 'title' => $title ],
-				$icon ? 'icon' : 'display',
-				$icon ? Services\Icons::get( [ 'misc-16', 'telephone-fill' ] ) : NULL
-			);
-
-		else
-			$prepared = $icon
-				? Core\HTML::tag( 'span', [ 'title' => $value ], Services\Icons::get( [ 'misc-16', 'patch-question-fill' ] ) )
-				: Core\HTML::escape( $value );
-
-		return apply_filters( self::und( static::BASE, 'prep', 'contact' ),
-			$prepared,
-			$value,
-			$title
-		);
+		return Services\Contacts::prepContact_Legacy( $value, $title, $empty, $icon );
 	}
 
 	public static function renderPostTermsEditRow(

@@ -212,12 +212,12 @@ class Template extends WordPress\Main
 	{
 		$module = $module ?? static::MODULE;
 		$args   = self::parsed( [
-			'field'    => 'contact',
+			'field'    => NULL,
 			'id'       => NULL,
 			'class'    => '-term-contact',
 			'taxonomy' => '',
-			'title'    => _x( 'Contact', 'Template: Term Contact Title', 'geditorial' ),   // or term core/meta field
 			'default'  => FALSE,
+			'context'  => 'display',
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
@@ -231,11 +231,17 @@ class Template extends WordPress\Main
 
 		$args['id']       = $term->term_id;
 		$args['taxonomy'] = $term->taxonomy;
+		$args['field']    = $args['field'] ?? Services\TaxonomyFields::getTermMetaKey( 'contact', $term->taxonomy );
 
-		$title = self::getTermField( $args['title'], $term, $args['taxonomy'], FALSE );
-		$meta  = get_term_meta( $args['id'], $args['field'], TRUE );
+		if ( ! $args['field'] )
+			return $args['default'];
 
-		if ( $html = Helper::prepContact( $meta, $title ) ) {
+		$html = Services\Contacts::prepContact(
+			get_term_meta( $args['id'], $args['field'], TRUE ),
+			$args['context'],
+		);
+
+		if ( $html ) {
 
 			$html = $args['before'].$html.$args['after'];
 

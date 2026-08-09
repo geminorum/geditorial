@@ -227,6 +227,7 @@ class Plugin extends WordPress\Plugin
 			'ClassicEditor',
 			'CommandPalette',
 			'CommonSettings',
+			'Contacts',
 			'ContentActions',
 			'ContentBrand',
 			'CustomPostType',
