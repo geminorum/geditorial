@@ -47,15 +47,17 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function prepPeople( mixed $value, string|false|null $empty = '', string|array|null $separator = NULL ): string|false|null
+	public static function prepPeople( mixed $value, null|false|string $empty = '', null|string|array $separator = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
 
+		// @hook `geditorial_prep_individual`
+		$hook = self::und( static::BASE, 'prep', 'individual' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $individual )
-			if ( $prepared = apply_filters( self::und( static::BASE, 'prep_individual' ), $individual, $individual, $value ) )
+		foreach ( Markup::getSeparated( $value, $separator ) as $item )
+			if ( $prepared = apply_filters( $hook, $item, $item, $value ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
@@ -108,16 +110,16 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function filter_prep_individual_front( string $individual, string $raw, mixed $value ): string
+	public static function filter_prep_individual_front( string $item, string $raw, mixed $value ): string
 	{
 		// late check for REST-API
 		if ( WordPress\IsIt::rest() )
-			return $individual;
+			return $item;
 
-		if ( $link = WordPress\URL::search( $individual ) )
-			return Core\HTML::link( $individual, $link );
+		if ( $link = WordPress\URL::search( $item ) )
+			return Core\HTML::link( $item, $link );
 
-		return $individual;
+		return $item;
 	}
 
 	public static function makeFullname( array $data, ?string $context = 'display', string|false|null $fallback = FALSE ): string|false|null

@@ -284,10 +284,7 @@ class Socialite extends gEditorial\Module
 		if ( ! $desc && ! $image && ! empty( $instance['hide_no_desc'] ) )
 			return;
 
-		echo $this->_get_term_icons( $term, 'widget', NULL, [
-			'-icon-list',
-			'-social-links',
-		] );
+		echo $this->_get_term_icons( $term, 'widget' );
 	}
 
 	public function termintro_description_after( $term, $desc, $image, $args, $module )
@@ -295,10 +292,7 @@ class Socialite extends gEditorial\Module
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
 
-		echo $this->_get_term_icons( $term, $args['context'], NULL, [
-			'-icon-list',
-			'-social-links',
-		] );
+		echo $this->_get_term_icons( $term, $args['context'] );
 	}
 
 	public function meta_summary_excludes( mixed $excludes, string $posttype, object $post, array $args ): mixed
@@ -356,10 +350,7 @@ class Socialite extends gEditorial\Module
 	public function terms_custom_column( string $column, $taxonomy, $supported, mixed $term ): void
 	{
 		if ( $column === $this->classs() )
-			echo $this->_get_term_icons( $term, 'column', $this->supported, [
-				'-icon-list',
-				'-social-links',
-			] );
+			echo $this->_get_term_icons( $term, 'column', $this->supported );
 	}
 
 	// NOTE: check for `Terms` module first!
@@ -613,7 +604,11 @@ class Socialite extends gEditorial\Module
 			return $content;
 
 		return gEditorial\ShortCode::wrap(
-			$this->_get_post_icons( $post, $args['context'] ?? 'display', $args['fields'] ) ?: NULL,
+			$this->_get_post_icons(
+				$post,
+				$args['context'] ?? 'display',
+				$args['fields'],
+			) ?: NULL,
 			$tag,
 			$args
 		);
@@ -641,7 +636,11 @@ class Socialite extends gEditorial\Module
 			return $content;
 
 		return gEditorial\ShortCode::wrap(
-			$this->_get_term_icons( $term, $args['context'] ?? 'display', $args['fields'] ) ?: NULL,
+			$this->_get_term_icons(
+				$term,
+				$args['context'] ?? 'display',
+				$args['fields'],
+			) ?: NULL,
 			$tag,
 			$args
 		);

@@ -49,29 +49,35 @@ class Locations extends gEditorial\Service
 		return Core\Text::normalizeWhitespace( $data );
 	}
 
-	public static function prepVenue( $value, $empty = '', $separator = NULL )
+	public static function prepVenue( mixed $value, null|false|string $empty = '', null|string|array $separator = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
 
+		// @hook `geditorial_prep_location`
+		$hook = self::und( static::BASE, 'prep', 'location' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value ) as $location )
-			if ( $prepared = apply_filters( self::und( static::BASE, 'prep_location' ), $location, $location, $value ) )
+		foreach ( Markup::getSeparated( $value ) as $item )
+			if ( $prepared = apply_filters( $hook, $item, $item, $value ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function filter_prep_location_front( $location, $raw, $value )
+	public static function filter_prep_location_front( string $item, string $raw, mixed $value ): string
 	{
-		if ( $link = WordPress\URL::search( $location ) )
-			return Core\HTML::link( $location, $link );
+		// late check for REST-API
+		if ( WordPress\IsIt::rest() )
+			return $item;
 
-		return $location;
+		if ( $link = WordPress\URL::search( $item ) )
+			return Core\HTML::link( $item, $link );
+
+		return $item;
 	}
 
-	public static function getTermLocation( $term = NULL, $context = NULL )
+	public static function getTermLocation( mixed $term = NULL, ?string $context = NULL ): false|array
 	{
 		if ( ! gEditorial()->enabled( 'terms' ) )
 			return FALSE;
@@ -91,7 +97,7 @@ class Locations extends gEditorial\Service
 		return FALSE;
 	}
 
-	public static function getPostLocation( $post = NULL, $context = NULL )
+	public static function getPostLocation( mixed $post = NULL, ?string $context = NULL ): false|array
 	{
 		if ( ! gEditorial()->enabled( 'meta' ) )
 			return FALSE;
@@ -122,7 +128,7 @@ class Locations extends gEditorial\Service
 		return FALSE;
 	}
 
-	public static function baseCountry( $fallback = NULL, $filtered = TRUE )
+	public static function baseCountry( null|false|string $fallback = NULL, bool $filtered = TRUE ): null|false|string
 	{
 		if ( WordPress\WooCommerce::available() )
 			return $filtered ? self::filters( 'locations_base_country',
@@ -146,9 +152,12 @@ class Locations extends gEditorial\Service
 	}
 
 	// TODO: apply `Divided` module data
-	public static function nameCountry( $country, $fallback = NULL )
+	public static function nameCountry( null|false|string $country, null|false|string $fallback = NULL ): null|false|string|array
 	{
 		static $data;
+
+		if ( is_null( $country ) )
+			return $fallback;
 
 		if ( empty( $data ) )
 			$data = self::filters( 'locations_name_countries', [
@@ -163,7 +172,7 @@ class Locations extends gEditorial\Service
 			: $data[$country];
 	}
 
-	public static function baseState( $fallback = NULL, $filtered = TRUE )
+	public static function baseState( null|false|string $fallback = NULL, bool $filtered = TRUE ): null|false|string
 	{
 		if ( WordPress\WooCommerce::available() )
 			return $filtered ? self::filters( 'locations_base_state',
@@ -190,7 +199,7 @@ class Locations extends gEditorial\Service
 	// TODO: apply `Iranian` module data
 	// TODO: apply `Districted` module data
 	// TODO: take advantage of WooCommerce Data!
-	public static function nameState( $state, $country, $fallback = NULL )
+	public static function nameState( null|false|string $state, null|false|string $country, null|false|string $fallback = NULL ): null|false|string|array
 	{
 		static $data = [];
 
@@ -215,9 +224,10 @@ class Locations extends gEditorial\Service
 	 * These define how addresses are formatted for display in various countries.
 	 * @source `WC_Countries::get_address_formats()`
 	 *
+	 * @param null|false|string $country
 	 * @return string|array
 	 */
-	public static function addressFormats( $country = FALSE )
+	public static function addressFormats( null|false|string $country = FALSE ): string|array
 	{
 		static $data;
 
@@ -242,16 +252,16 @@ class Locations extends gEditorial\Service
 	 * TODO: support linked: country/state/city
 	 *
 	 * @param array $data
-	 * @param array $atts
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function formatAddress( $data = [], $atts = [] )
+	public static function formatAddress( array $data = [], array $arguments = [] ): string
 	{
 		$args = self::parsed( [
 			'format'    => NULL,
 			'separator' => NULL,
 			'context'   => NULL,
-		], $atts );
+		], $arguments );
 
 		$parsed = Core\Arraay::trimText( self::parsed( [
 			'first_name' => '',
@@ -324,7 +334,7 @@ class Locations extends gEditorial\Service
 		);
 	}
 
-	public static function addressTokens( $context = NULL, $simplied = FALSE )
+	public static function addressTokens( ?string $context = NULL, bool $simplied = FALSE ): array
 	{
 		$tokens = self::filters( 'locations_address_tokens', [
 			'fullname',

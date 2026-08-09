@@ -212,7 +212,8 @@ class Venue extends gEditorial\Module
 						'type'        => 'embed',
 					],
 
-					'latlng' => [ 'type' => 'latlng' ],
+					'latlng'         => [ 'type' => 'latlng' ],
+					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
 				],
 			],
 		];

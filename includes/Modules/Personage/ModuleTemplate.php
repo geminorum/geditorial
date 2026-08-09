@@ -19,8 +19,6 @@ class ModuleTemplate extends gEditorial\Template
 			'default' => FALSE,
 			'before'  => '',
 			'after'   => '',
-			'before'  => '',
-			'after'   => '',
 			'echo'    => TRUE,
 		], $atts );
 
