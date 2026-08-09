@@ -924,4 +924,31 @@ class Calendars extends gEditorial\Service
 			$calendar
 		);
 	}
+
+	// @REF: https://developers.google.com/google-apps/calendar/
+	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
+	public static function getGoogleCalendarEvents( $atts )
+	{
+		$args = self::parsed( [
+			'calendar_id' => FALSE,
+			'api_key'     => '',
+			'time_min'    => '',
+			'max_results' => 5,
+		], $atts );
+
+		if ( ! $args['calendar_id'] )
+			return FALSE;
+
+		$time = $args['time_min'] && Core\Date::isInFormat( $args['time_min'] ) ? $args['time_min'] : date( 'Y-m-d' );
+
+		$url = 'https://www.googleapis.com/calendar/v3/calendars/'
+			.urlencode( $args['calendar_id'] )
+			.'/events?key='.$args['api_key']
+			.'&maxResults='.$args['max_results']
+			.'&orderBy=startTime'
+			.'&singleEvents=true'
+			.'&timeMin='.$time.'T00:00:00Z';
+
+		return WordPress\Remote::getJSON( $url, [], FALSE );
+	}
 }

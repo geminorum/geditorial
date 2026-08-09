@@ -503,7 +503,11 @@ class MetaBox extends WordPress\Main
 		$html.= '<ol>';
 
 		foreach ( $posts as $item )
-			$html.= '<li>'.Helper::getPostTitleRow( $item, ( $item->ID === $current ? FALSE : 'edit' ), $statuses ).'</li>';
+			$html.= '<li>'.Helper::getPostTitleRow(
+				$item,
+				$item->ID === $current ? FALSE : 'edit',
+				$statuses
+			).'</li>';
 
 		return Core\HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}

@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class GCalEvents extends gEditorial\Widget
@@ -22,7 +23,7 @@ class GCalEvents extends gEditorial\Widget
 
 	public function widget_html( array $args, array $instance ): bool
 	{
-		if ( ! $data = Core\Third::getGoogleCalendarEvents( $instance ) )
+		if ( ! $data = Services\Calendars::getGoogleCalendarEvents( $instance ) )
 			return FALSE;
 
 		$empty = empty( $instance['empty'] ) ? FALSE : $instance['empty'];

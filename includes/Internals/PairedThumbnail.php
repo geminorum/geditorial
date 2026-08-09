@@ -43,11 +43,12 @@ trait PairedThumbnail
 		if ( ! in_array( get_post_type( $post ), $posttypes, TRUE ) )
 			return $thumbnail_id;
 
-		if ( ! $parent = $this->get_linked_to_posts( $post, TRUE ) )
+		if ( ! $parent = WordPress\Post::get( $this->get_linked_to_posts( $post, TRUE ) ) )
 			return $thumbnail_id;
 
-		if ( $parent_thumbnail = get_post_thumbnail_id( $parent ) )
-			return $parent_thumbnail;
+		// NOTE: avoid the filter loop on `get_post_thumbnail_id()`
+		if ( $parent_thumbnail = get_post_meta( $parent->ID, '_thumbnail_id', TRUE ) )
+			return (int) $parent_thumbnail;
 
 		return $thumbnail_id;
 	}

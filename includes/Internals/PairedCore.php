@@ -873,7 +873,6 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		// return $this->paired_set_to_term( $post, $the_term['term_id'], $posttype_key, $taxonomy_key );
 		return Services\Paired::doPair( $post, $the_term['term_id'] );
 	}
 
@@ -917,7 +916,6 @@ trait PairedCore
 		if ( is_wp_error( $the_term ) )
 			return FALSE;
 
-		// return $this->paired_set_to_term( $after, $the_term['term_id'], $posttype_key, $taxonomy_key );
 		return Services\Paired::doPair( $after, $the_term['term_id'] );
 	}
 

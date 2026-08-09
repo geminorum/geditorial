@@ -189,6 +189,13 @@ class Happening extends gEditorial\Module
 						'description' => _x( 'Full location address, including city, state etc.', 'Field Description', 'geditorial-happening' ),
 						'type'        => 'address',
 					],
+					'map_embed_url' => [
+						'title'       => _x( 'Map Embed URL', 'Field Title', 'geditorial-happening' ),
+						'description' => _x( 'Embeddable map URL of the location.', 'Field Description', 'geditorial-happening' ),
+						'type'        => 'embed',
+					],
+
+					'latlng' => [ 'type' => 'latlng' ],
 				],
 			],
 			'units' => [

@@ -150,7 +150,7 @@ class Socialite extends gEditorial\Module
 				'eitaa'     => _x( 'Eitaa', 'Title', 'geditorial-socialite' ),
 				'wikipedia' => _x( 'Wikipedia', 'Title', 'geditorial-socialite' ),
 				'neshan'    => _x( 'Neshan', 'Title', 'geditorial-socialite' ),
-				'balad'     => _x( 'Neshan', 'Title', 'geditorial-socialite' ),
+				'balad'     => _x( 'Balad', 'Title', 'geditorial-socialite' ),
 				'_ical'     => _x( 'iCal', 'Title', 'geditorial-socialite' ),
 			],
 			'descriptions' => [
@@ -350,6 +350,7 @@ class Socialite extends gEditorial\Module
 			] );
 	}
 
+	// NOTE: check for `Terms` module first!
 	private function _get_term_icons( mixed $term, ?string $context = NULL, $fields = NULL, $extra = [] ): string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -489,7 +490,7 @@ class Socialite extends gEditorial\Module
 			case 'neshan'   :
 			case 'balad'    :
 
-				$url = Core\Third::getHandleURL( $raw ?: $value, $field_key );
+				$url = Core\Socials::getHandleURL( $raw ?: $value, $field_key );
 
 				return Core\HTML::tag( 'a', [
 					'href'   => $url,

@@ -454,7 +454,7 @@ class Bookmarked extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	// TODO: support: `Core\Third::getHandleURL()`
+	// TODO: support: `Core\Socials::getHandleURL()`
 	private function _generate_link( array $atts, mixed $parent = NULL, ?string $context = NULL ): false|string
 	{
 		$data = self::parsed( array_fill_keys( array_keys( $this->subcontent_define_fields() ), NULL ), $atts );

@@ -40,10 +40,13 @@ class Paired extends gEditorial\Service
 
 		wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, FALSE );
 
-		if ( $image_metakey ?? ( TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image' ) ) {
+		$image_metakey = $image_metakey ?? TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
+
+		if ( $image_metakey ) {
 
 			// Image from Post to Term
-			if ( $thumbnail = get_post_thumbnail_id( $post->ID ) )
+			// NOTE: avoid the filter loop on `get_post_thumbnail_id()`
+			if ( $thumbnail = get_post_meta( $post->ID, '_thumbnail_id', TRUE ) )
 				update_term_meta( $term->term_id, $image_metakey, $thumbnail );
 
 			// Image from Term to Post

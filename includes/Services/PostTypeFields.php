@@ -440,10 +440,10 @@ class PostTypeFields extends gEditorial\Service
 		// NOTE: first priority: field key
 		switch ( $field_key ) {
 
-			case 'twitter'  : return Core\Third::htmlTwitterIntent( $raw ?: $value, TRUE );
+			case 'twitter'  : return Core\Socials::htmlTwitterIntent( $raw ?: $value, TRUE );
 			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
-			case 'instagram': return Core\Third::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
-			case 'telegram' : return Core\Third::htmlHandle( $value, 'https://t.me/' );
+			case 'instagram': return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
+			case 'telegram' : return Core\Socials::htmlHandle( $value, 'https://t.me/' );
 			case 'phone'    : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
 			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
 			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
