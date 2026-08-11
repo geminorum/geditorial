@@ -1051,6 +1051,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'social':
 			case 'code':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -1379,17 +1380,24 @@ class Terms extends gEditorial\Module
 
 	public function store_supported_field( int $term_id, string $field, mixed $meta, string $taxonomy, bool $update = TRUE, ?string $context = NULL ): bool
 	{
-		$metakey = $this->get_supported_metakey( $field, $taxonomy );
-		$meta    = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
+		$metakey  = $this->get_supported_metakey( $field, $taxonomy );
+		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
+		$meta     = $this->filters( 'supported_field_edit', $meta, $field, $taxonomy, $term_id, $metakey );
 
 		if ( ! $update && ! self::empty( get_term_meta( $term_id, $metakey, TRUE ) ) )
 			return FALSE;
 
 		if ( $meta ) {
 
-			$meta = is_array( $meta ) ? array_filter( $meta ) : trim( Core\HTML::escape( $meta ) );
+			$meta = is_array( $meta )
+				? Core\Arraay::trimText( $meta )
+				: Core\Text::trim( $meta );
 
-			if ( 'image' == $field ) {
+			if ( 'social' === $metatype ) {
+
+				$meta = Core\Socials::sanitize( $meta, $field );
+
+			} else if ( 'image' === $field ) {
 
 				update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 				do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
@@ -1685,6 +1693,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'social':
 			case 'code':
 			case 'barcode':
 			case 'latlng':
@@ -1911,6 +1920,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'social':
 			case 'code':
 			case 'barcode':
 			case 'latlng':
@@ -2265,6 +2275,7 @@ class Terms extends gEditorial\Module
 						$node['href']   = $meta;
 						break;
 
+					case 'social':
 					case 'code':
 					default:
 

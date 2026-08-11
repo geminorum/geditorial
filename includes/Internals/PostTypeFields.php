@@ -176,6 +176,7 @@ trait PostTypeFields
 
 				if ( in_array( $args['type'], [
 					'title_link',
+					'social',
 					'code',
 					'color',
 					'phone',
@@ -516,6 +517,11 @@ trait PostTypeFields
 				$sanitized = Core\Number::translate( Core\Text::trim( $data ) );
 				break;
 
+			case 'social':
+
+				$sanitized = Core\Socials::sanitize( $data, $field['name'] );
+				break;
+
 			case 'identity':
 
 				$sanitized = Core\Validation::sanitizeIdentityNumber( $data );
@@ -791,6 +797,7 @@ trait PostTypeFields
 				case 'plate':
 				case 'iban':
 				case 'bankcard':
+				case 'social':
 				case 'code':
 				case 'color':
 				case 'postcode':

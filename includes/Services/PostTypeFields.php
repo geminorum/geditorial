@@ -486,6 +486,14 @@ class PostTypeFields extends gEditorial\Service
 
 					return Individuals::prepPeople( $raw ?: $value );
 
+				case 'social':
+
+					return Communities::prepSocial(
+						$raw ?: $value,
+						$field_key, // usually the service
+						// $context // maybe `admin`!
+					);
+
 				case 'day':
 				case 'hour':
 				case 'member':

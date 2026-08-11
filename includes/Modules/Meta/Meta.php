@@ -835,6 +835,14 @@ class Meta extends gEditorial\Module
 			case 'contact':
 				return Services\Contacts::prepContact( $raw, $context );
 
+			case 'social':
+
+				return Services\Communities::prepSocial(
+					$raw,
+					$field, // usually the service
+					$context
+				);
+
 			case 'email':
 				return Core\Email::prep( $raw, $field_args, $context );
 

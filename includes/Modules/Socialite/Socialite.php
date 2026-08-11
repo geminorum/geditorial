@@ -204,7 +204,7 @@ class Socialite extends gEditorial\Module
 				'title'       => $strings['titles'][$field] ?? $field,
 				'description' => $strings['descriptions'][$field] ?? '',
 				'icon'        => ModuleHelper::getIcon( $field, 'posttypefields' ),
-				'type'        => 'code',
+				'type'        => 'social',
 				'order'       => 1800,
 			];
 
@@ -323,7 +323,9 @@ class Socialite extends gEditorial\Module
 
 	public function terms_supported_field_metatype( $metatype, $field, $taxonomy )
 	{
-		return in_array( $field, $this->supported ) ? 'code' : $metatype;
+		return in_array( $field, $this->supported )
+			? 'social'
+			: $metatype;
 	}
 
 	public function terms_supported_field_position( $position, $field, $taxonomy )

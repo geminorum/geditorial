@@ -1334,6 +1334,7 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'social':
 			case 'code':
 
 				$atts['dir'] = 'ltr';
