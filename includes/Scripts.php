@@ -780,22 +780,21 @@ JS;
 	 */
 	public static function pkgSelect2( $enqueue = FALSE, $version = '4.1.0' )
 	{
-		$handle    = 'select2';
-		$dir       = Core\L10n::rtl() ? '-rtl' : '';
-		$wooselect = WordPress\WooCommerce::isActive();
+		$handle = 'select2';
+		$dir    = Core\L10n::rtl() ? '-rtl' : '';
 
 		if ( $enqueue ) {
 
 			wp_enqueue_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $version, TRUE );
 
-			if ( ! $wooselect )
+			if ( ! wp_script_is( 'selectWoo' ) )
 				wp_enqueue_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $version, 'screen' );
 
 		} else {
 
 			wp_register_script( $handle, static::URL.'assets/packages/select2/select2.min.js', [ 'jquery' ], $version, TRUE );
 
-			if ( ! $wooselect )
+			if ( ! wp_script_is( 'selectWoo' ) )
 				wp_register_style( $handle, static::URL.'assets/css/admin.select2'.$dir.'.css', [], $version, 'screen' );
 		}
 
