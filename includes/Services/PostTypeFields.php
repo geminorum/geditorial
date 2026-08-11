@@ -550,9 +550,10 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'identity':
 
-					return sprintf( '<span class="-identity %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
-						Core\Validation::isIdentityNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-						$raw ?: $value, $raw ?: $value );
+					return Individuals::prepIdentity(
+						$raw ?: $value,
+						// $context, // maybe `admin`!
+					);
 
 				case 'postcode':
 

@@ -771,15 +771,10 @@ class Meta extends gEditorial\Module
 
 			case 'identity':
 
-				if ( 'print' === $context )
-					return Core\Number::localize( Core\Number::zeroise( $raw ?: $meta, 10 ) );
-
-				if ( 'export' === $context )
-					return Core\Number::zeroise( Core\Number::translate( $raw ?: $meta ), 10 );
-
-				return sprintf( '<span class="-identity %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
-					Core\Validation::isIdentityNumber( $raw ?: $meta ) ? '-is-valid' : '-not-valid',
-					$meta, $meta );
+				return Services\Individuals::prepIdentity(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'postcode':
 

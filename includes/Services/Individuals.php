@@ -47,6 +47,28 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
+	public static function prepIdentity( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( self::empty( $input ) )
+			return $fallback;
+
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		if ( 'print' === $context )
+			return Core\Number::localize( Core\Number::zeroise( $data, 10 ) );
+
+		if ( 'export' === $context )
+			return Core\Number::zeroise( Core\Number::translate( $data ), 10 );
+
+		return sprintf(
+			'<span class="-identity %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
+			Core\Validation::isIdentityNumber( $data ) ? '-is-valid' : '-not-valid',
+			$data,
+			$data,
+		);
+	}
+
 	public static function prepPeople( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
