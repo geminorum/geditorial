@@ -13,7 +13,7 @@ class Communities extends gEditorial\Service
 		add_filter( self::und( static::BASE, 'prep_social' ), [ __CLASS__, 'filter_prep_social' ], 5, 5 );
 	}
 
-	public static function prepSocial( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|string $empty = '', string|array|null $separator = NULL ): string|false|null
+	public static function prepSocial( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -22,14 +22,20 @@ class Communities extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'social' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $item )
+		if ( $context && is_null( $separator ) ) {
+
+			if ( in_array( $context, [ 'export' ] ) )
+				$separator = '|';
+		}
+
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
 			if ( $prepared = apply_filters( $hook, $item, $item, $value, $context, $service ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function prepSocialIcons( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|array $empty = [], null|string|array $separator = NULL ): null|false|array
+	public static function prepSocialIcons( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -38,7 +44,7 @@ class Communities extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'social', 'icon' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $item )
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
 			if ( $prepared = apply_filters( $hook, self::prepSocial_Legacy( $item, $service, '', TRUE ), $item, $value, $context, $service ) )
 				$list[] = $prepared;
 

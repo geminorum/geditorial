@@ -14,7 +14,7 @@ class Locations extends gEditorial\Service
 		if ( is_admin() )
 			return;
 
-		add_filter( self::und( static::BASE, 'prep_location' ), [ __CLASS__, 'filter_prep_location_front' ], 5, 3 );
+		add_filter( self::und( static::BASE, 'prep_location' ), [ __CLASS__, 'filter_prep_location_front' ], 5, 4 );
 	}
 
 	public static function isParserAvailable()
@@ -27,9 +27,12 @@ class Locations extends gEditorial\Service
 	}
 
 	// OLD: `WordPress\Strings::prepAddress()`
-	public static function prepAddress( $data, $context = 'display', $fallback = FALSE )
+	public static function prepAddress( mixed $input, ?string $context = 'display', null|false|string $fallback = FALSE ): null|false|string
 	{
-		if ( self::empty( $data ) )
+		if ( self::empty( $input ) )
+			return $fallback;
+
+		if ( ! $data = Core\Text::force( $input ) )
 			return $fallback;
 
 		if ( ! $data = Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $data ) ) )
@@ -49,7 +52,7 @@ class Locations extends gEditorial\Service
 		return Core\Text::normalizeWhitespace( $data );
 	}
 
-	public static function prepVenue( mixed $value, null|false|string $empty = '', null|string|array $separator = NULL ): null|false|string
+	public static function prepVenue( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -58,17 +61,26 @@ class Locations extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'location' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value ) as $item )
-			if ( $prepared = apply_filters( $hook, $item, $item, $value ) )
+		if ( $context && is_null( $separator ) ) {
+
+			if ( in_array( $context, [ 'export' ] ) )
+				$separator = '|';
+		}
+
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
+			if ( $prepared = apply_filters( $hook, $item, $item, $value, $context ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function filter_prep_location_front( string $item, string $raw, mixed $value ): string
+	public static function filter_prep_location_front( string $item, string $raw, mixed $value, ?string $context ): string
 	{
 		// late check for REST-API
 		if ( WordPress\IsIt::rest() )
+			return $item;
+
+		if ( $context && in_array( $context, [ 'print', 'export' ] ) )
 			return $item;
 
 		if ( $link = WordPress\URL::search( $item ) )

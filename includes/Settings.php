@@ -483,7 +483,7 @@ class Settings extends WordPress\Main
 		return $single_title ? $list[$single_title] : $list;
 	}
 
-	public static function sub( string|false $default = 'general' ): string
+	public static function sub( false|string $default = 'general' ): string
 	{
 		return trim( self::req( 'sub', $default ) );
 	}

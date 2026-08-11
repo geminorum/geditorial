@@ -11,7 +11,7 @@ class ContentBrand extends gEditorial\Service
 	public static function siteIcon(
 		?int $size = NULL,
 		string|false|null $fallback = '',
-	): string|false|null {
+	): null|false|string {
 
 		return get_site_icon_url(
 			$size ?? 512,  // TODO: handle strings

@@ -36,13 +36,13 @@ class Parser extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function na( string|false $wrap = 'p' ): string
+	public static function na( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Data Parser is not available!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-na-parser' ] ], $message ) : $message;
 	}
 
-	public static function getDefaultArgs( string|false|null $file_path = NULL ): array
+	public static function getDefaultArgs( null|false|string $file_path = NULL ): array
 	{
 		return [
 			'headers_only' => FALSE,   // headers only
@@ -61,7 +61,7 @@ class Parser extends WordPress\Main
 		];
 	}
 
-	public static function getInitialData( array $args, string|false|null $file_path = NULL ): array
+	public static function getInitialData( array $args, null|false|string $file_path = NULL ): array
 	{
 		return [
 			'file_path'   => Core\File::normalize( $file_path ),
@@ -80,7 +80,7 @@ class Parser extends WordPress\Main
 		];
 	}
 
-	public static function getAdditionalData( array $data, array $args, string|false|null $file_path = NULL ): array
+	public static function getAdditionalData( array $data, array $args, null|false|string $file_path = NULL ): array
 	{
 		if ( $args['extra_url'] )
 			$data['file_url'] = Core\URL::fromPath( $data['file_path'] );
@@ -99,7 +99,7 @@ class Parser extends WordPress\Main
 	}
 
 	// TODO
-	// `public static function fromFile( string|false $file_path, $arguments = NULL ) {}: array`
+	// `public static function fromFile( false|string $file_path, $arguments = NULL ) {}: array`
 
 	public static function fromAttachment( mixed $attachment, array $arguments = [] ): array
 	{
@@ -143,7 +143,7 @@ class Parser extends WordPress\Main
 		);
 	}
 
-	public static function fromCSV( string|false $file_path, array $arguments = [] ): array
+	public static function fromCSV( false|string $file_path, array $arguments = [] ): array
 	{
 		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
@@ -259,7 +259,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV_OLD( string|false $file_path, $arguments = [] )
+	public static function fromCSV_OLD( false|string $file_path, $arguments = [] )
 	{
 		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
@@ -366,7 +366,7 @@ class Parser extends WordPress\Main
 
 	// OLD: `Helper::parseCSV_Legacy()`
 	#[\Deprecated('use `Parser::fromCSV()` instead')]
-	public static function fromCSV_Legacy( string|false $file_path, ?int $limit = NULL ): false|array
+	public static function fromCSV_Legacy( false|string $file_path, ?int $limit = NULL ): false|array
 	{
 		self::_dep( 'Parser::fromCSV()' );
 
@@ -399,7 +399,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXLSX()`
-	public static function fromXLSX( string|false $file_path, array $arguments = [] ): array
+	public static function fromXLSX( false|string $file_path, array $arguments = [] ): array
 	{
 		$args = self::parsed( self::getDefaultArguments( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
@@ -482,7 +482,7 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: implement all!
-	public static function fromTXT( string|false $file_path, array $arguments = [] ): array
+	public static function fromTXT( false|string $file_path, array $arguments = [] ): array
 	{
 		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
@@ -509,7 +509,7 @@ class Parser extends WordPress\Main
 		return Core\Text::splitLines( Core\File::getContents( $file_path ) );
 	}
 
-	public static function fromJSON( string|false $file_path, array $arguments = [] ): array
+	public static function fromJSON( false|string $file_path, array $arguments = [] ): array
 	{
 		static $parsed = [];
 		static $items  = [];
@@ -622,7 +622,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseJSON()`
-	public static function fromJSON_Legacy( string|false $file_path ): false|array
+	public static function fromJSON_Legacy( false|string $file_path ): false|array
 	{
 		self::_dep( 'Parser::fromJSON()' );
 
@@ -633,7 +633,7 @@ class Parser extends WordPress\Main
 	}
 
 	// FIXME: implement all!
-	public static function fromXML( string|false $file_path, array $arguments = [] ): array
+	public static function fromXML( false|string $file_path, array $arguments = [] ): array
 	{
 		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
@@ -658,7 +658,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXML()`
-	public static function fromXML_Legacy( string|false $file_path ): false|array
+	public static function fromXML_Legacy( false|string $file_path ): false|array
 	{
 		self::_dep( 'Parser::fromXML()' );
 
@@ -705,7 +705,7 @@ class Parser extends WordPress\Main
 		?array $styles = NULL,
 		?string $title = NULL,
 		?string $description = NULL,
-	): string|false {
+	): false|string {
 
 		$writer = new \XLSXWriter();
 		$writer->setTempDir( get_temp_dir() );

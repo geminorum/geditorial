@@ -480,11 +480,17 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'venue':
 
-					return Locations::prepVenue( $raw ?: $value );
+					return Locations::prepVenue(
+						$raw ?: $value,
+						// $context // maybe `admin`!
+					);
 
 				case 'people':
 
-					return Individuals::prepPeople( $raw ?: $value );
+					return Individuals::prepPeople(
+						$raw ?: $value,
+						// $context // maybe `admin`!
+					);
 
 				case 'social':
 

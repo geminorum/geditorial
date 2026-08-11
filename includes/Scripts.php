@@ -828,6 +828,7 @@ JS;
 			'_base' => static::BASE,
 			'_url'  => sanitize_url( admin_url( 'admin-ajax.php' ) ),
 
+			'_admin' => is_admin(),
 			'_debug' => WordPress\IsIt::debug(),
 			'_dev'   => WordPress\IsIt::dev(),
 

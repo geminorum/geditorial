@@ -354,7 +354,7 @@ class Isbn extends gEditorial\Module
 		);
 	}
 
-	private function _get_main_isbn_metakey( string $posttype, string|false|null $fallback = FALSE ): string|false|null
+	private function _get_main_isbn_metakey( string $posttype, null|false|string $fallback = FALSE ): null|false|string
 	{
 		if ( $this->posttype_woocommerce( $posttype ) )
 			return WordPress\WooCommerce::UNIQUEID_METAKEY;

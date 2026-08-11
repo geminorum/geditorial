@@ -17,7 +17,7 @@ class ModuleHelper extends gEditorial\Helper
 		return gEditorial\MetaBox::getFieldDefaults( $field, $module );
 	}
 
-	public static function htmlFieldAuthor( $field, $meta = FALSE, $module = NULL )
+	public static function htmlFieldAuthor( array $field, int $meta = 0, ?string $module = NULL ): string
 	{
 		if ( empty( $field['name'] ) )
 			return '';
@@ -40,7 +40,7 @@ class ModuleHelper extends gEditorial\Helper
 		return self::htmlFieldUser( $field, $meta, $module );
 	}
 
-	public static function htmlFieldUser( $field, $meta = FALSE, $module = NULL )
+	public static function htmlFieldUser( array $field, int $meta = 0, ?string $module = NULL ): string
 	{
 		if ( empty( $field['name'] ) )
 			return '';

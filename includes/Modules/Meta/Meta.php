@@ -757,23 +757,17 @@ class Meta extends gEditorial\Module
 
 			case 'venue':
 
-				if ( 'export' === $context )
-					return WordPress\Strings::getPiped( Services\Markup::getSeparated( $raw ?: $meta ) );
-
-				if ( 'print' === $context )
-					return WordPress\Strings::getJoined( Services\Markup::getSeparated( $raw ?: $meta ) );
-
-				return Services\Locations::prepVenue( $raw ?: $meta );
+				return Services\Locations::prepVenue(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'people':
 
-				if ( 'export' === $context )
-					return WordPress\Strings::getPiped( Services\Markup::getSeparated( $raw ?: $meta ) );
-
-				if ( 'print' === $context )
-					return WordPress\Strings::getJoined( Services\Markup::getSeparated( $raw ?: $meta ) );
-
-				return Services\Individuals::prepPeople( $raw ?: $meta );
+				return Services\Individuals::prepPeople(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'identity':
 

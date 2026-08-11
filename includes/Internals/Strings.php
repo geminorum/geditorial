@@ -15,7 +15,7 @@ trait Strings
 		string $group = 'titles',
 		string|false|null $fallback = FALSE,
 		bool $moveup = TRUE,
-	): string|false|null {
+	): null|false|string {
 
 		if ( $subgroup && isset( $this->strings[$group][$subgroup][$string] ) )
 			return $this->strings[$group][$subgroup][$string];
@@ -38,7 +38,7 @@ trait Strings
 		string $group = 'titles',
 		array|false|null $fallback = [],  // NOTE: fallback will merge if is an array
 		bool $moveup = FALSE,             // NOTE: `moveup` is FALSE by default
-	): array|false|null {
+	): null|false|array {
 
 		if ( $subgroup && isset( $this->strings[$group][$subgroup] ) )
 			return is_array( $fallback ) && count( $fallback )

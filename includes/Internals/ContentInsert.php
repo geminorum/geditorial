@@ -65,7 +65,7 @@ trait ContentInsert
 	}
 	```***/
 
-	protected function wrap_content_insert( mixed $html, array|string $extra = [], string|false|null $insert = NULL ): void
+	protected function wrap_content_insert( mixed $html, array|string $extra = [], null|false|string $insert = NULL ): void
 	{
 		if ( ! $html )
 			return;
@@ -80,7 +80,7 @@ trait ContentInsert
 		) );
 	}
 
-	protected function is_page_content_insert( string|false|null $insert = NULL ): bool
+	protected function is_page_content_insert( null|false|string $insert = NULL ): bool
 	{
 		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
 

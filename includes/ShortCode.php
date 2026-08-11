@@ -12,7 +12,7 @@ class ShortCode extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function wrap( ?string $html, string|false $suffix = '', array $args = [], bool $block = TRUE, string|array $extra = [] )
+	public static function wrap( ?string $html, false|string $suffix = '', array $args = [], bool $block = TRUE, string|array $extra = [] )
 	{
 		return WordPress\ShortCode::wrap(
 			$html,

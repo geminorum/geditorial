@@ -448,8 +448,6 @@ class Terms extends gEditorial\Module
 
 			if ( $enqueue ) {
 
-				$this->_admin_enabled();
-
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
@@ -459,7 +457,10 @@ class Terms extends gEditorial\Module
 			}
 
 			if ( count( $fields ) ) {
+
+				$this->_admin_enabled();
 				$this->_edit_tags_screen( $screen->taxonomy );
+
 				add_filter( 'manage_edit-'.$screen->taxonomy.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
 				// TODO: add empty all term meta card for each field
@@ -508,13 +509,16 @@ class Terms extends gEditorial\Module
 
 			if ( $enqueue ) {
 
-				$this->_admin_enabled();
-
 				wp_enqueue_media();
 
 				$this->enqueue_asset_js( [
 					'strings' => $this->strings['js'],
 				], NULL, [ 'jquery', 'media-upload' ] );
+			}
+
+			if ( count( $fields ) ) {
+
+				$this->_admin_enabled();
 			}
 		}
 	}
@@ -788,13 +792,13 @@ class Terms extends gEditorial\Module
 
 		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
 		$supported = $this->get_supported( $taxonomy );
-		$icons     = [
+		$icons     = $this->filters( 'icon_columns', [
 			'order',
 			'contact',
 			'venue',
 			'image',
-			'user',
-			'author',
+			// 'user',
+			// 'author',
 			'color',
 			'border',
 			'role',
@@ -825,7 +829,7 @@ class Terms extends gEditorial\Module
 			'source',
 			'embed',
 			'url',
-		];
+		], $taxonomy, $supported );
 
 		foreach ( $supported as $field ) {
 
@@ -1434,7 +1438,7 @@ class Terms extends gEditorial\Module
 
 		} else {
 
-			if ( 'image' == $field && $meta = get_term_meta( $term_id, $metakey, TRUE ) ) {
+			if ( 'image' === $field && ( $meta = get_term_meta( $term_id, $metakey, TRUE ) ) ) {
 
 				delete_post_meta( (int) $meta, '_wp_attachment_is_term_image' );
 				do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
@@ -1454,7 +1458,7 @@ class Terms extends gEditorial\Module
 	 * @param mixed $post
 	 * @return void
 	 */
-	public function delete_attachment( $post_id, $post )
+	public function delete_attachment( int $post_id, mixed $post ): void
 	{
 		delete_metadata( 'term', NULL, $this->get_supported_metakey( 'image' ), $post_id, TRUE );
 	}
@@ -1579,7 +1583,7 @@ class Terms extends gEditorial\Module
 					'name' => $field,
 					'type' => $metatype,
 					'role' => $this->get_setting( 'user_roles', [] ),
-				], $meta );
+				], (int) $meta ?: 0 );
 
 				break;
 
@@ -1592,7 +1596,7 @@ class Terms extends gEditorial\Module
 				$html.= ModuleHelper::htmlFieldAuthor( [
 					'name' => $field,
 					'type' => $metatype,
-				], $meta );
+				], (int) $meta ?: 0 );
 
 				break;
 
@@ -2810,7 +2814,7 @@ class Terms extends gEditorial\Module
 		return $metakeys;
 	}
 
-	public function searchselect_result_image_for_term( string|false $data, mixed $term, array $queried ): string|false
+	public function searchselect_result_image_for_term( false|string $data, mixed $term, array $queried ): string|false
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )

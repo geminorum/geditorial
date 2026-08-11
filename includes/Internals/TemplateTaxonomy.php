@@ -311,7 +311,7 @@ trait TemplateTaxonomy
 	}
 
 	// DEFAULT METHOD: button for overridden empty/archive page
-	public function templatetaxonomy_get_add_new( string $taxonomy, string|false $title = FALSE, ?string $label = NULL ): string
+	public function templatetaxonomy_get_add_new( string $taxonomy, false|string $title = FALSE, ?string $label = NULL ): string
 	{
 		$object = WordPress\Taxonomy::object( $taxonomy );
 

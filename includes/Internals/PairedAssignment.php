@@ -181,7 +181,7 @@ trait PairedAssignment
 	}
 
 	// `$this->filter( 'searchselect_result_image_for_term', 3, 12, 'paired_assignment', $this->base );`
-	public function searchselect_result_image_for_term_paired_assignment( string|false $data, mixed $term, array $queried ): string|false
+	public function searchselect_result_image_for_term_paired_assignment( false|string $data, mixed $term, array $queried ): string|false
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )

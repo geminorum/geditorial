@@ -10,10 +10,10 @@ class Contacts extends gEditorial\Service
 {
 	public static function setup(): void
 	{
-		add_filter( self::und( static::BASE, 'prep_contact' ), [ __CLASS__, 'filter_prep_contact_legacy' ], 5, 3 );
+		add_filter( self::und( static::BASE, 'prep_contact' ), [ __CLASS__, 'filter_prep_contact_legacy' ], 5, 5 );
 	}
 
-	public static function prepContact( mixed $value, ?string $context = NULL, string|false|null $empty = '', string|array|null $separator = NULL ): string|false|null
+	public static function prepContact( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -22,14 +22,20 @@ class Contacts extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'contact' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $item )
+		if ( $context && is_null( $separator ) ) {
+
+			if ( in_array( $context, [ 'export' ] ) )
+				$separator = '|';
+		}
+
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
 			if ( $prepared = apply_filters( $hook, $item, $item, $value, $context ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function prepContactIcons( mixed $value, ?string $context = NULL, null|false|array $empty = [], null|string|array $separator = NULL ): null|false|array
+	public static function prepContactIcons( mixed $value, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -38,17 +44,20 @@ class Contacts extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'contact', 'icon' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $item )
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
 			if ( $prepared = apply_filters( $hook, self::prepContact_Legacy( $item, NULL, '', TRUE ), $item, $value, $context ) )
 				$list[] = $prepared;
 
 		return $list;
 	}
 
-	public static function filter_prep_contact_legacy( string $item, string $raw, mixed $value ): string
+	public static function filter_prep_contact_legacy( string $item, string $raw, mixed $value, ?string $context ): string
 	{
 		// late check for REST-API
 		if ( WordPress\IsIt::rest() )
+			return $item;
+
+		if ( $context && in_array( $context, [ 'print', 'export' ] ) )
 			return $item;
 
 		return self::prepContact_Legacy( $item ) ?: $item;

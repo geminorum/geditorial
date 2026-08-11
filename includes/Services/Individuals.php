@@ -35,7 +35,7 @@ class Individuals extends gEditorial\Service
 		if ( is_admin() )
 			return;
 
-		add_filter( self::und( static::BASE, 'prep_individual' ), [ __CLASS__, 'filter_prep_individual_front' ], 5, 3 );
+		add_filter( self::und( static::BASE, 'prep_individual' ), [ __CLASS__, 'filter_prep_individual_front' ], 5, 4 );
 	}
 
 	public static function isParserAvailable(): bool
@@ -47,7 +47,7 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function prepPeople( mixed $value, null|false|string $empty = '', null|string|array $separator = NULL ): null|false|string
+	public static function prepPeople( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )
 			return $empty;
@@ -56,8 +56,14 @@ class Individuals extends gEditorial\Service
 		$hook = self::und( static::BASE, 'prep', 'individual' );
 		$list = [];
 
-		foreach ( Markup::getSeparated( $value, $separator ) as $item )
-			if ( $prepared = apply_filters( $hook, $item, $item, $value ) )
+		if ( $context && is_null( $separator ) ) {
+
+			if ( in_array( $context, [ 'export' ] ) )
+				$separator = '|';
+		}
+
+		foreach ( Markup::getSeparated( $value, $delimiters ) as $item )
+			if ( $prepared = apply_filters( $hook, $item, $item, $value, $context ) )
 				$list[] = $prepared;
 
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
@@ -110,10 +116,13 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
-	public static function filter_prep_individual_front( string $item, string $raw, mixed $value ): string
+	public static function filter_prep_individual_front( string $item, string $raw, mixed $value, ?string $context ): string
 	{
 		// late check for REST-API
 		if ( WordPress\IsIt::rest() )
+			return $item;
+
+		if ( $context && in_array( $context, [ 'print', 'export' ] ) )
 			return $item;
 
 		if ( $link = WordPress\URL::search( $item ) )
@@ -122,7 +131,7 @@ class Individuals extends gEditorial\Service
 		return $item;
 	}
 
-	public static function makeFullname( array $data, ?string $context = 'display', string|false|null $fallback = FALSE ): string|false|null
+	public static function makeFullname( array $data, ?string $context = 'display', null|false|string $fallback = FALSE ): null|false|string
 	{
 		if ( ! $data )
 			return $fallback;

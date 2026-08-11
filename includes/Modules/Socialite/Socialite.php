@@ -243,6 +243,7 @@ class Socialite extends gEditorial\Module
 		$this->filter_module( 'terms', 'supported_fields_raw', 1 );
 		$this->filter_module( 'terms', 'supported_field_metatype', 3 );
 		$this->filter_module( 'terms', 'supported_field_position', 3 );
+		// $this->filter_module( 'terms', 'icon_columns', 3 ); // no need if we combine on one column!
 		$this->filter_module( 'terms', 'manage_columns', 3 );
 		$this->filter_module( 'terms', 'sortable_columns', 3 );
 		$this->filter_module( 'terms', 'custom_column', 4 );
@@ -331,6 +332,14 @@ class Socialite extends gEditorial\Module
 	public function terms_supported_field_position( $position, $field, $taxonomy )
 	{
 		return in_array( $field, $this->supported ) ? FALSE : $position;
+	}
+
+	public function terms_icon_columns( array $list, string $taxonomy, array $supported ): array
+	{
+		return array_merge(
+			$list,
+			$this->supported,
+		);
 	}
 
 	public function terms_manage_columns( $columns, $taxonomy, $supported )

@@ -92,7 +92,7 @@ class Datetime extends WordPress\Main
 	}
 
 	// @SEE: http://www.phpformatdate.com/
-	public static function dateFormats( string|false $context = 'default' ): string|array
+	public static function dateFormats( false|string $context = 'default' ): string|array
 	{
 		static $formats;
 
@@ -129,7 +129,7 @@ class Datetime extends WordPress\Main
 		int|object|null $post = NULL,
 		bool $attr = FALSE,
 		?string $format = NULL,
-	): string|false {
+	): false|string {
 
 		if ( ! $post = get_post( $post ) )
 			return FALSE;
@@ -154,7 +154,7 @@ class Datetime extends WordPress\Main
 		mixed $datetime,
 		bool $flip = FALSE,
 		?string $timezone_string = NULL
-	): string|false {
+	): false|string {
 
 		if ( ! $timestamp = Core\Date::timestamp( $datetime, $timezone_string, FALSE ) )
 			return $timestamp;
@@ -185,7 +185,7 @@ class Datetime extends WordPress\Main
 		mixed $from,
 		int $to = 0,
 		?string $timezone_string = NULL,
-	): string|false {
+	): false|string {
 
 		if ( ! $timestamp = Core\Date::timestamp( $from, $timezone_string, FALSE ) )
 			return $timestamp;

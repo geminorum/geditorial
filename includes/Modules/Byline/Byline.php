@@ -545,7 +545,7 @@ class Byline extends gEditorial\Module
 		return $data + $rows;
 	}
 
-	public function termrelations_supported( array $fields, string $taxonomy, ?string $context, string|false $posttype ): array
+	public function termrelations_supported( array $fields, string $taxonomy, ?string $context, false|string $posttype ): array
 	{
 		if ( $this->taxonomy_supported( $taxonomy ) )
 			return array_merge( $fields, $this->_get_supported_fields( $context, $posttype ) );
@@ -569,7 +569,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _get_registered_relations( ?string $context = NULL, string|false $posttype = FALSE ): array
+	private function _get_registered_relations( ?string $context = NULL, false|string $posttype = FALSE ): array
 	{
 		return $this->filters( 'registered_relations',
 			Core\Arraay::pluck(
@@ -582,7 +582,7 @@ class Byline extends gEditorial\Module
 		);
 	}
 
-	private function _get_supported_fields( ?string $context = NULL, string|false $posttype = FALSE ): array
+	private function _get_supported_fields( ?string $context = NULL, false|string $posttype = FALSE ): array
 	{
 		return $this->filters( 'supported_fields',
 			[

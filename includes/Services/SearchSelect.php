@@ -200,7 +200,7 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// NOTE: also used by others!
-	public static function getImageForPost( mixed $post, array $queried = [], string|false $default = '' ): string|false
+	public static function getImageForPost( mixed $post, array $queried = [], false|string $default = '' ): string|false
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ), $default, $post, $queried );
 	}
@@ -319,7 +319,7 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// NOTE: also used by others!
-	public static function getImageForTerm( mixed $term, array $queried = [], string|false $default = '' ): false|string
+	public static function getImageForTerm( mixed $term, array $queried = [], false|string $default = '' ): false|string
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_term' ), $default, $term, $queried );
 	}
@@ -330,7 +330,7 @@ class SearchSelect extends gEditorial\Service
 		$list  = [];
 		$args  = [
 			'login__not_in'  => get_super_admins(),
-			'role__not_in'   => [ 'administrator', 'subscriber' ],
+			'role__not_in'   => [ 'administrator', 'subscriber' ], // TODO: organize this
 			'search_columns' => [
 				'user_login',
 				'user_email',

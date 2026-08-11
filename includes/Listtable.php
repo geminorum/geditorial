@@ -119,7 +119,7 @@ SQL;
 	// TODO: our own `wp_dropdown_categories()` using custom walker
 	// @SEE: https://developer.wordpress.org/reference/functions/wp_dropdown_categories/#comment-1823
 	// ALSO: trim term titles
-	public static function restrictByTaxonomy( string|object $taxonomy, string|false $paired_posttype = FALSE, array $extra = [] ): string
+	public static function restrictByTaxonomy( string|object $taxonomy, false|string $paired_posttype = FALSE, array $extra = [] ): string
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';

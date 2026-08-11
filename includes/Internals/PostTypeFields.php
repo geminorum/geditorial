@@ -13,11 +13,11 @@ trait PostTypeFields
 	/**
 	 * Retrieves a registered field for a post-type.
 	 *
-	 * @param string|false|null $field_key
-	 * @param string|false|null $posttype
+	 * @param null|false|string $field_key
+	 * @param null|false|string $posttype
 	 * @return false|array
 	 */
-	public function get_posttype_field_args( string|false|null $field_key, string|false|null $posttype ): false|array
+	public function get_posttype_field_args( null|false|string $field_key, null|false|string $posttype ): false|array
 	{
 		if ( ! $posttype || ! $field_key )
 			return FALSE;
@@ -33,11 +33,11 @@ trait PostTypeFields
 	/**
 	 * Retrieves the export title for given field key.
 	 *
-	 * @param string|false|null $field_key
-	 * @param string|false|null $posttype
+	 * @param null|false|string $field_key
+	 * @param null|false|string $posttype
 	 * @return false|array
 	 */
-	public function get_posttype_field_export_title( string|false|null $field_key, string|false|null $posttype ): false|string
+	public function get_posttype_field_export_title( null|false|string $field_key, null|false|string $posttype ): false|string
 	{
 		if ( ! $field = $this->get_posttype_field_args( $field_key, $posttype ) )
 			return $field;
@@ -91,7 +91,7 @@ trait PostTypeFields
 	 * @param string $operator
 	 * @return array
 	 */
-	public function get_posttype_fields( string|false $posttype, array $filter = [], string $operator = 'AND' ): array
+	public function get_posttype_fields( false|string $posttype, array $filter = [], string $operator = 'AND' ): array
 	{
 		global $gEditorialPostTypeFields;
 
@@ -176,6 +176,7 @@ trait PostTypeFields
 
 				if ( in_array( $args['type'], [
 					'title_link',
+					'link',
 					'social',
 					'code',
 					'color',
@@ -321,13 +322,13 @@ trait PostTypeFields
 	 * `$arg` `NULL` for post-type `read`/`edit_post` capability check
 	 * `$arg` String for strait capability check
 	 *
-	 * @param array $field
+	 * @param null|false|array $field
 	 * @param mixed $post
 	 * @param string $context
 	 * @param null|int $user_id
 	 * @return bool
 	 */
-	public function access_posttype_field( array|false|null $field, mixed $post = NULL, ?string $context = 'view', ?int $user_id = NULL ): bool
+	public function access_posttype_field( null|false|array $field, mixed $post = NULL, ?string $context = 'view', ?int $user_id = NULL ): bool
 	{
 		if ( ! $field )
 			return FALSE; // no field, no access!
@@ -485,11 +486,14 @@ trait PostTypeFields
 			case 'video_source':
 			case 'image_source':
 			case 'downloadable':
+
+				$sanitized = Core\URL::sanitize( $data );
+				break;
+
 			case 'title_link':
 			case 'link':
 
-				// $sanitized = Core\URL::sanitizeForStorage( $data );
-				$sanitized = Core\URL::sanitize( $data );
+				$sanitized = Core\URL::sanitizeForStorage( $data );
 				break;
 
 			case 'postcode':
