@@ -244,125 +244,61 @@ trait SettingsCore
 		return TRUE;
 	}
 
-	// DEFAULT METHOD: tools-sub HTML
-	public function tools_sub( string $uri = '', ?string $sub = NULL ): true
-	{
-		$context = 'tools';
-		$action  = 'bulk';
+	protected function settingscore__render_context_html(
+		string $context,
+		?string $sub = NULL,
+		string $uri = '',
+		string $action = 'bulk',
+		bool $sidebox_check = TRUE,
+	): bool {
 
-		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
+		if ( ! $context )
+			return FALSE;
 
-			if ( FALSE === $this->render_tools_html_before( $uri, $sub, $action, $context ) )
-				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
+		$hook = self::und( 'render', $context, 'html' );
 
-			if ( $this->render_tools_html( $uri, $sub, $action, $context ) )
-				$this->render_form_buttons( $context );
+		$this->render_form_start( $uri, $sub, $action, $context, $sidebox_check );
 
-			$this->render_tools_html_after( $uri, $sub, $action, $context );
+			if ( method_exists( $this, self::und( $hook, 'before' ) ) ) {
 
-		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
+				// bail if explicitly `FALSE`
+				if ( FALSE === call_user_func_array(
+					[ $this, self::und( $hook, 'before' ) ],
+					[ $uri, $sub, $action, $context ]
+				) )
+					return $this->render_form_end( $uri, $sub, $action, $context, FALSE );
+			}
+
+			if ( method_exists( $this, $hook ) ) {
+
+				if ( call_user_func_array(
+					[ $this, $hook ],
+					[ $uri, $sub, $action, $context ]
+				) )
+					$this->render_form_buttons( $context );
+			}
+
+			if ( method_exists( $this, self::und( $hook, 'after' ) ) ) {
+
+				call_user_func_array(
+					[ $this, self::und( $hook, 'after' ) ],
+					[ $uri, $sub, $action, $context ]
+				);
+			}
+
+		return $this->render_form_end( $uri, $sub, $action, $context, $sidebox_check );
 	}
 
-	// DEFAULT METHOD: used for `tools` default sub HTML
-	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
-	protected function render_tools_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-	protected function render_tools_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	// DEFAULT METHODS:
+	// `protected function render_{$context}_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }`
+	// `protected function render_{$context}_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }`
+	// `protected function render_{$context}_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }`
 
-	// DEFAULT METHOD: `roles` sub HTML
-	public function roles_sub( string $uri = '', ?string $sub = NULL ): true
-	{
-		$context = 'roles';
-		$action  = 'bulk';
-
-		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
-
-			if ( FALSE === $this->render_roles_html_before( $uri, $sub, $action, $context ) )
-				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
-
-			if ( $this->render_roles_html( $uri, $sub, $action, $context ) )
-				$this->render_form_buttons( $context );
-
-			$this->render_roles_html_after( $uri, $sub, $action, $context );
-
-		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
-	}
-
-	// DEFAULT METHOD: used for `roles` default sub HTML
-	protected function render_roles_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
-	protected function render_roles_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-	protected function render_roles_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-
-	// DEFAULT METHOD: `reports` sub HTML
-	public function reports_sub( string $uri = '', ?string $sub = NULL ): true
-	{
-		$context = 'reports';
-		$action  = 'bulk';
-
-		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
-
-			if ( FALSE === $this->render_reports_html_before( $uri, $sub, $action, $context ) )
-				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
-
-			if ( $this->render_reports_html( $uri, $sub, $action, $context ) )
-				$this->render_form_buttons( $context );
-
-			$this->render_reports_html_after( $uri, $sub, $action, $context );
-
-		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
-	}
-
-	// DEFAULT METHOD: used for `reports` default sub HTML
-	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
-	protected function render_reports_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-	protected function render_reports_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-
-	// DEFAULT METHOD: `imports` sub HTML
-	public function imports_sub( string $uri = '', ?string $sub = NULL ): true
-	{
-		$context = 'imports';
-		$action  = 'bulk';
-
-		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
-
-			if ( FALSE === $this->render_imports_html_before( $uri, $sub, $action, $context ) )
-				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
-
-			if ( $this->render_imports_html( $uri, $sub, $action, $context ) )
-				$this->render_form_buttons( $context );
-
-			$this->render_imports_html_after( $uri, $sub, $action, $context );
-
-		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
-	}
-
-	// DEFAULT METHOD: used for `imports` default sub HTML
-	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
-	protected function render_imports_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-	protected function render_imports_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-
-	// DEFAULT METHOD: `customs` sub HTML
-	public function customs_sub( string $uri = '', ?string $sub = NULL ): true
-	{
-		$context = 'customs';
-		$action  = 'bulk';
-
-		$this->render_form_start( $uri, $sub, $action, $context, TRUE );
-
-			if ( FALSE === $this->render_customs_html_before( $uri, $sub, $action, $context ) )
-				return $this->render_form_end( $uri, $sub, $action, $context ); // bail if explicitly FALSE
-
-			if ( $this->render_customs_html( $uri, $sub, $action, $context ) )
-				$this->render_form_buttons( $context );
-
-			$this->render_customs_html_after( $uri, $sub, $action, $context );
-
-		return $this->render_form_end( $uri, $sub, $action, $context, TRUE );
-	}
-
-	// DEFAULT METHOD: used for `customs` default sub HTML
-	protected function render_customs_html( string $uri, string $sub, string $action, string $context ): bool { return FALSE; }
-	protected function render_customs_html_before( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
-	protected function render_customs_html_after( string $uri, string $sub, string $action, string $context ): bool { return TRUE; }
+	public function tools_sub  ( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'tools',   $sub, $uri ); }
+	public function roles_sub  ( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'roles',   $sub, $uri ); }
+	public function reports_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'reports', $sub, $uri ); }
+	public function imports_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'imports', $sub, $uri ); }
+	public function customs_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'customs', $sub, $uri ); }
 
 	// @ALSO: `ModuleSettings::getCurrentForm()`
 	protected function get_current_form( array $defaults, ?string $context = NULL ): array
