@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait ObjectsToObjects
 {
 
-	protected function o2o_register( string $constant, ?string $context = NULL, string|array|null $posttypes = NULL, ?array $extra = NULL ): false|string
+	protected function o2o_register( string $constant, ?string $context = NULL, null|string|array $posttypes = NULL, ?array $extra = NULL ): false|string
 	{
 		if ( ! $from = $this->constant( $constant ) )
 			return FALSE;
@@ -58,7 +58,7 @@ trait ObjectsToObjects
 	}
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
-	protected function o2o_register_Legacy( string $constant, string|array|null $posttypes = NULL ): bool|string
+	protected function o2o_register_Legacy( string $constant, null|string|array $posttypes = NULL ): bool|string
 	{
 		if ( ! $posttypes = $posttypes ?? $this->posttypes() )
 			return FALSE;

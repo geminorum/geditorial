@@ -9,9 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreComments
 {
-	protected function comments__handle_default_status( $posttype, $fallback = NULL, $comment_types = NULL, $setting = NULL )
+	protected function comments__handle_default_status( string $posttype, ?string $fallback = NULL, null|string|array $comment_types = NULL, ?string $setting = NULL ): bool
 	{
-		add_filter( 'get_default_comment_status',
+		return add_filter( 'get_default_comment_status',
 			function ( $status, $_posttype, $_comment_type )
 				use ( $posttype, $comment_types, $fallback, $setting ) {
 

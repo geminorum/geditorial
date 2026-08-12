@@ -173,7 +173,7 @@ trait SettingsFields
 	}
 
 	// NOTE: for fields only in connection to the caller module!
-	public function add_posttype_fields_supported( array|string|null $posttypes = NULL, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
+	public function add_posttype_fields_supported( null|string|array $posttypes = NULL, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
 	{
 		$posttypes = $posttypes ?? $this->posttypes();
 

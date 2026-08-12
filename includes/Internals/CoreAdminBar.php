@@ -34,7 +34,7 @@ trait CoreAdminBar
 	 * @param bool $check_for_mobile
 	 * @return bool
 	 */
-	protected function adminbar__check_general( false|string|null $context = NULL, ?bool $check_for_mobile = NULL ): bool
+	protected function adminbar__check_general( null|false|string $context = NULL, ?bool $check_for_mobile = NULL ): bool
 	{
 		if ( is_admin() )
 			return FALSE;
@@ -65,7 +65,7 @@ trait CoreAdminBar
 	 * @param bool $check_for_mobile
 	 * @return false|object
 	 */
-	protected function adminbar__check_singular_post( string|array|null $posttypes = NULL, ?string $capability = NULL, ?bool $check_for_mobile = NULL ): false|object
+	protected function adminbar__check_singular_post( null|string|array $posttypes = NULL, ?string $capability = NULL, ?bool $check_for_mobile = NULL ): false|object
 	{
 		if ( is_admin() )
 			return FALSE;
@@ -115,7 +115,7 @@ trait CoreAdminBar
 	 * @param false|string $spinner
 	 * @return string
 	 */
-	protected function adminbar__get_spinner( false|string|null $spinner = NULL ): string
+	protected function adminbar__get_spinner( null|false|string $spinner = NULL ): string
 	{
 		if ( FALSE === $spinner )
 			return '';

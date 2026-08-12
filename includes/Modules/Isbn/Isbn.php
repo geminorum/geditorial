@@ -318,7 +318,7 @@ class Isbn extends gEditorial\Module
 		}
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),

@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreConstants
 {
-	public function constant( $key, $default = FALSE )
+	public function constant( mixed $key, mixed $default = FALSE ): mixed
 	{
 		if ( ! $key || ! is_string( $key ) )
 			return $default;
@@ -26,7 +26,7 @@ trait CoreConstants
 		return $default;
 	}
 
-	public function constants( $keys, $pre = [] )
+	public function constants( string|array $keys, array $pre = [] ): array
 	{
 		foreach ( (array) $keys as $key )
 			if ( $constant = $this->constant( $key ) )
@@ -35,7 +35,7 @@ trait CoreConstants
 		return Core\Arraay::prepString( $pre );
 	}
 
-	public function constant_plural( $key, $default = FALSE )
+	public function constant_plural( mixed $key, mixed $default = FALSE ): mixed
 	{
 		if ( ! $key )
 			return $default;
@@ -52,7 +52,7 @@ trait CoreConstants
 		return [ $singular, $plural ];
 	}
 
-	public function constant_in( $constant, $array )
+	public function constant_in( mixed $constant, array $array ): bool
 	{
 		if ( ! $constant )
 			return FALSE;
@@ -63,7 +63,7 @@ trait CoreConstants
 		return in_array( $key, $array, TRUE );
 	}
 
-	protected function _get_global_constants()
+	protected function _get_global_constants(): array
 	{
 		$list = [];
 

@@ -174,7 +174,7 @@ class API extends Core\Base
 	/**
 	 * Generates the proper string for a name attribute.
 	 *
-	 * @param array|string $name The raw name
+	 * @param string|array $name The raw name
 	 *
 	 * @return string
 	 */

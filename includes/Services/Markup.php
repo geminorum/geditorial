@@ -161,7 +161,7 @@ class Markup extends gEditorial\Service
 	 * @param string $delimiter
 	 * @return array
 	 */
-	public static function getSeparated( mixed $string, string|array|null $delimiters = NULL, ?int $limit = NULL, ?string $delimiter = NULL ): array
+	public static function getSeparated( mixed $string, null|string|array $delimiters = NULL, ?int $limit = NULL, ?string $delimiter = NULL ): array
 	{
 		return WordPress\Strings::getSeparated(
 			$string,

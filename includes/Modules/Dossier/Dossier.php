@@ -408,7 +408,7 @@ class Dossier extends gEditorial\Module
 		return $value;
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'primary_posttype' ),
@@ -427,7 +427,7 @@ class Dossier extends gEditorial\Module
 		);
 	}
 
-	public function span_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function span_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
@@ -440,7 +440,7 @@ class Dossier extends gEditorial\Module
 		);
 	}
 
-	public function cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function cover_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'primary_posttype' );
 		$args = [

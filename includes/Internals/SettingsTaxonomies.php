@@ -118,7 +118,7 @@ trait SettingsTaxonomies
 	}
 
 	// enabled taxonomies for this module
-	public function taxonomies( string|array|null $taxonomies = NULL ): array
+	public function taxonomies( null|string|array $taxonomies = NULL ): array
 	{
 		if ( is_null( $taxonomies ) )
 			$taxonomies = [];

@@ -869,7 +869,7 @@ class StaticCovers extends gEditorial\Module
 		], $url_template );
 	}
 
-	public function post_cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function post_cover_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id' => is_singular() ? get_queried_object_id() : NULL,
@@ -946,7 +946,7 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	public function term_cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function term_cover_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id' => ( is_tax() || is_tag() || is_category() ) ? get_queried_object_id() : NULL,

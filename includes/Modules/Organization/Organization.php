@@ -516,7 +516,7 @@ class Organization extends gEditorial\Module
 		] );
 	}
 
-	public function subterm_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function subterm_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),

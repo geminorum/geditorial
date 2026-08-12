@@ -113,7 +113,7 @@ class WcShortcodes extends gEditorial\Module
 	}
 
 	// @REF: https://gist.github.com/hamidrezayazdani/c0e2f0be5142ee12691dca0b09337114
-	public function wc_stock_status_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_stock_status_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id'      => get_queried_object_id(),
@@ -152,7 +152,7 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_scheduled_on_sales_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_scheduled_on_sales_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$columns = wc_get_default_products_per_row();
 		$args    = WordPress\ShortCode::attributes( [
@@ -239,7 +239,7 @@ class WcShortcodes extends gEditorial\Module
 	 * @param string $tag
 	 * @return string
 	 */
-	public function wc_order_count_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function wc_order_count_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'status'  => 'completed',

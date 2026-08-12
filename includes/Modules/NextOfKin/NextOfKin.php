@@ -361,7 +361,7 @@ class NextOfKin extends gEditorial\Module
 			: $template;
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}

@@ -441,7 +441,7 @@ trait CorePostTypes
 		return array_keys( $this->settings_supports_defaults( $constant ) );
 	}
 
-	protected function settings_supports_defaults( string $constant, string|array|null $excludes = NULL ): array
+	protected function settings_supports_defaults( string $constant, null|string|array $excludes = NULL ): array
 	{
 		// default excludes
 		if ( is_null( $excludes ) )
@@ -461,7 +461,7 @@ trait CorePostTypes
 		return $supports;
 	}
 
-	protected function settings_supports_option( string $constant, mixed $defaults = TRUE, string|array|null $excludes = NULL ): array
+	protected function settings_supports_option( string $constant, mixed $defaults = TRUE, null|string|array $excludes = NULL ): array
 	{
 		$supports = $this->settings_supports_defaults( $constant, $excludes );
 

@@ -610,7 +610,11 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'address':
 
-					return Locations::prepAddress( $raw ?: $value, 'display', $raw ?: $value );
+					return Locations::prepAddress(
+						$raw ?: $value,
+						NULL, // $context, // maybe `admin`!
+						$raw ?: $value
+					);
 
 				case 'year':
 
@@ -739,7 +743,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
-			case 'contact'    : return Services\Contacts::prepContact( $raw ?: $value );
+			case 'contact'    : return Contacts::prepContact( $raw ?: $value );
 		}
 
 		// NOTE: fifth priority: last resorts

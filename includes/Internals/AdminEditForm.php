@@ -25,7 +25,7 @@ trait AdminEditForm
 		);
 	}
 
-	protected function _hook_editform_globalsummary( true|string|null $option_key = NULL, ?int $priority = NULL ): bool
+	protected function _hook_editform_globalsummary( null|true|string $option_key = NULL, ?int $priority = NULL ): bool
 	{
 		if ( $option_key !== TRUE && ! $this->get_setting( $option_key ?? 'display_globalsummary' ) )
 			return FALSE;

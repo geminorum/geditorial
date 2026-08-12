@@ -11,7 +11,7 @@ trait PostsToPosts
 {
 
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
-	protected function p2p_register( string $constant, string|array|null $posttypes = NULL ): bool|string
+	protected function p2p_register( string $constant, null|string|array $posttypes = NULL ): bool|string
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = $this->posttypes();

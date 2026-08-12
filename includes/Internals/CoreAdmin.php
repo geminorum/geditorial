@@ -107,7 +107,7 @@ trait CoreAdmin
 	}
 
 	// NOTE: on target post-type screen only
-	protected function coreadmin__hook_taxonomy_display_states( array|string $constants, true|string|null $setting = NULL, bool $default_setting = FALSE, ?int $priority = NULL ): bool
+	protected function coreadmin__hook_taxonomy_display_states( string|array $constants, null|true|string $setting = NULL, bool $default_setting = FALSE, ?int $priority = NULL ): bool
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'admin_displaystates', $default_setting ) )
 			return FALSE;

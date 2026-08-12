@@ -1114,7 +1114,7 @@ trait CoreTaxonomies
 	}
 
 	// TODO: support term colors. @see `coreadmin__hook_taxonomy_display_states()`
-	protected function hook_taxonomy_parents_as_views( object $screen, string $constant, true|string|null $setting = NULL ): bool
+	protected function hook_taxonomy_parents_as_views( object $screen, string $constant, null|true|string $setting = NULL ): bool
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'parents_as_views' ) )
 			return FALSE;
@@ -1179,7 +1179,7 @@ trait CoreTaxonomies
 	 * @param bool|string $setting
 	 * @return bool
 	 */
-	protected function hook_taxonomy_importer_term_parents( string $taxonomy, true|string|null $setting = NULL ): bool
+	protected function hook_taxonomy_importer_term_parents( string $taxonomy, null|true|string $setting = NULL ): bool
 	{
 		if ( TRUE !== $setting && ! $this->get_setting( $setting ?? 'force_parents' ) )
 			return FALSE;

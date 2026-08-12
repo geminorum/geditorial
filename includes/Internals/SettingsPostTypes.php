@@ -120,7 +120,7 @@ trait SettingsPostTypes
 	}
 
 	// Enabled post-types for this module
-	public function posttypes( string|array|null $posttypes = NULL ): array
+	public function posttypes( null|string|array $posttypes = NULL ): array
 	{
 		if ( is_null( $posttypes ) )
 			$posttypes = [];
@@ -281,7 +281,7 @@ trait SettingsPostTypes
 	 * @param string|array $supports
 	 * @return array
 	 */
-	protected function get_settings_posttypes_for_target( string $target, string|array $extra = [], ?string $capability = NULL, string|array|null $supports = NULL ): array
+	protected function get_settings_posttypes_for_target( string $target, string|array $extra = [], ?string $capability = NULL, null|string|array $supports = NULL ): array
 	{
 		$list       = [];
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );

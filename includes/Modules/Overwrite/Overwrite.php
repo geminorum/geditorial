@@ -20,7 +20,9 @@ class Overwrite extends gEditorial\Module
 			'icon'     => 'editor-strikethrough',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',
-			'keywords' => [],
+			'keywords' => [
+				'localization',
+			],
 		];
 	}
 
@@ -35,7 +37,7 @@ class Overwrite extends gEditorial\Module
 			$posttype_object = WordPress\PostType::object( $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_plural',
+				'field' => self::und( 'posttype', $posttype_name, 'plural' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -47,7 +49,7 @@ class Overwrite extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_singular',
+				'field' => self::und( 'posttype', $posttype_name, 'singular' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -59,7 +61,7 @@ class Overwrite extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_featured',
+				'field' => self::und( 'posttype', $posttype_name, 'featured' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -71,7 +73,7 @@ class Overwrite extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field'       => 'posttype_'.$posttype_name.'_menuname',
+				'field'       => self::und( 'posttype', $posttype_name, 'menuname' ),
 				'type'        => 'text',
 				'title'       => sprintf(
 					/* translators: `%s`: supported object label */
@@ -90,7 +92,7 @@ class Overwrite extends gEditorial\Module
 			$taxonomy_object = WordPress\Taxonomy::object( $taxonomy_name );
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_plural',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'plural' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -102,7 +104,7 @@ class Overwrite extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_singular',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'singular' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -114,7 +116,7 @@ class Overwrite extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_menuname',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'menuname' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -188,7 +190,7 @@ class Overwrite extends gEditorial\Module
 	{
 		return $this->filters( 'taxonomies_excluded',
 			gEditorial\Settings::taxonomiesExcluded( get_taxonomies( [
-				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,   // NOTE: gEditorial prop
+				Services\Paired::PAIRED_POSTTYPE_PROP => TRUE,   // NOTE: `gEditorial` prop
 			], 'names', 'or' ) + $extra, $this->keep_taxonomies )
 		);
 	}
@@ -305,8 +307,8 @@ class Overwrite extends gEditorial\Module
 
 					return array_merge( $messages, [
 						$posttype->name => Services\CustomPostType::generateMessages( [
-							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
-							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
+							'plural'   => $this->get_setting_fallback( self::und( 'posttype', $posttype->name, 'plural' ), $posttype->labels->name ),
+							'singular' => $this->get_setting_fallback( self::und( 'posttype', $posttype->name, 'singular' ), $posttype->labels->singular_name ),
 						], $posttype->name ),
 					] );
 				}, 12 );
@@ -320,8 +322,8 @@ class Overwrite extends gEditorial\Module
 
 					return array_merge( $messages, [
 						$posttype->name => Services\CustomPostType::generateBulkMessages( [
-							'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_plural', $posttype->labels->name ),
-							'singular' => $this->get_setting_fallback( 'posttype_'.$posttype->name.'_singular', $posttype->labels->singular_name ),
+							'plural'   => $this->get_setting_fallback( self::und( 'posttype', $posttype->name, 'plural' ), $posttype->labels->name ),
+							'singular' => $this->get_setting_fallback( self::und( 'posttype', $posttype->name, 'singular' ), $posttype->labels->singular_name ),
 						], $counts, $posttype->name ),
 					] );
 				}, 12, 2 );
@@ -343,12 +345,12 @@ class Overwrite extends gEditorial\Module
 			add_filter( "post_type_labels_{$posttype}", function ( $labels ) use ( $posttype, $keeps ) {
 
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
-				$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
+				$customs['menu_name'] = $this->get_setting_fallback( self::und( 'posttype', $posttype, 'menuname' ), $labels->menu_name );
 
 				return (object) Services\CustomPostType::generateLabels( [
-					'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
-					'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
-				], $this->get_setting_fallback( 'posttype_'.$posttype.'_featured', $labels->featured_image ), $customs, $posttype );
+					'plural'   => $this->get_setting_fallback( self::und( 'posttype', $posttype, 'plural' ), $labels->name ),
+					'singular' => $this->get_setting_fallback( self::und( 'posttype', $posttype, 'singular' ), $labels->singular_name ),
+				], $this->get_setting_fallback( self::und( 'posttype', $posttype, 'featured' ), $labels->featured_image ), $customs, $posttype );
 
 			}, 9 );
 	}
@@ -368,16 +370,16 @@ class Overwrite extends gEditorial\Module
 			add_filter( "taxonomy_labels_{$taxonomy}", function ( $labels ) use ( $taxonomy, $keeps ) {
 
 				$customs = Core\Arraay::keepByKeys( (array) $labels, $keeps );
-				$customs['menu_name'] = $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_menuname', $labels->menu_name );
+				$customs['menu_name'] = $this->get_setting_fallback( self::und( 'taxonomy', $taxonomy, 'menuname' ), $labels->menu_name );
 
 				return (object) Services\CustomTaxonomy::generateLabels( [
-					'plural'   => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_plural', $labels->name ),
-					'singular' => $this->get_setting_fallback( 'taxonomy_'.$taxonomy.'_singular', $labels->singular_name ),
+					'plural'   => $this->get_setting_fallback( self::und( 'taxonomy', $taxonomy, 'plural' ), $labels->name ),
+					'singular' => $this->get_setting_fallback( self::und( 'taxonomy', $taxonomy, 'singular' ), $labels->singular_name ),
 				], $customs, $taxonomy );
 			}, 9 );
 	}
 
-	public function paired_registered( $posttype, $taxonomy, $subterm, $primary, $hierarchical, $private, $supported )
+	public function paired_registered( string $posttype, string $taxonomy, $subterm, $primary, $hierarchical, $private, $supported )
 	{
 		global $wp_post_types, $wp_taxonomies;
 
@@ -397,11 +399,11 @@ class Overwrite extends gEditorial\Module
 
 		$labels  = $wp_post_types[$posttype]->labels;
 		$customs = Core\Arraay::keepByKeys( (array) $wp_taxonomies[$taxonomy]->labels, $keeps );
-		$customs['menu_name'] = $this->get_setting_fallback( 'posttype_'.$posttype.'_menuname', $labels->menu_name );
+		$customs['menu_name'] = $this->get_setting_fallback( self::und( 'posttype', $posttype, 'menuname' ), $labels->menu_name );
 
 		$wp_taxonomies[$taxonomy]->labels = (object) Services\CustomTaxonomy::generateLabels( [
-			'plural'   => $this->get_setting_fallback( 'posttype_'.$posttype.'_plural', $labels->name ),
-			'singular' => $this->get_setting_fallback( 'posttype_'.$posttype.'_singular', $labels->singular_name ),
+			'plural'   => $this->get_setting_fallback( self::und( 'posttype', $posttype, 'plural' ), $labels->name ),
+			'singular' => $this->get_setting_fallback( self::und( 'posttype', $posttype, 'singular' ), $labels->singular_name ),
 		], $customs, $taxonomy );
 
 		$wp_taxonomies[$taxonomy]->label  = $wp_taxonomies[$taxonomy]->labels->name;

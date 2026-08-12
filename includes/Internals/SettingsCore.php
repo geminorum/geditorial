@@ -368,7 +368,6 @@ trait SettingsCore
 	protected function get_current_form( array $defaults, ?string $context = NULL ): array
 	{
 		$context  = $context ?? 'settings';
-		// $base_key = $this->hook_base( $this->module->name );
 		$base_key = $this->hook();
 
 		$req = empty( $_REQUEST[$base_key][$context] )
@@ -382,7 +381,6 @@ trait SettingsCore
 	protected function fields_current_form( array $fields, ?string $context = NULL, array $excludes = [] ): void
 	{
 		$context  = $context ?? 'settings';
-		// $base_key = $this->hook_base( $this->module->name );
 		$base_key = $this->hook();
 
 		foreach ( $fields as $key => $value ) {
@@ -751,9 +749,9 @@ trait SettingsCore
 				Services\Modulation::addSection( $this->hook_base( $this->module->name ), [
 					'id'            => $section,
 					'callback'      => $callback,
-					'title'         => empty( $title[0] ) ? Services\Modulation::makeSectionTitle( $section_suffix ) : $title[0],
-					'description'   => empty( $title[1] ) ? FALSE : $title[1],
-					'link'          => empty( $title[2] ) ? FALSE : $title[2],
+					'title'         => $title[0] ?? Services\Modulation::makeSectionTitle( $section_suffix ),
+					'description'   => $title[1] ?? FALSE,
+					'link'          => $title[2] ?? FALSE,
 					'section_class' => 'settings_section',
 				] );
 
@@ -884,10 +882,8 @@ trait SettingsCore
 	{
 		$field = array_merge( [
 			'options'      => $this->options->settings ?? [],
-			// 'option_base'  => $this->hook_base( $this->module->name ),
 			'option_base'  => $this->hook(),
 			'option_group' => 'settings',
-			// 'id_name_cb'   => [ $this, 'settings_id_name_cb' ],
 			'id_name_cb'   => [ gEditorial\Settings::class, 'settings_id_name_callback' ],
 		], $atts );
 

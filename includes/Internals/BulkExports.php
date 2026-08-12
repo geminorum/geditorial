@@ -223,7 +223,7 @@ trait BulkExports
 		array $taxes = [],
 		array $customs = [],
 		?string $format = 'xlsx',
-	): array|string {
+	): string|array {
 
 		$data = [];
 

@@ -91,7 +91,7 @@ trait CoreColumns
 		mixed $icon = NULL,
 		?string $title = NULL,
 		string $posttype = 'post',
-		array|string $extra = [],
+		string|array $extra = [],
 	): string {
 
 		return Core\HTML::tag( ( $link ? 'a' : 'span' ), [

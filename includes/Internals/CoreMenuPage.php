@@ -91,7 +91,7 @@ trait CoreMenuPage
 			$capability,
 			$menu_slug,
 			( empty( $callback ) ? ( is_callable( $default_callback ) ? $default_callback : '' ) : $callback ),
-			( $position ?? ( $this->positions[$context] ?? NULL ) )
+			$position ?? $this->positions[$context] ?? NULL,
 		);
 
 		if ( $this->screens[$context] && is_callable( $default_loading ) )

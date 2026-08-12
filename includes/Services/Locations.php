@@ -27,7 +27,7 @@ class Locations extends gEditorial\Service
 	}
 
 	// OLD: `WordPress\Strings::prepAddress()`
-	public static function prepAddress( mixed $input, ?string $context = 'display', null|false|string $fallback = FALSE ): null|false|string
+	public static function prepAddress( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
 		if ( self::empty( $input ) )
 			return $fallback;

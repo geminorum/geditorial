@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreDashboard
 {
-	protected function dashboard_glance_post( string $constant, string|array|null $roles = NULL ): false|string
+	protected function dashboard_glance_post( string $constant, null|string|array $roles = NULL ): false|string
 	{
 		if ( ! $this->role_can( $roles ) )
 			return FALSE;
@@ -23,7 +23,7 @@ trait CoreDashboard
 		);
 	}
 
-	protected function dashboard_glance_taxonomy( string $constant, string|array|null $roles = NULL ): false|string
+	protected function dashboard_glance_taxonomy( string $constant, null|string|array $roles = NULL ): false|string
 	{
 		if ( ! $this->role_can( $roles ) )
 			return FALSE;

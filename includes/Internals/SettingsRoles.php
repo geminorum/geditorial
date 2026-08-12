@@ -12,14 +12,14 @@ trait SettingsRoles
 	/**
 	 * Gets default roles for use in settings.
 	 *
-	 * @param array|string $extra_excludes
-	 * @param array|string $force_include
+	 * @param string|array $extra_excludes
+	 * @param string|array $force_include
 	 * @param bool $filtered
 	 * @return array
 	 */
 	protected function get_settings_default_roles(
-		array|string $extra_excludes = [],
-		array|string $force_include = [],
+		string|array $extra_excludes = [],
+		string|array $force_include = [],
 		bool $filtered = TRUE,
 	): array {
 

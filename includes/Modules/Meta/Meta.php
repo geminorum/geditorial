@@ -876,7 +876,11 @@ class Meta extends gEditorial\Module
 				if ( 'export' === $context )
 					return Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $raw ?: $meta ) );
 
-				return Services\Locations::prepAddress( $raw ?: $meta, $context, $raw ?: $meta );
+				return Services\Locations::prepAddress(
+					$raw ?: $meta,
+					$context,
+					$raw ?: $meta,
+				);
 
 			case 'year':
 

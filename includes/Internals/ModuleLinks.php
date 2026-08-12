@@ -306,7 +306,7 @@ trait ModuleLinks
 		return $contexts;
 	}
 
-	protected function modulelinks__get_context_icon( string $context, string|array|null $fallback = NULL ): string|array
+	protected function modulelinks__get_context_icon( string $context, null|string|array $fallback = NULL ): string|array
 	{
 		switch ( $context ) {
 			case 'customs' : return 'admin-customizer';

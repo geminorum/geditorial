@@ -10,18 +10,18 @@ use geminorum\gEditorial\WordPress;
 trait Calendars
 {
 
-	public function get_calendar_mode( array|string|null $default = NULL ): string
+	public function get_calendar_mode( null|string|array $default = NULL ): string
 	{
 		return 1 === count( $this->get_calendars( $default ) ) ? 'singular' : 'multiple';
 	}
 
-	public function get_calendars( array|string|null $default = NULL ): array
+	public function get_calendars( null|string|array $default = NULL ): array
 	{
 		return $this->get_setting( 'calendar_list', (array) ( $default ?? Core\L10n::calendar() ) );
 	}
 
 	// @old: `$this->get_calendars()`
-	public function list_calendars( array|string|null $default = NULL, bool $filtered = TRUE ): array
+	public function list_calendars( null|string|array $default = NULL, bool $filtered = TRUE ): array
 	{
 		return array_intersect_key(
 			Services\Calendars::getDefualts( $filtered ),

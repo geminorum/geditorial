@@ -53,7 +53,7 @@ trait CoreCapabilities
 		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
-		add_filter( 'map_meta_cap',
+		return add_filter( 'map_meta_cap',
 			function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
 
 				switch ( $cap ) {
@@ -121,8 +121,6 @@ trait CoreCapabilities
 
 				return $caps;
 			}, 10, 4 );
-
-		return TRUE;
 	}
 
 	/**
@@ -132,12 +130,12 @@ trait CoreCapabilities
 	 * @param string $constant
 	 * @return bool
 	 */
-	protected function corecaps__handle_taxonomy_metacaps_forced( $constant )
+	protected function corecaps__handle_taxonomy_metacaps_forced( string $constant ): bool
 	{
 		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
-		add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+		return add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
 
 			switch ( $cap ) {
 
@@ -174,20 +172,19 @@ trait CoreCapabilities
 
 			return $caps;
 		}, 10, 4 );
-
-		return TRUE;
 	}
 
 	/**
 	 * Retrieves setting arguments for given taxonomy constant roles.
 	 *
 	 * @param string $constant
+	 * @param bool $restricted
 	 * @param bool $locking
 	 * @param array $terms
 	 * @param string $empty
 	 * @return array
 	 */
-	protected function corecaps_taxonomy_get_roles_settings( $constant, $restricted = FALSE, $locking = FALSE, $terms = NULL, $empty = NULL )
+	protected function corecaps_taxonomy_get_roles_settings( string $constant, bool $restricted = FALSE, bool $locking = FALSE, ?array $terms = NULL, ?string $empty = NULL ): array
 	{
 		if ( ! $taxonomy = $this->constant( $constant ) )
 			return [];

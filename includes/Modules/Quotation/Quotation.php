@@ -311,7 +311,7 @@ class Quotation extends gEditorial\Module
 		return $title;
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'main_posttype' ),

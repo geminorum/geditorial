@@ -280,14 +280,14 @@ class Modified extends gEditorial\Module
 		$this->wrap_content_insert( $html, $extra );
 	}
 
-	public function entry_modified_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function entry_modified_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->modified_data_summary( array_merge( [
 			'echo' => FALSE,
 		], (array) $atts ) );
 	}
 
-	public function post_modified_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function post_modified_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id'             => get_queried_object_id(),
@@ -368,7 +368,7 @@ class Modified extends gEditorial\Module
 		echo $before.Core\HTML::code( '{SITE_LAST_MODIFIED}', FALSE, TRUE ).$after;
 	}
 
-	public function site_modified_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function site_modified_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'format'         => NULL,

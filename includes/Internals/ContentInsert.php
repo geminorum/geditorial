@@ -65,7 +65,7 @@ trait ContentInsert
 	}
 	```***/
 
-	protected function wrap_content_insert( mixed $html, array|string $extra = [], null|false|string $insert = NULL ): void
+	protected function wrap_content_insert( mixed $html, string|array $extra = [], null|false|string $insert = NULL ): void
 	{
 		if ( ! $html )
 			return;

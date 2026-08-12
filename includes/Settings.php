@@ -2338,7 +2338,7 @@ class Settings extends WordPress\Main
 		return $returns;
 	}
 
-	public static function processingAllDone( ?string $message = NULL, string|array|null $remove = NULL ): true
+	public static function processingAllDone( ?string $message = NULL, null|string|array $remove = NULL ): true
 	{
 		if ( FALSE !== $message )
 			echo self::toolboxColumnOpen( $message ?? Plugin::done( FALSE ) );
@@ -2355,7 +2355,7 @@ class Settings extends WordPress\Main
 		return TRUE;
 	}
 
-	public static function goBackButton( string|array|null $remove = NULL ): string
+	public static function goBackButton( null|string|array $remove = NULL ): string
 	{
 		return Core\Link::button(
 			_x( '&larr; Go-back', 'Settings: Button', 'geditorial-admin' ),

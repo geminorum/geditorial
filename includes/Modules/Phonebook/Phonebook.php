@@ -429,7 +429,7 @@ class Phonebook extends gEditorial\Module
 		$wp_query->set( 's', $sanitized );
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return $this->subcontent_do_main_shortcode( $atts, $content, $tag );
 	}
@@ -544,7 +544,7 @@ class Phonebook extends gEditorial\Module
 			return $data;
 
 		if ( array_key_exists( 'home_address', $data ) )
-			$data['address'] = Services\Locations::prepAddress( $data['home_address'], 'export', '' );
+			$data['address'] = Services\Locations::prepAddress( $data['home_address'], 'export' );
 
 		if ( empty( $data['phone'] ) ) {
 

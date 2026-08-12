@@ -295,9 +295,9 @@ trait Strings
 		if ( is_null( $title ) )
 			$title = $this->get_string( 'meta_box_title', $constant, 'misc', _x( 'Settings', 'Module: MetaBox Default Title', 'geditorial-admin' ) );
 
-		return $title; // <-- // FIXME: problems with block editor
+		return $title; // <- // FIXME: problems with block editor
 
-		// TODO: 'metabox_icon'
+		// TODO: `metabox_icon`
 		if ( $info = $this->get_string( 'metabox_info', $constant, 'metabox', NULL ) )
 			$title.= WordPress\MetaBox::markupTitleHelp( $info );
 

@@ -90,7 +90,7 @@ class ModuleTemplate extends gEditorial\Template
 	}
 
 	#[\Deprecated()]
-	public static function sanitize_field( array|string $field ): array
+	public static function sanitize_field( string|array $field ): array
 	{
 		if ( is_array( $field ) )
 			return $field;

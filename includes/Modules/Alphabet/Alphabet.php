@@ -62,7 +62,7 @@ class Alphabet extends gEditorial\Module
 		$this->register_shortcode( 'shortcode_terms', TRUE );
 	}
 
-	public function shortcode_posts( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function shortcode_posts( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'locale'            => Core\L10n::locale( TRUE ),
@@ -238,7 +238,7 @@ class Alphabet extends gEditorial\Module
 		return $html;
 	}
 
-	public function shortcode_terms( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function shortcode_terms( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'locale'             => Core\L10n::locale( TRUE ),

@@ -53,7 +53,7 @@ class Icons extends gEditorial\Service
 	}
 
 	// OLD: `Visual::getMenuIcon()`
-	public static function menu( array|string $icon, ?string $fallback_icon = NULL ): string
+	public static function menu( string|array $icon, ?string $fallback_icon = NULL ): string
 	{
 		if ( ! $icon )
 			$icon = $fallback_icon ?? 'screenoptions';

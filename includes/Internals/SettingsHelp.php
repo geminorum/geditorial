@@ -47,7 +47,7 @@ trait SettingsHelp
 				);
 	}
 
-	protected function help_tab_default_terms( $taxonomy, $terms )
+	protected function help_tab_default_terms( mixed $taxonomy, ?array $terms ): void
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;

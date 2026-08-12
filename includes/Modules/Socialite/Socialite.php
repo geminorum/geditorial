@@ -535,7 +535,7 @@ class Socialite extends gEditorial\Module
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'fallback_icon' => NULL,
@@ -593,7 +593,7 @@ class Socialite extends gEditorial\Module
 		);
 	}
 
-	public function shortcode_posts( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function shortcode_posts( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id'      => NULL,
@@ -625,7 +625,7 @@ class Socialite extends gEditorial\Module
 		);
 	}
 
-	public function shortcode_terms( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function shortcode_terms( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$args = WordPress\ShortCode::attributes( [
 			'id'      => NULL,

@@ -465,7 +465,7 @@ class Course extends gEditorial\Module
 		return ModuleTemplate::spanTiles();
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'paired',
 			$this->constant( 'course_posttype' ),
@@ -481,7 +481,7 @@ class Course extends gEditorial\Module
 		);
 	}
 
-	public function span_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function span_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'course_posttype' ),
@@ -494,7 +494,7 @@ class Course extends gEditorial\Module
 		);
 	}
 
-	public function cover_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function cover_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		$type = $this->constant( 'course_posttype' );
 		$args = [

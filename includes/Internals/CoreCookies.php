@@ -15,7 +15,7 @@ trait CoreCookies
 	 * @param string $suffix
 	 * @return string
 	 */
-	public function corecookies_name( $suffix = '' )
+	public function corecookies_name( string $suffix = '' ): string
 	{
 		return $this->classs( $this->site, $suffix );
 	}
@@ -30,7 +30,7 @@ trait CoreCookies
 	 * @param string $suffix
 	 * @return bool
 	 */
-	public function corecookies_set( $data, $append = TRUE, $expire = '+ 365 day', $suffix = '' )
+	public function corecookies_set( array $data, bool $append = TRUE, string $expire = '+ 365 day', string $suffix = '' ): bool
 	{
 		$name = $this->corecookies_name( $suffix );
 
@@ -61,7 +61,7 @@ trait CoreCookies
 	 * @param string $suffix
 	 * @return array
 	 */
-	public function corecookies_get( $suffix = '' )
+	public function corecookies_get( string $suffix = '' ): array
 	{
 		$name = $this->corecookies_name( $suffix );
 
@@ -77,7 +77,7 @@ trait CoreCookies
 	 * @param string $suffix
 	 * @return bool
 	 */
-	public function corecookies_clear( $suffix = '' )
+	public function corecookies_clear( string $suffix = '' ): bool
 	{
 		return setcookie(
 			$this->corecookies_name( $suffix ),

@@ -147,14 +147,14 @@ trait CoreRestrictPosts
 	 * @param string $query_var
 	 * @return bool
 	 */
-	protected function corerestrictposts__hook_parsequery_for_post_parent( $constant, $query_var = NULL )
+	protected function corerestrictposts__hook_parsequery_for_post_parent( string $constant, ?string $query_var = NULL ): bool
 	{
 		$posttype  = $this->constant( $constant, $constant );
 		$query_var = $query_var ?? self::und( $posttype, 'parent' );
 
 		$this->filter_append( 'query_vars', $query_var );
 
-		add_action( 'parse_query',
+		return add_action( 'parse_query',
 			static function ( &$query )
 				use ( $query_var ) {
 
@@ -165,14 +165,13 @@ trait CoreRestrictPosts
 				$query->query_vars['post_parent'] = $query->query_vars[$query_var];
 
 			}, 12, 1 );
-
-		return TRUE;
 	}
 
 	/**
 	 * Hooks column row for post children information.
 	 * NOTE: the post children are from a different post-type
 	 *
+	 * @param string $parent_type
 	 * @param string $constant
 	 * @param string $icon
 	 * @param string $module
@@ -180,7 +179,7 @@ trait CoreRestrictPosts
 	 * @param int $priority
 	 * @return bool
 	 */
-	protected function corerestrictposts__hook_columnrow_for_post_children( $parent_type, $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
+	protected function corerestrictposts__hook_columnrow_for_post_children( string $parent_type, string $constant, $icon = NULL, $module = NULL, $empty = NULL, $priority = 10 )
 	{
 		$posttype = $this->constant( $constant, $constant );
 		$can      = WordPress\PostType::can( $posttype, 'edit_posts' );

@@ -489,7 +489,7 @@ class Tube extends gEditorial\Module
 		return $output.Core\HTML::wrap( $html, $this->classs( 'video' ) );
 	}
 
-	public function primary_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function primary_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'primary_posttype' ),
@@ -503,7 +503,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function connected_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function connected_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		if ( ! $this->_o2o )
 			return $content;
@@ -525,7 +525,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function secondary_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function secondary_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'assigned',
 			$this->constant( 'secondary_posttype' ),
@@ -539,7 +539,7 @@ class Tube extends gEditorial\Module
 		);
 	}
 
-	public function children_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function children_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return gEditorial\ShortCode::listPosts( 'children',
 			$this->constant( 'secondary_posttype' ),

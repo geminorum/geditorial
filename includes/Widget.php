@@ -61,7 +61,7 @@ class Widget extends \WP_Widget
 		return TRUE;
 	}
 
-	protected static function posttypes( string|array|null $posttypes = NULL, bool $check = FALSE, ?string $module = NULL ): array
+	protected static function posttypes( null|string|array $posttypes = NULL, bool $check = FALSE, ?string $module = NULL ): array
 	{
 		if ( ! $module = $module ?? static::MODULE )
 			return [];
