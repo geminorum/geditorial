@@ -831,7 +831,7 @@ trait CoreTaxonomies
 		string $constant,
 		mixed $passed_argument = NULL,
 		bool $hierarchical = FALSE,
-	): callable|false|null {
+	): null|false|callable {
 
 		if ( ! $passed_argument && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
 			return [ $this, self::und( 'meta_box_cb', $constant ) ];

@@ -99,11 +99,11 @@ trait FramePageViews
 			$data['excerpt']['rendered'] = '';
 
 		$data = WordPress\Strings::stripByProp( $data, 'meta_rendered',  Core\Arraay::prepString( $this->filters( 'post_meta_exclude_rendered',  [], $post, $context ) ), 'name' );
-		// $data = WordPress\Strings::stripByProp( $data, 'units_rendered', Core\Arraay::prepString( $this->filters( 'post_units_exclude_rendered', [], $post, $context ) ), 'name' );
+		// `$data = WordPress\Strings::stripByProp( $data, 'units_rendered', Core\Arraay::prepString( $this->filters( 'post_units_exclude_rendered', [], $post, $context ) ), 'name' );`
 		$data = WordPress\Strings::stripByProp( $data, 'terms_rendered', Core\Arraay::prepString( $this->filters( 'post_terms_exclude_rendered', [], $post, $context ) ), 'name' );
 
 		$data = WordPress\Strings::stripEmptyValues( $data, 'meta_rendered',  'rendered' );
-		// $data = WordPress\Strings::stripEmptyValues( $data, 'units_rendered', 'rendered' );
+		// `$data = WordPress\Strings::stripEmptyValues( $data, 'units_rendered', 'rendered' );`
 		$data = WordPress\Strings::stripEmptyValues( $data, 'terms_rendered', 'rendered' );
 
 		if ( method_exists( $this, 'framepageviews__prep_data_for_post' ) )

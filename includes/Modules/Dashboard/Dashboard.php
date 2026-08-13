@@ -210,7 +210,7 @@ class Dashboard extends gEditorial\Module
 
 		$this->filter( 'the_title', 2, 9 );
 		$this->filter( 'nav_menu_item_title', 4, 9 );
-		$this->filter( 'the_content', 2, 9 );
+		$this->filter( 'the_content', 1, 9 );
 		$this->filter_append( 'post_class', 'editorial-dashboard' );
 
 		return TRUE;

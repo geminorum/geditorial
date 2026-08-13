@@ -40,7 +40,7 @@ class StaticCovers extends gEditorial\Module
 			$default_metakey = $this->filters( 'default_posttype_reference_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_reference_metakey',
+				'field' => self::und( $posttype_name, 'posttype', 'reference_metakey' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -55,7 +55,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_url_template',
+				'field' => self::und( $posttype_name, 'posttype', 'url_template' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -71,7 +71,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_path_template',
+				'field' => self::und( $posttype_name, 'posttype', 'path_template' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -88,7 +88,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_counter_support',
+				'field' => self::und( $posttype_name, 'posttype', 'counter_support' ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
@@ -98,7 +98,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_counter_max',
+				'field' => self::und( $posttype_name, 'posttype', 'counter_max' ),
 				'type'  => 'number',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -117,7 +117,7 @@ class StaticCovers extends gEditorial\Module
 			$default_metakey = $this->filters( 'default_taxonomy_reference_metakey', '', $taxonomy_name );
 
 			$settings['_taxonomies'][] = [
-				'field' => $taxonomy_name.'_taxonomy_reference_metakey',
+				'field' => self::und( $taxonomy_name, 'taxonomy', 'reference_metakey' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -132,7 +132,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => $taxonomy_name.'_taxonomy_url_template',
+				'field' => self::und( $taxonomy_name, 'taxonomy', 'url_template' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -148,7 +148,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => $taxonomy_name.'_taxonomy_path_template',
+				'field' => self::und( $taxonomy_name, 'taxonomy', 'path_template' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -165,7 +165,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => $taxonomy_name.'_taxonomy_counter_support',
+				'field' => self::und( $taxonomy_name, 'taxonomy', 'counter_support' ),
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Support Counter for %s', 'Setting Title', 'geditorial-static-covers' ),
@@ -175,7 +175,7 @@ class StaticCovers extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => $taxonomy_name.'_taxonomy_counter_max',
+				'field' => self::und( $taxonomy_name, 'taxonomy', 'counter_max' ),
 				'type'  => 'number',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -230,17 +230,17 @@ class StaticCovers extends gEditorial\Module
 			return $strings;
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'supportedbox_title' => _x( 'Cover for this &ldquo;%2$s&rdquo;', 'MetaBox Title', 'geditorial-static-covers' ),
 
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Covers for %1$s', 'Button Title', 'geditorial-static-covers' ),
-			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'mainbutton_text'  => _x( '%1$s Static Covers of the %2$s', 'Button Text', 'geditorial-static-covers' ),
 
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'headerbutton_title' => _x( 'Covers for %1$s', 'Button Title', 'geditorial-static-covers' ),
-			/* translators: `%1$s`: icon markup, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: icon markup, `%2$s`: post-type singular name */
 			'headerbutton_text'  => _x( '%1$s Static Covers', 'Button Text', 'geditorial-static-covers' ),
 		];
 

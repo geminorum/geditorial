@@ -145,7 +145,7 @@ class Attachments extends gEditorial\Module
 			$this->action( 'add_attachment', 1, 4, 'auto_rotation' );
 
 		if ( $this->get_setting( 'rewrite_permalink' ) ) {
-			$this->add_rewrite_rule();
+			$this->_add_rewrite_rules();
 			$this->filter( 'attachment_link', 2, 20 );
 		}
 
@@ -199,7 +199,7 @@ class Attachments extends gEditorial\Module
 	}
 
 	// @REF: https://core.trac.wordpress.org/ticket/57913
-	private function _init_attachment_pages()
+	private function _init_attachment_pages(): bool
 	{
 		$query    = $this->constant( 'download_queryvar' );
 		$download = array_key_exists( $query, $_GET );
@@ -230,9 +230,11 @@ class Attachments extends gEditorial\Module
 				$this->filter( 'attachment_fields_to_save', 2, 8 );
 			}
 		}
+
+		return TRUE;
 	}
 
-	public function post_plupload_upload_ui()
+	public function post_plupload_upload_ui(): void
 	{
 		if ( ! $parent = self::req( 'post_id' ) )
 			return;
@@ -252,18 +254,18 @@ class Attachments extends gEditorial\Module
 		) );
 	}
 
-	private function _hook_header_buttons()
+	private function _hook_header_buttons(): false|string
 	{
 		if ( ! $parent = self::req( 'post_parent' ) )
-			return;
+			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( (int) $parent ) )
-			return;
+			return FALSE;
 
 		if ( ! $upload = WordPress\Post::mediaUploadURL( $post ) )
-			return;
+			return FALSE;
 
-		Services\HeaderButtons::register( $this->key, [
+		return Services\HeaderButtons::register( $this->key, [
 			'link' => $upload,
 			'text' => sprintf(
 				/* translators: `%s`: parent post title */
@@ -281,7 +283,7 @@ class Attachments extends gEditorial\Module
 	 * @param string $comment_type
 	 * @return string
 	 */
-	public function get_default_comment_status( $status, $posttype, $comment_type )
+	public function get_default_comment_status( string $status, string $posttype, string $comment_type ): string
 	{
 		if ( 'attachment' !== $posttype )
 			return $status;
@@ -299,7 +301,7 @@ class Attachments extends gEditorial\Module
 	 * @param object $post
 	 * @return array
 	 */
-	public function attachment_fields_to_edit( $form_fields, $post )
+	public function attachment_fields_to_edit( array $form_fields, object $post ): array
 	{
 		$html = '';
 
@@ -341,7 +343,7 @@ class Attachments extends gEditorial\Module
 	 * @param array $attachment
 	 * @return array
 	 */
-	public function attachment_fields_to_save( $post, $attachment )
+	public function attachment_fields_to_save( array $post, array $attachment ): array
 	{
 		if ( ! empty( $attachment['comment_status'] ) )
 			$post['comment_status'] = 'open' === $attachment['comment_status'] ? 'open' : 'closed';
@@ -360,41 +362,43 @@ class Attachments extends gEditorial\Module
 	 * @param int $post_id
 	 * @return void
 	 */
-	public function add_attachment_auto_rotation( $post_id )
+	public function add_attachment_auto_rotation( int $post_id ): void
 	{
 		if ( ! $attachment = WordPress\Post::get( $post_id ) )
-			return FALSE;
+			return;
 
 		if ( 'image/jpeg' !== $attachment->post_mime_type )
-			return FALSE;
+			return;
 
 		$filepath = Core\URL::toPath( $attachment->guid );
 
 		if ( ! Core\Image::rotationJPEG( $filepath ) )
-			return FALSE;
+			return;
 
 		$metadata = wp_generate_attachment_metadata( $attachment->ID, $filepath );
 		wp_update_attachment_metadata( $attachment->ID, $metadata );
 	}
 
-	private function get_prefix_permalink()
+	private function get_prefix_permalink(): string
 	{
 		$prefix = $this->get_setting( 'prefix_permalink' );
 		$prefix = $prefix ?: 'media';
 		return ltrim( rtrim( $prefix, '/' ), '/' );
 	}
 
-	private function add_rewrite_rule()
+	private function _add_rewrite_rules(): bool
 	{
 		add_rewrite_rule(
 			'(.+)/'.$this->get_prefix_permalink().'/([0-9]{1,})/?$',
 			'index.php?attachment_id=$matches[2]',
 			'top'
 		);
+
+		return TRUE;
 	}
 
 	// @REF: https://wordpress.stackexchange.com/a/187817
-	public function attachment_link( $link, $attachment_id )
+	public function attachment_link( string $link, int $attachment_id ): string
 	{
 		if ( ! $attachment = WordPress\Post::get( $attachment_id ) )
 			return $link;
@@ -409,7 +413,7 @@ class Attachments extends gEditorial\Module
 	}
 
 	// @REF: http://wpbeg.in/2yZXJ2n
-	public function ajax_query_attachments_args( $query )
+	public function ajax_query_attachments_args( array $query ): array
 	{
 		$user_id = get_current_user_id();
 

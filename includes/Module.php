@@ -116,6 +116,7 @@ class Module extends WordPress\Module
 		'tools'     => 'edit_others_posts',
 		'uploads'   => 'upload_files',
 		'gizmos'    => 'read',                 // NOTE: `Subscriber` role
+		'kiosks'    => 'read',                 // NOTE: `Subscriber` role
 
 		// 'paired_create' => 'manage_options', // to restrict main post
 		// 'paired_delete' => 'manage_options', // to restrict main post

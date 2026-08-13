@@ -81,8 +81,8 @@ trait TemplateTaxonomy
 	protected function templatetaxonomy__include(
 		string $template,
 		string|array $taxonomies,
-		callable|false|null $empty_callback = NULL,
-		callable|false|null $archive_callback = NULL,
+		null|false|callable $empty_callback = NULL,
+		null|false|callable $archive_callback = NULL,
 	): string {
 
 		global $wp_query;

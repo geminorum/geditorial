@@ -172,7 +172,7 @@ class Organization extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-organization' ),
 		];
 
@@ -182,6 +182,11 @@ class Organization extends gEditorial\Module
 	protected function define_default_terms(): array
 	{
 		return [
+			'type_taxonomy' => [
+				'academic'       => _x( 'Academic', 'Default Term', 'geditorial-organization' ),
+				'administrative' => _x( 'Administrative', 'Default Term', 'geditorial-organization' ),
+				'logistic'       => _x( 'Logistic', 'Default Term', 'geditorial-organization' ),
+			],
 			'status_taxonomy' => [
 				'working'  => _x( 'Working', 'Default Term', 'geditorial-organization' ),
 				'inactive' => _x( 'Inactive', 'Default Term', 'geditorial-organization' ),

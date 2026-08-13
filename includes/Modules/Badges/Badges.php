@@ -180,12 +180,12 @@ class Badges extends gEditorial\Module
 		return $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) );
 	}
 
-	public function post_class( $classes, $css_class, $post_id )
+	public function post_class( array $classes, array $css_class, int $post_id ): array
 	{
-		if ( ! $post = WordPress\Post::type( $post_id ) );
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $classes;
 
-		if ( ! $this->posttype_supported( $post ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $classes;
 
 		$classes[] = $this->classs( 'supported' );
@@ -197,7 +197,7 @@ class Badges extends gEditorial\Module
 		return $classes;
 	}
 
-	public function template_post_image_args( $args, $post, $module, $title )
+	public function template_post_image_args( array $args, object $post, $module, $title ): array
 	{
 		if ( empty( $args['before'] ) )
 			$args['before'] = '';
@@ -208,7 +208,7 @@ class Badges extends gEditorial\Module
 		return $args;
 	}
 
-	public function get_rendered_badges( $post = NULL, $badges = NULL, $fallback = '' )
+	public function get_rendered_badges( mixed $post = NULL, ?array $badges = NULL, null|false|string $fallback = '' ): null|false|string
 	{
 		if ( ! $badges = $badges ?? $this->get_badges( $post ) )
 			return $fallback;
@@ -242,7 +242,7 @@ class Badges extends gEditorial\Module
 		return Core\HTML::wrap( $html, $this->classs() );
 	}
 
-	public function get_badges( $post = NULL )
+	public function get_badges( mixed $post = NULL ): array
 	{
 		return $this->filters( 'badges', WordPress\Taxonomy::getPostTerms( $this->constant( 'main_taxonomy' ), $post ), $post );
 	}

@@ -171,7 +171,7 @@ class Directorate extends gEditorial\Module
 		];
 
 		$strings['metabox'] = [
-			/* translators: `%1$s`: current post title, `%2$s`: posttype singular name */
+			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'listbox_title' => _x( '%2$s Members of &ldquo;%1$s&rdquo;', 'MetaBox: `listbox_title`', 'geditorial-directorate' ),
 		];
 

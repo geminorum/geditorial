@@ -589,8 +589,8 @@ class Tweaks extends gEditorial\Module
 				// TODO: add before action
 				$wp_list_table->column_title( $post );
 				// TODO: add after action
-				// TODO: must hook to 'the_excerpt' for before excerpt
-				// echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );
+				// TODO: must hook to `the_excerpt` for before excerpt
+				// `echo $wp_list_table->handle_row_actions( $post, 'title', $wp_list_table->get_primary_column_name() );`
 				break;
 
 			case $this->classs( 'rows' ):

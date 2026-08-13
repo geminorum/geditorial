@@ -38,6 +38,7 @@ class Personage extends gEditorial\Module
 			'keywords' => [
 				'human',
 				'people',
+				'for-individuals',
 				'cptmodule',
 				'crm-feature',
 			],
@@ -1099,6 +1100,7 @@ class Personage extends gEditorial\Module
 	{
 		echo ModuleSettings::toolboxColumnOpen( _x( 'Personage Tools', 'Header', 'geditorial-personage' ) );
 
+			// TODO: move to `gizmos`
 			ModuleSettings::renderCard_parse_pool();
 
 		echo '</div>';

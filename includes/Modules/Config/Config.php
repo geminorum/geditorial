@@ -132,6 +132,7 @@ class Config extends gEditorial\Module
 		$system = gEditorial\Plugin::system();
 
 		// `dashboard_page_geditorial-kiosks`
+		if ( GEDITORIAL_ALPHA_FEATURES )
 		$this->screens['kiosks'] = add_submenu_page(
 			'index.php',
 			sprintf(

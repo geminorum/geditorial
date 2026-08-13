@@ -185,7 +185,7 @@ class Recount extends gEditorial\Module
 		] );
 	}
 
-	public function taxonomy_bulk_callback( callable|false|null $callback, string $action, string $taxonomy ): callable|false|null
+	public function taxonomy_bulk_callback( null|false|callable $callback, string $action, string $taxonomy ): callable|false|null
 	{
 		$actions = [
 			'recount_recount_items',

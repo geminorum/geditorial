@@ -271,6 +271,7 @@ class Ortho extends gEditorial\Module
 	{
 		echo gEditorial\Settings::toolboxColumnOpen( _x( 'Orthography Tools', 'Header', 'geditorial-ortho' ) );
 
+			// TODO: move to `gizmos`
 			$this->renderCard_tools_sandbox();
 
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
@@ -344,7 +345,6 @@ class Ortho extends gEditorial\Module
 					],
 				] );
 
-
 		echo '</div><br/></div>';
 
 		echo gEditorial\Settings::toolboxAfterOpen(
@@ -353,6 +353,7 @@ class Ortho extends gEditorial\Module
 		echo '</div>';
 	}
 
+	// TODO: move to `tools` context
 	public function reports_settings( string $sub ): void
 	{
 		if ( ! class_exists( 'geminorum\\gNetwork\\Core\\Orthography' ) )
