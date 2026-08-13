@@ -1303,12 +1303,12 @@ trait PairedCore
 			}, 120, 4 );
 	}
 
-	protected function hook_paired_static_covers_secondaries()
+	protected function hook_paired_static_covers_lineup()
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'static_covers', 'post_supported_secondary' ),
+		add_filter( $this->hook_base( 'static_covers', 'post_supported_lineup' ),
 			function ( $supported, $post ) use ( $constants ) {
 
 				if ( ! is_null( $supported ) )
@@ -1323,7 +1323,7 @@ trait PairedCore
 				return $supported;
 			}, 12, 2 );
 
-		add_filter( $this->hook_base( 'static_covers', 'post_supported_secondary_posts' ),
+		add_filter( $this->hook_base( 'static_covers', 'post_supported_lineup_posts' ),
 			function ( $list, $post ) use ( $constants ) {
 
 				if ( $connected = $this->paired_all_connected_to( $post, 'staticcovers' ) )

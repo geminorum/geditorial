@@ -322,14 +322,14 @@ class StaticCovers extends gEditorial\Module
 				}
 
 			} else if ( 'post' === $screen->base
-				&& $this->filters( 'post_supported_secondary', NULL, WordPress\Post::get() ) ) {
+				&& $this->filters( 'post_supported_lineup', NULL, WordPress\Post::get() ) ) {
 
-				$this->_register_headerbuttons_for_post_secondary( $screen->post_type );
+				$this->_register_headerbuttons_for_post_lineup( $screen->post_type );
 			}
 
 		} else if ( in_array( $screen->base, [ 'edit-tags', 'term' ], TRUE ) ) {
 
-			// TODO: `$this->_register_headerbuttons_for_term_secondary( $screen->taxonomy );`
+			// TODO: `$this->_register_headerbuttons_for_term_lineup( $screen->taxonomy );`
 
 			if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
 
@@ -346,7 +346,7 @@ class StaticCovers extends gEditorial\Module
 	{
 		if ( $this->role_can( 'reports' ) ) {
 			$this->_hook_submenu_adminpage( 'overview', 'exist' );
-			$this->_hook_submenu_adminpage( 'secondary', 'exist' ); // maybe rename to `collection` (css-class for template:`photoarray`)
+			$this->_hook_submenu_adminpage( 'lineup', 'exist' );
 		}
 	}
 
@@ -355,9 +355,9 @@ class StaticCovers extends gEditorial\Module
 		return $this->render_default_mainpage( 'overview', 'update' );
 	}
 
-	public function render_secondary_adminpage(): bool
+	public function render_lineup_adminpage(): bool
 	{
-		return $this->render_default_mainpage( 'secondary', 'update' );
+		return $this->render_default_mainpage( 'lineup', 'update' );
 	}
 
 	protected function render_mainpage_content( ?string $sub, ?string $uri, ?string $context, ?array $subs ): bool
@@ -394,14 +394,14 @@ class StaticCovers extends gEditorial\Module
 	{
 		switch ( $context ) {
 
-			case 'secondary':
+			case 'lineup':
 
-				foreach ( $this->filters( 'post_supported_secondary_posts', [], $post ) as $secondary )
-					if ( $src = $this->_get_posttype_image( $secondary ) )
+				foreach ( $this->filters( 'post_supported_lineup_posts', [], $post ) as $_post )
+					if ( $src = $this->_get_posttype_image( $_post ) )
 						$data['covers'][] = [
 							'url'       => $src,
-							'posttitle' => WordPress\Post::title( $secondary ),
-							'postlink'  => WordPress\Post::overview( $secondary ),
+							'posttitle' => WordPress\Post::title( $_post ),
+							'postlink'  => WordPress\Post::overview( $_post ),
 						];
 
 				break;
@@ -1023,7 +1023,7 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	private function _register_headerbuttons_for_post_secondary( $posttype, $post = NULL, $handle = NULL )
+	private function _register_headerbuttons_for_post_lineup( $posttype, $post = NULL, $handle = NULL )
 	{
 		if ( ! $this->role_can( 'reports' ) )
 			return FALSE;
@@ -1033,7 +1033,7 @@ class StaticCovers extends gEditorial\Module
 
 		$link = $this->framepage_get_mainlink_for_post( $post, [
 			'context'      => 'headerbutton',
-			'link_context' => 'secondary',
+			'link_context' => 'lineup',
 			'maxwidth'     => '920px',
 			'extra'        => 'page-title-action -has-icon',
 		] );
