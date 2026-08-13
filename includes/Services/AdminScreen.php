@@ -130,6 +130,7 @@ class AdminScreen extends gEditorial\Service
 			foreach ( [
 				'reports',
 				'tools',
+				'gizmos',
 				'imports',
 				'customs',
 				'settings',

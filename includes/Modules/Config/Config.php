@@ -18,6 +18,7 @@ class Config extends gEditorial\Module
 	protected $caps_map = [
 		'customs'  => 'edit_theme_options',   // Note: `Administrator` role
 		'imports'  => 'import',               // Note: `Administrator` role
+		'gizmos'   => 'read',                 // NOTE: `Subscriber` role
 		'kiosks'   => 'read',                 // NOTE: `Subscriber` role
 		'reports'  => 'publish_posts',        // NOTE: `Author` role
 		'roles'    => 'edit_users',           // Note: `Administrator` role
@@ -70,6 +71,7 @@ class Config extends gEditorial\Module
 
 			case gEditorial\Plugin::CAPABILITY_CUSTOMS:
 			case gEditorial\Plugin::CAPABILITY_IMPORTS:
+			case gEditorial\Plugin::CAPABILITY_GIZMOS:
 			case gEditorial\Plugin::CAPABILITY_KIOSKS:
 			case gEditorial\Plugin::CAPABILITY_REPORTS:
 			case gEditorial\Plugin::CAPABILITY_ROLES:
@@ -188,6 +190,18 @@ class Config extends gEditorial\Module
 		);
 
 		if ( GEDITORIAL_ALPHA_FEATURES )
+		$this->_hook_wp_submenu_page( 'gizmos',
+			$edit ? 'tools.php' : $slug,
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Gizmos', 'Menu Title', 'geditorial-admin' ),
+				$system
+			),
+			NULL,
+			gEditorial\Plugin::CAPABILITY_GIZMOS
+		);
+
+		if ( GEDITORIAL_ALPHA_FEATURES )
 		$this->_hook_wp_submenu_page( 'roles',
 			current_user_can( 'list_users' ) ? 'users.php' : $slug,
 			sprintf(
@@ -223,6 +237,7 @@ class Config extends gEditorial\Module
 		);
 
 		add_action( sprintf( 'load-%s', $this->screens['kiosks'] ), [ $this, 'admin_kiosks_load' ] );
+		add_action( sprintf( 'load-%s', $this->screens['gizmos'] ), [ $this, 'admin_gizmos_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['reports'] ), [ $this, 'admin_reports_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['settings'] ), [ $this, 'admin_settings_load' ] );
 		add_action( sprintf( 'load-%s', $this->screens['tools'] ), [ $this, 'admin_tools_load' ] );
@@ -370,6 +385,21 @@ class Config extends gEditorial\Module
 		gEditorial\Settings::wrapClose( TRUE, $context );
 
 		return TRUE;
+	}
+
+	public function admin_gizmos_page(): bool
+	{
+		return $this->_render_page_by_context( 'gizmos',
+			_x( 'Gizmos', 'Page Title', 'geditorial-admin' )
+		);
+	}
+
+	protected function gizmos_overview( string $uri ): void
+	{
+		Services\AdminScreen::renderLayout( 'gizmos',
+			function ( $context, $screen ) use ( $uri ) {
+				do_action( $this->hook_base( $context, 'overview' ), $uri, $screen );
+			} );
 	}
 
 	public function admin_reports_page(): bool
@@ -623,6 +653,30 @@ class Config extends gEditorial\Module
 
 		$this->action( 'tools_overview', 1, 6, 'notice', $this->base );
 		$this->action( 'tools_overview', 1, 9, 'readme', $this->base );
+	}
+
+	public function admin_gizmos_load(): void
+	{
+		$context = $context ?? 'gizmos';
+		$sub     = gEditorial\Settings::sub();
+
+		if ( 'general' == $sub ) {
+
+			// if ( ! empty( $_POST ) ) {
+			// 	$this->nonce_check( $context, $sub );
+			// }
+
+			add_action( $this->hook_base( $context, 'sub', $sub ), [ $this, 'gizmos_sub' ], 10, 2 );
+
+			$this->register_help_tabs( NULL, $context );
+		}
+
+		do_action( $this->hook_base( $context, 'settings' ),
+			$sub,
+			$context,
+		);
+
+		Services\AdminScreen::enqueueValidator();
 	}
 
 	public function admin_roles_load(): void

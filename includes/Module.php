@@ -115,6 +115,7 @@ class Module extends WordPress\Module
 		'settings'  => 'manage_options',
 		'tools'     => 'edit_others_posts',
 		'uploads'   => 'upload_files',
+		'gizmos'    => 'read',                 // NOTE: `Subscriber` role
 
 		// 'paired_create' => 'manage_options', // to restrict main post
 		// 'paired_delete' => 'manage_options', // to restrict main post
@@ -302,6 +303,9 @@ class Module extends WordPress\Module
 
 			if ( $ui && method_exists( $this, 'tools_settings' ) )
 				add_action( $this->hook_base( 'tools_settings' ), [ $this, 'tools_settings' ] );
+
+			if ( $ui && method_exists( $this, 'gizmos_settings' ) )
+				add_action( $this->hook_base( 'gizmos_settings' ), [ $this, 'gizmos_settings' ] );
 
 			if ( $ui && method_exists( $this, 'roles_settings' ) )
 				add_action( $this->hook_base( 'roles_settings' ), [ $this, 'roles_settings' ] );

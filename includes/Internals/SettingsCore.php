@@ -296,6 +296,7 @@ trait SettingsCore
 
 	public function tools_sub  ( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'tools',   $sub, $uri ); }
 	public function roles_sub  ( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'roles',   $sub, $uri ); }
+	public function gizmos_sub ( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'gizmos',  $sub, $uri ); }
 	public function reports_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'reports', $sub, $uri ); }
 	public function imports_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'imports', $sub, $uri ); }
 	public function customs_sub( string $uri = '', ?string $sub = NULL ): bool { return $this->settingscore__render_context_html( 'customs', $sub, $uri ); }
