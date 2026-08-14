@@ -20,6 +20,18 @@ class Cine extends gEditorial\Module
 	use Internals\PostMeta;
 	use Internals\PostTypeOverview;
 
+	protected $supports = [
+		'main_posttype' => [
+			'title',
+			'excerpt',
+			'thumbnail',
+			'author',
+			'comments',
+			'date-picker',
+			'editorial-roles'
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -53,15 +65,7 @@ class Cine extends gEditorial\Module
 			],
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', [
-					'title',
-					'excerpt',
-					'thumbnail',
-					'author',
-					'comments',
-					'date-picker',
-					'editorial-roles'
-				] ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_editpost' => [
 				'assign_default_term',

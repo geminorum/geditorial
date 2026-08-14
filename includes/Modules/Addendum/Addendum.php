@@ -30,6 +30,17 @@ class Addendum extends gEditorial\Module
 
 	protected $deafults  = [ 'multiple_instances' => TRUE ];
 	protected $positions = [ 'primary_posttype' => 18 ];
+	protected $supports  = [
+		'primary_posttype' => [
+			'title',
+			'excerpt',
+			'thumbnail',
+			'author',
+			'comments',
+			'date-picker',
+			'editorial-roles',
+		],
+	];
 
 	public static function module(): array
 	{
@@ -89,15 +100,7 @@ class Addendum extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'excerpt',
-					'thumbnail',
-					'author',
-					'comments',
-					'date-picker',
-					'editorial-roles'
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],

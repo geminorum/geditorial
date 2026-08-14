@@ -107,7 +107,7 @@ class Book extends gEditorial\Module
 				'widget_support',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'main_posttype' ) ],

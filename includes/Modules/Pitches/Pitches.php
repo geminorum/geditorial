@@ -14,6 +14,16 @@ class Pitches extends gEditorial\Module
 
 	// @EXAMPLE: http://useridea.idea.informer.com/
 	// https://woocommerce.com/feature-requests/woocommerce/
+	protected $supports = [
+		'primary_posttype' => [
+			'title',
+			'excerpt',
+			'author',
+			'comments',
+			'date-picker',
+			'editorial-roles',
+		],
+	];
 
 	public static function module(): array
 	{
@@ -33,14 +43,7 @@ class Pitches extends gEditorial\Module
 			'_supports' => [
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'excerpt',
-					'author',
-					'comments',
-					'date-picker',
-					'editorial-roles'
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 		];
 	}

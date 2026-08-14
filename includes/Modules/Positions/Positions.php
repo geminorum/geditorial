@@ -28,6 +28,15 @@ class Positions extends gEditorial\Module
 		'subterms_support'   => TRUE,
 	];
 
+	protected $supports = [
+		'primary_posttype' => [
+			'title',
+			// 'editor',
+			'custom-fields',
+			'excerpt',
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -62,12 +71,7 @@ class Positions extends gEditorial\Module
 			],
 			'_supports' => [
 				'shortcode_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					// 'editor',
-					'custom-fields',
-					'excerpt',
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'posttypes_option' => 'posttypes_option',
 			'_general'         => [

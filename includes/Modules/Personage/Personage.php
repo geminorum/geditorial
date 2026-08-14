@@ -27,6 +27,15 @@ class Personage extends gEditorial\Module
 	protected $positions     = [ 'main_posttype' => 2 ];
 	protected $priority_init = 9;
 
+	protected $supports  = [
+		'main_posttype' => [
+			'excerpt',
+			'thumbnail',
+			'comments',
+			'date-picker',
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -75,12 +84,7 @@ class Personage extends gEditorial\Module
 				'public_statuses' => [ NULL, $terms, $empty ],
 				'assign_default_term',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', [
-					'excerpt',
-					'thumbnail',
-					'comments',
-					'date-picker',
-				], [
+				$this->settings_supports_option( 'main_posttype', NULL, [
 					'title',
 					'author',
 				] ),

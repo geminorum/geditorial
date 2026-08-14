@@ -74,6 +74,7 @@ class Module extends WordPress\Module
 
 	protected $screens   = [];  // screen-id by context/constant
 	protected $positions = [];  // menu positions by context/constant
+	protected $supports  = [];  // default supports by constant
 	protected $deafults  = [];  // default settings
 
 	protected $constants = [];

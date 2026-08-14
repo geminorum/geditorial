@@ -92,7 +92,7 @@ class Dossier extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],

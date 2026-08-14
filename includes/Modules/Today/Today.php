@@ -21,6 +21,14 @@ class Today extends gEditorial\Module
 	protected $__posts = [];
 	protected $__home  = FALSE;
 
+	protected $supports = [
+		'main_posttype' => [
+			'title',
+			'excerpt',
+			'editorial-roles'
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -77,11 +85,7 @@ class Today extends gEditorial\Module
 			'_supports' => [
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', [
-					'title',
-					'excerpt',
-					'editorial-roles'
-				] ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_constants' => [
 				'main_posttype_constant'  => [ NULL, 'day' ],

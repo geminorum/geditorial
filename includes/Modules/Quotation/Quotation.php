@@ -14,6 +14,18 @@ class Quotation extends gEditorial\Module
 	use Internals\CoreRestrictPosts;
 	use Internals\MetaBoxList;
 
+	protected $supports = [
+		'main_posttype' => [
+			'title',
+			'editor',
+			'excerpt',
+			'author',
+			'comments',
+			'custom-fields',
+			'editorial-roles',
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -37,15 +49,7 @@ class Quotation extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', [
-					'title',
-					'editor',
-					'excerpt',
-					'author',
-					'comments',
-					'custom-fields',
-					'editorial-roles',
-				] ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'quote' ],

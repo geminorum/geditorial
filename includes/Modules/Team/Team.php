@@ -34,7 +34,7 @@ class Team extends gEditorial\Module
 		return [
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'member_posttype', TRUE ),
+				$this->settings_supports_option( 'member_posttype' ),
 			],
 		];
 	}

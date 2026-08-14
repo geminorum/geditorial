@@ -69,8 +69,8 @@ class Tube extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
-				$this->settings_supports_option( 'secondary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype' ),
+				$this->settings_supports_option( 'secondary_posttype' ),
 			],
 			'_constants' => [
 				'primary_posttype_constant'    => [ NULL, 'video' ],

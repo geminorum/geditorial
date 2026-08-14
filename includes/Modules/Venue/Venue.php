@@ -30,6 +30,16 @@ class Venue extends gEditorial\Module
 	use Internals\PostTypeOverview;
 	use Internals\TemplatePostType;
 
+	protected $supports = [
+		'primary_posttype' => [
+			'title',
+			'editor',
+			'excerpt',
+			'thumbnail',
+			'editorial-roles',
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -101,13 +111,7 @@ class Venue extends gEditorial\Module
 				'assign_default_term',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'editor',
-					'excerpt',
-					'thumbnail',
-					'editorial-roles',
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],

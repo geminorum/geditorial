@@ -80,8 +80,8 @@ class Contest extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				'thumbnail_fallback',
-				$this->settings_supports_option( 'contest_posttype', TRUE ),
-				$this->settings_supports_option( 'apply_posttype', TRUE ),
+				$this->settings_supports_option( 'contest_posttype' ),
+				$this->settings_supports_option( 'apply_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'contest_posttype' ) ],

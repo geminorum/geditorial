@@ -438,6 +438,9 @@ trait CorePostTypes
 		if ( isset( $this->options->settings[$constant.'_supports'] ) )
 			return $this->options->settings[$constant.'_supports'];
 
+		if ( isset( $this->supports[$constant] ) )
+			return $this->supports[$constant];
+
 		return array_keys( $this->settings_supports_defaults( $constant ) );
 	}
 
@@ -461,11 +464,14 @@ trait CorePostTypes
 		return $supports;
 	}
 
-	protected function settings_supports_option( string $constant, mixed $defaults = TRUE, null|string|array $excludes = NULL ): array
+	protected function settings_supports_option( string $constant, mixed $defaults = NULL, null|string|array $excludes = NULL ): array
 	{
 		$supports = $this->settings_supports_defaults( $constant, $excludes );
 
-		if ( FALSE === $defaults )
+		if ( is_null( $defaults ) )
+			$defaults = $this->supports[$constant] ?? array_keys( $supports );
+
+		else if ( FALSE === $defaults )
 			$defaults = [];
 
 		else if ( TRUE === $defaults )

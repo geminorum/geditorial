@@ -33,6 +33,17 @@ class Meeted extends gEditorial\Module
 
 	protected $deafults  = [ 'multiple_instances' => TRUE ];
 	protected $positions = [ 'primary_posttype' => 3 ];
+	protected $supports  = [
+		'primary_posttype' => [
+			'title',
+			'excerpt',
+			'author',
+			'thumbnail',
+			'comments',
+			'custom-fields',
+			'page-attributes',
+		],
+	];
 
 	public static function module(): array
 	{
@@ -75,15 +86,7 @@ class Meeted extends gEditorial\Module
 				'assign_default_term',
 				'comment_status',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'excerpt',
-					'author',
-					'thumbnail',
-					'comments',
-					'custom-fields',
-					'page-attributes',
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_roles' => [
 				'custom_captype',

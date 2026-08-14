@@ -100,7 +100,7 @@ class Magazine extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				'thumbnail_fallback',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'primary_posttype' ) ],

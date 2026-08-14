@@ -97,8 +97,8 @@ class Course extends gEditorial\Module
 				'shortcode_support',
 				'thumbnail_support',
 				'thumbnail_fallback',
-				$this->settings_supports_option( 'course_posttype', TRUE ),
-				$this->settings_supports_option( 'lesson_posttype', TRUE ),
+				$this->settings_supports_option( 'course_posttype' ),
+				$this->settings_supports_option( 'lesson_posttype' ),
 			],
 			'_reports' => [
 				'overview_taxonomies' => [ NULL, $this->get_posttype_taxonomies_list( 'course_posttype' ) ],

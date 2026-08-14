@@ -102,7 +102,7 @@ class Directorate extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'primary_posttype', TRUE ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 			'_reports' => [
 				'append_identifier_code',

@@ -35,7 +35,7 @@ class Gallery extends gEditorial\Module
 			],
 			'_supports' => [
 				'thumbnail_support',
-				$this->settings_supports_option( 'album_posttype', TRUE ),
+				$this->settings_supports_option( 'album_posttype' ),
 			],
 		];
 	}

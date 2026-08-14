@@ -26,6 +26,15 @@ class Papered extends gEditorial\Module
 		'subterms_support'   => TRUE,
 	];
 
+	protected $supports = [
+		'primary_posttype' => [
+			'title',
+			'editor',
+			'custom-fields',
+			// 'excerpt',
+		],
+	];
+
 	public static function module(): array
 	{
 		return [
@@ -64,12 +73,7 @@ class Papered extends gEditorial\Module
 				'prints_roles',
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'primary_posttype', [
-					'title',
-					'editor',
-					'custom-fields',
-					// 'excerpt',
-				] ),
+				$this->settings_supports_option( 'primary_posttype' ),
 			],
 		];
 	}

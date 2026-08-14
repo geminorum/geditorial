@@ -64,7 +64,7 @@ class Entry extends gEditorial\Module
 				'comment_status',
 				'shortcode_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'entry' ],

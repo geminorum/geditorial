@@ -48,7 +48,7 @@ class Inquire extends gEditorial\Module
 				'contents_viewable',
 			],
 			'_supports' => [
-				$this->settings_supports_option( 'main_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 		];
 	}

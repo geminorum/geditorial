@@ -49,7 +49,7 @@ class Happening extends gEditorial\Module
 				'comment_status',
 				'widget_support',
 				'thumbnail_support',
-				$this->settings_supports_option( 'main_posttype', TRUE ),
+				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'event' ],
