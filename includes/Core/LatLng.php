@@ -173,14 +173,8 @@ class LatLng extends Base
 		if ( ! $data = Text::force( $data ) )
 			return $fallback;
 
-		if ( Text::starts( $data, 'geo:' ) ) {
-
-
-			if ( Text::has( $data, '?' ) )
-				list( $data ) = explode( '?', $data );
-
-			return Text::stripPrefix( $data, 'geo:' );
-		}
+		if ( Text::starts( $data, 'geo:' ) )
+			return Text::stripPrefix( URL::unquery( $data ), 'geo:' );
 
 		return $fallback;
 	}
@@ -458,7 +452,7 @@ class LatLng extends Base
 		string $data,
 		string|false|null $fallback = FALSE,
 		mixed $reference = NULL
-	): string|false|null {
+	): null|false|string {
 
 		if ( ! $data = Text::force( $data ) )
 			return $fallback;
@@ -500,7 +494,7 @@ class LatLng extends Base
 		string $data,
 		string|false|null $fallback = FALSE,
 		mixed $reference = NULL
-	): string|false|null {
+	): null|false|string {
 
 		if ( ! $data = Text::force( $data ) )
 			return $fallback;

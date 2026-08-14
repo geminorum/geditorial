@@ -50,32 +50,32 @@ class HTML extends Base
 			], $link ? self::link( $html, $link ) : $html );
 	}
 
-	public static function h1( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h1( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '1', $html, $class ?: FALSE, $link );
 	}
 
-	public static function h2( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h2( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '2', $html, $class ?: FALSE, $link );
 	}
 
-	public static function h3( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h3( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '3', $html, $class ?: FALSE, $link );
 	}
 
-	public static function h4( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h4( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '4', $html, $class ?: FALSE, $link );
 	}
 
-	public static function h5( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h5( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '5', $html, $class ?: FALSE, $link );
 	}
 
-	public static function h6( mixed $html, string|array|null $class = '', string $link = '' ): void
+	public static function h6( mixed $html, null|string|array $class = '', string $link = '' ): void
 	{
 		self::heading( '6', $html, $class ?: FALSE, $link );
 	}
