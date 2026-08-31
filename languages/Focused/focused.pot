@@ -1,0 +1,55 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Focused\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Focused\n"
+"X-Domain: geditorial-focused\n"
+
+#: Focused.php:97
+msgid "Focus Area"
+msgid_plural "Focus Areas"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Focused.php:101
+msgctxt "Label: `extended_label`"
+msgid "Focus Areas"
+msgstr ""
+
+#: Focused.php:102
+msgctxt "Label: `menu_name`"
+msgid "Focus Areas"
+msgstr ""
+
+#: Focused.php:103
+msgctxt "Label: `show_option_all`"
+msgid "Focus Areas"
+msgstr ""
+
+#: Focused.php:104
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unfocused)"
+msgstr ""
+
+#: Focused.php:116
+msgctxt "Main Taxonomy: Default Term"
+msgid "Art"
+msgstr ""
+
+#: Focused.php:117
+msgctxt "Main Taxonomy: Default Term"
+msgid "Education"
+msgstr ""
+
+#: Focused.php:132
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "20"
+msgstr ""
