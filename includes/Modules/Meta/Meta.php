@@ -824,10 +824,10 @@ class Meta extends gEditorial\Module
 
 			case 'isbn':
 
-				if ( 'export' === $context )
-					return Core\Number::translate( $raw ?: $meta );
-
-				return Services\Lookup::htmlISBN( trim( $raw ) );
+				return Services\Publications::prepISBN(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'vin':
 

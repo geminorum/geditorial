@@ -249,6 +249,7 @@ class Plugin extends WordPress\Plugin
 			'Paired',
 			'PostTypeFields',
 			'PrimaryTaxonomy',
+			'Publications',
 			'RestAPI',
 			'SearchSelect',
 			'SemiSecure',

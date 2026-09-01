@@ -588,10 +588,10 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'isbn':
 
-					// `return Lookup::htmlISBN( $raw ?: $value );`
-					return sprintf( '<span class="-isbn %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
-						Core\ISBN::validate( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-						$raw ?: $value, $raw ?: $value );
+					return Publications::prepISBN(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'vin':
 
