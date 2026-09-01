@@ -731,25 +731,10 @@ class Meta extends gEditorial\Module
 
 			case 'date_of_birth':
 
-				if ( 'print' === $context )
-					return gEditorial\Datetime::prepForDisplay(
-						trim( $raw ),
-						gEditorial\Datetime::dateFormats( 'printdate' ),
-						$this->default_calendar()
-					);
-
-				if ( 'export' === $context )
-					return gEditorial\Datetime::prepForInput(
-						trim( $raw ),
-						gEditorial\Datetime::dateFormats( 'default' ),
-						$this->default_calendar()
-					);
-
-				return gEditorial\Datetime::prepDateOfBirth(
-					trim( $raw ),
-					NULL,
-					FALSE,
-					$this->default_calendar()
+				return Services\Individuals::prepDateOfBirth(
+					$raw ?: $meta,
+					$this->default_calendar(),
+					$context,
 				);
 		}
 

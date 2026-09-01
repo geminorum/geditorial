@@ -47,6 +47,36 @@ class Individuals extends gEditorial\Service
 		);
 	}
 
+	public static function prepDateOfBirth( mixed $input, ?string $calendar_type = NULL, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( self::empty( $input ) )
+			return $fallback;
+
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		if ( 'print' === $context )
+			return gEditorial\Datetime::prepForDisplay(
+				$data,
+				gEditorial\Datetime::dateFormats( 'printdate' ),
+				$calendar_type ?? Core\L10n::calendar(),
+			);
+
+		if ( 'export' === $context )
+			return gEditorial\Datetime::prepForInput(
+				$data,
+				gEditorial\Datetime::dateFormats( 'default' ),
+				$calendar_type ?? Core\L10n::calendar(),
+			);
+
+		return gEditorial\Datetime::prepDateOfBirth(
+			$data,
+			NULL,
+			FALSE,
+			$calendar_type ?? Core\L10n::calendar(),
+		);
+	}
+
 	public static function prepIdentity( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
 		if ( self::empty( $input ) )
