@@ -505,7 +505,6 @@ class Modified extends gEditorial\Module
 			return $args['default'];
 
 		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
-		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
 			return $args['default'];
 
 		$html = $args['before'].$html.$args['after'];

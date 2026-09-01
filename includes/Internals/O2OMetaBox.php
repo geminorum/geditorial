@@ -11,7 +11,7 @@ use geminorum\gEditorial\WordPress;
 
 trait O2OMetaBox
 {
-	protected function o2o_register_metabox_from( $connection_constant, $posttypes = NULL, $screen = NULL )
+	protected function o2o_register_metabox_from( string $connection_constant, ?array $posttypes = NULL, ?object $screen = NULL ): bool
 	{
 		if ( ! $this->_o2o )
 			return FALSE;
@@ -41,7 +41,7 @@ trait O2OMetaBox
 			]
 		);
 
-		$this->class_metabox( $screen, 'connectedbox' );
+		return $this->class_metabox( $screen, 'connectedbox' );
 	}
 
 	public function o2o_render_from_connectedbox( object $post, false|array $box ): void
@@ -69,7 +69,7 @@ trait O2OMetaBox
 		$this->nonce_field( 'o2obox', $box['args']['o2o']->name );
 	}
 
-	protected function o2o_register_metabox_to( $connection_constant, $posttypes = NULL, $screen = NULL )
+	protected function o2o_register_metabox_to( string $connection_constant, ?array $posttypes = NULL, ?object $screen = NULL ): bool
 	{
 		if ( ! $this->_o2o )
 			return FALSE;
@@ -99,7 +99,7 @@ trait O2OMetaBox
 			]
 		);
 
-		$this->class_metabox( $screen, 'connectedbox' );
+		return $this->class_metabox( $screen, 'connectedbox' );
 	}
 
 	public function o2o_render_to_connectedbox( object $post, false|array $box ): void
@@ -127,9 +127,9 @@ trait O2OMetaBox
 		$this->nonce_field( 'o2obox', $box['args']['o2o']->name );
 	}
 
-	protected function o2o_hook_store_metabox( $posttype, $type )
+	protected function o2o_hook_store_metabox( string $posttype, object $type ): bool
 	{
-		add_action( self::und( 'save_post', $posttype ),
+		return add_action( self::und( 'save_post', $posttype ),
 			function ( $post_id, $post, $update )
 				use ( $type ) {
 
@@ -177,7 +177,7 @@ trait O2OMetaBox
 			}, 20, 3 );
 	}
 
-	protected function o2o_render_type_posts( $post, $type, $atts = [] )
+	protected function o2o_render_type_posts( object $post, object $type, array $atts = [] ): string
 	{
 		$module  = $this->key;
 		$options = [];

@@ -35,7 +35,7 @@ class Contacts extends gEditorial\Service
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function prepContactIcons( mixed $value, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
+	public static function prepContactIcon( mixed $value, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
 	{
 		if ( self::empty( $value ) )
 			return $empty;

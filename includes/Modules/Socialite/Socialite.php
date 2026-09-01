@@ -40,7 +40,7 @@ class Socialite extends gEditorial\Module
 			'keywords' => [
 				'social-network',
 				'site-identity',
-				'termmeta',
+				'term-meta',
 			],
 		];
 	}
@@ -410,7 +410,7 @@ class Socialite extends gEditorial\Module
 			case '_email':
 			case '_url':
 
-				return Services\Contacts::prepContactIcons( $url, $context );
+				return Services\Contacts::prepContactIcon( $url, $context );
 
 			case '_ical':
 			default:
@@ -476,7 +476,7 @@ class Socialite extends gEditorial\Module
 			case '_email':
 			case '_url':
 
-				return Services\Contacts::prepContactIcons( $url, $context );
+				return Services\Contacts::prepContactIcon( $url, $context );
 
 			case '_ical':
 			default:

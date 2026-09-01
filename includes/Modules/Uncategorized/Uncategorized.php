@@ -22,7 +22,7 @@ class Uncategorized extends gEditorial\Module
 			'i18n'     => 'adminonly',
 			'access'   => 'stable',
 			'keywords' => [
-				'termtools',
+				'term-tools',
 			],
 		];
 	}

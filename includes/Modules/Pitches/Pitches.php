@@ -12,8 +12,6 @@ class Pitches extends gEditorial\Module
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
 
-	// @EXAMPLE: http://useridea.idea.informer.com/
-	// https://woocommerce.com/feature-requests/woocommerce/
 	protected $supports = [
 		'primary_posttype' => [
 			'title',

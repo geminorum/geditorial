@@ -24,9 +24,9 @@ class Personage extends gEditorial\Module
 	use Internals\PostTypeFields;
 	use Internals\PostTypeOverview;
 
-	protected $positions     = [ 'main_posttype' => 2 ];
 	protected $priority_init = 9;
 
+	protected $positions = [ 'main_posttype' => 2 ];
 	protected $supports  = [
 		'main_posttype' => [
 			'excerpt',

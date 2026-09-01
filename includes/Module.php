@@ -429,7 +429,7 @@ class Module extends WordPress\Module
 		$this->actions( 'init', $this->options, $this->module );
 
 		$this->features = $this->filters( 'features', $this->get_global_features(), $this->module );
-		$this->strings  = $this->filters( 'strings', $this->get_global_strings(), $this->module );
+		$this->strings  = $this->filters( 'strings',  $this->get_global_strings(),  $this->module );
 	}
 
 	// NOTE: ALWAYS HOOKED

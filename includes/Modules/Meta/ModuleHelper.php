@@ -20,7 +20,7 @@ class ModuleHelper extends gEditorial\Helper
 		'subject',
 	];
 
-	public static function generateHints( $post, $extend, $context, $queried )
+	public static function generateHints( object $post, ?string $extend, ?string $context, array $queried ): array
 	{
 		$hints = [];
 
@@ -74,7 +74,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $hints;
 	}
 
-	public static function getPostTypeFieldKeyMap()
+	public static function getPostTypeFieldKeyMap(): array
 	{
 		return [
 			// meta currents

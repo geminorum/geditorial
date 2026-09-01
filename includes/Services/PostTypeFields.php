@@ -390,7 +390,7 @@ class PostTypeFields extends gEditorial\Service
 	}
 
 	// OLD: `Template::getMetaFieldRaw()`
-	// NOTE: does not check for `access_view` arg
+	// NOTE: does not check for `access_view` argument
 	public static function getFieldRaw( string $field_key, int $post_id, string $module = 'meta', bool $check = FALSE, mixed $default = FALSE ): mixed
 	{
 		if ( $check ) {
@@ -437,59 +437,73 @@ class PostTypeFields extends gEditorial\Service
 		if ( $filtered !== $value )
 			return $filtered; // bail if already filtered
 
-		// NOTE: first priority: field key
+		// NOTE: first priority: field-key
 		switch ( $field_key ) {
 
-			case 'twitter'  : return Core\Socials::htmlTwitterIntent( $raw ?: $value, TRUE );
-			case 'facebook' : return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
-			case 'instagram': return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
-			case 'telegram' : return Core\Socials::htmlHandle( $value, 'https://t.me/' );
-			case 'phone'    : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
-			case 'mobile'   : return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
-			case 'username' : return sprintf( '@%s', $raw ?: $value ); // TODO: filter this for profile links
+			case 'twitter'  : // return Core\Socials::htmlTwitterIntent( $raw ?: $value, TRUE );
+			case 'facebook' : // return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
+			case 'instagram': // return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
+			case 'telegram' : // return Core\Socials::htmlHandle( $value, 'https://t.me/' );
+
+				return Communities::prepSocial(
+					$raw ?: $value,
+					$field_key, // the service as field-key
+					'admin',
+				);
+
+			case 'phone' : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
+			case 'mobile': return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
+
+			// TODO: migrate to `Individuals` Service
+			// TODO: filter this for profile links
+			case 'username' : return sprintf( '@%s', $raw ?: $value );
 
 			case 'items':
 			case 'total_items':
 
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'item' ) ),
-					Core\Number::format( $raw ?: $value ) );
+					Core\Number::format( $raw ?: $value )
+				);
 
 			case 'pages':
 			case 'total_pages':
 
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'page' ) ),
-					Core\Number::format( $raw ?: $value ) );
+					Core\Number::format( $raw ?: $value )
+				);
 
 			case 'volumes':
 			case 'total_volumes':
 
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'volume' ) ),
-					Core\Number::format( $raw ?: $value ) );
+					Core\Number::format( $raw ?: $value )
+				);
 
 			case 'discs':
 			case 'total_discs':
 
 				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'disc' ) ),
-					Core\Number::format( $raw ?: $value ) );
+					Core\Number::format( $raw ?: $value )
+				);
 		}
 
 		if ( ! empty( $field['type'] ) ) {
 
-			// NOTE: second priority: field type
+			// NOTE: second priority: field-type
 			switch ( $field['type'] ) {
 
 				case 'venue':
 
 					return Locations::prepVenue(
 						$raw ?: $value,
-						// $context // maybe `admin`!
+						'admin',
 					);
 
 				case 'people':
 
 					return Individuals::prepPeople(
 						$raw ?: $value,
-						// $context // maybe `admin`!
+						'admin',
 					);
 
 				case 'social':
@@ -497,7 +511,7 @@ class PostTypeFields extends gEditorial\Service
 					return Communities::prepSocial(
 						$raw ?: $value,
 						$field_key, // usually the service
-						// $context // maybe `admin`!
+						'admin',
 					);
 
 				case 'day':
@@ -506,7 +520,8 @@ class PostTypeFields extends gEditorial\Service
 				case 'person':
 
 					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( $field['type'] ) ),
-						Core\Number::format( $raw ?: $value ) );
+						Core\Number::format( $raw ?: $value )
+					);
 
 				case 'gram':
 
@@ -552,12 +567,12 @@ class PostTypeFields extends gEditorial\Service
 
 					return Individuals::prepIdentity(
 						$raw ?: $value,
-						// $context, // maybe `admin`!
+						'admin',
 					);
 
 				case 'postcode':
 
-					return Services\Locations::prepPostCode(
+					return Locations::prepPostCode(
 						$raw ?: $value,
 						'admin',
 					);
@@ -607,7 +622,7 @@ class PostTypeFields extends gEditorial\Service
 
 					return Locations::prepAddress(
 						$raw ?: $value,
-						NULL, // $context, // maybe `admin`!
+						'admin',
 						$raw ?: $value
 					);
 
@@ -646,6 +661,8 @@ class PostTypeFields extends gEditorial\Service
 					return Core\Area::prep( $raw ?: $value, $field );
 
 				case 'contact_method':
+
+					// TODO: migrate to `Contacts` Service
 
 					return Core\URL::isValid( $raw ?: $value )
 						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
@@ -705,6 +722,8 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'user':
 
+					// TODO: migrate to `Individuals` Service
+
 					return gEditorial\Helper::getAuthorsEditRow(
 						(int) $raw ?: $value,
 						self::req( 'post_type', 'post' ),
@@ -715,7 +734,7 @@ class PostTypeFields extends gEditorial\Service
 			}
 		}
 
-		// NOTE: third priority: data unit
+		// NOTE: third priority: data-unit
 		if ( ! empty( $field['data_unit'] ) ) {
 
 			switch ( $field['data_unit'] ) {
@@ -732,12 +751,12 @@ class PostTypeFields extends gEditorial\Service
 			}
 		}
 
-		// NOTE: fourth priority: general field
+		// NOTE: fourth priority: general fields
 		switch ( $field_key ) {
 
-			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
-			case 'desc'       : return WordPress\Strings::prepDescription( $raw ?: $value );
+			case 'desc'       :
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
+			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
 			case 'contact'    : return Contacts::prepContact( $raw ?: $value );
 		}
 

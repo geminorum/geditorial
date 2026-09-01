@@ -35,7 +35,7 @@ class Communities extends gEditorial\Service
 		return WordPress\Strings::getJoined( $list, '', '', $empty, $separator );
 	}
 
-	public static function prepSocialIcons( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
+	public static function prepSocialIcon( mixed $value, ?string $service = NULL, ?string $context = NULL, null|false|array $empty = [], null|string|array $delimiters = NULL ): null|false|array
 	{
 		if ( self::empty( $value ) )
 			return $empty;

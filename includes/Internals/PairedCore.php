@@ -23,7 +23,7 @@ trait PairedCore
 	// 	];
 	// }
 
-	// wraps `paired_get_paired_constants()` with checks
+	// Wraps `paired_get_paired_constants()` with checks!
 	// NOTE: not checking for `$this->_paired` for maybe before `init`
 	public function paired_get_constants(): false|array
 	{
@@ -58,8 +58,7 @@ trait PairedCore
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $supported ) )
-			$supported = $this->posttypes();
+		$supported = $supported ?? $this->posttypes();
 
 		// NOTE: better to be set per module bases
 		// if ( ! array_key_exists( 'ical_source', $settings ) )
@@ -173,16 +172,17 @@ trait PairedCore
 		return $object;
 	}
 
-	protected function paired_handle_paired_metacaps_roles( $paired, $captype )
+	protected function paired_handle_paired_metacaps_roles( $paired, $captype ): true
 	{
-		add_filter( 'map_meta_cap',
-			function ( $caps, $cap, $user_id, $args ) use ( $paired, $captype ) {
+		return add_filter( 'map_meta_cap',
+			function ( $caps, $cap, $user_id, $args )
+				use ( $paired, $captype ) {
 
 				switch ( $cap ) {
 
 					case 'manage_paired_'.$captype[1]:
 
-						// fallback to paired post-type cap
+						// Falls back to paired post-type cap.
 						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
 							return [ $object->cap->create_posts ];
 
@@ -190,7 +190,7 @@ trait PairedCore
 
 					case 'edit_paired_'.$captype[1]:
 
-						// fallback to paired post-type cap
+						// Falls back to paired post-type cap.
 						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
 							return [ $object->cap->edit_posts ];
 
@@ -198,7 +198,7 @@ trait PairedCore
 
 					case 'delete_paired_'.$captype[1]:
 
-						// fallback to paired post-type cap
+						// Falls back to paired post-type cap.
 						if ( $object = WordPress\PostType::object( $this->constant( $paired[0] ) ) )
 							return [ $object->cap->delete_posts ];
 
@@ -233,8 +233,6 @@ trait PairedCore
 
 				return $caps;
 			}, 10, 4 );
-
-		return TRUE;
 	}
 
 	#[\Deprecated('USE `$this->paired_register()`')]
@@ -335,12 +333,13 @@ trait PairedCore
 	}
 
 	/**
-	 * Renders pointers about given supported posttype.
+	 * Renders pointers about given supported post-type.
 	 * @example `$this->action_module( 'pointers', 'post', 6, 202, 'paired_supported' );`
 	 *
 	 * @param object $post
 	 * @param string $before
 	 * @param string $after
+	 * @param bool $new_post
 	 * @param string $context
 	 * @param object $screen
 	 * @return void
@@ -396,12 +395,12 @@ trait PairedCore
 		return $data;
 	}
 
-	protected function hook_paired_tabloid_exclude_rendered()
+	protected function hook_paired_tabloid_exclude_rendered(): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$this->filter_append(
+		return $this->filter_append(
 			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
 			$this->constant( $constants[1] )
 		);
@@ -417,7 +416,7 @@ trait PairedCore
 	 * @param string $context
 	 * @return array
 	 */
-	public function tabloid_post_summaries_paired_supported( $list, $data, $post, $context )
+	public function tabloid_post_summaries_paired_supported( array $list, array $data, object $post, ?string $context ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $list;
@@ -447,7 +446,7 @@ trait PairedCore
 	}
 
 	/**
-	 * Appends List of supported posts to current paired
+	 * Appends List of supported posts to current paired.
 	 * @example: `$this->filter_module( 'tabloid', 'post_summaries', 4, 90, 'paired_posttype' );`
 	 *
 	 * @param array $list
@@ -456,7 +455,7 @@ trait PairedCore
 	 * @param string $context
 	 * @return array
 	 */
-	public function tabloid_post_summaries_paired_posttype( $list, $data, $post, $context )
+	public function tabloid_post_summaries_paired_posttype( array $list, array $data, object $post, ?string $context ): array
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return $list;
@@ -498,7 +497,7 @@ trait PairedCore
 	 * @param string $context
 	 * @return array
 	 */
-	public function tabloid_post_summaries_paired_exports( $list, $data, $post, $context )
+	public function tabloid_post_summaries_paired_exports( array $list, array $data, object $post, ?string $context ): array
 	{
 		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return $list;
@@ -525,7 +524,7 @@ trait PairedCore
 		return $list;
 	}
 
-	protected function paired_assign_is_available( $role_check = NULL )
+	protected function paired_assign_is_available( mixed $role_check = NULL ): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
@@ -551,12 +550,12 @@ trait PairedCore
 		return FALSE;
 	}
 
-	public function paired_count_connected_to( $post, $context, $exclude = [], $posttypes = NULL )
+	public function paired_count_connected_to( mixed $post, ?string $context, string|array $exclude = [], null|string|array $posttypes = NULL ): int
 	{
 		return $this->paired_all_connected_to( $post, $context, 'ids', $exclude, $posttypes, TRUE );
 	}
 
-	public function paired_all_connected_to( $post, $context, $fields = NULL, $exclude = [], $posttypes = NULL, $count = FALSE )
+	public function paired_all_connected_to( mixed $post, ?string $context, ?string $fields = NULL, string|array $exclude = [], null|string|array $posttypes = NULL, bool $count = FALSE ): false|int|array
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return $count ? 0 : FALSE;
@@ -573,8 +572,7 @@ trait PairedCore
 		if ( empty( $terms ) )
 			return $count ? 0 : FALSE;
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
+		$posttypes = $posttypes ?? $this->posttypes();
 
 		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), [
 
@@ -611,12 +609,12 @@ trait PairedCore
 		return empty( $posts ) ? [] : $posts;
 	}
 
-	public function paired_count_connected_from( $post, $context, $exclude = [] )
+	public function paired_count_connected_from( mixed $post, ?string $context, string|array $exclude = [] ): int
 	{
 		return $this->paired_all_connected_from( $post, $context, 'ids', $exclude, TRUE );
 	}
 
-	public function paired_all_connected_from( $post, $context, $fields = NULL, $exclude = [], $count = FALSE )
+	public function paired_all_connected_from( mixed $post, ?string $context, ?string $fields = NULL, string|array $exclude = [], bool $count = FALSE ): false|int|array
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return $count ? 0 : FALSE;
@@ -686,7 +684,7 @@ trait PairedCore
 		return $this->paired_sort_posts_by_term_relation( $constants, $posts, $terms, $post, $context, $fields );
 	}
 
-	protected function paired_sort_posts_by_term_relation( array $constants, array $posts, array $terms, object $post, ?string $context = NULL, $fields = NULL )
+	protected function paired_sort_posts_by_term_relation( array $constants, array $posts, array $terms, object $post, ?string $context = NULL, ?string $fields = NULL ): array
 	{
 		if ( empty( $posts ) )
 			return [];
@@ -716,7 +714,7 @@ trait PairedCore
 	}
 
 	// `$this->filter( 'paired_globalsummary_for_post', 3, 12, FALSE, $this->base );`
-	public function paired_globalsummary_for_post( $list, $post, $context )
+	public function paired_globalsummary_for_post( array $list, mixed $post, ?string $context ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $list;
@@ -737,21 +735,22 @@ trait PairedCore
 	 * Hooks the filter for paired parent terms on imports.
 	 * @SEE: `hook_taxonomy_importer_term_parents()`
 	 *
-	 * @param bool|string $setting
+	 * @param null|true|string $option_key
 	 * @return bool
 	 */
-	protected function pairedcore__hook_importer_term_parents( $setting = 'paired_force_parents' )
+	protected function pairedcore__hook_importer_term_parents( null|true|string $option_key = NULL ): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( TRUE !== $setting && ! $this->get_setting( $setting ) )
+		if ( TRUE !== $option_key && ! $this->get_setting( $option_key ?? 'paired_force_parents' ) )
 			return FALSE;
 
 		$taxonomy = $this->constant( $constants[1] );
 
-		add_filter( $this->hook_base( 'importer', 'posts_set_terms', $taxonomy ),
-			function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append ) use ( $taxonomy ) {
+		return add_filter( $this->hook_base( 'importer', 'posts_set_terms', $taxonomy ),
+			function ( $terms, $currents, $source_id, $post_id, $oldpost, $override, $append )
+				use ( $taxonomy ) {
 
 				$parents = [];
 
@@ -764,8 +763,6 @@ trait PairedCore
 				return Core\Arraay::prepNumeral( $terms, $parents );
 
 			}, 12, 7 );
-
-		return TRUE;
 	}
 
 	/**
@@ -773,42 +770,37 @@ trait PairedCore
 	 *
 	 * @return bool
 	 */
-	protected function pairedcore__hook_importer_before_import()
+	protected function pairedcore__hook_importer_before_import(): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( $this->hook_base( 'importer', 'posts_before' ),
+		return add_action( $this->hook_base( 'importer', 'posts_before' ),
 			function ( $posttype ) use ( $constants ) {
 
 				if ( $posttype === $this->constant( $constants[0] ) )
 					$this->pairedcore__hook_sync_paired( $constants );
 
 			}, 1, 12 );
-
-		return TRUE;
 	}
 
-	protected function pairedcore__hook_sync_paired_for_ajax()
+	protected function pairedcore__hook_sync_paired_for_ajax(): void
 	{
 		if ( ! $constants = $this->paired_get_constants() )
-			return FALSE;
+			return;
 
 		if ( $this->is_inline_save_posttype( $constants[0] ) )
 			$this->pairedcore__hook_sync_paired( $constants );
 	}
 
 	// OLD: `_hook_paired_sync_primary_posttype()`
-	protected function pairedcore__hook_sync_paired( $constants = NULL )
+	protected function pairedcore__hook_sync_paired( ?array $constants = NULL ): bool
 	{
 		// if ( ! $this->_paired )
-		// 	return;
+		// 	return FALSE;
 
-		if ( is_null( $constants ) ) {
-
-			if ( ! $constants = $this->paired_get_constants() )
-				return FALSE;
-		}
+		if ( ! ( $constants = $constants ?? $this->paired_get_constants() ) )
+			return FALSE;
 
 		$paired_posttype = $this->constant( $constants[0] );
 		// $paired_taxonomy = $this->constant( $constants[1] );
@@ -841,9 +833,11 @@ trait PairedCore
 			function ( $post_id ) use ( $constants ) {
 				$this->paired_do_before_delete_to_post( $post_id, $constants[0], $constants[1] );
 			} );
+
+		return TRUE;
 	}
 
-	protected function paired_do_save_to_post_new( $post, $posttype_key, $taxonomy_key )
+	protected function paired_do_save_to_post_new( object $post, string $posttype_key, string $taxonomy_key ): bool
 	{
 		if ( ! $this->is_save_post( $post, $posttype_key ) )
 			return FALSE;
@@ -876,7 +870,7 @@ trait PairedCore
 		return Services\Paired::doPair( $post, $the_term['term_id'] );
 	}
 
-	protected function paired_do_save_to_post_update( $after, $before, $posttype_key, $taxonomy_key )
+	protected function paired_do_save_to_post_update( object $after, object $before, string $posttype_key, string $taxonomy_key ): bool
 	{
 		if ( ! $this->is_save_post( $after, $posttype_key ) )
 			return FALSE;
@@ -919,36 +913,36 @@ trait PairedCore
 		return Services\Paired::doPair( $after, $the_term['term_id'] );
 	}
 
-	protected function paired_do_trash_to_post( $post_id, $posttype_key, $taxonomy_key )
+	protected function paired_do_trash_to_post( mixed $post, string $posttype_key, string $taxonomy_key ): void
 	{
-		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+		if ( ! $this->is_posttype( $posttype_key, $post ) )
 			return;
 
-		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) )
+		if ( $the_term = $this->paired_get_to_term( $post, $posttype_key, $taxonomy_key ) )
 			wp_update_term( $the_term->term_id, $this->constant( $taxonomy_key ), [
 				'name' => $the_term->name.'___TRASHED',
 				'slug' => $the_term->slug.'-trashed',
 			] );
 	}
 
-	protected function paired_do_untrash_to_post( $post_id, $posttype_key, $taxonomy_key )
+	protected function paired_do_untrash_to_post( mixed $post, string $posttype_key, string $taxonomy_key ): void
 	{
-		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+		if ( ! $this->is_posttype( $posttype_key, $post ) )
 			return;
 
-		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) )
+		if ( $the_term = $this->paired_get_to_term( $post, $posttype_key, $taxonomy_key ) )
 			wp_update_term( $the_term->term_id, $this->constant( $taxonomy_key ), [
 				'name' => str_ireplace( '___TRASHED', '', $the_term->name ),
 				'slug' => str_ireplace( '-trashed', '', $the_term->slug ),
 			] );
 	}
 
-	protected function paired_do_before_delete_to_post( $post_id, $posttype_key, $taxonomy_key )
+	protected function paired_do_before_delete_to_post( mixed $post, string $posttype_key, string $taxonomy_key ): void
 	{
-		if ( ! $this->is_posttype( $posttype_key, $post_id ) )
+		if ( ! $this->is_posttype( $posttype_key, $post ) )
 			return;
 
-		if ( $the_term = $this->paired_get_to_term( $post_id, $posttype_key, $taxonomy_key ) ) {
+		if ( $the_term = $this->paired_get_to_term( $post, $posttype_key, $taxonomy_key ) ) {
 			wp_delete_term( $the_term->term_id, $this->constant( $taxonomy_key ) );
 			delete_metadata( 'term', $the_term->term_id, $this->constant( $taxonomy_key ).'_linked' );
 		}
@@ -965,9 +959,9 @@ trait PairedCore
 	 * @param string $paired_constant
 	 * @param bool $keep_olds
 	 * @param bool $forced
-	 * @return bool|int|array
+	 * @return false|int|array
 	 */
-	protected function paired_do_connection( $action, $post_ids, $paired_ids, $posttype_constant, $paired_constant, $keep_olds = FALSE, $forced = NULL )
+	protected function paired_do_connection( string $action, int|array $post_ids, int|array $paired_ids, string $posttype_constant, string $paired_constant, bool $keep_olds = FALSE, ?bool $forced = NULL ): false|int|array
 	{
 		if ( ! in_array( $action, [ 'store', 'remove' ], TRUE ) )
 			return FALSE;
@@ -1027,31 +1021,31 @@ trait PairedCore
 	}
 
 	// OLD: `get_linked_term()`
-	public function paired_get_to_term( $post_id, $posttype_constant_key, $tax_constant_key )
+	public function paired_get_to_term( mixed $post, string $posttype_constant_key, string $tax_constant_key ): false|object
 	{
-		return $this->paired_get_to_term_direct( $post_id,
+		return $this->paired_get_to_term_direct( $post,
 			$this->constant( $posttype_constant_key ),
 			$this->constant( $tax_constant_key )
 		);
 	}
 
 	// NOTE: here so modules can override
-	public function paired_get_to_term_direct( $post_id, $posttype, $taxonomy )
+	public function paired_get_to_term_direct( mixed $post, string $posttype, string $taxonomy ): false|object
 	{
-		return Services\Paired::getToTerm( $post_id, $posttype, $taxonomy );
+		return Services\Paired::getToTerm( $post, $posttype, $taxonomy );
 	}
 
 	// OLD: `set_linked_term()`
 	#[\Deprecated('USE `Services\Paired::doPair()`')]
-	public function paired_set_to_term( $post, $term )
+	public function paired_set_to_term( mixed $post, mixed $term ): bool
 	{
 		return Services\Paired::doPair( $post, $term );
 	}
 
 	// OLD: `remove_linked_term()`
-	public function paired_remove_to_term( $post, $term_or_id, $posttype_key, $taxonomy_key )
+	public function paired_remove_to_term( mixed $post, mixed $term, string $posttype_key, string $taxonomy_key ): bool
 	{
-		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $taxonomy_key ) ) )
+		if ( ! $term = WordPress\Term::get( $term, $this->constant( $taxonomy_key ) ) )
 			return FALSE;
 
 		if ( ! $post ) {
@@ -1085,12 +1079,12 @@ trait PairedCore
 	}
 
 	// OLD: `get_linked_post_id()`
-	public function paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
+	public function paired_get_to_post_id( mixed $term, string $posttype_constant_key, string $tax_constant_key, bool $check_slug = TRUE ): false|int
 	{
-		if ( ! $term_or_id )
+		if ( ! $term )
 			return FALSE;
 
-		if ( ! $term = WordPress\Term::get( $term_or_id, $this->constant( $tax_constant_key ) ) )
+		if ( ! $term = WordPress\Term::get( $term, $this->constant( $tax_constant_key ) ) )
 			return FALSE;
 
 		$post_id = get_term_meta( $term->term_id, $this->constant( $posttype_constant_key ).'_linked', TRUE );
@@ -1210,15 +1204,16 @@ trait PairedCore
 	}
 
 	// NOTE: currently supports `Personage` module only
-	protected function pairedcore__hook_append_identifier_code( $fieldkey, $optionkey = NULL )
+	protected function pairedcore__hook_append_identifier_code( string $field_key, ?string $option_key = NULL ): bool
 	{
-		if ( ! $this->get_setting( $optionkey ?? 'append_identifier_code' ) )
+		if ( ! $this->get_setting( $option_key ?? 'append_identifier_code' ) )
 			return FALSE;
 
-		$metakey = Services\PostTypeFields::getPostMetaKey( $fieldkey, 'meta' );
+		$meta_key = Services\PostTypeFields::getPostMetaKey( $field_key, 'meta' );
 
-		add_filter( $this->hook_base( 'personage', 'make_human_title' ),
-			function ( $fullname, $context, $post, $names, $fallback, $checks ) use ( $metakey ) {
+		return add_filter( $this->hook_base( 'personage', 'make_human_title' ),
+			function ( $fullname, $context, $post, $names, $fallback, $checks )
+				use ( $meta_key ) {
 
 				if ( empty( $fullname ) || 'display' !== $context )
 					return $fullname;
@@ -1231,7 +1226,7 @@ trait PairedCore
 
 				foreach ( $items as $post_id ) {
 
-					if ( ! $code = get_post_meta( (int) $post_id, $metakey, TRUE ) )
+					if ( ! $code = get_post_meta( (int) $post_id, $meta_key, TRUE ) )
 						continue;
 
 					// TODO: maybe `prepIdentifier()`
@@ -1241,16 +1236,14 @@ trait PairedCore
 
 				return $fullname;
 			}, 20, 6 );
-
-		return TRUE;
 	}
 
-	protected function hook_paired_tabloid_post_summaries_by_paired()
+	protected function hook_paired_tabloid_post_summaries_by_paired(): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'tabloid', 'post_summaries' ),
+		return add_filter( $this->hook_base( 'tabloid', 'post_summaries' ),
 			function ( $list, $data, $post, $context ) use ( $constants ) {
 
 				if ( ! $this->is_posttype( $constants[0], $post ) )
@@ -1303,7 +1296,7 @@ trait PairedCore
 			}, 120, 4 );
 	}
 
-	protected function hook_paired_static_covers_lineup()
+	protected function hook_paired_static_covers_lineup(): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
@@ -1331,5 +1324,7 @@ trait PairedCore
 
 				return $list;
 			}, 12, 2 );
+
+		return TRUE;
 	}
 }

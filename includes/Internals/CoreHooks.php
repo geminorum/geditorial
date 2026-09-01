@@ -57,7 +57,7 @@ trait CoreHooks
 			if ( is_array( $constant ) && ! in_array( $post->post_type, $constant, TRUE ) )
 				return FALSE;
 
-			if ( ! is_array( $constant ) && $post->post_type != $this->constant( $constant ) )
+			if ( ! is_array( $constant ) && $post->post_type !== $this->constant( $constant ) )
 				return FALSE;
 		}
 
@@ -132,6 +132,7 @@ trait CoreHooks
 
 	/**
 	 * Filters a module hook if second parameter is equal to value of given constant.
+	 * @example `$this->filter_module_i2c( 'identified', 'default_posttype_identifier_type', 'code', 'primary_posttype' );`
 	 *
 	 * @param string|null $module
 	 * @param string $hook

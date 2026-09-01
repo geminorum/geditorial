@@ -82,7 +82,8 @@ class Terms extends gEditorial\Module
 			'icon'     => 'image-filter',
 			'access'   => 'stable',
 			'keywords' => [
-				'termmeta',
+				'term-meta',
+				'term-tools',
 				'has-adminbar',
 			],
 		];
@@ -1096,7 +1097,7 @@ class Terms extends gEditorial\Module
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta )
 						.'" title="'.Core\HTML::wrapLTR( Core\HTML::escape( $meta ) ).'">'
-						.Core\HTML::rows( Services\Contacts::prepContactIcons(
+						.Core\HTML::rows( Services\Contacts::prepContactIcon(
 							$meta,
 							$column ? 'column' : 'disabled',
 						) ).'</span>';

@@ -24,7 +24,7 @@ class Paired extends gEditorial\Service
 			[ __CLASS__, 'papered_view_data_for_post' ], 99, 4 );
 	}
 
-	public static function doPair( $post, $term, $image_metakey = NULL )
+	public static function doPair( mixed $post, mixed $term, ?string $image_metakey = NULL ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -58,7 +58,7 @@ class Paired extends gEditorial\Service
 	}
 
 	// returns the paired taxonomy, otherwise `FALSE`
-	public static function isPostType( $posttype )
+	public static function isPostType( mixed $posttype ): bool
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return FALSE;
@@ -67,7 +67,7 @@ class Paired extends gEditorial\Service
 	}
 
 	// returns the paired post-type, otherwise `FALSE`
-	public static function isTaxonomy( $taxonomy )
+	public static function isTaxonomy( mixed $taxonomy ): bool
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return FALSE;
@@ -75,7 +75,7 @@ class Paired extends gEditorial\Service
 		return empty( $taxonomy->{self::PAIRED_POSTTYPE_PROP} ) ? FALSE : $taxonomy->{self::PAIRED_POSTTYPE_PROP};
 	}
 
-	public static function getPostTypes()
+	public static function getPostTypes(): array
 	{
 		$list = [];
 
@@ -87,7 +87,7 @@ class Paired extends gEditorial\Service
 	}
 
 	// OLD: `paired_get_to_term_direct()`
-	public static function getToTerm( $post, $posttype, $taxonomy )
+	public static function getToTerm( mixed $post, string $posttype, string $taxonomy ): false|object
 	{
 		if ( empty( $post ) || ( ! $post = WordPress\Post::get( $post ) ) )
 			return FALSE;
@@ -98,10 +98,14 @@ class Paired extends gEditorial\Service
 		return get_term_by( 'id', (int) $term_id, $taxonomy );
 	}
 
-	public static function getGlobalSummaryForPost( $post, $context = NULL, $fields = NULL )
+	public static function getGlobalSummaryForPost( mixed $post, $context = NULL, $fields = NULL ): array
 	{
 		// NOTE: must be `$list['posttype'] = [ $items ];`
-		$list = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post' ), [], $post, $context );
+		$list = apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post' ),
+			[],
+			$post,
+			$context
+		);
 
 		if ( empty( $list ) )
 			return [];
@@ -123,7 +127,12 @@ class Paired extends gEditorial\Service
 			'lazy_load_term_meta'    => FALSE,
 		];
 
-		$posts = get_posts( apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'args' ), $args, $post, $list, $context ) );
+		$posts = get_posts( apply_filters( self::und( static::BASE, 'paired', 'globalsummary_for_post', 'args' ),
+			$args,
+			$post,
+			$list,
+			$context,
+		) );
 
 		return empty( $posts ) ? [] : $posts;
 	}

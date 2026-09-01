@@ -258,10 +258,9 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
+	#[\Deprecated('USE `WordPress\Post::image()`')]
 	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
-		self::_dep( 'WordPress\Post::image()' );
-
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 

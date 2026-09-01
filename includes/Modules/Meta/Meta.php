@@ -544,7 +544,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function sanitize_postmeta_field_key_map()
+	public function sanitize_postmeta_field_key_map(): array
 	{
 		return ModuleHelper::getPostTypeFieldKeyMap();
 	}
@@ -602,7 +602,7 @@ class Meta extends gEditorial\Module
 		];
 	}
 
-	public function tableColumnPostMeta_callback( $value, $row, $column, $index )
+	public function tableColumnPostMeta_callback( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 	{
 		$this->posts_custom_column_posttypefields( $this->hook(), $row );
 	}
@@ -799,28 +799,43 @@ class Meta extends gEditorial\Module
 					);
 
 			case 'contact':
-				return Services\Contacts::prepContact( $raw, $context );
+
+				return Services\Contacts::prepContact(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'social':
 
 				return Services\Communities::prepSocial(
-					$raw,
+					$raw ?: $meta,
 					$field, // usually the service
 					$context
 				);
 
 			case 'email':
-				return Core\Email::prep( $raw, $field_args, $context );
+
+				return Core\Email::prep(
+					$raw ?: $meta,
+					$field_args,
+					$context,
+				);
 
 			case 'phone':
 
-				// NOTE: `prep()` will handle the context
-				return Core\Phone::prep( trim( $raw ), $field_args, $context );
+				return Core\Phone::prep(
+					$raw ?: $meta,
+					$field_args,
+					$context,
+				);
 
 			case 'mobile':
 
-				// NOTE: `prep()` will handle the context
-				return Core\Mobile::prep( trim( $raw ), $field_args, $context );
+				return Core\Mobile::prep(
+					$raw ?: $meta,
+					$field_args,
+					$context,
+				);
 
 			case 'isbn':
 
@@ -849,9 +864,6 @@ class Meta extends gEditorial\Module
 					$meta, $meta );
 
 			case 'address':
-
-				if ( 'export' === $context )
-					return Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $raw ?: $meta ) );
 
 				return Services\Locations::prepAddress(
 					$raw ?: $meta,
@@ -913,7 +925,12 @@ class Meta extends gEditorial\Module
 				return Core\Number::localize( gEditorial\Datetime::stringFormat( $raw ) );
 
 			case 'area':
-				return Core\Area::prep( $raw, $field_args, $context );
+
+				return Core\Area::prep(
+					$raw ?: $meta,
+					$field_args,
+					$context,
+				);
 
 			case 'embed':
 
@@ -974,6 +991,8 @@ class Meta extends gEditorial\Module
 				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 
 			case 'latlng':
+
+				// TODO: migrate to `Locations` Service
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;

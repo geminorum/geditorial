@@ -59,6 +59,9 @@ class Locations extends gEditorial\Service
 		if ( ! $data = Core\Text::normalizeWhitespace( WordPress\Strings::cleanupChars( $data ) ) )
 			return $fallback;
 
+		if ( 'export' === $context )
+			return $data;
+
 		$data = trim( $data, '.-|…' );
 		$data = str_ireplace( [ '_', '|', '–', '—' ], '-', $data );
 		$data = sprintf( ' %s ', $data ); // padding with space
