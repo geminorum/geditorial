@@ -26,6 +26,27 @@ class Locations extends gEditorial\Service
 		);
 	}
 
+	public static function prepPostCode( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( self::empty( $input ) )
+			return $fallback;
+
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		if ( 'export' === $context )
+			return Core\Number::translate( $data );
+
+		if ( FALSE === ( $postcode = gEditorial\Info::fromPostCode( $data ) ) )
+			return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $data );
+
+		return sprintf( '<span class="-postcode %s" title="%s">%s</span>',
+			'-is-valid -ltr',
+			$postcode['country'] ?? gEditorial\Plugin::na( FALSE ),
+			Core\HTML::wrapLTR( $postcode['formatted'] ?? $data )
+		);
+	}
+
 	// OLD: `WordPress\Strings::prepAddress()`
 	public static function prepAddress( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{

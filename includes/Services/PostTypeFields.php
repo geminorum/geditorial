@@ -557,15 +557,10 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'postcode':
 
-					if ( FALSE === ( $postcode = gEditorial\Info::fromPostCode( $raw ?: $value ) ) )
-						return sprintf( '<span class="-postcode %s">%s</span>', '-not-valid', $raw ?: $value );
-
-					else
-						return sprintf( '<span class="-postcode %s" title="%s">%s</span>',
-							'-is-valid',
-							empty( $postcode['country'] ) ? gEditorial()->na( FALSE ) : $postcode['country'],
-							Core\HTML::wrapLTR( empty( $postcode['formatted'] ) ? ( $raw ?: $value ) : $postcode['formatted'] )
-						);
+					return Services\Locations::prepPostCode(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'iban':
 
