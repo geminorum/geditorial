@@ -579,27 +579,17 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'iban':
 
-					if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $raw ?: $value ) ) )
-						return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $value );
-
-					else
-						return sprintf( '<span class="-iban %s" title="%s">%s</span>',
-							'-is-valid',
-							empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
-							empty( $iban['formatted'] ) ? ( $raw ?: $value ) : $iban['formatted']
-						);
+					return Fiscal::prepIBAN(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'bankcard':
 
-					if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $raw ?: $value ) ) )
-						return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $value );
-
-					else
-						return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
-							'-is-valid',
-							empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
-							empty( $card['formatted'] ) ? ( $raw ?: $value ) : $card['formatted']
-						);
+					return Fiscal::prepBankCard(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'isbn':
 

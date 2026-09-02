@@ -770,33 +770,17 @@ class Meta extends gEditorial\Module
 
 			case 'iban':
 
-				if ( 'export' === $context )
-					return Core\Number::translate( $raw ?: $meta );
-
-				if ( FALSE === ( $iban = gEditorial\Info::fromIBAN( $raw ?: $meta ) ) )
-					return sprintf( '<span class="-iban %s">%s</span>', '-not-valid', $raw ?: $meta );
-
-				else
-					return sprintf( '<span class="-iban %s" title="%s">%s</span>',
-						'-is-valid',
-						empty( $iban['bankname'] ) ? gEditorial()->na( FALSE ) : $iban['bankname'],
-						empty( $iban['formatted'] ) ? ( $raw ?: $meta ) : $iban['formatted']
-					);
+				return Services\Fiscal::prepIBAN(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'bankcard':
 
-				if ( 'export' === $context )
-					return Core\Number::translate( $raw ?: $meta );
-
-				if ( FALSE === ( $card = gEditorial\Info::fromCardNumber( $raw ?: $meta ) ) )
-					return sprintf( '<span class="-bankcard %s">%s</span>', '-not-valid', $raw ?: $meta );
-
-				else
-					return sprintf( '<span class="-bankcard %s" title="%s">%s</span>',
-						'-is-valid',
-						empty( $card['bankname'] ) ? gEditorial()->na( FALSE ) : $card['bankname'],
-						empty( $card['formatted'] ) ? ( $raw ?: $meta ) : $card['formatted']
-					);
+				return Services\Fiscal::prepBankCard(
+					$raw ?: $meta,
+					$context,
+				);
 
 			case 'contact':
 

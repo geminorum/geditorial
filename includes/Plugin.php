@@ -235,6 +235,7 @@ class Plugin extends WordPress\Plugin
 			'CustomPostType',
 			'CustomTaxonomy',
 			'FileCache',
+			'Fiscal',
 			'FrontSettings',
 			'HeaderButtons',
 			'Icons',
