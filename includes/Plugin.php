@@ -262,6 +262,7 @@ class Plugin extends WordPress\Plugin
 			'TaxonomyTaxonomy',
 			'TermHierarchy',
 			'TermRelations',
+			'Vehicles',
 		];
 
 		foreach ( $available as $service )

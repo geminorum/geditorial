@@ -600,13 +600,17 @@ class PostTypeFields extends gEditorial\Service
 
 				case 'vin':
 
-					return Lookup::htmlVIN( $raw ?: $value );
+					return Vehicles::prepVIN(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'plate':
 
-					return sprintf( '<span class="-plate %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
-						Core\Validation::isPlateNumber( $raw ?: $value ) ? '-is-valid' : '-not-valid',
-						$raw ?: $value, $raw ?: $value );
+					return Vehicles::prepPlate(
+						$raw ?: $value,
+						'admin',
+					);
 
 				case 'address':
 
