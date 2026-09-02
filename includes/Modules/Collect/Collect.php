@@ -355,7 +355,6 @@ class Collect extends gEditorial\Module
 		$this->add_posttype_fields_supported();
 
 		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
-		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
 	public function dashboard_glance_items( array $items ): array
@@ -385,19 +384,6 @@ class Collect extends gEditorial\Module
 		}
 
 		return $value;
-	}
-
-	// @REF: `Template::getMetaField()`
-	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
-	{
-		switch ( $field ) {
-
-			case 'total_items':
-				return sprintf( Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'item' ) ),
-					Core\Number::format( trim( $raw ) ) );
-		}
-
-		return $meta;
 	}
 
 	public function tools_settings( string $sub ): void

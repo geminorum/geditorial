@@ -251,14 +251,7 @@ class Units extends gEditorial\Module
 			case 'metre'      :
 			case 'kilometre'  :
 			case 'hectare'    :
-
-				if ( 'export' === $context )
-					return trim( $raw );
-
-				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ),
-					gEditorial\Info::getNoop( $field_args['type'] ) ),
-					Core\Number::format( trim( $raw ) )
-				);
+				gEditorial\Info::prepNoop( $raw ?: $meta, $field_args['type'], $context );
 		}
 
 		switch ( $field_args['data_unit'] ) {
@@ -267,14 +260,7 @@ class Units extends gEditorial\Module
 			case 'line':
 			case 'card':
 			case 'metre':
-
-				if ( 'export' === $context )
-					return trim( $raw );
-
-				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ),
-					gEditorial\Info::getNoop( $field_args['data_unit'] ) ),
-					Core\Number::format( trim( $raw ) )
-				);
+				gEditorial\Info::prepNoop( $raw ?: $meta, $field_args['data_unit'], $context );
 		}
 
 		return $meta;

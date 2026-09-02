@@ -399,6 +399,19 @@ class Info extends WordPress\Main
 		return [ $fallback, $fallback, $fallback ];
 	}
 
+	public static function prepNoop( mixed $input, ?string $type = NULL, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		if ( 'export' === $context )
+			return Core\Number::translate( $data );
+
+		return sprintf( Helper::noopedCount( (int) $data, self::getNoop( $type ) ),
+			Core\Number::format( $data )
+		);
+	}
+
 	public static function getNoop( mixed $key, mixed $fallback = NULL ): mixed
 	{
 		if ( self::empty( $key ) )

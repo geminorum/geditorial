@@ -432,6 +432,7 @@ class PostTypeFields extends gEditorial\Service
 	// TODO: support: `dob`,`date`,`datetime`
 	public static function prepFieldRow( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, string $module = 'meta' ): mixed
 	{
+		$context  = $context ?? 'admin';
 		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw );
 
 		if ( $filtered !== $value )
@@ -458,33 +459,14 @@ class PostTypeFields extends gEditorial\Service
 			// TODO: filter this for profile links
 			case 'username' : return sprintf( '@%s', $raw ?: $value );
 
-			case 'items':
-			case 'total_items':
-
-				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'item' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
-
-			case 'pages':
-			case 'total_pages':
-
-				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'page' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
-
-			case 'volumes':
-			case 'total_volumes':
-
-				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'volume' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
-
-			case 'discs':
-			case 'total_discs':
-
-				return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( 'disc' ) ),
-					Core\Number::format( $raw ?: $value )
-				);
+			case 'items'        : return gEditorial\Info::prepNoop( $raw ?: $value, 'item', $context );
+			case 'total_items'  : return gEditorial\Info::prepNoop( $raw ?: $value, 'item', $context );
+			case 'pages'        : return gEditorial\Info::prepNoop( $raw ?: $value, 'page', $context );
+			case 'total_pages'  : return gEditorial\Info::prepNoop( $raw ?: $value, 'page', $context );
+			case 'volumes'      : return gEditorial\Info::prepNoop( $raw ?: $value, 'volume', $context );
+			case 'total_volumes': return gEditorial\Info::prepNoop( $raw ?: $value, 'volume', $context );
+			case 'discs'        : return gEditorial\Info::prepNoop( $raw ?: $value, 'disc', $context );
+			case 'total_discs'  : return gEditorial\Info::prepNoop( $raw ?: $value, 'disc', $context );
 		}
 
 		if ( ! empty( $field['type'] ) ) {
@@ -517,11 +499,7 @@ class PostTypeFields extends gEditorial\Service
 				case 'day':
 				case 'hour':
 				case 'member':
-				case 'person':
-
-					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value, gEditorial\Info::getNoop( $field['type'] ) ),
-						Core\Number::format( $raw ?: $value )
-					);
+				case 'person': return gEditorial\Info::prepNoop( $raw ?: $value, $field['type'], $context );
 
 				case 'gram':
 
@@ -733,15 +711,10 @@ class PostTypeFields extends gEditorial\Service
 
 			switch ( $field['data_unit'] ) {
 
-				case 'shot':
-				case 'line':
-				case 'card':
-				case 'metre':
-
-					return sprintf( gEditorial\Helper::noopedCount( $raw ?: $value,
-						gEditorial\Info::getNoop( $field['data_unit'] ) ),
-						Core\Number::format( $raw ?: $value )
-					);
+				case 'shot' :
+				case 'line' :
+				case 'card' :
+				case 'metre': return gEditorial\Info::prepNoop( $raw ?: $value, $field['data_unit'], $context );
 			}
 		}
 

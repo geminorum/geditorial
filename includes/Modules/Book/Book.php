@@ -1111,18 +1111,6 @@ class Book extends gEditorial\Module
 			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
 			case 'publication_print'  : return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
 			case 'collection'         : return Core\HTML::link( $raw, WordPress\URL::search( $raw ) );
-
-			case 'total_pages':
-				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'page' ) ),
-					Core\Number::format( trim( $raw ) ) );
-
-			case 'total_volumes':
-				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'volume' ) ),
-					Core\Number::format( trim( $raw ) ) );
-
-			case 'total_discs':
-				return sprintf( gEditorial\Helper::noopedCount( trim( $raw ), gEditorial\Info::getNoop( 'disc' ) ),
-					Core\Number::format( trim( $raw ) ) );
 		}
 
 		return $meta;

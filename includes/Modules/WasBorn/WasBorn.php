@@ -359,12 +359,13 @@ class WasBorn extends gEditorial\Module
 	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
 	{
 		$html      = '';
+		$context   = $context ?? 'dashboard';
 		$posttypes = $this->get_setting_posttypes( 'parent' );
 
-		foreach ( $this->_summary_age_groups( $posttypes, $paired ) as $group_summary )
+		foreach ( $this->_summary_age_groups( $posttypes, $paired, $context ) as $group_summary )
 			$html.= Core\HTML::tag( $list, [ 'class' => '-age-group' ], $group_summary );
 
-		foreach ( $this->_summary_age_empty_dob( $posttypes, $paired ) as $empty_dob )
+		foreach ( $this->_summary_age_empty_dob( $posttypes, $paired, $context ) as $empty_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -empty-dob' ], $empty_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtered )
@@ -382,14 +383,14 @@ class WasBorn extends gEditorial\Module
 
 		if ( ! $paired ) {
 			// NOTE: current method is not using the wp_query
-			foreach ( $this->_summary_mean_age( $posttypes ) as $mean_age )
+			foreach ( $this->_summary_mean_age( $posttypes, $context ) as $mean_age )
 				$html.= Core\HTML::tag( $list, [ 'class' => '-mean-age' ], $mean_age );
 		}
 
-		foreach ( $this->_summary_under_aged( $posttypes, $paired ) as $under_aged )
+		foreach ( $this->_summary_under_aged( $posttypes, $paired, $context ) as $under_aged )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -under-aged' ], $under_aged );
 
-		foreach ( $this->_summary_age_invalid_dob( $posttypes, $paired ) as $invalid_dob )
+		foreach ( $this->_summary_age_invalid_dob( $posttypes, $paired, $context ) as $invalid_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -invalid-dob' ], $invalid_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_sub', [], $posttypes, $scope, $user_id ) as $class => $filtered )
@@ -401,7 +402,7 @@ class WasBorn extends gEditorial\Module
 	// TODO: make link for restricted under aged posts
 	// @REF: https://stackoverflow.com/a/71815721
 	// TODO: move to `ModuleHelper`
-	private function _summary_under_aged( $posttypes, $paired = NULL )
+	private function _summary_under_aged( array $posttypes, $paired = NULL, ?string $context = NULL )
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$legal     = $this->get_setting( 'age_of_majority', 18 );
@@ -464,7 +465,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					gEditorial\Info::prepNoop( $count, 'person', $context ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -498,7 +499,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/a/35733405
-	private function _summary_age_invalid_dob( $posttypes, $paired = NULL )
+	private function _summary_age_invalid_dob( array $posttypes, $paired = NULL, ?string $context = NULL )
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$query_var = 'invaliddob';
@@ -559,7 +560,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					gEditorial\Info::prepNoop( $count, 'person', $context ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -585,7 +586,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/questions/13372395/average-age-from-dob-field-mysql-php
-	private function _summary_mean_age( $posttypes )
+	private function _summary_mean_age( array $posttypes, ?string $context = NULL )
 	{
 		global $wpdb;
 
@@ -621,14 +622,14 @@ class WasBorn extends gEditorial\Module
 				$text = vsprintf( '<b>%3$s</b> (%1$s) <span title="%4$s">[%2$s]</span>', [
 					$labels[$posttype],
 					WordPress\Strings::trimChars( $title, 35 ),
-					sprintf( gEditorial\Helper::noopedCount( $average, gEditorial\Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
+					gEditorial\Info::prepNoop( $average, 'year', $context ),
 					$title,
 				] );
 
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( gEditorial\Helper::noopedCount( $average, gEditorial\Info::getNoop( 'year' ) ), Core\Number::format( $average ) ),
+					gEditorial\Info::prepNoop( $average, 'year', $context ),
 				] );
 
 			$classes = [
@@ -643,7 +644,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_empty_dob( $posttypes, $paired = NULL )
+	private function _summary_age_empty_dob( array $posttypes, $paired = NULL, ?string $context = NULL )
 	{
 		$query_var = WordPress\Taxonomy::queryVar( $this->constant( 'group_taxonomy' ) );
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
@@ -709,7 +710,7 @@ class WasBorn extends gEditorial\Module
 			else
 				$text = vsprintf( '<b>%2$s</b> <span>[%1$s]</span>', [
 					$title,
-					sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+					gEditorial\Info::prepNoop( $count, 'person', $context ),
 				] );
 
 			if ( ! array_key_exists( $posttype, $access ) )
@@ -734,7 +735,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_groups( $posttypes, $paired = NULL )
+	private function _summary_age_groups( array $posttypes, $paired = NULL, ?string $context = NULL )
 	{
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$extra    = []; // TODO: make sure the terms are in order
@@ -801,7 +802,7 @@ class WasBorn extends gEditorial\Module
 				else
 					$text = vsprintf( '<b>%2$s</b> <span title="%3$s">[%1$s]</span>', [
 						$name,
-						sprintf( gEditorial\Helper::noopedCount( $count, gEditorial\Info::getNoop( 'person' ) ), Core\Number::format( $count ) ),
+						gEditorial\Info::prepNoop( $count, 'person', $context ),
 						$span,
 					] );
 

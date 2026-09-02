@@ -736,6 +736,15 @@ class Meta extends gEditorial\Module
 					$this->default_calendar(),
 					$context,
 				);
+
+			case 'items'        : return gEditorial\Info::prepNoop( $raw ?: $meta, 'item', $context );
+			case 'total_items'  : return gEditorial\Info::prepNoop( $raw ?: $meta, 'item', $context );
+			case 'pages'        : return gEditorial\Info::prepNoop( $raw ?: $meta, 'page', $context );
+			case 'total_pages'  : return gEditorial\Info::prepNoop( $raw ?: $meta, 'page', $context );
+			case 'volumes'      : return gEditorial\Info::prepNoop( $raw ?: $meta, 'volume', $context );
+			case 'total_volumes': return gEditorial\Info::prepNoop( $raw ?: $meta, 'volume', $context );
+			case 'discs'        : return gEditorial\Info::prepNoop( $raw ?: $meta, 'disc', $context );
+			case 'total_discs'  : return gEditorial\Info::prepNoop( $raw ?: $meta, 'disc', $context );
 		}
 
 		switch ( $field_args['type'] ) {
