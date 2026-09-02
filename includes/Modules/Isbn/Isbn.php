@@ -624,21 +624,7 @@ class Isbn extends gEditorial\Module
 	{
 		switch ( $field_key ) {
 
-			case 'bibliographic':
-
-				if ( ! Core\Validation::isBibliographic( $raw ?: $value ) )
-					return sprintf( '<span class="-biblio %s do-clicktoclip" data-clipboard-text="%s">%s</span>',
-						'-not-valid',
-						$raw ?: $value,
-						$raw ?: $value
-					);
-
-				return Core\HTML::tag( 'a', [
-					'href'   => sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%s', $raw ?: $value ),
-					'title'  => _x( 'See the page about this on National Library website.', 'Field Title Attr', 'geditorial-isbn' ),
-					'class'  => '-is-valid',
-					'target' => '_blank',
-				], Core\Number::localize( $raw ?: $value ) );
+			case 'bibliographic': return Services\Publications::prepBiblio( $raw ?: $value, $context );
 		}
 
 		return $value;
