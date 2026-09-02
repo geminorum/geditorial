@@ -67,7 +67,10 @@ class ProfileSummary extends gEditorial\Widget
 				echo '<li class="-row -contact -contact-'.$method.' list-group-item">';
 					gEditorial\Info::renderIcon( $method, $title );
 					echo ' ';
-					echo Services\PostTypeFields::prepFieldRow( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
+					echo Services\PostTypeFields::prepFieldRow( $value, $method, [
+						'type'  => 'contact_method',
+						'title' => $title,
+					], $value );
 				echo '</li>';
 			}
 

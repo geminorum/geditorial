@@ -158,7 +158,7 @@ class Isbn extends gEditorial\Module
 	{
 		$this->add_posttype_fields_supported();
 
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 		$this->filter( 'meta_initial_isbn', 4, 2, FALSE, $this->base );
 
@@ -620,7 +620,7 @@ class Isbn extends gEditorial\Module
 	}
 
 	// NOTE: `isbn` field type will be handled by the service.
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -647,7 +647,7 @@ class Isbn extends gEditorial\Module
 	// @REF: `Template::getMetaField()`
 	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
-		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw, $context );
 	}
 
 	// Makes sure all ISBN initiated on ISBN-13 format.

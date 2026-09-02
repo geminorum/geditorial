@@ -188,12 +188,30 @@ class Team extends gEditorial\Module
 		}
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
-			case 'email_gravatar': return Core\Link::mailto( $raw ?: $value );
-			case 'email_contact' : return Core\Link::mailto( $raw ?: $value );
-			case 'personal_site' : return Core\HTML::link( $raw ?: $value );
+
+			case 'email_gravatar':
+
+				if ( 'export' === $context )
+					return trim( $raw ?: $value );
+
+				return Core\Link::mailto( $raw ?: $value );
+
+			case 'email_contact' :
+
+				if ( 'export' === $context )
+					return trim( $raw ?: $value );
+
+				return Core\Link::mailto( $raw ?: $value );
+
+			case 'personal_site' :
+
+				if ( 'export' === $context )
+					return trim( $raw ?: $value );
+
+				return Core\HTML::link( $raw ?: $value );
 		}
 
 		return $value;
@@ -203,7 +221,7 @@ class Team extends gEditorial\Module
 	{
 		$this->add_posttype_fields_for( 'meta', 'member_posttype' );
 
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 	}
 
 	public function dashboard_glance_items( array $items ): array

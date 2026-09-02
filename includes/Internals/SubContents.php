@@ -396,7 +396,7 @@ trait SubContents
 
 					$item[$key] = $this->prep_meta_row( $value, $key, [
 						'type' => array_key_exists( $key, $types ) ? $types[$key] : $key,
-					], $raw );
+					], $raw, $context );
 				}
 			}
 

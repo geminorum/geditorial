@@ -261,7 +261,7 @@ class Socialite extends gEditorial\Module
 
 		$this->add_posttype_fields_supported();
 
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 		$this->filter( 'meta_summary_excludes', 4, 22, FALSE, $this->base );
 	}
@@ -496,7 +496,7 @@ class Socialite extends gEditorial\Module
 		}
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
@@ -515,6 +515,9 @@ class Socialite extends gEditorial\Module
 			case 'neshan'   :
 			case 'balad'    :
 
+				if ( 'export' === $context )
+					return trim( $raw ?: $value );
+
 				$url = Core\Socials::getHandleURL( $raw ?: $value, $field_key );
 
 				return Core\HTML::tag( 'a', [
@@ -531,7 +534,7 @@ class Socialite extends gEditorial\Module
 	// @REF: `Template::getMetaField()`
 	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
-		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw, $context );
 	}
 
 	// @SEE: https://codepen.io/geminorum/pen/xxrjYKK

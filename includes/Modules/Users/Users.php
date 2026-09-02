@@ -603,7 +603,10 @@ class Users extends gEditorial\Module
 
 			printf( $before, '-contact -contact-'.$method );
 				echo $this->get_column_icon( FALSE, Core\Icon::guess( $method, 'email-alt' ), $title );
-				echo $this->prep_meta_row( $value, $method, [ 'type' => 'contact_method', 'title' => $title ], $value );
+				echo $this->prep_meta_row( $value, $method, [
+					'type'  => 'contact_method',
+					'title' => $title,
+				], $value );
 			echo $after;
 		}
 

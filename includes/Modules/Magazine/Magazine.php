@@ -374,7 +374,7 @@ class Magazine extends gEditorial\Module
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 		$this->add_posttype_fields_supported();
 
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 
 		if ( $this->get_setting( 'override_dates', TRUE ) )
 			$this->latechores__init_post_aftercare( $this->constant( 'primary_posttype' ) );
@@ -449,11 +449,15 @@ class Magazine extends gEditorial\Module
 		] );
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
 			case 'in_issue_order':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return WordPress\Strings::getCounted(
 					Core\Number::translate( $raw ?: $value ),
 					/* translators: `%s`: order */
@@ -461,6 +465,10 @@ class Magazine extends gEditorial\Module
 				);
 
 			case 'in_issue_page_start':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return WordPress\Strings::getCounted(
 					Core\Number::translate( $raw ?: $value ),
 					/* translators: `%s`: page */
@@ -468,6 +476,10 @@ class Magazine extends gEditorial\Module
 				);
 
 			case 'in_issue_pages':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return sprintf(
 					/* translators: `%s`: total count */
 					_x( 'Total Pages: %s', 'Display', 'geditorial-magazine' ),

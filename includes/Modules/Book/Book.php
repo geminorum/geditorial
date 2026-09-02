@@ -668,13 +668,16 @@ class Book extends gEditorial\Module
 		$this->column_row_p2p_from_posttype( 'main_posttype', $post, $before, $after );
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
 			case 'publication_date': return Core\Number::localize( $raw ?: $value );
 
 			case 'publication_edition':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
 
 				return sprintf(
 					/* translators: `%s`: edition placeholder */
@@ -683,6 +686,9 @@ class Book extends gEditorial\Module
 				);
 
 			case 'publication_print':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
 
 				return sprintf(
 					/* translators: `%s`: print placeholder */
@@ -704,7 +710,7 @@ class Book extends gEditorial\Module
 		] );
 
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 
 		$this->filter( 'pairedimports_define_import_types', 4, 5, FALSE, $this->base );

@@ -430,10 +430,10 @@ class PostTypeFields extends gEditorial\Service
 
 	// OLD: `Helper::prepMetaRow()`
 	// TODO: support: `dob`,`date`,`datetime`
-	public static function prepFieldRow( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, string $module = 'meta' ): mixed
+	public static function prepFieldRow( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL, string $module = 'meta' ): mixed
 	{
 		$context  = $context ?? 'admin';
-		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw );
+		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw, $context );
 
 		if ( $filtered !== $value )
 			return $filtered; // bail if already filtered

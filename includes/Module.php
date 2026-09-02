@@ -619,20 +619,22 @@ class Module extends WordPress\Module
 
 	// DEFAULT METHOD
 	// NOTE: must be available to all modules
-	public function prep_meta_row( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
+		$context = $context ?? 'admin';
+
 		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
 			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
 
 		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
 
-			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw );
+			$prepped = $this->prep_meta_row_module( $value, $field_key, $field, $raw, $context );
 
 			if ( $prepped !== $value )
 				return $prepped; // bail if already prepped
 		}
 
-		return Services\PostTypeFields::prepFieldRow( $value, $field_key, $field, $raw, 'meta' );
+		return Services\PostTypeFields::prepFieldRow( $value, $field_key, $field, $raw, $context, 'meta' );
 	}
 
 	// TODO: customize column position/sorting

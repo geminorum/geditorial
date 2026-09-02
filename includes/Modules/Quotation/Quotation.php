@@ -204,7 +204,7 @@ class Quotation extends gEditorial\Module
 	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'main_posttype' );
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 9, FALSE, $this->base );
 	}
 
@@ -329,11 +329,15 @@ class Quotation extends gEditorial\Module
 		);
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		switch ( $field_key ) {
 
 			case 'quotation_pagestart':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return sprintf(
 					/* translators: `%s`: page start placeholder */
 					_x( 'Starts on Page %s', 'Display', 'geditorial-quotation' ),
@@ -341,6 +345,10 @@ class Quotation extends gEditorial\Module
 				);
 
 			case 'quotation_pageend':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return sprintf(
 					/* translators: `%s`: page end placeholder */
 					_x( 'Ends in Page %s', 'Display', 'geditorial-quotation' ),
@@ -348,6 +356,10 @@ class Quotation extends gEditorial\Module
 				);
 
 			case 'quotation_section':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return sprintf(
 					/* translators: `%s`: section placeholder */
 					_x( 'Section %s', 'Display', 'geditorial-quotation' ),
@@ -355,6 +367,10 @@ class Quotation extends gEditorial\Module
 				);
 
 			case 'quotation_volume':
+
+				if ( 'export' === $context )
+					return Core\Number::translate( $raw ?: $value );
+
 				return sprintf(
 					/* translators: `%s`: volume placeholder */
 					_x( 'Volume %s', 'Display', 'geditorial-quotation' ),
@@ -368,6 +384,6 @@ class Quotation extends gEditorial\Module
 	// @REF: `Template::getMetaField()`
 	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
-		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw );
+		return $this->prep_meta_row_module( $meta, $field, $field_args, $raw, $context );
 	}
 }

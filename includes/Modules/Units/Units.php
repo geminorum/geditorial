@@ -176,7 +176,7 @@ class Units extends gEditorial\Module
 		$this->posttypefields_init_meta_fields();
 		$this->posttypefields_register_meta_fields();
 
-		$this->filter( 'prep_meta_row', 2, 12, 'module', $this->base );
+		$this->filter( 'prep_meta_row', 5, 12, 'module', $this->base );
 		$this->filter( 'meta_field', 7, 5, FALSE, $this->base );
 		$this->action( 'posttypefields_import_raw_data', 5, 9, 'action', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 12, 'filter', $this->base );
@@ -263,7 +263,7 @@ class Units extends gEditorial\Module
 		return $meta;
 	}
 
-	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL ): mixed
+	public function prep_meta_row_module( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
 		// switch ( $field_key ) {}
 
@@ -272,6 +272,9 @@ class Units extends gEditorial\Module
 			switch ( $field['type'] ) {
 
 				case 'european_shoe':
+
+					if ( 'export' === $context )
+						return Core\Number::translate( $raw ?: $value );
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
@@ -285,6 +288,9 @@ class Units extends gEditorial\Module
 
 				case 'international_shirt':
 
+					if ( 'export' === $context )
+						return Core\Number::translate( $raw ?: $value );
+
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: Core\Number::localize( $raw ?: $value );
@@ -296,6 +302,9 @@ class Units extends gEditorial\Module
 					);
 
 				case 'international_pants':
+
+					if ( 'export' === $context )
+						return Core\Number::translate( $raw ?: $value );
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
@@ -309,6 +318,9 @@ class Units extends gEditorial\Module
 
 				case 'bookcover':
 
+					if ( 'export' === $context )
+						return Core\Number::translate( $raw ?: $value );
+
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
 						: ( $raw ?: $value );
@@ -320,6 +332,9 @@ class Units extends gEditorial\Module
 					);
 
 				case 'papersize':
+
+					if ( 'export' === $context )
+						return Core\Number::translate( $raw ?: $value );
 
 					$meta = \array_key_exists( $raw ?: $value, $this->strings['values'][$field['type']] )
 						? $this->strings['values'][$field['type']][( $raw ?: $value )]
