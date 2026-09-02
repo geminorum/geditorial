@@ -821,7 +821,7 @@ class Post extends Core\Base
 		return wp_insert_post( $new_post );
 	}
 
-	public static function image( $post, $context = NULL, $size = NULL, $thumbnail_id = NULL ): false|string
+	public static function image( mixed $post, ?string $context = NULL, $size = NULL, ?int $thumbnail_id = NULL ): false|string
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;

@@ -5,10 +5,15 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class Socials extends Base
 {
 	const TRACKING_PARAMS = [
-		// @REF: https://sleek-ly.com/blog/what-is-igsh-instagram-links
-		'igsh', // Instagram
 
-		'fbclid', // Facebook
+		/// Instagram
+		'igsh', // @REF: https://sleek-ly.com/blog/what-is-igsh-instagram-links
+
+		/// Facebook
+		'fbclid',
+
+		/// IMDB.com
+		'ref_',
 
 		// @REF https://www.mtu.edu/umc/services/websites/advertising/utm/
 		// @REF: https://en.wikipedia.org/wiki/UTM_parameters

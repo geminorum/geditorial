@@ -1600,4 +1600,39 @@ class Taxonomy extends Core\Base
 
 		return $terms;
 	}
+
+	public static function wipeOut( string $taxonomy ): void
+	{
+		global $wpdb;
+
+		// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$terms = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT t.*, tt.* FROM {$wpdb->terms} AS t " .
+				"INNER JOIN {$wpdb->term_taxonomy} AS tt ON t.term_id = tt.term_id " .
+				'WHERE tt.taxonomy IN (%s) ' .
+				'ORDER BY t.name ASC',
+				$taxonomy
+			)
+		);
+
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+
+				// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->delete( $wpdb->term_taxonomy, [ 'term_taxonomy_id' => $term->term_taxonomy_id ] );
+
+				// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->delete( $wpdb->term_relationships, [ 'term_taxonomy_id' => $term->term_taxonomy_id ] );
+
+				// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+				$wpdb->delete( $wpdb->terms, [ 'term_id' => $term->term_id ] );
+			}
+		}
+
+		// phpcs:ignore: WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->delete( $wpdb->term_taxonomy, [ 'taxonomy' => $taxonomy ], [ '%s' ] );
+
+		// `flush_rewrite_rules();`
+	}
 }

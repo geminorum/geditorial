@@ -385,7 +385,7 @@ class Arraay extends Base
 		return array_diff_key( $input, array_flip( array_keys( $input, $value, $strict ) ) );
 	}
 
-	//@RF: https://stackoverflow.com/a/11026840
+	//@REF: https://stackoverflow.com/a/11026840
 	public static function stripByKeys( array $input, array $keys ): array
 	{
 		if ( self::empty( $input ) )
@@ -399,20 +399,26 @@ class Arraay extends Base
 
 	// @REF: https://stackoverflow.com/a/34575007
 	// @SEE: `wp_array_slice_assoc()`
-	public static function keepByKeys( $array, $keys )
+	public static function keepByKeys( array $input, array $keys ): array
 	{
-		if ( empty( $array ) || empty( $keys ) )
+		if ( self::empty( $input ) )
 			return [];
 
-		return array_intersect_key( $array, array_flip( $keys ) );
+		if ( empty( $keys ) )
+			return [];
+
+		return array_intersect_key( $input, array_flip( $keys ) );
 	}
 
-	public static function keepByValue( $array, $values )
+	public static function keepByValue( array $input, array $values ): array
 	{
-		if ( empty( $array ) || empty( $values ) )
+		if ( self::empty( $input ) )
 			return [];
 
-		return array_intersect( $array, $values );
+		if ( empty( $values ) )
+			return [];
+
+		return array_intersect( $input, $values );
 	}
 
 	// @REF: WooCommerce: `_sort_priority_callback()`
