@@ -10,9 +10,6 @@ class Fiscal extends gEditorial\Service
 {
 	public static function prepIBAN( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
-		if ( self::empty( $input ) )
-			return $fallback;
-
 		if ( ! $data = Core\Text::force( $input ) )
 			return $fallback;
 
@@ -31,9 +28,6 @@ class Fiscal extends gEditorial\Service
 
 	public static function prepBankCard( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
-		if ( self::empty( $input ) )
-			return $fallback;
-
 		if ( ! $data = Core\Text::force( $input ) )
 			return $fallback;
 

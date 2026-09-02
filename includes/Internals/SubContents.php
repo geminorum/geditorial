@@ -1159,7 +1159,7 @@ trait SubContents
 					if ( $value && ( $parent = WordPress\Post::title( (int) $value, FALSE ) ) )
 						return $parent;
 
-					return Helper::getPostTitleRow( $row, 'edit' );
+					return gEditorial\Helper::getPostTitleRow( $row, 'edit' );
 				},
 				'actions' => function ( $value, $row, $column, $index, $key, $args )
 					use ( $custom ) {

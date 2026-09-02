@@ -233,11 +233,8 @@ class Units extends gEditorial\Module
 	{
 		switch ( $field_args['type'] ) {
 
-			case 'distance':
-				return Core\Distance::prep( $raw, $field_args, $context );
-
-			case 'duration':
-				return Core\Duration::prep( $raw, $field_args, $context );
+			case 'distance': return Core\Distance::prep( $raw, $field_args, $context );
+			case 'duration': return Core\Duration::prep( $raw, $field_args, $context );
 
 			case 'day'        :
 			case 'hour'       :

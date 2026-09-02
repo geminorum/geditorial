@@ -1018,7 +1018,7 @@ class WasBorn extends gEditorial\Module
 		return $terms;
 	}
 
-	public function papered_view_data_for_post( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( array $data, mixed $profile, mixed $source, ?string $context ): array
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;
@@ -1088,7 +1088,7 @@ class WasBorn extends gEditorial\Module
 		);
 	}
 
-	public function postdate_after_post_override_date( $post, $datetime, $metakeys, $verbose )
+	public function postdate_after_post_override_date( $post, $datetime, $metakeys, bool $verbose ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -1168,7 +1168,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @REF: `hook_dashboardsummary_paired_post_summaries()`
-	public function paired_post_summaries( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context )
+	public function paired_post_summaries( array $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, ?string $context ): array
 	{
 		if ( ! Core\Arraay::exists( $posttypes, $this->get_setting_posttypes( 'parent' ) ) )
 			return $summaries;

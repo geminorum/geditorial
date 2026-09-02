@@ -714,7 +714,7 @@ class Personage extends gEditorial\Module
 		return $data;
 	}
 
-	public function papered_view_data_for_post( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( array $data, mixed $profile, mixed $source, ?string $context ): array
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;
@@ -741,7 +741,7 @@ class Personage extends gEditorial\Module
 		return $data;
 	}
 
-	public function papered_view_list_item( $row, $item, $index, $source, $profile, $context, $list )
+	public function papered_view_list_item( array $row, mixed $item, $index, mixed $source, mixed $profile, ?string $context, array $list ): array
 	{
 		if ( ! $post = WordPress\Post::get( $item ) )
 			return $row;

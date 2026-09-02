@@ -749,115 +749,24 @@ class Meta extends gEditorial\Module
 
 		switch ( $field_args['type'] ) {
 
-			case 'venue':
-
-				return Services\Locations::prepVenue(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'people':
-
-				return Services\Individuals::prepPeople(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'identity':
-
-				return Services\Individuals::prepIdentity(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'postcode':
-
-				return Services\Locations::prepPostCode(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'iban':
-
-				return Services\Fiscal::prepIBAN(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'bankcard':
-
-				return Services\Fiscal::prepBankCard(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'contact':
-
-				return Services\Contacts::prepContact(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'social':
-
-				return Services\Communities::prepSocial(
-					$raw ?: $meta,
-					$field, // usually the service
-					$context
-				);
-
-			case 'email':
-
-				return Core\Email::prep(
-					$raw ?: $meta,
-					$field_args,
-					$context,
-				);
-
-			case 'phone':
-
-				return Core\Phone::prep(
-					$raw ?: $meta,
-					$field_args,
-					$context,
-				);
-
-			case 'mobile':
-
-				return Core\Mobile::prep(
-					$raw ?: $meta,
-					$field_args,
-					$context,
-				);
-
-			case 'isbn':
-
-				return Services\Publications::prepISBN(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'vin':
-
-				return Services\Vehicles::prepVIN(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'plate':
-
-				return Services\Vehicles::prepPlate(
-					$raw ?: $meta,
-					$context,
-				);
-
-			case 'address':
-
-				return Services\Locations::prepAddress(
-					$raw ?: $meta,
-					$context,
-					$raw ?: $meta,
-				);
+			case 'latlng'  : return Services\Locations::prepLatLng( $raw ?: $meta, $context );
+			case 'venue'   : return Services\Locations::prepVenue( $raw ?: $meta, $context );
+			case 'postcode': return Services\Locations::prepPostCode( $raw ?: $meta, $context );
+			case 'address' : return Services\Locations::prepAddress( $raw ?: $meta, $context, $raw ?: $meta );
+			case 'people'  : return Services\Individuals::prepPeople( $raw ?: $meta, $context );
+			case 'identity': return Services\Individuals::prepIdentity( $raw ?: $meta, $context );
+			case 'iban'    : return Services\Fiscal::prepIBAN( $raw ?: $meta, $context );
+			case 'bankcard': return Services\Fiscal::prepBankCard( $raw ?: $meta, $context );
+			case 'vin'     : return Services\Vehicles::prepVIN( $raw ?: $meta, $context );
+			case 'plate'   : return Services\Vehicles::prepPlate( $raw ?: $meta, $context );
+			case 'contact' : return Services\Contacts::prepContact( $raw ?: $meta, $context );
+			case 'social'  : return Services\Communities::prepSocial( $raw ?: $meta, $field, $context );        // The field key is usually the service
+			case 'isbn'    : return Services\Publications::prepISBN( $raw ?: $meta, $context );
+			case 'email'   : return Core\Email::prep( $raw ?: $meta, $field_args, $context );
+			case 'phone'   : return Core\Phone::prep( $raw ?: $meta, $field_args, $context );
+			case 'mobile'  : return Core\Mobile::prep( $raw ?: $meta, $field_args, $context );
+			case 'area'    : return Core\Area::prep( $raw ?: $meta, $field_args, $context );
+			case 'color'   : return Core\Color::prep( $raw, $field_args, $context );
 
 			case 'year':
 
@@ -912,15 +821,9 @@ class Meta extends gEditorial\Module
 			case 'datestring':
 				return Core\Number::localize( gEditorial\Datetime::stringFormat( $raw ) );
 
-			case 'area':
-
-				return Core\Area::prep(
-					$raw ?: $meta,
-					$field_args,
-					$context,
-				);
-
 			case 'embed':
+
+				// TODO: migrate to `Embeds` Service
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
@@ -932,6 +835,8 @@ class Meta extends gEditorial\Module
 
 			case 'text_source':
 
+				// TODO: migrate to `Embeds` Service
+
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
@@ -941,6 +846,8 @@ class Meta extends gEditorial\Module
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'text', $post, $context );
 
 			case 'audio_source':
+
+				// TODO: migrate to `Embeds` Service
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
@@ -952,6 +859,8 @@ class Meta extends gEditorial\Module
 
 			case 'video_source':
 
+				// TODO: migrate to `Embeds` Service
+
 				if ( 'export' === $context )
 					return $raw ?: $meta;
 
@@ -961,6 +870,8 @@ class Meta extends gEditorial\Module
 				return gEditorial\Template::doMediaShortCode( trim( $raw ), 'video', $post, $context );
 
 			case 'image_source':
+
+				// TODO: migrate to `Embeds` Service
 
 				if ( 'export' === $context )
 					return $raw ?: $meta;
@@ -977,19 +888,6 @@ class Meta extends gEditorial\Module
 					return Core\URL::prepTitle( trim( $raw ) );
 
 				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
-
-			case 'latlng':
-
-				// TODO: migrate to `Locations` Service
-
-				if ( 'export' === $context )
-					return $raw ?: $meta;
-
-				// `return Core\LatLng::prep( trim( $raw ) );`
-				return Services\Lookup::htmlLatLng( trim( $raw ) );
-
-			case 'color':
-				return Core\Color::prep( $raw, $field_args, $context );
 		}
 
 		return $meta;

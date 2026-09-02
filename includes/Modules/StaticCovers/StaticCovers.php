@@ -824,7 +824,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	public function papered_view_data_for_post( $data, $profile, $source, $context )
+	public function papered_view_data_for_post( array $data, mixed $profile, mixed $source, ?string $context ): array
 	{
 		if ( ! $post = WordPress\Post::get( $source ) )
 			return $data;

@@ -49,9 +49,6 @@ class Individuals extends gEditorial\Service
 
 	public static function prepDateOfBirth( mixed $input, ?string $calendar_type = NULL, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
-		if ( self::empty( $input ) )
-			return $fallback;
-
 		if ( ! $data = Core\Text::force( $input ) )
 			return $fallback;
 
@@ -79,9 +76,6 @@ class Individuals extends gEditorial\Service
 
 	public static function prepIdentity( mixed $input, ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
 	{
-		if ( self::empty( $input ) )
-			return $fallback;
-
 		if ( ! $data = Core\Text::force( $input ) )
 			return $fallback;
 

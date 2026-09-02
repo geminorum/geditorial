@@ -445,15 +445,10 @@ class PostTypeFields extends gEditorial\Service
 			case 'facebook' : // return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
 			case 'instagram': // return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
 			case 'telegram' : // return Core\Socials::htmlHandle( $value, 'https://t.me/' );
+				return Communities::prepSocial( $raw ?: $value, $field_key, $context ); // The field key is usually the service
 
-				return Communities::prepSocial(
-					$raw ?: $value,
-					$field_key, // the service as field-key
-					'admin',
-				);
-
-			case 'phone' : return Core\Email::prep( $raw ?: $value, $field, 'admin' );
-			case 'mobile': return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
+			case 'phone' : return Core\Email::prep( $raw ?: $value, $field, $context );
+			case 'mobile': return Core\Mobile::prep( $raw ?: $value, $field, $context );
 
 			// TODO: migrate to `Individuals` Service
 			// TODO: filter this for profile links
@@ -473,28 +468,6 @@ class PostTypeFields extends gEditorial\Service
 
 			// NOTE: second priority: field-type
 			switch ( $field['type'] ) {
-
-				case 'venue':
-
-					return Locations::prepVenue(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'people':
-
-					return Individuals::prepPeople(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'social':
-
-					return Communities::prepSocial(
-						$raw ?: $value,
-						$field_key, // usually the service
-						'admin',
-					);
 
 				case 'day':
 				case 'hour':
@@ -541,62 +514,35 @@ class PostTypeFields extends gEditorial\Service
 						Core\Number::format( $raw ?: $value )
 					);
 
-				case 'identity':
+				case 'identity': return Individuals::prepIdentity( $raw ?: $value, $context );
+				case 'people'  : return Individuals::prepPeople( $raw ?: $value, $context );
+				case 'latlng'  : return Locations::prepLatLng( $raw ?: $value, $context );
+				case 'postcode': return Locations::prepPostCode( $raw ?: $value, $context );
+				case 'venue'   : return Locations::prepVenue( $raw ?: $value, $context );
+				case 'address' : return Locations::prepAddress( $raw ?: $value, $context, $raw ?: $value );
+				case 'iban'    : return Fiscal::prepIBAN( $raw ?: $value, $context );
+				case 'bankcard': return Fiscal::prepBankCard( $raw ?: $value, $context );
+				case 'isbn'    : return Publications::prepISBN( $raw ?: $value, $context );
+				case 'vin'     : return Vehicles::prepVIN( $raw ?: $value, $context );
+				case 'plate'   : return Vehicles::prepPlate( $raw ?: $value, $context );
+				case 'distance': return Core\Distance::prep( $raw ?: $value, $field, $context );
+				case 'duration': return Core\Duration::prep( $raw ?: $value, $field, $context );
+				case 'area'    : return Core\Area::prep( $raw ?: $value, $field, $context );
+				case 'email'   : return Core\Email::prep( $raw ?: $value, $field, $context );
+				case 'phone'   : return Core\Phone::prep( $raw ?: $value, $field, $context );
+				case 'mobile'  : return Core\Mobile::prep( $raw ?: $value, $field, $context );
+				case 'social'  : return Communities::prepSocial( $raw ?: $value, $field_key, $context );     // The field key is usually the service
 
-					return Individuals::prepIdentity(
-						$raw ?: $value,
-						'admin',
-					);
+				case 'contact_method':
 
-				case 'postcode':
+					// TODO: migrate to `Contacts`/`Communities` Service
 
-					return Locations::prepPostCode(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'iban':
-
-					return Fiscal::prepIBAN(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'bankcard':
-
-					return Fiscal::prepBankCard(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'isbn':
-
-					return Publications::prepISBN(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'vin':
-
-					return Vehicles::prepVIN(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'plate':
-
-					return Vehicles::prepPlate(
-						$raw ?: $value,
-						'admin',
-					);
-
-				case 'address':
-
-					return Locations::prepAddress(
-						$raw ?: $value,
-						'admin',
-						$raw ?: $value
-					);
+					return Core\URL::isValid( $raw ?: $value )
+						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+						: sprintf( '<span title="%s">@%s</span>',
+							empty( $field['title'] ) ? $field_key : Core\HTML::escape( $field['title'] ),
+							$raw ?: $value
+						);
 
 				case 'year':
 
@@ -620,42 +566,9 @@ class PostTypeFields extends gEditorial\Service
 						self::getDefaultCalendar( $module )
 					);
 
-				case 'distance':
-
-					return Core\Distance::prep( $raw ?: $value, $field );
-
-				case 'duration':
-
-					return Core\Duration::prep( $raw ?: $value, $field );
-
-				case 'area':
-
-					return Core\Area::prep( $raw ?: $value, $field );
-
-				case 'contact_method':
-
-					// TODO: migrate to `Contacts` Service
-
-					return Core\URL::isValid( $raw ?: $value )
-						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
-						: sprintf( '<span title="%s">@%s</span>',
-							empty( $field['title'] ) ? $field_key : Core\HTML::escape( $field['title'] ),
-							$raw ?: $value
-						);
-
-				case 'email':
-
-					return Core\Email::prep( $raw ?: $value, $field, 'admin' );
-
-				case 'phone':
-
-					return Core\Phone::prep( $raw ?: $value, $field, 'admin' );
-
-				case 'mobile':
-
-					return Core\Mobile::prep( $raw ?: $value, $field, 'admin' );
-
 				case 'embed':
+
+					// TODO: migrate to `Embeds` Service
 
 					return Core\HTML::link( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
 
@@ -663,16 +576,14 @@ class PostTypeFields extends gEditorial\Service
 
 					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
 
-				case 'latlng':
-
-					return Lookup::htmlLatLng( $raw ?: $value );
-
 				case 'title_link':
 				case 'text_source':
 				case 'audio_source':
 				case 'video_source':
 				case 'image_source':
 				case 'downloadable':
+
+					// TODO: migrate to `Embeds` Service
 
 					return Core\HTML::tag( 'a', [
 						'href'   => $raw ?: $value,
@@ -724,7 +635,7 @@ class PostTypeFields extends gEditorial\Service
 			case 'desc'       :
 			case 'description': return WordPress\Strings::prepDescription( $raw ?: $value );
 			case 'title'      : return WordPress\Strings::prepTitle( $raw ?: $value );
-			case 'contact'    : return Contacts::prepContact( $raw ?: $value );
+			case 'contact'    : return Contacts::prepContact( $raw ?: $value, $context );
 		}
 
 		// NOTE: fifth priority: last resorts
