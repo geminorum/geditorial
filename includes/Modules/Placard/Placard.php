@@ -18,7 +18,9 @@ class Placard extends gEditorial\Module
 	use Internals\TemplateTaxonomy;
 	use Internals\ViewEngines;
 
-	protected $default_template = 'bootstrap-carousel';
+	private $_templates = [
+		'bootstrap-carousel',
+	];
 
 	protected $supports = [
 		'main_posttype' => [
@@ -52,9 +54,19 @@ class Placard extends gEditorial\Module
 		$roles = $this->get_settings_default_roles();
 
 		return [
-			'_supports' => [
+			'_general' => [
+				[
+					'field'       => 'default_template',
+					'type'        => 'select',
+					'title'       => _x( 'Default Template', 'Setting Title', 'geditorial-placard' ),
+					'description' => _x( 'Defines the the default template for rendering the banners on front-end.', 'Setting Description', 'geditorial-placard' ),
+					'values'      => WordPress\Strings::makeLabelsByKeys( $this->_templates ),
+					'default'     => $this->_templates[0],
+				],
 				'shortcode_support',
 				'widget_support',
+			],
+			'_supports' => [
 				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_roles' => [
@@ -326,6 +338,16 @@ class Placard extends gEditorial\Module
 		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_rawdata' ) );
 	}
 
+	// NOTE: front only!
+	private function _get_default_template( ?string $context = NULL ): string
+	{
+		return $this->filters( 'default_template',
+			$this->get_setting( 'default_template', $this->_templates[0] ),
+			$this->_templates,
+			$context,
+		);
+	}
+
 	public function get_content_banners_by_parent( mixed $parent ): false|object
 	{
 		if ( ! $parent = WordPress\Post::get( $parent ) )
@@ -487,7 +509,9 @@ class Placard extends gEditorial\Module
 		if ( $args['status'] && ! in_array( $post->post_status, WordPress\Status::acceptable( $this->constant( 'main_posttype' ), 'display' ), TRUE ) )
 			return $content;
 
-		if ( ! $data = $this->_get_data_for_post( $post, $args['context'] ?? 'summary' ) )
+		$context = $args['context'] ?? 'summary';
+
+		if ( ! $data = $this->_get_data_for_post( $post, $context ) )
 			return $content;
 
 		if ( ! method_exists( $this, 'viewengine__render' ) ) {
@@ -495,13 +519,16 @@ class Placard extends gEditorial\Module
 			return $content;
 		}
 
-		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? $this->default_template, 'front' ) )
+		$template = $args['template'] ?? $this->_get_default_template( $context );
+
+		if ( ! $view = $this->viewengine__view_by_template( $template, 'front' ) )
 			return $content;
 
 		if ( ! $html = $this->viewengine__render( $view, [
-			'context'  => $args['context'] ?? 'summary',
-			'selector' => $this->classs( $post->ID ),
+			'context'  => $context,
+			'template' => $template,
 			'data'     => $data,
+			'selector' => $this->classs( $post->ID ),
 		], FALSE ) )
 			return $content;
 
