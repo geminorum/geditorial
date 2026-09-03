@@ -16,7 +16,8 @@ class FeaturedCards extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Featured Cards', 'Widget Title', 'geditorial-byline' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Featured Cards', 'Widget Title', 'geditorial-byline' ),
 			'desc'  => _x( 'Displays byline card rows for currently queried post.', 'Widget Description', 'geditorial-byline' ),
 		];
 	}

@@ -594,15 +594,6 @@ class Module extends WordPress\Module
 			remove_meta_box( $subterms.'div', $screen->post_type, 'side' );
 	}
 
-	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false
-	{
-		return gEditorial()->icon(
-			$name,
-			$group ?? $this->icon_group,
-			$extra
-		);
-	}
-
 	// Checks to bail early if meta-box/widget is hidden
 	protected function check_hidden_metabox( false|array $box, false|string $posttype = FALSE, string $after = '' ): bool
 	{
@@ -624,7 +615,7 @@ class Module extends WordPress\Module
 		$context = $context ?? 'admin';
 
 		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
-			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw ] );
+			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw, $context ] );
 
 		if ( method_exists( $this, 'prep_meta_row_module' ) ) {
 

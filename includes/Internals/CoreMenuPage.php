@@ -26,10 +26,12 @@ trait CoreMenuPage
 	 * Network Settings: `settings.php`
 	 */
 
-	protected function _hook_menu_posttype( string $constant, string $parent_slug = 'index.php', ?string $context = 'adminpage' ): false|string
+	protected function _hook_menu_posttype( string $constant, string $parent_slug = 'index.php', ?string $context = NULL ): false|string
 	{
 		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
 			return FALSE;
+
+		$context = $context ?? 'adminpage';
 
 		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,
@@ -45,10 +47,12 @@ trait CoreMenuPage
 	// $parent_slug options: `options-general.php`, `users.php`
 	// also: `$this->_hook_parentfile_for_optionsgeneralphp();`
 	// also: `$this->_hook_parentfile_for_usersphp();`
-	protected function _hook_menu_taxonomy( string $constant, string $parent_slug = 'index.php', ?string $context = 'submenu' ): false|string
+	protected function _hook_menu_taxonomy( string $constant, string $parent_slug = 'index.php', ?string $context = NULL ): false|string
 	{
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
 			return FALSE;
+
+		$context = $context ?? 'submenu';
 
 		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,

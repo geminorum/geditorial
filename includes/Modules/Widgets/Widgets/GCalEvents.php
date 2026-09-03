@@ -16,7 +16,8 @@ class GCalEvents extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Google Calendar', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Google Calendar', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays list of events from a public Google Calendar.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

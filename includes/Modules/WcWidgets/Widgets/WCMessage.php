@@ -14,7 +14,8 @@ class WCMessage extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: WooCommerce Message', 'Widget Title', 'geditorial-wc-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: WooCommerce Message', 'Widget Title', 'geditorial-wc-widgets' ),
 			'desc'  => _x( 'Displays a custom message in WooCommerce mark-up.', 'Widget Description', 'geditorial-wc-widgets' ),
 		];
 	}

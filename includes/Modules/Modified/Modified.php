@@ -516,7 +516,7 @@ class Modified extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function modified_get_data_for_post( mixed $post = NULL, ?string $context = NULL, ?string $format = NULL ): false|string
+	public function modified_get_data_for_post( mixed $post = NULL, ?string $context = NULL, ?string $format = NULL ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;

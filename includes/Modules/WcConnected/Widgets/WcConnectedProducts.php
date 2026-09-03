@@ -15,7 +15,8 @@ class WcConnectedProducts extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: WC Connected Products', 'Widget Title', 'geditorial-wc-connected' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: WC Connected Products', 'Widget Title', 'geditorial-wc-connected' ),
 			'desc'  => _x( 'Displays connected products for currently queried post.', 'Widget Description', 'geditorial-wc-connected' ),
 		];
 	}

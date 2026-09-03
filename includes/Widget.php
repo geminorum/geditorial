@@ -90,6 +90,9 @@ class Widget extends \WP_Widget
 		if ( empty( $args['class'] ) )
 			$args['class'] = str_replace( '_', '-', $args['name'] );
 
+		if ( Core\Text::has( $args['title'], '%s' ) )
+			$args['title'] = sprintf( $args['title'], Plugin::system() );
+
 		parent::__construct( static::BASE.'_'.$args['name'], $args['title'], [
 			'description' => $args['desc'],
 			'classname'   => '{GEDITORIAL_WIDGET_CLASSNAME} '.'widget-'.static::BASE.'-'.$args['class'],

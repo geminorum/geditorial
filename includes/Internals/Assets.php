@@ -9,6 +9,15 @@ use geminorum\gEditorial\WordPress;
 
 trait Assets
 {
+	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false
+	{
+		return gEditorial()->icon(
+			$name,
+			$group ?? $this->icon_group,
+			$extra
+		);
+	}
+
 	public function enqueue_asset_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL ): string
 	{
 		if ( is_null( $name ) )

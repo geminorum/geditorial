@@ -15,7 +15,8 @@ class EventPoster extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Event Poster', 'Widget Title', 'geditorial-happening' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Event Poster', 'Widget Title', 'geditorial-happening' ),
 			'desc'  => _x( 'Displays selected, connected or current event poster.', 'Widget Description', 'geditorial-happening' ),
 		];
 	}

@@ -16,7 +16,8 @@ class ProfileSummary extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Profile Summary', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Profile Summary', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays arbitrary profile info for current logged-in user.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

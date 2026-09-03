@@ -15,7 +15,8 @@ class SearchTerms extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Search Terms', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Search Terms', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays the results of current search criteria on selected taxonomies.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

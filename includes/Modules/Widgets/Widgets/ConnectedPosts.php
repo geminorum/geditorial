@@ -18,7 +18,8 @@ class ConnectedPosts extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Connected Posts', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Connected Posts', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays the manually connected items to the currently queried post.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

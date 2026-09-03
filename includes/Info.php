@@ -407,9 +407,10 @@ class Info extends WordPress\Main
 		if ( 'export' === $context )
 			return Core\Number::translate( $data );
 
-		return sprintf( Helper::noopedCount( (int) $data, self::getNoop( $type ) ),
-			Core\Number::format( $data )
-		);
+		$nooped   = self::getNoop( $type, [ '%s', '%s' ] );
+		$template = Helper::noopedCount( (int) $data, $nooped );
+
+		return sprintf( $template, Core\Number::format( $data ) );
 	}
 
 	public static function getNoop( mixed $key, mixed $fallback = NULL ): mixed

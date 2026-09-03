@@ -15,7 +15,8 @@ class IssueCover extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Issue Cover', 'Widget Title', 'geditorial-magazine' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Issue Cover', 'Widget Title', 'geditorial-magazine' ),
 			'desc'  => _x( 'Displays latest, selected, connected or current issue cover.', 'Widget Description', 'geditorial-magazine' ),
 		];
 	}

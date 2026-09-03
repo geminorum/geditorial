@@ -15,7 +15,8 @@ class NamesakeTerms extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Namesake Terms', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Namesake Terms', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays the results of search for namesake to current term on selected taxonomies.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

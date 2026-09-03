@@ -15,7 +15,8 @@ class PostTerms extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Post Terms', 'Widget Title', 'geditorial-widgets' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Post Terms', 'Widget Title', 'geditorial-widgets' ),
 			'desc'  => _x( 'Displays the assigned terms of the current post.', 'Widget Description', 'geditorial-widgets' ),
 		];
 	}

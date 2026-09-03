@@ -138,12 +138,12 @@ class WcIdentify extends gEditorial\Module
 		$uniqueid = Core\ISBN::sanitize( $raw );
 
 		$tokens = [
-			'raw'    => $raw,
-			'uniqueid'   => $uniqueid,
-			'prep'   => Core\ISBN::prep( $raw, TRUE ),
-			'link'   => Services\Lookup::htmlISBN( $uniqueid ),
-			'label'  => $this->_get_uniqueid_label( 'action' ),
-			'notice' => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
+			'raw'      => $raw,
+			'uniqueid' => $uniqueid,
+			'prep'     => Core\ISBN::prep( $raw, TRUE ),
+			'link'     => Services\Lookup::htmlISBN( $uniqueid ),
+			'label'    => $this->_get_uniqueid_label( 'action' ),
+			'notice'   => _x( 'Click to Copy', 'Notice', 'geditorial-wc-identify' ),
 		];
 
 		echo $before.Core\Text::replaceTokens(

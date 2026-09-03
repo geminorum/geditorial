@@ -15,7 +15,8 @@ class CollectionPoster extends gEditorial\Widget
 	public static function setup(): array
 	{
 		return [
-			'title' => _x( 'Editorial: Collection Poster', 'Widget Title', 'geditorial-collect' ),
+			/* translators: `%s`: system string */
+			'title' => _x( '%s: Collection Poster', 'Widget Title', 'geditorial-collect' ),
 			'desc'  => _x( 'Displays latest, selected, connected or current collection poster.', 'Widget Description', 'geditorial-collect' ),
 		];
 	}
