@@ -318,20 +318,36 @@ class Placard extends gEditorial\Module
 		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_rawdata' ) );
 	}
 
-	public function get_content_banners_for_post( mixed $post ): false|object
+	public function get_content_banners_by_parent( mixed $parent ): false|object
 	{
-		if ( ! $post = WordPress\Post::get( $post ) )
+		if ( ! $parent = WordPress\Post::get( $parent ) )
 			return FALSE;
 
-		if ( ! $this->posttype_supported( $post->post_type ) )
+		if ( ! $this->posttype_supported( $parent->post_type ) )
 			return FALSE;
 
-		$metakey = Services\PostTypeFields::getPostMetaKey( 'parent_post' );
+		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'parent_post' ) )
+			return FALSE;
 
-		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $post->ID, FALSE ) )
-			foreach ( $matches as $match )
-				if ( $this->constant( 'main_posttype' ) === get_post_type( intval( $match ) ) )
-					return $match;
+		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $parent->ID, FALSE ) )
+			return FALSE;
+
+		$posttype   = $this->constant( 'main_posttype' );
+		$acceptable = WordPress\Status::acceptable( $posttype );
+
+		foreach ( $matches as $match ) {
+
+			if ( ! $post = WordPress\Post::get( $match ) )
+				continue;
+
+			if ( $posttype !== $post->post_type )
+				continue;
+
+			if ( ! in_array( $post->post_status, $acceptable, TRUE ) )
+				continue;
+
+			return $post;
+		}
 
 		return FALSE;
 	}
@@ -413,7 +429,7 @@ class Placard extends gEditorial\Module
 			return $content;
 
 		if ( empty( $post ) && ! empty( $parent ) )
-			$post = $this->get_content_banners_for_post( $parent );
+			$post = $this->get_content_banners_by_parent( $parent );
 
 		if ( empty( $post ) )
 			return $content;
