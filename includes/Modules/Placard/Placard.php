@@ -42,6 +42,7 @@ class Placard extends gEditorial\Module
 			'access'   => 'beta',
 			'keywords' => [
 				'banner',
+				'woocommerce',
 				'has-shortcodes',
 				'has-widgets',
 				'cptmodule',
@@ -65,6 +66,7 @@ class Placard extends gEditorial\Module
 					'default'     => $this->_templates[0],
 				],
 				'tabs_support',
+				'woocommerce_support',
 				'shortcode_support',
 				'widget_support',
 			],
@@ -256,6 +258,9 @@ class Placard extends gEditorial\Module
 		if ( $this->get_setting( 'tabs_support', TRUE ) )
 			$this->_init_post_tabs();
 
+		if ( $this->get_setting( 'woocommerce_support' ) )
+			$this->_init_woocommerce();
+
 		$this->register_shortcode( 'main_shortcode' );
 	}
 
@@ -291,6 +296,16 @@ class Placard extends gEditorial\Module
 
 				return $tabs;
 			}, 10, 2 );
+
+		return TRUE;
+	}
+
+	private function _init_woocommerce(): bool
+	{
+		if ( is_admin() )
+			return FALSE;
+
+		$this->filter( 'product_tabs', 1, 10, FALSE, 'woocommerce' );
 
 		return TRUE;
 	}
@@ -516,6 +531,35 @@ class Placard extends gEditorial\Module
 	public function meta_render_metabox( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
 	{
 		gEditorial\MetaBox::fieldPostMenuOrder( $post );
+	}
+
+	public function product_tabs( array $tabs ): array
+	{
+		global $product;
+
+		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+			return $tabs;
+
+		$context   = $context ?? 'woocommerce';
+		$parent_id = $product->get_id();
+
+		if ( ! $post = $this->get_content_banners_by_parent( $parent_id, $context ) )
+			return $tabs;
+
+		return array_merge( $tabs, [
+			$this->key => [
+				'title'    => $this->get_setting_fallback( 'tab_title', _x( 'Slides', 'Setting Default', 'geditorial-placard' ) ),
+				'priority' => $this->get_setting( 'tab_priority', 20 ),
+				'callback' => function () use ( $parent_id, $post, $context ) {
+					echo $this->main_shortcode( [
+						'parent'  => $parent_id,
+						'id'      => $post,
+						'context' => $context,
+						'wrap'    => FALSE,
+					], $this->get_notice_for_empty( $context, NULL, FALSE ) );
+				},
+			],
+		] );
 	}
 
 	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
