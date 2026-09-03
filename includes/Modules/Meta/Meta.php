@@ -768,6 +768,16 @@ class Meta extends gEditorial\Module
 			case 'area'    : return Core\Area::prep( $raw ?: $meta, $field_args, $context );
 			case 'color'   : return Core\Color::prep( $raw, $field_args, $context );
 
+			case 'code'   :
+			case 'context':
+			case 'slug'   :
+			case 'hook'   :
+
+				if ( 'export' === $context )
+					return $raw ?: $meta;
+
+				return Core\HTML::code( $raw ?: $meta, sprintf( '-%s', $field_args['type'] ), TRUE );
+
 			case 'year':
 
 				if ( 'export' === $context )

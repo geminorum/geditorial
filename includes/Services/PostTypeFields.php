@@ -533,6 +533,12 @@ class PostTypeFields extends gEditorial\Service
 				case 'mobile'  : return Core\Mobile::prep( $raw ?: $value, $field, $context );
 				case 'social'  : return Communities::prepSocial( $raw ?: $value, $field_key, $context );     // The field key is usually the service
 
+				case 'code'   :
+				case 'context':
+				case 'slug'   :
+				case 'hook'   :
+					return Core\HTML::code( $raw ?: $value, sprintf( '-%s', $field['type'] ), TRUE );
+
 				case 'contact_method':
 
 					// TODO: migrate to `Contacts`/`Communities` Service

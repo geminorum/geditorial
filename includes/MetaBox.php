@@ -1336,6 +1336,9 @@ class MetaBox extends WordPress\Main
 
 			case 'social':
 			case 'code':
+			case 'context':
+			case 'slug':
+			case 'hook':
 
 				$atts['dir'] = 'ltr';
 

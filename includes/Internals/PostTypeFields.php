@@ -179,6 +179,9 @@ trait PostTypeFields
 					'link',
 					'social',
 					'code',
+					'context',
+					'slug',
+					'hook',
 					'color',
 					'phone',
 					'mobile',
@@ -502,8 +505,19 @@ trait PostTypeFields
 				break;
 
 			case 'code':
+			case 'context':
 
-				$sanitized = trim( $data );
+				$sanitized = Core\Text::trim( $data );
+				break;
+
+			case 'slug':
+
+				$sanitized = Core\Text::sanitizeBase( $data );
+				break;
+
+			case 'hook':
+
+				$sanitized = Core\Text::sanitizeHook( $data );
 				break;
 
 			case 'color':
@@ -803,6 +817,9 @@ trait PostTypeFields
 				case 'bankcard':
 				case 'social':
 				case 'code':
+				case 'context':
+				case 'slug':
+				case 'hook':
 				case 'color':
 				case 'postcode':
 				case 'venue':

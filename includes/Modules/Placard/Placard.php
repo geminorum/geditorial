@@ -155,7 +155,7 @@ class Placard extends gEditorial\Module
 					'display_location' => [
 						'title'       => _x( 'Display Location', 'Field Title', 'geditorial-placard' ),
 						'description' => _x( 'Intended location of the Banners', 'Field Description', 'geditorial-placard' ),
-						'type'        => 'code',
+						'type'        => 'context',
 					],
 
 					'content_embed_url' => [ 'type' => 'embed' ],
