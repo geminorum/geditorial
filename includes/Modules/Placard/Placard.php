@@ -120,6 +120,7 @@ class Placard extends gEditorial\Module
 				'orderedlist' => [
 					'title_placeholder'   => _x( 'Title', 'JavaScript String', 'geditorial-placard' ),
 					'caption_placeholder' => _x( 'Caption', 'JavaScript String', 'geditorial-placard' ),
+					'class_placeholder'   => _x( 'CSS Class', 'JavaScript String', 'geditorial-placard' ),
 					'url_placeholder'     => _x( 'URL', 'JavaScript String', 'geditorial-placard' ),
 				],
 			],
@@ -407,6 +408,7 @@ class Placard extends gEditorial\Module
 			$data[] = self::parsed( [
 				'title'      => '',
 				'caption'    => '',
+				'class'      => '',
 				'url'        => '',
 				'attachment' => '',
 				'image'      => WordPress\Post::image( $post, $context, 'thumbnail', (int) $row['attachment'] ?? 0 ) ?: '',
@@ -428,9 +430,14 @@ class Placard extends gEditorial\Module
 		$context = $context ?? 'orderedlist';
 		$parsed  = Core\Arraay::parseInputGroups( self::req( $this->classs( $context ), [] ) );
 
-		foreach ( $parsed as &$item )
+		foreach ( $parsed as &$item ) {
+
 			if ( ! empty( $item['url'] ) )
 				$item['url'] = Core\URL::sanitizeForStorage( $item['url'] );
+
+			if ( ! empty( $item['class'] ) )
+				$item['class'] = Core\HTML::prepClass( $item['class'] );
+		}
 
 		update_post_meta(
 			$post_id,
@@ -537,6 +544,7 @@ class Placard extends gEditorial\Module
 
 				'title'      => '',
 				'caption'    => '',
+				'class'      => '', // item CSS class
 				'url'        => '',
 				'attachment' => '',
 				'image'      => WordPress\Post::image( $post, $context, 'thumbnail', (int) $row['attachment'] ?? 0 ) ?: '',
