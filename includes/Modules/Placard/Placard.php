@@ -151,6 +151,12 @@ class Placard extends gEditorial\Module
 						'posttype'    => $this->posttypes(),
 					],
 
+					'display_location' => [
+						'title'       => _x( 'Display Location', 'Field Title', 'geditorial-placard' ),
+						'description' => _x( 'Intended location of the Banners', 'Field Description', 'geditorial-placard' ),
+						'type'        => 'code',
+					],
+
 					'content_embed_url' => [ 'type' => 'embed' ],
 					'text_source_url'   => [ 'type' => 'text_source' ],
 					'audio_source_url'  => [ 'type' => 'audio_source' ],
@@ -352,6 +358,37 @@ class Placard extends gEditorial\Module
 		return FALSE;
 	}
 
+	public function get_content_banners_by_location( mixed $location ): false|object
+	{
+		if ( ! $location = Core\Text::force( $location ) )
+			return FALSE;
+
+		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'display_location' ) )
+			return FALSE;
+
+		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $location, FALSE ) )
+			return FALSE;
+
+		$posttype   = $this->constant( 'main_posttype' );
+		$acceptable = WordPress\Status::acceptable( $posttype );
+
+		foreach ( $matches as $match ) {
+
+			if ( ! $post = WordPress\Post::get( $match ) )
+				continue;
+
+			if ( $posttype !== $post->post_type )
+				continue;
+
+			if ( ! in_array( $post->post_status, $acceptable, TRUE ) )
+				continue;
+
+			return $post;
+		}
+
+		return FALSE;
+	}
+
 	public function edit_form_after_title( object $post ): void
 	{
 		$this->_render_orderedlist( $post );
@@ -411,6 +448,7 @@ class Placard extends gEditorial\Module
 		$args = WordPress\ShortCode::attributes( [
 			'id'       => FALSE,
 			'parent'   => get_queried_object_id(),
+			'location' => NULL,
 			'template' => NULL,
 			'context'  => NULL,
 			'wrap'     => TRUE,
@@ -423,6 +461,9 @@ class Placard extends gEditorial\Module
 			return NULL;
 
 		if ( $args['id'] && ( ! $post = WordPress\Post::get( $args['id'] ) ) )
+			return $content;
+
+		if ( empty( $post ) && $args['location'] && ( ! $post = $this->get_content_banners_by_location( $args['location'] ) ) )
 			return $content;
 
 		if ( empty( $post ) && $args['parent'] && ( ! $parent = WordPress\Post::get( $args['parent'] ) ) )

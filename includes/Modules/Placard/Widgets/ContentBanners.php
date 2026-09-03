@@ -37,6 +37,7 @@ class ContentBanners extends gEditorial\Widget
 		$html = gEditorial()->module( static::MODULE )->main_shortcode( [
 			'id'       => $instance['page_id'] ?: FALSE,
 			'context'  => $instance['context'] ?: NULL,
+			'location' => $instance['location'] ?: NULL,
 			'template' => $instance['template'] ?: NULL,
 			'wrap'     => FALSE,
 		] );
@@ -60,6 +61,7 @@ class ContentBanners extends gEditorial\Widget
 
 		$this->form_open_group( 'config' );
 			$this->form_page_id( $instance, '0', 'page_id', 'posttype', $type, _x( 'Content Banners', 'Widget: Content Banners', 'geditorial-placard' ) );
+			$this->form_custom_code( $instance, '', 'location', _x( 'Location:', 'Widget: Content Banners', 'geditorial-placard' ) );
 			$this->form_custom_code( $instance, '', 'template', _x( 'Template:', 'Widget: Content Banners', 'geditorial-placard' ) );
 			$this->form_checkbox( $instance, FALSE, 'bypasscache' );
 		$this->form_close_group();
@@ -88,6 +90,7 @@ class ContentBanners extends gEditorial\Widget
 		return $this->handle_update( $new, $old, [
 			'bypasscache',
 		], [
+			'location' => 'key',
 			'template' => 'key',
 		] );
 	}
