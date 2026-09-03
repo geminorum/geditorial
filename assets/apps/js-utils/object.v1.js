@@ -1,4 +1,6 @@
 
+const pluck = (obj, value, key) => Object.fromEntries(Object.keys(obj).map((i) => [obj[i][key], obj[i][value]]));
+
 /**
  * Checks if an object is empty.
  * Note: An object is considered empty when it has no key-value pair.
@@ -46,6 +48,7 @@ const transform = (obj, predicate) => {
 };
 
 export {
+  pluck,
   empty,
   omit,
   pick,

@@ -45,6 +45,10 @@ const isNumericString = (input) => {
   return typeof input === 'string' && !Number.isNaN(input);
 };
 
+const isNumericStringNonEmpty = (input) => {
+  return (typeof (input) === 'number' || typeof (input) === 'string') && input !== '' && !isNaN(input);
+};
+
 /**
  * Pads a number with leading zeros.
  * @source https://stackoverflow.com/a/10073788
@@ -172,6 +176,7 @@ export {
   parseArabic,
   formatNumber,
   isNumericString,
+  isNumericStringNonEmpty,
   padWith,
   inRange,
   between,

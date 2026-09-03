@@ -16,13 +16,13 @@
       $(s.dropdown, s.wrap).on('change', function () {
         const profile = $(this).val();
         if (profile !== '0') {
-          $preview.attr('disabled', false);
-          $print.attr('disabled', false);
+          $preview.prop('disabled', false);
+          $print.prop('disabled', false);
           $preview.attr('href', $preview.attr('rel') + '&profile=' + profile);
           $iframe.attr('src', $print.attr('rel') + '&profile=' + profile);
         } else {
-          $preview.attr('disabled', true);
-          $print.attr('disabled', true);
+          $preview.prop('disabled', true);
+          $print.prop('disabled', true);
           $preview.attr('href', '');
           $iframe.attr('src', '');
         }

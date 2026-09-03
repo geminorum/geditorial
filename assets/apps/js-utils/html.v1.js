@@ -1,7 +1,47 @@
 
 /**
+ * Converts given HTML string into Document-Fragment
+ * @source https://stackoverflow.com/a/54806517
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment
+ *
+ * @param {String} input
+ * @returns {DocumentFragment}
+ */
+const stringToFragment = (input) => {
+  const renderer = document.createElement('template');
+  renderer.innerHTML = input;
+  return renderer.content;
+};
+
+/**
+ * Create DOM fragments from HTML.
+ * @source https://gist.github.com/pubnub/989978
+ *
+ * @param {String} a
+ * @param {String} b
+ * @param {String} c
+ * @returns {DocumentFragment}
+ */
+const fragmentFromHTML = (
+  a, // an HTML string
+  b, // placeholder
+  c  // placeholder
+) => {
+  b = document;                   // get the document,
+  c = b.createElement("p");       // create a container element,
+  c.innerHTML = a;                // write the HTML to it, and
+  a = b.createDocumentFragment(); // create a fragment.
+
+  while (                         // while
+    b = c.firstChild              // the container element has a first child
+  ) a.appendChild(b);             // append the child to the fragment,
+
+  return a                        // and then return the fragment.
+};
+
+/**
  * Escape HTML, but don't double escape any existing decimal,
- * hex or named (xml only) entities.
+ * hex or named (XML only) entities.
  * @source https://gist.github.com/mrdaniellewis/3808576
  *
  * @param {String} input
@@ -91,6 +131,8 @@ function addStylesheetRules (rules) {
 }
 
 export {
+  stringToFragment,
+  fragmentFromHTML,
   addStylesheetRules,
   escaped,
   cssEscape

@@ -1,5 +1,6 @@
 import {
   // isNumericString,
+  isNumericStringNonEmpty,
   // padWith,
   // inRange,
   toEnglish
@@ -232,8 +233,69 @@ const validateVinALT = (vin, year) => {
   return true;
 };
 
+/**
+ * @source https://stackoverflow.com/a/8102532
+ * @param {String} vin
+ * @returns {Boolean}
+ */
+const validateVinALT2 = (vin) => {
+  if (!vin) {
+    return false;
+  }
+
+  vin = toEnglish(vin.toLowerCase());
+
+  const pattern = /^[^\Wioq]{17}$/;
+  const weights = [8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2];
+  const transliterations = {
+    a: 1,
+    b: 2,
+    c: 3,
+    d: 4,
+    e: 5,
+    f: 6,
+    g: 7,
+    h: 8,
+    j: 1,
+    k: 2,
+    l: 3,
+    m: 4,
+    n: 5,
+    p: 7,
+    r: 9,
+    s: 2,
+    t: 3,
+    u: 4,
+    v: 5,
+    w: 6,
+    x: 7,
+    y: 8,
+    z: 9
+  };
+
+  if (!vin.match(pattern)) return false;
+
+  let sum = 0;
+
+  for (let i = 0; i < vin.length; i++) {
+    if (!isNumericStringNonEmpty(vin.charAt(i))) {
+      sum += transliterations[vin.charAt(i)] * weights[i];
+    } else {
+      sum += parseInt(vin.charAt(i)) * weights[i];
+    }
+  }
+
+  let checkdigit = sum % 11;
+
+  // Checks digit of 10 represented by `X`.
+  if (checkdigit === 10) checkdigit = 'x';
+
+  return (checkdigit === vin.charAt(8));
+};
+
 export {
+  validateVinALT,
+  validateVinALT2,
   validateVin,
-  verifyVinNumber,
-  validateVinALT
+  verifyVinNumber
 };

@@ -26,7 +26,7 @@
         },
         success: function (response, textStatus, xhr) {
           $spinner.removeClass('is-active');
-          $el.attr('disabled', 'disabled');
+          $el.prop('disabled', true);
           $row.addClass('-done');
           if (response.success) {
             $row.append('<span class="dashicons dashicons-yes -success"></span>');
@@ -67,7 +67,7 @@
         },
         success: function (response, textStatus, xhr) {
           $spinner.removeClass('is-active');
-          $el.attr('disabled', 'disabled');
+          $el.prop('disabled', true);
           $row.addClass('-done');
           if (response.success) {
             $row.append('<span class="dashicons dashicons-yes -success"></span>');
