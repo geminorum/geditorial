@@ -450,6 +450,7 @@ class Placard extends gEditorial\Module
 			'parent'   => get_queried_object_id(),
 			'location' => NULL,
 			'template' => NULL,
+			'status'   => TRUE,                      // check for acceptable status
 			'context'  => NULL,
 			'wrap'     => TRUE,
 			'class'    => '',
@@ -473,6 +474,9 @@ class Placard extends gEditorial\Module
 			$post = $this->get_content_banners_by_parent( $parent );
 
 		if ( empty( $post ) )
+			return $content;
+
+		if ( $args['status'] && ! in_array( $post->post_status, WordPress\Status::acceptable( $this->constant( 'main_posttype' ), 'display' ), TRUE ) )
 			return $content;
 
 		if ( ! $data = $this->_get_data_for_post( $post, $args['context'] ?? 'summary' ) )
