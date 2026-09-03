@@ -1,0 +1,176 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Placard\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-09-03 09:21+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-Basepath: ../../includes/Modules/Placard\n"
+"X-Domain: geditorial-placard\n"
+
+#: Placard.php:94
+msgid "Content Banner"
+msgid_plural "Content Banners"
+msgstr[0] "بنرهای محتوا"
+msgstr[1] "بنر محتوا"
+
+#: Placard.php:95
+msgid "Banner Category"
+msgid_plural "Banner Categories"
+msgstr[0] "دسته‌های بنر"
+msgstr[1] "دسته بنر"
+
+#: Placard.php:96
+msgid "Banner Type"
+msgid_plural "Banner Types"
+msgstr[0] "انواع بنر"
+msgstr[1] "نوع بنر"
+
+#. translators: `%s`: count number
+#: Placard.php:99
+#, php-format
+msgid "%s Banner"
+msgid_plural "%s Banners"
+msgstr[0] "%s بنر"
+msgstr[1] "%s بنر"
+
+#: Placard.php:103
+msgctxt "Posttype Menu-name"
+msgid "Content Banners"
+msgstr "بنرهای محتوا"
+
+#: Placard.php:106
+msgctxt "Menu Title"
+msgid "Banner Categories"
+msgstr "دسته‌های بنر"
+
+#: Placard.php:107
+msgctxt "Label: Show Option All"
+msgid "Categories"
+msgstr "دسته‌بندی‌ها"
+
+#: Placard.php:108
+msgctxt "Label: Show Option No Terms"
+msgid "(Uncategorized)"
+msgstr "(دسته‌بندی‌نشده)"
+
+#: Placard.php:111
+msgctxt "Menu Title"
+msgid "Banner Types"
+msgstr "انواع بنر"
+
+#: Placard.php:116
+msgctxt "JavaScript String"
+msgid "Choose a Banner Image"
+msgstr "یک تصویر برای بنر انتخاب کنید"
+
+#: Placard.php:117
+msgctxt "JavaScript String"
+msgid "Select an Image"
+msgstr "یک تصویر انتخاب کنید"
+
+#: Placard.php:120
+msgctxt "JavaScript String"
+msgid "Title"
+msgstr "عنوان"
+
+#: Placard.php:121
+msgctxt "JavaScript String"
+msgid "Caption"
+msgstr "برنگاشت"
+
+#: Placard.php:122
+msgctxt "JavaScript String"
+msgid "URL"
+msgstr "نشانی"
+
+#: Placard.php:134
+msgctxt "Main Taxonomy: Default Term"
+msgid "Dashboard"
+msgstr "پیشخوان"
+
+#: Placard.php:135
+msgctxt "Main Taxonomy: Default Term"
+msgid "Widget"
+msgstr "ابزارک"
+
+#: Placard.php:148
+msgctxt "Field Title"
+msgid "Parent"
+msgstr "والد"
+
+#: Placard.php:149
+msgctxt "Field Description"
+msgid "Parent Post of the Banners"
+msgstr "فرسته والد برای بنرها"
+
+#: Placard.php:463
+msgctxt "Carousel Control"
+msgid "Next"
+msgstr "پسین"
+
+#: Placard.php:464
+msgctxt "Carousel Control"
+msgid "Previous"
+msgstr "پیشین"
+
+#. translators: `%s`: system string
+#: Widgets/ContentBanners.php:21
+#, php-format
+msgctxt "Widget Title"
+msgid "%s: Content Banners"
+msgstr "%s: بنرهای محتوا"
+
+#: Widgets/ContentBanners.php:22
+msgctxt "Widget Description"
+msgid "Displays banners from selected source."
+msgstr "بنرها را از منبع انتخاب‌شده نمایش می‌دهد."
+
+#: Widgets/ContentBanners.php:62
+msgctxt "Widget: Content Banners"
+msgid "Content Banners"
+msgstr "بنرهای محتوا"
+
+#: Widgets/ContentBanners.php:63
+msgctxt "Widget: Content Banners"
+msgid "Template:"
+msgstr "الگو:"
+
+#~ msgctxt "Widget: Content Banners"
+#~ msgid "Content Banners:"
+#~ msgstr "بنرهای محتوا"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "Title"
+#~ msgstr "عنوان"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "Subtitle"
+#~ msgstr "زیرعنوان"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "URL"
+#~ msgstr "نشانی"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "Image"
+#~ msgstr "تصویر"
+
+#~ msgctxt "Button"
+#~ msgid "Upload"
+#~ msgstr "بارگذاری"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "Add Another"
+#~ msgstr "افزودن گزینه دیگر"
+
+#~ msgctxt "Modules: Banners"
+#~ msgid "Save"
+#~ msgstr "ذخیره"

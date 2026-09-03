@@ -1,0 +1,43 @@
+<div class="-wrap geditorial-wrap -placard -content-banners wrap-bootstrap-carousel">
+	<div id="{{selector}}" class="carousel slide w-100" data-bs-ride="true">
+
+		<div class="carousel-indicators">
+		{{#data.indicators}}
+			<button type="button" data-bs-target="#{{selector}}" data-bs-slide-to="{{{offset}}}" class="{{active}}" aria-label="{{title}}"></button>
+		{{/data.indicators}}
+		</div>
+
+		<div class="carousel-inner">
+		{{#data.items}}
+			<div class="carousel-item {{active}}">
+				{{#url}}
+					<a href="{{url}}" class="{{link_class}}">
+				{{/url}}
+
+					<img class="{{image_class}}" src="{{image}}" alt="{{title}}" />
+
+				{{#caption}}
+					<div class="carousel-caption d-none d-md-block">
+			        	<h5>{{title}}</h5>
+        				<p>{{caption}}</p>
+      				</div>
+				{{/caption}}
+
+				{{#url}}
+					</a>
+				{{/url}}
+			</div>
+		{{/data.items}}
+		</div>
+
+		<button class="carousel-control-prev" type="button" data-bs-target="#{{selector}}" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">{{controls.prev}}</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#{{selector}}" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">{{controls.next}}</span>
+		</button>
+
+	</div>
+</div>

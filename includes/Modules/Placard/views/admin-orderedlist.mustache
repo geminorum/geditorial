@@ -1,0 +1,13 @@
+<div class="-wrap geditorial-wrap -placard -content-banners">
+	<ol id="geditorial-placard-content-banners">
+	{{#data}}
+		{{> admin-banner-item}}
+	{{/data}}
+	{{^data}}
+		{{> admin-banner-item}}
+	{{/data}}
+	</ol>
+	<ol id="geditorial-placard-empty-row" style="display:none">
+		{{> admin-banner-item}}
+	</ol>
+</div>

@@ -1,0 +1,20 @@
+<li class="-banner-item">
+	<input type="hidden" name="{{selector}}[attachment][]" class="-attachment" value="{{attachment}}" />
+	<div class="-item-band">
+		<ul>
+			<li><a class="button button-compact -upload" href="#"><span class="dashicons dashicons-upload"></span></a></li>
+			<li><a class="button button-compact -trash" href="#"><span class="dashicons dashicons-trash"></span></a></li>
+			<li><a class="button button-compact -insert-before" href="#"><span class="dashicons dashicons-insert-before"></span></a></li>
+			<li><a class="button button-compact -insert-after" href="#"><span class="dashicons dashicons-insert-after"></span></a></li>
+			<li><a class="button button-compact -move" href="#"><span class="dashicons dashicons-move"></span></a></li>
+		</ul>
+	</div>
+	<div class="-item-content">
+		<div class="-input-wrap">
+			<input type="text" class="-title" name="{{selector}}[title][]" placeholder="{{strings.title_placeholder}}" value="{{title}}" />
+			<input type="text" class="-caption" name="{{selector}}[caption][]" placeholder="{{strings.caption_placeholder}}" value="{{caption}}" />
+			<input type="text" class="-url" name="{{selector}}[url][]" placeholder="{{strings.url_placeholder}}" value="{{url}}" dir="ltr" />
+		</div>
+		<div class="-image-placeholder" style="background-image:url({{image}});"></div>
+	</div>
+</li>

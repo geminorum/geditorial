@@ -1,0 +1,142 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial Placard\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/Placard\n"
+"X-Domain: geditorial-placard\n"
+
+#: Placard.php:94
+msgid "Content Banner"
+msgid_plural "Content Banners"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Placard.php:95
+msgid "Banner Category"
+msgid_plural "Banner Categories"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Placard.php:96
+msgid "Banner Type"
+msgid_plural "Banner Types"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: `%s`: count number
+#: Placard.php:99
+#, php-format
+msgid "%s Banner"
+msgid_plural "%s Banners"
+msgstr[0] ""
+msgstr[1] ""
+
+#: Placard.php:103
+msgctxt "Posttype Menu-name"
+msgid "Content Banners"
+msgstr ""
+
+#: Placard.php:106
+msgctxt "Menu Title"
+msgid "Banner Categories"
+msgstr ""
+
+#: Placard.php:107
+msgctxt "Label: Show Option All"
+msgid "Categories"
+msgstr ""
+
+#: Placard.php:108
+msgctxt "Label: Show Option No Terms"
+msgid "(Uncategorized)"
+msgstr ""
+
+#: Placard.php:111
+msgctxt "Menu Title"
+msgid "Banner Types"
+msgstr ""
+
+#: Placard.php:116
+msgctxt "JavaScript String"
+msgid "Choose a Banner Image"
+msgstr ""
+
+#: Placard.php:117
+msgctxt "JavaScript String"
+msgid "Select an Image"
+msgstr ""
+
+#: Placard.php:120
+msgctxt "JavaScript String"
+msgid "Title"
+msgstr ""
+
+#: Placard.php:121
+msgctxt "JavaScript String"
+msgid "Caption"
+msgstr ""
+
+#: Placard.php:122
+msgctxt "JavaScript String"
+msgid "URL"
+msgstr ""
+
+#: Placard.php:134
+msgctxt "Main Taxonomy: Default Term"
+msgid "Dashboard"
+msgstr ""
+
+#: Placard.php:135
+msgctxt "Main Taxonomy: Default Term"
+msgid "Widget"
+msgstr ""
+
+#: Placard.php:148
+msgctxt "Field Title"
+msgid "Parent"
+msgstr ""
+
+#: Placard.php:149
+msgctxt "Field Description"
+msgid "Parent Post of the Banners"
+msgstr ""
+
+#: Placard.php:463
+msgctxt "Carousel Control"
+msgid "Next"
+msgstr ""
+
+#: Placard.php:464
+msgctxt "Carousel Control"
+msgid "Previous"
+msgstr ""
+
+#. translators: `%s`: system string
+#: Widgets/ContentBanners.php:21
+#, php-format
+msgctxt "Widget Title"
+msgid "%s: Content Banners"
+msgstr ""
+
+#: Widgets/ContentBanners.php:22
+msgctxt "Widget Description"
+msgid "Displays banners from selected source."
+msgstr ""
+
+#: Widgets/ContentBanners.php:62
+msgctxt "Widget: Content Banners"
+msgid "Content Banners"
+msgstr ""
+
+#: Widgets/ContentBanners.php:63
+msgctxt "Widget: Content Banners"
+msgid "Template:"
+msgstr ""

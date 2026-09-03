@@ -1,0 +1,101 @@
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+/// Module: Placard: Admin Post
+
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+.-wrap.-content-banners {
+  @include theme-box-sizing-reset;
+
+  background: #fff;
+  margin-top: 0.5rem;
+  border: 3px dashed #e9e9e9;
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  li.-banner-item {
+    padding: $spacer * 0.5;
+    display: flex;
+
+    + li {
+      border-top: 2px dotted #e9e9e9;
+    }
+
+    &.ui-sortable-helper {
+      background: #fff;
+      border: 1px dashed #e9e9e9;
+    }
+
+    .-item-band {
+      ul {
+        height: 100%;
+        margin-right: $spacer * 0.25;
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-end;
+
+        li {
+          + li {
+            margin-top: $spacer * 0.5;
+          }
+
+          &:first-of-type {
+            margin-bottom: auto;
+          }
+        }
+      }
+
+      .button {
+        padding: ($spacer * 0.25) ($spacer * 0.5) ($spacer * 0.125);
+
+        &:not(:hover) {
+          color: inherit;
+        }
+
+        span.dashicons {
+          font-size: $spacer * 1.25;
+        }
+      }
+    }
+
+    .-item-content {
+      width: 100%;
+    }
+
+    .-image-placeholder {
+      min-height: 200px;
+      width: 100%;
+      margin-left: $spacer * .125;
+      border: 1px dashed #e9e9e9;
+      border-radius: 2px;
+
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: top left;
+    }
+
+    .-input-wrap {
+      input[type="url"],
+      input[type="text"] {
+        width: 100%;
+        margin-bottom: $spacer * .5;
+        min-height: 37.5px;
+
+        &[dir="ltr"]::placeholder {
+          direction: ltr;
+          text-align: left; // for firefox
+        }
+      }
+    }
+  }
+}
