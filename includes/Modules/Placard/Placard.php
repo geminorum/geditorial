@@ -45,6 +45,7 @@ class Placard extends gEditorial\Module
 				'has-shortcodes',
 				'has-widgets',
 				'cptmodule',
+				'tabmodule',
 			],
 		];
 	}
@@ -63,11 +64,16 @@ class Placard extends gEditorial\Module
 					'values'      => WordPress\Strings::makeLabelsByKeys( $this->_templates ),
 					'default'     => $this->_templates[0],
 				],
+				'tabs_support',
 				'shortcode_support',
 				'widget_support',
 			],
 			'_supports' => [
 				$this->settings_supports_option( 'main_posttype' ),
+			],
+			'_frontend' => [
+				'tab_title'      => [ NULL, _x( 'Slides', 'Setting Default', 'geditorial-placard' ) ],
+				'tab_priority'   => [ NULL, 20 ],
 			],
 			'_roles' => [
 				'custom_captype',
@@ -247,7 +253,46 @@ class Placard extends gEditorial\Module
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
 
+		if ( $this->get_setting( 'tabs_support', TRUE ) )
+			$this->_init_post_tabs();
+
 		$this->register_shortcode( 'main_shortcode' );
+	}
+
+	private function _init_post_tabs(): bool
+	{
+		if ( ! gEditorial()->enabled( 'tabs' ) )
+			return FALSE;
+
+		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
+			function ( $tabs, $posttype ) {
+
+				if ( $this->posttype_supported( $posttype ) )
+					$tabs[] = [
+
+						'name'  => $this->classs(),
+						'title' => $this->get_setting_fallback( 'tab_title', _x( 'Slides', 'Setting Default', 'geditorial-placard' ) ),
+
+						'viewable' => function ( $post ) {
+							return (bool) $this->get_content_banners_by_parent( $post, 'tabs' );
+						},
+
+						'callback' => function ( $post ) {
+
+							echo $this->main_shortcode( [
+								'parent'  => $post,
+								'context' => 'tabs',
+								'wrap'    => FALSE,
+							], $this->get_notice_for_empty( 'tabs', NULL, FALSE ) );
+						},
+
+						'priority' => $this->get_setting( 'tab_priority', 20 ),
+					];
+
+				return $tabs;
+			}, 10, 2 );
+
+		return TRUE;
 	}
 
 	/**
