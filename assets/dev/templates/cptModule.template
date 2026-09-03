@@ -23,6 +23,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'icon'     => '<%= moduleDashicon %>',
 			'access'   => 'planned',
 			'keywords' => [
+				'',
+				'has-shortcodes',
 				'cptmodule',
 			],
 		];
@@ -40,6 +42,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			],
 			'_supports' => [
 				'thumbnail_support',
+				'shortcode_support',
 				$this->settings_supports_option( 'main_posttype' ),
 			],
 			'_editpost' => [
@@ -61,6 +64,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			'_constants' => [
 				'main_posttype_constant'     => [ NULL, 'xxx' ], // FIXME <----
 				'category_taxonomy_constant' => [ NULL, 'xxx_category' ], // FIXME <----
+				'main_shortcode_constant'    => [ NULL, '' ], // FIXME <---
 			],
 		];
 	}
@@ -70,6 +74,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return [
 			'main_posttype'     => 'xxx', // FIXME <----
 			'category_taxonomy' => 'xxx_category', // FIXME <----
+			'main_shortcode'    => '', // FIXME <---
 		];
 	}
 
@@ -196,6 +201,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			// 'custom_icon'      => $this->module->icon,                      // default is module icon
 			'primary_taxonomy' => $this->constant( 'category_taxonomy' ),
 		] );
+
+		$this->register_shortcode( 'main_shortcode' );
 	}
 
 	/**
@@ -210,11 +217,13 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 
 			if ( 'edit' === $screen->base ) {
 
-				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
 				$this->modulelinks__register_headerbuttons();
+				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 
 			} else if ( 'post' === $screen->base ) {
 
+				$this->_hook_post_updated_messages( 'main_posttype' );
 			}
 		}
 	}
@@ -232,5 +241,31 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $this->get_setting( 'contents_viewable', TRUE )
 			? $this->templatetaxonomy__include( $template, $this->constant( 'category_taxonomy' ) )
 			: $template;
+	}
+
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	{
+		$args = WordPress\ShortCode::attributes( [
+			'id'      => get_queried_object_id(),
+			'context' => NULL,
+			'wrap'    => TRUE,
+			'class'   => '',
+			'before'  => '',
+			'after'   => '',
+		], $atts, $tag ?: $this->constant( 'main_shortcode' ) );
+
+		if ( FALSE === $args['context'] )
+			return NULL;
+
+		if ( ! $post = WordPress\Post::get( $args['id'] ) )
+			return $content;
+
+		$html = ''; // FIXME <-------------------
+
+		return <%= namespaceBase %>\ShortCode::wrap(
+			$html,
+			$this->constant( 'main_shortcode' ),
+			$args
+		);
 	}
 }

@@ -21,7 +21,7 @@ Requires at least: 5.9.0
 Requires PHP: 8.3
 Tested up to: 7.1
 WC requires at least: 8.2
-WC tested up to: 9.1
+WC tested up to: 11.0
 */
 
 define( 'GEDITORIAL_VERSION', '3.35.1' );

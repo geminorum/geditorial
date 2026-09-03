@@ -399,7 +399,7 @@ task('build:styles', function () {
     .pipe(dest(conf.output.css)).on('error', log.error);
 });
 
-// seperated because of stripping rtl directives in compression
+// Separated because of stripping RTL directives in compression
 task('build:rtl', function () {
   return src(conf.input.sass)
     .pipe(sass.sync(conf.sass).on('error', sass.logError))
@@ -486,7 +486,7 @@ task('github:package', function (done) {
     filename + ' ' +
     '--draft' + ' ' +
     '--latest' + ' ' + // default: automatic based on date and version
-    '--title ' + pkg.version + ' ' +
+    '--title "' + pkg.version + '" ' +
     '--notes "' + normalizeEOL(changes.versions[0].rawNote.toString()) + '"' +
     '',
   done);

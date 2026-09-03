@@ -225,12 +225,12 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 			: $template;
 	}
 
-	public function post_class( $classes, $css_class, $post_id )
+	public function post_class( array $classes, array $css_class, int $post_id ): array
 	{
-		if ( ! $post = WordPress\Post::type( $post_id ) );
+		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return $classes;
 
-		if ( ! $this->posttype_supported( $post ) )
+		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $classes;
 
 		$classes[] = $this->classs( 'supported' );
@@ -242,7 +242,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return $classes;
 	}
 
-	public function main_shortcode( string|array|null $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
 		return <%= namespaceBase %>\ShortCode::listPosts( 'assigned',
 			'post',
