@@ -37,6 +37,8 @@ class Byline extends gEditorial\Module
 				'literature',
 				'woocommerce',
 				'has-adminbar',
+				'has-shortcodes',
+				'has-widgets',
 				'tabmodule',
 				'aws',
 			],

@@ -41,6 +41,7 @@ class Placard extends gEditorial\Module
 			'keywords' => [
 				'banner',
 				'has-shortcodes',
+				'has-widgets',
 				'cptmodule',
 			],
 		];
@@ -512,7 +513,7 @@ class Placard extends gEditorial\Module
 		$first   = TRUE;
 		$context = $context ?? 'summary';
 		$rawdata = $this->_fetch_postmeta( $post->ID, [] );
-self::_log($rawdata);
+
 		if ( empty( $rawdata ) )
 			return FALSE;
 
