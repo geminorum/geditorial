@@ -3,7 +3,12 @@
 
 		<div class="carousel-indicators">
 		{{#data.indicators}}
-			<button type="button" data-bs-target="#{{selector}}" data-bs-slide-to="{{{offset}}}" class="{{active}}" aria-label="{{title}}"></button>
+			<button type="button"
+				class="{{active}}"
+				data-bs-target="#{{selector}}"
+				data-bs-slide-to="{{{offset}}}"
+				aria-label="{{title}}"
+			></button>
 		{{/data.indicators}}
 		</div>
 
@@ -13,16 +18,17 @@
 				{{#url}}
 					<a href="{{url}}" class="{{link_class}}">
 				{{/url}}
-
-					<img class="{{image_class}}" src="{{image}}" alt="{{title}}" />
-
+					<img
+						class="{{image_class}}"
+						src="{{image}}"
+						alt="{{title}}"
+					/>
 				{{#caption}}
 					<div class="carousel-caption d-none d-md-block">
 			        	<h5>{{title}}</h5>
         				<p>{{caption}}</p>
       				</div>
 				{{/caption}}
-
 				{{#url}}
 					</a>
 				{{/url}}

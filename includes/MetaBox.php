@@ -1337,11 +1337,23 @@ class MetaBox extends WordPress\Main
 			case 'social':
 			case 'code':
 			case 'context':
+
+				$atts['dir'] = 'ltr';
+				$wrap[] = '-inputcode';
+				break;
+
 			case 'slug':
+
+				$atts['dir'] = 'ltr';
+				$atts['data']['validator'] = 'slug';
+				$wrap[] = '-inputcode';
+
+				break;
+
 			case 'hook':
 
 				$atts['dir'] = 'ltr';
-
+				$atts['data']['validator'] = 'hook';
 				$wrap[] = '-inputcode';
 
 				break;

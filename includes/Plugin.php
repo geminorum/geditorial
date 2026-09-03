@@ -761,4 +761,18 @@ class Plugin extends WordPress\Plugin
 		$message = __( 'What?!', 'geditorial' );
 		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-what' ] ], $message ) : $message;
 	}
+
+	public static function nav( false|string $wrap = 'button' )
+	{
+		if ( ! $wrap )
+			return [
+				'next' => __( 'Next', 'geditorial' ),
+				'prev' => __( 'Previous', 'geditorial' ),
+			];
+
+		return [
+			'next' => Core\HTML::tag( $wrap, [ 'class' => [ '-nav', '-next' ], 'data-nav' => 'next' ], __( 'Next', 'geditorial' ) ),
+			'prev' => Core\HTML::tag( $wrap, [ 'class' => [ '-nav', '-prev' ], 'data-nav' => 'prev' ], __( 'Previous', 'geditorial' ) ),
+		];
+	}
 }

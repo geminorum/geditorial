@@ -512,12 +512,12 @@ trait PostTypeFields
 
 			case 'slug':
 
-				$sanitized = Core\Text::sanitizeBase( $data );
+				$sanitized = strtolower( Core\Text::sanitizeBase( $data ) );
 				break;
 
 			case 'hook':
 
-				$sanitized = Core\Text::sanitizeHook( $data );
+				$sanitized = strtolower( Core\Text::sanitizeHook( $data ) );
 				break;
 
 			case 'color':
@@ -1288,7 +1288,7 @@ trait PostTypeFields
 
 		if ( count( $list ) )
 			$this->paired_do_connection( 'store',
-				$post,
+				$post->ID,
 				$list,
 				$constants[0],
 				$constants[1],

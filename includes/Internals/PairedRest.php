@@ -111,9 +111,9 @@ trait PairedRest
 		if ( ! $constants = $this->paired_get_constants() )
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
-		$raw    = $request->get_json_params();
-		$parent = WordPress\Post::get( (int) $request['parent'] );
-		$posts  = Core\Arraay::pluck( $raw, 'id' );
+		$raw       = $request->get_json_params();
+		$parent    = WordPress\Post::get( (int) $request['parent'] );
+		$posts_ids = Core\Arraay::pluck( $raw, 'id' );
 
 		// TODO: use `TermRelations` API
 		// $metas = Core\Arraay::pluck( $raw, 'meta', 'post_id' );
@@ -122,7 +122,7 @@ trait PairedRest
 		Services\LateChores::termCountCollect();
 
 		$result = $this->paired_do_connection( 'store',
-			$posts,
+			$posts_ids,
 			$parent->ID,
 			$constants[0],
 			$constants[1],
@@ -141,15 +141,15 @@ trait PairedRest
 		if ( ! $constants = $this->paired_get_constants() )
 			return Services\RestAPI::getErrorSomethingIsWrong();
 
-		$raw    = $request->get_json_params();
-		$parent = WordPress\Post::get( (int) $request['parent'] );
-		$posts  = Core\Arraay::pluck( $raw, 'id' );
+		$raw       = $request->get_json_params();
+		$parent    = WordPress\Post::get( (int) $request['parent'] );
+		$posts_ids = Core\Arraay::pluck( $raw, 'id' );
 
 		WordPress\Taxonomy::disableTermCounting();
 		Services\LateChores::termCountCollect();
 
 		$result = $this->paired_do_connection( 'remove',
-			$posts,
+			$posts_ids,
 			$parent->ID,
 			$constants[0],
 			$constants[1],

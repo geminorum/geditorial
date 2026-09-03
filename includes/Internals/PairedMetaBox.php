@@ -448,7 +448,12 @@ trait PairedMetaBox
 		if ( FALSE === $paired )
 			return NULL;
 
-		$terms = $this->paired_do_connection( 'store', $post->ID, $paired, $posttype_constant, $paired_constant );
+		$terms = $this->paired_do_connection( 'store',
+			$post->ID,
+			$paired,
+			$posttype_constant,
+			$paired_constant,
+		);
 
 		if ( FALSE === $terms )
 			return FALSE;

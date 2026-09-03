@@ -40,6 +40,10 @@ class Terms extends gEditorial\Module
 		'arrow',
 		'label',
 		'code',
+		'context',
+		'width',
+		'height',
+		'size',
 		'barcode',
 		'latlng',
 		'date',
@@ -210,6 +214,10 @@ class Terms extends gEditorial\Module
 				'arrow'     => _x( 'Arrow', 'Titles', 'geditorial-terms' ),
 				'label'     => _x( 'Label', 'Titles', 'geditorial-terms' ),
 				'code'      => _x( 'Code', 'Titles', 'geditorial-terms' ),
+				'context'   => _x( 'Context', 'Titles', 'geditorial-terms' ),
+				'width'     => _x( 'Width', 'Titles', 'geditorial-terms' ),
+				'height'    => _x( 'Height', 'Titles', 'geditorial-terms' ),
+				'size'      => _x( 'Size', 'Titles', 'geditorial-terms' ),
 				'barcode'   => _x( 'Barcode', 'Titles', 'geditorial-terms' ),
 				'latlng'    => _x( 'Coordinates', 'Titles', 'geditorial-terms' ),
 				'date'      => _x( 'Date', 'Titles', 'geditorial-terms' ),
@@ -254,6 +262,10 @@ class Terms extends gEditorial\Module
 				'arrow'     => _x( 'Terms can have direction arrows to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'label'     => _x( 'Terms can have text labels to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'code'      => _x( 'Terms can have text code to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'context'   => _x( 'Terms can have context code to help organize them.', 'Descriptions', 'geditorial-terms' ),
+				'width'     => _x( 'Terms can have an assigned width value.', 'Descriptions', 'geditorial-terms' ),
+				'height'    => _x( 'Terms can have an assigned height value.', 'Descriptions', 'geditorial-terms' ),
+				'size'      => _x( 'Terms can have an assigned size value.', 'Descriptions', 'geditorial-terms' ),
 				'barcode'   => _x( 'Terms can have barcodes to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'latlng'    => _x( 'Terms can have latitude and longitude to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'date'      => _x( 'Terms can have dates to help organize them.', 'Descriptions', 'geditorial-terms' ),
@@ -809,6 +821,10 @@ class Terms extends gEditorial\Module
 			'arrow',
 			'label',
 			'code',
+			'context',
+			'width',
+			'height',
+			'size',
 			'barcode',
 			'latlng',
 			'date',
@@ -881,6 +897,10 @@ class Terms extends gEditorial\Module
 			'arrow',
 			'label',
 			'code',
+			'context',
+			'width',
+			'height',
+			'size',
 			'barcode',
 			'latlng',
 			'date',
@@ -1058,6 +1078,10 @@ class Terms extends gEditorial\Module
 
 			case 'social':
 			case 'code':
+			case 'context':
+			case 'width':
+			case 'height':
+			case 'size':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1700,6 +1724,10 @@ class Terms extends gEditorial\Module
 
 			case 'social':
 			case 'code':
+			case 'context':
+			case 'width':
+			case 'height':
+			case 'size':
 			case 'barcode':
 			case 'latlng':
 			case 'contact':
@@ -1927,6 +1955,10 @@ class Terms extends gEditorial\Module
 
 			case 'social':
 			case 'code':
+			case 'context':
+			case 'width':
+			case 'height':
+			case 'size':
 			case 'barcode':
 			case 'latlng':
 			case 'contact':
@@ -2282,6 +2314,10 @@ class Terms extends gEditorial\Module
 
 					case 'social':
 					case 'code':
+					case 'context':
+					case 'width':
+					case 'height':
+					case 'size':
 					default:
 
 						$child['title'] = Core\HTML::code( $meta );
@@ -2609,6 +2645,7 @@ class Terms extends gEditorial\Module
 					case 'venue':
 					case 'label':
 					case 'code':
+					case 'context':
 					case 'barcode':
 
 						// NOTE: search must *not* be exact!

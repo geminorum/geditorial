@@ -240,9 +240,9 @@ class Quotation extends gEditorial\Module
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'main_posttype' );
 				}
 
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 				$this->modulelinks__register_headerbuttons();
 				$this->corerestrictposts__hook_screen_taxonomies( 'category_taxonomy' );
-				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
 			}
 
 		} else if ( $this->posttype_supported( $screen->post_type ) ) {

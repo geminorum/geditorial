@@ -652,7 +652,7 @@ class Organization extends gEditorial\Module
 
 				if ( count( $list ) )
 					$this->paired_do_connection( 'store',
-						$post,
+						$post->ID,
 						$list,
 						'primary_posttype',
 						'primary_paired',

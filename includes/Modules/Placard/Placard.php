@@ -166,24 +166,33 @@ class Placard extends gEditorial\Module
 		return [
 			'meta' => [
 				$posttype => [
+					'url' => [ 'type' => 'title_link' ],
+
 					'parent_post_id' => [
 						'title'       => _x( 'Parent', 'Field Title', 'geditorial-placard' ),
 						'description' => _x( 'Parent Post of the Banners', 'Field Description', 'geditorial-placard' ),
 						'type'        => 'parent_post',
 						'posttype'    => $this->posttypes(),
+						'quickedit'   => TRUE,
 					],
 
 					'display_location' => [
 						'title'       => _x( 'Display Location', 'Field Title', 'geditorial-placard' ),
 						'description' => _x( 'Intended location of the Banners', 'Field Description', 'geditorial-placard' ),
 						'type'        => 'context',
+						'quickedit'   => TRUE,
 					],
 
-					'content_embed_url' => [ 'type' => 'embed' ],
-					'text_source_url'   => [ 'type' => 'text_source' ],
-					'audio_source_url'  => [ 'type' => 'audio_source' ],
-					'video_source_url'  => [ 'type' => 'video_source' ],
-					'image_source_url'  => [ 'type' => 'image_source' ],
+					'source_title' => [ 'type' => 'text' ],
+					'source_url'   => [ 'type' => 'link' ],
+					'action_title' => [ 'type' => 'text' ],
+					'action_url'   => [ 'type' => 'link' ],
+
+					// 'content_embed_url' => [ 'type' => 'embed' ],
+					// 'text_source_url'   => [ 'type' => 'text_source' ],
+					// 'audio_source_url'  => [ 'type' => 'audio_source' ],
+					// 'video_source_url'  => [ 'type' => 'video_source' ],
+					// 'image_source_url'  => [ 'type' => 'image_source' ],
 				],
 			],
 		];
@@ -216,7 +225,6 @@ class Placard extends gEditorial\Module
 			? $this->constant_plural( 'main_posttype' )
 			: FALSE;
 
-		// TODO: header button for menu / filter parent_file
 		$this->register_taxonomy( 'category_taxonomy', [
 			'hierarchical'       => TRUE,
 			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
@@ -227,7 +235,6 @@ class Placard extends gEditorial\Module
 			'custom_captype' => $captype,
 		] );
 
-		// TODO: header button for menu / filter parent_file
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
 			'show_admin_column'  => TRUE,
@@ -239,6 +246,10 @@ class Placard extends gEditorial\Module
 			'auto_parents'    => TRUE,
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
+			'suitable_metas'  => [
+				'width'  => NULL,
+				'height' => NULL,
+			],
 		] );
 
 		$this->register_posttype( 'main_posttype', [
@@ -337,6 +348,9 @@ class Placard extends gEditorial\Module
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'main_posttype' );
 				}
 
+				$this->_hook_bulk_post_updated_messages( 'main_posttype' );
+				$this->register_headerbutton_for_taxonomy( 'category_taxonomy' );
+				$this->register_headerbutton_for_taxonomy( 'type_taxonomy' );
 				$this->modulelinks__register_headerbuttons();
 				$this->corerestrictposts__hook_screen_taxonomies( [
 					'category_taxonomy',
@@ -408,7 +422,7 @@ class Placard extends gEditorial\Module
 		);
 	}
 
-	public function get_content_banners_by_parent( mixed $parent ): false|object
+	public function get_content_banners_by_parent( mixed $parent, ?string $context = NULL ): false|object
 	{
 		if ( ! $parent = WordPress\Post::get( $parent ) )
 			return FALSE;
@@ -442,7 +456,7 @@ class Placard extends gEditorial\Module
 		return FALSE;
 	}
 
-	public function get_content_banners_by_location( mixed $location ): false|object
+	public function get_content_banners_by_location( mixed $location, ?string $context = NULL  ): false|object
 	{
 		if ( ! $location = Core\Text::force( $location ) )
 			return FALSE;
@@ -580,25 +594,25 @@ class Placard extends gEditorial\Module
 		if ( FALSE === $args['context'] )
 			return NULL;
 
+		$context = $args['context'] ?? 'summary';
+
 		if ( $args['id'] && ( ! $post = WordPress\Post::get( $args['id'] ) ) )
 			return $content;
 
-		if ( empty( $post ) && $args['location'] && ( ! $post = $this->get_content_banners_by_location( $args['location'] ) ) )
+		if ( empty( $post ) && $args['location'] && ( ! $post = $this->get_content_banners_by_location( $args['location'], $context ) ) )
 			return $content;
 
 		if ( empty( $post ) && $args['parent'] && ( ! $parent = WordPress\Post::get( $args['parent'] ) ) )
 			return $content;
 
 		if ( empty( $post ) && ! empty( $parent ) )
-			$post = $this->get_content_banners_by_parent( $parent );
+			$post = $this->get_content_banners_by_parent( $parent, $context );
 
 		if ( empty( $post ) )
 			return $content;
 
 		if ( $args['status'] && ! in_array( $post->post_status, WordPress\Status::acceptable( $this->constant( 'main_posttype' ), 'display' ), TRUE ) )
 			return $content;
-
-		$context = $args['context'] ?? 'summary';
 
 		if ( ! $data = $this->_get_data_for_post( $post, $context ) )
 			return $content;
@@ -644,10 +658,7 @@ class Placard extends gEditorial\Module
 			'context'    => $context,
 			'items'      => [],
 			'indicators' => [],
-			'controls'   => [
-				'next' => _x( 'Next', 'Carousel Control', 'geditorial-placard' ),
-				'prev' => _x( 'Previous', 'Carousel Control', 'geditorial-placard' ),
-			],
+			'controls'   => gEditorial\Plugin::nav( FALSE ),
 		];
 
 		foreach ( $rawdata as $offset => $row ) {
