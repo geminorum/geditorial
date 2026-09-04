@@ -354,6 +354,26 @@ class Uncategorized extends gEditorial\Module
 						WordPress\Redirect::doReferer( 'huh' );
 					}
 
+				} else if ( gEditorial\Tablelist::isAction( 'wipeout_terms' ) ) {
+
+					$post = $this->get_current_form( [
+						'dead_tax' => FALSE,
+					], 'imports' );
+
+					if ( $post['dead_tax'] ) {
+
+						$result = WordPress\Taxonomy::wipeOut( trim( $post['dead_tax'] ) );
+
+						WordPress\Redirect::doReferer( [
+							'message' => 'deleted',
+							'count'   => $result,
+						] );
+
+					} else {
+
+						WordPress\Redirect::doReferer( 'huh' );
+					}
+
 				} else if ( gEditorial\Tablelist::isAction( 'dead_tax_check' ) ) {
 
 					// Do nothing, the post will be handled on `ModuleSettngs`
@@ -468,6 +488,9 @@ class Uncategorized extends gEditorial\Module
 
 			gEditorial\Settings::submitButton( 'orphaned_terms',
 				_x( 'Convert Terms', 'Button', 'geditorial-uncategorized' ) );
+
+			gEditorial\Settings::submitButton( 'wipeout_terms',
+				_x( 'Wipe-Out Terms', 'Button', 'geditorial-uncategorized' ), 'danger' );
 
 			Core\HTML::desc( _x( 'Converts orphaned terms into currently registered taxonomies.', 'Message', 'geditorial-uncategorized' ) );
 
