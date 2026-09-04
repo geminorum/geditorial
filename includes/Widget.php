@@ -864,8 +864,7 @@ class Widget extends \WP_Widget
 
 		$posttype = $instance[$posttype_field] ?? $posttype_default;
 		$page_id  = $instance[$field] ?? $default;
-
-		$html = wp_dropdown_pages( [
+		$dropdown = [
 			'post_type'        => $posttype,
 			'selected'         => $page_id,
 			'name'             => $this->get_field_name( $field ),
@@ -874,7 +873,11 @@ class Widget extends \WP_Widget
 			'show_option_none' => Services\CustomPostType::getLabel( $posttype, 'show_option_select' ),
 			'sort_column'      => 'menu_order, post_title',
 			'echo'             => FALSE,
-		] );
+		];
+
+		$html = WordPress\PostType::hierarchical( $posttype )
+			? wp_dropdown_pages( $dropdown )
+			: WordPress\PostType::dropdown( $dropdown );
 
 		if ( ! $html ) {
 			$html = ' '.Plugin::na();
