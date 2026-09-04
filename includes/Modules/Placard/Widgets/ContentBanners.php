@@ -36,9 +36,10 @@ class ContentBanners extends gEditorial\Widget
 	{
 		$html = gEditorial()->module( static::MODULE )->main_shortcode( [
 			'id'       => $instance['page_id'] ?: FALSE,
-			'context'  => $instance['context'] ?: NULL,
-			'location' => $instance['location'] ?: NULL,
-			'template' => $instance['template'] ?: NULL,
+			'selector' => $this->selector( $instance ),
+			'context'  => empty( $instance['context'] ) ? NULL : $instance['context'],
+			'location' => empty( $instance['location'] ) ? NULL : $instance['location'],
+			'template' => empty( $instance['template'] ) ? NULL : $instance['template'],
 			'wrap'     => FALSE,
 		] );
 

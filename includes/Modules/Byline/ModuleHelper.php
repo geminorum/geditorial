@@ -119,6 +119,7 @@ class ModuleHelper extends gEditorial\Helper
 			'before'   => '',
 			'after'    => '',
 			'context'  => NULL,
+			'selector' => NULL,
 			'template' => NULL,
 			'columns'  => '',     // NOTE: only appends a wrap class `columns-%d`
 
@@ -184,7 +185,11 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! $view = static::factory()->module( static::MODULE )->viewengine__view_by_template( $args['template'] ?? 'default', $args['context'] ?? 'walker' ) )
 			return $args['default'];
 
-		if ( ! $html = static::factory()->module( static::MODULE )->viewengine__render( $view, [ 'data' => $data, 'args' => $args ], FALSE ) )
+		if ( ! $html = static::factory()->module( static::MODULE )->viewengine__render( $view, [
+			'data'     => $data,
+			'args'     => $args,
+			'selector' => $args['selector'] ?? self::hash( $args ),
+		], FALSE ) )
 			return $args['default'];
 
 		if ( ! $html )

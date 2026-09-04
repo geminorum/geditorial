@@ -581,6 +581,7 @@ class Placard extends gEditorial\Module
 		$args = WordPress\ShortCode::attributes( [
 			'id'       => FALSE,
 			'parent'   => get_queried_object_id(),
+			'selector' => NULL,
 			'location' => NULL,
 			'template' => NULL,
 			'status'   => TRUE,                      // check for acceptable status
@@ -631,7 +632,7 @@ class Placard extends gEditorial\Module
 			'context'  => $context,
 			'template' => $template,
 			'data'     => $data,
-			'selector' => $this->classs( $post->ID ),
+			'selector' => $args['selector'] ?? $this->classs( $post->ID ),
 		], FALSE ) )
 			return $content;
 

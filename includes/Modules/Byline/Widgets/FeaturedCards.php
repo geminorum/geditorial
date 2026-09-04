@@ -46,6 +46,7 @@ class FeaturedCards extends gEditorial\Widget
 			'columns'  => empty( $instance['columns'] ) ? gEditorial\Template::perRowColumns() : $instance['columns'],
 			// 'limit'    => empty( $instance['limit'] ) ? '-1' : $instance['limit'],
 			'context'  => empty( $instance['context'] ) ? NULL : $instance['context'],
+			'selector' => $this->selector( $instance ),
 		], $post_id );
 
 		if ( ! $html )
