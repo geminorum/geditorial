@@ -430,6 +430,29 @@ class Placard extends gEditorial\Module
 		if ( ! $this->posttype_supported( $parent->post_type ) )
 			return FALSE;
 
+		$posttype   = $this->constant( 'main_posttype' );
+		$acceptable = WordPress\Status::acceptable( $posttype );
+
+		$children = get_children( [
+			'post_parent' => $parent->ID,
+			'post_type'   => $posttype,
+			'post_status' => $acceptable,
+			'numberposts' => 1,
+			'orderby'     => 'menu_order',
+			'order'       => 'DESC',
+		] );
+
+		return reset( $children );
+	}
+
+	public function get_content_banners_by_parent_OLD( mixed $parent, ?string $context = NULL ): false|object
+	{
+		if ( ! $parent = WordPress\Post::get( $parent ) )
+			return FALSE;
+
+		if ( ! $this->posttype_supported( $parent->post_type ) )
+			return FALSE;
+
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'parent_post' ) )
 			return FALSE;
 
