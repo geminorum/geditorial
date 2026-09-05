@@ -202,7 +202,7 @@ trait CoreRestrictPosts
 
 				echo $this->get_column_icon(
 					WordPress\PostType::edit( $posttype ),
-					$icon,
+					$icon ?? Services\Icons::posttypeMarkup( $posttype, $this->module->icon, TRUE ),
 					Services\CustomPostType::getLabel( $posttype, 'extended_label' ),
 					$posttype
 				);
@@ -263,8 +263,8 @@ trait CoreRestrictPosts
 				printf( $before, '-parent-post -type-'.$posttype.( $post->post_parent ? ' -has-parent-post' : ' -has-not-parent-post' ) );
 
 					echo $this->get_column_icon(
-						$parent ? WordPress\Post::edit( $parent ) : FALSE,
-						$icon,
+						$parent ? WordPress\PostType::edit( $parent ) : FALSE,
+						$icon ?? Services\Icons::posttypeMarkup( $parent, $this->module->icon, TRUE ),
 						$parent ? Services\CustomPostType::getLabel( $parent, 'extended_label' ) : gEditorial\Plugin::na( FALSE ),
 						$post->post_parent
 					);
