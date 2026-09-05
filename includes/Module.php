@@ -105,6 +105,7 @@ class Module extends WordPress\Module
 	protected $errors  = [];
 	protected $cache   = [];
 
+	// TODO: MUST DEPRECATE
 	protected $caps = [
 		'adminbar'  => 'edit_others_posts',
 		'customs'   => 'edit_theme_options',

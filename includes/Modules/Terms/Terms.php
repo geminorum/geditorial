@@ -3094,7 +3094,9 @@ class Terms extends gEditorial\Module
 		$supported = $this->_get_supported_raw( TRUE );
 		$available = Core\Arraay::sameKey( WordPress\TermMeta::listAvailable() );
 		$linked    = Core\Arraay::getByKeyLike( $available, '/.+_linked$/' ); // linked by paired
-		$extra     = [];
+		$extra     = [
+			// 'count',
+		];
 
 		$excludes = array_merge( $supported, $extra, array_keys( $linked ) );
 

@@ -2460,6 +2460,7 @@ class Settings extends WordPress\Main
 	public static function fieldCurrentForm( $atts = [] )
 	{
 		$field = array_merge( [
+			'cap'          => TRUE,
 			'option_base'  => self::hook(),
 			'option_group' => 'settings',
 			'id_name_cb'   => [ __CLASS__, 'settings_id_name_callback' ],

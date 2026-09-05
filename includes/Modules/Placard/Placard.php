@@ -253,7 +253,6 @@ class Placard extends gEditorial\Module
 		] );
 
 		$this->register_posttype( 'main_posttype', [
-			'hierarchical' => TRUE, // for widget dropdown
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'has_archive'  => FALSE,
@@ -344,7 +343,7 @@ class Placard extends gEditorial\Module
 			if ( 'edit' === $screen->base ) {
 
 				if ( Services\PostTypeFields::isAvailable( 'parent_post_id', $this->constant( 'main_posttype' ) ) ) {
-					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, NULL, 'meta', NULL, -10 );
+					$this->corerestrictposts__hook_columnrow_for_parent_post( $screen->post_type, NULL, 'meta', FALSE, -10 );
 					$this->corerestrictposts__hook_parsequery_for_post_parent( 'main_posttype' );
 				}
 

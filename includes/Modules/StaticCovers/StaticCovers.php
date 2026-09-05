@@ -1023,7 +1023,7 @@ class StaticCovers extends gEditorial\Module
 		);
 	}
 
-	private function _register_headerbuttons_for_post_lineup( $posttype, $post = NULL, $handle = NULL )
+	private function _register_headerbuttons_for_post_lineup( string $posttype, mixed $post = NULL, ?string $handle = NULL ): false|string
 	{
 		if ( ! $this->role_can( 'reports' ) )
 			return FALSE;
@@ -1047,7 +1047,7 @@ class StaticCovers extends gEditorial\Module
 		] );
 	}
 
-	private function _register_headerbuttons_for_post( $posttype, $post = NULL, $handle = NULL )
+	private function _register_headerbuttons_for_post( string $posttype, mixed $post = NULL, ?string $handle = NULL ): false|string
 	{
 		if ( ! $this->get_setting( $posttype.'_posttype_counter_support' ) )
 			return FALSE;
@@ -1071,7 +1071,7 @@ class StaticCovers extends gEditorial\Module
 		] );
 	}
 
-	private function _register_headerbuttons_for_term( $taxonomy, $term = NULL, $handle = NULL )
+	private function _register_headerbuttons_for_term( string $taxonomy, mixed $term = NULL, ?string $handle = NULL ): false|string
 	{
 		if ( ! $this->get_setting( $taxonomy.'_taxonomy_counter_support' ) )
 			return FALSE;
