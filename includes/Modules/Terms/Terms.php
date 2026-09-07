@@ -420,11 +420,11 @@ class Terms extends gEditorial\Module
 	 */
 	public function current_screen( object $screen ): void
 	{
-		$enqueue = FALSE;
-
 		if ( 'edit-tags' === $screen->base ) {
 
-			$fields = $this->get_supported( $screen->taxonomy );
+			$enabled = [];
+			$enqueue = FALSE;
+			$fields  = $this->get_supported( $screen->taxonomy );
 
 			foreach ( $fields as $field ) {
 
@@ -436,9 +436,17 @@ class Terms extends gEditorial\Module
 						$this->add_form_field( $field, $taxonomy );
 					}, 8, 1 );
 
-				if ( ! in_array( $field, [ 'roles', 'posttypes', 'user', 'author' ] ) ) {
+				if ( in_array( $field, [
+					'roles',
+					'posttypes',
+					'user',
+					'author',
+				], TRUE ) ) {
 
+					// WTF: not supported yet!
 					// TODO: see `taxtax__hook_screen()` for multiple checkbox support
+
+				} else {
 
 					add_action( 'quick_edit_custom_box',
 						function ( $column, $screen, $taxonomy ) use ( $field ) {
@@ -449,14 +457,25 @@ class Terms extends gEditorial\Module
 					$enqueue = TRUE;
 				}
 
-				if ( in_array( $field, [ 'image' ], TRUE ) ) {
+				$enabled[] = $field;
+			}
 
-					gEditorial\Scripts::enqueueThickBox();
+			if ( Core\Arraay::exists( [
+				'image',
+			], $enabled ) )
+				gEditorial\Scripts::enqueueThickBox();
 
-				} else if ( in_array( $field, [ 'color', 'border' ], TRUE ) ) {
+			if ( Core\Arraay::exists( [
+				'color',
+				'border',
+			], $enabled ) )
+				gEditorial\Scripts::enqueueColorPicker();
 
-					gEditorial\Scripts::enqueueColorPicker();
-				}
+			if ( Core\Arraay::exists( [
+			], $enabled ) ) {
+
+				gEditorial\Scripts::enqueueCodeEditor();
+				$this->_hook_settings_print_scripts();
 			}
 
 			if ( $enqueue ) {
@@ -469,7 +488,7 @@ class Terms extends gEditorial\Module
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
 
-			if ( count( $fields ) ) {
+			if ( count( $enabled ) ) {
 
 				$this->_admin_enabled();
 				$this->_edit_tags_screen( $screen->taxonomy );
@@ -493,7 +512,9 @@ class Terms extends gEditorial\Module
 
 		} else if ( 'term' === $screen->base ) {
 
-			$fields = $this->get_supported( $screen->taxonomy );
+			$enabled = [];
+			$enqueue = FALSE;
+			$fields  = $this->get_supported( $screen->taxonomy );
 
 			foreach ( $fields as $field ) {
 
@@ -507,17 +528,31 @@ class Terms extends gEditorial\Module
 				if ( $disabled )
 					continue;
 
-				if ( ! in_array( $field, [ 'roles', 'posttypes' ] ) )
+				if ( ! in_array( $field, [
+					'roles',
+					'posttypes',
+				], TRUE ) )
 					$enqueue = TRUE;
 
-				if ( in_array( $field, [ 'image' ], TRUE ) ) {
+				$enabled[] = $field;
+			}
 
-					gEditorial\Scripts::enqueueThickBox();
+			if ( Core\Arraay::exists( [
+				'image',
+			], $enabled ) )
+				gEditorial\Scripts::enqueueThickBox();
 
-				} else if ( in_array( $field, [ 'color', 'border' ], TRUE ) ) {
+			if ( Core\Arraay::exists( [
+				'color',
+				'border',
+			], $enabled ) )
+				gEditorial\Scripts::enqueueColorPicker();
 
-					gEditorial\Scripts::enqueueColorPicker();
-				}
+			if ( Core\Arraay::exists( [
+			], $enabled ) ) {
+
+				gEditorial\Scripts::enqueueCodeEditor();
+				$this->_hook_settings_print_scripts();
 			}
 
 			if ( $enqueue ) {
@@ -529,7 +564,7 @@ class Terms extends gEditorial\Module
 				], NULL, [ 'jquery', 'media-upload' ] );
 			}
 
-			if ( count( $fields ) ) {
+			if ( count( $enabled ) ) {
 
 				$this->_admin_enabled();
 			}
