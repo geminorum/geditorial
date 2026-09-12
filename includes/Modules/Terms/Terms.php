@@ -70,9 +70,13 @@ class Terms extends gEditorial\Module
 		'embed',
 		'url',
 		// 'identity',  // TODO
-		// 'address'    // TODO
 		// 'email'      // TODO
 		// 'plate',     // TODO
+
+		'address',
+		'styles',
+		'markup',
+		'markdown',
 	];
 
 	const FORCE_SORT_KEY = 'force_menu_order_sort';
@@ -239,6 +243,10 @@ class Terms extends gEditorial\Module
 				'source'    => _x( 'Source', 'Titles', 'geditorial-terms' ),
 				'embed'     => _x( 'Embed', 'Titles', 'geditorial-terms' ),
 				'url'       => _x( 'URL', 'Titles', 'geditorial-terms' ),
+				'address'   => _x( 'Address', 'Titles', 'geditorial-terms' ),
+				'styles'    => _x( 'Styles', 'Titles', 'geditorial-terms' ),
+				'markup'    => _x( 'Markup', 'Titles', 'geditorial-terms' ),
+				'markdown'  => _x( 'Markdown', 'Titles', 'geditorial-terms' ),
 			],
 			'descriptions' => [
 				'parent'    => _x( 'Terms can have parents from other taxonomies.', 'Descriptions', 'geditorial-terms' ),
@@ -287,6 +295,10 @@ class Terms extends gEditorial\Module
 				'source'    => _x( 'Defines a source URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'embed'     => _x( 'Defines an embedable URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
+				'address'   => _x( 'Defines a custom address for the term.', 'Descriptions', 'geditorial-terms' ),
+				'styles'    => _x( 'Defines a custom styles for the term.', 'Descriptions', 'geditorial-terms' ),
+				'markup'    => _x( 'Defines a custom mark-up for the term.', 'Descriptions', 'geditorial-terms' ),
+				'markdown'  => _x( 'Defines a custom mark-down for the term.', 'Descriptions', 'geditorial-terms' ),
 			],
 			'misc' => [
 				'posts_column_title' => _x( 'Posts', 'Column Title', 'geditorial-terms' ),
@@ -437,6 +449,10 @@ class Terms extends gEditorial\Module
 					}, 8, 1 );
 
 				if ( in_array( $field, [
+					'address',
+					'styles',
+					'markup',
+					'markdown',
 					'roles',
 					'posttypes',
 					'user',
@@ -472,8 +488,13 @@ class Terms extends gEditorial\Module
 				gEditorial\Scripts::enqueueColorPicker();
 
 			if ( Core\Arraay::exists( [
+				'address',
+				'styles',
+				'markup',
+				'markdown',
 			], $enabled ) ) {
 
+				gEditorial\Scripts::enqueueToolTip();
 				gEditorial\Scripts::enqueueCodeEditor();
 				$this->_hook_settings_print_scripts();
 			}
@@ -549,6 +570,10 @@ class Terms extends gEditorial\Module
 				gEditorial\Scripts::enqueueColorPicker();
 
 			if ( Core\Arraay::exists( [
+				'address',
+				'styles',
+				'markup',
+				'markdown',
 			], $enabled ) ) {
 
 				gEditorial\Scripts::enqueueCodeEditor();
@@ -686,6 +711,20 @@ class Terms extends gEditorial\Module
 	public function get_supported_position( $field, $taxonomy = FALSE )
 	{
 		switch ( $field ) {
+
+			case 'address':
+			case 'styles':
+			case 'markup':
+			case 'markdown':
+
+				// only if tooltip implemented!
+				if ( ! WordPress\IsIt::compatWP( '7.1.0' ) ) // @since WP 7.1.0
+					$position = [ 'slug', 'before' ];
+
+				else
+					$position = FALSE;
+
+				break;
 
 			case 'order':
 
@@ -1000,6 +1039,44 @@ class Terms extends gEditorial\Module
 		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
 
 		switch ( $metatype ) {
+
+			case 'address':
+
+				if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+					$html = $this->field_empty( $field, '', $column );
+
+				else
+					$html = Services\Locations::displayAddress( $meta,
+						[ '-field',  self::dsh( 'field', $field ) ],
+						[ $field => $meta ],
+					);
+
+				if ( $meta && $column )
+					$html = WordPress\Screen::toggletip( $html, [
+						'class' => 'code', // TODO: custom class with correct positioning
+					] );
+
+				break;
+
+			case 'styles':
+			case 'markup':
+			case 'markdown':
+
+				if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
+					$html = $this->field_empty( $field, '', $column );
+
+				else if ( ! $column )
+					$html = Services\Markup::displayMarkup( $meta,
+						[ '-field',  self::dsh( 'field', $field ) ],
+						[ $field => $meta ],
+					);
+
+				else
+					$html = WordPress\Screen::toggletip( $meta, [
+				 		'class' => 'code ltr', // TODO: custom class with correct positioning
+					] );
+
+				break;
 
 			case 'order':
 
@@ -1466,6 +1543,15 @@ class Terms extends gEditorial\Module
 				update_post_meta( (int) $meta, '_wp_attachment_is_term_image', $taxonomy );
 				do_action( 'clean_term_attachment_cache', (int) $meta, $taxonomy, $term_id );
 
+			} else if ( in_array( $field, [
+				'address',
+				'styles',
+				'markup',
+				'markdown',
+			], TRUE ) ) {
+
+				$meta = Core\Text::trim( $meta );
+
 			} else if ( in_array( $field, [ 'days', 'hours', 'amount', 'unit', 'min', 'max' ] ) ) {
 
 				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
@@ -1587,6 +1673,55 @@ class Terms extends gEditorial\Module
 		$meta     = get_term_meta( $term_id, $metakey, TRUE );
 
 		switch ( $metatype ) {
+
+			case 'address':
+
+				$html = self::buffer( [ $this, 'do_settings_field' ], [ [
+					'override_value' => Core\Text::force( $meta ),
+					'id_attr'        => self::classs( $field, 'id' ),
+					'name_attr'      => self::dsh( 'term', $field ),
+					'field'          => $field,
+					'type'           => 'textarea-quicktags',
+				] ] );
+
+				break;
+
+			case 'styles':
+
+				$html = self::buffer( [ $this, 'do_settings_field' ], [ [
+					'override_value' => Core\Text::force( $meta ),
+					'id_attr'        => self::classs( $field, 'id' ),
+					'name_attr'      => self::dsh( 'term', $field ),
+					'field'          => $field,
+					'type'           => 'textarea-code-editor',
+					'values'         => [ 'mode' => 'css' ],
+				] ] );
+
+				break;
+
+			case 'markup':
+
+				$html = self::buffer( [ $this, 'do_settings_field' ], [ [
+					'override_value' => Core\Text::force( $meta ),
+					'id_attr'        => self::classs( $field, 'id' ),
+					'name_attr'      => self::dsh( 'term', $field ),
+					'field'          => $field,
+					'type'           => 'textarea-code-editor',
+				] ] );
+
+				break;
+
+			case 'markdown':
+
+				$html = self::buffer( [ $this, 'do_settings_field' ], [ [
+					'override_value' => Core\Text::force( $meta ),
+					'id_attr'        => self::classs( $field, 'id' ),
+					'name_attr'      => self::dsh( 'term', $field ),
+					'field'          => $field,
+					'type'           => 'textarea-quicktags',
+				] ] );
+
+				break;
 
 			case 'image':
 
