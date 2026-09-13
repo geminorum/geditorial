@@ -898,6 +898,7 @@ class Settings extends WordPress\Main
 			'none_title'     => NULL,    // select option none title
 			'none_value'     => NULL,    // select option none value
 			'template_value' => '%s',    // used on display value output
+			'override_value' => NULL,    // will override the value lookup
 			'filter'         => FALSE,   // will use via sanitize
 			'callback'       => FALSE,   // callable for `callback` type
 			'dir'            => FALSE,
@@ -997,7 +998,11 @@ class Settings extends WordPress\Main
 			$name = $args['name_attr'] ?? self::und( $args['option_base'], $args['option_group'] ).'['.Core\HTML::escape( $args['field'] ).']';
 		}
 
-		if ( isset( $args['options'][$args['field']] ) ) {
+		if ( ! is_null( $args['override_value'] ) ) {
+
+			$value = $args['override_value'];
+
+		} else if ( isset( $args['options'][$args['field']] ) ) {
 
 			$value = $args['options'][$args['field']];
 
