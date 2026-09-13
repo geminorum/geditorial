@@ -631,7 +631,7 @@ trait SettingsCore
 			$this->register_help_tabs( NULL, $context );
 			$this->add_sub_screen_option( $sub, $context, $screen_option );
 
-			add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
+			$this->_hook_settings_print_scripts();
 		}
 
 		return TRUE;
@@ -727,7 +727,7 @@ trait SettingsCore
 		$this->register_settings_default_buttons( $module );
 
 		// Registers settings on the settings page only.
-		add_action( 'admin_print_footer_scripts', [ $this, 'settings_print_scripts' ], 99 );
+		$this->_hook_settings_print_scripts();
 	}
 
 	public function settings_header( ?string $context = NULL ): void
@@ -828,6 +828,12 @@ trait SettingsCore
 			$field['cap'] = empty( $this->caps[$field['option_group']] ) ? NULL : $this->caps[$field['option_group']];
 
 		gEditorial\Settings::fieldType( $field, $this->scripts );
+	}
+
+	public function _hook_settings_print_scripts(): void
+	{
+		add_action( 'admin_print_footer_scripts',
+			[ $this, 'settings_print_scripts' ], 99 );
 	}
 
 	public function settings_print_scripts()
