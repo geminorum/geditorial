@@ -20,10 +20,7 @@ class ModuleSettings extends gEditorial\Settings
 			if ( empty( $data ) || ! ( $formatted = Services\Locations::formatAddress( $data ) ) )
 				$formatted = gEditorial\Plugin::noinfo();
 
-			// NOTE: intentionally avoid styles for `address` HTML tag
-			echo Core\HTML::tag( 'pre', [
-				'dir' => Core\HTML::dir(),
-			], Core\HTML::tag( 'address', $formatted ) );
+			echo Services\Locations::markupAddress( $formatted );
 
 			if ( ! empty( $data['embed'] ) )
 				echo Core\HTML::wrap( gEditorial\Template::doMediaShortCode( $data['embed'], 'embed', FALSE, 'reports' ), '-wrap-embed' );

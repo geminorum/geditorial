@@ -82,6 +82,20 @@ class Locations extends gEditorial\Service
 		return Core\Text::normalizeWhitespace( $data );
 	}
 
+	// NOTE: intentionally avoid styles for `address` HTML tag
+	public static function markupAddress( mixed $input, string|array $class = '', array $data = [], ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		return Core\HTML::tag( 'pre', [
+			'dir'   => Core\HTML::dir(),
+			'class' => $class,
+			'data'  => $data ?: FALSE,
+			'style' => 'text-wrap:auto',
+		], Core\HTML::tag( 'address', $input ) );
+	}
+
 	public static function prepVenue( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
 	{
 		if ( self::empty( $value ) )

@@ -1046,7 +1046,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 
 				else
-					$html = Services\Locations::displayAddress( $meta,
+					$html = Services\Locations::markupAddress( $meta,
 						[ '-field',  self::dsh( 'field', $field ) ],
 						[ $field => $meta ],
 					);
