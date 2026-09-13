@@ -1456,4 +1456,62 @@ class Template extends WordPress\Main
 
 		return $time;
 	}
+
+	public static function enqueuePostStyles( mixed $post, string|array $field = [], ?string $context = NULL, ?string $module = 'meta' ): false|string
+	{
+		static $enqueued = [];
+
+		$module ??= static::MODULE;
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( is_array( $field ) )
+			$field = $field['name'] ?? FALSE;
+
+		if ( ! empty( $field ) )
+			return FALSE;
+
+		if ( isset( $enqueued[$field][$post->ID] ) )
+			return $enqueued[$field][$post->ID];
+
+		if ( ! $data = Services\PostTypeFields::getFieldRaw( $field, $post->ID, $module, TRUE ) )
+			return $enqueued[$field][$post->ID] = FALSE;
+
+		return $enqueued[$field][$post->ID] = Scripts::inlineStyle( self::dsh(
+			static::BASE,
+			$module,
+			$field,
+			$post->ID,
+		), $data );
+	}
+
+	public static function enqueueTermStyles( mixed $term, string|array $field = [], ?string $context = NULL, ?string $module = 'terms' ): false|string
+	{
+		static $enqueued = [];
+
+		$module ??= static::MODULE;
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		if ( is_array( $field ) )
+			$field = $field['name'] ?? FALSE;
+
+		if ( ! empty( $field ) )
+			return FALSE;
+
+		if ( isset( $enqueued[$field][$term->term_id] ) )
+			return $enqueued[$field][$term->term_id];
+
+		if ( ! $data = Services\TaxonomyFields::getFieldRaw( $field, $term->term_id, $module, TRUE ) )
+			return $enqueued[$field][$term->term_id] = FALSE;
+
+		return $enqueued[$field][$term->term_id] = Scripts::inlineStyle( self::dsh(
+			static::BASE,
+			$module,
+			$field,
+			$term->term_id,
+		), $data );
+	}
 }
