@@ -126,8 +126,7 @@ class TaxonomyFields extends gEditorial\Service
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
 
-		// if ( empty( $field ) )
-		// 	$field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );
+		// `if ( empty( $field ) ) $field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );`
 		$field = FALSE; // TODO
 
 		// NOTE: field may be disabled or overridden
@@ -142,7 +141,7 @@ class TaxonomyFields extends gEditorial\Service
 
 		if ( FALSE !== $args['context'] ) {
 
-			// $access = gEditorial()->module( $module )->access_posttype_field( $field, $term, $args['context'] );
+			// `$access = gEditorial()->module( $module )->access_posttype_field( $field, $term, $args['context'] );`
 			$access = TRUE; // TODO
 
 			if ( ! $access )
@@ -167,7 +166,7 @@ class TaxonomyFields extends gEditorial\Service
 		return $args['default'];
 	}
 
-	public static function getFieldRaw( $field_key, $term_id, $module = 'terms', $check = FALSE, $default = FALSE )
+	public static function getFieldRaw( string $field_key, int $term_id, string $module = 'terms', bool $check = FALSE, mixed $default = FALSE ): mixed
 	{
 		if ( $check ) {
 

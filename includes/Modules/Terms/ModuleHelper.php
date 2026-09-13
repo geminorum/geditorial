@@ -12,18 +12,18 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'terms';
 
-	public static function getFieldDefaults( $field, $module = NULL )
+	public static function getFieldDefaults( string $field, ?string $module = NULL ): array
 	{
 		return gEditorial\MetaBox::getFieldDefaults( $field, $module );
 	}
 
-	public static function htmlFieldAuthor( array $field, int $meta = 0, ?string $module = NULL ): string
+	public static function htmlFieldAuthor( array $field, mixed $meta = 0, ?string $module = NULL ): string
 	{
 		if ( empty( $field['name'] ) )
 			return '';
 
 		$html = gEditorial\Listtable::restrictByAuthor(
-			empty( $meta ) ? 0 : (int) $meta,
+			(int) $meta ?: 0,
 			self::dsh( 'term', $field['name'] ),
 			[
 				'echo'            => FALSE,
@@ -40,7 +40,7 @@ class ModuleHelper extends gEditorial\Helper
 		return self::htmlFieldUser( $field, $meta, $module );
 	}
 
-	public static function htmlFieldUser( array $field, int $meta = 0, ?string $module = NULL ): string
+	public static function htmlFieldUser( array $field, mixed $meta = 0, ?string $module = NULL ): string
 	{
 		if ( empty( $field['name'] ) )
 			return '';
@@ -59,7 +59,8 @@ class ModuleHelper extends gEditorial\Helper
 			$html.= Core\HTML::tag( 'option', [
 				'selected' => TRUE,
 				'value'    => $meta,
-			], WordPress\User::getTitleRow( (int) $meta,
+			], WordPress\User::getTitleRow(
+				(int) $meta ?: 0,
 				sprintf(
 					/* translators: `%s`: user id number */
 					_x( 'Unknown User #%s', 'Helper', 'geditorial-terms' ),

@@ -666,9 +666,9 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	public function get_supported_taxonomies( $field )
+	public function get_supported_taxonomies( string $field ): array
 	{
-		return $this->filters( 'supported_field_taxonomies',
+		return (array) $this->filters( 'supported_field_taxonomies',
 			$this->get_setting( self::und( 'term', $field ), [] ),
 			$field
 		);
@@ -1032,7 +1032,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// TODO: use read-only inputs on non-columns
-	private function _display_form_field( $field, $taxonomy, $term, $column = TRUE )
+	private function _display_form_field( string $field, string $taxonomy, object $term, bool $column = TRUE ): void
 	{
 		$html     = $meta = '';
 		$metakey  = $this->get_supported_metakey( $field, $taxonomy );
@@ -1066,7 +1066,7 @@ class Terms extends gEditorial\Module
 					$html = $this->field_empty( $field, '', $column );
 
 				else if ( ! $column )
-					$html = Services\Markup::displayMarkup( $meta,
+					$html = Services\Markup::displayHTMLMixed( $meta,
 						[ '-field',  self::dsh( 'field', $field ) ],
 						[ $field => $meta ],
 					);
@@ -1499,7 +1499,7 @@ class Terms extends gEditorial\Module
 		return gEditorial\Plugin::na();
 	}
 
-	public function edit_term( int $term_id, int $tt_id, string $taxonomy, array $args = [] ): void
+	public function edit_term( int $term_id, int $tt_id, string $taxonomy, ?array $args = [] ): void
 	{
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
@@ -1609,7 +1609,7 @@ class Terms extends gEditorial\Module
 		delete_metadata( 'term', NULL, $this->get_supported_metakey( 'image' ), $post_id, TRUE );
 	}
 
-	private function quick_form_field( $field, $taxonomy )
+	private function quick_form_field( string $field, string $taxonomy ): void
 	{
 		echo '<fieldset><div class="inline-edit-col"><label><span class="title">';
 
@@ -1622,7 +1622,7 @@ class Terms extends gEditorial\Module
 		echo '</span></label></div></fieldset>';
 	}
 
-	private function add_form_field( $field, $taxonomy, $term = FALSE )
+	private function add_form_field( string $field, string $taxonomy, false|object $term = FALSE ): void
 	{
 		echo '<div class="form-field term-'.$field.'-wrap">';
 		echo '<label for="term-'.$field.'">';
@@ -1637,7 +1637,7 @@ class Terms extends gEditorial\Module
 		echo '</div>';
 	}
 
-	private function edit_form_field( $field, $taxonomy, $term, $disabled = FALSE )
+	private function edit_form_field( string $field, string $taxonomy, object $term, bool $disabled = FALSE ): void
 	{
 		echo '<tr class="form-field term-'.$field.'-wrap"><th scope="row" valign="top">';
 		echo '<label for="term-'.$field.'">';
@@ -1661,10 +1661,10 @@ class Terms extends gEditorial\Module
 	 *
 	 * @param string $field
 	 * @param string $taxonomy
-	 * @param mixed $term
+	 * @param bool|object $term
 	 * @return void
 	 */
-	private function _render_form_field( $field, $taxonomy, $term = FALSE )
+	private function _render_form_field( string $field, string $taxonomy, false|object $term = FALSE ): void
 	{
 		$html     = '';
 		$term_id  = empty( $term->term_id ) ? 0 : $term->term_id;
@@ -1791,7 +1791,7 @@ class Terms extends gEditorial\Module
 				$html.= ModuleHelper::htmlFieldAuthor( [
 					'name' => $field,
 					'type' => $metatype,
-				], (int) $meta ?: 0 );
+				], $meta );
 
 				break;
 
@@ -2017,7 +2017,7 @@ class Terms extends gEditorial\Module
 		echo $this->filters( 'supported_field_form', $html, $field, $taxonomy, $term_id, $meta );
 	}
 
-	private function _render_quickedit_field( $field, $taxonomy )
+	private function _render_quickedit_field( string $field, string $taxonomy ): void
 	{
 		$html     = '';
 		$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
@@ -2554,7 +2554,7 @@ class Terms extends gEditorial\Module
 		}
 	}
 
-	public function supported_field_edit_author( $meta, $field, $taxonomy, $term_id )
+	public function supported_field_edit_author( mixed $meta, string $field, string $taxonomy, int $term_id ): mixed
 	{
 		if ( 'author' !== $field )
 			return $meta;
@@ -2661,12 +2661,12 @@ class Terms extends gEditorial\Module
 	}
 
 	// TODO: check access
-	public function taxonomy_export_term_meta( $metas, $taxonomy )
+	public function taxonomy_export_term_meta( array $metas, string $taxonomy ): array
 	{
 		return array_merge( $metas, $this->list_supported( $taxonomy ) );
 	}
 
-	public function taxonomy_bulk_actions( $actions, $taxonomy )
+	public function taxonomy_bulk_actions( array $actions, string $taxonomy ): array
 	{
 		$additions = [];
 		$supported = $this->get_supported( $taxonomy );
@@ -2680,7 +2680,7 @@ class Terms extends gEditorial\Module
 		return array_merge( $actions, $additions );
 	}
 
-	public function taxonomy_bulk_callback( $callback, $action, $taxonomy )
+	public function taxonomy_bulk_callback( null|false|callable $callback, string $action, string $taxonomy ): callable|false|null
 	{
 		$actions = [
 			'sync_image_titles',
@@ -2693,7 +2693,7 @@ class Terms extends gEditorial\Module
 			: $callback;
 	}
 
-	public function bulk_action_sync_image_titles( $term_ids, $taxonomy, $action )
+	public function bulk_action_sync_image_titles( array $term_ids, string $taxonomy, string $action ): bool
 	{
 		if ( ! in_array( 'image', $this->get_supported( $taxonomy ) ) )
 			return FALSE;
@@ -2733,9 +2733,9 @@ class Terms extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function bulk_action_move_tagline_to_desc( $term_ids, $taxonomy, $action )
+	public function bulk_action_move_tagline_to_desc( array $term_ids, string $taxonomy, string $action ): bool
 	{
-		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy, TRUE ) ) )
+		if ( ! in_array( 'tagline', $this->get_supported( $taxonomy ) ) )
 			return FALSE;
 
 		$count   = 0;
@@ -2751,8 +2751,8 @@ class Terms extends gEditorial\Module
 			if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 				continue;
 
-			if ( ! empty( $taxonomy->description ) )
-				$meta.= "\n\n".trim( $taxonomy->description );
+			if ( ! empty( $term->description ) )
+				$meta.= "\n\n".trim( $term->description );
 
 			$updated = wp_update_term( $term->term_id, $term->taxonomy, [
 				'description' => $this->filters( 'sanitize_description', trim( $meta ), $term, $action ),
@@ -2768,7 +2768,7 @@ class Terms extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function taxonomy_delete_empty_term( $delete, $term_id, $taxonomy )
+	public function taxonomy_delete_empty_term( bool $delete, int $term_id, string $taxonomy ): bool
 	{
 		if ( ! $delete || ! $term_id || ! $taxonomy )
 			return $delete;
@@ -3043,7 +3043,7 @@ class Terms extends gEditorial\Module
 		return $data;
 	}
 
-	public function termintro_title_suffix( string $suffix, $term, $desc, $args, $module ): string
+	public function termintro_title_suffix( string $suffix, object $term, $desc, $args, $module ): string
 	{
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $suffix;

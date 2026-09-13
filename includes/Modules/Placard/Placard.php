@@ -19,7 +19,7 @@ class Placard extends gEditorial\Module
 	use Internals\ViewEngines;
 
 	private $_templates = [
-		'bs5-carousel',
+		'bs5-carousel-slide',
 	];
 
 	protected $supports = [

@@ -866,7 +866,11 @@ class Papered extends gEditorial\Module
 				]
 			);
 
-			$selectors[] = sprintf( '#qt_geditorial-papered-lonebox-%s_textdirection', str_replace( '_', '-', $field ) );
+			$selectors[] = sprintf( '#qt_%s-%s-lonebox-%s_textdirection',
+				$this->base,
+				$this->key,
+				str_replace( '_', '-', $field )
+			);
 		}
 
 		if ( ! Core\L10n::rtl() )
@@ -874,6 +878,7 @@ class Papered extends gEditorial\Module
 
 		$selectors[] = '#qt_content_textdirection'; // default content editor
 
+		// NOTE: triggering the direction on `RTL` environment.
 		gEditorial\Scripts::inlineScript(
 			$this->classs( 'quicktags' ),
 			'jQuery(function($){$(window).on("load",function(){$("'.implode( ',', $selectors ).'").click();});});'

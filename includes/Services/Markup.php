@@ -240,4 +240,20 @@ MARKUP;
 	{
 		return ' onmouseover="(function(e){e.style.cursor=\'url(\'+e.src+\'),auto\';}(this))" onmouseleave="this.style.cursor=\'auto\'"';
 	}
+
+	// `public static function displayStyles( mixed $input, string|array $class = '', array $data = [], ?string $context = NULL, null|false|string $fallback = '' ): null|false|string`
+	// `public static function displayMarkdown( mixed $input, string|array $class = '', array $data = [], ?string $context = NULL, null|false|string $fallback = '' ): null|false|string`
+
+	public static function displayHTMLMixed( mixed $input, string|array $class = '', array $data = [], ?string $context = NULL, null|false|string $fallback = '' ): null|false|string
+	{
+		if ( ! $data = Core\Text::force( $input ) )
+			return $fallback;
+
+		return Core\HTML::tag( 'pre', [
+			'dir'   => 'ltr', // always `LTR`!
+			'class' => $class,
+			'data'  => $data,
+			'style' => 'text-wrap:auto',
+		], $input );
+	}
 }

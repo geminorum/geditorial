@@ -237,7 +237,7 @@ trait SettingsCore
 		?string $sub = NULL,
 		?string $action = NULL,
 		?string $context = NULL,
-		bool $check_sidebox = FALSE
+		bool $check_sidebox = FALSE,
 	): true {
 
 		echo '</form>';
@@ -815,7 +815,7 @@ trait SettingsCore
 	}
 
 	// @ALSO `ModuleSettings::fieldCurrentForm()`
-	public function do_settings_field( $atts = [] )
+	public function do_settings_field( $atts = [] ): mixed
 	{
 		$field = array_merge( [
 			'options'      => $this->options->settings ?? [],
@@ -827,7 +827,7 @@ trait SettingsCore
 		if ( empty( $field['cap'] ) )
 			$field['cap'] = empty( $this->caps[$field['option_group']] ) ? NULL : $this->caps[$field['option_group']];
 
-		gEditorial\Settings::fieldType( $field, $this->scripts );
+		return gEditorial\Settings::fieldType( $field, $this->scripts );
 	}
 
 	public function _hook_settings_print_scripts(): void
@@ -836,7 +836,7 @@ trait SettingsCore
 			[ $this, 'settings_print_scripts' ], 99 );
 	}
 
-	public function settings_print_scripts()
+	public function settings_print_scripts(): void
 	{
 		if ( $this->scripts_printed )
 			return;
@@ -854,10 +854,12 @@ trait SettingsCore
 	 * @ref `WordPress\Media::handleImportUpload()`
 	 *
 	 * @param string|array $mimes
+	 * @param bool $size_after
 	 * @param string $name
+	 * @param false|string $field_wrap
 	 * @return false|int
 	 */
-	protected function settings_render_upload_field( $mimes, $size_after = TRUE, $name = 'import', $field_wrap = 'div' )
+	protected function settings_render_upload_field( string|array $mimes, $size_after = TRUE, string $name = 'import', false|string $field_wrap = 'div' ): false|int
 	{
 		$wpupload = WordPress\Media::upload();
 

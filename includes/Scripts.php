@@ -100,9 +100,9 @@ class Scripts extends WordPress\Main
 	}
 
 	// NOTE: for inline scripts without dependencies
-	public static function inlineScript( $asset, $script, $dep = [ 'jquery' ] )
+	public static function inlineScript( string $asset, mixed $script, ?array $dep = [ 'jquery' ] ): false|string
 	{
-		if ( empty( $script ) )
+		if ( ! $script = Core\Text::force( $script ) )
 			return FALSE;
 
 		$handle = self::handle( $asset );
@@ -112,6 +112,22 @@ class Scripts extends WordPress\Main
 		wp_register_script( $handle, '', $dep, '', TRUE );
 		wp_enqueue_script( $handle ); // must register then enqueue
 		wp_add_inline_script( $handle, $script );
+
+		return $handle;
+	}
+
+	// NOTE: for inline style without stylesheet
+	public static function inlineStyle( string $asset, mixed $style, ?array $dep = [] ): false|string
+	{
+		if ( ! $style = Core\Text::force( $style ) )
+			return FALSE;
+
+		$handle = self::handle( $asset );
+
+		// @REF: https://wordpress.stackexchange.com/a/282868
+		wp_register_style( $handle, FALSE, $dep );
+		wp_enqueue_style( $handle );
+		wp_add_inline_style( $handle, $style );
 
 		return $handle;
 	}
@@ -242,6 +258,12 @@ JS;
 	{
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_style( 'wp-color-picker' );
+	}
+
+	public static function enqueueToolTip()
+	{
+		wp_enqueue_script( 'wp-tooltip' );
+		wp_enqueue_style( 'wp-tooltip' );
 	}
 
 	public static function enqueueCodeEditor()

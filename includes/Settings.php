@@ -881,10 +881,10 @@ class Settings extends WordPress\Main
 	// TODO: Move to `Fields` Service: `Fields::renderType()`
 	// TODO: support HTML `pattern`: https://input-pattern.com/en/tutorial.php
 	// TODO: support HTML `title_attr`
-	public static function fieldType( array $atts, array &$scripts ): void
+	public static function fieldType( array $atts, array &$scripts ): mixed
 	{
 		if ( FALSE === $atts )
-			return;
+			return FALSE;
 
 		$args = self::parsed( [
 			'title'       => '&nbsp;',
@@ -967,14 +967,19 @@ class Settings extends WordPress\Main
 
 		} else if ( $args['wrap'] ) {
 
-			echo '<'.$args['wrap'].' class="'.Core\HTML::prepClass( '-wrap', '-settings-field', '-'.$args['type'], $args['class'] ).'">';
+			echo '<'.$args['wrap'].' class="'.Core\HTML::prepClass(
+				'-wrap',
+				'-settings-field',
+				'-'.$args['type'],
+				$args['class'],
+			).'">';
 
 			if ( ! empty( $args['label_for'] ) && '&nbsp;' !== $args['title'] )
 				echo Core\HTML::tag( 'label', [ 'for' => $args['label_for'] ], $args['title'] );
 		}
 
 		if ( ! $args['field'] )
-			return;
+			return FALSE;
 
 		$html  = '';
 		$value = $args['default'];
@@ -2178,6 +2183,8 @@ class Settings extends WordPress\Main
 
 		else if ( $args['wrap'] )
 			echo '</'.$args['wrap'].'>';
+
+		return $args['field'];
 	}
 
 	// TODO: Move to `Fields` Service
@@ -2475,7 +2482,7 @@ class Settings extends WordPress\Main
 	}
 
 	// @ALSO `$this->do_settings_field()`
-	public static function fieldCurrentForm( $atts = [] )
+	public static function fieldCurrentForm( $atts = [] ): mixed
 	{
 		$field = array_merge( [
 			'cap'          => TRUE,
@@ -2486,7 +2493,7 @@ class Settings extends WordPress\Main
 
 		$scripts = []; // FIXME: WTF: not handling scripts?!
 
-		self::fieldType( $field, $scripts );
+		return self::fieldType( $field, $scripts );
 	}
 
 	// CAUTION: used more than once

@@ -31,14 +31,15 @@ class Archives extends gEditorial\Module
 	protected function get_global_settings(): array
 	{
 		$settings  = [];
-		$templates = wp_get_theme()->get_page_templates();
+		$templates = WordPress\Theme::getTemplates( 'page', FALSE );  // NOTE: archives are in `page` post-type!
+		$none      = gEditorial\Settings::showOptionNone();
 
 		$settings['posttypes_option'] = 'posttypes_option';
 
 		foreach ( $this->list_posttypes() as $posttype_name => $posttype_label ) {
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_title',
+				'field' => self::und( 'posttype', $posttype_name, 'title' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -52,7 +53,7 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_content',
+				'field' => self::und( 'posttype', $posttype_name, 'content' ),
 				'type'  => 'textarea-quicktags',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -64,7 +65,7 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => 'posttype_'.$posttype_name.'_template',
+				'field' => self::und( 'posttype', $posttype_name, 'template' ),
 				'type'  => 'select',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -73,6 +74,9 @@ class Archives extends gEditorial\Module
 				),
 				'description' => _x( 'Used as page template on the posttype archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
+				'none_title'  => $none,
+				'none_value'  => '',
+				'default'     => '',
 			];
 		}
 
@@ -81,7 +85,7 @@ class Archives extends gEditorial\Module
 		foreach ( $this->list_taxonomies() as $taxonomy_name => $taxonomy_label ) {
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_title',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'title' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -93,7 +97,7 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_content',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'content' ),
 				'type'  => 'textarea-quicktags',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -105,7 +109,7 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_slug',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'slug' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -120,7 +124,7 @@ class Archives extends gEditorial\Module
 			];
 
 			$settings['_taxonomies'][] = [
-				'field' => 'taxonomy_'.$taxonomy_name.'_template',
+				'field' => self::und( 'taxonomy', $taxonomy_name, 'template' ),
 				'type'  => 'select',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -129,6 +133,9 @@ class Archives extends gEditorial\Module
 				),
 				'description' => _x( 'Used as page template on the taxonomy archive pages.', 'Setting Description', 'geditorial-archives' ),
 				'values'      => $templates,
+				'none_title'  => $none,
+				'none_value'  => '',
+				'default'     => '',
 			];
 		}
 
@@ -332,7 +339,7 @@ class Archives extends gEditorial\Module
 					'term-archives-'.$taxonomy,
 				] );
 
-				return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
+				return WordPress\Theme::getTemplate( $this->get_setting( self::und( 'taxonomy', $taxonomy, 'template' ), '' ) );
 			}
 
 			$this->current_queried = $taxonomy;
@@ -354,7 +361,7 @@ class Archives extends gEditorial\Module
 				'taxonomy-archives-'.$taxonomy,
 			] );
 
-			return WordPress\Theme::getTemplate( $this->get_setting( 'taxonomy_'.$taxonomy.'_template' ) );
+			return WordPress\Theme::getTemplate( $this->get_setting( self::und( 'taxonomy', $taxonomy, 'template' ), '' ) );
 
 		} else if ( is_embed() || is_search() || ! ( $posttype = $GLOBALS['wp_query']->get( 'post_type' ) ) ) {
 
@@ -385,7 +392,7 @@ class Archives extends gEditorial\Module
 				'archive-entry',
 			] );
 
-			return WordPress\Theme::getTemplate( $this->get_setting( 'posttype_'.$posttype.'_template' ) );
+			return WordPress\Theme::getTemplate( $this->get_setting( self::und( 'posttype', $posttype, 'template' ), '' ) );
 		}
 
 		return $template;

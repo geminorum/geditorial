@@ -432,7 +432,7 @@ class PostTypeFields extends gEditorial\Service
 	// TODO: support: `dob`,`date`,`datetime`
 	public static function prepFieldRow( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL, string $module = 'meta' ): mixed
 	{
-		$context  = $context ?? 'admin';
+		$context ??= 'admin';
 		$filtered = apply_filters( self::und( static::BASE, 'prep_meta_row' ), $value, $field_key, $field, $raw, $context );
 
 		if ( $filtered !== $value )
@@ -656,7 +656,7 @@ class PostTypeFields extends gEditorial\Service
 		if ( ! $meta || ! is_string( $meta ) )
 			return $meta;
 
-		// Do bail early if it has not have tokens!
+		// Do bail early if it has no tokens!
 		if ( ! Core\Text::has( $meta, '{{' ) )
 			return $meta;
 
