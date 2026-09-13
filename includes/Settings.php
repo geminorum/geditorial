@@ -912,8 +912,8 @@ class Settings extends WordPress\Main
 			'options'      => [],             // saved options
 
 			'id_name_cb' => FALSE,   // id/name generator callback
-			'id_attr'    => FALSE,   // override
-			'name_attr'  => FALSE,   // override
+			'id_attr'    => NULL,    // override
+			'name_attr'  => NULL,    // override
 			'step_attr'  => '1',     // for number type
 			'min_attr'   => '0',     // for number type
 			'rows_attr'  => '5',     // for textarea type
@@ -993,8 +993,8 @@ class Settings extends WordPress\Main
 
 		} else {
 
-			$id   = $args['id_attr']   ? $args['id_attr']   : ( $args['option_base'] ? $args['option_base'].'-' : '' ).$args['option_group'].'-'.Core\HTML::escape( $args['field'] );
-			$name = $args['name_attr'] ? $args['name_attr'] : ( $args['option_base'] ? $args['option_base'].'_' : '' ).$args['option_group'].'['.Core\HTML::escape( $args['field'] ).']';
+			$id   = $args['id_attr']   ?? self::dsh( $args['option_base'], $args['option_group'], Core\HTML::escape( $args['field'] ) );
+			$name = $args['name_attr'] ?? self::und( $args['option_base'], $args['option_group'] ).'['.Core\HTML::escape( $args['field'] ).']';
 		}
 
 		if ( isset( $args['options'][$args['field']] ) ) {
@@ -2476,13 +2476,13 @@ class Settings extends WordPress\Main
 	{
 		if ( $args['option_group'] )
 			return [
-				$args['id_attr'] ?: self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
-				$args['name_attr'] ?: sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
+				$args['id_attr']   ?? self::dsh( $args['option_base'], $args['option_group'], $args['field'] ),
+				$args['name_attr'] ?? sprintf( '%s[%s][%s]', $args['option_base'], $args['option_group'], $args['field'] ),
 			];
 
 		return [
-			$args['id_attr'] ?: self::dsh( $args['option_base'], $args['field'] ),
-			$args['name_attr'] ?: sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
+			$args['id_attr']   ?? self::dsh( $args['option_base'], $args['field'] ),
+			$args['name_attr'] ?? sprintf( '%s[%s]', $args['option_base'], $args['field'] ),
 		];
 	}
 }
