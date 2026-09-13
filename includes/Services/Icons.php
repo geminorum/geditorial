@@ -164,4 +164,18 @@ class Icons extends gEditorial\Service
 			Core\HTML::attrClass( '-direction-icon', $extra_class )
 		);
 	}
+
+	// NOTE: better not to have space between icon and text
+	public static function prefixedMarkup( string $markup, ?string $directive = NULL ): string
+	{
+		$checks = $directive ?? [ '%1$s', '%s' ];
+
+		foreach ( (array) $checks as $check )
+			if ( Core\Text::starts( $markup, $check.' ' ) )
+				return $check.'<span class="-text">'
+					.Core\Text::trim( Core\Text::stripPrefix( $markup, $check ) )
+					.'</span>';
+
+		return $markup;
+	}
 }

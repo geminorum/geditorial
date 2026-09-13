@@ -76,14 +76,7 @@ trait FramePage
 
 		if ( FALSE !== $args['icon'] ) {
 			$class[] = '-has-icon';
-
-			if ( Core\Text::starts( $text, '%1$s ' ) ) // with space
-				// NOTE: better not to have space between icon and text
-				$text = '%1$s<span class="-text">'.trim( Core\Text::stripPrefix( $text, '%1$s' ) ).'</span>';
-
-			else if ( Core\Text::starts( $text, '%s ' ) ) // with space
-				// NOTE: better not to have space between icon and text
-				$text = '%s<span class="-text">'.trim( Core\Text::stripPrefix( $text, '%s' ) ).'</span>';
+			$text    = Services\Icons::prefixedMarkup( $text );
 		}
 
 		return $args['before'].Core\HTML::tag( 'a', [
@@ -150,14 +143,7 @@ trait FramePage
 
 		if ( FALSE !== $args['icon'] ) {
 			$class[] = '-has-icon';
-
-			if ( Core\Text::starts( $text, '%1$s ' ) ) // with space
-				// NOTE: better not to have space between icon and text
-				$text = '%1$s<span class="-text">'.trim( Core\Text::stripPrefix( $text, '%1$s' ) ).'</span>';
-
-			else if ( Core\Text::starts( $text, '%s ' ) ) // with space
-				// NOTE: better not to have space between icon and text
-				$text = '%s<span class="-text">'.trim( Core\Text::stripPrefix( $text, '%s' ) ).'</span>';
+			$text    = Services\Icons::prefixedMarkup( $text );
 		}
 
 		return $args['before'].Core\HTML::tag( 'a', [

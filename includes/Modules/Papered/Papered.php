@@ -997,6 +997,7 @@ class Papered extends gEditorial\Module
 		$default = _x( '%1$s Print Profile', 'Button', 'geditorial-papered' );
 		$title   = $this->get_string( $context.'_print_title', $source ? $source->post_type : $profile->post_type, 'metabox', NULL );
 		$text    = $this->get_string( $context.'_print_text', $source ? $source->post_type : $profile->post_type, 'metabox', $default );
+		$text    = Services\Icons::prefixedMarkup( $text );
 
 		// prefix to avoid conflicts
 		$func = $this->hook( 'printIframe' );
