@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Papered extends gEditorial\Module
 {
 	use Internals\AdminPage;
+	use Internals\AssetsPostTypes;
 	use Internals\CoreMenuPage;
 	use Internals\FramePage;
 	use Internals\MetaBoxSupported;
@@ -124,6 +125,12 @@ class Papered extends gEditorial\Module
 					'padding_20mm' => _x( '20mm Sheet Padding', 'Sheet Padding', 'geditorial-papered' ),
 					'padding_25mm' => _x( '25mm Sheet Padding', 'Sheet Padding', 'geditorial-papered' ),
 				],
+			],
+			'codebox' => [
+				'template_rows'   => _x( 'Template for Rows', 'MetaBox Title', 'geditorial-papered' ),
+				'template_before' => _x( 'Template Before', 'MetaBox Title', 'geditorial-papered' ),
+				'template_after'  => _x( 'Template After', 'MetaBox Title', 'geditorial-papered' ),
+				'template_styles' => _x( 'Template Styles', 'MetaBox Title', 'geditorial-papered' ),
 			],
 		];
 
@@ -268,7 +275,9 @@ class Papered extends gEditorial\Module
 
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
-				$this->_register_lonebox_fields( $screen );
+				// $this->_register_lonebox_fields( $screen );
+				$this->assetsposttypes_register_codebox_fields( $screen, TRUE );
+				$this->assetsposttypes_hook_codebox_fields( 'primary_posttype' );
 
 			} else if ( 'edit' === $screen->base ) {
 
@@ -809,10 +818,10 @@ class Papered extends gEditorial\Module
 			'rowpersheet'     => '0',
 			'papersize'       => 'undefined',
 			'posttype'        => 'undefined',
-			'template_rows'   => '',
-			'template_before' => '',
-			'template_after'  => '',
-			'template_styles' => '',
+			// 'template_rows'   => '',
+			// 'template_before' => '',
+			// 'template_after'  => '',
+			// 'template_styles' => '',
 		];
 
 		foreach ( $fields as $field => $default ) {
@@ -835,6 +844,7 @@ class Papered extends gEditorial\Module
 		}
 	}
 
+	// FIXME: DROP THIS
 	protected function _register_lonebox_fields( object $screen ): bool
 	{
 		$selectors = [];
@@ -887,6 +897,7 @@ class Papered extends gEditorial\Module
 		return TRUE;
 	}
 
+	// FIXME: DROP THIS
 	public function render_lonebox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )

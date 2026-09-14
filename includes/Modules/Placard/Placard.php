@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class Placard extends gEditorial\Module
 {
+	use Internals\AssetsPostTypes;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
 	use Internals\CoreRestrictPosts;
@@ -144,6 +145,9 @@ class Placard extends gEditorial\Module
 					'url_placeholder'     => _x( 'URL', 'JavaScript String', 'geditorial-placard' ),
 				],
 			],
+			'codebox' => [
+				'template_styles' => _x( 'Template Styles', 'MetaBox Title', 'geditorial-placard' ),
+			],
 		];
 
 		return $strings;
@@ -247,6 +251,7 @@ class Placard extends gEditorial\Module
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 			'suitable_metas'  => [
+				'style'  => NULL,
 				'width'  => NULL,
 				'height' => NULL,
 			],
@@ -368,6 +373,8 @@ class Placard extends gEditorial\Module
 
 				$this->posttypes__media_register_headerbutton( 'main_posttype' );
 				$this->_hook_post_updated_messages( 'main_posttype' );
+				$this->assetsposttypes_register_codebox_fields( $screen );
+				$this->assetsposttypes_hook_codebox_fields( 'main_posttype' );
 
 				wp_enqueue_media();
 
@@ -657,6 +664,13 @@ class Placard extends gEditorial\Module
 			'selector' => $args['selector'] ?? $this->classs( $post->ID ),
 		], FALSE ) )
 			return $content;
+
+		$this->assetsposttypes_enqueue_by_taxonomy(
+			$post,
+			$this->constant( 'type_taxonomy' ),
+			'styles',
+			$context,
+		);
 
 		return gEditorial\ShortCode::wrap(
 			$html,
