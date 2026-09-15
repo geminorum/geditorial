@@ -324,6 +324,29 @@ class Arraay extends Base
 		return $parsed;
 	}
 
+	public static function parseInputGroups( array $input ): array
+	{
+		if ( self::empty( $input ) )
+			return [];
+
+		$parsed = [];
+		$keys   = array_keys( $input );
+
+		foreach ( $input[$keys[0]] as $offset => $first ) {
+
+			$group = [];
+
+			foreach ( $keys as $key )
+				if ( ! empty( $input[$key][$offset] ) )
+					$group[$key] = $input[$key][$offset];
+
+			if ( $group )
+				$parsed[] = $group;
+		}
+
+		return $parsed;
+	}
+
 	// FIXME: TEST THIS!
 	// array map, but maps values to new keys instead of new values
 	// @REF: https://gist.github.com/abiusx/4ed90007ca693802cc7a56446cfd9394

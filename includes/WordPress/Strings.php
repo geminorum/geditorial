@@ -402,7 +402,7 @@ class Strings extends Core\Base
 		$upper = array_map( 'strtoupper', $words );
 
 		foreach ( (array) $keys as $key )
-			$list[$key] = str_ireplace( $words, $upper, Core\Text::titleCase( str_replace( '_', ' ', $key ) ) );
+			$list[$key] = str_ireplace( $words, $upper, Core\Text::titleCase( str_replace( [ '_', '-' ], ' ', $key ) ) );
 
 		return $list;
 	}

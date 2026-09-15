@@ -181,10 +181,11 @@ class Duration extends Base
 	// Converts an integer of seconds to time format.
 	// @SEE: `Misc\MP3File::formatTime()`
 	// FIXME: WTF: test this
+	// @SEE: https://php.watch/versions/8.1/deprecate-implicit-conversion-incompatible-float-string
 	public static function secondsToTime( $secondsInt )
 	{
 		$hours   = @floor( $secondsInt / 3600 );
-		$minutes = @floor( ( $secondsInt / 60 ) % 60 );
+		$minutes = @floor( ( $secondsInt / 60 ) % 60 ); // WTF?!: `PHP Deprecated: Implicit conversion from float 12.233333333333333`
 		$seconds = @floor( $secondsInt % 60 );
 
 		return sprintf( '%02d:%02d:%02d', $hours, $minutes, $seconds );

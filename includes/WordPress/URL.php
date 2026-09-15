@@ -203,6 +203,9 @@ class URL extends Core\Base
 		if ( $posttype instanceof \WP_Post_Type )
 			$posttype = $posttype->name;
 
+		else if ( $posttype instanceof \WP_Post )
+			$posttype = $posttype->post_type;
+
 		$args = 'post' === $posttype ? [] : [
 			'post_type' => $posttype,
 		];
@@ -216,6 +219,9 @@ class URL extends Core\Base
 	{
 		if ( $taxonomy instanceof \WP_Taxonomy )
 			$taxonomy = $taxonomy->name;
+
+		else if ( $taxonomy instanceof \WP_Term )
+			$taxonomy = $taxonomy->taxonomy;
 
 		$args = [ 'taxonomy' => $taxonomy ];
 
