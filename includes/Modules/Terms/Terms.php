@@ -75,6 +75,7 @@ class Terms extends gEditorial\Module
 
 		'address',
 		'styles',
+		'script',
 		'markup',
 		'markdown',
 	];
@@ -245,6 +246,7 @@ class Terms extends gEditorial\Module
 				'url'       => _x( 'URL', 'Titles', 'geditorial-terms' ),
 				'address'   => _x( 'Address', 'Titles', 'geditorial-terms' ),
 				'styles'    => _x( 'Styles', 'Titles', 'geditorial-terms' ),
+				'script'    => _x( 'Script', 'Titles', 'geditorial-terms' ),
 				'markup'    => _x( 'Markup', 'Titles', 'geditorial-terms' ),
 				'markdown'  => _x( 'Markdown', 'Titles', 'geditorial-terms' ),
 			],
@@ -297,6 +299,7 @@ class Terms extends gEditorial\Module
 				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'address'   => _x( 'Defines a custom address for the term.', 'Descriptions', 'geditorial-terms' ),
 				'styles'    => _x( 'Defines a custom styles for the term.', 'Descriptions', 'geditorial-terms' ),
+				'script'    => _x( 'Defines a custom script for the term.', 'Descriptions', 'geditorial-terms' ),
 				'markup'    => _x( 'Defines a custom mark-up for the term.', 'Descriptions', 'geditorial-terms' ),
 				'markdown'  => _x( 'Defines a custom mark-down for the term.', 'Descriptions', 'geditorial-terms' ),
 			],
@@ -451,6 +454,7 @@ class Terms extends gEditorial\Module
 				if ( in_array( $field, [
 					'address',
 					'styles',
+					'script',
 					'markup',
 					'markdown',
 					'roles',
@@ -492,6 +496,7 @@ class Terms extends gEditorial\Module
 			if ( Core\Arraay::exists( [
 				'address',
 				'styles',
+				'script',
 				'markup',
 				'markdown',
 			], $enabled ) ) {
@@ -574,6 +579,7 @@ class Terms extends gEditorial\Module
 			if ( Core\Arraay::exists( [
 				'address',
 				'styles',
+				'script',
 				'markup',
 				'markdown',
 			], $enabled ) ) {
@@ -716,6 +722,7 @@ class Terms extends gEditorial\Module
 
 			case 'address':
 			case 'styles':
+			case 'script':
 			case 'markup':
 			case 'markdown':
 
@@ -924,6 +931,7 @@ class Terms extends gEditorial\Module
 			'url',
 			'address',
 			'styles',
+			'script',
 			'markup',
 			'markdown',
 		], $taxonomy, $supported );
@@ -1066,6 +1074,7 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'styles':
+			case 'script':
 			case 'markup':
 			case 'markdown':
 
@@ -1554,6 +1563,7 @@ class Terms extends gEditorial\Module
 			} else if ( in_array( $field, [
 				'address',
 				'styles',
+				'script',
 				'markup',
 				'markdown',
 			], TRUE ) ) {
@@ -1703,6 +1713,19 @@ class Terms extends gEditorial\Module
 					'field'          => $field,
 					'type'           => 'textarea-code-editor',
 					'values'         => [ 'mode' => 'css' ],
+				] ] );
+
+				break;
+
+			case 'script':
+
+				$html = self::buffer( [ $this, 'do_settings_field' ], [ [
+					'override_value' => Core\Text::force( $meta ),
+					'id_attr'        => self::classs( $field, 'id' ),
+					'name_attr'      => self::dsh( 'term', $field ),
+					'field'          => $field,
+					'type'           => 'textarea-code-editor',
+					'values'         => [ 'mode' => 'javascript' ],
 				] ] );
 
 				break;
