@@ -1319,7 +1319,7 @@ class Settings extends WordPress\Main
 					'data'     => $args['data'],
 				] );
 
-				Core\HTML::label( $html.'&nbsp;'.$args['description'], $id );
+				Core\HTML::label( self::nbs( $html, $args['description'] ), $id );
 
 				$args['description'] = FALSE;
 
@@ -1337,10 +1337,11 @@ class Settings extends WordPress\Main
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
+						$for  = self::dsh( $id, $args['none_value'] );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'checkbox',
-							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'id'       => $for,
+							'name'     => self::dsh( $name, $args['none_value'] ),
 							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
 							'value'    => $args['none_value'] ?? '1',
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
@@ -1350,9 +1351,7 @@ class Settings extends WordPress\Main
 							'dir'      => $args['dir'],
 						] );
 
-						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
-
-						Core\HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
+						Core\HTML::label( self::nbs( $html, $args['none_title'] ), $for );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1360,9 +1359,10 @@ class Settings extends WordPress\Main
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
+						$for  = self::dsh( $id, $value_name );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'checkbox',
-							'id'       => $id.'-'.$value_name,
+							'id'       => $for,
 							'name'     => $name.'['.$value_name.']',
 							'data'     => [ 'raw-value' => $value_name ],
 							'value'    => '1',
@@ -1378,7 +1378,7 @@ class Settings extends WordPress\Main
 						if ( 'checkboxes-values' == $args['type'] )
 							$html.= ' &mdash; <code>'.sprintf( $args['template_value'], $value_name ).'</code>';
 
-						Core\HTML::label( $html, $id.'-'.$value_name );
+						Core\HTML::label( $html, $for );
 					}
 
 					echo '</div>';
@@ -1407,10 +1407,11 @@ class Settings extends WordPress\Main
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
+						$for  = self::dsh( $id, $args['none_value'] );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'checkbox',
-							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
-							'name'     => $name.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'id'       => $for,
+							'name'     => self::dsh( $name, $args['none_value'] ),
 							'data'     => [ 'raw-value' => $args['none_value'] ?? '' ],
 							'value'    => $args['none_value'] ?? '1',
 							'checked'  => FALSE === $value || in_array( $args['none_value'], (array) $value ),
@@ -1420,9 +1421,7 @@ class Settings extends WordPress\Main
 							'dir'      => $args['dir'],
 						] );
 
-						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
-
-						Core\HTML::label( $html.'&nbsp;'.$args['none_title'], $for, 'li' );
+						Core\HTML::label( self::nbs( $html, $args['none_title'] ), $for, 'li' );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1430,9 +1429,10 @@ class Settings extends WordPress\Main
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
+						$for  = self::dsh( $id, $value_name );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'checkbox',
-							'id'       => $id.'-'.$value_name,
+							'id'       => $for,
 							'name'     => $name.'['.$value_name.']',
 							'data'     => [ 'raw-value' => $value_name ],
 							'value'    => '1',
@@ -1443,7 +1443,7 @@ class Settings extends WordPress\Main
 							'dir'      => $args['dir'],
 						] );
 
-						Core\HTML::label( $html.'&nbsp;'.$value_title, $id.'-'.$value_name, 'li' );
+						Core\HTML::label( self::nbs( $html, $value_title ), $for, 'li' );
 					}
 
 					echo '</ul></div>';
@@ -1463,9 +1463,10 @@ class Settings extends WordPress\Main
 
 					if ( ! is_null( $args['none_title'] ) ) {
 
+						$for  = self::dsh( $id, $args['none_value'] );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'radio',
-							'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+							'id'       => $for,
 							'name'     => $name,
 							'value'    => $args['none_value'] ?? FALSE,
 							'checked'  => in_array( $args['none_value'], (array) $value ),
@@ -1475,9 +1476,7 @@ class Settings extends WordPress\Main
 							'dir'      => $args['dir'],
 						] );
 
-						$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
-
-						Core\HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
+						Core\HTML::label( self::nbs( $html, $args['none_title'] ), $for );
 					}
 
 					foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1485,9 +1484,10 @@ class Settings extends WordPress\Main
 						if ( in_array( $value_name, $exclude ) )
 							continue;
 
+						$for  = self::dsh( $id, $value_name );
 						$html = Core\HTML::tag( 'input', [
 							'type'     => 'radio',
-							'id'       => $id.'-'.$value_name,
+							'id'       => $for,
 							'name'     => $name,
 							'value'    => $value_name,
 							'checked'  => in_array( $value_name, (array) $value ),
@@ -1502,7 +1502,7 @@ class Settings extends WordPress\Main
 						if ( 'radio-values' == $args['type'] )
 							$html.= ' &mdash; <code>'.sprintf( $args['template_value'], $value_name ).'</code>';
 
-						Core\HTML::label( $html, $id.'-'.$value_name );
+						Core\HTML::label( $html, $for );
 					}
 				}
 
@@ -1515,9 +1515,10 @@ class Settings extends WordPress\Main
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
+					$for  = self::dsh( $id, $args['none_value'] );
 					$html = Core\HTML::tag( 'input', [
 						'type'     => 'radio',
-						'id'       => $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] ),
+						'id'       => $for,
 						'name'     => $name,
 						'value'    => $args['none_value'] ?? FALSE,
 						'checked'  => in_array( $args['none_value'], (array) $value ),
@@ -1527,9 +1528,7 @@ class Settings extends WordPress\Main
 						'dir'      => $args['dir'],
 					] );
 
-					$for = $id.( is_null( $args['none_value'] ) ? '' : '-'.$args['none_value'] );
-
-					Core\HTML::label( $html.'&nbsp;'.$args['none_title'], $for );
+					Core\HTML::label( self::nbs( $html, $args['none_title'] ), $for );
 				}
 
 				foreach ( $args['values'] as $value_name => $value_title ) {
@@ -1537,9 +1536,10 @@ class Settings extends WordPress\Main
 					if ( in_array( $value_name, $exclude ) )
 						continue;
 
+					$for  = self::dsh( $id, $value_name );
 					$html = Core\HTML::tag( 'input', [
 						'type'     => 'radio',
-						'id'       => $id.'-'.$value_name,
+						'id'       => $for,
 						'name'     => $name,
 						'value'    => $value_name,
 						'checked'  => in_array( $value_name, (array) $value ),
@@ -1555,7 +1555,7 @@ class Settings extends WordPress\Main
 						Core\Date::get( $value_title )
 					);
 
-					Core\HTML::label( $html, $id.'-'.$value_name );
+					Core\HTML::label( $html, $for );
 				}
 
 				break;
@@ -1666,15 +1666,20 @@ class Settings extends WordPress\Main
 				} else if ( 'textarea-code-editor' == $args['type'] ) {
 
 					// @SEE: `wp_get_code_editor_settings()`
+					// https://codemirror.net/5/doc/manual.html
 					$codemirror_args =  [
+						'spellcheck'      => FALSE,
+						'autocorrect'     => FALSE,
 						'lineNumbers'     => TRUE,
 						'lineWrapping'    => TRUE,
 						'indentUnit'      => 2,
 						'tabSize'         => 2,
 						'matchBrackets'   => TRUE,
-						// 'styleActiveLine' => TRUE,
 						'autoRefresh'     => TRUE,
-						'mode'            => 'htmlmixed',
+						// 'styleActiveLine' => TRUE,
+
+						// https://codemirror.net/5/mode/index.html
+						'mode' => 'htmlmixed',
 					];
 
 					if ( ! $args['values'] )
@@ -1760,7 +1765,7 @@ class Settings extends WordPress\Main
 
 				if ( ! empty( $args['values'] ) ) {
 
-					$args['none_value'] = $args['none_value'] ?? '0';
+					$args['none_value'] ??= '0';
 
 					$html.= Core\HTML::tag( 'option', [
 						'value'    => $args['none_value'],
@@ -1809,7 +1814,7 @@ class Settings extends WordPress\Main
 				if ( ! $args['values'] )
 					$args['values'] = array_reverse( get_editable_roles() );
 
-				$args['none_value'] = $args['none_value'] ?? '0';
+				$args['none_value'] ??= '0';
 
 				$html.= Core\HTML::tag( 'option', [
 					'value'    => $args['none_value'],
@@ -1892,7 +1897,7 @@ class Settings extends WordPress\Main
 
 				if ( ! is_null( $args['none_title'] ) ) {
 
-					$args['none_value'] = $args['none_value'] ?? FALSE;
+					$args['none_value'] ??= FALSE;
 
 					$html.= Core\HTML::tag( 'option', [
 						'value'    => $args['none_value'],

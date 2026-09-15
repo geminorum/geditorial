@@ -1009,7 +1009,7 @@ trait PostTypeFields
 			$this->action( 'bulk_edit_custom_box', 2, 12, 'posttypefields' );
 		}
 
-		$this->action( 'quick_edit_custom_box', 2, 12, 'posttypefields' );
+		$this->action( 'quick_edit_custom_box', 3, 12, 'posttypefields' );
 
 		add_filter( sprintf( 'manage_%s_posts_columns', $posttype ),
 			function ( $columns ) use ( $posttype ) {
@@ -1024,7 +1024,7 @@ trait PostTypeFields
 		return TRUE;
 	}
 
-	public function bulk_edit_custom_box_posttypefields( string $column, string $posttype ): void
+	public function bulk_edit_custom_box_posttypefields( string $column, string $posttype, string $taxonomy ): void
 	{
 		$this->quick_edit_custom_box_posttypefields( $column, $posttype, TRUE );
 	}

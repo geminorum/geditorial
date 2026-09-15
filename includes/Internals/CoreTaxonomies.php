@@ -9,18 +9,29 @@ use geminorum\gEditorial\WordPress;
 
 trait CoreTaxonomies
 {
-	// @REF: https://developer.wordpress.org/reference/functions/register_taxonomy/
+	/**
+	 * Creates a new custom taxonomy and applies the given settings.
+	 *
+	 * @link: https://developer.wordpress.org/reference/functions/register_taxonomy/
+	 * @link: https://wp-kama.com/function/register_taxonomy
+	 *
+	 * @param string $constant
+	 * @param array $arguments
+	 * @param mixed $targets
+	 * @param array $settings_arguments
+	 * @return false|object
+	 */
 	public function register_taxonomy(
 		string $constant,
-		array $atts = [],
+		array $arguments = [],
 		mixed $targets = NULL,
-		array $settings_atts = [],
+		array $settings_arguments = [],
 	): false|object {
 
 		$taxonomy = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $taxonomy ) );
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'meta_box_cb'          => FALSE,
 			// @REF: https://make.wordpress.org/core/2019/01/23/improved-taxonomy-metabox-sanitization-in-5-1/
 			'meta_box_sanitize_cb' => method_exists( $this, 'meta_box_sanitize_cb_'.$constant ) ? [ $this, 'meta_box_sanitize_cb_'.$constant ] : NULL,
@@ -35,8 +46,8 @@ trait CoreTaxonomies
 			'query_var'            => $this->constant( $constant.'_query', $taxonomy ),
 			'rewrite'              => NULL,
 
-			// 'sort' => NULL, // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
-			// 'args' => [], //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.
+			// 'sort' => NULL,   // Whether terms in this taxonomy should be sorted in the order they are provided to `wp_set_object_terms()`.
+			// 'args' => [],     //  Array of arguments to automatically use inside `wp_get_object_terms()` for this taxonomy.`
 
 			'show_in_rest'   => TRUE,
 			'rest_base'      => NULL,
@@ -115,7 +126,7 @@ trait CoreTaxonomies
 
 			/// after register
 			'module_link' => (bool) in_array( $constant, [ 'main_taxonomy', 'primary_taxonomy' ], TRUE ),
-		], $settings_atts );
+		], $settings_arguments );
 
 		$target_object = $settings['target_object'] ?: 'post';
 

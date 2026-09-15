@@ -278,9 +278,10 @@ class Book extends gEditorial\Module
 			'status_taxonomy' => [
 				'not-available-in-print' => _x( 'Not Available in Print', 'Publication Status: Default Term', 'geditorial-book' ),
 				'soon-to-be-published'   => _x( 'Soon to be Published', 'Publication Status: Default Term', 'geditorial-book' ),
-				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
-				'repeat-print'           => _x( 'Repeat Print', 'Publication Status: Default Term', 'geditorial-book' ),
 				'first-print'            => _x( 'First Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'secondary-print'        => _x( 'Secondary Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'repeated-print'         => _x( 'Repeated Print', 'Publication Status: Default Term', 'geditorial-book' ),
+				'out-of-print'           => _x( 'Out of Print', 'Publication Status: Default Term', 'geditorial-book' ),
 			],
 			// @source https://www.biblio.com/booksearch
 			// TODO: add the taxonomy

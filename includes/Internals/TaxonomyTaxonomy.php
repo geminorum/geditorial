@@ -85,7 +85,7 @@ trait TaxonomyTaxonomy
 				$this->taxtax__edit_tags_screen( $screen->taxonomy, $target );
 
 				add_action( 'quick_edit_custom_box',
-					function ( $column, $screen, $taxonomy )
+					function ( string $column, string $posttype, string $taxonomy )
 						use ( $target ) {
 
 						if ( $this->classs( $target ) !== $column )

@@ -394,7 +394,7 @@ class Today extends gEditorial\Module
 		add_filter( 'manage_'.$posttype.'_posts_custom_column', [ $this, 'posts_custom_column' ], 10, 2 );
 		add_filter( 'manage_edit-'.$posttype.'_sortable_columns', [ $this, 'sortable_columns' ] );
 
-		$this->action( 'quick_edit_custom_box', 2 );
+		$this->action( 'quick_edit_custom_box', 3 );
 	}
 
 	private function _save_meta_supported( string $posttype ): void
@@ -531,9 +531,9 @@ class Today extends gEditorial\Module
 		}
 	}
 
-	public function quick_edit_custom_box( string $column, string $posttype ): void
+	public function quick_edit_custom_box( string $column, string $posttype, string $taxonomy ): void
 	{
-		if ( 'theday' != $column )
+		if ( 'theday' !== $column )
 			return;
 
 		echo '<div class="inline-edit-col geditorial-admin-wrap-quickedit -today">';

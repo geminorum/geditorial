@@ -135,6 +135,7 @@ class Publishers extends gEditorial\Module
 				'tagline'   => NULL,
 				'establish' => NULL,
 				'abolish'   => NULL,
+				'address'   => NULL,
 			],
 		] );
 

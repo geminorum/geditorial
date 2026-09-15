@@ -22,7 +22,7 @@ trait CorePostTypes
 		$args = self::recursiveParseArgs( $atts, [
 			'description'   => $this->strings['labels'][$constant]['description'] ?? '',
 			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
-			'menu_position' => empty( $this->positions[$constant] ) ? 4 : $this->positions[$constant],
+			'menu_position' => $this->positions[$constant] ?? 4,
 
 			// 'show_in_nav_menus' => TRUE,
 			// 'show_in_admin_bar' => TRUE,
@@ -43,7 +43,7 @@ trait CorePostTypes
 				? [ $this, 'add_meta_box_cb_'.$constant ] : NULL,
 
 			'show_in_rest' => TRUE,
-			'rest_base'    => $this->constant( $constant.'_rest', $this->constant( $constant.'_archive', $plural ) ),
+			'rest_base'    => $this->constant( self::und( $constant, 'rest' ), $this->constant( self::und( $constant, 'archive' ), $plural ) ),
 
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 			// 'late_route_registration' => TRUE, // A flag to direct the REST API controllers for autosave / revisions should be registered before/after the post type controller.

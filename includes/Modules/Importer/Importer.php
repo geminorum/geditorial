@@ -422,7 +422,7 @@ class Importer extends gEditorial\Module
 
 			echo Core\HTML::tag( 'label', [
 				'for' => $this->classs( 'source_postid' ),
-			], $checkbox.'&nbsp;'._x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) );
+			], self::nbs( $checkbox, _x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) ) );
 
 		echo '</td></tr><tr><td colspan="8" v-align="top">';
 
@@ -2140,7 +2140,7 @@ class Importer extends gEditorial\Module
 
 			echo Core\HTML::tag( 'label', [
 				'for' => $this->classs( 'source_postid' ),
-			], $checkbox.'&nbsp;'._x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) );
+			], self::nbs( $checkbox, _x( 'Treat values on source column as the same as Post-ID', 'Label', 'geditorial-importer' ) ) );
 
 		echo '</td></tr><tr><td colspan="8" v-align="top">';
 

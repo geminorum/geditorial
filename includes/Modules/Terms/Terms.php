@@ -465,7 +465,9 @@ class Terms extends gEditorial\Module
 				} else {
 
 					add_action( 'quick_edit_custom_box',
-						function ( $column, $screen, $taxonomy ) use ( $field ) {
+						function ( string $column, string $posttype, string $taxonomy )
+							use ( $field ) {
+
 							if ( $this->classs( $field ) == $column )
 								$this->quick_form_field( $field, $taxonomy );
 						}, 10, 3 );
@@ -718,7 +720,7 @@ class Terms extends gEditorial\Module
 			case 'markdown':
 
 				// only if tooltip implemented!
-				if ( ! WordPress\IsIt::compatWP( '7.1.0' ) ) // @since WP 7.1.0
+				if ( WordPress\IsIt::compatWP( '7.1.0' ) ) // @since WP 7.1.0
 					$position = [ 'slug', 'before' ];
 
 				else
@@ -920,6 +922,10 @@ class Terms extends gEditorial\Module
 			'source',
 			'embed',
 			'url',
+			'address',
+			'styles',
+			'markup',
+			'markdown',
 		], $taxonomy, $supported );
 
 		foreach ( $supported as $field ) {
@@ -1045,15 +1051,16 @@ class Terms extends gEditorial\Module
 				if ( ! $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
 					$html = $this->field_empty( $field, '', $column );
 
-				else
+				else if ( ! $column )
 					$html = Services\Locations::markupAddress( $meta,
 						[ '-field',  self::dsh( 'field', $field ) ],
 						[ $field => $meta ],
 					);
 
-				if ( $meta && $column )
-					$html = WordPress\Screen::toggletip( $html, [
-						'class' => 'code', // TODO: custom class with correct positioning
+				else
+					$html = WordPress\Screen::toggletip( $meta, [
+						'class' => 'code '.Core\HTML::dir(),   // TODO: custom class with correct positioning
+						'icon'  => 'dashicons-location-alt',
 					] );
 
 				break;
@@ -1073,7 +1080,8 @@ class Terms extends gEditorial\Module
 
 				else
 					$html = WordPress\Screen::toggletip( $meta, [
-				 		'class' => 'code ltr', // TODO: custom class with correct positioning
+						'class' => 'code ltr',               // TODO: custom class with correct positioning
+						'icon'  => 'dashicons-media-code',
 					] );
 
 				break;
@@ -1718,7 +1726,8 @@ class Terms extends gEditorial\Module
 					'id_attr'        => self::classs( $field, 'id' ),
 					'name_attr'      => self::dsh( 'term', $field ),
 					'field'          => $field,
-					'type'           => 'textarea-quicktags',
+					'type'           => 'textarea-code-editor',
+					'values'         => [ 'mode' => 'markdown' ],
 				] ] );
 
 				break;
@@ -1822,7 +1831,7 @@ class Terms extends gEditorial\Module
 
 					$html.= '<li>'.Core\HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $role ),
-					], $checkbox.'&nbsp;'.Core\HTML::escape( $name ) ).'</li>';
+					], self::nbs( $checkbox, Core\HTML::escape( $name ) ) ).'</li>';
 				}
 
 				$html.= '</ul></div>';
@@ -1856,7 +1865,7 @@ class Terms extends gEditorial\Module
 
 					$html.= '<li>'.Core\HTML::tag( 'label', [
 						'for' => $this->classs( $field, 'id', $posttype ),
-					], $checkbox.'&nbsp;'.Core\HTML::escape( $name ) ).'</li>';
+					], self::nbs( $checkbox, Core\HTML::escape( $name ) ) ).'</li>';
 				}
 
 				$html.= '</ul></div>';

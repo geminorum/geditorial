@@ -629,7 +629,7 @@ class Widget extends \WP_Widget
 			] );
 
 			Core\HTML::label(
-				$html.'&nbsp;'.$value_title,
+				Core\Base::nbs( $html, $value_title ),
 				$id.'-'.$value_name,
 				'li'
 			);

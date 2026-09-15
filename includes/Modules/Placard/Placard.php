@@ -147,6 +147,7 @@ class Placard extends gEditorial\Module
 			],
 			'codebox' => [
 				'template_styles' => _x( 'Template Styles', 'MetaBox Title', 'geditorial-placard' ),
+				'template_script' => _x( 'Template Script', 'MetaBox Title', 'geditorial-placard' ),
 			],
 		];
 
@@ -251,7 +252,8 @@ class Placard extends gEditorial\Module
 			'admin_managed'   => TRUE,
 			'single_selected' => TRUE,
 			'suitable_metas'  => [
-				'style'  => NULL,
+				'styles' => NULL,
+				'script' => NULL,
 				'width'  => NULL,
 				'height' => NULL,
 			],
@@ -261,9 +263,8 @@ class Placard extends gEditorial\Module
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
 			'has_archive'  => FALSE,
-			// 'show_in_rest' => FALSE,
 			'ical_source'  => FALSE,
-			'show_in_menu' => 'themes.php',
+			'show_in_menu' => 'index.php',
 		], [
 			'is_viewable'      => FALSE,
 			'custom_captype'   => $captype,

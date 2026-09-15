@@ -47,7 +47,8 @@ class TermHierarchy extends gEditorial\Service
 			return FALSE;
 
 		add_filter( 'quick_edit_show_taxonomy',
-			static function ( $show, $taxonomy, $current ) use ( $posttype, $taxonomies ) {
+			static function ( bool $show, string $taxonomy, string $current )
+				use ( $posttype, $taxonomies ) {
 
 				if ( ! $show || $current !== $posttype )
 					return $show;
@@ -59,7 +60,8 @@ class TermHierarchy extends gEditorial\Service
 			}, 12, 3 );
 
 		add_action( 'add_inline_data',
-			static function ( $post, $object ) use ( $posttype, $taxonomies ) {
+			static function ( $post, $object )
+				use ( $posttype, $taxonomies ) {
 
 				if ( $object->name !== $posttype )
 					return;
@@ -78,11 +80,12 @@ class TermHierarchy extends gEditorial\Service
 			}, 1, 2 );
 
 		add_action( 'quick_edit_custom_box',
-			static function ( $column, $current ) use ( $posttype, $taxonomies ) {
+			static function ( string $column, string $current_posttype )
+				use ( $posttype, $taxonomies ) {
 
 				static $added = FALSE;
 
-				if ( $added || $current !== $posttype )
+				if ( $added || $current_posttype !== $posttype )
 					return;
 
 				self::_renderCustomBoxDropdowns( $taxonomies, FALSE );

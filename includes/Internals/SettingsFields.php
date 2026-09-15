@@ -106,7 +106,7 @@ trait SettingsFields
 		] );
 
 		echo '<div>';
-			Core\HTML::label( $html.'&nbsp;'.$args['field_title'], $id, FALSE );
+			Core\HTML::label( self::nbs( $html, $args['field_title'] ), $id, FALSE );
 			Core\HTML::desc( $args['description'] );
 		echo '</div>';
 	}

@@ -459,7 +459,11 @@ class Users extends gEditorial\Module
 						'checked' => in_array( $term->term_id, $selected ),
 					] );
 
-					Core\HTML::label( $html.'&nbsp;'.Core\HTML::escape( $term->name ), 'categories-'.$term->slug, 'li' );
+					Core\HTML::label(
+						self::nbs( $html, Core\HTML::escape( $term->name ) ),
+						self::dsh( 'categories', $term->slug ),
+						'li',
+					);
 				 }
 
 				echo '</ul></div>';

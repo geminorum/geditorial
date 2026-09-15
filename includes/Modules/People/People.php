@@ -153,6 +153,7 @@ class People extends gEditorial\Module
 				'user'     => NULL,
 				'born'     => NULL,
 				'dead'     => NULL,
+				'address'  => NULL,
 			],
 		] );
 

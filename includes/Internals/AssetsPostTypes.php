@@ -127,6 +127,7 @@ trait AssetsPostTypes
 		return TRUE;
 	}
 
+	// TODO: replace this with code-mirror editor @see `textarea-code-editor` on Settings
 	public function assetsposttypes_render_codebox_metabox( object $post, false|array $box ): void
 	{
 		if ( $this->check_hidden_metabox( $box, $post->post_type ) )
