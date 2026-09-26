@@ -20,24 +20,6 @@ class Skilled extends gEditorial\Module
 	use Internals\TaxonomyOverview;
 	use Internals\TemplateTaxonomy;
 
-	// TODO: add subcontent api for list of Skilled background: سابقه مهارت‌ها
-
-	/**
-	 * TODO: add level taxonomy for each skill
-	 * WTF: or maybe new module!
-	 * @SEE: https://ielts.org/organisations/ielts-for-organisations/ielts-scoring-in-detail
-	 * 9 - Expert
-	 * 8 - Excellent (`Very good`)
-	 * 7 - Good
-	 * 6 - Competent
-	 * 5 - Modest
-	 * 4 - Limited
-	 * 3 - Extremely limited
-	 * 2 - Intermittent
-	 * 1 - `Non-user`
-	 * 0 - Did not attempt the test
-	 */
-
 	protected $disable_no_posttypes = TRUE;
 
 	public static function module(): array

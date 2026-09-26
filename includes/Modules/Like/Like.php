@@ -623,25 +623,25 @@ class Like extends gEditorial\Module
 			'title' => gEditorial\Tablelist::columnPostTitle(),
 			'total' => [
 				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					return gEditorial\Helper::htmlCount( $this->get_liked_total( $row->ID ) );
 				},
 			],
 			'guests' => [
 				'title'    => _x( 'Guests', 'Table Column', 'geditorial-like' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					return gEditorial\Helper::htmlCount( $this->get_liked_guests( $row->ID ) );
 				},
 			],
 			'users' => [
 				'title'    => _x( 'Users', 'Table Column', 'geditorial-like' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					return gEditorial\Helper::htmlCount( $this->get_liked_users( $row->ID ) );
 				},
 			],
 			'avatars' => [
 				'title'    => _x( 'Avatars', 'Table Column', 'geditorial-like' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					$html = $this->avatars( $row->ID );
 					return $html ? Core\HTML::tag( 'ul', $html ) : gEditorial\Helper::htmlEmpty();
 				},

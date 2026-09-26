@@ -45,13 +45,13 @@ class ModuleSettings extends gEditorial\Settings
 				'type'  => gEditorial\Tablelist::columnTermTaxonomy( 'term_id' ),
 				'title' => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-terms' ),
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 						return Core\HTML::span( WordPress\Term::title( $row->term_id ), FALSE, $row->term_id, $row->term_id );
 					},
 				],
 				'meta' => [
 					'title' => _x( 'Raw Data', 'Table Column', 'geditorial-terms' ),
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 						return Core\HTML::sanitizeDisplay( $value );
 					},
 				],

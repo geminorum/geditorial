@@ -123,5 +123,6 @@ class Statistical extends gEditorial\Module
 
 		echo '</td></tr>';
 		echo '</table>';
+		return TRUE;
 	}
 }

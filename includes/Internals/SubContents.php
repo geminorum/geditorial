@@ -1154,14 +1154,14 @@ trait SubContents
 			'_cb'     => '_id',
 			'_object' => [
 				'title'    => _x( 'Parent Post', 'Internal: Subcontents: Column', 'geditorial-admin' ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( $value && ( $parent = WordPress\Post::title( (int) $value, FALSE ) ) )
 						return $parent;
 
 					return gEditorial\Helper::getPostTitleRow( $row, 'edit' );
 				},
-				'actions' => function ( $value, $row, $column, $index, $key, $args )
+				'actions' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $custom ) {
 
 					if ( ! $post = WordPress\Post::get( (int) $value ) )

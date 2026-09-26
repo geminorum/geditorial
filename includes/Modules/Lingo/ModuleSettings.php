@@ -34,7 +34,7 @@ class ModuleSettings extends gEditorial\Settings
 						'title'    => _x( 'Term', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-term',
 						'args'     => [ 'taxonomy' => $taxonomy, 'metakeys' => $metakeys ],
-						'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+						'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 							if ( $term_id = WordPress\Taxonomy::getIDbyMeta( $column['args']['metakeys']['alpha2code'], $row['alpha2code'] ) )
 								$title = gEditorial\Helper::getTermTitleRow( $term_id );

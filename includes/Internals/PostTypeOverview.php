@@ -50,7 +50,7 @@ trait PostTypeOverview
 			$columns['tax__'.$taxonomy] = [
 				'title'    => $object->label,
 				'class'    => sprintf( '-field-%s-%s', 'tax', $taxonomy ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $taxonomy, $object ) {
 
 					gEditorial\Helper::renderPostTermsEditRow( $row, $object );
@@ -62,7 +62,7 @@ trait PostTypeOverview
 			$columns['meta__'.$field_key] = [
 				'title'    => $field['title'],
 				'class'    => sprintf( '-field-%s-%s', 'meta', $field_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $field_key, $field, $context ) {
 
 					return gEditorial\Template::getMetaField( $field_key, [
@@ -77,7 +77,7 @@ trait PostTypeOverview
 			$columns['unit__'.$unit_key] = [
 				'title'    => $unit['title'],
 				'class'    => sprintf( '-field-%s-%s', 'unit', $unit_key ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $unit_key, $unit, $context ) {
 
 					return gEditorial\Template::getMetaField( $unit_key, [
@@ -93,7 +93,7 @@ trait PostTypeOverview
 			$columns['paired_connected'] = [
 				'title'    => _x( 'Connected', 'Internal: PostTypeOverview: Column Header', 'geditorial-admin' ),
 				'class'    => '-paired-connected-to',
-				'callback' => function ( $value, $row, $column, $index, $key, $args )
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $context ) {
 
 					if ( FALSE === ( $connected = $this->paired_all_connected_to( $row, $context ) ) )

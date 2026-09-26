@@ -536,7 +536,7 @@ class Importer extends gEditorial\Module
 				'title'    => _x( 'Image', 'Table Column', 'geditorial-importer' ),
 				'args'     => $args,
 				'class'    => 'image-column',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( ! $id = get_post_meta( $row->ID, $column['args']['metakey'], TRUE ) )
 						return gEditorial\Helper::htmlEmpty();
@@ -556,7 +556,7 @@ class Importer extends gEditorial\Module
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					$html = WordPress\PostType::htmlFeaturedImage( $row->ID, [ 45, 72 ] );
 					return $html ?: gEditorial\Helper::htmlEmpty();
 				},

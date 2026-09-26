@@ -118,7 +118,7 @@ class WcImages extends gEditorial\Module
 			'thumb' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-wc-images' ),
 				'class'    => 'image-column',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					$attachment_id = get_post_meta( $row->ID, $this->constant( 'metakey_thumbnail_id' ), TRUE );
 					$html = WordPress\Media::htmlAttachmentImage( $attachment_id, [ 45, 72 ] );
 					return $html ?: gEditorial\Helper::htmlEmpty();
@@ -128,7 +128,8 @@ class WcImages extends gEditorial\Module
 			'gallery' => [
 				'title'    => _x( 'Gallery', 'Table Column', 'geditorial-wc-images' ),
 				'class'    => 'image-column',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
+
 					$html = '';
 
 					if ( $gallery = get_post_meta( $row->ID, $this->constant( 'metakey_image_gallery' ), TRUE ) )

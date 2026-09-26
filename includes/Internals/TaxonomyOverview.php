@@ -52,7 +52,7 @@ trait TaxonomyOverview
 			'_cb'  => 'term_id',
 			'name' => [
 				'title'    => _x( 'Name', 'Internal: TaxonomyOverview: Column', 'geditorial-admin' ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args )
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $description ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )
@@ -65,7 +65,7 @@ trait TaxonomyOverview
 
 					return $html;
 				},
-				'actions' => function ( $value, $row, $column, $index, $key, $args )
+				'actions' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args )
 					use ( $exports, $context ) {
 
 					if ( ! $term = WordPress\Term::get( $row ) )

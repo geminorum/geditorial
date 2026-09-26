@@ -289,7 +289,7 @@ class Uncategorized extends gEditorial\Module
 			'raw'   => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-uncategorized' ),
 				'class'    => '-has-list',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					$query = new \WP_Term_Query( [
 						'object_ids' => $row->ID,

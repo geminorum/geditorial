@@ -453,7 +453,7 @@ class Revisions extends gEditorial\Module
 			'title' => gEditorial\Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Table Column', 'geditorial-revisions' ),
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					$html = '';
 

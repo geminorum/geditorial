@@ -1377,7 +1377,8 @@ class Today extends gEditorial\Module
 					'constants'    => $constants,
 					'default_type' => $this->default_calendar(),
 				],
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
+
 					$the_day = ModuleHelper::getTheDayFromPost( $row,
 						$column['args']['default_type'],
 						$column['args']['constants']

@@ -1306,11 +1306,9 @@ class Settings extends WordPress\Main
 
 			case 'checkbox':
 
-				$html = Core\HTML::tag( 'input', [
-					'type'     => 'checkbox',
+				Core\HTML::checkBox( $args['description'], [
 					'id'       => $id,
 					'name'     => $name,
-					'value'    => '1',
 					'checked'  => $value,
 					'class'    => Core\HTML::attrClass( $args['field_class'], '-type-checkbox' ),
 					'disabled' => $args['disabled'],
@@ -1318,8 +1316,6 @@ class Settings extends WordPress\Main
 					'dir'      => $args['dir'],
 					'data'     => $args['data'],
 				] );
-
-				Core\HTML::label( self::nbs( $html, $args['description'] ), $id );
 
 				$args['description'] = FALSE;
 

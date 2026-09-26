@@ -101,7 +101,7 @@ trait PostTypeFieldsReports
 			'meta' => [
 				'title'    => _x( 'Meta', 'Internal: PostTypeFieldsReports: Table Column', 'geditorial-admin' ),
 				'class'    => '-meta-metafields -has-table',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					$data = [];
 
@@ -118,7 +118,7 @@ trait PostTypeFieldsReports
 			'legacy' => [
 				'title'    => _x( 'Legacy', 'Internal: PostTypeFieldsReports: Table Column', 'geditorial-admin' ),
 				'class'    => '-meta-legacies -has-count',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( ! $legacies = $this->get_postmeta_legacy( $row->ID ) )
 						return gEditorial\Helper::htmlEmpty();

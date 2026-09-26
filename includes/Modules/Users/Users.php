@@ -401,7 +401,7 @@ class Users extends gEditorial\Module
 		echo gEditorial\Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
 	}
 
-	public function edit_user_profile( $user )
+	public function edit_user_profile( object $user ): void
 	{
 		if ( $this->get_setting( 'user_groups' ) )
 			gEditorial\MetaBox::tableRowObjectTaxonomy(
@@ -423,17 +423,18 @@ class Users extends gEditorial\Module
 				'</table>'
 			);
 
-		if ( $this->get_setting( 'author_categories' ) ) {
+		if ( ! $this->get_setting( 'author_categories' ) )
+			return;
 
-			if ( user_can( $user, 'edit_posts' ) && ! user_can( $user, 'edit_others_posts' ) )
-				$this->render_author_categories( $user );
-		}
+		if ( user_can( $user, 'edit_posts' )
+			&& ! user_can( $user, 'edit_others_posts' ) )
+			$this->_render_author_categories( $user );
 	}
 
-	private function render_author_categories( $user )
+	private function _render_author_categories( object $user ): void
 	{
 		$terms    = get_terms( [ 'taxonomy' => 'category', 'hide_empty' => FALSE ] );
-		$default  = get_option( 'default_category' );
+		$default  = WordPress\Taxonomy::getDefaultTermID( 'category' );
 		$selected = $this->get_user_categories( $user->ID );
 
 		Core\HTML::h3( _x( 'Site Categories', 'Header', 'geditorial-users' ) );
@@ -472,6 +473,7 @@ class Users extends gEditorial\Module
 				echo '<input type="hidden" name="categories[]" value="0" />';
 
 			} else {
+
 				_ex( 'There are no categories available.', 'Message', 'geditorial-users' );
 			}
 
@@ -479,26 +481,25 @@ class Users extends gEditorial\Module
 		echo '</table>';
 	}
 
-	private function get_user_categories( $user_id = NULL, $blog_id = NULL, $fallback = TRUE )
+	private function get_user_categories( ?int $user_id = NULL, ?int $blog_id = NULL, bool $fallback_to_default = TRUE ): array
 	{
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( is_null( $blog_id ) )
-			$blog_id = $this->site;
+		$user_id ??= get_current_user_id();
+		$blog_id ??= $this->site;
 
 		$key = sprintf( $this->constant( 'metakey_categories' ), $blog_id );
 
-		if ( $cats = get_user_meta( $user_id, $key, TRUE ) )
-			return (array) $cats;
+		if ( $categories = get_user_meta( $user_id, $key, TRUE ) )
+			return (array) $categories;
 
-		return $fallback ? [ get_option( 'default_category' ) ] : [];
+		return $fallback_to_default
+			? [ WordPress\Taxonomy::getDefaultTermID( 'category' ) ]
+			: [];
 	}
 
-	public function edit_user_profile_update( $user_id )
+	public function edit_user_profile_update( int $user_id ): void
 	{
 		if ( ! current_user_can( 'edit_user', $user_id ) )
-			return FALSE;
+			return;
 
 		if ( $this->get_setting( 'user_groups' ) )
 			gEditorial\MetaBox::storeObjectTaxonomy(
@@ -522,7 +523,7 @@ class Users extends gEditorial\Module
 		}
 	}
 
-	public function pre_option_default_category( $false, $option, $default )
+	public function pre_option_default_category( mixed $false, string $option, mixed $default ): mixed
 	{
 		if ( current_user_can( 'edit_posts' )
 			&& ! current_user_can( 'edit_others_posts' ) ) {
@@ -713,6 +714,7 @@ class Users extends gEditorial\Module
 								WHERE ID IN ( ".trim( $current['posts'], ',' )." )
 							", $user->ID ) );
 
+						// TODO: move up to `WordPress\User`
 						if ( ! is_user_member_of_blog( $user->ID, $this->site ) )
 							add_user_to_blog( $this->site, $user->ID, $role );
 					}

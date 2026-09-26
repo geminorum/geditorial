@@ -954,7 +954,7 @@ class Cartable extends gEditorial\Module
 			'terms' => gEditorial\Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					return $this->_get_metabox_summary( $row );
 				},
 			],

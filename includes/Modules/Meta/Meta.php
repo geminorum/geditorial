@@ -1077,13 +1077,13 @@ class Meta extends gEditorial\Module
 				'type'  => gEditorial\Tablelist::columnPostType( 'post_id' ),
 				'title' => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 						return Core\HTML::span( WordPress\Post::title( $row->post_id ), FALSE, $row->post_id, $row->post_id );
 					},
 				],
 				'meta' => [
 					'title' => _x( 'Raw Data', 'Table Column', 'geditorial-meta' ),
-					'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 						return Core\HTML::sanitizeDisplay( $value );
 					},
 				],

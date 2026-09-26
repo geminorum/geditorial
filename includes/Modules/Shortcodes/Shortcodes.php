@@ -147,7 +147,6 @@ class Shortcodes extends gEditorial\Module
 				];
 			}
 
-
 			$nodes[] = [
 				'parent' => $niches[$shortcode],
 				'id'     => $this->classs( 'matched', $offset ),
@@ -202,7 +201,7 @@ class Shortcodes extends gEditorial\Module
 			'shortcodes' => [
 				'title'    => _x( 'Shortcodes', 'Table Column', 'geditorial-shortcodes' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					$html = '<div dir="ltr">';
 
@@ -210,7 +209,7 @@ class Shortcodes extends gEditorial\Module
 						return $html.'&mdash;</div>';
 
 					foreach ( $matches[0] as $offset => $shortcode )
-						// $html.= Core\HTML::wrap( Core\HTML::code( $matches[2][$offset] ).' '.WordPress\Strings::trimChars( $shortcode, 145 ) );
+						// `$html.= Core\HTML::wrap( Core\HTML::code( $matches[2][$offset] ).' '.WordPress\Strings::trimChars( $shortcode, 145 ) );`
 						$html.= Core\HTML::wrap( Core\HTML::code( WordPress\Strings::trimChars( $shortcode, 185 ) ) );
 
 					return $html.'</div>';
@@ -232,18 +231,18 @@ class Shortcodes extends gEditorial\Module
 		$list = [];
 
 		foreach ( $shortcode_tags as $shortcode => $callback )
-			$list[$shortcode] = $shortcode; // sprintf( '[%s]', $shortcode ); // for search
+			$list[$shortcode] = $shortcode; // `sprintf( '[%s]', $shortcode );` // for search
 
 		return $list;
 	}
 
 	// TODO: add table action
-	protected function remove_shortcode( $post_id, $shortcode )
+	protected function remove_shortcode( mixed $post, string $shortcode ): false|int
 	{
-		if ( ! $post = WordPress\Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$pattern = '#\['.$shortcode.'[^\]]*\]#i';
+		$pattern = sprintf( '#\[%s[^\]]*\]#i', $shortcode );
 
 		if ( ! preg_match_all( $pattern, $post->post_content, $matches ) )
 			return FALSE;
@@ -273,7 +272,7 @@ class Shortcodes extends gEditorial\Module
 	 * @param string $content
 	 * @return string
 	 */
-	public function the_content_orphaned( $content )
+	public function the_content_orphaned( string $content ): string
 	{
 		global $shortcode_tags;
 

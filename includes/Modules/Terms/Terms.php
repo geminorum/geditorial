@@ -1593,6 +1593,10 @@ class Terms extends gEditorial\Module
 				$meta = gEditorial\Datetime::makeMySQLFromInput( $meta,
 					NULL, $this->default_calendar(), NULL, $meta );
 
+			} else if ( in_array( $field, [ 'latlng' ] ) ) {
+
+				$meta = Core\LatLng::sanitize( $meta );
+
 			} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
 
 				$meta = Core\URL::sanitize( $meta );

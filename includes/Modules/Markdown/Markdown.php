@@ -703,7 +703,7 @@ class Markdown extends gEditorial\Module
 			'markdown' => [
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					return $this->_post_is_markdown( $row->ID )
 						? Services\Icons::get( $this->module->icon )
 						: '';

@@ -54,11 +54,11 @@ class Wysiwyg extends gEditorial\Module
 	protected function get_global_strings(): array
 	{
 		$strings = [
-			'titles' => [ // label of description field
-				// '{$taxonomy_name}' => _x( 'Description', 'Titles', 'geditorial-wysiwyg' ),
+			'titles' => [ // The labels of description field
+				// `'{$taxonomy_name}' => _x( 'Description', 'Titles', 'geditorial-wysiwyg' ),`
 			],
-			'descriptions' => [ // description of description field
-				// '{$taxonomy_name}' => _x( 'The description is not prominent by default; however, some themes may show it.', 'Titles', 'geditorial-wysiwyg' ),
+			'descriptions' => [ // The descriptions of description field
+				// `'{$taxonomy_name}' => _x( 'The description is not prominent by default; however, some themes may show it.', 'Titles', 'geditorial-wysiwyg' ),`
 			],
 		];
 
@@ -95,7 +95,7 @@ class Wysiwyg extends gEditorial\Module
 	 * @param object $screen
 	 * @return void
 	 */
-	private function _enqueue_editor( $screen )
+	private function _enqueue_editor( object $screen ): void
 	{
 		// Removes the filters which disallow HTML in term descriptions
 		remove_filter( 'pre_term_description', 'wp_filter_kses' );
@@ -116,7 +116,7 @@ class Wysiwyg extends gEditorial\Module
 		gEditorial\Scripts::enqueueWordCount();
 	}
 
-	private function _get_taxonomy_desc_title( $taxonomy )
+	private function _get_taxonomy_desc_title( object $taxonomy ): string
 	{
 		$fallback = empty( $taxonomy->labels->desc_field_title )
 			? _x( 'Description', 'Taxonomy Description: Label', 'geditorial-wysiwyg' )
@@ -125,7 +125,7 @@ class Wysiwyg extends gEditorial\Module
 		return $this->get_string( $taxonomy->name, FALSE, 'titles', $fallback );
 	}
 
-	private function _get_taxonomy_desc_desc( $taxonomy )
+	private function _get_taxonomy_desc_desc( object $taxonomy ): string
 	{
 		$fallback = empty( $taxonomy->labels->desc_field_description )
 			? _x( 'The description is not prominent by default; however, some themes may show it.', 'Taxonomy Description: Description', 'geditorial-wysiwyg' )
@@ -135,7 +135,7 @@ class Wysiwyg extends gEditorial\Module
 	}
 
 	// @SEE: for caption type editor: `edit_form_image_editor()`
-	private function _get_taxonomy_desc_editor_settings( $taxonomy, $name_attr )
+	private function _get_taxonomy_desc_editor_settings( string|object $taxonomy, string $name_attr ): array
 	{
 		return [
 			'textarea_name'  => $name_attr,
@@ -143,7 +143,7 @@ class Wysiwyg extends gEditorial\Module
 			'teeny'          => TRUE,
 			'media_buttons'  => FALSE,
 			'default_editor' => 'html',
-			'editor_class'   => 'editor-status-counts i18n-multilingual', // qtranslate-x
+			'editor_class'   => 'editor-status-counts i18n-multilingual', // `qtranslate-x`
 			'quicktags'      => [ 'buttons' => 'link,em,strong,li,ul,ol,code' ],
 			'tinymce'        => [
 				'toolbar1' => 'bold,italic,alignleft,aligncenter,alignright,link,undo,redo',
@@ -154,7 +154,7 @@ class Wysiwyg extends gEditorial\Module
 		];
 	}
 
-	public function add_form_fields_editor( $taxonomy )
+	public function add_form_fields_editor( string $taxonomy ): void
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
@@ -193,7 +193,7 @@ JS;
 		echo '</div>';
 	}
 
-	public function edit_form_fields_editor( $term, $taxonomy )
+	public function edit_form_fields_editor( object $term, string $taxonomy ): void
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
 			return;

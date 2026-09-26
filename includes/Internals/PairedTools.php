@@ -340,7 +340,7 @@ trait PairedTools
 
 			'related' => [
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) use ( $constants ) {
 
 					if ( $post_id = WordPress\Post::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						$html = gEditorial\Helper::getPostTitleRow( $post_id ).' &ndash; <small>'.$post_id.'</small>';
@@ -361,7 +361,7 @@ trait PairedTools
 			'description' => [
 				'title'    => _x( 'Desc. / Exce.', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'html-column',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) use ( $constants ) {
 
 					if ( empty( $row->description ) )
 						$html = gEditorial\Helper::htmlEmpty();
@@ -387,7 +387,7 @@ trait PairedTools
 
 			'count' => [
 				'title'    => _x( 'Count', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants, $context ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) use ( $constants, $context ) {
 
 					if ( $post_id = WordPress\Post::getIDbySlug( $row->slug, $this->constant( $constants[0] ) ) )
 						return Core\Number::format( $this->paired_count_connected_to( $post_id, $context ) );
@@ -399,7 +399,7 @@ trait PairedTools
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'image-column',
-				'callback' => function ( $value, $row, $column, $index, $key, $args ) use ( $constants ) {
+				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) use ( $constants ) {
 					$html = '';
 
 					if ( $post_id = $this->paired_get_to_post_id( $row, $constants[0], $constants[1], FALSE ) )
@@ -412,7 +412,7 @@ trait PairedTools
 			'term_image' => [
 				'title'    => _x( 'Image', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
 				'class'    => 'image-column',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					$html = WordPress\Taxonomy::htmlFeaturedImage( $row->term_id, [ 45, 72 ] );
 					return $html ?: gEditorial\Helper::htmlEmpty();
 				},

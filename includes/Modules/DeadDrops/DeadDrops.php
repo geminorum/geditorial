@@ -42,7 +42,7 @@ class DeadDrops extends gEditorial\Module
 					'type'        => 'textarea-quicktags',
 					'title'       => _x( 'Signal Instructions', 'Setting Title', 'geditorial-dead-drops' ),
 					'description' => _x( 'Displays beside the qr-code on the signalling pop-up. Leave blank for default.', 'Setting Description', 'geditorial-dead-drops' ),
-					'placeholder' => _x( 'Scan this with your phone and open it to upload files anonymously.', 'Message', 'geditorial-dead-drops' ),
+					'placeholder' => _x( 'Scan the barcode with your phone and open it to upload files anonymously.', 'Message', 'geditorial-dead-drops' ),
 				],
 			],
 			'_roles' => [

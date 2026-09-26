@@ -131,10 +131,11 @@ class AdminScreen extends gEditorial\Service
 				'reports',
 				'tools',
 				'gizmos',
+				// 'kiosks',
 				'imports',
 				'customs',
 				'settings',
-				'dashboard',
+				// 'dashboard',
 			] as $context )
 				if ( gEditorial\Settings::isScreenContext( $context, $screen ) ) {
 					gEditorial\Helper::linkStyleSheetAdmin( $context );

@@ -57,10 +57,10 @@ trait LateChores
 			$this->latechores__collect_post_aftercare( $post_id );
 	}
 
-	public function latechores__do_post_aftercare( array $list, string $collectors ): void
+	public function latechores__do_post_aftercare( array $list, string|array $collector_actions ): void
 	{
-		foreach ( (array) $collectors as $collector )
-			remove_action( $collector, [ $this, 'latechores__collector_post_aftercare' ], 20 );
+		foreach ( (array) $collector_actions as $action_hook )
+			remove_action( $action_hook, [ $this, 'latechores__collector_post_aftercare' ], 20 );
 
 		if ( empty( $list ) )
 			return;
@@ -112,7 +112,7 @@ trait LateChores
 		);
 	}
 
-	private function latechores__schedule_post_aftercare( string $action, array $collectors = [] ): bool
+	private function latechores__schedule_post_aftercare( string $action, string|array $collectors = [] ): bool
 	{
 		global $gEditorialLateChores;
 

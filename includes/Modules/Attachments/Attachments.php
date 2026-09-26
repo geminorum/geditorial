@@ -696,7 +696,7 @@ class Attachments extends gEditorial\Module
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( $custom = WordPress\Media::isCustom( $row->ID ) )
 						return strtoupper( str_replace( '_', ' ', $custom ) );
@@ -708,7 +708,7 @@ class Attachments extends gEditorial\Module
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 					$list = [];
 
 					if ( $row->post_parent )
@@ -745,7 +745,7 @@ class Attachments extends gEditorial\Module
 			'sizes' => [
 				'title'    => _x( 'Sizes', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-sizes -has-table -has-table-ltr',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return gEditorial\Helper::htmlEmpty();
@@ -772,7 +772,7 @@ class Attachments extends gEditorial\Module
 			'meta' => [
 				'title'    => _x( 'Meta', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-meta -has-table -has-table-ltr',
-				'callback' => static function ( $value, $row, $column, $index, $key, $args ) {
+				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
 
 					if ( ! $meta = wp_get_attachment_metadata( $row->ID ) )
 						return gEditorial\Helper::htmlEmpty();
