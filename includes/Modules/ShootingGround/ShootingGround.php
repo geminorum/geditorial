@@ -1,0 +1,274 @@
+<?php namespace geminorum\gEditorial\Modules\ShootingGround;
+
+defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
+
+use geminorum\gEditorial;
+use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
+use geminorum\gEditorial\WordPress;
+
+class ShootingGround extends gEditorial\Module
+{
+	use Internals\BulkExports;
+	use Internals\CoreAdmin;
+	use Internals\CoreCapabilities;
+	use Internals\CoreDashboard;
+	use Internals\CoreMenuPage;
+	use Internals\CoreRestrictPosts;
+	use Internals\DashboardSummary;
+	use Internals\MetaBoxSupported;
+	use Internals\TaxonomyOverview;
+	use Internals\TemplateTaxonomy;
+
+	protected $disable_no_posttypes = TRUE;
+
+	public static function module(): array
+	{
+		return [
+			'name'     => 'shooting_ground',
+			'title'    => _x( 'Shooting Ground', 'Modules: Shooting Ground', 'geditorial-admin' ),
+			'desc'     => _x( 'Range Facilities', 'Modules: Shooting Ground', 'geditorial-admin' ),
+			'icon'     => [ 'misc-16', 'crosshair' ],
+			'access'   => 'beta',
+			'keywords' => [
+				'shooting',
+				'has-shortcodes',
+				'taxmodule',
+				'crm-feature',
+			],
+		];
+	}
+
+	protected function get_global_settings(): array
+	{
+		$terms = WordPress\Taxonomy::listTerms( $this->constant( 'main_taxonomy' ) );
+		$empty = $this->get_taxonomy_label( 'main_taxonomy', 'no_items_available', NULL, 'no_terms' );
+
+		return [
+			'posttypes_option' => 'posttypes_option',
+			'_roles'           => $this->corecaps_taxonomy_get_roles_settings( 'main_taxonomy', TRUE, TRUE, $terms, $empty ),
+			'_dashboard'       => [
+				'dashboard_widgets',
+				'summary_parents',
+				'summary_excludes' => [ NULL, $terms, $empty ],
+				'summary_scope',
+				'summary_drafts',
+				'count_not',
+			],
+			'_editpost' => [
+				'metabox_advanced',
+				'selectmultiple_term' => [ NULL, TRUE ],
+			],
+			'_editlist' => [
+				'admin_restrict',
+				'auto_term_parents',
+				'show_in_quickedit',
+			],
+			'_frontend' => [
+				'contents_viewable',
+				'show_in_navmenus',
+				'archive_override',
+				'archive_empty_items',
+				'custom_archives',
+			],
+			'_supports' => [
+				'shortcode_support',
+			],
+			'_constants' => [
+				'main_taxonomy_constant'  => [ NULL, 'shooting_range' ],
+				'main_shortcode_constant' => [ NULL, 'shooting-ranges' ],
+			],
+		];
+	}
+
+	protected function get_global_constants(): array
+	{
+		return [
+			'main_taxonomy'  => 'shooting_range',
+			'main_shortcode' => 'shooting-ranges',
+		];
+	}
+
+	protected function get_global_strings(): array
+	{
+		$strings = [
+			'noops' => [
+				'main_taxonomy' => _n_noop( 'Shooting Range', 'Shooting Ranges', 'geditorial-shooting-ground' ),
+			],
+			'labels' => [
+				'main_taxonomy' => [
+					'extended_label'       => _x( 'Range Facilities', 'Label: `extended_label`', 'geditorial-shooting-ground' ),
+					'menu_name'            => _x( 'Shooting Ranges', 'Label: `menu_name`', 'geditorial-shooting-ground' ),
+					'show_option_all'      => _x( 'Ranges', 'Label: `show_option_all`', 'geditorial-shooting-ground' ),
+					'show_option_no_items' => _x( '(Unknown)', 'Label: `show_option_no_items`', 'geditorial-shooting-ground' ),
+				],
+			],
+		];
+
+		if ( ! is_admin() )
+			return $strings;
+
+		// $strings[''] = [];
+
+		return $strings;
+	}
+
+	public function init(): void
+	{
+		parent::init();
+
+		$this->register_taxonomy( 'main_taxonomy', [
+			'hierarchical'       => TRUE,
+			'show_in_menu'       => FALSE,
+			'meta_box_cb'        => $this->get_setting( 'metabox_advanced' ) ? NULL : FALSE,
+			'show_in_quick_edit' => (bool) $this->get_setting( 'show_in_quickedit' ),
+			'show_in_nav_menus'  => (bool) $this->get_setting( 'show_in_navmenus' ),
+			'data_length'        => _x( '35', 'Main Taxonomy Argument: `data_length`', 'geditorial-shooting-ground' ),
+		], NULL, [
+			'is_viewable'     => $this->get_setting( 'contents_viewable', TRUE ),
+			'auto_parents'    => $this->get_setting( 'auto_term_parents', TRUE ),
+			'single_selected' => ! $this->get_setting( 'selectmultiple_term', TRUE ),
+			'custom_captype'  => TRUE,
+			'suitable_metas'  => [
+				'tagline' => NULL,
+				'contact' => NULL,
+				'venue'   => NULL,
+				'image'   => NULL,
+				'user'    => NULL,
+				'address' => NULL,
+				'latlng'  => NULL,
+			],
+		] );
+
+		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
+		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
+		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
+
+		if ( is_admin() ) {
+
+			$this->coreadmin__ajax_taxonomy_multiple_supported_column( 'main_taxonomy' );
+
+		} else {
+
+			$this->templatetaxonomy__hook_adminbar( 'main_taxonomy' );
+			$this->hook_adminbar_node_for_taxonomy( 'main_taxonomy' );
+
+			// $this->filter( 'post_class', 3, 12 );
+		}
+
+		$this->register_shortcode( 'main_shortcode' );
+	}
+
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
+	public function current_screen( object $screen ): void
+	{
+		if ( $this->is_screen_taxonomy( 'main_taxonomy', $screen ) ) {
+
+			$this->_hook_parentfile_for_optionsgeneralphp();
+			$this->modulelinks__register_headerbuttons();
+			$this->bulkexports__hook_supportedbox_for_term( 'main_taxonomy', $screen );
+			$this->coreadmin__hook_taxonomy_multiple_supported_column( $screen );
+
+		} else if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'edit' === $screen->base ) {
+
+				if ( $this->corecaps_taxonomy_role_can( 'main_taxonomy', 'reports' ) )
+					$this->corerestrictposts__hook_screen_taxonomies( 'main_taxonomy' );
+
+			} else if ( 'post' === $screen->base ) {
+
+				$this->coretax__hook_posttype_mainbox( 'main_taxonomy', $screen, TRUE );
+			}
+		}
+	}
+
+	public function admin_menu(): void
+	{
+		$this->_hook_menu_taxonomy( 'main_taxonomy', 'options-general.php' );
+	}
+
+	public function dashboard_widgets(): void
+	{
+		$this->add_dashboard_term_summary( 'main_taxonomy' );
+	}
+
+	public function dashboard_glance_items( array $items ): array
+	{
+		if ( $glance = $this->dashboard_glance_taxonomy( 'main_taxonomy' ) )
+			$items[] = $glance;
+
+		return $items;
+	}
+
+	/**
+	 * Returns whether the current user has the specified capability for given context.
+	 *
+	 * @param string|null $context
+	 * @param string $fallback_capability
+	 * @return bool
+	 */
+	public function cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
+	{
+		return $this->_override_module_cuc_by_taxonomy( 'main_taxonomy', $context, $fallback_capability );
+	}
+
+	public function template_include( string $template ): string
+	{
+		return $this->get_setting( 'contents_viewable', TRUE )
+			? $this->templatetaxonomy__include( $template, $this->constant( 'main_taxonomy' ) )
+			: $template;
+	}
+
+	public function post_class( array $classes, array $css_class, int $post_id ): array
+	{
+		if ( ! $post = WordPress\Post::get( $post_id ) )
+			return $classes;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $classes;
+
+		$classes[] = $this->classs( 'supported' );
+		$template  = $this->constant( 'postclass_template', '%s' );
+
+		foreach ( WordPress\Taxonomy::getPostTerms( $this->constant( 'main_taxonomy' ), $post ) as $term )
+			$classes[] = Core\HTML::prepClass( sprintf( $template, $term->slug ) );
+
+		return $classes;
+	}
+
+	public function main_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
+	{
+		return gEditorial\ShortCode::listPosts( 'assigned',
+			'post',
+			$this->constant( 'main_taxonomy' ),
+			array_merge( [
+				'post_id'   => NULL,
+				'posttypes' => $this->posttypes(),
+			], (array) $atts ),
+			$content,
+			$tag ?: $this->constant( 'main_shortcode' ),
+			$this->key
+		);
+	}
+
+	public function reports_settings( string $sub ): void
+	{
+		$this->check_settings( $sub, 'reports', 'per_page' );
+	}
+
+	protected function render_reports_html( string $uri, string $sub, string $action, string $context ): bool
+	{
+		if ( ! $this->taxonomy_overview_render_table( 'main_taxonomy', $uri, $sub ) )
+			return gEditorial\Info::renderNoReportsAvailable();
+
+		return TRUE;
+	}
+}

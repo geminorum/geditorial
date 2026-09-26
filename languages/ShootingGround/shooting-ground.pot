@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial ShootingGround\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"Last-Translator: NULL\n"
+"Language-Team: NULL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Poedit-Basepath: ../../includes/Modules/ShootingGround\n"
+"X-Domain: geditorial-shooting-ground\n"
+
+#: ShootingGround.php:97
+msgid "Shooting Range"
+msgid_plural "Shooting Ranges"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ShootingGround.php:101
+msgctxt "Label: `extended_label`"
+msgid "Range Facilities"
+msgstr ""
+
+#: ShootingGround.php:102
+msgctxt "Label: `menu_name`"
+msgid "Shooting Ranges"
+msgstr ""
+
+#: ShootingGround.php:103
+msgctxt "Label: `show_option_all`"
+msgid "Ranges"
+msgstr ""
+
+#: ShootingGround.php:104
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unknown)"
+msgstr ""
+
+#: ShootingGround.php:127
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "35"
+msgstr ""

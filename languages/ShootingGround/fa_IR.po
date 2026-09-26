@@ -1,0 +1,47 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gEditorial ShootingGround\n"
+"Report-Msgid-Bugs-To: https://github.com/geminorum/geditorial/issues\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2026-09-26 18:14+0330\n"
+"Last-Translator: geminorum <contact@geminorum.ir>\n"
+"Language-Team: NULL\n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n==0 || n==1);\n"
+"X-Generator: Poedit 3.9\n"
+"X-Poedit-Basepath: ../../includes/Modules/ShootingGround\n"
+"X-Domain: geditorial-shooting-ground\n"
+
+#: ShootingGround.php:97
+msgid "Shooting Range"
+msgid_plural "Shooting Ranges"
+msgstr[0] "میدان‌های تیراندازی"
+msgstr[1] "میدان تیراندازی"
+
+#: ShootingGround.php:101
+msgctxt "Label: `extended_label`"
+msgid "Range Facilities"
+msgstr "تأسیسات میدانی"
+
+#: ShootingGround.php:102
+msgctxt "Label: `menu_name`"
+msgid "Shooting Ranges"
+msgstr "میدان‌های تیراندازی"
+
+#: ShootingGround.php:103
+msgctxt "Label: `show_option_all`"
+msgid "Ranges"
+msgstr "میدان‌ها"
+
+#: ShootingGround.php:104
+msgctxt "Label: `show_option_no_items`"
+msgid "(Unknown)"
+msgstr "(نامعلوم)"
+
+#: ShootingGround.php:127
+msgctxt "Main Taxonomy Argument: `data_length`"
+msgid "35"
+msgstr "35"
