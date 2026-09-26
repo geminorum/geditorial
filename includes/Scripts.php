@@ -628,7 +628,7 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgDropzone( $enqueue = FALSE, $version = '6.0.0-beta.2' )
+	public static function pkgDropzone( $enqueue = FALSE, $version = '6.3.4' )
 	{
 		$handle = 'dropzone';
 
