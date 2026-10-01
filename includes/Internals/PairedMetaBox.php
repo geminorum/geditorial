@@ -50,7 +50,7 @@ trait PairedMetaBox
 		object $post,
 		string $posttype_constant,
 		string $paired_constant,
-		string|false $subterm_constant = FALSE,
+		false|string $subterm_constant = FALSE,
 		bool $display_empty = FALSE,
 	): void {
 
@@ -439,7 +439,7 @@ trait PairedMetaBox
 		object $post,
 		string $posttype_constant,
 		string $paired_constant,
-		string|false $subterm_constant = FALSE,
+		false|string $subterm_constant = FALSE,
 	): mixed {
 
 		$posttype = $this->constant( $posttype_constant );

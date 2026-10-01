@@ -306,9 +306,9 @@ class CustomPostType extends gEditorial\Service
 		$scheduled_date = gEditorial\Datetime::dateFormat( $post->post_date, 'datetime' );
 
 		if ( WordPress\PostType::viewable( $post_type_object ) ) {
-			$view      = ' '.Core\HTML::link( $messages['view_post'], $permalink );
-			$preview   = ' '.Core\HTML::link( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
-			$scheduled = ' '.Core\HTML::link( $messages['preview_post'], $permalink, TRUE );
+			$view      = ' '.Core\Link::get( $messages['view_post'], $permalink );
+			$preview   = ' '.Core\Link::get( $messages['preview_post'], get_preview_post_link( $post ), TRUE );
+			$scheduled = ' '.Core\Link::get( $messages['preview_post'], $permalink, TRUE );
 		}
 
 		return [

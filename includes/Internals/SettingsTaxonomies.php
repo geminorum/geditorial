@@ -154,7 +154,7 @@ trait SettingsTaxonomies
 		return Core\L10n::pluralize( $taxonomy );
 	}
 
-	public function screen_taxonomy_supported( object $screen, string|array|false|null $base = NULL ): bool
+	public function screen_taxonomy_supported( object $screen, null|false|string|array $base = NULL ): bool
 	{
 		$base = $base ?? [ 'edit-tags', 'term' ];
 
@@ -166,7 +166,7 @@ trait SettingsTaxonomies
 
 	public function list_taxonomies(
 		mixed $pre = NULL,
-		string|array|null $taxonomies = NULL,
+		null|string|array $taxonomies = NULL,
 		?string $capability = NULL,
 		?array $args = NULL,
 		?int $user_id = NULL,

@@ -164,7 +164,7 @@ trait SettingsPostTypes
 		return Core\L10n::pluralize( $posttype );
 	}
 
-	public function screen_posttype_supported( object $screen, string|array|false|null $base = NULL ): bool
+	public function screen_posttype_supported( object $screen, null|false|string|array $base = NULL ): bool
 	{
 		$base = $base ?? [ 'edit', 'post' ];
 
@@ -176,7 +176,7 @@ trait SettingsPostTypes
 
 	public function list_posttypes(
 		mixed $pre = NULL,
-		string|array|null $posttypes = NULL,
+		null|string|array $posttypes = NULL,
 		?string $capability = NULL,
 		?array $args = NULL,
 		?int $user_id = NULL,

@@ -428,8 +428,15 @@ trait PostTypeFields
 	{
 		if ( ! empty( $field['sanitize'] ) && is_callable( $field['sanitize'] ) )
 			return $this->filters( 'sanitize_posttype_field',
-				call_user_func_array( $field['sanitize'], [ $data, $field, $post ] ),
-				$field, $post, $data );
+				call_user_func_array( $field['sanitize'], [
+					$data,
+					$field,
+					$post,
+				] ),
+				$field,
+				$post,
+				$data,
+			);
 
 		$sanitized = $data;
 
@@ -1024,7 +1031,7 @@ trait PostTypeFields
 		return TRUE;
 	}
 
-	public function bulk_edit_custom_box_posttypefields( string $column, string $posttype, string $taxonomy ): void
+	public function bulk_edit_custom_box_posttypefields( string $column, string $posttype ): void
 	{
 		$this->quick_edit_custom_box_posttypefields( $column, $posttype, TRUE );
 	}
@@ -1262,7 +1269,7 @@ trait PostTypeFields
 				return FALSE;
 		}
 
-		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $value, FALSE ) )
+		if ( $matches = WordPress\PostMeta::getID( $metakey, $value, FALSE ) )
 			foreach ( $matches as $match )
 				if ( $posttype === get_post_type( intval( $match ) ) )
 					return intval( $match );
@@ -1301,10 +1308,9 @@ trait PostTypeFields
 	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
 	public function get_postid_by_field( mixed $value, string $field, ?string $prefix = NULL ): false
 	{
-		if ( is_null( $prefix ) )
-			$prefix = 'meta'; // the exception!
+		$prefix ??= 'meta'; // the exception!
 
-		if ( $post_id = WordPress\PostType::getIDbyMeta( $this->get_postmeta_key( $field, $prefix ), $value ) )
+		if ( $post_id = WordPress\PostMeta::getID( $this->get_postmeta_key( $field, $prefix ), $value ) )
 			return intval( $post_id );
 
 		return FALSE;

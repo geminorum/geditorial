@@ -597,7 +597,7 @@ class Users extends gEditorial\Module
 		if ( $user->user_url ) {
 			printf( $before, '-url' );
 				echo $this->get_column_icon( FALSE, 'admin-links', _x( 'URL', 'Row Icon Title', 'geditorial-users' ) );
-				echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
+				echo Core\Link::get( Core\URL::prepTitle( $user->user_url ), $user->user_url );
 			echo $after;
 		}
 

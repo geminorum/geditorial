@@ -470,7 +470,7 @@ class Modulation extends gEditorial\Service
 	{
 		return class_exists( 'WP_Document_Revisions' )
 			? FALSE
-			: Core\HTML::link(
+			: Core\Link::get(
 				_x( 'Needs WP-Document-Revisions', 'Service: Modulation', 'geditorial-admin' ),
 				'https://github.com/wp-document-revisions/wp-document-revisions',
 				TRUE

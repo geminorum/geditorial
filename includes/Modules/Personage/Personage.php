@@ -410,7 +410,7 @@ class Personage extends gEditorial\Module
 		$this->filter_module( 'papered', 'view_data_for_post', 4 );
 		$this->filter_module( 'papered', 'view_list_item', 7 );
 
-		$this->filter( 'linediscovery_search_for_post', 5, 12, FALSE, $this->base );
+		$this->filter( 'linediscovery_data_for_post', 4, 12, FALSE, $this->base );
 		$this->filter( 'paired_all_connected_to_args', 4, 18, 'clause', $this->base );
 		$this->filter( 'searchselect_result_extra_for_post', 3, 22, FALSE, $this->base );
 
@@ -591,7 +591,7 @@ class Personage extends gEditorial\Module
 	public function prep_individual_admin( string $individual, string $raw, mixed $value ): string
 	{
 		if ( $link = WordPress\URL::searchAdmin( $individual, $this->constant( 'main_posttype' ) ) )
-			return Core\HTML::link( $individual, $link, TRUE );
+			return Core\Link::get( $individual, $link, TRUE );
 
 		return $individual;
 	}
@@ -613,12 +613,12 @@ class Personage extends gEditorial\Module
 		return $terms;
 	}
 
-	public function meta_field_empty( $meta, $field, $post, $args, $raw, $field_args, $context )
+	public function meta_field_empty( mixed $meta, string $field_key, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		if ( ! empty( $meta ) )
 			return $meta;
 
-		switch ( $field ) {
+		switch ( $field_key ) {
 			case 'fullname': return $this->make_human_title( $post, $context, FALSE );
 		}
 
@@ -671,7 +671,7 @@ class Personage extends gEditorial\Module
 	}
 
 	// TODO: move the list into `ModuleHelper`
-	public function identified_possible_keys_for_identifier( $keys, $posttype )
+	public function identified_possible_keys_for_identifier( array $keys, string $posttype ): array
 	{
 		if ( $posttype == $this->constant( 'main_posttype' ) )
 			return array_merge( $keys, [
@@ -697,7 +697,7 @@ class Personage extends gEditorial\Module
 		return $default;
 	}
 
-	public function tabloid_view_data_for_post( $data, $post, $context )
+	public function tabloid_view_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		if ( $post->post_type !== $this->constant( 'main_posttype' ) )
 			return $data;
@@ -955,7 +955,7 @@ class Personage extends gEditorial\Module
 			: $keys;
 	}
 
-	public function linediscovery_search_for_post( $discovered, $row, $posttypes, $insert, $raw )
+	public function linediscovery_data_for_post( mixed $discovered, array $row, array $posttypes, bool $insert ): mixed
 	{
 		if ( ! is_null( $discovered ) )
 			return $discovered;
@@ -970,7 +970,7 @@ class Personage extends gEditorial\Module
 
 		$type   = $this->constant( 'main_posttype' );
 		$search = WordPress\Post::getByTitle(
-			Core\Text::trim( $row[$key] ),   // FIXME: sanaitze!
+			Core\Text::trim( $row[$key] ),   // FIXME: sanitize!
 			$type,
 			'ids',
 			WordPress\Status::acceptable( $type, 'search' ),
@@ -982,7 +982,7 @@ class Personage extends gEditorial\Module
 		return $discovered;
 	}
 
-	public function paired_all_connected_to_args_status( $args, $post, $posttypes, $context )
+	public function paired_all_connected_to_args_status( array $args, object $post, array $posttypes, ?string $context ): array
 	{
 		if ( in_array( $context, [
 			'restapi',
@@ -1011,7 +1011,7 @@ class Personage extends gEditorial\Module
 		return $args;
 	}
 
-	public function paired_all_connected_to_args_clause( $args, $post, $posttypes, $context )
+	public function paired_all_connected_to_args_clause( array $args, object $post, array $posttypes, ?string $context ): array
 	{
 		if ( count( $posttypes ) > 1 && $this->constant( 'main_posttype' ) !== $posttypes[0] )
 			return $args;
@@ -1062,8 +1062,14 @@ class Personage extends gEditorial\Module
 	}
 
 	// TODO: move this up!
-	public function sanitize_passport_number( $data, $field, $post )
+	public function sanitize_passport_number( mixed $data, array $field, mixed $post ): string
 	{
+		if ( ! $data = Core\Text::force( $data ) )
+			return '';
+
+		if ( WordPress\Strings::isEmpty( $data ) )
+			return '';
+
 		$sanitized = Core\Number::translate( trim( $data ) );
 		$sanitized = Core\Text::stripAllSpaces( strtoupper( $sanitized ) );
 

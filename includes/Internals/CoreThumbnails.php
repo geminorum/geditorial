@@ -10,10 +10,11 @@ use geminorum\gEditorial\WordPress;
 trait CoreThumbnails
 {
 	// TODO: same for term with image support on Terms module
-	protected function corethumbnails__hook_tabloid_side_image( $constant )
+	protected function corethumbnails__hook_tabloid_side_image( string $constant ): bool
 	{
-		add_filter( $this->hook_base( 'tabloid', 'view_data_for_post' ),
-			function ( $data, $post, $context ) use ( $constant ) {
+		return add_filter( $this->hook_base( 'tabloid', 'view_data_for_post' ),
+			function ( $data, $post, $context )
+				use ( $constant ) {
 
 				if ( ! $this->is_posttype( $constant, $post ) )
 					return $data;
@@ -35,7 +36,5 @@ trait CoreThumbnails
 				return $data;
 
 			}, 20, 3 );
-
-		return TRUE;
 	}
 }

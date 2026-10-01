@@ -211,7 +211,7 @@ class Uploader extends gEditorial\Module
 
 		return [
 			TRUE,
-			Core\HTML::link(
+			Core\Link::get(
 				_x( 'Edit Uploaded Attachment', 'Message', 'geditorial-uploader' ),
 				WordPress\Post::edit( $id ),
 				TRUE

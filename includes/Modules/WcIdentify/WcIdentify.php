@@ -299,7 +299,7 @@ class WcIdentify extends gEditorial\Module
 		if ( $posttype !== WordPress\WooCommerce::PRODUCT_POSTTYPE )
 			return $matched;
 
-		if ( $post_id = WordPress\PostType::getIDbyMeta( WordPress\WooCommerce::UNIQUEID_METAKEY, $source_id, TRUE ) )
+		if ( $post_id = WordPress\PostMeta::getID( WordPress\WooCommerce::UNIQUEID_METAKEY, $source_id, TRUE ) )
 			return (int) $post_id;
 
 		return $matched;

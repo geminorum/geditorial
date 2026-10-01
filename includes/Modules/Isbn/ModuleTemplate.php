@@ -39,10 +39,10 @@ class ModuleTemplate extends gEditorial\Template
 		$html = Core\HTML::img( ModuleHelper::barcode( $isbn ), '-barcode-isbn', $isbn );
 
 		if ( is_null( $args['link'] ) )
-			$html = Core\HTML::link( $html, Services\Lookup::linkISBN( $isbn ) );
+			$html = Core\Link::get( $html, Services\Lookup::linkISBN( $isbn ) );
 
 		else if ( $args['link'] )
-			$html = Core\HTML::link( $html, $args['link'] );
+			$html = Core\Link::get( $html, $args['link'] );
 
 		$html = $args['before'].$html.$args['after'];
 

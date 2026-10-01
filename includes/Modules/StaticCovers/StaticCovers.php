@@ -808,7 +808,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	public function tabloid_view_data_for_post( $data, $post, $context )
+	public function tabloid_view_data_for_post( array $data, object $post, ?string $context ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $data;
@@ -927,7 +927,7 @@ class StaticCovers extends gEditorial\Module
 			$args['link'] = WordPress\Post::link( $post );
 
 		if ( $args['link'] )
-			$html = Core\HTML::link( $html, $args['link'] );
+			$html = Core\Link::get( $html, $args['link'] );
 
 		if ( $args['figure'] ) {
 
@@ -1004,7 +1004,7 @@ class StaticCovers extends gEditorial\Module
 			$args['link'] = WordPress\Term::link( $term );
 
 		if ( $args['link'] )
-			$html = Core\HTML::link( $html, $args['link'] );
+			$html = Core\Link::get( $html, $args['link'] );
 
 		if ( $args['figure'] ) {
 

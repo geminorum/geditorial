@@ -114,7 +114,7 @@ trait PostDate
 	public function postdate__render_card_override_dates(
 		?string $uri = '',
 		?string $sub = NULL,
-		string|array|null $supported_list = NULL,
+		null|string|array $supported_list = NULL,
 		?string $card_title = NULL,
 	): bool {
 

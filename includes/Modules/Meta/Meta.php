@@ -897,7 +897,7 @@ class Meta extends gEditorial\Module
 				if ( 'print' === $context )
 					return Core\URL::prepTitle( trim( $raw ) );
 
-				return Core\HTML::link( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
+				return Core\Link::get( Core\URL::prepTitle( trim( $raw ) ), trim( $raw ), TRUE );
 		}
 
 		return $meta;

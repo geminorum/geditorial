@@ -16,11 +16,12 @@ class Datetime extends WordPress\Main
 	public static function htmlCurrent(
 		?string $format = NULL,
 		string|array $class = '',
-		string|false $title = FALSE,
+		false|string $title = FALSE,
 		?string $calendar_type = NULL,
 		?string $timezone_string = NULL,
 		?string $locale = NULL
 	): string {
+
 		$html = self::htmlDateTime(
 			'now',
 			$format ?? self::dateFormats( 'current' ),
@@ -37,11 +38,12 @@ class Datetime extends WordPress\Main
 	public static function htmlDateTime(
 		mixed $input = NULL,
 		?string $format = NULL,
-		string|false $title = FALSE,
+		false|string $title = FALSE,
 		?string $calendar_type = NULL,
 		?string $timezone_string = NULL,
 		?string $locale = NULL
 	): string {
+
 		return Core\HTML::tag( 'time', [
 			'datetime'       => Core\Date::getISO8601( $input, $timezone_string, FALSE ),
 			'title'          => $title,
@@ -80,7 +82,7 @@ class Datetime extends WordPress\Main
 
 	public static function dateFormat(
 		mixed $datetime,
-		string|false $context = 'default',
+		false|string $context = 'default',
 		?string $timezone_string = NULL,
 	): string {
 
@@ -126,12 +128,12 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function postModified(
-		int|object|null $post = NULL,
+		mixed $post = NULL,
 		bool $attr = FALSE,
 		?string $format = NULL,
 	): false|string {
 
-		if ( ! $post = get_post( $post ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		return $attr
@@ -425,6 +427,7 @@ class Datetime extends WordPress\Main
 		?string $timezone_string = NULL,
 		mixed $fallback = NULL,
 	): mixed {
+
 		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
 
 		if ( is_callable( [ 'gPersianDateDate', 'makeMySQLFromInput' ] ) )
@@ -717,7 +720,7 @@ class Datetime extends WordPress\Main
 	// @SEE: `Datetime::daysInMonth()`
 	public static function getMonths( ?string $calendar_type = NULL ): array
 	{
-		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+		$calendar_type ??= Core\L10n::calendar();
 
 		if ( is_callable( [ 'gPersianDateStrings', 'month' ] ) ) {
 
@@ -743,7 +746,7 @@ class Datetime extends WordPress\Main
 
 	public static function getCalendar( ?string $calendar_type = NULL, array $args = [] ): false|string
 	{
-		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+		$calendar_type ??= Core\L10n::calendar();
 
 		if ( is_callable( [ 'gPersianDateCalendar', 'build' ] ) ) {
 
@@ -777,8 +780,8 @@ class Datetime extends WordPress\Main
 		array $array,
 		?string $default_calendar = NULL,
 		bool $set_timestamp = TRUE,
-	)
-	{
+	): bool {
+
 		global $wpdb;
 
 		if ( ! is_callable( 'gPersianDateDate', 'make' ) )
@@ -854,8 +857,9 @@ class Datetime extends WordPress\Main
 	public static function getTheDay(
 		string|object|null $datetime_string = NULL,
 		?string $calendar_type = NULL,
-	) {
-		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+	): array {
+
+		$calendar_type ??= Core\L10n::calendar();
 		$the_day       = [ 'cal' => $calendar_type ];
 
 		$the_date = self::formatByCalendar(

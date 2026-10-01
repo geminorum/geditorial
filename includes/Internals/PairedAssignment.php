@@ -11,7 +11,7 @@ trait PairedAssignment
 {
 	use MetaBoxSupported;
 
-	protected function paired_assignment__init()
+	protected function paired_assignment__init(): void
 	{
 		$this->filter( 'restapi_terms_rendered', 5, 12, 'paired_assignment', $this->base );
 		$this->filter( 'searchselect_result_image_for_term', 3, 12, 'paired_assignment', $this->base );
@@ -19,7 +19,7 @@ trait PairedAssignment
 		$this->filter( 'termrelations_supported', 4, 9, 'paired_assignment', $this->base );
 	}
 
-	protected function paired_assignment__load_submenu_adminpage( $context )
+	protected function paired_assignment__load_submenu_adminpage( ?string $context ): void
 	{
 		$target = self::req( 'target', 'mainapp' );
 
@@ -30,7 +30,7 @@ trait PairedAssignment
 		// 	$this->action( 'admin_print_styles', 0, 99, 'summaryreport' );
 	}
 
-	public function restapi_terms_rendered_paired_assignment( $data, $taxonomy, $params, $object_type, $post )
+	public function restapi_terms_rendered_paired_assignment( array $data, object $taxonomy, $params, $object_type, object $post ): array
 	{
 		if ( ! $paired = $this->paired_get_constants() )
 			return $data;
@@ -38,7 +38,7 @@ trait PairedAssignment
 		if ( $taxonomy->name !== $this->constant( $paired[1] ) )
 			return $data;
 
-		$html = '';
+		$html    = '';
 		$context = 'terms_rendered';
 
 		if ( $items = $this->paired_all_connected_from( $post, $context ) ) {
@@ -71,12 +71,12 @@ trait PairedAssignment
 			return FALSE;
 
 		$args = self::parsed( [
-			'app'     => defined( 'self::APP_NAME' ) ? constant( 'self::APP_NAME' ) : 'assignment-dock',
+			'app'     => defined( 'self::APP_NAME' )  ? constant( 'self::APP_NAME' )  : 'assignment-dock',
 			'asset'   => defined( 'self::APP_ASSET' ) ? constant( 'self::APP_ASSET' ) : '_assignment',
 			'can'     => 'paired',
 			'linked'  => NULL,
 			'targets' => [ $this->constant( $paired[1] ) => $this->get_taxonomy_label( $paired[1] ) ],
-			'summary' => FALSE,                                                                             // $this->constant( 'restapi_attribute' ),
+			'summary' => FALSE, // `$this->constant( 'restapi_attribute' ),`
 			'context' => 'edit',
 			'strings' => [],
 		], $atts );
@@ -120,7 +120,7 @@ trait PairedAssignment
 				'labels'       => $targets,
 				'routes'       => $routes,
 				'searchselect' => Services\SearchSelect::namespace(),
-				// 'discovery'    => Services\LineDiscovery::namespace(), // NOT USED YET
+				// `'discovery'    => Services\LineDiscovery::namespace(),` // NOT USED YET
 				'hints'        => Services\ObjectHints::namespace(),
 				'summary'      => $args['summary'],
 				'perpage'      => 5,

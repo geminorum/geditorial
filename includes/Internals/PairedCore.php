@@ -286,11 +286,12 @@ trait PairedCore
 	 * @param object $post
 	 * @param string $before
 	 * @param string $after
+	 * @param bool $new_post
 	 * @param string $context
 	 * @param object $screen
 	 * @return void
 	 */
-	public function pointers_post_paired_posttype( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post_paired_posttype( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL )
 	{
 		if ( $new_post )
 			return;
@@ -344,7 +345,7 @@ trait PairedCore
 	 * @param object $screen
 	 * @return void
 	 */
-	public function pointers_post_paired_supported( $post, $before, $after, $new_post, $context, $screen )
+	public function pointers_post_paired_supported( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		if ( $new_post )
 			return;
@@ -379,7 +380,7 @@ trait PairedCore
 	 * @return array
 	 */
 	#[\Deprecated('USE `$this->hook_paired_tabloid_exclude_rendered()`')]
-	public function tabloid_view_data_for_post_paired_supported( $data, $post, $context )
+	public function tabloid_view_data_for_post_paired_supported( array $data, object $post, ?string $context ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
 			return $data;
@@ -574,6 +575,7 @@ trait PairedCore
 
 		$posttypes = $posttypes ?? $this->posttypes();
 
+		// @hook: `geditorial_paired_all_connected_to_args`
 		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), [
 
 			'posts_per_page' => -1,

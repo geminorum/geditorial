@@ -1117,7 +1117,7 @@ class Book extends gEditorial\Module
 
 			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
 			case 'publication_print'  : return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize
-			case 'collection'         : return Core\HTML::link( $raw, WordPress\URL::search( $raw ) );
+			case 'collection'         : return Core\Link::get( $raw, WordPress\URL::search( $raw ) );
 		}
 
 		return $meta;

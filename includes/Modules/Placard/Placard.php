@@ -463,7 +463,7 @@ class Placard extends gEditorial\Module
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'parent_post' ) )
 			return FALSE;
 
-		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $parent->ID, FALSE ) )
+		if ( ! $matches = WordPress\PostMeta::getID( $metakey, $parent->ID, FALSE ) )
 			return FALSE;
 
 		$posttype   = $this->constant( 'main_posttype' );
@@ -494,7 +494,7 @@ class Placard extends gEditorial\Module
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'display_location' ) )
 			return FALSE;
 
-		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $location, FALSE ) )
+		if ( ! $matches = WordPress\PostMeta::getID( $metakey, $location, FALSE ) )
 			return FALSE;
 
 		$posttype   = $this->constant( 'main_posttype' );

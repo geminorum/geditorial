@@ -91,10 +91,10 @@ class LineDiscovery extends gEditorial\Service
 
 			$discovered = apply_filters( self::und( static::BASE, 'linediscovery', 'data_for_post' ),
 				NULL,
-				$row,
+				(array) $row,
 				$queried['posttype'],
 				(bool) $queried['insert'],
-				$queried['raw']
+				// (array) $queried['raw'],
 			);
 
 			if ( is_null( $discovered ) )

@@ -184,7 +184,7 @@ class Calendars extends gEditorial\Service
 	// NOTE: may return empty calendar markup!
 	public static function exitICS(
 		mixed $events,
-		string|false $filename = FALSE,
+		false|string $filename = FALSE,
 		?string $context = NULL,
 	): never {
 

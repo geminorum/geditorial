@@ -182,7 +182,7 @@ class WcTracking extends gEditorial\Module
 		return $styles;
 	}
 
-	public function admin_order_data_after_shipping_address( $order )
+	public function admin_order_data_after_shipping_address( object $order ): void
 	{
 		if ( ! $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			return;
@@ -190,11 +190,11 @@ class WcTracking extends gEditorial\Module
 		echo $this->wrap_open( 'form-field form-field-wide -tracking' );
 			echo Core\HTML::img( $this->_service_icon(), '-before-icon' );
 			echo ' '._x( 'Tracking Package ID:', 'Action Title', 'geditorial-wc-tracking' );
-			echo ' '.Core\HTML::link( $tracking, $this->_service_url( $tracking ), TRUE );
+			echo ' '.Core\Link::get( $tracking, $this->_service_url( $tracking ), TRUE );
 		echo '</div>';
 	}
 
-	public function my_account_my_orders_actions( $actions, $order )
+	public function my_account_my_orders_actions( array $actions, object $order ): array
 	{
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			$actions[$this->classs( 'tracking' )] = [
@@ -205,7 +205,7 @@ class WcTracking extends gEditorial\Module
 		return $actions;
 	}
 
-	public function admin_order_actions_end( $order )
+	public function admin_order_actions_end( object $order ): void
 	{
 		if ( $tracking = $order->get_meta( $this->_tracking_metakey(), TRUE, 'edit' ) )
 			echo Core\HTML::tag( 'a', [

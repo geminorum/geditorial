@@ -19,7 +19,7 @@ trait PairedAdmin
 	 * @param int $priority
 	 * @return bool
 	 */
-	protected function paired__hook_screen_restrictposts( $check_role = FALSE, $priority = 10 )
+	protected function paired__hook_screen_restrictposts( null|bool|string $check_role = FALSE, int $priority = 10 ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -39,7 +39,8 @@ trait PairedAdmin
 		$this->filter_append( $this->hook_base( 'screen_restrict_taxonomies' ), $this->constant( $constants[1] ), $priority );
 
 		add_action( 'restrict_manage_posts',
-			function ( $posttype, $which ) use ( $constants ) {
+			function ( $posttype, $which )
+				use ( $constants ) {
 
 				$option   = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 				$taxonomy = $this->constant( $constants[1] );
@@ -50,7 +51,8 @@ trait PairedAdmin
 			}, $priority, 2 );
 
 		add_action( 'parse_query',
-			function ( &$query ) use ( $constants ) {
+			function ( &$query )
+				use ( $constants ) {
 
 				gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
 
@@ -61,7 +63,7 @@ trait PairedAdmin
 
 	// TODO: check capability
 	// OLD: `_hook_paired_tweaks_column_attr()`
-	protected function pairedadmin__hook_tweaks_column_connected( $posttype, $supported = NULL )
+	protected function pairedadmin__hook_tweaks_column_connected( string $posttype, ?array $supported = NULL ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -69,14 +71,14 @@ trait PairedAdmin
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( is_null( $supported ) )
-			$supported = $this->posttypes();
+		$supported ??= $this->posttypes();
 
 		if ( empty( $supported ) )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
-			function ( $post, $before, $after ) use ( $constants, $supported ) {
+		return add_action( $this->hook_base( 'tweaks', 'column_attr', $posttype ),
+			function ( $post, $before, $after )
+				use ( $constants, $supported ) {
 
 				if ( count( $supported ) > 1 ) {
 
@@ -124,12 +126,10 @@ trait PairedAdmin
 
 				echo $after;
 			}, 12, 3 );
-
-		return TRUE;
 	}
 
 	// TODO: add an advance version with modal for `multipaired` modules
-	protected function paired__hook_tweaks_column( $posttype, $priority = 10 )
+	protected function paired__hook_tweaks_column( string $posttype, int $priority = 10 ): bool
 	{
 		if ( ! $this->_paired )
 			return FALSE;
@@ -137,8 +137,9 @@ trait PairedAdmin
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
-			function ( $post, $before, $after, $module ) use ( $constants ) {
+		return add_action( $this->hook_base( 'tweaks', 'column_row', $posttype ),
+			function ( $post, $before, $after, $module )
+				use ( $constants ) {
 
 				if ( ! $items = $this->paired_all_connected_from( $post, 'columns' ) )
 					return;

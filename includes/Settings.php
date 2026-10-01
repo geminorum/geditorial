@@ -223,7 +223,7 @@ class Settings extends WordPress\Main
 
 			'buddypress'        ,   // BuddyPress
 			'bp-email'          ,   // BuddyPress
-			// 'product'           ,   // WooCommerce
+			// `'product'           ,   // WooCommerce`
 			'shop_order'        ,   // WooCommerce
 			'shop_coupon'       ,   // WooCommerce
 			'guest-author'      ,   // Co-Authors Plus
@@ -542,7 +542,7 @@ class Settings extends WordPress\Main
 	public static function headerTitle(
 		?string $context = NULL,
 		?string $title = NULL,
-		false|string|array|null $back = NULL,
+		false|null|string|array $back = NULL,
 		?string $to = NULL,
 		string|array|false $icon = '',
 		false|int $count = FALSE,
@@ -623,7 +623,7 @@ class Settings extends WordPress\Main
 		?string $uri = '',
 		?string $active = '',
 		array $subs = [],
-		string|false|null $heading = NULL,
+		null|false|string $heading = NULL,
 	): void {
 
 		echo '<div class="side-nav-wrap">';
@@ -740,27 +740,27 @@ class Settings extends WordPress\Main
 		return count( $extra ) ? ' ('.implode( WordPress\Strings::separator(), $extra ).')' : '';
 	}
 
-	public static function error( $message, $dismissible = TRUE )
+	public static function error( string $message, bool $dismissible = TRUE ): string
 	{
 		return Core\HTML::error( $message.self::messageExtra(), $dismissible );
 	}
 
-	public static function success( $message, $dismissible = TRUE )
+	public static function success( string $message, bool $dismissible = TRUE ): string
 	{
 		return Core\HTML::success( $message.self::messageExtra(), $dismissible );
 	}
 
-	public static function warning( $message, $dismissible = TRUE )
+	public static function warning( string $message, bool $dismissible = TRUE ): string
 	{
 		return Core\HTML::warning( $message.self::messageExtra(), $dismissible );
 	}
 
-	public static function info( $message, $dismissible = TRUE )
+	public static function info( string $message, bool $dismissible = TRUE ): string
 	{
 		return Core\HTML::info( $message.self::messageExtra(), $dismissible );
 	}
 
-	public static function getButtonConfirm( $message = NULL )
+	public static function getButtonConfirm( ?string $message = NULL ): array
 	{
 		return [ 'onclick' => sprintf(
 			'return confirm(\'%s\')',
@@ -768,7 +768,7 @@ class Settings extends WordPress\Main
 		) ];
 	}
 
-	public static function submitCheckBox( $name = 'submit', $text = '', $atts = [], $before = '', $after = '' )
+	public static function submitCheckBox( string $name = 'submit', string $text = '', array $atts = [], string $before = '', string $after = '' ): void
 	{
 		$id = Core\Text::sanitizeBase( $name );
 
@@ -784,13 +784,19 @@ class Settings extends WordPress\Main
 		echo $after;
 	}
 
-	// same as `submitButton()` but wraps in action array
-	public static function actionButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '' )
+	// NOTE: same as `submitButton()` but wraps in action array.
+	public static function actionButton( string $name = 'submit', ?string $text = NULL, bool|string $primary = FALSE, true|array $atts = [], string $after = '' ): void
 	{
-		return self::submitButton( sprintf( '%s[%s]', 'action', $name ), $text, $primary, $atts, $after );
+		self::submitButton(
+			sprintf( '%s[%s]', 'action', $name ),
+			$text,
+			$primary,
+			$atts,
+			$after,
+		);
 	}
 
-	public static function submitButton( $name = 'submit', $text = NULL, $primary = FALSE, $atts = [], $after = '' )
+	public static function submitButton( string $name = 'submit', ?string $text = NULL, bool|string $primary = FALSE, true|array $atts = [], string $after = '' ): void
 	{
 		$link    = FALSE;
 		$classes = [ '-button', 'button' ];
@@ -841,7 +847,7 @@ class Settings extends WordPress\Main
 			echo Core\HTML::tag( 'input', array_merge( $atts, [
 				'type'    => 'submit',
 				'name'    => $name,
-				// 'id'      => $name, // FIXME: must sanitize
+				// `'id'      => $name,` // FIXME: must sanitize
 				'value'   => $text,
 				'class'   => $classes,
 				'default' => TRUE === $primary,
@@ -850,13 +856,16 @@ class Settings extends WordPress\Main
 		echo $after;
 	}
 
-	public static function counted( $message = NULL, $count = NULL, $class = 'notice-success' )
+	public static function counted( ?string $message = NULL, null|int|string $count = NULL, string $class = 'notice-success' ): string
 	{
-		if ( is_null( $message ) )
-			/* translators: `%s`: count */
-			$message = _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' );
-
-		return Core\HTML::notice( sprintf( $message, Core\Number::format( $count ?? self::req( 'count', 0 ) ) ), $class.' fade' );
+		return Core\HTML::notice(
+			sprintf(
+				/* translators: `%s`: count */
+				$message ?? _x( '%s Counted!', 'Settings: Message', 'geditorial-admin' ),
+				Core\Number::format( $count ?? self::req( 'count', 0 ) )
+			),
+			$class.' fade',
+		);
 	}
 
 	public static function cheatin( ?string $message = NULL ): bool
@@ -2389,8 +2398,8 @@ class Settings extends WordPress\Main
 				'action',
 				'type',
 				'mime',
-				// 'taxonomy', // NOTE: passing back will help the dropdown on default selected
-				// 'metakey',  // NOTE: passing back will help the dropdown on default selected
+				// `'taxonomy',` // NOTE: passing back will help the dropdown on default selected
+				// `'metakey',`  // NOTE: passing back will help the dropdown on default selected
 				'message',
 				'paged',
 				'count',
@@ -2446,7 +2455,7 @@ class Settings extends WordPress\Main
 		int $per = 60,
 		?string $context = NULL,
 		?string $module = NULL,
-	): int|string|false {
+	): false|int|string {
 
 		if ( ! $module = $module ?? static::MODULE )
 			return FALSE;
@@ -2483,14 +2492,14 @@ class Settings extends WordPress\Main
 	}
 
 	// @ALSO `$this->do_settings_field()`
-	public static function fieldCurrentForm( $atts = [] ): mixed
+	public static function fieldCurrentForm( array $arguments = [] ): mixed
 	{
 		$field = array_merge( [
 			'cap'          => TRUE,
 			'option_base'  => self::hook(),
 			'option_group' => 'settings',
 			'id_name_cb'   => [ __CLASS__, 'settings_id_name_callback' ],
-		], $atts );
+		], $arguments );
 
 		$scripts = []; // FIXME: WTF: not handling scripts?!
 

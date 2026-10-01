@@ -1809,7 +1809,7 @@ class Importer extends gEditorial\Module
 
 			// avoid the search
 
-		} else if ( $matches = WordPress\PostType::getIDbyMeta( $this->constant( 'metakey_source_id' ), $source_id, FALSE ) ) {
+		} else if ( $matches = WordPress\PostMeta::getID( $this->constant( 'metakey_source_id' ), $source_id, FALSE ) ) {
 
 			foreach ( $matches as $match ) {
 

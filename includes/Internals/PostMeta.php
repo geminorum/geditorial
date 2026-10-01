@@ -11,7 +11,11 @@ trait PostMeta
 {
 	public function get_postmeta_key( string $field, ?string $prefix = NULL ): string
 	{
-		return sprintf( '_%s_%s', $prefix ?? $this->key, $field );
+		return sprintf( '_%s_%s',
+			/** @disregard */
+			$prefix ?? $this->key,
+			$field,
+		);
 	}
 
 	public function get_postmeta_field( false|int $post_id, string $field, mixed $default = FALSE, ?string $prefix = NULL, ?string $meta_key = NULL ): mixed
@@ -52,7 +56,8 @@ trait PostMeta
 	{
 		global $gEditorialPostMetaLegacy;
 
-		$meta_key = $meta_key ?? $this->meta_key;
+		/** @disregard */
+		$meta_key ??= $this->meta_key;
 
 		if ( ! isset( $gEditorialPostMetaLegacy[$post_id][$meta_key] ) )
 			$gEditorialPostMetaLegacy[$post_id][$meta_key] = $this->fetch_postmeta( $post_id, $default, $meta_key );
@@ -64,8 +69,9 @@ trait PostMeta
 	{
 		global $gEditorialPostMetaLegacy;
 
-		$meta_key = $meta_key ?? $this->meta_key;
-		$legacy   = $legacy   ?? $this->get_postmeta_legacy( $post_id, [], $meta_key );
+		/** @disregard */
+		$meta_key ??= $this->meta_key;
+		$legacy   ??= $this->get_postmeta_legacy( $post_id, [], $meta_key );
 
 		foreach ( $fields as $field => $args )
 			foreach ( $this->sanitize_postmeta_field_key( $field ) as $field_key )
@@ -97,7 +103,8 @@ trait PostMeta
 
 	public function store_postmeta( int $post_id, mixed $data, ?string $meta_key = NULL ): bool
 	{
-		$meta_key = $meta_key ?? $this->meta_key; // back-comp
+		/** @disregard */
+		$meta_key ??= $this->meta_key; // back-comp
 
 		if ( empty( $data ) )
 			return delete_post_meta( $post_id, $meta_key );
@@ -110,10 +117,10 @@ trait PostMeta
 		if ( ! $post_id )
 			return $default;
 
-		$meta_key = $meta_key ?? $this->meta_key; // back-comp
-		$data     = get_metadata( 'post', $post_id, $meta_key, TRUE );
+		/** @disregard */
+		$meta_key ??= $this->meta_key; // back-comp
 
-		return $data ?: $default;
+		return get_metadata( 'post', $post_id, $meta_key, TRUE ) ?: $default;
 	}
 
 	protected function postmeta__hook_meta_column_row(
@@ -169,7 +176,13 @@ trait PostMeta
 			if ( ! $value = $this->get_postmeta_field( $post->ID, $field_key, FALSE, $module_name ) )
 				continue;
 
-			printf( $before, sprintf( '-%s -%s-%s', $this->module->name, $module_name, $field_key ) );
+			printf( $before, sprintf( '-%s -%s-%s',
+				/** @disregard */
+				$this->module->name,
+				$module_name,
+				$field_key,
+			) );
+
 				echo $this->get_column_icon( FALSE, $field['icon'], $field['title'] );
 				echo $this->prep_meta_row( $value, $field_key, $field, $value );
 			echo $after;

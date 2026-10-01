@@ -18,7 +18,7 @@ trait MetaBoxMain
 		string|array $extra = [],
 	): false|string {
 
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		if ( ! empty( $screen->post_type ) && method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
 			add_action( self::und( 'save_post', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
@@ -103,7 +103,7 @@ trait MetaBoxMain
 		?object $screen = NULL,
 	): void {
 
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		gEditorial\MetaBox::fieldPostMenuOrder( $object );
 		gEditorial\MetaBox::fieldPostParent( $object );

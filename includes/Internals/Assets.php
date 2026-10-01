@@ -54,7 +54,7 @@ trait Assets
 	// NOTE: each script must have a `.min` version
 	public function enqueue_asset_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL ): string
 	{
-		$key = $key ?? $this->key;
+		$key ??= $this->key;
 
 		if ( is_null( $name ) )
 			$name = $key;

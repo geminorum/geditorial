@@ -111,17 +111,17 @@ trait MainDownload
 			: (int) $filesize;
 	}
 
-	protected function maindownload__override_loop_before()
+	protected function maindownload__override_loop_before(): void
 	{
 		add_filter( 'post_type_link', [ $this, 'maindownload__override_posttype_link' ], 9999, 4 );
 	}
 
-	protected function maindownload__override_loop_after()
+	protected function maindownload__override_loop_after(): void
 	{
 		remove_filter( 'post_type_link', [ $this, 'maindownload__override_posttype_link' ], 9999 );
 	}
 
-	public function maindownload__override_posttype_link( $post_link, $post, $leavename, $sample )
+	public function maindownload__override_posttype_link( string $post_link, object $post, $leavename, $sample ): string
 	{
 		if ( ! $this->maindownload__posttype_supported( $post->post_type ) )
 			return $post_link;
@@ -133,7 +133,7 @@ trait MainDownload
 	}
 
 	// NOTE: overrides
-	protected function maindownload__posttype_supported( $posttype )
+	protected function maindownload__posttype_supported( string $posttype ): bool
 	{
 		return TRUE;
 	}

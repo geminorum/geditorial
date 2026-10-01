@@ -654,7 +654,7 @@ class Tweaks extends gEditorial\Module
 			case $this->classs( 'id' ):
 
 				echo '<div class="geditorial-admin-wrap-column -tweaks -id">';
-					echo Core\HTML::link( $post_id, WordPress\Post::shortlink( $post_id ), TRUE );
+					echo Core\Link::get( $post_id, WordPress\Post::shortlink( $post_id ), TRUE );
 				echo '</div>';
 		}
 	}

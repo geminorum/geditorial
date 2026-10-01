@@ -409,7 +409,7 @@ class People extends gEditorial\Module
 	public function prep_individual_admin( string $individual, string $raw, mixed $value )
 	{
 		if ( $link = WordPress\URL::searchAdminTerm( $individual, $this->constant( 'main_taxonomy' ) ) )
-			return Core\HTML::link( $individual, $link, TRUE );
+			return Core\Link::get( $individual, $link, TRUE );
 
 		return $individual;
 	}

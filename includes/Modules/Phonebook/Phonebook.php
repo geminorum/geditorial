@@ -319,7 +319,7 @@ class Phonebook extends gEditorial\Module
 
 		$this->filter( 'searchselect_result_extra_for_post', 3, 32, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
-		$this->filter( 'linediscovery_data_for_post', 5, 12, FALSE, $this->base );
+		$this->filter( 'linediscovery_data_for_post', 4, 12, FALSE, $this->base );
 
 		if ( $this->get_setting( 'frontend_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
@@ -590,7 +590,7 @@ class Phonebook extends gEditorial\Module
 				continue;
 
 			foreach ( $this->_get_phone_fields( $posttype ) as $field => $metakey )
-				if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $phone, FALSE ) )
+				if ( $matches = WordPress\PostMeta::getID( $metakey, $phone, FALSE ) )
 					foreach ( $matches as $match )
 						if ( $posttype === get_post_type( intval( $match ) ) )
 							return intval( $match );
@@ -599,7 +599,7 @@ class Phonebook extends gEditorial\Module
 		return $null;
 	}
 
-	public function linediscovery_data_for_post( $discovered, $row, $posttypes, $insert, $raw )
+	public function linediscovery_data_for_post( mixed $discovered, array $row, array $posttypes, bool $insert ): mixed
 	{
 		if ( ! is_null( $discovered ) )
 			return $discovered;

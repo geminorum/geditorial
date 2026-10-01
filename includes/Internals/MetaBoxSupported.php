@@ -20,7 +20,7 @@ trait MetaBoxSupported
 		string|array $extra = [],
 	): false|string {
 
-		$context  = $context ?? 'supportedbox';
+		$context  ??= 'supportedbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box )
 			use ( $context, $screen ) {
@@ -80,7 +80,7 @@ trait MetaBoxSupported
 		string|array $extra = [],
 	): false|string {
 
-		$context  = $context ?? 'supportedbox';
+		$context  ??= 'supportedbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box )
 			use ( $context, $screen ) {
@@ -140,8 +140,8 @@ trait MetaBoxSupported
 		?object $screen = NULL,
 	): void {
 
-		$context = $context ?? 'supportedbox';
-		$screen  = $screen  ?? get_current_screen();
+		$context ??= 'supportedbox';
+		$screen  ??= get_current_screen();
 
 		if ( 'post' === $screen->base )
 			$action_context = self::und( $context, $object->post_type );

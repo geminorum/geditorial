@@ -202,7 +202,7 @@ class Headings extends gEditorial\Module
 			Core\HTML::menu( $tree, static function ( $item ) {
 
 				if ( FALSE === $item['page'] )
-					return Core\HTML::link( $item['title'], '#'.$item['slug'] );
+					return Core\Link::get( $item['title'], '#'.$item['slug'] );
 
 				return rtrim( _wp_link_page( $item['page'] ), '">' )
 					.'#'.$item['slug'].'">'.$item['title'].'</a>';

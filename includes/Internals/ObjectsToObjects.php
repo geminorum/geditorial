@@ -15,14 +15,14 @@ trait ObjectsToObjects
 		if ( ! $from = $this->constant( $constant ) )
 			return FALSE;
 
-		$context   = $context   ?? 'o2o';
-		$posttypes = $posttypes ?? $this->get_setting_posttypes( $context );
+		$context   ??= 'o2o';
+		$posttypes ??= $this->get_setting_posttypes( $context );
 
 		if ( ! $posttypes )
 			return FALSE;
 
 		$name = $this->constant( self::und( $constant, $context ), self::und( $from, $context ) );
-		$pre  = $extra ?? ( $this->strings[$context][$constant] ?? [] );
+		$pre  = $extra ?? $this->strings[$context][$constant] ?? [];
 
 		$args = apply_filters( $this->hook( $from, $context, 'args' ), array_merge( [
 			'title' => _x( 'Connected Posts', 'O2O: MetaBox Title', 'geditorial-admin' ),
@@ -60,7 +60,7 @@ trait ObjectsToObjects
 	// @REF: https://github.com/scribu/wp-posts-to-posts/wiki
 	protected function o2o_register_Legacy( string $constant, null|string|array $posttypes = NULL ): bool|string
 	{
-		if ( ! $posttypes = $posttypes ?? $this->posttypes() )
+		if ( ! $posttypes ??= $this->posttypes() )
 			return FALSE;
 
 		$to  = $this->constant( $constant );
@@ -93,7 +93,7 @@ trait ObjectsToObjects
 		if ( ! $o2o || is_admin() )
 			return FALSE;
 
-		$context = $context ?? 'o2o';
+		$context ??= 'o2o';
 
 		if ( $this->get_setting( self::und( $context, 'insert_content' ) ) )
 			add_action( $this->hook_base( 'content', 'after' ),

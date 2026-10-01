@@ -703,7 +703,7 @@ class Module extends WordPress\Module
 		int $count = 1,
 		int $per = 60,
 		?string $context = NULL,
-	): int|string|false {
+	): false|int|string {
 
 		gEditorial()->disable_process( 'audit', $context ?? 'import' );
 		gEditorial()->disable_process( 'personage', 'aftercare' );

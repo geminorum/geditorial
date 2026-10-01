@@ -109,8 +109,8 @@ class ListRenderer extends Core\Base
 			return ob_get_clean();
 	}
 
-	private static function render_item( $item )
+	private static function render_item( object $item ): string
 	{
-		return Core\HTML::link( $item->get_title(), $item->get_permalink() );
+		return Core\Link::get( $item->get_title(), $item->get_permalink() );
 	}
 }

@@ -472,7 +472,7 @@ class NationalLibrary extends gEditorial\Module
 					if ( ! $metakey = $this->_get_posttype_bib_metakey( $posttype ) )
 						continue;
 
-					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $bib ) )
+					if ( ! $post_id = WordPress\PostMeta::getID( $metakey, $bib ) )
 						return;
 
 					if ( ! $post = WordPress\Post::get( $post_id ) )

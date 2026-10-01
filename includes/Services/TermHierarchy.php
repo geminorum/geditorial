@@ -128,11 +128,12 @@ class TermHierarchy extends gEditorial\Service
 			}, 12, 2 );
 
 		add_action( 'bulk_edit_custom_box',
-			static function ( $column, $current ) use ( $posttype, $taxonomies ) {
+			static function ( $column, $current_posttype )
+				use ( $posttype, $taxonomies ) {
 
 				static $added = FALSE;
 
-				if ( $added || $current !== $posttype )
+				if ( $added || $current_posttype !== $posttype )
 					return;
 
 				// NOTE: different context

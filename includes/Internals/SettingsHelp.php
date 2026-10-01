@@ -66,7 +66,7 @@ trait SettingsHelp
 
 		$link   = WordPress\Taxonomy::edit( $object );
 		$before = Core\HTML::tag( 'p', $title );
-		$after  = Core\HTML::tag( 'p', Core\HTML::link( $edit, $link, TRUE ) );
+		$after  = Core\HTML::tag( 'p', Core\Link::get( $edit, $link, TRUE ) );
 		$args   = [
 			'title' => $object->label,
 			'id'    => $this->classs( 'help-default-terms', '-'.$object->name ),

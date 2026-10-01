@@ -226,7 +226,7 @@ trait AdminPage
 	protected function render_adminpage_header_title(
 		?string $title = NULL,
 		false|array|null $links = NULL,
-		string|array|null $icon = NULL,
+		null|string|array $icon = NULL,
 		?string $context = NULL
 	): void {
 

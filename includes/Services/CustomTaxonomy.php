@@ -186,7 +186,7 @@ class CustomTaxonomy extends gEditorial\Service
 				if ( ! $edit = WordPress\Taxonomy::edit( $object ) )
 					return $html;
 
-				return Core\HTML::link( $html, $edit, TRUE );
+				return Core\Link::get( $html, $edit, TRUE );
 
 			case 'desc':
 			case 'description':

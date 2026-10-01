@@ -172,7 +172,7 @@ class MetaBox extends WordPress\Main
 
 		} else {
 
-			// $terms = WordPress\Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );
+			// `$terms = WordPress\Taxonomy::getTerms( $args['taxonomy'], FALSE, TRUE );`
 			$terms = WordPress\Taxonomy::listTerms( $args['taxonomy'], 'all' );
 		}
 
@@ -412,7 +412,7 @@ class MetaBox extends WordPress\Main
 	// TODO: move to `WordPress\MetaBox`
 	public static function getChildrenPosts(
 		mixed $post,
-		string|array|null $posttypes = NULL,
+		null|string|array $posttypes = NULL,
 		string|bool $title = FALSE,
 		int $current = 0,
 		array $exclude = []
@@ -459,7 +459,7 @@ class MetaBox extends WordPress\Main
 	public static function getTermPosts(
 		string $taxonomy,
 		int|object $term,
-		string|array|null $posttypes = NULL,
+		null|string|array $posttypes = NULL,
 		string|bool $title = FALSE,
 		int $current = 0,
 		array $exclude = []
@@ -514,8 +514,8 @@ class MetaBox extends WordPress\Main
 
 	public static function fieldEmptyTaxonomy(
 		string|object $taxonomy,
-		string|false|null $edit = NULL,
-		string|false $posttype = FALSE,
+		null|false|string $edit = NULL,
+		false|string $posttype = FALSE,
 		bool $echo = TRUE
 	): bool|string {
 
@@ -771,7 +771,7 @@ class MetaBox extends WordPress\Main
 		bool $check = TRUE,
 		?string $name = NULL,
 		?string $posttype = NULL,
-		string|array|null $statuses = NULL,
+		null|string|array $statuses = NULL,
 	): void {
 
 		// NOTE: allows for a parent of different type
@@ -858,7 +858,7 @@ class MetaBox extends WordPress\Main
 	public static function dropdownPostTaxonomy(
 		string|object $taxonomy,
 		object $post,
-		string|false $key = FALSE,
+		false|string $key = FALSE,
 		bool $show_count = TRUE,
 		string $excludes = '',
 		string|int $default = '0',
@@ -885,8 +885,8 @@ class MetaBox extends WordPress\Main
 			'class'             => self::dsh( static::BASE, 'admin', 'dropbown' ),
 			'id'                => self::dsh( static::BASE, $taxonomy ),
 			'name'              => 'tax_input['.$taxonomy.'][]',
-			// 'name'              => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),
-			// 'id'                => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),
+			// `'name'              => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '['.$key.']' ),`
+			// `'id'                => static::BASE.'-'.$taxonomy.( FALSE === $key ? '' : '-'.$key ),`
 			'hierarchical'      => $obj->hierarchical,
 			'orderby'           => 'name',
 			'show_count'        => $show_count,
@@ -1366,7 +1366,7 @@ class MetaBox extends WordPress\Main
 
 				// NOTE: CAUTION: module must enqueue `wp-color-picker` styles/scripts
 				// @SEE: `Scripts::enqueueColorPicker()`
-				// $scripts[] = '$("#'.$id.'").wpColorPicker();';
+				// `$scripts[] = '$("#'.$id.'").wpColorPicker();';`
 
 				break;
 
@@ -1374,7 +1374,7 @@ class MetaBox extends WordPress\Main
 
 				$atts['dir']     = 'ltr';
 				$atts['type']    = 'email';
-				$atts['pattern'] = $atts['pattern'] ?? Core\Email::getHTMLPattern();
+				$atts['pattern'] ??= Core\Email::getHTMLPattern();
 
 				$atts['data']['validator'] = 'email';
 
@@ -1405,7 +1405,7 @@ class MetaBox extends WordPress\Main
 			case 'isbn':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\ISBN::getHTMLPattern();
+				$atts['pattern'] ??= Core\ISBN::getHTMLPattern();
 
 				$atts['data']['validator'] = 'isbn';
 
@@ -1417,7 +1417,7 @@ class MetaBox extends WordPress\Main
 			case 'vin':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getVINHTMLPattern();
+				$atts['pattern'] ??= Core\Validation::getVINHTMLPattern();
 
 				$atts['data']['validator'] = 'vin';
 
@@ -1429,7 +1429,7 @@ class MetaBox extends WordPress\Main
 			case 'plate':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getPlateHTMLPattern();
+				$atts['pattern'] ??= Core\Validation::getPlateHTMLPattern();
 
 				$atts['data']['validator'] = 'plate';
 
@@ -1441,7 +1441,7 @@ class MetaBox extends WordPress\Main
 			case 'iban':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getIBANHTMLPattern();
+				$atts['pattern'] ??= Core\Validation::getIBANHTMLPattern();
 
 				$atts['data']['validator'] = 'iban';
 
@@ -1453,7 +1453,7 @@ class MetaBox extends WordPress\Main
 			case 'bankcard':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\Validation::getCardNumberHTMLPattern();
+				$atts['pattern'] ??= Core\Validation::getCardNumberHTMLPattern();
 
 				$atts['data']['validator'] = 'bankcard';
 
@@ -1467,7 +1467,7 @@ class MetaBox extends WordPress\Main
 				// @REF: https://community.bitwarden.com/t/never-autofill-social-security-number/17900
 				$atts['autocomplete'] = 'off';
 				$atts['dir']          = 'ltr';
-				$atts['pattern']      = $atts['pattern'] ?? Core\Validation::getIdentityNumberHTMLPattern();
+				$atts['pattern']      ??= Core\Validation::getIdentityNumberHTMLPattern();
 
 				$atts['data']['validator'] = 'identity';
 
@@ -1512,8 +1512,8 @@ class MetaBox extends WordPress\Main
 		$wrap  = [ 'field-wrap', '-inputnumber' ];
 		$label = FALSE;
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
 			'type'         => 'number',
@@ -1524,7 +1524,7 @@ class MetaBox extends WordPress\Main
 			'pattern'      => $args['pattern'] ?? FALSE,
 			'size'         => $args['data_length'] ?? FALSE,
 			'autocomplete' => $args['autocomplete'] ?? FALSE,
-			// 'placeholder' => $args['title'],
+			// `'placeholder' => $args['title'],`
 			'class'       => [
 				'form-control',
 				self::dsh( static::BASE, 'inputnumber' ),
@@ -1550,6 +1550,7 @@ class MetaBox extends WordPress\Main
 			case 'float'    :
 
 				if ( empty( $args['pattern'] ) )
+					// TODO: move up pattern to `Core\Number`
 					// $args['pattern'] = 'fa_IR' === self::const( 'GNETWORK_WPLANG' )
 					// 	? '[0-9۰-۹]*[.,]?[0-9۰-۹]*'
 					// 	: '[0-9]*[.,]?[0-9]*';

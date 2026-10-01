@@ -211,7 +211,7 @@ class Team extends gEditorial\Module
 				if ( 'export' === $context )
 					return trim( $raw ?: $value );
 
-				return Core\HTML::link( $raw ?: $value );
+				return Core\Link::get( $raw ?: $value );
 		}
 
 		return $value;

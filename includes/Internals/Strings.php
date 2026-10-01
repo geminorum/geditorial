@@ -11,9 +11,9 @@ trait Strings
 {
 	public function get_string(
 		string $string,
-		string|false $subgroup = 'post',
+		false|string $subgroup = 'post',
 		string $group = 'titles',
-		string|false|null $fallback = FALSE,
+		null|false|string $fallback = FALSE,
 		bool $moveup = TRUE,
 	): null|false|string {
 
@@ -34,9 +34,9 @@ trait Strings
 
 	// NOTE: merge numeric keys will rearrange them!
 	public function get_strings(
-		string|false $subgroup,
+		false|string $subgroup,
 		string $group = 'titles',
-		array|false|null $fallback = [],  // NOTE: fallback will merge if is an array
+		null|false|array $fallback = [],  // NOTE: fallback will merge if is an array
 		bool $moveup = FALSE,             // NOTE: `moveup` is FALSE by default
 	): null|false|array {
 
@@ -71,11 +71,13 @@ trait Strings
 
 		if ( ! empty( $this->strings['labels'][$constant]['name'] ) )
 			$noop['plural'] = $this->strings['labels'][$constant]['name'];
+
 		else
 			$noop['plural'] = Core\L10n::pluralize( $constant );
 
 		if ( ! empty( $this->strings['labels'][$constant]['singular_name'] ) )
 			$noop['singular'] = $this->strings['labels'][$constant]['singular_name'];
+
 		else
 			$noop['singular'] = $constant;
 
@@ -95,8 +97,8 @@ trait Strings
 		?string $context = 'default',
 		?string $default = NULL,
 		mixed $post = NULL,
-		string|false $prop = 'empty',
-		string|false $group = 'metabox',
+		false|string $prop = 'empty',
+		false|string $group = 'metabox',
 	): string {
 
 		if ( is_null( $default ) ) {
@@ -123,8 +125,8 @@ trait Strings
 		?string $context = 'default',
 		?string $default = NULL,
 		mixed $post = NULL,
-		string|false $prop = 'title',
-		string|false $group = 'metabox',
+		false|string $prop = 'title',
+		false|string $group = 'metabox',
 	): string {
 
 		if ( is_null( $default ) ) {
@@ -189,8 +191,8 @@ trait Strings
 		?string $context = 'default',
 		?string $default = NULL,
 		mixed $term = NULL,
-		string|false $prop = 'title',
-		string|false $group = 'metabox',
+		false|string $prop = 'title',
+		false|string $group = 'metabox',
 	): string {
 
 		if ( is_null( $default ) ) {

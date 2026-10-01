@@ -1066,7 +1066,7 @@ class Config extends gEditorial\Module
 			Core\HTML::desc( sprintf(
 				/* translators: `%s`: user link placeholder */
 				_x( 'Editorial Site User Is %s', 'Config: Message', 'geditorial-admin' ),
-				$edit ? Core\HTML::link( $name, $edit, TRUE ) : $name
+				$edit ? Core\Link::get( $name, $edit, TRUE ) : $name
 			) );
 
 		} else {

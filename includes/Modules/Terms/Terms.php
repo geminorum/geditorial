@@ -1193,7 +1193,7 @@ class Terms extends gEditorial\Module
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-					$html.= Core\HTML::link(
+					$html.= Core\Link::get(
 						Core\HTML::getDashicon( 'admin-site-alt3', $meta, '-icon-'.$field ),
 						Services\Lookup::linkLatLng( $meta ), TRUE
 					).'</span>';
@@ -1468,7 +1468,7 @@ class Terms extends gEditorial\Module
 					];
 
 					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">';
-						$html.= Core\HTML::link(
+						$html.= Core\Link::get(
 							Core\HTML::getDashicon(
 								$icons[$field],
 								Core\URL::prepTitle( $meta ),
@@ -3153,7 +3153,7 @@ class Terms extends gEditorial\Module
 			return;
 
 		if ( $meta = get_term_meta( $term->term_id, $this->get_supported_metakey( $field, $term->taxonomy ), TRUE ) )
-			echo Core\HTML::wrap( Core\HTML::link( $title, $meta, TRUE ), '-term-'.$field );
+			echo Core\HTML::wrap( Core\Link::get( $title, $meta, TRUE ), '-term-'.$field );
 	}
 
 	// NOTE: `timespan` only if taxonomy supported.

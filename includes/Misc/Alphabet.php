@@ -122,7 +122,7 @@ class Alphabet extends Core\Base
 	 */
 	public static function sort(
 		array $array,
-		string|array|null $orderby = NULL,
+		null|string|array $orderby = NULL,
 		string $order = 'ASC',
 		bool $preserve_keys = FALSE,
 		?string $locale = NULL,

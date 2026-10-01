@@ -128,7 +128,7 @@ class Locations extends gEditorial\Service
 			return $item;
 
 		if ( $link = WordPress\URL::search( $item ) )
-			return Core\HTML::link( $item, $link );
+			return Core\Link::get( $item, $link );
 
 		return $item;
 	}

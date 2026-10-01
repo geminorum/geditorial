@@ -35,7 +35,7 @@ class SystemHelp extends gEditorial\Service
 		$html = '';
 
 		foreach ( $list as $link )
-			$html.= '<li>'.Core\HTML::link( $link['title'], $link['url'], TRUE ).'</li>';
+			$html.= '<li>'.Core\Link::get( $link['title'], $link['url'], TRUE ).'</li>';
 
 		return $html ? Core\HTML::wrap( '<ul>'.$html.'</ul>', '-help-sidebar' ) : FALSE;
 	}

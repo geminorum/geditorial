@@ -11,14 +11,14 @@ trait MetaBoxList
 {
 	protected function _hook_children_listbox(
 		object $screen,
-		string|array|null $posttypes = NULL,
+		null|string|array $posttypes = NULL,
 		?string $context = NULL,
 		?string $metabox_context = NULL,
 		string|array $extra = [],
 	): false|string {
 
-		$context   = $context   ?? 'listbox';
-		$posttypes = $posttypes ?? $this->posttypes();
+		$context   ??= 'listbox';
+		$posttypes ??= $this->posttypes();
 		$metabox   = $this->classs( $context );
 
 		$callback = function ( $post, $box )
@@ -89,7 +89,7 @@ trait MetaBoxList
 		?object $screen = NULL,
 	): void {
 
-		$context = $context ?? 'listbox';
+		$context ??= 'listbox';
 
 		// WTF?!
 	}

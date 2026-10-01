@@ -73,11 +73,11 @@ class Template extends WordPress\Main
 
 	public static function termImageCallback(
 		string $image,
-		string|false $link,
+		false|string $link,
 		array $args,
 		string $status,
-		string|false|null $title,
-		string|false|null $module
+		null|false|string $title,
+		null|false|string $module
 	): false|string {
 
 		if ( ! $image )
@@ -97,10 +97,10 @@ class Template extends WordPress\Main
 			$caption = trim( ( $args['caption_text'] ?: $title ) );
 
 			if ( WordPress\Strings::isTruthy( $args['caption_link'] ) && $link )
-				$caption = Core\HTML::link( $caption, $link );
+				$caption = Core\Link::get( $caption, $link );
 
 			else if ( $args['caption_link'] )
-				$caption = Core\HTML::link( $caption, $args['caption_link'] );
+				$caption = Core\Link::get( $caption, $args['caption_link'] );
 
 			$html = '<figure'.( WordPress\Strings::isTruthy( args['figure'] ) ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
@@ -313,10 +313,10 @@ class Template extends WordPress\Main
 		if ( $title && $args['figure'] ) {
 
 			if ( WordPress\Strings::isTruthy( $args['caption_link'] ) && $link )
-				$caption = Core\HTML::link( $title, $link );
+				$caption = Core\Link::get( $title, $link );
 
 			else if ( $args['caption_link'] )
-				$caption = Core\HTML::link( $title, $args['caption_link'] );
+				$caption = Core\Link::get( $title, $args['caption_link'] );
 
 			else
 				$caption = $title;
@@ -613,25 +613,25 @@ class Template extends WordPress\Main
 					$html = WordPress\ShortCode::tag( 'raw', [
 						'context' => $context,
 						'url'     => $meta,
-					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+					], Core\Link::get( Core\URL::prepTitle( $meta ), $meta ) );
 
 				else if ( 'text/csv' === $file['type'] )
 					$html = WordPress\ShortCode::tag( 'csv', [
 						'context' => $context,
 						'url'     => $meta,
-					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+					], Core\Link::get( Core\URL::prepTitle( $meta ), $meta ) );
 
 				else if ( 'application/pdf' === $file['type'] )
 					$html = WordPress\ShortCode::tag( 'pdf', [
 						'context' => $context,
 						'url'     => $meta,
-					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+					], Core\Link::get( Core\URL::prepTitle( $meta ), $meta ) );
 
 				else if ( 'text/markdown' === $file['type'] )
 					$html = WordPress\ShortCode::tag( 'markdown', [
 						'context' => $context,
 						'url'     => $meta,
-					], Core\HTML::link( Core\URL::prepTitle( $meta ), $meta ) );
+					], Core\Link::get( Core\URL::prepTitle( $meta ), $meta ) );
 
 				else
 					$html = Core\HTML::tag( 'a', [
@@ -649,7 +649,7 @@ class Template extends WordPress\Main
 				$html = WordPress\ShortCode::tag( 'raw', [
 					'context' => $context,
 					'url'     => $meta,
-				], Core\HTML::link( _x( 'Plain Text', 'Template: File Label', 'geditorial' ), $meta ) );
+				], Core\Link::get( _x( 'Plain Text', 'Template: File Label', 'geditorial' ), $meta ) );
 
 				break;
 
@@ -659,7 +659,7 @@ class Template extends WordPress\Main
 				$html = WordPress\ShortCode::tag( 'csv', [
 					'context' => $context,
 					'url'     => $meta,
-				], Core\HTML::link( _x( 'CSV Data', 'Template: File Label', 'geditorial' ), $meta ) );
+				], Core\Link::get( _x( 'CSV Data', 'Template: File Label', 'geditorial' ), $meta ) );
 
 				break;
 
@@ -669,7 +669,7 @@ class Template extends WordPress\Main
 				$html = WordPress\ShortCode::tag( 'pdf', [
 					'context' => $context,
 					'url'     => $meta,
-				], Core\HTML::link( _x( 'PDF Document', 'Template: File Label', 'geditorial' ), $meta ) );
+				], Core\Link::get( _x( 'PDF Document', 'Template: File Label', 'geditorial' ), $meta ) );
 
 				break;
 
@@ -679,7 +679,7 @@ class Template extends WordPress\Main
 				$html = WordPress\ShortCode::tag( 'markdown', [
 					'context' => $context,
 					'url'     => $meta,
-				], Core\HTML::link( _x( 'Markdown Text', 'Template: File Label', 'geditorial' ), $meta ) );
+				], Core\Link::get( _x( 'Markdown Text', 'Template: File Label', 'geditorial' ), $meta ) );
 
 				break;
 
@@ -1176,7 +1176,7 @@ class Template extends WordPress\Main
 
 	public static function renderRecentByPosttype(
 		string|object $posttype,
-		string|false $link = 'view',
+		false|string $link = 'view',
 		mixed $empty = NULL,
 		?string $title_attr = NULL,
 		array $extra = [],

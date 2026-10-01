@@ -31,7 +31,7 @@ class Statuses extends gEditorial\Module
 			'access'   => 'beta',
 			'disabled' => class_exists( 'WP_Statuses' )
 				? FALSE
-				: Core\HTML::link(
+				: Core\Link::get(
 					_x( 'Needs WP Statuses', 'Modules: Statuses', 'geditorial-admin' ),
 					'https://github.com/imath/wp-statuses',
 					TRUE

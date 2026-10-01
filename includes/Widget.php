@@ -258,7 +258,7 @@ class Widget extends \WP_Widget
 			$title = Core\HTML::img( $instance['title_image'], '-title-image', $title );
 
 		if ( ! empty( $instance['title_link'] ) )
-			$title = Core\HTML::link( $title, $instance['title_link'] );
+			$title = Core\Link::get( $title, $instance['title_link'] );
 
 		$html = $args['before_title'].$title.$args['after_title'];
 

@@ -175,7 +175,7 @@ class Recount extends gEditorial\Module
 		);
 
 		// WTF: must print here, weird bug on category tax!
-		echo ( $edit ? Core\HTML::link( $html, $edit, TRUE ) : $html );
+		echo ( $edit ? Core\Link::get( $html, $edit, TRUE ) : $html );
 	}
 
 	public function taxonomy_bulk_actions( array $actions, string $taxonomy ): array

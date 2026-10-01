@@ -326,7 +326,7 @@ class Modified extends gEditorial\Module
 		);
 
 		return gEditorial\ShortCode::wrap(
-			$args['link'] ? Core\HTML::link( $html, $args['link'] ) : $html,
+			$args['link'] ? Core\Link::get( $html, $args['link'] ) : $html,
 			$this->constant( 'post_modified_shortcode' ),
 			$args,
 			FALSE
@@ -406,7 +406,7 @@ class Modified extends gEditorial\Module
 		);
 
 		return gEditorial\ShortCode::wrap(
-			$args['link'] ? Core\HTML::link( $html, $args['link'] ) : $html,
+			$args['link'] ? Core\Link::get( $html, $args['link'] ) : $html,
 			$this->constant( 'site_modified_shortcode' ),
 			$args,
 			FALSE

@@ -684,7 +684,7 @@ class Attachments extends gEditorial\Module
 
 		$actions = [
 			// FIXME: must add ajax
-			// 'override-name' => Core\HTML::link( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
+			// 'override-name' => Core\Link::get( _x( 'Override Name', 'Table Action', 'geditorial-attachments' ) ),
 
 			// rename filenames
 			// move filenames

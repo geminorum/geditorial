@@ -671,7 +671,7 @@ class Audit extends gEditorial\Module
 		int $count = 1,
 		int $per = 60,
 		?string $context = NULL,
-	): int|string|false {
+	): false|int|string {
 
 		WordPress\Taxonomy::disableTermCounting();
 		Services\LateChores::termCountCollect();

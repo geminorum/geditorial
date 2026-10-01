@@ -91,7 +91,7 @@ class Contacts extends gEditorial\Service
 			);
 
 		else if ( Core\URL::isValid( $value ) )
-			$prepared = Core\HTML::link(
+			$prepared = Core\Link::get(
 				$icon ? Icons::get( [ 'misc-16', 'link-45deg' ] ) : Core\URL::prepTitle( $value ),
 				$value,
 				TRUE

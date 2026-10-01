@@ -70,7 +70,7 @@ abstract class Column
 		$links = [];
 
 		foreach ( $this->connected[$item_id] as $item )
-			$links[] = Core\HTML::link( $item->get_title(), $this->get_admin_link( $item ) );
+			$links[] = Core\Link::get( $item->get_title(), $this->get_admin_link( $item ) );
 
 		return Core\HTML::rows( $links );
 	}

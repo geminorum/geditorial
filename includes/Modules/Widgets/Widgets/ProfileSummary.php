@@ -55,7 +55,7 @@ class ProfileSummary extends gEditorial\Widget
 				echo '<li class="-row -url list-group-item">';
 					gEditorial\Info::renderIcon( 'url' );
 					echo ' ';
-					echo Core\HTML::link( Core\URL::prepTitle( $user->user_url ), $user->user_url );
+					echo Core\Link::get( Core\URL::prepTitle( $user->user_url ), $user->user_url );
 				echo '</li>';
 			}
 

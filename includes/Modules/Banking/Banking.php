@@ -345,7 +345,7 @@ class Banking extends gEditorial\Module
 
 			if ( $exists = term_exists( $this->constant( 'term_duplicate_iban' ), $taxonomy ) ) {
 
-				$matches = WordPress\PostType::getIDbyMeta( $metakey, $iban, FALSE );
+				$matches = WordPress\PostMeta::getID( $metakey, $iban, FALSE );
 
 				if ( ! $iban || count( $matches ) < 2 )
 					$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );

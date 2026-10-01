@@ -181,7 +181,7 @@ class PostTypeFields extends gEditorial\Service
 				return FALSE;
 		}
 
-		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $value, FALSE ) )
+		if ( $matches = WordPress\PostMeta::getID( $metakey, $value, FALSE ) )
 			foreach ( $matches as $match )
 				if ( $posttype === get_post_type( intval( $match ) ) )
 					return intval( $match );
@@ -358,7 +358,17 @@ class PostTypeFields extends gEditorial\Service
 			$field = [ 'name' => $field_key, 'type' => 'text' ];
 
 		if ( FALSE === $meta )
-			$meta = apply_filters( self::und( static::BASE, 'meta_field', 'empty' ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+			// @hook: `geditorial_meta_field_empty`
+			$meta = apply_filters( self::und( static::BASE, 'meta_field', 'empty' ),
+				$meta,
+				$field_key,
+				$post,
+				$args,
+				$raw,
+				$field,
+				$args['context'] ?: NULL, // avoid passing `FALSE`
+				$module,
+			);
 
 		if ( FALSE === $meta )
 			return $args['default'];
@@ -371,8 +381,29 @@ class PostTypeFields extends gEditorial\Service
 				return $args['noaccess'] ?? $args['default'];
 		}
 
-		$meta = apply_filters( self::und( static::BASE, 'meta_field' ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
-		$meta = apply_filters( self::und( static::BASE, 'meta_field', $field_key ), $meta, $field_key, $post, $args, $raw, $field, $args['context'], $module );
+		// @hook: `geditorial_meta_field`
+		$meta = apply_filters( self::und( static::BASE, 'meta_field' ),
+			$meta,
+			$field_key,
+			$post,
+			$args,
+			$raw,
+			$field,
+			$args['context'] ?: NULL, // avoid passing `FALSE`
+			$module,
+		);
+
+		// @hook: `geditorial_meta_field_{field_key}`
+		$meta = apply_filters( self::und( static::BASE, 'meta_field', $field_key ),
+			$meta,
+			$field_key,
+			$post,
+			$args,
+			$raw,
+			$field,
+			$args['context'] ?: NULL, // avoid passing `FALSE`
+			$module,
+		);
 
 		if ( '__do_embed_shortcode' === $args['filter'] )
 			$args['filter'] = [ gEditorial\Template::class, 'doEmbedShortCode' ];
@@ -408,6 +439,7 @@ class PostTypeFields extends gEditorial\Service
 			? gEditorial()->{$module}->get_postmeta_field( $post_id, $field_key, $default )
 			: $default;
 
+		// @hook: `geditorial_get_meta_field`
 		return apply_filters( self::und( static::BASE, 'get_meta_field' ),
 			$meta,
 			$field_key,
@@ -441,10 +473,10 @@ class PostTypeFields extends gEditorial\Service
 		// NOTE: first priority: field-key
 		switch ( $field_key ) {
 
-			case 'twitter'  : // return Core\Socials::htmlTwitterIntent( $raw ?: $value, TRUE );
-			case 'facebook' : // return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );
-			case 'instagram': // return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );
-			case 'telegram' : // return Core\Socials::htmlHandle( $value, 'https://t.me/' );
+			case 'twitter'  : // `return Core\Socials::htmlTwitterIntent( $raw ?: $value, TRUE );`
+			case 'facebook' : // `return Core\Link::get( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value );`
+			case 'instagram': // `return Core\Socials::htmlHandle( $raw ?: $value, 'https://instagram.com/' );`
+			case 'telegram' : // `return Core\Socials::htmlHandle( $value, 'https://t.me/' );`
 				return Communities::prepSocial( $raw ?: $value, $field_key, $context ); // The field key is usually the service
 
 			case 'phone' : return Core\Email::prep( $raw ?: $value, $field, $context );
@@ -544,7 +576,7 @@ class PostTypeFields extends gEditorial\Service
 					// TODO: migrate to `Contacts`/`Communities` Service
 
 					return Core\URL::isValid( $raw ?: $value )
-						? Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
+						? Core\Link::get( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value )
 						: sprintf( '<span title="%s">@%s</span>',
 							empty( $field['title'] ) ? $field_key : Core\HTML::escape( $field['title'] ),
 							$raw ?: $value
@@ -576,11 +608,11 @@ class PostTypeFields extends gEditorial\Service
 
 					// TODO: migrate to `Embeds` Service
 
-					return Core\HTML::link( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
+					return Core\Link::get( Core\URL::getDomain( $raw ?: $value ), $raw ?: $value, TRUE );
 
 				case 'link':
 
-					return Core\HTML::link( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
+					return Core\Link::get( Core\URL::prepTitle( $raw ?: $value ), $raw ?: $value, TRUE );
 
 				case 'title_link':
 				case 'text_source':

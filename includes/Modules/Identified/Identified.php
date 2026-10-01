@@ -223,7 +223,7 @@ class Identified extends gEditorial\Module
 		$this->action( 'template_newpost_beforetitle', 6, 8, FALSE, $this->base );
 		$this->filter( 'pairedrest_prepped_post', 3, 99, FALSE, $this->base );
 		$this->filter( 'subcontent_provide_summary', 4, 8, FALSE, $this->base );
-		$this->filter( 'linediscovery_data_for_post', 5, 8, FALSE, $this->base );
+		$this->filter( 'linediscovery_data_for_post', 4, 8, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 8, FALSE, $this->base );
 
 		$this->filter_module( 'audit', 'auto_audit_save_post', 5 );
@@ -490,7 +490,7 @@ class Identified extends gEditorial\Module
 			: add_query_arg( array_merge( [ $type => $data ], $extra ), get_bloginfo( 'url' ) );
 	}
 
-	private function _get_posttype_identifier_possible_keys( $posttype, $extra = [] )
+	private function _get_posttype_identifier_possible_keys( string $posttype, array $extra = [] ): array
 	{
 		$type    = $this->_get_posttype_identifier_type( $posttype );
 		$metakey = $this->_get_posttype_identifier_metakey( $posttype );
@@ -567,7 +567,7 @@ class Identified extends gEditorial\Module
 			$supported = $this->_get_supported_by_identifier_type( 'identity' );
 
 			foreach ( $supported as $posttype => $metakey )
-				if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
+				if ( $matches = WordPress\PostMeta::getID( $metakey, $identifier, FALSE ) )
 					foreach ( $matches as $match )
 						if ( array_key_exists( get_post_type( intval( $match ) ), $supported ) )
 							return WordPress\Post::summary( $match );
@@ -576,7 +576,7 @@ class Identified extends gEditorial\Module
 		return $data;
 	}
 
-	public function linediscovery_data_for_post( $discovered, $row, $posttypes, $insert, $raw )
+	public function linediscovery_data_for_post( mixed $discovered, array $row, array $posttypes, bool $insert ): mixed
 	{
 		if ( ! is_null( $discovered ) )
 			return $discovered;
@@ -609,7 +609,7 @@ class Identified extends gEditorial\Module
 		if ( ! $identifier || ! count( $metakey ) )
 			return NULL;
 
-		if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
+		if ( $matches = WordPress\PostMeta::getID( $metakey, $identifier, FALSE ) )
 			foreach ( $matches as $match )
 				if ( $posttype === get_post_type( intval( $match ) ) )
 					return intval( $match );
@@ -693,7 +693,7 @@ class Identified extends gEditorial\Module
 
 			if ( $identifier = $this->sanitize_identifier( $args['s'], $type ) ) {
 
-				if ( $matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE ) )
+				if ( $matches = WordPress\PostMeta::getID( $metakey, $identifier, FALSE ) )
 					foreach ( $matches as $match )
 						if ( $posttype === get_post_type( intval( $match ) ) )
 							return intval( $match );
@@ -741,7 +741,7 @@ class Identified extends gEditorial\Module
 
 		if ( $exists = term_exists( $this->constant( 'term_duplicate_identification' ), $taxonomy ) ) {
 
-			$matches = WordPress\PostType::getIDbyMeta( $metakey, $identifier, FALSE );
+			$matches = WordPress\PostMeta::getID( $metakey, $identifier, FALSE );
 
 			if ( ! $identifier || count( $matches ) < 2 )
 				$terms = Core\Arraay::stripByValue( $terms, $exists['term_id'] );
@@ -774,7 +774,7 @@ class Identified extends gEditorial\Module
 
 	private function _get_post_identified( string $code, string $metakey, ?string $posttype = NULL ): false|object
 	{
-		if ( ! $matches = WordPress\PostType::getIDbyMeta( $metakey, $code, FALSE ) )
+		if ( ! $matches = WordPress\PostMeta::getID( $metakey, $code, FALSE ) )
 			return FALSE;
 
 		foreach ( $matches as $match ) {
@@ -978,7 +978,7 @@ class Identified extends gEditorial\Module
 
 				foreach ( $supported as $posttype => $metakey ) {
 
-					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $sanitized ) )
+					if ( ! $post_id = WordPress\PostMeta::getID( $metakey, $sanitized ) )
 						continue;
 
 					if ( ! $post = WordPress\Post::get( $post_id ) )
@@ -1019,7 +1019,7 @@ class Identified extends gEditorial\Module
 
 				foreach ( $supported as $posttype => $metakey ) {
 
-					if ( ! $post_id = WordPress\PostType::getIDbyMeta( $metakey, $sanitized ) )
+					if ( ! $post_id = WordPress\PostMeta::getID( $metakey, $sanitized ) )
 						continue;
 
 					if ( ! $post = WordPress\Post::get( $post_id ) )

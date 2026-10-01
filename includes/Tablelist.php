@@ -533,7 +533,7 @@ class Tablelist extends WordPress\Main
 					return Core\HTML::code( $row->taxonomy, FALSE, TRUE );
 
 				return $link
-					? Core\HTML::link( Core\Text::code( $row->taxonomy ), WordPress\URL::editTaxonomy( $row->taxonomy ), TRUE )
+					? Core\Link::get( Core\Text::code( $row->taxonomy ), WordPress\URL::editTaxonomy( $row->taxonomy ), TRUE )
 					: Core\HTML::code( $row->taxonomy, FALSE, TRUE );
 			}
 		];
@@ -627,7 +627,7 @@ class Tablelist extends WordPress\Main
 					return Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
 
 				return $linked
-					? Core\HTML::link( Core\Text::code( urldecode( $row->slug ) ), WordPress\Term::edit( $row ), TRUE )
+					? Core\Link::get( Core\Text::code( urldecode( $row->slug ) ), WordPress\Term::edit( $row ), TRUE )
 					: Core\HTML::code( urldecode( $row->slug ), FALSE, $row->slug );
 			},
 		], $extra_arguments );

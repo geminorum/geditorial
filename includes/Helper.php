@@ -15,7 +15,7 @@ class Helper extends WordPress\Main
 	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheet(
 		string $url,
-		string|array|null $version = NULL,
+		null|string|array $version = NULL,
 		false|string $media = FALSE,
 		bool $verbose = TRUE,
 	): true {
@@ -191,7 +191,7 @@ class Helper extends WordPress\Main
 	// NOTE: the output of `the_title()` is `un-escaped`
 	// @REF: https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
 	public static function getPostTitleRow(
-		null|int|object $post,
+		mixed $post,
 		false|string $link = 'edit',
 		bool|string|array $status = FALSE,
 		?string $title_attr = NULL,

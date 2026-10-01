@@ -443,7 +443,7 @@ class Drafts extends gEditorial\Module
 			return $actions;
 
 		if ( $this->is_public( $post->ID ) )
-			$actions['public_link'] = Core\HTML::link(
+			$actions['public_link'] = Core\Link::get(
 				_x( 'Public Preview', 'Action', 'geditorial-drafts' ),
 				$this->get_preview_url( $post->ID )
 			);
