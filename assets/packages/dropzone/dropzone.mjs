@@ -1,5 +1,5 @@
 //#region package.json
-var version = "6.3.4";
+var version = "6.3.5";
 //#endregion
 //#region src/extend.ts
 function extend(...args) {
@@ -1263,7 +1263,7 @@ var Dropzone = class Dropzone extends Emitter {
 	}
 	cancelUpload(file) {
 		if (file.status === Dropzone.UPLOADING) {
-			let groupedFiles = this._getFilesWithXhr(file.xhr);
+			let groupedFiles = file.xhr ? this._getFilesWithXhr(file.xhr) : [file];
 			for (let groupedFile of groupedFiles) groupedFile.status = Dropzone.CANCELED;
 			if (file.upload.chunked && file.upload.chunks) {
 				for (let chunk of file.upload.chunks) if (chunk && chunk.xhr && chunk.status === Dropzone.UPLOADING) {
@@ -1289,6 +1289,7 @@ var Dropzone = class Dropzone extends Emitter {
 	}
 	uploadFiles(files) {
 		this._transformFiles(files, (transformedFiles) => {
+			if (files.every((file) => file.status === Dropzone.CANCELED)) return;
 			let chunkSize = Number(this.options.chunkSize);
 			if (this.options.chunking) {
 				let transformedFile = transformedFiles[0];
@@ -1389,7 +1390,7 @@ var Dropzone = class Dropzone extends Emitter {
 		if (this.options.binaryBody) {
 			for (let file of files) this.emit("sending", file, xhr);
 			if (this.options.uploadMultiple) this.emit("sendingmultiple", files, xhr);
-			this.submitRequest(xhr, null, files);
+			this.submitRequest(xhr, null, files, dataBlocks);
 		} else {
 			let formData = new FormData();
 			if (this.options.params) {
@@ -1408,7 +1409,7 @@ var Dropzone = class Dropzone extends Emitter {
 				let dataBlock = dataBlocks[i];
 				formData.append(dataBlock.name, dataBlock.data, dataBlock.filename);
 			}
-			this.submitRequest(xhr, formData, files);
+			this.submitRequest(xhr, formData, files, dataBlocks);
 		}
 	}
 	_transformFiles(files, done) {
@@ -1495,7 +1496,7 @@ var Dropzone = class Dropzone extends Emitter {
 		}
 		this._errorProcessing(files, response || this.options.dictResponseError.replace("{{statusCode}}", String(xhr.status)), xhr);
 	}
-	submitRequest(xhr, formData, files) {
+	submitRequest(xhr, formData, files, dataBlocks) {
 		if (xhr.readyState != 1) {
 			console.warn("Cannot send this request because the XMLHttpRequest.readyState is not OPENED.");
 			return;
@@ -1504,7 +1505,7 @@ var Dropzone = class Dropzone extends Emitter {
 			if (files[0].upload.chunked) {
 				const chunk = this._getChunk(files[0], xhr);
 				xhr.send(chunk.dataBlock.data);
-			} else xhr.send(files[0]);
+			} else xhr.send(dataBlocks ? dataBlocks[0].data : files[0]);
 		} else xhr.send(formData);
 	}
 	_finished(files, responseText, e) {
@@ -1809,5 +1810,3 @@ function __guardMethod__(obj, methodName, transform) {
 }
 //#endregion
 export { Dropzone, Dropzone as default };
-
-//# sourceMappingURL=dropzone.mjs.map

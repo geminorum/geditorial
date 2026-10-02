@@ -628,7 +628,7 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgDropzone( $enqueue = FALSE, $version = '6.3.4' )
+	public static function pkgDropzone( $enqueue = FALSE, $version = '6.3.5' )
 	{
 		$handle = 'dropzone';
 
@@ -651,7 +651,7 @@ JS;
 		return $handle;
 	}
 
-	public static function linkDropzone( $ver = '6.0.0-beta.2' )
+	public static function linkDropzone( $ver = '6.3.5' )
 	{
 		// Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );
 		Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/dropzone.css', $ver, 'screen' );
