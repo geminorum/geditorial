@@ -51,7 +51,7 @@
       el.select2({
         dir: $('html').attr('dir'),
         width: '100%', // 'element'
-        theme: el.data('theme') || plugin._base,
+        theme: el.data('theme') || plugin._base + (plugin._admin ? '-admin' : '-front'),
         allowClear: true,
         minimumInputLength: el.data('query-minimum') || 5,
         placeholder: { id: '0', text: app.str(el, 'placeholder') },
