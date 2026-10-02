@@ -92,7 +92,7 @@
         min-height: 37.5px;
 
         &[dir="ltr"]::placeholder {
-          direction: ltr;
+          direction: ltr !important;
           text-align: left; // for firefox
         }
       }

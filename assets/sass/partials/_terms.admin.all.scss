@@ -24,6 +24,7 @@ body.#{$plugin}-terms-enabled {
   @include plugin-listtable-column-icon("arrow", "\f545", "column-#{$plugin}-terms");
   @include plugin-listtable-column-icon("barcode", "\f212", "column-#{$plugin}-terms");
   @include plugin-listtable-column-icon("contact", "\f525", "column-#{$plugin}-terms");
+  @include plugin-listtable-column-icon("email", "\f465", "column-#{$plugin}-terms"); // `dashicons-email`
   @include plugin-listtable-column-icon("venue", "\f231", "column-#{$plugin}-terms");
   @include plugin-listtable-column-icon("label", "\f323", "column-#{$plugin}-terms");
   @include plugin-listtable-column-icon("color", "\f131", "column-#{$plugin}-terms");
@@ -38,6 +39,11 @@ body.#{$plugin}-terms-enabled {
   @include plugin-listtable-column-icon("dead", "\f516", "column-#{$plugin}-terms");       // `dashicons-controls-skipback`
   @include plugin-listtable-column-icon("establish", "\f12a", "column-#{$plugin}-terms");  // `dashicons-yes-alt`
   @include plugin-listtable-column-icon("abolish", "\f153", "column-#{$plugin}-terms");    // `dashicons-dismiss`
+  @include plugin-listtable-column-icon("address", "\f230", "column-#{$plugin}-terms");    // `dashicons-location`
+  @include plugin-listtable-column-icon("styles", "\f309", "column-#{$plugin}-terms");     // `dashicons-art`
+  @include plugin-listtable-column-icon("script", "\f475", "column-#{$plugin}-terms");     // `dashicons-editor-code`
+  @include plugin-listtable-column-icon("markup", "\f14b", "column-#{$plugin}-terms");     // `dashicons-html`
+  @include plugin-listtable-column-icon("markdown", "\f159", "column-#{$plugin}-terms");   // `dashicons-marker`
 
   .wp-list-table.tags {
     .column-slug {
@@ -51,6 +57,14 @@ body.#{$plugin}-terms-enabled {
         &::before {
           content: "\f128";
         }
+      }
+    }
+
+    th.column-#{$plugin}-terms-user,
+    th.column-#{$plugin}-terms-author {
+      a {
+        // padding-left: 0;
+        padding-right: 0;
       }
     }
 
@@ -92,7 +106,6 @@ body.#{$plugin}-terms-enabled {
       overflow-x: hidden;
     }
 
-    .column-#{$plugin}-terms-author,
     .column-#{$plugin}-terms-role,
     .column-#{$plugin}-terms-posttype {
       width: 80px;
@@ -110,6 +123,11 @@ body.#{$plugin}-terms-enabled {
       width: 55px;
     }
 
+    .column-#{$plugin}-terms-address,
+    .column-#{$plugin}-terms-styles,
+    .column-#{$plugin}-terms-script,
+    .column-#{$plugin}-terms-markup,
+    .column-#{$plugin}-terms-markdown,
     .column-#{$plugin}-terms-min,
     .column-#{$plugin}-terms-max,
     .column-#{$plugin}-terms-order,
@@ -120,6 +138,7 @@ body.#{$plugin}-terms-enabled {
 
     .column-#{$plugin}-terms-latlng,
     .column-#{$plugin}-terms-contact,
+    .column-#{$plugin}-terms-email,
     .column-#{$plugin}-terms-barcode,
     .column-#{$plugin}-terms-arrow,
     .column-#{$plugin}-terms-viewable {
@@ -139,6 +158,7 @@ body.#{$plugin}-terms-enabled {
     td.column-#{$plugin}-terms-viewable,
     td.column-#{$plugin}-terms-arrow,
     td.column-#{$plugin}-terms-barcode,
+    td.column-#{$plugin}-terms-email,
     td.column-#{$plugin}-terms-contact {
       // > span.field-contact,
       // > span.field-contact a {
@@ -167,7 +187,7 @@ body.#{$plugin}-terms-enabled {
     td.column-#{$plugin}-terms-author,
     td.column-#{$plugin}-terms-image {
 
-      padding: 10px 0 0;
+      padding: 5px 0 0;
       text-align: center;
 
       a:focus {

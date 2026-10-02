@@ -46,7 +46,7 @@ body.admin_page_#{$plugin}-dead-drops-signal {
   .#{$plugin}-wrap.-view {
 
     // Module:  `Audit`/`Tabloid`/`Importer`
-    &.-secondary,
+    &.-lineup,
     &.-overview {
       margin: calc( #{($spacer * .5)} - 1px ) auto 0;
       padding: 0 ($spacer * .5);
@@ -59,7 +59,7 @@ body.admin_page_#{$plugin}-dead-drops-signal {
     }
 
     // WTF: `StaticCovers`
-    // &.-secondary {}
+    // &.-lineup {}
   }
 
   > p.-description.-empty {

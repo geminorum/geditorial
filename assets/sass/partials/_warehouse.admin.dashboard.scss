@@ -62,7 +62,7 @@ $spacer: 1rem !default;
         direction: ltr !important;
 
         &::placeholder {
-          direction: ltr; // must not be ignored by RTLCSS
+          direction: ltr !important;
           text-align: left; // for firefox
         }
       }
