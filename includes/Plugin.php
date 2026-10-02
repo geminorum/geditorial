@@ -245,6 +245,7 @@ class Plugin extends WordPress\Plugin
 			'Locations',
 			'Lookup',
 			'Markup',
+			'Maps',
 			'ObjectHints',
 			'ObjectsToObjects',
 			'Paired',
