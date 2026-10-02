@@ -427,7 +427,7 @@ class Identified extends gEditorial\Module
 		$this->template_newpost_beforetitle( $post->post_type, $post, NULL, FALSE, NULL, [] );
 	}
 
-	public function template_newpost_beforetitle( string $posttype, mixed $post, $target, $linked, $status, $meta ): void
+	public function template_newpost_beforetitle( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -669,19 +669,19 @@ class Identified extends gEditorial\Module
 		return $post_id;
 	}
 
-	public function searchselect_pre_query_posts( $null, $args, $queried )
+	public function searchselect_pre_query_posts( mixed $pre, array $args, array $queried ): mixed
 	{
-		if ( ! is_null( $null ) )
-			return $null;
+		if ( ! is_null( $pre ) )
+			return $pre;
 
 		if ( empty( $queried['posttype'] ) || empty( $args['s'] ) )
-			return $null;
+			return $pre;
 
 		$supported  = $this->posttypes();
 		$identifier = FALSE;
 
 		if ( ! Core\Arraay::exists( $supported, (array) $queried['posttype'] ) )
-			return $null;
+			return $pre;
 
 		foreach ( (array) $queried['posttype'] as $posttype ) {
 
@@ -700,7 +700,7 @@ class Identified extends gEditorial\Module
 			}
 		}
 
-		return $null;
+		return $pre;
 	}
 
 	public function audit_get_default_terms( array $terms, string $taxonomy ): array

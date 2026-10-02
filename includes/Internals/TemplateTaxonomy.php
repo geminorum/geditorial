@@ -123,7 +123,10 @@ trait TemplateTaxonomy
 			if ( ! is_user_logged_in() )
 				return $template;
 
-			do_action( $this->hook_base( 'template', 'taxonomy', '404', 'init' ), $taxonomy );
+			// @hook `geditorial_template_taxonomy_404_init`
+			do_action( $this->hook_base( 'template', 'taxonomy', '404', 'init' ),
+				$taxonomy,
+			);
 
 			$this->current_queried = $taxonomy;
 
@@ -145,7 +148,10 @@ trait TemplateTaxonomy
 
 		} else {
 
-			do_action( $this->hook_base( 'template', 'taxonomy', 'archive', 'init' ), $taxonomy );
+			// @hook `geditorial_template_taxonomy_archive_init`
+			do_action( $this->hook_base( 'template', 'taxonomy', 'archive', 'init' ),
+				$taxonomy,
+			);
 
 			// stored for late use
 			$this->current_queried = get_queried_object_id();
@@ -161,8 +167,8 @@ trait TemplateTaxonomy
 			], [], $archive_callback ?? [ $this, 'templatetaxonomy_archive_content' ] );
 
 			$this->filter_append( 'post_class', [ 'archive-term', 'archive-term-'.$taxonomy ] );
-			// $this->filter( 'single_term_title' ); // no need on terms
-			// $this->filter( 'gtheme_navigation_crumb_archive', 2 );
+			// `$this->filter( 'single_term_title' );` // no need on terms
+			// `$this->filter( 'gtheme_navigation_crumb_archive', 2 );`
 
 			$template = WordPress\Theme::getTemplate( $this->get_setting( 'archive_template' ) );
 		}
@@ -318,13 +324,14 @@ trait TemplateTaxonomy
 		if ( ! WordPress\Taxonomy::can( $object, 'manage_terms' ) )
 			return '';
 
+		// @hook `geditorial_template_taxonomy_addnew_extra`
 		$extra = apply_filters( $this->hook_base( 'template', 'taxonomy', 'addnew', 'extra' ),
 			[
 				'name' => $title,
 			],
 			$object->name,
 			$title,
-			$this->key
+			$this->key,
 		);
 
 		return Core\Link::button(

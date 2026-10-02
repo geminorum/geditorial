@@ -109,9 +109,8 @@ trait TaxonomyOverview
 		if ( ! method_exists( $this, 'exports_get_export_buttons' ) )
 			return;
 
-		// already checked
-		// if ( ! $this->role_can( $args['extra']['context'], NULL, TRUE ) )
-		// 	return;
+		// Already checked!
+		// `if ( ! $this->role_can( $args['extra']['context'], NULL, TRUE ) ) return;`
 
 		echo Core\HTML::wrap(
 			$this->exports_get_export_buttons(

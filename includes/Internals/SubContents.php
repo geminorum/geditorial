@@ -696,7 +696,7 @@ trait SubContents
 
 		if ( ! empty( $item['_date'] ) ) {
 			$datetime = gEditorial\Datetime::dateFormat( $item['_date'], $context );
-			// $timeago  = human_time_diff( strtotime( $item['_date'] ) );
+			// `$timeago  = human_time_diff( strtotime( $item['_date'] ) );`
 			$timeago  = gEditorial\Datetime::moment( $item['_date'] );
 		}
 
@@ -1090,8 +1090,8 @@ trait SubContents
 			'order'   => self::order( 'DESC' ),
 
 			'post_id'   => $post ? $post->ID : 0,
-			'post_type' => 'any', // $parent->post_type,
-			'status'    => 'any', // $this->subcontent_get_comment_status(),
+			'post_type' => 'any', // `$parent->post_type,`
+			'status'    => 'any', // `$this->subcontent_get_comment_status(),`
 			'type'      => $this->subcontent_get_comment_type(),
 			'fields'    => '', // 'ids', // empty for all
 

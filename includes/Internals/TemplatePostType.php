@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 trait TemplatePostType
 {
-
 	protected function templateposttype__include(
 		string $template,
 		string|array $posttypes,
@@ -53,7 +52,10 @@ trait TemplatePostType
 			if ( ! is_user_logged_in() )
 				return $template;
 
-			do_action( $this->hook_base( 'template', 'posttype', '404', 'init' ), $posttype );
+			// @hook `geditorial_template_posttype_404_init`
+			do_action( $this->hook_base( 'template', 'posttype', '404', 'init' ),
+				$posttype,
+			);
 
 			$this->current_queried = $posttype;
 
@@ -78,7 +80,10 @@ trait TemplatePostType
 			if ( FALSE === $newpost_callback )
 				return $template;
 
-			do_action( $this->hook_base( 'template', 'newpost', 'init' ), $posttype );
+			// @hook `geditorial_template_newpost_init`
+			do_action( $this->hook_base( 'template', 'newpost', 'init' ),
+				$posttype,
+			);
 
 			$this->current_queried = $posttype;
 
@@ -118,7 +123,10 @@ trait TemplatePostType
 			if ( FALSE === $archive_callback )
 				return $template;
 
-			do_action( $this->hook_base( 'template', 'posttype', 'archive', 'init' ), $posttype );
+			// @hook `geditorial_template_posttype_archive_init`
+			do_action( $this->hook_base( 'template', 'posttype', 'archive', 'init' ),
+				$posttype,
+			);
 
 			WordPress\Theme::resetQuery( [
 				'ID'         => 0,
@@ -175,13 +183,13 @@ trait TemplatePostType
 		return $this->get_setting_fallback( 'newpost_title', $crumb );
 	}
 
-	// no need to check for post-type
+	// NOTE: no need to check for post-type
 	public function post_type_archive_title( string $name, string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'archive_title', $name );
 	}
 
-	// no need to check for post-type
+	// NOTE: no need to check for post-type
 	public function post_type_archive_title_templateposttype_newpost( string $name, string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'newpost_title',
@@ -251,7 +259,7 @@ trait TemplatePostType
 					'context' => 'template_posttype',
 					'orderby' => 'menu_order',          // WTF: must apply to `assigned`
 					'term_id' => 'all',
-					// 'future'  => WordPress\PostType::can( $posttype, 'publish_posts' ) ? 'on' : 'off',
+					// `'future'  => WordPress\PostType::can( $posttype, 'publish_posts' ) ? 'on' : 'off',`
 					'title'   => FALSE,
 					'wrap'    => FALSE,
 				]
@@ -275,14 +283,14 @@ trait TemplatePostType
 
 		// FIXME: must check if post is unpublished
 
-		$extra = apply_filters(
-			$this->hook_base( 'template', 'posttype', 'addnew', 'extra' ),
+		// @hook `geditorial_template_posttype_addnew_extra`
+		$extra = apply_filters( $this->hook_base( 'template', 'posttype', 'addnew', 'extra' ),
 			[
 				'post_title' => $title,
 			],
 			$object->name,
 			$title,
-			$this->key
+			$this->key,
 		);
 
 		return Core\Link::button(
@@ -332,9 +340,9 @@ trait TemplatePostType
 	protected function templateposttype_newpost_form( string $posttype ): string
 	{
 		$status = $this->get_setting( 'post_status', 'pending' );  // `draft`
-		$target = 'none';                                          // self::req( 'target', 'none' );
-		$linked = NULL;                                            // self::req( 'linked', FALSE );
-		$meta   = [];                                              // self::req( 'meta', [] );
+		$target = 'none';                                          // `self::req( 'target', 'none' );`
+		$linked = NULL;                                            // `self::req( 'linked', FALSE );`
+		$meta   = [];                                              // `self::req( 'meta', [] );`
 		$object = WordPress\PostType::object( $posttype );
 		$post   = WordPress\Post::defaultToEdit( $posttype );
 
@@ -343,37 +351,41 @@ trait TemplatePostType
 
 		ob_start();
 
+		// @hook `geditorial_template_newpost_meta`
 		$meta = apply_filters( $this->hook_base( 'template', 'newpost', 'meta' ),
 			$meta,
 			$posttype,
 			$target,
 			$linked,
-			$status
+			$status,
 		);
 
 		echo $this->wrap_open( '-newpost-layout' );
 		echo '<div class="row"><div class="col-6"><form class="-form-form">';
 
+		// @hook `geditorial_template_newpost_beforetitle`
 		do_action( $this->hook_base( 'template', 'newpost', 'beforetitle' ),
 			$posttype,
 			$post,
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		if ( $this->is_posttype_support( $posttype, 'title' ) ) {
 
 			$field = $this->classs( $posttype, 'title' );
 			$label = $this->get_string( 'post_title', $posttype, 'newpost', __( 'Add title' ) );
+
+			// @hook `geditorial_template_newpost_title`
 			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'title' ),
 				'',
 				$posttype,
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'input', [
@@ -390,26 +402,29 @@ trait TemplatePostType
 			echo '</div>';
 		}
 
+		// @hook `geditorial_template_newpost_aftertitle`
 		do_action( $this->hook_base( 'template', 'newpost', 'aftertitle' ),
 			$posttype,
 			$post,
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		if ( $this->is_posttype_support( $posttype, 'excerpt' ) ) {
 
 			$field = $this->classs( $posttype, 'excerpt' );
 			$label = $this->get_string( 'post_excerpt', $posttype, 'newpost', __( 'Excerpt' ) );
+
+			// @hook `geditorial_template_newpost_excerpt`
 			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'excerpt' ),
 				'',
 				$posttype,
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'textarea', [
@@ -431,13 +446,15 @@ trait TemplatePostType
 
 			$field = $this->classs( $posttype, 'content' );
 			$label = $this->get_string( 'post_content', $posttype, 'newpost', __( 'Content' ) );
+
+			// @hook `geditorial_template_newpost_content`
 			$value = apply_filters( $this->hook_base( 'template', 'newpost', 'content' ),
 				'',
 				$posttype,
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'textarea', [
@@ -458,13 +475,14 @@ trait TemplatePostType
 		if ( $object->hierarchical )
 			MetaBox::fieldPostParent( $post, FALSE, 'parent' );
 
+		// @hook `geditorial_template_newpost_aftercontent`
 		do_action( $this->hook_base( 'template', 'newpost', 'aftercontent' ),
 			$posttype,
 			$post,
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		Core\HTML::inputHidden( 'type', $posttype );
@@ -477,13 +495,14 @@ trait TemplatePostType
 		echo '<span class="-message"></span>';
 		echo gEditorial\Ajax::spinner();
 
+			// @hook `geditorial_template_newpost_buttons`
 			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),
 				$posttype,
 				$post,
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 		echo Core\HTML::tag( 'a', [
@@ -499,13 +518,14 @@ trait TemplatePostType
 
 		echo '</p></form></div><div class="col-6">';
 
+			// @hook `geditorial_template_newpost_side`
 			do_action( $this->hook_base( 'template', 'newpost', 'side' ),
 				$posttype,
 				$post,
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 		echo '</div></div>';
@@ -517,6 +537,7 @@ trait TemplatePostType
 	public function templateposttype_get_newpost_title( string $posttype ): string
 	{
 		return $this->get_setting_fallback( 'newpost_title',
-			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $posttype ) );
+			Services\CustomPostType::getLabel( $posttype, 'add_new_item', NULL, $posttype ),
+		);
 	}
 }

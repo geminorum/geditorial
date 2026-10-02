@@ -372,7 +372,7 @@ class People extends gEditorial\Module
 			: $value;
 	}
 
-	public function searchselect_pre_query_terms( $pre, $args, $queried )
+	public function searchselect_pre_query_terms( mixed $pre, array $args, array $queried ): mixed
 	{
 		if ( empty( $queried['search'] ) )
 			return $pre;

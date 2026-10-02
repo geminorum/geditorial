@@ -23,13 +23,11 @@ class Scripts extends WordPress\Main
 
 	// TODO: move to `Services\Markup`
 	// NOTE: simpler version: `gEditorial\Plugin::nojs()`
-	public static function noScriptMessage( $verbose = TRUE ): string|true
+	public static function noScriptMessage( bool $verbose = TRUE ): string|true
 	{
-		$html = Core\HTML::tag( 'noscript',
-			'<strong>'.
-				_x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' )
-			.'</strong>'
-		);
+		$html = Core\HTML::tag( 'noscript', Core\HTML::strong(
+			_x( 'We\'re sorry but this application doesn\'t work properly without JavaScript enabled. Please enable it to continue.', 'Scripts: No Script Message', 'geditorial' ),
+		) );
 
 		if ( ! $verbose )
 			return $html;
@@ -76,24 +74,41 @@ class Scripts extends WordPress\Main
 
 		wp_enqueue_script( $handle, $script, Core\Arraay::prepString( $config['dependencies'], $dependencies ), $config['version'], TRUE );
 		wp_script_add_data( $handle, 'strategy', 'defer' ); // @REF: https://make.wordpress.org/core/2023/07/14/registering-scripts-with-async-and-defer-attributes-in-wordpress-6-3/
-		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
+		// `wp_script_add_data( $handle, 'fetchpriority', 'low' );`
 
 		return $handle;
 	}
 
-	public static function enqueueStyle( $asset, $dep = [], $version = NULL, $base = NULL, $path = 'assets/css', $media = 'all' )
+	public static function enqueueStyle( string $asset, array $dependencies = [], ?string $version = NULL, ?string $base = NULL, ?string $path = NULL, ?string $media = NULL )
 	{
 		$handle = self::handle( $asset );
 
-		wp_enqueue_style( $handle, ( $base ?? static::URL ).$path.'/'.$asset.'.css', $dep, $version ?? static::VERSION, $media );
+		wp_enqueue_style(
+			$handle,
+			sprintf( '%s%s/%s.css',
+				$base ?? static::URL,
+				$path ?? 'assets/css',
+				$asset,
+			),
+			$dependencies,
+			$version ?? static::VERSION,
+			$media ?? 'all',
+		);
+
 		wp_style_add_data( $handle, 'rtl', 'replace' );
 
 		return $handle;
 	}
 
-	public static function enqueueStyleSrc( $source, $handle, $version = NULL, $rtl_data = NULL )
+	public static function enqueueStyleSrc( string $source, string $handle, ?string $version = NULL, ?string $rtl_data = NULL ): string
 	{
-		wp_enqueue_style( $handle, $source, [], $version ?? static::VERSION );
+		wp_enqueue_style(
+			$handle,
+			$source,
+			[],
+			$version ?? static::VERSION,
+		);
+
 		wp_style_add_data( $handle, 'rtl', $rtl_data ?? 'replace' );
 
 		return $handle;
@@ -435,7 +450,7 @@ JS;
 	}
 
 	// TODO: move to `Services\Barcodes`
-	public static function markupJSBarcode( $data, $atts = [] )
+	public static function markupJSBarcode( string $data, array $arguments = [] ): string
 	{
 		$args = self::parsed( [
 			'format'     => 'CODE128',
@@ -445,7 +460,7 @@ JS;
 			'margin'     => 5,
 			'background' => '#fff',
 			'textmargin' => 0,
-		], $atts );
+		], $arguments );
 
 		return Core\HTML::tag( 'svg', [
 			'class'                  => 'do-jsbarcode',
@@ -460,7 +475,7 @@ JS;
 		], NULL );
 	}
 
-	public static function enqueueJSBarcode()
+	public static function enqueueJSBarcode(): string
 	{
 		static $enqueued = FALSE;
 
@@ -477,15 +492,16 @@ JS;
 
 	/**
 	 * Registers or Enqueues the `JsBarcode` package.
-	 * @package https://github.com/lindell/JsBarcode
 	 * TODO: move to `Services\Barcodes`
+	 *
+	 * @repo https://github.com/lindell/JsBarcode
 	 *
 	 * @param bool $enqueue
 	 * @param string $barcode
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $version = '3.12.3' )
+	public static function pkgJSBarcode( $enqueue = FALSE, $barcode = '', $version = '3.12.3' ): string
 	{
 		switch ( strtolower( $barcode ) ) {
 			case    'all':        $filepath = 'all';        break;  // All the barcodes!
@@ -506,14 +522,15 @@ JS;
 
 	/**
 	 * Generates mark-up to use with `QRcodeSVG` script.
-	 * @package https://github.com/papnkukn/qrcode-svg
 	 * TODO: move to `Services\Barcodes`
 	 *
+	 * @repo https://github.com/papnkukn/qrcode-svg
+	 *
 	 * @param string $data
-	 * @param array $atts
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function markupQRCodeSVG( $data, $atts = [] )
+	public static function markupQRCodeSVG( string $data, array $arguments = [] ): string
 	{
 		$args = self::parsed( [
 			'padding'    => 4,
@@ -522,7 +539,7 @@ JS;
 			'ecl'        => 'M',         // error correction level: L, M, H, Q
 			'color'      => '#000000',
 			'background' => '#ffffff',
-		], $atts );
+		], $arguments );
 
 		return Core\HTML::tag( 'div', [
 			'class'           => 'do-qrcodesvg',
@@ -581,14 +598,14 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgQRCodeSVG( $enqueue = FALSE, $version = '1.1.0' )
+	public static function pkgQRCodeSVG( bool $enqueue = FALSE, $version = '1.1.0' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $version )
 			: self::registerPackage( 'qrcodesvg', 'qrcode-svg/qrcode', [], $version );
 	}
 
-	public static function pkgPrintThis( $enqueue = FALSE, $ver = '2.0.0' )
+	public static function pkgPrintThis( bool $enqueue = FALSE, $ver = '2.0.0' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'printthis', 'printThis/printThis', [ 'jquery' ], $ver )
@@ -597,7 +614,7 @@ JS;
 
 	// @REF: https://printjs.crabbly.com/
 	// @REF: https://github.com/crabbly/Print.js
-	public static function pkgPrintJS( $enqueue = FALSE, $ver = '1.6.0' )
+	public static function pkgPrintJS( bool $enqueue = FALSE, string $ver = '1.6.0' ): string
 	{
 		$handle = 'printjs';
 
@@ -628,7 +645,7 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgDropzone( $enqueue = FALSE, $version = '6.3.5' )
+	public static function pkgDropzone( bool $enqueue = FALSE, string $version = '6.3.5' ): string
 	{
 		$handle = 'dropzone';
 
@@ -651,16 +668,16 @@ JS;
 		return $handle;
 	}
 
-	public static function linkDropzone( $ver = '6.3.5' )
+	public static function linkDropzone( string $ver = '6.3.5' ): true
 	{
-		// `Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );`
-		Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/dropzone.css', $ver, 'screen' );
 		printf( '<script src="%s"></script>', add_query_arg( 'ver', $ver, static::URL.'assets/packages/dropzone/dropzone-min.js' ) );
+		// `return Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );`
+		return Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/dropzone.css', $ver, 'screen' );
 	}
 
 	// @REF: https://github.com/axenox/onscan.js
 	// @REF: https://a.kabachnik.info/onscan-js.html
-	public static function pkgOnScanJS( $enqueue = FALSE, $ver = '1.5.2' )
+	public static function pkgOnScanJS( bool $enqueue = FALSE, string $ver = '1.5.2' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'onscanjs', 'onscan.js/onscan', [], $ver )
@@ -669,7 +686,7 @@ JS;
 
 	// @REF: https://github.com/mbraak/jqTree
 	// @REF: http://mbraak.github.io/jqTree/
-	public static function pkgJqTree( $enqueue = FALSE, $ver = '2.0.1' )
+	public static function pkgJqTree( bool $enqueue = FALSE, string $ver = '2.0.1' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'jqtree', 'jqtree/tree.jquery', [ 'jquery' ], $ver )
@@ -678,7 +695,7 @@ JS;
 
 	// @REF: https://igorescobar.github.io/jQuery-Mask-Plugin/
 	// @REF: https://github.com/igorescobar/jQuery-Mask-Plugin
-	public static function pkgJqueryMask( $enqueue = FALSE, $ver = '1.14.16' )
+	public static function pkgJqueryMask( bool $enqueue = FALSE, string $ver = '1.14.16' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'jquery-mask', 'jquery-mask/jquery.mask', [ 'jquery' ], $ver )
@@ -687,7 +704,7 @@ JS;
 
 	// @REF: https://github.com/fgnass/spin.js
 	// @REF: https://spin.js.org/
-	public static function pkgSpinJS( $enqueue = FALSE, $ver = '4.1.2' )
+	public static function pkgSpinJS( bool $enqueue = FALSE, string $ver = '4.1.2' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'spinjs', 'spin.js/spin.umd', [], $ver )
@@ -696,7 +713,7 @@ JS;
 
 	// @REF: https://github.com/chartjs/Chart.js
 	// @REF: https://www.chartjs.org/
-	public static function pkgChartJS( $enqueue = FALSE, $ver = '4.5.1' )
+	public static function pkgChartJS( bool $enqueue = FALSE, string $ver = '4.5.1' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'chartjs', 'chart.js/chart.umd', [], $ver )
@@ -704,7 +721,7 @@ JS;
 	}
 
 	// TODO: move to `Services\Markup`
-	public static function markupChartJS( $name, $module = FALSE )
+	public static function markupChartJS( string $name, false|string $module = FALSE ): string
 	{
 		return Core\HTML::wrap( Core\HTML::tag( 'canvas', [
 			'id' => self::dsh( static::BASE, 'chart', $name ),
@@ -716,7 +733,7 @@ JS;
 		] );
 	}
 
-	public static function enqueueChartJS_Bar( $name, $data, $atts = [] )
+	public static function enqueueChartJS_Bar( string $name, array $data, array $atts = [] ): string
 	{
 		$args = self::parsed( [
 			'type'   => 'bar',
@@ -725,10 +742,10 @@ JS;
 			'values' => array_values( $data ),
 
 			'rtl'    => Core\L10n::rtl(),
-			'locale' => Core\L10n::getISO639(),   // 'fa-IR',
+			'locale' => Core\L10n::getISO639(),   // `'fa-IR',`
 
-			// 'color'      => '#000000',
-			// 'background' => '#ffffff',
+			// `'color'      => '#000000',`
+			// `'background' => '#ffffff',`
 		], $atts );
 
 		$rtl      = $args['rtl'] ? 'true' : 'false';
@@ -736,7 +753,7 @@ JS;
 		$values   = Core\HTML::encode( $args['values'] );
 		$selector = self::dsh( static::BASE, 'chart', $name );
 
-		$script   = <<<JS
+		$script = <<<JS
 (function () {
 	const ctx = document.getElementById('{$selector}');
 
@@ -793,14 +810,14 @@ JS;
 	 * `Select2` is a jQuery based replacement for select boxes. It supports
 	 * searching, remote datasets, and infinite scrolling of results.
 	 *
-	 * @docs https://select2.org
-	 * @source https://github.com/select2/select2
+	 * @home https://select2.org
+	 * @repo https://github.com/select2/select2
 	 *
 	 * @param bool $enqueue
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgSelect2( $enqueue = FALSE, $version = '4.1.0' )
+	public static function pkgSelect2( bool $enqueue = FALSE, string $version = '4.1.0' ): string
 	{
 		$handle = 'select2';
 		$dir    = Core\L10n::rtl() ? '-rtl' : '';
@@ -823,7 +840,7 @@ JS;
 		return $handle;
 	}
 
-	public static function linkBootstrap5( $ver = '5.3.8', $screen = 'all' )
+	public static function linkBootstrap5( string $ver = '5.3.8', string $screen = 'all' ): true
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 		$dir = Core\L10n::rtl() ? '.rtl' : '';
@@ -835,7 +852,7 @@ JS;
 		);
 	}
 
-	public static function linkVazirMatn( $ver = '33.0.3', $screen = 'all' )
+	public static function linkVazirMatn( string $ver = '33.0.3', string $screen = 'all' ): true
 	{
 		return Core\HTML::linkStyleSheet(
 			GEDITORIAL_URL.'assets/packages/vazirmatn/Vazirmatn-font-face.css',

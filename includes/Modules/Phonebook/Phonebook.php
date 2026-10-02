@@ -564,21 +564,21 @@ class Phonebook extends gEditorial\Module
 		return $data;
 	}
 
-	public function searchselect_pre_query_posts( $null, $args, $queried )
+	public function searchselect_pre_query_posts( mixed $pre, array $args, array $queried ): mixed
 	{
-		if ( ! is_null( $null ) )
-			return $null;
+		if ( ! is_null( $pre ) )
+			return $pre;
 
 		if ( empty( $queried['posttype'] ) || empty( $args['s'] ) )
-			return $null;
+			return $pre;
 
 		if ( ! $phone = $this->sanitize_phone( $args['s'] ) )
-			return $null;
+			return $pre;
 
 		$supported = $this->posttypes();
 
 		if ( ! Core\Arraay::exists( $supported, (array) $queried['posttype'] ) )
-			return $null;
+			return $pre;
 
 		foreach ( (array) $queried['posttype'] as $posttype ) {
 
@@ -596,7 +596,7 @@ class Phonebook extends gEditorial\Module
 							return intval( $match );
 		}
 
-		return $null;
+		return $pre;
 	}
 
 	public function linediscovery_data_for_post( mixed $discovered, array $row, array $posttypes, bool $insert ): mixed

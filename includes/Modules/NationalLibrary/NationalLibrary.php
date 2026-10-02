@@ -827,7 +827,7 @@ class NationalLibrary extends gEditorial\Module
 		return TRUE;
 	}
 
-	public function template_newpost_title( $title, $posttype, $target, $linked, $status, $meta )
+	public function template_newpost_title( string $title, string $posttype, ?string $target, null|false|int $linked, ?string $status, array $meta ): string
 	{
 		if ( $title )
 			return $title; // already generated!
@@ -844,7 +844,7 @@ class NationalLibrary extends gEditorial\Module
 		return $title;
 	}
 
-	public function template_newpost_buttons( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_buttons( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -859,7 +859,7 @@ class NationalLibrary extends gEditorial\Module
 			echo ModuleHelper::linkISBN( $this->cache[$posttype]['raw']['isbn'], TRUE, NULL, 'button btn btn-info' ).'&nbsp;&nbsp;';
 	}
 
-	public function template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_aftercontent( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -877,7 +877,7 @@ class NationalLibrary extends gEditorial\Module
 			self::dump( $this->cache[$posttype]['parsed'] );
 	}
 
-	public function template_newpost_side( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_side( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		$this->template_newpost_aftercontent( $posttype, $post, $target, $linked, $status, $meta );
 	}

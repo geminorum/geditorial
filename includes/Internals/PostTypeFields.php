@@ -2029,7 +2029,7 @@ trait PostTypeFields
 		$this->action( 'template_newpost_aftertitle', 6, 20, 'posttypefields_quickedit', $this->base );
 	}
 
-	public function template_newpost_beforetitle_posttypefields_title_before( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_beforetitle_posttypefields_title_before( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -2044,7 +2044,7 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_title_after( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_aftertitle_posttypefields_title_after( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -2059,7 +2059,7 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_title_link( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_aftertitle_posttypefields_title_link( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
@@ -2074,7 +2074,7 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_quickedit( $posttype, $post, $target, $linked, $status, $meta )
+	public function template_newpost_aftertitle_posttypefields_quickedit( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;

@@ -144,8 +144,12 @@ class SearchSelect extends gEditorial\Service
 		else
 			$args['post_status'] = WordPress\Status::available( $args['post_type'] );
 
-		// NOTE: must return single or array of post ids
-		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_posts' ), NULL, $args, $queried );
+		// @hook `geditorial_searchselect_pre_query_posts`
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_posts' ),
+			NULL,  // NOTE: Accepts single or array of post-ids.
+			$args,
+			$queried,
+		);
 
 		if ( is_wp_error( $pre ) )
 			return $pre;
@@ -231,9 +235,12 @@ class SearchSelect extends gEditorial\Service
 		if ( ! empty( $queried['exclude'] ) )
 			$args['exclude'] = self::parseIDs( $queried['exclude'] );
 
-		// NOTE: Must return single or array of term objects/ids.
-		// NOTE: If it's array, will handle duplicates.
-		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_terms' ), NULL, $args, $queried );
+		// @hook `geditorial_searchselect_pre_query_terms`
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_terms' ),
+			NULL,  // NOTE: Accepts single or array of term objects/ids, will handle duplicates.
+			$args,
+			$queried,
+		);
 
 		if ( is_wp_error( $pre ) )
 			return $pre;
@@ -356,8 +363,12 @@ class SearchSelect extends gEditorial\Service
 		if ( ! empty( $queried['search'] ) )
 			$args['search'] = trim( $queried['search'] );
 
-		// NOTE: must return single or array of user ids
-		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_users' ), NULL, $args, $queried );
+		// @hook `geditorial_searchselect_pre_query_users`
+		$pre = apply_filters( self::und( static::BASE, 'searchselect', 'pre_query_users' ),
+			NULL,  // NOTE: Accepts single or array of user-ids.
+			$args,
+			$queried,
+		);
 
 		if ( is_wp_error( $pre ) )
 			return $pre;

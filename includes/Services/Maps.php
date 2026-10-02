@@ -28,8 +28,8 @@ class Maps extends gEditorial\Service
 				'raw'    => Core\Text::force( $data ),
 				'lat'    => $latlng[0],
 				'lng'    => $latlng[1],
-				'latlng' => sprintf( '%1$s,%2$s', $latlng ),
-				'lonlat' => sprintf( '%2$s,%1$s', $latlng ),
+				'latlng' => vsprintf( '%1$s,%2$s', $latlng ),
+				'lonlat' => vsprintf( '%2$s,%1$s', $latlng ),
 			],
 		], NULL );
 
