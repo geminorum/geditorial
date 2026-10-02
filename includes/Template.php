@@ -1411,6 +1411,42 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
+	public static function renderTermMap(
+		mixed $term,
+		array $arguments = [],
+		?string $module = NULL
+	): bool {
+
+		if ( ! $term = WordPress\Term::get( $term ) )
+			return FALSE;
+
+		$module = $module ?? static::MODULE;
+		$args   = self::parsed( [
+			'field'    => 'latlng',
+			'fallback' => '',
+			'context'  => NULL,
+			'before'   => '',
+			'after'    => '',
+		], $arguments );
+
+		if ( $data = Services\TaxonomyFields::getFieldRaw( $args['field'], $term->term_id, $module, TRUE ) ) {
+
+			echo $args['before'];
+				Services\Maps::renderSingleMarker( $data, $args['context'] );
+			echo $args['after'];
+
+		} else if ( $args['fallback'] ) {
+
+			echo $args['before'].$args['fallback'].$args['after'];
+
+		} else {
+
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
 	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
 	public static function eventDate( int $start, int $end ): string|false

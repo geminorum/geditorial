@@ -29,4 +29,13 @@ class ModuleTemplate extends gEditorial\Template
 
 		return parent::renderTermIntro( $term, $atts, static::MODULE );
 	}
+
+	public static function renderTermMap(
+		mixed $term,
+		array $arguments = [],
+		?string $module = NULL,
+	): bool {
+
+		return parent::renderTermMap( $term, $arguments, static::MODULE );
+	}
 }
