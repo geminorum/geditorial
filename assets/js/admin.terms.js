@@ -142,6 +142,7 @@
       app.inlineText('fullname', tag, event);
       app.inlineText('tagline', tag, event);
       app.inlineText('subtitle', tag, event);
+      // 'abbr', // TODO
       app.inlineText('contact', tag, event); // TODO convert to code
       app.inlineText('venue', tag, event);
       app.inlineImage(tag, event);
@@ -156,6 +157,10 @@
       app.inlineSelect('arrow', tag, event);
       app.inlineText('label', tag, event);
       app.inlineCode('code', tag, event);
+      app.inlineCode('context', tag, event);
+      app.inlineCode('width', tag, event);
+      app.inlineCode('height', tag, event);
+      app.inlineCode('size', tag, event);
       app.inlineText('barcode', tag, event);
       app.inlineCode('latlng', tag, event);
       app.inlineDate('date', tag, event);
@@ -175,6 +180,7 @@
       app.inlineNumber('amount', tag, event);
       app.inlineNumber('unit', tag, event);
       app.inlineNumber('min', tag, event);
+      // 'rtl', // TODO
       app.inlineNumber('max', tag, event);
       app.inlineSelect('viewable', tag, event);
       app.inlineURL('source', tag, event);
@@ -183,6 +189,11 @@
       // 'identity',  // TODO
       // 'plate',     // TODO
       app.inlineCode('email', tag, event);
+      // 'address'    // TODO
+      // 'styles'     // TODO
+      // 'script'     // TODO
+      // 'markup'     // TODO
+      // 'markdown'   // TODO
 
       // FIXME: WTF: data attr cannot contain underscores!
       // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/

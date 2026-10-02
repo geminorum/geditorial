@@ -13,7 +13,7 @@
     // path: '[data-' + mainkey + '=\'path\']', // TODO!
     // pattern: '[data-' + mainkey + '=\'pattern\']', // TODO!
     // url: '[data-' + mainkey + '=\'url\']', // TODO!: support relative paths
-    // email: '[data-' + mainkey + '=\'email\'], input[type="email"]',
+    // email: '[data-' + mainkey + '=\'email\'], input[type="email"]', // TODO!
     identity: '[data-' + mainkey + '=\'identity\']',
     phone: '[data-' + mainkey + '=\'phone\'], input[type="tel"]',
     isbn: '[data-' + mainkey + '=\'isbn\']',
