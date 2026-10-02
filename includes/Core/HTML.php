@@ -5,7 +5,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 class HTML extends Base
 {
 
-	#[Deprecated(message:'use `Core\L10n::rtl()` instead')]
+	#[\Deprecated('USE `Core\L10n::rtl()`')]
 	public static function rtl(): bool
 	{
 		return L10n::rtl();
@@ -16,7 +16,7 @@ class HTML extends Base
 		return L10n::rtl() ? 'rtl' : 'ltr';
 	}
 
-	#[Deprecated(message:'use `Core\Link::get()` instead')]
+	#[\Deprecated('USE `Core\Link::get()`')]
 	public static function link(
 		?string $html = NULL,
 		string $link = '#',
@@ -34,20 +34,27 @@ class HTML extends Base
 		string $alt = '',
 	): string {
 
-		return $src ? '<img src="'.( (string) $src ).'" class="'.self::prepClass( $class ).'" alt="'.self::escape( $alt ).'" decoding="async" loading="lazy" />' : '';
+		return $src ?
+			'<img '.
+			'src="'.( (string) $src ).'" '.
+			'class="'.self::prepClass( $class ).'" '.
+			'alt="'.self::escape( $alt ).'" '.
+			'decoding="async" '.
+			'loading="lazy" '.
+			'/>' : '';
 	}
 
 	public static function heading(
 		mixed $level,   // may come straight from setting
 		string $html,
-		string|array|false|null $class = NULL,
+		null|false|string|array $class = NULL,
 		string $link = '',
 	): void {
 
 		if ( $level && $html )
 			echo self::tag( sprintf( 'h%s', (string) $level ), [
 				'class' => $class ?? '-title',
-			], $link ? self::link( $html, $link ) : $html );
+			], $link ? Link::get( $html, $link ) : $html );
 	}
 
 	public static function h1( mixed $html, null|string|array $class = '', string $link = '' ): void
@@ -179,7 +186,7 @@ class HTML extends Base
 			$tag = 'div';
 
 		echo '<'.$tag.' class="'.self::prepClass( 'description', '-description', $class ).'">'
-			// .Text::wordWrap( $nl2br ? nl2br( $string ) : $string ) // FIXME: messes with HTML attributes!
+			// `.Text::wordWrap( $nl2br ? nl2br( $string ) : $string )` // FIXME: messes with HTML attributes!
 			.( $nl2br ? nl2br( $html ) : $html )
 		.'</'.$tag.'>';
 
@@ -197,8 +204,8 @@ class HTML extends Base
 
 	public static function label(
 		string $input,
-		string|false $for = FALSE,
-		string|false $wrap = 'p',
+		false|string $for = FALSE,
+		false|string $wrap = 'p',
 	): void {
 
 		$html = self::tag( 'label', [
@@ -211,11 +218,44 @@ class HTML extends Base
 			: $html;
 	}
 
+	public static function checkBox(
+		string $title,
+		array $input_attributes = [],
+		false|string $wrap = 'p',
+		string|array $wrap_class = [],
+		false|array $label_attributes = [],
+		bool $verbose = TRUE,
+	): true|string {
+
+		$html = self::nbs( self::tag( 'input', array_merge( [
+			'type'    => 'checkbox',
+			'value'   => '1',
+			// 'checked' => FALSE, // no need
+		], $input_attributes ) ), $title );
+
+		if ( FALSE !== $label_attributes )
+			$html = self::tag( 'label', array_merge( [
+				'for'   => $input_attributes['id'] ?? FALSE,
+				'class' => 'form-label', // BS Class
+			], $label_attributes ), $html );
+
+		if ( $wrap )
+			$html = self::tag( $wrap, [
+				'class' => $wrap_class ?: FALSE,
+			], $html );
+
+		if ( ! $verbose )
+			return $html;
+
+		echo $html;
+		return TRUE;
+	}
+
 	public static function row(
 		mixed $html,
 		string|array $class = '',
 		mixed $data = [],
-		string|false $tag = 'li',
+		false|string $tag = 'li',
 	): string {
 
 		if ( ! $html && ! '0' === $html )
@@ -233,8 +273,8 @@ class HTML extends Base
 		array $rows,
 		string|array $class = '',
 		mixed $data = [],
-		string|false $tag = 'ul',
-		string|false $sub_tag = 'li',
+		false|string $tag = 'ul',
+		false|string $sub_tag = 'li',
 		string|array $sub_class = '',
 	): string {
 
@@ -341,9 +381,9 @@ class HTML extends Base
 
 	public static function tag(
 		mixed $tag,
-		string|array $atts = [],
-		string|bool|null $content = FALSE,
-		string $sep = '',
+		string|array     $atts    = [],
+		null|bool|string $content = FALSE,
+		string           $sep     = '',
 	): string {
 
 		if ( empty( $tag ) ) {
@@ -386,7 +426,7 @@ class HTML extends Base
 
 	public static function attrBoolean(
 		mixed $value,
-		mixed $current = NULL,
+		mixed $current  = NULL,
 		mixed $fallback = FALSE,
 	): mixed {
 
@@ -404,17 +444,17 @@ class HTML extends Base
 
 	public static function attrClass(): array
 	{
-		$classes = [];
+		$list = [];
 
 		foreach ( func_get_args() as $arg )
 
 			if ( is_array( $arg ) )
-				$classes = array_merge( $classes, $arg );
+				$list = array_merge( $list, $arg );
 
 			else if ( $arg && TRUE !== $arg )
-				$classes = array_merge( $classes, preg_split( '#\s+#', $arg ) );
+				$list = array_merge( $list, preg_split( '#\s+#', $arg ) );
 
-		return Arraay::prepString( $classes );
+		return Arraay::prepString( $list );
 	}
 
 	public static function prepClass(): string
@@ -552,7 +592,7 @@ class HTML extends Base
 			: '';
 	}
 
-	#[\Deprecated()]
+	#[\Deprecated('USE `Core\HTML::escape()`')]
 	public static function escapeAttr( ?string $data ): string
 	{
 		return self::escape( $data );
@@ -584,7 +624,7 @@ class HTML extends Base
 		// strip out any % encoded octets
 		$sanitized = preg_replace( '/%[a-fA-F0-9][a-fA-F0-9]/', '', $data );
 
-		// limit to A-Z,a-z,0-9,_,-
+		// limit to `A-Z,a-z,0-9,_,-`
 		$sanitized = preg_replace( '/[^A-Za-z0-9_-]/', '', $sanitized );
 
 		return $sanitized;
@@ -600,11 +640,9 @@ class HTML extends Base
 		return preg_replace( '/[^a-zA-Z0-9_:]/', '', $data );
 	}
 
-	#[Deprecated(message:'use `Core\HTML::parseAtts()` instead')]
+	#[\Deprecated('USE `Core\HTML::parseAtts()`')]
 	public static function getAtts( string $string, array $expecting = [] ): array
 	{
-		self::_dev_dep( 'HTML::parseAtts()' );
-
 		return self::parseAtts( $string, $expecting );
 	}
 
@@ -630,7 +668,7 @@ class HTML extends Base
 	public static function listCode(
 		mixed $array,
 		?string $row = NULL,
-		string|false $first = FALSE,
+		false|string $first = FALSE,
 	): string {
 
 		if ( ! $array )
@@ -651,7 +689,7 @@ class HTML extends Base
 	public static function tableCode(
 		mixed $array,
 		bool $reverse = FALSE,
-		string|false $caption = FALSE,
+		false|string $caption = FALSE,
 	): string {
 
 		if ( ! $array )
@@ -883,7 +921,7 @@ class HTML extends Base
 	public static function linkStyleSheet(
 		string $url,
 		string|array|false $version = FALSE,
-		string|false $media = 'all',
+		false|string $media = 'all',
 		bool $verbose = TRUE,
 	): true {
 
@@ -896,7 +934,7 @@ class HTML extends Base
 		$html = self::tag( 'link', [
 			'rel'   => 'stylesheet',
 			'href'  => $url,
-			// 'type'  => 'text/css', // @REF: https://core.trac.wordpress.org/ticket/64428
+			// `'type'  => 'text/css',` // @REF: https://core.trac.wordpress.org/ticket/64428
 			'media' => $media,
 		] )."\n";
 
@@ -969,10 +1007,19 @@ class HTML extends Base
 			];
 
 			if ( $item )
-				$html.= self::tag( $item, [ 'class' => $class, 'title' => $hint, 'data' => $data ], self::link( $icon.$title, $url ) );
+				$html.= self::tag( $item, [
+					'class' => $class,
+					'title' => $hint,
+					'data'  => $data,
+				], Link::get( $icon.$title, $url ) );
 
 			else
-				$html.= self::tag( 'a', [ 'class' => $class, 'title' => $hint, 'data' => $data, 'href' => $url ], $icon.$title );
+				$html.= self::tag( 'a', [
+					'class' => $class,
+					'title' => $hint,
+					'data'  => $data,
+					'href'  => $url,
+				], $icon.$title );
 		}
 
 		if ( $wrap )
@@ -1036,7 +1083,7 @@ class HTML extends Base
 		foreach ( $tabs as $tab => $tab_atts ) {
 
 			$tab_args = self::parsed( [
-				// 'active'  => FALSE, // not needed here, just for reference
+				// `'active'  => FALSE,` // not needed here, just for reference
 				'title'   => $tab,
 				'link'    => '#'.$tab,
 				'cb'      => FALSE,
@@ -1303,8 +1350,10 @@ class HTML extends Base
 						echo '&nbsp;';
 
 					if ( $actions )
-						self::tableActions( call_user_func_array( $actions,
-							array( $value, $row, $column, $index, $key, $args ) ) );
+						self::tableActions( call_user_func_array(
+							$actions,
+							[ $value, $row, $column, $index, $key, $args ]
+						) );
 
 					echo '</'.$cell.'>';
 				}
@@ -1399,8 +1448,8 @@ class HTML extends Base
 			'filter'   => self::getDashicon( 'filter' ),
 			'last'     => self::getDashicon( $args['rtl'] ? 'controls-skipback' : 'controls-skipforward' ),
 			'first'    => self::getDashicon( $args['rtl'] ? 'controls-skipforward' : 'controls-skipback' ),
-			'next'     => self::getDashicon( $args['rtl'] ? 'controls-back' : 'controls-forward' ), // &rsaquo;
-			'previous' => self::getDashicon( $args['rtl'] ? 'controls-forward' : 'controls-back' ), // &lsaquo;
+			'next'     => self::getDashicon( $args['rtl'] ? 'controls-back' : 'controls-forward' ), // `&rsaquo;`
+			'previous' => self::getDashicon( $args['rtl'] ? 'controls-forward' : 'controls-back' ), // `&lsaquo;`
 			'refresh'  => self::getDashicon( 'controls-repeat' ),
 			'order'    => self::getDashicon( 'sort' ),
 		], $args['icons'] );
@@ -1511,7 +1560,7 @@ class HTML extends Base
 				], $icons['next'] );
 				echo '&nbsp;';
 
-				// when found count is not available
+				// When found count is not available!
 				if ( $args['pages'] )
 					echo self::tag( 'a', [
 						'href' => add_query_arg( array_merge( $args['extra'], [
@@ -1555,7 +1604,7 @@ class HTML extends Base
 			if ( $pagination['paged'] != 1 )
 				$pagination['previous'] = $pagination['paged'] - 1;
 
-			// if ( $pagination['paged'] != $pagination['pages'] )
+			// `if ( $pagination['paged'] != $pagination['pages'] )`
 				$pagination['next'] = $pagination['paged'] + 1;
 
 		} else if ( $pagination['pages'] > 1 ) {
@@ -1574,7 +1623,7 @@ class HTML extends Base
 		array|false $menu,
 		callable|false $callback = FALSE,
 		string $list = 'ul',
-		string|false $children = 'children',
+		false|string $children = 'children',
 		string|array $class = '-html-menu',
 	): void {
 
@@ -1591,7 +1640,7 @@ class HTML extends Base
 				echo call_user_func_array( $callback, [ $item ] );
 
 			else
-				echo self::link( $item['title'], '#'.$item['slug'] );
+				echo Link::get( $item['title'], '#'.$item['slug'] );
 
 			if ( $children && ! empty( $item[$children] ) )
 				self::menu( $item[$children], $callback, $list, $children, '' );
@@ -1946,7 +1995,7 @@ class HTML extends Base
 		return self::wrap( $html, '-multiselect-wrap'.( $args['panel'] ? ' wp-tab-panel' : '' ) );
 	}
 
-	#[Deprecated(message:'use `Core\HTML::rows()` instead')]
+	#[\Deprecated('USE `Core\HTML::rows()`')]
 	public static function renderList( array $items, bool $keys = FALSE, string $list = 'ul' ): string
 	{
 		return $items ? self::tag( $list, '<li>'.implode( '</li><li>', $keys ? array_keys( $items ) : array_filter( $items ) ).'</li>' ) : '';

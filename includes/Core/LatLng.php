@@ -40,19 +40,19 @@ class LatLng extends Base
 	public static function validate( $lat, $long )
 	{
 		return preg_match( '/\A[+-]?(?:90(?:\.0{1,18})?|\d(?(?<=9)|\d?)\.\d{1,18})\z/x', $lat )
-		// return preg_match( '/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/', $lat )
-		// return preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat )
+		// `return preg_match( '/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/', $lat )`
+		// `return preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat )`
 			&& preg_match( '/\A[+-]?(?:180(?:\.0{1,18})?|(?:1[0-7]\d|\d{1,2})\.\d{1,18})\z/x', $long );
-			// && preg_match( '/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{0,6}$/', $long );
-			// && preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long );
+			// `&& preg_match( '/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{0,6}$/', $long );`
+			// `&& preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long );`
 	}
 
 	// `(42.32783298989135, -70.99989162915041)`
 	// @REF: https://stackoverflow.com/a/68931818
 	// @REF: https://3v4l.org/daAqb
-	public static function extract( $string )
+	public static function extract( string $data ): array
 	{
-		return sscanf( sprintf( '(%s)', $string ), '(%[^,], %[^)]' );
+		return $data ? sscanf( sprintf( '(%s)', $data ), '(%[^,], %[^)]' ) : '';
 	}
 
 	public static function prep( $input, $wrap = FALSE )
@@ -196,7 +196,11 @@ class LatLng extends Base
 			return $fallback;
 
 		$geopint = new \geminorum\gEditorial\Misc\LangLongUTM();
-		$latlng  = $geopint->convertUtmToLatLng( $parsed['zone'], $parsed['easting'], $parsed['northing'] );
+		$latlng  = $geopint->convertUtmToLatLng(
+			$parsed['zone'],
+			$parsed['easting'],
+			$parsed['northing'],
+		);
 
 		return vsprintf( '%s,%s', $latlng );
 	}
@@ -446,11 +450,11 @@ class LatLng extends Base
 	 * @param string $data
 	 * @param bool $fallback
 	 * @param mixed $reference
-	 * @return string|false|null
+	 * @return null|false|string
 	 */
 	public static function extractFromNeshan(
 		string $data,
-		string|false|null $fallback = FALSE,
+		null|false|string $fallback = FALSE,
 		mixed $reference = NULL
 	): null|false|string {
 
@@ -492,7 +496,7 @@ class LatLng extends Base
 	// Regex("""((?:(?:https?://)?(?:comaps\.at|ge0\.me|omaps\.app)|ge0:/)/$URI_REST)""")
 	public static function extractFromCoMaps(
 		string $data,
-		string|false|null $fallback = FALSE,
+		null|false|string $fallback = FALSE,
 		mixed $reference = NULL
 	): null|false|string {
 
