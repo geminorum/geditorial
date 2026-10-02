@@ -602,6 +602,13 @@ class Terms extends gEditorial\Module
 			if ( count( $enabled ) ) {
 
 				$this->_admin_enabled();
+
+				if ( Core\Arraay::exists( [
+					'latlng',
+				], $enabled ) ) {
+
+					$this->filter( 'taxonomy_term_tabs', 3, 21, FALSE, 'gnetwork' );
+				}
 			}
 		}
 	}
@@ -2850,6 +2857,34 @@ class Terms extends gEditorial\Module
 				return FALSE;
 
 		return $delete;
+	}
+
+	public function taxonomy_term_tabs( array $tabs, string $taxonomy, ?object $term = NULL ): array
+	{
+		foreach ( $this->get_supported( $taxonomy ) as $field ) {
+
+			switch ( $field ) {
+
+				case 'latlng':
+
+					$tabs[$this->classs( $field )] = [
+						'title'    => $this->get_supported_field_title( $field, $taxonomy ),
+						'callback' => [ $this, 'callback_term_tab_map' ],
+					];
+
+					break;
+			}
+		}
+
+		return $tabs;
+	}
+
+	public function callback_term_tab_map( string $taxonomy, string $tab, object $object, object $term ): void
+	{
+		ModuleTemplate::renderTermMap( $term, [
+			'field'   => 'latlng',
+			'context' => 'term_tab',
+		] );
 	}
 
 	public function terms_search_append_meta_frontend( array $meta, string $search, mixed $taxonomies, array $args ): array
