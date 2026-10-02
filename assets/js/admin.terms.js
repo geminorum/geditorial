@@ -182,6 +182,7 @@
       app.inlineURL('url', tag, event);
       // 'identity',  // TODO
       // 'plate',     // TODO
+      app.inlineCode('email', tag, event);
 
       // FIXME: WTF: data attr cannot contain underscores!
       // @SEE: https://www.sitepoint.com/how-why-use-html5-custom-data-attributes/

@@ -70,8 +70,8 @@ class Terms extends gEditorial\Module
 		'embed',
 		'url',
 		// 'identity',  // TODO
-		// 'email'      // TODO
 		// 'plate',     // TODO
+		'email',
 
 		'address',
 		'styles',
@@ -244,6 +244,7 @@ class Terms extends gEditorial\Module
 				'source'    => _x( 'Source', 'Titles', 'geditorial-terms' ),
 				'embed'     => _x( 'Embed', 'Titles', 'geditorial-terms' ),
 				'url'       => _x( 'URL', 'Titles', 'geditorial-terms' ),
+				'email'     => _x( 'Email', 'Titles', 'geditorial-terms' ),
 				'address'   => _x( 'Address', 'Titles', 'geditorial-terms' ),
 				'styles'    => _x( 'Styles', 'Titles', 'geditorial-terms' ),
 				'script'    => _x( 'Script', 'Titles', 'geditorial-terms' ),
@@ -298,6 +299,7 @@ class Terms extends gEditorial\Module
 				'embed'     => _x( 'Defines an embedable URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'address'   => _x( 'Defines a custom address for the term.', 'Descriptions', 'geditorial-terms' ),
+				'email'     => _x( 'Defines a custom email address for the term.', 'Descriptions', 'geditorial-terms' ),
 				'styles'    => _x( 'Defines a custom styles for the term.', 'Descriptions', 'geditorial-terms' ),
 				'script'    => _x( 'Defines a custom script for the term.', 'Descriptions', 'geditorial-terms' ),
 				'markup'    => _x( 'Defines a custom mark-up for the term.', 'Descriptions', 'geditorial-terms' ),
@@ -929,6 +931,7 @@ class Terms extends gEditorial\Module
 			'source',
 			'embed',
 			'url',
+			'email',
 			'address',
 			'styles',
 			'script',
@@ -1010,6 +1013,7 @@ class Terms extends gEditorial\Module
 			'source',
 			'embed',
 			'url',
+			'email',
 		];
 
 		foreach ( $supported as $field )
@@ -1244,6 +1248,7 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'email':
 			case 'contact':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -1597,6 +1602,10 @@ class Terms extends gEditorial\Module
 
 				$meta = Core\LatLng::sanitize( $meta );
 
+			} else if ( in_array( $field, [ 'email' ] ) ) {
+
+				$meta = Core\Email::sanitize( $meta );
+
 			} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
 
 				$meta = Core\URL::sanitize( $meta );
@@ -1949,6 +1958,19 @@ class Terms extends gEditorial\Module
 
 				break;
 
+			case 'email':
+
+				$html.= Core\HTML::tag( 'input', [
+					'id'    => $this->classs( $field, 'id' ),
+					'name'  => 'term-'.$field,
+					'type'  => 'email',
+					'value' => empty( $meta ) ? '' : $meta,
+					'class' => [ 'code' ],
+					'data'  => [ 'validator' => 'email' ],
+				] );
+
+				break;
+
 			case 'viewable':
 
 				$html.= Core\HTML::dropdown( $this->get_strings( 'misc', 'visibility' ), [
@@ -2168,6 +2190,7 @@ class Terms extends gEditorial\Module
 			case 'barcode':
 			case 'latlng':
 			case 'contact':
+			case 'email':
 
 				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
@@ -2476,6 +2499,7 @@ class Terms extends gEditorial\Module
 						$child['title'] = WordPress\Strings::prepTitle( $meta );
 						break;
 
+					case 'email':
 					case 'contact':
 
 						$child['meta']['html']  = Core\HTML::wrap( Services\Contacts::prepContact( $meta, 'adminbar' ) );
