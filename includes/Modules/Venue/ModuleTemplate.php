@@ -8,7 +8,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleTemplate extends gEditorial\Template
 {
-
 	const MODULE = 'venue';
 
 	public static function summary( array $atts = [] ): bool|string
@@ -56,7 +55,7 @@ class ModuleTemplate extends gEditorial\Template
 		if ( $post->post_type === self::constant( 'primary_posttype', 'place' ) )
 			return self::metaField( 'map_embed_url', array_merge( $atts, [
 				'fallback' => 'content_embed_url',
-				// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta
+				// `'filter'   => '__do_embed_shortcode',` // NO NEED: filtering the raw meta
 			] ) );
 
 		if ( ! gEditorial()->module( static::MODULE )->posttype_supported( $post->post_type ) )
@@ -68,7 +67,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::metaField( 'map_embed_url', array_merge( $atts, [
 			'id'       => $linked,
 			'fallback' => 'content_embed_url',
-			// 'filter'   => '__do_embed_shortcode', // NO NEED: filtering the raw meta
+			// `'filter'   => '__do_embed_shortcode',` // NO NEED: filtering the raw meta
 		] ) );
 	}
 }

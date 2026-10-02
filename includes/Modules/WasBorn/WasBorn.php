@@ -54,7 +54,7 @@ class WasBorn extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Date of Birth Meta-key for %s', 'Setting Title', 'geditorial-was-born' ),
-					Core\HTML::tag( 'i', $posttypes[$posttype_name] )
+					Core\HTML::em( $posttypes[$posttype_name] )
 				),
 				'description' => _x( 'Defines date-of-birth meta-key for the post-type.', 'Setting Description', 'geditorial-was-born' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -286,7 +286,7 @@ class WasBorn extends gEditorial\Module
 		$this->_hook_menu_taxonomy( 'group_taxonomy', 'users.php' );
 	}
 
-	public function restrict_manage_posts_admin_restrict( $posttype, $which )
+	public function restrict_manage_posts_admin_restrict( string $posttype, $which )
 	{
 		$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
@@ -300,7 +300,7 @@ class WasBorn extends gEditorial\Module
 			] );
 	}
 
-	public function parse_query_admin_restrict( &$query )
+	public function parse_query_admin_restrict( object &$query ): void
 	{
 		gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
 
@@ -356,7 +356,7 @@ class WasBorn extends gEditorial\Module
 		$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );
 	}
 
-	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
+	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' ): string
 	{
 		$html      = '';
 		$context   = $context ?? 'dashboard';

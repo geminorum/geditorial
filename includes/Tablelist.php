@@ -276,7 +276,7 @@ class Tablelist extends WordPress\Main
 	}
 
 	// @SEE: `Helper::getTermTitleRow()`
-	public static function getTermTitleRow( mixed $term, string|bool|null $link = 'edit' ): string
+	public static function getTermTitleRow( mixed $term, null|bool|string $link = 'edit' ): string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return Plugin::na( FALSE );

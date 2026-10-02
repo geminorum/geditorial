@@ -621,8 +621,8 @@ JS;
 	/**
 	 * Provides `Dropzone` package for register or enqueue.
 	 *
-	 * @homepage https://www.dropzone.dev/
-	 * @github https://github.com/dropzone/dropzone
+	 * @home https://www.dropzone.dev/
+	 * @repo https://github.com/dropzone/dropzone
 	 *
 	 * @param bool $enqueue
 	 * @param string $version
@@ -634,26 +634,26 @@ JS;
 
 		if ( $enqueue ) {
 
-			// wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );
+			// `wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );`
 			wp_enqueue_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $version, 'screen' );
 			wp_enqueue_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $version, TRUE );
 
 		} else {
 
-			// wp_register_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );
+			// `wp_register_style( $handle, static::URL.'assets/packages/dropzone/basic.css', [], $version, 'screen' );`
 			wp_register_style( $handle, static::URL.'assets/packages/dropzone/dropzone.css', [], $version, 'screen' );
 			wp_register_script( $handle, static::URL.'assets/packages/dropzone/dropzone-min.js', [], $version, TRUE );
 		}
 
-		// wp_script_add_data( $handle, 'strategy', 'defer' );
-		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
+		// `wp_script_add_data( $handle, 'strategy', 'defer' );`
+		// `wp_script_add_data( $handle, 'fetchpriority', 'low' );`
 
 		return $handle;
 	}
 
 	public static function linkDropzone( $ver = '6.3.5' )
 	{
-		// Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );
+		// `Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/basic.css', $ver, 'screen' );`
 		Core\HTML::linkStyleSheet( static::URL.'assets/packages/dropzone/dropzone.css', $ver, 'screen' );
 		printf( '<script src="%s"></script>', add_query_arg( 'ver', $ver, static::URL.'assets/packages/dropzone/dropzone-min.js' ) );
 	}

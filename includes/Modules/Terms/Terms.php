@@ -73,6 +73,7 @@ class Terms extends gEditorial\Module
 		// 'plate',     // TODO
 		'email',
 
+		/// multiline
 		'address',
 		'styles',
 		'script',
@@ -298,8 +299,8 @@ class Terms extends gEditorial\Module
 				'source'    => _x( 'Defines a source URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'embed'     => _x( 'Defines an embedable URL for the term.', 'Descriptions', 'geditorial-terms' ),
 				'url'       => _x( 'Defines a custom URL for the term.', 'Descriptions', 'geditorial-terms' ),
-				'address'   => _x( 'Defines a custom address for the term.', 'Descriptions', 'geditorial-terms' ),
 				'email'     => _x( 'Defines a custom email address for the term.', 'Descriptions', 'geditorial-terms' ),
+				'address'   => _x( 'Defines a custom street address for the term.', 'Descriptions', 'geditorial-terms' ),
 				'styles'    => _x( 'Defines a custom styles for the term.', 'Descriptions', 'geditorial-terms' ),
 				'script'    => _x( 'Defines a custom script for the term.', 'Descriptions', 'geditorial-terms' ),
 				'markup'    => _x( 'Defines a custom mark-up for the term.', 'Descriptions', 'geditorial-terms' ),
@@ -691,7 +692,7 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	public function get_supported_field_title( $field, $taxonomy, $term = FALSE )
+	public function get_supported_field_title( string $field, string $taxonomy, false|object $term = FALSE ): string
 	{
 		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
 		$suitable  = $suitables[$field]['title'] ?? NULL;
@@ -708,7 +709,7 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	public function get_supported_field_desc( $field, $taxonomy, $term = FALSE )
+	public function get_supported_field_desc( string $field, string $taxonomy, false|object $term = FALSE ): string
 	{
 		$suitables = Services\TaxonomyFields::getSuitableMetas( $taxonomy );
 		$suitable  = $suitables[$field]['description'] ?? NULL;
@@ -725,7 +726,7 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	public function get_supported_position( $field, $taxonomy = FALSE )
+	public function get_supported_position( string $field, false|string $taxonomy = FALSE ): false|array
 	{
 		switch ( $field ) {
 
@@ -791,7 +792,7 @@ class Terms extends gEditorial\Module
 	// TODO: `meta_rendered` just like meta module
 	// @REF: https://make.wordpress.org/core/2018/07/27/registering-metadata-in-4-9-8/
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/modifying-responses/
-	protected function register_meta_fields()
+	protected function register_meta_fields(): void
 	{
 		foreach ( $this->get_supported() as $field ) {
 

@@ -413,7 +413,7 @@ class Modified extends gEditorial\Module
 		);
 	}
 
-	public function get_site_modified( string|bool|null $format = NULL, mixed $posttypes = NULL, ?bool $published = NULL ): false|string|array
+	public function get_site_modified( null|bool|string $format = NULL, mixed $posttypes = NULL, ?bool $published = NULL ): false|string|array
 	{
 		global $wpdb;
 

@@ -8,11 +8,10 @@ use geminorum\gEditorial\WordPress;
 
 class TaxonomyFields extends gEditorial\Service
 {
-
 	const SUITABLE_METAS_PROP = 'suitable_meta_fields';
-	const META_TAGLINE_PROP   = 'taxonomyfields_tagline'; // CAUTION: @SEE `WordPress\Term::summary()`
+	const META_TAGLINE_PROP   = 'taxonomyfields_tagline';  // CAUTION: @SEE `WordPress\Term::summary()`
 
-	public static function getSuitableMetas( $taxonomy, $fallback = [] )
+	public static function getSuitableMetas( string $taxonomy, array $fallback = [] ): array
 	{
 		static $data = [];
 
@@ -84,7 +83,7 @@ class TaxonomyFields extends gEditorial\Service
 		return gEditorial()->module( $module )->get_supported_metakey( $field_key, $taxonomy );
 	}
 
-	public static function getField( $field_key, $atts = [], $check = TRUE, $module = 'terms' )
+	public static function getField( mixed $field_key, array $atts = [], bool $check = TRUE, string $module = 'terms' ): mixed
 	{
 		$field = FALSE;
 		$args  = self::parsed( [
@@ -94,7 +93,7 @@ class TaxonomyFields extends gEditorial\Service
 			'noaccess' => NULL,     // returns upon no access, `NULL` for `default` argument
 			'context'  => 'view',   // access checks, `FALSE` to disable checks
 			'filter'   => FALSE,    // or `__do_embed_shortcode`
-			'prefix'   => FALSE,    // prefix the value with field prop
+			'prefix'   => FALSE,    // prefixes the value with field prop
 			'trim'     => FALSE,    // or number of chars
 			'before'   => '',
 			'after'    => '',
@@ -126,7 +125,7 @@ class TaxonomyFields extends gEditorial\Service
 		if ( FALSE === $meta && $args['fallback'] )
 			return self::getField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
 
-		// `if ( empty( $field ) ) $field = gEditorial()->module( $module )->get_posttype_field_args( $field_key, $post->post_type );`
+		// `if ( empty( $field ) ) $field = gEditorial()->module( $module )->get_taxonomy_field_args( $field_key, $post->post_type );`
 		$field = FALSE; // TODO
 
 		// NOTE: field may be disabled or overridden
@@ -141,7 +140,7 @@ class TaxonomyFields extends gEditorial\Service
 
 		if ( FALSE !== $args['context'] ) {
 
-			// `$access = gEditorial()->module( $module )->access_posttype_field( $field, $term, $args['context'] );`
+			// `$access = gEditorial()->module( $module )->access_taxonomy_field( $field, $term, $args['context'] );`
 			$access = TRUE; // TODO
 
 			if ( ! $access )
@@ -173,7 +172,7 @@ class TaxonomyFields extends gEditorial\Service
 			if ( ! gEditorial()->enabled( $module ) )
 				return $default;
 
-			if ( ! $term = WordPress\Post::get( $term_id ) )
+			if ( ! $term = WordPress\Term::get( $term_id ) )
 				return $default;
 
 			$term_id = $term->term_id;
@@ -187,7 +186,7 @@ class TaxonomyFields extends gEditorial\Service
 		return apply_filters( self::und( static::BASE, 'get_terms_field' ), $data, $field_key, $term_id, $module, $default );
 	}
 
-	public static function getFieldDate( $field_key, $term_id, $module = 'terms', $check = TRUE, $default = FALSE, $default_calendar = NULL )
+	public static function getFieldDate( string $field_key, int $term_id, string $module = 'terms', bool $check = TRUE, mixed $default = FALSE, ?string $default_calendar = NULL ): mixed
 	{
 		if ( ! $date = self::getFieldRaw( $field_key, $term_id, $module, $check, $default ) )
 			return $default;
