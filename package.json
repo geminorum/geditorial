@@ -4,7 +4,7 @@
   "version": "3.35.1",
   "description": "Our Editorial in WordPress",
   "license": "GPL-2.0-or-later",
-  "homepage": "https://github.com/geminorum/geditorial",
+  "homepage": "https://geminorum.ir/wordpress/geditorial",
   "author": {
     "name": "Nasser Rafie",
     "email": "contact@geminorum.ir",
@@ -45,15 +45,15 @@
     "git:gc": "git gc --prune=now"
   },
   "devDependencies": {
-    "@wordpress/babel-preset-default": "^8.54.0",
-    "@wordpress/browserslist-config": "^6.54.0",
-    "@wordpress/stylelint-config": "^24.3.0",
-    "autoprefixer": "^10.5.4",
-    "browserslist": "^4.28.8",
-    "cssnano": "^9.0.2",
+    "@wordpress/babel-preset-default": "^8.56.0",
+    "@wordpress/browserslist-config": "^6.56.0",
+    "@wordpress/stylelint-config": "^26.0.0",
+    "autoprefixer": "^10.6.1",
+    "browserslist": "^4.29.3",
+    "cssnano": "^9.1.2",
     "del": "^8.0.1",
     "fancy-log": "^2.0.0",
-    "fs-extra": "^11.4.0",
+    "fs-extra": "^11.4.1",
     "gulp": "^5.0.1",
     "gulp-bump": "^3.2.0",
     "gulp-changed-in-place": "^2.3.0",
@@ -70,14 +70,14 @@
     "gulp-template": "^6.1.0",
     "gulp-uglify": "^3.0.2",
     "gulp-zip": "^6.1.0",
-    "js-yaml": "^5.4.1",
+    "js-yaml": "^5.4.2",
     "lodash.template": "^4.18.1",
     "parse-changelog": "^1.0.2",
-    "postcss": "^8.5.26",
+    "postcss": "^8.5.28",
     "rtlcss": "^4.3.0",
     "semistandard": "^17.0.0",
-    "stylelint": "^17.14.1",
-    "stylelint-scss": "^7.2.0",
+    "stylelint": "^17.16.0",
+    "stylelint-scss": "^7.3.0",
     "xtend": "^4.0.2"
   },
   "optionalDependencies": {
@@ -87,8 +87,8 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "chart.js": "^4.5.1",
-    "dropzone": "^6.0.0-beta.2",
-    "jqtree": "^1.9.0",
+    "dropzone": "^6.3.5",
+    "jqtree": "^2.0.2",
     "jquery": "^4.0.0",
     "jquery-mask-plugin": "^1.14.16",
     "jsbarcode": "^3.12.3",
@@ -106,6 +106,11 @@
     "vazirmatn": "^33.0.3",
     "virastar": "^0.22.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "allowScripts": {
+    "@parcel/watcher": true,
+    "core-js": true,
+    "es5-ext": true
   },
   "babel": {
     "presets": [

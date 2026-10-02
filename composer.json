@@ -82,5 +82,6 @@
     "psr-4": {
       "geminorum\\gEditorial\\": "includes/"
     }
-  }
+  },
+  "prefer-stable": true
 }

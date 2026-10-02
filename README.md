@@ -20,7 +20,7 @@ See [assets/packages](https://github.com/geminorum/geditorial/tree/master/assets
 ### Installation
 Grab the latest release from [here](https://github.com/geminorum/geditorial/releases).
 
-See [Installing Plugins](http://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
+See [Installing Plugins](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins).
 
 ### Changelog
 See [CHANGES.md](CHANGES.md).
@@ -28,6 +28,6 @@ See [CHANGES.md](CHANGES.md).
 ### Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Please log issues at [here](https://github.com/geminorum/geditorial/issues).
+Please log issues [here](https://github.com/geminorum/geditorial/issues).
 
 [![it's a geminorum project](https://img.shields.io/badge/it's_a-geminorum_project-lightgrey.svg?style=flat-square)](https://geminorum.ir/)
