@@ -27,7 +27,7 @@ class Skilled extends gEditorial\Module
 		return [
 			'name'     => 'skilled',
 			'title'    => _x( 'Skilled', 'Modules: Skilled', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Expertise', 'Modules: Skilled', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Expertise', 'Modules: Skilled', 'geditorial-admin' ),
 			'icon'     => 'admin-tools',
 			'access'   => 'beta',
 			'keywords' => [

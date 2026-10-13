@@ -41,7 +41,7 @@ class Papered extends gEditorial\Module
 		return [
 			'name'     => 'papered',
 			'title'    => _x( 'Papered', 'Modules: Papered', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Print Profiles', 'Modules: Papered', 'geditorial-admin' ),
+			'desc'     => _x( 'Print Profiles', 'Modules: Papered', 'geditorial-admin' ),
 			'icon'     => 'printer',
 			'access'   => 'beta',
 			'keywords' => [
@@ -743,7 +743,7 @@ class Papered extends gEditorial\Module
 		?object $screen = NULL,
 	): void {
 
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		// gEditorial\MetaBox::fieldPostMenuOrder( $object );
 		// gEditorial\MetaBox::fieldPostParent( $object );
@@ -808,7 +808,7 @@ class Papered extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, 'primary_posttype' ) || empty( $_POST ) )
 			return;
 
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		if ( ! $this->nonce_verify( $context ) )
 			return;
@@ -919,7 +919,7 @@ class Papered extends gEditorial\Module
 
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
-		$context  = $context ?? 'printingbox';
+		$context  ??= 'printingbox';
 		$posttype = $this->constant( 'primary_posttype' );
 		$link     = $this->get_printpage_url();
 		$name     = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
@@ -973,7 +973,7 @@ class Papered extends gEditorial\Module
 	// @REF: `render_print_button()`
 	private function _render_printbuttons( object $profile, false|object $source = FALSE, ?string $context = NULL ): void
 	{
-		$context = $context ?? 'printingbox';
+		$context ??= 'printingbox';
 		$args    = [
 			'profile'  => $profile->ID,
 			'target'   => 'preview',

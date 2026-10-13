@@ -71,7 +71,7 @@ trait SettingsPostTypes
 
 	public function register_settings_posttypes_option( $title = NULL )
 	{
-		$title = $title ?? $this->get_string( 'post_types_title', FALSE, 'settings',
+		$title ??= $this->get_string( 'post_types_title', FALSE, 'settings',
 				_x( 'Supported Post-types', 'Internal: SettingsPostTypes: Field Title', 'geditorial-admin' ) );
 
 		$option = $this->hook_base( $this->module->name );
@@ -256,7 +256,7 @@ trait SettingsPostTypes
 	 */
 	protected function get_settings_posttypes_parents( string|array $extra = [], ?string $capability = NULL ): array
 	{
-		$list       = [];
+		$list      = [];
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
 
 		foreach ( $this->posttypes_parents( $extra ) as $posttype ) {
@@ -283,7 +283,7 @@ trait SettingsPostTypes
 	 */
 	protected function get_settings_posttypes_for_target( string $target, string|array $extra = [], ?string $capability = NULL, null|string|array $supports = NULL ): array
 	{
-		$list       = [];
+		$list      = [];
 		$posttypes = WordPress\PostType::get( 0, [ 'show_ui' => TRUE ], $capability );
 
 		foreach ( $this->posttypes_for_target( $target, $extra ) as $posttype ) {

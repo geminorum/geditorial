@@ -9,15 +9,15 @@ use geminorum\gEditorial\WordPress;
 
 trait DefaultTerms
 {
-	protected function init_default_terms()
+	protected function init_default_terms(): void
 	{
 		if ( ! method_exists( $this, 'define_default_terms' ) )
-			return FALSE;
+			return;
 
 		$this->filter( 'taxonomy_default_terms', 2, 12, FALSE, 'gnetwork' );
 	}
 
-	public function taxonomy_default_terms( $terms, $taxonomy )
+	public function taxonomy_default_terms( array $terms, string $taxonomy ): array
 	{
 		foreach ( $this->define_default_terms() as $constant => $defaults )
 			if ( $taxonomy === $this->constant( $constant ) )
@@ -32,7 +32,7 @@ trait DefaultTerms
 
 	// protected function define_default_terms(): array { return []; }
 
-	protected function get_default_terms( $constant, $terms = NULL )
+	protected function get_default_terms( string $constant, ?array $terms = NULL ): array
 	{
 		// Constant is not defined (in case custom terms are for another module)
 		if ( ! $this->constant( $constant ) )

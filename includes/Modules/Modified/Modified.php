@@ -237,7 +237,7 @@ class Modified extends gEditorial\Module
 	{
 		if ( $content = $this->site_modified_shortcode( [ 'title' => NULL, 'format_context' => 'printdate' ] ) )
 			$items[] = Core\HTML::tag( 'span', [
-				// 'href'  => $this->get_module_url(), // TODO
+				// `'href'  => $this->get_module_url(),` // TODO
 				'title' => $this->get_setting( 'last_published' )
 					? _x( 'This is the time of last published post is this site.', 'Pointer: Site', 'geditorial-modified' )
 					: _x( 'This is the time of last modified post is this site.', 'Pointer: Site', 'geditorial-modified' ),
@@ -521,8 +521,8 @@ class Modified extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$context = $context ?? 'summary';
-		$format  = $format  ?? $this->get_setting( 'insert_format', 'dateonly' );
+		$context ??= 'summary';
+		$format  ??= $this->get_setting( 'insert_format', 'dateonly' );
 
 		$data = [
 			'context' => $context,

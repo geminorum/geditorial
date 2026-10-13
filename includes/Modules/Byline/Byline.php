@@ -401,7 +401,7 @@ class Byline extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
-		$context = $context ?? 'overview';
+		$context ??= 'overview';
 		$target  = self::req( 'target', 'mainapp' );
 
 		if ( $this->role_can_post( $post, 'assign' ) && 'mainapp' === $target ) {

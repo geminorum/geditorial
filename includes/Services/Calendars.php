@@ -685,7 +685,7 @@ class Calendars extends gEditorial\Service
 			$summary,
 			$term,
 			$context,
-			$final
+			$final,
 		) )
 			$event->setSummary( Core\Text::prepDescForICAL( $summary ) );
 
@@ -694,7 +694,7 @@ class Calendars extends gEditorial\Service
 			WordPress\Term::shortlink( $term ),
 			$term,
 			$context,
-			$final
+			$final,
 		) )
 			$event->setUrl( new \Eluceo\iCal\Domain\ValueObject\Uri( $link ) );
 
@@ -703,7 +703,7 @@ class Calendars extends gEditorial\Service
 			WordPress\Strings::prepDescription( $term->description, TRUE, FALSE ),
 			$term,
 			$context,
-			$final
+			$final,
 		) )
 			$event->setDescription( Core\Text::prepDescForICAL( $desc ) );
 
@@ -767,7 +767,7 @@ class Calendars extends gEditorial\Service
 		$filtered = apply_filters( self::und( static::BASE, 'calendars', 'sanitize_ical_context' ),
 			$context ?? static::ICAL_DEFAULT_CONTEXT,
 			$target,
-			$object
+			$object,
 		);
 
 		if ( ! $filtered || static::ICAL_DEFAULT_CONTEXT === $filtered )
@@ -799,10 +799,10 @@ class Calendars extends gEditorial\Service
 			WordPress\Post::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$post,
-				$sanitized
+				$sanitized,
 			),
 			$post,
-			$sanitized
+			$sanitized,
 		);
 	}
 
@@ -821,10 +821,10 @@ class Calendars extends gEditorial\Service
 			WordPress\Term::endpointURL(
 				static::REWRITE_ENDPOINT_NAME,
 				$term,
-				$sanitized
+				$sanitized,
 			),
 			$term,
-			$sanitized
+			$sanitized,
 		);
 	}
 
@@ -865,15 +865,15 @@ class Calendars extends gEditorial\Service
 	{
 		$calendars = [
 			'gregorian'     => _x( 'Gregorian', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'japanese'      => _x( 'Japanese', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'buddhist'      => _x( 'Buddhist', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'chinese'       => _x( 'Chinese', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
+			// `'japanese'      => _x( 'Japanese', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
+			// `'buddhist'      => _x( 'Buddhist', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
+			// `'chinese'       => _x( 'Chinese', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
 			'persian'       => _x( 'Persian', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'indian'        => _x( 'Indian', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
+			// `'indian'        => _x( 'Indian', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
 			'islamic'       => _x( 'Islamic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'islamic-civil' => _x( 'Islamic-Civil', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'coptic'        => _x( 'Coptic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
-			// 'ethiopic'      => _x( 'Ethiopic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),
+			// `'islamic-civil' => _x( 'Islamic-Civil', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
+			// `'coptic'        => _x( 'Coptic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
+			// `'ethiopic'      => _x( 'Ethiopic', 'Service: Calendars: Default Calendar Type', 'geditorial' ),`
 		];
 
 		// @hook `geditorial_default_calendars`
@@ -892,7 +892,7 @@ class Calendars extends gEditorial\Service
 	#[\Deprecated('USE `Core\Date::sanitizeCalendar()`')]
 	public static function sanitize( ?string $calendar, ?string $default = NULL ): string|null
 	{
-		$default   = $default ?? Core\L10n::calendar();
+		$default   ??= Core\L10n::calendar();
 		$calendars = self::getDefualts( FALSE );
 		$sanitized = $calendar;
 

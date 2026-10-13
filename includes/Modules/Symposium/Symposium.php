@@ -23,7 +23,7 @@ class Symposium extends gEditorial\Module
 		return [
 			'name'     => 'symposium',
 			'title'    => _x( 'Symposium', 'Modules: Symposium', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Session Management', 'Modules: Symposium', 'geditorial-admin' ),
+			'desc'     => _x( 'Session Management', 'Modules: Symposium', 'geditorial-admin' ),
 			'icon'     => 'welcome-learn-more',
 			'access'   => 'beta',
 			'keywords' => [

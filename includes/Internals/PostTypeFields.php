@@ -698,8 +698,8 @@ trait PostTypeFields
 
 	protected function posttypefields__hook_metabox( object $screen, ?array $fields = NULL, ?string $context = NULL )
 	{
-		$context = $context ?? 'mainbox';
-		$fields  = $fields  ?? $this->get_posttype_fields( $screen->post_type );
+		$context ??= 'mainbox';
+		$fields  ??= $this->get_posttype_fields( $screen->post_type );
 
 		// Bail if no fields enabled for this post-type
 		if ( ! count( $fields ) )
@@ -769,8 +769,8 @@ trait PostTypeFields
 	{
 		$user_id  = get_current_user_id();
 		$calendar = $this->default_calendar();
-		$context  = $context ?? 'mainbox';
-		$fields   = $fields  ?? $this->get_posttype_fields( $post->post_type );
+		$context  ??= 'mainbox';
+		$fields   ??= $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field ) {
 

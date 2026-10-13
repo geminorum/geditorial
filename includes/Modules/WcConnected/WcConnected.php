@@ -178,7 +178,7 @@ class WcConnected extends gEditorial\Module
 
 	protected function _render_supportedbox_content( object $post, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
-		$context   = $context ?? 'supportedbox';
+		$context   ??= 'supportedbox';
 		$metakey   = $this->constant( 'metakey_connected' );
 		$connected = get_metadata( 'post', $post->ID, $metakey, FALSE );
 		$options   = [];

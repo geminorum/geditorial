@@ -32,7 +32,7 @@ trait ObjectsToObjects
 			'can_create_post' => FALSE,
 			'admin_column'    => FALSE,   // 'from',
 			'admin_box'       => [
-				// 'show'    => 'from',
+				// `'show'    => 'from',`
 				'context' => $this->get_setting( self::und( $context, 'adminbox_context' ), FALSE ) ? 'advanced' : 'normal',
 			],
 
@@ -167,7 +167,7 @@ trait ObjectsToObjects
 			return FALSE;
 
 		$type = Services\O2O\API::type( $this->constant( self::und( $constant, 'o2o' ) ) );
-		// $id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );
+		// `$id   = $type->connect( $from, $to, [ 'date' => current_time( 'mysql' ) ] );`
 		$id   = $type->connect( $from, $to, $meta );
 
 		if ( is_wp_error( $id ) )
@@ -306,7 +306,7 @@ trait ObjectsToObjects
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return;
 
-		$context   = $context ?? 'o2o';
+		$context   ??= 'o2o';
 		$connected = new \WP_Query( [
 			'connected_type'  => $o2o,
 			'connected_items' => $post,

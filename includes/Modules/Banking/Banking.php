@@ -456,7 +456,7 @@ class Banking extends gEditorial\Module
 		return $data;
 	}
 
-	public function personage_editform_meta_summary( $fields, $post )
+	public function personage_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;

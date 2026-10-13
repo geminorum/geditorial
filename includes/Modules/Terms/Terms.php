@@ -3376,7 +3376,7 @@ class Terms extends gEditorial\Module
 
 	public function imports_settings( string $sub ): void
 	{
-		$context = $context ?? 'imports';
+		$context ??= 'imports';
 
 		if ( $this->check_settings( $sub, $context, 'per_page' ) ) {
 

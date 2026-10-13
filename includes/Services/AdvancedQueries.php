@@ -161,19 +161,23 @@ class AdvancedQueries extends gEditorial\Service
 		return $clauses;
 	}
 
-	// @REF: https://stackoverflow.com/a/64184587
-	// @REF: https://regex101.com/r/drMN1X/2
-	// 'meta_query' => [
-    //     'relation' => 'AND',
-    //     [
-    //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
-    //         'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}',
-    //         'key' => '{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
-    //         'value' => [ $first_day, $last_day ],
-    //         'type' => 'numeric',
-    //         'compare' => 'BETWEEN'
-    //     ],
-    // ],
+	/***
+	 // @REF: https://stackoverflow.com/a/64184587
+	 // @REF: https://regex101.com/r/drMN1X/2
+	 ```
+	'meta_query' => [
+        'relation' => 'AND',
+        [
+            'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
+            'key' => 'course_{GEDITORIAL_METAKEY_LIKE_POSITION}',
+            'key' => '{GEDITORIAL_METAKEY_LIKE_POSITION}_access_from',
+            'value' => [ $first_day, $last_day ],
+            'type' => 'numeric',
+            'compare' => 'BETWEEN'
+        ],
+    ],
+	```
+	 */
 	public static function posts_where_metakey_like( string $where ): string
 	{
 		return preg_replace(
@@ -330,8 +334,8 @@ class AdvancedQueries extends gEditorial\Service
 	public static function getTaxonomies(): array
 	{
 		return WordPress\Taxonomy::get( -1, [
-			// 'show_ui'      => TRUE,
-			// 'show_in_rest' => TRUE,
+			// `'show_ui'      => TRUE,`
+			// `'show_in_rest' => TRUE,`
 			'public'       => TRUE,
 			'_builtin'     => FALSE,   // WTF?!
 
@@ -362,7 +366,7 @@ class AdvancedQueries extends gEditorial\Service
 
 		return array_filter( array_map(
 			static function ( $value ) {
-				// return trim( $value, "\"\'\n\r " );
+				// `return trim( $value, "\"\'\n\r " );`
 				return Core\Text::trimQuotes( $value );
 			},
 			$matches[0]

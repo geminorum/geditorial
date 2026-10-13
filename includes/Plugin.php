@@ -121,18 +121,20 @@ class Plugin extends WordPress\Plugin
 		$development = WordPress\IsIt::dev();
 
 		return [
-			'GEDITORIAL_SYSTEM_TITLE'      => NULL,
-			'GEDITORIAL_SYSTEM_DESC'       => NULL,
-			'GEDITORIAL_BETA_FEATURES'     => TRUE,
-			'GEDITORIAL_ALPHA_FEATURES'    => $development,
-			'GEDITORIAL_CRM_FEATURES'      => $development,
-			'GEDITORIAL_LOAD_PRIVATES'     => $development,
-			'GEDITORIAL_DEBUG_MODE'        => $development,
-			'GEDITORIAL_THRIFT_MODE'       => FALSE,
-			'GEDITORIAL_DISABLE_ICAL'      => FALSE,
-			'GEDITORIAL_DISABLE_CREDITS'   => FALSE,
-			'GEDITORIAL_DISABLE_HELP_TABS' => FALSE,
-			'GEDITORIAL_STRING_DELIMITERS' => NULL,
+			'GEDITORIAL_SYSTEM_TITLE'        => NULL,
+			'GEDITORIAL_SYSTEM_DESC'         => NULL,
+			'GEDITORIAL_BETA_FEATURES'       => TRUE,
+			'GEDITORIAL_ALPHA_FEATURES'      => $development,
+			'GEDITORIAL_CRM_FEATURES'        => $development,
+			'GEDITORIAL_LOAD_PRIVATES'       => $development,
+			'GEDITORIAL_DEBUG_MODE'          => $development,
+			'GEDITORIAL_AIRGAPPED'           => FALSE,
+			'GEDITORIAL_THRIFT_MODE'         => FALSE,
+			'GEDITORIAL_DISABLE_ICAL'        => FALSE,
+			'GEDITORIAL_DISABLE_REMOTEFILES' => TRUE,           // FALSE, // FIXME!
+			'GEDITORIAL_DISABLE_CREDITS'     => FALSE,
+			'GEDITORIAL_DISABLE_HELP_TABS'   => FALSE,
+			'GEDITORIAL_STRING_DELIMITERS'   => NULL,
 
 			'GEDITORIAL_WIKI_URL' => 'https://github.com/geminorum/geditorial/wiki',
 
@@ -244,8 +246,8 @@ class Plugin extends WordPress\Plugin
 			'LineDiscovery',
 			'Locations',
 			'Lookup',
-			'Markup',
 			'Maps',
+			'Markup',
 			'ObjectHints',
 			'ObjectsToObjects',
 			'Paired',
@@ -652,7 +654,7 @@ class Plugin extends WordPress\Plugin
 				// 'parent' => 'top-secondary',
 				'id'     => $this->base,
 				'title'  => Services\Icons::adminBarMarkup(),
-				// 'title'  => gEditorial()->module( 'config' )->_get_icon(), // WTF??!
+				// `'title'  => gEditorial()->module( 'config' )->_get_icon(),` // WTF??!
 				'href'   => $link,
 				'meta'   => [
 					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),

@@ -30,9 +30,9 @@ trait Assets
 		else
 			$name = self::dot( $this->key, $name );
 
-		$name   = str_replace( '_', '-', $name );
-		$handle = $handle ?? strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 		$prefix = is_admin() ? 'admin.' : 'front.';
+		$name   = str_replace( '_', '-', $name );
+		$handle ??= strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
 		wp_enqueue_style(
 			$handle,
@@ -74,11 +74,10 @@ trait Assets
 
 		if ( $name ) {
 
-			$name   = str_replace( '_', '-', $name );
-			$handle = $handle ?? strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
-
 			$prefix = is_admin() ? 'admin.' : 'front.';
 			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+			$name   = str_replace( '_', '-', $name );
+			$handle ??= strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
 			wp_enqueue_script(
 				$handle,

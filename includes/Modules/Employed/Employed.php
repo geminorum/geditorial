@@ -27,7 +27,7 @@ class Employed extends gEditorial\Module
 		return [
 			'name'     => 'employed',
 			'title'    => _x( 'Employed', 'Modules: Employed', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Employment Records', 'Modules: Employed', 'geditorial-admin' ),
+			'desc'     => _x( 'Employment Records', 'Modules: Employed', 'geditorial-admin' ),
 			'icon'     => 'businessperson',
 			'access'   => 'beta',
 			'keywords' => [

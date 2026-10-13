@@ -432,7 +432,7 @@ class Drafts extends gEditorial\Module
 		return $states;
 	}
 
-	public function page_row_actions( $actions, $post )
+	public function page_row_actions( array $actions, object $post ): array
 	{
 		return $this->post_row_actions( $actions, $post );
 	}

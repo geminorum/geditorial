@@ -325,6 +325,7 @@ trait DashboardSummary
 		if ( empty( $supported ) || ! $constant )
 			return FALSE;
 
+		// @hook: `geditorial_paired_post_summaries`
 		add_filter( $this->hook_base( 'paired', 'post_summaries' ),
 			function ( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context ) use ( $constant, $supported ) {
 

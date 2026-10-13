@@ -362,7 +362,7 @@ class Bookmarked extends gEditorial\Module
 		string $source_title
 	): array|false {
 
-		$context = $context ?? 'import';
+		$context ??= 'import';
 
 		$this->cache['subcontent_type_options'] = $this->cache['subcontent_type_options']
 			?? ModuleHelper::getTypeOptions( $context );

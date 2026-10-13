@@ -50,7 +50,7 @@ class Trained extends gEditorial\Module
 		return [
 			'name'     => 'trained',
 			'title'    => _x( 'Trained', 'Modules: Trained', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Training Management', 'Modules: Trained', 'geditorial-admin' ),
+			'desc'     => _x( 'Training Management', 'Modules: Trained', 'geditorial-admin' ),
 			'icon'     => [ 'misc-16', 'person-arms-up' ],
 			'access'   => 'beta',
 			'keywords' => [

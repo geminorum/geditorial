@@ -16,7 +16,7 @@ class Pointers extends gEditorial\Module
 		return [
 			'name'     => 'pointers',
 			'title'    => _x( 'Pointers', 'Modules: Pointers', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Content Hints', 'Modules: Pointers', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Hints', 'Modules: Pointers', 'geditorial-admin' ),
 			'i18n'     => FALSE, // NOTE: strings in this module are loaded via plugin
 			'icon'     => 'sticky',
 			'access'   => 'beta',
@@ -75,7 +75,7 @@ class Pointers extends gEditorial\Module
 
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
-		$context = $context ?? 'supportedbox';
+		$context ??= 'supportedbox';
 		$screen  = $screen ?? get_current_screen();
 
 		if ( 'post' === $screen->base )

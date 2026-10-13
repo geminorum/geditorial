@@ -27,7 +27,7 @@ class Jobbed extends gEditorial\Module
 		return [
 			'name'     => 'jobbed',
 			'title'    => _x( 'Jobbed', 'Modules: Jobbed', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Job Titles', 'Modules: Jobbed', 'geditorial-admin' ),
+			'desc'     => _x( 'Job Titles', 'Modules: Jobbed', 'geditorial-admin' ),
 			'icon'     => 'businessperson',
 			'access'   => 'beta',
 			'keywords' => [

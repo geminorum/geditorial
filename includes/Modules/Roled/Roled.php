@@ -72,7 +72,7 @@ class Roled extends gEditorial\Module
 
 		foreach ( $this->get_setting( 'duplicate_roles', [] ) as $role )
 			$settings['_general'][] = [
-				'field' => 'role_name_'.$role,
+				'field' => self::und( 'role_name', $role ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: role name */
@@ -113,8 +113,8 @@ class Roled extends gEditorial\Module
 	private function get_posttypes_support_editorial(): array
 	{
 		$posttypes = [];
-		$supported = get_post_types_by_support( 'editorial-roles' );
 		$excludes  = [];
+		$supported = get_post_types_by_support( 'editorial-roles' );
 
 		foreach ( WordPress\PostType::get( 0, [ 'show_ui' => TRUE, '_builtin' => FALSE ] ) as $posttype => $label )
 			if ( in_array( $posttype, $supported )
@@ -141,7 +141,7 @@ class Roled extends gEditorial\Module
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
-	// NOTE: hacked to hide shared tag sub-menu on other post-types
+	// NOTE: hacked to hide shared tag submenu on other post-types
 	public function admin_menu(): void
 	{
 		global $menu;
@@ -153,7 +153,7 @@ class Roled extends gEditorial\Module
 
 	// OVERWRITE
 	// FIXME: WTF?!
-	public function post_types( $posttypes = NULL )
+	public function post_types( ?array $posttypes = NULL ): bool|array
 	{
 		$supported = $this->get_setting( 'editorial_posttypes', [] );
 

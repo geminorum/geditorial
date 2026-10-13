@@ -148,7 +148,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		if ( method_exists( $this, 'store_'.$context.'_metabox_'.$screen->post_type ) )
 			add_action( self::und( 'save_post', $screen->post_type ), [ $this, 'store_'.$context.'_metabox_'.$screen->post_type ], 20, 3 );
@@ -231,7 +231,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$context  = $context ?? 'listbox';
+		$context  ??= 'listbox';
 		$metabox  = $this->classs( $context );
 		$callback = function ( $object, $box )
 			use ( $constants, $context, $screen ) {
@@ -301,7 +301,7 @@ trait PairedMetaBox
 	): void {
 
 		$html    = '';
-		$context = $context ?? 'listbox';
+		$context ??= 'listbox';
 
 		if ( $this->_paired && $this->role_can( 'import', NULL, TRUE ) && method_exists( $this, 'pairedimports_get_import_buttons' ) )
 			$html.= $this->pairedimports_get_import_buttons( $post, $context );
@@ -325,7 +325,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$context  = $context ?? 'pairedbox';
+		$context  ??= 'pairedbox';
 		$metabox  = $this->classs( $context );
 		$action   = self::und( 'render', $context, 'metabox' );
 		$callback = function ( $post, $box )
@@ -516,7 +516,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$context  = $context ?? 'overviewbox';
+		$context  ??= 'overviewbox';
 		$metabox  = $this->classs( $context );
 		$action   = self::und( 'render', $context, 'metabox' );
 		$callback = function ( $post, $box )
@@ -606,7 +606,7 @@ trait PairedMetaBox
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		$context       = $context ?? 'megabox';
+		$context       ??= 'megabox';
 		$post_title    = WordPress\Post::title(); // NOTE: gets post from query arguments in admin
 		$singular_name = Services\CustomPostType::getLabel( $screen->post_type, 'singular_name' );
 
@@ -688,7 +688,7 @@ trait PairedMetaBox
 		?object $screen = NULL,
 	): void {
 
-		$context = $context ?? 'megabox';
+		$context ??= 'megabox';
 
 		$this->_render_paired_listbox_extra( $post, $box, $context, $screen );
 	}

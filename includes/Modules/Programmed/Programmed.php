@@ -50,7 +50,7 @@ class Programmed extends gEditorial\Module
 		return [
 			'name'     => 'programmed',
 			'title'    => _x( 'Programmed', 'Modules: Programmed', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Program Management', 'Modules: Programmed', 'geditorial-admin' ),
+			'desc'     => _x( 'Program Management', 'Modules: Programmed', 'geditorial-admin' ),
 			'icon'     => 'fullscreen-exit-alt',
 			'access'   => 'beta',
 			'keywords' => [

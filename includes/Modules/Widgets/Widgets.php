@@ -155,27 +155,36 @@ class Widgets extends gEditorial\Module
 
 	private function _register_areas(): void
 	{
+		$system = gEditorial\Plugin::system();
+
 		foreach ( $this->get_setting( 'areas', [] ) as $index => $area ) {
 
 			if ( empty( $area['action'] ) )
 				continue;
 
-			$id       = $this->classs( 'area', $index );
-			$priority = empty( $area['priority'] ) ? 10 : $area['priority'];
-			$name     = empty( $area['name'] ) ? _x( '[Unnamed]', 'Widget Area Unnamed', 'geditorial-widgets' ) : $area['name'];
+			$id = $this->classs( 'area', $index );
 
-			add_action( $area['action'], static function () use ( $id ) {
-				dynamic_sidebar( $id );
-			}, $priority, 0 );
+			add_action( $area['action'],
+				static function () use ( $id ) {
+					dynamic_sidebar( $id );
+				}, $area['priority'] ?? 10, 0 );
 
-			register_sidebar( array_merge( Core\Arraay::stripByKeys( $area, [ 'action', 'priority', 'name' ] ), [
-				'id'   => $id,
-				'name' => sprintf(
-					/* translators: `%s`: widget area name */
-					_x( 'Editorial: %s', 'Widget Area Prefix', 'geditorial-widgets' ),
-					$name
-				),
-			] ) );
+			register_sidebar( array_merge(
+				Core\Arraay::stripByKeys( $area, [
+					'action',
+					'priority',
+					'name',
+				] ),
+				[
+					'id'   => $id,
+					'name' => sprintf(
+						/* translators: `%1$s`: system string, `%2$s`: widget area name */
+						_x( '%s: %s', 'Widget Area Prefix', 'geditorial-widgets' ),
+						$system,
+						$area['name'] ?? _x( '[Unnamed]', 'Widget Area Unnamed', 'geditorial-widgets' ),
+					),
+				],
+			) );
 		}
 	}
 

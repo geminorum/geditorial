@@ -50,7 +50,7 @@ class Meeted extends gEditorial\Module
 		return [
 			'name'     => 'meeted',
 			'title'    => _x( 'Meeted', 'Modules: Meeted', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Meeting Management', 'Modules: Meeted', 'geditorial-admin' ),
+			'desc'     => _x( 'Meeting Management', 'Modules: Meeted', 'geditorial-admin' ),
 			'icon'     => 'buddicons-groups',
 			'access'   => 'beta',
 			'keywords' => [

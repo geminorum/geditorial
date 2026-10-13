@@ -77,7 +77,7 @@ trait PostTypeFieldsReports
 			$query,
 			$extra,
 			array_keys( $list ),
-			$this->get_sub_limit_option( $sub, 'reports' )
+			$this->get_sub_limit_option( $sub, 'reports' ),
 		);
 
 		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );

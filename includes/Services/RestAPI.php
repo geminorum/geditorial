@@ -36,7 +36,7 @@ class RestAPI extends gEditorial\Service
 			'shop_coupon',       // WooCommerce
 		];
 
-		$posttypes = $posttypes ?? get_post_types( [ 'show_in_rest' => TRUE ] );
+		$posttypes ??= get_post_types( [ 'show_in_rest' => TRUE ] );
 
 		return apply_filters( self::und( static::BASE, 'restapi', 'supported_posttypes' ),
 			array_diff_key( $posttypes, array_flip( $excluded ) ),
@@ -175,7 +175,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code ?? 'rest_invalid_param', $message, $data );
+		return new \WP_Error(
+			$code ?? 'rest_invalid_param',
+			$message,
+			$data,
+		);
 	}
 
 	public static function getErrorNoPermission( $code = NULL, $message = NULL, $data = [], $status = 401 )
@@ -183,7 +187,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code ?? 'not_authorized', $message ?? gEditorial\Plugin::denied( FALSE ), $data );
+		return new \WP_Error(
+			$code ?? 'not_authorized',
+			$message ?? gEditorial\Plugin::denied( FALSE ),
+			$data,
+		);
 	}
 
 	public static function getErrorInvalidData( $code = NULL, $message = NULL, $data = [], $status = NULL )
@@ -191,7 +199,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code ?? 'invalid_data_provided', $message ?? gEditorial\Plugin::invalid( FALSE ), $data );
+		return new \WP_Error(
+			$code ?? 'invalid_data_provided',
+			$message ?? gEditorial\Plugin::invalid( FALSE ),
+			$data,
+		);
 	}
 
 	public static function getErrorNotFound( $code = NULL, $message = NULL, $data = [], $status = 404 )
@@ -199,7 +211,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code ?? 'not_found', $message ?? __( 'Not Available', 'geditorial' ), $data );
+		return new \WP_Error(
+			$code ?? 'not_found',
+			$message ?? __( 'Not Available', 'geditorial' ),
+			$data,
+		);
 	}
 
 	public static function getErrorSomethingIsWrong( $code = NULL, $message = NULL, $data = [], $status = NULL )
@@ -207,7 +223,11 @@ class RestAPI extends gEditorial\Service
 		if ( ! is_null( $status ) )
 			$data['status'] = $status;
 
-		return new \WP_Error( $code ?? 'no_correct_settings', $message ?? gEditorial\Plugin::wrong( FALSE ), $data );
+		return new \WP_Error(
+			$code ?? 'no_correct_settings',
+			$message ?? gEditorial\Plugin::wrong( FALSE ),
+			$data,
+		);
 	}
 
 	public static function defineArgument_postid( $description = NULL, $required = TRUE, $validate = NULL )
@@ -220,7 +240,7 @@ class RestAPI extends gEditorial\Service
 		];
 	}
 
-	public static function validateArgument_postid( $param, $request, $key )
+	public static function validateArgument_postid( mixed $param, $request, $key ): bool|object
 	{
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );
@@ -245,7 +265,7 @@ class RestAPI extends gEditorial\Service
 		];
 	}
 
-	public static function validateArgument_commentid( $param, $request, $key )
+	public static function validateArgument_commentid( mixed $param, $request, $key ): bool|object
 	{
 		if ( empty( $param ) || (int) $param <= 0 )
 			return self::getErrorArgNotEmpty( $key );

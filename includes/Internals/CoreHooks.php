@@ -33,7 +33,7 @@ trait CoreHooks
 
 	protected function class_metabox( object $screen, ?string $context = NULL ): bool
 	{
-		$context = $context ?? 'mainbox';
+		$context ??= 'mainbox';
 
 		return add_filter( self::und( 'postbox_classes', $screen->id, $this->classs( $context ) ),
 			function ( $classes )

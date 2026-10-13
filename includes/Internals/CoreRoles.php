@@ -10,18 +10,21 @@ use geminorum\gEditorial\WordPress;
 trait CoreRoles
 {
 	// NOTE: accepts array and performs `OR` check
-	protected function role_can( mixed $whats = 'supported', ?int $user_id = NULL, bool $fallback = FALSE, bool $admins = TRUE, ?string $suffix = NULL )
-	{
+	protected function role_can(
+		mixed   $whats    = 'supported',
+		?int    $user_id  = NULL,
+		bool    $fallback = FALSE,
+		bool    $admins   = TRUE,
+		?string $suffix   = NULL,
+	): bool {
+
 		if ( is_null( $whats ) )
 			return TRUE;
 
 		if ( FALSE === $whats )
 			return FALSE;
 
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( ! $user_id )
+		if ( ! $user_id ??= get_current_user_id() )
 			return $fallback;
 
 		if ( $admins && WordPress\User::isSuperAdmin( $user_id ) )
@@ -48,8 +51,15 @@ trait CoreRoles
 	}
 
 	// NOTE: accepts array and performs `OR` check
-	protected function role_can_post( mixed $post, mixed $whats = 'supported', ?int $user_id = NULL, bool $fallback = FALSE, bool $admins = TRUE, ?string $suffix = NULL )
-	{
+	protected function role_can_post(
+		mixed   $post,
+		mixed   $whats    = 'supported',
+		?int    $user_id  = NULL,
+		bool    $fallback = FALSE,
+		bool    $admins   = TRUE,
+		?string $suffix   = NULL,
+	): bool {
+
 		if ( is_null( $whats ) )
 			return TRUE;
 
@@ -59,10 +69,7 @@ trait CoreRoles
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
 
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
-
-		if ( ! $user_id )
+		if ( ! $user_id ??= get_current_user_id() )
 			return $fallback;
 
 		if ( $admins && WordPress\User::isSuperAdmin( $user_id ) )
@@ -94,7 +101,7 @@ trait CoreRoles
 	 * @param array $customized
 	 * @return mixed
 	 */
-	protected function _override_module_cuc( $context = 'settings', $fallback_capability = '', $customized = NULL )
+	protected function _override_module_cuc( ?string $context = 'settings', string $fallback_capability = '', ?array $customized = NULL ): mixed
 	{
 		return in_array( $context, $customized ?? [ 'reports' ], TRUE )
 			? $this->role_can( $context )
@@ -108,11 +115,11 @@ trait CoreRoles
 	 * @param string $context
 	 * @param string $fallback_capability
 	 * @param array $customized
-	 * @return bool
+	 * @return mixed
 	 */
-	protected function _override_module_cuc_by_taxonomy( string $constant, ?string $context = NULL, string $fallback_capability = '', ?array $customized = NULL ): bool
+	protected function _override_module_cuc_by_taxonomy( string $constant, ?string $context = NULL, string $fallback_capability = '', ?array $customized = NULL ): mixed
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		return in_array( $context, $customized ?? [ 'reports', 'tools' ], TRUE )
 			? $this->corecaps_taxonomy_role_can( $constant, $context )

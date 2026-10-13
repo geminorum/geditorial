@@ -73,8 +73,8 @@ trait Rewrites
 		if ( ! $wp_rewrite->use_verbose_page_rules )
 			return;
 
-		$query    = $query    ?? $this->rewrites__get_queryvar( $constant_prefix );
-		$endpoint = $endpoint ?? $this->rewrites__get_endpoint( $constant_prefix, $query );
+		$query    ??= $this->rewrites__get_queryvar( $constant_prefix );
+		$endpoint ??= $this->rewrites__get_endpoint( $constant_prefix, $query );
 
 		// Build regex.
 		$regex  = substr( str_replace( $wp_rewrite->rewritecode, $wp_rewrite->rewritereplace, $wp_rewrite->permalink_structure ), 1 );

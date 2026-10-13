@@ -34,7 +34,7 @@ class Socialite extends gEditorial\Module
 		return [
 			'name'     => 'socialite',
 			'title'    => _x( 'Socialite', 'Modules: Socialite', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Social Card', 'Modules: Socialite', 'geditorial-admin' ),
+			'desc'     => _x( 'Social Network Apprentice', 'Modules: Socialite', 'geditorial-admin' ),
 			'icon'     => 'money',
 			'access'   => 'beta',
 			'keywords' => [

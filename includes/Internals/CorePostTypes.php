@@ -497,7 +497,7 @@ trait CorePostTypes
 
 	public function is_screen_posttype( string $constant, ?object $screen = NULL ): bool
 	{
-		if ( ! $screen = $screen ?? get_current_screen() )
+		if ( ! $screen ??= get_current_screen() )
 			return FALSE;
 
 		return $this->constant( $constant ) === $screen->post_type;

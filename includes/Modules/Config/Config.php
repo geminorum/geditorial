@@ -126,7 +126,7 @@ class Config extends gEditorial\Module
 
 	public function admin_menu(): void
 	{
-		// $can    = $this->cuc( 'settings' );
+		// `$can    = $this->cuc( 'settings' );`
 		$slug   = $this->classs_base( 'settings' );
 		$edit   = current_user_can( 'edit_posts' );
 		$system = gEditorial\Plugin::system();
@@ -529,7 +529,7 @@ class Config extends gEditorial\Module
 
 	public function admin_tools_load(): void
 	{
-		$context = $context ?? 'tools';
+		$context ??= 'tools';
 		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
@@ -658,7 +658,7 @@ class Config extends gEditorial\Module
 
 	public function admin_gizmos_load(): void
 	{
-		$context = $context ?? 'gizmos';
+		$context ??= 'gizmos';
 		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
@@ -682,7 +682,7 @@ class Config extends gEditorial\Module
 
 	public function admin_roles_load(): void
 	{
-		$context = $context ?? 'roles';
+		$context ??= 'roles';
 		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
@@ -942,7 +942,7 @@ class Config extends gEditorial\Module
 
 	public function admin_imports_load(): void
 	{
-		$context = $context ?? 'imports';
+		$context ??= 'imports';
 		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' === $sub ) {
@@ -1026,7 +1026,7 @@ class Config extends gEditorial\Module
 
 	public function admin_customs_load(): void
 	{
-		$context = $context ?? 'customs';
+		$context ??= 'customs';
 		$sub     = gEditorial\Settings::sub();
 
 		if ( 'general' == $sub ) {
@@ -1175,7 +1175,7 @@ class Config extends gEditorial\Module
 
 	public function admin_settings_load(): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( ! $this->cuc( $context ) )
 			return;
@@ -1214,7 +1214,7 @@ class Config extends gEditorial\Module
 
 	private function _handle_settings_disable( string $module_key = '', ?string $context = NULL ): bool
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( ! isset( $_POST['disable'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
@@ -1234,7 +1234,7 @@ class Config extends gEditorial\Module
 
 	private function _handle_settings_reset( string $module_key = '', ?string $context = NULL ): bool
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( ! isset( $_POST['reset'], $_POST['geditorial_module_name'] ) )
 			return FALSE;
@@ -1252,7 +1252,7 @@ class Config extends gEditorial\Module
 
 	private function _handle_settings_save( string $module_key = '', ?string $context = NULL ): bool
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( ! isset( $_POST['submit'], $_POST['action'], $_POST['geditorial_module_name'] ) )
 			return FALSE;

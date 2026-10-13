@@ -303,7 +303,7 @@ class Personage extends gEditorial\Module
 						'quickedit'   => TRUE,
 						'bulkedit'    => FALSE,
 						'order'       => 1,
-						'access_edit' => 'delete_post', // only deleters can edit!
+						'access_edit' => 'delete_post', // NOTE: only roles with `delete` cap can edit!
 					],
 					'passport_number' => [
 						'title'       => _x( 'Passport Number', 'Field Title', 'geditorial-personage' ),
@@ -880,7 +880,7 @@ class Personage extends gEditorial\Module
 				return $fallback;
 		}
 
-		$context = $context ?? 'display';
+		$context ??= 'display';
 
 		if ( $post && ! empty( $this->cache['fullnames'][$context][$post->ID] ) )
 			return $this->cache['fullnames'][$context][$post->ID];

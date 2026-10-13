@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait CoreRowActions
 {
 
-	protected function rowactions__hook_admin_bulkactions( $screen, $cap_check = NULL )
+	protected function rowactions__hook_admin_bulkactions( object $screen, $cap_check = NULL )
 	{
 		if ( ! $this->get_setting( 'admin_bulkactions' ) )
 			return;
@@ -117,10 +117,9 @@ trait CoreRowActions
 	// `protected function rowaction_get_mainlink_for_term( $term ) { return ''; }`
 
 	// NOTE: appears only on empty posts!
-	protected function rowactions__hook_force_default_term( $screen, $constant, $cap_check = NULL )
+	protected function rowactions__hook_force_default_term( object $screen, string $constant, $cap_check = NULL )
 	{
-		// if ( ! $this->get_setting( 'admin_bulkactions' ) )
-		// 	return FALSE;
+		// `if ( ! $this->get_setting( 'admin_bulkactions' ) ) return FALSE;`
 
 		if ( FALSE === $cap_check || ! $constant )
 			return FALSE;

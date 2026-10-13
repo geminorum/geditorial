@@ -70,7 +70,7 @@ trait ContentInsert
 		if ( ! $html )
 			return;
 
-		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
+		$insert ??= $this->get_setting( 'insert_content', 'none' );
 		$margin = 'none' !== $insert ? ( 'after' === $insert ? 'mt-3' : 'mb-3' ) : 'm-0'; // NOTE: BS compatible CSS classes
 
 		echo $this->wrap( $html, Core\HTML::attrClass(
@@ -82,7 +82,7 @@ trait ContentInsert
 
 	protected function is_page_content_insert( null|false|string $insert = NULL ): bool
 	{
-		$insert = $insert ?? $this->get_setting( 'insert_content', 'none' );
+		$insert ??= $this->get_setting( 'insert_content', 'none' );
 
 		switch ( $insert ) {
 			case 'before': return WordPress\Isit::contentFirstPage();

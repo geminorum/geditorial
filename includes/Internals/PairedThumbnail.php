@@ -38,7 +38,7 @@ trait PairedThumbnail
 		if ( $thumbnail_id || FALSE === $post )
 			return $thumbnail_id;
 
-		$posttypes = $posttypes ?? $this->posttypes();
+		$posttypes ??= $this->posttypes();
 
 		if ( ! in_array( get_post_type( $post ), $posttypes, TRUE ) )
 			return $thumbnail_id;

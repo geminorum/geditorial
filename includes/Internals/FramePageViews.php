@@ -22,8 +22,8 @@ trait FramePageViews
 	 */
 	protected function framepageviews__render_context_content( ?string $context, ?string $target = NULL, ?string $linked = NULL ): string
 	{
-		$target = $target ?? 'post';    // the default target
-		$linked = $linked ?? 'linked';  // the request key
+		$target ??= 'post';    // the default target
+		$linked ??= 'linked';  // the request key
 
 		if ( 'post' === self::req( 'target', $target ) ) {
 

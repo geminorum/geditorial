@@ -253,7 +253,7 @@ class Audit extends gEditorial\Module
 			clean_object_term_cache( $post->ID, $this->constant( 'main_taxonomy' ) );
 	}
 
-	public function auto_audit_save_post( $terms, $post, $taxonomy, $currents, $update )
+	public function auto_audit_save_post( array $terms, object $post, string $taxonomy, array $currents, bool $update ): array
 	{
 		if ( $exists = term_exists( ModuleHelper::getAttributeSlug( 'empty_title' ), $taxonomy ) ) {
 

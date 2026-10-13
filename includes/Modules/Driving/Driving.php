@@ -23,7 +23,7 @@ class Driving extends gEditorial\Module
 		return [
 			'name'     => 'driving',
 			'title'    => _x( 'Driving', 'Modules: Driving', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Drivers Management', 'Modules: Driving', 'geditorial-admin' ),
+			'desc'     => _x( 'Drivers Management', 'Modules: Driving', 'geditorial-admin' ),
 			'icon'     => 'car',
 			'access'   => 'beta',
 			'keywords' => [
@@ -108,7 +108,7 @@ class Driving extends gEditorial\Module
 
 		$strings['metabox'] = [
 			'supportedbox_title'  => _x( 'Vehicles', 'MetaBox Title', 'geditorial-driving' ),
-			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-driving' ),
+			// `'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-driving' ),`
 
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Vehicles of %1$s', 'Button Title', 'geditorial-driving' ),
@@ -314,16 +314,16 @@ class Driving extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function personage_editform_meta_summary( $fields, $post )
+	public function personage_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
 
 		$fields['vehicle_model'] = NULL;
 		$fields['vehicle_color'] = NULL;
-		// $fields['vehicle_year']  = NULL;
+		// `$fields['vehicle_year']  = NULL;`
 		$fields['vehicle_plate'] = NULL;
-		// $fields['vin']           = NULL;
+		// `$fields['vin']           = NULL;`
 
 		return $fields;
 	}

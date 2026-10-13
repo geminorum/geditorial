@@ -1130,7 +1130,7 @@ trait SubContents
 			return FALSE;
 
 		$query   = [];
-		$context = $context ?? 'reports';
+		$context ??= 'reports';
 
 		list( $items, $pagination ) = $this->subcontent_get_data_with_pagination( $query, [], FALSE, $context, $this->get_sub_limit_option( $sub, $context ) );
 

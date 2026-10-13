@@ -16,7 +16,7 @@ trait AdminPage
 
 	protected function get_adminpage_subs( ?string $context = NULL ): array
 	{
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		// `$subs = $this->list_posttypes( NULL, NULL, 'create_posts' );`
 		$subs = $this->get_strings( 'subs', $context );
@@ -32,8 +32,8 @@ trait AdminPage
 
 	protected function get_adminpage_default_sub( ?array $subs = NULL, ?string $context = NULL ): ?string
 	{
-		$context = $context ?? 'mainpage';
-		$subs    = $subs    ?? $this->get_adminpage_subs( $context );
+		$context ??= 'mainpage';
+		$subs    ??= $this->get_adminpage_subs( $context );
 
 		return $this->filters( self::und( $context, 'default', 'sub' ),
 			Core\Arraay::keyFirst( $subs ),
@@ -44,14 +44,14 @@ trait AdminPage
 
 	protected function _hook_menu_adminpage( ?string $context = NULL, ?int $position = NULL, ?string $capability = NULL ): string
 	{
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
 		$menu    = $this->get_string( 'menu_title', $context, 'adminpage', $this->key );
 
 		/** @disregard */
-		$position = $position   ?? empty( $this->positions[$context] ) ? 3 : $this->positions[$context];
+		$position ??= empty( $this->positions[$context] ) ? 3 : $this->positions[$context];
 		$cap      = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 
 		/** @disregard */
@@ -69,7 +69,7 @@ trait AdminPage
 			add_submenu_page(
 				$slug,
 				sprintf(
-					/* translators: `%1$s`: menu title, `%2$s`: sub-menu title */
+					/* translators: `%1$s`: menu title, `%2$s`: submenu title */
 					_x( '%1$s &lsaquo; %2$s', 'Module: Page Title', 'geditorial-admin' ),
 					$submenu, // FIXME: only shows the first sub
 					$menu
@@ -94,7 +94,7 @@ trait AdminPage
 
 	public function load_menu_adminpage(): void
 	{
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		$this->_load_menu_adminpage( $context );
 		// `$this->enqueue_asset_js( [], $this->dotted( $context ), [ 'jquery', 'wp-api-request' ] );`
@@ -103,7 +103,7 @@ trait AdminPage
 
 	protected function _load_menu_adminpage( ?string $context = NULL ): void
 	{
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
 		$page    = self::req( 'page', NULL );
@@ -122,16 +122,16 @@ trait AdminPage
 
 	public function render_menu_adminpage(): bool
 	{
-		$context = $context ?? 'mainpage';
-		$action  = $action  ?? 'update';
+		$context ??= 'mainpage';
+		$action  ??= 'update';
 
 		return $this->render_default_mainpage( $context, $action );
 	}
 
 	protected function render_default_mainpage( ?string $context = NULL, ?string $action = NULL ): bool
 	{
-		$context = $context ?? 'mainpage';
-		$action  = $action  ?? 'update';
+		$context ??= 'mainpage';
+		$action  ??= 'update';
 		$uri     = $this->get_adminpage_url( TRUE, [], $context );
 		$subs    = $this->get_adminpage_subs( $context );
 		$default = $this->get_adminpage_default_sub( $subs, $context );
@@ -166,7 +166,7 @@ trait AdminPage
 
 	protected function _hook_submenu_adminpage( ?string $context = NULL, ?string $capability = NULL, string $parent_slug = '' ): string
 	{
-		$context = $context ?? 'subpage';
+		$context ??= 'subpage';
 		$slug    = $this->get_adminpage_url( FALSE, [], $context );
 		$cap     = $capability ?? $this->role_can( $context ) ? 'exist' : 'do_not_allow';
 		$cb      = [ $this, 'render_submenu_adminpage' ];
@@ -194,14 +194,14 @@ trait AdminPage
 
 	public function load_submenu_adminpage(): void
 	{
-		$context = $context ?? 'subpage';
+		$context ??= 'subpage';
 
 		$this->_load_submenu_adminpage( $context );
 	}
 
 	protected function _load_submenu_adminpage( ?string $context = NULL ): void
 	{
-		$context = $context ?? 'subpage';
+		$context ??= 'subpage';
 		$page    = self::req( 'page', NULL );
 		$sub     = self::req( 'sub', NULL );
 
@@ -230,14 +230,12 @@ trait AdminPage
 		?string $context = NULL
 	): void {
 
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		if ( self::req( 'noheader' ) )
 			return;
 
-		$title = $title ?? $this->get_string( 'page_title', $context, 'adminpage', NULL );
-
-		if ( ! $title )
+		if ( ! $title ??= $this->get_string( 'page_title', $context, 'adminpage', NULL ) )
 			return;
 
 		gEditorial\Settings::headerTitle(
@@ -256,7 +254,7 @@ trait AdminPage
 		?string $context = NULL,
 	): void {
 
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		if ( self::req( 'noheader' ) ) {
 
@@ -277,7 +275,7 @@ trait AdminPage
 		?string $context = NULL,
 	): void {
 
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		if ( ! self::req( 'noheader' ) )
 			$this->settings_signature( $context );
@@ -288,7 +286,7 @@ trait AdminPage
 	// `array` for custom, `NULL` to settings, `FALSE` to disable
 	protected function get_adminpage_header_links( ?string $context = NULL ): false|array
 	{
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		if ( $action = $this->get_string( 'page_action', $context, 'adminpage', NULL ) )
 			return [ $this->get_adminpage_url() => $action ];

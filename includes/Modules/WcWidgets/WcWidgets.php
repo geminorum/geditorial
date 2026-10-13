@@ -78,7 +78,8 @@ class WcWidgets extends gEditorial\Module
 	// @REF: https://www.businessbloomer.com/woocommerce-visual-hook-guide-checkout-page/
 	private function _get_widget_action_hooks(): array
 	{
-		$list = [
+		$system = gEditorial\Plugin::system();
+		$list   = [
 			[
 				'action'   => 'woocommerce_thankyou',
 				'title'    => _x( 'Thank-you (Before Order Details)', 'Action Hook', 'geditorial-wc-widgets' ),
@@ -118,8 +119,12 @@ class WcWidgets extends gEditorial\Module
 
 		if ( gEditorial()->enabled( 'wc_dashboard' ) )
 			$list[] = [
-				'action'   => 'geditorial_wc_dashboard_account_purchased_empty',
-				'title'    => _x( 'Editorial: Dashboard Purchased Empty', 'Action Hook', 'geditorial-wc-widgets' ),
+				'action' => 'geditorial_wc_dashboard_account_purchased_empty',
+				'title'  => sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s: Dashboard Purchased Empty', 'Action Hook', 'geditorial-wc-widgets' ),
+					$system,
+				),
 				'priority' => 10,
 			];
 

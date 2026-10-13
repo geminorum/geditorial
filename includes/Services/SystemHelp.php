@@ -11,10 +11,10 @@ class SystemHelp extends gEditorial\Service
 	/**
 	 * Returns Documentation URL for the module.
 	 *
-	 * @param boolean|object $module
+	 * @param false|object $module
 	 * @return string
 	 */
-	public static function getModuleDocsURL( $module = FALSE )
+	public static function getModuleDocsURL( false|object $module = FALSE ): string
 	{
 		if ( ! GEDITORIAL_WIKI_URL )
 			return FALSE;
@@ -47,7 +47,7 @@ class SystemHelp extends gEditorial\Service
 	 * @param string $context
 	 * @return array
 	 */
-	public static function content( false|object $module = FALSE, ?string $context = NULL )
+	public static function content( false|object $module = FALSE, ?string $context = NULL ): array
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
 			return [];
@@ -56,7 +56,11 @@ class SystemHelp extends gEditorial\Service
 			'module'   => $module,
 			'id'       => 'geditorial-wikihome',
 			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
-			'title'    => _x( 'Editorial Wiki', 'Service: System Help: Help Content Title', 'geditorial-admin' ),
+			'title'    => sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Wiki', 'Service: System Help: Help Content Title', 'geditorial-admin' ),
+				gEditorial\Plugin::system(),
+			),
 		];
 
 		if ( FALSE === $module || 'config' === $module->name )
@@ -79,13 +83,13 @@ class SystemHelp extends gEditorial\Service
 		];
 	}
 
-	public static function add_help_tab_home_callback( $screen, $tab )
+	public static function add_help_tab_home_callback( ?object $screen, array $tab ): void
 	{
 		$tab['module'] = FALSE;
 		self::add_help_tab_module_callback( $screen, $tab );
 	}
 
-	public static function add_help_tab_module_callback( $screen, $tab )
+	public static function add_help_tab_module_callback( ?object $screen, array $tab ): void
 	{
 		if ( ! function_exists( 'gnetwork_github' ) )
 			return;

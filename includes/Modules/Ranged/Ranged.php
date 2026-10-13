@@ -50,7 +50,7 @@ class Ranged extends gEditorial\Module
 		return [
 			'name'     => 'ranged',
 			'title'    => _x( 'Ranged', 'Modules: Ranged', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Shooting Management', 'Modules: Ranged', 'geditorial-admin' ),
+			'desc'     => _x( 'Shooting Management', 'Modules: Ranged', 'geditorial-admin' ),
 			'icon'     => [ 'misc-16', 'crosshair' ],
 			'access'   => 'beta',
 			'keywords' => [

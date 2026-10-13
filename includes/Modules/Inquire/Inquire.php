@@ -156,9 +156,15 @@ class Inquire extends gEditorial\Module
 
 	protected function get_module_templates(): array
 	{
+		$system = gEditorial\Plugin::system();
+
 		return [
 			'page_posttype' => [
-				'main' => _x( 'Editorial: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
+				'main' => sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s: Inquire: Dashboard', 'Template Title', 'geditorial-inquire' ),
+					$system,
+				),
 			],
 		];
 	}

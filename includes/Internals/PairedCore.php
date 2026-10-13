@@ -573,7 +573,7 @@ trait PairedCore
 		if ( empty( $terms ) )
 			return $count ? 0 : FALSE;
 
-		$posttypes = $posttypes ?? $this->posttypes();
+		$posttypes ??= $this->posttypes();
 
 		// @hook: `geditorial_paired_all_connected_to_args`
 		$args = apply_filters( $this->hook_base( 'paired', 'all_connected_to', 'args' ), [

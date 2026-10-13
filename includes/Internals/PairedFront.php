@@ -50,7 +50,8 @@ trait PairedFront
 		if ( $constants[5] )
 			return FALSE; // it's private
 
-		add_filter( 'term_link', function ( $link, $term, $taxonomy ) use ( $constants ) {
+		add_filter( 'term_link', function ( $link, $term, $taxonomy )
+			use ( $constants ) {
 
 			if ( $taxonomy !== $this->constant( $constants[1] ) )
 				return $link;
@@ -75,7 +76,8 @@ trait PairedFront
 			return FALSE;
 
 		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
-			function ( $tabs, $posttype ) use ( $constants, $priority ) {
+			function ( $tabs, $posttype )
+				use ( $constants, $priority ) {
 
 				if ( in_array( $posttype, $this->posttypes(), TRUE ) )
 					$tabs[] = [
@@ -93,11 +95,14 @@ trait PairedFront
 							Services\CustomPostType::getLabel( $posttype, 'singular_name' ),
 						),
 
-						'viewable' => function ( $post ) use ( $posttype, $constants ) {
+						'viewable' => function ( $post )
+							use ( $posttype, $constants ) {
+
 							return (bool) $this->paired_all_connected_from( $post, 'tabs' );
 						},
 
-						'callback' => function ( $post ) use ( $posttype, $constants ) {
+						'callback' => function ( $post )
+							use ( $posttype, $constants ) {
 
 							echo gEditorial\ShortCode::listPosts( 'paired',
 								$this->constant( $constants[0] ),
@@ -137,11 +142,14 @@ trait PairedFront
 							Services\CustomPostType::getLabel( $posttype, 'singular_name' ),
 						),
 
-						'viewable' => function ( $post ) use ( $supported, $constants ) {
+						'viewable' => function ( $post )
+							use ( $supported, $constants ) {
+
 							return (bool) $this->paired_count_connected_to( $post, 'tabs', [], (array) $supported );
 						},
 
-						'callback' => function ( $post ) use ( $supported, $constants ) {
+						'callback' => function ( $post )
+							use ( $supported, $constants ) {
 
 							echo gEditorial\ShortCode::listPosts( 'paired',
 								$this->constant( $constants[0] ),

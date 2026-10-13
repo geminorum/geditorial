@@ -11,9 +11,8 @@ trait SettingsFields
 {
 	public function register_settings_fields_option( ?string $section_title = NULL ): void
 	{
-		if ( is_null( $section_title ) )
-			/* translators: `%s`: post-type label */
-			$section_title = _x( 'Fields for %s', 'Module', 'geditorial-admin' );
+		/* translators: `%s`: post-type label */
+		$section_title ??= _x( 'Fields for %s', 'Module', 'geditorial-admin' );
 
 		$all = $this->all_posttypes();
 
@@ -175,7 +174,7 @@ trait SettingsFields
 	// NOTE: for fields only in connection to the caller module!
 	public function add_posttype_fields_supported( null|string|array $posttypes = NULL, ?array $fields = NULL, bool $append = TRUE, ?string $type = 'meta' ): void
 	{
-		$posttypes = $posttypes ?? $this->posttypes();
+		$posttypes ??= $this->posttypes();
 
 		if ( is_null( $fields ) ) {
 

@@ -368,7 +368,7 @@ class Isbn extends gEditorial\Module
 		return $fallback;
 	}
 
-	public function book_editform_meta_summary( array $fields, object $post ): array
+	public function book_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;

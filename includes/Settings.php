@@ -65,7 +65,7 @@ class Settings extends WordPress\Main
 
 	public static function isScreenContext( string|array $contexts, ?object $screen = NULL ): bool
 	{
-		$screen = $screen ?? get_current_screen();
+		$screen ??= get_current_screen();
 
 		foreach ( (array) $contexts as $context )
 			if ( ! empty( $screen->base ) && Core\Text::has( $screen->base, self::classs( $context ) ) )
@@ -490,7 +490,7 @@ class Settings extends WordPress\Main
 
 	public static function wrapOpen( string $sub, ?string $context = NULL, string $iframe_title = '' ): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( self::req( 'noheader' ) ) {
 
@@ -515,7 +515,7 @@ class Settings extends WordPress\Main
 
 	public static function wrapClose( bool $iframe_exit = TRUE, ?string $context = NULL ): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		echo '<div class="clear"></div></div>';
 
@@ -628,7 +628,7 @@ class Settings extends WordPress\Main
 
 		echo '<div class="side-nav-wrap">';
 
-		$title = $title ?? ( Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' ) );
+		$title ??= Plugin::system() ?: _x( 'Editorial', 'Settings: Header Title', 'geditorial-admin' );
 		$extra = [ 'style' => sprintf( '--side-nav-title-length: %d', Core\Text::utf8Len( $title ) ) ];
 
 		Core\HTML::h2( $title, '-title' );
@@ -2466,20 +2466,15 @@ class Settings extends WordPress\Main
 	// @ALSO `$this->get_current_form()`
 	public static function getCurrentForm( array $defaults, ?string $context = NULL ): array
 	{
-		$context  = $context ?? 'settings';
-		$base_key = self::hook();
+		$context ??= 'settings';
 
-		$req = empty( $_REQUEST[$base_key][$context] )
-			? []
-			: $_REQUEST[$base_key][$context];
-
-		return self::parsed( $defaults, $req );
+		return self::parsed( $defaults, $_REQUEST[self::hook()][$context] ?? [] );
 	}
 
 	// @ALSO `$this->fields_current_form()`
 	public static function fieldsCurrentForm( array $fields, ?string $context = NULL, array $excludes = [] ): void
 	{
-		$context  = $context ?? 'settings';
+		$context  ??= 'settings';
 		$base_key = self::hook();
 
 		foreach ( $fields as $key => $value ) {
@@ -2487,7 +2482,7 @@ class Settings extends WordPress\Main
 			if ( in_array( $key, $excludes ) )
 				continue;
 
-			Core\HTML::inputHidden( $base_key.'['.$context.']['.$key.']', $value );
+			Core\HTML::inputHidden( sprintf( '%s[%s][%s]', $base_key, $context, $key ), $value );
 		}
 	}
 

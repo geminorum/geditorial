@@ -16,7 +16,7 @@ class Avatars extends gEditorial\Service
 		return ! get_option( 'show_avatars' );
 	}
 
-	public static function getByUser( $user, $fallback = '', $extra = [] )
+	public static function getByUser( mixed $user, string $fallback = '', array $extra = [] ): string
 	{
 		// WTF?!
 		return self::getByEmail(
@@ -26,7 +26,7 @@ class Avatars extends gEditorial\Service
 		);
 	}
 
-	public static function getByEmail( $email, $fallback = '', $extra = [] )
+	public static function getByEmail( int|string $email, string $fallback = '', array $extra = [] ): string
 	{
 		$args = array_merge( [
 			'class'         => self::classs( 'avatar' ),
@@ -44,7 +44,7 @@ class Avatars extends gEditorial\Service
 	}
 
 	// @REF: https://docs.gravatar.com/rest/hash/
-	public function urlGravatar( $email, $size = NULL, $default = NULL )
+	public function urlGravatar( string $email, ?int $size = NULL, ?string $default = NULL )
 	{
 		if ( empty( $email ) )
 			return FALSE;
@@ -76,8 +76,8 @@ class Avatars extends gEditorial\Service
 		$force_default       = FALSE,
 		$rating              = 'g',
 		$return_image        = FALSE,
-		$html_tag_attributes = []
-	) {
+		$html_tag_attributes = [],
+	): string {
 
 		$params = [
 			's' => Core\Coding::entityEncode( $size ),

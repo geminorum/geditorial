@@ -28,7 +28,7 @@ class Barcodes extends gEditorial\Service
 	 *
 	 * @source https://github.com/markusfisch/BinaryEye
 	 */
-	public static function binaryEyeLink( $query_var = 's', $url = NULL )
+	public static function binaryEyeLink( string $query_var = 's', ?string $url = NULL ): string
 	{
 		$ret = add_query_arg( [
 			$query_var => '{RESULT}',
@@ -38,7 +38,7 @@ class Barcodes extends gEditorial\Service
 		return sprintf( 'binaryeye://scan?ret=%s', rawurlencode( $ret ) );
 	}
 
-	public static function binaryEyeHeaderButton()
+	public static function binaryEyeHeaderButton(): void
 	{
 		HeaderButtons::register( 'barcodescanner', [
 			'icon'  => [ 'misc-512', 'openlibrary-barcodescanner' ],
@@ -55,12 +55,13 @@ class Barcodes extends gEditorial\Service
 	}
 
 	// @REF: https://github.com/hbgl/php-code-128-encoder
-	public static function encode( $data, $type )
+	public static function encode( mixed $data, string $type ): mixed
 	{
 		switch ( $type ) {
+
 			// NOTE: depends on `tecnickcom/tc-lib-barcode`
 			// NOTE: not included on `Production` yet!
-			// case 'code128': return \Hbgl\Barcode\Code128Encoder\Code128Encoder::encode( $data );
+			case 'code128': // `return \Hbgl\Barcode\Code128Encoder\Code128Encoder::encode( $data );`
 		}
 
 		return $data;
@@ -78,13 +79,21 @@ class Barcodes extends gEditorial\Service
 	// @REF: https://github.com/metafloor/bwip-js/wiki/Online-Barcode-API
 	// @SEE: https://github.com/metafloor/bwip-js/wiki/BWIPP-Barcode-Types
 	// https://github.com/metafloor/bwip-js/wiki/BWIPP-border-vs-bwipjs-padding
-	public static function getByBWIPP( $type, $text, $extra = [], $tag = FALSE, $cache = TRUE, $sub = 'bwipjs', $base = NULL )
-	{
+	public static function getByBWIPP(
+		string  $type,
+		string  $text,
+		array   $extra = [],
+		bool    $tag   = FALSE,
+		bool    $cache = TRUE,
+		string  $sub   = 'bwipjs',
+		?string $base  = NULL,
+	): string {
+
 		if ( ! GEDITORIAL_CACHE_DIR )
 			$cache = FALSE;
 
 		$direct = add_query_arg( array_merge( [
-			'bcid'        => $type, // Must follow immediately after the question mark.
+			'bcid'        => $type, // NOTE: Must follow immediately after the question mark.
 			'scale'       => '2',
 			'text'        => $text,
 			'includetext' => in_array( $type, static::TYPES_WITH_TEXT, TRUE ) ? '' : FALSE,
@@ -111,8 +120,16 @@ class Barcodes extends gEditorial\Service
 		return $tag ? Core\HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;
 	}
 
-	public static function getQRCode( $data, $type = 'text', $size = 300, $tag = FALSE, $cache = TRUE, $sub = 'qrcodes', $base = NULL )
-	{
+	public static function getQRCode(
+		string  $data,
+		string  $type  = 'text',
+		int     $size  = 300,
+		bool    $tag   = FALSE,
+		bool    $cache = TRUE,
+		string  $sub   = 'qrcodes',
+		?string $base  = NULL,
+	): string {
+
 		if ( ! GEDITORIAL_CACHE_DIR )
 			$cache = FALSE;
 

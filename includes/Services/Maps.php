@@ -31,6 +31,10 @@ class Maps extends gEditorial\Service
 				'latlng' => vsprintf( '%1$s,%2$s', $latlng ),
 				'lonlat' => vsprintf( '%2$s,%1$s', $latlng ),
 			],
+			'class' => [
+				'osm-map-container',
+				'map-single-marker',
+			],
 		], NULL );
 
 		?><script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>

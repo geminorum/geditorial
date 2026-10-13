@@ -8,16 +8,15 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
-
 	const MODULE = 'audit';
 
 	// OLD: `_do_auto_audit_post()`
-	public static function doAutoAuditPost( $post, $update = FALSE, $taxonomy = NULL )
+	public static function doAutoAuditPost( mixed $post, bool $update = FALSE, ?string $taxonomy = NULL ): null|false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$taxonomy = $taxonomy ?? self::constant( 'main_taxonomy', 'audit_attribute' );
+		$taxonomy ??= self::constant( 'main_taxonomy', 'audit_attribute' );
 		$currents = WordPress\Taxonomy::getObjectTerms( $taxonomy, $post->ID );
 
 		$terms = self::filters( 'auto_audit_save_post', $currents, $post, $taxonomy, $currents, $update );
@@ -32,10 +31,10 @@ class ModuleHelper extends gEditorial\Helper
 	}
 
 	// TODO: add setting/filter for this
-	public static function getAttributeSlug( $for, $default = FALSE )
+	public static function getAttributeSlug( string $for, false|string $default = FALSE ): false|string
 	{
 		switch ( $for ) {
-			case 'empty_title': return 'title-empty';
+			case 'empty_title'  : return 'title-empty';
 			case 'empty_content': return 'text-empty';
 			case 'empty_excerpt': return 'excerpt-empty';
 		}
@@ -45,10 +44,10 @@ class ModuleHelper extends gEditorial\Helper
 
 	// @REF: https://wordpress.stackexchange.com/a/251385
 	// @REF: https://stackoverflow.com/a/16395673
-	public static function getPostsEmpty( $for, $attribute, $posttypes = NULL, $check_taxonomy = TRUE )
+	public static function getPostsEmpty( string $for, string $attribute, ?array $posttypes = NULL, bool$check_taxonomy = TRUE ): false|array
 	{
 		switch ( $for ) {
-			case 'title':   case 'empty_title':   $callback = [ __CLASS__, 'whereEmptyTitle' ];   break;
+			case 'title'  : case 'empty_title'  : $callback = [ __CLASS__, 'whereEmptyTitle' ];   break;
 			case 'content': case 'empty_content': $callback = [ __CLASS__, 'whereEmptyContent' ]; break;
 			case 'excerpt': case 'empty_excerpt': $callback = [ __CLASS__, 'whereEmptyExcerpt' ]; break;
 			default: return FALSE;
@@ -86,19 +85,19 @@ class ModuleHelper extends gEditorial\Helper
 		return $posts;
 	}
 
-	public static function whereEmptyTitle( $where )
+	public static function whereEmptyTitle( string $where ): string
 	{
 		global $wpdb;
 		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_title, '')) = '') ";
 	}
 
-	public static function whereEmptyContent( $where )
+	public static function whereEmptyContent( string $where ): string
 	{
 		global $wpdb;
 		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_content, '')) = '') ";
 	}
 
-	public static function whereEmptyExcerpt( $where )
+	public static function whereEmptyExcerpt( string $where ): string
 	{
 		global $wpdb;
 		return $where.= " AND (TRIM(COALESCE({$wpdb->posts}.post_excerpt, '')) = '') ";

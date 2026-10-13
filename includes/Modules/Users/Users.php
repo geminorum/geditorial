@@ -24,7 +24,7 @@ class Users extends gEditorial\Module
 		return [
 			'name'     => 'users',
 			'title'    => _x( 'Users', 'Modules: Users', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Users', 'Modules: Users', 'geditorial-admin' ),
+			'desc'     => _x( 'User Enhancements', 'Modules: Users', 'geditorial-admin' ),
 			'icon'     => 'admin-users',
 			'access'   => 'beta',
 			'keywords' => [

@@ -104,12 +104,11 @@ trait PostTypeOverview
 			];
 		}
 
-		if ( is_null( $title ) )
-			$title = sprintf(
-				/* translators: `%s`: post-type label */
-				_x( 'Overview of %s', 'Internal: PostTypeOverview: Header', 'geditorial-admin' ),
-				$this->get_posttype_label( $constant, 'extended_label', 'name' )
-			);
+		$title ??= sprintf(
+			/* translators: `%s`: post-type label */
+			_x( 'Overview of %s', 'Internal: PostTypeOverview: Header', 'geditorial-admin' ),
+			$this->get_posttype_label( $constant, 'extended_label', 'name' ),
+		);
 
 		return Core\HTML::tableList( $columns, $posts, [
 			'navigation' => 'before',

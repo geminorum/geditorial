@@ -297,7 +297,7 @@ class Lingo extends gEditorial\Module
 
 	public function tools_settings( string $sub ): void
 	{
-		$context = $context ?? 'tools';
+		$context ??= 'tools';
 
 		if ( $this->check_settings( $sub, $context ) ) {
 
@@ -370,7 +370,7 @@ class Lingo extends gEditorial\Module
 
 	protected function render_tools_html( string $uri, string $sub, string $action, string $context ): bool
 	{
-		$context   = $context ?? 'tools';
+		$context   ??= 'tools';
 		$rawdata   = $this->get_imports_raw_data();
 		$taxonomy  = $this->constant( 'language_taxonomy' );
 		$metakeys  = $this->_get_supported_metakeys( $context );
@@ -395,7 +395,7 @@ class Lingo extends gEditorial\Module
 
 	public function imports_settings( string $sub ): void
 	{
-		$context = $context ?? 'imports';
+		$context ??= 'imports';
 
 		if ( $this->check_settings( $sub, $context ) ) {
 
@@ -476,7 +476,7 @@ class Lingo extends gEditorial\Module
 
 	protected function render_imports_html( string $uri, string $sub, string $action, string $context ): bool
 	{
-		$context   = $context ?? 'imports';
+		$context   ??= 'imports';
 		$rawdata   = $this->get_imports_raw_data();
 		$taxonomy  = $this->constant( 'language_taxonomy' );
 		$metakeys  = $this->_get_supported_metakeys( $context );

@@ -187,7 +187,8 @@ class Attachments extends gEditorial\Module
 			if ( $this->get_setting( 'attachment_count' ) )
 				$this->coreadmin__hook_tweaks_column_attr( $screen->post_type, 20 );
 
-		} else if ( 'media' === $screen->base && 'add' === $screen->action ) {
+		} else if ( 'media' === $screen->base
+			&& 'add' === $screen->action ) {
 
 			$this->action( 'post-plupload-upload-ui', 0, 8 );
 

@@ -9,8 +9,12 @@ use geminorum\gEditorial\WordPress;
 
 trait BulkExports
 {
-	protected function exports_get_export_buttons( int|string $reference, ?string $context, ?string $target = NULL ): string
-	{
+	protected function exports_get_export_buttons(
+		int|string $reference,
+		?string $context,
+		?string $target = NULL,
+	): string {
+
 		$html = '';
 
 		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args )
@@ -29,8 +33,12 @@ trait BulkExports
 		return $html;
 	}
 
-	protected function exports_get_export_links( int|string $reference, ?string $context, ?string $target = NULL ): array
-	{
+	protected function exports_get_export_links(
+		int|string $reference,
+		?string $context,
+		?string $target = NULL,
+	): array {
+
 		$links = [];
 
 		foreach ( $this->exports_get_types( $context, $target ) as $type => $type_args ) {
@@ -55,10 +63,13 @@ trait BulkExports
 	// TODO: support `taxonomy` target
 	// TODO: support `subcontent` target
 	// TODO: support `subcontent_from_paired` target
-	protected function exports_get_types( ?string $context, ?string $target = NULL ): array
-	{
+	protected function exports_get_types(
+		?string $context,
+		?string $target = NULL,
+	): array {
+
 		$types = [
-			'paired_simple'   => [
+			'paired_simple' => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'paired',
 				'format' => 'xlsx',
@@ -76,7 +87,7 @@ trait BulkExports
 				'format' => 'csv',
 			],
 
-			'posttype_simple'   => [
+			'posttype_simple' => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'posttype',
 				'format' => 'xlsx',
@@ -94,7 +105,7 @@ trait BulkExports
 				'format' => 'csv',
 			],
 
-			'assigned_simple'   => [
+			'assigned_simple' => [
 				'title'  => _x( 'Simple', 'Internal: Export Type Title', 'geditorial-admin' ),
 				'target' => 'assigned',
 				'format' => 'xlsx',
@@ -131,7 +142,7 @@ trait BulkExports
 		?string $context,
 		?string $target = 'default',
 		string $format = 'xlsx',
-		array $extra = []
+		array $extra = [],
 	): string {
 
 		return add_query_arg( array_merge( [
@@ -168,7 +179,7 @@ trait BulkExports
 		?string $target,
 		?string $type,
 		?string $context,
-		?string $format
+		?string $format,
 	): string {
 
 		$ext = in_array( $format, [

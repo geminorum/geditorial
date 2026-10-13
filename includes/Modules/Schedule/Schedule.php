@@ -135,7 +135,11 @@ class Schedule extends gEditorial\Module
 	{
 		$this->_hook_wp_submenu_page( 'mainpage',
 			'index.php',
-			_x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ),
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Calendar', 'Page Title', 'geditorial-schedule' ),
+				gEditorial\Plugin::system(),
+			),
 			_x( 'My Calendar', 'Menu Title', 'geditorial-schedule' ),
 			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
@@ -149,7 +153,7 @@ class Schedule extends gEditorial\Module
 		$this->enqueue_asset_js( 'calendar', NULL, [ 'jquery', gEditorial\Scripts::pkgSortable() ] );
 	}
 
-	public function page_row_actions( $actions, $post )
+	public function page_row_actions( array $actions, object $post ): array
 	{
 		return $this->post_row_actions( $actions, $post );
 	}
@@ -180,7 +184,8 @@ class Schedule extends gEditorial\Module
 
 	public function admin_mainpage_page()
 	{
-		$cal = self::req( 'cc', $this->cache['default_calendar'] );
+		$context ??= 'listtable';
+		$cal     = self::req( 'cc', $this->cache['default_calendar'] );
 
 		$args = [
 			'id'                  => $this->classs( 'calendar' ),
@@ -212,9 +217,13 @@ class Schedule extends gEditorial\Module
 			$links = FALSE;
 		}
 
-		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
+		gEditorial\Settings::wrapOpen( $this->key, $context );
 
-			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Calendar', 'Page Title', 'geditorial-schedule' ), $links );
+			gEditorial\Settings::headerTitle( $context, sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Calendar', 'Page Title', 'geditorial-schedule' ),
+				gEditorial\Plugin::system(),
+			), $links );
 
 			$html = Core\HTML::wrap( '', '-messages' );
 			$html.= gEditorial\Datetime::getCalendar( $cal, $args );
@@ -222,11 +231,11 @@ class Schedule extends gEditorial\Module
 
 			echo '<div class="'.Core\HTML::prepClass( $this->classs( 'calendar' ) ).'" data-cal="'.$cal.'">'.$html.'</div>';
 
-			$this->settings_signature( 'listtable' );
+			$this->settings_signature( $context );
 		gEditorial\Settings::wrapClose();
 	}
 
-	private function _add_new_box( $calendar )
+	private function _add_new_box( string $calendar ): string
 	{
 		$html = Core\HTML::tag( 'input', [ 'type' => 'text', 'name' => 'post_title', 'data-field' => 'title', 'class' => 'regular-text' ] );
 
@@ -318,7 +327,7 @@ class Schedule extends gEditorial\Module
 		return $html.'</li>';
 	}
 
-	private function _get_addnew_links( $posttypes )
+	private function _get_addnew_links( array $posttypes ): string
 	{
 		$buttons = '';
 
@@ -380,6 +389,7 @@ class Schedule extends gEditorial\Module
 				'publish',
 				'future',
 				'private',
-			] );
+			],
+		);
 	}
 }

@@ -31,7 +31,7 @@ trait CoreMenuPage
 		if ( ! $posttype = get_post_type_object( $this->constant( $constant ) ) )
 			return FALSE;
 
-		$context = $context ?? 'adminpage';
+		$context ??= 'adminpage';
 
 		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,
@@ -52,7 +52,7 @@ trait CoreMenuPage
 		if ( ! $taxonomy = get_taxonomy( $this->constant( $constant ) ) )
 			return FALSE;
 
-		$context = $context ?? 'submenu';
+		$context ??= 'submenu';
 
 		$this->screens[$constant] = add_submenu_page(
 			$parent_slug,
@@ -126,7 +126,7 @@ trait CoreMenuPage
 		if ( ! $taxonomies )
 			return;
 
-		$posttypes = $posttypes ?? $this->posttypes();
+		$posttypes ??= $this->posttypes();
 
 		foreach ( (array) $taxonomies as $taxonomy )
 			foreach ( $posttypes as $posttype )

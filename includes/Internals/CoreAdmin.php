@@ -51,7 +51,7 @@ trait CoreAdmin
 	 */
 	protected function coreadmin__unset_columns( string $posttype, ?array $list = NULL ): bool
 	{
-		$list = $list ?? [
+		$list ??= [
 			'author',
 		];
 
@@ -70,7 +70,7 @@ trait CoreAdmin
 	 */
 	protected function coreadmin__unset_views( string $posttype, ?array $list = NULL ): bool
 	{
-		$list = $list ?? [
+		$list ??= [
 			'mine',
 		];
 

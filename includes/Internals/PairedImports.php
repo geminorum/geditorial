@@ -143,7 +143,7 @@ trait PairedImports
 
 	public function load_importitems_adminpage( ?string $context = NULL ): void
 	{
-		$context = $context ?? 'importitems';
+		$context ??= 'importitems';
 
 		$this->_load_submenu_adminpage( $context );
 
@@ -216,7 +216,7 @@ trait PairedImports
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return gEditorial\Info::renderNoPostsAvailable();
 
-		$context = $context ?? 'importitems';
+		$context ??= 'importitems';
 
 		if ( WordPress\Post::can( $post, 'edit_post' ) ) {
 

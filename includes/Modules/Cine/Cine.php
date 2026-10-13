@@ -37,7 +37,7 @@ class Cine extends gEditorial\Module
 		return [
 			'name'     => 'cine',
 			'title'    => _x( 'Cine', 'Modules: Cine', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Library of Films', 'Modules: Cine', 'geditorial-admin' ),
+			'desc'     => _x( 'Library of Films', 'Modules: Cine', 'geditorial-admin' ),
 			'icon'     => 'tickets-alt',
 			'access'   => 'beta',
 			'keywords' => [

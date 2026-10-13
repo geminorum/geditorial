@@ -349,7 +349,7 @@ class Module extends WordPress\Module
 	// NOTE: to prevent infinite loops!
 	public function _cuc( ?string $context = NULL, string $fallback_capability = '' ): bool
 	{
-		$context = $context ?? $this->default_cuc_context;
+		$context ??= $this->default_cuc_context;
 
 		if ( ! empty( $this->caps[$context] ) )
 			return current_user_can( $this->caps[$context] );
@@ -613,7 +613,7 @@ class Module extends WordPress\Module
 	// NOTE: must be available to all modules
 	public function prep_meta_row( mixed $value, ?string $field_key = NULL, array $field = [], mixed $raw = NULL, ?string $context = NULL ): mixed
 	{
-		$context = $context ?? 'admin';
+		$context ??= 'admin';
 
 		if ( ! empty( $field['prep'] ) && is_callable( $field['prep'] ) )
 			return call_user_func_array( $field['prep'], [ $value, $field_key, $field, $raw, $context ] );

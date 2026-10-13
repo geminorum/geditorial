@@ -18,7 +18,7 @@ class Statistical extends gEditorial\Module
 		return [
 			'name'     => 'statistical',
 			'title'    => _x( 'Statistical', 'Modules: Statistical', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Content Reports', 'Modules: Statistical', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Reports', 'Modules: Statistical', 'geditorial-admin' ),
 			'icon'     => 'chart-pie',
 			'i18n'     => 'adminonly',
 			'access'   => 'beta',

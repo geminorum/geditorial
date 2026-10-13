@@ -24,7 +24,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		static $data = [];
 
-		$context = $context ?? 'default';
+		$context ??= 'default';
 
 		if ( ! empty( $data[$context] ) )
 			return $data[$context];

@@ -33,7 +33,7 @@ trait TaxonomyOverview
 		?string $title = NULL,
 	): bool {
 
-		$context = $context ?? 'reports';
+		$context ??= 'reports';
 
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
@@ -83,7 +83,7 @@ trait TaxonomyOverview
 			'desc' => gEditorial\Tablelist::columnTermDesc(),
 		];
 
-		$title = $title ?? sprintf(
+		$title ??= sprintf(
 			/* translators: `%s`: taxonomy label */
 			_x( 'Overview of %s', 'Internal: TaxonomyOverview: Header', 'geditorial-admin' ),
 			$this->get_taxonomy_label( $constant, 'extended_label', 'name' )

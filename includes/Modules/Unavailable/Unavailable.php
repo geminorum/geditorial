@@ -19,7 +19,7 @@ class Unavailable extends gEditorial\Module
 		return [
 			'name'     => 'unavailable',
 			'title'    => _x( 'Unavailable', 'Modules: Unavailable', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Archived Contents', 'Modules: Unavailable', 'geditorial-admin' ),
+			'desc'     => _x( 'Archived Contents', 'Modules: Unavailable', 'geditorial-admin' ),
 			'icon'     => 'archive',
 			'frontend' => FALSE,
 			'access'   => 'beta',

@@ -16,6 +16,7 @@ trait ModuleLinks
 		$links    = [];
 		$screen   = get_current_screen();
 		$disabled = $this->setup_disabled();
+		$system   = gEditorial\Plugin::system();
 
 		// already registered links
 		foreach ( $this->module_links as $module_link ) {
@@ -122,7 +123,7 @@ trait ModuleLinks
 
 		if ( isset( $this->caps['settings'] )
 			&& ! gEditorial\Settings::isScreenContext( 'settings', $screen )
-			// && current_user_can( gEditorial\Plugin::CAPABILITY_SETTINGS ) ) {
+			// `&& current_user_can( gEditorial\Plugin::CAPABILITY_SETTINGS ) ) {`
 			&& $this->cuc( 'settings' ) ) {
 			$links[] = [
 				'context' => 'settings',
@@ -161,9 +162,13 @@ trait ModuleLinks
 			$links[] = [
 				'context' => 'docs',
 				'sub'     => FALSE,
-				'text'    => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+				'text'    => _x( 'Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
 				'url'     => Services\SystemHelp::getModuleDocsURL( FALSE ),
-				'title'   => _x( 'Editorial Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+				'title'   => sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+					$system,
+				),
 			];
 
 		return $links;
@@ -171,8 +176,8 @@ trait ModuleLinks
 
 	public function get_module_url( ?string $context = NULL, ?string $sub = NULL, array $extra = [] ): string
 	{
-		$sub     = $sub     ?? $this->key;
-		$context = $context ?? $this->default_link_context;
+		$sub     ??= $this->key;
+		$context ??= $this->default_link_context;
 
 		switch ( $context ) {
 			case 'tools'    :
@@ -203,7 +208,7 @@ trait ModuleLinks
 		?string $admin_base = NULL,
 	): string {
 
-		$context = $context ?? 'mainpage';
+		$context ??= 'mainpage';
 
 		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
 			? $this->classs()

@@ -86,6 +86,9 @@ class Wysiwyg extends gEditorial\Module
 			if ( $this->get_setting( 'description_editor' )
 				&& $this->role_can( 'description' ) )
 					$this->_enqueue_editor( $screen );
+
+		} else if ( 'profile' === $screen->base ) {
+
 		}
 	}
 

@@ -149,7 +149,7 @@ class WasBorn extends gEditorial\Module
 		$strings['dashboard'] = [
 			'paired'  => [ 'widget_title' => _x( 'The Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 			'current' => [ 'widget_title' => _x( 'Your Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
-			'all'     => [ 'widget_title' => _x( 'Editorial Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
+			'all'     => [ 'widget_title' => _x( 'The Staff Age Summary', 'Dashboard Widget Title', 'geditorial-was-born' ), ],
 		];
 
 		return $strings;
@@ -358,9 +358,9 @@ class WasBorn extends gEditorial\Module
 
 	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' ): string
 	{
-		$html      = '';
-		$context   = $context ?? 'dashboard';
+		$context   ??= 'dashboard';
 		$posttypes = $this->get_setting_posttypes( 'parent' );
+		$html      = '';
 
 		foreach ( $this->_summary_age_groups( $posttypes, $paired, $context ) as $group_summary )
 			$html.= Core\HTML::tag( $list, [ 'class' => '-age-group' ], $group_summary );
@@ -1168,7 +1168,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @REF: `hook_dashboardsummary_paired_post_summaries()`
-	public function paired_post_summaries( array $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, ?string $context ): array
+	public function paired_post_summaries( array $summaries, ?string $paired, ?string $posttype, ?string $taxonomy, array $posttypes, $post, ?string $context ): array
 	{
 		if ( ! Core\Arraay::exists( $posttypes, $this->get_setting_posttypes( 'parent' ) ) )
 			return $summaries;

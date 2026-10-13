@@ -424,7 +424,7 @@ class Phonebook extends gEditorial\Module
 		if ( $search === $sanitized )
 			return;
 
-		// TODO: make wp-query support `OR` operator on search-terms
+		// TODO: make `wp-query` support `OR` operator on search-terms
 		// `$wp_query->set( 's', sprintf( '%s|%s', $sanitized, $search ) );`
 		$wp_query->set( 's', $sanitized );
 	}
@@ -462,18 +462,18 @@ class Phonebook extends gEditorial\Module
 		return $terms;
 	}
 
-	public function personage_editform_meta_summary( $fields, $post )
+	public function personage_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
 
 		$fields['mobile_number']    = NULL;
-		// $fields['phone_number']     = NULL;
+		// `$fields['phone_number']     = NULL;`
 		$fields['home_address']     = NULL;
-		// $fields['work_address']     = NULL;
+		// `$fields['work_address']     = NULL;`
 		$fields['emergency_person'] = NULL;
 		$fields['emergency_mobile'] = NULL;
-		// $fields['emergency_address'] = NULL;
+		// `$fields['emergency_address'] = NULL;`
 
 		return $fields;
 	}
@@ -648,7 +648,7 @@ class Phonebook extends gEditorial\Module
 		return NULL;
 	}
 
-	private function _get_posttype_phone_possible_keys( $posttype, $extra = [] )
+	private function _get_posttype_phone_possible_keys( string $posttype, array $extra = [] ): array
 	{
 		$keys = [
 			'mobile_number'    => 'mobile',
@@ -672,7 +672,7 @@ class Phonebook extends gEditorial\Module
 		return array_change_key_case( $list, CASE_LOWER );
 	}
 
-	public function sanitize_phone( $value, $type = 'phone', $post = FALSE )
+	public function sanitize_phone( mixed $value, string $type = 'phone', mixed $post = FALSE ): false|string
 	{
 		if ( WordPress\Strings::isEmpty( $value ) )
 			return FALSE;
@@ -691,7 +691,7 @@ class Phonebook extends gEditorial\Module
 		return $this->filters( 'sanitize_phone', $sanitized, $value, $type, $post );
 	}
 
-	private function _get_phone_fields( $posttype, $extra = [] )
+	private function _get_phone_fields( string $posttype, array $extra = [] ): array
 	{
 		$list = [
 			'mobile_number'    => Services\PostTypeFields::getPostMetaKey( 'mobile_number' ),

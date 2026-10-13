@@ -29,7 +29,7 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_import_custom_fields( array $metakeys, array $supported, array $taxonomies, ?string $context = NULL ): bool
 	{
-		$context = $context ?? 'imports';
+		$context ??= 'imports';
 		$form    = self::getCurrentForm( static::CURRENT_FORM[$context] , $context );
 
 		if ( isset( $_POST[static::ACTION_CUSTOM_FIELDS_CHECK] ) ) {
@@ -147,7 +147,7 @@ class ModuleSettings extends gEditorial\Settings
 		if ( gEditorial\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CHECK ) )
 			return TRUE; // will be handled by card renderer
 
-		$context = $context ?? 'imports';
+		$context ??= 'imports';
 
 		if ( gEditorial\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CONVERT ) ) {
 

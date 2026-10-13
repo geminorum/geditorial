@@ -220,7 +220,7 @@ class ModuleHelper extends gEditorial\Helper
 	{
 		static $data;
 
-		$context = $context ?? 'display';
+		$context ??= 'display';
 
 		if ( ! empty( $data[$context] ) )
 			return $data[$context];

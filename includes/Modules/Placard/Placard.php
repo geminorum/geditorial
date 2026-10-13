@@ -525,7 +525,7 @@ class Placard extends gEditorial\Module
 	private function _render_orderedlist( object $post, ?string $context = NULL ): bool
 	{
 		$data    = [];
-		$context = $context ?? 'orderedlist';
+		$context ??= 'orderedlist';
 
 		if ( ! $view = $this->viewengine__view_by_template( $context, 'admin' ) )
 			return Core\HTML::desc( gEditorial\Plugin::wrong( FALSE ) );
@@ -553,7 +553,7 @@ class Placard extends gEditorial\Module
 		if ( ! $this->is_save_post( $post, 'main_posttype' ) )
 			return;
 
-		$context = $context ?? 'orderedlist';
+		$context ??= 'orderedlist';
 		$parsed  = Core\Arraay::parseInputGroups( self::req( $this->classs( $context ), [] ) );
 
 		foreach ( $parsed as &$item ) {
@@ -584,7 +584,7 @@ class Placard extends gEditorial\Module
 		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
 			return $tabs;
 
-		$context   = $context ?? 'woocommerce';
+		$context   ??= 'woocommerce';
 		$parent_id = $product->get_id();
 
 		if ( ! $post = $this->get_content_banners_by_parent( $parent_id, $context ) )
@@ -686,7 +686,7 @@ class Placard extends gEditorial\Module
 			return FALSE;
 
 		$first   = TRUE;
-		$context = $context ?? 'summary';
+		$context ??= 'summary';
 		$rawdata = $this->_fetch_postmeta( $post->ID, [] );
 
 		if ( empty( $rawdata ) )

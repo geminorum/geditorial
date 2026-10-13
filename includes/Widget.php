@@ -797,8 +797,8 @@ class Widget extends \WP_Widget
 
 	public function form_image_size( array $instance, ?string $default = NULL, string $field = 'image_size', string $posttype = 'post' ): void
 	{
+		$default ??= WordPress\Media::getAttachmentImageDefaultSize( $posttype );
 		$sizes   = $this->get_images_sizes( $posttype );
-		$default = $default ?? WordPress\Media::getAttachmentImageDefaultSize( $posttype );
 
 		if ( count( $sizes ) ) {
 
@@ -855,17 +855,22 @@ class Widget extends \WP_Widget
 		), $this->get_field_id( $field ) );
 	}
 
-	public function form_checkbox( array $instance, bool|string $default = FALSE, string $field = 'checked', ?string $label = NULL ): void
-	{
+	public function form_checkbox(
+		array $instance,
+		bool|string $default = FALSE,
+		string $field = 'checked',
+		?string $label = NULL,
+	): void {
+
 		if ( is_null( $label ) ) {
 			switch ( $field ) {
-				case 'embeds'     : $label = _x( 'Process Embeds', 'Widget Core', 'geditorial-admin' ); break;
-				case 'shortcodes' : $label = _x( 'Process Short-codes', 'Widget Core', 'geditorial-admin' ); break;
-				case 'filters'    : $label = _x( 'Process Filters', 'Widget Core', 'geditorial-admin' ); break;
+				case 'embeds'     : $label = _x( 'Process Embeds', 'Widget Core', 'geditorial-admin' );           break;
+				case 'shortcodes' : $label = _x( 'Process Short-codes', 'Widget Core', 'geditorial-admin' );      break;
+				case 'filters'    : $label = _x( 'Process Filters', 'Widget Core', 'geditorial-admin' );          break;
 				case 'legacy'     : $label = _x( 'Process Filters (Legacy)', 'Widget Core', 'geditorial-admin' ); break;
-				case 'autop'      : $label = _x( 'Automatic Paragraphs', 'Widget Core', 'geditorial-admin' ); break;
-				case 'bypasscache': $label = _x( 'Bypass Caching', 'Widget Core', 'geditorial-admin' ); break;
-				case 'field_desc' : $label = _x( 'Display Descriptions', 'Widget Core', 'geditorial-admin' ); break;
+				case 'autop'      : $label = _x( 'Automatic Paragraphs', 'Widget Core', 'geditorial-admin' );     break;
+				case 'bypasscache': $label = _x( 'Bypass Caching', 'Widget Core', 'geditorial-admin' );           break;
+				case 'field_desc' : $label = _x( 'Display Descriptions', 'Widget Core', 'geditorial-admin' );     break;
 				default:            $label = _x( 'Checked:', 'Widget Core', 'geditorial-admin' );
 			}
 		}
@@ -890,7 +895,7 @@ class Widget extends \WP_Widget
 		string $field = 'page_id',
 		string $posttype_field = 'posttype',
 		string $posttype_default = 'page',
-		?string $label = NULL
+		?string $label = NULL,
 	): void {
 
 		$posttype = $instance[$posttype_field] ?? $posttype_default;

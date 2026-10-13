@@ -363,7 +363,7 @@ class Chronicles extends gEditorial\Module
 		] ) : $terms;
 	}
 
-	public function personage_editform_meta_summary( array $fields, object $post ): array
+	public function personage_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;
@@ -375,7 +375,7 @@ class Chronicles extends gEditorial\Module
 		return $fields;
 	}
 
-	public function book_editform_meta_summary( array $fields, object $post ): array
+	public function book_editform_meta_summary( ?array $fields, object $post ): ?array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $fields;

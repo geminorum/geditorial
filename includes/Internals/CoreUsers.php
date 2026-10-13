@@ -16,7 +16,7 @@ trait CoreUsers
 	protected function get_blog_users( ?array $fields = NULL, string|array $object = '', bool $admins = FALSE )
 	{
 		$excludes = $this->get_setting( 'excluded_roles', [] );
-		$fields   = $fields ?? [
+		$fields   ??= [
 			'ID',
 			'display_name',
 			'user_login',

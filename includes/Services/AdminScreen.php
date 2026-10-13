@@ -90,7 +90,7 @@ class AdminScreen extends gEditorial\Service
 
 	public static function _print_admin_styles( ?object $screen = NULL ): bool
 	{
-		$screen = $screen ?? get_current_screen();
+		$screen ??= get_current_screen();
 
 		// NOTE: renders before this plugin styles
 		if ( ! defined( 'GNETWORK_VERSION' ) )
@@ -205,15 +205,15 @@ class AdminScreen extends gEditorial\Service
 	public static function term_edit_form_close( object $term, string $taxonomy ): void
 	{
 		echo '</div><div id="postbox-container-1" class="postbox-container">';
-			// do_accordion_sections( get_current_screen(), 'side', $term );
+			// `do_accordion_sections( get_current_screen(), 'side', $term );`
 			do_meta_boxes( get_current_screen(), 'side', $term );
 		echo '</div><br class="clear" /></div></div>';
 	}
 
 	private static function _enqueue_screen_script( object $screen, ?string $taxonomy = NULL, ?string $mainkey = NULL ): false|string
 	{
-		$taxonomy = $taxonomy ?? $screen->taxonomy;
-		$mainkey  = $mainkey  ?? 'adminscreen';
+		$taxonomy ??= $screen->taxonomy;
+		$mainkey  ??= 'adminscreen';
 
 		if ( ! apply_filters( self::und( static::BASE, $mainkey, 'enhancements' ), TRUE, $taxonomy, $mainkey, $screen ) )
 			return FALSE;
@@ -221,8 +221,8 @@ class AdminScreen extends gEditorial\Service
 		if ( 'edit-tags' === $screen->base ) {
 
 			$asset = [
-				// '_nonce'   => wp_create_nonce( $mainkey ),
-				// 'strings'  => [],
+				// `'_nonce'   => wp_create_nonce( $mainkey ),`
+				// `'strings'  => [],`
 				'settings' => [
 					'inputs'  => apply_filters( self::und( static::BASE, $mainkey, 'fillbyquery', 'inputs' ), [], $taxonomy, $mainkey ),
 					'selects' => apply_filters( self::und( static::BASE, $mainkey, 'fillbyquery', 'selects' ), [], $taxonomy, $mainkey ),
@@ -326,7 +326,7 @@ class AdminScreen extends gEditorial\Service
 	 */
 	public static function disableQuickEdit( ?object $screen = NULL ): void
 	{
-		$screen = $screen ?? get_current_screen();
+		$screen ??= get_current_screen();
 
 		add_filter( 'page_row_actions',
 			static function ( $actions, $post)
@@ -339,8 +339,8 @@ class AdminScreen extends gEditorial\Service
 			}, 12, 2 );
 
 		add_filter( 'post_row_actions',
-			static function ( $actions, $post )
-				use ( $screen ) {
+			static function ( array $actions, object $post )
+				use ( $screen ): array {
 
 				if ( $post->post_type === $screen->post_type )
 					unset( $actions['inline hide-if-no-js'] );
@@ -349,7 +349,7 @@ class AdminScreen extends gEditorial\Service
 			}, 12, 2 );
 
 		add_filter( 'bulk_actions-'.$screen->id,
-			static function ( $actions ) {
+			static function ( array $actions ): array {
 				unset( $actions['edit'] );
 				return $actions;
 			} );

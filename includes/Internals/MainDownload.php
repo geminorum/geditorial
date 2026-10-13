@@ -105,10 +105,13 @@ trait MainDownload
 		if ( ! $filesize )
 			return $format ? '' : 0;
 
-		return $format
-			? sprintf( $template ?? '<span class="-filesize text-nowrap" title="%1$s">%2$s</span>',
-				_x( 'File Size', 'Internal: Main Download: Title Attr', 'geditorial' ), Core\HTML::wrapLTR( Core\File::formatSize( $filesize ) ) )
-			: (int) $filesize;
+		if  ( ! $format )
+			return (int) $filesize;
+
+		return sprintf( $template ?? '<span class="-filesize text-nowrap" title="%1$s">%2$s</span>',
+			_x( 'File Size', 'Internal: Main Download: Title Attr', 'geditorial' ),
+			Core\HTML::wrapLTR( Core\File::formatSize( $filesize ) ),
+		);
 	}
 
 	protected function maindownload__override_loop_before(): void

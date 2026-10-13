@@ -225,7 +225,9 @@ class Dossier extends gEditorial\Module
 			'meta_box_cb'        => '__checklist_reverse_terms_callback',
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
-		], 'primary_posttype', [] );
+		], 'primary_posttype', [
+
+		] );
 
 		$this->paired_register( [], [
 			'custom_icon' => $this->module->icon,

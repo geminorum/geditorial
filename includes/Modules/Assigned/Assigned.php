@@ -23,7 +23,7 @@ class Assigned extends gEditorial\Module
 		return [
 			'name'     => 'assigned',
 			'title'    => _x( 'Assigned', 'Modules: Assigned', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Assignments', 'Modules: Assigned', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Assignments', 'Modules: Assigned', 'geditorial-admin' ),
 			'icon'     => 'hammer',
 			'access'   => 'beta',
 			'keywords' => [

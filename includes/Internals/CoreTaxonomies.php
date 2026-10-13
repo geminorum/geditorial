@@ -157,7 +157,7 @@ trait CoreTaxonomies
 							$targets = $targets ? [ $this->constant( $targets ) ] : '';
 
 						if ( ! $callback )
-							// $args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];
+							// `$args['update_count_callback'] = [ WordPress\Database::class, 'updateCountCallback' ];`
 							$args['update_count_callback'] = '_update_post_term_count';
 
 					} else if ( 'user' === $value ) {
@@ -755,7 +755,7 @@ trait CoreTaxonomies
 
 	public function is_screen_taxonomy( string $constant, ?object $screen = NULL ): bool
 	{
-		if ( ! $screen = $screen ?? get_current_screen() )
+		if ( ! $screen ??= get_current_screen() )
 			return FALSE;
 
 		return $this->constant( $constant ) === $screen->taxonomy;
@@ -917,7 +917,7 @@ trait CoreTaxonomies
 		if ( $check_advanced && $this->get_setting( 'metabox_advanced', $default_advanced ) )
 			return FALSE;
 
-		if ( ! $screen = $screen ?? get_current_screen() )
+		if ( ! $screen ??= get_current_screen() )
 			return FALSE;
 
 		return $this->hook_taxonomy_metabox_mainbox(

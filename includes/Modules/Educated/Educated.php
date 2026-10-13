@@ -27,7 +27,7 @@ class Educated extends gEditorial\Module
 		return [
 			'name'     => 'educated',
 			'title'    => _x( 'Educated', 'Modules: Educated', 'geditorial-admin' ),
-			'desc'     => _x( 'Editorial Educations', 'Modules: Educated', 'geditorial-admin' ),
+			'desc'     => _x( 'Content Educations', 'Modules: Educated', 'geditorial-admin' ),
 			'icon'     => 'welcome-learn-more',
 			'access'   => 'beta',
 			'keywords' => [

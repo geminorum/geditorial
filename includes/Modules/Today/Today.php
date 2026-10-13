@@ -161,9 +161,15 @@ class Today extends gEditorial\Module
 
 	protected function get_module_templates(): array
 	{
+		$system = gEditorial\Plugin::system();
+
 		return [
 			'page_posttype' => [
-				'frontpage' => _x( 'Editorial: Today: Front-page', 'Template Title', 'geditorial-today' ),
+				'frontpage' => sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s: Today: Front-page', 'Template Title', 'geditorial-today' ),
+					$system,
+				),
 			],
 		];
 	}
@@ -274,7 +280,11 @@ class Today extends gEditorial\Module
 	{
 		$this->_hook_wp_submenu_page( 'adminmenu',
 			'index.php',
-			_x( 'Editorial Today', 'Page Title', 'geditorial-today' ),
+			sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Today', 'Page Title', 'geditorial-today' ),
+				gEditorial\Plugin::system(),
+			),
 			_x( 'My Today', 'Menu Title', 'geditorial-today' ),
 			$this->role_can( 'adminmenu' ) ? 'exist' : 'do_not_allow',
 			$this->get_adminpage_url( FALSE ),
@@ -286,14 +296,21 @@ class Today extends gEditorial\Module
 		$this->register_help_tabs();
 		$this->actions( 'load', self::req( 'page', NULL ) );
 
-		// $this->enqueue_asset_js();
+		// `$this->enqueue_asset_js();`
 	}
 
+	// TODO: migrate to `AdminScreen::renderLayout()`
 	public function admin_adminmenu_page()
 	{
-		gEditorial\Settings::wrapOpen( $this->key, 'listtable' );
+		$context ??= 'listtable';
 
-			gEditorial\Settings::headerTitle( 'listtable', _x( 'Editorial Today', 'Page Title', 'geditorial-today' ), FALSE );
+		gEditorial\Settings::wrapOpen( $this->key, $context );
+
+			gEditorial\Settings::headerTitle( $context, sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Today', 'Page Title', 'geditorial-today' ),
+				gEditorial\Plugin::system(),
+			), FALSE );
 
 			echo '<div id="poststuff"><div id="post-body" class="metabox-holder columns-2">';
 				echo '<div id="postbox-container-2" class="postbox-container">';
@@ -319,7 +336,7 @@ class Today extends gEditorial\Module
 			echo '</div></div>';
 
 
-			$this->settings_signature( 'listtable' );
+			$this->settings_signature( $context );
 		gEditorial\Settings::wrapClose();
 	}
 
@@ -882,7 +899,7 @@ class Today extends gEditorial\Module
 		if ( ! $this->prime_today( $the_day ) )
 			return $content;
 
-		$posttypes = $posttypes ?? get_query_var( 'day_posttype', $this->posttypes() );
+		$posttypes ??= get_query_var( 'day_posttype', $this->posttypes() );
 		$type      = $this->default_calendar();
 		$admin     = is_admin();
 		$blocks    = [];
@@ -1700,7 +1717,7 @@ class Today extends gEditorial\Module
 		if ( empty( $columns ) )
 			return;
 
-		$context = $context ?? is_admin() ? 'backend' : 'frontend';
+		$context ??= is_admin() ? 'backend' : 'frontend';
 
 		if ( ! $view = $this->viewengine__view_by_template( 'today-items', $context ) )
 			return;

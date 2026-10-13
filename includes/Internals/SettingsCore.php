@@ -131,7 +131,7 @@ trait SettingsCore
 
 	public function settings_from(): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		echo '<form class="'.$this->base.'-form -form -'.$this->module->name
 			.'" action="'.$this->get_module_url( $context ).'" method="post">';
@@ -203,9 +203,9 @@ trait SettingsCore
 		bool $check_sidebox = FALSE,
 	): true {
 
-		$sub     = $sub     ?? $this->module->name;
-		$context = $context ?? 'settings';
-		$action  = $action  ?? 'update';
+		$sub     ??= $this->module->name;
+		$context ??= 'settings';
+		$action  ??= 'update';
 		$class   = [
 			$this->base.'-form',
 			'-form',
@@ -304,20 +304,15 @@ trait SettingsCore
 	// @ALSO: `ModuleSettings::getCurrentForm()`
 	protected function get_current_form( array $defaults, ?string $context = NULL ): array
 	{
-		$context  = $context ?? 'settings';
-		$base_key = $this->hook();
+		$context ??= 'settings';
 
-		$req = empty( $_REQUEST[$base_key][$context] )
-			? []
-			: $_REQUEST[$base_key][$context];
-
-		return self::parsed( $defaults, $req );
+		return self::parsed( $defaults, $_REQUEST[$this->hook()][$context] ?? [] );
 	}
 
 	// @ALSO: `ModuleSettings::fieldsCurrentForm()`
 	protected function fields_current_form( array $fields, ?string $context = NULL, array $excludes = [] ): void
 	{
-		$context  = $context ?? 'settings';
+		$context  ??= 'settings';
 		$base_key = $this->hook();
 
 		foreach ( $fields as $key => $value ) {
@@ -325,13 +320,13 @@ trait SettingsCore
 			if ( in_array( $key, $excludes ) )
 				continue;
 
-			Core\HTML::inputHidden( $base_key.'['.$context.']['.$key.']', $value );
+			Core\HTML::inputHidden( sprintf( '%s[%s][%s]', $base_key, $context, $key ), $value );
 		}
 	}
 
 	protected function render_form_fields( string $sub, ?string $action = NULL, ?string $context = NULL ): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		Core\HTML::inputHidden( 'base', $this->base );
 		Core\HTML::inputHidden( 'key', $this->key );
@@ -347,7 +342,7 @@ trait SettingsCore
 	// NOTE: `$extra` argument is for extending in modules.
 	public function append_sub( array $subs, ?string $context = NULL, array $extra = [] ): array
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( ! $this->cuc( $context ) )
 			return $subs;
@@ -362,7 +357,7 @@ trait SettingsCore
 	// TODO: must avoid storing the defaults!
 	public function settings_validate( array $options, ?string $context = NULL ): array
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( 'settings' === $context ) {
 
@@ -569,7 +564,7 @@ trait SettingsCore
 
 	protected function get_settings_field( string $setting, ?string $context = NULL ): array
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		foreach ( $this->{$context} as $section ) {
 
@@ -607,7 +602,7 @@ trait SettingsCore
 		?string $key = NULL,
 	): bool {
 
-		$context = $context ?? 'tools'; // WTF?!
+		$context ??= 'tools'; // WTF?!
 
 		if ( ! $this->cuc( $context ) )
 			return FALSE;
@@ -732,7 +727,7 @@ trait SettingsCore
 
 	public function settings_header( ?string $context = NULL ): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 		$back    = $count = $flush = $filters = FALSE;
 
 		if ( 'config' == $this->module->name ) {
@@ -772,7 +767,7 @@ trait SettingsCore
 
 	protected function settings_footer( ?string $context = NULL ): void
 	{
-		$context = $context ?? 'settings';
+		$context ??= 'settings';
 
 		if ( 'config' === $this->module->name )
 			Services\SystemBranding::credits( $context );

@@ -1039,7 +1039,7 @@ class Template extends WordPress\Main
 					if ( ! $terms = WordPress\Taxonomy::getTheTermList( $key, $post ) )
 						continue;
 
-					$title = $title ?? Services\CustomTaxonomy::getLabel( $key, 'singular_name' );
+					$title ??= Services\CustomTaxonomy::getLabel( $key, 'singular_name' );
 
 					$rows[$title] = WordPress\Strings::getJoined( $terms );
 				}
@@ -1048,7 +1048,7 @@ class Template extends WordPress\Main
 			}
 
 			$field = $fields[$key];
-			$title = $title ?? $field['title'];
+			$title ??= $field['title'];
 
 			if ( 'term' == $field['type'] )
 				$meta = self::metaTermField( [
@@ -1465,7 +1465,7 @@ class Template extends WordPress\Main
 			'after'    => '',
 		], $arguments );
 
-		if ( $data = Services\TaxonomyFields::getFieldRaw( $args['field'], $term->term_id, $module, TRUE ) ) {
+		if ( $data = Services\TaxonomyFields::getFieldRaw( $args['field'], $term->term_id, 'terms', TRUE ) ) {
 
 			echo $args['before'];
 				Services\Maps::renderSingleMarker( $data, $args['context'] );

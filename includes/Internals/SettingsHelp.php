@@ -27,7 +27,7 @@ trait SettingsHelp
 		if ( ! WordPress\Screen::mustRegisterUI( FALSE ) || self::req( 'noheader' ) )
 			return;
 
-		if ( ! $screen = $screen ?? get_current_screen() )
+		if ( ! $screen ??= get_current_screen() )
 			return;
 
 		foreach ( $this->settings_help_tabs( $context ) as $tab )

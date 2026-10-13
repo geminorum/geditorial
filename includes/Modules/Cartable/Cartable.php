@@ -162,7 +162,7 @@ class Cartable extends gEditorial\Module
 			'user_taxonomy'  => 'cartable_user',
 			'group_taxonomy' => 'cartable_group',
 			'type_taxonomy'  => 'cartable_type',
-			'group_ref'      => 'user_group',       // ref to the constant in Users module
+			'group_ref'      => 'user_group',       // Reference to the constant in `Users` module
 		];
 	}
 
@@ -170,8 +170,8 @@ class Cartable extends gEditorial\Module
 	{
 		return [
 			'metabox' => [
-				// 'metabox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
-				// 'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),
+				// `'metabox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),`
+				// `'metabox_action' => _x( 'View All', 'MetaBox Action', 'geditorial-cartable' ),`
 				'mainbox_title'  => _x( 'Cartable', 'MetaBox Title', 'geditorial-cartable' ),
 			],
 			'noops' => [
@@ -193,12 +193,11 @@ class Cartable extends gEditorial\Module
 				'show_ui'      => FALSE,
 				'meta_box_cb'  => FALSE,
 			], NULL, [
-				'custom_icon' => 'admin-users',
-			], [
+				'custom_icon'  => 'admin-users',
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => 'assign_'.$this->constant( 'user_taxonomy' ),
+				'assign_terms' => self::_und( 'assign', $this->constant( 'user_taxonomy' ) ),
 			] );
 
 			// new term for new users
@@ -218,12 +217,11 @@ class Cartable extends gEditorial\Module
 				'rewrite'      => FALSE,
 				'show_in_menu' => FALSE,
 			], NULL, [
-				'custom_icon' => 'tag',
-			], [
+				'custom_icon'  => 'tag',
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => 'assign_'.$this->constant( 'type_taxonomy' ),
+				'assign_terms' => self::_und( 'assign', $this->constant( 'type_taxonomy' ) ),
 			] );
 
 			$this->support_types = TRUE;
@@ -232,7 +230,7 @@ class Cartable extends gEditorial\Module
 		$this->filter( 'map_meta_cap', 4 );
 	}
 
-	public function users_init( $options )
+	public function users_init( object $options ): void
 	{
 		if ( empty( $options->settings['user_groups'] ) )
 			return;
@@ -243,12 +241,11 @@ class Cartable extends gEditorial\Module
 			'rewrite'      => FALSE,
 			'show_ui'      => FALSE,
 		], NULL, [
-			'custom_icon' => 'groups',
-		], [
+			'custom_icon'  => 'groups',
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => 'assign_'.$this->constant( 'group_taxonomy' ),
+			'assign_terms' => self::_und( 'assign', $this->constant( 'group_taxonomy' ) ),
 		] );
 
 		$this->filter( 'wp_update_term_data', 4 );
@@ -403,7 +400,11 @@ class Cartable extends gEditorial\Module
 
 			add_submenu_page(
 				'index.php',
-				_x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ),
+				sprintf(
+					/* translators: `%s`: system string */
+					_x( '%s Cartables', 'Page Title', 'geditorial-cartable' ),
+					gEditorial\Plugin::system(),
+				),
 				_x( 'My Cartables', 'Menu Title', 'geditorial-cartable' ),
 				'read',
 				$this->get_adminpage_url( FALSE ),
@@ -414,7 +415,7 @@ class Cartable extends gEditorial\Module
 
 	public function admin_cartable_page(): bool
 	{
-		$context = $context ?? 'listtable';
+		$context ??= 'listtable';
 		$user    = wp_get_current_user();
 		$uri     = $this->get_adminpage_url( TRUE, [], 'adminmenu' );
 
@@ -474,7 +475,11 @@ class Cartable extends gEditorial\Module
 
 		gEditorial\Settings::wrapOpen( $this->key, $context );
 
-			gEditorial\Settings::headerTitle( $context, _x( 'Editorial Cartables', 'Page Title', 'geditorial-cartable' ), FALSE );
+			gEditorial\Settings::headerTitle( $context, sprintf(
+				/* translators: `%s`: system string */
+				_x( '%s Cartables', 'Page Title', 'geditorial-cartable' ),
+				gEditorial\Plugin::system(),
+			), FALSE );
 
 			$_context = self::req( 'context', $_context );
 			$slug    = 'user' == $_context ? $slug : self::req( 'slug', $slug ); // prevents access to other users
@@ -716,7 +721,7 @@ class Cartable extends gEditorial\Module
 		] );
 	}
 
-	public function wp_update_term_data( $data, $term_id, $taxonomy, $args )
+	public function wp_update_term_data( array $data, int $term_id, string $taxonomy, array $args ): array
 	{
 		if ( $taxonomy == $this->constant( 'group_ref' ) )
 			$this->before_terms[$term_id] = get_term_by( 'id', $term_id, $this->constant( 'group_ref' ) );
