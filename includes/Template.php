@@ -1411,6 +1411,42 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
+	public static function renderPostMap(
+		mixed $post,
+		array $arguments = [],
+		?string $module = NULL
+	): bool {
+
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$module = $module ?? static::MODULE;
+		$args   = self::parsed( [
+			'field'    => 'latlng',
+			'fallback' => '',
+			'context'  => NULL,
+			'before'   => '',
+			'after'    => '',
+		], $arguments );
+
+		if ( $data = Services\PostTypeFields::getFieldRaw( $args['field'], $post->ID, 'meta', TRUE ) ) {
+
+			echo $args['before'];
+				Services\Maps::renderSingleMarker( $data, $args['context'] );
+			echo $args['after'];
+
+		} else if ( $args['fallback'] ) {
+
+			echo $args['before'].$args['fallback'].$args['after'];
+
+		} else {
+
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
 	public static function renderTermMap(
 		mixed $term,
 		array $arguments = [],
