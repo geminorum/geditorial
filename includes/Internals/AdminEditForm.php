@@ -13,12 +13,17 @@ trait AdminEditForm
 	{
 		return add_action( 'edit_form_after_title',
 			function ( $post ) use ( $fields ) {
+
+				$this->actions( 'editform_meta_summary_before', $post );
+
 				echo $this->wrap( gEditorial\Template::metaSummary( [
 					'echo'   => FALSE,
 					'id'     => $post->ID,
 					'type'   => $post->post_type,
 					'fields' => $this->filters( 'editform_meta_summary', $fields, $post ),
 				] ), '-meta-summary -double-column-table' );
+
+				$this->actions( 'editform_meta_summary_after', $post );
 			},
 			1,
 			$priority ?? 9
