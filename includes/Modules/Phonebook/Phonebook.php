@@ -220,17 +220,35 @@ class Phonebook extends gEditorial\Module
 						'type'        => 'address',
 						'order'       => 600,
 					],
+					'home_coordinates' => [
+						'title'       => _x( 'Home Coordinates', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Latitude and Longitude of the home address.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'latlng',
+						'order'       => 605,
+					],
 					'work_address' => [
 						'title'       => _x( 'Work Address', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'address',
-						'order'       => 600,
+						'order'       => 610,
+					],
+					'work_coordinates' => [
+						'title'       => _x( 'Work Coordinates', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Latitude and Longitude of the work address.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'latlng',
+						'order'       => 615,
 					],
 					'family_address' => [
 						'title'       => _x( 'Parent\'s Address', 'Field Title', 'geditorial-phonebook' ),
 						'description' => _x( 'Full family address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'address',
-						'order'       => 600,
+						'order'       => 620,
+					],
+					'family_coordinates' => [
+						'title'       => _x( 'Parent\'s Coordinates', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Latitude and Longitude of the family address.', 'Field Description', 'geditorial-phonebook' ),
+						'type'        => 'latlng',
+						'order'       => 625,
 					],
 					'emergency_mobile' => [
 						'title'       => _x( 'Emergency Contact', 'Field Title', 'geditorial-phonebook' ),
@@ -316,6 +334,7 @@ class Phonebook extends gEditorial\Module
 	{
 		$this->add_posttype_fields_supported();
 		$this->filter_module( 'personage', 'editform_meta_summary', 2, 20 );
+		$this->action_module( 'personage', 'editform_meta_summary_after', 1, 20 );
 
 		$this->filter( 'searchselect_result_extra_for_post', 3, 32, FALSE, $this->base );
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
@@ -476,6 +495,20 @@ class Phonebook extends gEditorial\Module
 		// `$fields['emergency_address'] = NULL;`
 
 		return $fields;
+	}
+
+	// TODO: push to the side!
+	public function personage_editform_meta_summary_after( mixed $post ): void
+	{
+		if ( GEDITORIAL_AIRGAPPED )
+		 	return;
+
+		gEditorial\Template::renderPostMap( $post, [
+			'field'    => 'home_coordinates',
+			'context'  => 'edit_post',
+			'before'   => $this->wrap_open( '-summary-coordinates' ),
+			'after'    => '</div>',
+		], $this->key );
 	}
 
 	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
