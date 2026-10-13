@@ -349,7 +349,8 @@ trait DashboardSummary
 				$summaries[] = [
 					'key'     => $this->classs( 'summary', $target ),
 					'class'   => '-paired-summary',
-					'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', Services\CustomTaxonomy::getLabel( $target, 'extended_label' ) ),
+					// `'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', Services\CustomTaxonomy::getLabel( $target, 'extended_label' ) ),`
+					'title'   => $this->strings_admin_widget_title( 'paired', Services\CustomTaxonomy::getLabel( $target, 'extended_label' ) ),
 					'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),
 				];
 

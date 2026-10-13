@@ -220,6 +220,27 @@ trait Strings
 		return sprintf( $template, $title, $singular );
 	}
 
+	protected function strings_admin_widget_title(
+		?string $context = 'default',
+		?string $default = NULL,
+		false|string $prop = 'widget_title',
+		false|string $group = 'dashboard',
+	): string {
+
+		$string = $this->get_string(
+			$prop,
+			$context ?? FALSE,
+			$group,
+			$default,
+		);
+
+		return $string ?? sprintf(
+			/* translators: `%s`: system string */
+			_x( '%s Content Summary', 'Internal: Strings: Dashboard Widget Title', 'geditorial-admin' ),
+			gEditorial\Plugin::system(),
+		);
+	}
+
 	// OLD: `subcontent_get_empty_notice()`
 	protected function get_notice_for_empty(
 		?string $context = 'display',

@@ -1179,7 +1179,8 @@ class WasBorn extends gEditorial\Module
 		$summaries[] = [
 			'key'     => $this->classs( 'summary' ),
 			'class'   => '-paired-summary',
-			'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', '' ),
+			// `'title'   => $this->get_string( 'widget_title', 'paired', 'dashboard', '' ),`
+			'title'   => $this->strings_admin_widget_title( 'paired', '' ),
 			'content' => Core\HTML::wrap( Core\HTML::tag( 'ul', $html ), 'list-columns -term-columns' ),
 		];
 
