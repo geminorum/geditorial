@@ -314,6 +314,7 @@ class Venue extends gEditorial\Module
 
 			if ( 'post' === $screen->base ) {
 
+				$this->_hook_editform_meta_coordinates();
 				$this->_hook_editform_meta_summary( [
 					'street_address' => NULL,
 					'postal_code'    => NULL,

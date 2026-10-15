@@ -30,6 +30,28 @@ trait AdminEditForm
 		);
 	}
 
+	// TODO: duplicate for `map_embed_url`
+	// TODO: push to the side!
+	protected function _hook_editform_meta_coordinates( ?string $field = NULL, ?string $module = NULL, ?int $priority = NULL ): bool
+	{
+		if ( GEDITORIAL_AIRGAPPED )
+		 	return FALSE;
+
+		return add_action( $this->hook_base( $module ?? $this->key, 'editform_meta_summary', 'after' ),
+			function( $post ) use ( $field ) {
+
+				gEditorial\Template::renderPostMap( $post, [
+					'field'    => $field ?? 'latlng',
+					'context'  => 'edit_post',
+					'before'   => $this->wrap_open( '-summary-coordinates' ),
+					'after'    => '</div>',
+				], $this->key );
+			},
+			1,
+			$priority ?? 12,
+		);
+	}
+
 	protected function _hook_editform_globalsummary( null|true|string $option_key = NULL, ?int $priority = NULL ): bool
 	{
 		if ( $option_key !== TRUE && ! $this->get_setting( $option_key ?? 'display_globalsummary' ) )
