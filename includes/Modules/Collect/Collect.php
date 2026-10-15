@@ -151,6 +151,8 @@ class Collect extends gEditorial\Module
 				$this->constant( 'collection_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'number_line' => [
 						'title'       => _x( 'Number Line', 'Field Title', 'geditorial-collect' ),

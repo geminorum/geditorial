@@ -91,14 +91,14 @@ class Recount extends gEditorial\Module
 
 	// TODO: maybe it's better to override the taxonomy callback for count
 	// `clean_term_cache( $term_id, $taxonomy, FALSE );`
-	public function edit_term_taxonomy( $term_id, $taxonomy )
+	public function edit_term_taxonomy( int $term_id, string $taxonomy ): void
 	{
 		if ( $this->taxonomy_supported( $taxonomy ) )
 			$this->_do_recount_term( $term_id );
 	}
 
 	// FIXME: use `countTermObjects( $term, $taxonomy )`
-	public function _do_recount_term( $term_id )
+	public function _do_recount_term( int $term_id ): int
 	{
 		global $wpdb;
 
@@ -106,10 +106,10 @@ class Recount extends gEditorial\Module
 
 		update_term_meta( $term_id, 'count', $count );
 
-		return $count;
+		return (int) $count;
 	}
 
-	public function taxonomy_term_count( $count, $term, $taxonomy )
+	public function taxonomy_term_count( int $count, object $term, string $taxonomy ): int
 	{
 		if ( FALSE !== ( $meta = get_term_meta( $term->term_id, 'count', TRUE ) ) )
 			return $meta;

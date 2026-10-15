@@ -156,7 +156,7 @@ trait SettingsTaxonomies
 
 	public function screen_taxonomy_supported( object $screen, null|false|string|array $base = NULL ): bool
 	{
-		$base = $base ?? [ 'edit-tags', 'term' ];
+		$base ??= [ 'edit-tags', 'term' ];
 
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
 			return FALSE;

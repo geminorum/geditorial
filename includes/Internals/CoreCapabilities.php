@@ -54,7 +54,8 @@ trait CoreCapabilities
 			return FALSE;
 
 		return add_filter( 'map_meta_cap',
-			function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+			function ( $caps, $cap, $user_id, $args )
+				use ( $constant, $taxonomy ) {
 
 				switch ( $cap ) {
 
@@ -135,43 +136,45 @@ trait CoreCapabilities
 		if ( ! $taxonomy = $this->constant_plural( $constant ) )
 			return FALSE;
 
-		return add_filter( 'map_meta_cap', function ( $caps, $cap, $user_id, $args ) use ( $constant, $taxonomy ) {
+		return add_filter( 'map_meta_cap',
+			function ( $caps, $cap, $user_id, $args )
+				use ( $constant, $taxonomy ) {
 
-			switch ( $cap ) {
+				switch ( $cap ) {
 
-				case 'manage_'.$taxonomy[0]: // NOTE: DEPRECATED
-				case 'edit_'.$taxonomy[0]:   // NOTE: DEPRECATED
-				case 'delete_'.$taxonomy[0]: // NOTE: DEPRECATED
-				case 'assign_'.$taxonomy[0]: // NOTE: DEPRECATED
+					case 'manage_'.$taxonomy[0]: // NOTE: DEPRECATED
+					case 'edit_'.$taxonomy[0]:   // NOTE: DEPRECATED
+					case 'delete_'.$taxonomy[0]: // NOTE: DEPRECATED
+					case 'assign_'.$taxonomy[0]: // NOTE: DEPRECATED
 
-				case 'manage_'.$taxonomy[1]:
-				case 'edit_'.$taxonomy[1]:
-				case 'delete_'.$taxonomy[1]:
-				case 'assign_'.$taxonomy[1]:
+					case 'manage_'.$taxonomy[1]:
+					case 'edit_'.$taxonomy[1]:
+					case 'delete_'.$taxonomy[1]:
+					case 'assign_'.$taxonomy[1]:
 
-					return $this->role_can( 'manage', $user_id )
-						? [ 'exist' ]
-						: [ 'do_not_allow' ];
+						return $this->role_can( 'manage', $user_id )
+							? [ 'exist' ]
+							: [ 'do_not_allow' ];
 
-				case 'assign_term':
+					case 'assign_term':
 
-					$term = get_term( (int) $args[0] );
+						$term = get_term( (int) $args[0] );
 
-					if ( ! $term || is_wp_error( $term ) )
-						return $caps;
+						if ( ! $term || is_wp_error( $term ) )
+							return $caps;
 
-					if ( $taxonomy[0] != $term->taxonomy )
-						return $caps;
+						if ( $taxonomy[0] != $term->taxonomy )
+							return $caps;
 
-					if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
-						return $caps;
+						if ( ! $roles = get_term_meta( $term->term_id, 'roles', TRUE ) )
+							return $caps;
 
-					if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
-						return [ 'do_not_allow' ];
-			}
+						if ( ! WordPress\Role::has( Core\Arraay::prepString( 'administrator', $roles ), $user_id ) )
+							return [ 'do_not_allow' ];
+				}
 
-			return $caps;
-		}, 10, 4 );
+				return $caps;
+			}, 10, 4 );
 	}
 
 	/**

@@ -12,8 +12,8 @@ trait CoreTaxonomies
 	/**
 	 * Creates a new custom taxonomy and applies the given settings.
 	 *
-	 * @link: https://developer.wordpress.org/reference/functions/register_taxonomy/
-	 * @link: https://wp-kama.com/function/register_taxonomy
+	 * @link https://developer.wordpress.org/reference/functions/register_taxonomy/
+	 * @link https://wp-kama.com/function/register_taxonomy
 	 *
 	 * @param string $constant
 	 * @param array $arguments
@@ -111,14 +111,14 @@ trait CoreTaxonomies
 			'is_viewable'     => NULL,
 			'custom_captype'  => FALSE,
 			'admin_managed'   => NULL,     // pseudo-setting: manage only for admins
-			'content_rich'    => NULL,     // pseudo-setting: the terms have additional content beside just assignment to posts
+			'content_rich'    => NULL,     // pseudo-setting: the terms have additional content beside just assignment to posts.
 			'auto_parents'    => FALSE,
 			'auto_children'   => FALSE,
 			'single_selected' => FALSE,    // TRUE or callable: @SEE: `Services\TermHierarchy::getSingleSelectTerm()`
 			'reverse_ordered' => NULL,     // the value used on `orderby`: `name`/`id`
 			'auto_assigned'   => NULL,
 			'terms_related'   => NULL,
-			'archive_content' => NULL,     // to suggest on content of the archive page // TODO
+			'archive_content' => NULL,     // Used to suggest on content of the archive page // TODO
 			'meta_tagline'    => NULL,     // `FALSE`, meta-key or `TRUE` for default `tagline` // TODO
 			'suitable_metas'  => NULL,     // Optional list of meta suggested for this taxonomy.
 			'search_titles'   => NULL,

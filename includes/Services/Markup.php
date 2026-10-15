@@ -121,7 +121,7 @@ class Markup extends gEditorial\Service
 		if ( ! empty( $gEditorialMustache ) )
 			return $gEditorialMustache;
 
-		$base = $base ?? static::factory()->get_dir(); // `GEDITORIAL_DIR`
+		$base ??= static::factory()->get_dir(); // `GEDITORIAL_DIR`
 
 		$gEditorialMustache = new \Mustache\Engine( [
 			'template_class_prefix' => sprintf( '__%s_', static::BASE ),

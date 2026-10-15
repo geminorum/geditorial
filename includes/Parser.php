@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Parser extends WordPress\Main
 {
+	// TODO: Migrate to Services
 
 	const BASE = 'geditorial';
 

@@ -134,7 +134,7 @@ trait CoreHooks
 	 * Filters a module hook if second parameter is equal to value of given constant.
 	 * @example `$this->filter_module_i2c( 'identified', 'default_posttype_identifier_type', 'code', 'primary_posttype' );`
 	 *
-	 * @param string|null $module
+	 * @param null|string $module
 	 * @param string $hook
 	 * @param mixed $override
 	 * @param string $target

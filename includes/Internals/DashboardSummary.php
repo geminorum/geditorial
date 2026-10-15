@@ -47,19 +47,18 @@ trait DashboardSummary
 		echo '</div>';
 	}
 
-	protected function add_dashboard_term_summary( string $constant, $posttypes = NULL, $role_check = TRUE, ?string $title = NULL, ?string $context = 'reports' )
+	protected function add_dashboard_term_summary( string $constant, ?array $posttypes = NULL, bool $role_check = TRUE, ?string $title = NULL, ?string $context = 'reports' ): bool
 	{
 		if ( $role_check && ! $this->corecaps_taxonomy_role_can( $constant, $context ) )
 			return FALSE;
 
-		if ( is_null( $title ) )
-			$title = sprintf(
-				/* translators: `%s`: taxonomy extended label */
-				_x( '%s Summary', 'Internal: Dashboard Summary: Widget Title', 'geditorial-admin' ),
-				$this->get_taxonomy_label( $constant, 'extended_label' ),
-			);
+		$title ??= sprintf(
+			/* translators: `%s`: taxonomy extended label */
+			_x( '%s Summary', 'Internal: Dashboard Summary: Widget Title', 'geditorial-admin' ),
+			$this->get_taxonomy_label( $constant, 'extended_label' ),
+		);
 
-		$this->add_dashboard_widget( 'term-summary', $title, 'refresh', [],
+		return $this->add_dashboard_widget( 'term-summary', $title, 'refresh', [],
 			function ( $object, $box )
 				use ( $constant, $posttypes ) {
 
@@ -67,7 +66,7 @@ trait DashboardSummary
 			} );
 	}
 
-	protected function do_dashboard_term_summary( string $constant, false|array $box, $posttypes = NULL, $edit = NULL )
+	protected function do_dashboard_term_summary( string $constant, false|array $box, ?array $posttypes = NULL, null|false|string $edit = NULL ): void
 	{
 		if ( $this->check_hidden_metabox( $box ) )
 			return;
@@ -79,8 +78,7 @@ trait DashboardSummary
 
 		if ( ! WordPress\Taxonomy::hasTerms( $taxonomy->name ) ) {
 
-			if ( is_null( $edit ) )
-				$edit = WordPress\Taxonomy::edit( $taxonomy );
+			$edit ??= WordPress\Taxonomy::edit( $taxonomy );
 
 			if ( $edit )
 				$empty = Core\HTML::tag( 'a', [
@@ -123,8 +121,16 @@ trait DashboardSummary
 	}
 
 	// TODO: support nooped term title via term meta from Terms module
-	protected function get_dashboard_term_summary( string $constant, $posttypes = NULL, $terms = NULL, $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' )
-	{
+	protected function get_dashboard_term_summary(
+		string       $constant,
+		?array       $posttypes = NULL,
+		?array       $terms     = NULL,
+		?string      $scope     = 'all',
+		?int         $user_id   = NULL,
+		?object      $paired    = NULL,
+		false|string $list      = 'li',
+	): string {
+
 		$html     = '';
 		$check    = FALSE;
 		$nooped   = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
@@ -136,18 +142,13 @@ trait DashboardSummary
 
 		$query_var = WordPress\Taxonomy::queryVar( $object );
 
-		if ( is_null( $posttypes ) )
-			$posttypes = $this->posttypes();
-
-		if ( is_null( $terms ) )
-			$terms = WordPress\Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
-				'hide_empty' => TRUE,
-				'exclude'    => $this->get_setting( 'summary_excludes', '' ),
-				'parent'     => $this->get_setting( 'summary_parents', TRUE ) ? 0 : '',
-			] );
-
-		if ( is_null( $user_id ) )
-			$user_id = get_current_user_id();
+		$user_id   ??= get_current_user_id();
+		$posttypes ??= $this->posttypes();
+		$terms     ??= WordPress\Taxonomy::getTerms( $taxonomy, FALSE, TRUE, 'slug', [
+			'hide_empty' => TRUE,
+			'exclude'    => $this->get_setting( 'summary_excludes', '' ),
+			'parent'     => $this->get_setting( 'summary_parents', TRUE ) ? 0 : '',
+		] );
 
 		if ( 'roles' == $scope && $this->role_can( self::und( 'taxonomy', $taxonomy, 'locking_terms' ), $user_id, FALSE, FALSE ) )
 			$check = TRUE; // 'hidden' == $this->get_setting( self::und( 'taxonomy', $taxonomy, 'restricted_visibility' ), 'disabled' );
@@ -164,11 +165,11 @@ trait DashboardSummary
 
 			foreach ( $counts as $term_slug => $posts ) {
 
-				// empty count
+				// The term count is empty.
 				if ( empty( $posts ) )
 					continue;
 
-				// term not available for display (usually child terms)
+				// The term is not available for display (usually child terms).
 				if ( ! array_key_exists( $term_slug, $terms ) )
 					continue;
 
@@ -311,7 +312,7 @@ trait DashboardSummary
 		return $html;
 	}
 
-	protected function hook_dashboardsummary_paired_post_summaries( string $constant, $supported = NULL, ?string $setting = NULL, ?int $priority = NULL )
+	protected function hook_dashboardsummary_paired_post_summaries( string $constant, mixed $supported = NULL, ?string $setting = NULL, ?int $priority = NULL ): bool
 	{
 		if ( $setting !== TRUE && ! $this->get_setting( $setting ?? 'dashboard_widgets', FALSE ) )
 			return FALSE;
@@ -326,8 +327,9 @@ trait DashboardSummary
 			return FALSE;
 
 		// @hook: `geditorial_paired_post_summaries`
-		add_filter( $this->hook_base( 'paired', 'post_summaries' ),
-			function ( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context ) use ( $constant, $supported ) {
+		return add_filter( $this->hook_base( 'paired', 'post_summaries' ),
+			function ( $summaries, $paired, $posttype, $taxonomy, $posttypes, $post, $context )
+				use ( $constant, $supported ) {
 
 				if ( ! Core\Arraay::exists( $posttypes, $supported ) )
 					return $summaries;

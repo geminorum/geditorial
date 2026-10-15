@@ -324,7 +324,7 @@ class People extends gEditorial\Module
 		$wp_query->query_vars['search']  = ''; // Turned out it's very important to clear the search!
 	}
 
-	public function get_name_familyfirst( $string, $term = NULL )
+	public function get_name_familyfirst( string $string, mixed $term = NULL ): string
 	{
 		return $this->filters( 'format_name',
 			Core\Text::nameFamilyFirst( $string ),
@@ -333,7 +333,7 @@ class People extends gEditorial\Module
 		);
 	}
 
-	public function get_name_familylast( $string, $term = NULL )
+	public function get_name_familylast( string $string, mixed $term = NULL ): string
 	{
 		return $this->filters( 'display_name',
 			Core\Text::nameFamilyLast( $string ),
@@ -350,7 +350,7 @@ class People extends gEditorial\Module
 	 * @param string $taxonomy
 	 * @return mixed
 	 */
-	public function pre_term_slug( $value, $taxonomy )
+	public function pre_term_slug( mixed $value, string $taxonomy ): mixed
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
 			? Core\Text::formatSlug( $this->get_name_familylast( $value ) )
@@ -365,7 +365,7 @@ class People extends gEditorial\Module
 	 * @param string $taxonomy
 	 * @return mixed
 	 */
-	public function pre_term_name( $value, $taxonomy )
+	public function pre_term_name( mixed $value, string $taxonomy ): mixed
 	{
 		return $taxonomy === $this->constant( 'main_taxonomy' )
 			? $this->get_name_familyfirst( $value )
@@ -408,7 +408,7 @@ class People extends gEditorial\Module
 	}
 
 	// @hook: `geditorial_prep_individual`
-	public function prep_individual_admin( string $individual, string $raw, mixed $value )
+	public function prep_individual_admin( string $individual, string $raw, mixed $value ): string
 	{
 		if ( $link = WordPress\URL::searchAdminTerm( $individual, $this->constant( 'main_taxonomy' ) ) )
 			return Core\Link::get( $individual, $link, TRUE );
@@ -468,7 +468,7 @@ class People extends gEditorial\Module
 			return $terms;
 
 		$query = new \WP_Term_Query( [
-			// 'search'     => $target,
+			// `'search'     => $target,`
 			'name__like' => $target,
 			'taxonomy'   => $taxonomy,
 			'exclude'    => Core\Arraay::pluck( $terms, 'term_id' ),

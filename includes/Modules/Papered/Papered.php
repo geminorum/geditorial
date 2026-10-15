@@ -155,14 +155,9 @@ class Papered extends gEditorial\Module
 					'dateend'   => [ 'type' => 'datetime' ],
 
 					'venue_string'   => [ 'type' => 'venue' ],
-					'contact_string' => [ 'type' => 'contact' ], // url/email/phone
+					'contact_string' => [ 'type' => 'contact' ],
 					'phone_number'   => [ 'type' => 'phone' ],
 					'mobile_number'  => [ 'type' => 'mobile' ],
-
-					// 'first_name' => [
-					// 	'title'       => _x( 'First Name', 'Field Title', 'geditorial-papered' ),
-					// 	'description' => _x( 'Given Name of the Person', 'Field Description', 'geditorial-papered' ),
-					// ],
 				],
 			]
 		];
@@ -173,15 +168,15 @@ class Papered extends gEditorial\Module
 	{
 		return [
 			'primary_taxonomy' => [
-				'featured'   => _x( 'Featured', 'Primary Taxonomy: Default Term', 'geditorial-papered' ), // TODO: display profile with `featured` on Tabloid Overviews
+				'featured'   => _x( 'Featured', 'Primary Taxonomy: Default Term', 'geditorial-papered' ),     // TODO: display profile with `featured` on Tabloid Overviews
 				'deprecated' => _x( 'Deprecated', 'Primary Taxonomy: Default Term', 'geditorial-papered' ),
 			],
 			'flag_taxonomy' => [
-				'needs-libre-fonts'    => _x( 'Needs Libre Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),  // FIXME: add support
+				'needs-libre-fonts'    => _x( 'Needs Libre Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),      // FIXME: add support
 				'needs-vazir-fonts'    => _x( 'Needs Vazir Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
-				'needs-nastaliq-fonts' => _x( 'Needs Nastaliq Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),  // FIXME: add support
+				'needs-nastaliq-fonts' => _x( 'Needs Nastaliq Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),   // FIXME: add support
 				'needs-bootstrap-5'    => _x( 'Needs Bootstrap 5', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
-				'needs-titr-fonts'     => _x( 'Needs Titr Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ), // FIXME: add support
+				'needs-titr-fonts'     => _x( 'Needs Titr Fonts', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),       // FIXME: add support
 				'needs-barcode'        => _x( 'Needs Barcode', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
 				'needs-qrcode'         => _x( 'Needs QR-Code', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
 				'needs-globalsummary'  => _x( 'Needs Global Summary', 'Flag Taxonomy: Default Term', 'geditorial-papered' ),
@@ -228,7 +223,7 @@ class Papered extends gEditorial\Module
 		$this->paired_register( [
 			'public'       => FALSE,
 			'rewrite'      => FALSE,
-			'show_in_menu' => FALSE, // NOTE: better to be `FALSE`, adding parent-slug will override the `mainpage`
+			'show_in_menu' => FALSE,   // NOTE: better to be `FALSE`, adding parent-slug will override the `mainpage`
 		], [
 			'tinymce_disabled' => TRUE,
 		] );
@@ -275,7 +270,7 @@ class Papered extends gEditorial\Module
 
 				$this->_hook_paired_mainbox( $screen );
 				$this->_hook_paired_listbox( $screen );
-				// $this->_register_lonebox_fields( $screen );
+				// `$this->_register_lonebox_fields( $screen );`
 				$this->assetsposttypes_register_codebox_fields( $screen, TRUE );
 				$this->assetsposttypes_hook_codebox_fields( 'primary_posttype' );
 
@@ -288,15 +283,15 @@ class Papered extends gEditorial\Module
 
 			if ( $this->posttype_supported( $screen->post_type ) ) {
 
-				// display main pairedbox to connect with selected print profile
-				// display secondary metaboxbox with action hook
-				// - to display print profile for each connected profiles,
-				// - likely also paired to this posts
+				// - display main paired-box to connect with selected print profile
+				// - display secondary meta-box-box with action hook
+				// 	- to display print profile for each connected profiles,
+				// 	- likely also paired to this posts
 
-				// WTF: or print profiles can expand for more than one page: loop with paired items and pagebreak
+				// WTF: or print profiles can expand for more than one page: loop with paired items and page-break
 
-				// $this->_hook_paired_pairedbox( $screen );
-				// $this->_hook_paired_store_metabox( $screen->post_type );
+				// `$this->_hook_paired_pairedbox( $screen );`
+				// `$this->_hook_paired_store_metabox( $screen->post_type );`
 			}
 
 			if ( $this->in_setting_posttypes( $screen->post_type, 'directed' ) ) {
@@ -337,9 +332,11 @@ class Papered extends gEditorial\Module
 
 		$field        = 'sheetpadding';
 		$sheetpadding = $this->fetch_postmeta( $post->ID, 'undefined', $this->get_postmeta_key( $field ) );
+
 		$field        = 'rowpersheet';
 		$rowpersheet  = $this->fetch_postmeta( $post->ID, '0', $this->get_postmeta_key( $field ) );
-		$paddings     = [
+
+		$paddings = [
 			'padding_5mm'  => '5mm',
 			'padding_10mm' => '10mm',
 			'padding_15mm' => '15mm',
@@ -526,6 +523,7 @@ class Papered extends gEditorial\Module
 
 	public function printpage_render_head( false|object $profile = FALSE ): void
 	{
+		// FIXME: move to `Scripts`
 		Core\HTML::linkStyleSheet( GEDITORIAL_URL.'assets/packages/paper-css/paper-0.4.1.css', GEDITORIAL_HASH, 'all' );
 
 		if ( $post = WordPress\Post::get( $profile ) ) {
@@ -745,8 +743,8 @@ class Papered extends gEditorial\Module
 
 		$context ??= 'mainbox';
 
-		// gEditorial\MetaBox::fieldPostMenuOrder( $object );
-		// gEditorial\MetaBox::fieldPostParent( $object );
+		// `gEditorial\MetaBox::fieldPostMenuOrder( $object );`
+		// `gEditorial\MetaBox::fieldPostParent( $object );`
 
 		$field   = 'papersize';
 		$default = 'undefined';
@@ -775,7 +773,6 @@ class Papered extends gEditorial\Module
 		$html    = Core\HTML::tag( 'input', [
 			'title'       => _x( 'Row per Sheet', 'Input Title', 'geditorial-papered' ),
 			'type'        => 'number',
-			// 'dir'         => 'ltr',
 			'name'        => $this->classs( $context, $field ),
 			'value'       => $this->fetch_postmeta( $object->ID, $default, $this->get_postmeta_key( $field ) ) ?: '',
 			'placeholder' => $default,

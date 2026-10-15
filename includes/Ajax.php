@@ -4,6 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Ajax extends WordPress\Main
 {
+	// TODO: Migrate to Services
+
 	const BASE = 'geditorial';
 
 	public static function factory()

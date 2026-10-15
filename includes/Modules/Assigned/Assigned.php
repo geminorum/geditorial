@@ -188,7 +188,7 @@ class Assigned extends gEditorial\Module
 	/**
 	 * Returns whether the current user has the specified capability for given context.
 	 *
-	 * @param string|null $context
+	 * @param null|string $context
 	 * @param string $fallback_capability
 	 * @return bool
 	 */

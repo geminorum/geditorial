@@ -13,7 +13,7 @@ class FileCache extends gEditorial\Service
 		if ( ! GEDITORIAL_CACHE_DIR )
 			return FALSE;
 
-		$base = $base ?? self::BASE;
+		$base ??= self::BASE;
 		$path = GEDITORIAL_CACHE_DIR.( $base ? '/'.$base.'/' : '/' ).$sub;
 		$path = Core\File::untrail( Core\File::normalize( $path ) );
 
@@ -35,7 +35,7 @@ class FileCache extends gEditorial\Service
 		if ( ! GEDITORIAL_CACHE_DIR ) // correct, we check for path constant
 			return FALSE;
 
-		$base = $base ?? self::BASE;
+		$base ??= self::BASE;
 
 		return Core\URL::untrail( GEDITORIAL_CACHE_URL.( $base ? '/'.$base.'/' : '/' ).$sub );
 	}

@@ -172,6 +172,8 @@ class Contest extends gEditorial\Module
 				$this->constant( 'contest_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'deadline_datetime' => [
 						'title'       => _x( 'Deadline Date', 'Field Title', 'geditorial-contest' ),

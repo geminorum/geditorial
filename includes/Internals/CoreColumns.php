@@ -17,7 +17,7 @@ trait CoreColumns
 
 		return gEditorial\Listtable::checkHidden(
 			$column ?? $this->classs(),
-			$after
+			$after,
 		);
 	}
 
@@ -28,11 +28,11 @@ trait CoreColumns
 				self::und( $column, 'column_title' ),
 				$constant,
 				'misc',
-				$fallback ?? $column
+				$fallback ?? $column,
 			),
 			$column,
 			$constant,
-			$fallback
+			$fallback,
 		);
 	}
 
@@ -43,11 +43,11 @@ trait CoreColumns
 				$this->constant( $constant ),
 				'column_title',
 				'name',
-				$fallback
+				$fallback,
 			),
 			$taxonomy,
 			$constant,
-			$fallback
+			$fallback,
 		);
 	}
 
@@ -62,11 +62,11 @@ trait CoreColumns
 				$this->constant( $constant ),
 				'column_title',
 				'name',
-				$fallback
+				$fallback,
 			),
 			$posttype,
 			$constant,
-			$fallback
+			$fallback,
 		);
 	}
 
@@ -82,7 +82,7 @@ trait CoreColumns
 			'<span class="-column-icon %3$s" title="%2$s">%1$s</span>',
 			$title,
 			esc_attr( $title ),
-			$this->classs( $column )
+			$this->classs( $column ),
 		);
 	}
 

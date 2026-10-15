@@ -166,7 +166,7 @@ trait SettingsPostTypes
 
 	public function screen_posttype_supported( object $screen, null|false|string|array $base = NULL ): bool
 	{
-		$base = $base ?? [ 'edit', 'post' ];
+		$base ??= [ 'edit', 'post' ];
 
 		if ( $base && ! in_array( $screen->base, (array) $base, TRUE ) )
 			return FALSE;

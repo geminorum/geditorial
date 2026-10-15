@@ -8,7 +8,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
-
 	const MODULE = 'physical';
 
 	// @REF: https://medium.com/@hermuwyim/a-simple-bmi-calculator-using-javascript-b2365f3206e8
@@ -17,16 +16,22 @@ class ModuleHelper extends gEditorial\Helper
 	// @SEE: https://www.calculator.net/bmi-calculator.html
 	// @SEE: https://www.medicalnewstoday.com/articles/323446
 	// TODO: suggest the better range for the height
-	// TODO: move to `Weight` DataType/
-	public static function calculateBMI( $weight_in_kg, $height_in_cm, $age = NULL, $gender = NULL, $context = 'display', $fallback = FALSE )
-	{
+	// TODO: move to `Weight` Data-Type
+	public static function calculateBMI(
+		int $weight_in_kg,
+		int $height_in_cm,
+		?int    $age     = NULL,
+		?string $gender  = NULL,
+		?string $context = 'display',
+	): false|array {
+
 		if ( ! $weight_in_kg || ! $height_in_cm )
-			return $fallback;
+			return FALSE;
 
 		$bmi = round( ( $weight_in_kg * 2.2 ) / ( ( $height_in_cm * 0.393701 ) * ( $height_in_cm * 0.393701 ) ) * 703, 2 );
 
 		if ( ! $bmi )
-			return $fallback;
+			return FALSE;
 
 		$data = [
 			'bmi'         => $bmi,
@@ -87,7 +92,7 @@ class ModuleHelper extends gEditorial\Helper
 			$bmi,
 			$weight_in_kg,
 			$height_in_cm,
-			$context
+			$context,
 		);
 	}
 }

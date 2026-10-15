@@ -453,8 +453,9 @@ class StaticCovers extends gEditorial\Module
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context ??= 'supportedbox';
-		$screen  = $screen  ?? get_current_screen();
-		$src     = $title   =  FALSE;
+		$screen  ??= get_current_screen();
+
+		$src = $title = FALSE;
 
 		if ( 'post' === $screen->base ) {
 
@@ -478,23 +479,23 @@ class StaticCovers extends gEditorial\Module
 	}
 
 	// TODO: do the actual count!
-	private function _get_counter( $start = 1 ): string
+	private function _get_counter( int $start = 1 ): string
 	{
 		return Core\Number::zeroise( $start, $this->get_setting( 'counter_threshold', 2 ) );
 	}
 
-	private function _get_html_image( $src, $title = FALSE, $class = '' ): string
+	private function _get_html_image( string $src, ?string $title = NULL, string|array $class = '' ): string
 	{
 		return Core\HTML::tag( 'a', [
 			'href'   => $src,
-			'title'  => $title,
+			'title'  => $title ?: FALSE,
 			'class'  => 'thickbox',
 			'target' => '_blank',
 		], Core\HTML::img( $src, $class ) );
 	}
 
 	// NOTE: counter starts from `0`
-	private function _get_posttype_images( $post, $metakey = NULL )
+	private function _get_posttype_images( mixed $post, ?string $metakey = NULL ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -779,7 +780,7 @@ class StaticCovers extends gEditorial\Module
 		] );
 	}
 
-	public function post_image_pre_src( $pre, $post, $context, $size, $thumbnail_id )
+	public function post_image_pre_src( mixed $pre, object $post, ?string $context, mixed $size, ?int $thumbnail_id ): mixed
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $pre;
@@ -839,7 +840,7 @@ class StaticCovers extends gEditorial\Module
 		return $data;
 	}
 
-	public function importer_metakeys_for_image( $metakeys, $posttype )
+	public function importer_metakeys_for_image( array $metakeys, string $posttype ): array
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $metakeys;
@@ -852,7 +853,7 @@ class StaticCovers extends gEditorial\Module
 		return $metakeys;
 	}
 
-	public function importer_template_for_image( $template, $posttype )
+	public function importer_template_for_image( string $template, string $posttype ): string
 	{
 		if ( ! $this->posttype_supported( $posttype ) )
 			return $template;

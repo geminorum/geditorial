@@ -29,7 +29,7 @@ trait CoreComments
 
 				return $this->get_setting(
 					$setting ?? 'comment_status',
-					$fallback ?? 'closed'
+					$fallback ?? 'closed',
 				);
 
 			}, 12, 3 );

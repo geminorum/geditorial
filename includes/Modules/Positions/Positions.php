@@ -139,7 +139,7 @@ class Positions extends gEditorial\Module
 
 		$strings['metabox'] = [
 			'supportedbox_title'  => _x( 'Positions', 'MetaBox Title', 'geditorial-positions' ),
-			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-positions' ),
+			// `'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-positions' ),`
 
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Positions of %1$s', 'Button Title', 'geditorial-positions' ),
@@ -177,7 +177,9 @@ class Positions extends gEditorial\Module
 	protected function subcontent_define_searchable_fields( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		if ( $human = gEditorial()->constant( 'personage', 'primary_posttype' ) )
-			return [ 'fullname' => [ $human ] ];
+			return [
+				'fullname' => [ $human ],
+			];
 
 		return [];
 	}
@@ -330,10 +332,10 @@ class Positions extends gEditorial\Module
 					$this->_hook_paired_store_metabox( $screen->post_type );
 				}
 
-				// $this->pairedimports__hook_append_import_button( $screen->post_type );
-				// $this->pairedrowactions__hook_for_supported_posttypes( $screen );
-				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
-				// $this->paired__hook_screen_restrictposts( FALSE, 9 );
+				// `$this->pairedimports__hook_append_import_button( $screen->post_type );`
+				// `$this->pairedrowactions__hook_for_supported_posttypes( $screen );`
+				// `$this->paired__hook_tweaks_column( $screen->post_type, 8 );`
+				// `$this->paired__hook_screen_restrictposts( FALSE, 9 );`
 
 				if ( $this->role_can( [ 'reports', 'assign' ] ) ) {
 
@@ -383,7 +385,7 @@ class Positions extends gEditorial\Module
 			$manage  = $this->role_can( 'manage' );
 			$assign  = $this->role_can( 'assign' );
 			$count   = $this->quantumcomments__get_data_count( $object );
-			$profile = $this->get_linked_to_posts( $object, TRUE ); // single profile only
+			$profile = WordPress\Post::get( $this->get_linked_to_posts( $object, TRUE ) ); // single profile only
 
 			if ( $count && ( $manage || $assign ) )
 				$buttons[] = $this->framepage_get_mainlink_for_post( $object, [
@@ -434,23 +436,23 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	private function _get_mount_link( $post, $profile, $context = FALSE, $extra = [] )
+	private function _get_mount_link( object $post, object $profile, ?string $context = NULL, array $extra = [] ): string
 	{
 		return add_query_arg( array_merge( [
 			'action'  => $this->classs( 'mount', 'profile' ),
 			'target'  => $post->ID,
 			'ref'     => $profile->ID,
-			'context' => $context,
+			'context' => $context ?: FALSE,
 		], $extra ), get_admin_url() );
 	}
 
-	private function _get_clear_link( $post, $profile, $context = FALSE, $extra = [] )
+	private function _get_clear_link( object $post, object $profile, ?string $context = NULL, array $extra = [] ): string
 	{
 		return add_query_arg( array_merge( [
 			'action'  => $this->classs( 'clear', 'profile' ),
 			'target'  => $post->ID,
 			'ref'     => $profile->ID,
-			'context' => $context,
+			'context' => $context ?: FALSE,
 		], $extra ), get_admin_url() );
 	}
 
@@ -466,7 +468,7 @@ class Positions extends gEditorial\Module
 
 				$reference = self::req( 'ref', NULL );
 				$target    = self::req( 'target', NULL );
-				// $context   = self::req( 'context', 'default' );
+				// `$context   = self::req( 'context', 'default' );`
 
 				if ( $reference && $target ) {
 
@@ -481,9 +483,9 @@ class Positions extends gEditorial\Module
 
 			case $this->classs( 'clear', 'profile' ):
 
-				// $reference = self::req( 'ref', NULL );
+				// `$reference = self::req( 'ref', NULL );`
 				$target    = self::req( 'target', NULL );
-				// $context   = self::req( 'context', 'default' );
+				// `$context   = self::req( 'context', 'default' );`
 
 				if ( $target ) {
 

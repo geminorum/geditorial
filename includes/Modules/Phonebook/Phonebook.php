@@ -115,7 +115,7 @@ class Phonebook extends gEditorial\Module
 
 		$strings['metabox'] = [
 			'supportedbox_title'  => _x( 'Contacts', 'MetaBox Title', 'geditorial-phonebook' ),
-			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-phonebook' ),
+			// `'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-phonebook' ),`
 
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Contacts of %1$s', 'Button Title', 'geditorial-phonebook' ),
@@ -227,14 +227,14 @@ class Phonebook extends gEditorial\Module
 						'order'       => 605,
 					],
 					'work_address' => [
-						'title'       => _x( 'Work Address', 'Field Title', 'geditorial-phonebook' ),
-						'description' => _x( 'Full work address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
+						'title'       => _x( 'Workplace Address', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Full workplace address, including city, state etc.', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'address',
 						'order'       => 610,
 					],
 					'work_coordinates' => [
-						'title'       => _x( 'Work Coordinates', 'Field Title', 'geditorial-phonebook' ),
-						'description' => _x( 'Latitude and Longitude of the work address.', 'Field Description', 'geditorial-phonebook' ),
+						'title'       => _x( 'Workplace Coordinates', 'Field Title', 'geditorial-phonebook' ),
+						'description' => _x( 'Latitude and Longitude of the workplace address.', 'Field Description', 'geditorial-phonebook' ),
 						'type'        => 'latlng',
 						'order'       => 615,
 					],
@@ -497,11 +497,14 @@ class Phonebook extends gEditorial\Module
 		return $fields;
 	}
 
-	// TODO: push to the side!
+	// @REF: `_hook_editform_meta_coordinates()`
 	public function personage_editform_meta_summary_after( mixed $post ): void
 	{
 		if ( GEDITORIAL_AIRGAPPED )
 		 	return;
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return;
 
 		gEditorial\Template::renderPostMap( $post, [
 			'field'    => 'home_coordinates',

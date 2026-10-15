@@ -11,7 +11,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	const MODULE = 'papered';
 
-	public static function getPostProps( $post, $fallback = [] )
+	public static function getPostProps( mixed $post, array $fallback = [] ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
@@ -29,7 +29,7 @@ class ModuleHelper extends gEditorial\Helper
 		] );
 	}
 
-	public static function getPostMetas( $post, $fallback = [] )
+	public static function getPostMetas( mixed $post, array $fallback = [] ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
@@ -39,7 +39,7 @@ class ModuleHelper extends gEditorial\Helper
 		] );
 	}
 
-	public static function getGeneralTokens( $post, $fallback = [] )
+	public static function getGeneralTokens( mixed $post, array $fallback = [] ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;
@@ -49,7 +49,7 @@ class ModuleHelper extends gEditorial\Helper
 		];
 	}
 
-	public static function getPosttypeFieldsData( $post, $module = 'meta', $fallback = [] )
+	public static function getPosttypeFieldsData( mixed $post, string $module = 'meta', array $fallback = [] ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return $fallback;

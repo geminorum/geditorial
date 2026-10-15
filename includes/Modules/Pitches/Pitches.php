@@ -65,11 +65,6 @@ class Pitches extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
-		// $strings['misc'] = [];
-
 		return $strings;
 	}
 

@@ -4,8 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Listtable extends WordPress\Main
 {
-
-	// TODO: move to services
+	// TODO: Migrate to Services
 
 	const BASE = 'geditorial';
 

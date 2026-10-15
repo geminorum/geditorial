@@ -76,7 +76,7 @@ class Pointers extends gEditorial\Module
 	protected function _render_supportedbox_content( ?object $object, false|array $box, ?string $context = NULL, ?object $screen = NULL ): void
 	{
 		$context ??= 'supportedbox';
-		$screen  = $screen ?? get_current_screen();
+		$screen  ??= get_current_screen();
 
 		if ( 'post' === $screen->base )
 			$this->render_post_pointers( $object, $context, $screen );
@@ -147,7 +147,7 @@ class Pointers extends gEditorial\Module
 		echo '</ul></div>';
 	}
 
-	public function tabloid_post_summaries( $list, $data, $post, $context )
+	public function tabloid_post_summaries( array $list, array $data, object $post, ?string $context ): array
 	{
 		if ( $this->posttype_supported( $post->post_type ) )
 			$list[] = [
@@ -159,7 +159,7 @@ class Pointers extends gEditorial\Module
 		return $list;
 	}
 
-	public function static_covers_post_summaries( $list, $data, $post, $context )
+	public function static_covers_post_summaries( array $list, array $data, object $post, ?string $context ): array
 	{
 		return $this->tabloid_post_summaries( $list, $data, $post, $context );
 	}

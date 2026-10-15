@@ -166,6 +166,7 @@ class Tube extends gEditorial\Module
 				$this->constant( 'primary_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
 					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'parent_post_id' => [
@@ -213,6 +214,7 @@ class Tube extends gEditorial\Module
 				$this->constant( 'secondary_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
 					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'content_embed_url' => [ 'type' => 'embed' ],

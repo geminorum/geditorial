@@ -104,11 +104,6 @@ class Publishers extends gEditorial\Module
 			],
 		];
 
-		if ( ! is_admin() )
-			return $strings;
-
-		// $strings[''] = [];
-
 		return $strings;
 	}
 

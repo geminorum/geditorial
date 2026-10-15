@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class MetaBox extends WordPress\Main
 {
+	// TODO: Migrate to Services
 
 	const BASE = 'geditorial';
 
@@ -954,7 +955,7 @@ class MetaBox extends WordPress\Main
 		string|object $taxonomy,
 		int $object_id = 0,
 		?string $name = NULL,
-		false|string|null $edit = NULL,
+		false|null|string $edit = NULL,
 		string $before = '',
 		string $after = '',
 	): bool {

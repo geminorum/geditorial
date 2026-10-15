@@ -131,7 +131,7 @@ trait LateChores
 		return $scheduled;
 	}
 
-	protected function latechores__hook_admin_bulkactions( object $screen, bool|string|null $cap_check = NULL ): bool
+	protected function latechores__hook_admin_bulkactions( object $screen, null|bool|string $cap_check = NULL ): bool
 	{
 		if ( ! $this->get_setting( 'admin_bulkactions' ) )
 			return FALSE;

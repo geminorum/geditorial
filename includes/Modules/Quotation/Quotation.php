@@ -282,7 +282,6 @@ class Quotation extends gEditorial\Module
 		$html = Core\HTML::tag( 'input', [
 			'name'        => 'menu_order',
 			'type'        => 'number',
-			// 'dir'         => 'ltr',
 			'value'       => $post->menu_order ?: '',
 			'placeholder' => _x( 'Menu Order', 'Placeholder', 'geditorial-quotation' ),
 		] );

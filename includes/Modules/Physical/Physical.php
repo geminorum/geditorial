@@ -112,7 +112,7 @@ class Physical extends gEditorial\Module
 
 		$strings['metabox'] = [
 			'supportedbox_title'  => _x( 'Physicals', 'MetaBox Title', 'geditorial-physical' ),
-			// 'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-physical' ),
+			// `'metabox_action' => _x( 'Directory', 'MetaBox Action', 'geditorial-physical' ),`
 
 			/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 			'mainbutton_title' => _x( 'Physical Examinations of %1$s', 'Button Title', 'geditorial-physical' ),
@@ -338,7 +338,7 @@ class Physical extends gEditorial\Module
 			return;
 
 		// FIXME: passing age/gender
-		if ( ! $bmi = ModuleHelper::calculateBMI( $mass, $stature ) )
+		if ( ! $bmi = ModuleHelper::calculateBMI( (int) $mass, (int) $stature ) )
 			return;
 
 		printf( $before, '-bmi-suammry' );

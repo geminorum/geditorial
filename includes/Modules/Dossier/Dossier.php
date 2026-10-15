@@ -168,6 +168,7 @@ class Dossier extends gEditorial\Module
 				$this->constant( 'primary_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
 					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
 					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'number_line' => [

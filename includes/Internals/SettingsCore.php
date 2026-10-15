@@ -124,7 +124,7 @@ trait SettingsCore
 		if ( is_null( $item ) || is_bool( $item ) )
 			return FALSE;
 
-		$setting = $setting ?? $default;
+		$setting ??= $default;
 
 		return in_array( (string) $item, (array) $setting, TRUE );
 	}
