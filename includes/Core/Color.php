@@ -17,7 +17,7 @@ class Color extends Base
 	 *
 	 * @param  mixed       $value
 	 * @param  array|null  $field
-	 * @param  string|null $context
+	 * @param  null|string $context
 	 * @param  mixed       $icon
 	 * @return string
 	 */

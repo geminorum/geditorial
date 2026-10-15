@@ -821,24 +821,31 @@ class Post extends Core\Base
 		return wp_insert_post( $new_post );
 	}
 
-	public static function image( mixed $post, ?string $context = NULL, $size = NULL, ?int $thumbnail_id = NULL ): false|string
-	{
+	public static function image(
+		mixed   $post,
+		?string $context      = NULL,
+		mixed   $size         = NULL,
+		?int    $thumbnail_id = NULL,
+	): false|string {
+
 		if ( ! $post = self::get( $post ) )
 			return FALSE;
 
-		$filtered = apply_filters( 'nucleus_post_image_pre_src', NULL, $post, $context, $size, $thumbnail_id );
+		$filtered = apply_filters( 'nucleus_post_image_pre_src',
+			NULL,
+			$post,
+			$context,
+			$size,
+			$thumbnail_id,
+		);
 
 		if ( ! is_null( $filtered ) )
 			return $filtered;
 
-		if ( is_null( $thumbnail_id ) )
-			$thumbnail_id = PostType::getThumbnailID( $post->ID );
-
-		if ( ! $thumbnail_id )
+		if ( ! $thumbnail_id ??= PostType::getThumbnailID( $post->ID ) )
 			return FALSE;
 
-		if ( is_null( $size ) )
-			$size = Media::getAttachmentImageDefaultSize( $post->post_type );
+		$size ??= Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
 			return FALSE;

@@ -136,11 +136,11 @@ class Taxonomy extends Core\Base
 	 * Retrieves the capability assigned to the taxonomy.
 	 *
 	 * @param mixed $taxonomy
-	 * @param string|null $capability
-	 * @param bool|string|null $fallback
+	 * @param null|string $capability
+	 * @param null|bool|string $fallback
 	 * @return bool|string
 	 */
-	public static function cap( mixed $taxonomy, ?string $capability = 'manage_terms', bool|string|null $fallback = NULL ): bool|string|null
+	public static function cap( mixed $taxonomy, ?string $capability = 'manage_terms', null|bool|string $fallback = NULL ): null|bool|string
 	{
 		if ( is_null( $capability ) )
 			return TRUE;

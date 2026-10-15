@@ -72,7 +72,7 @@ class Term extends Core\Base
 	 * NOTE: caches the results
 	 *
 	 * @param  mixed       $term
-	 * @param  string|null $capability
+	 * @param  null|string $capability
 	 * @param  int|null    $user_id
 	 * @param  bool        $fallback
 	 * @return bool

@@ -22,12 +22,12 @@ class Status extends Core\Base
 	 * - `trash`: post is in trash-bin. Added @since WP 2.9
 	 *
 	 * @param int $mod
-	 * @param array $arguments
-	 * @param string $capability
-	 * @param int $user_id
+	 * @param null|array $arguments
+	 * @param null|string $capability
+	 * @param null|int $user_id
 	 * @return array
 	 */
-	public static function get( $mod = 0, $arguments = [], $capability = NULL, $user_id = NULL )
+	public static function get( int $mod = 0, ?array $arguments = NULL, ?string $capability = NULL, ?int $user_id = NULL )
 	{
 		$list = [];
 
@@ -57,7 +57,7 @@ class Status extends Core\Base
 	 * @param array $excludes
 	 * @return array
 	 */
-	public static function available( $posttype, $excludes = NULL )
+	public static function available( string $posttype, ?array $excludes = NULL ): array
 	{
 		$excludes ??= [
 			'trash',

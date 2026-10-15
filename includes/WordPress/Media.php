@@ -571,8 +571,8 @@ class Media extends Core\Base
 	public static function getAttachmentImageDefaultSize(
 		?string $perent_posttype = NULL,
 		?string $perent_taxonomy = NULL,
-		null|false|string|array $fallback = 'thumbnail',
-	): null|false|string|array {
+		mixed   $fallback        = 'thumbnail',
+	): mixed {
 
 		$size     = NULL;
 		$sizes    = wp_get_additional_image_sizes();
