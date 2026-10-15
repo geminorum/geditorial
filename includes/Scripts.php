@@ -392,6 +392,22 @@ JS;
 		return $handle;
 	}
 
+	public static function pkgOpenLayers( $enqueue = FALSE, $version = '5.3.0' )
+	{
+		$handle = self::dsh( static::BASE, 'openlayers' );
+
+		$url = WordPress\IsIt::dev()
+			? 'https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v'.$version.'/build/ol.js'
+			: 'https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v'.$version.'/build/ol.js';
+
+		if ( $enqueue )
+			wp_enqueue_script( $handle, $url, [], $version, TRUE );
+		else
+			wp_register_script( $handle, $url, [], $version, TRUE );
+
+		return $handle;
+	}
+
 	public static function pkgVueJS2( $enqueue = FALSE, $ver = '2.6.14' )
 	{
 		$handle = self::dsh( static::BASE, 'vuejs' );

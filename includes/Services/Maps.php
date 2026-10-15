@@ -8,7 +8,6 @@ use geminorum\gEditorial\WordPress;
 
 class Maps extends gEditorial\Service
 {
-	// WTF: initial version!
 	public static function renderSingleMarker( mixed $data, ?string $context = NULL ): bool
 	{
 		$latlng = Core\LatLng::is( $data )
@@ -22,68 +21,44 @@ class Maps extends gEditorial\Service
 			$latlng = Core\LatLng::extract( $latlng );
 
 		echo Core\HTML::tag( 'div', [
-			'id'    => 'osmmapdiv',
 			'style' => 'width:100%;height:400px',
 			'data'  => [
-				'raw'    => Core\Text::force( $data ),
-				'lat'    => $latlng[0],
-				'lng'    => $latlng[1],
-				'latlng' => vsprintf( '%1$s,%2$s', $latlng ),
-				'lonlat' => vsprintf( '%2$s,%1$s', $latlng ),
+				'context' => Core\Text::force( $context ),
+				'raw'     => Core\Text::force( $data ),
+				'lat'     => $latlng[0],
+				'lng'     => $latlng[1],
+				'latlng'  => vsprintf( '%1$s,%2$s', $latlng ),
+				'lonlat'  => vsprintf( '%2$s,%1$s', $latlng ),
 			],
 			'class' => [
+				self::dsh( static::BASE, 'maps', 'singlemarker' ),
 				'osm-map-container',
 				'map-single-marker',
 			],
 		], NULL );
 
-		?><script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
-			<script>
-				jQuery( document ).ready( function(){
+		return (bool) self::enqueueSingleMarker();
+	}
 
-					var iconStyle = new ol.style.Style({
-						image: new ol.style.Circle({
-							radius: 10,
-							snapToPixel: false,
-							fill: new ol.style.Fill({
-								color: [66, 113, 174, 0.7]
-							}),
-							stroke: new ol.style.Stroke({
-								color: [0, 0, 0, 1],
-								width: 2
-							})
-						})
-					});
+	public static function enqueueSingleMarker(): string
+	{
+		static $enqueued;
 
-					var iconFeature = new ol.Feature({
-						geometry: new ol.geom.Point(ol.proj.fromLonLat([ <?php esc_attr_e( $latlng[1] ); ?>, <?php esc_attr_e( $latlng[0] ); ?> ]))
-					});
-					iconFeature.setStyle( iconStyle );
+		if ( $enqueued )
+			return $enqueued;
 
-					var vectorLayer = new ol.layer.Vector({
-						source: new ol.source.Vector({
-							features: [ iconFeature ]
-						})
-					});
+		$mainkey = 'singlemarker';
+		$asset   = [
+			'settings' => [
+				'default_zoom' => 16,
+			],
+		];
 
-					var tileLayer = new ol.layer.Tile({
-						source: new ol.source.OSM()
-					});
+		gEditorial()->enqueue_asset_config( $asset, $mainkey );
 
-					var map = new ol.Map({
-						target: 'osmmapdiv',
-						layers: [
-							tileLayer,
-							vectorLayer
-						],
-						view: new ol.View({
-							center: ol.proj.fromLonLat( [ <?php esc_attr_e( $latlng[1] ); ?>, <?php esc_attr_e( $latlng[0] ); ?> ] ),
-							zoom: 16
-						})
-					});
-				});
-			</script><?php
-
-		return TRUE;
+		return $enqueued = gEditorial\Scripts::enqueue( self::dot( 'maps', $mainkey ), [
+			'jquery',
+			gEditorial\Scripts::pkgOpenLayers(),
+		] );
 	}
 }
