@@ -241,9 +241,12 @@ trait PairedCore
 		return $this->paired_register( $extra, [], [], $supported );
 	}
 
-	public function bulk_exports_post_taxonomies_exclude_paired( $taxonomies, $posttype, $reference, $target, $type, $context, $format )
+	public function bulk_exports_get_post_taxonomies_exclude_paired( array $taxonomies, array $arguments ): array
 	{
-		if ( ! $this->posttype_supported( $posttype ) )
+		if ( empty( $arguments['posttype'] ) )
+			return $taxonomies;
+
+		if ( ! $this->posttype_supported( $arguments['posttype'] ) )
 			return $taxonomies;
 
 		if ( ! $constants = $this->paired_get_constants() )

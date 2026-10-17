@@ -133,7 +133,13 @@ trait BulkExports
 		if ( $target && 'default' !== $target )
 			$types = Core\Arraay::filter( $types, [ 'target' => $target ] );
 
-		return $this->filters( 'export_types', $types, $context, $target );
+		// @hook `geditorial_bulk_exports_export_types`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'export_types' ),
+			$types,
+			$context,
+			$target,
+			$this->key,
+		);
 	}
 
 	protected function exports_get_type_download_link(
@@ -295,7 +301,19 @@ trait BulkExports
 				$row[] = WordPress\Strings::getPiped( WordPress\Taxonomy::getPostTerms( $taxonomy, $post, FALSE, 'name' ) );
 
 			foreach ( $customs as $custom => $custom_title )
-				$row[] = apply_filters( $this->hook_base( 'bulk_exports', 'prep_custom_for_post' ), '', $custom, $post, $reference, $target, $type, $format );
+				// @hook `geditorial_bulk_exports_prep_custom_for_post`
+				$row[] = apply_filters( $this->hook_base( 'bulk_exports', 'prep_custom_for_post' ),
+					'',
+					[
+						'custom'    => $custom,
+						'post'      => $post,
+						'reference' => $reference,
+						'target'    => $target,
+						'type'      => $type,
+						'format'    => $format,
+						'module'    => $this->key,
+					],
+				);
 
 			$data[] = $row;
 		}
@@ -333,7 +351,14 @@ trait BulkExports
 
 				foreach ( $metas as $meta => $meta_title )
 					$headers['meta__'.$meta] = $this->exports_generate_column_header( $headers,
-						$meta_title ?? $this->filters( 'export_get_meta_title', $meta, $meta, $posttypes ) ); // FIXME: move-up the filter!
+						// @hook `geditorial_bulk_exports_get_meta_title`
+						apply_filters( $this->hook_base( 'bulk_exports', 'get_meta_title' ),
+							$meta_title ?? $meta,
+							$meta,
+							$posttypes,
+							$this->key,
+						),
+					);
 
 				foreach ( $taxes as $taxonomy => $taxonomy_title )
 					$headers['taxonomy__'.$taxonomy] = $this->exports_generate_column_header( $headers,
@@ -341,7 +366,14 @@ trait BulkExports
 
 				foreach ( $customs as $custom => $custom_title )
 					$headers['custom__'.$custom] = $this->exports_generate_column_header( $headers,
-						$custom_title ?? $this->filters( 'export_get_custom_title', $custom, $custom, $posttypes ) ); // FIXME: move-up the filter!
+						// @hook `geditorial_bulk_exports_get_custom_title`
+						apply_filters( $this->hook_base( 'bulk_exports', 'get_custom_title' ),
+							$custom_title ?? $custom,
+							$custom,
+							$posttypes,
+							$this->key,
+						),
+					);
 
 				if ( 'assigned' === $target )
 					$sheet_title = sprintf( '%s — %s',
@@ -448,7 +480,13 @@ trait BulkExports
 			$widths[$header] = $width ?? $default;
 		}
 
-		return apply_filters( $this->hook_base( 'bulk_exports', 'post_column_widths' ), $widths, $headers, $default );
+		// @hook `geditorial_bulk_exports_post_column_widths`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_column_widths' ),
+			$widths,
+			$headers,
+			$default,
+			$this->key,
+		);
 	}
 
 	protected function exports_generate_column_widths_for_fields( string $field, ?int $default = NULL, ?string $module = 'meta', int $padding = 4 ): int
@@ -507,20 +545,28 @@ trait BulkExports
 
 				$posttypes = (array) $object->object_type;
 
-				$args = $this->filters( 'export_query_args', [
-					'posts_per_page' => -1,
-					'orderby'        => [ 'menu_order', 'date' ],
-					'order'          => 'ASC',
-					'post_type'      => $posttypes,
-					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
-					'tax_query'      => [ [
-						'taxonomy' => $object->name,
-						'field'    => 'term_id',
-						'terms'    => [ $term->term_id ],
+				// @hook `geditorial_bulk_exports_get_query_args`
+				$args = apply_filters( $this->hook_base( 'bulk_exports', 'get_query_args' ),
+					[
+						'posts_per_page' => -1,
+						'orderby'        => [ 'menu_order', 'date' ],
+						'order'          => 'ASC',
+						'post_type'      => $posttypes,
+						'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
+						'tax_query'      => [ [
+							'taxonomy' => $object->name,
+							'field'    => 'term_id',
+							'terms'    => [ $term->term_id ],
 
-						'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
-					] ],
-				], $reference, $target, $type, $context );
+							'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
+						] ],
+					],
+					$reference,
+					$target,
+					$type,
+					$context,
+					$this->key,
+				);
 
 				$data = $this->exports_generate_export_data(
 					get_posts( $args ),
@@ -544,13 +590,21 @@ trait BulkExports
 
 				$posttypes = [ $posttype->name ];
 
-				$args = $this->filters( 'export_query_args', [
-					'posts_per_page' => -1,
-					'orderby'        => [ 'menu_order', 'date' ],
-					'order'          => 'ASC',
-					'post_type'      => $posttypes,
-					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
-				], $reference, $target, $type, $context );
+				// @hook `geditorial_bulk_exports_get_query_args`
+				$args = apply_filters( $this->hook_base( 'bulk_exports', 'get_query_args' ),
+					[
+						'posts_per_page' => -1,
+						'orderby'        => [ 'menu_order', 'date' ],
+						'order'          => 'ASC',
+						'post_type'      => $posttypes,
+						'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
+					],
+					$reference,
+					$target,
+					$type,
+					$context,
+					$this->key,
+				);
 
 				$data = $this->exports_generate_export_data(
 					get_posts( $args ),
@@ -600,20 +654,28 @@ trait BulkExports
 				if ( ! $paired = $this->paired_get_to_term( (int) $reference, $constants[0], $constants[1] ) )
 					break;
 
-				$args = $this->filters( 'export_query_args', [
-					'posts_per_page' => -1,
-					'orderby'        => [ 'menu_order', 'date' ],
-					'order'          => 'ASC',
-					'post_type'      => $posttypes,
-					'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
-					'tax_query'      => [ [
-						'taxonomy' => $this->constant( $constants[1] ),
-						'field'    => 'term_id',
-						'terms'    => [ $paired->term_id ],
+				// @hook `geditorial_bulk_exports_get_query_args`
+				$args = apply_filters( $this->hook_base( 'bulk_exports', 'get_query_args' ),
+					[
+						'posts_per_page' => -1,
+						'orderby'        => [ 'menu_order', 'date' ],
+						'order'          => 'ASC',
+						'post_type'      => $posttypes,
+						'post_status'    => WordPress\Status::acceptable( $posttypes, 'query', [ 'pending', 'draft' ] ),
+						'tax_query'      => [ [
+							'taxonomy' => $this->constant( $constants[1] ),
+							'field'    => 'term_id',
+							'terms'    => [ $paired->term_id ],
 
-						'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
-					] ],
-				], $reference, $target, $type, $context );
+							'include_children' => FALSE, // @REF: https://docs.wpvip.com/code-quality/term-queries-should-consider-include_children-false/
+						] ],
+					],
+					$reference,
+					$target,
+					$type,
+					$context,
+					$this->key,
+				);
 
 				$data = $this->exports_generate_export_data(
 					get_posts( $args ),
@@ -628,13 +690,18 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'export_get_data',
+		// @hook `geditorial_bulk_exports_get_data`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'get_data' ),
 			$data,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes ?? [],
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -705,14 +772,18 @@ trait BulkExports
 				break;
 		}
 
-		return $this->filters( 'export_post_props',
+		// @hook `geditorial_bulk_exports_post_props`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_props' ),
 			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -780,14 +851,18 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_fields',
+		// @hook `geditorial_bulk_exports_post_fields`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_fields' ),
 			$list,
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -840,14 +915,18 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_units',
+		// @hook `geditorial_bulk_exports_post_units`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_units' ),
 			$list,
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -886,14 +965,18 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_metas',
+		// @hook `geditorial_bulk_exports_post_metas`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_metas' ),
 			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -911,14 +994,18 @@ trait BulkExports
 				Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,
 			], $posttype );
 
+			// @hook `geditorial_bulk_exports_get_post_taxonomies`
 			$all = apply_filters( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
 				$taxonomies,
-				$posttype,
-				$reference,
-				$target,
-				$type,
-				$context,
-				$format
+				[
+					'posttype'  => $posttype,
+					'reference' => $reference,
+					'target'    => $target,
+					'type'      => $type,
+					'context'   => $context,
+					'format'    => $format,
+					'module'    => $this->key,
+				],
 			);
 
 			$primary = empty( $object->{Services\PrimaryTaxonomy::POSTTYPE_PROP} )
@@ -967,14 +1054,18 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_taxonomies',
+		// @hook `geditorial_bulk_exports_post_taxonomies`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
 			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
@@ -1013,14 +1104,18 @@ trait BulkExports
 			}
 		}
 
-		return $this->filters( 'export_post_customs',
+		// @hook `geditorial_bulk_exports_post_customs`
+		return apply_filters( $this->hook_base( 'bulk_exports', 'post_customs' ),
 			array_fill_keys( Core\Arraay::prepString( $list ), NULL ),
-			$posttypes,
-			$reference,
-			$target,
-			$type,
-			$context,
-			$format
+			[
+				'posttypes' => $posttypes,
+				'reference' => $reference,
+				'target'    => $target,
+				'type'      => $type,
+				'context'   => $context,
+				'format'    => $format,
+				'module'    => $this->key,
+			],
 		);
 	}
 
