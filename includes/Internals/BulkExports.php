@@ -236,7 +236,11 @@ trait BulkExports
 		?string $format = 'xlsx',
 	): string|array {
 
-		$data = [];
+		$data  = [];
+
+		$importable = in_array( $format, [
+			'csv',
+		], TRUE );
 
 		foreach ( $posts as $post ) {
 
@@ -247,10 +251,10 @@ trait BulkExports
 				if ( 'post_name' === $prop )
 					$row[] = urldecode( $post->{$prop} );
 
-				if ( 'post_type' === $prop )
+				else if ( ! $importable && 'post_type' === $prop )
 					$row[] = Services\CustomPostType::getLabel( $post->post_type, 'extended_label', 'singular', $post->post_type );
 
-				else if ( in_array( $prop, [
+				else if ( ! $importable && in_array( $prop, [
 					'post_date',
 					'post_date_gmt',
 					'post_modified',
