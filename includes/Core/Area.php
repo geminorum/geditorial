@@ -63,6 +63,15 @@ class Area extends Base
 		return $sanitized;
 	}
 
+	/**
+	 * Prepares a value for the given context.
+	 *
+	 * @param  mixed       $value
+	 * @param  null|array  $field
+	 * @param  null|string $context
+	 * @param  mixed       $icon
+	 * @return string
+	 */
 	public static function prep( mixed $value, ?array $field = [], ?string $context = 'display', mixed $icon = NULL ): string
 	{
 		if ( self::empty( $value ) )
@@ -99,7 +108,7 @@ class Area extends Base
 		}
 	}
 
-	public static function getHTMLPattern(): string|false
+	public static function getHTMLPattern(): false|string
 	{
 		return FALSE; // FIXME!
 	}

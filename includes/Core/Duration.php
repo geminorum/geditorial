@@ -94,7 +94,7 @@ class Duration extends Base
 		return $value;
 	}
 
-	public static function getHTMLPattern(): string|false
+	public static function getHTMLPattern(): false|string
 	{
 		return FALSE; // FIXME!
 	}
@@ -109,7 +109,7 @@ class Duration extends Base
 	 * @source `human_readable_duration()`
 	 *
 	 * @param string $duration
-	 * @return string|false
+	 * @return false|string
 	 */
 	public static function humanReadable( $duration )
 	{

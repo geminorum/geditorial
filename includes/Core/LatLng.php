@@ -19,10 +19,7 @@ class LatLng extends Base
 		if ( self::empty( $input ) )
 			return FALSE;
 
-		if ( ! is_array( $input ) )
-			$input = self::extract( $input );
-
-		return self::validate( $input[0], $input[1] );
+		return (bool) self::validate( $input );
 	}
 
 	/**
@@ -33,29 +30,50 @@ class LatLng extends Base
 	 * Latitude coordinate is between `-90` and `90`.
 	 * Longitude coordinate is between `-180` and `180`.
 	 *
-	 * @param float|int|string $lat
-	 * @param float|int|string $long
-	 * @return bool
+	 * @param mixed $data
+	 * @return int
 	 */
-	public static function validate( $lat, $long )
+	public static function validate( mixed $data ): int
 	{
-		return preg_match( '/\A[+-]?(?:90(?:\.0{1,18})?|\d(?(?<=9)|\d?)\.\d{1,18})\z/x', $lat )
-		// `return preg_match( '/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/', $lat )`
-		// `return preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat )`
-			&& preg_match( '/\A[+-]?(?:180(?:\.0{1,18})?|(?:1[0-7]\d|\d{1,2})\.\d{1,18})\z/x', $long );
-			// `&& preg_match( '/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{0,6}$/', $long );`
-			// `&& preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long );`
+		if ( ! $data = self::extract( $data ) )
+			return 0;
+
+		// `if ( ! preg_match( '/^-?([1-8]?[1-9]|[1-9]0)\.{1}\d{1,6}$/', $data[0] ) )`
+		// `if ( ! preg_match( '/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $data[0] ) )`
+		if ( ! preg_match( '/\A[+-]?(?:90(?:\.0{1,18})?|\d(?(?<=9)|\d?)\.\d{1,18})\z/x', $data[0] ) )
+			return 0;
+
+		// `if ( ! preg_match( '/^-?([1]?[1-7][1-9]|[1]?[1-8][0]|[1-9]?[0-9])\.{1}\d{0,6}$/', $data[1] ) )`
+		// `if ( ! preg_match( '/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $data[1] ) )`
+		if ( ! preg_match( '/\A[+-]?(?:180(?:\.0{1,18})?|(?:1[0-7]\d|\d{1,2})\.\d{1,18})\z/x', $data[1] ) )
+			return 0;
+
+		return 1;
 	}
 
 	// `(42.32783298989135, -70.99989162915041)`
 	// @REF: https://stackoverflow.com/a/68931818
 	// @REF: https://3v4l.org/daAqb
-	public static function extract( string $data ): array
+	public static function extract( mixed $input ): false|array
 	{
-		return $data ? sscanf( sprintf( '(%s)', $data ), '(%[^,], %[^)]' ) : '';
+		$data = $input;
+
+		if ( self::empty( $input ) )
+			return FALSE;
+
+		if ( is_array( $input ) )
+			$data = self::extractFromArray( $input );
+
+		else if ( is_object( $input ) )
+			$data = self::extractFromObject( $input );
+
+		if ( is_string( $data ) )
+			$data = Number::translate( Text::trim( htmlspecialchars_decode( $input ) ) );
+
+		return $data ? sscanf( sprintf( '(%s)', $data ), '(%[^,], %[^)]' ) : FALSE;
 	}
 
-	public static function prep( $input, $wrap = FALSE )
+	public static function prep( mixed $input, bool $wrap = FALSE ): string
 	{
 		// NOTE: returns the original if not valid
 		if ( ! self::is( $input ) )
@@ -302,6 +320,14 @@ class LatLng extends Base
 
 				break;
 
+			// https://github.com/jakubvalenta/geoshare/pull/520/changes
+			// `google.navigation:q={lat}+{lon}`
+			// `google.navigation:q=50.123456,-120.123456`
+			// `google.navigation:q={query}`
+			// `"""(.+?)(?:[\s+]*@$LAT,$LON\s*)?"""`
+			// `"""(.+?)(?:[\s+]*@$LAT$COORD_SEP$LON\s*)?"""`
+			// `"""@$LAT$COORD_SEP$LON(?:,${Z}z)?.*"""`
+			// `"""(?:^|.*&)q=([^&]+).*"""`
 			case 'maps.google.com':
 			case 'maps.google.com/maps':
 			case 'ditu.google.com/maps':
@@ -564,7 +590,7 @@ class LatLng extends Base
 	 * @source https://github.com/prairiewest/phpconvertdmstodecimal
 	 *
 	 * @param string $latlng
-	 * @return string|false
+	 * @return false|string
 	 */
 	public static function convertDMSToDecimal( $latlng )
 	{

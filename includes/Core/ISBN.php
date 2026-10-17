@@ -13,7 +13,7 @@ class ISBN extends Base
 	// Matches an un-formatted `ISBN-13`.
 	public const ISBN13 = '/^97[89][0-9]{10}$/';
 
-	public static function getHTMLPattern(): string|false
+	public static function getHTMLPattern(): false|string
 	{
 		// @source https://input-pattern.com/en/training.php#isbn
 		return '(97[89])?\d{10}|(97[89]-)?(?=.{13}$)(\d+-){3}\d';
@@ -55,9 +55,9 @@ class ISBN extends Base
 	 * NOTE: avoids validation to support fake ISBN numbers.
 	 *
 	 * @param mixed $criteria
-	 * @return string|false
+	 * @return false|string
 	 */
-	public static function discovery( mixed $criteria ): string|false
+	public static function discovery( mixed $criteria ): false|string
 	{
 		if ( ! $sanitized = self::sanitize( $criteria ) )
 			return FALSE;
@@ -101,13 +101,13 @@ class ISBN extends Base
 	 * `9791090636071`          // return `2`
 	 * `ISBN:97811`             // return `FALSE`
 	 *
-	 * @param mixed $input
-	 * @return bool|int
+	 * @param mixed $data
+	 * @return int
 	 */
-	public static function validate( mixed $input ): bool
+	public static function validate( mixed $data ): int
 	{
-		if ( ! $input = Text::force( $input ) )
-			return FALSE;
+		if ( ! $input = Text::force( $data ) )
+			return 0;
 
 		$data    = Text::trim( Number::translate( $input ) );
 		$pattern = '/\b(?:ISBN(?:: ?| ))?((?:97[89])?\d{9}[\dx])\b/i';
@@ -117,7 +117,7 @@ class ISBN extends Base
 				? self::isValidISBN10( $matches[1] )  // ISBN-10
 				: self::isValidISBN13( $matches[1] ); // ISBN-13
 
-		return FALSE;
+		return 0;
 	}
 
 	/**
@@ -255,10 +255,10 @@ class ISBN extends Base
 		return ( ( 10 - ( $sum % 10 ) ) % 10 );
 	}
 
-	// `wc_get_product_id_by_global_unique_id()`
-	// X is only valid as the final ISBN-10 check digit character (ISO 2108) — reject anywhere else.
-	public static function checkX( $input )
+	// @source `wc_get_product_id_by_global_unique_id()`
+	// X is only valid as the final ISBN-10 check digit character (ISO 2108), reject anywhere else.
+	public static function checkX( string $input ): bool
 	{
-		return preg_match( '/^[0-9\-]*[0-9Xx]?$/', $input );
+		return (bool) preg_match( '/^[0-9\-]*[0-9Xx]?$/', $input );
 	}
 }
