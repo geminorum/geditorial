@@ -791,7 +791,7 @@ class StaticCovers extends gEditorial\Module
 		return $pre;
 	}
 
-	public function searchselect_result_image_for_post( false|string $data, mixed $post, array $queried ): string|false
+	public function searchselect_result_image_for_post( false|string $data, mixed $post, array $queried ): false|string
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )

@@ -11,6 +11,7 @@ class Info extends WordPress\Main
 		return gEditorial();
 	}
 
+	// TODO: migrate to Data-Types
 	public static function fromIBAN( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
@@ -39,6 +40,7 @@ class Info extends WordPress\Main
 		);
 	}
 
+	// TODO: migrate to Data-Types
 	public static function fromPostCode( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
@@ -90,6 +92,7 @@ class Info extends WordPress\Main
 		);
 	}
 
+	// TODO: migrate to Data-Types
 	public static function fromCardNumber( string $input, array $pre = [] ): array
 	{
 		$info = $pre;
@@ -326,6 +329,7 @@ class Info extends WordPress\Main
 		).$after;
 	}
 
+	// TODO: Migrate to `Icons` service
 	// NOTE: front-end only. `$icon` must be an array
 	public static function getIcon( array $icon, ?string $title = '', ?string $link = '' ): string
 	{
@@ -337,12 +341,12 @@ class Info extends WordPress\Main
 		], gEditorial()->icon( $icon[1], $icon[0] ) );
 	}
 
-	// FIXME: Migrate to `Icons` service: `Icons::renderByField()`
+	// TODO: Migrate to `Icons` service: `Icons::renderByField()`
 	public static function renderIcon(
 		string $for,
-		?string $text = NULL,
-		?string $link = '',
-		bool $verbose = TRUE,
+		?string $text    = NULL,
+		?string $link    = '',
+		bool    $verbose = TRUE,
 	): bool|string {
 
 		$html = '';
@@ -694,6 +698,7 @@ class Info extends WordPress\Main
 		);
 	}
 
+	// TODO: move to Scripts
 	public static function getDropzoneStrings(): array
 	{
 		return apply_filters( self::und( static::BASE, 'strings_dropzone' ), [

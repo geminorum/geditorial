@@ -204,7 +204,7 @@ class SearchSelect extends gEditorial\Service
 	}
 
 	// NOTE: also used by others!
-	public static function getImageForPost( mixed $post, array $queried = [], false|string $default = '' ): string|false
+	public static function getImageForPost( mixed $post, array $queried = [], false|string $default = '' ): false|string
 	{
 		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ), $default, $post, $queried );
 	}

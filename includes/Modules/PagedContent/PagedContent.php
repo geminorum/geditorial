@@ -391,7 +391,7 @@ class PagedContent extends gEditorial\Module
 	 * @hook: `redirect_canonical`
 	 *
 	 * @param string $url
-	 * @return string|false
+	 * @return false|string
 	 */
 	public function redirect_canonical_viewall( $redirect_url, $requested_url )
 	{

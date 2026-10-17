@@ -400,6 +400,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXLSX()`
+	// @SEE https://github.com/rap2hpoutre/fast-excel/blob/master/src/FastExcel.php
 	public static function fromXLSX( false|string $file_path, array $arguments = [] ): array
 	{
 		$args = self::parsed( self::getDefaultArguments( $file_path ), $arguments );

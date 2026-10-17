@@ -172,7 +172,7 @@ trait PairedCore
 		return $object;
 	}
 
-	protected function paired_handle_paired_metacaps_roles( $paired, $captype ): true
+	protected function paired_handle_paired_metacaps_roles( array $paired, array $captype ): true
 	{
 		return add_filter( 'map_meta_cap',
 			function ( $caps, $cap, $user_id, $args )

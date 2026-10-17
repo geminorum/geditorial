@@ -181,7 +181,7 @@ trait PairedAssignment
 	}
 
 	// `$this->filter( 'searchselect_result_image_for_term', 3, 12, 'paired_assignment', $this->base );`
-	public function searchselect_result_image_for_term_paired_assignment( false|string $data, mixed $term, array $queried ): string|false
+	public function searchselect_result_image_for_term_paired_assignment( false|string $data, mixed $term, array $queried ): false|string
 	{
 		if ( empty( $queried['context'] )
 			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
@@ -196,7 +196,7 @@ trait PairedAssignment
 		$metakey    = Services\TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
 		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
 
-		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
+		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ] ) )
 			return $src;
 
 		return $data;

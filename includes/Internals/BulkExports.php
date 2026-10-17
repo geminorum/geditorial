@@ -208,7 +208,7 @@ trait BulkExports
 					$term->taxonomy,
 					$term->slug ?: $term->name,
 					$context,
-					$type
+					$type,
 				), $ext );
 
 			case 'globalsummary':
@@ -220,7 +220,7 @@ trait BulkExports
 				return self::dot( self::dsh(
 					$post->post_name ?: $post->post_title,
 					$context,
-					$type
+					$type,
 				), $ext );
 		}
 
@@ -286,10 +286,10 @@ trait BulkExports
 			}
 
 			foreach ( $fields as $field => $field_title )
-				$row[] = gEditorial\Template::getMetaField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE, 'meta' ) ?: '';
+				$row[] = Services\PostTypeFields::getField( $field, [ 'id' => $post, 'context' => 'export' ], FALSE, 'meta' ) ?: '';
 
 			foreach ( $units as $unit => $unit_title )
-				$row[] = gEditorial\Template::getMetaField( $unit, [ 'id' => $post, 'context' => 'export' ], FALSE, 'units' ) ?: '';
+				$row[] = Services\PostTypeFields::getField( $unit, [ 'id' => $post, 'context' => 'export' ], FALSE, 'units' ) ?: '';
 
 			$saved = get_post_meta( $post->ID );
 
@@ -328,7 +328,7 @@ trait BulkExports
 					Core\Arraay::prefixValues( array_keys( $units ), 'unit__' ),
 					Core\Arraay::prefixValues( array_keys( $metas ), 'meta__' ),
 					Core\Arraay::prefixValues( array_keys( $taxes ), 'taxonomy__' ),
-					Core\Arraay::prefixValues( array_keys( $customs ), 'custom__' )
+					Core\Arraay::prefixValues( array_keys( $customs ), 'custom__' ),
 				);
 
 				return Core\Text::toCSV( array_merge( [ $headers ], $data ) );
@@ -391,7 +391,7 @@ trait BulkExports
 					$data,
 					array_values( $headers ),
 					$sheet_title,
-					array_values( $this->exports_generate_column_widths( $headers, $posttypes ) )
+					array_values( $this->exports_generate_column_widths( $headers, $posttypes ) ),
 				);
 		}
 
@@ -412,7 +412,7 @@ trait BulkExports
 			gEditorial\Datetime::isDateOnly( $data )
 				? gEditorial\Datetime::dateFormats( 'printdate' )
 				: gEditorial\Datetime::dateFormats( 'printtime' ),
-			$this->default_calendar()
+			$this->default_calendar(),
 		);
 	}
 
@@ -433,7 +433,7 @@ trait BulkExports
 			/* translators: `%1$s`: column title, `%2$s`: column counter */
 			_x( '%1$s (%2$s)', 'Internal: Exports: Column Header', 'geditorial-admin' ),
 			$header,
-			Core\Number::localize( $counter[$header] )
+			Core\Number::localize( $counter[$header] ),
 		);
 	}
 
@@ -514,20 +514,31 @@ trait BulkExports
 		if ( empty( $posts ) )
 			return FALSE;
 
-		$props   = $this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format );
-		$fields  = $this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format );
-		$units   = $this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format );
-		$metas   = $this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format );
-		$taxes   = $this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format );
-		$customs = $this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format );
-		$data    = $this->exports_prep_posts_for_export( $posttypes, $reference, $target, $type, $posts, $props, $fields, $units, $metas, $taxes, $customs, $format );
-
-		return $data;
+		return $this->exports_prep_posts_for_export(
+			$posttypes,
+			$reference,
+			$target,
+			$type,
+			$posts,
+			$this->exports_get_post_props( $posttypes, $reference, $target, $type, $context, $format ),
+			$this->exports_get_post_fields( $posttypes, $reference, $target, $type, $context, $format ),
+			$this->exports_get_post_units( $posttypes, $reference, $target, $type, $context, $format ),
+			$this->exports_get_post_metas( $posttypes, $reference, $target, $type, $context, $format ),
+			$this->exports_get_post_taxonomies( $posttypes, $reference, $target, $type, $context, $format ),
+			$this->exports_get_post_customs( $posttypes, $reference, $target, $type, $context, $format ),
+			$format,
+		);
 	}
 
 	// TODO: export target: `paired_by_term`
-	protected function exports_get_export_data( int|string $reference, ?string $target, ?string $type, ?string $context, ?string $format ): false|string
-	{
+	protected function exports_get_export_data(
+		int|string $reference,
+		?string $target,
+		?string $type,
+		?string $context,
+		?string $format,
+	): false|string {
+
 		$data = FALSE;
 
 		switch ( $target ) {
@@ -575,7 +586,7 @@ trait BulkExports
 					$target,
 					$type,
 					$context,
-					$format
+					$format,
 				);
 
 				break;
@@ -613,7 +624,7 @@ trait BulkExports
 					$target,
 					$type,
 					$context,
-					$format
+					$format,
 				);
 
 				break;
@@ -632,7 +643,7 @@ trait BulkExports
 					$target,
 					$type,
 					$context,
-					$format
+					$format,
 				);
 
 				break;
@@ -684,7 +695,7 @@ trait BulkExports
 					$target,
 					$type,
 					$context,
-					$format
+					$format,
 				);
 
 				break;
@@ -887,9 +898,9 @@ trait BulkExports
 				case 'posttype_simple':
 				case 'assigned_simple':
 
-					// $keys  = [];
-					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					// $list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
+					// `$keys  = [];`
+					// `$keeps = Core\Arraay::keepByKeys( $fields, $keys );`
+					// `$list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );`
 
 					break;
 
@@ -898,9 +909,9 @@ trait BulkExports
 				case 'posttype_advanced':
 				case 'assigned_advanced':
 
-					// $keys  = [];
-					// $keeps = Core\Arraay::keepByKeys( $fields, $keys );
-					// $list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );
+					// `$keys  = [];`
+					// `$keeps = Core\Arraay::keepByKeys( $fields, $keys );`
+					// `$list  = array_merge( $list, array_fill_keys( array_keys( $keeps ), NULL ) );`
 
 					break;
 

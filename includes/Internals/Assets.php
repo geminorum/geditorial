@@ -9,7 +9,7 @@ use geminorum\gEditorial\WordPress;
 
 trait Assets
 {
-	public function icon( string $name, ?string $group = NULL, array $extra = [] ): string|false
+	public function icon( string $name, ?string $group = NULL, array $extra = [] ): false|string
 	{
 		return gEditorial()->icon(
 			$name,

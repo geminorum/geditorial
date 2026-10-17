@@ -1485,7 +1485,7 @@ class Template extends WordPress\Main
 
 	// TODO: Move to `Services\Calendars`
 	// @source https://github.com/billerickson/BE-Events-Calendar/wiki
-	public static function eventDate( int $start, int $end ): string|false
+	public static function eventDate( int $start, int $end ): false|string
 	{
 		// Only a start date
 		if ( empty( $end ) )

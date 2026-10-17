@@ -181,7 +181,7 @@ class Datetime extends WordPress\Main
 	 * @param mixed $from
 	 * @param int $to
 	 * @param string $timezone_string
-	 * @return string|false
+	 * @return false|string
 	 */
 	public static function humanTimeAgo(
 		mixed $from,

@@ -13,7 +13,7 @@ class AddressInPersian extends Core\Base
 	];
 
 	// NOTE: must be used in conjunction with `Services\Locations::prepAddress()`
-	public static function prepExtra( mixed $data, ?string $context = NULL, false|string $fallback = FALSE ): string|false
+	public static function prepExtra( mixed $data, ?string $context = NULL, false|string $fallback = FALSE ): false|string
 	{
 		if ( self::empty( $data ) )
 			return $fallback;

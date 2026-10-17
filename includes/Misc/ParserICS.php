@@ -47,8 +47,8 @@ class ParserICS extends Core\Base
 	 * @param string $content
 	 * @return array
 	 */
-	public static function normalize( string $content ): array {
-
+	public static function normalize( string $content ): array 
+	{
 		$content = preg_replace( "/\r\n[ \t]/", '', $content );      // Unfold lines
 		$content = str_replace( [ "\r\n", "\r" ], "\n", $content );  // Normalize line endings
 
@@ -61,8 +61,8 @@ class ParserICS extends Core\Base
 	 * @param array $lines
 	 * @return array
 	 */
-	public static function extract( array $lines ): array {
-
+	public static function extract( array $lines ): array 
+	{
 		$events  = [];
 		$current = [];
 		$inEvent = FALSE;
@@ -103,8 +103,8 @@ class ParserICS extends Core\Base
 	 * @param array $event
 	 * @return array
 	 */
-	public static function expand( array $event ): array {
-
+	public static function expand( array $event ): array 
+	{
 		preg_match( '/:(\d{8})/', $event['DTSTART'], $startMatch );
 		preg_match( '/:(\d{8})/', $event['DTEND'],   $endMatch   );
 
@@ -137,8 +137,8 @@ class ParserICS extends Core\Base
 	 * @param string $content
 	 * @return array
 	 */
-	public static function doParse( string $content ): array {
-
+	public static function doParse( string $content ): array 
+	{
 		$dates  = [];
 		$lines  = self::normalize( $content );
 		$events = self::extract( $lines );
@@ -153,7 +153,7 @@ class ParserICS extends Core\Base
 		return $dates;
 	}
 
-	public static function getRemote( $url )
+	public static function getRemote( string $url )
 	{
 		$response = wp_remote_get( $url );
 

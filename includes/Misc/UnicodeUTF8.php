@@ -182,7 +182,7 @@ class UnicodeUTF8 extends Core\Base
 	 * surrogates or are outside the Unicode range.
 	 *
 	 * @param array $arr
-	 * @return string|false
+	 * @return false|string
 	 */
 	public static function unicodeToUtf8( $arr )
 	{

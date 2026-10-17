@@ -168,7 +168,7 @@ class Individuals extends gEditorial\Service
 		if ( WordPress\IsIt::rest() )
 			return $item;
 
-		if ( $context && in_array( $context, [ 'print', 'export' ] ) )
+		if ( $context && in_array( $context, [ 'print', 'export' ], TRUE ) )
 			return $item;
 
 		if ( $link = WordPress\URL::search( $item ) )

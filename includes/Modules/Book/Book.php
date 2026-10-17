@@ -1113,6 +1113,11 @@ class Book extends gEditorial\Module
 	// @REF: `Template::getMetaField()`
 	public function meta_field( mixed $meta, string $field, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
+		if ( $context && in_array( $context, [
+			'export',
+		], TRUE ) )
+			return $meta;
+
 		switch ( $field ) {
 
 			case 'publication_edition': return Core\Number::localize( Core\Number::toOrdinal( $raw ) );         // NOTE: not always a number/fallback localize

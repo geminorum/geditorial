@@ -197,7 +197,7 @@ class Cartable extends gEditorial\Module
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => self::_und( 'assign', $this->constant( 'user_taxonomy' ) ),
+				'assign_terms' => self::und( 'assign', $this->constant( 'user_taxonomy' ) ),
 			] );
 
 			// new term for new users
@@ -221,7 +221,7 @@ class Cartable extends gEditorial\Module
 				'manage_terms' => $this->caps['settings'],
 				'edit_terms'   => $this->caps['settings'],
 				'delete_terms' => $this->caps['settings'],
-				'assign_terms' => self::_und( 'assign', $this->constant( 'type_taxonomy' ) ),
+				'assign_terms' => self::und( 'assign', $this->constant( 'type_taxonomy' ) ),
 			] );
 
 			$this->support_types = TRUE;
@@ -245,7 +245,7 @@ class Cartable extends gEditorial\Module
 			'manage_terms' => $this->caps['settings'],
 			'edit_terms'   => $this->caps['settings'],
 			'delete_terms' => $this->caps['settings'],
-			'assign_terms' => self::_und( 'assign', $this->constant( 'group_taxonomy' ) ),
+			'assign_terms' => self::und( 'assign', $this->constant( 'group_taxonomy' ) ),
 		] );
 
 		$this->filter( 'wp_update_term_data', 4 );

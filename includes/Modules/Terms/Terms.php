@@ -3095,11 +3095,11 @@ class Terms extends gEditorial\Module
 	/**
 	 * Filters proper field as title for terms on the `alphabet` short-code.
 	 *
-	 * @param array $metakeys
+	 * @param array $meta_keys
 	 * @param array $taxonomies
 	 * @return array
 	 */
-	public function alphabet_term_title_metakeys( array $metakeys, array $taxonomies ): array
+	public function alphabet_term_title_metakeys( array $meta_keys, array $taxonomies ): array
 	{
 		foreach ( $taxonomies as $taxonomy ) {
 
@@ -3109,19 +3109,22 @@ class Terms extends gEditorial\Module
 			$supported = $this->get_supported( $taxonomy );
 
 			if ( in_array( 'tagline', $supported, TRUE ) )
-				$metakeys[$taxonomy] = $this->get_supported_metakey( 'tagline', $taxonomy );
+				$meta_keys[$taxonomy] = $this->get_supported_metakey( 'tagline', $taxonomy );
 
 			else if ( in_array( 'subtitle', $supported, TRUE ) )
-				$metakeys[$taxonomy] = $this->get_supported_metakey( 'subtitle', $taxonomy );
+				$meta_keys[$taxonomy] = $this->get_supported_metakey( 'subtitle', $taxonomy );
 		}
 
-		return $metakeys;
+		return $meta_keys;
 	}
 
-	public function searchselect_result_image_for_term( false|string $data, mixed $term, array $queried ): string|false
+	public function searchselect_result_image_for_term( false|string $data, mixed $term, array $queried ): false|string
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			|| in_array( $queried['context'], [
+				'select2',
+				'pairedimports',
+			], TRUE ) )
 			return $data;
 
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -3133,7 +3136,7 @@ class Terms extends gEditorial\Module
 		$metakey    = $this->get_supported_metakey( 'image', $term->taxonomy );
 		$attachment = WordPress\Taxonomy::getThumbnailID( $term->term_id, $metakey );
 
-		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ], FALSE ) )
+		if ( $src = WordPress\Media::getAttachmentSrc( $attachment, [ 45, 72 ] ) )
 			return $src;
 
 		return $data;
@@ -3242,7 +3245,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// NOTE: `timespan` only if terms has data.
-	public function calendars_term_link( string $url, object $term, ?string $context ): string|false
+	public function calendars_term_link( string $url, object $term, ?string $context ): false|string
 	{
 		if ( Services\Calendars::ICAL_TIMESPAN_CONTEXT !== $context )
 			return $url;
