@@ -2862,6 +2862,8 @@ class Terms extends gEditorial\Module
 
 	public function taxonomy_term_tabs( array $tabs, string $taxonomy, ?object $term = NULL ): array
 	{
+		$context ??= 'term_tab';
+
 		foreach ( $this->get_supported( $taxonomy ) as $field ) {
 
 			switch ( $field ) {
@@ -2870,7 +2872,14 @@ class Terms extends gEditorial\Module
 
 					$tabs[$this->classs( $field )] = [
 						'title'    => $this->get_supported_field_title( $field, $taxonomy ),
-						'callback' => [ $this, 'callback_term_tab_map' ],
+						'callback' => static function ( string $taxonomy, string $tab, object $object, object $term )
+							use ( $field, $context ) {
+
+							ModuleTemplate::renderTermMap( $term, [
+								'field'   => $field,
+								'context' => $context,
+							] );
+						},
 					];
 
 					break;
@@ -2878,14 +2887,6 @@ class Terms extends gEditorial\Module
 		}
 
 		return $tabs;
-	}
-
-	public function callback_term_tab_map( string $taxonomy, string $tab, object $object, object $term ): void
-	{
-		ModuleTemplate::renderTermMap( $term, [
-			'field'   => 'latlng',
-			'context' => 'term_tab',
-		] );
 	}
 
 	public function terms_search_append_meta_frontend( array $meta, string $search, mixed $taxonomies, array $args ): array
