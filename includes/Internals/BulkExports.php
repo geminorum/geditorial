@@ -258,6 +258,12 @@ trait BulkExports
 				else if ( ! $importable && 'post_status' === $prop )
 					$row[] = $stati[$post->{$prop}] ?? $post->{$prop};
 
+				else if ( in_array( $prop, [
+					'post_content',
+					'post_excerpt',
+				], TRUE ) )
+					$row[] = $this->exports_generate_content_value( $post->{$prop}, $prop );
+
 				else if ( ! $importable && in_array( $prop, [
 					'post_date',
 					'post_date_gmt',
@@ -358,6 +364,14 @@ trait BulkExports
 		}
 
 		return $data;
+	}
+
+	protected function exports_generate_content_value( mixed $data, string $prop ): string
+	{
+		if ( WordPress\Strings::isEmpty( $data ) )
+			return '';
+
+		return Core\Text::trim( $data );
 	}
 
 	protected function exports_generate_date_value( mixed $data, string $prop ): string
