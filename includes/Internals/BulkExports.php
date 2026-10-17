@@ -1168,4 +1168,31 @@ trait BulkExports
 
 			}, 20, 4 );
 	}
+
+	// TODO: control by settings
+	protected function bulkexports__hook_advanced_post_taxonomies(
+		string  $constant,
+		?string $suffix    = NULL,
+		?array  $posttypes = NULL,
+	): bool {
+
+		return add_filter( $this->hook_base( 'bulk_exports', 'post_taxonomies' ),
+			function ( $list, $arguments )
+				use ( $constant, $suffix, $posttypes ) {
+
+				if ( empty( $arguments['type'] ) || empty( $arguments['posttypes'] ) )
+					return $list;
+
+				if ( ! Core\Text::ends( $arguments['type'], $suffix ?? 'advanced' ) )
+					return $list;
+
+				if ( ! Core\Arraay::exists( $arguments['posttypes'], $posttypes ?? $this->posttypes() ) )
+					return $list;
+
+				return Core\Arraay::insert( $list, [
+					$this->constant( $constant ) => NULL,
+				], 'post_tag', 'after' );
+
+			}, 9, 2 );
+	}
 }

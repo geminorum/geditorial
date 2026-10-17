@@ -141,6 +141,7 @@ class Subjects extends gEditorial\Module
 		$this->corecaps__handle_taxonomy_metacaps_roles( 'main_taxonomy' );
 		$this->templatetaxonomy__hook_custom_archives( 'main_taxonomy' );
 		$this->hook_dashboardsummary_paired_post_summaries( 'main_taxonomy' );
+		$this->bulkexports__hook_advanced_post_taxonomies( 'main_taxonomy' );
 		$this->bulkexports__hook_tabloid_term_assigned( 'main_taxonomy' );
 
 		if ( is_admin() ) {
