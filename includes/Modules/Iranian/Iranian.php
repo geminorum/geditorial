@@ -370,24 +370,35 @@ class Iranian extends gEditorial\Module
 
 	public function sanitize_birth_certificate_number( mixed $data, ?array $field, mixed $post ): mixed
 	{
-		$sanitized = Core\Number::translate( trim( $data ) );
-
-		if ( empty( $sanitized ) )
+		if ( ! $sanitized = Core\Text::trim( Core\Number::translate( $data ) ) )
 			return '';
 
-		if ( FALSE === $post || ( ! $post = WordPress\Post::get( $post ) ) )
+		if ( in_array( $sanitized, [
+			'تکرار',
+			'همان',
+			'کدملی',
+			'کد ملی',
+		], TRUE ) )
+			return '';
+
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return $sanitized;
 
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $sanitized;
 
+		$zeroised = Core\Validation::sanitizeIdentityNumber( $sanitized );
 		$metakey  = $this->_get_posttype_identity_metakey( $post->post_type );
-		$identity = get_post_meta( $post->ID, $metakey, TRUE );
+		$identity = trim( get_post_meta( $post->ID, $metakey, TRUE ) ?: '' );
 
-		if ( $identity == $sanitized )
-			return '';
+		if ( $identity !== $zeroised )
+			return $sanitized;
 
-		return $sanitized;
+		// NOTE: store as identity only if empty.
+		if ( ! $identity && Core\Validation::isIdentityNumber( $sanitized ) )
+			update_post_meta( $post->ID, $metakey, $zeroised );
+
+		return ''; // Avoids storing birth certificate same as identity.
 	}
 
 	public function info_from_iban( false|array $info, string $raw, string $input, array $pre ): false|array
