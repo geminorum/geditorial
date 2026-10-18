@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 
 class WasBorn extends gEditorial\Module
 {
+	use Internals\Calendars;
 	use Internals\CoreCapabilities;
 	use Internals\CoreDashboard;
 	use Internals\CoreMenuPage;
@@ -66,8 +67,8 @@ class WasBorn extends gEditorial\Module
 
 		$settings['_defaults'] = [
 			'override_dates' => [ _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ), ],
+			'calendar_list',
 			'calendar_type',
-			// 'calendar_list',
 			[
 				'field'       => 'age_of_majority',
 				'type'        => 'number',
@@ -170,6 +171,15 @@ class WasBorn extends gEditorial\Module
 	public function after_setup_theme(): void
 	{
 		$this->filter_module( 'audit', 'get_default_terms', 2 );
+	}
+
+	public function importer_init(): void
+	{
+		$this->filter_module( 'importer', 'posts_fields', 2 );
+		$this->filter_module( 'importer', 'posts_prepare', 7 );
+		$this->action_module( 'importer', 'posts_saved', 2 );
+
+		$this->action_module( 'importer', 'posttype_extra_all', 7 );
 	}
 
 	public function init(): void
@@ -1185,5 +1195,221 @@ class WasBorn extends gEditorial\Module
 		];
 
 		return $summaries;
+	}
+
+	private function _get_importer_fields( ?string $posttype = NULL ): array
+	{
+		return [
+			'dob__cal'   => _x( 'BirthDate: Calendar', 'Import Field', 'geditorial-was-born' ),
+			'dob__year'  => _x( 'BirthDate: Year', 'Import Field', 'geditorial-was-born' ),
+			'dob__month' => _x( 'BirthDate: Month', 'Import Field', 'geditorial-was-born' ),
+			'dob__day'   => _x( 'BirthDate: Day', 'Import Field', 'geditorial-was-born' ),
+			'dob__full'  => _x( 'BirthDate: Full', 'Import Field', 'geditorial-was-born' ),
+		];
+	}
+
+	public function importer_posts_fields( array $fields, string $posttype ): array
+	{
+		if ( ! $this->in_setting_posttypes( $posttype, 'parent' ) )
+			return $fields;
+
+		return array_merge( $fields, $this->_get_importer_fields( $posttype ) );
+	}
+
+	public function importer_posts_prepare(
+		mixed $value,
+		string $field,
+		?string $header,
+		?string $posttype,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
+		if ( ! $this->in_setting_posttypes( $posttype, 'parent' ) || empty( $value ) )
+			return $value;
+
+		if ( ! in_array( $field, array_keys( $this->_get_importer_fields( $posttype ) ) ) )
+			return $value;
+
+		switch ( $field ) {
+
+			case 'dob__cal'  : return Core\Date::sanitizeCalendar( Core\Text::trim( $value ), $this->default_calendar(), $this->list_calendars() );
+			case 'dob__year' :
+			case 'dob__month':
+			case 'dob__day'  : return Core\Text::trim( Core\Number::translate( $value ) );
+			case 'dob__full' : return gEditorial\Datetime::parseTheDay( Core\Text::trim( $value ), $this->default_calendar() );
+		}
+
+		return $value;
+	}
+
+	public function importer_posts_saved( object $post, array $arguments = [] ): void
+	{
+		if ( ! $post || ! $this->in_setting_posttypes( $post->post_type, 'parent' ) )
+			return;
+
+		$prefix    = sprintf( '%s__', 'dob' );
+		$type      = $this->default_calendar();
+		$calendars = $this->list_calendars();
+		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
+		$data      = [ 'cal' => $type ];
+
+		// Pre-fills with extra-all data.
+		foreach ( $arguments['extra_all'] ?? [] as $extra_key => $extra_data ) {
+
+			if ( ! in_array( $extra_key, $fields ) )
+				continue;
+
+			if ( ! $value = Core\Text::trim( $extra_data ) )
+				continue;
+
+			$key = Core\Text::stripPrefix( $extra_key, $prefix );
+
+			// will override all data!
+			if ( 'full' === $key )
+				$data = gEditorial\Datetime::parseTheDay( $value, $data['cal'] );
+
+			else
+				$data[$key] = Core\Number::translate( $value );
+
+			// override the calendar type!
+			if ( 'cal' === $key )
+				$type = $value; // already sanitized!
+		}
+
+		// Checks for calendar type on current row.
+		foreach ( $arguments['map'] ?? [] as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( ! $value = Core\Text::trim( $arguments['raw'][$offset] ) )
+				continue;
+
+			if ( $field !== ( $prefix.'cal' ) )
+				continue;
+
+			// override the calendar type!
+			$data['cal'] = Core\Date::sanitizeCalendar( $value, $type, $calendars );
+			break;
+		}
+
+		foreach ( $arguments['map'] ?? [] as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( ! $value = Core\Text::trim( $arguments['raw'][$offset] ) )
+				continue;
+
+			$key = Core\Text::stripPrefix( $field, $prefix );
+
+			if ( 'cal' === $key )
+				continue; // already checked!
+
+			// will override all data!
+			if ( 'full' === $key )
+				$data = gEditorial\Datetime::parseTheDay( $value, $data['cal'] );
+
+			else
+				$data[$key] = Core\Number::translate( $value );
+		}
+
+		if ( 1 === count( $data ) )
+			return; // `cal` only data will be ignored.
+
+		if ( FALSE === $this->store_dob_for_post( $data, $post, $arguments['override'] ?? FALSE ) )
+			$this->log( 'FAILED', sprintf( 'cannot store dob for post #%s', $post->ID ), $post->ID );
+	}
+
+	public function importer_posttype_extra_all(
+		string  $posttype,
+		array   $taxonomies,
+		string  $name_template,
+		string  $before      = '',
+		string  $after       = '',
+		string  $after_title = '',
+		?string $context     = NULL,
+	): void {
+
+		if ( ! $this->in_setting_posttypes( $posttype, 'parent' ) )
+			return;
+
+		foreach ( $this->_get_importer_fields( $posttype ) as $field => $title ) {
+
+			if ( 'dob__full' === $field )
+				continue; // no need here!
+
+			echo $before;
+				echo Core\HTML::escape( $title );
+			echo $after_title;
+
+			if ( 'dob__cal' === $field )
+				$this->do_settings_field( [
+					'type'       => 'select',
+					'field'      => $field,
+					'values'     => $this->list_calendars(),
+					'default'    => $this->default_calendar(),
+					'none_title' => gEditorial\Settings::showOptionNone(),
+					'name_attr'  => sprintf( $name_template, $field ),
+				] );
+
+			else
+				$this->do_settings_field( [
+					'type'      => 'number',
+					'field'     => $field,
+					'name_attr' => sprintf( $name_template, $field ),
+				] );
+
+			echo $after;
+		}
+	}
+
+	public function store_dob_for_post( array $input, mixed $post = NULL, bool $override = FALSE ): ?bool
+	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		if ( ! $this->in_setting_posttypes( $post->post_type, 'parent' ) )
+			return FALSE;
+
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
+			return FALSE;
+
+		if ( ! $override && WordPress\PostMeta::get( $metakey, $post ) )
+			return NULL;
+
+		$date  = '';
+		$data  = array_filter( $input );
+		$parts = count( $data );
+
+		// calendar only
+		if ( 1 === $parts )
+			return NULL;
+
+		// accepts year only
+		if ( 2 === $parts
+			&& array_key_exists( 'cal', $data )
+			&& array_key_exists( 'year', $data ) )
+			$date = gEditorial\Datetime::prepYearOnly( $data['year'] ?: '', FALSE );
+
+		else if ( 4 === $parts )
+			$date = gEditorial\Datetime::makeMySQLFromInput(
+				self::dsh(
+					$data['year'],
+					$data['month'],
+					$data['day'],
+				),
+				'Y-m-d',
+				$data['cal'],
+				NULL,
+				'',
+			);
+
+		if ( ! $date && ! $override )
+			return NULL;
+
+		return WordPress\PostMeta::store( $metakey, $date, $post );
 	}
 }
