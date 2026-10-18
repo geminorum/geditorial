@@ -541,35 +541,19 @@ class Phonebook extends gEditorial\Module
 			case 'phone_number':
 
 				// NOTE: provides `phone` from the first row of sub-content data, if availabale!
+				if ( $data = $this->subcontent_get_first_row_field( $post, 'phone', $context ) )
+					return Core\Phone::prep( $data, $field_args, $context );
 
-				if ( ! $items = $this->quantumcomments__get_data_all( $post, $context, TRUE, [ 'number' => 1 ] ) )
-					break;
+				break;
 
-				if ( empty( $items[0]['phone'] ) )
-					break;
-
-				return Core\Phone::prep(
-					$items[0]['phone'],
-					$field_args,
-					$context,
-				);
-
-			case 'postal_address':
 			case 'home_address':
+			case 'postal_address':
 
 				// NOTE: provides `address` from the first row of sub-content data, if availabale!
+				if ( $data = $this->subcontent_get_first_row_field( $post, 'address', $context ) )
+					return Services\Locations::prepAddress( $data, $context, $data );
 
-				if ( ! $items = $this->quantumcomments__get_data_all( $post, $context, TRUE, [ 'number' => 1 ] ) )
-					break;
-
-				if ( empty( $items[0]['address'] ) )
-					break;
-
-				return Services\Locations::prepAddress(
-					$items[0]['address'],
-					$context,
-					$items[0]['address'],
-				);
+				break;
 		}
 
 		return $meta;

@@ -1216,4 +1216,23 @@ trait SubContents
 	{
 		return $row_class;
 	}
+
+	protected function subcontent_get_first_row_field(
+		mixed   $post,
+		string  $field,
+		?string $context  = NULL,
+		?string $fallback = NULL,
+	): ?string {
+
+		$extra = [
+			'number' => 1,
+		];
+
+		if ( ! $data = $this->quantumcomments__get_data_all( $post, $context, TRUE, $extra ) )
+			return $fallback;
+
+		return empty( $data[0][$field] )
+			? $fallback
+			: $data[0][$field];
+	}
 }
