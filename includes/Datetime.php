@@ -570,32 +570,60 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function prepDateOfBirth(
-		string $datetime_string,
-		?string $format = NULL,
-		bool $reversed = FALSE,
-		?string $calendar_type = NULL,
+		string  $input,
+		?string $format          = NULL,
+		bool    $reversed        = FALSE,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
 	): string {
 
-		if ( ! $datetime_string )
+		if ( ! $input )
 			return '';
+
+		if ( 4 === strlen( $input ) ) {
+
+			$datetime_string = self::makeMySQLFromInput(
+				sprintf( '%s-01-01', $input ),
+				NULL,
+				$calendar_type,
+				$timezone_string,
+				FALSE,
+			);
+
+			// override format
+			$format = self::dateFormats( 'yearonly' );
+
+		} else {
+
+			$datetime_string = $input;
+		}
 
 		$age = Core\Date::calculateAge( $datetime_string, $calendar_type, $timezone_string );
 
-		$title = sprintf(
-			/* translators: `%s`: year number */
-			_nx( '%s year old', '%s years old', $age['year'], 'Datetime: Age Title Attr', 'geditorial' ),
-			Core\Number::format( $age['year'] )
-		);
+		if ( ! $age ) {
 
-		$template  = '<span title="%s" class="%s" datetime="%s">%s</span>';
-		$datetime  = Core\Date::getISO8601( $datetime_string, $timezone_string, '' );
-		$formatted = self::formatByCalendar(
-			$format ?? self::dateFormats( 'birthday' ),
-			$datetime_string,
-			$calendar_type,
-			$timezone_string
-		);
+			$template = '<span class="%2$s">%4$s</span>';
+			$datetime = '';
+
+			$formatted = $title = Core\Number::localize( $input );
+
+		} else {
+
+			$template = '<span title="%1$s" class="%2$s" datetime="%3$s">%4$s</span>';
+			$datetime = Core\Date::getISO8601( $datetime_string, $timezone_string, '' );
+			$title    = sprintf(
+				/* translators: `%s`: year number */
+				_nx( '%s year old', '%s years old', $age['year'] ?? 0, 'Datetime: Age Title Attr', 'geditorial' ),
+				Core\Number::format( $age['year'] ?? 0 ),
+			);
+
+			$formatted = self::formatByCalendar(
+				$format ?? self::dateFormats( 'birthday' ),
+				$datetime_string,
+				$calendar_type,
+				$timezone_string,
+			);
+		}
 
 		return $reversed
 			? sprintf( $template, $formatted, 'date-of-birth', $datetime, $title )
