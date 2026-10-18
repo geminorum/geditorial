@@ -1719,9 +1719,9 @@ trait PostTypeFields
 					return FALSE;
 
 				if ( ! WordPress\Post::setParent( $post->ID, $parent->ID, FALSE ) )
-					return FALSE;
+					return $this->log( 'FAILED', sprintf( 'cannot store parest for post #%s', $post->ID ), $post->ID );
 
-				break;
+				return TRUE;
 
 			case 'term':
 
@@ -1734,9 +1734,18 @@ trait PostTypeFields
 				if ( ! $override && FALSE !== get_the_terms( $post, $field['taxonomy'] ) )
 					return FALSE;
 
-				$terms = $this->sanitize_posttype_field( $data, $field, $post );
+				$terms  = $this->sanitize_posttype_field( $data, $field, $post );
+				$result = wp_set_object_terms(
+					$post->ID,
+					Core\Arraay::prepNumeral( $terms ),
+					$field['taxonomy'],
+					FALSE,
+				);
 
-				return wp_set_object_terms( $post->ID, Core\Arraay::prepNumeral( $terms ), $field['taxonomy'], FALSE );
+				if ( self::isError( $result ) )
+					return $this->log( 'FAILED', $result->get_error_message(), $terms );
+
+				return TRUE;
 
 			default:
 
