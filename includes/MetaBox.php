@@ -16,8 +16,8 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function checkHidden(
-		mixed $metabox_id,
-		string $after = '',
+		mixed  $metabox_id,
+		string $after    = '',
 		string $posttype = '',
 	): bool {
 
@@ -51,9 +51,13 @@ class MetaBox extends WordPress\Main
 	// TODO: move to `WordPress\MetaBox`
 	// FIXME: adopt `wp_dropdown_categories()`
 	// FIXME: add taxonomy `title::description` as drop-down title attribute
-	public static function singleselectTerms( int $object_id = 0, array $atts = [], ?array $terms = NULL ): bool|string
-	{
-		$args = self::args( $atts, [
+	public static function singleselectTerms(
+		int    $object_id = 0,
+		array  $arguments = [],
+		?array $terms     = NULL,
+	): bool|string {
+
+		$args = self::args( $arguments, [
 			'context'     => NULL,
 			'taxonomy'    => NULL,
 			'posttype'    => FALSE,
@@ -120,27 +124,29 @@ class MetaBox extends WordPress\Main
 	// whereas non-hierarchical save by slugs.
 	// WTF: because the core's not passing arguments into the walker!
 	// @REF: `post_categories_meta_box()`, `wp_terms_checklist()`
-	public static function checklistTerms( int $object_id = 0, array $atts = [], ?array $terms = NULL ): bool|string
-	{
-		$atts = apply_filters( 'wp_terms_checklist_args', $atts, $object_id );
+	public static function checklistTerms(
+		int $object_id = 0,
+		array $arguments = [],
+		?array $terms = NULL,
+	): bool|string {
 
-		$args = self::args( $atts, [
+		$args = self::args( apply_filters( 'wp_terms_checklist_args', $arguments, $object_id ), [
 			'taxonomy'             => NULL,
 			'posttype'             => FALSE,
-			'metabox'              => NULL,          // `metabox` id to check for hidden
-			'header'               => FALSE,         // `TRUE`, `NULL`, or template
+			'metabox'              => NULL,    // `metabox` id to check for hidden
+			'header'               => FALSE,   // `TRUE`, `NULL`, or template
 			'list_only'            => NULL,
 			'selected_only'        => NULL,
-			'selected_preserve'    => NULL,          // Keeps hidden selected / `NULL` to check for assign cap
+			'selected_preserve'    => NULL,    // Keeps hidden selected / `NULL` to check for assign cap
 			'descendants_and_self' => 0,
 			'selected_cats'        => FALSE,
 			'popular_cats'         => FALSE,
 			'checked_ontop'        => TRUE,
-			'show_count'           => FALSE,         // `TRUE`, `NULL`, or template
-			'minus_count'          => FALSE,         // or number to subtract from count
-			'edit'                 => NULL,          // Links to manage page if has no terms, FALSE to disable
-			'restricted'           => FALSE,         // `disabled` / `hidden`
-			'name'                 => NULL,          // Override this if not saving by core
+			'show_count'           => FALSE,   // `TRUE`, `NULL`, or template
+			'minus_count'          => FALSE,   // or number to subtract from count
+			'edit'                 => NULL,    // Links to manage page if has no terms, FALSE to disable
+			'restricted'           => FALSE,   // `disabled` / `hidden`
+			'name'                 => NULL,    // Override this if not saving by core
 			'field_class'          => '',
 			'walker'               => NULL,
 			'echo'                 => TRUE,
@@ -287,9 +293,14 @@ class MetaBox extends WordPress\Main
 	}
 
 	// TODO: move to `WordPress\MetaBox`
-	public static function checklistUserTerms( int $post_id = 0, array $atts = [], ?array $users = NULL, int $threshold = 5 ): bool|string
-	{
-		$args = self::args( $atts, [
+	public static function checklistUserTerms(
+		int    $post_id   = 0,
+		array  $arguments = [],
+		?array $users     = NULL,
+		int    $threshold = 5,
+	): bool|string {
+
+		$args = self::args( $arguments, [
 			'taxonomy'          => NULL,
 			'posttype'          => FALSE,
 			'metabox'           => NULL,
@@ -412,11 +423,11 @@ class MetaBox extends WordPress\Main
 
 	// TODO: move to `WordPress\MetaBox`
 	public static function getChildrenPosts(
-		mixed $post,
+		mixed             $post,
 		null|string|array $posttypes = NULL,
-		string|bool $title = FALSE,
-		int $current = 0,
-		array $exclude = []
+		string|bool       $title     = FALSE,
+		int               $current   = 0,
+		array             $exclude   = []
 	): bool|string {
 
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -458,12 +469,12 @@ class MetaBox extends WordPress\Main
 
 	// TODO: move to `WordPress\MetaBox`
 	public static function getTermPosts(
-		string $taxonomy,
-		int|object $term,
+		string            $taxonomy,
+		int|object        $term,
 		null|string|array $posttypes = NULL,
-		string|bool $title = FALSE,
-		int $current = 0,
-		array $exclude = []
+		string|bool       $title     = FALSE,
+		int               $current   = 0,
+		array             $exclude   = []
 	): bool|string {
 
 		if ( ! $term = WordPress\Term::get( $term, $taxonomy ) )
@@ -514,10 +525,10 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function fieldEmptyTaxonomy(
-		string|object $taxonomy,
-		null|false|string $edit = NULL,
-		false|string $posttype = FALSE,
-		bool $echo = TRUE
+		string|object     $taxonomy,
+		null|false|string $edit     = NULL,
+		false|string      $posttype = FALSE,
+		bool              $echo     = TRUE
 	): bool|string {
 
 		if ( FALSE === $edit )
@@ -590,11 +601,11 @@ class MetaBox extends WordPress\Main
 	// PAIRED API
 	// @OLD: `dropdownAssocPostsSubTerms()`
 	public static function paired_dropdownSubTerms(
-		string $taxonomy,
-		int $paired = 0,
-		string $prefix = '',
-		int $selected = 0,
-		?string $none = NULL
+		string  $taxonomy,
+		int     $paired   = 0,
+		string  $prefix   = '',
+		int     $selected = 0,
+		?string $none     = NULL
 	): string {
 
 		$name = sprintf( '%s[%s]', $prefix, $paired );
@@ -619,13 +630,13 @@ class MetaBox extends WordPress\Main
 	// PAIRED API
 	// OLD: `dropdownAssocPostsRedux()`
 	public static function paired_dropdownToPosts(
-		string $posttype,
-		string $taxonomy = '',
-		string|int $paired = '0', // WTF?!
-		string $prefix = '',
-		array $exclude = [],
-		?string $none = NULL,
-		bool $display_empty = TRUE,
+		string     $posttype,
+		string     $taxonomy      = '',
+		string|int $paired        = '0',    // WTF?!
+		string     $prefix        = '',
+		array      $exclude       = [],
+		?string    $none          = NULL,
+		bool       $display_empty = TRUE,
 	): string {
 
 		$args = [
@@ -657,7 +668,7 @@ class MetaBox extends WordPress\Main
 		if ( empty( $posts ) && ! $display_empty )
 			return '';
 
-		$none = $none ?? Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
+		$none ??= Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
 		$html = $none ? Core\HTML::tag( 'option', [ 'value' => '0' ], $none ) : '';
 		$html.= walk_page_dropdown_tree( $posts, 0, [
 			'selected'          => $paired,
@@ -681,8 +692,8 @@ class MetaBox extends WordPress\Main
 	public static function dropdownAssocPosts(
 		string $posttype,
 		string $selected = '',
-		string $prefix = '',
-		string $exclude = ''
+		string $prefix   = '',
+		string $exclude  = '',
 	): string {
 
 		$html = wp_dropdown_pages( [
@@ -764,10 +775,10 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function fieldPostParent(
-		object $post,
-		bool $check = TRUE,
-		?string $name = NULL,
-		?string $posttype = NULL,
+		object            $post,
+		bool              $check    = TRUE,
+		?string           $name     = NULL,
+		?string           $posttype = NULL,
 		null|string|array $statuses = NULL,
 	): void {
 
@@ -813,10 +824,10 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function fieldEditorBox(
-		string $content = '',
-		string $id = 'excerpt',
-		?string $title = NULL,
-		array $atts = [],
+		string  $content = '',
+		string  $id      = 'excerpt',
+		?string $title   = NULL,
+		array   $atts    = [],
 	): void {
 
 		$args = self::args( $atts, [
@@ -854,11 +865,11 @@ class MetaBox extends WordPress\Main
 	// FIXME: finalize name/id
 	public static function dropdownPostTaxonomy(
 		string|object $taxonomy,
-		object $post,
-		false|string $key = FALSE,
-		bool $show_count = TRUE,
-		string $excludes = '',
-		string|int $default = '0',
+		object        $post,
+		false|string  $key        = FALSE,
+		bool          $show_count = TRUE,
+		string        $excludes   = '',
+		string|int    $default    = '0',
 	): void {
 
 		if ( ! $obj = get_taxonomy( $taxonomy ) )
@@ -903,10 +914,10 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function glancePosttype(
-		string $posttype,
-		array $noop,
+		string       $posttype,
+		array        $noop,
 		string|array $extra_class = '',
-		string $status = 'publish',
+		string       $status      = 'publish',
 	): false|string {
 
 		$posts = WordPress\Database::countPostsByPosttype( $posttype );
@@ -927,9 +938,9 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function glanceTaxonomy(
-		string $taxonomy,
-		array $noop,
-		string|array $extra_class = ''
+		string       $taxonomy,
+		array        $noop,
+		string|array $extra_class = '',
 	): false|string {
 
 		if ( ! $terms = WordPress\Taxonomy::hasTerms( $taxonomy ) )
@@ -948,12 +959,12 @@ class MetaBox extends WordPress\Main
 	}
 
 	public static function tableRowObjectTaxonomy(
-		string|object $taxonomy,
-		int $object_id = 0,
-		?string $name = NULL,
-		false|null|string $edit = NULL,
-		string $before = '',
-		string $after = '',
+		string|object     $taxonomy,
+		int               $object_id = 0,
+		?string           $name      = NULL,
+		null|false|string $edit      = NULL,
+		string            $before    = '',
+		string            $after     = '',
 	): bool {
 
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
@@ -977,10 +988,10 @@ class MetaBox extends WordPress\Main
 
 	public static function storeObjectTaxonomy(
 		string|object $taxonomy,
-		int $object_id,
-		?array $data = NULL,
-		?string $name = NULL,
-		bool $check = TRUE,
+		int           $object_id,
+		?array        $data  = NULL,
+		?string       $name  = NULL,
+		bool          $check = TRUE,
 	): false|array|object {
 
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
@@ -989,8 +1000,8 @@ class MetaBox extends WordPress\Main
 		if ( $check && ! current_user_can( $object->cap->assign_terms ) )
 			return FALSE;
 
-		$name = $name ?? self::dsh( static::BASE, 'object_tax' );
-		$data = $data ?? self::req( $name, [] );
+		$name ??= self::dsh( static::BASE, 'object_tax' );
+		$data ??= self::req( $name, [] );
 
 		// For clearing must send `0` as `term_id`
 		if ( empty( $data ) || ! is_array( $data ) )
@@ -1005,7 +1016,7 @@ class MetaBox extends WordPress\Main
 
 	public static function getFieldDefaults( string $field, ?string $module = NULL ): array
 	{
-		// if ( ! $module = $module ?? static::MODULE )
+		// if ( ! $module ??= static::MODULE )
 		// 	return FALSE;
 
 		return [
@@ -1064,19 +1075,19 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-textarea' ];
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
-			// 'rows'        => '1',
-			// 'cols'        => '40',
+			// `'rows'        => '1',`
+			// `'cols'        => '40',`
 			'name'        => self::_getNameAttr( $args, $module ),
 			'title'       => WordPress\Strings::makeTitleAttribute( $args['title'] ?: $args['name'], $args['description'] ?: '' ),
 			'placeholder' => $args['title'],
@@ -1135,15 +1146,15 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 		$value = self::_getMetaFieldRaw( $args, $post, $module );
 		$wrap  = [ 'field-wrap', '-inputgeneral' ];
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		$atts = [
 			'type'         => 'text',
@@ -1501,7 +1512,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$args  = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
@@ -1596,7 +1607,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$html     = '';
@@ -1608,9 +1619,9 @@ class MetaBox extends WordPress\Main
 		if ( empty( $args['values'] ) && in_array( $args['type'], [ 'term' ], TRUE ) && ! empty( $args['taxonomy'] ) )
 			$args['values'] = WordPress\Taxonomy::listTerms( $args['taxonomy'] );
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
-		$args['none_title']  = $args['none_title']  ?? self::getString( $args['name'], $post->post_type, 'none', Settings::showOptionNone( $args['title'] ), $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['none_title']  ??= self::getString( $args['name'], $post->post_type, 'none', Settings::showOptionNone( $args['title'] ), $module );
 
 		if ( $args['none_title'] )
 			$html.= Core\HTML::tag( 'option', [
@@ -1678,7 +1689,7 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$html = '';
@@ -1690,8 +1701,8 @@ class MetaBox extends WordPress\Main
 		else if ( ! $args['posttype'] )
 			return FALSE;
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( $post->post_parent && ( $parent = WordPress\Post::get( $post->post_parent ) ) )
 			$html.= Core\HTML::tag( 'option', [
@@ -1706,7 +1717,7 @@ class MetaBox extends WordPress\Main
 		], Settings::showOptionNone() );
 
 		$atts = [
-			'name'  => 'parent_id', // self::dsh( static::BASE, $module, $args['name'] ),
+			'name'  => 'parent_id', // `self::dsh( static::BASE, $module, $args['name'] ),`
 			'title' => WordPress\Strings::makeTitleAttribute( $args['title'], $args['description'] ),
 			'class' => [
 				self::dsh( static::BASE, 'searchselect', 'select2' ),
@@ -1742,14 +1753,14 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$html = '';
 		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
@@ -1807,14 +1818,14 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$html = '';
 		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
@@ -1859,14 +1870,14 @@ class MetaBox extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$html = '';
 		$args = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
-		$args['title']       = $args['title']       ?? self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
-		$args['description'] = $args['description'] ?? self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
+		$args['title']       ??= self::getString( $args['name'], $post->post_type, 'titles', $args['name'], $module );
+		$args['description'] ??= self::getString( $args['name'], $post->post_type, 'descriptions', FALSE, $module );
 
 		if ( $value = self::getPostMeta( $post->ID, $args['name'], '', NULL, $module ) )
 			$html.= Core\HTML::tag( 'option', [
@@ -1876,7 +1887,7 @@ class MetaBox extends WordPress\Main
 				sprintf(
 					/* translators: `%s`: user id number */
 					_x( 'Unknown User #%s', 'MetaBox: Option', 'geditorial' ),
-					$value
+					$value,
 				) )
 			);
 
@@ -1918,7 +1929,13 @@ class MetaBox extends WordPress\Main
 
 		} else {
 
-			$meta = Template::getMetaFieldRaw( $field['name'], $post->ID, $module, FALSE, '' );
+			$meta = Template::getMetaFieldRaw(
+				$field['name'],
+				$post->ID,
+				$module,
+				FALSE,
+				'',
+			);
 		}
 
 		if ( '' === $meta
@@ -1928,7 +1945,14 @@ class MetaBox extends WordPress\Main
 			// Fills the meta by query data, only on new posts.
 			$meta = WordPress\Strings::kses( self::req( $metakey, '' ), 'none' );
 			$meta = Services\PostTypeFields::replaceTokens( $meta, $field, $post, 'raw' );
-			$meta = apply_filters( self::und( static::BASE, $module, 'initial', $field['name'] ), $meta, $field, $post, $module );
+
+			// @hook: `geditorial_{$module}_initial_{$field_name}`
+			$meta = apply_filters( self::und( static::BASE, $module, 'initial', $field['name'] ),
+				$meta,
+				$field,
+				$post,
+				$module,
+			);
 		}
 
 		return $meta;
@@ -1949,13 +1973,17 @@ class MetaBox extends WordPress\Main
 	// OLD: `check_draft_metabox()`
 	public static function checkDraftMetaBox( ?array $box, object $post, ?string $message = NULL ): bool
 	{
-		if ( ! in_array( $post->post_status, [ 'trash', 'private', 'auto-draft' ], TRUE ) )
+		if ( ! in_array( $post->post_status, [
+			'trash',
+			'private',
+			'auto-draft',
+		], TRUE ) )
 			return FALSE;
 
 		Core\HTML::desc(
 			$message ?? _x( 'You can see the contents once you\'ve saved this post for the first time.', 'MetaBox: Draft MetaBox', 'geditorial-admin' ),
 			TRUE,
-			'field-wrap -empty'
+			'field-wrap -empty',
 		);
 
 		return TRUE;

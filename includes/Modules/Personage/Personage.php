@@ -110,7 +110,7 @@ class Personage extends gEditorial\Module
 				'overview_fields'     => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'meta' ) ],
 				'overview_units'      => [ NULL, $this->get_posttype_fields_list( 'main_posttype', 'units' ) ],
 			],
-			'_import' => [
+			'_imports' => [
 				[
 					'field'       => 'import_check_identity_number',
 					'title'       => _x( 'Check Identity Number', 'Setting Title', 'geditorial-personage' ),
@@ -616,6 +616,9 @@ class Personage extends gEditorial\Module
 	public function meta_field_empty( mixed $meta, string $field_key, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
 	{
 		if ( ! empty( $meta ) )
+			return $meta; // already filtered!
+
+		if ( ! $this->is_posttype( 'main_posttype', $post ) )
 			return $meta;
 
 		switch ( $field_key ) {

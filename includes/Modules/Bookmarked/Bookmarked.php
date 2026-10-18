@@ -471,7 +471,7 @@ class Bookmarked extends gEditorial\Module
 		} else if ( ! empty( $data['type'] ) ) {
 
 			$types = Core\Arraay::reKey(
-				$this->subcontent_get_type_options( $context, $post ? $post->post_type : NULL ),
+				$this->subcontent_get_type_options( $context, WordPress\Post::type( $post ) ?: NULL ),
 				'name'
 			);
 

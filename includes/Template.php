@@ -113,7 +113,7 @@ class Template extends WordPress\Main
 
 	public static function termImage( array $atts = [], ?string $module = NULL ): bool|string
 	{
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'field'        => NULL,                                 // NULL for `image`
 			'id'           => NULL,
@@ -210,7 +210,7 @@ class Template extends WordPress\Main
 
 	public static function termContact( array $atts = [], ?string $module = NULL ): bool|string
 	{
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'field'    => NULL,
 			'id'       => NULL,
@@ -332,7 +332,7 @@ class Template extends WordPress\Main
 
 	public static function postImage( array $atts = [], ?string $module = NULL ): bool|string
 	{
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$html   = '';
 		$args   = self::parsed( [
 			'id'           => NULL,
@@ -458,7 +458,7 @@ class Template extends WordPress\Main
 	// TODO: duplicate to `pairedList()`
 	public static function pairedLink( array $atts = [], ?string $module = NULL ): bool|string
 	{
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		$args = self::parsed( [
@@ -734,7 +734,7 @@ class Template extends WordPress\Main
 		bool $check = TRUE,
 	): bool|string {
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'id'          => NULL,
 			'default'     => FALSE,
@@ -765,14 +765,15 @@ class Template extends WordPress\Main
 
 		if ( $args['taxonomy'] && ( $term = WordPress\Taxonomy::theTerm( $args['taxonomy'], $post->ID, TRUE ) ) ) {
 
-			$meta                = $meta                ?: WordPress\Term::title( $term );
-			$args['link']        = $args['link']        ?? WordPress\Term::link( $term );
-			$args['description'] = $args['description'] ?? Core\Text::stripTags( $term->description );
+			$meta = $meta ?: WordPress\Term::title( $term );
+
+			$args['link']        ??= WordPress\Term::link( $term );
+			$args['description'] ??= Core\Text::stripTags( $term->description );
 
 		} else if ( $meta && is_null( $args['link'] ) ) {
 
 			$args['link']        = WordPress\URL::search( $meta );
-			$args['description'] = $args['description'] ?? sprintf(
+			$args['description'] ??= sprintf(
 				/* translators: `%s`: search query */
 				_x( 'Search for %s', 'Template: Search Link Title Attr', 'geditorial' ),
 				$meta
@@ -816,12 +817,12 @@ class Template extends WordPress\Main
 	}
 
 	public static function metaLink(
-		array $atts = [],
-		?string $module = NULL,
-		bool $check = TRUE,
+		array   $arguments = [],
+		?string $module    = NULL,
+		bool    $check     = TRUE,
 	): bool|string {
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'id'            => NULL,
 			'default'       => FALSE,
@@ -839,8 +840,8 @@ class Template extends WordPress\Main
 			'url_filter'    => FALSE,
 			'span_class'    => FALSE,
 			'link_class'    => FALSE,
-			'hide_empty'    => FALSE, // hide when no URL available
-		], $atts );
+			'hide_empty'    => FALSE,            // hide when no URL available
+		], $arguments );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -949,24 +950,24 @@ class Template extends WordPress\Main
 
 	// TODO: `unitsSummary()`
 	public static function metaSummary(
-		array $atts = [],
-		?string $module = NULL,
-		bool $check = TRUE,
+		array   $arguments = [],
+		?string $module    = NULL,
+		bool    $check     = TRUE,
 	): bool|string {
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'id'       => NULL,
 			'fields'   => NULL,
 			'excludes' => NULL,
-			'type'     => NULL, // default to current post
+			'type'     => NULL,    // default to current post
 			'default'  => FALSE,
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
 			'render'   => NULL,
 			'context'  => NULL,
-		], $atts );
+		], $arguments );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -1017,7 +1018,7 @@ class Template extends WordPress\Main
 			$excludes,
 			$post->post_type,
 			$post,
-			$args
+			$args,
 		);
 
 		foreach ( $list as $key => $title ) {
@@ -1072,7 +1073,7 @@ class Template extends WordPress\Main
 			$rows,
 			$list,
 			$post,
-			$args
+			$args,
 		);
 
 		if ( empty( $rows ) )
@@ -1115,11 +1116,9 @@ class Template extends WordPress\Main
 		);
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function sanitizeField( string|array $field ): array
 	{
-		self::_dep( 'NO NEED!' );
-
 		if ( is_array( $field ) )
 			return $field;
 
@@ -1144,7 +1143,7 @@ class Template extends WordPress\Main
 	}
 
 	public static function reorderPosts(
-		array $posts,
+		array  $posts,
 		string $field_module = 'meta',
 		string $field_start = 'start',
 		string $field_order = 'order',
@@ -1176,10 +1175,10 @@ class Template extends WordPress\Main
 
 	public static function renderRecentByPosttype(
 		string|object $posttype,
-		false|string $link = 'view',
-		mixed $empty = NULL,
-		?string $title_attr = NULL,
-		array $extra = [],
+		false|string  $link       = 'view',
+		mixed         $empty      = NULL,
+		?string       $title_attr = NULL,
+		array         $extra      = [],
 	): void {
 
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
@@ -1219,10 +1218,10 @@ class Template extends WordPress\Main
 	}
 
 	// @EXAMPLE: https://dastan.ourmag.ir/archives/issues/
-	public static function getSpanTiles( array $atts = [], ?string $module = NULL ): bool|string
+	public static function getSpanTiles( array $arguments = [], ?string $module = NULL ): bool|string
 	{
 		$html   = '';
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 
 		$args = self::parsed( [
 			'taxonomy' => NULL,
@@ -1231,12 +1230,18 @@ class Template extends WordPress\Main
 			'before'   => '',
 			'after'    => '',
 			'wrap'     => TRUE,
-		], $atts );
+		], $arguments );
 
 		if ( empty( $args['posttype'] ) || empty( $args['taxonomy'] ) )
 			return $args['fallback'];
 
-		$terms = WordPress\Taxonomy::listTerms( $args['taxonomy'], 'ids', [ 'order' => 'DESC' ] );
+		$terms = WordPress\Taxonomy::listTerms(
+			$args['taxonomy'],
+			'ids',
+			[
+				'order' => 'DESC',
+			],
+		);
 
 		foreach ( $terms as $term_id ) {
 
@@ -1254,7 +1259,7 @@ class Template extends WordPress\Main
 				],
 				NULL,
 				'',
-				$module
+				$module,
 			);
 
 			if ( ! empty( $span ) )
@@ -1272,9 +1277,9 @@ class Template extends WordPress\Main
 	// TODO: link back to taxonomy archive via `Archives` Module
 	// `WordPress\Taxonomy::link( $term->taxonomy )`
 	public static function renderTermIntro(
-		mixed $term,
-		array $arguments = [],
-		?string $module = NULL,
+		mixed   $term,
+		array   $arguments = [],
+		?string $module    = NULL,
 	): bool {
 
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -1372,9 +1377,9 @@ class Template extends WordPress\Main
 	}
 
 	public static function renderTermSubTerms(
-		mixed $term,
-		array $arguments = [],
-		?string $module = NULL
+		mixed   $term,
+		array   $arguments = [],
+		?string $module    = NULL
 	): bool {
 
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -1383,7 +1388,7 @@ class Template extends WordPress\Main
 		if ( ! WordPress\Taxonomy::hierarchical( $term->taxonomy ) )
 			return FALSE;
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'hide_empty' => TRUE,
 			'context'    => NULL,
@@ -1412,15 +1417,15 @@ class Template extends WordPress\Main
 	}
 
 	public static function renderPostMap(
-		mixed $post,
-		array $arguments = [],
-		?string $module = NULL
+		mixed   $post,
+		array   $arguments = [],
+		?string $module    = NULL
 	): bool {
 
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'field'    => 'latlng',
 			'fallback' => '',
@@ -1448,15 +1453,15 @@ class Template extends WordPress\Main
 	}
 
 	public static function renderTermMap(
-		mixed $term,
-		array $arguments = [],
-		?string $module = NULL
+		mixed   $term,
+		array   $arguments = [],
+		?string $module    = NULL
 	): bool {
 
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( [
 			'field'    => 'latlng',
 			'fallback' => '',

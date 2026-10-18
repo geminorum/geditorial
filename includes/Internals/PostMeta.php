@@ -9,10 +9,19 @@ use geminorum\gEditorial\WordPress;
 
 trait PostMeta
 {
+	/**
+	 * @var string
+	 */
+	protected $key = NULL;
+
+	/**
+	 * @var object
+	 */
+	public $module = NULL;
+
 	public function get_postmeta_key( string $field, ?string $prefix = NULL ): string
 	{
 		return sprintf( '_%s_%s',
-			/** @disregard */
 			$prefix ?? $this->key,
 			$field,
 		);
@@ -177,7 +186,6 @@ trait PostMeta
 				continue;
 
 			printf( $before, sprintf( '-%s -%s-%s',
-				/** @disregard */
 				$this->module->name,
 				$module_name,
 				$field_key,

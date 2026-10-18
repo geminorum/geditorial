@@ -9,6 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 trait QuantumComments
 {
+	/**
+	 * @var string
+	 */
 	protected $key = NULL;
 
 	protected function quantumcomments__filter_prefix(): string
@@ -48,7 +51,7 @@ trait QuantumComments
 	protected function quantumcomments__get_meta_mapping( ?string $context = NULL, ?string $posttype = NULL ): array
 	{
 		return [
-			// 'name' => '_metakey', // <---- EXAMPLE
+			// `'name' => '_metakey',` // <---- EXAMPLE
 			'postid' => '_post_ref',
 		];
 	}
@@ -77,7 +80,7 @@ trait QuantumComments
 			$this->quantumcomments__get_comment_type() );
 	}
 
-	protected function quantumcomments__is_comment_type( object|array $data_or_comment, ?string $type = NULL ): bool
+	protected function quantumcomments__is_comment_type( array|object $data_or_comment, ?string $type = NULL ): bool
 	{
 		$type = $type ?? $this->quantumcomments__get_comment_type();
 
@@ -93,7 +96,7 @@ trait QuantumComments
 	}
 
 	// OLD: `subcontent_delete_data_row`
-	protected function quantumcomments__delete_data_row( int|string $id, object|false $post = FALSE ): bool
+	protected function quantumcomments__delete_data_row( int|string $id, false|object $post = FALSE ): bool
 	{
 		return wp_delete_comment( intval( $id ), TRUE );
 	}
@@ -122,7 +125,7 @@ trait QuantumComments
 	}
 
 	// OLD: `subcontent_update_sort()`
-	protected function quantumcomments__update_sort( array $raw = [], object|false $post = FALSE, ?array $mapping = NULL ): int
+	protected function quantumcomments__update_sort( array $raw = [], false|object $post = FALSE, ?array $mapping = NULL ): int
 	{
 		foreach ( $raw as $offset => $comment_id )
 			WordPress\Comment::setKarma( $offset + 1, $comment_id );
@@ -189,8 +192,8 @@ trait QuantumComments
 	protected function quantumcomments__insert_data_row(
 		array|object $raw,
 		?string $context = NULL,
-		object|false $post = FALSE,
-		?array $mapping = NULL,
+		mixed   $post    = FALSE,
+		?array  $mapping = NULL,
 	): int {
 
 		$prefix = $this->quantumcomments__filter_prefix();
@@ -252,20 +255,29 @@ trait QuantumComments
 	protected function quantumcomments__prep_data_for_save(
 		array|object $raw,
 		?string $context = NULL,
-		object|false $post = FALSE,
-		?array $mapping = NULL,
-		?array $metas = NULL,
+		mixed   $post    = FALSE,
+		?array  $mapping = NULL,
+		?array  $metas   = NULL,
 	): array {
 
 		$prefix   = $this->quantumcomments__filter_prefix();
-		$posttype = $post ? $post->post_type : NULL;
-		$mapping  = $mapping ?? $this->quantumcomments__get_data_mapping( $context, $posttype );
-		$metas    = $metas   ?? $this->quantumcomments__get_meta_mapping( $context, $posttype );
+		$posttype = WordPress\Post::type( $post ) ?: NULL;
+
+		$mapping ??= $this->quantumcomments__get_data_mapping( $context, $posttype );
+		$metas   ??= $this->quantumcomments__get_meta_mapping( $context, $posttype );
 
 		if ( is_object( $raw ) )
 			$raw = Core\Arraay::fromObject( $raw );
 
-		$raw  = $this->filters( $prefix.'_pre_prep_data', $raw, $context, $post, $mapping, $metas );
+		// @hook `geditorial_{$module}_{$prefix}_pre_prep_data`
+		$raw = $this->filters( self::und( $prefix, 'pre_prep_data' ),
+			$raw,
+			$context,
+			$post,
+			$mapping,
+			$metas,
+		);
+
 		$data = [ 'comment_meta' => array_key_exists( '_meta', $raw ) ? $raw['_meta'] : [] ];
 		unset( $raw['_meta'] );
 
@@ -290,21 +302,21 @@ trait QuantumComments
 	protected function quantumcomments__prep_data_from_query(
 		array|object $raw,
 		?string $context = NULL,
-		object|false $post = FALSE,
-		?array $mapping = NULL,
-		?array $metas = NULL,
-		$order = NULL,
+		mixed   $post    = FALSE,
+		?array  $mapping = NULL,
+		?array  $metas   = NULL,
+		?int    $order   = NULL,
 	): array {
 
+		$data     = [];
 		$prefix   = $this->quantumcomments__filter_prefix();
-		$posttype = $post ? $post->post_type : NULL;
-		$mapping  = $mapping  ?? $this->quantumcomments__get_data_mapping( $context, $posttype );
-		$metas    = $metas    ?? $this->quantumcomments__get_meta_mapping( $context, $posttype );
+		$posttype = WordPress\Post::type( $post ) ?: NULL;
+
+		$mapping ??= $this->quantumcomments__get_data_mapping( $context, $posttype );
+		$metas   ??= $this->quantumcomments__get_meta_mapping( $context, $posttype );
 
 		if ( is_object( $raw ) )
 			$raw = Core\Arraay::fromObject( $raw );
-
-		$data = [];
 
 		foreach ( $mapping as $map_from => $map_to )
 			if ( array_key_exists( $map_from, $raw ) )
@@ -389,7 +401,7 @@ trait QuantumComments
 	{
 		return Core\Arraay::stripByKeys( $data, [
 			'_id',
-			// '_parent',  // parent comment
+			// `'_parent',  // parent comment`
 			'_object',  // parent post
 			'_status',
 			'_date',
@@ -404,19 +416,20 @@ trait QuantumComments
 	// TODO: support for auto-fill fields with tokens: `date: '{{now}}'`
 	// OLD: `subcontent_sanitize_data()`
 	protected function quantumcomments__sanitize_data(
-		array $raw = [],
-		?string $context = NULL,
-		object|false $post = FALSE,
-		?array $mapping = NULL,
-		?array $metas = NULL,
-		$allowed_raw = NULL
+		array   $raw         = [],
+		?string $context     = NULL,
+		mixed   $post        = FALSE,
+		?array  $mapping     = NULL,
+		?array  $metas       = NULL,
+		?array  $allowed_raw = NULL,
 	): array {
 
-		$prefix      = $this->quantumcomments__filter_prefix();
-		$posttype    = $post ? $post->post_type : NULL;
-		$mapping     = $mapping ?? $this->quantumcomments__get_data_mapping( $context, $posttype );
-		$metas       = $metas ?? $this->quantumcomments__get_meta_mapping( $context, $posttype );
-		$allowed_raw = $allowed_raw ?? [ 'data', 'order' ];
+		$prefix   = $this->quantumcomments__filter_prefix();
+		$posttype = WordPress\Post::type( $post ) ?: NULL;
+
+		$mapping     ??= $this->quantumcomments__get_data_mapping( $context, $posttype );
+		$metas       ??= $this->quantumcomments__get_meta_mapping( $context, $posttype );
+		$allowed_raw ??= [ 'data', 'order' ];
 
 		$types = $this->quantumcomments__get_field_types( $context );
 		$data  = [];
@@ -444,12 +457,22 @@ trait QuantumComments
 			$data[$raw_key] = $this->quantumcomments__sanitize_data_value( $raw_value, $type, $context );
 		}
 
-		return $this->filters( $prefix.'_sanitize_data', $data, $context, $post, $raw, $mapping, $metas, $allowed_raw );
+		// @hook `geditorial_{$module}_{$prefix}_sanitize_data`
+		return $this->filters( self::und( $prefix, 'sanitize_data' ),
+			$data,
+			$context,
+			$post,
+			$raw,
+			$mapping,
+			$metas,
+			$allowed_raw,
+		);
 	}
 
-	protected function quantumcomments__sanitize_data_value( mixed $value, string $type, ?string $context = NULL )
+	protected function quantumcomments__sanitize_data_value( mixed $value, string $type, ?string $context = NULL ): mixed
 	{
 		switch ( $type ) {
+
 			case 'phone':    return Core\Phone::sanitize( $value );
 			case 'mobile':   return Core\Phone::Mobile( $value );
 			case 'country':  return Core\Validation::sanitizeCountry( $value, TRUE );   // NOTE: skips the base country
@@ -516,19 +539,20 @@ trait QuantumComments
 	}
 
 	protected function quantumcomments__get_data_all(
-		mixed $parent = NULL,
+		mixed   $parent  = NULL,
 		?string $context = NULL,
-		bool $map = TRUE,
-		array $extra = [],
+		bool    $map     = TRUE,
+		array   $extra   = [],
 	): false|array {
 
 		if ( ! $post = WordPress\Post::get( $parent ) )
 			return FALSE;
 
-		$args = array_merge( [
+		$prefix = $this->quantumcomments__filter_prefix();
+		$args   = array_merge( [
 			'post_id'   => $post->ID,
-			'post_type' => 'any', // $parent->post_type,
-			'status'    => 'any', // $this->quantumcomments__get_comment_status(),
+			'post_type' => 'any', // `$parent->post_type,`
+			'status'    => 'any', // `$this->quantumcomments__get_comment_status(),`
 			'type'      => $this->quantumcomments__get_comment_type(),
 			'fields'    => '', // 'ids', // empty for all
 			'number'    => '', // empty for all comments
@@ -541,32 +565,51 @@ trait QuantumComments
 		], $extra );
 
 		$query = new \WP_Comment_Query;
-		$items = $this->filters( 'pre_data_all', $query->query( $args ), $context, $post, $args );
+
+		// @hook `geditorial_{$module}_{$prefix}_pre_data_all`
+		$items = $this->filters( self::und( $prefix, 'pre_data_all' ),
+			$query->query( $args ),
+			$context,
+			$post,
+			$args,
+		);
 
 		return $map ? $this->quantumcomments__get_data_mapped( $items, $context, $post ) : $items;
 	}
 
 	protected function quantumcomments__get_data_mapped(
-		array $items,
+		array   $items,
 		?string $context = NULL,
-		object|false $post = FALSE,
-		?array $mapping = NULL,
-		?array $metas = NULL,
+		mixed   $post    = FALSE,
+		?array  $mapping = NULL,
+		?array  $metas   = NULL,
 	): array {
 
-		$posttype = $post ? $post->post_type : NULL;
+		$data     = [];
+		$posttype = WordPress\Post::type( $post ) ?: NULL;
+		$prefix   = $this->quantumcomments__filter_prefix();
 
-		if ( is_null( $mapping ) )
-			$mapping = $this->quantumcomments__get_data_mapping( $context, $posttype );
-
-		if ( is_null( $metas ) )
-			$metas = $this->quantumcomments__get_meta_mapping( $context, $posttype );
-
-		$data = [];
+		$mapping ??= $this->quantumcomments__get_data_mapping( $context, $posttype );
+		$metas   ??= $this->quantumcomments__get_meta_mapping( $context, $posttype );
 
 		foreach ( $items as $offset => $item )
-			$data[] = $this->quantumcomments__prep_data_from_query( $item, $context, $post, $mapping, $metas, $offset + 1 );
+			$data[] = $this->quantumcomments__prep_data_from_query(
+				$item,
+				$context,
+				$post,
+				$mapping,
+				$metas,
+				$offset + 1,
+			);
 
-		return $this->filters( 'subcontent_data_mapped', $data, $context, $post, $items, $mapping, $metas );
+		// @hook `geditorial_{$module}_{$prefix}_data_mapped`
+		return $this->filters( self::und( $prefix, 'data_mapped' ),
+			$data,
+			$context,
+			$post,
+			$items,
+			$mapping,
+			$metas,
+		);
 	}
 }

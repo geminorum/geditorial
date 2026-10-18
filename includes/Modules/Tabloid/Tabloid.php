@@ -138,7 +138,7 @@ class Tabloid extends gEditorial\Module
 		}
 	}
 
-	public function rowaction_get_mainlink_for_post( ?object $post, null|string|array $extra = NULL, mixed $icon = FALSE ): false|string
+	public function rowaction_get_mainlink_for_post( mixed $post, null|string|array $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'read_post' ) )
 			return FALSE;

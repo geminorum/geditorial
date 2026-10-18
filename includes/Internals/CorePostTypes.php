@@ -447,7 +447,7 @@ trait CorePostTypes
 	protected function settings_supports_defaults( string $constant, null|string|array $excludes = NULL ): array
 	{
 		// default excludes
-		$excludes = $excludes ?? [ 'post-formats', 'trackbacks' ];
+		$excludes ??= [ 'post-formats', 'trackbacks' ];
 		$posttype = $this->constant( $constant );
 		$supports = $this->filters( $constant.'_supports', gEditorial\Settings::supportsOptions(), $posttype, $excludes );
 

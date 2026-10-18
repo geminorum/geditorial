@@ -381,7 +381,7 @@ class Banking extends gEditorial\Module
 		return $data;
 	}
 
-	public function subcontent_pre_prep_data( $raw, $context, $post, $mapping, $metas )
+	public function subcontent_pre_prep_data( array $raw, ?string $context, false|object $post, array $mapping, array $metas ): array
 	{
 		$sanitize = $this->get_setting( 'force_sanitize' );
 		$data     = [];

@@ -1699,17 +1699,26 @@ trait PostTypeFields
 
 				// only if a new post
 				if ( empty( $atts['updated'] ) )
-					$this->posttypefields_do_import_field( $atts['raw'][$offset], $fields[$field], $post );
+					$this->posttypefields_do_import_field(
+						$atts['raw'][$offset] ?? '',
+						$fields[$field],
+						$post,
+					);
 
 			} else {
 
-				$this->posttypefields_do_import_field( $atts['raw'][$offset], $fields[$field], $post, $atts['override'] );
+				$this->posttypefields_do_import_field(
+					$atts['raw'][$offset] ?? '',
+					$fields[$field],
+					$post,
+					$atts['override'],
+				);
 			}
 		}
 	}
 
 	// OLD: `import_posttype_field()`
-	protected function posttypefields_do_import_field( mixed $data, ?array $field, mixed $post, bool $override = TRUE ): bool
+	protected function posttypefields_do_import_field( mixed $data, array $field, mixed $post, bool $override = TRUE ): bool
 	{
 		switch ( $field['type'] ) {
 
@@ -1896,7 +1905,7 @@ trait PostTypeFields
 		}
 	}
 
-	protected function posttypefields__do_check_empty_fields( $post )
+	protected function posttypefields__do_check_empty_fields( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -1929,7 +1938,7 @@ trait PostTypeFields
 		return TRUE;
 	}
 
-	protected function posttypefields__do_convert_legacy_fields( $post )
+	protected function posttypefields__do_convert_legacy_fields( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -2001,7 +2010,7 @@ trait PostTypeFields
 		return $this->clean_postmeta_legacy( $post->ID, [], [] );
 	}
 
-	protected function posttypefields__do_sanitize_fields( $post )
+	protected function posttypefields__do_sanitize_fields( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -2021,7 +2030,7 @@ trait PostTypeFields
 		return TRUE;
 	}
 
-	protected function posttypefields__do_empty_all_metadata( $post )
+	protected function posttypefields__do_empty_all_metadata( mixed $post ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -2040,7 +2049,7 @@ trait PostTypeFields
 		return TRUE;
 	}
 
-	protected function posttypefields__hook_template_newpost()
+	protected function posttypefields__hook_template_newpost(): void
 	{
 		$this->action( 'template_newpost_beforetitle', 6, 20, 'posttypefields_title_before', $this->base );
 		$this->action( 'template_newpost_aftertitle', 6, 1, 'posttypefields_title_after', $this->base );
@@ -2048,8 +2057,15 @@ trait PostTypeFields
 		$this->action( 'template_newpost_aftertitle', 6, 20, 'posttypefields_quickedit', $this->base );
 	}
 
-	public function template_newpost_beforetitle_posttypefields_title_before( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
-	{
+	public function template_newpost_beforetitle_posttypefields_title_before(
+		string $posttype,
+		object $post,
+		?string $target,
+		null|false|int $linked,
+		?string $status,
+		array $meta,
+	): void {
+
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 
@@ -2063,8 +2079,15 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_title_after( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
-	{
+	public function template_newpost_aftertitle_posttypefields_title_after(
+		string $posttype,
+		object $post,
+		?string $target,
+		null|false|int $linked,
+		?string $status,
+		array $meta,
+	): void {
+
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 
@@ -2078,8 +2101,15 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_title_link( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
-	{
+	public function template_newpost_aftertitle_posttypefields_title_link(
+		string $posttype,
+		object $post,
+		?string $target,
+		null|false|int $linked,
+		?string $status,
+		array $meta,
+	): void {
+
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 
@@ -2093,8 +2123,15 @@ trait PostTypeFields
 		] );
 	}
 
-	public function template_newpost_aftertitle_posttypefields_quickedit( string $posttype, object $post, ?string $target, null|false|int $linked, ?string $status, array $meta ): void
-	{
+	public function template_newpost_aftertitle_posttypefields_quickedit(
+		string $posttype,
+		object $post,
+		?string $target,
+		null|false|int $linked,
+		?string $status,
+		array $meta,
+	): void {
+
 		if ( ! $this->posttype_supported( $posttype ) )
 			return;
 
@@ -2112,7 +2149,10 @@ trait PostTypeFields
 	public function searchselect_result_extra_for_post_filter( array $data, mixed $post, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			|| in_array( $queried['context'], [
+				'select2',
+				'pairedimports',
+			], TRUE ) )
 			return $data;
 
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -2124,7 +2164,7 @@ trait PostTypeFields
 		return array_merge( $data, array_filter( Core\Arraay::pluck(
 			$this->get_posttype_fields_data( $post, FALSE, 'export' ),
 			'rendered',
-			'name'
+			'name',
 		) ) );
 	}
 }

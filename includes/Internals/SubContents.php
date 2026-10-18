@@ -985,7 +985,7 @@ trait SubContents
 		echo $after;
 	}
 
-	protected function rowaction_get_mainlink_for_post_subcontent( object $post ): false|string
+	protected function rowaction_get_mainlink_for_post_subcontent( mixed $post ): false|string
 	{
 		if ( ! $this->role_can_post( $post, [ 'reports', 'assign' ] ) )
 			return FALSE;
@@ -1087,9 +1087,10 @@ trait SubContents
 		?int $perpage = 25,
 	): array {
 
-		$post  = WordPress\Post::get( $parent );
-		$limit = self::limit( $perpage );
-		$paged = self::paged();
+		$prefix = $this->quantumcomments__filter_prefix();
+		$post   = WordPress\Post::get( $parent );
+		$limit  = self::limit( $perpage );
+		$paged  = self::paged();
 
 		$args = [
 			'offset'  => ( $paged - 1 ) * $limit,
@@ -1118,7 +1119,14 @@ trait SubContents
 			$args['post_type'] = $extra['type'] = $_REQUEST['type'];
 
 		$query = new \WP_Comment_Query;
-		$items = $this->filters( 'pre_data_all', $query->query( array_merge( $args, $atts ) ), $context, $post, $args );
+
+		// @hook: `geditorial_{$module}_{$prefix}_pre_data_pagination`
+		$items = $this->filters( self::und( $prefix, 'pre_data_pagination' ),
+			$query->query( array_merge( $args, $atts ) ),
+			$context,
+			$post,
+			$args,
+		);
 
 		$pagination             = Core\HTML::tablePagination( $query->found_comments, $query->max_num_pages, $limit, $paged, $extra );
 		$pagination['orderby']  = $args['orderby'];

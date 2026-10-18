@@ -94,7 +94,7 @@ class Widget extends \WP_Widget
 
 	protected static function posttypes( null|string|array $posttypes = NULL, bool $check = FALSE, ?string $module = NULL ): array
 	{
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return [];
 
 		if ( $check && ! static::factory()->enabled( $module ) )

@@ -457,7 +457,7 @@ class Iranian extends gEditorial\Module
 		return $info;
 	}
 
-	public function banking_subcontent_pre_prep_data( $raw, $context, $post, $mapping, $metas )
+	public function banking_subcontent_pre_prep_data( array $raw, ?string $context, false|object $post, array $mapping, array $metas ): array
 	{
 		$data             = $raw;
 		$data['bank']     = ModuleHelper::sanitizeBank( $raw['bank'] ?? '', $raw['bankname'] ?? '' );

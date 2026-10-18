@@ -151,7 +151,7 @@ class Plugin extends WordPress\Plugin
 			if ( in_array( $module, [ '.', '..', 'index.html' ] ) )
 				continue;
 
-			if ( ! file_exists( $this->_path.$module.'/'.$module.'.php' ) )
+			if ( ! file_exists( sprintf( '%s%s/%s.php', $this->_path, $module, $module ) ) )
 				continue;
 
 			if ( $class = Services\Modulation::moduleClass( $module, TRUE, __NAMESPACE__.'\\Modules' ) )

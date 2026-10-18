@@ -642,7 +642,7 @@ class Meta extends gEditorial\Module
 		);
 	}
 
-	public function calendars_post_summary( string $summary, object $post, ?string $context, object|false $final )
+	public function calendars_post_summary( string $summary, object $post, ?string $context, false|object $final )
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) )
 			return $summary;

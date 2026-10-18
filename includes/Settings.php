@@ -542,7 +542,7 @@ class Settings extends WordPress\Main
 	public static function headerTitle(
 		?string $context = NULL,
 		?string $title = NULL,
-		false|null|string|array $back = NULL,
+		null|false|string|array $back = NULL,
 		?string $to = NULL,
 		string|array|false $icon = '',
 		false|int $count = FALSE,
@@ -2457,7 +2457,7 @@ class Settings extends WordPress\Main
 		?string $module = NULL,
 	): false|int|string {
 
-		if ( ! $module = $module ?? static::MODULE )
+		if ( ! $module ??= static::MODULE )
 			return FALSE;
 
 		return self::factory()->module( $module )->raise_resources( $count, $per, $context );

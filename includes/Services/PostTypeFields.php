@@ -366,7 +366,7 @@ class PostTypeFields extends gEditorial\Service
 				$args,
 				$raw,
 				$field,
-				$args['context'] ?: NULL, // avoid passing `FALSE`
+				$args['context'] ?: NULL, // Avoids passing `FALSE`
 				$module,
 			);
 

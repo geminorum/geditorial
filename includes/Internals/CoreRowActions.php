@@ -76,7 +76,7 @@ trait CoreRowActions
 	}
 
 	// EXAMPLE CALLBACK
-	// `protected function rowaction_get_mainlink_for_post( object $post ): string { return ''; }`
+	// `protected function rowaction_get_mainlink_for_post( mixed $post ): string { return ''; }`
 
 	protected function rowactions__hook_mainlink_for_term( $taxonomy = NULL, $priority = 10, $callback_suffix = FALSE, $prepend = FALSE, $action_key = NULL, $setting_key = 'admin_rowactions' )
 	{

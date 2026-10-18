@@ -46,7 +46,7 @@ class ModuleHelper extends gEditorial\Helper
 			return '';
 
 		$html   = '';
-		$module = $module ?? static::MODULE;
+		$module ??= static::MODULE;
 		$args   = self::parsed( self::getFieldDefaults( $field['name'], $module ), $field );
 
 		// NOTE: no need for `Select2` but passing in case JavaScript-disabled.

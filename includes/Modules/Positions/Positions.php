@@ -348,7 +348,7 @@ class Positions extends gEditorial\Module
 		}
 	}
 
-	protected function rowaction_get_mainlink_for_post_checkprofile( object $post ): string
+	protected function rowaction_get_mainlink_for_post_checkprofile( mixed $post ): string
 	{
 		if ( ! $this->get_linked_to_posts( $post, TRUE ) )
 			return FALSE;
@@ -370,7 +370,7 @@ class Positions extends gEditorial\Module
 
 		$this->subcontent_render_metabox_data_grid( $object, $context );
 
-		if ( $object->post_type == $this->constant( 'primary_posttype' ) ) {
+		if ( $this->is_posttype( 'primary_posttype', $object ) ) {
 
 			// NOTE: user already have the cap to edit.
 
@@ -379,7 +379,7 @@ class Positions extends gEditorial\Module
 				'target'  => 'grid',
 			] ), 'field-wrap -buttons' );
 
-		} else if ( $this->posttype_supported( $object->post_type ) ) {
+		} else if ( $this->posttype_supported( $object->post_type ?? FALSE ) ) {
 
 			$buttons = [];
 			$manage  = $this->role_can( 'manage' );
@@ -516,7 +516,7 @@ class Positions extends gEditorial\Module
 
 		if ( $post = WordPress\Post::get( self::req( 'linked', FALSE ) ) ) {
 
-			if ( $post->post_type == $this->constant( 'primary_posttype' ) ) {
+			if ( $this->is_posttype( 'primary_posttype', $post ) ) {
 
 				$enabled = $this->subcontent_get_fields( 'manage' );
 

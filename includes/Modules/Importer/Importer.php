@@ -19,7 +19,7 @@ class Importer extends gEditorial\Module
 	use Internals\RawImports;
 
 	protected $disable_no_posttypes = TRUE;
-	protected $capability_posttype  = 'import_posts'; // Retrieves the `edit_others_posts` on the target post-type.
+	protected $capability_posttype  = 'import_posts';  // Retrieves the `edit_others_posts` on the target post-type.
 
 	public static function module(): array
 	{
@@ -67,13 +67,11 @@ class Importer extends gEditorial\Module
 					'title'       => _x( 'Store Source Data', 'Setting Title', 'geditorial-importer' ),
 					'description' => _x( 'Stores raw source data and attchment reference as meta for each imported item.', 'Setting Description', 'geditorial-importer' ),
 				],
-				'add_audit_attribute' => [
-					sprintf(
-						/* translators: `%s`: audit attribute placeholder */
-						_x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
-						Core\HTML::code( $this->constant( 'term_newpost_imported' ) )
-					),
-				],
+				'add_audit_attribute' => [ sprintf(
+					/* translators: `%s`: audit attribute placeholder */
+					_x( 'Appends %s audit attribute to each imported item.', 'Setting Description', 'geditorial-importer' ),
+					Core\HTML::code( $this->constant( 'term_newpost_imported' ) ),
+				) ],
 			],
 			'_defaults' => [
 				'post_type',
@@ -228,7 +226,7 @@ class Importer extends gEditorial\Module
 				if ( ! $this->role_can( 'imports' ) )
 					gEditorial\Ajax::errorUserCant();
 
-				if ( ! $this->_do_cleanup_post( $post['post_id'] ) )
+				if ( ! $this->_do_cleanup_post( (int) $post['post_id'] ) )
 					gEditorial\Ajax::errorMessage( _x( 'Unable to clean-up imported residual data!', 'Message', 'geditorial-importer' ) );
 
 				gEditorial\Ajax::successMessage( _x( 'Imported residual data cleaned-up successfully.', 'Message', 'geditorial-importer' ) );
@@ -243,7 +241,7 @@ class Importer extends gEditorial\Module
 				if ( empty( $post['metakey'] ) )
 					gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
 
-				if ( ! $this->_do_discard_meta( $post['post_id'], $post['metakey'] ) )
+				if ( ! WordPress\PostMeta::delete( (string) $post['metakey'], (int) $post['post_id'] ) )
 					gEditorial\Ajax::errorMessage( _x( 'Unable to discard imported meta log!', 'Message', 'geditorial-importer' ) );
 
 				gEditorial\Ajax::successMessage( _x( 'Imported meta log discarded successfully.', 'Message', 'geditorial-importer' ) );
@@ -282,7 +280,7 @@ class Importer extends gEditorial\Module
 		return $this->filters( 'posts_guessed_fields_map',
 			$mapped,
 			$headers,
-			$attachment_id
+			$attachment_id,
 		);
 	}
 
@@ -294,7 +292,7 @@ class Importer extends gEditorial\Module
 			$option_key,
 			array_merge(
 				(array) get_option( $option_key, [] ),
-				array_filter( $map )
+				array_filter( $map ),
 			)
 		);
 	}
@@ -314,7 +312,7 @@ class Importer extends gEditorial\Module
 				'<tr><td>',
 				'</td></tr>',
 				'</td><td>',
-				$context
+				$context,
 			);
 
 		foreach ( $taxonomies as $taxonomy => $object ) {
@@ -348,7 +346,7 @@ class Importer extends gEditorial\Module
 			'<tr><td>',
 			'</td></tr>',
 			'</td><td>',
-			$context
+			$context,
 		);
 
 		// @hook `geditorial_importer_posttype_extra_all`
@@ -359,7 +357,7 @@ class Importer extends gEditorial\Module
 			'<tr><td>',
 			'</td></tr>',
 			'</td><td>',
-			$context
+			$context,
 		);
 
 		echo '</tbody></table>';
@@ -375,7 +373,7 @@ class Importer extends gEditorial\Module
 		$rawdata = gEditorial\Parser::fromAttachment( $id );
 
 		if ( $rawdata['error'] )
-			return print Core\HTML::error( $rawdata['error'], FALSE );
+			return ! print Core\HTML::error( $rawdata['error'], FALSE );
 
 		$taxonomies    = $this->get_importer_taxonomies( $posttype );
 		$fields        = $this->get_importer_fields( $posttype, $taxonomies );
@@ -565,7 +563,7 @@ class Importer extends gEditorial\Module
 			'empty' => Services\CustomPostType::getLabel( $args['posttype'], 'not_found' ),
 			'title' => Core\HTML::tag( 'h3', WordPress\Strings::getCounted( count( $posts ),
 				/* translators: `%s`: count placeholder */
-				_x( '%s Records Found', 'Header', 'geditorial-importer' )
+				_x( '%s Records Found', 'Header', 'geditorial-importer' ),
 			) ),
 		] );
 	}
@@ -611,7 +609,7 @@ class Importer extends gEditorial\Module
 				$column['title'] = sprintf(
 					/* translators: `%s`: custom meta-key */
 					_x( 'Custom: %s', 'Post Field Column', 'geditorial-importer' ),
-					Core\HTML::code( $key )
+					Core\HTML::code( $key ),
 				);
 
 			// @hook `geditorial_importer_form_posts_table_column`
@@ -653,7 +651,7 @@ class Importer extends gEditorial\Module
 			$checks[] = sprintf(
 				/* translators: `%s`: source id */
 				_x( 'Source-ID: %s', 'Checks', 'geditorial-importer' ),
-				Core\HTML::code( $row['___source_id'] )
+				Core\HTML::code( $row['___source_id'] ),
 			);
 
 		else if ( FALSE === $row['___source_id'] )
@@ -666,7 +664,7 @@ class Importer extends gEditorial\Module
 			$checks[] = sprintf(
 				/* translators: `%s`: post title */
 				_x( 'Matched: %s', 'Checks', 'geditorial-importer' ),
-				gEditorial\Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] )
+				gEditorial\Helper::getPostTitleRow( $row['___matched'], 'edit', FALSE, $row['___matched'] ),
 			);
 
 		if ( ! empty( $args['extra']['mapped'] ) ) {
@@ -680,7 +678,7 @@ class Importer extends gEditorial\Module
 					$args['extra']['post_type'],
 					$row,
 					$row['___source_id'],
-					$args['extra']['taxonomies']
+					$args['extra']['taxonomies'],
 				);
 
 				if ( $title && ( $posts = WordPress\Post::getByTitle( $title, $args['extra']['post_type'] ) ) ) {
@@ -717,7 +715,7 @@ class Importer extends gEditorial\Module
 		$raw['___source_id'] = $this->filters( 'posts_source_id',
 			$source_id,
 			$args['extra']['post_type'],
-			$raw
+			$raw,
 		);
 
 		// skipped by filter
@@ -748,7 +746,7 @@ class Importer extends gEditorial\Module
 			$args['extra']['post_type'],
 			$row,
 			$row['___source_id'],
-			$args['extra']['taxonomies']
+			$args['extra']['taxonomies'],
 		);
 
 		// TODO: optional check for previously stored data
@@ -955,13 +953,13 @@ class Importer extends gEditorial\Module
 
 				// @hook `geditorial_importer_posts_prepare`
 				$value = $this->filters( 'posts_prepare',
-					Core\Text::trim( $raw[$header] ),
+					Core\Text::trim( $raw[$header] ?? '' ),
 					$field,
 					(string) $header ?: '',
 					$posttype,
 					$raw,
 					$source_id,
-					$all_taxonomies
+					$all_taxonomies,
 				);
 
 				// filter bail-out!
@@ -1361,7 +1359,7 @@ class Importer extends gEditorial\Module
 				$posttype,
 				$terms_all,
 				$source_column,
-				(bool) $source_postid
+				(bool) $source_postid,
 			);
 
 			echo $this->wrap_open_buttons();
@@ -1385,7 +1383,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms and more to append to all items for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				WordPress\Attachment::title( $attach_id )
+				WordPress\Attachment::title( $attach_id ),
 			) );
 
 			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
@@ -1420,7 +1418,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				WordPress\Attachment::title( $attach_id )
+				WordPress\Attachment::title( $attach_id ),
 			) );
 
 			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
@@ -1457,7 +1455,7 @@ class Importer extends gEditorial\Module
 	// NOTE: the difference is on not trying to create the posts!
 	private function _render_imports_for_terms( ?string $uri, ?string $sub ): bool
 	{
-		// $field_map  = self::req( 'field_map', [] );
+		// `$field_map  = self::req( 'field_map', [] );`
 		$terms_all     = self::req( 'terms_all', [] );
 		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
@@ -1479,7 +1477,7 @@ class Importer extends gEditorial\Module
 			if ( ! WordPress\PostType::can( $posttype, $this->capability_posttype ) )
 				return print Core\HTML::error( _x( 'You are not allowed to edit this post-type!', 'Message', 'geditorial-importer' ), FALSE );
 
-			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
+			// `Core\HTML::inputHiddenArray( $field_map, 'field_map' );`
 			Core\HTML::inputHiddenArray( array_filter( $terms_all ), 'terms_all' );
 			Core\HTML::inputHiddenArray( $extra_all, 'extra_all' );
 			Core\HTML::inputHidden( 'posttype', $posttype );
@@ -1510,7 +1508,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Terms to Append All for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				WordPress\Attachment::title( $attach_id )
+				WordPress\Attachment::title( $attach_id ),
 			) );
 
 			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
@@ -1518,7 +1516,7 @@ class Importer extends gEditorial\Module
 			if ( ! $this->_render_posttype_taxonomies( $posttype, 'terms' ) )
 				Core\HTML::desc( _x( 'No taxonomy availabe for this post-type!', 'Message', 'geditorial-importer' ) );
 
-			// Core\HTML::inputHiddenArray( $field_map, 'field_map' );
+			// `Core\HTML::inputHiddenArray( $field_map, 'field_map' );`
 			Core\HTML::inputHidden( 'posttype', $posttype );
 			Core\HTML::inputHidden( $this->classs( 'terms', 'attachment', 'selected' ), $attach_id );
 			Core\HTML::inputHidden( 'user_id', $user_id );
@@ -1540,7 +1538,7 @@ class Importer extends gEditorial\Module
 			Core\HTML::h3( sprintf(
 				/* translators: `%s`: attachment title */
 				_x( 'Map the Importer for &ldquo;%s&rdquo;', 'Header', 'geditorial-importer' ),
-				WordPress\Attachment::title( $attach_id )
+				WordPress\Attachment::title( $attach_id ),
 			) );
 
 			echo '<hr class="wp-header-end">'; // NOTE: notices will be pulled after this!
@@ -1711,7 +1709,7 @@ class Importer extends gEditorial\Module
 			$fields[self::und( $this->key, 'tax', $taxonomy )] = sprintf(
 				/* translators: `%s`: taxonomy name placeholder */
 				_x( 'Taxonomy: %s', 'Post Field', 'geditorial-importer' ),
-				$taxonomy_object->labels->singular_name
+				$taxonomy_object->labels->singular_name,
 			);
 
 		// @hook `geditorial_importer_posts_fields`
@@ -1722,13 +1720,13 @@ class Importer extends gEditorial\Module
 	}
 
 	public function importer_posts_prepare(
-		mixed $value,
-		string $field,
+		mixed   $value,
+		string  $field,
 		?string $header,
 		?string $posttype,
-		mixed $raw,
-		mixed $source_id,
-		array $all_taxonomies,
+		mixed   $raw,
+		mixed   $source_id,
+		array   $all_taxonomies,
 	): mixed {
 
 		switch ( $field ) {
@@ -1753,7 +1751,7 @@ class Importer extends gEditorial\Module
 					return (array) WordPress\Term::title(
 						(int) $default_term,
 						WordPress\Strings::kses( $value, 'none' ),
-						FALSE
+						FALSE,
 					);
 
 			} else if ( WordPress\Strings::isEmpty( $value ) ) {
@@ -1779,7 +1777,7 @@ class Importer extends gEditorial\Module
 				$post->ID,
 				self::und(
 					$this->constant( 'metakey_source_log' ),
-					current_time( 'YmdHis', TRUE )
+					current_time( 'YmdHis', TRUE ),
 				),
 				[
 					'prepared'  => $atts['prepared'],
@@ -1888,7 +1886,7 @@ class Importer extends gEditorial\Module
 				$post_id,
 				$oldpost,
 				$override,
-				$append
+				$append,
 			);
 
 			if ( FALSE === $filtered )
@@ -1968,7 +1966,7 @@ class Importer extends gEditorial\Module
 		return ModuleSettings::handleTool_cleanup_raw_data(
 			$posttype,
 			$this->_get_metakeys(),
-			$this->get_sub_limit_option( $sub, 'tools' )
+			$this->get_sub_limit_option( $sub, 'tools' ),
 		);
 	}
 
@@ -2157,10 +2155,10 @@ class Importer extends gEditorial\Module
 	}
 
 	private function _form_terms_table(
-		int $id,
-		array $map = [],
-		string $posttype = 'post',
-		array $terms_all = [],
+		int    $id,
+		array  $map           = [],
+		string $posttype      = 'post',
+		array  $terms_all     = [],
 		string $source_column = '',
 	): bool {
 
@@ -2180,17 +2178,17 @@ class Importer extends gEditorial\Module
 			$map,
 			$posttype,
 			$terms_all,
-			$source_column
+			$source_column,
 		);
 	}
 
 	private function _render_data_table_for_terms(
-		int $id,
-		array $data,
-		array $headers,
-		array $map = [],
-		string $posttype = 'post',
-		array $terms_all = [],
+		int    $id,
+		array  $data,
+		array  $headers,
+		array  $map           = [],
+		string $posttype      = 'post',
+		array  $terms_all     = [],
 		string $source_column = '',
 	): bool {
 
@@ -2230,7 +2228,7 @@ class Importer extends gEditorial\Module
 				/* translators: `%1$s`: count placeholder, `%2$s`: attachment title */
 				_x( '%1$s Records Found for &ldquo;%2$s&rdquo;', 'Header', 'geditorial-importer' ),
 				Core\Number::format( count( $data ) ),
-				WordPress\Attachment::title( $id )
+				WordPress\Attachment::title( $id ),
 			) ),
 			'callback' => [ $this, 'form_terms_table_callback' ],
 			'row_prep' => [ $this, 'form_posts_table_row_prep' ],
@@ -2263,7 +2261,7 @@ class Importer extends gEditorial\Module
 		$extra_all     = self::req( 'extra_all', [] );
 		$posttype      = self::req( 'posttype', $this->get_setting( 'post_type', 'post' ) );
 		$attach_id     = self::req( $this->classs( 'terms', 'attachment', 'selected' ), FALSE );
-		// $user_id       = self::req( 'user_id', $this->_get_user_id() );
+		// `$user_id       = self::req( 'user_id', $this->_get_user_id() );`
 		$source_column = self::req( 'source_column', '' );
 		$source_postid = self::req( 'source_postid', '' );
 		$append        = isset( $_POST['terms_import_append'] );
@@ -2282,14 +2280,18 @@ class Importer extends gEditorial\Module
 		$taxonomies = Core\Arraay::prepItemsNumeral( $terms_all );
 
 		// @hook `geditorial_importer_terms_before`
-		$this->actions( 'terms_before', $posttype );
+		$this->actions( 'terms_before',
+			$posttype,
+		);
 
 		foreach ( $_POST['_cb'] as $offset ) {
 
 			$row = $raw = $rawdata['items'][( $offset + 1 )]; // this parser combines header data
 
 			// @hook `geditorial_importer_terms_before_each`
-			$this->actions( 'terms_before_each', $posttype );
+			$this->actions( 'terms_before_each',
+				$posttype,
+			);
 
 			// @hook `geditorial_importer_posts_source_id`
 			$source_id = $this->filters( 'posts_source_id',
@@ -2298,7 +2300,7 @@ class Importer extends gEditorial\Module
 					: NULL
 				),
 				$posttype,
-				$raw
+				$raw,
 			);
 
 			if ( ! $source_id )
@@ -2334,18 +2336,22 @@ class Importer extends gEditorial\Module
 			] );
 
 			// @hook `geditorial_importer_terms_after_each`
-			$this->actions( 'terms_after_each', $posttype );
+			$this->actions( 'terms_after_each',
+				$posttype,
+			);
 
 			++$count;
 		}
 
 		// @hook `geditorial_importer_terms_after`
-		$this->actions( 'terms_after', $posttype );
+		$this->actions( 'terms_after',
+			$posttype,
+		);
 
 		return $count;
 	}
 
-	public function rowaction_get_mainlink_for_post( ?object $post, null|string|array $extra = NULL, mixed $icon = FALSE ): false|string
+	public function rowaction_get_mainlink_for_post( mixed $post, null|string|array $extra = NULL, mixed $icon = FALSE ): false|string
 	{
 		if ( ! WordPress\Post::can( $post, 'edit_post' ) )
 			return FALSE;
@@ -2362,7 +2368,7 @@ class Importer extends gEditorial\Module
 				/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 				_x( 'Overview of the imported data into this %2$s', 'Post Row Action Title Attr', 'geditorial-importer' ),
 				WordPress\Post::title( $post ),
-				Services\CustomPostType::getLabel( $post, 'singular_name' )
+				Services\CustomPostType::getLabel( $post, 'singular_name' ),
 			),
 			'text'         => $text,
 			'icon'         => $icon,
@@ -2390,7 +2396,7 @@ class Importer extends gEditorial\Module
 
 			$keys = Core\Arraay::prepString(
 				$metakey, // original key
-				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', preg_quote( $metakey, '/' ) ) ) )
+				array_keys( Core\Arraay::getByKeyLike( $meta, sprintf( '/^%s_+/', preg_quote( $metakey, '/' ) ) ) ),
 			);
 
 			foreach ( $keys as $key ) {
@@ -2433,31 +2439,16 @@ class Importer extends gEditorial\Module
 	}
 
 	/**
-	 * Discards imported meta log for given post.
-	 *
-	 * @param int $post_id
-	 * @param string $meta_key
-	 * @return bool
-	 */
-	private function _do_discard_meta( int $post_id, string $meta_key ): bool
-	{
-		if ( ! $post = WordPress\Post::get( $post_id ) )
-			return FALSE;
-
-		return delete_metadata( 'post', $post->ID, $meta_key );
-	}
-
-	/**
 	 * Cleanups imported meta logs for given post.
 	 *
-	 * @param int $post_id
+	 * @param mixed $post
 	 * @return bool
 	 */
-	private function _do_cleanup_post( int $post_id ): bool
+	private function _do_cleanup_post( mixed $post ): bool
 	{
 		return ModuleSettings::post_cleanup_raw_data(
-			$post_id,
-			$this->_get_metakeys()
+			$post,
+			$this->_get_metakeys(),
 		);
 	}
 }

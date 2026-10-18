@@ -433,7 +433,7 @@ class Audit extends gEditorial\Module
 		$this->add_dashboard_term_summary( 'main_taxonomy' );
 	}
 
-	protected function rowaction_get_mainlink_for_post( object $post ): string
+	protected function rowaction_get_mainlink_for_post( mixed $post ): string
 	{
 		return $this->framepage_get_mainlink_for_post( $post, [
 			'context'      => 'rowaction',

@@ -177,6 +177,16 @@ class CommonSettings extends gEditorial\Service
 		];
 	}
 
+	public static function export_fallback( $description = NULL, $default = NULL ): array
+	{
+		return [
+			'field'       => 'export_fallback',
+			'title'       => _x( 'Export Fallback', 'Setting Title', 'geditorial-admin' ),
+			'description' => $description ?? _x( 'Tries to fill the empty fields with relevant data on exports.', 'Setting Description', 'geditorial-admin' ),
+			'default'     => $default ?? '1',
+		];
+	}
+
 	public static function assignment_dock( $description = NULL, $default = NULL ): array
 	{
 		return [

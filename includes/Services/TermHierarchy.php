@@ -211,7 +211,7 @@ class TermHierarchy extends gEditorial\Service
 	 *
 	 * @param string|object $taxonomy
 	 * @param array|false $terms
-	 * @param object|false $post
+	 * @param false|object $post
 	 * @return false|object
 	 */
 	public static function getSingleSelectTerm( string|object $taxonomy, array|false $terms, mixed $post = FALSE ): false|object

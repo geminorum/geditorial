@@ -273,6 +273,7 @@ class Phonebook extends gEditorial\Module
 		];
 	}
 
+	// TODO: add Coordinates
 	protected function subcontent_get_data_mapping(): array
 	{
 		return array_merge( $this->subcontent_base_data_mapping(), [

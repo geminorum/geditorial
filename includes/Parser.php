@@ -40,7 +40,13 @@ class Parser extends WordPress\Main
 	public static function na( false|string $wrap = 'p' ): string
 	{
 		$message = __( 'Data Parser is not available!', 'geditorial' );
-		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [ 'description', '-description', '-empty', '-na-parser' ] ], $message ) : $message;
+
+		return $wrap ? Core\HTML::tag( $wrap, [ 'class' => [
+			'description',
+			'-description',
+			'-empty',
+			'-na-parser',
+		] ], $message ) : $message;
 	}
 
 	public static function getDefaultArgs( null|false|string $file_path = NULL ): array
@@ -107,13 +113,13 @@ class Parser extends WordPress\Main
 		if ( ! $post = WordPress\Post::get( $attachment ) )
 			return self::bailWithError( [],
 				'attachment_is_invalid',
-				Plugin::invalid( FALSE )
+				Plugin::invalid( FALSE ),
 			);
 
 		if ( ! $file_path = get_attached_file( $post->ID ) )
 			return self::bailWithError( [],
 				'file_path_is_empty',
-				Plugin::wrong( FALSE )
+				Plugin::wrong( FALSE ),
 			);
 
 		switch ( WordPress\Attachment::type( $post ) ) {
@@ -140,7 +146,7 @@ class Parser extends WordPress\Main
 
 		return self::bailWithError( [],
 			'mimetype_is_not_supported',
-			Plugin::invalid( FALSE )
+			Plugin::invalid( FALSE ),
 		);
 	}
 
@@ -152,7 +158,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
@@ -160,7 +166,7 @@ class Parser extends WordPress\Main
 		if ( ! class_exists( 'League\\Csv\\Reader' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
-				self::na( FALSE )
+				self::na( FALSE ),
 			);
 
 		try {
@@ -196,7 +202,7 @@ class Parser extends WordPress\Main
 			if ( empty( $data['headers'] ) )
 				return self::bailWithError( $data,
 					'file_is_empty',
-					Plugin::noinfo( FALSE )
+					Plugin::noinfo( FALSE ),
 				);
 
 			if ( $args['headers_only'] )
@@ -222,7 +228,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['single'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 
 			} else {
@@ -239,7 +245,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['items'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 			}
 
@@ -247,7 +253,7 @@ class Parser extends WordPress\Main
 
 			return self::bailWithError( $data,
 				'exception_occurred',
-				$e->getMessage()
+				$e->getMessage(),
 			);
 		}
 
@@ -268,7 +274,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
@@ -276,7 +282,7 @@ class Parser extends WordPress\Main
 		if ( ! class_exists( 'EasyCSV\\Reader' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
-				self::na( FALSE )
+				self::na( FALSE ),
 			);
 
 		try {
@@ -294,7 +300,7 @@ class Parser extends WordPress\Main
 			if ( empty( $data['headers'] ) )
 				return self::bailWithError( $data,
 					'file_is_empty',
-					Plugin::noinfo( FALSE )
+					Plugin::noinfo( FALSE ),
 				);
 
 			if ( $args['headers_only'] )
@@ -311,7 +317,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['single'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 
 			} else if ( $args['first_row'] ) {
@@ -323,7 +329,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['single'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 
 			} else if ( is_null( $args['mapping'] ) ) {
@@ -333,7 +339,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['items'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 
 			} else {
@@ -344,7 +350,7 @@ class Parser extends WordPress\Main
 				if ( empty( $data['items'] ) )
 					return self::bailWithError( $data,
 						'file_is_empty',
-						Plugin::noinfo( FALSE )
+						Plugin::noinfo( FALSE ),
 					);
 			}
 
@@ -352,7 +358,7 @@ class Parser extends WordPress\Main
 
 			return self::bailWithError( $data,
 				'exception_occurred',
-				$e->getMessage()
+				$e->getMessage(),
 			);
 		}
 
@@ -366,11 +372,9 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV_Legacy()`
-	#[\Deprecated('use `Parser::fromCSV()` instead')]
+	#[\Deprecated('USE `Parser::fromCSV()`')]
 	public static function fromCSV_Legacy( false|string $file_path, ?int $limit = NULL ): false|array
 	{
-		self::_dep( 'Parser::fromCSV()' );
-
 		if ( empty( $file_path ) )
 			return FALSE;
 
@@ -409,7 +413,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
@@ -417,7 +421,7 @@ class Parser extends WordPress\Main
 		if ( ! class_exists( '\\OpenSpout\\Reader\\XLSX\\Reader' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
-				self::na( FALSE )
+				self::na( FALSE ),
 			);
 
 		/**
@@ -481,7 +485,7 @@ class Parser extends WordPress\Main
 				else
 					$single = Core\Arraay::reKeyByMap_ALT(
 						$raw,
-						$args['mapping']
+						$args['mapping'],
 					);
 
 				if ( $args['by_offset'] || $args['first_row'] || $args['last_row'] )
@@ -528,7 +532,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
@@ -540,10 +544,9 @@ class Parser extends WordPress\Main
 		return $data;
 	}
 
+	#[\Deprecated('USE `Parser::fromTXT()`')]
 	public static function fromTXT_Legacy( string $file_path ): array
 	{
-		self::_dep( 'Parser::fromTXT()' );
-
 		return Core\Text::splitLines( Core\File::getContents( $file_path ) );
 	}
 
@@ -558,7 +561,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$hash = self::hash( $args ); // for items only
@@ -567,7 +570,7 @@ class Parser extends WordPress\Main
 		if ( ! extension_loaded( 'json' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
-				self::na( FALSE )
+				self::na( FALSE ),
 			);
 
 		if ( ! empty( $parsed[$file_path] ) ) {
@@ -593,7 +596,7 @@ class Parser extends WordPress\Main
 		if ( empty( $parser ) )
 			return self::bailWithError( $data,
 				'file_is_empty',
-				Plugin::noinfo( FALSE )
+				Plugin::noinfo( FALSE ),
 			);
 
 		$data['headers'] = array_keys( Core\Arraay::valueFirst( $parser ) );
@@ -613,7 +616,7 @@ class Parser extends WordPress\Main
 			if ( empty( $data['single'] ) )
 				return self::bailWithError( $data,
 					'file_is_empty',
-					Plugin::noinfo( FALSE )
+					Plugin::noinfo( FALSE ),
 				);
 
 		} else if ( $args['first_row'] ) {
@@ -625,7 +628,7 @@ class Parser extends WordPress\Main
 			if ( empty( $data['single'] ) )
 				return self::bailWithError( $data,
 					'file_is_empty',
-					Plugin::noinfo( FALSE )
+					Plugin::noinfo( FALSE ),
 				);
 
 		} else {
@@ -647,7 +650,7 @@ class Parser extends WordPress\Main
 			if ( empty( $data['items'] ) )
 				return self::bailWithError( $data,
 					'file_is_empty',
-					Plugin::noinfo( FALSE )
+					Plugin::noinfo( FALSE ),
 				);
 		}
 
@@ -660,10 +663,9 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseJSON()`
+	#[\Deprecated('USE `Parser::fromJSON()`')]
 	public static function fromJSON_Legacy( false|string $file_path ): false|array
 	{
-		self::_dep( 'Parser::fromJSON()' );
-
 		if ( empty( $file_path ) )
 			return FALSE;
 
@@ -679,7 +681,7 @@ class Parser extends WordPress\Main
 		if ( ! Core\File::readable( $data['file_path'] ) )
 			return self::bailWithError( $data,
 				'file_not_readable',
-				Plugin::notreadable( FALSE )
+				Plugin::notreadable( FALSE ),
 			);
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
@@ -687,7 +689,7 @@ class Parser extends WordPress\Main
 		if ( ! function_exists( 'xml_parser_create' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
-				self::na( FALSE )
+				self::na( FALSE ),
 			);
 
 		$data['items'] = self::fromXML_Legacy( $file_path );
@@ -696,10 +698,9 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXML()`
+	#[\Deprecated('USE `Parser::fromXML()`')]
 	public static function fromXML_Legacy( false|string $file_path ): false|array
 	{
-		self::_dep( 'Parser::fromXML()' );
-
 		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
 			return FALSE;
 

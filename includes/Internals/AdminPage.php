@@ -9,10 +9,20 @@ use geminorum\gEditorial\WordPress;
 
 trait AdminPage
 {
-	public $module = NULL;
-
+	/**
+	 * @var string
+	 */
 	protected $base = NULL;
-	protected $key  = NULL;
+
+	/**
+	 * @var string
+	 */
+	protected $key = NULL;
+
+	/**
+	 * @var object
+	 */
+	public $module = NULL;
 
 	protected function get_adminpage_subs( ?string $context = NULL ): array
 	{

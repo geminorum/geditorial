@@ -118,7 +118,7 @@ class Identified extends gEditorial\Module
 		$settings['_frontend'][] = 'admin_rowactions';
 		$settings['_supports'][] = 'restapi_restricted';
 
-		$settings['_import'] = [
+		$settings['_imports'] = [
 			'post_status',
 			'comment_status',
 			'add_audit_attribute' => [
