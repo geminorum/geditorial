@@ -101,7 +101,12 @@ trait PostDate
 					WordPress\Post::title( $post ),
 				] );
 
-		$this->actions( 'postdate_after_post_override_date', $updated, $data['post_date'], $metakeys, $verbose );
+		$this->actions( 'postdate_after_post_override_date',
+			$updated,
+			$data['post_date'],
+			$metakeys,
+			$verbose,
+		);
 
 		return gEditorial\Settings::processingListItem( $verbose,
 			/* translators: `%1$s`: postdate, `%2$s`: post title */

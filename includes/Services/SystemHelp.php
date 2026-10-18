@@ -58,7 +58,7 @@ class SystemHelp extends gEditorial\Service
 			'callback' => [ __CLASS__, 'add_help_tab_home_callback' ],
 			'title'    => sprintf(
 				/* translators: `%s`: system string */
-				_x( '%s Wiki', 'Service: System Help: Help Content Title', 'geditorial-admin' ),
+				_x( '%s Wiki', 'Service: System Help: Module Help Content Title', 'geditorial-admin' ),
 				gEditorial\Plugin::system(),
 			),
 		];
@@ -72,7 +72,7 @@ class SystemHelp extends gEditorial\Service
 			'callback' => [ __CLASS__, 'add_help_tab_module_callback' ],
 			'title'    => sprintf(
 				/* translators: `%s`: module title */
-				_x( '%s Wiki', 'Service: System Help: Help Content Title', 'geditorial-admin' ),
+				_x( '%s Wiki', 'Service: System Help: System Help Content Title', 'geditorial-admin' ),
 				$module->title
 			),
 		];

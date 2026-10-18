@@ -26,7 +26,7 @@ trait CoreColumns
 		return $this->filters( 'column_title',
 			$this->get_string(
 				self::und( $column, 'column_title' ),
-				$constant,
+				$constant ?: FALSE,
 				'misc',
 				$fallback ?? $column,
 			),

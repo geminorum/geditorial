@@ -850,12 +850,12 @@ class Datetime extends WordPress\Main
 	 * Retrieves the day array in given calendar
 	 * @old: `::getTheDayFromToday()`
 	 *
-	 * @param string $datetime_string
-	 * @param string $calendar_type
+	 * @param mixed $input
+	 * @param null|string $calendar_type
 	 * @return array
 	 */
 	public static function getTheDay(
-		string|object|null $datetime_string = NULL,
+		mixed $input = NULL,
 		?string $calendar_type = NULL,
 	): array {
 
@@ -864,7 +864,7 @@ class Datetime extends WordPress\Main
 
 		$the_date = self::formatByCalendar(
 			'Y-n-j',
-			$datetime_string,
+			$input,
 			$calendar_type,
 			NULL,
 			''

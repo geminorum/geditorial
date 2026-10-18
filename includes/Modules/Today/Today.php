@@ -1545,8 +1545,16 @@ class Today extends gEditorial\Module
 		return array_merge( $fields, $this->_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
-	{
+	public function importer_posts_prepare(
+		mixed $value,
+		string $field,
+		?string $header,
+		?string $posttype,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
 		if ( ! $this->posttype_supported( $posttype ) || empty( $value ) )
 			return $value;
 
@@ -1643,13 +1651,13 @@ class Today extends gEditorial\Module
 	}
 
 	public function importer_posttype_extra_all(
-		string $posttype,
-		array $taxonomies,
-		string $name_template,
-		string $before = '',
-		string $after = '',
-		string $after_title = '',
-		?string $context = NULL,
+		string  $posttype,
+		array   $taxonomies,
+		string  $name_template,
+		string  $before      = '',
+		string  $after       = '',
+		string  $after_title = '',
+		?string $context     = NULL,
 	): void {
 
 		if ( ! $this->posttype_supported( $posttype ) )

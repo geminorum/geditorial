@@ -13,7 +13,7 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function renderCard_address_type_report( array $type, array $data = [] ): bool
 	{
-		echo self::toolboxCardOpen( $type['title'] ?? _x( 'Untitled Address Type', 'Card Title', 'geditorial-addressed' ), FALSE );
+		echo self::toolboxCardOpen( $type['title'] ?? gEditorial\Plugin::untitled( FALSE ), FALSE );
 
 			Core\HTML::desc( $type['description'] ?? '' );
 

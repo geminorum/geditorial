@@ -179,9 +179,9 @@ class Widgets extends gEditorial\Module
 					'id'   => $id,
 					'name' => sprintf(
 						/* translators: `%1$s`: system string, `%2$s`: widget area name */
-						_x( '%s: %s', 'Widget Area Prefix', 'geditorial-widgets' ),
+						_x( '%1$s: %2$s', 'Widget Area Prefix', 'geditorial-widgets' ),
 						$system,
-						$area['name'] ?? _x( '[Unnamed]', 'Widget Area Unnamed', 'geditorial-widgets' ),
+						$area['name'] ?? gEditorial\Plugin::untitled( FALSE ),
 					),
 				],
 			) );

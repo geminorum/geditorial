@@ -1114,12 +1114,12 @@ trait PostTypeFields
 		], $position[0], $position[1] );
 	}
 
-	public function posts_custom_column_posttypefields( string $column, int $post_id ): void
+	public function posts_custom_column_posttypefields( string $column, mixed $post ): void
 	{
 		if ( $this->classs() != $column )
 			return;
 
-		if ( ! $post = WordPress\Post::get( $post_id ) )
+		if ( ! $post = WordPress\Post::get( $post ) )
 			return;
 
 		$prefix   = $this->classs().'-value-';
@@ -1664,9 +1664,9 @@ trait PostTypeFields
 
 	public function importer_posts_prepare_posttypefields(
 		mixed $value,
-		?string $posttype,
 		string $field,
-		array $header,
+		?string $header,
+		?string $posttype,
 		mixed $raw,
 		mixed $source_id,
 		array $all_taxonomies,
@@ -1709,7 +1709,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `import_posttype_field()`
-	protected function posttypefields_do_import_field( $data, $field, $post, $override = TRUE )
+	protected function posttypefields_do_import_field( mixed $data, ?array $field, mixed $post, bool $override = TRUE ): bool
 	{
 		switch ( $field['type'] ) {
 
@@ -1752,19 +1752,23 @@ trait PostTypeFields
 				if ( ! $override && FALSE !== $this->get_postmeta_field( $post->ID, $field['name'] ) )
 					return FALSE;
 
-				return $this->set_postmeta_field( $post->ID, $field['name'], $this->sanitize_posttype_field( $data, $field, $post ) );
+				return $this->set_postmeta_field(
+					$post->ID,
+					$field['name'],
+					$this->sanitize_posttype_field( $data, $field, $post ),
+				);
 		}
 	}
 
 	// OLD: `import_field_meta()`
-	protected function posttypefields_do_migrate_field( $metakey, $field, $limit = FALSE )
+	protected function posttypefields_do_migrate_field( string $metakey, string $field_key, false|int $limit = FALSE ): int
 	{
 		$rows = WordPress\PostMeta::listByKey( $metakey, $limit );
 
 		foreach ( $rows as $row )
 			$this->posttypefields_do_migrate_field_raw(
 				Services\Markup::getSeparated( $row->meta ),
-				$field,
+				$field_key,
 				$row->post_id
 			);
 
@@ -1772,7 +1776,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `import_field_raw()`
-	protected function posttypefields_do_migrate_field_raw( $data, $field_key, $post )
+	protected function posttypefields_do_migrate_field_raw( mixed $data, string $field_key, mixed $post ): false|int
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -1802,7 +1806,7 @@ trait PostTypeFields
 	}
 
 	// OLD: `import_field_raw_terms()`
-	protected function posttypefields_do_migrate_field_terms( $data, $field, $post )
+	protected function posttypefields_do_migrate_field_terms( mixed $data, ?array $field, mixed $post ): false|int
 	{
 		$terms = [];
 
@@ -1828,18 +1832,22 @@ trait PostTypeFields
 			}
 		}
 
-		$terms = $this->sanitize_posttype_field( $terms, $field, $post );
-
-		return wp_set_object_terms(
+		$terms  = Core\Arraay::prepNumeral( $this->sanitize_posttype_field( $terms, $field, $post ) );
+		$result = wp_set_object_terms(
 			$post->ID,
-			Core\Arraay::prepNumeral( $terms ),
+			$terms,
 			$field['taxonomy'],
-			FALSE
+			FALSE,
 		);
+
+		if ( self::isError( $result ) )
+			return FALSE;
+
+		return count( $terms );
 	}
 
 	// OLD: `import_field_raw_strings()`
-	protected function posttypefields_do_migrate_field_strings( $data, $field, $post )
+	protected function posttypefields_do_migrate_field_strings( mixed $data, ?array $field, mixed $post ): false|int
 	{
 		$strings = [];
 
@@ -1853,7 +1861,9 @@ trait PostTypeFields
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		return $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
+		$result =  $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
+
+		return $result ? count( $strings ) : FALSE;
 	}
 
 	public function posttypefields_import_raw_data_action( $post, $data, $override, $check_access, $module )

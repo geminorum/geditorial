@@ -308,7 +308,7 @@ class MetaBox extends WordPress\Main
 		if ( $args['metabox'] && self::checkHidden( $args['metabox'], '', $args['posttype'] ) )
 			return FALSE;
 
-		$users    = $users ?? WordPress\User::get();
+		$users    ??= WordPress\User::list();
 		$selected = $post_id ? WordPress\Taxonomy::getPostTerms( $args['taxonomy'], $post_id, FALSE, 'slug' ) : [];
 
 		if ( empty( $args['walker'] ) || ! ( $args['walker'] instanceof \Walker ) ) {
@@ -439,8 +439,8 @@ class MetaBox extends WordPress\Main
 		if ( empty( $posts ) )
 			return FALSE;
 
-		$html     = '';
-		$statuses = WordPress\Status::get();
+		$html  = '';
+		$stati = WordPress\Status::get();
 
 		if ( WordPress\Strings::isTruthy( $title ) )
 			$html.= Core\HTML::tag( 'h4', Helper::getPostTitleRow( $post ) );
@@ -451,7 +451,7 @@ class MetaBox extends WordPress\Main
 		$html.= '<ol>';
 
 		foreach ( $posts as $item )
-			$html.= '<li>'.Helper::getPostTitleRow( $item, ( $item->ID === $current ? FALSE : 'edit' ), $statuses ).'</li>';
+			$html.= '<li>'.Helper::getPostTitleRow( $item, ( $item->ID === $current ? FALSE : 'edit' ), $stati ).'</li>';
 
 		return Core\HTML::wrap( $html.'</ol>', 'field-wrap -list' );
 	}
@@ -492,8 +492,8 @@ class MetaBox extends WordPress\Main
 		if ( empty( $posts ) )
 			return FALSE;
 
-		$html     = '';
-		$statuses = WordPress\Status::get();
+		$html  = '';
+		$stati = WordPress\Status::get();
 
 		if ( WordPress\Strings::isTruthy( $title ) )
 			$html.= Core\HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
@@ -507,7 +507,7 @@ class MetaBox extends WordPress\Main
 			$html.= '<li>'.Helper::getPostTitleRow(
 				$item,
 				$item->ID === $current ? FALSE : 'edit',
-				$statuses
+				$stati
 			).'</li>';
 
 		return Core\HTML::wrap( $html.'</ol>', 'field-wrap -list' );
@@ -569,8 +569,6 @@ class MetaBox extends WordPress\Main
 	#[\Deprecated('USE `WordPress\MetaBox::markupTitleAction()`')]
 	public static function getTitleAction( string|array|false $action ): string
 	{
-		self::_dev_dep( 'WordPress\MetaBox::markupTitleAction()' );
-
 		return WordPress\MetaBox::markupTitleAction( $action );
 	}
 
@@ -583,11 +581,9 @@ class MetaBox extends WordPress\Main
 		] );
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated('USE `WordPress\MetaBox::markupTitleInfo()`')]
 	public static function titleActionInfo( string $info ): string
 	{
-		self::_dev_dep( 'WordPress\MetaBox::markupTitleInfo()' );
-
 		return WordPress\MetaBox::markupTitleInfo( $info );
 	}
 
@@ -681,7 +677,7 @@ class MetaBox extends WordPress\Main
 		return $html ? Core\HTML::wrap( $html, 'field-wrap -select' ) : '';
 	}
 
-	// NOTE: DEPRECATED
+	#[\Deprecated()]
 	public static function dropdownAssocPosts(
 		string $posttype,
 		string $selected = '',

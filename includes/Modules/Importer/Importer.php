@@ -498,7 +498,7 @@ class Importer extends gEditorial\Module
 
 		gEditorial\Settings::fieldSeparate( 'as' );
 
-		echo Core\HTML::dropdown( WordPress\User::get(), [
+		echo Core\HTML::dropdown( WordPress\User::list(), [
 			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
 			'name'     => 'user_id',
 			'prop'     => 'display_name',
@@ -675,9 +675,9 @@ class Importer extends gEditorial\Module
 				// @hook `geditorial_importer_posts_prepare`
 				$title = $this->filters( 'posts_prepare',
 					Core\Text::trim( $row[$title_key] ),
-					$args['extra']['post_type'],
 					'importer_post_title',
-					(string) $title_key,
+					(string) $title_key ?: '',
+					$args['extra']['post_type'],
 					$row,
 					$row['___source_id'],
 					$args['extra']['taxonomies']
@@ -743,9 +743,9 @@ class Importer extends gEditorial\Module
 		// @hook `geditorial_importer_posts_prepare`
 		$filtered = $this->filters( 'posts_prepare',
 			Core\Text::trim( $value ),
-			$args['extra']['post_type'],
 			$args['extra']['mapped'][$key],
-			(string) $key,
+			(string) $key ?: '',
+			$args['extra']['post_type'],
 			$row,
 			$row['___source_id'],
 			$args['extra']['taxonomies']
@@ -756,7 +756,8 @@ class Importer extends gEditorial\Module
 		if ( FALSE === $filtered )
 			$filtered = $args['extra']['na'];
 
-		else if ( WordPress\Strings::isEmpty( $filtered ) )
+		else if ( is_string( $filtered )
+			&& WordPress\Strings::isEmpty( $filtered ) )
 			$filtered = '';
 
 		return Core\HTML::sanitizeDisplay( $filtered );
@@ -955,9 +956,9 @@ class Importer extends gEditorial\Module
 				// @hook `geditorial_importer_posts_prepare`
 				$value = $this->filters( 'posts_prepare',
 					Core\Text::trim( $raw[$header] ),
-					$posttype,
 					$field,
-					(string) $header,
+					(string) $header ?: '',
+					$posttype,
 					$raw,
 					$source_id,
 					$all_taxonomies
@@ -1199,22 +1200,25 @@ class Importer extends gEditorial\Module
 			}
 
 			// @hook `geditorial_importer_posts_saved`
-			$this->actions( 'posts_saved', WordPress\Post::get( $post_id ), [
-				'updated'    => ( ! empty( $insert['ID'] ) ),
-				'data'       => $insert,
-				'prepared'   => $prepared,
-				'headers'    => $headers,
-				'raw'        => $raw,
-				'map'        => $field_map,
-				'source_id'  => $source_id,
-				'attach_id'  => $attach_id,
-				'user_id'    => $user_id,
-				'terms_all'  => $terms_all,
-				'extra_all'  => $extra_all,
-				'taxonomies' => $taxonomies,
-				'override'   => $override,
-				'oldpost'    => $oldpost,
-			] );
+			$this->actions( 'posts_saved',
+				WordPress\Post::get( $post_id ),
+				[
+					'updated'    => ( ! empty( $insert['ID'] ) ),
+					'data'       => $insert,
+					'prepared'   => $prepared,
+					'headers'    => $headers,
+					'raw'        => $raw,
+					'map'        => $field_map,
+					'source_id'  => $source_id,
+					'attach_id'  => $attach_id,
+					'user_id'    => $user_id,
+					'terms_all'  => $terms_all,
+					'extra_all'  => $extra_all,
+					'taxonomies' => $taxonomies,
+					'override'   => $override,
+					'oldpost'    => $oldpost,
+				],
+			);
 
 			// @REF: https://make.wordpress.org/core/2020/11/20/new-action-wp_after_insert_post-in-wordpress-5-6/
 			wp_after_insert_post( $post_id, $oldpost ? TRUE : FALSE, $oldpost ?: NULL );
@@ -1719,9 +1723,9 @@ class Importer extends gEditorial\Module
 
 	public function importer_posts_prepare(
 		mixed $value,
-		?string $posttype,
 		string $field,
 		?string $header,
+		?string $posttype,
 		mixed $raw,
 		mixed $source_id,
 		array $all_taxonomies,
@@ -2082,7 +2086,7 @@ class Importer extends gEditorial\Module
 
 		gEditorial\Settings::fieldSeparate( 'as' );
 
-		echo Core\HTML::dropdown( WordPress\User::get(), [
+		echo Core\HTML::dropdown( WordPress\User::list(), [
 			'selected' => is_null( $user_id ) ? $this->_get_user_id() : $user_id,
 			'name'     => 'user_id',
 			'prop'     => 'display_name',

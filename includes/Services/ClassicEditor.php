@@ -41,7 +41,7 @@ class ClassicEditor extends gEditorial\Service
 		return WordPress\Strings::isTruthy( WordPress\User::option( 'rich_editing', $user ) );
 	}
 
-	public static function hook_buttons() : void
+	public static function hook_buttons(): void
 	{
 		if ( ! self::richEditing() )
 			return;
@@ -54,8 +54,7 @@ class ClassicEditor extends gEditorial\Service
 				static function ( $buttons, $editor_id )
 					use ( $level, $filter ) {
 
-				// if ( WordPress\IsIt::blockEditor() )
-				// 	return $buttons;
+				// `if ( WordPress\IsIt::blockEditor() ) return $buttons;`
 
 				if ( empty( static::$tinymce_buttons[$level] ) )
 					return $buttons;
@@ -112,7 +111,7 @@ class ClassicEditor extends gEditorial\Service
 				printf(
 					/* translators: `%s`: words count */
 					_x( 'Words: %s', 'Service: ClassicEditor: WordCount', 'geditorial' ),
-					Core\HTML::span( Core\Number::format( '0' ), 'word-count' )
+					Core\HTML::span( Core\Number::format( '0' ), 'word-count' ),
 				);
 
 				echo '&nbsp;|&nbsp;';
@@ -120,7 +119,7 @@ class ClassicEditor extends gEditorial\Service
 				printf(
 					/* translators: `%s`: chars count */
 					_x( 'Chars: %s', 'Service: ClassicEditor: WordCount', 'geditorial' ),
-					Core\HTML::span( Core\Number::format( '0' ), 'char-count' )
+					Core\HTML::span( Core\Number::format( '0' ), 'char-count' ),
 				);
 
 			echo '</div>';

@@ -153,7 +153,7 @@ trait ModuleLinks
 					? _x( 'Docs', 'Module: Extra Link: Documentation', 'geditorial-admin' )
 					: sprintf(
 					/* translators: `%s`: module title */
-					_x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+					_x( '%s Documentation', 'Module: Extra Link: Module Documentation', 'geditorial-admin' ),
 					$this->module->title
 				),
 			];
@@ -166,7 +166,7 @@ trait ModuleLinks
 				'url'     => Services\SystemHelp::getModuleDocsURL( FALSE ),
 				'title'   => sprintf(
 					/* translators: `%s`: system string */
-					_x( '%s Documentation', 'Module: Extra Link: Documentation', 'geditorial-admin' ),
+					_x( '%s Documentation', 'Module: Extra Link: System Documentation', 'geditorial-admin' ),
 					$system,
 				),
 			];

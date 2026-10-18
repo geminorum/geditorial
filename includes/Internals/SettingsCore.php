@@ -849,13 +849,18 @@ trait SettingsCore
 	 * @ref `WordPress\Media::handleImportUpload()`
 	 *
 	 * @param string|array $mimes
-	 * @param bool $size_after
 	 * @param string $name
+	 * @param bool $size_after
 	 * @param false|string $field_wrap
-	 * @return false|int
+	 * @return false|string
 	 */
-	protected function settings_render_upload_field( string|array $mimes, $size_after = TRUE, string $name = 'import', false|string $field_wrap = 'div' ): false|int
-	{
+	protected function settings_render_upload_field(
+		string|array $mimes,
+		string       $name       = 'import',
+		bool         $size_after = TRUE,
+		false|string $field_wrap = 'div',
+	): false|string {
+
 		$wpupload = WordPress\Media::upload();
 
 		if ( ! empty( $wpupload['error'] ) ) {

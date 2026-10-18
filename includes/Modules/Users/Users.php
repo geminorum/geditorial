@@ -695,7 +695,7 @@ class Users extends gEditorial\Module
 
 					$count   = 0;
 					$role    = get_option( 'default_role' );
-					$users   = WordPress\User::get( TRUE, TRUE, [], 'user_email' );
+					$users   = WordPress\User::list( TRUE, TRUE, [], 'user_email' );
 					$mapping = Core\Arraay::pluck( $rawdata['items'], 'user_email', 'ID' );
 
 					foreach ( $currents as $current ) {
@@ -799,7 +799,7 @@ class Users extends gEditorial\Module
 		echo '</p></td></tr>';
 		echo '<tr><th scope="row">'._x( 'Re-Map Authors', 'Header', 'geditorial-users' ).'</th><td>';
 
-		if ( $filesize = $this->settings_render_upload_field( '.csv', FALSE, 'import', FALSE ) ) {
+		if ( $filesize = $this->settings_render_upload_field( '.csv', 'import', FALSE, FALSE ) ) {
 			echo $this->wrap_open_buttons();
 				gEditorial\Settings::submitButton( 'remap_post_authors', _x( 'Upload and Re-Map', 'Button', 'geditorial-users' ), 'danger' );
 

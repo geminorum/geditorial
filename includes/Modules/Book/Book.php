@@ -1164,8 +1164,16 @@ class Book extends gEditorial\Module
 		return array_merge( $fields, $this->get_importer_fields( $posttype ) );
 	}
 
-	public function importer_posts_prepare( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
-	{
+	public function importer_posts_prepare(
+		mixed $value,
+		string $field,
+		?string $header,
+		?string $posttype,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
 		$fields = array_keys( $this->get_importer_fields( $posttype ) );
 
 		if ( ! in_array( $field, $fields ) )

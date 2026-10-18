@@ -9,10 +9,9 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
-
 	const MODULE = 'today';
 
-	public static function getTheDayAllCalendars( $calendars, $year = FALSE, $datetime_string = NULL )
+	public static function getTheDayAllCalendars( array $calendars, bool $year = FALSE, mixed $datetime_string = NULL ): array
 	{
 		$list = [];
 
@@ -29,7 +28,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $list;
 	}
 
-	public static function getTheDayDateMySQL( $the_day, $type = NULL )
+	public static function getTheDayDateMySQL( array $the_day, ?string $type = NULL ): mixed
 	{
 		$cal   = empty( $the_day['cal'] ) ? $type : $the_day['cal'];
 		$today = gEditorial\Datetime::getTheDay( NULL, $cal );
@@ -54,15 +53,14 @@ class ModuleHelper extends gEditorial\Helper
 		return gEditorial\Datetime::parseTheDay( $input, $type );
 	}
 
-	#[\Deprecated()]
+	#[\Deprecated('USE `Datetime::getTheDay()`')]
 	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
-		self::_dev_dep( 'Datetime::getTheDay()' );
 		return gEditorial\Datetime::getTheDay( $today, $type );
 	}
 
 	// NOT USED
-	public static function titleToday( $calendars, $separator = ' &ndash; ', $year = FALSE )
+	public static function titleToday( array $calendars, string $separator = ' &ndash; ', bool $year = FALSE ): string
 	{
 		$titles = [];
 		$today  = self::getTheDayAllCalendars( $calendars, $year );

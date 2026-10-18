@@ -49,7 +49,7 @@ class Ajax extends WordPress\Main
 		self::error( [ 'html' => $html ], $status_code );
 	}
 
-	public static function errorMessage( string|object|null $message = NULL ): void
+	public static function errorMessage( null|string|object $message = NULL ): void
 	{
 		if ( $message && self::isError( $message ) )
 			$message = $message->get_error_message();

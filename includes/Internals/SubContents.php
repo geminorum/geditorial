@@ -456,8 +456,16 @@ trait SubContents
 		return array_merge( $fields, $this->subcontent_get_importer_fields( $posttype ) );
 	}
 
-	public function importer_posts_prepare_subcontent( mixed $value, ?string $posttype, string $field, ?string $header, mixed $raw, mixed $source_id, array $all_taxonomies ): mixed
-	{
+	public function importer_posts_prepare_subcontent(
+		mixed $value,
+		string $field,
+		?string $header,
+		?string $posttype,
+		mixed $raw,
+		mixed $source_id,
+		array $all_taxonomies,
+	): mixed {
+
 		if ( ! $this->in_setting_posttypes( $posttype, 'subcontent' ) || empty( $value ) )
 			return $value;
 

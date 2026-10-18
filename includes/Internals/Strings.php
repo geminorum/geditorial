@@ -11,8 +11,8 @@ trait Strings
 {
 	public function get_string(
 		string $string,
-		false|string $subgroup = 'post',
-		string $group = 'titles',
+		null|false|string $subgroup = 'post',
+		null|false|string $group = 'titles', // WTF?!
 		null|false|string $fallback = FALSE,
 		bool $moveup = TRUE,
 	): null|false|string {

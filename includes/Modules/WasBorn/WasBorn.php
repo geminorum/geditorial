@@ -50,7 +50,7 @@ class WasBorn extends gEditorial\Module
 			$default_dob_metakey = $this->filters( 'default_posttype_dob_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_dob_metakey',
+				'field' => self::und( $posttype_name, 'posttype', 'dob_metakey' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -66,9 +66,9 @@ class WasBorn extends gEditorial\Module
 		}
 
 		$settings['_defaults'] = [
-			'override_dates' => [ _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ), ],
 			'calendar_list',
 			'calendar_type',
+			'override_dates' => [ _x( 'Tries to override post-date with provided date-of-birth on supported post-types.', 'Setting Description', 'geditorial-was-born' ), ],
 			[
 				'field'       => 'age_of_majority',
 				'type'        => 'number',
@@ -366,7 +366,7 @@ class WasBorn extends gEditorial\Module
 		$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );
 	}
 
-	protected function get_dashboard_summary_content( $scope = 'all', $user_id = NULL, $paired = NULL, $list = 'li' ): string
+	protected function get_dashboard_summary_content( string $scope = 'all', ?int $user_id = NULL, $paired = NULL, string $list = 'li' ): string
 	{
 		$context   ??= 'dashboard';
 		$posttypes = $this->get_setting_posttypes( 'parent' );
@@ -411,8 +411,7 @@ class WasBorn extends gEditorial\Module
 
 	// TODO: make link for restricted under aged posts
 	// @REF: https://stackoverflow.com/a/71815721
-	// TODO: move to `ModuleHelper`
-	private function _summary_under_aged( array $posttypes, $paired = NULL, ?string $context = NULL )
+	private function _summary_under_aged( array $posttypes, $paired = NULL, ?string $context = NULL ): array
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$legal     = $this->get_setting( 'age_of_majority', 18 );
@@ -509,7 +508,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/a/35733405
-	private function _summary_age_invalid_dob( array $posttypes, $paired = NULL, ?string $context = NULL )
+	private function _summary_age_invalid_dob( array $posttypes, $paired = NULL, ?string $context = NULL ): array
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$query_var = 'invaliddob';
@@ -596,7 +595,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/questions/13372395/average-age-from-dob-field-mysql-php
-	private function _summary_mean_age( array $posttypes, ?string $context = NULL )
+	private function _summary_mean_age( array $posttypes, ?string $context = NULL ): array
 	{
 		global $wpdb;
 
@@ -609,8 +608,8 @@ class WasBorn extends gEditorial\Module
 			if ( ! array_key_exists( $posttype, $metakey ) )
 				$metakey[$posttype] = $this->_get_posttype_dob_metakey( $posttype );
 
-			// SELECT AVG((TO_DAYS(NOW())-TO_DAYS(DOB)))/365.242199
-			// SELECT AVG(DATEDIFF(YEAR(NOW()), YEAR(m.meta_value))) as `Average`
+			// `'SELECT AVG((TO_DAYS(NOW())-TO_DAYS(DOB)))/365.242199'`
+			// `'SELECT AVG(DATEDIFF(YEAR(NOW()), YEAR(m.meta_value))) as `Average`'`
 
 			$query = $wpdb->prepare( "
 				SELECT AVG((TO_DAYS(NOW())-TO_DAYS(m.meta_value)))/365.242199
@@ -654,7 +653,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_empty_dob( array $posttypes, $paired = NULL, ?string $context = NULL )
+	private function _summary_age_empty_dob( array $posttypes, $paired = NULL, ?string $context = NULL ): array
 	{
 		$query_var = WordPress\Taxonomy::queryVar( $this->constant( 'group_taxonomy' ) );
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
@@ -745,7 +744,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_groups( array $posttypes, $paired = NULL, ?string $context = NULL )
+	private function _summary_age_groups( array $posttypes, $paired = NULL, ?string $context = NULL ): array
 	{
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$extra    = []; // TODO: make sure the terms are in order
@@ -841,7 +840,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _get_age_group_metaquery( $term, $metakey )
+	private function _get_age_group_metaquery( object $term, string $metakey ): false|array
 	{
 		$max = get_term_meta( $term->term_id, 'max', TRUE );
 		$min = get_term_meta( $term->term_id, 'min', TRUE );
@@ -892,7 +891,7 @@ class WasBorn extends gEditorial\Module
 		];
 	}
 
-	private function _get_posttype_dob_metakey( $posttype )
+	private function _get_posttype_dob_metakey( string $posttype ): string
 	{
 		if ( $setting = $this->get_setting( $posttype.'_posttype_dob_metakey' ) )
 			return $setting;
@@ -937,7 +936,7 @@ class WasBorn extends gEditorial\Module
 				if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
 					continue;
 
-				if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+				if ( ! $dob = WordPress\PostMeta::get( $metakey, $post ) )
 					continue;
 
 				if ( ! $age = Core\Date::calculateAge( $dob, $cal ) )
@@ -966,27 +965,35 @@ class WasBorn extends gEditorial\Module
 		if ( ! $this->in_setting( $post->post_type, 'parent_posttypes' ) )
 			return;
 
-		$metakey = $this->_get_posttype_dob_metakey( $post->post_type );
-		$legal   = $this->get_setting( 'age_of_majority', 18 );
-		$cal     = $this->default_calendar();
-
-		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
 			return;
 
+		if ( ! $dob = WordPress\PostMeta::get( $metakey, $post ) )
+			return;
+
+		$type  = $this->default_calendar();
+		$legal = $this->get_setting( 'age_of_majority', 18 );
+
 		printf( $before, '-date-of-birth' );
-		echo $this->get_column_icon();
+			echo $this->get_column_icon();
 
-		echo gEditorial\Datetime::prepDateOfBirth( $dob, NULL, TRUE, $cal );
+			echo gEditorial\Datetime::prepDateOfBirth( $dob, NULL, TRUE, $type );
 
-		if ( Core\Date::isUnderAged( $dob, $legal, $cal ) )
-			printf( ' (<span class="%s">%s</span>)',
-				'-color-danger -is-under-aged',
-				_x( 'Under-Aged!', 'Pointer Notice', 'geditorial-was-born' ),
-			);
+			if ( Core\Date::isUnderAged( $dob, $legal, $type ) )
+				printf( ' (<span class="%s">%s</span>)',
+					'-color-danger -is-under-aged',
+					_x( 'Under-Aged!', 'Pointer Notice', 'geditorial-was-born' ),
+				);
 
 		echo $after;
 
-		$this->actions( 'pointers_post_after', $post, $dob, $cal, $before, $after );
+		$this->actions( 'pointers_post_after',
+			$post,
+			$dob,
+			$type,
+			$before,
+			$after,
+		);
 	}
 
 	public function audit_get_default_terms( array $terms, string $taxonomy ): array
@@ -1005,7 +1012,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
 			return $terms;
 
-		$dob = get_post_meta( $post->ID, $metakey, TRUE );
+		$dob = WordPress\PostMeta::get( $metakey, $post );
 
 		if ( $exists = term_exists( $this->constant( 'term_empty_dob_data' ), $taxonomy ) ) {
 
@@ -1039,17 +1046,17 @@ class WasBorn extends gEditorial\Module
 		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
 			return $data;
 
-		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+		if ( ! $dob = WordPress\PostMeta::get( $metakey, $post ) )
 			return $data;
 
-		$cal   = $this->default_calendar();
+		$type  = $this->default_calendar();
 		$legal = $this->get_setting( 'age_of_majority', 18 );
 
 		$data['source']['dob']['raw']           = $dob;
-		$data['source']['dob']['cal']           = $cal;
-		$data['source']['dob']['age']           = Core\Date::calculateAge( $dob, $cal );
-		$data['source']['dob']['is_under_aged'] = Core\Date::isUnderAged( $dob, $legal, $cal );
-		$data['source']['rendered']['dob']      = gEditorial\Datetime::prepDateOfBirth( $dob, NULL, FALSE, $cal );
+		$data['source']['dob']['cal']           = $type;
+		$data['source']['dob']['age']           = Core\Date::calculateAge( $dob, $type );
+		$data['source']['dob']['is_under_aged'] = Core\Date::isUnderAged( $dob, $legal, $type );
+		$data['source']['rendered']['dob']      = gEditorial\Datetime::prepDateOfBirth( $dob, NULL, FALSE, $type );
 		$data['source']['rendered']['age']      = Core\Number::localize( $data['source']['dob']['age'] );
 
 		return $data;
@@ -1098,7 +1105,7 @@ class WasBorn extends gEditorial\Module
 		);
 	}
 
-	public function postdate_after_post_override_date( $post, $datetime, $metakeys, bool $verbose ): bool
+	public function postdate_after_post_override_date( mixed $post, string $datetime, array $metakeys, bool $verbose ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -1159,7 +1166,7 @@ class WasBorn extends gEditorial\Module
 		if ( ! $metakey = $this->_get_posttype_dob_metakey( $post->post_type ) )
 			return $data;
 
-		if ( ! $dob = get_post_meta( $post->ID, $metakey, TRUE ) )
+		if ( ! $dob = WordPress\PostMeta::get( $metakey, $post ) )
 			return $data;
 
 		$cal = $this->default_calendar();

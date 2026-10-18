@@ -10,6 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait ContentReplace
 {
 
+	// @SEE https://github.com/stuttter/wp-auto-linker
 	// NOTE: better to hook in `template_redirect` after `is_singular()` check
 	protected function contentreplace__autolink_terms( string $constant, ?string $setting_key = NULL, bool $only_parents = TRUE ): false|int
 	{

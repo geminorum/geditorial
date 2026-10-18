@@ -52,7 +52,7 @@ class Iranian extends gEditorial\Module
 			$default_location_metakey = $this->filters( 'default_posttype_location_metakey', '', $posttype_name );
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_identity_metakey',
+				'field' => self::und( $posttype_name, 'posttype', 'identity_metakey' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -67,7 +67,7 @@ class Iranian extends gEditorial\Module
 			];
 
 			$settings['_posttypes'][] = [
-				'field' => $posttype_name.'_posttype_location_metakey',
+				'field' => self::und( $posttype_name, 'posttype', 'location_metakey' ),
 				'type'  => 'text',
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
@@ -280,7 +280,7 @@ class Iranian extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_import_location_by_identity( $sub )
+	private function _do_import_location_by_identity( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_LOCATION_BY_IDENTITY ) )
 			return FALSE;
@@ -345,7 +345,7 @@ class Iranian extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_tool_identity_certificate( $sub )
+	private function _do_tool_identity_certificate( string $sub ): bool
 	{
 		if ( ! self::do( ModuleSettings::ACTION_IDENTITY_CERTIFICATE ) )
 			return FALSE;
@@ -368,7 +368,7 @@ class Iranian extends gEditorial\Module
 		);
 	}
 
-	public function sanitize_birth_certificate_number( $data, $field, $post )
+	public function sanitize_birth_certificate_number( mixed $data, ?array $field, mixed $post ): mixed
 	{
 		$sanitized = Core\Number::translate( trim( $data ) );
 
@@ -390,7 +390,7 @@ class Iranian extends gEditorial\Module
 		return $sanitized;
 	}
 
-	public function info_from_iban( $info, $raw, $input, $pre )
+	public function info_from_iban( false|array $info, string $raw, string $input, array $pre ): false|array
 	{
 		if ( empty( $info ) )
 			return $info;
@@ -401,7 +401,7 @@ class Iranian extends gEditorial\Module
 		return $info;
 	}
 
-	public function info_from_card_number( $info, $raw, $input, $pre )
+	public function info_from_card_number( false|array $info, string $raw, string $input, array $pre ): false|array
 	{
 		if ( empty( $info ) )
 			return $info;

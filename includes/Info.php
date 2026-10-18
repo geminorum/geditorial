@@ -32,11 +32,12 @@ class Info extends WordPress\Main
 			$info = FALSE;
 		}
 
+		// @hook: `geditorial_info_from_iban`
 		return apply_filters( self::und( static::BASE, 'info', 'from_iban' ),
 			$info,
 			$raw,
 			$input,
-			$pre
+			$pre,
 		);
 	}
 
@@ -84,11 +85,12 @@ class Info extends WordPress\Main
 			$info = FALSE;
 		}
 
+		// @hook: `geditorial_info_from_postcode`
 		return apply_filters( self::und( static::BASE, 'info', 'from_postcode' ),
 			$info,
 			$raw,
 			$input,
-			$pre
+			$pre,
 		);
 	}
 
@@ -99,14 +101,16 @@ class Info extends WordPress\Main
 
 		if ( $raw = Core\Validation::sanitizeCardNumber( $input ) )
 			$info['raw'] = $raw;
+
 		else
 			$info = FALSE;
 
+		// @hook: `geditorial_info_from_card_number`
 		return apply_filters( self::und( static::BASE, 'info', 'from_card_number' ),
 			$info,
 			$raw,
 			$input,
-			$pre
+			$pre,
 		);
 	}
 

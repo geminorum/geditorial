@@ -927,14 +927,14 @@ class Calendars extends gEditorial\Service
 
 	// @REF: https://developers.google.com/google-apps/calendar/
 	// @SOURCE: https://wordpress.org/plugins/gcal-events-list/
-	public static function getGoogleCalendarEvents( $atts )
+	public static function getGoogleCalendarEvents( $arguments )
 	{
 		$args = self::parsed( [
 			'calendar_id' => FALSE,
 			'api_key'     => '',
 			'time_min'    => '',
 			'max_results' => 5,
-		], $atts );
+		], $arguments );
 
 		if ( ! $args['calendar_id'] )
 			return FALSE;
