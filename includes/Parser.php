@@ -403,7 +403,7 @@ class Parser extends WordPress\Main
 	// @SEE https://github.com/rap2hpoutre/fast-excel/blob/master/src/FastExcel.php
 	public static function fromXLSX( false|string $file_path, array $arguments = [] ): array
 	{
-		$args = self::parsed( self::getDefaultArguments( $file_path ), $arguments );
+		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );
 
 		if ( ! Core\File::readable( $data['file_path'] ) )
@@ -414,7 +414,7 @@ class Parser extends WordPress\Main
 
 		$data = self::getAdditionalData( $data, $args, $file_path );
 
-		if ( ! class_exists( 'OpenSpout\\Reader\\Common\\Creator\\ReaderEntityFactory' ) )
+		if ( ! class_exists( '\\OpenSpout\\Reader\\XLSX\\Reader' ) )
 			return self::bailWithError( $data,
 				'parser_not_available',
 				self::na( FALSE )
@@ -422,16 +422,15 @@ class Parser extends WordPress\Main
 
 		/**
 		 * @package `openspout/openspout`
-		 * @link https://opensource.box.com/spout/docs/
-		 * @link https://github.com/openspout/openspout/blob/3.x/docs/index.md
+		 * @link https://github.com/openspout/openspout/tree/5.x/docs
 		 */
-		$parser = \OpenSpout\Reader\Common\Creator\ReaderEntityFactory::createXLSXReader();
+		$parser = new \OpenSpout\Reader\XLSX\Reader();
 		$parser->open( $data['file_path'] );
 
 		foreach ( $parser->getSheetIterator() as $sheet ) {
 
 			$sheet_name  = $sheet->getName();
-			$sheet_index = $sheet->getIndex();
+			$sheet_index = $sheet->getIndex(); // `0` based
 
 			if ( $args['sheet_name'] ) {
 
@@ -447,9 +446,9 @@ class Parser extends WordPress\Main
 			$data['sheet_name']  = $sheet_name;
 			$data['sheet_index'] = $sheet_index;
 
-			foreach ( $sheet->getRowIterator() as $index => $row ) {
+			foreach ( $sheet->getRowIterator() as $offset => $row ) {
 
-				if ( 1 === $index ) {
+				if ( 1 === $offset ) {
 					$data['headers'] = $row->toArray();
 
 					if ( $args['headers_only'] )
@@ -458,17 +457,54 @@ class Parser extends WordPress\Main
 					continue;
 				}
 
-				$raw = array_combine( $data['headers'], $row->toArray() );
+				// if ( $row->isEmpty() )
+				// 	continue;
+
+				$index = $offset - 1;
+
+				if ( $args['by_offset'] ) {
+
+					// Must be loose comparison!
+					if ( $index != $args['by_offset'] )
+						continue;
+
+				} // else if ( $args['last_row'] ) {} // FIXME: WTF?!
+
+				$raw = array_combine(
+					$data['headers'],
+					$row->toArray(),
+				);
 
 				if ( is_null( $args['mapping'] ) )
-					$data['items'][$index] = $raw;
+					$single = Core\Arraay::filterFromEnd( $raw );
 
 				else
-					$data['items'][$index] = Core\Arraay::reKeyByMap_ALT(
+					$single = Core\Arraay::reKeyByMap_ALT(
 						$raw,
 						$args['mapping']
 					);
+
+				if ( $args['by_offset'] || $args['first_row'] || $args['last_row'] )
+					$data['single'] = $single;
+
+				else
+					$data['items'][$index] = $single;
+
+				if ( $args['first_row'] || $args['by_offset'] )
+					break;
 			}
+
+			// Clears out empty headers from the end.
+			$data['headers'] = Core\Arraay::filterFromEnd( $data['headers'] );
+
+			if ( empty( $data['headers'] ) )
+				return self::bailWithError( $data,
+					'file_is_empty',
+					Plugin::noinfo( FALSE ),
+				);
+
+			if ( $args['headers_only'] )
+				return $data;
 
 			break; // No need iterating through other sheets!
 		}
