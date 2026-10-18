@@ -61,6 +61,9 @@ class Phonebook extends gEditorial\Module
 				'tab_priority'    => [ NULL, 80 ],
 				'frontend_search' => [ _x( 'Adds results by Phone and Mobile information on front-end search.', 'Setting Description', 'geditorial-phonebook' ) ],
 			],
+			'_exports' => [
+				'export_fallback',
+			],
 			'_supports' => [
 				'shortcode_support',
 			],
@@ -341,6 +344,9 @@ class Phonebook extends gEditorial\Module
 		$this->filter( 'searchselect_pre_query_posts', 3, 12, FALSE, $this->base );
 		$this->filter( 'linediscovery_data_for_post', 4, 12, FALSE, $this->base );
 
+		if ( $this->get_setting( 'export_fallback', TRUE ) )
+			$this->filter( 'meta_field_empty', 7, 20, FALSE, $this->base );
+
 		if ( $this->get_setting( 'frontend_search' ) )
 			$this->filter( 'posts_search_append_meta_frontend', 3, 8, FALSE, $this->base );
 
@@ -513,6 +519,60 @@ class Phonebook extends gEditorial\Module
 			'before'   => $this->wrap_open( '-summary-coordinates' ),
 			'after'    => '</div>',
 		], $this->key );
+	}
+
+	public function meta_field_empty( mixed $meta, string $field_key, object $post, array $args, mixed $raw, array $field_args, ?string $context ): mixed
+	{
+		if ( ! empty( $meta ) )
+			return $meta; // already filtered!
+
+		if ( ! $this->posttype_supported( $post->post_type ) )
+			return $meta;
+
+		if ( ! $context || ! in_array( $context, [
+			'export',
+			'overview',
+		], TRUE ) )
+			return $meta;
+
+		switch ( $field_key ) {
+
+			case 'mobile_number':
+			case 'phone_number':
+
+				// NOTE: provides `phone` from the first row of sub-content data, if availabale!
+
+				if ( ! $items = $this->quantumcomments__get_data_all( $post, $context, TRUE, [ 'number' => 1 ] ) )
+					break;
+
+				if ( empty( $items[0]['phone'] ) )
+					break;
+
+				return Core\Phone::prep(
+					$items[0]['phone'],
+					$field_args,
+					$context,
+				);
+
+			case 'postal_address':
+			case 'home_address':
+
+				// NOTE: provides `address` from the first row of sub-content data, if availabale!
+
+				if ( ! $items = $this->quantumcomments__get_data_all( $post, $context, TRUE, [ 'number' => 1 ] ) )
+					break;
+
+				if ( empty( $items[0]['address'] ) )
+					break;
+
+				return Services\Locations::prepAddress(
+					$items[0]['address'],
+					$context,
+					$items[0]['address'],
+				);
+		}
+
+		return $meta;
 	}
 
 	public function posts_search_append_meta_frontend( array $meta, string $search, mixed $posttypes ): array
