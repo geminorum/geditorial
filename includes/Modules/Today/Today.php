@@ -633,38 +633,44 @@ class Today extends gEditorial\Module
 		echo '</div>';
 	}
 
-	public function set_today_meta( int $post_id, array $postmeta, array $constants ): void
+	public function store_today_for_post( mixed $post, array $input, ?array $constants = NULL ): bool
 	{
-		$data = array_filter( $postmeta );
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return FALSE;
+
+		$constants ??= $this->get_the_day_constants();
+		$data      = array_filter( $input );
 
 		foreach ( $constants as $field => $constant ) {
 
 			// if year with no cal
-			if ( 'year' == $field && ! array_key_exists( 'cal', $data ) )
+			if ( 'year' === $field && ! array_key_exists( 'cal', $data ) )
 				unset( $data['year'] );
 
 			// if month with no cal
-			if ( 'month' == $field && ! array_key_exists( 'cal', $data ) )
+			if ( 'month' === $field && ! array_key_exists( 'cal', $data ) )
 				unset( $data['month'] );
 
 			// if only day with no month
-			if ( 'day' == $field && ! array_key_exists( 'month', $data ) )
+			if ( 'day' === $field && ! array_key_exists( 'month', $data ) )
 				unset( $data['day'] );
 
 			if ( array_key_exists( $field, $data ) ) {
 
 				// if only cal meta, delete all
-				if ( 'cal' == $field && 1 === count( $data ) )
-					delete_post_meta( $post_id, $constant );
+				if ( 'cal' === $field && 1 === count( $data ) )
+					delete_post_meta( $post->ID, $constant );
 
 				else
-					update_post_meta( $post_id, $constant, $data[$field] );
+					update_post_meta( $post->ID, $constant, $data[$field] );
 
 			} else {
 
-				delete_post_meta( $post_id, $constant );
+				delete_post_meta( $post->ID, $constant );
 			}
 		}
+
+		return TRUE;
 	}
 
 	public function store_metabox( int $post_id, object $post, bool $update, ?string $context = NULL ): void
@@ -704,7 +710,7 @@ class Today extends gEditorial\Module
 				$postmeta[$field] = Core\Number::translate( $value );
 		}
 
-		$this->set_today_meta( $post->ID, $postmeta, $constants );
+		$this->store_today_for_post( $post->ID, $postmeta, $constants );
 	}
 
 	public function the_title( string $title, mixed $post_id = NULL ): string
@@ -1552,60 +1558,88 @@ class Today extends gEditorial\Module
 			case 'today__cal'  : return Core\Date::sanitizeCalendar( Core\Text::trim( $value ), $this->default_calendar(), $this->list_calendars() );
 			case 'today__year' :
 			case 'today__month':
-			case 'today__day'  : return Core\Number::translate( Core\Text::trim( $value ) );
-			case 'today__full' : return ModuleHelper::parseTheFullDay( Core\Text::trim( $value ), $this->default_calendar() );
+			case 'today__day'  : return Core\Text::trim( Core\Number::translate( $value ) );
+			case 'today__full' : return gEditorial\Datetime::parseTheDay( Core\Text::trim( $value ), $this->default_calendar() );
 		}
 
 		return $value;
 	}
 
-	public function importer_posts_saved( object $post, array $atts = [] ): void
+	public function importer_posts_saved( object $post, array $arguments = [] ): void
 	{
 		if ( ! $post || ! $this->posttype_supported( $post->post_type ) )
 			return;
 
 		$prefix    = sprintf( '%s__', $this->key );
-		$default   = $this->default_calendar();
+		$type      = $this->default_calendar();
 		$calendars = $this->list_calendars();
 		$fields    = array_keys( $this->_get_importer_fields( $post->post_type ) );
-		$postmeta  = [ 'cal' => $default ]; // NOTE: `set_today_meta()` needs cal
+		$data      = [ 'cal' => $type ];
 
-		foreach ( $atts['extra_all'] ?? [] as $extra_key => $extra_data ) {
+		// Pre-fills with extra-all data.
+		foreach ( $arguments['extra_all'] ?? [] as $extra_key => $extra_data ) {
 
 			if ( ! in_array( $extra_key, $fields ) )
 				continue;
 
-			if ( ! $value = trim( $extra_data ) )
+			if ( ! $value = Core\Text::trim( $extra_data ) )
 				continue;
 
 			$key = Core\Text::stripPrefix( $extra_key, $prefix );
 
-			$postmeta[$key] = $extra_data;
+			// will override all data!
+			if ( 'full' === $key )
+				$data = gEditorial\Datetime::parseTheDay( $value, $data['cal'] );
+
+			else
+				$data[$key] = Core\Number::translate( $value );
+
+			// override the calendar type!
+			if ( 'cal' === $key )
+				$type = $value; // already sanitized!
 		}
 
-		foreach ( $atts['map'] ?? [] as $offset => $field ) {
+		// Checks for calendar type on current row.
+		foreach ( $arguments['map'] ?? [] as $offset => $field ) {
 
 			if ( ! in_array( $field, $fields ) )
 				continue;
 
-			if ( ! $value = trim( $atts['raw'][$offset] ) )
+			if ( ! $value = Core\Text::trim( $arguments['raw'][$offset] ) )
+				continue;
+
+			if ( $field !== ( $prefix.'cal' ) )
+				continue;
+
+			// override the calendar type!
+			$data['cal'] = Core\Date::sanitizeCalendar( $value, $type, $calendars );
+			break;
+		}
+
+		foreach ( $arguments['map'] ?? [] as $offset => $field ) {
+
+			if ( ! in_array( $field, $fields ) )
+				continue;
+
+			if ( ! $value = Core\Text::trim( $arguments['raw'][$offset] ) )
 				continue;
 
 			$key = Core\Text::stripPrefix( $field, $prefix );
 
-			// will override all data!
-			if ( 'full' == $key )
-				$postmeta = ModuleHelper::parseTheFullDay( $value, array_key_exists( 'cal', $postmeta ) ? $postmeta['cal'] : $default );
+			if ( 'cal' === $key )
+				continue; // already checked!
 
-			else if ( 'cal' == $key )
-				$postmeta[$key] = Core\Date::sanitizeCalendar( $value, $default, $calendars );
+			// will override all data!
+			if ( 'full' === $key )
+				$data = gEditorial\Datetime::parseTheDay( $value, $data['cal'] );
 
 			else
-				$postmeta[$key] = Core\Number::translate( $value );
+				$data[$key] = Core\Number::translate( $value );
 		}
 
-		if ( count( $postmeta ) ) // NOTE: `cal` only data will be ignored
-			$this->set_today_meta( $post->ID, $postmeta, $this->get_the_day_constants() );
+		// NOTE: `cal` only data will be ignored
+		if ( ! $this->store_today_for_post( $post->ID, $data, $this->get_the_day_constants() ) )
+			$this->log( 'FAILED', sprintf( 'cannot store today for post #%s', $post->ID ), $post->ID );
 	}
 
 	public function importer_posttype_extra_all(

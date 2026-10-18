@@ -48,43 +48,10 @@ class ModuleHelper extends gEditorial\Helper
 		return gEditorial\Datetime::makeMySQLFromArray( $array, NULL, FALSE );
 	}
 
-	// TODO: check minimum/max for day/month
-	// TODO: 4 digit year based on `$type`
-	public static function parseTheFullDay( $text, $type = NULL )
+	#[\Deprecated('USE `Datetime::parseTheDay()`')]
+	public static function parseTheFullDay( mixed $input, ?string $type = NULL ): array
 	{
-		if ( WordPress\Strings::isEmpty( $text ) )
-			return [];
-
-		$text = Core\Number::translate( trim( $text ) );
-		$text = trim( str_ireplace( [
-			' ',
-			'.',
-			'-',
-			'\\',
-		], '/', $text ) );
-
-		// NOTE: we can not determine 2 digits!
-		if ( 4 === strlen( $text ) )
-			return [
-				'cal'   => $type,
-				'year'  => $text,
-				'month' => '',
-				'day'   => '',
-			];
-
-		$parts = explode( '/', $text );
-
-		if ( 4 === strlen( $parts[2] ) )
-			$parts = array_reverse( $parts );
-
-		$temp = [
-			'cal'   => $type,
-			'year'  => $parts[0],
-			'month' => Core\Number::zeroise( $parts[1], 2 ),
-			'day'   => Core\Number::zeroise( $parts[2], 2 ),
-		];
-
-		return $temp;
+		return gEditorial\Datetime::parseTheDay( $input, $type );
 	}
 
 	#[\Deprecated()]

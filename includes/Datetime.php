@@ -881,4 +881,54 @@ class Datetime extends WordPress\Main
 
 		return $the_day;
 	}
+
+	// TODO: check minimum/max for day/month
+	// TODO: 4 digit year based on `$type`
+	// OLD: `::parseTheFullDay()`
+	public static function parseTheDay(
+		mixed $input,
+		?string $calendar_type = NULL,
+	): array {
+
+		if ( WordPress\Strings::isEmpty( $input ) )
+			return [];
+
+		if ( ! $data = Core\Text::trim( Core\Number::translate( $input ) ) )
+			return [];
+
+		$data = trim( str_ireplace( [
+			' ',
+			'.',
+			'-',
+			'\\',
+		], '/', $data ) );
+
+		// NOTE: we can not determine 2 digits!
+		if ( 4 === strlen( $data ) )
+			return [
+				'cal'   => $calendar_type,
+				'year'  => $data,
+				'month' => '',
+				'day'   => '',
+			];
+
+		// $parts = explode( '/', $data );
+		$parts = WordPress\Strings::getSeparated( $data, [
+			'\\',
+			'/',
+			'-',
+			'.',
+			'|',
+		] );
+
+		if ( 4 === strlen( $parts[2] ) )
+			$parts = array_reverse( $parts );
+
+		return [
+			'cal'   => $calendar_type,
+			'year'  => $parts[0],
+			'month' => Core\Number::zeroise( $parts[1], 2 ),
+			'day'   => Core\Number::zeroise( $parts[2], 2 ),
+		];
+	}
 }
