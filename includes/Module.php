@@ -185,12 +185,12 @@ class Module extends WordPress\Module
 		if ( 'frontonly' === $this->module->i18n && is_admin() )
 			return FALSE;
 
-		$domain = $domain ?? $this->get_textdomain();
+		$domain ??= $this->get_textdomain();
 
 		if ( ! $domain )
 			return FALSE;
 
-		$locale = $locale ?? apply_filters( 'plugin_locale',
+		$locale ??= apply_filters( 'plugin_locale',
 			Core\L10n::locale(),
 			$this->base
 		);

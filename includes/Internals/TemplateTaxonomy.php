@@ -303,8 +303,8 @@ trait TemplateTaxonomy
 				// NOTE: `renderTermIntro` absent!
 				'title'      => $html ? FALSE : NULL,
 				'title_link' => $html ? FALSE : WordPress\Taxonomy::link( $taxonomy, FALSE ),
-			]
-		);
+			],
+		) ?: '';
 
 		$html.= $list ?: $this->templatetaxonomy_get_empty_items( $taxonomy );
 
@@ -336,7 +336,7 @@ trait TemplateTaxonomy
 
 		return Core\Link::button(
 			$label ?? Services\CustomTaxonomy::getLabel( $object, 'add_new_item' ),
-			WordPress\Taxonomy::edit( $object, $extra )
+			WordPress\Taxonomy::edit( $object, $extra ),
 		);
 	}
 

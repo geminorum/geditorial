@@ -483,6 +483,7 @@ trait PostTypeFields
 				$sanitized = empty( $data ) ? FALSE : (int) $data;
 				break;
 
+			case 'price':
 			case 'venue':
 			case 'people':
 
@@ -654,7 +655,6 @@ trait PostTypeFields
 			case 'km_per_hour':
 			case 'millimetre' :
 			case 'centimetre' :
-			case 'price'      :
 			case 'number'     :
 
 				$sanitized = Core\Number::intval( $data );
@@ -823,6 +823,7 @@ trait PostTypeFields
 				case 'iban':
 				case 'bankcard':
 				case 'social':
+				case 'price':  // TODO: must use custom text input + code + validator: number + separator
 				case 'code':
 				case 'context':
 				case 'slug':
@@ -849,7 +850,6 @@ trait PostTypeFields
 					break;
 
 				case 'float'      :
-				case 'price'      :   // TODO: must use custom text input + code + validator: number + separator
 				case 'number'     :
 				case 'member'     :
 				case 'person'     :
@@ -988,7 +988,7 @@ trait PostTypeFields
 		if ( ! apply_filters( 'quick_edit_enabled_for_post_type', TRUE, $posttype ) )
 			return FALSE;
 
-		$fields = $fields ?? $this->get_posttype_fields( $posttype );
+		$fields ??= $this->get_posttype_fields( $posttype );
 
 		if ( ! $quickedits = Core\Arraay::filter( $fields, [ 'quickedit' => TRUE ] ) )
 			return FALSE;
@@ -1248,7 +1248,7 @@ trait PostTypeFields
 		);
 	}
 
-	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
+	#[\Deprecated( 'USE `Services\PostTypeFields::getPostByField()`' )]
 	protected function posttypefields_get_post_by( string $field_key, mixed $value, string $posttype_constant, bool $sanitize = FALSE, ?string $module = 'meta' ): false|object
 	{
 		if ( ! $field_key || ! $value || ! $posttype_constant || ! gEditorial()->enabled( $module ) )
@@ -1305,7 +1305,7 @@ trait PostTypeFields
 		return $list;
 	}
 
-	#[\Deprecated('USE `Services\PostTypeFields::getPostByField()`')]
+	#[\Deprecated( 'USE `Services\PostTypeFields::getPostByField()`' )]
 	public function get_postid_by_field( mixed $value, string $field, ?string $prefix = NULL ): false
 	{
 		$prefix ??= 'meta'; // the exception!
@@ -1870,7 +1870,7 @@ trait PostTypeFields
 			$strings[] = apply_filters( 'string_format_i18n', $sanitized );
 		}
 
-		$result =  $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
+		$result = $this->set_postmeta_field( $post->ID, $field['name'], WordPress\Strings::getPiped( $strings ) );
 
 		return $result ? count( $strings ) : FALSE;
 	}

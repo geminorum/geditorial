@@ -139,7 +139,7 @@ class Like extends gEditorial\Module
 
 	public function get_button( $post = NULL )
 	{
-		if ( ! $post = $post ?? $this->current_queried )
+		if ( ! $post ??= $this->current_queried )
 			return FALSE;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

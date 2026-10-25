@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 trait ModuleLinks
 {
-
 	// TODO: link to the `Customizer`
 	protected function get_module_links( bool $compact = FALSE ): array
 	{
@@ -54,10 +53,10 @@ trait ModuleLinks
 					'title'   => $compact
 						? _x( 'Reports', 'Module: Extra Link: Reports', 'geditorial-admin' )
 						: sprintf(
-						/* translators: `%s`: subtitle */
-						_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
-						is_array( $title ) ? $title['title'] : $title,
-					),
+							/* translators: `%s`: subtitle */
+							_x( '%s Reports', 'Module: Extra Link: Reports', 'geditorial-admin' ),
+							is_array( $title ) ? $title['title'] : $title,
+						),
 				];
 		}
 
@@ -74,10 +73,10 @@ trait ModuleLinks
 					'title'   => $compact
 						? _x( 'Tools', 'Module: Extra Link: Tools', 'geditorial-admin' )
 						: sprintf(
-						/* translators: `%s`: subtitle */
-						_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
-						is_array( $title ) ? $title['title'] : $title,
-					),
+							/* translators: `%s`: subtitle */
+							_x( '%s Tools', 'Module: Extra Link: Tools', 'geditorial-admin' ),
+							is_array( $title ) ? $title['title'] : $title,
+						),
 				];
 		}
 
@@ -94,10 +93,10 @@ trait ModuleLinks
 					'title'   => $compact
 						? _x( 'Roles', 'Module: Extra Link: Roles', 'geditorial-admin' )
 						: sprintf(
-						/* translators: `%s`: subtitle */
-						_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
-						is_array( $title ) ? $title['title'] : $title,
-					),
+							/* translators: `%s`: subtitle */
+							_x( '%s Roles', 'Module: Extra Link: Roles', 'geditorial-admin' ),
+							is_array( $title ) ? $title['title'] : $title,
+						),
 				];
 		}
 
@@ -114,10 +113,10 @@ trait ModuleLinks
 					'title'   => $compact
 						? _x( 'Imports', 'Module: Extra Link: Tools', 'geditorial-admin' )
 						: sprintf(
-						/* translators: `%s`: subtitle */
-						_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
-						is_array( $title ) ? $title['title'] : $title,
-					),
+							/* translators: `%s`: subtitle */
+							_x( '%s Imports', 'Module: Extra Link: Tools', 'geditorial-admin' ),
+							is_array( $title ) ? $title['title'] : $title,
+						),
 				];
 		}
 
@@ -133,10 +132,10 @@ trait ModuleLinks
 				'title'   => $compact
 					? _x( 'Settings', 'Module: Extra Link: Settings', 'geditorial-admin' )
 					: sprintf(
-					/* translators: `%s`: module title */
-					_x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ),
-					$this->module->title
-				),
+						/* translators: `%s`: module title */
+						_x( '%s Settings', 'Module: Extra Link: Settings', 'geditorial-admin' ),
+						$this->module->title,
+					),
 			];
 		}
 
@@ -152,10 +151,10 @@ trait ModuleLinks
 				'title'   => $compact
 					? _x( 'Docs', 'Module: Extra Link: Documentation', 'geditorial-admin' )
 					: sprintf(
-					/* translators: `%s`: module title */
-					_x( '%s Documentation', 'Module: Extra Link: Module Documentation', 'geditorial-admin' ),
-					$this->module->title
-				),
+						/* translators: `%s`: module title */
+						_x( '%s Documentation', 'Module: Extra Link: Module Documentation', 'geditorial-admin' ),
+						$this->module->title,
+					),
 			];
 
 		if ( 'config' !== $this->module->name && ! $compact )
@@ -210,17 +209,25 @@ trait ModuleLinks
 
 		$context ??= 'mainpage';
 
-		$page = in_array( $context, [ 'mainpage', 'adminmenu' ], TRUE )
+		$page = in_array( $context, [
+			'mainpage',
+			'adminmenu',
+		], TRUE )
 			? $this->classs()
 			: $this->classs( $context );
 
 		if ( ! $full )
 			return $page;
 
-		if ( is_null( $admin_base ) )
-			$admin_base = in_array( $context, [ 'adminmenu', 'printpage', 'framepage', 'newpost', 'importitems' ], TRUE )
-				? get_admin_url( NULL, 'index.php' )
-				: get_admin_url( NULL, 'admin.php' );
+		$admin_base ??= in_array( $context, [
+			'adminmenu',
+			'printpage',
+			'framepage',
+			'newpost',
+			'importitems',
+		], TRUE )
+			? get_admin_url( NULL, 'index.php' )
+			: get_admin_url( NULL, 'admin.php' );
 
 		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), $admin_base );
 	}
@@ -230,8 +237,8 @@ trait ModuleLinks
 	{
 		if ( $this->_paired && method_exists( $this, 'paired_get_constants' ) ) {
 
-			// if ( $constants = $this->paired_get_constants() )
-			// 	return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );
+			// `if ( $constants = $this->paired_get_constants() )`
+			// 	`return $this->paired_do_get_to_posts( $constants[0], $constants[1], $post, $single, $published );`
 
 			// NOTE: `published` status is the only available on non-admin
 			if ( $linked = $this->paired_all_connected_from( $post, NULL ) )
@@ -243,12 +250,12 @@ trait ModuleLinks
 
 	protected function modulelinks__hook_calendar_linked_post( ?object $screen = NULL, ?string $module = NULL ): bool
 	{
-		$module = $module ?? 'schedule';
+		$module ??= 'schedule';
 
 		if ( ! gEditorial\Settings::isScreenContext( $module, $screen ) )
 			return FALSE;
 
-		add_filter( $this->classs_base( $module, 'post_row_title' ),
+		return add_filter( $this->classs_base( $module, 'post_row_title' ),
 			function ( $title, $post, $the_day, $calendar_args )
 				use ( $module ) {
 
@@ -261,8 +268,6 @@ trait ModuleLinks
 				return sprintf( '%s – %s', $title, WordPress\Post::title( $linked ) );
 
 			}, 12, 4 );
-
-		return TRUE;
 	}
 
 	protected function modulelinks__register_headerbuttons( ?array $contexts = NULL ): array
@@ -296,16 +301,14 @@ trait ModuleLinks
 			if ( ! $this->cuc( $context, 'manage_options' ) )
 				continue;
 
-			$args = [
+			Services\HeaderButtons::register( self::und( 'module', $context ), [
 				'text'     => $text,
 				'link'     => $this->get_module_url( $context ),
 				'title'    => WordPress\Strings::makeTitleAttribute( $this->module->title, $this->module->desc ),
 				'icon'     => $this->modulelinks__get_context_icon( $context, FALSE ),
 				'class'    => '-link-to-'.$context,
 				'priority' => 20,
-			];
-
-			Services\HeaderButtons::register( self::und( 'module', $context ), $args );
+			] );
 		}
 
 		return $contexts;
@@ -330,7 +333,7 @@ trait ModuleLinks
 	protected function modulelinks__register_posttype_export_headerbuttons(
 		string $constant_or_posttype,
 		?string $context = 'reports',
-		bool $check = TRUE,
+		bool    $check   = TRUE,
 	): false|string {
 
 		if ( ! method_exists( $this, 'exports_get_export_links' ) )

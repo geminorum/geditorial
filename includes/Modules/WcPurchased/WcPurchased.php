@@ -214,8 +214,8 @@ class WcPurchased extends gEditorial\Module
 			FROM `{$wpdb->prefix}woocommerce_order_items` AS `items`
 			INNER JOIN `{$wpdb->prefix}woocommerce_order_itemmeta` AS `itemmeta`
 			ON `items`.`order_item_id` = `itemmeta`.`order_item_id`
-			WHERE `items`.`order_item_type` IN('line_item')
-			AND `itemmeta`.`meta_key` IN('_product_id')
+			WHERE `items`.`order_item_type` IN ('line_item')
+			AND `itemmeta`.`meta_key` IN ('_product_id')
 			GROUP BY `items`.`order_item_id`
 			HAVING `product_id` = %d",
 		$product_id );

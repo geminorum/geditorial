@@ -506,7 +506,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $post->post_type.'_posttype_url_template' ) )
 			return FALSE;
 
-		$metakey = $metakey ?? $this->_get_posttype_metakey( $post->post_type );
+		$metakey ??= $this->_get_posttype_metakey( $post->post_type );
 
 		if ( ! $reference = get_post_meta( $post->ID, $metakey, TRUE ) )
 			return FALSE;
@@ -555,7 +555,7 @@ class StaticCovers extends gEditorial\Module
 		return $list;
 	}
 
-	private function _get_posttype_image( $post, $metakey = NULL )
+	private function _get_posttype_image( mixed $post, ?string $metakey = NULL ): false|string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -563,7 +563,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $post->post_type.'_posttype_url_template' ) )
 			return FALSE;
 
-		$metakey = $metakey ?? $this->_get_posttype_metakey( $post->post_type );
+		$metakey ??= $this->_get_posttype_metakey( $post->post_type );
 
 		if ( ! $reference = get_post_meta( $post->ID, $metakey, TRUE ) )
 			return FALSE;
@@ -597,7 +597,7 @@ class StaticCovers extends gEditorial\Module
 	}
 
 	// NOTE: counter starts from `0`
-	private function _get_taxonomy_images( $term, $metakey = NULL )
+	private function _get_taxonomy_images( mixed $term, ?string $metakey = NULL ): false|array
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
@@ -608,7 +608,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $term->taxonomy.'_taxonomy_url_template' ) )
 			return FALSE;
 
-		$metakey = $metakey ?? $this->_get_posttype_metakey( $term->taxonomy );
+		$metakey ??= $this->_get_posttype_metakey( $term->taxonomy );
 
 		if ( ! $reference = get_term_meta( $term->term_id, $metakey, TRUE ) )
 			return FALSE;
@@ -658,7 +658,7 @@ class StaticCovers extends gEditorial\Module
 		return $list;
 	}
 
-	private function _get_taxonomy_image( $term, $metakey = NULL )
+	private function _get_taxonomy_image( mixed $term, ?string $metakey = NULL ): false|string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
@@ -666,7 +666,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $url_template = $this->get_setting( $term->taxonomy.'_taxonomy_url_template' ) )
 			return FALSE;
 
-		$metakey = $metakey ?? $this->_get_posttype_metakey( $term->taxonomy );
+		$metakey ??= $this->_get_posttype_metakey( $term->taxonomy );
 
 		if ( ! $reference = get_term_meta( $term->term_id, $metakey, TRUE ) )
 			return FALSE;
@@ -899,7 +899,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
 			return $content;
 
-		$args['check'] = $args['check'] ?? 'read_post';
+		$args['check'] ??= 'read_post';
 
 		if ( $args['check'] && ! WordPress\Post::can( $post, $args['check'] ) )
 			return $content;
@@ -909,7 +909,7 @@ class StaticCovers extends gEditorial\Module
 
 		$title = WordPress\Post::title( $post );
 
-		$args['alt'] = $args['alt'] ?? $title;
+		$args['alt'] ??= $title;
 
 		$html = Core\HTML::tag( 'img', [
 			'src'     => $src,
@@ -932,7 +932,7 @@ class StaticCovers extends gEditorial\Module
 
 		if ( $args['figure'] ) {
 
-			$args['caption'] = $args['caption'] ?? $title;
+			$args['caption'] ??= $title;
 
 			if ( $args['caption'] )
 				$html.= '<figcaption class="figure-caption">'.$args['caption'].'</figcaption>';
@@ -976,7 +976,7 @@ class StaticCovers extends gEditorial\Module
 		if ( ! $term = WordPress\Term::get( $args['id'] ) )
 			return $content;
 
-		$args['check'] = $args['check'] ?? FALSE; // default is viewable
+		$args['check'] ??= FALSE; // default is viewable
 
 		if ( $args['check'] && ! WordPress\Term::can( $term, $args['check'] ) )
 			return $content;
@@ -986,7 +986,7 @@ class StaticCovers extends gEditorial\Module
 
 		$title = WordPress\Term::title( $term );
 
-		$args['alt'] = $args['alt'] ?? $title;
+		$args['alt'] ??= $title;
 
 		$html = Core\HTML::tag( 'img', [
 			'src'     => $src,
@@ -1009,7 +1009,7 @@ class StaticCovers extends gEditorial\Module
 
 		if ( $args['figure'] ) {
 
-			$args['caption'] = $args['caption'] ?? $title;
+			$args['caption'] ??= $title;
 
 			if ( $args['caption'] )
 				$html.= '<figcaption class="figure-caption">'.$args['caption'].'</figcaption>';

@@ -206,6 +206,7 @@ class Course extends gEditorial\Module
 					'datestart'         => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'dateend'           => [ 'type' => 'datetime', 'quickedit' => TRUE ],
 					'content_fee'       => [ 'type' => 'price' ],
+					'cost_string'       => [ 'type' => 'price' ],
 					'content_embed_url' => [ 'type' => 'embed' ],
 					'text_source_url'   => [ 'type' => 'text_source' ],
 					'audio_source_url'  => [ 'type' => 'audio_source' ],

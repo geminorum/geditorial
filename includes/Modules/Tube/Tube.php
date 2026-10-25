@@ -369,7 +369,7 @@ class Tube extends gEditorial\Module
 
 				$this->o2o_register_metabox_to(
 					'primary_posttype_connected',
-					$this->constant( 'primary_posttype' ),
+					[ $this->constant( 'primary_posttype' ) ],
 					$screen
 				);
 

@@ -911,7 +911,7 @@ class Cartable extends gEditorial\Module
 
 	private function get_user_groups( ?int $user_id = NULL )
 	{
-		$user_id = $user_id ?? get_current_user_id();
+		$user_id ??= get_current_user_id();
 
 		return wp_get_object_terms( (int) $user_id, $this->constant( 'group_ref' ) );
 	}

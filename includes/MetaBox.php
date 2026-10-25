@@ -534,7 +534,7 @@ class MetaBox extends WordPress\Main
 		if ( FALSE === $edit )
 			return FALSE;
 
-		$edit = $edit ?? WordPress\Taxonomy::edit( $taxonomy, $posttype ? [ 'post_type' => $posttype ] : [] );
+		$edit ??= WordPress\Taxonomy::edit( $taxonomy, $posttype ? [ 'post_type' => $posttype ] : [] );
 
 		if ( $edit )
 			$html = Core\HTML::tag( 'a', [
@@ -577,7 +577,7 @@ class MetaBox extends WordPress\Main
 		return TRUE;
 	}
 
-	#[\Deprecated('USE `WordPress\MetaBox::markupTitleAction()`')]
+	#[\Deprecated( 'USE `WordPress\MetaBox::markupTitleAction()`' )]
 	public static function getTitleAction( string|array|false $action ): string
 	{
 		return WordPress\MetaBox::markupTitleAction( $action );
@@ -592,7 +592,7 @@ class MetaBox extends WordPress\Main
 		] );
 	}
 
-	#[\Deprecated('USE `WordPress\MetaBox::markupTitleInfo()`')]
+	#[\Deprecated( 'USE `WordPress\MetaBox::markupTitleInfo()`' )]
 	public static function titleActionInfo( string $info ): string
 	{
 		return WordPress\MetaBox::markupTitleInfo( $info );
@@ -783,7 +783,7 @@ class MetaBox extends WordPress\Main
 	): void {
 
 		// NOTE: allows for a parent of different type
-		$posttype = $posttype ?? $post->post_type;
+		$posttype ??= $post->post_type;
 
 		$object = WordPress\PostType::object( $posttype );
 
@@ -1222,6 +1222,15 @@ class MetaBox extends WordPress\Main
 
 				break;
 
+			case 'price':
+
+				$atts['data']['ortho'] = 'text';
+				$atts['data']['validator'] = 'price';
+
+				$wrap[] = '-inputprice';
+
+				break;
+
 			case 'year':
 
 				$atts['dir'] = 'ltr';
@@ -1314,7 +1323,7 @@ class MetaBox extends WordPress\Main
 			case 'postcode':
 
 				$atts['dir']     = 'ltr';
-				$atts['pattern'] = $atts['pattern'] ?? Core\PostCode::getHTMLPattern();
+				$atts['pattern'] ??= Core\PostCode::getHTMLPattern();
 
 				$atts['data']['validator'] = 'postcode';
 

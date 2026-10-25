@@ -889,7 +889,7 @@ class Calendars extends gEditorial\Service
 	 * @param string $default
 	 * @return string
 	 */
-	#[\Deprecated('USE `Core\Date::sanitizeCalendar()`')]
+	#[\Deprecated( 'USE `Core\Date::sanitizeCalendar()`' )]
 	public static function sanitize( ?string $calendar, ?string $default = NULL ): string|null
 	{
 		$default   ??= Core\L10n::calendar();

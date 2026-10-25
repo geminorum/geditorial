@@ -467,8 +467,8 @@ class Addendum extends gEditorial\Module
 				return $content;
 		}
 
-		$args['template'] = $args['template'] ?? 'downloadbox';
-		$args['render']   = $args['render']   ?? [ WordPress\Theme::class, 'render_post_template' ];
+		$args['template'] ??= 'downloadbox';
+		$args['render']   ??= [ WordPress\Theme::class, 'render_post_template' ];
 
 		if ( ! $template = $this->locate_template_part( $args['template'], $args['context'] ) ) {
 			$this->log( 'CRITICAL', sprintf( 'TEMPLATE NOT FOUND: %s', $args['template'] ) );

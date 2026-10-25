@@ -77,7 +77,7 @@ trait CoreHooks
 		if ( ! WordPress\IsIt::ajaxAdmin() )
 			return FALSE;
 
-		$request = $request ?? $_REQUEST;
+		$request ??= $_REQUEST;
 
 		if ( empty( $request['bulk_edit'] )
 			&& ( empty( $request['action'] ) || 'inline-save' != $request['action'] ) )

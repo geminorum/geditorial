@@ -217,7 +217,7 @@ class TermRelations extends gEditorial\Service
 
 	private static function _getData( $post, $taxonomy, $terms = NULL, $context = 'view' )
 	{
-		$terms = $terms ?? get_the_terms( $post, $taxonomy ); // hits the cache
+		$terms ??= get_the_terms( $post, $taxonomy ); // hits the cache
 
 		if ( ! $terms || is_wp_error( $terms ) )
 			return [];
@@ -291,7 +291,7 @@ class TermRelations extends gEditorial\Service
 
 	public static function getPostTypes( $taxonomies = NULL )
 	{
-		$taxonomies = $taxonomies ?? self::getTaxonomies();
+		$taxonomies ??= self::getTaxonomies();
 
 		if ( empty( $taxonomies ) )
 			return [];

@@ -1713,7 +1713,7 @@ class ShortCode extends WordPress\Main
 		$query = [];
 		$html  = $ref = $parent = '';
 
-		$args['module'] = $args['module'] ?? static::MODULE;
+		$args['module'] ??= static::MODULE;
 
 		if ( $args['item_cb'] && ! is_callable( $args['item_cb'] ) )
 			$args['item_cb'] = FALSE;
@@ -1760,8 +1760,8 @@ class ShortCode extends WordPress\Main
 			] ];
 		}
 
-		$query['order']   = $query['order']   ?? $args['order'];
-		$query['orderby'] = $query['orderby'] ?? ( $args['orderby'] ?: 'name' );
+		$query['order']   ??= $args['order'];
+		$query['orderby'] ??= $args['orderby'] ?: 'name';
 
 		// FIXME: support sort by meta
 		if ( 'order' === $args['orderby'] )

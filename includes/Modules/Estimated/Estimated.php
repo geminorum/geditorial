@@ -253,7 +253,7 @@ class Estimated extends gEditorial\Module
 		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_post_wordcount' ) );
 	}
 
-	#[\Deprecated('USE `get_estimated_for_post()`')]
+	#[\Deprecated( 'USE `get_estimated_for_post()`' )]
 	public function get_estimated( int $post_id, ?string $prefix = NULL ): string
 	{
 		return $this->get_estimated_for_post( $post_id, $prefix );

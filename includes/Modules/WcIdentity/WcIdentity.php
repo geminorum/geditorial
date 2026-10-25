@@ -200,7 +200,7 @@ class WcIdentity extends gEditorial\Module
 		wc_enqueue_js( "$('p#account_identity_number_field').insertAfter($('input#account_display_name').parent());" );
 	}
 
-	public function save_account_details_numberfield( $user_id )
+	public function save_account_details_numberfield( int $user_id ): void
 	{
 		if ( array_key_exists( 'account_identity_number', $_POST ) )
 			update_user_meta( $user_id, $this->constant( 'metakey_user_identity_number' ),
@@ -208,7 +208,7 @@ class WcIdentity extends gEditorial\Module
 					sanitize_text_field( $_POST['account_identity_number'] ) ) );
 	}
 
-	public function save_account_details_errors_numberfield( &$errors, &$user )
+	public function save_account_details_errors_numberfield( object &$errors, object &$user ): void
 	{
 		$identity_number = sanitize_text_field( self::unslash( $_POST['account_identity_number'] ) );
 
@@ -231,14 +231,14 @@ class WcIdentity extends gEditorial\Module
 		}
 	}
 
-	public function save_account_details_required_fields_numberfield( $fields )
+	public function save_account_details_required_fields_numberfield( array $fields ): array
 	{
 		return array_merge( $fields, [
 			'account_identity_number' => _x( 'Identity Number', 'Account Field Required', 'geditorial-wc-identity' ),
 		] );
 	}
 
-	public function register_form_numberfield()
+	public function register_form_numberfield(): void
 	{
 		$identity_number = [
 			'type'        => 'text',
@@ -258,7 +258,7 @@ class WcIdentity extends gEditorial\Module
 		woocommerce_form_field( 'account_identity_number', $identity_number );
 	}
 
-	public function created_customer_numberfield( $customer_id )
+	public function created_customer_numberfield( int $customer_id ): void
 	{
 		$this->save_account_details_numberfield( $customer_id );
 	}

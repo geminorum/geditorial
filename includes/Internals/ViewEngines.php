@@ -88,10 +88,10 @@ trait ViewEngines
 	}
 
 	// @SEE: https://github.com/bobthecow/mustache.php/wiki/Mustache-Tags
-	#[\Deprecated('USE `$this->viewengine__render()`')]
+	#[\Deprecated( 'USE `$this->viewengine__render()`' )]
 	protected function render_view( string $part, array $data = [], ?string $path = NULL, bool $verbose = TRUE ): true|string
 	{
-		$path = $path ?? $this->get_view_path();
+		$path ??= $this->get_view_path();
 
 		if ( empty( $this->view_engines[$path] ) )
 			$this->view_engines[$path] = $this->viewengine__get( $path );
@@ -248,7 +248,7 @@ trait ViewEngines
 	#[\Deprecated()]
 	protected function get_view_path( false|string $part = FALSE, ?string $path = NULL ): string
 	{
-		$path = $path ?? ( $this->path.'views' );
+		$path ??= ( $this->path.'views' );
 
 		return $part ? sprintf( '%s/%s.mustache', $path, $part ) : $path;
 	}

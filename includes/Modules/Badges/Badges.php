@@ -210,7 +210,7 @@ class Badges extends gEditorial\Module
 
 	public function get_rendered_badges( mixed $post = NULL, ?array $badges = NULL, null|false|string $fallback = '' ): null|false|string
 	{
-		if ( ! $badges = $badges ?? $this->get_badges( $post ) )
+		if ( ! $badges ??= $this->get_badges( $post ) )
 			return $fallback;
 
 		$html     = '';

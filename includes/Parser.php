@@ -372,7 +372,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV_Legacy()`
-	#[\Deprecated('USE `Parser::fromCSV()`')]
+	#[\Deprecated( 'USE `Parser::fromCSV()`' )]
 	public static function fromCSV_Legacy( false|string $file_path, ?int $limit = NULL ): false|array
 	{
 		if ( empty( $file_path ) )
@@ -544,7 +544,7 @@ class Parser extends WordPress\Main
 		return $data;
 	}
 
-	#[\Deprecated('USE `Parser::fromTXT()`')]
+	#[\Deprecated( 'USE `Parser::fromTXT()`' )]
 	public static function fromTXT_Legacy( string $file_path ): array
 	{
 		return Core\Text::splitLines( Core\File::getContents( $file_path ) );
@@ -663,7 +663,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseJSON()`
-	#[\Deprecated('USE `Parser::fromJSON()`')]
+	#[\Deprecated( 'USE `Parser::fromJSON()`' )]
 	public static function fromJSON_Legacy( false|string $file_path ): false|array
 	{
 		if ( empty( $file_path ) )
@@ -698,7 +698,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseXML()`
-	#[\Deprecated('USE `Parser::fromXML()`')]
+	#[\Deprecated( 'USE `Parser::fromXML()`' )]
 	public static function fromXML_Legacy( false|string $file_path ): false|array
 	{
 		if ( empty( $file_path ) || ! function_exists( 'xml_parser_create' ) )
@@ -761,7 +761,7 @@ class Parser extends WordPress\Main
 		if ( $user = gEditorial()->user() )
 			$writer->setAuthor( get_userdata( $user )->display_name );
 
-		$sheet = $sheet ?? 'Sheet1';
+		$sheet ??= 'Sheet1';
 
 		// @SEE: https://github.com/maksimovic/PHP_XLSXWriter/blob/master/examples/ex13-multiple-sheets-properties.php
 		if ( is_null( $options ) )

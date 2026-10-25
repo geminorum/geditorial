@@ -27,7 +27,7 @@ class TaxonomyFields extends gEditorial\Service
 		$suitables = [];
 
 		foreach ( $object->{static::SUITABLE_METAS_PROP} as $field => $args ) {
-			$args = $args ?? [];
+			$args ??= [];
 
 			// `NULL`: default
 			// `FALSE`: disable

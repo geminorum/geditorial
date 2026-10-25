@@ -68,7 +68,7 @@ class ModuleTemplate extends gEditorial\Template
 		return parent::postImage( $atts, static::MODULE );
 	}
 
-	#[\Deprecated('USE `Template::theCover()`')]
+	#[\Deprecated( 'USE `Template::theCover()`' )]
 	public static function theIssueCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )
@@ -77,7 +77,7 @@ class ModuleTemplate extends gEditorial\Template
 		return self::cover( $atts );
 	}
 
-	#[\Deprecated('USE `Template::cover()`')]
+	#[\Deprecated( 'USE `Template::cover()`' )]
 	public static function issueCover( array $atts = [] ): bool|string
 	{
 		if ( ! array_key_exists( 'id', $atts ) )

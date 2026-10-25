@@ -357,7 +357,7 @@ class Drafts extends gEditorial\Module
 	public function get_preview_url( $post_id, $key = NULL )
 	{
 		$url = get_permalink( $post_id );
-		$key = $key ?? get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE );
+		$key ??= get_post_meta( $post_id, $this->constant( 'metakey_secret' ), TRUE );
 
 		return $key ? add_query_arg( $this->constant( 'public_queryvar' ), $key, $url ) : $url;
 	}

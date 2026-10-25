@@ -225,7 +225,7 @@ class ModuleHelper extends gEditorial\Helper
 			return $args['default'];
 
 		$html = '';
-		$args['callback'] = $args['callback'] ?? [ __NAMESPACE__.'\\ModuleTemplate', 'renderTermIntro' ];
+		$args['callback'] ??= [ __NAMESPACE__.'\\ModuleTemplate', 'renderTermIntro' ];
 
 		foreach ( $list as $item ) {
 

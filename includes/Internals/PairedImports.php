@@ -76,7 +76,7 @@ trait PairedImports
 		], 'importitems' );
 
 		$title = _x( 'Import Items via File or Paste', 'Internal: PairedImports: Button Title', 'geditorial' );
-		$label = $label ?? sprintf(
+		$label ??= sprintf(
 			/* translators: `%s`: icon markup */
 			_x( '%s Upload', 'Internal: PairedImports: Button Label', 'geditorial' ),
 			Services\Icons::get( 'upload' )

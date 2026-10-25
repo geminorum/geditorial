@@ -794,8 +794,9 @@ class Today extends gEditorial\Module
 
 		$type      = $this->default_calendar();
 		$constants = $this->get_the_day_constants();
-		$the_day   = $the_day ?? ModuleHelper::getTheDayFromQuery( NULL, FALSE, $constants );
-		$count     = count( array_filter( (array) $the_day ) );
+
+		$the_day ??= ModuleHelper::getTheDayFromQuery( NULL, FALSE, $constants );
+		$count   = count( array_filter( (array) $the_day ) );
 
 		if ( ! $count ) {
 

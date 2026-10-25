@@ -87,7 +87,7 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getDefaultLabelsForTypeOptions( ?array $type_options = NULL, ?string $context = NULL ): array
 	{
 		$list         = [];
-		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$type_options ??= self::getTypeOptions( $context );
 
 		foreach ( $type_options as $type_option )
 			$list[$type_option['name']] = [
@@ -101,7 +101,7 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getDefaultDescriptionsForTypeOptions( ?array $type_options = NULL, ?string $context = NULL ): array
 	{
 		$list         = [];
-		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$type_options ??= self::getTypeOptions( $context );
 
 		foreach ( $type_options as $type_option )
 			$list[$type_option['name']] = [
@@ -115,7 +115,7 @@ class ModuleHelper extends gEditorial\Helper
 	// NOTE: assumes link already sanitized and valid!
 	public static function extractTypeOptionFromLink( string $link, ?array $type_options = NULL, ?string $context = NULL ): string
 	{
-		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$type_options ??= self::getTypeOptions( $context );
 		$relative     = Core\URL::isRelative( $link );
 		$local        = $relative ?: Core\URL::isLocal( $link );
 
@@ -154,7 +154,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( static::DEFAULT_TYPE_OPTION === $type )
 			return '';
 
-		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$type_options ??= self::getTypeOptions( $context );
 		$relative     = Core\URL::isRelative( $link );
 		$local        = $relative ?: Core\URL::isLocal( $link );
 
@@ -193,7 +193,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( static::DEFAULT_TYPE_OPTION === $type )
 			return $link;
 
-		$type_options = $type_options ?? self::getTypeOptions( $context );
+		$type_options ??= self::getTypeOptions( $context );
 		$relative     = Core\URL::isRelative( $link );
 		$local        = $relative ?: Core\URL::isLocal( $link );
 
@@ -225,7 +225,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( ! empty( $data[$context] ) )
 			return $data[$context];
 
-		$path = $path ?? self::path( $context );
+		$path ??= self::path( $context );
 		$home = get_bloginfo( 'url' );
 
 		return $data[$context] = [

@@ -82,7 +82,7 @@ trait QuantumComments
 
 	protected function quantumcomments__is_comment_type( array|object $data_or_comment, ?string $type = NULL ): bool
 	{
-		$type = $type ?? $this->quantumcomments__get_comment_type();
+		$type ??= $this->quantumcomments__get_comment_type();
 
 		if ( is_object( $data_or_comment ) )
 			return property_exists( $data_or_comment, 'comment_type' )

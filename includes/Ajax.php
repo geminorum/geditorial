@@ -35,7 +35,7 @@ class Ajax extends WordPress\Main
 
 	public static function successMessage( ?string $message = NULL ): void
 	{
-		$message = $message ?? Plugin::done( FALSE );
+		$message ??= Plugin::done( FALSE );
 
 		if ( $message )
 			self::success( Core\HTML::success( $message, FALSE, '-via-ajax' ) );
@@ -54,7 +54,7 @@ class Ajax extends WordPress\Main
 		if ( $message && self::isError( $message ) )
 			$message = $message->get_error_message();
 
-		$message = $message ?? Plugin::wrong( FALSE );
+		$message ??= Plugin::wrong( FALSE );
 
 		if ( $message )
 			self::error( Core\HTML::error( $message, FALSE, '-via-ajax' ) );

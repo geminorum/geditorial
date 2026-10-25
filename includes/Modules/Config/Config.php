@@ -315,7 +315,7 @@ class Config extends gEditorial\Module
 
 	private function _render_page_by_context( string $context, $title = NULL, $extra_subs = NULL ): bool
 	{
-		$title    = $title ?? _x( 'Configurations', 'Page Title', 'geditorial-admin' );
+		$title    ??= _x( 'Configurations', 'Page Title', 'geditorial-admin' );
 		$can      = $this->cuc( $context );
 		$uri      = gEditorial\Settings::getURLbyContext( $context );
 		$overview = method_exists( $this, self::und( $context, 'overview' ) );
@@ -769,7 +769,7 @@ class Config extends gEditorial\Module
 
 	private function renderCard_tools_options( $form, $system = NULL )
 	{
-		$system = $system ?? gEditorial\Plugin::system();
+		$system ??= gEditorial\Plugin::system();
 
 		echo gEditorial\Settings::toolboxCardOpen( sprintf(
 			/* translators: `%s`: editorial system title */
@@ -834,7 +834,7 @@ class Config extends gEditorial\Module
 
 	private function renderCard_tools_maintenance( array $form, ?string $system ): bool
 	{
-		$system = $system ?? gEditorial\Plugin::system();
+		$system ??= gEditorial\Plugin::system();
 
 		echo gEditorial\Settings::toolboxCardOpen( sprintf(
 			/* translators: `%s`: editorial system title */
@@ -862,7 +862,7 @@ class Config extends gEditorial\Module
 
 	private function renderCard_tools_o2o( array $form, ?string $system ): bool
 	{
-		$system = $system ?? gEditorial\Plugin::system();
+		$system ??= gEditorial\Plugin::system();
 		$counts = Services\O2O\API::getConnectionCounts();
 
 		if ( empty( $counts ) )

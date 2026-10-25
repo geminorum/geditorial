@@ -58,11 +58,11 @@ trait PairedCore
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 
-		$supported = $supported ?? $this->posttypes();
+		$supported ??= $this->posttypes();
 
 		// NOTE: better to be set per module bases
-		// if ( ! array_key_exists( 'ical_source', $settings ) )
-		// 	$settings['ical_source'] = 'paired';
+		// `if ( ! array_key_exists( 'ical_source', $settings ) )`
+		// 	`$settings['ical_source'] = 'paired';`
 
 		if ( count( $supported ) ) {
 
@@ -235,7 +235,7 @@ trait PairedCore
 			}, 10, 4 );
 	}
 
-	#[\Deprecated('USE `$this->paired_register()`')]
+	#[\Deprecated( 'USE `$this->paired_register()`' )]
 	protected function paired_register_objects( $posttype, $paired, $subterm = FALSE, $primary = FALSE, $private = FALSE, $extra = [], $supported = NULL )
 	{
 		return $this->paired_register( $extra, [], [], $supported );
@@ -382,7 +382,7 @@ trait PairedCore
 	 * @param string $context
 	 * @return array
 	 */
-	#[\Deprecated('USE `$this->hook_paired_tabloid_exclude_rendered()`')]
+	#[\Deprecated( 'USE `$this->hook_paired_tabloid_exclude_rendered()`' )]
 	public function tabloid_view_data_for_post_paired_supported( array $data, object $post, ?string $context ): array
 	{
 		if ( ! $this->posttype_supported( $post->post_type ) || empty( $data['terms_rendered'] ) )
@@ -1041,7 +1041,7 @@ trait PairedCore
 	}
 
 	// OLD: `set_linked_term()`
-	#[\Deprecated('USE `Services\Paired::doPair()`')]
+	#[\Deprecated( 'USE `Services\Paired::doPair()`' )]
 	public function paired_set_to_term( mixed $post, mixed $term ): bool
 	{
 		return Services\Paired::doPair( $post, $term );
@@ -1101,7 +1101,7 @@ trait PairedCore
 	}
 
 	// PAIRED API: get (from) posts connected to the pair
-	#[\Deprecated('USE `paired_all_connected_to()`')]
+	#[\Deprecated( 'USE `paired_all_connected_to()`' )]
 	public function paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		if ( is_null( $term_id ) )
@@ -1137,7 +1137,7 @@ trait PairedCore
 
 	// NOTE: must be public
 	// NOTE: returns sorted results
-	#[\Deprecated('USE `paired_all_connected_from()`')]
+	#[\Deprecated( 'USE `paired_all_connected_from()`' )]
 	public function paired_do_get_to_posts( $posttype_constant_key, $tax_constant_key, $post = NULL, $single = FALSE, $published = TRUE )
 	{
 		$admin   = is_admin();

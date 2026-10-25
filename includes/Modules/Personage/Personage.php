@@ -487,7 +487,7 @@ class Personage extends gEditorial\Module
 
 				$this->corerestrictposts__hook_screen_taxonomies( $restricted );
 
-				// $this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );
+				// `$this->postmeta__hook_meta_column_row( $screen->post_type, TRUE );`
 			}
 		}
 	}
@@ -894,7 +894,7 @@ class Personage extends gEditorial\Module
 		if ( empty( $this->cache['fullnames'][$context] ) )
 			$this->cache['fullnames'][$context] = [];
 
-		if ( ! ( $names = $names ?? $this->_get_human_names( $post ) ) )
+		if ( ! ( $names ??= $this->_get_human_names( $post ) ) )
 			return $fallback;
 
 		$fullname = $this->filters( 'make_human_title',

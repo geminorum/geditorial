@@ -371,7 +371,7 @@ class Socialite extends gEditorial\Module
 			return '';
 
 		$list   = [];
-		$fields = $fields ?? array_merge( [
+		$fields ??= array_merge( [
 			// adds before the list
 			'_contact',
 			'_email',
@@ -437,7 +437,7 @@ class Socialite extends gEditorial\Module
 			return '';
 
 		$list   = [];
-		$fields = $fields ?? array_merge( [
+		$fields ??= array_merge( [
 			// adds before the list
 			'_contact',
 			'_email',

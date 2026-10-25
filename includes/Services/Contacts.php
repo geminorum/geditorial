@@ -13,8 +13,14 @@ class Contacts extends gEditorial\Service
 		add_filter( self::und( static::BASE, 'prep_contact' ), [ __CLASS__, 'filter_prep_contact_legacy' ], 5, 5 );
 	}
 
-	public static function prepContact( mixed $value, ?string $context = NULL, null|false|string $empty = '', ?string $separator = NULL, null|string|array $delimiters = NULL ): null|false|string
-	{
+	public static function prepContact(
+		mixed             $value,
+		?string           $context    = NULL,
+		null|false|string $empty      = '',
+		?string           $separator  = NULL,
+		null|string|array $delimiters = NULL,
+	): null|false|string {
+
 		if ( self::empty( $value ) )
 			return $empty;
 
@@ -73,10 +79,10 @@ class Contacts extends gEditorial\Service
 	 * @return string
 	 */
 	public static function prepContact_Legacy(
-		string $value,
+		string  $value,
 		?string $title = NULL,
-		mixed $empty = '',
-		bool $icon = FALSE,
+		mixed   $empty = '',
+		bool    $icon  = FALSE,
 	): mixed {
 
 		if ( self::empty( $value ) )
@@ -110,6 +116,7 @@ class Contacts extends gEditorial\Service
 				? Core\HTML::tag( 'span', [ 'title' => $value ], Icons::get( [ 'misc-16', 'patch-question-fill' ] ) )
 				: Core\HTML::escape( $value );
 
+		// @hook: `geditorial_prep_contact_legacy`
 		return apply_filters( self::und( static::BASE, 'prep', 'contact', 'legacy' ),
 			$prepared,
 			$value,

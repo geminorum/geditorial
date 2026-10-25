@@ -40,7 +40,7 @@ class Paired extends gEditorial\Service
 
 		wp_set_object_terms( $post->ID, $term->term_id, $term->taxonomy, FALSE );
 
-		$image_metakey = $image_metakey ?? TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
+		$image_metakey ??= TaxonomyFields::getTermMetaKey( 'image', $term->taxonomy ) ?: 'image';
 
 		if ( $image_metakey ) {
 

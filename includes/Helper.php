@@ -14,32 +14,32 @@ class Helper extends WordPress\Main
 	// Override to use plugin version/hash
 	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheet(
-		string $url,
+		string            $url,
 		null|string|array $version = NULL,
-		false|string $media = FALSE,
-		bool $verbose = TRUE,
+		false|string      $media   = FALSE,
+		bool              $verbose = TRUE,
 	): true {
 
 		return Core\HTML::linkStyleSheet(
 			$url,
 			$version ?? GEDITORIAL_HASH,
 			$media,
-			$verbose
+			$verbose,
 		);
 	}
 
 	// TODO: Move to `AssetRegistry` Service
 	public static function linkStyleSheetAdmin(
 		string $page,
-		bool $verbose = TRUE,
-		string $prefix = 'admin',
+		bool   $verbose = TRUE,
+		string $prefix  = 'admin',
 	): true {
 
 		return Core\HTML::linkStyleSheet(
 			GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css',
 			GEDITORIAL_HASH,
 			'all',
-			$verbose
+			$verbose,
 		);
 	}
 
@@ -52,12 +52,12 @@ class Helper extends WordPress\Main
 	 * @param bool $icon
 	 * @return string
 	 */
-	#[\Deprecated('USE `Services\Contacts::prepContact_Legacy()`')]
+	#[\Deprecated( 'USE `Services\Contacts::prepContact_Legacy()`' )]
 	public static function prepContact(
-		string $value,
+		string  $value,
 		?string $title = NULL,
-		mixed $empty = '',
-		bool $icon = FALSE,
+		mixed   $empty = '',
+		bool    $icon  = FALSE,
 	): mixed {
 
 		return Services\Contacts::prepContact_Legacy( $value, $title, $empty, $icon );
@@ -65,9 +65,9 @@ class Helper extends WordPress\Main
 
 	public static function renderPostTermsEditRow(
 		object $post,
-		string|object $taxonomy,
+		mixed  $taxonomy,
 		string $before = '',
-		string $after = '',
+		string $after  = '',
 	): void {
 
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
@@ -106,10 +106,10 @@ class Helper extends WordPress\Main
 	}
 
 	public static function renderTaxonomyTermsEditRow(
-		int|object $object,
-		string|object $taxonomy,
+		mixed  $object,
+		mixed  $taxonomy,
 		string $before = '',
-		string $after = '',
+		string $after  = '',
 	): void {
 
 		if ( ! $object = WordPress\Term::get( $object ) )
@@ -136,16 +136,16 @@ class Helper extends WordPress\Main
 	}
 
 	public static function renderUserTermsEditRow(
-		int|string $user_id,
-		string|object $taxonomy,
+		int    $user_id,
+		mixed  $taxonomy,
 		string $before = '',
-		string $after = '',
+		string $after  = '',
 	): void {
 
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return;
 
-		if ( ! $terms = wp_get_object_terms( (int) $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
+		if ( ! $terms = wp_get_object_terms( $user_id, $taxonomy->name, [ 'update_term_meta_cache' => FALSE ] ) )
 			return;
 
 		$list = [];
@@ -162,11 +162,11 @@ class Helper extends WordPress\Main
 	}
 
 	public static function getAuthorsEditRow(
-		array $authors,
+		array  $authors,
 		string $posttype = 'post',
-		string $before = '',
-		string $after = '',
-		bool $verbose = TRUE,
+		string $before   = '',
+		string $after    = '',
+		bool   $verbose  = TRUE,
 	): true|string {
 
 		if ( empty( $authors ) )
@@ -191,10 +191,10 @@ class Helper extends WordPress\Main
 	// NOTE: the output of `the_title()` is `un-escaped`
 	// @REF: https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
 	public static function getPostTitleRow(
-		mixed $post,
-		false|string $link = 'edit',
-		bool|string|array $status = FALSE,
-		?string $title_attr = NULL,
+		mixed             $post,
+		false|string      $link       = 'edit',
+		bool|string|array $status     = FALSE,
+		?string           $title_attr = NULL,
 	): string {
 
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -243,7 +243,7 @@ class Helper extends WordPress\Main
 			return Core\HTML::tag( 'span', [
 				'class' => '-row-span',
 				'title' => $title_attr ?? FALSE,
-				// 'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],
+				// `'data'  => [ 'post' => $post->ID, 'type' => $post->post_type ],`
 			], $title ).$after;
 
 		if ( 'view' == $link )
@@ -267,10 +267,10 @@ class Helper extends WordPress\Main
 	// TODO: move to `Tablelist`
 	// @SEE: `Tablelist::getTermTitleRow()`
 	public static function getTermTitleRow(
-		int|object $term,
-		bool|string $link = 'edit',
-		bool $taxonomy = FALSE,
-		?string $title_attr = NULL,
+		mixed       $term,
+		bool|string $link       = 'edit',
+		bool        $taxonomy   = FALSE,
+		?string     $title_attr = NULL,
 	): string {
 
 		if ( ! $term = WordPress\Term::get( $term ) )
@@ -335,8 +335,8 @@ class Helper extends WordPress\Main
 
 	// TODO: move to `WordPress\Strings`
 	public static function htmlEmpty(
-		string|array $class = '',
-		?string $title_attr = NULL,
+		string|array $class      = '',
+		?string      $title_attr = NULL,
 	): string {
 
 		return is_null( $title_attr )
@@ -347,8 +347,8 @@ class Helper extends WordPress\Main
 	// TODO: move to `WordPress\Strings`
 	public static function htmlCount(
 		int|array $count,
-		?string $title = NULL,
-		mixed $empty = NULL,
+		?string   $title = NULL,
+		mixed     $empty = NULL,
 	): string {
 
 		if ( is_array( $count ) )
@@ -361,7 +361,7 @@ class Helper extends WordPress\Main
 
 	// TODO: move to `WordPress\Strings`
 	public static function htmlOrder(
-		int $order,
+		int     $order,
 		?string $title = NULL,
 	): string {
 
@@ -371,7 +371,7 @@ class Helper extends WordPress\Main
 	}
 
 	public static function getDateEditRow(
-		int|string $timestamp,
+		int|string   $timestamp,
 		string|array $class = '',
 	): string {
 
@@ -391,7 +391,7 @@ class Helper extends WordPress\Main
 	}
 
 	public static function getModifiedEditRow(
-		object $post,
+		object       $post,
 		string|array $class = '',
 	): string {
 
@@ -411,7 +411,7 @@ class Helper extends WordPress\Main
 
 	// @source: `translate_nooped_plural()`
 	public static function nooped(
-		int $count,
+		int   $count,
 		array $nooped,
 	): string {
 
@@ -429,7 +429,7 @@ class Helper extends WordPress\Main
 	}
 
 	public static function noopedCount(
-		int $count,
+		int   $count,
 		array $nooped,
 	): string {
 
@@ -441,8 +441,8 @@ class Helper extends WordPress\Main
 
 	public static function getLayout(
 		string $name,
-		bool $require = FALSE,
-		bool $no_cache = FALSE,
+		bool   $require  = FALSE,
+		bool   $no_cache = FALSE,
 	): string|true {
 
 		$dir     = static::factory()->get_dir(); // `GEDITORIAL_DIR`
@@ -478,10 +478,10 @@ class Helper extends WordPress\Main
 	 * @return false
 	 */
 	public static function log(
-		string $message,
-		?string $agent = NULL,
-		?string $level = NULL,
-		mixed $contextual_data = NULL,
+		string  $message,
+		?string $agent           = NULL,
+		?string $level           = NULL,
+		mixed   $contextual_data = NULL,
 	): false {
 
 		do_action( self::und( 'gnetwork_logger', 'site', strtolower( $level ?? 'NOTICE' ) ),

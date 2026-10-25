@@ -54,7 +54,7 @@ class Modulation extends gEditorial\Service
 	public static function moduleClass( string $module, bool $check = TRUE, ?string $root = NULL ): false|string
 	{
 		$class = '';
-		$root  = $root ?? '\\geminorum\\gEditorial\\Modules';
+		$root  ??= '\\geminorum\\gEditorial\\Modules';
 
 		foreach ( explode( '-', str_replace( '_', '-', $module ) ) as $word )
 			$class.= ucfirst( $word ).'';
@@ -88,7 +88,7 @@ class Modulation extends gEditorial\Service
 		if ( ! GEDITORIAL_CRM_FEATURES && in_array( 'crm-feature', $module->keywords, TRUE ) )
 			return FALSE;
 
-		$stage = $stage ?? self::const( 'WP_STAGE', 'production' ); // 'development'
+		$stage ??= self::const( 'WP_STAGE', 'production' ); // 'development'
 
 		if ( 'production' !== $stage )
 			return TRUE;

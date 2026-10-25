@@ -474,7 +474,7 @@ class Identified extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$metakey = $metakey ?? $this->_get_posttype_identifier_metakey( $post->post_type );
+		$metakey ??= $this->_get_posttype_identifier_metakey( $post->post_type );
 
 		return $this->filters( 'get_posttype_identifier',
 			get_post_meta( $post->ID, $metakey, TRUE ),

@@ -293,7 +293,7 @@ class WcUnits extends gEditorial\Module
 		if ( empty( $formatted ) )
 			return $this->get_setting( 'weight_custom_na' ) ?: '';
 
-		$unit = $unit ?? get_option( 'woocommerce_weight_unit' );
+		$unit ??= get_option( 'woocommerce_weight_unit' );
 
 		$template = $this->get_setting(
 			sprintf( 'weight_template__%s', $unit ),
@@ -311,7 +311,7 @@ class WcUnits extends gEditorial\Module
 		if ( empty( $formatted ) )
 			return $this->get_setting( 'dimensions_custom_na' ) ?: '';
 
-		$unit = $unit ?? get_option( 'woocommerce_dimension_unit' );
+		$unit ??= get_option( 'woocommerce_dimension_unit' );
 
 		$template = $this->get_setting(
 			sprintf( 'dimensions_template__%s', $unit ),

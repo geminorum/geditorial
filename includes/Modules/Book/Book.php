@@ -418,7 +418,9 @@ class Book extends gEditorial\Module
 					'action_url'   => [ 'type' => 'link' ],
 					'cover_blurb'  => [ 'type' => 'note' ],
 					'cover_price'  => [ 'type' => 'price' ],
-					'content_fee'  => [ 'type' => 'price' ],
+
+					'content_fee' => [ 'type' => 'price' ],
+					'cost_string' => [ 'type' => 'price' ],
 				],
 			],
 		];

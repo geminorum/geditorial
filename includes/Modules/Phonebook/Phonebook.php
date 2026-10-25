@@ -615,7 +615,10 @@ class Phonebook extends gEditorial\Module
 	public function searchselect_result_extra_for_post( array $data, mixed $post, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			|| in_array( $queried['context'], [
+				'select2',
+				'pairedimports',
+			], TRUE ) )
 			return $data;
 
 		if ( ! $post = WordPress\Post::get( $post ) )

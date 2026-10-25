@@ -336,7 +336,7 @@ class DeadDrops extends gEditorial\Module
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
-		$secret   = $secret ?? get_post_meta( $post->ID, $this->constant( 'metakey_secret' ), TRUE );
+		$secret   ??= get_post_meta( $post->ID, $this->constant( 'metakey_secret' ), TRUE );
 		$endpoint = $this->constant( 'main_endpoint' );
 
 		if ( $GLOBALS['wp_rewrite']->using_permalinks() && WordPress\Post::viewable( $post ) )

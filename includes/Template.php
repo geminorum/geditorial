@@ -34,9 +34,9 @@ class Template extends WordPress\Main
 	}
 
 	public static function getTermImageSrc(
-		mixed $size = NULL,
-		mixed $term_id = NULL,
-		string $taxonomy = '',
+		mixed   $size     = NULL,
+		mixed   $term_id  = NULL,
+		string  $taxonomy = '',
 		?string $meta_key = NULL,
 	): false|string {
 
@@ -46,7 +46,7 @@ class Template extends WordPress\Main
 		if ( ! $term_image_id = get_term_meta( $term->term_id, $meta_key ?? 'image', TRUE ) )
 			return FALSE;
 
-		$size = $size ?? WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
+		$size ??= WordPress\Media::getAttachmentImageDefaultSize( NULL, WordPress\Term::taxonomy( $term ) ?: NULL );
 
 		if ( ! $image = image_downsize( $term_image_id, $size ) )
 			return FALSE;
@@ -54,7 +54,7 @@ class Template extends WordPress\Main
 		return $image[0] ?? FALSE;
 	}
 
-	public static function getTermImageTag( array $atts = [] ): false|string
+	public static function getTermImageTag( array $arguments = [] ): false|string
 	{
 		$args = self::parsed( [
 			'id'       => NULL,
@@ -63,7 +63,7 @@ class Template extends WordPress\Main
 			'size'     => NULL,
 			'alt'      => FALSE,
 			'class'    => '-term-image img-fluid',
-		], $atts );
+		], $arguments );
 
 		if ( $src = self::getTermImageSrc( $args['size'], $args['id'], $args['taxonomy'], $args['field'] ) )
 			return Core\HTML::img( $src, apply_filters( 'get_image_tag_class', $args['class'], $args['id'], 'none', $args['size'] ), $args['alt'] );
@@ -111,7 +111,7 @@ class Template extends WordPress\Main
 		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-term-image-wrap' ).'">'.$html.'</div>';
 	}
 
-	public static function termImage( array $atts = [], ?string $module = NULL ): bool|string
+	public static function termImage( array $arguments = [], ?string $module = NULL ): bool|string
 	{
 		$module ??= static::MODULE;
 		$args   = self::parsed( [
@@ -134,7 +134,7 @@ class Template extends WordPress\Main
 			'before'       => '',
 			'after'        => '',
 			'echo'         => TRUE,
-		], $atts );
+		], $arguments );
 
 		if ( FALSE === $args['id'] )
 			return $args['default'];
@@ -161,7 +161,7 @@ class Template extends WordPress\Main
 				$args['link'] = ( $meta && $viewable ) ? wp_get_attachment_url( (int) $meta ) : FALSE;
 		}
 
-		$args['alt'] = $args['alt'] ?? $title;
+		$args['alt'] ??= $title;
 
 		$html  = '';
 		$image = self::getTermImageTag( $args );
@@ -208,7 +208,7 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function termContact( array $atts = [], ?string $module = NULL ): bool|string
+	public static function termContact( array $arguments = [], ?string $module = NULL ): bool|string
 	{
 		$module ??= static::MODULE;
 		$args   = self::parsed( [
@@ -221,7 +221,7 @@ class Template extends WordPress\Main
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
-		], $atts );
+		], $arguments );
 
 		if ( FALSE === $args['id'] )
 			return $args['default'];
@@ -231,7 +231,7 @@ class Template extends WordPress\Main
 
 		$args['id']       = $term->term_id;
 		$args['taxonomy'] = $term->taxonomy;
-		$args['field']    = $args['field'] ?? Services\TaxonomyFields::getTermMetaKey( 'contact', $term->taxonomy );
+		$args['field']    ??= Services\TaxonomyFields::getTermMetaKey( 'contact', $term->taxonomy );
 
 		if ( ! $args['field'] )
 			return $args['default'];
@@ -258,16 +258,16 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
-	#[\Deprecated('USE `WordPress\Post::image()`')]
+	#[\Deprecated( 'USE `WordPress\Post::image()`' )]
 	public static function getPostImageSrc( $thumbnail_id = NULL, $size = NULL, $post_id = NULL )
 	{
 		if ( ! $post = WordPress\Post::get( $post_id ) )
 			return FALSE;
 
-		if ( ! $thumbnail_id = $thumbnail_id ?? WordPress\PostType::getThumbnailID( $post->ID ) )
+		if ( ! $thumbnail_id ??= WordPress\PostType::getThumbnailID( $post->ID ) )
 			return FALSE;
 
-		$size = $size ?? WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
+		$size ??= WordPress\Media::getAttachmentImageDefaultSize( $post->post_type );
 
 		if ( ! $image = image_downsize( $thumbnail_id, $size ) )
 			return FALSE;
@@ -275,10 +275,9 @@ class Template extends WordPress\Main
 		return $image[0] ?? FALSE;
 	}
 
-	public static function getPostImageTag( array $atts = [], ?string $module = NULL ): bool|string
+	public static function getPostImageTag( array $arguments = [], ?string $module = NULL ): bool|string
 	{
 		$html = FALSE;
-
 		$args = self::parsed( [
 			'id'           => NULL,
 			'thumbnail'    => NULL,
@@ -286,7 +285,7 @@ class Template extends WordPress\Main
 			'alt'          => NULL,
 			'alt_fallback' => 'parent_title',
 			'class'        => '-post-image img-fluid',
-		], $atts );
+		], $arguments );
 
 		if ( is_null( $args['alt'] ) && $args['thumbnail'] )
 			$args['alt'] = WordPress\Media::getAttachmentImageAlt( $args['thumbnail'], FALSE );
@@ -330,11 +329,12 @@ class Template extends WordPress\Main
 		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
 	}
 
-	public static function postImage( array $atts = [], ?string $module = NULL ): bool|string
+	public static function postImage( array $arguments = [], ?string $module = NULL ): bool|string
 	{
 		$module ??= static::MODULE;
-		$html   = '';
-		$args   = self::parsed( [
+
+		$html = '';
+		$args = self::parsed( [
 			'id'           => NULL,
 			'thumbnail'    => NULL,
 			'size'         => NULL,
@@ -355,7 +355,7 @@ class Template extends WordPress\Main
 			'before'       => '',
 			'after'        => '',
 			'echo'         => TRUE,
-		], $atts );
+		], $arguments );
 
 		if ( 'latest' == $args['id'] )
 			$args['id'] = WordPress\PostType::getLastMenuOrder( $args['type'], '', 'ID', [ 'publish' ] );
@@ -378,7 +378,7 @@ class Template extends WordPress\Main
 		$title  = self::getPostField( $args['title'], $post->ID, FALSE );
 		$status = get_post_status( $post );
 
-		$args['thumbnail'] = $args['thumbnail'] ?? WordPress\PostType::getThumbnailID( $post->ID );
+		$args['thumbnail'] ??= WordPress\PostType::getThumbnailID( $post->ID );
 
 		if ( $args['link'] ) {
 
@@ -447,11 +447,9 @@ class Template extends WordPress\Main
 		return TRUE;
 	}
 
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `Template::pairedLink()`' )]
 	public static function assocLink( array $atts = [], ?string $module = NULL ): bool|string
 	{
-		self::_dep( 'Template::pairedLink()' );
-
 		return self::pairedLink( $atts, $module );
 	}
 
@@ -498,9 +496,9 @@ class Template extends WordPress\Main
 		return FALSE;
 	}
 
-	public static function getTermField( $field = 'name', $term = NULL, $taxonomy = '', $default = '' )
+	public static function getTermField( string $field = 'name', mixed $term = NULL, string $taxonomy = '', mixed $default = '' ): mixed
 	{
-		if ( ! $term = $term ?? WordPress\Term::get( $term, $taxonomy ) )
+		if ( ! $term ??= WordPress\Term::get( $term, $taxonomy ) )
 			return $default;
 
 		if ( in_array( $field, [ 'name', 'description', 'slug', 'count' ], TRUE ) )
@@ -513,7 +511,7 @@ class Template extends WordPress\Main
 	}
 
 	// TODO: support more post-type props
-	public static function getPostField( $field = 'title', $post = NULL, $default = '' )
+	public static function getPostField( string $field = 'title', mixed $post = NULL, mixed $default = '' ): mixed
 	{
 		if ( 'title' === $field )
 			return Core\Text::stripTags( get_the_title( $post ) );
@@ -521,7 +519,7 @@ class Template extends WordPress\Main
 		return self::getMetaField( $field, [ 'id' => $post, 'default' => $default ] );
 	}
 
-	public static function metaFieldHTML( $field, $atts = [] )
+	public static function metaFieldHTML( mixed $field, array $atts = [] ): mixed
 	{
 		if ( ! array_key_exists( 'filter', $atts ) )
 			$atts['filter'] = [ __NAMESPACE__.'\\WordPress\\Strings', 'prepDescription' ];
@@ -574,17 +572,17 @@ class Template extends WordPress\Main
 		if ( ! Core\URL::isValid( $url ) )
 			return $meta;
 
-		return $wp_embed->run_shortcode( sprintf(
-			'[embed src="%s" context="%s"]%s[/embed]',
+		return $wp_embed->run_shortcode( vsprintf( '[embed src="%s" context="%s"]%s[/embed]', [
 			$url,
-			$context, $url
-		) );
+			$context,
+			$url,
+		] ) );
 	}
 
 	public static function doMediaShortCode(
-		mixed $meta,
-		?string $type = NULL,
-		mixed $post = FALSE,
+		mixed   $meta,
+		?string $type    = NULL,
+		mixed   $post    = FALSE,
 		?string $context = 'display',
 	): string {
 
@@ -729,9 +727,9 @@ class Template extends WordPress\Main
 	}
 
 	public static function metaTermField(
-		array $atts = [],
-		?string $module = NULL,
-		bool $check = TRUE,
+		array   $arguments = [],
+		?string $module    = NULL,
+		bool    $check     = TRUE,
 	): bool|string {
 
 		$module ??= static::MODULE;
@@ -748,7 +746,7 @@ class Template extends WordPress\Main
 			'image'       => FALSE,
 			'link'        => NULL, // FALSE to disable
 			'description' => NULL, // FALSE to disable
-		], $atts );
+		], $arguments );
 
 		if ( $check && ! gEditorial()->enabled( 'meta' ) )
 			return $args['default'];
@@ -1079,7 +1077,7 @@ class Template extends WordPress\Main
 		if ( empty( $rows ) )
 			return $args['default'];
 
-		$args['render'] = $args['render'] ?? [ __CLASS__, 'metaSummary__render_callback' ];
+		$args['render'] ??= [ __CLASS__, 'metaSummary__render_callback' ];
 
 		$callback_args = [
 			$rows,
@@ -1101,9 +1099,9 @@ class Template extends WordPress\Main
 	}
 
 	public static function metaSummary__render_callback(
-		array $data,
-		array $args,
-		mixed $post = NULL,
+		array   $data,
+		array   $arguments,
+		mixed   $post   = NULL,
 		?string $module = NULL,
 	): void {
 
@@ -1145,8 +1143,8 @@ class Template extends WordPress\Main
 	public static function reorderPosts(
 		array  $posts,
 		string $field_module = 'meta',
-		string $field_start = 'start',
-		string $field_order = 'order',
+		string $field_start  = 'start',
+		string $field_order  = 'order',
 	): array {
 
 		$i = 1000;
@@ -1220,9 +1218,9 @@ class Template extends WordPress\Main
 	// @EXAMPLE: https://dastan.ourmag.ir/archives/issues/
 	public static function getSpanTiles( array $arguments = [], ?string $module = NULL ): bool|string
 	{
-		$html   = '';
 		$module ??= static::MODULE;
 
+		$html = '';
 		$args = self::parsed( [
 			'taxonomy' => NULL,
 			'posttype' => NULL,
@@ -1285,8 +1283,8 @@ class Template extends WordPress\Main
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return FALSE;
 
-		$renderer = 'termintro';                // renderer context
-		$module   = $module ?? static::MODULE;
+		$renderer = 'termintro';  // renderer context
+		$module   ??= static::MODULE;
 
 		$args = self::parsed( [
 			'heading'     => '3',     // heading level or `FALSE` to disable

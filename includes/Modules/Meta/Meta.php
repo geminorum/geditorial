@@ -107,7 +107,9 @@ class Meta extends gEditorial\Module
 				'foreword'      => _x( 'Foreword', 'Titles', 'geditorial-meta' ),
 				'cover_blurb'   => _x( 'Cover Blurb', 'Titles', 'geditorial-meta' ),
 				'cover_price'   => _x( 'Cover Price', 'Titles', 'geditorial-meta' ),
-				'content_fee'   => _x( 'Content Fee', 'Titles', 'geditorial-meta' ),
+
+				'content_fee' => _x( 'Content Fee', 'Titles', 'geditorial-meta' ),
+				'cost_string' => _x( 'Cost', 'Titles', 'geditorial-meta' ),
 
 				'venue_string'   => _x( 'Venue', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'Contact', 'Descriptions', 'geditorial-meta' ),
@@ -175,7 +177,9 @@ class Meta extends gEditorial\Module
 				'foreword'      => _x( 'Introduction to the Content', 'Descriptions', 'geditorial-meta' ),
 				'cover_blurb'   => _x( 'Description included on the inside cover or on the back', 'Descriptions', 'geditorial-meta' ),
 				'cover_price'   => _x( 'Cover Price of the content', 'Descriptions', 'geditorial-meta' ),
-				'content_fee'   => _x( 'Fee of the content', 'Descriptions', 'geditorial-meta' ),
+
+				'content_fee' => _x( 'Fee of the content', 'Descriptions', 'geditorial-meta' ),
+				'cost_string' => _x( 'Cost of the content', 'Descriptions', 'geditorial-meta' ),
 
 				'venue_string'   => _x( 'Placing Information about the Content', 'Descriptions', 'geditorial-meta' ),
 				'contact_string' => _x( 'A Way to Contact Someone about the Content', 'Descriptions', 'geditorial-meta' ),
@@ -270,10 +274,12 @@ class Meta extends gEditorial\Module
 					'foreword'      => [ 'type' => 'postbox_html' ],                      // or 'postbox_tiny'
 					'cover_blurb'   => [ 'type' => 'note' ],
 					'cover_price'   => [ 'type' => 'price' ],
+
 					'content_fee'   => [ 'type' => 'price' ],
+					'cost_string'   => [ 'type' => 'price' ],
 
 					'venue_string'   => [ 'type' => 'venue' ],
-					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'contact_string' => [ 'type' => 'contact' ],   // URL/Email/Phone
 					'website_url'    => [ 'type' => 'link' ],
 					'wiki_url'       => [ 'type' => 'link' ],
 					'email_address'  => [ 'type' => 'email' ],

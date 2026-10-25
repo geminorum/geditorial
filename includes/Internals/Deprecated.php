@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait Deprecated
 {
 	// OVERRIDE: if has no admin menu but using the hook
-	#[\Deprecated('USE `$this->get_adminpage_url( FALSE )`')]
+	#[\Deprecated( 'USE `$this->get_adminpage_url( FALSE )`' )]
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
 		self::_dep( '$this->get_adminpage_url( FALSE )' );
@@ -101,7 +101,7 @@ trait Deprecated
 	}
 
 	// get stored post meta by the field
-	#[\Deprecated('USE `$this->get_postmeta_legacy() || $this->get_postmeta_field()`')]
+	#[\Deprecated( 'USE `$this->get_postmeta_legacy() || $this->get_postmeta_field()`' )]
 	public function get_postmeta( $post_id, $field = FALSE, $default = '', $metakey = NULL )
 	{
 		global $gEditorialPostMeta;
@@ -125,7 +125,7 @@ trait Deprecated
 		return $default;
 	}
 
-	#[\Deprecated('USE `$this->store_postmeta()`')]
+	#[\Deprecated( 'USE `$this->store_postmeta()`' )]
 	public function set_meta( $post_id, $postmeta, $key_suffix = '' )
 	{
 		global $gEditorialPostMeta;
@@ -142,7 +142,7 @@ trait Deprecated
 	#[\Deprecated()]
 	public function dISABLED_render_metabox( object $post, false|array $box, array $fields = NULL, ?string $context = NULL ): void
 	{
-		$fields = $fields ?? $this->get_posttype_fields( $post->post_type );
+		$fields ??= $this->get_posttype_fields( $post->post_type );
 
 		foreach ( $fields as $field => $args ) {
 
@@ -206,20 +206,20 @@ trait Deprecated
 	}
 
 	// PAIRED API
-	#[\Deprecated('USE `$this->paired_get_to_post_id()`')]
+	#[\Deprecated( 'USE `$this->paired_get_to_post_id()`' )]
 	public function get_linked_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug = TRUE )
 	{
 		return $this->paired_get_to_post_id( $term_or_id, $posttype_constant_key, $tax_constant_key, $check_slug );
 	}
 
 	// PAIRED API
-	#[\Deprecated('USE `$this->paired_get_from_posts()`')]
+	#[\Deprecated( 'USE `$this->paired_get_from_posts()`' )]
 	public function get_linked_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count = FALSE, $term_id = NULL )
 	{
 		return $this->paired_get_from_posts( $post_id, $posttype_constant_key, $tax_constant_key, $count, $term_id );
 	}
 
-	#[\Deprecated('USE `restrict_manage_posts_restrict_taxonomy()`')]
+	#[\Deprecated( 'USE `restrict_manage_posts_restrict_taxonomy()`' )]
 	protected function do_restrict_manage_posts_taxes( $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
@@ -230,7 +230,7 @@ trait Deprecated
 		}
 	}
 
-	#[\Deprecated('USE `parse_query_restrict_taxonomy()`')]
+	#[\Deprecated( 'USE `parse_query_restrict_taxonomy()`' )]
 	protected function do_parse_query_taxes( &$query, $taxes, $posttype_constant_key = TRUE )
 	{
 		if ( TRUE === $posttype_constant_key ||
@@ -241,7 +241,7 @@ trait Deprecated
 		}
 	}
 
-	#[\Deprecated('USE `restrict_manage_posts_restrict_paired()`')]
+	#[\Deprecated( 'USE `restrict_manage_posts_restrict_paired()`' )]
 	protected function do_restrict_manage_posts_posts( $tax_constant_key, $posttype_constant_key )
 	{
 		Listtable::restrictByPosttype(
@@ -277,7 +277,7 @@ trait Deprecated
 		}
 	}
 
-	#[\Deprecated('USE `$this->strings_metabox_title_via_posttype()`')]
+	#[\Deprecated( 'USE `$this->strings_metabox_title_via_posttype()`' )]
 	public function get_meta_box_title_posttype( $constant, $url = NULL, $title = NULL )
 	{
 		$object = WordPress\PostType::object( $this->constant( $constant ) );
@@ -310,7 +310,7 @@ trait Deprecated
 		return $title;
 	}
 
-	#[\Deprecated('USE `$this->strings_metabox_title_via_taxonomy()`')]
+	#[\Deprecated( 'USE `$this->strings_metabox_title_via_taxonomy()`' )]
 	public function get_meta_box_title_taxonomy( $constant, $posttype, $url = NULL, $title = NULL )
 	{
 		$object = WordPress\Taxonomy::object( $this->constant( $constant ) );
@@ -341,10 +341,10 @@ trait Deprecated
 		return $title;
 	}
 
-	#[\Deprecated('USE `paired_do_connection()`')]
+	#[\Deprecated( 'USE `paired_do_connection()`' )]
 	protected function paired_do_store_connection( $post_ids, $paired_ids, $posttype_constant, $paired_constant, $append = FALSE, $forced = NULL )
 	{
-		$forced = $forced ?? $this->get_setting( 'paired_force_parents', FALSE );
+		$forced ??= $this->get_setting( 'paired_force_parents', FALSE );
 		$terms  = $stored = [];
 
 		foreach ( (array) $paired_ids as $paired_id ) {
@@ -387,7 +387,7 @@ trait Deprecated
 		return is_array( $post_ids ) ? $stored : reset( $stored );
 	}
 
-	#[\Deprecated('USE `$this->register_default_terms()`')]
+	#[\Deprecated( 'USE `$this->register_default_terms()`' )]
 	protected function insert_default_terms( $constant, $terms = NULL )
 	{
 		if ( ! $this->nonce_verify( 'settings' ) )
@@ -609,7 +609,7 @@ trait Deprecated
 	}
 
 	// USAGE: `$this->filter( 'get_default_comment_status', 3 );`
-	#[\Deprecated('USE `comments__handle_default_status()`')]
+	#[\Deprecated( 'USE `comments__handle_default_status()`' )]
 	public function get_default_comment_status( $status, $posttype, $comment_type )
 	{
 		self::_dep( '$this->comments__handle_default_status()' );

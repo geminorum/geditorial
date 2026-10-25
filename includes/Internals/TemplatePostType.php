@@ -10,9 +10,9 @@ use geminorum\gEditorial\WordPress;
 trait TemplatePostType
 {
 	protected function templateposttype__include(
-		string $template,
-		string|array $posttypes,
-		null|false|callable $empty_callback = NULL,
+		string              $template,
+		string|array        $posttypes,
+		null|false|callable $empty_callback   = NULL,
 		null|false|callable $archive_callback = NULL,
 		null|false|callable $newpost_callback = NULL,
 	): string {
@@ -198,8 +198,8 @@ trait TemplatePostType
 
 	protected function templateposttype_process_empty_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
-		if ( ! $content )
-			return $content;
+		if ( ! self::empty( $content ) )
+			return '';
 
 		$html = $content;
 
@@ -217,8 +217,8 @@ trait TemplatePostType
 
 	protected function templateposttype_process_archive_content( string $content, mixed $queried, bool $wrap = FALSE ): string
 	{
-		if ( ! $content )
-			return $content;
+		if ( ! self::empty( $content ) )
+			return '';
 
 		$html = $content;
 
@@ -262,8 +262,8 @@ trait TemplatePostType
 					// `'future'  => WordPress\PostType::can( $posttype, 'publish_posts' ) ? 'on' : 'off',`
 					'title'   => FALSE,
 					'wrap'    => FALSE,
-				]
-			);
+				],
+			) ?: '';
 
 		return '';
 	}

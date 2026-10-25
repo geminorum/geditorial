@@ -80,7 +80,7 @@ class Countables extends gEditorial\Module
 			return NULL;
 
 		$html = '';
-		$args['template'] = $args['template'] ??$this->countbox_default_template( 'posttype' );
+		$args['template'] ??= $this->countbox_default_template( 'posttype' );
 
 		foreach ( Services\Markup::getSeparated( $args['post_type'] ) as $posttype ) {
 
@@ -132,7 +132,7 @@ class Countables extends gEditorial\Module
 			return NULL;
 
 		$html = '';
-		$args['template'] = $args['template'] ?? $this->countbox_default_template( 'taxonomy' );
+		$args['template'] ??= $this->countbox_default_template( 'taxonomy' );
 
 		foreach ( Services\Markup::getSeparated( $args['taxonomy'] ) as $taxonomy ) {
 

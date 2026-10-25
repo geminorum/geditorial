@@ -38,7 +38,7 @@ trait O2OMetaBox
 				'connection' => $connection,
 				'posttypes'  => $posttypes ?? $this->posttypes(), // TODO: must get from connection-type itself
 				'multiple'   => $type->cardinality['from'] === 'many',
-			]
+			],
 		);
 
 		return $this->class_metabox( $screen, 'connectedbox' );
@@ -51,17 +51,22 @@ trait O2OMetaBox
 
 		echo $this->wrap_open( '-admin-metabox' );
 
-			$this->o2o_render_type_posts( $post, $box['args']['o2o'], [
-				'title'    => $box['args']['title'],
-				'posttype' => $box['args']['posttypes'],
-				'multiple' => $box['args']['multiple'],
-			] );
+			$this->o2o_render_type_posts(
+				$post,
+				$box['args']['o2o'],
+				[
+					'title'    => $box['args']['title'],
+					'posttype' => $box['args']['posttypes'],
+					'multiple' => $box['args']['multiple'],
+				],
+			);
 
+			// hook: `geditorial_o2o_render_from_metabox`
 			do_action( $this->hook_base( 'o2o', 'render_from_metabox' ),
 				$post,
 				$box,
 				$box['args']['o2o'],
-				$box['args']['posttypes']
+				$box['args']['posttypes'],
 			);
 
 		echo '</div>';
@@ -96,7 +101,7 @@ trait O2OMetaBox
 				'connection' => $connection,
 				'posttypes'  => $posttypes ?? $this->posttypes(), // TODO: must get from connection-type itself
 				'multiple'   => $type->cardinality['to'] === 'many',
-			]
+			],
 		);
 
 		return $this->class_metabox( $screen, 'connectedbox' );
@@ -109,17 +114,22 @@ trait O2OMetaBox
 
 		echo $this->wrap_open( '-admin-metabox' );
 
-			$this->o2o_render_type_posts( $post, $box['args']['o2o'], [
-				'title'    => $box['args']['title'],
-				'posttype' => $box['args']['posttypes'],
-				'multiple' => $box['args']['multiple'],
-			] );
+			$this->o2o_render_type_posts(
+				$post,
+				$box['args']['o2o'],
+				[
+					'title'    => $box['args']['title'],
+					'posttype' => $box['args']['posttypes'],
+					'multiple' => $box['args']['multiple'],
+				],
+			);
 
+			// hook: `geditorial_o2o_render_to_metabox`
 			do_action( $this->hook_base( 'o2o', 'render_to_metabox' ),
 				$post,
 				$box,
 				$box['args']['o2o'],
-				$box['args']['posttypes']
+				$box['args']['posttypes'],
 			);
 
 		echo '</div>';
@@ -229,7 +239,7 @@ trait O2OMetaBox
 
 		echo Core\HTML::wrap(
 			Core\HTML::tag( 'select', $atts, implode( "\n", $options ) ),
-			'field-wrap -select-multiple hide-if-no-js'
+			'field-wrap -select-multiple hide-if-no-js',
 		);
 
 		Core\HTML::inputHidden( $atts['name'], '0' );

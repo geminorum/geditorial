@@ -69,7 +69,7 @@ trait SettingsTaxonomies
 	public function register_settings_taxonomies_option( ?string $title = NULL ): bool
 	{
 		$option = $this->hook_base( $this->module->name );
-		$title  = $title ?? $this->get_string( 'taxonomies_title', FALSE, 'settings',
+		$title  ??= $this->get_string( 'taxonomies_title', FALSE, 'settings',
 			_x( 'Supported Taxonomies', 'Internal: SettingsTaxonomies: Field Title', 'geditorial-admin' ) );
 
 		Services\Modulation::addSection( $option, [

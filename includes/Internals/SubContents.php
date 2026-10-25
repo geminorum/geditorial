@@ -764,7 +764,7 @@ trait SubContents
 		if ( ! $data = $this->quantumcomments__get_data_all( $post, $args['context'] ?? 'display' ) )
 			return $content;
 
-		$args['fields'] = $args['fields'] ?? $this->subcontent_get_fields( $args['context'] );
+		$args['fields'] ??= $this->subcontent_get_fields( $args['context'] );
 		$data           = $this->subcontent_get_prepped_data( $data, $args['context'], $post );
 
 		return gEditorial\ShortCode::wrap(

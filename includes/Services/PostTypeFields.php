@@ -325,7 +325,7 @@ class PostTypeFields extends gEditorial\Service
 		], $atts );
 
 		// NOTE: may come from post-type field argument
-		$args['default'] = $args['default'] ?? '';
+		$args['default'] ??= '';
 
 		if ( empty( $field_key ) )
 			return $args['default'];
@@ -479,7 +479,8 @@ class PostTypeFields extends gEditorial\Service
 			case 'telegram' : // `return Core\Socials::htmlHandle( $value, 'https://t.me/' );`
 				return Communities::prepSocial( $raw ?: $value, $field_key, $context ); // The field key is usually the service
 
-			case 'phone' : return Core\Email::prep( $raw ?: $value, $field, $context );
+			case 'email' : return Core\Email::prep( $raw ?: $value, $field, $context );
+			case 'phone' : return Core\Phone::prep( $raw ?: $value, $field, $context );
 			case 'mobile': return Core\Mobile::prep( $raw ?: $value, $field, $context );
 
 			// TODO: migrate to `Individuals` Service

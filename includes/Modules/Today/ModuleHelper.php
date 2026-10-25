@@ -47,13 +47,13 @@ class ModuleHelper extends gEditorial\Helper
 		return gEditorial\Datetime::makeMySQLFromArray( $array, NULL, FALSE );
 	}
 
-	#[\Deprecated('USE `Datetime::parseTheDay()`')]
+	#[\Deprecated( 'USE `Datetime::parseTheDay()`' )]
 	public static function parseTheFullDay( mixed $input, ?string $type = NULL ): array
 	{
 		return gEditorial\Datetime::parseTheDay( $input, $type );
 	}
 
-	#[\Deprecated('USE `Datetime::getTheDay()`')]
+	#[\Deprecated( 'USE `Datetime::getTheDay()`' )]
 	public static function getTheDayFromToday( $today = NULL, $type = NULL )
 	{
 		return gEditorial\Datetime::getTheDay( $today, $type );
@@ -245,7 +245,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getTheDayLink( $data, $target = NULL, $admin = NULL )
 	{
-		$admin = $admin ?? is_admin();
+		$admin ??= is_admin();
 		$path  = '';
 
 		// sorting the variables!
@@ -291,15 +291,15 @@ class ModuleHelper extends gEditorial\Helper
 		return home_url( $path ?: implode( '/', $the_day ) );
 	}
 
-	public static function getTheDayFromPost( $post, $default_type = NULL, $constants = NULL )
+	public static function getTheDayFromPost( mixed $post, ?string $default_type = NULL, ?array $constants = NULL ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
 
 		$the_day      = [];
-		$default_type = $default_type ?? Core\L10n::calendar();
-		$constants    = $constants ?? self::getTheDayConstants();
 		$post_meta    = get_post_meta( $post->ID );
+		$default_type ??= Core\L10n::calendar();
+		$constants    ??= self::getTheDayConstants();
 
 		foreach ( $constants as $field => $constant )
 			if ( ! empty( $post_meta[$constant][0] ) )
@@ -314,9 +314,9 @@ class ModuleHelper extends gEditorial\Helper
 	public static function getTheDayFromQuery( $admin = NULL, $default_type = NULL, $constants = NULL )
 	{
 		$the_day      = [];
-		$default_type = $default_type ?? Core\L10n::calendar();
-		$admin        = $admin ?? is_admin();
-		$constants    = $constants ?? self::getTheDayConstants();
+		$admin        ??= is_admin();
+		$default_type ??= Core\L10n::calendar();
+		$constants    ??= self::getTheDayConstants();
 
 		foreach ( $constants as $field => $constant ) {
 
@@ -349,7 +349,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function getDayPost( $stored, $constants = NULL )
 	{
-		$constants = $constants ?? self::getTheDayConstants();
+		$constants ??= self::getTheDayConstants();
 		$posttype  = self::constant( 'main_posttype', 'day' );
 		$the_day   = self::parsed( [
 			'cal'   => '',
@@ -474,7 +474,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $args['today'] ) )
 			$args['today'] = [ $args['the_day'] ];
 
-		// $constants = $constants ?? self::getTheDayConstants();
+		// `$constants ??= self::getTheDayConstants();`
 
 		$query_args = [
 			'orderby'             => $args['orderby'],
@@ -527,7 +527,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	public static function theDayMetaQuery( $today, $constants = NULL )
 	{
-		$constants = $constants ?? self::getTheDayConstants();
+		$constants ??= self::getTheDayConstants();
 		$metaquery = [ 'relation' => 'OR' ];
 		$orderby   = [];
 
@@ -573,7 +573,7 @@ class ModuleHelper extends gEditorial\Helper
 			'year'  => '',
 		], $atts );
 
-		$calendars = $calendars ?? Services\Calendars::getDefualts( TRUE );
+		$calendars ??= Services\Calendars::getDefualts( TRUE );
 
 		$html = Core\HTML::tag( 'input', [
 			'type'         => 'text',
@@ -655,7 +655,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		$buttons = [];
 		$count   = count( $the_day );
-		$today   = $today ?? TRUE;     // WTF: we should compare the day with!
+		$today   ??= TRUE;  // WTF: we should compare the day with!
 
 		if ( $today )
 			$buttons['today'] = Core\Link::button(

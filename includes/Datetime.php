@@ -14,12 +14,12 @@ class Datetime extends WordPress\Main
 
 	// NOTE: Here the signature is different: supporting the calendar-type and locale with using `Intl` methods.
 	public static function htmlCurrent(
-		?string $format = NULL,
-		string|array $class = '',
-		false|string $title = FALSE,
-		?string $calendar_type = NULL,
-		?string $timezone_string = NULL,
-		?string $locale = NULL
+		?string      $format          = NULL,
+		string|array $class           = '',
+		false|string $title           = FALSE,
+		?string      $calendar_type   = NULL,
+		?string      $timezone_string = NULL,
+		?string      $locale          = NULL
 	): string {
 
 		$html = self::htmlDateTime(
@@ -28,7 +28,7 @@ class Datetime extends WordPress\Main
 			$title,
 			$calendar_type,
 			$timezone_string,
-			$locale
+			$locale,
 		);
 
 		return $class ? Core\HTML::span( $html, $class ) : $html;
@@ -36,12 +36,12 @@ class Datetime extends WordPress\Main
 
 	// NOTE: Here the signature is different: supporting the calendar-type and locale with using `Intl` methods.
 	public static function htmlDateTime(
-		mixed $input = NULL,
-		?string $format = NULL,
-		false|string $title = FALSE,
-		?string $calendar_type = NULL,
-		?string $timezone_string = NULL,
-		?string $locale = NULL
+		mixed        $input           = NULL,
+		?string      $format          = NULL,
+		false|string $title           = FALSE,
+		?string      $calendar_type   = NULL,
+		?string      $timezone_string = NULL,
+		?string      $locale          = NULL
 	): string {
 
 		return Core\HTML::tag( 'time', [
@@ -54,7 +54,7 @@ class Datetime extends WordPress\Main
 			$input,
 			$calendar_type,
 			$timezone_string,
-			$locale
+			$locale,
 		) );
 	}
 
@@ -81,15 +81,15 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function dateFormat(
-		mixed $datetime,
-		false|string $context = 'default',
-		?string $timezone_string = NULL,
+		mixed        $datetime,
+		false|string $context         = 'default',
+		?string      $timezone_string = NULL,
 	): string {
 
 		return Core\Date::get(
 			self::dateFormats( $context ),
 			$datetime,
-			$timezone_string
+			$timezone_string,
 		);
 	}
 
@@ -128,8 +128,8 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function postModified(
-		mixed $post = NULL,
-		bool $attr = FALSE,
+		mixed   $post   = NULL,
+		bool    $attr   = FALSE,
 		?string $format = NULL,
 	): false|string {
 
@@ -142,19 +142,19 @@ class Datetime extends WordPress\Main
 				_x( 'Last Modified on %s', 'Datetime: Post Modified', 'geditorial' ),
 				Core\Date::get(
 					$format ?? self::dateFormats( 'daydate' ),
-					$post->post_modified
+					$post->post_modified,
 				)
 			)
 			: Core\Date::htmlDateTime(
 				$post->post_modified,
 				$format ?? self::dateFormats( 'daydate' ),
-				self::humanTimeDiffRound( $post->post_modified, FALSE )
+				self::humanTimeDiffRound( $post->post_modified, FALSE ),
 			);
 	}
 
 	public static function htmlHumanTime(
-		mixed $datetime,
-		bool $flip = FALSE,
+		mixed   $datetime,
+		bool    $flip            = FALSE,
 		?string $timezone_string = NULL
 	): false|string {
 
@@ -184,8 +184,8 @@ class Datetime extends WordPress\Main
 	 * @return false|string
 	 */
 	public static function humanTimeAgo(
-		mixed $from,
-		int $to = 0,
+		mixed   $from,
+		int     $to              = 0,
 		?string $timezone_string = NULL,
 	): false|string {
 
@@ -195,16 +195,16 @@ class Datetime extends WordPress\Main
 		return sprintf(
 			/* translators: `%s`: time string */
 			_x( '%s ago', 'Datetime: Human Time Ago', 'geditorial' ),
-			human_time_diff( $timestamp, (int) $to )
+			human_time_diff( $timestamp, (int) $to ),
 		);
 	}
 
 	public static function humanTimeDiffRound(
-		mixed $datetime,
-		int|false|null $round = NULL,
-		?string $format = NULL,
-		?int $now = NULL,
-		?string $timezone_string = NULL
+		mixed          $datetime,
+		int|false|null $round           = NULL,
+		?string        $format          = NULL,
+		?int           $now             = NULL,
+		?string        $timezone_string = NULL,
 	): string {
 
 		$timestamp = Core\Date::timestamp( $datetime, $timezone_string );
@@ -213,7 +213,7 @@ class Datetime extends WordPress\Main
 		if ( FALSE === $round )
 			return self::humanTimeAgo( $timestamp, $right_now );
 
-		$round = $round ?? Core\Date::DAY_IN_SECONDS;
+		$round ??= Core\Date::DAY_IN_SECONDS;
 		$diff  = $right_now - $timestamp;
 
 		if ( $diff > 0 && $diff < $round )
@@ -222,13 +222,13 @@ class Datetime extends WordPress\Main
 		return Core\Date::get(
 			$format ?? self::dateFormats( 'default' ),
 			$timestamp,
-			$timezone_string
+			$timezone_string,
 		);
 	}
 
 	public static function humanTimeDiff(
-		mixed $datetime,
-		int $now = 0,
+		mixed   $datetime,
+		int     $now             = 0,
 		?string $timezone_string = NULL,
 	): string {
 
@@ -260,7 +260,7 @@ class Datetime extends WordPress\Main
 			$datetime,
 			$now,
 			$strings,
-			$timezone_string
+			$timezone_string,
 		);
 	}
 
@@ -287,8 +287,8 @@ class Datetime extends WordPress\Main
 
 	// not used yet!
 	public static function moment(
-		mixed $datetime,
-		int $now = 0,
+		mixed   $datetime,
+		int     $now             = 0,
 		?string $timezone_string = NULL,
 	): string {
 
@@ -326,31 +326,40 @@ class Datetime extends WordPress\Main
 				'format_f_y'     => _x( 'F Y', 'Datetime: Date: Moment', 'geditorial' ),
 			];
 
-		return Core\Date::moment( $datetime, $now, $strings, $timezone_string );
+		return Core\Date::moment(
+			$datetime,
+			$now,
+			$strings,
+			$timezone_string,
+		);
 	}
 
 	public static function getPostTypeMonths(
 		?string $calendar_type = NULL,
-		string $posttype = 'post',
-		array $args = [],
-		int $user_id = 0,
+		string  $posttype      = 'post',
+		array   $args          = [],
+		int     $user_id       = 0,
 	): array {
 
 		$callback      = [ WordPress\Database::class, 'getPostTypeMonths' ];
-		$calendar_type = $calendar_type ?? Core\L10n::calendar();
+		$calendar_type ??= Core\L10n::calendar();
 
 		if ( 'persian' === $calendar_type
 			&& is_callable( [ 'gPersianDateWordPress', 'getPostTypeMonths' ] ) )
 				$callback = [ 'gPersianDateWordPress', 'getPostTypeMonths' ];
 
-		return call_user_func_array( $callback, [ $posttype, $args, $user_id ] );
+		return call_user_func_array( $callback, [
+			$posttype,
+			$args,
+			$user_id,
+		] );
 	}
 
 	public static function monthFirstAndLast(
 		int|string $year,
 		int|string $month,
-		?string $format = NULL,
-		?string $calendar_type = NULL,
+		?string    $format        = NULL,
+		?string    $calendar_type = NULL,
 	): array {
 
 		$callback = [ Core\Date::class, 'monthFirstAndLast' ];
@@ -371,7 +380,7 @@ class Datetime extends WordPress\Main
 	public static function daysInMonth(
 		int|string $month,
 		int|string $year,
-		?string $calendar_type = NULL,
+		?string    $calendar_type = NULL,
 	): int {
 
 		$callback = [ Core\Date::class, 'daysInMonth' ];
@@ -387,10 +396,10 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function makeFromInput(
-		mixed $input,
-		?string $calendar_type = NULL,
+		mixed   $input,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
-		mixed $fallback = '',
+		mixed   $fallback        = '',
 	): mixed {
 
 		$callback = [ Core\Date::class, 'makeFromInput' ];
@@ -407,9 +416,9 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function makeMySQLFromArray(
-		array $array = [],
-		?string $format = NULL,
-		mixed $fallback = '',
+		array   $array    = [],
+		?string $format   = NULL,
+		mixed   $fallback = '',
 	): mixed {
 
 		$callback = [ Core\Date::class, 'makeMySQLFromArray' ];
@@ -421,11 +430,11 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function makeMySQLFromInput(
-		mixed $input,
-		?string $format = NULL,
-		?string $calendar_type = NULL,
+		mixed   $input,
+		?string $format          = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
-		mixed $fallback = NULL,
+		mixed   $fallback        = NULL,
 	): mixed {
 
 		$callback = [ Core\Date::class, 'makeMySQLFromInput' ];
@@ -453,11 +462,11 @@ class Datetime extends WordPress\Main
 	 * @return false|string
 	 */
 	public static function formatByCalendar(
-		?string $format = NULL,
-		mixed $input = NULL,
-		?string $calendar_type = NULL,
+		?string $format          = NULL,
+		mixed   $input           = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
-		?string $locale = NULL,
+		?string $locale          = NULL,
 	): mixed {
 
 		$callback = [ Core\Date::class, 'formatByCalendar' ];
@@ -475,9 +484,9 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function prepForInput(
-		mixed $data,
-		?string $format = NULL,
-		?string $calendar_type = NULL,
+		mixed   $data,
+		?string $format          = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
 	): string {
 
@@ -488,15 +497,15 @@ class Datetime extends WordPress\Main
 			$format,
 			$data,
 			$calendar_type,
-			$timezone_string
+			$timezone_string,
 		);
 	}
 
 	// NOTE: alternative to `Datetime::makeMySQLFromInput()` since the input only in year/mysql-format
 	public static function prepForMySQL(
-		mixed $input,
-		?string $format = NULL,
-		?string $calendar_type = NULL,
+		mixed   $input,
+		?string $format          = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
 	): false|string {
 
@@ -513,7 +522,7 @@ class Datetime extends WordPress\Main
 				$format,
 				$calendar_type,
 				$timezone_string,
-				FALSE
+				FALSE,
 			);
 
 		// NOTE: full-dates stored in Gregorian
@@ -531,7 +540,7 @@ class Datetime extends WordPress\Main
 
 	public static function prepYearOnly(
 		mixed $data,
-		bool $localize = TRUE,
+		bool  $localize = TRUE,
 		mixed $fallback = '',
 	): mixed {
 
@@ -548,9 +557,9 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function prepForDisplay(
-		string $datetime_string,
-		?string $format = NULL,
-		?string $calendar_type = NULL,
+		string  $datetime_string,
+		?string $format          = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
 	): string {
 
@@ -563,7 +572,7 @@ class Datetime extends WordPress\Main
 				$format ?? self::dateFormats( 'default' ),
 				self::humanTimeDiffRound( $datetime_string, FALSE, NULL, NULL, $timezone_string ),
 				$calendar_type,
-				$timezone_string
+				$timezone_string,
 			);
 
 		return $datetime_string ?: '';
@@ -633,10 +642,10 @@ class Datetime extends WordPress\Main
 	// NOTE: falls back on raw data: like `1362`
 	// TODO: support other spans like: establish/abolish
 	public static function prepBornDeadForDisplay(
-		string $born = '',
-		string $dead = '',
-		?string $context = NULL,
-		?string $calendar_type = NULL,
+		string  $born            = '',
+		string  $dead            = '',
+		?string $context         = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
 	): string {
 
@@ -657,9 +666,9 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function getDecades(
-		string $from = '-100 years',
-		int $count = 10,
-		bool $prefixed = FALSE,
+		string  $from     = '-100 years',
+		int     $count    = 10,
+		bool    $prefixed = FALSE,
 		?string $meta_key = NULL,
 	): array {
 
@@ -686,9 +695,9 @@ class Datetime extends WordPress\Main
 	}
 
 	public static function getYearsByDecades(
-		string $from = '-100 years',
-		int $count = 10,
-		bool $prefixed = TRUE,
+		string  $from     = '-100 years',
+		int     $count    = 10,
+		bool    $prefixed = TRUE,
 		?string $meta_key = NULL,
 	): array {
 
@@ -804,10 +813,10 @@ class Datetime extends WordPress\Main
 	// @SEE: [Keep `post_date_gmt` in sync when dragging posts on the calendar](https://github.com/Automattic/edit-flow/pull/1009)
 	// FIXME: NEEDS fallback
 	public static function reSchedulePost(
-		mixed $post,
-		array $array,
+		mixed   $post,
+		array   $array,
 		?string $default_calendar = NULL,
-		bool $set_timestamp = TRUE,
+		bool    $set_timestamp    = TRUE,
 	): bool {
 
 		global $wpdb;
@@ -845,7 +854,7 @@ class Datetime extends WordPress\Main
 			$the_day['day'],
 			$the_day['year'],
 			$the_day['cal'],
-			'UTC'
+			'UTC',
 		);
 
 		if ( ! $timestamp )
@@ -883,7 +892,7 @@ class Datetime extends WordPress\Main
 	 * @return array
 	 */
 	public static function getTheDay(
-		mixed $input = NULL,
+		mixed   $input         = NULL,
 		?string $calendar_type = NULL,
 	): array {
 
@@ -895,7 +904,7 @@ class Datetime extends WordPress\Main
 			$input,
 			$calendar_type,
 			NULL,
-			''
+			'',
 		);
 
 		if ( ! $the_date )
@@ -904,7 +913,7 @@ class Datetime extends WordPress\Main
 		list(
 			$the_day['year'],
 			$the_day['month'],
-			$the_day['day']
+			$the_day['day'],
 		) = explode( '-', Core\Number::translate( $the_date ) );
 
 		return $the_day;
@@ -914,7 +923,7 @@ class Datetime extends WordPress\Main
 	// TODO: 4 digit year based on `$type`
 	// OLD: `::parseTheFullDay()`
 	public static function parseTheDay(
-		mixed $input,
+		mixed   $input,
 		?string $calendar_type = NULL,
 	): array {
 

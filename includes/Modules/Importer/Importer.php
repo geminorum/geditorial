@@ -286,7 +286,7 @@ class Importer extends gEditorial\Module
 
 	private function _record_fields_map( array $map, ?string $option_key = NULL ): bool
 	{
-		$option_key = $option_key ?? $this->hook( 'fields_history' );
+		$option_key ??= $this->hook( 'fields_history' );
 
 		return update_option(
 			$option_key,

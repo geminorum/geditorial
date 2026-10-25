@@ -445,9 +445,9 @@ class Settings extends WordPress\Main
 	public static function getUserCapList( ?string $single_title = NULL, ?bool $pseudo_caps = NULL, ?string $none_title = NULL, ?string $none_value = NULL ): array|string
 	{
 		$multisite   = is_multisite();
-		$pseudo_caps = $pseudo_caps ?? $multisite;
-		$none_value  = $none_value  ?? 'none';
-		$none_title  = $none_title  ?? _x( '&ndash; No One &ndash;', 'Fields: Role Dropdown', 'geditorial' );
+		$pseudo_caps ??= $multisite;
+		$none_value  ??= 'none';
+		$none_title  ??= _x( '&ndash; No One &ndash;', 'Fields: Role Dropdown', 'geditorial' );
 
 		$list = [
 			'edit_theme_options'   => _x( 'Administrators', 'Fields: Role Dropdown', 'geditorial' ),
@@ -552,7 +552,7 @@ class Settings extends WordPress\Main
 
 		$system = Plugin::system();
 		$before = $class = '';
-		$title  = $title ?? $system ?: _x( 'Editorial', 'Settings', 'geditorial-admin' );
+		$title  ??= $system ?: _x( 'Editorial', 'Settings', 'geditorial-admin' );
 
 		// FIXME: get cap from settings module
 		if ( is_null( $back ) && current_user_can( 'manage_options' ) )
@@ -668,7 +668,7 @@ class Settings extends WordPress\Main
 	// @SEE: https://core.trac.wordpress.org/ticket/57791
 	public static function message( ?array $messages = NULL ): void
 	{
-		$messages = $messages ?? self::messages();
+		$messages ??= self::messages();
 
 		if ( isset( $_GET['message'] ) ) {
 

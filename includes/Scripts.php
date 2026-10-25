@@ -164,7 +164,7 @@ class Scripts extends WordPress\Main
 
 	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
-		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
+		$package ??= sprintf( '%s/%s', $asset, $asset );
 		$handle  = self::handle( $asset );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
@@ -177,7 +177,7 @@ class Scripts extends WordPress\Main
 
 	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
 	{
-		$package = $package ?? sprintf( '%s/%s', $asset, $asset );
+		$package ??= sprintf( '%s/%s', $asset, $asset );
 		$handle  = self::handle( $asset );
 		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 
