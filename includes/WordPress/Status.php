@@ -53,11 +53,11 @@ class Status extends Core\Base
 	 * Retrieves available post statuses for given post-type.
 	 * TODO: https://developer.wordpress.org/apis/transients/
 	 *
-	 * @param string $posttype
+	 * @param string|array $posttypes
 	 * @param array $excludes
 	 * @return array
 	 */
-	public static function available( string $posttype, ?array $excludes = NULL ): array
+	public static function available( string|array $posttypes, ?array $excludes = NULL ): array
 	{
 		$excludes ??= [
 			'trash',
@@ -65,12 +65,19 @@ class Status extends Core\Base
 			'auto-draft',
 		];
 
-		$statuses = IsIt::advancedCache()
-			? get_available_post_statuses( $posttype )
-			// : [ 'publish', 'future', 'draft' ];
-			: [ 'publish', 'future' ];
+		$statuses = [];
 
-		return array_diff_key( $statuses, (array) $excludes );
+		if ( IsIt::advancedCache() )
+			foreach ( (array) $posttypes as $posttype )
+				$statuses = array_merge( $statuses, get_available_post_statuses( $posttype ) );
+
+		else
+			$statuses = [
+				'publish',
+				'future',
+			];
+
+		return array_diff_key( Core\Arraay::prepString( $statuses ), (array) $excludes );
 	}
 
 	/**
@@ -105,7 +112,7 @@ class Status extends Core\Base
 		];
 
 		// @SEE: `WordPress\Database::getExcludeStatuses()`
-		$excludes = $excludes ?? is_admin() ? [] : [
+		$excludes ??= is_admin() ? [] : [
 			'pending',
 			'draft',
 		];

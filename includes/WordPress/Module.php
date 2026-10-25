@@ -7,11 +7,41 @@ use geminorum\gEditorial\Core;
 class Module extends Core\Base
 {
 
+	/**
+	 * Holds the current system base identifier.
+	 *
+	 * @var string
+	 */
 	protected $base = NULL;
-	protected $key  = NULL;
+
+	/**
+	 * Holds the current module key identifier.
+	 *
+	 * @var string
+	 */
+	protected $key = NULL;
+
+	/**
+	 * Holds the current module path directory.
+	 *
+	 * @var string
+	 */
 	protected $path = NULL;
+
+	/**
+	 * Holds the current site ID.
+	 *
+	 * @var int
+	 */
 	protected $site = NULL;
-	protected $icon = NULL; // `Dashicons` only
+
+	/**
+	 * Holds the current module icon identifier.
+	 * NOTE: `Dashicons` only!
+	 *
+	 * @var string
+	 */
+	protected $icon = NULL;
 
 	public static function factory()
 	{
@@ -511,6 +541,7 @@ class Module extends Core\Base
 		};
 	}
 
+	// @SEE https://www.malcare.com/blog/wordpress-nonce/
 	protected function nonce_create( ?string $context = NULL, ?string $key = NULL ): string
 	{
 		return wp_create_nonce( self::dsh(
@@ -592,11 +623,11 @@ class Module extends Core\Base
 
 	// NOTE: `add_screen_option()` only accept 2 options: `per_page` and `layout_columns`
 	protected function add_sub_screen_option(
-		?string $sub = NULL,
-		?string $context = NULL,
-		null|bool|string $option = TRUE,
-		?int $default = NULL,
-		?string $label = NULL,
+		?string          $sub     = NULL,
+		?string          $context = NULL,
+		null|bool|string $option  = TRUE,
+		?int             $default = NULL,
+		?string          $label   = NULL,
 	): void {
 
 		if ( FALSE === $option )
@@ -722,9 +753,9 @@ class Module extends Core\Base
 
 	protected function wrap_open(
 		string|array $class = '',
-		bool $block = TRUE,
-		string $id = '',
-		bool $hide = FALSE,
+		bool         $block = TRUE,
+		string       $id    = '',
+		bool         $hide  = FALSE,
 	): string {
 
 		return $block

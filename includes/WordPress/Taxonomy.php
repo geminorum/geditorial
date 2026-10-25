@@ -9,18 +9,18 @@ class Taxonomy extends Core\Base
 
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,32}';
 
-	public static function object( mixed $taxonomy_or_term ): false|object
+	public static function object( mixed $data ): false|object
 	{
-		if ( ! $taxonomy_or_term )
+		if ( ! $data )
 			return FALSE;
 
-		if ( $taxonomy_or_term instanceof \WP_Term )
-			return get_taxonomy( $taxonomy_or_term->taxonomy ) ?: FALSE;
+		if ( $data instanceof \WP_Term )
+			return get_taxonomy( $data->taxonomy ) ?: FALSE;
 
-		if ( $taxonomy_or_term instanceof \WP_Taxonomy )
-			return $taxonomy_or_term;
+		if ( $data instanceof \WP_Taxonomy )
+			return $data;
 
-		return get_taxonomy( $taxonomy_or_term ) ?: FALSE;
+		return get_taxonomy( $data ) ?: FALSE;
 	}
 
 	/**
@@ -95,10 +95,10 @@ class Taxonomy extends Core\Base
 	 * @return bool
 	 */
 	public static function can(
-		mixed $taxonomy,
+		mixed   $taxonomy,
 		?string $capability = 'manage_terms',
-		?int $user_id = NULL,
-		bool $fallback = FALSE,
+		?int    $user_id    = NULL,
+		bool    $fallback   = FALSE,
 	): bool {
 
 		static $cache = [];
@@ -181,20 +181,20 @@ class Taxonomy extends Core\Base
 	 * `_builtin`
 	 *
 	 * @param int $mod
-	 * @param array $args
+	 * @param array $arguments
 	 * @param false|string|array $object
 	 * @param null|string $capability
 	 * @param null|int $user_id
 	 * @return array
 	 */
-	public static function get( int $mod = 0, array $args = [], false|string|array $object = FALSE, ?string $capability = NULL, ?int $user_id = NULL )
+	public static function get( int $mod = 0, array $arguments = [], false|string|array $object = FALSE, ?string $capability = NULL, ?int $user_id = NULL )
 	{
 		$list = [];
 
 		if ( FALSE === $object || 'any' === $object )
-			$objects = get_taxonomies( $args, 'objects' );
+			$objects = get_taxonomies( $arguments, 'objects' );
 		else
-			$objects = Core\Arraay::filter( get_object_taxonomies( $object, 'objects' ), $args );
+			$objects = Core\Arraay::filter( get_object_taxonomies( $object, 'objects' ), $arguments );
 
 		foreach ( $objects as $taxonomy => $taxonomy_obj ) {
 
@@ -435,13 +435,13 @@ class Taxonomy extends Core\Base
 		return $query->query( array_merge( $args, $extra ) );
 	}
 
-	#[\Deprecated('USE `WordPress\Term::taxonomy()`')]
+	#[\Deprecated( 'USE `WordPress\Term::taxonomy()`' )]
 	public static function getTermTaxonomy( int|object $term_or_id, mixed $fallback = FALSE )
 	{
 		return Term::taxonomy( $term_or_id ) ?: $fallback;
 	}
 
-	#[\Deprecated('USE `WordPress\Term::get()`')]
+	#[\Deprecated( 'USE `WordPress\Term::get()`' )]
 	public static function getTerm( int|object $term_or_id, string $taxonomy = '' )
 	{
 		return Term::get( $term_or_id, $taxonomy );
@@ -733,7 +733,7 @@ class Taxonomy extends Core\Base
 		return count( $terms );
 	}
 
-	#[\Deprecated('USE `WordPress\Term::add()`')]
+	#[\Deprecated( 'USE `WordPress\Term::add()`' )]
 	public static function addTerm( mixed $term, mixed $taxonomy, bool $sanitize = TRUE )
 	{
 		return Term::add( $term, $taxonomy, $sanitize );
@@ -1445,7 +1445,7 @@ class Taxonomy extends Core\Base
 
 	public static function listTermsJS( string $taxonomy, ?array $fields = NULL, array $extra = [] )
 	{
-		$fields = $fields ?? [
+		$fields ??= [
 			'term_id',
 			'name',
 		];
@@ -1455,7 +1455,7 @@ class Taxonomy extends Core\Base
 		}, self::listTerms( $taxonomy, 'all', $extra ) );
 	}
 
-	#[\Deprecated('USE `WordPress\Term::getMeta()`')]
+	#[\Deprecated( 'USE `WordPress\Term::getMeta()`' )]
 	public static function getTermMeta( mixed $term, $keys = FALSE, $single = TRUE )
 	{
 		return Term::getMeta( $term, $keys, $single );
@@ -1516,7 +1516,7 @@ class Taxonomy extends Core\Base
 			return FALSE;
 
 		$query = new \WP_Term_Query( [
-			// 'taxonomy'   => (array) $taxonomy,
+			// `'taxonomy'   => (array) $taxonomy,`
 			'orderby'     => 'none',
 			'meta_query'  => [ [
 				'value'   => $attachment_id,
@@ -1533,20 +1533,22 @@ class Taxonomy extends Core\Base
 	// NOTE: must add `add_thickbox()` for thick-box
 	// @SEE: `Scripts::enqueueThickBox()`
 	public static function htmlFeaturedImage(
-		int $term_id,
-		null|string|array $size = NULL,
-		bool $link = TRUE,
-		?string $meta_key = NULL
+		int               $term_id,
+		null|string|array $size     = NULL,
+		bool              $link     = TRUE,
+		?string           $meta_key = NULL
 	): string {
 
-		$size = $size ?? Media::getAttachmentImageDefaultSize( NULL, Term::taxonomy( $term_id ) ?: NULL );
+		$size ??= Media::getAttachmentImageDefaultSize( NULL, Term::taxonomy( $term_id ) ?: NULL );
 
 		return Media::htmlAttachmentImage(
 			self::getThumbnailID( $term_id, $meta_key ),
 			$size,
 			$link,
-			[ 'term' => $term_id ],
-			'-featured'
+			[
+				'term' => $term_id,
+			],
+			'-featured',
 		);
 	}
 
@@ -1556,17 +1558,17 @@ class Taxonomy extends Core\Base
 		// @old `geditorial_get_term_thumbnail_id`
 		return apply_filters( 'term_thumbnail_id',
 			( (int) get_term_meta( $term_id, $metakey ?? 'image', TRUE ) ) ?: FALSE,
-			get_term( $term_id )
+			get_term( $term_id ),
 		);
 	}
 
-	#[\Deprecated('USE `WordPress\Taxonomy::link()`')]
+	#[\Deprecated( 'USE `WordPress\Taxonomy::link()`' )]
 	public static function getArchiveLink( string $taxonomy )
 	{
 		return self::link( $taxonomy );
 	}
 
-	#[\Deprecated('USE `WordPress\Term::title()`')]
+	#[\Deprecated( 'USE `WordPress\Term::title()`' )]
 	public static function getTermTitle( int $term, mixed $fallback = NULL, bool $filter = TRUE )
 	{
 		return Term::title( $term, $fallback, $filter );

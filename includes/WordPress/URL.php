@@ -138,7 +138,9 @@ class URL extends Core\Base
 	// OLD: `Core\WordPress::getAdminPageLink()`
 	public static function admin( string $page, array $extra = [], ?string $base = NULL ): string
 	{
-		return add_query_arg( array_merge( [ 'page' => $page ], $extra ), admin_url( $base ?? 'admin.php' ) );
+		return add_query_arg( array_merge( [
+			'page' => $page,
+		], $extra ), admin_url( $base ?? 'admin.php' ) );
 	}
 
 	/**
@@ -151,7 +153,9 @@ class URL extends Core\Base
 	 */
 	public static function adminPOST( string $action, array $extra = [] ): string
 	{
-		return add_query_arg( array_merge( [ 'action' => $action ], $extra ), admin_url( 'admin-post.php' ) );
+		return add_query_arg( array_merge( [
+			'action' => $action,
+		], $extra ), admin_url( 'admin-post.php' ) );
 	}
 
 	public static function searchAdminTerm( string $criteria, string|object $taxonomy, array $extra = [] ): false|string
@@ -288,7 +292,7 @@ class URL extends Core\Base
 		if ( ! is_multisite() || ! function_exists( 'get_network' ) )
 			return home_url( $path, $scheme );
 
-		$network         = $network ?? get_network();
+		$network         ??= get_network();
 		$original_scheme = $scheme;
 
 		if ( ! in_array( $scheme, [ 'http', 'https', 'relative' ], TRUE ) )
