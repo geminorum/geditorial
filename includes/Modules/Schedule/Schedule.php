@@ -78,40 +78,40 @@ class Schedule extends gEditorial\Module
 			case 'reschedule':
 
 				if ( empty( $post['post_id'] ) )
-					gEditorial\Ajax::errorInvalid();
+					Services\Ajax::errorInvalid();
 
 				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
-				gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+				Services\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 				if ( ! $target = WordPress\Post::get( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
+					Services\Ajax::errorMessage( _x( 'Post not found.', 'Message', 'geditorial-schedule' ) );
 
 				if ( ! $this->can_reschedule( $target ) )
-					gEditorial\Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Message', 'geditorial-schedule' ) );
+					Services\Ajax::errorMessage( _x( 'Updating the post date dynamically doesn\'t work for published content.', 'Message', 'geditorial-schedule' ) );
 
 				$result = gEditorial\Datetime::reSchedulePost( $target, $post );
 
 				if ( TRUE === $result )
-					gEditorial\Ajax::successMessage();
+					Services\Ajax::successMessage();
 
 				if ( $result )
-					gEditorial\Ajax::errorMessage( $result ?: NULL );
+					Services\Ajax::errorMessage( $result ?: NULL );
 
-				gEditorial\Ajax::errorMessage();
+				Services\Ajax::errorMessage();
 
 			break;
 			case 'addnew':
 
-				gEditorial\Ajax::checkReferer( $this->hook( 'add-new' ) );
+				Services\Ajax::checkReferer( $this->hook( 'add-new' ) );
 
 				parse_str( $post['data'], $data );
 
 				if ( ! WordPress\PostType::can( $data['post_type'], 'create_posts' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
-				// gEditorial\Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
+				// Services\Ajax::success( '<li>'.$data['post_title'].'</li>' ); // FOR TEST!
 
 				$inserted = $this->_add_new_post(
 					$data['post_type'],
@@ -123,12 +123,12 @@ class Schedule extends gEditorial\Module
 				);
 
 				if ( ! $inserted )
-					gEditorial\Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
-				gEditorial\Ajax::success( $this->_get_post_row( $data['date_day'], $inserted ) );
+				Services\Ajax::success( $this->_get_post_row( $data['date_day'], $inserted ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	public function admin_menu(): void
@@ -268,7 +268,7 @@ class Schedule extends gEditorial\Module
 	{
 		// $cal = self::req( 'cc', $this->cache['default_calendar'] );
 
-		$html = gEditorial\Ajax::spinner();
+		$html = Services\Ajax::spinner();
 		$html.= '<span class="-the-day-number">'.Core\Number::localize( $the_day ).'</span>';
 
 		if ( $today )

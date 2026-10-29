@@ -212,42 +212,42 @@ class Importer extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorInvalid();
+			Services\Ajax::errorInvalid();
 
 		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-			gEditorial\Ajax::errorUserCant();
+			Services\Ajax::errorUserCant();
 
-		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		Services\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'cleanup_post':
 
 				if ( ! $this->role_can( 'imports' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( ! $this->_do_cleanup_post( (int) $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to clean-up imported residual data!', 'Message', 'geditorial-importer' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to clean-up imported residual data!', 'Message', 'geditorial-importer' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Imported residual data cleaned-up successfully.', 'Message', 'geditorial-importer' ) );
+				Services\Ajax::successMessage( _x( 'Imported residual data cleaned-up successfully.', 'Message', 'geditorial-importer' ) );
 
 				break;
 
 			case 'discard_meta':
 
 				if ( ! $this->role_can( 'imports' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( empty( $post['metakey'] ) )
-					gEditorial\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
+					Services\Ajax::errorMessage( gEditorial\Plugin::invalid( FALSE ) );
 
 				if ( ! WordPress\PostMeta::delete( (string) $post['metakey'], (int) $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to discard imported meta log!', 'Message', 'geditorial-importer' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to discard imported meta log!', 'Message', 'geditorial-importer' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Imported meta log discarded successfully.', 'Message', 'geditorial-importer' ) );
+				Services\Ajax::successMessage( _x( 'Imported meta log discarded successfully.', 'Message', 'geditorial-importer' ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	private function _posts_guess_fields_map( array $headers, array $fields = [], array $taxonomies = [], ?int $attachment_id = NULL ): array

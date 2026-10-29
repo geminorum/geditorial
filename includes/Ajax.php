@@ -4,8 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Ajax extends WordPress\Main
 {
-	// TODO: Migrate to Services
-
 	const BASE = 'geditorial';
 
 	public static function factory()
@@ -13,77 +11,69 @@ class Ajax extends WordPress\Main
 		return gEditorial();
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::checkReferer()`' )]
 	public static function checkReferer( ?string $action = NULL, ?string $key = NULL ): int|false
 	{
-		return check_ajax_referer( $action ?? static::BASE, $key ?? 'nonce' );
+		return Services\Ajax::checkReferer( $action, $key );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::success()`' )]
 	public static function success( mixed $data = NULL, ?int $status_code = NULL ): void
 	{
-		wp_send_json_success( $data, $status_code );
+		Services\Ajax::success( $data, $status_code );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::error()`' )]
 	public static function error( mixed $data = NULL, ?int $status_code = NULL ): void
 	{
-		wp_send_json_error( $data, $status_code );
+		Services\Ajax::error( $data, $status_code );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::successHTML()`' )]
 	public static function successHTML( string $html, ?int $status_code = NULL ): void
 	{
-		self::success( [ 'html' => $html ], $status_code );
+		Services\Ajax::successHTML( $html, $status_code );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::successMessage()`' )]
 	public static function successMessage( ?string $message = NULL ): void
 	{
-		$message ??= Plugin::done( FALSE );
-
-		if ( $message )
-			self::success( Core\HTML::success( $message, FALSE, '-via-ajax' ) );
-
-		else
-			self::success();
+		Services\Ajax::successMessage( $message );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::errorHTML()`' )]
 	public static function errorHTML( string $html, ?int $status_code = NULL ): void
 	{
-		self::error( [ 'html' => $html ], $status_code );
+		Services\Ajax::errorHTML( $html, $status_code );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::errorMessage()`' )]
 	public static function errorMessage( null|string|object $message = NULL ): void
 	{
-		if ( $message && self::isError( $message ) )
-			$message = $message->get_error_message();
-
-		$message ??= Plugin::wrong( FALSE );
-
-		if ( $message )
-			self::error( Core\HTML::error( $message, FALSE, '-via-ajax' ) );
-
-		else
-			self::error();
+		Services\Ajax::errorMessage( $message );
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::errorInvalid()`' )]
 	public static function errorInvalid(): void
 	{
-		self::errorMessage( Plugin::invalid( FALSE ) );
+		Services\Ajax::errorInvalid();
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::errorUserCant()`' )]
 	public static function errorUserCant(): void
 	{
-		self::errorMessage( Plugin::denied( FALSE ) );
+		Services\Ajax::errorUserCant();
 	}
 
+	#[\Deprecated( 'USE `Services\Ajax::errorWhat()`' )]
 	public static function errorWhat(): void
 	{
-		self::errorMessage( Plugin::what( FALSE ) );
+		Services\Ajax::errorWhat();
 	}
 
-	// @REF: https://make.wordpress.org/core/?p=12799
-	// @REF: https://austin.passy.co/2014/native-wordpress-loading-gifs/
+	#[\Deprecated( 'USE `Services\Ajax::spinner()`' )]
 	public static function spinner( ?bool $admin = NULL, mixed $data = NULL ): string
 	{
-		return ( $admin ?? is_admin() )
-			? '<span class="-loading spinner"'.Core\HTML::propData( $data ).'></span>'
-			: '<span class="-loading '.static::BASE.'-spinner"'.Core\HTML::propData( $data ).'></span>';
+		return Services\Ajax::spinner( $admin, $data );
 	}
 }

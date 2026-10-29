@@ -79,41 +79,41 @@ class Unavailable extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['c'] ) )
-			Ajax::errorMessage();
+			Services\Ajax::errorMessage();
 
-		Ajax::checkReferer( $this->hook( $post['c'] ) );
+		Services\Ajax::checkReferer( $this->hook( $post['c'] ) );
 
 		switch ( $what ) {
 
 			case 'comment_unarchive':
 
 				if ( empty( $post['c'] ) )
-					Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_comment', $post['c'] ) )
-					Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( ! $this->comment_archive( $post['c'], FALSE ) )
-					Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
-				Ajax::success( _x( 'Restored', 'Message', 'geditorial-unavailable' ) );
+				Services\Ajax::success( _x( 'Restored', 'Message', 'geditorial-unavailable' ) );
 
 			break;
 			case 'comment_doarchive':
 
 				if ( empty( $post['c'] ) )
-					Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
 				if ( ! current_user_can( 'edit_comment', $post['c'] ) )
-					Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( ! $this->comment_archive( $post['c'], TRUE ) )
-					Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
-				Ajax::success( _x( 'Archived', 'Message', 'geditorial-unavailable' ) );
+				Services\Ajax::success( _x( 'Archived', 'Message', 'geditorial-unavailable' ) );
 		}
 
-		Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	public function pre_get_comments( &$query )

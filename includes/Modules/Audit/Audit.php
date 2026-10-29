@@ -173,18 +173,18 @@ class Audit extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorInvalid();
+			Services\Ajax::errorInvalid();
 
 		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-			gEditorial\Ajax::errorUserCant();
+			Services\Ajax::errorUserCant();
 
-		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		Services\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'list':
 
-				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+				Services\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
 
 				break;
 
@@ -204,14 +204,14 @@ class Audit extends gEditorial\Module
 				);
 
 				if ( self::isError( $result ) )
-					gEditorial\Ajax::errorMessage( $result );
+					Services\Ajax::errorMessage( $result );
 
 				clean_object_term_cache( $post['post_id'], $taxonomy );
 
-				gEditorial\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
+				Services\Ajax::success( $this->get_adminbar_checklist( $post['post_id'] ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	private function get_adminbar_checklist( int $post_id ): string

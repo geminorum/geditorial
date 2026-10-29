@@ -3,7 +3,6 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
@@ -72,7 +71,7 @@ class Uploader extends gEditorial\Module
 
 		Core\HTML::desc( $this->get_setting( 'form_before', '' ), TRUE, '-intro' );
 
-		$html = '<form>'.Ajax::spinner();
+		$html = '<form>'.Services\Ajax::spinner();
 		$html.= '<div id="'.$this->classs( 'largefile', 'progress' ).'" class="-messages">';
 		$html.= _x( 'Please select a file and click &#8220;Upload&#8221; to continue.', 'Message', 'geditorial-uploader' );
 		$html.= '</div>';
@@ -120,43 +119,46 @@ class Uploader extends gEditorial\Module
 
 			case 'upload_check':
 
-				Ajax::checkReferer( $this->classs( 'largefile' ) );
+				Services\Ajax::checkReferer( $this->classs( 'largefile' ) );
 
 				$stored = $this->_handle_upload_check( $post['file'], $post['mime'] );
 
 				if ( TRUE === $stored )
-					Ajax::success();
+					Services\Ajax::success();
+
 				else
-					Ajax::error( $stored );
+					Services\Ajax::error( $stored );
 
 				break;
 
 			case 'upload_chaunk':
 
-				Ajax::checkReferer( $this->classs( 'largefile' ) );
+				Services\Ajax::checkReferer( $this->classs( 'largefile' ) );
 
 				$stored = $this->_handle_store_chaunk( $post['file'], $post['file_data'], (int) $post['chunk'] );
 
 				if ( TRUE === $stored )
-					Ajax::success();
+					Services\Ajax::success();
+
 				else
-					Ajax::error( $stored );
+					Services\Ajax::error( $stored );
 
 				break;
 
 			case 'upload_complete':
 
-				Ajax::checkReferer( $this->classs( 'largefile' ) );
+				Services\Ajax::checkReferer( $this->classs( 'largefile' ) );
 
 				$completed = $this->_handle_complete_upload( $post['file'] );
 
 				if ( $completed[0] )
-					Ajax::success( $completed[1] );
+					Services\Ajax::success( $completed[1] );
+
 				else
-					Ajax::errorMessage( $completed[1] );
+					Services\Ajax::errorMessage( $completed[1] );
 		}
 
-		Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	private function _handle_upload_check( $filename, $mime )

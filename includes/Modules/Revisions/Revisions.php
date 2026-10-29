@@ -283,7 +283,7 @@ class Revisions extends gEditorial\Module
 			$parts['autosave'] = _x( '[Autosave]', 'Indicator', 'geditorial-revisions' );
 
 		if ( $link )
-			$parts['loading'] = gEditorial\Ajax::spinner();
+			$parts['loading'] = Services\Ajax::spinner();
 
 		return Core\HTML::span( implode( ' ', $parts ), [ 'geditorial-admin-wrap-inline', '-revisions' ] );
 	}
@@ -314,7 +314,7 @@ class Revisions extends gEditorial\Module
 				] ),
 			], _x( 'Purge Revisions', 'Button', 'geditorial-revisions' ) );
 
-			echo gEditorial\Ajax::spinner();
+			echo Services\Ajax::spinner();
 
 			echo Core\HTML::tag( 'a', [
 				'id'    => $this->hook( 'browse' ),
@@ -374,35 +374,35 @@ class Revisions extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorInvalid();
+			Services\Ajax::errorInvalid();
 
-		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		Services\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'purge':
 
 				if ( ! current_user_can( $this->caps['purge'], $post['post_id'] ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
-				gEditorial\Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
+				Services\Ajax::success( [ 'count' => $this->purge( $post['post_id'] ) ] );
 
 			break;
 			case 'delete':
 
 				if ( empty( $post['revision_id'] ) )
-					gEditorial\Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
 				if ( ! current_user_can( $this->caps['delete'], $post['post_id'] ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( is_wp_error( wp_delete_post_revision( $post['revision_id'] ) ) )
-					gEditorial\Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 
-				gEditorial\Ajax::successMessage();
+				Services\Ajax::successMessage();
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	public function reports_settings( string $sub ): void

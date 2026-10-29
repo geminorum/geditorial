@@ -224,6 +224,7 @@ class Plugin extends WordPress\Plugin
 		$available = [
 			'AdminScreen',
 			'AdvancedQueries',
+			'Ajax',
 			'Avatars',
 			'Barcodes',
 			'Calendars',

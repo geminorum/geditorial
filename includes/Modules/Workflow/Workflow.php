@@ -469,7 +469,7 @@ class Workflow extends gEditorial\Module
 					'class' => Core\Link::buttonClass( TRUE, [ 'hide-if-no-js', '-browse-revisions' ] ),
 				], __( 'Browse revisions' ) );
 
-			echo gEditorial\Ajax::spinner();
+			echo Services\Ajax::spinner();
 
 		echo '</div>';
 
@@ -594,7 +594,7 @@ class Workflow extends gEditorial\Module
 
 		echo '</div><div id="publishing-action">';
 
-			echo gEditorial\Ajax::spinner();
+			echo Services\Ajax::spinner();
 
 			submit_button( __( 'Submit' ), 'primary large', 'save', FALSE, [ 'id' => 'publish' ] );
 

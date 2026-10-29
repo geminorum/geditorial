@@ -253,7 +253,7 @@ class Like extends gEditorial\Module
 
 				list( $check, $count ) = $this->check( $post['id'] );
 
-				gEditorial\Ajax::success( [
+				Services\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => $check ? 'unlike' : 'dolike',
 					'remove'  => 'loading',
@@ -267,11 +267,11 @@ class Like extends gEditorial\Module
 
 			case 'dolike':
 
-				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				Services\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->like( $post['id'] );
 
-				gEditorial\Ajax::success( [
+				Services\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'unlike',
 					'remove'  => 'dolike',
@@ -284,11 +284,11 @@ class Like extends gEditorial\Module
 
 			case 'unlike':
 
-				gEditorial\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
+				Services\Ajax::checkReferer( 'geditorial_like_ajax-'.$post['id'] );
 
 				list( $check, $count ) = $this->unlike( $post['id'] );
 
-				gEditorial\Ajax::success( [
+				Services\Ajax::success( [
 					'title'   => $this->title( $check, $post['id'] ),
 					'action'  => 'dolike',
 					'remove'  => 'unlike',
@@ -298,7 +298,7 @@ class Like extends gEditorial\Module
 				] );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	public function title( $liked, $post_id = NULL )

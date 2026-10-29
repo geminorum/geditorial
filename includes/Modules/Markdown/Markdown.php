@@ -290,51 +290,51 @@ class Markdown extends gEditorial\Module
 		$what = empty( $post['what'] ) ? 'nothing': trim( $post['what'] );
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorInvalid();
+			Services\Ajax::errorInvalid();
 
 		if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-			gEditorial\Ajax::errorUserCant();
+			Services\Ajax::errorUserCant();
 
-		gEditorial\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
+		Services\Ajax::checkReferer( $this->hook( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'process':
 
 				if ( ! $this->process_post( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML!', 'Message', 'geditorial-markdown' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to process Markdown content into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Processed successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				Services\Ajax::successMessage( _x( 'Processed successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 
 				break;
 
 			case 'convert':
 
 				if ( ! $this->convert_post( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to convert content into Markdown!', 'Message', 'geditorial-markdown' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to convert content into Markdown!', 'Message', 'geditorial-markdown' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Converted successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				Services\Ajax::successMessage( _x( 'Converted successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 
 				break;
 
 			case 'cleanup':
 
 				if ( ! $this->cleanup_post( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to cleanup Markdown content!', 'Message', 'geditorial-markdown' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to cleanup Markdown content!', 'Message', 'geditorial-markdown' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Cleaned-up successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				Services\Ajax::successMessage( _x( 'Cleaned-up successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 
 				break;
 
 			case 'discard':
 
 				if ( ! $this->discard_post( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML!', 'Message', 'geditorial-markdown' ) );
+					Services\Ajax::errorMessage( _x( 'Unable to discard Markdown content back into HTML!', 'Message', 'geditorial-markdown' ) );
 
-				gEditorial\Ajax::successMessage( _x( 'Discarded successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
+				Services\Ajax::successMessage( _x( 'Discarded successfully. Reloading &hellip;', 'Message', 'geditorial-markdown' ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	/**

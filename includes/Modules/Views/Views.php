@@ -127,21 +127,21 @@ class Views extends gEditorial\Module
 		$what = $post['what'] ?? 'nothing';
 
 		if ( empty( $post['post_id'] ) )
-			gEditorial\Ajax::errorInvalid();
+			Services\Ajax::errorInvalid();
 
-		gEditorial\Ajax::checkReferer( $this->classs( $post['post_id'] ) );
+		Services\Ajax::checkReferer( $this->classs( $post['post_id'] ) );
 
 		switch ( $what ) {
 
 			case 'entryview':
 
 				if ( $this->_update_views_for_post( $post['post_id'], $what ) )
-					gEditorial\Ajax::successMessage();
+					Services\Ajax::successMessage();
 				else
-					gEditorial\Ajax::errorMessage();
+					Services\Ajax::errorMessage();
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	private function _update_views_for_post( int $post_id, string $event ): int|bool

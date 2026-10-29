@@ -192,50 +192,50 @@ class Drafts extends gEditorial\Module
 			case 'private':
 
 				if ( empty( $post['post_id'] ) )
-					gEditorial\Ajax::errorInvalid();
+					Services\Ajax::errorInvalid();
 
 				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $this->make_private( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( __( 'Unable to make preview private. Please try again.', 'geditorial-drafts' ) );
+					Services\Ajax::errorMessage( __( 'Unable to make preview private. Please try again.', 'geditorial-drafts' ) );
 
-				gEditorial\Ajax::success();
+				Services\Ajax::success();
 
 				break;
 
 			case 'public':
 
 				if ( empty( $post['post_id'] ) )
-					gEditorial\Ajax::errorInvalid();
+					Services\Ajax::errorInvalid();
 
 				if ( ! WordPress\Post::can( $post['post_id'], 'edit_post' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
 				if ( ! $this->nonce_verify( $post['post_id'], $post['nonce'] ) )
 					self::cheatin();
 
 				if ( ! $link = $this->make_public( $post['post_id'] ) )
-					gEditorial\Ajax::errorMessage( __( 'Unable to make preview public. Please try again.', 'geditorial-drafts' ) );
+					Services\Ajax::errorMessage( __( 'Unable to make preview public. Please try again.', 'geditorial-drafts' ) );
 
-				gEditorial\Ajax::success( $link );
+				Services\Ajax::success( $link );
 
 				break;
 
 			case 'list':
 
-				gEditorial\Ajax::checkReferer( $this->hook() );
+				Services\Ajax::checkReferer( $this->hook() );
 
 				if ( ! $this->role_can( 'adminbar' ) )
-					gEditorial\Ajax::errorUserCant();
+					Services\Ajax::errorUserCant();
 
-				gEditorial\Ajax::success( $this->_drafts_list_markup( 'adminbar' ) );
+				Services\Ajax::success( $this->_drafts_list_markup( 'adminbar' ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	private function _drafts_list_markup( $context = NULL )
@@ -327,7 +327,7 @@ class Drafts extends gEditorial\Module
 			'onclick'  => 'this.focus();this.select()',
 		] );
 
-		echo gEditorial\Ajax::spinner();
+		echo Services\Ajax::spinner();
 
 		echo Core\HTML::tag( 'a', [
 			'href'  => '#',

@@ -493,7 +493,7 @@ trait TemplatePostType
 		echo $this->wrap_open_buttons();
 
 		echo '<span class="-message"></span>';
-		echo gEditorial\Ajax::spinner();
+		echo Services\Ajax::spinner();
 
 			// @hook `geditorial_template_newpost_buttons`
 			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),

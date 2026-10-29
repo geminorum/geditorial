@@ -218,7 +218,7 @@ class ModuleSettings extends gEditorial\Settings
 					'dynamicsubmit-target' => static::SELECTOR_FROM_SIMPLE_META,
 				] );
 
-			echo gEditorial\Ajax::spinner( TRUE, [
+			echo Services\Ajax::spinner( TRUE, [
 				'dynamicsubmit-loading' => static::SELECTOR_FROM_SIMPLE_META,
 			] );
 
@@ -427,7 +427,7 @@ class ModuleSettings extends gEditorial\Settings
 					'dynamicsubmit-target' => static::SELECTOR_FROM_BYLINE_META,
 				] );
 
-			echo gEditorial\Ajax::spinner( TRUE, [
+			echo Services\Ajax::spinner( TRUE, [
 				'dynamicsubmit-loading' => static::SELECTOR_FROM_BYLINE_META,
 			] );
 

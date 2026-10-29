@@ -1087,24 +1087,24 @@ class Config extends gEditorial\Module
 
 			case 'state':
 
-				gEditorial\Ajax::checkReferer( $this->hook() );
+				Services\Ajax::checkReferer( $this->hook() );
 
 				if ( ! isset( $_POST['doing'], $_POST['name'] ) )
-					gEditorial\Ajax::errorMessage( _x( 'No action or name!', 'Ajax Notice', 'geditorial-admin' ) );
+					Services\Ajax::errorMessage( _x( 'No action or name!', 'Ajax Notice', 'geditorial-admin' ) );
 
 				if ( ! $module = gEditorial()->get_module_by( 'name', sanitize_key( $_POST['name'] ) ) )
-					gEditorial\Ajax::errorMessage( _x( 'Cannot find the module!', 'Ajax Notice', 'geditorial-admin' ) );
+					Services\Ajax::errorMessage( _x( 'Cannot find the module!', 'Ajax Notice', 'geditorial-admin' ) );
 
 				$enabled = 'enable' == sanitize_key( $_POST['doing'] ) ? TRUE : FALSE;
 
 				if ( gEditorial()->update_module_option( $module->name, 'enabled', $enabled ) )
-					gEditorial\Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-admin' ) );
+					Services\Ajax::successMessage( _x( 'Module state successfully changed.', 'Ajax Notice', 'geditorial-admin' ) );
 
 				else
-					gEditorial\Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-admin' ) );
+					Services\Ajax::errorMessage( _x( 'Cannot change module state!', 'Ajax Notice', 'geditorial-admin' ) );
 		}
 
-		gEditorial\Ajax::errorWhat();
+		Services\Ajax::errorWhat();
 	}
 
 	public function admin_settings_page(): bool
@@ -1149,7 +1149,7 @@ class Config extends gEditorial\Module
 			if ( $module->icon )
 				echo Services\Icons::get( $module->icon );
 
-			echo gEditorial\Ajax::spinner();
+			echo Services\Ajax::spinner();
 
 			Services\Modulation::renderInfo( $module, $enabled );
 

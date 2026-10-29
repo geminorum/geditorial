@@ -161,7 +161,7 @@ trait QuickPosts
 		echo $this->wrap_open_buttons();
 
 			echo '<span class="-message"></span>';
-			echo gEditorial\Ajax::spinner();
+			echo Services\Ajax::spinner();
 
 			do_action( $this->hook_base( 'template', 'newpost', 'buttons' ),
 				$posttype,

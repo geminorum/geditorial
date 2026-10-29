@@ -120,7 +120,7 @@ trait CoreAdminBar
 		if ( FALSE === $spinner )
 			return '';
 
-		return gEditorial\Ajax::spinner( FALSE, [
+		return Services\Ajax::spinner( FALSE, [
 			'spinner' => $spinner ?? 'fade-stagger-squares',
 		] );
 	}
