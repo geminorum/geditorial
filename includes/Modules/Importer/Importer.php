@@ -526,7 +526,7 @@ class Importer extends gEditorial\Module
 				'compare' => 'NOT EXISTS',
 			];
 
-		list( $posts, ) = gEditorial\Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
+		list( $posts, ) = Services\Tablelist::getPosts( $query, [], $args['posttype'], $this->get_sub_limit_option( NULL, 'imports' ) );
 
 		return Core\HTML::tableList( [
 			'_cb'          => 'ID',
@@ -548,9 +548,9 @@ class Importer extends gEditorial\Module
 					], Core\HTML::img( $src ) );
 				},
 			],
-			'ID'    => gEditorial\Tablelist::columnPostID(),
-			'title' => gEditorial\Tablelist::columnPostTitle(),
-			'type'  => gEditorial\Tablelist::columnPostType(),
+			'ID'    => Services\Tablelist::columnPostID(),
+			'title' => Services\Tablelist::columnPostTitle(),
+			'type'  => Services\Tablelist::columnPostType(),
 			'thumb_image' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-importer' ),
 				'class'    => 'image-column',
@@ -802,7 +802,7 @@ class Importer extends gEditorial\Module
 
 	private function _handle_imports_action_images( string $sub ): bool
 	{
-		if ( ! gEditorial\Tablelist::isAction( [
+		if ( ! Services\Tablelist::isAction( [
 			'images_import',
 			'images_import_as_thumbnail',
 		], TRUE ) )
@@ -851,7 +851,7 @@ class Importer extends gEditorial\Module
 
 	private function _handle_imports_action_terms( string $sub ): bool
 	{
-		if ( ! gEditorial\Tablelist::isAction( [
+		if ( ! Services\Tablelist::isAction( [
 			'terms_import_newonly',
 			'terms_import_append',
 			'terms_import_override',
@@ -869,7 +869,7 @@ class Importer extends gEditorial\Module
 
 	private function _handle_imports_action_posts( string $sub ): bool
 	{
-		if ( ! gEditorial\Tablelist::isAction( [
+		if ( ! Services\Tablelist::isAction( [
 			'posts_import_newonly',
 			'posts_import_override',
 		], TRUE ) )

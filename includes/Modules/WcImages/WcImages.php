@@ -44,7 +44,7 @@ class WcImages extends gEditorial\Module
 			if ( ! empty( $_POST ) ) {
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'shift_thumb_from_gallery', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'shift_thumb_from_gallery', TRUE ) ) {
 
 					$count = 0;
 
@@ -103,17 +103,17 @@ class WcImages extends gEditorial\Module
 
 		$extra = [];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::PRODUCT_POSTTYPE, $this->get_sub_limit_option( $sub, 'tools' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, WordPress\WooCommerce::PRODUCT_POSTTYPE, $this->get_sub_limit_option( $sub, 'tools' ) );
 
 		$pagination['actions'] = [
 			'shift_thumb_from_gallery' => _x( 'Shift Thumbnail from Gallery', 'Table Action', 'geditorial-wc-images' ),
 		];
 
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+		$pagination['before'][] = Services\Tablelist::filterSearch();
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'title' => Services\Tablelist::columnPostTitle(),
 
 			'thumb' => [
 				'title'    => _x( 'Thumbnail', 'Table Column', 'geditorial-wc-images' ),

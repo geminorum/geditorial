@@ -202,15 +202,15 @@ class Modified extends gEditorial\Module
 
 		$query = new \WP_Query();
 
-		$columns = [ 'title' => gEditorial\Tablelist::columnPostTitleSummary() ];
+		$columns = [ 'title' => Services\Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = gEditorial\Tablelist::columnPostStatusSummary();
+			$columns['status'] = Services\Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = gEditorial\Tablelist::columnPostAuthorSummary();
+			$columns['author'] = Services\Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = gEditorial\Tablelist::columnPostDateModified();
+		$columns['modified'] = Services\Tablelist::columnPostDateModified();
 
 		Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => Services\CustomPostType::getLabel( 'post', 'not_found' ),

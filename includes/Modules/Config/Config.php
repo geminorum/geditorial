@@ -542,7 +542,7 @@ class Config extends gEditorial\Module
 					'empty_module' => FALSE,
 				], $context );
 
-				if ( gEditorial\Tablelist::isAction( 'upgrade_old_options' ) ) {
+				if ( Services\Tablelist::isAction( 'upgrade_old_options' ) ) {
 
 					$result = gEditorial()->upgrade_old_options();
 
@@ -552,7 +552,7 @@ class Config extends gEditorial\Module
 							'count'   => count( $result ),
 						] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'import_all_options' ) ) {
+				} else if ( Services\Tablelist::isAction( 'import_all_options' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						WordPress\Redirect::doReferer( 'wrong' );
@@ -573,7 +573,7 @@ class Config extends gEditorial\Module
 
 					WordPress\Redirect::doReferer( 'updated' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'download_active_options' ) ) {
+				} else if ( Services\Tablelist::isAction( 'download_active_options' ) ) {
 
 					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
 						Core\Text::download(
@@ -583,7 +583,7 @@ class Config extends gEditorial\Module
 
 					WordPress\Redirect::doReferer( 'wrong' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'download_all_options' ) ) {
+				} else if ( Services\Tablelist::isAction( 'download_all_options' ) ) {
 
 					if ( FALSE !== ( $data = get_option( 'geditorial_options' ) ) )
 						Core\Text::download(
@@ -593,12 +593,12 @@ class Config extends gEditorial\Module
 
 					WordPress\Redirect::doReferer( 'wrong' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'delete_all_options' ) ) {
+				} else if ( Services\Tablelist::isAction( 'delete_all_options' ) ) {
 
 					if ( delete_option( 'geditorial_options' ) )
 						WordPress\Redirect::doReferer( 'purged' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'custom_fields_empty' ) ) {
+				} else if ( Services\Tablelist::isAction( 'custom_fields_empty' ) ) {
 
 					if ( $post['empty_module'] && isset( gEditorial()->module( $post['empty_module'] )->meta_key ) ) {
 
@@ -611,7 +611,7 @@ class Config extends gEditorial\Module
 							] );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'do_o2o_conversion_types' ) ) {
+				} else if ( Services\Tablelist::isAction( 'do_o2o_conversion_types' ) ) {
 
 					if ( empty( $_POST['o2o_conversion_types'] ) )
 						WordPress\Redirect::doReferer( 'nochange' );

@@ -1063,15 +1063,15 @@ class Book extends gEditorial\Module
 			],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'tools' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'tools' ) );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'type'  => gEditorial\Tablelist::columnPostType(),
-			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'type'  => Services\Tablelist::columnPostType(),
+			'title' => Services\Tablelist::columnPostTitle(),
 			'metas' => [
 				'title'    => _x( 'Import Meta', 'Table Column', 'geditorial-book' ),
 				'args'     => [ 'fields' => $this->get_importer_fields() ],

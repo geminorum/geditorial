@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
@@ -42,7 +41,7 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function handleImport_from_book_module()
 	{
-		if ( ! Tablelist::isAction( static::ACTION_FROM_BOOK_MODULE ) )
+		if ( ! Services\Tablelist::isAction( static::ACTION_FROM_BOOK_MODULE ) )
 			return FALSE;
 
 		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'isbn', 'meta' ) )

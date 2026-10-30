@@ -421,15 +421,15 @@ class Roled extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'duplicate_default_roles' ) ) {
+				if ( Services\Tablelist::isAction( 'duplicate_default_roles' ) ) {
 
 					$this->duplicate_default_roles();
 
-				} else if ( gEditorial\Tablelist::isAction( 'add_defaults_to_editor' ) ) {
+				} else if ( Services\Tablelist::isAction( 'add_defaults_to_editor' ) ) {
 
 					$this->add_default_caps( 'editor' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'remove_duplicate_roles' ) ) {
+				} else if ( Services\Tablelist::isAction( 'remove_duplicate_roles' ) ) {
 
 					$this->remove_duplicate_roles();
 				}

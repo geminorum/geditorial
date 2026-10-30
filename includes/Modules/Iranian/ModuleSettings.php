@@ -55,7 +55,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -167,7 +167,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();
@@ -363,7 +363,7 @@ class ModuleSettings extends gEditorial\Settings
 			],
 		];
 
-		$posts = gEditorial\Tablelist::getPosts( $query, [], $posttype, FALSE );
+		$posts = Services\Tablelist::getPosts( $query, [], $posttype, FALSE );
 		$list  = $table = [];
 
 		foreach ( $posts as $post ) {

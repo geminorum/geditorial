@@ -413,7 +413,7 @@ class Revisions extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'cleanup_revisions', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'cleanup_revisions', TRUE ) ) {
 
 					$count = 0;
 
@@ -442,15 +442,15 @@ class Revisions extends gEditorial\Module
 		list( $posts, $pagination ) = $this->getPostArray();
 
 		$pagination['actions']['cleanup_revisions'] = _x( 'Cleanup Revisions', 'Table Action', 'geditorial-revisions' );
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => gEditorial\Tablelist::columnPostID(),
-			'date'  => gEditorial\Tablelist::columnPostDate(),
-			'type'  => gEditorial\Tablelist::columnPostType(),
-			'title' => gEditorial\Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
+			'ID'    => Services\Tablelist::columnPostID(),
+			'date'  => Services\Tablelist::columnPostDate(),
+			'type'  => Services\Tablelist::columnPostType(),
+			'title' => Services\Tablelist::columnPostTitle( [ 'edit', 'view', 'revisions' ] ),
 			'revisons' => [
 				'title'    => _x( 'Revisions', 'Table Column', 'geditorial-revisions' ),
 				'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
@@ -473,7 +473,7 @@ class Revisions extends gEditorial\Module
 					return $html;
 				},
 			],
-			'terms' => gEditorial\Tablelist::columnPostTerms(),
+			'terms' => Services\Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

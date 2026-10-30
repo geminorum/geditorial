@@ -42,7 +42,7 @@ class ModuleSettings extends gEditorial\Settings
 	{
 		$query = [];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return self::processingAllDone();

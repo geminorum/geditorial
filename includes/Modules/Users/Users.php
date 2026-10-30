@@ -643,7 +643,7 @@ class Users extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'duplicate_role' ) ) {
+				if ( Services\Tablelist::isAction( 'duplicate_role' ) ) {
 
 					if ( ! $from = self::req( 'role_from' ) )
 						WordPress\Redirect::doReferer( 'huh' );
@@ -659,7 +659,7 @@ class Users extends gEditorial\Module
 
 					WordPress\Redirect::doReferer( 'added' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'delete_role' ) ) {
+				} else if ( Services\Tablelist::isAction( 'delete_role' ) ) {
 
 					if ( ! $delete = self::req( 'role_delete' ) )
 						WordPress\Redirect::doReferer( 'huh' );
@@ -673,7 +673,7 @@ class Users extends gEditorial\Module
 					remove_role( $delete );
 					WordPress\Redirect::doReferer( 'removed' );
 
-				} else if ( gEditorial\Tablelist::isAction( 'remap_post_authors' ) ) {
+				} else if ( Services\Tablelist::isAction( 'remap_post_authors' ) ) {
 
 					if ( ! $file = WordPress\Media::handleImportUpload() )
 						WordPress\Redirect::doReferer( 'wrong' );

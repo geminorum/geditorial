@@ -373,7 +373,7 @@ class Ortho extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'cleanup_chars', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'cleanup_chars', TRUE ) ) {
 
 					$count = 0;
 
@@ -402,7 +402,7 @@ class Ortho extends gEditorial\Module
 		if ( 'none' != $char )
 			$query['s'] = $extra['char'] = $char;
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Core\HTML::dropdown( [
 			'ي' => _x( 'Arabic Yeh U+064A', 'Char Title', 'geditorial-ortho' ),
@@ -414,17 +414,17 @@ class Ortho extends gEditorial\Module
 			'none_title' => gEditorial\Settings::showOptionNone(),
 		] );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		$columns = [
 			'_cb'     => 'ID',
-			'ID'      => gEditorial\Tablelist::columnPostID(),
-			'date'    => gEditorial\Tablelist::columnPostDate(),
-			'type'    => gEditorial\Tablelist::columnPostType(),
-			'title'   => gEditorial\Tablelist::columnPostTitle(),
-			'excerpt' => gEditorial\Tablelist::columnPostExcerpt(),
+			'ID'      => Services\Tablelist::columnPostID(),
+			'date'    => Services\Tablelist::columnPostDate(),
+			'type'    => Services\Tablelist::columnPostType(),
+			'title'   => Services\Tablelist::columnPostTitle(),
+			'excerpt' => Services\Tablelist::columnPostExcerpt(),
 		];
 
 		if ( gEditorial()->enabled( 'meta' ) )

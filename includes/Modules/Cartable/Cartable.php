@@ -939,7 +939,7 @@ class Cartable extends gEditorial\Module
 			] ],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts(
+		list( $posts, $pagination ) = Services\Tablelist::getPosts(
 			$query,
 			[],
 			array_keys( $list ),
@@ -947,16 +947,16 @@ class Cartable extends gEditorial\Module
 		);
 
 		$pagination['actions']['empty_cartable'] = _x( 'Empty Cartable', 'Table Action', 'geditorial-cartable' );
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			// 'ID'    => gEditorial\Tablelist::columnPostID(),
-			'date'  => gEditorial\Tablelist::columnPostDate(),
-			// 'type'  => gEditorial\Tablelist::columnPostType(), // FIXME: add setting for this
-			'title' => gEditorial\Tablelist::columnPostTitle(),
-			'terms' => gEditorial\Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
+			// `'ID'    => Services\Tablelist::columnPostID(),`
+			'date'  => Services\Tablelist::columnPostDate(),
+			// `'type'  => Services\Tablelist::columnPostType(),` // FIXME: add setting for this
+			'title' => Services\Tablelist::columnPostTitle(),
+			'terms' => Services\Tablelist::columnPostTerms( WordPress\Taxonomy::get( 4, [ 'public' => TRUE ] ) ),
 			'cartable' => [
 				'title'    => _x( 'Cartable', 'Table Column Title', 'geditorial-cartable' ),
 				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
@@ -997,15 +997,15 @@ class Cartable extends gEditorial\Module
 
 		$query = new \WP_Query();
 
-		$columns = [ 'title' => gEditorial\Tablelist::columnPostTitleSummary() ];
+		$columns = [ 'title' => Services\Tablelist::columnPostTitleSummary() ];
 
 		if ( $this->get_setting( 'dashboard_statuses', FALSE ) )
-			$columns['status'] = gEditorial\Tablelist::columnPostStatusSummary();
+			$columns['status'] = Services\Tablelist::columnPostStatusSummary();
 
 		if ( $this->get_setting( 'dashboard_authors', FALSE ) )
-			$columns['author'] = gEditorial\Tablelist::columnPostAuthorSummary();
+			$columns['author'] = Services\Tablelist::columnPostAuthorSummary();
 
-		$columns['modified'] = gEditorial\Tablelist::columnPostDateModified();
+		$columns['modified'] = Services\Tablelist::columnPostDateModified();
 
 		return Core\HTML::tableList( $columns, $query->query( $args ), [
 			'empty' => _x( 'The cartable is empty!', 'Message', 'geditorial-cartable' ),

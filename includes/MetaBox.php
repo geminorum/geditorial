@@ -507,7 +507,7 @@ class MetaBox extends WordPress\Main
 		$stati = WordPress\Status::get();
 
 		if ( WordPress\Strings::isTruthy( $title ) )
-			$html.= Core\HTML::tag( 'h4', Tablelist::getTermTitleRow( $term ) );
+			$html.= Core\HTML::tag( 'h4', Services\Tablelist::getTermTitleRow( $term ) );
 
 		else if ( $title )
 			$html.= Core\HTML::tag( 'h4', $title );

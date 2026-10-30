@@ -629,7 +629,7 @@ class Markdown extends gEditorial\Module
 
 				$count = 0;
 
-				if ( gEditorial\Tablelist::isAction( 'convert_markdown', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'convert_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->convert_post( $post_id ) )
@@ -641,7 +641,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'process_markdown', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'process_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->process_post( $post_id ) )
@@ -653,7 +653,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'cleanup_markdown', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'cleanup_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->cleanup_post( $post_id ) )
@@ -665,7 +665,7 @@ class Markdown extends gEditorial\Module
 							'count'   => $count,
 						] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'discard_markdown', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'discard_markdown', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id )
 						if ( $this->discard_post( $post_id ) )
@@ -685,21 +685,21 @@ class Markdown extends gEditorial\Module
 	{
 		$list = $this->list_posttypes();
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( [], [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['convert_markdown'] = _x( 'Convert into Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['process_markdown'] = _x( 'Re-Process Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['cleanup_markdown'] = _x( 'Cleanup Markdown', 'Table Action', 'geditorial-markdown' );
 		$pagination['actions']['discard_markdown'] = _x( 'Discard Markdown', 'Table Action', 'geditorial-markdown' );
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'      => 'ID',
-			'ID'       => gEditorial\Tablelist::columnPostID(),
-			'date'     => gEditorial\Tablelist::columnPostDate(),
-			'type'     => gEditorial\Tablelist::columnPostType(),
+			'ID'       => Services\Tablelist::columnPostID(),
+			'date'     => Services\Tablelist::columnPostDate(),
+			'type'     => Services\Tablelist::columnPostType(),
 			'markdown' => [
 				'title'    => _x( 'Markdown', 'Table Column', 'geditorial-markdown' ),
 				'class'    => [ '-icon-column' ],
@@ -709,8 +709,8 @@ class Markdown extends gEditorial\Module
 						: '';
 				},
 			],
-			'title' => gEditorial\Tablelist::columnPostTitle(),
-			'terms' => gEditorial\Tablelist::columnPostTerms(),
+			'title' => Services\Tablelist::columnPostTitle(),
+			'terms' => Services\Tablelist::columnPostTerms(),
 		], $posts, [
 			'navigation' => 'before',
 			'search'     => 'before',

@@ -552,7 +552,7 @@ class Like extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'sync_counts_all' ) ) {
+				if ( Services\Tablelist::isAction( 'sync_counts_all' ) ) {
 
 					$count = 0;
 					$query = new \WP_Query();
@@ -578,7 +578,7 @@ class Like extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'sync_counts', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'sync_counts', TRUE ) ) {
 
 					$count = 0;
 
@@ -606,21 +606,21 @@ class Like extends gEditorial\Module
 			'order'    => 'DESC',
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['actions']['sync_counts']     = _x( 'Sync Counts', 'Table Action', 'geditorial-like' );
 		$pagination['actions']['sync_counts_all'] = _x( 'Sync All Counts', 'Table Action', 'geditorial-like' );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => gEditorial\Tablelist::columnPostID(),
-			'date'  => gEditorial\Tablelist::columnPostDate(),
-			'type'  => gEditorial\Tablelist::columnPostType(),
-			'title' => gEditorial\Tablelist::columnPostTitle(),
+			'ID'    => Services\Tablelist::columnPostID(),
+			'date'  => Services\Tablelist::columnPostDate(),
+			'type'  => Services\Tablelist::columnPostType(),
+			'title' => Services\Tablelist::columnPostTitle(),
 			'total' => [
 				'title'    => _x( 'Total', 'Table Column', 'geditorial-like' ),
 				'callback' => function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {

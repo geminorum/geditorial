@@ -614,7 +614,7 @@ class Attachments extends gEditorial\Module
 
 				$this->nonce_check( 'reports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'delete_permanently', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'delete_permanently', TRUE ) ) {
 
 					$count = 0;
 
@@ -627,7 +627,7 @@ class Attachments extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'empty_metadata', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'empty_metadata', TRUE ) ) {
 
 					$count = 0;
 
@@ -640,7 +640,7 @@ class Attachments extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'delete_sizes', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'delete_sizes', TRUE ) ) {
 
 					$count = 0;
 
@@ -669,11 +669,11 @@ class Attachments extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, 'attachment', $this->get_sub_limit_option( $sub, 'reports' ) );
 
-		// $pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list, 'type_parent' ); // FIXME: no support for parent type yet!
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		// `$pagination['before'][] = Services\Tablelist::filterPostTypes( $list, 'type_parent' );` // FIXME: no support for parent type yet!
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		$pagination['actions'] = [
 			'delete_permanently' => _x( 'Delete Permanently', 'Table Action', 'geditorial-attachments' ),
@@ -693,7 +693,7 @@ class Attachments extends gEditorial\Module
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'mime'   => gEditorial\Tablelist::columnPostMime(),
+			'mime'   => Services\Tablelist::columnPostMime(),
 			'custom' => [
 				'title'    => _x( 'Custom', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-custom',
@@ -705,7 +705,7 @@ class Attachments extends gEditorial\Module
 					return gEditorial\Helper::htmlEmpty();
 				},
 			],
-			'title'  => gEditorial\Tablelist::columnPostTitle( NULL, TRUE, $actions ),
+			'title'  => Services\Tablelist::columnPostTitle( NULL, TRUE, $actions ),
 			'search' => [
 				'title'    => _x( 'Search', 'Table Column', 'geditorial-attachments' ),
 				'class'    => '-attachment-search -has-list',

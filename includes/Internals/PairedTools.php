@@ -119,7 +119,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( gEditorial\Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
+		if ( Services\Tablelist::isAction( 'create_paired_posts', TRUE ) ) {
 
 			$terms = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
 			$posts = [];
@@ -145,7 +145,7 @@ trait PairedTools
 				'count'   => count( $posts ),
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'resync_paired_images', TRUE ) ) {
 
 			$meta_key = Services\TaxonomyFields::getTermMetaKey( 'image', $constants[1] ) ?: 'image';
 			$count    = 0;
@@ -169,7 +169,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'resync_paired_descs', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'resync_paired_descs', TRUE ) ) {
 
 			$count = 0;
 
@@ -190,7 +190,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'store_paired_orders', TRUE ) ) {
 
 			if ( ! gEditorial()->enabled( 'meta' ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -223,7 +223,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'empty_paired_descs', TRUE ) ) {
 
 			$taxonomy = $this->constant( $constants[1] );
 			$args     = [ 'description' => '' ];
@@ -238,7 +238,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'connect_paired_posts', TRUE ) ) {
 
 			$posttype = $this->constant( $constants[0] );
 			$terms    = WordPress\Taxonomy::getTerms( $this->constant( $constants[1] ), FALSE, TRUE );
@@ -261,7 +261,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'delete_paired_terms', TRUE ) ) {
 
 			$taxonomy = $this->constant( $constants[1] );
 			$count    = 0;
@@ -291,7 +291,7 @@ trait PairedTools
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		if ( gEditorial\Tablelist::isAction( 'sync_paired_terms' ) ) {
+		if ( Services\Tablelist::isAction( 'sync_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_terms( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -301,7 +301,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'sync_paired_dates' ) ) {
+		} else if ( Services\Tablelist::isAction( 'sync_paired_dates' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_sync_paired_dates( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -311,7 +311,7 @@ trait PairedTools
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'create_paired_terms' ) ) {
+		} else if ( Services\Tablelist::isAction( 'create_paired_terms' ) ) {
 
 			if ( FALSE === ( $count = $this->paired_create_paired_terms( $constants[0], $constants[1] ) ) )
 				WordPress\Redirect::doReferer( 'wrong' );
@@ -336,7 +336,7 @@ trait PairedTools
 		$context = 'tools';
 		$columns = [
 			'_cb'  => 'term_id',
-			'name' => gEditorial\Tablelist::columnTermName(),
+			'name' => Services\Tablelist::columnTermName(),
 
 			'related' => [
 				'title'    => _x( 'Slugged / Paired', 'Internal: PairedTools: Table Column', 'geditorial-admin' ),
@@ -419,7 +419,7 @@ trait PairedTools
 			],
 		];
 
-		list( $data, $pagination ) = gEditorial\Tablelist::getTerms( [], [], $this->constant( $constants[1] ) );
+		list( $data, $pagination ) = Services\Tablelist::getTerms( [], [], $this->constant( $constants[1] ) );
 
 		if ( FALSE !== $actions ) {
 
@@ -437,7 +437,7 @@ trait PairedTools
 			], $actions );
 		}
 
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+		$pagination['before'][] = Services\Tablelist::filterSearch();
 
 		if ( is_null( $title ) )
 			$title = sprintf(
@@ -590,7 +590,7 @@ trait PairedTools
 			] ],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return gEditorial\Settings::processingAllDone( NULL, [
@@ -673,7 +673,7 @@ trait PairedTools
 			] ],
 		];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return gEditorial\Settings::processingAllDone();

@@ -6,7 +6,6 @@ use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\ShortCode;
-use geminorum\gEditorial\Tablelist;
 use geminorum\gEditorial\WordPress;
 
 class Shortcodes extends gEditorial\Module
@@ -178,7 +177,7 @@ class Shortcodes extends gEditorial\Module
 			$extra['shortcode'] = $shortcode;
 		}
 
-		list( $posts, $pagination ) = Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		$pagination['before'][] = Core\HTML::dropdown(
 			$this->get_shortcode_list(), [
@@ -188,16 +187,16 @@ class Shortcodes extends gEditorial\Module
 				'none_title' => _x( 'All Shortcodes', 'None Title', 'geditorial-shortcodes' ),
 			] );
 
-		$pagination['before'][] = Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = Tablelist::filterAuthors( $list );
-		$pagination['before'][] = Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => Tablelist::columnPostID(),
-			'date'  => Tablelist::columnPostDate(),
-			'type'  => Tablelist::columnPostType(),
-			'title' => Tablelist::columnPostTitle(),
+			'ID'    => Services\Tablelist::columnPostID(),
+			'date'  => Services\Tablelist::columnPostDate(),
+			'type'  => Services\Tablelist::columnPostType(),
+			'title' => Services\Tablelist::columnPostTitle(),
 			'shortcodes' => [
 				'title'    => _x( 'Shortcodes', 'Table Column', 'geditorial-shortcodes' ),
 				'args'     => [ 'regex' => get_shortcode_regex() ],

@@ -35,16 +35,16 @@ trait PostTypeOverview
 		$taxes   = $this->posttype_overview_get_available_taxonomies( $type );
 		$columns = [ '_cb' => 'ID' ];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub, $context ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, $type, $this->get_sub_limit_option( $sub, $context ) );
 
 		// TODO: filter by fields
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		if ( ! $this->get_setting( 'override_dates', TRUE ) )
-			$columns['date'] = gEditorial\Tablelist::columnPostDate();
+			$columns['date'] = Services\Tablelist::columnPostDate();
 
-		$columns['title'] = gEditorial\Tablelist::columnPostTitle();
+		$columns['title'] = Services\Tablelist::columnPostTitle();
 
 		foreach ( $taxes as $taxonomy => $object )
 			$columns['tax__'.$taxonomy] = [

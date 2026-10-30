@@ -60,7 +60,7 @@ class ModuleSettings extends gEditorial\Settings
 						'title' => _x( 'Alpha-2', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-iso639-alpha2code',
 					],
-					'rtl'     => gEditorial\Tablelist::columnGeneralDirection(),
+					'rtl'     => Services\Tablelist::columnGeneralDirection(),
 					'en_name' => [
 						'title' => _x( 'English Name', 'Table Column', 'geditorial-lingo' ),
 						'class'    => '-language-english-name -ltr',
@@ -113,10 +113,10 @@ class ModuleSettings extends gEditorial\Settings
 
 			$empty = Core\HTML::tableList( [
 				'_cb'   => 'term_id',
-				'_lang' => gEditorial\Tablelist::columnGeneralCode( '_lang', _x( '<abbr title="Language">Lang</abbr>', 'Table Column', 'geditorial-lingo' ) ),
-				'name'  => gEditorial\Tablelist::columnTermName( [] ),
-				'slug'  => gEditorial\Tablelist::columnTermSlug( FALSE ),
-				'_code' => gEditorial\Tablelist::columnGeneralCode( '_code' ),
+				'_lang' => Services\Tablelist::columnGeneralCode( '_lang', _x( '<abbr title="Language">Lang</abbr>', 'Table Column', 'geditorial-lingo' ) ),
+				'name'  => Services\Tablelist::columnTermName( [] ),
+				'slug'  => Services\Tablelist::columnTermSlug( FALSE ),
+				'_code' => Services\Tablelist::columnGeneralCode( '_code' ),
 
 			], $terms, [
 				'empty'    => _x( 'There are no terms available!', 'Table Empty', 'geditorial-lingo' ),

@@ -987,7 +987,7 @@ class Meta extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'custom_fields_convert' ) ) {
+				if ( Services\Tablelist::isAction( 'custom_fields_convert' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
@@ -1013,7 +1013,7 @@ class Meta extends gEditorial\Module
 							'count'   => $result,
 						] );
 
-				} else if ( gEditorial\Tablelist::isAction( 'custom_fields_delete' ) ) {
+				} else if ( Services\Tablelist::isAction( 'custom_fields_delete' ) ) {
 
 					$post = $this->get_current_form( [
 						'custom_field'       => FALSE,
@@ -1080,7 +1080,7 @@ class Meta extends gEditorial\Module
 				Core\HTML::code( $form['custom_field'], 'sub' ), FALSE, '-tablelist-card' );
 
 			Core\HTML::tableList( [
-				'type'  => gEditorial\Tablelist::columnPostType( 'post_id' ),
+				'type'  => Services\Tablelist::columnPostType( 'post_id' ),
 				'title' => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-meta' ),
 					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {

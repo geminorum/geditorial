@@ -1096,7 +1096,7 @@ class Personage extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
+				if ( Services\Tablelist::isAction( ModuleSettings::ACTION_PARSE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_parse_pool() )
 						WordPress\Redirect::doReferer( 'huh' );

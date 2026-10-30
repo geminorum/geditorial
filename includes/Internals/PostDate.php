@@ -60,7 +60,7 @@ trait PostDate
 				'compare' => 'EXISTS',
 			];
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, [], $posttype, $limit );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, [], $posttype, $limit );
 
 		if ( empty( $posts ) )
 			return gEditorial\Settings::processingAllDone();

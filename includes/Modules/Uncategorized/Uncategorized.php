@@ -194,7 +194,7 @@ class Uncategorized extends gEditorial\Module
 
 				$count = 0;
 
-				if ( gEditorial\Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
+				if ( Services\Tablelist::isAction( 'clean_uncategorized', TRUE ) ) {
 
 					$taxonomies = $this->taxonomies();
 
@@ -215,7 +215,7 @@ class Uncategorized extends gEditorial\Module
 						] );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'clean_unregistered', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'clean_unregistered', TRUE ) ) {
 
 					foreach ( $_POST['_cb'] as $post_id ) {
 
@@ -234,7 +234,7 @@ class Uncategorized extends gEditorial\Module
 						] );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'clean_unattached', TRUE ) ) {
+				} else if ( Services\Tablelist::isAction( 'clean_unattached', TRUE ) ) {
 
 					$taxonomies = WordPress\Taxonomy::get( -1 );
 
@@ -268,24 +268,24 @@ class Uncategorized extends gEditorial\Module
 		$query = $extra = [];
 		$list  = $this->list_posttypes();
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
+		list( $posts, $pagination ) = Services\Tablelist::getPosts( $query, $extra, array_keys( $list ), $this->get_sub_limit_option( $sub, 'reports' ) );
 
 		// TODO: add screen help tabs explaining the actions
 		$pagination['actions']['clean_uncategorized'] = _x( 'Clean Uncategorized', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unregistered']  = _x( 'Clean Unregistered', 'Action', 'geditorial-uncategorized' );
 		$pagination['actions']['clean_unattached']    = _x( 'Clean Unattached', 'Action', 'geditorial-uncategorized' );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes();
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors();
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+		$pagination['before'][] = Services\Tablelist::filterPostTypes();
+		$pagination['before'][] = Services\Tablelist::filterAuthors();
+		$pagination['before'][] = Services\Tablelist::filterSearch();
 
 		return Core\HTML::tableList( [
 			'_cb'   => 'ID',
-			'ID'    => gEditorial\Tablelist::columnPostID(),
-			'date'  => gEditorial\Tablelist::columnPostDate(),
-			'type'  => gEditorial\Tablelist::columnPostType(),
-			'title' => gEditorial\Tablelist::columnPostTitle(),
-			'terms' => gEditorial\Tablelist::columnPostTerms(),
+			'ID'    => Services\Tablelist::columnPostID(),
+			'date'  => Services\Tablelist::columnPostDate(),
+			'type'  => Services\Tablelist::columnPostType(),
+			'title' => Services\Tablelist::columnPostTitle(),
+			'terms' => Services\Tablelist::columnPostTerms(),
 			'raw'   => [
 				'title'    => _x( 'Raw', 'Table Column', 'geditorial-uncategorized' ),
 				'class'    => '-has-list',
@@ -328,7 +328,7 @@ class Uncategorized extends gEditorial\Module
 
 				$this->nonce_check( 'imports', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'orphaned_terms' ) ) {
+				if ( Services\Tablelist::isAction( 'orphaned_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -354,7 +354,7 @@ class Uncategorized extends gEditorial\Module
 						WordPress\Redirect::doReferer( 'huh' );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'wipeout_terms' ) ) {
+				} else if ( Services\Tablelist::isAction( 'wipeout_terms' ) ) {
 
 					$post = $this->get_current_form( [
 						'dead_tax' => FALSE,
@@ -374,7 +374,7 @@ class Uncategorized extends gEditorial\Module
 						WordPress\Redirect::doReferer( 'huh' );
 					}
 
-				} else if ( gEditorial\Tablelist::isAction( 'dead_tax_check' ) ) {
+				} else if ( Services\Tablelist::isAction( 'dead_tax_check' ) ) {
 
 					// Do nothing, the post will be handled on `ModuleSettngs`
 
@@ -432,10 +432,10 @@ class Uncategorized extends gEditorial\Module
 				register_taxonomy( $form['dead_tax'], [] );
 
 				Core\HTML::tableList( [
-					'slug'        => gEditorial\Tablelist::columnTermSlug( FALSE ),
-					'name'        => gEditorial\Tablelist::columnTermName( [] ),
-					'meta'        => gEditorial\Tablelist::columnTermMetaList( NULL, [ 'hide_empty' => TRUE ] ),
-					'description' => gEditorial\Tablelist::columnTermDesc( NULL, [ 'hide_empty' => TRUE ] ),
+					'slug'        => Services\Tablelist::columnTermSlug( FALSE ),
+					'name'        => Services\Tablelist::columnTermName( [] ),
+					'meta'        => Services\Tablelist::columnTermMetaList( NULL, [ 'hide_empty' => TRUE ] ),
+					'description' => Services\Tablelist::columnTermDesc( NULL, [ 'hide_empty' => TRUE ] ),
 				], get_terms( [
 					'taxonomy'   => $form['dead_tax'],
 					'orderby'    => 'none',

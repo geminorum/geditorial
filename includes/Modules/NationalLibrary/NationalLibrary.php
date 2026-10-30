@@ -1026,7 +1026,7 @@ class NationalLibrary extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
+				if ( Services\Tablelist::isAction( ModuleSettings::ACTION_SCRAPE_POOL ) ) {
 
 					if ( ! ModuleSettings::handleTool_scrape_pool() )
 						WordPress\Redirect::doReferer( 'huh' );

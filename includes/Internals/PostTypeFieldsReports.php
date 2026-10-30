@@ -11,7 +11,7 @@ trait PostTypeFieldsReports
 {
 	protected function posttypefields_reports_handle_tablelist( ?string $sub = NULL ): bool
 	{
-		if ( gEditorial\Tablelist::isAction( 'check_empty_fields', TRUE ) ) {
+		if ( Services\Tablelist::isAction( 'check_empty_fields', TRUE ) ) {
 
 			$count = 0;
 
@@ -24,7 +24,7 @@ trait PostTypeFieldsReports
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'convert_legacy_fields', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'convert_legacy_fields', TRUE ) ) {
 
 			$count = 0;
 
@@ -37,7 +37,7 @@ trait PostTypeFieldsReports
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'sanitize_fields', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'sanitize_fields', TRUE ) ) {
 
 			$count = 0;
 
@@ -50,7 +50,7 @@ trait PostTypeFieldsReports
 				'count'   => $count,
 			] );
 
-		} else if ( gEditorial\Tablelist::isAction( 'empty_all_metadata', TRUE ) ) {
+		} else if ( Services\Tablelist::isAction( 'empty_all_metadata', TRUE ) ) {
 
 			$count = 0;
 
@@ -73,16 +73,16 @@ trait PostTypeFieldsReports
 		$query   = $extra = $fields = [];
 		$list    = $this->list_posttypes();
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts(
+		list( $posts, $pagination ) = Services\Tablelist::getPosts(
 			$query,
 			$extra,
 			array_keys( $list ),
 			$this->get_sub_limit_option( $sub, 'reports' ),
 		);
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		$pagination['actions'] = [
 			'check_empty_fields'    => _x( 'Check Empty Fields', 'Internal: PostTypeFieldsReports: Table Action', 'geditorial-admin' ),
@@ -96,8 +96,8 @@ trait PostTypeFieldsReports
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'type'   => gEditorial\Tablelist::columnPostType(),
-			'title'  => gEditorial\Tablelist::columnPostTitle(),
+			'type'   => Services\Tablelist::columnPostType(),
+			'title'  => Services\Tablelist::columnPostTitle(),
 			'meta' => [
 				'title'    => _x( 'Meta', 'Internal: PostTypeFieldsReports: Table Column', 'geditorial-admin' ),
 				'class'    => '-meta-metafields -has-table',

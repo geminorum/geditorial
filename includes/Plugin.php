@@ -263,6 +263,7 @@ class Plugin extends WordPress\Plugin
 			'SystemBranding',
 			'SystemHeartbeat',
 			'SystemHelp',
+			'Tablelist',
 			'TaxonomyFields',
 			'TaxonomyTaxonomy',
 			'TermHierarchy',

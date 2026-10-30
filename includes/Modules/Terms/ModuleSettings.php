@@ -42,7 +42,7 @@ class ModuleSettings extends gEditorial\Settings
 				Core\HTML::code( $form['custom_field'], 'sub' ), FALSE, '-tablelist-card' );
 
 			Core\HTML::tableList( [
-				'type'  => gEditorial\Tablelist::columnTermTaxonomy( 'term_id' ),
+				'type'  => Services\Tablelist::columnTermTaxonomy( 'term_id' ),
 				'title' => [
 					'title'    => _x( 'Title', 'Table Column', 'geditorial-terms' ),
 					'callback' => static function ( mixed $value, mixed $row, string|array $column, int|string $index, int|string $key, array $args ) {
@@ -144,12 +144,12 @@ class ModuleSettings extends gEditorial\Settings
 
 	public static function handlePost_import_custom_fields( ?string $context = NULL ): bool
 	{
-		if ( gEditorial\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CHECK ) )
+		if ( Services\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CHECK ) )
 			return TRUE; // will be handled by card renderer
 
 		$context ??= 'imports';
 
-		if ( gEditorial\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CONVERT ) ) {
+		if ( Services\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_CONVERT ) ) {
 
 			self::raiseResources();
 
@@ -196,7 +196,7 @@ class ModuleSettings extends gEditorial\Settings
 					'custom_field_limit' => $form['custom_field_limit'],
 				] );
 
-		} else if ( gEditorial\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_DELETE ) ) {
+		} else if ( Services\Tablelist::isAction( static::ACTION_CUSTOM_FIELDS_DELETE ) ) {
 
 			self::raiseResources();
 

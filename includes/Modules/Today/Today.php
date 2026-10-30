@@ -619,9 +619,9 @@ class Today extends gEditorial\Module
 
 			Core\HTML::tableList( [
 				'_cb'   => 'ID',
-				'title' => gEditorial\Tablelist::columnPostTitle(),
-				'terms' => gEditorial\Tablelist::columnPostTerms(),
-				'type'  => gEditorial\Tablelist::columnPostType(),
+				'title' => Services\Tablelist::columnPostTitle(),
+				'terms' => Services\Tablelist::columnPostTerms(),
+				'type'  => Services\Tablelist::columnPostType(),
 			], $posts, [
 				'empty'  => _x( 'No posts with day information found.', 'Message', 'geditorial-today' ),
 				'before' => static function ( $columns, $data, $args ) use ( $posttypes, $the_day ) {
@@ -1379,22 +1379,22 @@ class Today extends gEditorial\Module
 		$list      = $this->list_posttypes();
 		$query     = $this->_build_meta_query( $constants );
 
-		list( $posts, $pagination ) = gEditorial\Tablelist::getPosts(
+		list( $posts, $pagination ) = Services\Tablelist::getPosts(
 			$query,
 			[],
 			array_keys( $list ),
 			$this->get_sub_limit_option( $sub, 'reports' )
 		);
 
-		$pagination['before'][] = gEditorial\Tablelist::filterPostTypes( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterAuthors( $list );
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterPostTypes( $list );
+		$pagination['before'][] = Services\Tablelist::filterAuthors( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		return Core\HTML::tableList( [
 			'_cb'    => 'ID',
-			'date'   => gEditorial\Tablelist::columnPostDate(),
-			'type'   => gEditorial\Tablelist::columnPostType(),
-			'title'  => gEditorial\Tablelist::columnPostTitle(),
+			'date'   => Services\Tablelist::columnPostDate(),
+			'type'   => Services\Tablelist::columnPostType(),
+			'title'  => Services\Tablelist::columnPostTitle(),
 			'theday' => [
 				'title' => _x( 'The Day', 'Table Column', 'geditorial-today' ),
 				'args'  => [
@@ -1427,7 +1427,7 @@ class Today extends gEditorial\Module
 
 				$this->nonce_check( 'tools', $sub );
 
-				if ( gEditorial\Tablelist::isAction( 'reschedule_by_day' ) ) {
+				if ( Services\Tablelist::isAction( 'reschedule_by_day' ) ) {
 
 					$default   = $this->default_calendar();
 					$constants = $this->get_the_day_constants();
@@ -1739,7 +1739,7 @@ class Today extends gEditorial\Module
 		else
 			$status = $parsed['status'] ?: 'publish';
 
-		$posts = gEditorial\Tablelist::getPosts(
+		$posts = Services\Tablelist::getPosts(
 			array_merge( $parsed['query'], [
 				'post_status' => $status,
 				'post__in'    => $sorted,

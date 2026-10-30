@@ -1150,7 +1150,7 @@ trait SubContents
 
 		list( $items, $pagination ) = $this->subcontent_get_data_with_pagination( $query, [], FALSE, $context, $this->get_sub_limit_option( $sub, $context ) );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch();
+		$pagination['before'][] = Services\Tablelist::filterSearch();
 		$pagination['actions']  = $this->filters( 'subcontent_reports_bulk_action_list', [
 			'check_empty_fields'    => _x( 'Check Empty Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
 			'convert_legacy_fields' => _x( 'Convert Legacy Fields', 'Internal: Subcontents: Table Action', 'geditorial-admin' ),
@@ -1187,7 +1187,7 @@ trait SubContents
 						$custom['subcontent'] = $row_action;
 
 					return array_merge(
-						gEditorial\Tablelist::getPostRowActions( $post->ID, NULL ),
+						Services\Tablelist::getPostRowActions( $post->ID, NULL ),
 						$custom
 					);
 				},

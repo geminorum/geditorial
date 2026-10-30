@@ -305,7 +305,7 @@ class Lingo extends gEditorial\Module
 
 				$this->nonce_check( $context, $sub );
 
-				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CONVERT_INTO_LANG, TRUE ) ) {
+				if ( Services\Tablelist::isAction( ModuleSettings::ACTION_CONVERT_INTO_LANG, TRUE ) ) {
 
 					if ( ! $rawdata = $this->get_imports_raw_data() )
 						WordPress\Redirect::doReferer( 'wrong' );
@@ -356,7 +356,7 @@ class Lingo extends gEditorial\Module
 						'count'   => $count,
 					] );
 
-				} else if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_INVESTIGATE_TERMS ) ) {
+				} else if ( Services\Tablelist::isAction( ModuleSettings::ACTION_INVESTIGATE_TERMS ) ) {
 
 					// Do nothing, the post will be handled on `ModuleSettngs`
 
@@ -403,7 +403,7 @@ class Lingo extends gEditorial\Module
 
 				$this->nonce_check( $context, $sub );
 
-				if ( gEditorial\Tablelist::isAction( ModuleSettings::ACTION_CREATE_LANG_TAXONOMY, TRUE ) ) {
+				if ( Services\Tablelist::isAction( ModuleSettings::ACTION_CREATE_LANG_TAXONOMY, TRUE ) ) {
 
 					if ( ! $rawdata = $this->get_imports_raw_data() )
 						WordPress\Redirect::doReferer( 'wrong' );

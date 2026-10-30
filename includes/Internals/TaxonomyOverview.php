@@ -44,9 +44,9 @@ trait TaxonomyOverview
 		$description = TRUE;
 		$exports     = method_exists( $this, 'exports_get_export_links' );
 
-		list( $terms, $pagination ) = gEditorial\Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub, $context ) );
+		list( $terms, $pagination ) = Services\Tablelist::getTerms( $query, $extra, $taxonomy, $this->get_sub_limit_option( $sub, $context ) );
 
-		$pagination['before'][] = gEditorial\Tablelist::filterSearch( $list );
+		$pagination['before'][] = Services\Tablelist::filterSearch( $list );
 
 		$columns = [
 			'_cb'  => 'term_id',
@@ -73,14 +73,14 @@ trait TaxonomyOverview
 
 					if ( $exports )
 						return array_merge(
-							gEditorial\Tablelist::getTermRowActions( $term ),
+							Services\Tablelist::getTermRowActions( $term ),
 							$this->exports_get_export_links( $term->term_id, $context, 'assigned' )
 						);
 
-					return gEditorial\Tablelist::getTermRowActions( $term );
+					return Services\Tablelist::getTermRowActions( $term );
 				},
 			],
-			'desc' => gEditorial\Tablelist::columnTermDesc(),
+			'desc' => Services\Tablelist::columnTermDesc(),
 		];
 
 		$title ??= sprintf(
