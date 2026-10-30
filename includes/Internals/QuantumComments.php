@@ -148,7 +148,10 @@ trait QuantumComments
 		// NOTE: core tries to validate `comment_author_email`
 		$data['comment_author_url'] = Core\Text::stripPrefix(
 			$data['comment_author_url'],
-			[ 'http://', 'https://' ]
+			[
+				'http://',
+				'https://',
+			],
 		);
 
 		return $data;

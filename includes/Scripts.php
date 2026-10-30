@@ -147,35 +147,55 @@ class Scripts extends WordPress\Main
 		return $handle;
 	}
 
-	public static function enqueue( $asset, $dep = [ 'jquery' ], $version = NULL, $base = NULL, $path = 'assets/js' )
+	public static function enqueue( string $asset, array $dep = [ 'jquery' ], null|false|string $version = NULL, ?string $base = NULL, string $path = 'assets/js' ): string
 	{
-		$handle  = self::handle( $asset );
-		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
+		$handle = self::handle( $asset );
 
-		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$asset.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
+		wp_enqueue_script(
+			$handle,
+			sprintf( '%s%s/%s%s.js',
+				$base ?? static::URL,
+				$path,
+				$asset,
+				self::const( 'SCRIPT_DEBUG' ) ? '' : '.min',
+			),
+			$dep,
+			$version ?? static::VERSION,
+			TRUE,
+		);
 
 		return $handle;
 	}
 
-	public static function enqueueVendor( $asset, $dep = [], $version = NULL, $base = NULL, $path = 'assets/js/vendor' )
+	public static function enqueueVendor( string $asset, array $dep = [], null|false|string $version = NULL, ?string $base = NULL, string $path = 'assets/js/vendor' ): string
 	{
 		return self::enqueue( $asset, $dep, $version, $base, $path );
 	}
 
-	public static function enqueuePackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
+	public static function enqueuePackage( string $asset, ?string $package = NULL, array $dep = [], null|false|string $version = NULL, ?string $base = NULL, string $path = 'assets/packages' ): string
 	{
-		$package ??= sprintf( '%s/%s', $asset, $asset );
-		$handle  = self::handle( $asset );
-		$variant = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
+		$handle = self::handle( $asset );
 
-		wp_enqueue_script( $handle, ( $base ?? static::URL ).$path.'/'.$package.$variant.'.js', $dep, $version ?? static::VERSION, TRUE );
-		wp_script_add_data( $handle, 'strategy', 'defer' );
-		wp_script_add_data( $handle, 'fetchpriority', 'low' );
+		wp_enqueue_script(
+			$handle,
+			sprintf( '%s%s/%s%s.js',
+				$base ?? static::URL,
+				$path,
+				$package ?? sprintf( '%s/%s', $asset, $asset ),
+				self::const( 'SCRIPT_DEBUG' ) ? '' : '.min',
+			),
+			$dep,
+			$version ?? static::VERSION,
+			TRUE,
+		);
+
+		wp_script_add_data( $handle, 'strategy',      'defer' );
+		wp_script_add_data( $handle, 'fetchpriority', 'low'   );
 
 		return $handle;
 	}
 
-	public static function registerPackage( $asset, $package = NULL, $dep = [], $version = NULL, $base = NULL, $path = 'assets/packages' )
+	public static function registerPackage( string $asset, ?string $package = NULL, array $dep = [], null|false|string $version = NULL, ?string $base = NULL, string $path = 'assets/packages' ): string
 	{
 		$package ??= sprintf( '%s/%s', $asset, $asset );
 		$handle  = self::handle( $asset );
@@ -376,8 +396,8 @@ JS;
 		else
 			wp_register_script( $handle, static::URL.'assets/packages/mustache.js/mustache.min.js', [], $version, TRUE );
 
-		// wp_script_add_data( $handle, 'strategy', 'defer' );
-		// wp_script_add_data( $handle, 'fetchpriority', 'low' );
+		// `wp_script_add_data( $handle, 'strategy', 'defer' );`
+		// `wp_script_add_data( $handle, 'fetchpriority', 'low' );`
 
 		return $handle;
 	}

@@ -127,7 +127,7 @@ trait Rewrites
 			add_rewrite_rule(
 				'^'.$posttype.'/'.$query.'/([^/]*)/?',
 				'index.php?post_type='.$posttype.'&'.$query.'=$matches[1]',
-				'top'
+				'top',
 			);
 
 		return $query;
@@ -166,7 +166,7 @@ trait Rewrites
 
 		add_rewrite_tag(
 			$rewrite_tag,  // The rewrite tag to use. Defaults to the taxonomy slug.
-			'([^/]+)'   ,  // What regex to use to validate the value of the tag. Defaults to anything but a forward slash.
+			'([^/]+)',     // What regex to use to validate the value of the tag. Defaults to anything but a forward slash.
 		);
 
 		$callback = function ( $permalink, $post )

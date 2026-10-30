@@ -35,7 +35,7 @@ trait DefaultTerms
 	protected function get_default_terms( string $constant, ?array $terms = NULL ): array
 	{
 		// Constant is not defined (in case custom terms are for another module)
-		if ( ! $this->constant( $constant ) )
+		if ( ! $taxonomy = $this->constant( $constant ) )
 			return []; // must return empty
 
 		if ( is_null( $terms ) ) {
@@ -61,9 +61,10 @@ trait DefaultTerms
 		}
 
 		// NOTE: hook filter before `init` on `after_setup_theme`
-		return $this->filters( 'get_default_terms',
+		return (array) $this->filters( 'get_default_terms',
 			$terms,
-			$this->constant( $constant )
+			$taxonomy,
+			$constant,
 		);
 	}
 }

@@ -388,7 +388,7 @@ trait Deprecated
 	}
 
 	#[\Deprecated( 'USE `$this->register_default_terms()`' )]
-	protected function insert_default_terms( $constant, $terms = NULL )
+	protected function insert_default_terms( string $constant, ?array $terms = NULL ): void
 	{
 		if ( ! $this->nonce_verify( 'settings' ) )
 			return;

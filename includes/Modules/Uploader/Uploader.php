@@ -105,7 +105,7 @@ class Uploader extends gEditorial\Module
 		echo $this->wrap( $html, '-admin-widget -widget-form' );
 	}
 
-	protected function get_widget_largefile_info()
+	protected function get_widget_largefile_info(): string
 	{
 		return _x( 'You can access uploaded files via Media Library.', 'Widget Info', 'geditorial-uploader' );
 	}
@@ -161,7 +161,7 @@ class Uploader extends gEditorial\Module
 		Services\Ajax::errorWhat();
 	}
 
-	private function _handle_upload_check( $filename, $mime )
+	private function _handle_upload_check( string $filename, string $mime ): bool|string
 	{
 		$type = wp_check_filetype( $filename );
 
@@ -242,7 +242,7 @@ class Uploader extends gEditorial\Module
 		return TRUE;
 	}
 
-	private function _do_decode_chunk( $data )
+	private function _do_decode_chunk( string $data ): false|string
 	{
 		$parts = explode( ';base64,', $data );
 
@@ -253,7 +253,7 @@ class Uploader extends gEditorial\Module
 	}
 
 	// @hook: `post-plupload-upload-ui`
-	public function post_plupload_upload_ui()
+	public function post_plupload_upload_ui(): void
 	{
 		if ( ! $this->role_can( 'uploads' ) )
 			return;

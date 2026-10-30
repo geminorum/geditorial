@@ -20,8 +20,8 @@ trait SettingsCore
 	}
 
 	protected function settings_shortcode_constant(
-		string $constant,
-		?string $title = NULL,
+		string  $constant,
+		?string $title    = NULL,
 		?string $extended = NULL,
 	): array {
 
@@ -164,10 +164,10 @@ trait SettingsCore
 	}
 
 	public function register_button(
-		string $key,
-		?string $value = NULL,
-		false|string $type = FALSE,
-		mixed $atts = [],
+		string       $key,
+		?string      $value = NULL,
+		false|string $type  = FALSE,
+		mixed        $atts  = [],
 	): void {
 
 		$this->buttons[] = [
@@ -196,11 +196,11 @@ trait SettingsCore
 	}
 
 	protected function render_form_start(
-		string $uri = '',
-		?string $sub = NULL,
-		?string $action = NULL,
-		?string $context = NULL,
-		bool $check_sidebox = FALSE,
+		string  $uri           = '',
+		?string $sub           = NULL,
+		?string $action        = NULL,
+		?string $context       = NULL,
+		bool    $check_sidebox = FALSE,
 	): true {
 
 		$sub     ??= $this->module->name;
@@ -233,11 +233,11 @@ trait SettingsCore
 	}
 
 	protected function render_form_end(
-		string $uri = '',
-		?string $sub = NULL,
-		?string $action = NULL,
-		?string $context = NULL,
-		bool $check_sidebox = FALSE,
+		string  $uri           = '',
+		?string $sub           = NULL,
+		?string $action        = NULL,
+		?string $context       = NULL,
+		bool    $check_sidebox = FALSE,
 	): true {
 
 		echo '</form>';
@@ -595,11 +595,11 @@ trait SettingsCore
 	}
 
 	protected function check_settings(
-		string $sub,
-		?string $context = NULL,
+		string           $sub,
+		?string          $context       = NULL,
 		null|bool|string $screen_option = FALSE,
-		array $extra = [],
-		?string $key = NULL,
+		array            $extra         = [],
+		?string          $key           = NULL,
 	): bool {
 
 		$context ??= 'tools'; // WTF?!

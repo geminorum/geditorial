@@ -16,7 +16,7 @@ trait SettingsPostTypes
 	 * @param string $target
 	 * @return string
 	 */
-	protected function get_setting_key_posttypes_for_target( $target )
+	protected function get_setting_key_posttypes_for_target( string $target ): string
 	{
 		return self::und( $target, 'posttypes' );
 	}
@@ -29,7 +29,7 @@ trait SettingsPostTypes
 	 * @param string $description
 	 * @return array
 	 */
-	protected function settings_posttypes_for_target( $target, $title = NULL, $description = NULL )
+	protected function settings_posttypes_for_target( string $target, ?string $title = NULL, ?string $description = NULL ): array
 	{
 		return [
 			'type'        => 'checkboxes-panel-expanded',
@@ -59,7 +59,7 @@ trait SettingsPostTypes
 	 * Checks if post-type is in settings option for the target post-types.
 	 * NOTE: common targets: `subcontent`, `parent`, `directed`, `supported`
 	 *
-	 * @param string $posttype
+	 * @param false|string $posttype
 	 * @param string $target
 	 * @param bool $fallback
 	 * @return bool
@@ -175,11 +175,11 @@ trait SettingsPostTypes
 	}
 
 	public function list_posttypes(
-		mixed $pre = NULL,
-		null|string|array $posttypes = NULL,
-		?string $capability = NULL,
-		?array $args = NULL,
-		?int $user_id = NULL,
+		mixed             $pre        = NULL,
+		null|string|array $posttypes  = NULL,
+		?string           $capability = NULL,
+		?array            $args       = NULL,
+		?int              $user_id    = NULL,
 	): array {
 
 		if ( is_null( $pre ) )

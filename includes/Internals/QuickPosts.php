@@ -38,7 +38,7 @@ trait QuickPosts
 			$posttype,
 			$target,
 			$linked,
-			$status
+			$status,
 		);
 
 		echo $this->wrap_open( '-newpost-layout'.( $recents ? ' -has-recents' : '' ) );
@@ -51,7 +51,7 @@ trait QuickPosts
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		if ( $this->is_posttype_support( $posttype, 'title' ) ) {
@@ -64,7 +64,7 @@ trait QuickPosts
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'input', [
@@ -86,7 +86,7 @@ trait QuickPosts
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		if ( $this->is_posttype_support( $posttype, 'excerpt' ) ) {
@@ -99,7 +99,7 @@ trait QuickPosts
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'textarea', [
@@ -125,7 +125,7 @@ trait QuickPosts
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			$html = Core\HTML::tag( 'textarea', [
@@ -151,7 +151,7 @@ trait QuickPosts
 			$target,
 			$linked,
 			$status,
-			$meta
+			$meta,
 		);
 
 		Core\HTML::inputHidden( 'type', $posttype );
@@ -169,7 +169,7 @@ trait QuickPosts
 				$target,
 				$linked,
 				$status,
-				$meta
+				$meta,
 			);
 
 			echo Core\HTML::tag( 'a', [
@@ -218,7 +218,7 @@ trait QuickPosts
 					$target,
 					$linked,
 					$status,
-					$meta
+					$meta,
 				);
 
 			echo '</div>';

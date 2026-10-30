@@ -9,17 +9,17 @@ use geminorum\gEditorial\WordPress;
 
 trait SettingsHelp
 {
-	protected function settings_help_tabs( ?string $context = NULL )
+	protected function settings_help_tabs( ?string $context = NULL ): array
 	{
 		return Services\SystemHelp::content( $this->module, $context );
 	}
 
-	protected function settings_help_sidebar( ?string $context = NULL )
+	protected function settings_help_sidebar( ?string $context = NULL ): false|string
 	{
 		return Services\SystemHelp::sidebar( $this->get_module_links(), $context );
 	}
 
-	protected function register_help_tabs( $screen = NULL, $context = 'settings' )
+	protected function register_help_tabs( ?object $screen = NULL, ?string $context = 'settings' ): void
 	{
 		if ( GEDITORIAL_DISABLE_HELP_TABS )
 			return;
@@ -43,7 +43,7 @@ trait SettingsHelp
 			foreach ( $this->define_default_terms() as $constant => $terms )
 				$this->help_tab_default_terms(
 					$this->constant( $constant ),
-					$this->get_default_terms( $constant, $terms )
+					$this->get_default_terms( $constant, $terms ),
 				);
 	}
 
@@ -55,13 +55,13 @@ trait SettingsHelp
 		$title = sprintf(
 			/* translators: `%s`: taxonomy object label */
 			_x( 'Default Terms for %s', 'Module', 'geditorial-admin' ),
-			$object->label
+			$object->label,
 		);
 
 		$edit = sprintf(
 			/* translators: `%s`: taxonomy object label */
 			_x( 'Edit Terms for %s', 'Module', 'geditorial-admin' ),
-			$object->label
+			$object->label,
 		);
 
 		$link   = WordPress\Taxonomy::edit( $object );

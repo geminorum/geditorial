@@ -3,17 +3,13 @@
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
-use geminorum\gEditorial\Ajax;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
+use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
 class Unavailable extends gEditorial\Module
 {
-
-	// TODO: archived support for posttypes: only selected roles can view/edit content
-	// https://wordpress.org/plugins/archived-post-status/
-	// https://github.com/joshuadavidnelson/archived-post-status/
-
 	public static function module(): array
 	{
 		return [
@@ -23,6 +19,9 @@ class Unavailable extends gEditorial\Module
 			'icon'     => 'archive',
 			'frontend' => FALSE,
 			'access'   => 'beta',
+			'keywords' => [
+
+			],
 		];
 	}
 
@@ -55,7 +54,7 @@ class Unavailable extends gEditorial\Module
 	 */
 	public function current_screen( object $screen ): void
 	{
-		if ( 'edit-comments' == $screen->base ) {
+		if ( 'edit-comments' === $screen->base ) {
 
 			if ( $this->get_setting( 'archived_comments' ) ) {
 
@@ -116,13 +115,13 @@ class Unavailable extends gEditorial\Module
 		Services\Ajax::errorWhat();
 	}
 
-	public function pre_get_comments( &$query )
+	public function pre_get_comments( object &$query ): void
 	{
 		if ( $this->constant( 'comment_status' ) == self::req( 'comment_status' ) )
 			$query->query_vars['status'] = $this->constant( 'comment_status' );
 	}
 
-	public function comments_list_table_query_args( $args )
+	public function comments_list_table_query_args( array $args ): array
 	{
 		if ( $this->constant( 'comment_status' ) == self::req( 'comment_status' ) )
 			$args['status'] = $this->constant( 'comment_status' );
@@ -130,7 +129,7 @@ class Unavailable extends gEditorial\Module
 		return $args;
 	}
 
-	public function comment_status_links( $status_links )
+	public function comment_status_links( array $status_links ): array
 	{
 		global $comment_type;
 
@@ -149,11 +148,9 @@ class Unavailable extends gEditorial\Module
 				'class' => $this->constant( 'comment_status' ) === $status ? 'current' : FALSE,
 			], _x( 'Archived', 'Status Link', 'geditorial-unavailable' ) ),
 		], 'approved', 'after' );
-
-		return $status_links;
 	}
 
-	public function comment_row_actions( $actions, $comment )
+	public function comment_row_actions( array $actions, object $comment ): array
 	{
 		$args = [
 			'action' => $this->hook(),
@@ -188,7 +185,7 @@ class Unavailable extends gEditorial\Module
 		], 'edit', 'after' );
 	}
 
-	public function bulk_actions_edit_comments( $actions )
+	public function bulk_actions_edit_comments( array $actions ): array
 	{
 		if ( $this->constant( 'comment_status' ) === self::req( 'comment_status' ) )
 			$actions['comment_unarchive'] = _x( 'Restore from Archived', 'Action', 'geditorial-unavailable' );
@@ -199,7 +196,7 @@ class Unavailable extends gEditorial\Module
 		return $actions;
 	}
 
-	public function handle_bulk_actions_edit_comments( $redirect_to, $doaction, $comment_ids )
+	public function handle_bulk_actions_edit_comments( string $redirect_to, string $doaction, array $comment_ids ): string
 	{
 		if ( ! in_array( $doaction, [ 'comment_doarchive', 'comment_unarchive' ] ) )
 			return $redirect_to;
@@ -214,11 +211,11 @@ class Unavailable extends gEditorial\Module
 	}
 
 	// @REF: `wp_set_comment_status()`
-	protected function comment_archive( $comment_id, $archive = TRUE )
+	protected function comment_archive( mixed $comment_id, bool $archive = TRUE ): bool
 	{
 		global $wpdb;
 
-		// NOTE: un-archived comments must be moderated
+		// NOTE: de-archive comments must be moderated
 		$status = $archive ? $this->constant( 'comment_status' ) : '0';
 		$old    = clone WordPress\Comment::get( $comment_id );
 

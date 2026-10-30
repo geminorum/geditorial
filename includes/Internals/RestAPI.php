@@ -13,7 +13,7 @@ trait RestAPI
 	{
 		return sprintf( '%s/%s',
 			$this->constant( 'restapi_namespace', $this->classs() ),
-			$this->rest_api_version
+			$this->rest_api_version,
 		);
 	}
 
@@ -28,13 +28,13 @@ trait RestAPI
 		return $route;
 	}
 
-	// TODO: add extra args
+	// TODO: add extra `args`
 	// @REF: https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
 	protected function restapi_register_route(
-		string $route,
+		string       $route,
 		string|array $methods = 'GET',
-		string $suffix = '',
-		array $extra = [],
+		string       $suffix  = '',
+		array        $extra   = [],
 	): bool {
 
 		$args = [];
@@ -114,7 +114,7 @@ trait RestAPI
 		return register_rest_route(
 			$this->restapi_get_namespace(),
 			'/'.$route.( $suffix ? '/'.$suffix : '' ),
-			$args
+			$args,
 		);
 	}
 
