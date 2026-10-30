@@ -301,10 +301,10 @@ class WasBorn extends gEditorial\Module
 		$option = get_user_option( $this->hook_base( 'restrict', $posttype ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'main_taxonomy' ), (array) $option, TRUE ) )
-			gEditorial\Listtable::restrictByTaxonomy( $this->constant( 'main_taxonomy' ) );
+			Services\Listtable::restrictByTaxonomy( $this->constant( 'main_taxonomy' ) );
 
 		if ( FALSE === $option || in_array( $this->constant( 'group_taxonomy' ), (array) $option, TRUE ) )
-			gEditorial\Listtable::restrictByTaxonomy( $this->constant( 'group_taxonomy' ), FALSE, [
+			Services\Listtable::restrictByTaxonomy( $this->constant( 'group_taxonomy' ), FALSE, [
 				'hide_empty'    => FALSE,
 				'hide_if_empty' => FALSE,
 			] );
@@ -312,7 +312,7 @@ class WasBorn extends gEditorial\Module
 
 	public function parse_query_admin_restrict( object &$query ): void
 	{
-		gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
+		Services\Listtable::parseQueryTaxonomy( $query, $this->constant( 'main_taxonomy' ) );
 
 		$object    = WordPress\Taxonomy::object( $this->constant( 'group_taxonomy' ) );
 		$query_var = WordPress\Taxonomy::queryVar( $object );

@@ -760,7 +760,7 @@ class MetaBox extends WordPress\Main
 	{
 		$selected = empty( $post->ID ) ? $GLOBALS['user_ID'] : $post->post_author;
 
-		$html = Listtable::restrictByAuthor( $selected, 'post_author_override', [
+		$html = Services\Listtable::restrictByAuthor( $selected, 'post_author_override', [
 			'echo'            => FALSE,
 			'class'           => self::dsh( static::BASE, 'admin', 'dropbown' ),
 			'show_option_all' => '',

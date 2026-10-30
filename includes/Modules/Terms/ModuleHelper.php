@@ -22,7 +22,7 @@ class ModuleHelper extends gEditorial\Helper
 		if ( empty( $field['name'] ) )
 			return '';
 
-		$html = gEditorial\Listtable::restrictByAuthor(
+		$html = Services\Listtable::restrictByAuthor(
 			(int) $meta ?: 0,
 			self::dsh( 'term', $field['name'] ),
 			[

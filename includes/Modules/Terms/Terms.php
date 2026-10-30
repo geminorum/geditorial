@@ -1113,7 +1113,7 @@ class Terms extends gEditorial\Module
 
 				if ( $meta || '0' === $meta ) {
 
-					$html = gEditorial\Listtable::columnOrder( $meta );
+					$html = Services\Listtable::columnOrder( $meta );
 
 				} else {
 

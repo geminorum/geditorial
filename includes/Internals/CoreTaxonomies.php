@@ -1177,7 +1177,7 @@ trait CoreTaxonomies
 
 		add_action( 'parse_query',
 			static function ( &$query ) use ( $taxonomy ) {
-				gEditorial\Listtable::parseQueryTaxonomy( $query, $taxonomy->name );
+				Services\Listtable::parseQueryTaxonomy( $query, $taxonomy->name );
 			}, 12, 1 );
 
 		return TRUE;

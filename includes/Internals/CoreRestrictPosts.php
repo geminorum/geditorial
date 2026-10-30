@@ -45,7 +45,7 @@ trait CoreRestrictPosts
 
 				foreach ( $taxonomies as $taxonomy )
 					if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-						gEditorial\Listtable::restrictByTaxonomy( $taxonomy );
+						Services\Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
 
@@ -53,7 +53,7 @@ trait CoreRestrictPosts
 			static function ( &$query ) use ( $taxonomies ) {
 
 				foreach ( $taxonomies as $taxonomy )
-					gEditorial\Listtable::parseQueryTaxonomy( $query, $taxonomy );
+					Services\Listtable::parseQueryTaxonomy( $query, $taxonomy );
 
 			}, 12, 1 );
 
@@ -83,7 +83,7 @@ trait CoreRestrictPosts
 		add_action( 'restrict_manage_posts',
 			static function ( $posttype, $which ) {
 
-				gEditorial\Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0 );
+				Services\Listtable::restrictByAuthor( $GLOBALS['wp_query']->get( 'author' ) ?: 0 );
 
 			}, $priority, 2 );
 
@@ -132,7 +132,7 @@ trait CoreRestrictPosts
 
 				foreach ( $taxonomies as $taxonomy )
 					if ( self::dsh( 'taxonomy', $taxonomy ) === $wp_query->query['orderby'] )
-						return gEditorial\Listtable::orderClausesByTaxonomy( $pieces, $wp_query, $taxonomy );
+						return Services\Listtable::orderClausesByTaxonomy( $pieces, $wp_query, $taxonomy );
 
 				return $pieces;
 			}, 10, 2 );

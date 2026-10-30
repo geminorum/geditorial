@@ -330,7 +330,7 @@ class Users extends gEditorial\Module
 		if ( count( $list ) )
 			echo Core\HTML::tableCode( $list );
 		else
-			echo gEditorial\Listtable::columnCount( 0 );
+			echo Services\Listtable::columnCount( 0 );
 
 		return ob_get_clean();
 	}
@@ -381,7 +381,7 @@ class Users extends gEditorial\Module
 		if ( $this->check_hidden_column( $column ) )
 			return;
 
-		echo gEditorial\Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
+		echo Services\Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
 	}
 
 	public function manage_columns_types( $columns )
@@ -398,7 +398,7 @@ class Users extends gEditorial\Module
 		if ( $this->check_hidden_column( $column ) )
 			return;
 
-		echo gEditorial\Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
+		echo Services\Listtable::columnCount( get_term( $term_id, $this->constant( 'type_taxonomy' ) )->count );
 	}
 
 	public function edit_user_profile( object $user ): void

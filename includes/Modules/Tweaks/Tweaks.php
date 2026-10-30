@@ -648,7 +648,7 @@ class Tweaks extends gEditorial\Module
 
 			case $this->classs( 'order' ):
 
-				echo gEditorial\Listtable::columnOrder( $post->menu_order );
+				echo Services\Listtable::columnOrder( $post->menu_order );
 				break;
 
 			case $this->classs( 'id' ):

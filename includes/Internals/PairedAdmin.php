@@ -46,7 +46,7 @@ trait PairedAdmin
 				$taxonomy = $this->constant( $constants[1] );
 
 				if ( FALSE === $option || in_array( $taxonomy, (array) $option, TRUE ) )
-					gEditorial\Listtable::restrictByTaxonomy( $taxonomy );
+					Services\Listtable::restrictByTaxonomy( $taxonomy );
 
 			}, $priority, 2 );
 
@@ -54,7 +54,7 @@ trait PairedAdmin
 			function ( &$query )
 				use ( $constants ) {
 
-				gEditorial\Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
+				Services\Listtable::parseQueryTaxonomy( $query, $this->constant( $constants[1] ) );
 
 			}, 12, 1 );
 

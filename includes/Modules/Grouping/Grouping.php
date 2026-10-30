@@ -181,7 +181,7 @@ class Grouping extends gEditorial\Module
 				if ( $this->check_hidden_column( $column ) )
 					return;
 
-				echo gEditorial\Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
+				echo Services\Listtable::columnCount( get_term( $term_id, $taxonomy )->count );
 			}, 10, 3 );
 
 		return TRUE;

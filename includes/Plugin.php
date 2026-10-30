@@ -245,6 +245,7 @@ class Plugin extends WordPress\Plugin
 			'Individuals',
 			'LateChores',
 			'LineDiscovery',
+			'Listtable',
 			'Locations',
 			'Lookup',
 			'Maps',
