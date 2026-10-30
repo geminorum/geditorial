@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -20,7 +19,7 @@ class ModuleSettings extends gEditorial\Settings
 	const METAKEY_FROM_PEOPLE_PLUGIN  = '_gpeople_remote';
 	const TAXONOMY_FROM_PEOPLE_PLUGIN = 'people';                        // NOTE: as set on the old `People` plugin
 
-	public static function renderCard_import_from_people_plugin( $posttypes )
+	public static function renderCard_import_from_people_plugin( ?array $posttypes ): bool
 	{
 		if ( empty( $posttypes ) )
 			return FALSE;
@@ -51,7 +50,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function handleImport_from_people_plugin( $posttype, $limit = 25 )
+	public static function handleImport_from_people_plugin( string $posttype, int $limit = 25 ): bool
 	{
 		$query = [
 			'meta_query' => [
@@ -89,7 +88,7 @@ class ModuleSettings extends gEditorial\Settings
 	// 'override' => '',         // override
 	// 'rel'      => 'none',     // rel tax term
 	// 'temp'     => '',         // temporary title, in case there's no people term available.
-	public static function post_set_byline_from_people_plugin( $post, $verbose = FALSE )
+	public static function post_set_byline_from_people_plugin( mixed $post, bool $verbose = FALSE ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
@@ -166,7 +165,7 @@ class ModuleSettings extends gEditorial\Settings
 			], TRUE );
 	}
 
-	public static function renderCard_import_from_simple_meta( $posttypes, $taxonomies, $metakeys )
+	public static function renderCard_import_from_simple_meta( ?array $posttypes, ?array $taxonomies, array $metakeys ): bool
 	{
 		if ( empty( $posttypes ) || empty( $taxonomies ) || empty( $metakeys ) )
 			return FALSE;
@@ -235,7 +234,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function handleImport_from_simple_meta( $posttype, $taxonomy, $metakey, $limit = 25 )
+	public static function handleImport_from_simple_meta( string $posttype, string $taxonomy, string $metakey, int $limit = 25 ): bool
 	{
 		if ( empty( $metakey ) || empty( $taxonomy ) )
 			return self::processingAllDone();
@@ -276,7 +275,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function post_set_byline_from_simple_meta( $post, $taxonomy, $metakey, $parser, $verbose = FALSE )
+	public static function post_set_byline_from_simple_meta( mixed $post, string $taxonomy, string $metakey, bool $parser, bool $verbose = FALSE ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
@@ -289,15 +288,15 @@ class ModuleSettings extends gEditorial\Settings
 
 		$data       = [];
 		$currents   = WordPress\Taxonomy::theTermCount( $taxonomy, $post );
-		$filters    = $parser ? Misc\NamesInPersian::mapRelationPrefixes() : [];
-		$prefixes   = $parser ? Misc\NamesInPersian::getFullnamePrefixes() : [];
-		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS   : Service\Individuals::FULLNAME_DELIMITERS;
+		$filters    = $parser ? gEditorial\Misc\NamesInPersian::mapRelationPrefixes() : [];
+		$prefixes   = $parser ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
+		$delimiters = $parser ? gEditorial\Misc\NamesInPersian::FULLNAME_DELIMITERS   : Service\Individuals::FULLNAME_DELIMITERS;
 
 		foreach ( Services\Markup::getSeparated( $legacy, $delimiters ) as $offset => $raw ) {
 
 			if ( $parser ) {
 
-				if ( ! Misc\NamesInPersian::isValidFullname( $raw ) )
+				if ( ! gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
 					continue;
 
 			} else {
@@ -358,7 +357,7 @@ class ModuleSettings extends gEditorial\Settings
 			], TRUE );
 	}
 
-	public static function renderCard_import_from_byline_meta( $posttypes, $taxonomies, $metakeys )
+	public static function renderCard_import_from_byline_meta( ?array $posttypes, ?array $taxonomies, array $metakeys ): bool
 	{
 		if ( empty( $posttypes ) || empty( $taxonomies ) || empty( $metakeys ) )
 			return FALSE;
@@ -476,7 +475,7 @@ class ModuleSettings extends gEditorial\Settings
 		return TRUE;
 	}
 
-	public static function handleImport_from_byline_meta( $posttype, $taxonomy, $metakey, $limit = 25 )
+	public static function handleImport_from_byline_meta( string $posttype, string $taxonomy, string $metakey, int $limit = 25 ): bool
 	{
 		if ( empty( $metakey ) || empty( $taxonomy ) )
 			return self::processingAllDone();
@@ -523,7 +522,7 @@ class ModuleSettings extends gEditorial\Settings
 		] ) );
 	}
 
-	public static function post_set_byline_from_byline_meta( $post, $taxonomy, $metakey, $parser, $verbose = FALSE )
+	public static function post_set_byline_from_byline_meta( mixed $post, string $taxonomy, string $metakey, bool $parser, bool $verbose = FALSE ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
@@ -539,7 +538,7 @@ class ModuleSettings extends gEditorial\Settings
 
 		if ( $parser ) {
 
-			$parsed = Misc\NamesInPersian::parseByline( $legacy );
+			$parsed = gEditorial\Misc\NamesInPersian::parseByline( $legacy );
 
 			if ( empty( $parsed ) )
 				return self::processingListItem( $verbose, gEditorial\Plugin::invalid( FALSE ) );

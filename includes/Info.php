@@ -120,7 +120,7 @@ class Info extends WordPress\Main
 			return;
 
 		Core\HTML::desc( sprintf(
-			/* translators: `%1$s`: plugin URL, `%2$s`: plugin URL */
+			/* translators: `%1$s`: P2P plugin URL, `%2$s`: O2O plugin URL */
 			_x( 'Please consider installing <a href="%1$s" target="_blank">Posts to Posts</a> or <a href="%2$s" target="_blank">Objects to Objects</a>.', 'Info: P2P', 'geditorial-admin' ),
 			'https://github.com/scribu/wp-posts-to-posts/',
 			'https://github.com/voceconnect/objects-to-objects' )

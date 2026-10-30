@@ -5,7 +5,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
 use geminorum\gEditorial\Internals;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -136,10 +135,10 @@ class Alphabet extends gEditorial\Module
 			$current = $html = $list = '';
 			$actives = [];
 
-			$alphabet = Misc\Alphabet::get( $args['locale'] );
+			$alphabet = gEditorial\Misc\Alphabet::get( $args['locale'] );
 			$keys     = Core\Arraay::pluck( $alphabet, 'key', 'letter' );
 
-			$alt      = $args['alternative'] ? Misc\Alphabet::get( $args['alternative'] ) : FALSE;
+			$alt      = $args['alternative'] ? gEditorial\Misc\Alphabet::get( $args['alternative'] ) : FALSE;
 			$alt_keys = $alt ? Core\Arraay::pluck( $alt, 'key', 'letter' ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
@@ -161,7 +160,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $posts as $post ) {
 
-				$letter = Misc\Alphabet::firstLetter( Core\Text::trim( $post->post_title ), $alphabet, $alt );
+				$letter = gEditorial\Misc\Alphabet::firstLetter( Core\Text::trim( $post->post_title ), $alphabet, $alt );
 
 				if ( $current != $letter ) {
 
@@ -300,10 +299,10 @@ class Alphabet extends gEditorial\Module
 			$current = $html = $list = '';
 			$actives = [];
 
-			$alphabet = Misc\Alphabet::get( $args['locale'] );
+			$alphabet = gEditorial\Misc\Alphabet::get( $args['locale'] );
 			$keys     = Core\Arraay::pluck( $alphabet, 'key', 'letter' );
 
-			$alt      = $args['alternative'] ? Misc\Alphabet::get( $args['alternative'] ) : FALSE;
+			$alt      = $args['alternative'] ? gEditorial\Misc\Alphabet::get( $args['alternative'] ) : FALSE;
 			$alt_keys = $alt ? Core\Arraay::pluck( $alt, 'key', 'letter' ) : [];
 
 			if ( $args['heading_cb'] && ! is_callable( $args['heading_cb'] ) )
@@ -325,7 +324,7 @@ class Alphabet extends gEditorial\Module
 
 			foreach ( $terms as $term ) {
 
-				$letter = Misc\Alphabet::firstLetter( Core\Text::trim( $term->name ), $alphabet, $alt );
+				$letter = gEditorial\Misc\Alphabet::firstLetter( Core\Text::trim( $term->name ), $alphabet, $alt );
 
 				if ( $current != $letter ) {
 

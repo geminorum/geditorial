@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -22,7 +21,7 @@ class ModuleHelper extends gEditorial\Helper
 
 	// EXAMPLE: `Pam Durban, Mary Hood (Foreword)`
 	// EXAMPLE: `John Updike (Editor, Contributor), Katrina Kenison (Editor)`
-	public static function bylineDefaultWalker( $list, $atts = [] )
+	public static function bylineDefaultWalker( mixed $list, array $arguments = [] ): mixed
 	{
 		$args = self::parsed( static::filters( 'walker_default', [
 			'post'    => NULL,
@@ -46,7 +45,7 @@ class ModuleHelper extends gEditorial\Helper
 				'between_last' => _x( ' and ', 'Walker: Default: Between Last Delimiter', 'geditorial-byline' ),
 				'pre'          => _x( 'Written by', 'Walker: Default: Pre', 'geditorial-byline' ),
 			],
-		], $list, $atts['post'] ?? NULL ), $atts );
+		], $list, $arguments['post'] ?? NULL ), $arguments );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
@@ -111,7 +110,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $args['before'].Core\Text::trim( $args['_strings']['pre'].' '.$html ).$args['after'];
 	}
 
-	public static function bylineTemplateWalker( $list, $atts = [] )
+	public static function bylineTemplateWalker( mixed $list, array $arguments = [] ): mixed
 	{
 		$args = self::parsed( static::filters( 'walker_template', [
 			'post'     => NULL,
@@ -136,7 +135,7 @@ class ModuleHelper extends gEditorial\Helper
 				'hint'       => _x( 'View full profile', 'Walker: Default: Hint', 'geditorial-byline' ),
 				'norelation' => _x( '[Unrelated]', 'Walker: Default: No-Relation', 'geditorial-byline' ),
 			],
-		], $list, $atts['post'] ?? NULL ), $atts );
+		], $list, $arguments['post'] ?? NULL ), $arguments );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
@@ -198,7 +197,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $args['before'].$html.$args['after'];
 	}
 
-	public static function bylineIntroWalker( $list, $atts = [] )
+	public static function bylineIntroWalker( mixed $list, array $arguments = [] ): mixed
 	{
 		$args = self::parsed( static::filters( 'walker_intro', [
 			'post'     => NULL,
@@ -219,7 +218,7 @@ class ModuleHelper extends gEditorial\Helper
 			'_legacy'    => [],
 			'_extra'     => [],   // intro arguments
 			'_strings'   => [],
-		], $list, $atts['post'] ?? NULL ), $atts );
+		], $list, $arguments['post'] ?? NULL ), $arguments );
 
 		if ( ! $list || ! count( $list ) )
 			return $args['default'];
@@ -248,19 +247,19 @@ class ModuleHelper extends gEditorial\Helper
 		return $args['before'].$html.$args['after'];
 	}
 
-	public static function generateHints( $post, $extend, $context, $queried, $metakeys )
+	public static function generateHints( mixed $post, ?string $extend, ?string $context, array $queried, array $metakeys ): array
 	{
 		$hints = [];
 
 		if ( ! $extend || ! in_array( $extend, static::HINT_EXTENDS, TRUE ) )
 			return $hints;
 
-		if ( ! $metas  = WordPress\Post::getMeta( $post ) )
+		if ( ! $metas = WordPress\Post::getMeta( $post ) )
 			return $hints;
 
 		$parser     = Services\Individuals::isParserAvailable();
-		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS   : Service\Individuals::FULLNAME_DELIMITERS;
-		$prefixes   = $parser ? Misc\NamesInPersian::getFullnamePrefixes() : [];
+		$delimiters = $parser ? gEditorial\Misc\NamesInPersian::FULLNAME_DELIMITERS   : Service\Individuals::FULLNAME_DELIMITERS;
+		$prefixes   = $parser ? gEditorial\Misc\NamesInPersian::getFullnamePrefixes() : [];
 
 		foreach ( $metakeys as $metakey => $label ) {
 
@@ -271,7 +270,7 @@ class ModuleHelper extends gEditorial\Helper
 
 				if ( $parser ) {
 
-					if ( ! Misc\NamesInPersian::isValidFullname( $raw ) )
+					if ( ! gEditorial\Misc\NamesInPersian::isValidFullname( $raw ) )
 						continue;
 
 				} else {

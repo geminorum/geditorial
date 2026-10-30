@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
 class Locations extends gEditorial\Service
@@ -21,7 +20,7 @@ class Locations extends gEditorial\Service
 	{
 		return in_array(
 			Core\L10n::locale( TRUE ),
-			Misc\AddressInPersian::SUPPORTED_LOCALE,
+			gEditorial\Misc\AddressInPersian::SUPPORTED_LOCALE,
 			TRUE
 		);
 	}
@@ -73,7 +72,7 @@ class Locations extends gEditorial\Service
 		$data = sprintf( ' %s ', $data ); // padding with space
 
 		if ( self::isParserAvailable() )
-			$data = Misc\AddressInPersian::prepExtra( $data, $context, '' );
+			$data = gEditorial\Misc\AddressInPersian::prepExtra( $data, $context, '' );
 
 		$data = preg_replace( '/\s+([\,\،])/mu', '$1', $data );
 		$data = preg_replace( '/\s+([\-])/mu', '$1', $data );

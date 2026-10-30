@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -207,7 +206,7 @@ class ModuleSettings extends gEditorial\Settings
 		);
 
 		// BAIL: if cannot parse the data
-		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $_fullname ) )
+		if ( ! $parsed = gEditorial\Misc\NamesInPersian::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
 				_x( 'Can not parse full-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
@@ -301,7 +300,7 @@ class ModuleSettings extends gEditorial\Settings
 			return self::processingListItem( $verbose, gEditorial\Plugin::wrong( FALSE ) );
 
 		// BAIL: if cannot parse the data
-		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $_fullname ) )
+		if ( ! $parsed = gEditorial\Misc\NamesInPersian::parseFullname( $_fullname ) )
 			return self::processingListItem( $verbose,
 				/* translators: `%1$s`: full-name string, `%2$s`: post title */
 				_x( 'Can not parse full-name (%1$s) on &ldquo;%2$s&rdquo;!', 'Notice', 'geditorial-personage' ), [
@@ -378,7 +377,7 @@ class ModuleSettings extends gEditorial\Settings
 		$parsed = [];
 
 		foreach ( Core\Text::splitLines( $pool ) as $row )
-			$parsed[] = Misc\NamesInPersian::parseFullname( $row );
+			$parsed[] = gEditorial\Misc\NamesInPersian::parseFullname( $row );
 
 		if ( ! $parsed = array_values( array_filter( $parsed ) ) )
 			return FALSE;

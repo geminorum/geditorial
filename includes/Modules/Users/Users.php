@@ -384,7 +384,7 @@ class Users extends gEditorial\Module
 		echo Services\Listtable::columnCount( get_term( $term_id, $this->constant( 'group_taxonomy' ) )->count );
 	}
 
-	public function manage_columns_types( $columns )
+	public function manage_columns_types( array $columns ): array
 	{
 		unset( $columns['posts'] );
 		return array_merge( $columns, [ 'users' => $this->get_column_title( 'users', 'type_taxonomy' ) ] );

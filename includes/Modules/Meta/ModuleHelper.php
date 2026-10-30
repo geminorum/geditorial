@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\Services;
 use geminorum\gEditorial\WordPress;
 
@@ -42,7 +41,7 @@ class ModuleHelper extends gEditorial\Helper
 		);
 
 		$parser     = Services\Individuals::isParserAvailable();
-		$delimiters = $parser ? Misc\NamesInPersian::FULLNAME_DELIMITERS : Service\Individuals::FULLNAME_DELIMITERS;
+		$delimiters = $parser ? gEditorial\Misc\NamesInPersian::FULLNAME_DELIMITERS : Service\Individuals::FULLNAME_DELIMITERS;
 
 		// if ( ! $overview = WordPress\Post::overview( $post, 'hints' ) )
 		// 	$overview = WordPress\Post::edit( $post );

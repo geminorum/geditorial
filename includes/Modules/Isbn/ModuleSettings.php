@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleSettings extends gEditorial\Settings
 {
-
 	const MODULE = 'isbn';
 
 	const ACTION_FROM_BOOK_MODULE  = 'do_import_from_book_module';

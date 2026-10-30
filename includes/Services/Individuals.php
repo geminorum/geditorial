@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
-use geminorum\gEditorial\Misc;
 use geminorum\gEditorial\WordPress;
 
 class Individuals extends gEditorial\Service
@@ -42,7 +41,7 @@ class Individuals extends gEditorial\Service
 	{
 		return in_array(
 			Core\L10n::locale( TRUE ),
-			Misc\NamesInPersian::SUPPORTED_LOCALE,
+			gEditorial\Misc\NamesInPersian::SUPPORTED_LOCALE,
 			TRUE
 		);
 	}
@@ -125,7 +124,7 @@ class Individuals extends gEditorial\Service
 		if ( Core\Text::has( $target, trim( static::SEPARATOR_TEMPLATE ) ) )
 			return $filtred;
 
-		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $target ) )
+		if ( ! $parsed = gEditorial\Misc\NamesInPersian::parseFullname( $target ) )
 			return $filtred;
 
 		if ( WordPress\Strings::isEmpty( $parsed['first_name'] )
@@ -149,7 +148,7 @@ class Individuals extends gEditorial\Service
 		if ( Core\Text::has( $raw, trim( static::SEPARATOR_TEMPLATE ) ) )
 			return $formatted;
 
-		if ( ! $parsed = Misc\NamesInPersian::parseFullname( $raw ) )
+		if ( ! $parsed = gEditorial\Misc\NamesInPersian::parseFullname( $raw ) )
 			return $formatted;
 
 		if ( WordPress\Strings::isEmpty( $parsed['first_name'] )
@@ -196,7 +195,7 @@ class Individuals extends gEditorial\Service
 
 		foreach ( $parts as $key => $value )
 			$parts[$key] = $parser
-				? Misc\NamesInPersian::replaceSplits( WordPress\Strings::cleanupChars( $value ) )
+				? gEditorial\Misc\NamesInPersian::replaceSplits( WordPress\Strings::cleanupChars( $value ) )
 				: WordPress\Strings::cleanupChars( $value );
 
 		if ( empty( $parts['last_name'] ) && empty( $parts['first_name'] ) )

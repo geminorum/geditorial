@@ -4,8 +4,8 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial;
 use geminorum\gEditorial\Core;
+use geminorum\gEditorial\Internals;
 use geminorum\gEditorial\Services;
-use geminorum\gEditorial\ShortCode;
 use geminorum\gEditorial\WordPress;
 
 class Shortcodes extends gEditorial\Module
@@ -21,7 +21,7 @@ class Shortcodes extends gEditorial\Module
 			'icon'     => 'media-code',
 			'access'   => 'stable',
 			'keywords' => [
-				'shortcode',
+				'has-shortcodes',
 				'has-adminbar',
 			],
 		];
@@ -308,7 +308,7 @@ class Shortcodes extends gEditorial\Module
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
 	public function display_terms_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		return ShortCode::listTerms( 'allitems',
+		return gEditorial\ShortCode::listTerms( 'allitems',
 			'',
 			array_merge( [
 				'title' => FALSE,
@@ -321,7 +321,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function term_tiles_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		return ShortCode::listTerms( 'allitems',
+		return gEditorial\ShortCode::listTerms( 'allitems',
 			'',
 			array_merge( [
 				'item_image_tile' => TRUE,
@@ -335,7 +335,7 @@ class Shortcodes extends gEditorial\Module
 
 	public function posts_assigned_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed
 	{
-		return ShortCode::listPosts( 'assigned',
+		return gEditorial\ShortCode::listPosts( 'assigned',
 			'',
 			'',
 			$atts,
