@@ -749,7 +749,7 @@ JS;
 
 	// @REF: https://github.com/chartjs/Chart.js
 	// @REF: https://www.chartjs.org/
-	public static function pkgChartJS( bool $enqueue = FALSE, string $ver = '4.5.1' )
+	public static function pkgChartJS( bool $enqueue = FALSE, string $ver = '4.6.1' )
 	{
 		return $enqueue
 			? self::enqueuePackage( 'chartjs', 'chart.js/chart.umd', [], $ver )
