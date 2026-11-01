@@ -29,6 +29,7 @@ class Plugin extends WordPress\Plugin
 	private $_modules;
 
 	private $_path      = '';
+	private $_url       = '';
 	private $_active    = 0;
 	private $_available = 0;
 
@@ -64,6 +65,7 @@ class Plugin extends WordPress\Plugin
 	protected function initialize(): void
 	{
 		$this->_path    = sprintf( '%sincludes/Modules/', $this->__dir );
+		$this->_url     = sprintf( '%sincludes/Modules/', $this->__url );
 		$this->_modules = new \stdClass();
 		$this->_options = new \stdClass();
 	}
@@ -204,7 +206,14 @@ class Plugin extends WordPress\Plugin
 			if ( $module->autoload || Services\Modulation::moduleEnabled( $this->_options->{$mod_name} ) ) {
 
 				$class = $module->class;
-				$this->{$mod_name} = new $class( $module, $this->_options->{$mod_name}, $this->_path, $locale );
+
+				$this->{$mod_name} = new $class(
+					$module,
+					$this->_options->{$mod_name},
+					$this->_path,
+					$this->_url,
+					$locale,
+				);
 
 				$this->_active++;
 			}

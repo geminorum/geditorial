@@ -142,11 +142,12 @@ class Module extends WordPress\Module
 	protected $default_link_context = 'reports';   // default context for module link
 	protected $default_cuc_context  = 'settings';  // default context for user checks
 
-	public function __construct( object &$module, object &$options, string $root, ?string $locale = NULL )
+	public function __construct( object &$module, object &$options, string $path, string $url, ?string $locale = NULL )
 	{
 		$this->base = 'geditorial';
 		$this->key  = $module->name;
-		$this->path = Core\File::normalize( $root.$module->folder.'/' );
+		$this->path = Core\File::normalize( $path.$module->folder.'/' );
+		$this->url  = Core\URL::trail( $url.$module->folder );
 		$this->site = get_current_blog_id();
 
 		$this->module  = $module;
