@@ -204,16 +204,12 @@ class HTTP extends Base
 		return WordPress\Remote::getHTML( $url, $atts );
 	}
 
-	#[\Deprecated( 'USE `WordPress\Remote::getContents()`' )]
-	public static function getContents( false|string $url, array $atts = [] ): false|string
-	{
-		return WordPress\Remote::getContents( $url, $atts );
-	}
-
-	// TODO: rename back after deprecation period!
-	public static function getContents_OLD( string $url ): false|string
+	public static function getContents( mixed $url, array $arguments = [] ): false|string
 	{
 		if ( ! extension_loaded( 'curl' ) )
+			return FALSE;
+
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init();
@@ -226,16 +222,16 @@ class HTTP extends Base
 			curl_setopt( $handle, CURLOPT_SSL_VERIFYPEER, FALSE );
 		}
 
+		foreach ( $arguments as $argument_key => $argument_value )
+			curl_setopt( $handle, $argument_key, $argument_value );
+
 		$contents = curl_exec( $handle );
 
 		// `curl_close()` has no effect as of PHP 8.0.0
 		if ( PHP_VERSION_ID < 80000 )
 			curl_close( $handle );
 
-		if ( ! $contents )
-			return FALSE;
-
-		return $contents;
+		return $contents ?: FALSE;
 	}
 
 	// @SOURCE: `wp_get_raw_referer()`
@@ -327,7 +323,7 @@ class HTTP extends Base
 		return trim( preg_replace( '/[^0-9a-fA-F:., ]/', '', stripslashes( $ip ) ) );
 	}
 
-	public static function IPinRange( $ip, $range )
+	public static function IPinRange( string $ip, string $range ): bool
 	{
 		// `1.2.3/24` OR `1.2.3.4/255.255.255.0`
 		if ( FALSE !== strpos( $range, '/' ) )
@@ -358,7 +354,7 @@ class HTTP extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/594134
-	public static function IPinCIDR( $ip, $range )
+	public static function IPinCIDR( string $ip, string $range ): bool
 	{
 		list( $subnet, $bits ) = explode( '/', $range );
 
@@ -402,14 +398,17 @@ class HTTP extends Base
 	 * @source https://gist.github.com/eric1234/37fd102798d99d94b0dcebde6bb29ef3
 	 * @see `wp_remote_get()`
 	 *
-	 * @param string $url
+	 * @param mixed $url
 	 * @param array $headers
 	 * @param string $error_message
 	 * @return false|resource
 	 */
-	public static function download( string $url, ?array &$headers, ?string &$error_message ): mixed
+	public static function download( mixed $url, ?array &$headers, ?string &$error_message ): mixed
 	{
 		if ( ! extension_loaded( 'curl' ) )
+			return FALSE;
+
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		$in_out = curl_init( $url );
@@ -441,9 +440,12 @@ class HTTP extends Base
 		}
 
 		while ( $line = fgets( $stream ) ) {
+
 			if ( preg_match( '/^\s+$/', $line ) )
 				break;
+
 			list( $key, $value ) = preg_split( '/\s*:\s*/', $line, 2 );
+
 			$headers[strtoupper( $key )] = trim( $value );
 		}
 
@@ -501,9 +503,12 @@ class HTTP extends Base
 
 	// @SEE: https://stackoverflow.com/a/12628971
 	// @REF: https://stackoverflow.com/a/12629254
-	public static function getStatus( null|false|string $url ): false|int
+	public static function getStatus( mixed $url ): false|int
 	{
-		if ( self::empty( $url ) || ! extension_loaded( 'curl' ) )
+		if ( ! extension_loaded( 'curl' ) )
+			return FALSE;
+
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init( $url );
@@ -532,12 +537,15 @@ class HTTP extends Base
 	 * Finds where the URL will be redirected using curl.
 	 * @source https://www.geeksforgeeks.org/php/how-to-find-where-the-url-will-redirected-using-curl/
 	 *
-	 * @param false|string $url
+	 * @param mixed $url
 	 * @return false|string
 	 */
-	public static function getRedirect( false|string $url ): false|string
+	public static function getRedirect( mixed $url ): false|string
 	{
-		if ( self::empty( $url ) || ! extension_loaded( 'curl' ) )
+		if ( ! extension_loaded( 'curl' ) )
+			return FALSE;
+
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init();
@@ -565,13 +573,13 @@ class HTTP extends Base
 	 * Retrieves the size of a file without downloading.
 	 * @source https://stackoverflow.com/a/2602624
 	 *
-	 * @param false|string $url
+	 * @param mixed $url
 	 * @param int $status
 	 * @return false|int
 	 */
-	public static function getSize( false|string $url, ?int &$status = NULL ): false|int
+	public static function getSize( mixed $url, ?int &$status = NULL ): false|int
 	{
-		if ( empty( $url ) )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		if ( ! extension_loaded( 'curl' ) )
@@ -611,12 +619,12 @@ class HTTP extends Base
 	 * Retrieves the size of a file using headers.
 	 * @source https://stackoverflow.com/a/43520299
 	 *
-	 * @param string $url
+	 * @param mixed $url
 	 * @return false|int
 	 */
-	public static function getSizeFromHeaders( string $url ): false|int
+	public static function getSizeFromHeaders( mixed $url ): false|int
 	{
-		if ( empty( $url ) )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		if ( ! $headers = get_headers( $url, TRUE ) )

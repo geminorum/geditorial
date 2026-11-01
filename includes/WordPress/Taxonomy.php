@@ -1386,7 +1386,7 @@ class Taxonomy extends Core\Base
 	 * @param null|string $index_key
 	 * @return array
 	 */
-	public static function getPostTerms( string $taxonomy, mixed $post = NULL, bool $object = TRUE, false|string $key = FALSE, ?string $index_key = NULL )
+	public static function getPostTerms( string $taxonomy, mixed $post = NULL, bool $object = TRUE, false|string $key = FALSE, ?string $index_key = NULL ): array
 	{
 		if ( ! $post = Post::get( $post ) )
 			return [];

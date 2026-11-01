@@ -198,19 +198,22 @@ class Site extends Core\Base
 		$stylesheet = Core\File::trail( get_stylesheet_directory() );
 
 		if ( Core\File::exists( $filename, $stylesheet ) )
-			return $path ? ( $stylesheet.$filename )
+			return $path
+				? ( $stylesheet.$filename )
 				: ( Core\URL::trail( get_stylesheet_directory_uri() ).$filename );
 
 		$template = Core\File::trail( get_template_directory() );
 
 		if ( Core\File::exists( $filename, $template ) )
-			return $path ? ( $template.$filename )
+			return $path
+				? ( $template.$filename )
 				: ( Core\URL::trail( get_template_directory_uri() ).$filename );
 
 		$contents = Core\File::trail( WP_CONTENT_DIR );
 
 		if ( Core\File::exists( $filename, $contents ) )
-			return $path ? ( $contents.$filename )
+			return $path
+				? ( $contents.$filename )
 				: ( Core\URL::trail( WP_CONTENT_URL ).$filename );
 
 		return FALSE;

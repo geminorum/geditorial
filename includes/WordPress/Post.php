@@ -626,13 +626,13 @@ class Post extends Core\Base
 	 * Retrieves post parent titles given a post ID or post object.
 	 * NOTE: parent post type can be different
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param string $suffix
-	 * @param bool|string $linked
+	 * @param false|string $linked
 	 * @param string $separator
 	 * @return string
 	 */
-	public static function getParentTitles( $post, $suffix = '', $linked = FALSE, $separator = NULL ): string
+	public static function getParentTitles( mixed $post, string $suffix = '', false|string $linked = FALSE, ?string $separator = NULL ): string
 	{
 		if ( ! $post = self::get( $post ) )
 			return $suffix;
@@ -681,12 +681,12 @@ class Post extends Core\Base
 	/**
 	 * Retrieves meta-data for a given post.
 	 *
-	 * @param object|int $post
+	 * @param mixed $post
 	 * @param bool|array $keys `false` for all meta
 	 * @param bool $single
 	 * @return false|array
 	 */
-	public static function getMeta( $post, $keys = FALSE, $single = TRUE ): false|array
+	public static function getMeta( mixed $post, false|array $keys = FALSE, bool $single = TRUE ): false|array
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;

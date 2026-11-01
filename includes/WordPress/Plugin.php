@@ -58,6 +58,7 @@ class Plugin extends Core\Base
 		add_action( 'plugins_loaded', function () {
 			$this->defines( $this->late_constants() );
 			$this->textdomains();
+			$this->setup_services();
 		}, 19 ); // child's must run on `20`
 	}
 
@@ -85,6 +86,7 @@ class Plugin extends Core\Base
 
 	protected function actions(): void {}
 	protected function modules(): array { return [ [], '' ]; }
+	protected function services(): array { return [ [], '' ]; }
 	protected function setup_check(): bool { return TRUE; }
 	protected function early_constants(): array { return []; }
 	protected function late_constants(): array { return []; }
@@ -109,6 +111,15 @@ class Plugin extends Core\Base
 				do_action( 'qm/debug', $e );
 			}
 		}
+	}
+
+	protected function setup_services(): void
+	{
+		list( $services, $namespace ) = $this->services();
+
+		foreach ( $services as $service )
+			if ( is_callable( [ $namespace.'\\Services\\'.$service, 'setup' ] ) )
+				call_user_func( [ $namespace.'\\Services\\'.$service, 'setup' ] );
 	}
 
 	protected function setup_loaded(): void

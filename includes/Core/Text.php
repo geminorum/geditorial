@@ -260,6 +260,7 @@ class Text extends Base
 	}
 
 	// @SEE: `sanitize_title_with_dashes()`
+	// @SEE: `_wp_to_kebab_case()`
 	public static function formatSlug( mixed $text ): string
 	{
 		if ( ! $text = self::force( $text ) )

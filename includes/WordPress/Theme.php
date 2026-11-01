@@ -168,7 +168,7 @@ class Theme extends Core\Base
 		return $meta;
 	}
 
-	public static function restPost_metaFieldArgs( $field, $field_key, $posttype, $fields  )
+	public static function restPost_metaFieldArgs( $field, $field_key, $posttype, $fields )
 	{
 		if ( ! $field )
 			return $field;

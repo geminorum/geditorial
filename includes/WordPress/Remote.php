@@ -7,19 +7,19 @@ use geminorum\gEditorial\Core;
 class Remote extends Core\Base
 {
 	/**
-	 * Retrieves data from the JSON body of a GET request, given a URL.
+	 * Retrieves data from the JSON body of a `GET` request, given a URL.
 	 *
-	 * @param string $url
-	 * @param array $atts
+	 * @param mixed $url
+	 * @param array $arguments
 	 * @param bool $assoc
 	 * @return false|array|object
 	 */
-	public static function getJSON( false|string $url, array $atts = [], bool $assoc = TRUE ): false|array|object
+	public static function getJSON( mixed $url, array $arguments = [], bool $assoc = TRUE ): false|array|object
 	{
-		if ( ! $url )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'timeout' => 15,
 			'headers' => [ 'Accept' => 'application/json' ],
 		] );
@@ -47,20 +47,20 @@ class Remote extends Core\Base
 	}
 
 	/**
-	 * Puts data as JSON body of a POST request, given a URL.
+	 * Puts data as JSON body of a `POST` request, given a URL.
 	 *
 	 * @param mixed $body
-	 * @param string $url
-	 * @param array $atts
+	 * @param mixed $url
+	 * @param array $arguments
 	 * @param bool $assoc
 	 * @return false|array|object
 	 */
-	public static function postJSON( mixed $body, false|string $url, array $atts = [], bool $assoc = TRUE ): false|array|object
+	public static function postJSON( mixed $body, mixed $url, array $arguments = [], bool $assoc = TRUE ): false|array|object
 	{
-		if ( ! $url )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'body'    => $body,
 			'timeout' => 15,
 			'headers' => [ 'Accept' => 'application/json' ],
@@ -91,25 +91,26 @@ class Remote extends Core\Base
 	}
 
 	/**
-	 * Retrieves data from the HTML body of a GET request, given a URL.
-	 *
+	 * Retrieves data from the HTML body of a `GET` request, given a URL.
 	 * @see https://deliciousbrains.com/wordpress-http-api-requests/
 	 *
-	 * @param false|string $url
-	 * @param array $atts
+	 * @param mixed $url
+	 * @param array $arguments
 	 * @return false|string
 	 */
-	public static function getHTML( false|string $url, array $atts = [] ): false|string
+	public static function getHTML( mixed $url, array $arguments = [] ): false|string
 	{
-		if ( ! $url )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'timeout' => 15,
-			'headers' => [ 'Accept' => 'text/html' ],
+			'headers' => [
+				'Accept' => 'text/html',
+			],
 		] );
 
-		// $response = wp_remote_get( $url, $args );
+		// `$response = wp_remote_get( $url, $args );`
 		$response = wp_safe_remote_get( $url, $args );
 
 		if ( self::isError( $response ) )
@@ -127,19 +128,19 @@ class Remote extends Core\Base
 	}
 
 	/**
-	 * Retrieves data from the content body of a GET request, given a URL.
+	 * Retrieves data from the content body of a `GET` request, given a URL.
 	 * NOTE: without `accept` header
 	 *
-	 * @param false|string $url
-	 * @param array $atts
+	 * @param mixed $url
+	 * @param array $arguments
 	 * @return false|string
 	 */
-	public static function getContents( false|string $url, array $atts = [] ): false|string
+	public static function getContents( mixed $url, array $arguments = [] ): false|string
 	{
-		if ( ! $url )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'timeout' => 15,
 		] );
 

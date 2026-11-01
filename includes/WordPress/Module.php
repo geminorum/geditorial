@@ -29,6 +29,13 @@ class Module extends Core\Base
 	protected $path = NULL;
 
 	/**
+	 * Holds the current module URL address.
+	 *
+	 * @var string
+	 */
+	protected $url = NULL;
+
+	/**
 	 * Holds the current site ID.
 	 *
 	 * @var int

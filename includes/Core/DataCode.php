@@ -53,13 +53,13 @@ class DataCode extends Base
 	{
 		$args = self::parsed( [
 			'tag'        => TRUE,
-			'format'     => 'svg', // 'png',
+			'format'     => 'svg', // `png`
 			'zone'       => 2, // quiet zone
 			'size'       => 150,
 			'encoding'   => 'UTF-8',
 			'correction' => 'H', // 'L', 'M', 'Q', 'H'
 			'margin'     => 0,
-			'alt'        => '', // Text::stripTags( $data ),
+			'alt'        => '', // `Text::stripTags( $data ),`
 			'url'        => 'https://api.qrserver.com/v1/create-qr-code/',
 		], $atts );
 
