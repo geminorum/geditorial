@@ -1555,7 +1555,12 @@ class Template extends WordPress\Main
 		if ( isset( $enqueued[$field][$post->ID] ) )
 			return $enqueued[$field][$post->ID];
 
-		if ( ! $data = Services\PostTypeFields::getFieldRaw( $field, $post->ID, $module, TRUE ) )
+		$data = Services\PostTypeFields::getFieldRaw( $field, $post->ID, $module, TRUE );
+
+		if ( ! $data && WordPress\Post::get( $post->post_parent ?: FALSE ) )
+			$data = Services\PostTypeFields::getFieldRaw( $field, $post->post_parent, $module, TRUE );
+
+		if ( ! $data )
 			return $enqueued[$field][$post->ID] = FALSE;
 
 		return $enqueued[$field][$post->ID] = Scripts::inlineStyle( self::dsh(
@@ -1584,7 +1589,12 @@ class Template extends WordPress\Main
 		if ( isset( $enqueued[$field][$term->term_id] ) )
 			return $enqueued[$field][$term->term_id];
 
-		if ( ! $data = Services\TaxonomyFields::getFieldRaw( $field, $term->term_id, $module, TRUE ) )
+		$data = Services\TaxonomyFields::getFieldRaw( $field, $term->term_id, $module, TRUE );
+
+		if ( ! $data && WordPress\Term::get( $term->parent ?: FALSE ) )
+			$data = Services\TaxonomyFields::getFieldRaw( $field, $term->parent, $module, TRUE );
+
+		if ( ! $data )
 			return $enqueued[$field][$term->term_id] = FALSE;
 
 		return $enqueued[$field][$term->term_id] = Scripts::inlineStyle( self::dsh(
