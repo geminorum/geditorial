@@ -1496,7 +1496,11 @@ trait PostTypeFields
 					$register_args['show_in_rest'] = FALSE;
 
 				$meta_key = $this->get_postmeta_key( $field );
-				$filtered = $this->filters( 'register_field_args', $register_args, $meta_key, $posttype );
+				$filtered = $this->filters( 'register_field_args',
+					$register_args,
+					$meta_key,
+					$posttype,
+				);
 
 				if ( FALSE !== $filtered )
 					register_meta( 'post', $meta_key, $filtered );

@@ -8,7 +8,7 @@ use geminorum\gEditorial\WordPress;
 
 class FileCache extends gEditorial\Service
 {
-	public static function getDIR( $sub, $base = NULL )
+	public static function getDIR( string $sub, ?string $base = NULL ): false|string
 	{
 		if ( ! GEDITORIAL_CACHE_DIR )
 			return FALSE;
@@ -30,7 +30,7 @@ class FileCache extends gEditorial\Service
 		return $path;
 	}
 
-	public static function getURL( $sub, $base = NULL )
+	public static function getURL( string $sub, ?string $base = NULL ): false|string
 	{
 		if ( ! GEDITORIAL_CACHE_DIR ) // correct, we check for path constant
 			return FALSE;

@@ -8,6 +8,9 @@ use geminorum\gEditorial\WordPress;
 
 class Barcodes extends gEditorial\Service
 {
+	const BARCODE_CACHE_GROUP = 'bwipjs';
+	const QRCODE_CACHE_GROUP  = 'qrcodes';
+	const QRCODE_DEFAULT_SIZE = 300;
 
 	/**
 	 * You can invoke Binary Eye with a web URI intent from anything
@@ -81,11 +84,11 @@ class Barcodes extends gEditorial\Service
 	// https://github.com/metafloor/bwip-js/wiki/BWIPP-border-vs-bwipjs-padding
 	public static function getByBWIPP(
 		string  $type,
-		string  $text,
+		string  $data,
 		array   $extra = [],
 		bool    $tag   = FALSE,
 		bool    $cache = TRUE,
-		string  $sub   = 'bwipjs',
+		?string $group = NULL,
 		?string $base  = NULL,
 	): string {
 
@@ -95,20 +98,28 @@ class Barcodes extends gEditorial\Service
 		$direct = add_query_arg( array_merge( [
 			'bcid'        => $type, // NOTE: Must follow immediately after the question mark.
 			'scale'       => '2',
-			'text'        => $text,
+			'text'        => $data,
 			'includetext' => in_array( $type, static::TYPES_WITH_TEXT, TRUE ) ? '' : FALSE,
 		], $extra ), 'https://bwipjs-api.metafloor.com' );
 
 		if ( ! $cache )
-			return $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ) ] ) : $direct;
+			return $tag ? Core\HTML::img( $direct, [
+				'-barcode',
+				sprintf( '-%s', $type ),
+			] ) : $direct;
 
-		$file = sprintf( '%s.png', md5( maybe_serialize( $direct ) ) );
-		$url  = FileCache::getURL( $sub, $base ).'/'.$file;
-		$path = FileCache::getDIR( $sub, $base );
+		$group ??= static::BARCODE_CACHE_GROUP;
+		$file = sprintf( '%s.png', self::hash( $direct ) );
+		$url  = FileCache::getURL( $group, $base ).'/'.$file;
+		$path = FileCache::getDIR( $group, $base );
 
 		if ( ! Core\File::exists( $file, $path ) ) {
 
-			$bypass = $tag ? Core\HTML::img( $direct, [ '-barcode', sprintf( '-%s', $type ), '-direct' ] ) : $direct;
+			$bypass = $tag ? Core\HTML::img( $direct, [
+				'-barcode',
+				'-direct',
+				sprintf( '-%s', $type ),
+			] ) : $direct;
 
 			if ( ! $image = WordPress\Remote::getContents( $direct ) )
 				return $bypass;
@@ -117,16 +128,20 @@ class Barcodes extends gEditorial\Service
 				return $bypass;
 		}
 
-		return $tag ? Core\HTML::img( $url, [ '-barcode', sprintf( '-%s', $type ), '-cached' ] ) : $url;
+		return $tag ? Core\HTML::img( $url, [
+			'-barcode',
+			'-cached',
+			sprintf( '-%s', $type ),
+		] ) : $url;
 	}
 
 	public static function getQRCode(
 		string  $data,
-		string  $type  = 'text',
-		int     $size  = 300,
+		?string $type  = NULL,
+		?int    $size  = NULL,
 		bool    $tag   = FALSE,
 		bool    $cache = TRUE,
-		string  $sub   = 'qrcodes',
+		?string $group = NULL,
 		?string $base  = NULL,
 	): string {
 
@@ -142,16 +157,34 @@ class Barcodes extends gEditorial\Service
 			default       : $prepared = Core\Text::trim( $data ); break;
 		}
 
-		if ( ! $cache )
-			return Core\DataCode::getQRCode( $prepared, [ 'tag' => $tag, 'size' => $size ] );
+		$size  ??= static::QRCODE_DEFAULT_SIZE;
+		$group ??= static::QRCODE_CACHE_GROUP;
 
-		$file = sprintf( '%s-%s.svg', md5( maybe_serialize( $prepared ) ), $size );
-		$url  = Core\URL::trail( FileCache::getURL( $sub, $base ) ).$file;
-		$path = FileCache::getDIR( $sub, $base );
+		if ( ! $cache )
+			return Core\DataCode::getQRCode(
+				$prepared,
+				[
+					'tag'  => $tag,
+					'size' => $size,
+				],
+			);
+
+		$file = sprintf( '%s-%s.svg', self::hash( $prepared ), $size );
+		$path = FileCache::getDIR( $group, $base );
+		$url  = Core\URL::trail( FileCache::getURL( $group, $base ) ).$file;
 
 		if ( ! Core\File::exists( $file, $path ) ) {
 
-			if ( ! Core\DataCode::cacheQRCode( Core\File::join( $path, $file ), $prepared, [ 'size' => $size ] ) )
+			$cahced = Core\DataCode::cacheQRCode(
+				Core\File::join( $path, $file ),
+				$prepared,
+				[
+					'size'   => $size,
+					'format' => 'svg',
+				],
+			);
+
+			if ( ! $cahced )
 				return $tag ? '' : FALSE;
 		}
 

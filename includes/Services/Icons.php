@@ -27,7 +27,7 @@ class Icons extends gEditorial\Service
 	 */
 	public static function get( mixed $icon, string $fallback_icon = 'admin-post', string|array $extra_class = [] ): string
 	{
-		if ( ! $icon || 'none' === $icon )
+		if ( self::empty( $icon ) || 'none' === $icon )
 			return Core\HTML::getDashicon( $fallback_icon, FALSE, $extra_class );
 
 		if ( is_array( $icon ) )

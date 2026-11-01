@@ -307,29 +307,32 @@ class Socialite extends gEditorial\Module
 		return array_merge( $excludes, $this->supported );
 	}
 
-	public function terms_field_title( $string, $taxonomy, $field, $term )
+	public function terms_field_title( string $title, string $taxonomy, string $field, false|object $term ): string
 	{
-		return $this->get_string( $field, $taxonomy, 'titles', $string );
+		return $this->get_string( $field, $taxonomy, 'titles', $title );
 	}
 
-	public function terms_field_desc( $string, $taxonomy, $field, $term )
+	public function terms_field_desc( string $desc, string $taxonomy, string $field, false|object $term ): string
 	{
-		return $this->get_string( $field, $taxonomy, 'descriptions', $string );
+		return $this->get_string( $field, $taxonomy, 'descriptions', $desc );
 	}
 
-	public function terms_supported_fields_raw( $supported )
+	public function terms_supported_fields_raw( array $supported ): array
 	{
-		return array_merge( $supported, $this->get_setting( 'extra_meta_fields', [] ) );
+		return array_merge(
+			$supported,
+			$this->get_setting( 'extra_meta_fields', [] ),
+		);
 	}
 
-	public function terms_supported_field_metatype( $metatype, $field, $taxonomy )
+	public function terms_supported_field_metatype( string $metatype, string $field, string $taxonomy ): string
 	{
 		return in_array( $field, $this->supported )
 			? 'social'
 			: $metatype;
 	}
 
-	public function terms_supported_field_position( $position, $field, $taxonomy )
+	public function terms_supported_field_position( false|array $position, string $field, string $taxonomy ): false|array
 	{
 		return in_array( $field, $this->supported ) ? FALSE : $position;
 	}
@@ -342,31 +345,36 @@ class Socialite extends gEditorial\Module
 		);
 	}
 
-	public function terms_manage_columns( $columns, $taxonomy, $supported )
+	public function terms_manage_columns( array $columns, string $taxonomy, array $supported ): array
 	{
 		if ( ! Core\Arraay::exists( $supported, $this->supported ) )
 			return $columns;
 
 		return Core\Arraay::insert( $columns, [
-			// $this->classs() => $this->get_column_title( 'social', $taxonomy ),
+			// `$this->classs() => $this->get_column_title( 'social', $taxonomy ),`
 			$this->classs() => $this->get_column_title_icon( 'social', $taxonomy ),
 		], 'posts', 'before' );
 	}
 
-	public function terms_sortable_columns( $columns, $taxonomy, $supported )
+	public function terms_sortable_columns( array $columns, string $taxonomy, array $supported ): array
 	{
 		return $columns; // TODO
 	}
 
-	public function terms_custom_column( string $column, $taxonomy, $supported, mixed $term ): void
+	public function terms_custom_column( string $column, string $taxonomy, array $supported, mixed $term ): void
 	{
 		if ( $column === $this->classs() )
 			echo $this->_get_term_icons( $term, 'column', $this->supported );
 	}
 
 	// NOTE: check for `Terms` module first!
-	private function _get_term_icons( mixed $term, ?string $context = NULL, $fields = NULL, null|string|array $extra = NULL ): string
-	{
+	private function _get_term_icons(
+		mixed             $term,
+		?string           $context = NULL,
+		?array            $fields  = NULL,
+		null|string|array $extra   = NULL,
+	): string {
+
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return '';
 

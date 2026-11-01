@@ -137,7 +137,7 @@ class Terms extends gEditorial\Module
 					'description' => sprintf(
 						/* translators: `%s`: zero placeholder */
 						_x( 'Defines the title string on source link for supported taxonomies. Leave blank for default or %s to disable.', 'Setting Description', 'geditorial-terms' ),
-						Core\HTML::code( '0' )
+						Core\HTML::code( '0' ),
 					),
 				],
 				'calendar_type',
@@ -681,7 +681,7 @@ class Terms extends gEditorial\Module
 		);
 	}
 
-	public function get_supported_field_metatype( $field, $taxonomy )
+	public function get_supported_field_metatype( string $field, string $taxonomy ): string
 	{
 		$metatype = $field; // NOTE: by default the meta-type is the same as the field
 
@@ -926,12 +926,17 @@ class Terms extends gEditorial\Module
 						'prepare_callback' => method_exists( $this, $prepare ) ? [ $this, $prepare ] : NULL,
 					];
 
-				$args = array_merge( $defaults, [
+				$arguments = array_merge( $defaults, [
 					'object_subtype' => $taxonomy,
 					'description'    => $this->get_string( $field, $taxonomy, 'descriptions', '' ),
 				] );
 
-				$filtered = $this->filters( 'register_field_args', $args, $field, $taxonomy );
+				$filtered = $this->filters( 'register_field_args',
+					$arguments,
+					$field,
+					$metatype,
+					$taxonomy,
+				);
 
 				if ( FALSE !== $filtered )
 					register_meta( 'term', $field, $filtered );
@@ -1062,7 +1067,11 @@ class Terms extends gEditorial\Module
 		if ( array_key_exists( 'posts', $columns ) )
 			$columns['posts'] = $this->get_column_title_icon( 'posts', $taxonomy );
 
-		return $this->filters( 'manage_columns', $columns, $taxonomy, $supported );
+		return $this->filters( 'manage_columns',
+			$columns,
+			$taxonomy,
+			$supported,
+		);
 	}
 
 	public function sortable_columns( array $columns ): array
@@ -1119,7 +1128,11 @@ class Terms extends gEditorial\Module
 			if ( ! in_array( $field, $sortables, TRUE ) )
 				$columns[$this->classs( $field )] = self::und( 'meta', $field );
 
-		return $this->filters( 'sortable_columns', $columns, $taxonomy, $supported );
+		return $this->filters( 'sortable_columns',
+			$columns,
+			$taxonomy,
+			$supported,
+		);
 	}
 
 	public function custom_column( ?string $string, string $column, int $term_id ): ?string
@@ -1143,7 +1156,12 @@ class Terms extends gEditorial\Module
 			return $string;
 
 		// NOTE: here for custom column with multiple fields support
-		$this->actions( 'custom_column', $column, $taxonomy, $supported, $term );
+		$this->actions( 'custom_column',
+			$column,
+			$taxonomy,
+			$supported,
+			$term,
+		);
 
 		return $string;
 	}
@@ -1584,14 +1602,14 @@ class Terms extends gEditorial\Module
 			default:
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) )
-					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( $meta ).'">'
-						.WordPress\Strings::prepTitle( $meta ).'</span>';
+					$html = '<span class="-field field-'.$field.'" data-'.$field.'="'.Core\HTML::escape( (string) $meta ).'">'
+						.WordPress\Strings::prepTitle( (string) $meta ).'</span>';
 
 				else
 					$html = $this->field_empty( $field, '', $column );
 		}
 
-		echo $this->filters( 'supported_field_column',
+		$filtered = $this->filters( 'supported_field_column',
 			$html,
 			$field,
 			$taxonomy,
@@ -1600,6 +1618,9 @@ class Terms extends gEditorial\Module
 			$metakey,
 			$metatype,
 		);
+
+		if ( $filtered )
+			echo $filtered;
 	}
 
 	private function field_empty( string $field, string $value = '0', bool $column = TRUE ): string
@@ -2154,7 +2175,16 @@ class Terms extends gEditorial\Module
 				] );
 		}
 
-		echo $this->filters( 'supported_field_form', $html, $field, $taxonomy, $term_id, $meta );
+		$filtered = $this->filters( 'supported_field_form',
+			$html,
+			$field,
+			$taxonomy,
+			$term_id,
+			$meta,
+		);
+
+		if ( $filtered )
+			echo $filtered;
 	}
 
 	private function _render_quickedit_field( string $field, string $taxonomy ): void
@@ -2179,7 +2209,7 @@ class Terms extends gEditorial\Module
 				], _x( 'Remove', 'Button', 'geditorial-terms' ) ).'&nbsp;';
 
 				$html.= Core\HTML::tag( 'img', [
-					// 'src'   => '',
+					// `'src'   => '',`
 					'class' => '-img',
 					'style' => 'display:none',
 				] );
@@ -2338,7 +2368,15 @@ class Terms extends gEditorial\Module
 				$html.= '<input type="text" class="ptitle" name="term-'.$field.'" value="" />';
 		}
 
-		echo $this->filters( 'supported_field_quickedit', $html, $field, $taxonomy, $metatype );
+		$filtered = $this->filters( 'supported_field_quickedit',
+			$html,
+			$field,
+			$taxonomy,
+			$metatype,
+		);
+
+		if ( $filtered )
+			echo $filtered;
 	}
 
 	public function adminbar_init( array &$nodes, string $parent ): void
@@ -2359,7 +2397,7 @@ class Terms extends gEditorial\Module
 			$icon     = $this->adminbar__get_icon();
 			$taxonomy = WordPress\Taxonomy::object( $term );
 			$singular = Services\CustomTaxonomy::getLabel( $taxonomy, 'singular_name' );
-			// $reports  = $this->role_can_term( $term, 'reports' ); // TODO!
+			// `$reports  = $this->role_can_term( $term, 'reports' );` // TODO!
 			$reports  = $this->role_can( 'reports' );
 
 			$nodes[] = [
@@ -2372,7 +2410,7 @@ class Terms extends gEditorial\Module
 					'title' => $reports ? sprintf(
 						/* translators: `%s`: singular taxonomy label */
 						_x( 'View Term Reports for this %s', 'Node: Title: Taxonomy', 'geditorial-terms' ),
-						$singular
+						$singular,
 					) : '',
 				],
 			];
@@ -2421,8 +2459,8 @@ class Terms extends gEditorial\Module
 					WordPress\Strings::getCounted(
 						$term->count,
 						NULL,
-						Services\CustomTaxonomy::getLabel( $taxonomy, 'post_count' )
-					)
+						Services\CustomTaxonomy::getLabel( $taxonomy, 'post_count' ),
+					),
 				),
 				'meta' => [
 					'title' => _x( 'Term Short-link', 'Node: Title', 'geditorial-terms' ),
@@ -2439,7 +2477,7 @@ class Terms extends gEditorial\Module
 					'title'  => sprintf(
 						/* translators: `%s`: post-type menu label */
 						_x( 'View in %s', 'Node: Title', 'geditorial-terms' ),
-						Services\CustomPostType::getLabel( $posttype, 'menu_name' )
+						Services\CustomPostType::getLabel( $posttype, 'menu_name' ),
 					),
 					'meta' => [
 						'title' => $posttype, // raw
@@ -2459,8 +2497,8 @@ class Terms extends gEditorial\Module
 						WordPress\Strings::getCounted(
 							Core\Text::wordCount( $term->description ),
 							NULL,
-							_x( 'Description Word Count', 'Node: Title', 'geditorial-terms' )
-						)
+							_x( 'Description Word Count', 'Node: Title', 'geditorial-terms' ),
+						),
 					),
 					'meta' => [
 						'title' => Services\CustomTaxonomy::getLabel( $taxonomy, 'edit_item' ),
@@ -2493,7 +2531,7 @@ class Terms extends gEditorial\Module
 					'title'  => sprintf(
 						/* translators: `%s`: meta title */
 						_x( 'Meta: %s', 'Node: Title', 'geditorial-terms' ),
-						$this->get_supported_field_title( $field, $term->taxonomy, $term )
+						$this->get_supported_field_title( $field, $term->taxonomy, $term ),
 					),
 					'meta' => [
 						'title' => $this->get_supported_field_desc( $field, $term->taxonomy, $term ),
@@ -2587,7 +2625,7 @@ class Terms extends gEditorial\Module
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
 							gEditorial\Datetime::dateFormats( 'default' ),
-							$this->default_calendar()
+							$this->default_calendar(),
 						);
 
 						break;
@@ -2597,7 +2635,7 @@ class Terms extends gEditorial\Module
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
 							gEditorial\Datetime::dateFormats( 'datetime' ),
-							$this->default_calendar()
+							$this->default_calendar(),
 						);
 
 						break;
@@ -2645,7 +2683,7 @@ class Terms extends gEditorial\Module
 				'title' => $reports ? sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'View Term Reports for this %s', 'Node: Title: Post-Type', 'geditorial-terms' ),
-					Services\CustomPostType::getLabel( $post, 'singular_name' )
+					Services\CustomPostType::getLabel( $post, 'singular_name' ),
 				) : '',
 			],
 		];
@@ -2710,7 +2748,7 @@ class Terms extends gEditorial\Module
 			$states[] = sprintf(
 				/* translators: `%s`: term name */
 				_x( 'Term Image for “%s”', 'Media State', 'geditorial-terms' ),
-				WordPress\Term::title( (int) $term_id, FALSE ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' )
+				WordPress\Term::title( (int) $term_id, FALSE ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' ),
 			);
 
 		} else {
@@ -2718,7 +2756,7 @@ class Terms extends gEditorial\Module
 			$states[] = sprintf(
 				/* translators: `%s`: term link */
 				_x( 'Term Image for &ldquo;%s&rdquo;', 'Media State', 'geditorial-terms' ),
-				WordPress\Term::htmlLink( (int) $term_id ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' )
+				WordPress\Term::htmlLink( (int) $term_id ) ?: _x( 'Missing Term', 'Media State', 'geditorial-terms' ),
 			);
 		}
 
@@ -2774,7 +2812,7 @@ class Terms extends gEditorial\Module
 	}
 
 	// NOTE: converts image attachment id to full URL
-	public function taxonomy_export_term_meta_data( $data, $metakey, $taxonomy, $term )
+	public function taxonomy_export_term_meta_data( string $data, string $metakey, string $taxonomy, object $term ): string
 	{
 		if ( $metakey !== $this->get_supported_metakey( 'image', $taxonomy ) )
 			return $data;
@@ -2808,11 +2846,11 @@ class Terms extends gEditorial\Module
 		return array_merge( $actions, $additions );
 	}
 
-	public function taxonomy_bulk_callback( null|false|callable $callback, string $action, string $taxonomy ): callable|false|null
+	public function taxonomy_bulk_callback( null|false|callable $callback, string $action, string $taxonomy ): null|false|callable
 	{
 		$actions = [
 			'sync_image_titles',
-			// 'move_desc_to_fullname', // TODO
+			// `'move_desc_to_fullname',` // TODO
 			'move_tagline_to_desc',
 		];
 
@@ -2908,7 +2946,7 @@ class Terms extends gEditorial\Module
 		return $delete;
 	}
 
-	public function taxonomy_delete_term( $delete, $term, $taxonomy, $force )
+	public function taxonomy_delete_term( bool $delete, object $term, string $taxonomy, bool $force ): bool
 	{
 		if ( $force || ! $delete || !$taxonomy || ! $term || is_wp_error( $term ) )
 			return $delete;
@@ -3167,7 +3205,8 @@ class Terms extends gEditorial\Module
 			if ( ! empty( $metakeys[$taxonomy] ) )
 				continue;
 
-			$supported = $this->get_supported( $taxonomy );
+			if ( ! $supported = $this->get_supported( $taxonomy ) )
+				continue;
 
 			if ( in_array( 'tagline', $supported, TRUE ) )
 				$meta_keys[$taxonomy] = $this->get_supported_metakey( 'tagline', $taxonomy );
@@ -3203,7 +3242,7 @@ class Terms extends gEditorial\Module
 		return $data;
 	}
 
-	public function termintro_title_suffix( string $suffix, object $term, $desc, $args, $module ): string
+	public function termintro_title_suffix( string $suffix, object $term, false|string $desc, array $args, false|string $module ): string
 	{
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $suffix;
@@ -3230,7 +3269,7 @@ class Terms extends gEditorial\Module
 		return $suffix;
 	}
 
-	public function termintro_description_before( $term, $desc, $image, $args, $module ): void
+	public function termintro_description_before( object $term, false|string $desc, bool $image, array $args, false|string $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
@@ -3244,7 +3283,7 @@ class Terms extends gEditorial\Module
 			echo Core\HTML::wrap( get_term_meta( $term->term_id, $this->get_supported_metakey( 'subtitle', $taxonomy ), TRUE ) ?: '', '-term-subtitle' );
 	}
 
-	public function termintro_description_after( $term, $desc, $image, $args, $module ): void
+	public function termintro_description_after( object $term, false|string $desc, bool $image, array $args, false|string $module ): void
 	{
 		if ( ! $desc && ! $image && empty( $args['heading'] ) )
 			return;
@@ -3380,7 +3419,7 @@ class Terms extends gEditorial\Module
 			'terms', // NOTE: better to be hard-coded
 			FALSE,
 			FALSE,
-			$default_calendar ?? $this->default_calendar()
+			$default_calendar ?? $this->default_calendar(),
 		);
 
 		if ( $date )
@@ -3391,7 +3430,7 @@ class Terms extends gEditorial\Module
 				sprintf( '%s (%s)',
 					'{{title}}', // NOTE: see `WordPress\Term::summary()`
 					$this->get_supported_field_title( $field, $term->taxonomy, $term )
-				)
+				),
 			);
 
 		return FALSE;
@@ -3424,7 +3463,7 @@ class Terms extends gEditorial\Module
 			Core\Arraay::stripByKeys( $available, $excludes ),
 			$context ?? 'imports',
 			$excludes,
-			$available
+			$available,
 		);
 	}
 

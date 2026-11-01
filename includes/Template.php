@@ -1297,8 +1297,10 @@ class Template extends WordPress\Main
 			'after'       => '',
 		], $arguments );
 
-		$wrap   = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
-		$desc   = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
+		$wrap = $args['before'].'<div class="-wrap '.static::BASE.'-wrap row -term-introduction'.( $args['context'] ? ( ' -'.$args['context'] ) : '' ).'">';
+		$desc = WordPress\Strings::isEmpty( $term->description ) ? FALSE : $term->description;
+
+		// @hook: `geditorial_termintro_title_suffix`
 		$suffix = $args['secondary'] ?? apply_filters( self::und( static::BASE, $renderer, 'title_suffix' ),
 			'',
 			$term,
@@ -1308,6 +1310,7 @@ class Template extends WordPress\Main
 		);
 
 		$image = self::termImage(
+			// @hook: `geditorial_termintro_term_image_args`
 			apply_filters( self::und( static::BASE, $renderer, 'term_image', 'args' ),
 				[
 					'id'       => $term,
@@ -1334,11 +1337,11 @@ class Template extends WordPress\Main
 
 		echo '<div class="'.( $image ? 'col-sm-8 -term-has-image' : 'col -term-no-image' ).' -term-details">';
 
+			// @hook: `geditorial_termintro_title_before`
 			do_action( self::und( static::BASE, $renderer, 'title', 'before' ),
 				$term,
 				$desc,
-				(bool)
-				$image,
+				(bool) $image,
 				$args,
 				$module,
 			);
@@ -1346,6 +1349,7 @@ class Template extends WordPress\Main
 			if ( $args['heading'] )
 				Core\HTML::heading( $args['heading'], WordPress\Term::title( $term, FALSE ).Core\HTML::small( $suffix, '-secondary', TRUE ) );
 
+			// @hook: `geditorial_termintro_description_before`
 			do_action( self::und( static::BASE, $renderer, 'description', 'before' ),
 				$term,
 				$desc,
@@ -1360,6 +1364,7 @@ class Template extends WordPress\Main
 						WordPress\Strings::kses( $desc, 'html' )
 					), 'term-description -term-description' );
 
+			// @hook: `geditorial_termintro_description_after`
 			do_action( self::und( static::BASE, $renderer, 'description', 'after' ),
 				$term,
 				$desc,
