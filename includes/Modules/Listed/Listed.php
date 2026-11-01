@@ -237,7 +237,7 @@ class Listed extends gEditorial\Module
 					'duration'      => [ 'type' => 'duration', 'quickedit' => TRUE ],
 
 					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
-					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'contact_string' => [ 'type' => 'contact' ],
 					'website_url'    => [ 'type' => 'link' ],
 					'email_address'  => [ 'type' => 'email' ],
 
@@ -292,7 +292,7 @@ class Listed extends gEditorial\Module
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
 
-		// $this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );
+		// `$this->filter_module( 'identified', 'default_posttype_identifier_type', 2 );`
 		$this->filter_module_i2c( 'identified', 'default_posttype_identifier_type', 'code', 'primary_posttype' );
 		$this->filter_module( 'identified', 'default_posttype_identifier_metakey', 2 );
 		$this->filter_module( 'static_covers', 'default_posttype_reference_metakey', 2 );
@@ -475,8 +475,8 @@ class Listed extends gEditorial\Module
 			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
-				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
-				// $this->paired__hook_screen_restrictposts();
+				// `$this->paired__hook_tweaks_column( $screen->post_type, 8 );`
+				// `$this->paired__hook_screen_restrictposts();`
 			}
 		}
 
@@ -503,7 +503,7 @@ class Listed extends gEditorial\Module
 		object $object,
 		array|false $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		gEditorial\MetaBox::fieldPostParent( $object );
@@ -563,7 +563,7 @@ class Listed extends gEditorial\Module
 		return $types;
 	}
 
-	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	public function posttypefields_import_raw_data( mixed $post, mixed $data, bool $override, bool $check_access, ?string $module ): void
 	{
 		if ( empty( $data ) || empty( $data['listing_code'] ) || $module !== 'meta' )
 			return;
@@ -581,7 +581,7 @@ class Listed extends gEditorial\Module
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,
-			Services\PostTypeFields::getPostDateMetaKeys()
+			Services\PostTypeFields::getPostDateMetaKeys(),
 		);
 	}
 
@@ -620,7 +620,7 @@ class Listed extends gEditorial\Module
 					$uri,
 					$sub,
 					$this->constant( 'primary_posttype' ),
-					_x( 'Listing Date from Meta-data', 'Card', 'geditorial-listed' )
+					_x( 'Listing Date from Meta-data', 'Card', 'geditorial-listed' ),
 				);
 
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
@@ -636,7 +636,7 @@ class Listed extends gEditorial\Module
 			Services\PostTypeFields::getPostDateMetaKeys(),
 			$uri,
 			$sub,
-			'tools'
+			'tools',
 		) )
 			return FALSE;
 

@@ -252,7 +252,7 @@ class Trained extends gEditorial\Module
 					'duration'      => [ 'type' => 'duration', 'quickedit' => TRUE ],
 
 					'venue_string'   => [ 'type' => 'venue', 'quickedit' => TRUE ],
-					'contact_string' => [ 'type' => 'contact' ],   // url/email/phone
+					'contact_string' => [ 'type' => 'contact' ],
 					'website_url'    => [ 'type' => 'link' ],
 					'email_address'  => [ 'type' => 'email' ],
 
@@ -489,8 +489,8 @@ class Trained extends gEditorial\Module
 			} else if ( 'edit' === $screen->base ) {
 
 				$this->_hook_paired_store_metabox( $screen->post_type );
-				// $this->paired__hook_tweaks_column( $screen->post_type, 8 );
-				// $this->paired__hook_screen_restrictposts();
+				// `$this->paired__hook_tweaks_column( $screen->post_type, 8 );`
+				// `$this->paired__hook_screen_restrictposts();`
 			}
 		}
 
@@ -517,7 +517,7 @@ class Trained extends gEditorial\Module
 		object $object,
 		array|false $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		gEditorial\MetaBox::fieldPostParent( $object );
@@ -577,7 +577,7 @@ class Trained extends gEditorial\Module
 		return $types;
 	}
 
-	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	public function posttypefields_import_raw_data( mixed $post, mixed $data, bool $override, bool $check_access, ?string $module ): void
 	{
 		if ( empty( $data ) || empty( $data['training_code'] ) || $module !== 'meta' )
 			return;
@@ -595,7 +595,7 @@ class Trained extends gEditorial\Module
 	{
 		return $this->postdate__get_post_data_for_latechores(
 			$post,
-			Services\PostTypeFields::getPostDateMetaKeys()
+			Services\PostTypeFields::getPostDateMetaKeys(),
 		);
 	}
 
@@ -634,7 +634,7 @@ class Trained extends gEditorial\Module
 					$uri,
 					$sub,
 					$this->constant( 'primary_posttype' ),
-					_x( 'Training Course Date from Meta-data', 'Card', 'geditorial-trained' )
+					_x( 'Training Course Date from Meta-data', 'Card', 'geditorial-trained' ),
 				);
 
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
@@ -650,7 +650,7 @@ class Trained extends gEditorial\Module
 			Services\PostTypeFields::getPostDateMetaKeys(),
 			$uri,
 			$sub,
-			'tools'
+			'tools',
 		) )
 			return FALSE;
 

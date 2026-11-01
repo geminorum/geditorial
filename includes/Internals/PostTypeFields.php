@@ -1244,7 +1244,7 @@ trait PostTypeFields
 			$data,
 			$override,
 			$check_access,
-			$module
+			$module,
 		);
 	}
 
@@ -1879,7 +1879,7 @@ trait PostTypeFields
 		return $result ? count( $strings ) : FALSE;
 	}
 
-	public function posttypefields_import_raw_data_action( $post, $data, $override, $check_access, $module )
+	public function posttypefields_import_raw_data_action( mixed $post, mixed $data, bool $override, bool $check_access, ?string $module ): void
 	{
 		if ( empty( $data ) || $module !== $this->key )
 			return;

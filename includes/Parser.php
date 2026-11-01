@@ -266,7 +266,7 @@ class Parser extends WordPress\Main
 	}
 
 	// OLD: `Helper::parseCSV()`
-	public static function fromCSV_OLD( false|string $file_path, $arguments = [] )
+	public static function fromCSV_Legacy2( false|string $file_path, $arguments = [] )
 	{
 		$args = self::parsed( self::getDefaultArgs( $file_path ), $arguments );
 		$data = self::getInitialData( $args, $file_path );

@@ -275,24 +275,6 @@ class Quotation extends gEditorial\Module
 		gEditorial\MetaBox::fieldPostMenuOrder( $post );
 	}
 
-	// @REF: `MetaBox::fieldPostParent()`
-	// @REF: `page_attributes_misc_attributes`
-	public function meta_render_metabox_OLD( object $post, false|array $box, ?array $fields = NULL, ?string $context = NULL ): void
-	{
-		$html = Core\HTML::tag( 'input', [
-			'name'        => 'menu_order',
-			'type'        => 'number',
-			'value'       => $post->menu_order ?: '',
-			'placeholder' => _x( 'Menu Order', 'Placeholder', 'geditorial-quotation' ),
-		] );
-
-		$html.= ' <span>'._x( 'Menu Order', 'Placeholder', 'geditorial-quotation' ).'</span>';
-
-		echo Core\HTML::wrap( $html, 'field-wrap -inputnumber' );
-
-		echo '<hr />';
-	}
-
 	public function the_title( string $title, mixed $post_id = NULL ): string
 	{
 		if ( ! empty( $title ) )
@@ -302,13 +284,11 @@ class Quotation extends gEditorial\Module
 			return $title;
 
 		if ( $post->post_parent && $this->is_posttype( 'main_posttype', $post ) )
-			return vsprintf(
+			return sprintf(
 				/* translators: `%1$s`: post parent, `%2$s`: menu order */
 				_x( '[Quote from &ldquo;%1$s&rdquo; &mdash; %2$s]', 'Title Template', 'geditorial-quotation' ),
-				[
-					WordPress\Post::title( $post->post_parent, NULL, FALSE ),
-					Core\Number::format( $post->menu_order ),
-				]
+				WordPress\Post::title( $post->post_parent, NULL, FALSE ),
+				Core\Number::format( $post->menu_order ),
 			);
 
 		return $title;
@@ -324,7 +304,7 @@ class Quotation extends gEditorial\Module
 			], (array) $atts ),
 			$content,
 			$this->constant( 'main_shortcode', $tag ),
-			$this->key
+			$this->key,
 		);
 	}
 
@@ -340,7 +320,7 @@ class Quotation extends gEditorial\Module
 				return sprintf(
 					/* translators: `%s`: page start placeholder */
 					_x( 'Starts on Page %s', 'Display', 'geditorial-quotation' ),
-					Core\Number::localize( $raw ?: $value )
+					Core\Number::localize( $raw ?: $value ),
 				);
 
 			case 'quotation_pageend':
@@ -351,7 +331,7 @@ class Quotation extends gEditorial\Module
 				return sprintf(
 					/* translators: `%s`: page end placeholder */
 					_x( 'Ends in Page %s', 'Display', 'geditorial-quotation' ),
-					Core\Number::localize( $raw ?: $value )
+					Core\Number::localize( $raw ?: $value ),
 				);
 
 			case 'quotation_section':
@@ -362,7 +342,7 @@ class Quotation extends gEditorial\Module
 				return sprintf(
 					/* translators: `%s`: section placeholder */
 					_x( 'Section %s', 'Display', 'geditorial-quotation' ),
-					Core\Number::localize( $raw ?: $value )
+					Core\Number::localize( $raw ?: $value ),
 				);
 
 			case 'quotation_volume':
@@ -373,7 +353,7 @@ class Quotation extends gEditorial\Module
 				return sprintf(
 					/* translators: `%s`: volume placeholder */
 					_x( 'Volume %s', 'Display', 'geditorial-quotation' ),
-					Core\Number::localize( $raw ?: $value )
+					Core\Number::localize( $raw ?: $value ),
 				);
 		}
 

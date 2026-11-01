@@ -104,13 +104,13 @@ class Pointers extends gEditorial\Module
 			'</li>',
 			in_array( $post->post_status, [ 'auto-draft' ], TRUE ), // Is it a new post?!
 			$action_context,
-			$screen
+			$screen,
 		);
 
 		if ( ! $fired )
 			echo Core\HTML::row(
 				_x( 'There are no pointers available!', 'Message', 'geditorial-admin' ),
-				'-empty -no-pointers'
+				'-empty -no-pointers',
 			);
 
 		echo '</ul></div>';
@@ -135,13 +135,13 @@ class Pointers extends gEditorial\Module
 			'</li>',
 			FALSE, // is it a new term?!
 			$action_context,
-			$screen
+			$screen,
 		);
 
 		if ( ! $fired )
 			echo Core\HTML::row(
 				_x( 'There are no pointers available!', 'Message', 'geditorial-admin' ),
-				'-empty -no-pointers'
+				'-empty -no-pointers',
 			);
 
 		echo '</ul></div>';

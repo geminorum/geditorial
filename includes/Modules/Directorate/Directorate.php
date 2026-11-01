@@ -566,7 +566,7 @@ class Directorate extends gEditorial\Module
 		return $types;
 	}
 
-	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	public function posttypefields_import_raw_data( mixed $post, mixed $data, bool $override, bool $check_access, ?string $module ): void
 	{
 		if ( empty( $data ) || empty( $data['committee_code'] ) || $module !== 'meta' )
 			return;

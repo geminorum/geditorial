@@ -442,7 +442,9 @@ class DeadDrops extends gEditorial\Module
 
 		printf( '<title>%s</title>', $title );
 
-		if ( Core\L10n::rtl() ) gEditorial\Scripts::linkVazirMatn();
+		if ( Core\L10n::rtl() )
+			gEditorial\Scripts::linkVazirMatn();
+
 		gEditorial\Scripts::linkDropzone();
 		gEditorial\Helper::linkStyleSheetAdmin( 'dead-drops', TRUE, 'dropzone' );
 

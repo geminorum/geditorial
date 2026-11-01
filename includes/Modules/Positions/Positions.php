@@ -399,7 +399,7 @@ class Positions extends gEditorial\Module
 					/* translators: `%1$s`: icon markup, `%2$s`: profile post title */
 					_x( '%1$s Mount: %2$s', 'Button Label', 'geditorial-positions' ),
 					Services\Icons::get( 'database-add' ),
-					WordPress\Post::title( $profile, '' )
+					WordPress\Post::title( $profile, '' ),
 				);
 
 				$buttons[] = Core\HTML::tag( 'a', [
@@ -415,7 +415,7 @@ class Positions extends gEditorial\Module
 					/* translators: `%1$s`: icon markup, `%2$s`: profile post title */
 					_x( '%1$s Clear: %2$s', 'Button Label', 'geditorial-positions' ),
 					Services\Icons::get( 'database-remove' ),
-					WordPress\Post::title( $profile, '' )
+					WordPress\Post::title( $profile, '' ),
 				);
 
 				$buttons[] = Core\HTML::tag( 'a', array_merge( [
@@ -548,7 +548,7 @@ class Positions extends gEditorial\Module
 			/* translators: `%s`: post title */
 			_x( 'Position Grid for %s', 'Page Title', 'geditorial-positions' ),
 			/* translators: `%s`: post title */
-			_x( 'Positions Overview for %s', 'Page Title', 'geditorial-positions' )
+			_x( 'Positions Overview for %s', 'Page Title', 'geditorial-positions' ),
 		);
 	}
 
@@ -587,7 +587,7 @@ class Positions extends gEditorial\Module
 			AND comment_type IN ('%s')
 			AND comment_author != ''",
 			$post->ID,
-			$this->quantumcomments__get_comment_type()
+			$this->quantumcomments__get_comment_type(),
 		);
 
 		return $wpdb->get_var( $query );

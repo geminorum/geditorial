@@ -192,12 +192,6 @@ class Placard extends gEditorial\Module
 					'source_url'   => [ 'type' => 'link' ],
 					'action_title' => [ 'type' => 'text' ],
 					'action_url'   => [ 'type' => 'link' ],
-
-					// 'content_embed_url' => [ 'type' => 'embed' ],
-					// 'text_source_url'   => [ 'type' => 'text_source' ],
-					// 'audio_source_url'  => [ 'type' => 'audio_source' ],
-					// 'video_source_url'  => [ 'type' => 'video_source' ],
-					// 'image_source_url'  => [ 'type' => 'image_source' ],
 				],
 			],
 		];
@@ -208,7 +202,7 @@ class Placard extends gEditorial\Module
 		return $this->filters( 'posttypes_excluded',
 			gEditorial\Settings::posttypesExcluded( $extra + [
 				$this->constant( 'main_posttype' ),
-			], $this->keep_posttypes )
+			], $this->keep_posttypes ),
 		);
 	}
 
@@ -382,8 +376,8 @@ class Placard extends gEditorial\Module
 				$this->enqueue_asset_js( [
 					'strings' => $this->get_strings( 'media', 'js' ),
 					'config'  => [
-						// 'mimetypes' => $this->_get_source_mimetypes(),
-						// 'selector' => $this->classs( 'orderedlist' ),
+						// `'mimetypes' => $this->_get_source_mimetypes(),`
+						// `'selector' => $this->classs( 'orderedlist' ),`
 					],
 				], $screen, [
 					'jquery',
@@ -410,22 +404,27 @@ class Placard extends gEditorial\Module
 
 	public function admin_menu(): void
 	{
-		$this->_hook_menu_taxonomy( 'category_taxonomy', 'options-general.php' ); // `themes.php`
-		$this->_hook_menu_taxonomy( 'type_taxonomy', 'options-general.php' ); // `themes.php`
+		$this->_hook_menu_taxonomy( 'category_taxonomy', 'options-general.php' );  // `themes.php`
+		$this->_hook_menu_taxonomy( 'type_taxonomy', 'options-general.php' );      // `themes.php`
 	}
 
 	private function _fetch_postmeta( int $post_id, mixed $fallback = FALSE ): mixed
 	{
-		return $this->fetch_postmeta( $post_id, $fallback, $this->constant( 'metakey_rawdata' ) );
+		return $this->fetch_postmeta(
+			$post_id,
+			$fallback,
+			$this->constant( 'metakey_rawdata' ),
+		);
 	}
 
 	// NOTE: front only!
-	private function _get_default_template( ?string $context = NULL ): string
+	private function _get_default_template( ?string $context = NULL, mixed $post = FALSE ): string
 	{
 		return $this->filters( 'default_template',
 			$this->get_setting( 'default_template', $this->_templates[0] ),
 			$this->_templates,
 			$context,
+			$post,
 		);
 	}
 
@@ -452,41 +451,7 @@ class Placard extends gEditorial\Module
 		return reset( $children );
 	}
 
-	public function get_content_banners_by_parent_OLD( mixed $parent, ?string $context = NULL ): false|object
-	{
-		if ( ! $parent = WordPress\Post::get( $parent ) )
-			return FALSE;
-
-		if ( ! $this->posttype_supported( $parent->post_type ) )
-			return FALSE;
-
-		if ( ! $metakey = Services\PostTypeFields::getPostMetaKey( 'parent_post' ) )
-			return FALSE;
-
-		if ( ! $matches = WordPress\PostMeta::getID( $metakey, $parent->ID, FALSE ) )
-			return FALSE;
-
-		$posttype   = $this->constant( 'main_posttype' );
-		$acceptable = WordPress\Status::acceptable( $posttype );
-
-		foreach ( $matches as $match ) {
-
-			if ( ! $post = WordPress\Post::get( $match ) )
-				continue;
-
-			if ( $posttype !== $post->post_type )
-				continue;
-
-			if ( ! in_array( $post->post_status, $acceptable, TRUE ) )
-				continue;
-
-			return $post;
-		}
-
-		return FALSE;
-	}
-
-	public function get_content_banners_by_location( mixed $location, ?string $context = NULL  ): false|object
+	public function get_content_banners_by_location( mixed $location, ?string $context = NULL ): false|object
 	{
 		if ( ! $location = Core\Text::force( $location ) )
 			return FALSE;
@@ -676,7 +641,7 @@ class Placard extends gEditorial\Module
 		return gEditorial\ShortCode::wrap(
 			$html,
 			$this->constant( 'main_shortcode' ),
-			$args
+			$args,
 		);
 	}
 
@@ -725,6 +690,11 @@ class Placard extends gEditorial\Module
 			$first = FALSE;
 		}
 
-		return $this->filters( 'data_summary', $data, $post, $context, $format );
+		return $this->filters( 'data_summary',
+			$data,
+			$post,
+			$context,
+			$format,
+		);
 	}
 }

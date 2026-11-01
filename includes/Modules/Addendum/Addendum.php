@@ -191,17 +191,17 @@ class Addendum extends gEditorial\Module
 			'meta' => [
 				$this->constant( 'primary_posttype' ) => [
 					'over_title' => [ 'type' => 'title_before' ],
-					'sub_title'  => [ 'type' => 'title_after' ],
-					'url'        => [ 'type' => 'title_link' ],
+					'sub_title'  => [ 'type' => 'title_after'  ],
+					'url'        => [ 'type' => 'title_link'   ],
 					'lead'       => [ 'type' => 'postbox_html' ],
 
-					'content_embed_url' => [ 'type' => 'embed' ],
-					'text_source_url'   => [ 'type' => 'text_source' ],
+					'content_embed_url' => [ 'type' => 'embed'        ],
+					'text_source_url'   => [ 'type' => 'text_source'  ],
 					'audio_source_url'  => [ 'type' => 'audio_source' ],
 					'video_source_url'  => [ 'type' => 'video_source' ],
 					'image_source_url'  => [ 'type' => 'image_source' ],
 					'main_download_url' => [ 'type' => 'downloadable' ],
-					'main_download_id'  => [ 'type' => 'attachment' ],
+					'main_download_id'  => [ 'type' => 'attachment'   ],
 				],
 				// '_supported' => [],
 			],
@@ -226,7 +226,7 @@ class Addendum extends gEditorial\Module
 	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
-		// $this->add_posttype_fields_supported();
+		// `$this->add_posttype_fields_supported();`
 	}
 
 	public function init(): void
@@ -245,7 +245,7 @@ class Addendum extends gEditorial\Module
 
 		$this->register_taxonomy( 'type_taxonomy', [
 			'hierarchical'       => TRUE,
-			// 'meta_box_cb'        => '__singleselect_terms_callback',
+			// `'meta_box_cb'        => '__singleselect_terms_callback',`
 			'show_admin_column'  => TRUE,
 			'show_in_quick_edit' => TRUE,
 		], 'primary_posttype', [
@@ -490,7 +490,7 @@ class Addendum extends gEditorial\Module
 		return gEditorial\ShortCode::wrap(
 			$html,
 			$this->constant( 'main_shortcode' ),
-			$args
+			$args,
 		);
 	}
 

@@ -770,7 +770,7 @@ trait SubContents
 		return gEditorial\ShortCode::wrap(
 			Core\HTML::tableSimple( $data, $args['fields'], FALSE ),
 			$constant,
-			$args
+			$args,
 		);
 	}
 

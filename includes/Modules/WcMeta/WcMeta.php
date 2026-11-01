@@ -130,7 +130,7 @@ class WcMeta extends gEditorial\Module
 	// @hook `aws_excerpt_search_result`
 	public function excerpt_search_result( string $excerpt, mixed $post_id, mixed $product ): string
 	{
-		if ( empty( $product )  )
+		if ( empty( $product ) )
 			return $excerpt;
 
 		$subtitle = gEditorial\Template::getMetaField( 'sub_title', [

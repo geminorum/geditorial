@@ -652,7 +652,7 @@ class Users extends gEditorial\Module
 						WordPress\Redirect::doReferer( 'wrong' );
 
 					$name  = self::req( 'role_name' )  ?: self::und( $from, 'duplicated' );
-					$title = self::req( 'role_title' ) ?: Core\Text::readableKey( $name  );
+					$title = self::req( 'role_title' ) ?: Core\Text::readableKey( $name );
 
 					if ( ! add_role( WordPress\Role::sanitize( $name ), $title, $caps ) )
 						WordPress\Redirect::doReferer( 'wrong' );

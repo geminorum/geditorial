@@ -242,7 +242,7 @@ class Modulation extends gEditorial\Service
 	}
 
 	// NOTE: THE OLD CLASSIC WAY!
-	public static function renderSections_OLD( string $page ): void
+	public static function renderSections_Legacy( string $page ): void
 	{
 		global $wp_settings_sections, $wp_settings_fields;
 

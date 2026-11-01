@@ -554,7 +554,7 @@ class Programmed extends gEditorial\Module
 		return $types;
 	}
 
-	public function posttypefields_import_raw_data( $post, $data, $override, $check_access, $module )
+	public function posttypefields_import_raw_data( mixed $post, mixed $data, bool $override, bool $check_access, ?string $module ): void
 	{
 		if ( empty( $data ) || empty( $data['program_code'] ) || $module !== 'meta' )
 			return;
@@ -611,7 +611,7 @@ class Programmed extends gEditorial\Module
 					$uri,
 					$sub,
 					$this->constant( 'primary_posttype' ),
-					_x( 'Program Date from Meta-data', 'Card', 'geditorial-programmed' )
+					_x( 'Program Date from Meta-data', 'Card', 'geditorial-programmed' ),
 				);
 
 			gEditorial\Settings::toolboxAfterLinks( $this->get_module_links( TRUE ) );
@@ -627,7 +627,7 @@ class Programmed extends gEditorial\Module
 			Services\PostTypeFields::getPostDateMetaKeys(),
 			$uri,
 			$sub,
-			'tools'
+			'tools',
 		) )
 			return FALSE;
 

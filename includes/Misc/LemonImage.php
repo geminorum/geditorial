@@ -10,7 +10,7 @@ use geminorum\gEditorial\Core;
  * @source https://github.com/aristath/Lemon_Image
  *
  * `$image  = LemonImage::create( $image_url_or_id );`
- * `$resize = $image->resize( [ 'width' => 500, 'height' => 300  );`
+ * `$resize = $image->resize( [ 'width' => 500, 'height' => 300 ] );`
  * `$new_url = $resize['url'];`
  *
  * - If you only define `width` or `height` the image will be resized using

@@ -9,17 +9,27 @@ use geminorum\gEditorial\WordPress;
 
 trait Assets
 {
-	public function icon( string $name, ?string $group = NULL, array $extra = [] ): false|string
-	{
+	public function icon(
+		string  $name,
+		?string $group = NULL,
+		array   $extra = [],
+	): false|string {
+
 		return gEditorial()->icon(
 			$name,
 			$group ?? $this->icon_group,
-			$extra
+			$extra,
 		);
 	}
 
-	public function assets__enqueue_module_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
-	{
+	public function assets__enqueue_module_style(
+		mixed   $name   = NULL,
+		?array  $deps   = NULL,
+		?string $handle = NULL,
+		?string $root   = NULL,
+		?string $prefix = NULL,
+	): string {
+
 		return $this->enqueue_asset_style(
 			$name,
 			$deps,
@@ -29,8 +39,14 @@ trait Assets
 		);
 	}
 
-	public function enqueue_asset_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
-	{
+	public function enqueue_asset_style(
+		mixed   $name   = NULL,
+		?array  $deps   = NULL,
+		?string $handle = NULL,
+		?string $root   = NULL,
+		?string $prefix = NULL,
+	): string {
+
 		if ( is_null( $name ) )
 			$name = $this->key;
 
@@ -50,11 +66,11 @@ trait Assets
 			sprintf( '%sassets/css/%s%s.css',
 				$root ?? GEDITORIAL_URL,
 				$prefix,
-				$name
+				$name,
 			),
 			$deps ?? [],
 			GEDITORIAL_HASH,
-			'all'
+			'all',
 		);
 
 		wp_style_add_data( $handle, 'rtl', 'replace' );
@@ -62,8 +78,16 @@ trait Assets
 		return $handle;
 	}
 
-	public function assets__enqueue_module_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
-	{
+	public function assets__enqueue_module_js(
+		mixed   $args   = [],
+		mixed   $name   = NULL,
+		?array  $deps   = NULL,
+		?string $key    = NULL,
+		?string $handle = NULL,
+		?string $root   = NULL,
+		?string $prefix = NULL,
+	): string {
+
 		return $this->enqueue_asset_js(
 			$args,
 			$name,
@@ -76,8 +100,16 @@ trait Assets
 	}
 
 	// NOTE: each script must have a `.min` version
-	public function enqueue_asset_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
-	{
+	public function enqueue_asset_js(
+		mixed   $args   = [],
+		mixed   $name   = NULL,
+		?array  $deps   = NULL,
+		?string $key    = NULL,
+		?string $handle = NULL,
+		?string $root   = NULL,
+		?string $prefix = NULL,
+	): string {
+
 		$key ??= $this->key;
 
 		if ( is_null( $name ) )
@@ -109,11 +141,11 @@ trait Assets
 					$root ?? GEDITORIAL_URL,
 					$prefix,
 					$name,
-					$suffix
+					$suffix,
 				),
 				$deps ?? [ 'jquery' ],
 				GEDITORIAL_HASH,
-				TRUE
+				TRUE,
 			);
 		}
 
@@ -136,8 +168,12 @@ trait Assets
 		gEditorial()->enqueue_styles();
 	}
 
-	public function register_editor_button( string $plugin, ?int $level = NULL, ?string $settings_key = NULL ): false|string
-	{
+	public function register_editor_button(
+		string  $plugin,
+		?int    $level        = NULL,
+		?string $settings_key = NULL,
+	): false|string {
+
 		if ( ! $this->get_setting( $settings_key ?? 'editor_button', TRUE ) )
 			return FALSE;
 
@@ -145,9 +181,9 @@ trait Assets
 			$this->hook( $plugin ),
 			sprintf( 'assets/js/tinymce/%s.%s',
 				$this->module->name,
-				$plugin
+				$plugin,
 			),
-			$level
+			$level,
 		);
 	}
 }
