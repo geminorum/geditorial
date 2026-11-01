@@ -18,7 +18,18 @@ trait Assets
 		);
 	}
 
-	public function enqueue_asset_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL ): string
+	public function assets__enqueue_module_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
+	{
+		return $this->enqueue_asset_style(
+			$name,
+			$deps,
+			$handle,
+			$root ?? $this->url, // `Core\URL::fromPath( $this->path ),`
+			$prefix ?? '',
+		);
+	}
+
+	public function enqueue_asset_style( mixed $name = NULL, ?array $deps = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
 	{
 		if ( is_null( $name ) )
 			$name = $this->key;
@@ -27,17 +38,17 @@ trait Assets
 		else if ( is_object( $name ) )
 			$name = $name->base;
 
-		else
+		else if ( is_null( $prefix ) )
 			$name = self::dot( $this->key, $name );
 
-		$prefix = is_admin() ? 'admin.' : 'front.';
 		$name   = str_replace( '_', '-', $name );
+		$prefix ??= is_admin() ? 'admin.' : 'front.';
 		$handle ??= strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
 		wp_enqueue_style(
 			$handle,
 			sprintf( '%sassets/css/%s%s.css',
-				GEDITORIAL_URL,
+				$root ?? GEDITORIAL_URL,
 				$prefix,
 				$name
 			),
@@ -51,8 +62,21 @@ trait Assets
 		return $handle;
 	}
 
+	public function assets__enqueue_module_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
+	{
+		return $this->enqueue_asset_js(
+			$args,
+			$name,
+			$deps,
+			$key ?? '',
+			$handle,
+			$root ?? $this->url, // `Core\URL::fromPath( $this->path ),`
+			$prefix ?? '',
+		);
+	}
+
 	// NOTE: each script must have a `.min` version
-	public function enqueue_asset_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL ): string
+	public function enqueue_asset_js( mixed $args = [], mixed $name = NULL, ?array $deps = NULL, ?string $key = NULL, ?string $handle = NULL, ?string $root = NULL, ?string $prefix = NULL ): string
 	{
 		$key ??= $this->key;
 
@@ -66,7 +90,7 @@ trait Assets
 
 			$args = [];
 
-		} else if ( $args && $name && is_string( $args ) ) {
+		} else if ( $args && is_string( $args ) ) {
 
 			$name = self::dot( $name, $args );
 			$args = [];
@@ -74,15 +98,15 @@ trait Assets
 
 		if ( $name ) {
 
-			$prefix = is_admin() ? 'admin.' : 'front.';
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 			$name   = str_replace( '_', '-', $name );
+			$suffix = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
+			$prefix ??= is_admin() ? 'admin.' : 'front.';
 			$handle ??= strtolower( $this->base.'-'.str_replace( '.', '-', $name ) );
 
 			wp_enqueue_script(
 				$handle,
 				sprintf( '%sassets/js/%s%s%s.js',
-					GEDITORIAL_URL,
+					$root ?? GEDITORIAL_URL,
 					$prefix,
 					$name,
 					$suffix
