@@ -19,10 +19,6 @@ class Placard extends gEditorial\Module
 	use Internals\TemplateTaxonomy;
 	use Internals\ViewEngines;
 
-	private $_templates = [
-		'bs5-carousel-slide',
-	];
-
 	protected $supports = [
 		'main_posttype' => [
 			'title',
@@ -63,8 +59,8 @@ class Placard extends gEditorial\Module
 					'type'        => 'select',
 					'title'       => _x( 'Default Template', 'Setting Title', 'geditorial-placard' ),
 					'description' => _x( 'Defines the the default template for rendering the banners on front-end.', 'Setting Description', 'geditorial-placard' ),
-					'values'      => WordPress\Strings::makeLabelsByKeys( $this->_templates ),
-					'default'     => $this->_templates[0],
+					'values'      => ModuleHelper::availableTemplates(),
+					'default'     => ModuleHelper::defaultTemplate(),
 				],
 				'tabs_support',
 				'woocommerce_support',
@@ -157,6 +153,7 @@ class Placard extends gEditorial\Module
 	protected function define_default_terms(): array
 	{
 		return [
+			'type_taxonomy'     => ModuleHelper::availableTemplates(),
 			'category_taxonomy' => [
 				'dashboard' => _x( 'Dashboard', 'Main Taxonomy: Default Term', 'geditorial-placard' ),
 				'widget'    => _x( 'Widget', 'Main Taxonomy: Default Term', 'geditorial-placard' ),
@@ -421,8 +418,8 @@ class Placard extends gEditorial\Module
 	private function _get_default_template( ?string $context = NULL, mixed $post = FALSE ): string
 	{
 		return $this->filters( 'default_template',
-			$this->get_setting( 'default_template', $this->_templates[0] ),
-			$this->_templates,
+			$this->get_setting( 'default_template', ModuleHelper::defaultTemplate() ),
+			ModuleHelper::availableTemplates(),
 			$context,
 			$post,
 		);
@@ -618,7 +615,8 @@ class Placard extends gEditorial\Module
 			return $content;
 		}
 
-		$template = $args['template'] ?? $this->_get_default_template( $context );
+		$taxonomy = $this->constant( 'type_taxonomy' );
+		$template = $args['template'] ?? $this->get_template_by_post( $post, $taxonomy, $context );
 
 		if ( ! $view = $this->viewengine__view_by_template( $template, 'front' ) )
 			return $content;
@@ -631,9 +629,10 @@ class Placard extends gEditorial\Module
 		], FALSE ) )
 			return $content;
 
+		$this->enqueue_template_assets( $template );
 		$this->assetsposttypes_enqueue_by_taxonomy(
 			$post,
-			$this->constant( 'type_taxonomy' ),
+			$taxonomy,
 			'styles',
 			$context,
 		);
@@ -643,6 +642,46 @@ class Placard extends gEditorial\Module
 			$this->constant( 'main_shortcode' ),
 			$args,
 		);
+	}
+
+	public function get_template_by_post( mixed $post, ?string $taxonomy = NULL, ?string $context = NULL ): string
+	{
+		$taxonomy  ??= $this->constant( 'type_taxonomy' );
+		$available = ModuleHelper::availableTemplates();
+		$parents   = [];
+
+		foreach ( WordPress\Taxonomy::getPostTerms( $taxonomy, $post ) as $term ) {
+
+			if ( $term->slug && array_key_exists( $term->slug, $available ) )
+				return $term->slug;
+
+			if ( $term->parent )
+				$parents[] = (int) $term->parent;
+		}
+
+		// NOTE: moving up one level only!
+		foreach ( $parents as $parent_id ) {
+
+			if ( ! $parent = WordPress\Term::get( $parent_id ) )
+				continue;
+
+			if ( $parent->slug && array_key_exists( $parent->slug, $available ) )
+				return $parent->slug;
+		}
+
+		return $this->_get_default_template( $context, $post );
+	}
+
+	public function enqueue_template_assets( string $template ): void
+	{
+		$style  = sprintf( 'assets/css/%s.css', $template );
+		$script = sprintf( 'assets/js/%s.js',   $template );
+
+		if ( Core\File::exists( $style, $this->path ) )
+			$this->assets__enqueue_module_style( $template );
+
+		if ( Core\File::exists( $script, $this->path ) )
+			$this->assets__enqueue_module_js( $template );
 	}
 
 	public function _get_data_for_post( mixed $post = NULL, ?string $context = NULL, ?string $format = NULL ): false|array
