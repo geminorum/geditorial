@@ -97,7 +97,6 @@ class Plugin extends WordPress\Plugin
 
 	public function plugins_loaded(): void
 	{
-		$this->setup_services();
 		$this->load_modules();
 		$this->load_options();
 		$this->init_modules();
@@ -228,9 +227,9 @@ class Plugin extends WordPress\Plugin
 			$this->_modules = FALSE;
 	}
 
-	private function setup_services(): void
+	protected function services(): array
 	{
-		$available = [
+		return [ [
 			'AdminScreen',
 			'AdvancedQueries',
 			'Ajax',
@@ -278,11 +277,7 @@ class Plugin extends WordPress\Plugin
 			'TermHierarchy',
 			'TermRelations',
 			'Vehicles',
-		];
-
-		foreach ( $available as $service )
-			if ( is_callable( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] ) )
-				call_user_func( [ __NAMESPACE__.'\\Services\\'.$service, 'setup' ] );
+		], __NAMESPACE__ ];
 	}
 
 	// HELPER
