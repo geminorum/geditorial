@@ -54,6 +54,8 @@ class Terms extends gEditorial\Module
 		'dead',
 		'establish',
 		'abolish',
+		'adopted',
+		'abandoned',
 		// 'distance', // TODO
 		// 'duration', // TODO
 		// 'area',     // TODO
@@ -84,6 +86,7 @@ class Terms extends gEditorial\Module
 	protected $date_pairs = [
 		[ 'born',      'dead'      ],
 		[ 'establish', 'abolish'   ],
+		[ 'adopted',   'abandoned' ],
 	];
 
 	const FORCE_SORT_KEY = 'force_menu_order_sort';
@@ -240,6 +243,8 @@ class Terms extends gEditorial\Module
 				'dead'      => _x( 'Dead', 'Titles', 'geditorial-terms' ),
 				'establish' => _x( 'Establish', 'Titles', 'geditorial-terms' ),
 				'abolish'   => _x( 'Abolish', 'Titles', 'geditorial-terms' ),
+				'adopted'   => _x( 'Adopted', 'Titles', 'geditorial-terms' ),
+				'abandoned' => _x( 'Abandoned', 'Titles', 'geditorial-terms' ),
 				'hours'     => _x( 'Hours', 'Titles', 'geditorial-terms' ),
 				'period'    => _x( 'Period', 'Titles', 'geditorial-terms' ),
 				'amount'    => _x( 'Amount', 'Titles', 'geditorial-terms' ),
@@ -293,6 +298,8 @@ class Terms extends gEditorial\Module
 				'dead'      => _x( 'Defines the date on which the person has died.', 'Descriptions', 'geditorial-terms' ),
 				'establish' => _x( 'Defines the date on which the entity was established.', 'Descriptions', 'geditorial-terms' ),
 				'abolish'   => _x( 'Defines the date on which the entity was terminated, disbanded, inactivated, or superseded.', 'Descriptions', 'geditorial-terms' ),
+				'adopted'   => _x( 'Defines the date on which the entity was adopted.', 'Descriptions', 'geditorial-terms' ),
+				'abandoned' => _x( 'Defines the date on which the entity was abandoned.', 'Descriptions', 'geditorial-terms' ),
 				'days'      => _x( 'Terms can have days number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'hours'     => _x( 'Terms can have hour number to help organize them.', 'Descriptions', 'geditorial-terms' ),
 				'period'    => _x( 'The length of time of the term.', 'Descriptions', 'geditorial-terms' ),
@@ -702,6 +709,8 @@ class Terms extends gEditorial\Module
 			case 'dead':
 			case 'establish':
 			case 'abolish':
+			case 'adopted':
+			case 'abandoned':
 			case 'date':
 
 				$metatype = 'date';
@@ -814,6 +823,10 @@ class Terms extends gEditorial\Module
 
 			case 'abolish':
 				$position = [ $this->classs( 'establish' ), 'after' ];
+				break;
+
+			case 'abandoned':
+				$position = [ $this->classs( 'adopted' ), 'after' ];
 				break;
 
 			default:
@@ -1002,6 +1015,8 @@ class Terms extends gEditorial\Module
 			'dead',
 			'establish',
 			'abolish',
+			'adopted',
+			'abandoned',
 			'days',
 			'hours',
 			'period',
@@ -1084,6 +1099,8 @@ class Terms extends gEditorial\Module
 			'dead',
 			'establish',
 			'abolish',
+			'adopted',
+			'abandoned',
 			'days',
 			'hours',
 			'period',
@@ -3272,6 +3289,8 @@ class Terms extends gEditorial\Module
 			'dead',
 			'establish',
 			'abolish',
+			'adopted',
+			'abandoned',
 		];
 
 		if ( Core\Arraay::exists( $fields, $supported ) )
@@ -3297,6 +3316,8 @@ class Terms extends gEditorial\Module
 			'establish',
 			'dead',
 			'abolish',
+			'adopted',
+			'abandoned',
 		];
 
 		if ( ! Core\Arraay::exists( $fields, $supported ) )
