@@ -81,6 +81,11 @@ class Terms extends gEditorial\Module
 		'markdown',
 	];
 
+	protected $date_pairs = [
+		[ 'born',      'dead'      ],
+		[ 'establish', 'abolish'   ],
+	];
+
 	const FORCE_SORT_KEY = 'force_menu_order_sort';
 
 	public static function module(): array
@@ -674,7 +679,40 @@ class Terms extends gEditorial\Module
 		$metatype = $field; // NOTE: by default the meta-type is the same as the field
 
 		switch ( $field ) {
-			case 'border': $metatype = 'color'; break;
+
+			case 'border':
+
+				$metatype = 'color';
+				break;
+
+			case 'source':
+			case 'embed':
+			case 'url':
+
+				$metatype = 'url';
+				break;
+
+			case 'author':
+			case 'user':
+
+				$metatype = 'user';
+				break;
+
+			case 'born':
+			case 'dead':
+			case 'establish':
+			case 'abolish':
+			case 'date':
+
+				$metatype = 'date';
+				break;
+
+			case 'datestart':
+			case 'dateend':
+			case 'datetime':
+
+				$metatype = 'datetime';
+				break;
 		}
 
 		return $this->filters( 'supported_field_metatype',
@@ -799,45 +837,81 @@ class Terms extends gEditorial\Module
 			if ( ! $taxonomies = $this->get_supported_taxonomies( $field ) )
 				continue;
 
-			$prepare = self::und( 'register_prepare_callback', $field );
-
-			// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
-			if ( in_array( $field, [ 'parent', 'order', 'user', 'author', 'image', 'days', 'hours', 'amount', 'unit', 'min', 'max', 'viewable' ] ) )
-				$defaults = [ 'type'=> 'integer', 'single' => TRUE, 'default' => 0 ];
-
-			else if ( in_array( $field, [ 'roles', 'posttypes' ] ) )
-				$defaults = [ 'type'=> 'array', 'single' => FALSE, 'default' => [] ];
-
-			// NOTE: WordPress not yet support for `date` type
-			else if ( in_array( $field, [ 'date', 'datetime', 'datestart', 'dateend', 'born', 'dead', 'establish', 'abolish' ] ) )
-				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
-
-			else
-				$defaults = [ 'type'=> 'string', 'single' => TRUE, 'default' => '' ];
-
-			$defaults = array_merge( $defaults, [
-				'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
-				'auth_callback'     => [ $this, 'register_auth_callback' ],
-				'show_in_rest'      => TRUE,
-			] );
-
-			if ( 'array' === $defaults['type'] )
-				$defaults['show_in_rest'] = [
-					'schema' => [
-
-						// @REF: https://developer.wordpress.org/reference/functions/register_term_meta/#comment-3969
-						// 'type'     => 'string',
-						// 'format'   => 'url',
-						// 'context'  => [ 'view', 'edit' ],
-						// 'readonly' => TRUE,
-
-						'type'  => 'array',
-						'items' => [],
-					],
-					'prepare_callback' => method_exists( $this, $prepare ) ? [ $this, $prepare ] : NULL,
-				];
-
 			foreach ( $taxonomies as $taxonomy ) {
+
+				$prepare  = self::und( 'register_prepare_callback', $field );
+				$metatype = $this->get_supported_field_metatype( $field, $taxonomy );
+
+				// 'string', 'boolean', 'integer', 'number', 'array', and 'object'
+				if ( in_array( $metatype, [
+					'parent',
+					'order',
+					'user',
+					'author',
+					'image',
+					'days',
+					'hours',
+					'amount',
+					'unit',
+					'min',
+					'max',
+					'viewable',
+				], TRUE ) )
+					$defaults = [
+						'type'    => 'integer',
+						'single'  => TRUE,
+						'default' => 0,
+					];
+
+				else if ( in_array( $metatype, [
+					'roles',
+					'posttypes',
+				], TRUE ) )
+					$defaults = [
+						'type'    => 'array',
+						'single'  => FALSE,
+						'default' => [],
+					];
+
+				// NOTE: WordPress not yet support for `date` type
+				else if ( in_array( $metatype, [
+					'date',
+					'datetime',
+				], TRUE ) )
+					$defaults = [
+						'type'    => 'string',
+						'single'  => TRUE,
+						'default' => '',
+					];
+
+				else
+					$defaults = [
+						'type'    => 'string',
+						'single'  => TRUE,
+						'default' => '',
+					];
+
+				$defaults = array_merge( $defaults, [
+					'sanitize_callback' => [ $this, 'register_sanitize_callback' ],
+					'auth_callback'     => [ $this, 'register_auth_callback' ],
+					'show_in_rest'      => TRUE,
+				] );
+
+				if ( 'array' === $defaults['type'] )
+					$defaults['show_in_rest'] = [
+						'schema' => [
+
+							// @REF: https://developer.wordpress.org/reference/functions/register_term_meta/#comment-3969
+							// 'type'     => 'string',
+							// 'format'   => 'url',
+							// 'context'  => [ 'view', 'edit' ],
+							// 'readonly' => TRUE,
+
+							'type'  => 'array',
+							'items' => [],
+						],
+						'prepare_callback' => method_exists( $this, $prepare ) ? [ $this, $prepare ] : NULL,
+					];
 
 				$args = array_merge( $defaults, [
 					'object_subtype' => $taxonomy,
@@ -1297,7 +1371,6 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'user':
-			case 'author':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1429,10 +1502,6 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'date':
-			case 'born':
-			case 'dead':
-			case 'establish':
-			case 'abolish':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1450,8 +1519,6 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'datetime':
-			case 'datestart':
-			case 'dateend':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
 
@@ -1468,8 +1535,6 @@ class Terms extends gEditorial\Module
 
 				break;
 
-			case 'source':
-			case 'embed':
 			case 'url':
 
 				if ( $meta = get_term_meta( $term->term_id, $metakey, TRUE ) ) {
@@ -1591,7 +1656,7 @@ class Terms extends gEditorial\Module
 
 				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 
-			} else if ( in_array( $field, [ 'date', 'born', 'dead', 'establish', 'abolish' ] ) ) {
+			} else if ( in_array( $metatype, [ 'date' ] ) ) {
 
 				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 
@@ -1600,21 +1665,21 @@ class Terms extends gEditorial\Module
 					$meta = gEditorial\Datetime::makeMySQLFromInput( $meta,
 						'Y-m-d', $this->default_calendar(), NULL, $meta );
 
-			} else if ( in_array( $field, [ 'datetime', 'datestart', 'dateend' ] ) ) {
+			} else if ( in_array( $metatype, [ 'datetime' ] ) ) {
 
 				$meta = Core\Text::trim( Core\Number::translate( $meta ) );
 				$meta = gEditorial\Datetime::makeMySQLFromInput( $meta,
 					NULL, $this->default_calendar(), NULL, $meta );
 
-			} else if ( in_array( $field, [ 'latlng' ] ) ) {
+			} else if ( in_array( $metatype, [ 'latlng' ] ) ) {
 
 				$meta = Core\LatLng::sanitize( $meta );
 
-			} else if ( in_array( $field, [ 'email' ] ) ) {
+			} else if ( in_array( $metatype, [ 'email' ] ) ) {
 
 				$meta = Core\Email::sanitize( $meta );
 
-			} else if ( in_array( $field, [ 'source', 'embed', 'url' ] ) ) {
+			} else if ( in_array( $metatype, [ 'url' ] ) ) {
 
 				$meta = Core\URL::sanitize( $meta );
 			}
@@ -2000,10 +2065,6 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'date':
-			case 'born':
-			case 'dead':
-			case 'establish':
-			case 'abolish':
 
 				if ( empty( $meta ) )
 					$value = '';
@@ -2030,8 +2091,6 @@ class Terms extends gEditorial\Module
 				break;
 
 			case 'datetime':
-			case 'datestart':
-			case 'dateend':
 
 				if ( empty( $meta ) )
 					$value = '';
@@ -2054,8 +2113,6 @@ class Terms extends gEditorial\Module
 
 				break;
 
-			case 'source':
-			case 'embed':
 			case 'url':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -2229,12 +2286,6 @@ class Terms extends gEditorial\Module
 
 			case 'date':
 			case 'datetime':
-			case 'datestart':
-			case 'dateend':
-			case 'born':
-			case 'dead':
-			case 'establish':
-			case 'abolish':
 
 				$html.= Core\HTML::tag( 'input', [
 					'name'  => 'term-'.$field,
@@ -2246,8 +2297,6 @@ class Terms extends gEditorial\Module
 
 				break;
 
-			case 'source':
-			case 'embed':
 			case 'url':
 
 				$html.= Core\HTML::tag( 'input', [
@@ -2517,10 +2566,6 @@ class Terms extends gEditorial\Module
 						break;
 
 					case 'date':
-					case 'born':
-					case 'dead':
-					case 'establish':
-					case 'abolish':
 
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
@@ -2531,8 +2576,6 @@ class Terms extends gEditorial\Module
 						break;
 
 					case 'datetime':
-					case 'datestart':
-					case 'dateend':
 
 						$child['title'] = gEditorial\Datetime::prepForDisplay(
 							$meta,
@@ -3148,31 +3191,23 @@ class Terms extends gEditorial\Module
 		if ( ! $taxonomy = WordPress\Term::taxonomy( $term ) )
 			return $suffix;
 
-		$supported = $this->get_supported( $taxonomy );
+		if ( ! $supported = $this->get_supported( $taxonomy ) )
+			return $suffix;
 
-		if ( in_array( 'born', $supported, TRUE )
-			&& in_array( 'dead', $supported, TRUE ) ) {
+		foreach ( $this->date_pairs as $pair ) {
 
-			$html = gEditorial\Datetime::prepBornDeadForDisplay(
-				get_term_meta( $term->term_id, $this->get_supported_metakey( 'born', $taxonomy ), TRUE ),
-				get_term_meta( $term->term_id, $this->get_supported_metakey( 'dead', $taxonomy ), TRUE ),
-				NULL,
-				$this->default_calendar()
-			);
+			if ( in_array( $pair[0], $supported, TRUE )
+				&& in_array( $pair[1], $supported, TRUE ) ) {
 
-			return $html ? self::spc( $suffix, $html ) : $suffix;
+				$html = gEditorial\Datetime::prepBornDeadForDisplay(
+					WordPress\TermMeta::get( $this->get_supported_metakey( $pair[0], $taxonomy ), $term, '' ),
+					WordPress\TermMeta::get( $this->get_supported_metakey( $pair[1], $taxonomy ), $term, '' ),
+					NULL,
+					$this->default_calendar(),
+				);
 
-		} else if ( in_array( 'establish', $supported, TRUE )
-			&& in_array( 'abolish', $supported, TRUE ) ) {
-
-			$html = gEditorial\Datetime::prepBornDeadForDisplay(
-				get_term_meta( $term->term_id, $this->get_supported_metakey( 'establish', $taxonomy ), TRUE ),
-				get_term_meta( $term->term_id, $this->get_supported_metakey( 'abolish', $taxonomy ), TRUE ),
-				NULL,
-				$this->default_calendar()
-			);
-
-			return $html ? self::spc( $suffix, $html ) : $suffix;
+				return $html ? self::spc( $suffix, $html ) : $suffix;
+			}
 		}
 
 		return $suffix;
@@ -3294,23 +3329,17 @@ class Terms extends gEditorial\Module
 		$events  = [];
 		$default = $this->default_calendar();
 
-		if ( in_array( 'born', $supported, TRUE )
-			&& in_array( 'dead', $supported, TRUE ) ) {
+		foreach ( $this->date_pairs as $pair ) {
 
-			foreach ( [ 'born', 'dead' ] as $field )
-				if ( $event = $this->_calendars_term_event( $term, $field, $context, $default ) )
-					$events[] = $event;
+			if ( in_array( $pair[0], $supported, TRUE )
+				&& in_array( $pair[1], $supported, TRUE ) ) {
 
-			return $events;
+				foreach ( $pair as $field )
+					if ( $event = $this->_calendars_term_event( $term, $field, $context, $default ) )
+						$events[] = $event;
 
-		} else if ( in_array( 'establish', $supported, TRUE )
-			&& in_array( 'abolish', $supported, TRUE ) ) {
-
-			foreach ( [ 'establish', 'abolish' ] as $field )
-				if ( $event = $this->_calendars_term_event( $term, $field, $context, $default ) )
-					$events[] = $event;
-
-			return $events;
+				return $events;
+			}
 		}
 
 		return $null;
