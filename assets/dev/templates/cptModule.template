@@ -12,7 +12,8 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 {
 	use Internals\CoreDashboard;
 	use Internals\CoreRestrictPosts;
-	use Internals\TemplateTaxonomy;
+	use Internals\BulkExports;
+	use Internals\TemplatePostType;
 
 	public static function module(): array
 	{
@@ -55,10 +56,18 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 				'contents_viewable',
 				'show_in_navmenus' => [ $this->get_taxonomy_show_in_navmenus_desc( 'category_taxonomy' ), '1' ],
 			],
+			'_content' => [
+				'archive_override',
+				'display_searchform',
+				'empty_content',
+				'archive_title' => [ NULL, $this->get_posttype_label( 'main_posttype', 'all_items' ) ],
+				'archive_content',
+				'archive_template',
+			],
 			'_fields' => [
 				$this->settings_posttypes_for_target( 'parent',
 					_x( 'Owner Post-types', 'Settings', '<%= moduleTextdomain %>' ),
-					_x( 'Selected will be available as the post-types of the owner meta-field.', 'Settings', '<%= moduleTextdomain %>' )
+					_x( 'Selected will be available as the post-types of the owner meta-field.', 'Settings', '<%= moduleTextdomain %>' ),
 				),
 			],
 			'_constants' => [
@@ -117,6 +126,10 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return [
 			'meta' => [
 				$posttype => [
+					'over_title' => [ 'type' => 'title_before' ],
+					'sub_title'  => [ 'type' => 'title_after' ],
+					'url'        => [ 'type' => 'title_link' ],
+					'lead'       => [ 'type' => 'postbox_html' ],
 
 					'owner_userid' => [
 						'title'       => _x( 'Owner', 'Field Title', '<%= moduleTextdomain %>' ),
@@ -239,7 +252,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	public function template_include( string $template ): string
 	{
 		return $this->get_setting( 'contents_viewable', TRUE )
-			? $this->templatetaxonomy__include( $template, $this->constant( 'category_taxonomy' ) )
+			? $this->templateposttype__include( $template, $this->constant( 'main_posttype' ) )
 			: $template;
 	}
 
@@ -265,7 +278,7 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 		return <%= namespaceBase %>\ShortCode::wrap(
 			$html,
 			$this->constant( 'main_shortcode' ),
-			$args
+			$args,
 		);
 	}
 }

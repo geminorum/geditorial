@@ -72,4 +72,30 @@ class <%= moduleCamelCase %> extends <%= namespaceBase %>\Module
 	{
 		parent::init();
 	}
+
+	/**
+	 * Fires after the current screen has been set.
+	 *
+	 * @param object $screen
+	 * @return void
+	 */
+	public function current_screen( object $screen ): void
+	{
+		if ( $this->posttype_supported( $screen->post_type ) ) {
+
+			if ( 'edit' === $screen->base ) {
+
+			} else if ( 'post' === $screen->base ) {
+
+			}
+
+		} else if ( $this->taxonomy_supported( $screen->taxonomy ) ) {
+
+			if ( 'term' === $screen->base ) {
+
+			} else if ( 'edit-tags' === $screen->base ) {
+
+			}
+		}
+	}
 }

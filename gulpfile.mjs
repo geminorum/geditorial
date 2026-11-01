@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import sass from 'gulp-dart-sass';
 import * as compiler from 'sass'; // @REF: https://github.com/sass/dart-sass/issues/2008
-// import sourcemaps from 'gulp-sourcemaps';
+// `import sourcemaps from 'gulp-sourcemaps';`
 import postcss from 'gulp-postcss';
 import cssnano from 'cssnano';
 import autoprefixer from 'autoprefixer';
@@ -30,7 +30,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import { deleteSync } from 'del';
 import { readFileSync, accessSync } from 'node:fs';
-// import { readFile } from 'fs/promises';
+// `import { readFile } from 'fs/promises';`
 
 // @REF: https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
 import { createRequire } from 'module';
@@ -39,14 +39,14 @@ const customRequire = createRequire(import.meta.url);
 const { src, dest, watch, series, parallel, task } = gulp;
 
 // @REF: https://www.stefanjudis.com/snippets/how-to-import-json-files-in-es-modules-node-js/
-// const conf = JSON.parse(await readFile(new URL('./gulp.config.json', import.meta.url))); // eslint-disable-line
-// const pkg = JSON.parse(await readFile(new URL('./package.json', import.meta.url))); // eslint-disable-line
+// `const conf = JSON.parse(await readFile(new URL('./gulp.config.json', import.meta.url))); // eslint-disable-line`
+// `const pkg = JSON.parse(await readFile(new URL('./package.json', import.meta.url))); // eslint-disable-line`
 
 const conf = customRequire('./gulp.config.json');
 const pkg = customRequire('./package.json');
 
 // @REF: https://www.sitepoint.com/pass-parameters-gulp-tasks/
-const devBuild = ((process.env.NODE_ENV || 'development').trim().toLowerCase() === 'development'); // eslint-disable-line
+// `const devBuild = ((process.env.NODE_ENV || 'development').trim().toLowerCase() === 'development'); // eslint-disable-line`
 
 // @REF: https://www.sitepoint.com/pass-parameters-gulp-tasks/
 const args=(argList=>{let arg={},a,opt,thisOpt,curOpt;for(a=0;a<argList.length;a++){thisOpt=argList[a].trim();opt=thisOpt.replace(/^\-+/,'');if(opt===thisOpt){if(curOpt)arg[curOpt]=opt;curOpt=null;}else{curOpt=opt;arg[curOpt]=true;}}return arg;})(process.argv); // eslint-disable-line
@@ -67,7 +67,7 @@ let env = conf.env;
 const banner = conf.banner.join('\n');
 
 const debug = /--debug/.test(process.argv.slice(2));
-const patch = /--patch/.test(process.argv.slice(2)); // bump a patch?
+const patch = /--patch/.test(process.argv.slice(2)); // Bump a patch?
 
 try {
   env = extend(conf.env, yaml(readFileSync('./environment.yml', { encoding: 'utf-8' }), { json: true })); // eslint-disable-line no-unused-vars
@@ -101,6 +101,44 @@ function moduleData (name, template, widget) {
       }
     : {});
 }
+
+task('dev:new:helper', function (done) {
+  if (!('name' in args)) {
+    log.error('Error: missing required name for the module: `--name ModuleName`');
+    return done();
+  }
+
+  const template = 'template' in args ? args.template : 'generalHelper';
+
+  if (!(template in conf.templates)) {
+    log.error('Error: provided template not exist in configuration: `' + template + '`');
+    return done();
+  }
+
+  const name = capitalize(sanitizeModule(args.name));
+
+  if (!name) {
+    log.error('Error: invalid module name for the helper: `' + args.name + '`');
+    return done();
+  }
+
+  const data = moduleData(name, template);
+  const file = data.helperCamelCase + '.' + conf.templates[template].ext;
+  const targ = path.join(conf.templates[template].dest, data.moduleCamelCase);
+
+  if (debug) log.info(data, path.join(targ, file));
+
+  try {
+    accessSync(path.join(targ, file));
+    log.error('Error: the helper already exists');
+    return done();
+  } catch (e) {
+    return src(conf.templates[template].src)
+      .pipe(gulptemplate(data))
+      .pipe(rename(file))
+      .pipe(dest(targ));
+  }
+});
 
 task('dev:new:widget', function (done) {
   if (!('name' in args)) {
@@ -136,7 +174,7 @@ task('dev:new:widget', function (done) {
 
   try {
     accessSync(path.join(targ, file));
-    log.error('Error: the module already exists');
+    log.error('Error: the widget already exists');
     return done();
   } catch (e) {
     return src(conf.templates[template].src)

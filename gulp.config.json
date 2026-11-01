@@ -434,6 +434,23 @@
         "moduleTagline": "[CHANGE ME]",
         "moduleDashicon": "smiley"
       }
+    },
+    "generalHelper": {
+      "src": "./assets/dev/templates/generalHelper.template",
+      "dest": "./includes/Modules/",
+      "ext": "php",
+      "defaults": {
+        "helperCamelCase": "ModuleHelper",
+        "namespaceAuthor": "geminorum",
+        "namespaceBase": "gEditorial",
+        "pluginTexdomain": "geditorial",
+        "adminTexdomain": "geditorial-admin",
+        "moduleTextdomain": "geditorial-helper-module",
+        "moduleBase": "geditorial",
+        "moduleTitle": "CPT Module",
+        "moduleCamelCase": "HelperModule",
+        "moduleUnderline": "helper_module"
+      }
     }
   }
 }
