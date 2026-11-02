@@ -320,7 +320,7 @@ JS;
 	public static function enqueueColorBox()
 	{
 		// NOTE: since we need `gEditorial` object on this script!
-		gEditorial()->enqueue_asset_config();
+		Services\AssetRegistry::enqueue_asset_config();
 
 		return self::enqueue( 'all.colorbox', [
 			'jquery',
@@ -355,7 +355,7 @@ JS;
 	public static function enqueueDynamicSubmit()
 	{
 		// NOTE: since we need `gEditorial` object on this script!
-		gEditorial()->enqueue_asset_config();
+		Services\AssetRegistry::enqueue_asset_config();
 
 		return self::enqueue( 'all.dynamicsubmit', [ 'jquery', 'wp-url' ] );
 	}

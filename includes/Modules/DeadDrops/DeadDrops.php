@@ -446,7 +446,7 @@ class DeadDrops extends gEditorial\Module
 			gEditorial\Scripts::linkVazirMatn();
 
 		gEditorial\Scripts::linkDropzone();
-		gEditorial\Helper::linkStyleSheetAdmin( 'dead-drops', TRUE, 'dropzone' );
+		Services\AssetRegistry::linkStyleSheetAdmin( 'dead-drops', NULL, TRUE, 'dropzone' );
 
 		// @REF: https://gitlab.com/meno/dropzone/-/wikis/make-the-whole-body-a-dropzone
 		echo '</head><body class="dropzone">';

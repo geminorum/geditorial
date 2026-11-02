@@ -448,7 +448,7 @@ class SearchSelect extends gEditorial\Service
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( 'searchselect' );
 
-		gEditorial()->enqueue_asset_config( $args, 'searchselect' );
+		AssetRegistry::enqueue_asset_config( $args, 'searchselect' );
 
 		return $enqueued = gEditorial\Scripts::enqueue(
 			self::dot( 'all', 'searchselect', 'select2' ),

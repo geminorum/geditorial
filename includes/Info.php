@@ -342,7 +342,7 @@ class Info extends WordPress\Main
 			'title'  => $title ?: FALSE,
 			'class'  => [ '-icon', ( $link ? '-link' : '-info' ) ],
 			'target' => $link ? '_blank' : FALSE,
-		], gEditorial()->icon( $icon[1], $icon[0] ) );
+		], Services\AssetRegistry::icon( $icon[1], $icon[0] ) );
 	}
 
 	// TODO: Migrate to `Icons` service: `Icons::renderByField()`

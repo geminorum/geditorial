@@ -54,7 +54,7 @@ class Maps extends gEditorial\Service
 			],
 		];
 
-		gEditorial()->enqueue_asset_config( $asset, $mainkey );
+		AssetRegistry::enqueue_asset_config( $asset, $mainkey );
 
 		return $enqueued = gEditorial\Scripts::enqueue( self::dot( 'maps', $mainkey ), [
 			'jquery',

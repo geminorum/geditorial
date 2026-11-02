@@ -73,26 +73,14 @@ class Plugin extends WordPress\Plugin
 	protected function actions(): void
 	{
 		add_action( 'plugins_loaded', [ $this, 'plugins_loaded' ], 20 );
-		add_action( 'admin_init', [ $this, 'admin_init' ] );
-		add_action( 'admin_bar_init', [ $this, 'admin_bar_init' ] );
-		add_action( 'admin_bar_menu', [ $this, 'admin_bar_menu' ], 999 );
 		add_filter( 'wp_default_autoload_value', [ $this, 'wp_default_autoload_value' ], 20, 4 );
 
 		if ( ! is_admin() ) {
 
-			add_action( 'wp_footer', [ $this, 'footer_asset_config_early' ], 1 );
-			add_action( 'wp_footer', [ $this, 'footer_asset_config_late' ], 999 );
-			add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ] );
 			add_filter( 'template_include', [ $this, 'template_include' ], 98 );  // before `gTheme`
 		}
 
 		WordPress\WooCommerce::declareCompat( $this->get_file() );
-	}
-
-	public function admin_init(): void
-	{
-		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_early' ], 1 );
-		add_action( 'admin_print_footer_scripts', [ $this, 'footer_asset_config_late' ], 999 );
 	}
 
 	public function plugins_loaded(): void
@@ -233,6 +221,7 @@ class Plugin extends WordPress\Plugin
 			'AdminScreen',
 			'AdvancedQueries',
 			'Ajax',
+			'AssetRegistry',
 			'Avatars',
 			'Barcodes',
 			'Calendars',
@@ -501,112 +490,6 @@ class Plugin extends WordPress\Plugin
 	}
 
 	// TODO: Move to `AssetRegistry` Service
-	// NOTE: `enqueue` means just the styles, not the admin-bar itself!
-	public function enqueue_adminbar( ?bool $value = NULL ): bool
-	{
-		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	// NOTE: passing `NULL` returns the current state.
-	// FIXME: default must be `NULL` / caller must pass the intended value!
-	public function enqueue_styles( ?bool $value = TRUE ): bool
-	{
-		return $this->asset_adminbar = $value ?? $this->asset_adminbar;
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	public function wp_enqueue_scripts(): void
-	{
-		$this->enqueue_asset_adminbar();
-
-		if ( ! $this->asset_styles )
-			return;
-
-		if ( defined( 'GEDITORIAL_DISABLE_FRONT_STYLES' ) && GEDITORIAL_DISABLE_FRONT_STYLES )
-			return;
-
-		Scripts::enqueueStyleSrc(
-			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'all' ),
-			self::dsh( $this->base, 'front' ),
-			$this->get_hash()
-		);
-
-		if ( WordPress\WooCommerce::isActive() )
-			Scripts::enqueueStyleSrc(
-				sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'woocommerce' ),
-				self::dsh( $this->base, 'woocommerce', 'front' ),
-				$this->get_hash()
-			);
-
-		if ( defined( 'GNETWORK_VERSION' ) )
-			return;
-
-		Scripts::enqueueStyleSrc(
-			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'front', 'gnetwork' ),
-			self::dsh( $this->base, 'gnetwork', 'front' ),
-			$this->get_hash()
-		);
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	public function enqueue_asset_adminbar(): bool|string
-	{
-		if ( ! is_admin_bar_showing() )
-			return FALSE;
-
-		if ( count( $this->adminbar_nodes ) )
-			$this->asset_adminbar = TRUE;
-
-		if ( ! $this->asset_adminbar )
-			return FALSE;
-
-		return Scripts::enqueueStyleSrc(
-			sprintf( '%sassets/css/%s.%s.css', $this->get_url(), 'adminbar', 'all' ),
-			self::dsh( $this->base, 'adminbar' ),
-			$this->get_hash()
-		);
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	public function enqueue_asset_config( array $args = [], ?string $module = NULL ): bool
-	{
-		$this->asset_config = TRUE;
-
-		if ( empty( $args ) )
-			return TRUE;
-
-		if ( is_null( $module ) )
-			$this->asset_jsargs = array_merge( $this->asset_jsargs, $args );
-
-		else if ( isset( $this->asset_jsargs[$module] ) )
-			$this->asset_jsargs[$module] = array_merge( $this->asset_jsargs[$module], $args );
-
-		else
-			$this->asset_jsargs[$module] = $args;
-
-		return TRUE;
-	}
-
-	// used in front & admin
-	// TODO: Move to `AssetRegistry` Service
-	public function footer_asset_config_early(): void
-	{
-		if ( $this->asset_config )
-			Scripts::printJSConfig( $this->asset_jsargs );
-	}
-
-	// used in front & admin
-	// TODO: Move to `AssetRegistry` Service
-	public function footer_asset_config_late(): void
-	{
-		if ( $this->asset_config )
-			Scripts::printJSDebug();
-
-		Core\Icon::printSprites( $this->asset_icons );
-	}
-
-	// TODO: Move to `AssetRegistry` Service
 	public function icon( string $name, string $group, array $extra = [], bool $enqueue = TRUE ): false|string|array
 	{
 		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {
@@ -626,52 +509,6 @@ class Plugin extends WordPress\Plugin
 		}
 
 		return FALSE;
-	}
-
-	// TODO: Move to `AdminbarRegistry` Service
-	public function admin_bar_init(): void
-	{
-		do_action_ref_array( 'geditorial_adminbar', [ &$this->adminbar_nodes, $this->base ] );
-	}
-
-	// TODO: Move to `AdminbarRegistry` Service
-	public function admin_bar_menu( object $wp_admin_bar ): void
-	{
-		// NOT USED YET: WTF: it causes to `geditorial_adminbar` action fires again!
-		// `do_action_ref_array( 'geditorial_adminbar_lastcall', [ &$this->adminbar_nodes, $this->base ] );`
-
-		if ( empty( $this->adminbar_nodes ) )
-			return;
-
-		if ( in_array( $this->base, Core\Arraay::column( $this->adminbar_nodes, 'parent' ) ) ) {
-
-			if ( ! is_user_logged_in() )
-				$link = FALSE;
-
-			else if ( current_user_can( 'manage_options' ) )
-				$link = Settings::getURLbyContext( 'settings' );
-
-			else if ( current_user_can( 'edit_others_posts' ) )
-				$link = Settings::getURLbyContext( 'reports' );
-
-			else
-				$link = FALSE;
-
-			$wp_admin_bar->add_node( [
-				// 'parent' => 'top-secondary',
-				'id'     => $this->base,
-				'title'  => Services\Icons::adminBarMarkup(),
-				// `'title'  => gEditorial()->module( 'config' )->_get_icon(),` // WTF??!
-				'href'   => $link,
-				'meta'   => [
-					'title' => self::system() ?: _x( 'Editorial', 'Plugin: Main: Adminbar Node', 'geditorial' ),
-					'class' => self::dsh( $this->base, 'adminbar', 'node', 'icononly' ),
-				],
-			] );
-		}
-
-		foreach ( $this->adminbar_nodes as $node )
-			$wp_admin_bar->add_node( $node );
 	}
 
 	// @OLD: `Core\WordPress::getEditorialUserID()`

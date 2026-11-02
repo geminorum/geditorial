@@ -99,6 +99,6 @@ class HeaderButtons extends gEditorial\Service
 		}
 
 		gEditorial\Scripts::enqueue( self::dot( 'admin', 'headerbuttons', 'all' ) );
-		gEditorial()->enqueue_asset_config( $args, 'headerbuttons' );
+		AssetRegistry::enqueue_asset_config( $args, 'headerbuttons' );
 	}
 }

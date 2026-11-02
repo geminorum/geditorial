@@ -15,7 +15,7 @@ trait Assets
 		array   $extra = [],
 	): false|string {
 
-		return gEditorial()->icon(
+		return Services\AssetRegistry::icon(
 			$name,
 			$group ?? $this->icon_group,
 			$extra,
@@ -155,7 +155,7 @@ trait Assets
 		if ( ! array_key_exists( '_nonce', $args ) && is_user_logged_in() )
 			$args['_nonce'] = wp_create_nonce( $this->hook() );
 
-		gEditorial()->enqueue_asset_config( $args, $key );
+		Services\AssetRegistry::enqueue_asset_config( $args, $key );
 
 		return $handle ?? '';
 	}
@@ -163,9 +163,9 @@ trait Assets
 	// CAUTION: front only
 	// NOTE: combined global styles
 	// TODO: also we need API for module specified CSS
-	public function enqueue_styles(): void
+	public function enqueue_styles(): bool
 	{
-		gEditorial()->enqueue_styles();
+		return Services\AssetRegistry::enqueue_styles( TRUE );
 	}
 
 	public function register_editor_button(

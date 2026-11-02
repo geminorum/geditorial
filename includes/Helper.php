@@ -11,38 +11,6 @@ class Helper extends WordPress\Main
 		return gEditorial();
 	}
 
-	// Override to use plugin version/hash
-	// TODO: Move to `AssetRegistry` Service
-	public static function linkStyleSheet(
-		string            $url,
-		null|string|array $version = NULL,
-		false|string      $media   = FALSE,
-		bool              $verbose = TRUE,
-	): true {
-
-		return Core\HTML::linkStyleSheet(
-			$url,
-			$version ?? GEDITORIAL_HASH,
-			$media,
-			$verbose,
-		);
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	public static function linkStyleSheetAdmin(
-		string $page,
-		bool   $verbose = TRUE,
-		string $prefix  = 'admin',
-	): true {
-
-		return Core\HTML::linkStyleSheet(
-			GEDITORIAL_URL.'assets/css/'.( $prefix ? $prefix.'.' : '' ).$page.( is_rtl() ? '-rtl' : '' ).'.css',
-			GEDITORIAL_HASH,
-			'all',
-			$verbose,
-		);
-	}
-
 	/**
 	 * Prepares data for display as a contact.
 	 *

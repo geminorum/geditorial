@@ -31,7 +31,7 @@ class Icons extends gEditorial\Service
 			return Core\HTML::getDashicon( $fallback_icon, FALSE, $extra_class );
 
 		if ( is_array( $icon ) )
-			return gEditorial()->icon( $icon[1], $icon[0], $extra_class );
+			return AssetRegistry::icon( $icon[1], $icon[0], $extra_class );
 
 		if ( Core\Text::starts( $icon, '#' ) )
 			return Core\Icon::getLink( $icon, $extra_class );

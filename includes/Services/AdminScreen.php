@@ -91,17 +91,18 @@ class AdminScreen extends gEditorial\Service
 	public static function _print_admin_styles( ?object $screen = NULL ): bool
 	{
 		$screen ??= get_current_screen();
+		$hash   = static::factory()->get_hash();
 
 		// NOTE: renders before this plugin styles
 		if ( ! defined( 'GNETWORK_VERSION' ) )
-			gEditorial\Helper::linkStyleSheetAdmin( 'gnetwork' );
+			AssetRegistry::linkStyleSheetAdmin( 'gnetwork', $hash );
 
 		// NOTE: must check before IFRAME
 		if ( WordPress\IsIt::customize() )
-			gEditorial\Helper::linkStyleSheetAdmin( 'customize' );
+			AssetRegistry::linkStyleSheetAdmin( 'customize', $hash );
 
 		else if ( WordPress\IsIt::iFrame() )
-			gEditorial\Helper::linkStyleSheetAdmin( 'iframe' );
+			AssetRegistry::linkStyleSheetAdmin( 'iframe', $hash );
 
 		else if ( in_array( $screen->base, [
 			'post',
@@ -113,17 +114,17 @@ class AdminScreen extends gEditorial\Service
 			'users',
 			'dashboard',
 		] ) )
-			gEditorial\Helper::linkStyleSheetAdmin( $screen->base );
+			AssetRegistry::linkStyleSheetAdmin( $screen->base, $hash );
 
 		else if ( Core\Text::starts( $screen->base, 'dashboard_page' )
 			&& ! Core\Text::ends( $screen->base, [
 				// NOTE: contexts displaying under dashboard-page
 				'reports',
 			] ) )
-			gEditorial\Helper::linkStyleSheetAdmin( 'dashboard' );
+			AssetRegistry::linkStyleSheetAdmin( 'dashboard', $hash );
 
 		else if ( Core\Text::starts( $screen->base, 'woocommerce_page' ) )
-			gEditorial\Helper::linkStyleSheetAdmin( 'woocommerce' );
+			AssetRegistry::linkStyleSheetAdmin( 'woocommerce', $hash );
 
 		else {
 
@@ -138,14 +139,14 @@ class AdminScreen extends gEditorial\Service
 				// 'dashboard',
 			] as $context )
 				if ( gEditorial\Settings::isScreenContext( $context, $screen ) ) {
-					gEditorial\Helper::linkStyleSheetAdmin( $context );
+					AssetRegistry::linkStyleSheetAdmin( $context, $hash );
 					break;
 				}
 		}
 
 		// NOTE: always add admin-bar styles to admin
 		if ( is_admin_bar_showing() )
-			gEditorial\Helper::linkStyleSheetAdmin( 'all', TRUE, 'adminbar' );
+			AssetRegistry::linkStyleSheetAdmin( 'all', $hash, TRUE, 'adminbar' );
 
 		return TRUE;
 	}
@@ -229,7 +230,7 @@ class AdminScreen extends gEditorial\Service
 				],
 			];
 
-			gEditorial()->enqueue_asset_config( $asset, $mainkey );
+			AssetRegistry::enqueue_asset_config( $asset, $mainkey );
 
 			return gEditorial\Scripts::enqueue( self::dot( $screen->base, $mainkey ) );
 		}
@@ -311,7 +312,7 @@ class AdminScreen extends gEditorial\Service
 		$mainkey = 'validator';
 		$asset   = [];
 
-		gEditorial()->enqueue_asset_config( $asset, $mainkey );
+		AssetRegistry::enqueue_asset_config( $asset, $mainkey );
 
 		return $enqueued = gEditorial\Scripts::enqueue( self::dot( 'all', $mainkey ) );
 	}
@@ -438,7 +439,7 @@ class AdminScreen extends gEditorial\Service
 
 		add_action( 'admin_print_styles',
 			static function () {
-				gEditorial\Helper::linkStyleSheetAdmin( 'dashboard' );
+				AssetRegistry::linkStyleSheetAdmin( 'dashboard' );
 			} );
 	}
 

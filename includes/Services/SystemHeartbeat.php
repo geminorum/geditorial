@@ -25,8 +25,8 @@ class SystemHeartbeat extends gEditorial\Service
 		if ( ! is_admin_bar_showing() || ! is_user_logged_in() )
 			return;
 
-		gEditorial()->enqueue_asset_config();    // NOTE: since we need `gEditorial` object on this script!
-		gEditorial()->enqueue_adminbar( TRUE );  // NOTE: `admin_bar_menu` is too late for this!
+		AssetRegistry::enqueue_asset_config();    // NOTE: since we need `gEditorial` object on this script!
+		AssetRegistry::enqueue_adminbar( TRUE );  // NOTE: `admin_bar_menu` is too late for this!
 
 		gEditorial\Scripts::enqueue(
 			self::dot( 'all', 'systemheartbeat' ),

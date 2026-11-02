@@ -566,7 +566,7 @@ class Settings extends WordPress\Main
 			) : _x( 'Back to Editorial', 'Settings', 'geditorial-admin' );
 
 		if ( is_array( $icon ) )
-			$before = gEditorial()->icon( $icon[1], $icon[0] );
+			$before = Services\AssetRegistry::icon( $icon[1], $icon[0] );
 
 		else if ( $icon )
 			$class = ' dashicons-before dashicons-'.$icon;

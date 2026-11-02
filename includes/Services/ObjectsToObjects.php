@@ -318,7 +318,7 @@ class ObjectsToObjects extends gEditorial\Service
 			// $args['_spinner'] = admin_url( 'images/wpspin_light.gif' );
 			$args['_spinner'] = GEDITORIAL_URL.'assets/images/spinner/fade-stagger-squares.svg';
 
-		gEditorial()->enqueue_asset_config( $args, 'o2obox' );
+		AssetRegistry::enqueue_asset_config( $args, 'o2obox' );
 
 		add_action( 'admin_footer', [ __NAMESPACE__.'\\O2O\\Admin\\Box', 'add_templates' ] );
 
