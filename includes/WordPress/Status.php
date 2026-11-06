@@ -121,7 +121,7 @@ class Status extends Core\Base
 			array_diff( $available, (array) $excludes ),
 			(array) $posttypes,
 			$context,
-			$excludes
+			$excludes,
 		);
 	}
 }

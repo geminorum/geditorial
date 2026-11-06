@@ -74,15 +74,15 @@ class Post extends Core\Base
 	 *
 	 * @param mixed $post
 	 * @param string $capability
-	 * @param int|object $user_id
+	 * @param null|int|object $user_id
 	 * @param bool $fallback
 	 * @return bool
 	 */
 	public static function can(
-		mixed   $post,
-		?string $capability,
-		?int    $user_id  = NULL,
-		bool    $fallback = FALSE,
+		mixed           $post,
+		?string         $capability,
+		null|int|object $user_id  = NULL,
+		bool            $fallback = FALSE,
 	): bool {
 
 		static $cache = [];
@@ -281,12 +281,12 @@ class Post extends Core\Base
 	 * @OLD: `Core\WordPress::getPostAttachmentsLink()`
 	 * @OLD: `WordPress\Post::mediaLink()`
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param array $extra
 	 * @param false|string $fallback
 	 * @return false|string
 	 */
-	public static function mediaURL( $post, $extra = [], $fallback = FALSE ): false|string
+	public static function mediaURL( mixed $post, array $extra = [], false|string $fallback = FALSE ): false|string
 	{
 		if ( ! current_user_can( 'upload_files' ) )
 			return $fallback;
@@ -317,14 +317,13 @@ class Post extends Core\Base
 		return add_query_arg( array_merge( [ 'post_id' => $post->ID ], $extra ), admin_url( 'media-new.php' ) );
 	}
 
-	public static function mediaLink( $post, $extra = [], $fallback = FALSE )
+	#[\Deprecated( 'USE `WordPress\Post::mediaURL()`')]
+	public static function mediaLink( mixed $post, array $extra = [], false|string $fallback = FALSE ): false|string
 	{
-		self::_dep( 'WordPress\Post::mediaURL()' );
-
 		return self::mediaURL( $post, $extra = [], $fallback = FALSE );
 	}
 
-	public static function endpointURL( $endpoint, $post, $data = NULL, $extra = [], $fallback = FALSE ): false|string
+	public static function endpointURL( string $endpoint, mixed $post, ?string $data = NULL, array $extra = [], false|string $fallback = FALSE ): false|string
 	{
 		if ( ! $post = self::get( $post ) )
 			return $fallback;
@@ -415,10 +414,10 @@ class Post extends Core\Base
 	 * @return array
 	 */
 	public static function getByTitle(
-		string $title,
+		string            $title,
 		null|string|array $posttype = NULL,
-		?string $fields = NULL,
-		null|string|array $status = NULL,
+		?string           $fields   = NULL,
+		null|string|array $status   = NULL,
 	): array {
 
 		if ( ! $title = trim( $title ) )
@@ -444,9 +443,9 @@ class Post extends Core\Base
 	}
 
 	// @old: `WordPress\PostType::getIDbySlug()`
-	public static function getIDbyURL( $url, $posttype = 'post' ): false|int
+	public static function getIDbyURL( mixed $url, string $posttype = 'post' ): false|int
 	{
-		if ( ! $url = trim( $url ?: '' ) )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		$encoded   = rawurlencode( urldecode( $url ) );
@@ -460,7 +459,7 @@ class Post extends Core\Base
 	{
 		static $cache = [];
 
-		if ( ! $slug = trim( $slug ?: '' ) )
+		if ( ! $slug = Core\Text::force( $slug ) )
 			return FALSE;
 
 		if ( isset( $cache[$posttype] ) && array_key_exists( $slug, $cache[$posttype] ) )
@@ -588,19 +587,19 @@ class Post extends Core\Base
 		return sprintf( '/%s/%s/%d',
 			$object->rest_namespace,
 			$object->rest_base ?: $object->name,
-			$post->ID
+			$post->ID,
 		);
 	}
 
 	/**
 	 * Retrieves post full title given a post ID or post object.
 	 *
-	 * @param int|object $post
+	 * @param mixed $post
 	 * @param bool|string $linked
 	 * @param string $separator
 	 * @return string
 	 */
-	public static function fullTitle( $post, $linked = FALSE, $separator = NULL ): string
+	public static function fullTitle( mixed $post, bool|string $linked = FALSE, ?string $separator = NULL ): string
 	{
 		if ( ! $post = self::get( $post ) )
 			return '';
@@ -675,11 +674,18 @@ class Post extends Core\Base
 		if ( empty( $parents ) )
 			return $suffix;
 
-		return Strings::getJoined( array_reverse( $parents ), '', $suffix ? $separator.$suffix : '', '', $separator );
+		return Strings::getJoined(
+			array_reverse( $parents ),
+			'',
+			$suffix ? ( $separator.$suffix ) : '',
+			'',
+			$separator,
+		);
 	}
 
 	/**
 	 * Retrieves meta-data for a given post.
+	 * TODO: migrate to `WordPress\ObjectMeta`
 	 *
 	 * @param mixed $post
 	 * @param bool|array $keys `false` for all meta
@@ -719,11 +725,12 @@ class Post extends Core\Base
 	/**
 	 * Retrieves post meta field for a post, by Regular Expression match on the key.
 	 * @source https://gist.github.com/rmpel/8b103a5dd360a5000e4d4f9aa22e2787
+	 * TODO: migrate to `WordPress\ObjectMeta`
 	 *
 	 * @param int $post_id
 	 * @param string $regexp The regexp to match the meta key against. One capture-group allowed for key-ing the results. Full meta_key is used if no capture-groups in the expression.
 	 * @param bool $single Optional. Whether to return an array of single values. Default false.
-	 * @return WP_Error|array Will be an array with either scalars or arrays based on `$single`. Contains the individual meta_value results of get_post_meta. Will be WP_Error in case the regular expression fails to validate.
+	 * @return \WP_Error|array Will be an array with either scalars or arrays based on `$single`. Contains the individual meta_value results of get_post_meta. Will be WP_Error in case the regular expression fails to validate.
 	 */
 	public static function getMetaByRegexp( int $post_id, string $regexp, bool $single = FALSE ): array|object
 	{
@@ -760,7 +767,7 @@ class Post extends Core\Base
 	}
 
 	// @old: `WordPress\PostType::getParentPostID()`
-	public static function getParent( $post = NULL, $object = TRUE ): false|int
+	public static function getParent( mixed $post = NULL, bool $object = TRUE ): false|int
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;
@@ -808,7 +815,7 @@ class Post extends Core\Base
 	}
 
 	// @old: `WordPress\PostType::newPostFromTerm()`
-	public static function newByTerm( $term, $taxonomy = NULL, $posttype = 'post', $user_id = NULL ): int|object
+	public static function newByTerm( mixed $term, ?string $taxonomy = NULL, string $posttype = 'post', ?int $user_id = NULL ): int|object
 	{
 		if ( ! $term = Term::get( $term, $taxonomy ?: '' ) )
 			return FALSE;
@@ -897,7 +904,7 @@ class Post extends Core\Base
 	}
 
 	// OLD: `WordPress\PostType::supportBlocksByPost()`
-	public static function supportBlocks( $post ): bool
+	public static function supportBlocks( mixed $post ): bool
 	{
 		if ( ! function_exists( 'use_block_editor_for_post' ) )
 			return FALSE;
@@ -908,7 +915,7 @@ class Post extends Core\Base
 		return use_block_editor_for_post( $post );
 	}
 
-	public static function publishedInLast( $post, $in, $modulus = NULL ): bool
+	public static function publishedInLast( mixed $post, int $in, ?int $modulus = NULL ): bool
 	{
 		if ( ! $post = self::get( $post ) )
 			return FALSE;

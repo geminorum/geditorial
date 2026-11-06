@@ -2,8 +2,6 @@
 
 defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
-use geminorum\gEditorial\Core;
-
 /**
  * Further Readings:
  * - https://php.watch/versions/8.2/utf8_encode-utf8_decode-deprecated
@@ -15,7 +13,7 @@ use geminorum\gEditorial\Core;
  * - It seems that `ENT_XML1` and `ENT_XHTML` are identical when decoding.
  */
 
-class Coding extends Core\Base
+class Coding extends Base
 {
 	/**
 	 * Converts all applicable characters to HTML entities.
@@ -44,7 +42,7 @@ class Coding extends Core\Base
 	public static function entityDecode( mixed $input ): string
 	{
 		return @html_entity_decode(
-			Core\Text::force( $input ),
+			Text::force( $input ),
 			ENT_QUOTES,
 			'UTF-8',
 		);
@@ -61,7 +59,7 @@ class Coding extends Core\Base
 	public static function entityEncodeCOMPAT( mixed $input ): string
 	{
 		return @htmlspecialchars(
-			Core\Text::force( $input ),
+			Text::force( $input ),
 			ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401,
 			'UTF-8',
 		);
@@ -78,7 +76,7 @@ class Coding extends Core\Base
 	public static function entityEncodeQUOTES( mixed $input ): string
 	{
 		return @htmlspecialchars(
-			Core\Text::force( $input ),
+			Text::force( $input ),
 			ENT_QUOTES | ENT_SUBSTITUTE,
 			'UTF-8',
 		);

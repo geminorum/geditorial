@@ -209,7 +209,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init();
@@ -408,7 +408,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		$in_out = curl_init( $url );
@@ -508,7 +508,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init( $url );
@@ -545,7 +545,7 @@ class HTTP extends Base
 		if ( ! extension_loaded( 'curl' ) )
 			return FALSE;
 
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		$handle = curl_init();
@@ -579,7 +579,7 @@ class HTTP extends Base
 	 */
 	public static function getSize( mixed $url, ?int &$status = NULL ): false|int
 	{
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		if ( ! extension_loaded( 'curl' ) )
@@ -624,7 +624,7 @@ class HTTP extends Base
 	 */
 	public static function getSizeFromHeaders( mixed $url ): false|int
 	{
-		if ( ! $url = Core\Text::force( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		if ( ! $headers = get_headers( $url, TRUE ) )

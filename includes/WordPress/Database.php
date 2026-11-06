@@ -89,26 +89,26 @@ class Database extends Core\Base
 	#[\Deprecated( 'USE `WordPress\PostMeta::listByKey()`' )]
 	public static function getPostMetaRows( string $meta_key, ?int $limit = NULL )
 	{
-		return WordPress\PostMeta::listByKey( $meta_key, $limit );
+		return PostMeta::listByKey( $meta_key, $limit );
 	}
 
 	#[\Deprecated( 'USE `WordPress\PostMeta::listAvailable()`' )]
 	public static function getPostMetaKeys( bool $same_key = FALSE )
 	{
-		$meta_keys = WordPress\PostMeta::listAvailable();
+		$meta_keys = PostMeta::listAvailable();
 		return $same_key ? Core\Arraay::sameKey( $meta_keys ) : $meta_keys;
 	}
 
 	#[\Deprecated( 'USE `WordPress\PostMeta::deleteByKey()`' )]
 	public static function deletePostMeta( string $meta_key, ?int $limit = 0 )
 	{
-		return WordPress\PostMeta::deleteByKey( $meta_key, $limit );
+		return PostMeta::deleteByKey( $meta_key, $limit );
 	}
 
 	#[\Deprecated( 'USE `WordPress\PostMeta::deleteEmpty()`' )]
 	public static function deleteEmptyMeta( string $meta_key )
 	{
-		return WordPress\PostMeta::deleteEmpty( $meta_key );
+		return PostMeta::deleteEmpty( $meta_key );
 	}
 
 	// FIXME
@@ -479,7 +479,7 @@ class Database extends Core\Base
 	#[\Deprecated( 'USE `WordPress\PostMeta::changeKey()`' )]
 	public static function changePostMetaKey( string $from, string $to )
 	{
-		return WordPress\PostMeta::changeKey( $from, $to );
+		return PostMeta::changeKey( $from, $to );
 	}
 
 	/**

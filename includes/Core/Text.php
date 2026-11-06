@@ -1570,7 +1570,7 @@ class Text extends Base
 
 		$html = self::noLineBreak( $html );
 		$html = self::stripPunctuation( $html );
-		// $html = self::normalizeWhitespaceUTF8( $html, TRUE );
+		// `$html = self::normalizeWhitespaceUTF8( $html, TRUE );`
 		$html = self::singleWhitespaceUTF8( $html );
 
 		return trim( $html );
@@ -1872,7 +1872,7 @@ class Text extends Base
 		foreach ( $data as $fields ) {
 
 			// @SEE: https://github.com/parsecsv/parsecsv-for-php/issues/167
-			// fputcsv( $handle, $fields, ',', '"', '\\' );
+			// `fputcsv( $handle, $fields, ',', '"', '\\' );`
 
 			$row = [];
 
@@ -1894,7 +1894,7 @@ class Text extends Base
 			$output.= implode( $delimiter, $row )."\n";
 		}
 
-		return "\xEF\xBB\xBF".$output; // UTF8 Bom for the Damn Excel!
+		return "\xEF\xBB\xBF".$output; // `UTF8-Bom` for the Damn Excel!
 	}
 
 	public static function download( string $contents, string $name, string $mime = 'application/octet-stream' ): bool
@@ -1934,16 +1934,13 @@ class Text extends Base
 		}, hex2bin( bin2hex( $text ) ) );
 	}
 
-	// FIXME: address the other attributes
-	// @REF: https://gist.github.com/man4toman/a645c4022f741c879110d09834f73d12
-	// TODO: move to `Core\Link`
+	#[\Deprecated( 'USE `Core\Link::un()`' )]
 	public static function unlinkify( string $text ): string
 	{
-		// return preg_replace( '/<a href=\"(.*?)\">(.*?)<\/a>/', "\\2", $text );
-		return preg_replace( '/<a.*?>(.*?)</a>/i', '\1', $text );
+		return Core\Link::un( $text );
 	}
 
-	public static function dashify( string $string, $chunk, ?string $separator = NULL )
+	public static function dashify( string $string, int $chunk, ?string $separator = NULL )
 	{
 		return implode( $separator ?? '-', str_split( $string, $chunk ) );
 	}

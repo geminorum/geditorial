@@ -162,22 +162,18 @@ class WooCommerce extends Core\Base
 			: array_diff( $list, static::PRODUCT_TAXONOMIES );
 	}
 
-	// NOTE: it's always `product` then all sub-types are registered as a taxonomy `$product->get_type()`
+	// NOTE: it's always `product` then all subtypes are registered as a taxonomy `$product->get_type()`
 	// @SEE: https://woocommerce.com/document/installed-taxonomies-post-types/#section-2
 	// @REF https://rudrastyh.com/woocommerce/product-types.html
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `WooCommerce::PRODUCT_POSTTYPE`' )]
 	public static function getProductPosttype(): string
 	{
-		self::_dep( 'WooCommerce::PRODUCT_POSTTYPE' );
-
 		return 'product';
 	}
 
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `WooCommerce::PROCUCT_CATEGORY`' )]
 	public static function getProductCategoryTaxonomy(): string
 	{
-		self::_dep( 'WooCommerce::PROCUCT_CATEGORY' );
-
 		return 'product_cat';
 	}
 

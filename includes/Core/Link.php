@@ -18,6 +18,12 @@ class Link extends Base
 		], $html ?? $link );
 	}
 
+	// OLD: `Core\Text::unlinkify()`
+	public static function un( string $html ): string
+	{
+		return preg_replace( '/<a.*?>(.*?)<\/a>/i', '\1', $html ) ?: '';
+	}
+
 	/**
 	 * Retrieves the CSS class for a button.
 	 * NOTE: WordPress Core `primary`/`small`/`compact`/`large`

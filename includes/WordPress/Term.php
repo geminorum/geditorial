@@ -255,12 +255,12 @@ class Term extends Core\Base
 	 * Retrieves term short-link given a term ID or term object.
 	 * OLD: `Core\WordPress::getTermShortLink()`
 	 *
-	 * @param int|object $term
+	 * @param mixed $term
 	 * @param array $extra
-	 * @param mixed $fallback
-	 * @return string
+	 * @param false|string $fallback
+	 * @return false|string
 	 */
-	public static function shortlink( $term, $extra = [], $fallback = FALSE )
+	public static function shortlink( mixed $term, $extra = [], false|string $fallback = FALSE ): false|string
 	{
 		if ( ! $term = self::get( $term ) )
 			return $fallback;
@@ -268,7 +268,7 @@ class Term extends Core\Base
 		return add_query_arg( array_merge( [ 't' => $term->term_id ], $extra ), get_bloginfo( 'url' ) );
 	}
 
-	public static function endpointURL( $endpoint, $term, $data = NULL, $extra = [], $fallback = FALSE )
+	public static function endpointURL( string $endpoint, mixed $term, ?string $data = NULL, array $extra = [], false|string $fallback = FALSE ): false|string
 	{
 		if ( ! $term = self::get( $term ) )
 			return $fallback;
