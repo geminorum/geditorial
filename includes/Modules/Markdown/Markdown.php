@@ -341,10 +341,11 @@ class Markdown extends gEditorial\Module
 	 * Processes given content in Markdown syntax to HTML.
 	 *
 	 * @param string $content
+	 * @param string $posttype
 	 * @param int $post_id
 	 * @return string
 	 */
-	public function process_content( ?string $content, int $post_id ): ?string
+	public function process_content( ?string $content, string $posttype, int $post_id = 0 ): ?string
 	{
 		if ( ! $content )
 			return $content;
@@ -354,7 +355,7 @@ class Markdown extends gEditorial\Module
 		$content = Services\Markup::mdExtra( $content, TRUE, FALSE );
 
 		if ( $this->get_setting( 'wiki_linking' ) )
-			$content = $this->_do_wiki_linking( $content, WordPress\Post::get( $post_id ) );
+			$content = $this->_do_wiki_linking( $content, $posttype );
 
 		// Reference the `post_id` to make footnote ids unique
 		$content = preg_replace( '/fn(ref)?:/', "fn$1-$post_id:", $content );
@@ -368,10 +369,11 @@ class Markdown extends gEditorial\Module
 	 * Converts given content into Markdown syntax.
 	 *
 	 * @param string $content
+	 * @param string $posttype
 	 * @param int $post_id
 	 * @return string
 	 */
-	private function _do_convert_content( ?string $content, int $post_id ): ?string
+	private function _do_convert_content( ?string $content, string $posttype, int $post_id = 0 ): ?string
 	{
 		return Services\Markup::markdownFromHTML( $content, TRUE );
 	}
@@ -381,25 +383,25 @@ class Markdown extends gEditorial\Module
 	 * FIXME: do the cleanup!
 	 *
 	 * @param string $content
-	 * @param int $post_id
+	 * @param string $posttype
 	 * @return string
 	 */
-	private function _do_cleanup_content( ?string $content, int $post_id ): ?string
+	private function _do_cleanup_content( ?string $content, string $posttype, int $post_id = 0 ): ?string
 	{
 		return $content;
 	}
 
 	// @REF: https://en.wikipedia.org/wiki/Help:Wiki_markup#Links_and_URLs
-	private function _do_wiki_linking( ?string $content, object $post ): ?string
+	private function _do_wiki_linking( ?string $content, string $posttype ): ?string
 	{
 		// $pattern = '/\[\[(.+?)\]\]/u';
 		$pattern = '/\[\[(.*?)\]\]/u';
 
 		return preg_replace_callback( $pattern,
 			function ( $match )
-				use ( $content, $post ) {
+				use ( $content, $posttype ) {
 
-				list( $text, $link, $slug, $post_id ) = $this->_make_the_link( $match[1], $post, $content );
+				list( $text, $link, $slug, $post_id ) = $this->_make_the_link( $match[1], $posttype, $content );
 
 				$html = '<a href="'.$link.'" data-slug="'.$slug.'" class="-wikilink'.( $post_id ? '' : ' -notfound' ).'">'.$text.'</a>';
 
@@ -410,7 +412,7 @@ class Markdown extends gEditorial\Module
 					$slug,
 					$post_id,
 					$match,
-					$post,
+					$posttype,
 					$content,
 				);
 
@@ -418,7 +420,7 @@ class Markdown extends gEditorial\Module
 	}
 
 	// TODO: name-space with `:` for taxonomies
-	private function _make_the_link( string $text, object $post, ?string $content ): array
+	private function _make_the_link( string $text, string $posttype, ?string $content ): array
 	{
 		$slug = $text;
 		$link = $post_id = FALSE;
@@ -428,12 +430,12 @@ class Markdown extends gEditorial\Module
 
 		$slug = preg_replace( '/\s+/', '-', $slug );
 
-		if ( $post_id = WordPress\Post::getIDbyURL( $slug, $post->post_type ) )
+		if ( $post_id = WordPress\Post::getIDbyURL( $slug, $posttype ) )
 			$link = WordPress\Post::shortlink( $post_id );
 
 		else
 			$link = add_query_arg( [
-				'post_type' => $post->post_type,
+				'post_type' => $posttype,
 				'name'      => $slug,
 			], get_bloginfo( 'url' ) );
 
@@ -450,7 +452,11 @@ class Markdown extends gEditorial\Module
 
 		$data = [
 			'ID'           => $post->ID,
-			'post_content' => $this->process_content( $post->post_content_filtered, $post->ID ),
+			'post_content' => $this->process_content(
+				$post->post_content_filtered,
+				$post->post_type,
+				$post->ID,
+			),
 		];
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
@@ -475,22 +481,28 @@ class Markdown extends gEditorial\Module
 		if ( empty( $post->post_content ) )
 			return FALSE;
 
+		$converted = $this->_do_convert_content(
+			$post->post_content,
+			$post->post_type,
+			$post->ID,
+		);
+
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $this->_do_convert_content( $post->post_content, $post->ID ),
+			'post_content_filtered' => $converted,
+			'post_content'          => $this->process_content(
+				$converted,
+				$post->post_type,
+				$post->ID,
+			),
 		];
-
-		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
 
-		if ( ! wp_update_post( $data ) )
-			return FALSE;
+		$data['meta_input'][$this->constant( 'metakey_is_markdown' )] = TRUE;
 
-		update_post_meta( $post->ID, $this->constant( 'metakey_is_markdown' ), TRUE );
-
-		return TRUE;
+		return (bool) wp_update_post( $data );
 	}
 
 	public function cleanup_post( mixed $post ): bool
@@ -504,12 +516,21 @@ class Markdown extends gEditorial\Module
 		if ( empty( $post->post_content_filtered ) )
 			return FALSE;
 
+		$cleaned = $this->_do_cleanup_content(
+			$post->post_content_filtered,
+			$post->post_type,
+			$post->ID,
+		);
+
 		$data = [
 			'ID'                    => $post->ID,
-			'post_content_filtered' => $this->_do_cleanup_content( $post->post_content_filtered, $post->ID ),
+			'post_content_filtered' => $cleaned,
+			'post_content'          => $this->process_content(
+				$cleaned,
+				$post->post_type,
+				$post->ID,
+			),
 		];
-
-		$data['post_content'] = $this->process_content( $data['post_content_filtered'], $post->ID );
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
@@ -557,16 +578,18 @@ class Markdown extends gEditorial\Module
 
 	public function wp_insert_post_data( array $data, array $postarr ): array
 	{
-		$post_id = empty( $postarr['ID'] ) ? 0 : $postarr['ID'];
-
 		$data['post_content_filtered'] = $data['post_content'];
-		$data['post_content'] = $this->process_content( $data['post_content'], $post_id );
+
+		$data['post_content'] = $this->process_content(
+			$data['post_content'],
+			$postarr['post_type'] ?? WordPress\Post::type( $postarr['ID'] ?? FALSE ) ?: '',
+			(int) $postarr['ID'] ?? 0,
+		);
 
 		if ( ! current_user_can( 'unfiltered_html' ) )
 			$data['post_content'] = wp_kses_post( $data['post_content'] );
 
-		if ( $post_id )
-			update_post_meta( $post_id, $this->constant( 'metakey_is_markdown' ), TRUE );
+		$data['meta_input'][$this->constant( 'metakey_is_markdown' )] = TRUE;
 
 		return $data;
 	}
