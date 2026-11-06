@@ -394,7 +394,7 @@ class Markdown extends gEditorial\Module
 	// @REF: https://en.wikipedia.org/wiki/Help:Wiki_markup#Links_and_URLs
 	private function _do_wiki_linking( ?string $content, string $posttype ): ?string
 	{
-		// $pattern = '/\[\[(.+?)\]\]/u';
+		// `$pattern = '/\[\[(.+?)\]\]/u';`
 		$pattern = '/\[\[(.*?)\]\]/u';
 
 		return preg_replace_callback( $pattern,
@@ -439,7 +439,12 @@ class Markdown extends gEditorial\Module
 				'name'      => $slug,
 			], get_bloginfo( 'url' ) );
 
-		return [ $text, $link, $slug, $post_id ];
+		return [
+			$text,
+			$link,
+			$slug,
+			$post_id,
+		];
 	}
 
 	public function process_post( mixed $post ): bool

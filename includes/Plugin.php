@@ -7,13 +7,6 @@ class Plugin extends WordPress\Plugin
 {
 	public $base = 'geditorial';
 
-	private $asset_adminbar = FALSE;
-	private $asset_styles   = FALSE;
-	private $asset_config   = FALSE;
-	private $asset_jsargs   = [];
-	private $asset_icons    = [];
-	private $adminbar_nodes = [];
-
 	/**
 	 * Keeps a copy of loaded options for current module.
 	 *
@@ -487,28 +480,6 @@ class Plugin extends WordPress\Plugin
 			return;
 
 		get_footer( $name ?? 'editorial' );
-	}
-
-	// TODO: Move to `AssetRegistry` Service
-	public function icon( string $name, string $group, array $extra = [], bool $enqueue = TRUE ): false|string|array
-	{
-		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {
-
-			if ( ! $enqueue )
-				return $icon;
-
-			$key = self::und( $group, $name );
-
-			if ( ! isset( $this->asset_icons[$key] ) )
-				$this->asset_icons[$key] = [
-					'icon'    => $name,
-					'group'   => $group,
-				];
-
-			return $icon;
-		}
-
-		return FALSE;
 	}
 
 	// @OLD: `Core\WordPress::getEditorialUserID()`

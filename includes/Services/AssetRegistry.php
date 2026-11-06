@@ -212,7 +212,7 @@ class AssetRegistry extends gEditorial\Service
 				// `'title'  => gEditorial()->module( 'config' )->_get_icon(),` // WTF??!
 				'href'   => $link,
 				'meta'   => [
-					'title' => self::system() ?: _x( 'Editorial', 'Adminbar Node', 'geditorial' ),
+					'title' => gEditorial\Plugin::system() ?: _x( 'Editorial', 'Adminbar Node', 'geditorial' ),
 					'class' => self::dsh( static::BASE, 'adminbar', 'node', 'icononly' ),
 				],
 			] );
@@ -222,6 +222,7 @@ class AssetRegistry extends gEditorial\Service
 			$wp_admin_bar->add_node( $node );
 	}
 
+	// TODO: register hashed SVG icons as CSS variables
 	public static function icon( string $name, string $group, array $extra = [], bool $enqueue = TRUE ): false|string|array
 	{
 		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {

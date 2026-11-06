@@ -453,7 +453,7 @@ class Module extends WordPress\Module
 				continue;
 
 			$this->filter_set(
-				sprintf( 'theme_%s_templates', $this->constant( $constant ) ),
+				self::und( 'theme', $this->constant( $constant ), 'templates' ),
 				Core\Arraay::mapAssoc( $callback, $templates )
 			);
 		}
@@ -479,15 +479,16 @@ class Module extends WordPress\Module
 	protected function get_global_fields(): array { return []; }
 
 	protected function get_module_templates(): array { return []; }
+	protected function get_module_blocktypes(): array { return []; }
 
 	// NOTE: do not use `thick-box` anymore!
 	// NOTE: must `add_thickbox()` on load
 	public function do_render_thickbox_mainbutton(
 		object $post,
 		string $context = 'framepage',
-		array $extra = [],
-		bool $inline = FALSE,
-		string $width = '800',
+		array  $extra   = [],
+		bool   $inline  = FALSE,
+		string $width   = '800',
 	): void {
 
 		// NOTE: for inline only: modal id must be: `{$base}-{$module}-thickbox-{$context}`
@@ -636,7 +637,7 @@ class Module extends WordPress\Module
 	protected function _hook_terms_meta_field(
 		string $constant,
 		string $field_key,
-		array $field_args = [],
+		array  $field_args = [],
 	): bool {
 
 		if ( ! gEditorial()->enabled( 'terms' ) )
@@ -701,8 +702,8 @@ class Module extends WordPress\Module
 	}
 
 	protected function raise_resources(
-		int $count = 1,
-		int $per = 60,
+		int     $count   = 1,
+		int     $per     = 60,
 		?string $context = NULL,
 	): false|int|string {
 

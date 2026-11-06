@@ -13,8 +13,6 @@ trait Deprecated
 	#[\Deprecated( 'USE `$this->get_adminpage_url( FALSE )`' )]
 	public function get_adminmenu( $page = TRUE, $extra = [] )
 	{
-		self::_dep( '$this->get_adminpage_url( FALSE )' );
-
 		if ( $page )
 			return $this->classs();
 
@@ -612,8 +610,6 @@ trait Deprecated
 	#[\Deprecated( 'USE `comments__handle_default_status()`' )]
 	public function get_default_comment_status( $status, $posttype, $comment_type )
 	{
-		self::_dep( '$this->comments__handle_default_status()' );
-
 		return $this->get_setting( 'comment_status', $status );
 	}
 

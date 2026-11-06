@@ -95,7 +95,12 @@ class Meta extends gEditorial\Module
 				'print_title' => _x( 'Print Title', 'Titles', 'geditorial-meta' ),
 				'print_date'  => _x( 'Print Date', 'Titles', 'geditorial-meta' ),
 
-				'published'     => _x( 'Published', 'Titles', 'geditorial-meta' ),
+				'published'  => _x( 'Published', 'Titles', 'geditorial-meta' ),
+				'received'   => _x( 'Received', 'Titles', 'geditorial-meta' ),
+				'accepted'   => _x( 'Accepted', 'Titles', 'geditorial-meta' ),
+				'introduced' => _x( 'Introduced', 'Titles', 'geditorial-meta' ),
+				'released'   => _x( 'Released', 'Titles', 'geditorial-meta' ),
+
 				'status_string' => _x( 'Status', 'Titles', 'geditorial-meta' ),
 				'source_title'  => _x( 'Source Title', 'Titles', 'geditorial-meta' ),
 				'source_url'    => _x( 'Source URL', 'Titles', 'geditorial-meta' ),
@@ -165,7 +170,12 @@ class Meta extends gEditorial\Module
 				'print_title' => _x( 'Text to Overwrite the Original Title on Printing', 'Descriptions', 'geditorial-meta' ),
 				'print_date'  => _x( 'Date to Overwrite the Original Date on Printing', 'Descriptions', 'geditorial-meta' ),
 
-				'published'     => _x( 'Text to indicate the original date of the content', 'Descriptions', 'geditorial-meta' ),
+				'published'  => _x( 'Text to indicate the original date of the content.', 'Descriptions', 'geditorial-meta' ),
+				'received'   => _x( 'Text to indicate the reception date of the content.', 'Descriptions', 'geditorial-meta' ),
+				'accepted'   => _x( 'Text to indicate the acceptance date of the content.', 'Descriptions', 'geditorial-meta' ),
+				'introduced' => _x( 'Text to indicate the introduce date of the content.', 'Descriptions', 'geditorial-meta' ),
+				'released'   => _x( 'Text to indicate the release date of the content.', 'Descriptions', 'geditorial-meta' ),
+
 				'status_string' => _x( 'Text to indicate the current status of the content', 'Descriptions', 'geditorial-meta' ),
 				'source_title'  => _x( 'Custom title for the source of the content', 'Descriptions', 'geditorial-meta' ),
 				'source_url'    => _x( 'Custom URL to the source of the content', 'Descriptions', 'geditorial-meta' ),
@@ -262,7 +272,13 @@ class Meta extends gEditorial\Module
 					'alt_title'     => [ 'type' => 'text' ],
 					'print_title'   => [ 'type' => 'text' ],
 					'print_date'    => [ 'type' => 'date' ],
-					'published'     => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+
+					'published'  => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+					'received'   => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+					'accepted'   => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+					'introduced' => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+					'released'   => [ 'type' => 'datestring', 'quickedit' => TRUE ],
+
 					'status_string' => [ 'type' => 'text', 'quickedit' => TRUE ],
 					'source_title'  => [ 'type' => 'text' ],
 					'source_url'    => [ 'type' => 'link' ],
@@ -678,6 +694,9 @@ class Meta extends gEditorial\Module
 		$actions    = [];
 		$supported  = [
 			'published',
+			'received',
+			'accepted',
+			'introduced',
 			'released',
 			'publication_date',
 			'creation_date',

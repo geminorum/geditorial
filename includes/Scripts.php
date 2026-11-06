@@ -4,7 +4,6 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 class Scripts extends WordPress\Main
 {
-
 	const BASE    = 'geditorial';
 	const PATH    = GEDITORIAL_DIR;
 	const URL     = GEDITORIAL_URL;

@@ -317,7 +317,7 @@ class Personage extends gEditorial\Module
 					'website_url'    => [ 'type' => 'link',    'order' => 610 ],
 					'wiki_url'       => [ 'type' => 'link',    'order' => 620 ],
 					'email_address'  => [ 'type' => 'email',   'order' => 630 ],
-					'contact_string' => [ 'type' => 'contact', 'order' => 640 ],   // url/email/phone
+					'contact_string' => [ 'type' => 'contact', 'order' => 640 ],
 				],
 			],
 		];

@@ -8,7 +8,6 @@ use geminorum\gEditorial\WordPress;
 
 class ModuleHelper extends gEditorial\Helper
 {
-
 	const MODULE = 'people';
 
 	// TODO: must returns array of options

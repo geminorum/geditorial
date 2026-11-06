@@ -11,15 +11,15 @@ trait CorePostTypes
 {
 	public function register_posttype(
 		string $constant,
-		array $atts = [],
-		array $settings_atts = [],
-		array $taxonomies = [ 'post_tag' ],
+		array  $arguments          = [],
+		array  $settings_arguments = [],
+		array  $taxonomies         = [ 'post_tag' ],
 	): false|object {
 
 		$posttype = $this->constant( $constant );
 		$plural   = str_replace( '_', '-', Core\L10n::pluralize( $posttype ) );
 
-		$args = self::recursiveParseArgs( $atts, [
+		$args = self::recursiveParseArgs( $arguments, [
 			'description'   => $this->strings['labels'][$constant]['description'] ?? '',
 			'show_in_menu'  => NULL, // or TRUE or `$parent_slug`
 			'menu_position' => $this->positions[$constant] ?? 4,
@@ -83,7 +83,7 @@ trait CorePostTypes
 			$args['labels'] = $this->get_posttype_labels( $constant );
 
 		if ( ! array_key_exists( 'taxonomies', $args ) )
-			$args['taxonomies'] = is_null( $taxonomies ) ? $this->taxonomies() : $taxonomies;
+			$args['taxonomies'] = $taxonomies ?? $this->taxonomies();
 
 		if ( ! array_key_exists( 'supports', $args ) )
 			$args['supports'] = $this->get_posttype_supports( $constant );
@@ -108,7 +108,7 @@ trait CorePostTypes
 			/// after register
 			'no_autosave' => NULL,
 			'module_link' => (bool) in_array( $constant, [ 'main_posttype', 'primary_posttype' ], TRUE ),
-		], $settings_atts );
+		], $settings_arguments );
 
 		// NOTE: apply settings BEFORE registration
 		foreach ( $settings as $setting => $value ) {

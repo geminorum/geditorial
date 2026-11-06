@@ -75,11 +75,9 @@ class Settings extends WordPress\Main
 	}
 
 	// NOTE: better to use `$this->get_module_url()`
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `Settings::getURLbyContext()`')]
 	public static function subURL( $sub = FALSE, $context = 'reports', $extra = [] )
 	{
-		self::_dep( 'Settings::getURLbyContext()' );
-
 		switch ( $context ) {
 			case 'reports' : $url = self::reportsURL();  break;
 			case 'settings': $url = self::settingsURL(); break;

@@ -449,14 +449,11 @@ class ModuleHelper extends gEditorial\Helper
 		);
 	}
 
-	// NOTE: DEPRECATED: use `get_posts_connected()` on main module class
 	// NOTE: we can query multiple days at once but the db takes forever to respond!
 	// NOTE: does not handle sorting by the day data!
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `$this->get_posts_connected()`' )]
 	public static function getPostsConnected( $atts = [], $constants = NULL )
 	{
-		self::_dep( 'get_posts_connected()' );
-
 		$args = self::parsed( [
 			'the_day' => [],
 			'today'   => [],

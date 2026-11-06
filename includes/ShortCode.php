@@ -12,52 +12,58 @@ class ShortCode extends WordPress\Main
 		return gEditorial();
 	}
 
-	public static function wrap( ?string $html, false|string $suffix = '', array $args = [], bool $block = TRUE, string|array $extra = [] )
-	{
+	public static function wrap(
+		?string      $html,
+		false|string $suffix = '',
+		array        $args   = [],
+		bool         $block  = TRUE,
+		string|array $extra  = [],
+	): ?string {
+
 		return WordPress\ShortCode::wrap(
 			$html,
 			$suffix ?: '',
 			$args,
 			$block,
 			$extra,
-			static::BASE
+			static::BASE,
 		);
 	}
 
 	/**
 	 * Retrieves given term as title of the list.
 	 *
-	 * @param int|object $term_or_id
+	 * @param mixed $term
 	 * @param string $taxonomy
-	 * @param array $atts
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function termTitle( $term_or_id, $taxonomy = NULL, $atts = [] )
+	public static function termTitle( mixed $term, ?string $taxonomy = NULL, array $arguments = [] ): string
 	{
-		if ( ! $term = WordPress\Term::get( $term_or_id, $taxonomy ?: '' ) )
+		if ( ! $term = WordPress\Term::get( $term, $taxonomy ?: '' ) )
 			return '';
 
 		$args = self::parsed( [
-			'title'          => NULL,                             // '<a href="%2$s">%1$s</a>', // `FALSE` to disable
+			'title'          => NULL,                             // `<a href="%2$s">%1$s</a>` // `FALSE` to disable
 			'title_cb'       => FALSE,                            // Call-back for title
 			'title_link'     => NULL,                             // `anchor` for slug anchor, `FALSE` to disable
 			'title_title'    => '',
-			'title_title_cb' => FALSE,                            // Call-back for title attr
+			'title_title_cb' => FALSE,                            // Call-back for title attribute
 			'title_tag'      => 'h3',
 			'title_anchor'   => 'term-%2$s',
 			'title_class'    => '-title',
 			'title_dummy'    => '<span class="-dummy"></span>',
-			'title_after'    => '',                               // '<div class="-desc">%3$s</div>',
-		], $atts );
+			'title_after'    => '',                               // `<div class="-desc">%3$s</div>`
+		], $arguments );
 
 		$text = WordPress\Term::title( $term );
 		$link = WordPress\Term::link( $term );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
-			$args['title'] = call_user_func_array( $args['title_cb'], [ $term, $atts, $text, $link ] );
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $term, $arguments, $text, $link ] );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $atts, $text ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $term, $arguments, $text ] );
 
 		else if ( $args['title_title'] )
 			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
@@ -127,14 +133,14 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given term as an item on the list.
 	 *
-	 * @param int|object $term
-	 * @param array $atts
+	 * @param mixed $term
+	 * @param array $arguments
 	 * @param string $before
 	 * @param string $after
-	 * @param string $fallback
+	 * @param false|string $fallback
 	 * @return string
 	 */
-	public static function termItem( $term, $atts = [], $before = '', $after = '', $fallback = '' )
+	public static function termItem( mixed $term, array $arguments = [], string $before = '', string $after = '', false|string $fallback = '' ): false|string
 	{
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
@@ -146,12 +152,12 @@ class ShortCode extends WordPress\Main
 			'item_title'    => '',                               // Use `%s` for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => FALSE,                            // $term->taxonomy.'-%2$s',
+			'item_anchor'   => FALSE,                            // `$term->taxonomy.'-%2$s'`
 			'item_class'    => '-item do-sincethen',
 			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
 			'item_after_cb' => FALSE,
-		], $atts );
+		], $arguments );
 
 		$text = WordPress\Term::title( $term );
 		$link = WordPress\Term::link( $term );
@@ -219,15 +225,21 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given term as an image on the list.
 	 *
-	 * @param int|object $term
-	 * @param array $atts
+	 * @param mixed $term
+	 * @param array $arguments
 	 * @param string $before
 	 * @param string $after
-	 * @param string $fallback
-	 * @return string
+	 * @param false|string $fallback
+	 * @return false|string
 	 */
-	public static function termImage( $term, $atts = [], $before = '', $after = '', $fallback = '' )
-	{
+	public static function termImage(
+		mixed        $term,
+		array        $arguments = [],
+		string       $before    = '',
+		string       $after     = '',
+		false|string $fallback  = '',
+	): false|string {
+
 		if ( ! $term = WordPress\Term::get( $term ) )
 			return $fallback;
 
@@ -238,7 +250,7 @@ class ShortCode extends WordPress\Main
 			'item_title'          => '',                               // Use `%s` for term title
 			'item_title_cb'       => FALSE,
 			'item_tag'            => 'li',
-			'item_anchor'         => FALSE,                            // $term->taxonomy.'-%2$s',
+			'item_anchor'         => FALSE,                            // `$term->taxonomy.'-%2$s'`
 			'item_class'          => '-item -tile do-sincethen',
 			'item_dummy'          => '<span class="-dummy"></span>',
 			'item_after'          => '',
@@ -249,7 +261,7 @@ class ShortCode extends WordPress\Main
 			'item_image_loading'  => 'lazy',                           // `FALSE` to disable
 			'item_image_decoding' => 'async',                          // `FALSE` to disable
 			'item_image_empty'    => FALSE,
-		], $atts );
+		], $arguments );
 
 		if ( ! $image_id = WordPress\Taxonomy::getThumbnailID( $term->term_id, $args['item_image_metakey'] ) )
 			return $fallback;
@@ -334,11 +346,11 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given post-type as title of the list.
 	 *
-	 * @param string|object $posttype
-	 * @param array $atts
+	 * @param mixed $posttype
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function posttypeTitle( $posttype = NULL, $atts = [] )
+	public static function posttypeTitle( mixed $posttype = NULL, array $arguments = [] ): string
 	{
 		if ( ! $posttype = WordPress\PostType::object( $posttype ) )
 			return '';
@@ -354,7 +366,7 @@ class ShortCode extends WordPress\Main
 			'title_class'    => '-title',
 			'title_dummy'    => '<span class="-dummy"></span>',
 			'title_label'    => 'all_items',
-		], $atts );
+		], $arguments );
 
 		if ( 'posttype' === $args['title'] )
 			$args['title'] = NULL; // reset
@@ -363,7 +375,7 @@ class ShortCode extends WordPress\Main
 		$link = WordPress\PostType::link( $posttype->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
-			$args['title'] = call_user_func_array( $args['title_cb'], [ $posttype, $atts, $text, $link ] );
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $posttype, $arguments, $text, $link ] );
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
@@ -372,7 +384,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $posttype, $atts, $text ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $posttype, $arguments, $text ] );
 
 		else if ( $args['title_title'] )
 			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
@@ -413,11 +425,11 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given taxonomy as title of the list.
 	 *
-	 * @param string|object $taxonomy
-	 * @param array $atts
+	 * @param mixed $taxonomy
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function taxonomyTitle( $taxonomy = NULL, $atts = [] )
+	public static function taxonomyTitle( mixed $taxonomy = NULL, array $arguments = [] ): string
 	{
 		if ( ! $taxonomy = WordPress\Taxonomy::object( $taxonomy ) )
 			return '';
@@ -433,7 +445,7 @@ class ShortCode extends WordPress\Main
 			'title_class'    => '-title',
 			'title_dummy'    => '<span class="-dummy"></span>',
 			'title_label'    => 'all_items',
-		], $atts );
+		], $arguments );
 
 		if ( 'taxonomy' === $args['title'] )
 			$args['title'] = NULL; // reset
@@ -442,7 +454,7 @@ class ShortCode extends WordPress\Main
 		$link = WordPress\Taxonomy::link( $taxonomy->name );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
-			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $atts, $text, $link ] );
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $taxonomy, $arguments, $text, $link ] );
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
@@ -451,7 +463,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $taxonomy, $atts, $text ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $taxonomy, $arguments, $text ] );
 
 		else if ( $args['title_title'] )
 			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
@@ -492,12 +504,15 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given post as title of the list.
 	 *
-	 * @param int|object $post
-	 * @param array $atts
+	 * @param mixed $post
+	 * @param array $arguments
 	 * @return string
 	 */
-	public static function postTitle( $post = NULL, $atts = [] )
+	public static function postTitle( mixed $post = NULL, $arguments = [] ): string
 	{
+		if ( ! $post = WordPress\Post::get( $post ) )
+			return '';
+
 		$args = self::parsed( [
 			'title'            => NULL,                             // `FALSE` to disable
 			'title_cb'         => FALSE,                            // Call-back for title
@@ -509,13 +524,13 @@ class ShortCode extends WordPress\Main
 			'title_anchor'     => 'post-%2$s',
 			'title_class'      => '-title',
 			'title_dummy'      => '<span class="-dummy"></span>',
-		], $atts );
+		], $arguments );
 
 		$text = WordPress\Post::title( $post, FALSE );
 		$link = WordPress\Post::link( $post, '' );
 
 		if ( $args['title_cb'] && is_callable( $args['title_cb'] ) )
-			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $atts, $text, $link ] );
+			$args['title'] = call_user_func_array( $args['title_cb'], [ $post, $arguments, $text, $link ] );
 
 		if ( is_null( $args['title'] ) )
 			$args['title'] = $text;
@@ -524,7 +539,7 @@ class ShortCode extends WordPress\Main
 			$args['title'] = sprintf( $args['title'], ( $text ?: '' ) );
 
 		if ( $args['title_title_cb'] && is_callable( $args['title_title_cb'] ) )
-			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $atts, $text ] );
+			$attr = call_user_func_array( $args['title_title_cb'], [ $post, $arguments, $text ] );
 
 		else if ( $args['title_title'] )
 			$attr = sprintf( $args['title_title'], ( $text ?: '' ) );
@@ -576,13 +591,13 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given post as an item on the list.
 	 *
-	 * @param int|object $post
-	 * @param array $atts
+	 * @param mixed $post
+	 * @param array $arguments
 	 * @param string $before
 	 * @param string $after
 	 * @return string
 	 */
-	public static function postItem( $post = NULL, $atts = [], $before = '', $after = '' )
+	public static function postItem( mixed $post = NULL, array $arguments = [], string $before = '', string $after = '' ): string
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return '';
@@ -605,7 +620,7 @@ class ShortCode extends WordPress\Main
 			'order_before'  => FALSE,
 			'order_zeroise' => FALSE,
 			'order_sep'     => ' &ndash; ',
-		], $atts );
+		], $arguments );
 
 		$text = WordPress\Post::title( $post );
 		$link = WordPress\Post::link( $post, '' );
@@ -730,19 +745,19 @@ class ShortCode extends WordPress\Main
 	/**
 	 * Retrieves given post as an image on the list.
 	 *
-	 * @param object $post
-	 * @param array $atts
+	 * @param mixed $post
+	 * @param array $arguments
 	 * @param string $before
 	 * @param string $after
-	 * @param string $fallback
-	 * @return string
+	 * @param false|string $fallback
+	 * @return false|string
 	 */
 	public static function postImage(
-		mixed $post = NULL,
-		array $atts = [],
-		string $before = '',
-		string $after = '',
-		false|string $fallback = '',
+		mixed        $post      = NULL,
+		array        $arguments = [],
+		string       $before    = '',
+		string       $after     = '',
+		false|string $fallback  = '',
 	): false|string {
 
 		if ( ! $post = WordPress\Post::get( $post ) )
@@ -766,7 +781,7 @@ class ShortCode extends WordPress\Main
 			'item_image_loading'  => 'lazy',                           // `FALSE` to disable
 			'item_image_decoding' => 'async',                          // `FALSE` to disable
 			'item_image_empty'    => FALSE,
-		], $atts );
+		], $arguments );
 
 		if ( ! $image_id = WordPress\PostType::getThumbnailID( $post->ID, $args['item_image_metakey'] ) )
 			return $fallback;
@@ -858,8 +873,14 @@ class ShortCode extends WordPress\Main
 	 * @param string $module
 	 * @return array
 	 */
-	public static function getDefaults( $posttype = '', $taxonomy = '', $posttypes = [], $taxonomies = [], $module = NULL )
-	{
+	public static function getDefaults(
+		string  $posttype   = '',
+		string  $taxonomy   = '',
+		array   $posttypes  = [],
+		array   $taxonomies = [],
+		?string $module     = NULL,
+	): array {
+
 		return [
 			'taxonomy'           => $taxonomy,
 			'taxonomies'         => $taxonomies,
@@ -893,7 +914,7 @@ class ShortCode extends WordPress\Main
 			'item_title'    => '',                               // Use `%s` for post title
 			'item_title_cb' => FALSE,
 			'item_tag'      => 'li',
-			'item_anchor'   => FALSE,                            // $posttype.'-%2$s',
+			'item_anchor'   => FALSE,                            // `$posttype.'-%2$s'`
 			'item_class'    => '-item do-sincethen',
 			'item_dummy'    => '<span class="-dummy"></span>',
 			'item_after'    => '',
@@ -938,26 +959,34 @@ class ShortCode extends WordPress\Main
 		];
 	}
 
-	// list: `assigned`: posts by terms
-	// list: `paired`: posts by meta (PAIRED API)
-	// list: `objects2objects`: posts by `p2p`/`o2o`
-	// list: `metadata`: posts by metadata comparison
-	// list: `children`: posts by parent of another post-type.
-	// list: `attached`: posts by inheritance
-	// list: `alphabetized`: posts sorted by alphabet // TODO!
-	// list: `custom`: posts by id list // TODO!
-	public static function listPosts( $list, $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
-	{
+	// `assigned`: posts by terms
+	// `paired`: posts by meta (PAIRED API)
+	// `objects2objects`: posts by `p2p`/`o2o`
+	// `metadata`: posts by metadata comparison
+	// `children`: posts by parent of another post-type
+	// `attached`: posts by inheritance
+	// `alphabetized`: posts sorted by alphabet // TODO!
+	// `custom`: posts by id list // TODO!
+	public static function listPosts(
+		string  $list,
+		string  $posttype,
+		string  $taxonomy,
+		array   $arguments = [],
+		?string $content   = NULL,
+		string  $tag       = '',
+		?string $module    = NULL,
+	): ?string {
+
 		$args = WordPress\ShortCode::attributes(
 			self::getDefaults(
 				$posttype,
 				$taxonomy,
 				[],
 				[],
-				$module
+				$module,
 			),
-			$atts,
-			$tag
+			$arguments,
+			$tag,
 		);
 
 		if ( FALSE === $args['context'] )
@@ -1072,7 +1101,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Strings::getSeparated( $args['posttypes'] ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 		} else if ( 'children' === $list ) {
@@ -1098,7 +1127,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Strings::getSeparated( $args['posttypes'] ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 			$list_class[] = '-children-list';
@@ -1121,7 +1150,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 		} else if ( $args['slug'] ) {
@@ -1140,7 +1169,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 		} else if ( $posttype && is_post_type_archive( $posttype ) ) {
@@ -1162,7 +1191,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 		} else if ( 'paired' === $list && $posttype && is_singular( $posttype ) ) {
@@ -1242,7 +1271,7 @@ class ShortCode extends WordPress\Main
 			if ( $args['exclude_posttypes'] )
 				$query['post_type'] = array_diff(
 					WordPress\Taxonomy::types( $term ),
-					WordPress\Strings::getSeparated( $args['exclude_posttypes'] )
+					WordPress\Strings::getSeparated( $args['exclude_posttypes'] ),
 				);
 
 		} else if ( 'paired' === $list || ( 'assigned' === $list && $posttype && is_singular( $posttype ) ) ) {
@@ -1320,7 +1349,8 @@ class ShortCode extends WordPress\Main
 				$items = Template::reorderPosts( $items,
 					$args['field_module'],
 					$args['order_start'],
-					$args['order_order'] );
+					$args['order_order'],
+				);
 		}
 
 		foreach ( $items as $item ) {
@@ -1363,12 +1393,9 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'assigned' )`
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `ShortCode::listPosts( \'assigned\' )`' )]
 	public static function getTermPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dep( 'ShortCode::listPosts( \'assigned\' )' );
-
 		$args = WordPress\ShortCode::attributes( self::getDefaults( $posttype, $taxonomy, [ $posttype ] ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -1522,13 +1549,10 @@ class ShortCode extends WordPress\Main
 		return $html;
 	}
 
-	// NOTE: DEPRECATED: use `ShortCode::listPosts( 'paired' )`
 	// OLD: `::getAssocPosts()`
-	#[\Deprecated()]
+	#[\Deprecated( 'USE `ShortCode::listPosts( \'paired\' )`' )]
 	public static function getPairedPosts( $posttype, $taxonomy, $atts = [], $content = NULL, $tag = '' )
 	{
-		self::_dep( 'ShortCode::listPosts( \'paired\' )' );
-
 		$args = WordPress\ShortCode::attributes( self::getDefaults( $posttype, $taxonomy ), $atts, $tag );
 
 		if ( FALSE === $args['context'] )
@@ -1686,18 +1710,25 @@ class ShortCode extends WordPress\Main
 	// list: `allitems`: terms for display
 	// list: `thepost`: terms for the post
 	// list: `alphabetized`: terms sorted by alphabet // TODO!
-	public static function listTerms( $list, $taxonomy, $atts = [], $content = NULL, $tag = '', $module = NULL )
-	{
+	public static function listTerms(
+		string  $list,
+		string  $taxonomy,
+		array   $arguments = [],
+		?string $content   = NULL,
+		string  $tag       = '',
+		?string $module    = NULL,
+	): ?string {
+
 		$args = WordPress\ShortCode::attributes(
 			self::getDefaults(
 				'',
 				$taxonomy,
 				[],
 				[],
-				$module
+				$module,
 			),
-			$atts,
-			$tag
+			$arguments,
+			$tag,
 		);
 
 		if ( FALSE === $args['context'] )
@@ -1792,8 +1823,8 @@ class ShortCode extends WordPress\Main
 			if ( $args['order_cb'] && is_callable( $args['order_cb'] ) )
 				$items = call_user_func_array( $args['order_cb'], [ $items, $args, $ref ] );
 
-			// else if ( is_null( $args['order_cb'] ) && $count > 1 )
-			// 	$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );
+			// `else if ( is_null( $args['order_cb'] ) && $count > 1 )`
+			// 	`$items = Template::reorderPosts( $items, $args['field_module'], $args['order_start'], $args['order_order'] );`
 		}
 
 		foreach ( $items as $item ) {
