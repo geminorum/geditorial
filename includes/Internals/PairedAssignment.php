@@ -26,8 +26,8 @@ trait PairedAssignment
 		if ( 'mainapp' === $target )
 			$this->paired_assignment__do_enqueue_app();
 
-		// else if ( 'summaryreport' === $target && $this->role_can( 'reports' ) )
-		// 	$this->action( 'admin_print_styles', 0, 99, 'summaryreport' );
+		// `else if ( 'summaryreport' === $target && $this->role_can( 'reports' ) )`
+		// 	`$this->action( 'admin_print_styles', 0, 99, 'summaryreport' );`
 	}
 
 	public function restapi_terms_rendered_paired_assignment( array $data, object $taxonomy, $params, $object_type, object $post ): array
@@ -65,7 +65,7 @@ trait PairedAssignment
 		return $data;
 	}
 
-	protected function paired_assignment__do_enqueue_app( $atts = [] )
+	protected function paired_assignment__do_enqueue_app( array $arguments = [] ): false|string
 	{
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
@@ -79,7 +79,7 @@ trait PairedAssignment
 			'summary' => FALSE, // `$this->constant( 'restapi_attribute' ),`
 			'context' => 'edit',
 			'strings' => [],
-		], $atts );
+		], $arguments );
 
 		if ( ! $this->role_can( $args['can'] ) || empty( $args['targets'] ) )
 			return FALSE;
@@ -133,10 +133,10 @@ trait PairedAssignment
 	}
 
 	protected function paired_assignment__do_render_iframe_content(
-		?string $context = NULL,
-		?string $assign_template = NULL,
+		?string $context          = NULL,
+		?string $assign_template  = NULL,
 		?string $reports_template = NULL,
-		?string $custom_app = NULL,
+		?string $custom_app       = NULL,
 	): bool {
 
 		if ( ! $post = self::req( 'linked' ) )
@@ -184,7 +184,10 @@ trait PairedAssignment
 	public function searchselect_result_image_for_term_paired_assignment( false|string $data, mixed $term, array $queried ): false|string
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			|| in_array( $queried['context'], [
+				'select2',
+				'pairedimports',
+			], TRUE ) )
 			return $data;
 
 		if ( ! $paired = $this->paired_get_constants() )
@@ -206,7 +209,10 @@ trait PairedAssignment
 	public function searchselect_result_extra_for_term_paired_assignment( array $data, mixed $term, array $queried ): array
 	{
 		if ( empty( $queried['context'] )
-			|| in_array( $queried['context'], [ 'select2', 'pairedimports' ], TRUE ) )
+			|| in_array( $queried['context'], [
+				'select2',
+				'pairedimports',
+			], TRUE ) )
 			return $data;
 
 		if ( ! $paired = $this->paired_get_constants() )
@@ -232,38 +238,42 @@ trait PairedAssignment
 
 	protected function paired_assignment_get_supported_fields( ?string $context, string $posttype ): array
 	{
-		return $this->filters( 'paired_supported_fields', [
+		return $this->filters( 'paired_supported_fields',
+			[
+				'overwrite' => [
+					'title'   => _x( 'Overwrite', 'Paired Assignment: Field Title', 'geditorial-admin' ),
+					'desc'    => _x( 'String to override the title.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
+					'type'    => 'string',
+					'default' => '',
+				],
 
-			'overwrite' => [
-				'title'   => _x( 'Overwrite', 'Paired Assignment: Field Title', 'geditorial-admin' ),
-				'desc'    => _x( 'String to override the title.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
-				'type'    => 'string',
-				'default' => '',
-			],
+				'notes' => [
+					'title'   => _x( 'Notes', 'Paired Assignment: Field Title', 'geditorial-admin' ),
+					'desc'    => _x( 'About relation to the post.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
+					'type'    => 'string',
+					'default' => '',
+				],
 
-			'notes' => [
-				'title'   => _x( 'Notes', 'Paired Assignment: Field Title', 'geditorial-admin' ),
-				'desc'    => _x( 'About relation to the post.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
-				'type'    => 'string',
-				'default' => '',
+				'featured' => [
+					'title'   => _x( 'Featured', 'Paired Assignment: Field Title', 'geditorial-admin' ),
+					'desc'    => _x( 'Features the connection on the extended list.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
+					'type'    => 'boolean',
+					'default' => FALSE,
+				],
 			],
-
-			'featured' => [
-				'title'   => _x( 'Featured', 'Paired Assignment: Field Title', 'geditorial-admin' ),
-				'desc'    => _x( 'Features the connection on the extended list.', 'Paired Assignment: Field Description', 'geditorial-admin' ),
-				'type'    => 'boolean',
-				'default' => FALSE,
-			],
-		], $context, $posttype );
+			$context,
+			$posttype,
+		);
 	}
 
 	protected function pairedmetabox__render_supportedbox_content(
-		string $linked_context,
-		?object $object,
+		string      $linked_context,
+		?object     $object,
 		array|false $box,
-		?string $context = NULL,
-		?object $screen = NULL,
+		?string     $context = NULL,
+		?object     $screen  = NULL,
 	): bool {
+
 		if ( ! $paired = $this->paired_get_constants() )
 			return FALSE;
 

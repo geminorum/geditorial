@@ -46,6 +46,7 @@ class Settings extends WordPress\Main
 
 				break;
 
+			case 'gizmos':
 			case 'settings':
 				break;
 

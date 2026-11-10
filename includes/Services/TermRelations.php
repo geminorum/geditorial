@@ -35,11 +35,17 @@ class TermRelations extends gEditorial\Service
 			'schema' => NULL,
 
 			'get_callback' => static function ( $params, $attr, $request, $object_type ) {
-				return self::getPostData( (int) $params['id'], $request['context'] );
+				return self::getPostData(
+					(int) $params['id'],
+					$request['context'],
+				);
 			},
 
 			'update_callback' => static function ( $data, $object ) {
-				return self::updatePostData( $object->ID, $data );
+				return self::updatePostData(
+					$object->ID,
+					$data,
+				);
 			},
 		] );
 
@@ -52,7 +58,7 @@ class TermRelations extends gEditorial\Service
 					: self::getTermData(
 						(int) $request['post'],
 						(int) $params['id'],
-						$request['context']
+						$request['context'],
 					);
 			},
 		] );
@@ -68,43 +74,46 @@ class TermRelations extends gEditorial\Service
 				} );
 	}
 
-	// NOTE: this will also effect the results on `get_the_terms` filter
-	public static function get_object_terms( $terms, $object_ids, $taxonomies, $args )
+	// NOTE: this will also affect the results on `get_the_terms` filter
+	public static function get_object_terms( mixed $terms, array $object_ids, array $taxonomies, array $args ): mixed
 	{
-		// bail if no terms found
+		// Bail if no terms found
 		if ( empty( $terms ) )
 			return $terms;
 
-		// bail if more than one object
+		// Bail if count only
+		if ( array_key_exists( 'count', $args ) && $args['count'] )
+			return $terms;
+
+		// Bail if more than one object
 		if ( count( $object_ids ) !== 1 || count( $taxonomies ) !== 1 )
 			return $terms;
 
-		// bail if no taxonomy or not supported
+		$fields = $args['fields'] ?? 'all';
+
+		if ( in_array( $fields, [
+			'count', // Bail if count only
+		], TRUE ) )
+			return $terms;
+
+		// Bail if `orderby` exists and is not `relatedmeta`
+		if ( array_key_exists( 'orderby', $args ) && static::CUSTOM_ORDER != $args['orderby'] )
+			return $terms;
+
+		// Bail if no taxonomy or not supported
 		$supported = array_keys( self::getTaxonomies() );
 
 		if ( empty( $supported ) || ! in_array( $taxonomies[0], $supported, TRUE ) )
 			return $terms;
 
-		// bail if `orderby` exists and is not `relatedmeta`
-		if ( array_key_exists( 'orderby', $args ) && static::CUSTOM_ORDER != $args['orderby'] )
-			return $terms;
-
-		// bail if count only
-		if ( array_key_exists( 'count', $args ) && $args['count'] )
-			return $terms;
-
-		$fields = empty( $args['fields'] ) ? 'all' : $args['fields'];
-
-		// bail if count only
-		if ( 'count' === $fields )
-			return $terms;
-
-		$metakey = self::getMetakey( static::FIELD_ORDER, $object_ids[0] );
-
-		return WordPress\Taxonomy::reorderTermsByMeta( $terms, $metakey, $fields );
+		return WordPress\Taxonomy::reorderTermsByMeta(
+			(array) $terms,
+			self::getMetakey( static::FIELD_ORDER, $object_ids[0] ),
+			$fields,
+		);
 	}
 
-	public static function updatePostData( $post, $data )
+	public static function updatePostData( mixed $post, array $data ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -120,9 +129,16 @@ class TermRelations extends gEditorial\Service
 				continue;
 
 			if ( ! empty( $raw['__delete'] ) ) {
-				wp_remove_object_terms( $post->ID, $term->term_id, $term->taxonomy );
+
+				wp_remove_object_terms(
+					$post->ID,
+					$term->term_id,
+					$term->taxonomy,
+				);
+
 				// MAYBE: delete all meta related!
 				// TODO: clean-up process for residual data
+
 				continue;
 			}
 
@@ -130,7 +146,7 @@ class TermRelations extends gEditorial\Service
 				$post->ID,
 				$term->term_id,
 				$term->taxonomy,
-				TRUE
+				TRUE,
 			);
 
 			if ( is_wp_error( $result ) )
@@ -154,19 +170,22 @@ class TermRelations extends gEditorial\Service
 							$meta = Core\Text::trim( $raw[$field] );
 					}
 
-					$filtered = apply_filters( self::und( static::BASE, 'sanitize_field_data' ),
+					$filtered = apply_filters( self::und( static::BASE, 'termrelations', 'sanitize_field_data' ),
 						$meta ?? FALSE,
 						$field,
 						$term,
 						$post,
-						$raw
+						$raw,
 					);
 
 					// skipped by filter!
 					if ( FALSE === $filtered )
 						continue;
 
-				} else if ( ! in_array( $field, [ static::FIELD_USERID, static::FIELD_TIMESTAMP ], TRUE ) ) {
+				} else if ( ! in_array( $field, [
+					static::FIELD_USERID,
+					static::FIELD_TIMESTAMP,
+				], TRUE ) ) {
 
 					continue;
 				}
@@ -185,14 +204,14 @@ class TermRelations extends gEditorial\Service
 				else
 					$result = update_term_meta( $term->term_id, $metakey, $filtered );
 
-				// if ( is_wp_error( $result ) )
+				// `if ( is_wp_error( $result ) )`
 			}
 		}
 
 		return TRUE;
 	}
 
-	public static function getPostData( $post, $context = 'view' )
+	public static function getPostData( mixed $post, ?string $context = 'view' ): array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return [];
@@ -215,7 +234,7 @@ class TermRelations extends gEditorial\Service
 		return $data;
 	}
 
-	private static function _getData( $post, $taxonomy, $terms = NULL, $context = 'view' )
+	private static function _getData( object $post, string $taxonomy, ?array $terms = NULL, ?string $context = 'view' ): array
 	{
 		$terms ??= get_the_terms( $post, $taxonomy ); // hits the cache
 
@@ -273,7 +292,7 @@ class TermRelations extends gEditorial\Service
 		return $list;
 	}
 
-	public static function getTermData( $post, $term, $context = 'view' )
+	public static function getTermData( mixed $post, mixed $term, ?string $context = 'view' ): false|array
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -289,7 +308,7 @@ class TermRelations extends gEditorial\Service
 		return empty( $data ) ? FALSE : reset( $data );
 	}
 
-	public static function getPostTypes( $taxonomies = NULL )
+	public static function getPostTypes( $taxonomies = NULL ): array
 	{
 		$taxonomies ??= self::getTaxonomies();
 
@@ -299,10 +318,10 @@ class TermRelations extends gEditorial\Service
 		return Core\Arraay::prepString( ...array_values( $taxonomies ) );
 	}
 
-	public static function getTaxonomies()
+	public static function getTaxonomies(): array
 	{
 		return WordPress\Taxonomy::get( 7, [
-			// 'show_ui'      => TRUE,
+			// `'show_ui'      => TRUE,`
 			'show_in_rest' => TRUE,
 			'_builtin'     => FALSE,
 
@@ -310,17 +329,21 @@ class TermRelations extends gEditorial\Service
 		] );
 	}
 
-	public static function get_supported( $taxonomy, $context = NULL, $posttype = FALSE )
+	public static function get_supported( string $taxonomy, ?string $context = NULL, false|string $posttype = FALSE ): array
 	{
 		return apply_filters( self::und( static::BASE, 'termrelations', 'supported' ), [
 			static::FIELD_ORDER     => NULL,
-			// static::FIELD_USERID    => NULL,
-			// static::FIELD_TIMESTAMP => NULL,
+			// `static::FIELD_USERID    => NULL,`
+			// `static::FIELD_TIMESTAMP => NULL,`
 		], $taxonomy, $context, $posttype );
 	}
 
-	public static function getMetakey( $key, $object_id, $for = 'post' )
+	public static function getMetakey( string $key, int $object_id, string $for = 'post' ): string
 	{
-		return sprintf( '_%3$s_%2$d_%1$s', $key, $object_id, $for );
+		return sprintf( '_%3$s_%2$d_%1$s',
+			$key,
+			$object_id,
+			$for,
+		);
 	}
 }

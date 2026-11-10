@@ -10,17 +10,15 @@ class ModuleHelper extends gEditorial\Helper
 {
 	const MODULE = 'national_library';
 
-	const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36';
-
-	public static function getRemoteBody( string $url ): false|string
+	public static function getRemoteBody( string $url, ?string $agent = NULL ): false|string
 	{
 		return WordPress\Remote::getHTML( $url, [
 			'timeout'    => 30,
-			'user-agent' => static::USER_AGENT,
+			'user-agent' => $agent ?? Core\Browser::USER_AGENT,
 		] );
 	}
 
-	public static function linkBib( $bib, $link = TRUE, $html = NULL, $class = FALSE )
+	public static function linkBib( string $bib, bool $link = TRUE, ?string $html = NULL, string|array $class = '' ): string
 	{
 		$url = sprintf( 'https://opac.nlai.ir/opac-prod/bibliographic/%d', $bib );
 
@@ -29,7 +27,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		return Core\HTML::tag( 'a', [
 			'href'     => $url,
-			'class'    => $class,
+			'class'    => $class ?: FALSE,
 			'data-bib' => $bib,
 			'title'    => _x( 'Book Page on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'      => 'noreferrer',
@@ -37,7 +35,7 @@ class ModuleHelper extends gEditorial\Helper
 		], $html ?? $bib );
 	}
 
-	public static function linkISBN( $isbn, $link = TRUE, $html = NULL, $class = FALSE )
+	public static function linkISBN( string $isbn, bool $link = TRUE, ?string $html = NULL, string|array $class = '' ): string
 	{
 		$base = 'https://opac.nlai.ir';
 		$url  = add_query_arg( [
@@ -60,7 +58,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		return Core\HTML::tag( 'a', [
 			'href'      => $url,
-			'class'     => $class,
+			'class'     => $class ?: FALSE,
 			'data-isbn' => $isbn,
 			'title'     => _x( 'Search ISBN on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
 			'rel'       => 'noreferrer',
@@ -68,9 +66,9 @@ class ModuleHelper extends gEditorial\Helper
 		], $html ?? Core\ISBN::prep( $isbn, TRUE ) );
 	}
 
-	public static function scrapeURLFromISBN( $isbn )
+	public static function scrapeURLFromISBN( mixed $isbn ): false|string
 	{
-		if ( ! $isbn )
+		if ( ! $isbn = Core\Text::force( $isbn ) )
 			return FALSE;
 
 		$base = 'https://opac.nlai.ir';
@@ -103,9 +101,9 @@ class ModuleHelper extends gEditorial\Helper
 		return $base.$brief;
 	}
 
-	public static function scrapeFipaFromURL( $url, $biblio = NULL, $isbn = NULL )
+	public static function scrapeFipaFromURL( mixed $url, ?string $biblio = NULL, ?string $isbn = NULL ): false|array
 	{
-		if ( ! $url )
+		if ( ! $url = Core\Text::force( $url ) )
 			return FALSE;
 
 		if ( ! $body = self::getRemoteBody( $url ) )
@@ -119,7 +117,7 @@ class ModuleHelper extends gEditorial\Helper
 			'rows'   => [],
 			'title'  => '',
 			'link'   => '',
-			// 'search' => $url ?? '',
+			// `'search' => $url ?? '',`
 			'biblio' => $biblio ?? '',
 			'isbn'   => $isbn ? Core\ISBN::sanitize( $isbn ) : '',
 		];
@@ -165,7 +163,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $data;
 	}
 
-	public static function getFibaByBib( $bib, $isbn = NULL )
+	public static function getFipaByBib( mixed $bib, ?string $isbn = NULL ): false|array
 	{
 		if ( WordPress\Strings::isEmpty( $bib ) )
 			return FALSE;
@@ -173,7 +171,7 @@ class ModuleHelper extends gEditorial\Helper
 		return self::scrapeFipaFromURL( self::linkBib( $bib, FALSE ), $bib, $isbn );
 	}
 
-	public static function getFibaByISBN( $isbn )
+	public static function getFipaByISBN( mixed $isbn ): false|array
 	{
 		if ( WordPress\Strings::isEmpty( $isbn ) )
 			return FALSE;
@@ -194,7 +192,7 @@ class ModuleHelper extends gEditorial\Helper
 		return FALSE;
 	}
 
-	public static function getTitle( $raw, $fallback = FALSE )
+	public static function getTitle( array $raw, ?string $fallback = '' ): ?string
 	{
 		if ( ! $parsed = self::parseFipa( $raw ) )
 			return $fallback;
@@ -204,7 +202,7 @@ class ModuleHelper extends gEditorial\Helper
 			: $fallback;
 	}
 
-	public static function parseFipa( $raw )
+	public static function parseFipa( array $raw ): array
 	{
 		$data = [
 			'title'   => [],
@@ -321,7 +319,7 @@ class ModuleHelper extends gEditorial\Helper
 		return $data;
 	}
 
-	public static function parsePeople( $batch, $featured = FALSE )
+	public static function parsePeople( array $batch, bool $featured = FALSE ): array
 	{
 		$parsed = [];
 
@@ -404,10 +402,8 @@ class ModuleHelper extends gEditorial\Helper
 		return $parsed;
 	}
 
-	public static function linkPeople( $criteria, $link = TRUE, $html = NULL )
+	public static function linkPeople( mixed $criteria, bool $link = TRUE, ?string $html = NULL ): false|string
 	{
-		$criteria = Core\Text::normalizeZWNJ( $criteria );
-
 		if ( WordPress\Strings::isEmpty( $criteria ) )
 			return FALSE;
 
@@ -431,15 +427,15 @@ class ModuleHelper extends gEditorial\Helper
 			return $url;
 
 		return Core\HTML::tag( 'a', [
-			'href'      => $url,
-			'data-isbn' => $criteria,
-			'title'     => _x( 'Search People on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
-			'rel'       => 'noreferrer',
-			'target'    => '_blank',
+			'href'          => $url,
+			'data-criteria' => $criteria,
+			'title'         => _x( 'Search People on Nali.ir', 'Helper: Title Attr', 'geditorial-national-library' ),
+			'rel'           => 'noreferrer',
+			'target'        => '_blank',
 		], $html ?? $criteria );
 	}
 
-	public static function generateHints( $raw, $post, $context, $queried )
+	public static function generateHints( array $raw, mixed $post, ?string $context, array $queried ): array
 	{
 		$hints = [];
 
@@ -459,7 +455,7 @@ class ModuleHelper extends gEditorial\Helper
 
 		foreach ( $data['people'] as $row )
 			$hints[] = [
-				'html'     => sprintf( '%s: %s', $row['label'], self::linkPeople( $row['raw'] ) ),
+				'html'     => sprintf( '%s: %s', $row['label'], self::linkPeople( Core\Text::normalizeZWNJ( $row['raw'] ) ) ),
 				'data'     => isset( $row['parsed'][0]['data'] ) ? $row['parsed'][0]['data'] : [],
 				'class'    => static::classs( 'people', isset( $row['parsed'][0]['flags'] ) ? $row['parsed'][0]['flags'] : [] ),
 				'source'   => static::MODULE,
@@ -470,17 +466,17 @@ class ModuleHelper extends gEditorial\Helper
 	}
 
 	/**
-	 * Generates data for a CSV row.
+	 * Generates data for a `CSV` row.
 	 *
-	 * @param string $isbn
+	 * @param mixed $isbn
 	 * @return array
 	 */
-	public static function getFipaRow( $isbn )
+	public static function getFipaRow( mixed $isbn ): array
 	{
 		if ( ! $sanitized = Core\ISBN::sanitize( $isbn ) )
 			return [];
 
-		if ( ! $raw = self::getFibaByISBN( $sanitized ) )
+		if ( ! $raw = self::getFipaByISBN( $sanitized ) )
 			return [];
 
 		$parsed = self::parseFipa( $raw );

@@ -17,7 +17,7 @@ class ShortCode extends WordPress\Main
 		false|string $suffix = '',
 		array        $args   = [],
 		bool         $block  = TRUE,
-		string|array $extra  = [],
+		array        $extra  = [],
 	): ?string {
 
 		return WordPress\ShortCode::wrap(

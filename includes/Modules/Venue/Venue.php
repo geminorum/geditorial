@@ -407,7 +407,7 @@ class Venue extends gEditorial\Module
 	public function meta_init(): void
 	{
 		$this->add_posttype_fields_for( 'meta', 'primary_posttype' );
-		// $this->add_posttype_fields_supported(); // FIXME: add fields first
+		// `$this->add_posttype_fields_supported();` // FIXME: add fields first
 	}
 
 	public function admin_menu(): void
@@ -483,7 +483,7 @@ class Venue extends gEditorial\Module
 			], (array) $atts ),
 			$content,
 			$this->constant( 'main_shortcode', $tag ),
-			$this->key
+			$this->key,
 		);
 	}
 

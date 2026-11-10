@@ -48,8 +48,10 @@ trait CorePostTypes
 			// 'rest_namespace' => 'wp/v2', // @SEE: https://core.trac.wordpress.org/ticket/54536
 			// 'late_route_registration' => TRUE, // A flag to direct the REST API controllers for autosave / revisions should be registered before/after the post type controller.
 
-			'can_export'          => TRUE,
-			'delete_with_user'    => FALSE,
+			'delete_with_user' => FALSE,
+			'randomable'       => FALSE,
+			'can_export'       => TRUE,
+
 			'exclude_from_search' => $this->get_setting( self::und( $constant, 'exclude_search' ), FALSE ),
 
 			/// gEditorial Props // TODO: move to settings

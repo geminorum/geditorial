@@ -301,10 +301,10 @@ class NationalLibrary extends gEditorial\Module
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
 
 			if ( $isbn = Core\ISBN::sanitize( $code ) )
-				$data = ModuleHelper::getFibaByISBN( $isbn );
+				$data = ModuleHelper::getFipaByISBN( $isbn );
 
 			else if ( Core\Validation::isBibliographic( $code ) )
-				$data = ModuleHelper::getFibaByBib( $code );
+				$data = ModuleHelper::getFipaByBib( $code );
 
 			else
 				$data = NULL; // avoid repeatable requests
@@ -573,10 +573,10 @@ class NationalLibrary extends gEditorial\Module
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
 
 			if ( $bib = $this->get_bib( $post ) )
-				$data = ModuleHelper::getFibaByBib( $bib );
+				$data = ModuleHelper::getFipaByBib( $bib );
 
 			else if ( $isbn = $this->get_isbn( $post ) )
-				$data = ModuleHelper::getFibaByISBN( $isbn );
+				$data = ModuleHelper::getFipaByISBN( $isbn );
 
 			else
 				$data = NULL; // avoid repeatable requests
@@ -669,10 +669,10 @@ class NationalLibrary extends gEditorial\Module
 		if ( FALSE === ( $data = get_transient( $key ) ) ) {
 
 			if ( $bib = $this->get_product_bib( $product ) )
-				$data = ModuleHelper::getFibaByBib( $bib );
+				$data = ModuleHelper::getFipaByBib( $bib );
 
 			else if ( $isbn = $this->get_product_isbn( $product ) )
-				$data = ModuleHelper::getFibaByISBN( $isbn );
+				$data = ModuleHelper::getFipaByISBN( $isbn );
 
 			else
 				$data = NULL; // avoid repeatable requests
@@ -795,28 +795,28 @@ class NationalLibrary extends gEditorial\Module
 		$bib_metakey  = $this->_get_posttype_bib_metakey( $posttype );
 		$isbn_metakey = $this->_get_posttype_isbn_metakey( $posttype );
 
-		if ( $data = ModuleHelper::getFibaByBib( self::req( $bib_metakey ) ) )
+		if ( $data = ModuleHelper::getFipaByBib( self::req( $bib_metakey ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'meta', FALSE, $bib_metakey ) ) )
+		else if ( $data = ModuleHelper::getFipaByBib( self::req( 'meta', FALSE, $bib_metakey ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'biblio' ) ) )
+		else if ( $data = ModuleHelper::getFipaByBib( self::req( 'biblio' ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByBib( self::req( 'bib' ) ) )
+		else if ( $data = ModuleHelper::getFipaByBib( self::req( 'bib' ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByISBN( self::req( $isbn_metakey ) ) )
+		else if ( $data = ModuleHelper::getFipaByISBN( self::req( $isbn_metakey ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'meta', FALSE, $isbn_metakey ) ) )
+		else if ( $data = ModuleHelper::getFipaByISBN( self::req( 'meta', FALSE, $isbn_metakey ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'isbn' ) ) )
+		else if ( $data = ModuleHelper::getFipaByISBN( self::req( 'isbn' ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
-		else if ( $data = ModuleHelper::getFibaByISBN( self::req( 'barcode' ) ) )
+		else if ( $data = ModuleHelper::getFipaByISBN( self::req( 'barcode' ) ) )
 			$this->cache[$posttype]['raw'] = $data;
 
 		else
@@ -968,10 +968,10 @@ class NationalLibrary extends gEditorial\Module
 
 		$html = '';
 
-		if ( $args['bib'] && $data = ModuleHelper::getFibaByBib( $args['bib'] ) )
+		if ( $args['bib'] && $data = ModuleHelper::getFipaByBib( $args['bib'] ) )
 			$html = Core\HTML::tableSimple( $data['rows'], [], FALSE, $this->_get_table_css_class( $args['context'] ) ); // not cached!
 
-		else if ( $args['isbn'] && $data = ModuleHelper::getFibaByISBN( $args['isbn'] ) )
+		else if ( $args['isbn'] && $data = ModuleHelper::getFipaByISBN( $args['isbn'] ) )
 			$html = Core\HTML::tableSimple( $data['rows'], [], FALSE, $this->_get_table_css_class( $args['context'] ) ); // not cached!
 
 		else if ( $post = WordPress\Post::get( $args['id'] ) )

@@ -119,7 +119,7 @@ class Shortcodes extends gEditorial\Module
 				'title' => $reports ? sprintf(
 					/* translators: `%s`: singular post-type label */
 					_x( 'View Short-code Reports for this %s', 'Node: Title', 'geditorial-shortcodes' ),
-					Services\CustomPostType::getLabel( $post, 'singular_name' )
+					Services\CustomPostType::getLabel( $post, 'singular_name' ),
 				) : '',
 			],
 		];
@@ -173,7 +173,7 @@ class Shortcodes extends gEditorial\Module
 		$shortcode = self::req( 'shortcode', 'none' );
 
 		if ( 'none' != $shortcode ) {
-			$query['s'] = '['.$shortcode;
+			$query['s']         = '['.$shortcode;
 			$extra['shortcode'] = $shortcode;
 		}
 
@@ -263,7 +263,7 @@ class Shortcodes extends gEditorial\Module
 	}
 
 	/**
-	 * Strips Orphan Short-codes
+	 * Strips Orphaned Short-codes!
 	 * Author: Meks - v1.2
 	 *
 	 * @source https://wordpress.org/plugins/remove-orphan-shortcodes/
@@ -279,30 +279,31 @@ class Shortcodes extends gEditorial\Module
 			return $content;
 
 		// Check for active short-codes
-		$active_shortcodes = ( is_array( $shortcode_tags ) && ! empty( $shortcode_tags ) )
-			? array_keys( $shortcode_tags ) : [];
+		// $active = ( is_array( $shortcode_tags ) && ! empty( $shortcode_tags ) )
+		// 	? array_keys( $shortcode_tags )
+		// 	: [];
+
+		$active = array_filter( array_keys( (array) $shortcode_tags ?? [] ) );
 
 		// Avoid `/` chars in content breaks `preg_replace`
-		$hack1   = md5( microtime( TRUE ) );
+		$hack1 = md5( microtime( TRUE ) );
+		$hack2 = md5( microtime( TRUE ) + 1 );
+
 		$content = str_replace( '[/', $hack1, $content );
-		$hack2   = md5( microtime( TRUE ) + 1 );
 		$content = str_replace( '/', $hack2, $content );
 		$content = str_replace( $hack1, '[/', $content );
-
-		if ( ! empty( $active_shortcodes ) ) {
-
-			// Be sure to keep active short-codes
-			$keep_active = implode( '|', $active_shortcodes );
-			$content     = preg_replace( "~(?:\[/?)(?!(?:$keep_active))[^/\]]+/?\]~s", '', $content );
-
-		} else {
-
-			// Strip all short-codes
-			$content = preg_replace( "~(?:\[/?)[^/\]]+/?\]~s", '', $content );
-		}
+		$content = preg_replace(
+			$active
+				// Be sure to keep active short-codes
+				? '~(?:\[/?)(?!(?:'.implode( '|', $active ).'))[^/\]]+/?\]~s'
+				// Strip all short-codes
+				: '~(?:\[/?)[^/\]]+/?\]~s',
+			'',
+			$content,
+		);
 
 		// Set `/` back to its place
-		return str_replace( $hack2, "/", $content );
+		return str_replace( $hack2, '/', $content );
 	}
 
 	// @SEE: https://github.com/seothemes/display-terms-shortcode/blob/master/display-terms-shortcode.php
