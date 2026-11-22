@@ -9,7 +9,6 @@ use geminorum\gEditorial\WordPress;
 
 trait MainDownload
 {
-
 	public function maindownload__get_link( object $post ): false|string
 	{
 		$link = $url = $attachment = FALSE;
@@ -20,7 +19,12 @@ trait MainDownload
 		else if ( $attachment = gEditorial\Template::getMetaFieldRaw( 'main_download_id', $post->ID ) )
 			$link = wp_get_attachment_url( (int) $attachment );
 
-		return $this->filters( 'main_download', $link, $post, $url, $attachment );
+		return $this->filters( 'main_download',
+			$link,
+			$post,
+			$url,
+			$attachment,
+		);
 	}
 
 	public function maindownload__get_file_data_for_latechores( mixed $post ): bool|array

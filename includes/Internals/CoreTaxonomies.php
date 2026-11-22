@@ -23,9 +23,9 @@ trait CoreTaxonomies
 	 */
 	public function register_taxonomy(
 		string $constant,
-		array $arguments = [],
-		mixed $targets = NULL,
-		array $settings_arguments = [],
+		array  $arguments          = [],
+		mixed  $targets            = NULL,
+		array  $settings_arguments = [],
 	): false|object {
 
 		$taxonomy = $this->constant( $constant );
@@ -51,7 +51,7 @@ trait CoreTaxonomies
 
 			'show_in_rest'   => TRUE,
 			'rest_base'      => NULL,
-			// 'rest_namespace' => 'wp/v2',   // @SEE: https://core.trac.wordpress.org/ticket/54536
+			// `'rest_namespace' => 'wp/v2',` // @SEE: https://core.trac.wordpress.org/ticket/54536
 
 			/// `gEditorial` Props
 			Services\Paired::PAIRED_POSTTYPE_PROP => FALSE,  // @SEE: `Paired::isTaxonomy()`
@@ -426,7 +426,7 @@ trait CoreTaxonomies
 		$object = register_taxonomy(
 			$taxonomy,
 			'post' === $target_object ? $targets : '',
-			$args
+			$args,
 		);
 
 		if ( self::isError( $object ) )
@@ -488,7 +488,7 @@ trait CoreTaxonomies
 			return Services\CustomTaxonomy::generateLabels(
 				gEditorial\Info::getNoop( $this->strings['noops'][$constant] ) ?: $this->strings['noops'][$constant],
 				$labels,
-				$this->constant( $constant )
+				$this->constant( $constant ),
 			);
 
 		return $labels;
@@ -548,7 +548,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 			gEditorial\MetaBox::checklistTerms( $post->ID, $args );
@@ -556,7 +556,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 		if ( FALSE !== $box )
@@ -594,7 +594,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 			gEditorial\MetaBox::checklistTerms( $post->ID, $args, $terms );
@@ -602,7 +602,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 		if ( FALSE !== $box )
@@ -639,7 +639,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 			gEditorial\MetaBox::checklistTerms( $post->ID, $args );
@@ -647,7 +647,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 		if ( FALSE !== $box )
@@ -671,7 +671,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
-			// 'header'   => FALSE === $box, // no need for header on dropdowns
+			// `'header'   => FALSE === $box,` // no need for header on dropdowns
 		];
 
 		if ( FALSE !== $box ) {
@@ -687,7 +687,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 			gEditorial\MetaBox::singleselectTerms( $post->ID, $args );
@@ -695,7 +695,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 		if ( FALSE !== $box )
@@ -719,7 +719,7 @@ trait CoreTaxonomies
 		$args = [
 			'taxonomy' => $taxonomy ?? $box['args']['taxonomy'],
 			'posttype' => $post->post_type,
-			// 'header'   => FALSE === $box, // no need for header on dropdowns
+			// `'header'   => FALSE === $box,` // no need for header on dropdowns
 		];
 
 		if ( FALSE !== $box ) {
@@ -738,7 +738,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'before' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 			gEditorial\MetaBox::singleselectTerms( $post->ID, $args );
@@ -746,7 +746,7 @@ trait CoreTaxonomies
 			do_action( $this->hook_base( $args['taxonomy'], 'metabox', 'after' ),
 				$args['taxonomy'],
 				$post,
-				$box
+				$box,
 			);
 
 		if ( FALSE !== $box )
@@ -774,9 +774,9 @@ trait CoreTaxonomies
 
 	// NOTE: reversed `$fallback`/`$fallback_key`
 	public function get_taxonomy_label(
-		string $constant,
-		string $label = 'name',
-		mixed $fallback = '',
+		string  $constant,
+		string  $label        = 'name',
+		mixed   $fallback     = '',
 		?string $fallback_key = NULL,
 	): mixed {
 
@@ -784,7 +784,7 @@ trait CoreTaxonomies
 			$this->constant( $constant, $constant ),
 			$label,
 			$fallback_key,
-			$fallback
+			$fallback,
 		);
 	}
 
@@ -840,8 +840,8 @@ trait CoreTaxonomies
 
 	protected function determine_taxonomy_meta_box_cb(
 		string $constant,
-		mixed $passed_argument = NULL,
-		bool $hierarchical = FALSE,
+		mixed  $passed_argument = NULL,
+		bool   $hierarchical    = FALSE,
 	): null|false|callable {
 
 		if ( ! $passed_argument && method_exists( $this, self::und( 'meta_box_cb', $constant ) ) )
@@ -888,7 +888,7 @@ trait CoreTaxonomies
 			[
 				'taxonomy'               => $taxonomy->name,
 				'__back_compat_meta_box' => TRUE,
-			]
+			],
 		);
 
 		return $metabox;
@@ -906,12 +906,12 @@ trait CoreTaxonomies
 	 * @return bool
 	 */
 	protected function coretax__hook_posttype_mainbox(
-		string $constant,
-		?object $screen = NULL,
-		bool $default_multiple_term = FALSE,
-		bool $default_advanced = FALSE,
-		bool $restricted = TRUE,
-		bool $check_advanced = TRUE
+		string  $constant,
+		?object $screen                = NULL,
+		bool    $default_multiple_term = FALSE,
+		bool    $default_advanced      = FALSE,
+		bool    $restricted            = TRUE,
+		bool    $check_advanced        = TRUE,
 	): false|string {
 
 		if ( $check_advanced && $this->get_setting( 'metabox_advanced', $default_advanced ) )
@@ -942,9 +942,9 @@ trait CoreTaxonomies
 	protected function hook_taxonomy_metabox_mainbox(
 		string $constant,
 		string|object $posttype,
-		mixed $callback = NULL,
-		?int $priority = NULL,
-		?string $context = NULL,
+		mixed   $callback = NULL,
+		?int    $priority = NULL,
+		?string $context  = NULL,
 	): false|string {
 
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
@@ -985,7 +985,7 @@ trait CoreTaxonomies
 		do_action( $this->hook_base( $taxonomy, 'metabox', 'before' ),
 			$taxonomy,
 			$post,
-			$box
+			$box,
 		);
 
 		\post_categories_meta_box( $post, $box );
@@ -993,7 +993,7 @@ trait CoreTaxonomies
 		do_action( $this->hook_base( $taxonomy, 'metabox', 'after' ),
 			$taxonomy,
 			$post,
-			$box
+			$box,
 		);
 
 		if ( FALSE !== $box )
@@ -1010,7 +1010,7 @@ trait CoreTaxonomies
 		do_action( $this->hook_base( $taxonomy, 'metabox', 'before' ),
 			$taxonomy,
 			$post,
-			$box
+			$box,
 		);
 
 		\post_tags_meta_box( $post, $box );
@@ -1018,7 +1018,7 @@ trait CoreTaxonomies
 		do_action( $this->hook_base( $taxonomy, 'metabox', 'after' ),
 			$taxonomy,
 			$post,
-			$box
+			$box,
 		);
 
 		if ( FALSE !== $box )
@@ -1217,7 +1217,7 @@ trait CoreTaxonomies
 	{
 		return $this->filter_append(
 			$this->hook_base( 'tabloid', 'post_terms_exclude_rendered' ),
-			$this->constants( $constants )
+			$this->constants( $constants ),
 		);
 	}
 
@@ -1238,7 +1238,7 @@ trait CoreTaxonomies
 			$taxonomy_features[$taxonomy][$feature] ?? $fallback,
 			$taxonomy,
 			$feature,
-			$fallback
+			$fallback,
 		);
 	}
 }

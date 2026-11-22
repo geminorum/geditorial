@@ -51,7 +51,7 @@ trait PairedMetaBox
 		string $posttype_constant,
 		string $paired_constant,
 		false|string $subterm_constant = FALSE,
-		bool $display_empty = FALSE,
+		bool         $display_empty    = FALSE,
 	): void {
 
 		$subterm   = FALSE;
@@ -64,7 +64,7 @@ trait PairedMetaBox
 		$terms     = WordPress\Taxonomy::getPostTerms( $paired, $post );
 		$none_main = Services\CustomPostType::getLabel( $posttype, 'show_option_select' );
 		$prefix    = $this->classs();
-		// $access    = $this->role_can( 'paired' );
+		// `$access    = $this->role_can( 'paired' );`
 
 		if ( $subterm_constant && $this->get_setting( 'subterms_support' ) ) {
 
@@ -135,11 +135,11 @@ trait PairedMetaBox
 	}
 
 	protected function _hook_paired_mainbox(
-		object $screen,
-		bool $remove_parent_order = TRUE,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		string|array $extra = [],
+		object       $screen,
+		bool         $remove_parent_order = TRUE,
+		?string      $context             = NULL,
+		?string      $metabox_context     = NULL,
+		string|array $extra               = [],
 	): false|string {
 
 		if ( ! $this->_paired || empty( $screen->post_type ) )
@@ -177,7 +177,7 @@ trait PairedMetaBox
 					$post,
 					$box,
 					NULL,
-					self::und( $context, $this->constant( $constants[0] ) )
+					self::und( $context, $this->constant( $constants[0] ) ),
 				);
 
 				do_action( 'geditorial_meta_render_metabox', $post, $box, NULL );
@@ -189,7 +189,7 @@ trait PairedMetaBox
 					$post,
 					$box,
 					$context,
-					$screen
+					$screen,
 				);
 
 			echo '</div>';
@@ -202,7 +202,7 @@ trait PairedMetaBox
 			$callback,
 			$screen,
 			$metabox_context ?? 'side',
-			'high'
+			'high',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -219,10 +219,10 @@ trait PairedMetaBox
 	}
 
 	protected function _hook_paired_listbox(
-		object $screen,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		string|array $extra = [],
+		object       $screen,
+		?string      $context         = NULL,
+		?string      $metabox_context = NULL,
+		string|array $extra           = [],
 	): false|string {
 
 		if ( ! $this->_paired || empty( $screen->post_type ) )
@@ -248,7 +248,7 @@ trait PairedMetaBox
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $this->constant( $constants[0] ) )
+				self::und( $context, $this->constant( $constants[0] ) ),
 			);
 
 			$term = $this->paired_get_to_term( $object->ID, $constants[0], $constants[1] );
@@ -271,7 +271,7 @@ trait PairedMetaBox
 			$callback,
 			$screen,
 			$metabox_context ?? 'advanced',
-			'low'
+			'low',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -297,7 +297,7 @@ trait PairedMetaBox
 		object $post,
 		false|array $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		$html    = '';
@@ -313,10 +313,10 @@ trait PairedMetaBox
 	}
 
 	protected function _hook_paired_pairedbox(
-		object $screen,
-		bool $menuorder = FALSE,
-		?string $context = NULL,
-		string|array $extra = [],
+		object       $screen,
+		bool         $menuorder = FALSE,
+		?string      $context   = NULL,
+		string|array $extra     = [],
 	): false|string {
 
 		if ( ! $this->_paired )
@@ -344,7 +344,7 @@ trait PairedMetaBox
 					$post,
 					$box,
 					NULL,
-					$action_context
+					$action_context,
 				);
 
 			} else {
@@ -358,7 +358,7 @@ trait PairedMetaBox
 						$post,
 						$box,
 						NULL,
-						$action_context
+						$action_context,
 					);
 			}
 
@@ -366,7 +366,7 @@ trait PairedMetaBox
 				$post,
 				$box,
 				NULL,
-				$action_context
+				$action_context,
 			);
 
 			if ( $menuorder )
@@ -381,7 +381,7 @@ trait PairedMetaBox
 			$this->strings_metabox_title_via_posttype( $this->constant( $constants[0] ), $context ),
 			$callback,
 			$screen,
-			'side'
+			'side',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -504,10 +504,10 @@ trait PairedMetaBox
 
 	// NOTE: alternative to `pairedbox`
 	protected function _hook_paired_overviewbox(
-		object $screen,
-		bool $menuorder = FALSE,
-		?string $context = NULL,
-		string|array $extra = [],
+		object       $screen,
+		bool         $menuorder = FALSE,
+		?string      $context   = NULL,
+		string|array $extra     = [],
 	): false|string {
 
 		if ( ! $this->_paired )
@@ -533,7 +533,7 @@ trait PairedMetaBox
 				$post,
 				$box,
 				NULL,
-				$action_context
+				$action_context,
 			);
 
 			// action for `Meta` Module
@@ -541,7 +541,7 @@ trait PairedMetaBox
 				$post,
 				$box,
 				NULL,
-				$action_context
+				$action_context,
 			);
 
 			if ( $menuorder )
@@ -556,7 +556,7 @@ trait PairedMetaBox
 			$this->strings_metabox_title_via_posttype( $this->constant( $constants[0] ), $context ),
 			$callback,
 			$screen,
-			'advanced'
+			'advanced',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -594,10 +594,10 @@ trait PairedMetaBox
 
 	// NOTE: alternative to `listbox`
 	protected function pairedmetabox__hook_megabox(
-		object $screen,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		string|array $extra = [],
+		object       $screen,
+		?string      $context         = NULL,
+		?string      $metabox_context = NULL,
+		string|array $extra           = [],
 	): false|string {
 
 		if ( ! $this->_paired || empty( $screen->post_type ) )
@@ -630,7 +630,7 @@ trait PairedMetaBox
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $this->constant( $constants[0] ) )
+				self::und( $context, $this->constant( $constants[0] ) ),
 			);
 
 			$term = $this->paired_get_to_term( $object->ID, $constants[0], $constants[1] );
@@ -659,7 +659,7 @@ trait PairedMetaBox
 			$callback,
 			$screen,
 			$metabox_context ?? 'advanced',
-			'low'
+			'low',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -685,7 +685,7 @@ trait PairedMetaBox
 		object $post,
 		false|array $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		$context ??= 'megabox';

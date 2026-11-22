@@ -9,15 +9,26 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxSupported
 {
+	/**
+	 * Holds the current system base identifier.
+	 *
+	 * @var string
+	 */
 	protected $base = NULL;
-	protected $key  = NULL;
+
+	/**
+	 * Holds the current module key identifier.
+	 *
+	 * @var string
+	 */
+	protected $key = NULL;
 
 	protected function _hook_term_supportedbox(
-		object $screen,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		?string $metabox_priority = NULL,
-		string|array $extra = [],
+		object       $screen,
+		?string      $context          = NULL,
+		?string      $metabox_context  = NULL,
+		?string      $metabox_priority = NULL,
+		string|array $extra            = [],
 	): false|string {
 
 		$context  ??= 'supportedbox';
@@ -34,7 +45,7 @@ trait MetaBoxSupported
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $object->taxonomy )
+				self::und( $context, $object->taxonomy ),
 			);
 
 			$this->_render_supportedbox_content( $object, $box, $context, $screen );
@@ -43,7 +54,7 @@ trait MetaBoxSupported
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $object->taxonomy )
+				self::und( $context, $object->taxonomy ),
 			);
 
 			echo '</div>';
@@ -56,7 +67,7 @@ trait MetaBoxSupported
 			$callback,
 			$screen,
 			$metabox_context ?? 'side',
-			$metabox_priority ?? 'default'
+			$metabox_priority ?? 'default',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -73,11 +84,11 @@ trait MetaBoxSupported
 	}
 
 	protected function _hook_general_supportedbox(
-		object $screen,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		?string $metabox_priority = NULL,
-		string|array $extra = [],
+		object       $screen,
+		?string      $context          = NULL,
+		?string      $metabox_context  = NULL,
+		?string      $metabox_priority = NULL,
+		string|array $extra            = [],
 	): false|string {
 
 		$context  ??= 'supportedbox';
@@ -94,7 +105,7 @@ trait MetaBoxSupported
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $object->post_type )
+				self::und( $context, $object->post_type ),
 			);
 
 			$this->_render_supportedbox_content( $object, $box, $context, $screen );
@@ -103,7 +114,7 @@ trait MetaBoxSupported
 				$object,
 				$box,
 				NULL,
-				self::und( $context, $object->post_type )
+				self::und( $context, $object->post_type ),
 			);
 
 			echo '</div>';
@@ -116,7 +127,7 @@ trait MetaBoxSupported
 			$callback,
 			$screen,
 			$metabox_context ?? 'side',
-			$metabox_priority ?? 'default'
+			$metabox_priority ?? 'default',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -137,7 +148,7 @@ trait MetaBoxSupported
 		?object $object,
 		false|array $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		$context ??= 'supportedbox';
@@ -156,7 +167,7 @@ trait MetaBoxSupported
 			$object,
 			$box,
 			$screen,
-			$action_context
+			$action_context,
 		);
 	}
 }

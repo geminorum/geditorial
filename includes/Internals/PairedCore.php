@@ -100,7 +100,7 @@ trait PairedCore
 			$this->register_taxonomy( $paired[1],
 				$taxonomy,
 				array_merge( $supported, [ $this->constant( $paired[0] ) ] ),
-				array_merge( [ 'terms_related' => $paired[6] ], $settings )
+				array_merge( [ 'terms_related' => $paired[6] ], $settings ),
 			);
 
 			$this->_paired = $this->constant( $paired[1] );
@@ -109,8 +109,8 @@ trait PairedCore
 
 			if ( $this->get_setting( 'paired_relation_type' ) ) {
 
-				// use main post-type + `_relation`
-				// register un-attached taxonomy
+				// TODO: use main post-type + `_relation`
+				// TODO: register unattached taxonomy
 			}
 		}
 
@@ -166,7 +166,7 @@ trait PairedCore
 			$this->constant( $paired[3] ), // `primary`
 			$paired[4], // `hierarchical`
 			$paired[5], // private
-			$supported
+			$supported,
 		);
 
 		return $object;
@@ -294,8 +294,15 @@ trait PairedCore
 	 * @param object $screen
 	 * @return void
 	 */
-	public function pointers_post_paired_posttype( object $post, string $before = '', string $after = '', bool $new_post = FALSE, ?string $context = NULL, ?object $screen = NULL )
-	{
+	public function pointers_post_paired_posttype(
+		object  $post,
+		string  $before   = '',
+		string  $after    = '',
+		bool    $new_post = FALSE,
+		?string $context  = NULL,
+		?object $screen   = NULL,
+	) {
+
 		if ( $new_post )
 			return;
 

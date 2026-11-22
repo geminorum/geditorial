@@ -10,12 +10,12 @@ use geminorum\gEditorial\WordPress;
 trait MetaBoxMain
 {
 	protected function _hook_general_mainbox(
-		object $screen,
-		string $constant_key = 'post',
-		bool $remove_parent_order = TRUE,
-		?string $context = NULL,
-		?string $metabox_context = 'side',
-		string|array $extra = [],
+		object       $screen,
+		string       $constant_key        = 'post',
+		bool         $remove_parent_order = TRUE,
+		?string      $context             = NULL,
+		?string      $metabox_context     = 'side',
+		string|array $extra               = [],
 	): false|string {
 
 		$context ??= 'mainbox';
@@ -47,7 +47,7 @@ trait MetaBoxMain
 					$post,
 					$box,
 					NULL,
-					self::und( $context, $post->post_type )
+					self::und( $context, $post->post_type ),
 				);
 
 				do_action( $this->hook_base( 'meta', 'render_metabox' ), $post, $box, NULL );
@@ -59,7 +59,7 @@ trait MetaBoxMain
 					$post,
 					$box,
 					$context,
-					$screen
+					$screen,
 				);
 
 			echo '</div>';
@@ -71,7 +71,7 @@ trait MetaBoxMain
 		$title = $this->filters( self::und( 'metabox', 'title' ),
 			Services\CustomPostType::getLabel( $screen->post_type, self::und( $this->key, $context ), NULL, NULL ),
 			$screen->post_type,
-			$context
+			$context,
 		);
 
 		add_meta_box( $metabox,
@@ -79,7 +79,7 @@ trait MetaBoxMain
 			$callback,
 			$screen,
 			$metabox_context,
-			'default'
+			'default',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -100,7 +100,7 @@ trait MetaBoxMain
 		object $object,
 		array|false $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		$context ??= 'mainbox';

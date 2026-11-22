@@ -9,9 +9,14 @@ use geminorum\gEditorial\WordPress;
 
 trait MetaBoxCustom
 {
+	public function metaboxcustom_add_metabox_author(
+		object    $screen,
+		string    $constant,
+		?string   $metabox_context = NULL,
+		bool      $check_Support   = TRUE,
+		?callable $callback        = NULL,
+	): false|string {
 
-	public function metaboxcustom_add_metabox_author( object $screen, string $constant, ?string $metabox_context = NULL, bool $check_Support = TRUE, ?callable $callback = NULL ): false|string
-	{
 		if ( ! empty( $screen->is_block_editor ) )
 			return FALSE;
 
@@ -34,14 +39,20 @@ trait MetaBoxCustom
 			$callback ?? 'post_author_meta_box', // core's default
 			$screen,
 			$metabox_context ?? 'normal', // 'after_title'
-			'core'
+			'core',
 		);
 
 		return $metabox;
 	}
 
-	public function metaboxcustom_add_metabox_excerpt( object $screen, string $constant, ?string $metabox_context = NULL, bool $check_Support = TRUE, ?callable $callback = NULL ): false|string
-	{
+	public function metaboxcustom_add_metabox_excerpt(
+		object    $screen,
+		string    $constant,
+		?string   $metabox_context = NULL,
+		bool      $check_Support   = TRUE,
+		?callable $callback        = NULL,
+	): false|string {
+
 		if ( ! empty( $screen->is_block_editor ) )
 			return FALSE;
 
@@ -66,7 +77,7 @@ trait MetaBoxCustom
 				'constant' => $constant,
 				'posttype' => $posttype,
 				'label'    => $label,
-			]
+			],
 		);
 
 		gEditorial\MetaBox::classEditorBox( $screen, 'postexcerpt' );
@@ -82,7 +93,7 @@ trait MetaBoxCustom
 		gEditorial\MetaBox::fieldEditorBox(
 			$post->post_excerpt,
 			'excerpt',
-			$box['args']['label']
+			$box['args']['label'],
 		);
 	}
 }

@@ -10,7 +10,7 @@ use geminorum\gEditorial\WordPress;
 trait PairedFront
 {
 	// Excludes paired post-type from sub-term archives
-	protected function _hook_paired_exclude_from_subterm()
+	protected function _hook_paired_exclude_from_subterm(): bool
 	{
 		if ( ! $this->get_setting( 'subterms_support' ) )
 			return FALSE;
@@ -18,31 +18,32 @@ trait PairedFront
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
 
-		add_action( 'pre_get_posts', function ( &$wp_query ) use ( $constants ) {
+		return add_action( 'pre_get_posts',
+			function ( &$wp_query ) use ( $constants ) {
 
-			$subterms = $this->constant( $constants[2] );
+				$subterms = $this->constant( $constants[2] );
 
-			if ( ! $wp_query->is_main_query() || ! $wp_query->is_tax( $subterms ) )
-				return;
+				if ( ! $wp_query->is_main_query() || ! $wp_query->is_tax( $subterms ) )
+					return;
 
-			$primaries = WordPress\PostType::getIDs( $this->constant( $constants[0] ), [
-				'tax_query' => [ [
-					'taxonomy' => $subterms,
-					'terms'    => [ get_queried_object_id() ],
-				] ],
-			] );
+				$primaries = WordPress\PostType::getIDs( $this->constant( $constants[0] ), [
+					'tax_query' => [ [
+						'taxonomy' => $subterms,
+						'terms'    => [ get_queried_object_id() ],
+					] ],
+				] );
 
-			if ( count( $primaries ) ) {
+				if ( count( $primaries ) ) {
 
-				if ( $not = $wp_query->get( 'post__not_in' ) )
-					$primaries = Core\Arraay::prepNumeral( $not, $primaries );
+					if ( $not = $wp_query->get( 'post__not_in' ) )
+						$primaries = Core\Arraay::prepNumeral( $not, $primaries );
 
-				$wp_query->set( 'post__not_in', $primaries );
-			}
-		}, 8 );
+					$wp_query->set( 'post__not_in', $primaries );
+				}
+			}, 8 );
 	}
 
-	protected function _hook_paired_override_term_link()
+	protected function _hook_paired_override_term_link(): bool
 	{
 		if ( ! $constants = $this->paired_get_constants() )
 			return FALSE;
@@ -50,21 +51,22 @@ trait PairedFront
 		if ( $constants[5] )
 			return FALSE; // it's private
 
-		add_filter( 'term_link', function ( $link, $term, $taxonomy )
-			use ( $constants ) {
+		return add_filter( 'term_link',
+			function ( $link, $term, $taxonomy )
+				use ( $constants ) {
 
-			if ( $taxonomy !== $this->constant( $constants[1] ) )
+				if ( $taxonomy !== $this->constant( $constants[1] ) )
+					return $link;
+
+				if ( $post_id = $this->paired_get_to_post_id( $term, $constants[0], $constants[1] ) )
+					return get_permalink( $post_id );
+
 				return $link;
 
-			if ( $post_id = $this->paired_get_to_post_id( $term, $constants[0], $constants[1] ) )
-				return get_permalink( $post_id );
-
-			return $link;
-
-		}, 9, 3 );
+			}, 9, 3 );
 	}
 
-	protected function pairedfront_hook__post_tabs( $priority = NULL )
+	protected function pairedfront_hook__post_tabs( ?int $priority = NULL ): bool
 	{
 		if ( ! $this->get_setting( 'tabs_support', TRUE ) )
 			return FALSE;
@@ -75,7 +77,7 @@ trait PairedFront
 		if ( ! gEditorial()->enabled( 'tabs' ) )
 			return FALSE;
 
-		add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
+		return add_filter( $this->hook_base( 'tabs', 'builtins_tabs' ),
 			function ( $tabs, $posttype )
 				use ( $constants, $priority ) {
 
@@ -85,7 +87,7 @@ trait PairedFront
 
 						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
 							$this->module->title,
-							Services\CustomPostType::getLabel( $this->constant( $constants[0] ), 'extended_label' )
+							Services\CustomPostType::getLabel( $this->constant( $constants[0] ), 'extended_label' ),
 						),
 
 						'description' => sprintf(
@@ -116,7 +118,7 @@ trait PairedFront
 								],
 								NULL,
 								'',
-								$this->module->name
+								$this->module->name,
 							);
 						},
 
@@ -132,7 +134,7 @@ trait PairedFront
 
 						'title' => sprintf( is_admin() ? '%1$s: %2$s' : '%2$s',
 							$this->module->title,
-							Services\CustomPostType::getLabel( $supported, 'extended_label' )
+							Services\CustomPostType::getLabel( $supported, 'extended_label' ),
 						),
 
 						'description' => sprintf(
@@ -163,7 +165,7 @@ trait PairedFront
 								],
 								NULL,
 								'',
-								$this->module->name
+								$this->module->name,
 							);
 						},
 

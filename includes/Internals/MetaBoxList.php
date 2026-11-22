@@ -10,11 +10,11 @@ use geminorum\gEditorial\WordPress;
 trait MetaBoxList
 {
 	protected function _hook_children_listbox(
-		object $screen,
-		null|string|array $posttypes = NULL,
-		?string $context = NULL,
-		?string $metabox_context = NULL,
-		string|array $extra = [],
+		object            $screen,
+		null|string|array $posttypes       = NULL,
+		?string           $context         = NULL,
+		?string           $metabox_context = NULL,
+		string|array      $extra           = [],
 	): false|string {
 
 		$context   ??= 'listbox';
@@ -36,7 +36,7 @@ trait MetaBoxList
 					$post,
 					$box,
 					NULL,
-					self::und( $context, $post->post_type )
+					self::und( $context, $post->post_type ),
 				);
 
 				if ( $list = gEditorial\MetaBox::getChildrenPosts( $post, $posttypes ) )
@@ -52,7 +52,7 @@ trait MetaBoxList
 					$post,
 					$box,
 					$context,
-					$screen
+					$screen,
 				);
 
 			echo '</div>';
@@ -65,7 +65,7 @@ trait MetaBoxList
 			$callback,
 			$screen,
 			$metabox_context ?? 'advanced',
-			'default'
+			'default',
 		);
 
 		add_filter( self::und( 'postbox', 'classes', $screen->id, $metabox ),
@@ -86,7 +86,7 @@ trait MetaBoxList
 		object $object,
 		false|array $box,
 		?string $context = NULL,
-		?object $screen = NULL,
+		?object $screen  = NULL,
 	): void {
 
 		$context ??= 'listbox';

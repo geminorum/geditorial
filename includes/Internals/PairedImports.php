@@ -38,7 +38,7 @@ trait PairedImports
 
 		add_action( 'admin_footer',
 			function () use ( $post ) {
-				$label  = sprintf(
+				$label = sprintf(
 					/* translators: `%s`: post title */
 					_x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ),
 					WordPress\Post::title( $post )
@@ -62,17 +62,17 @@ trait PairedImports
 
 	// NOTE: default context is `importitems`
 	protected function pairedimports_get_import_buttons(
-		object $post,
-		?string $context = NULL,
-		?string $target = NULL,
-		?string $label = NULL,
+		object  $post,
+		?string $context      = NULL,
+		?string $target       = NULL,
+		?string $label        = NULL,
 		?string $button_class = NULL,
 	): string {
 
 		$link = $this->get_adminpage_url( TRUE, [
 			'target'   => $target ?? 'paired',
 			'linked'   => $post->ID,
-			'noheader' => 1
+			'noheader' => 1,
 		], 'importitems' );
 
 		$title = _x( 'Import Items via File or Paste', 'Internal: PairedImports: Button Title', 'geditorial' );
@@ -89,7 +89,7 @@ trait PairedImports
 				[
 					'-import-button',
 					'do-colorbox-iframe',
-				]
+				],
 			),
 			'title' => $title,
 			'data'  => [
@@ -110,7 +110,7 @@ trait PairedImports
 			] ),
 			$linked,
 			$posttypes,
-			$this->key
+			$this->key,
 		);
 	}
 
@@ -137,7 +137,7 @@ trait PairedImports
 			$fields,
 			$enabled,
 			$required,
-			$context ?? 'display'
+			$context ?? 'display',
 		);
 	}
 

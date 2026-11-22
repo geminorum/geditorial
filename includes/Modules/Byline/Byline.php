@@ -381,7 +381,7 @@ class Byline extends gEditorial\Module
 				'labels'       => $targets,
 				'routes'       => $routes,
 				'searchselect' => Services\SearchSelect::namespace(),
-				// 'discovery'    => Services\LineDiscovery::namespace(), // NOT USED YET
+				// `'discovery'    => Services\LineDiscovery::namespace(),` // NOT USED YET
 				'hints'        => Services\ObjectHints::namespace(),
 				'summary'      => $args['summary'],
 				'perpage'      => 5,
