@@ -77,7 +77,7 @@ class URL extends Base
 	// like twitter links
 	public static function prepTitle( string $url, bool $convert_slash = FALSE ): string
 	{
-		// $title = preg_replace( '|^http(s)?://(www\.)?|i', '', $url );
+		// `$title = preg_replace( '|^http(s)?://(www\.)?|i', '', $url );`
 		$title = preg_replace( '/^https?:\/\/(www\.)?/i', '', $url );
 		$title = self::untrail( $title );
 		return $convert_slash ? str_ireplace( [ '/', '\/' ], '-', $title ) : $title;
@@ -298,14 +298,12 @@ class URL extends Base
 		return FALSE;
 	}
 
-	public static function checkExternals( $urls = [], $site = NULL )
+	public static function checkExternals( ?array $urls = [], ?string $site = NULL ): array
 	{
 		if ( empty( $urls ) )
 			return [];
 
-		if ( is_null( $site ) )
-			$site = get_option( 'siteurl' );
-
+		$site    ??= get_option( 'siteurl' );
 		$urls    = array_values( array_unique( $urls ) );
 		$length  = strlen( $site );
 		$results = [];
@@ -323,12 +321,12 @@ class URL extends Base
 	 * the destination. It doesn't check if that location is valid or not.
 	 * @source https://gist.github.com/davejamesmiller/dbefa0ff167cc5c08d6d
 	 *
-	 * @param string $url
-	 * @return string
+	 * @param mixed $url
+	 * @return false|string
 	 */
-	public static function getRedirectTargetSingle( $url )
+	public static function getRedirectTargetSingle( mixed $url ): false|string
 	{
-		if ( empty( $url ) )
+		if ( ! $url = Text::force( $url ) )
 			return FALSE;
 
 		$ch = curl_init( $url );

@@ -11,7 +11,7 @@ class PostMeta extends ObjectMeta
 	const OBJECT_ID_PROP  = 'ID';
 	const TABLE_ID_COLUMN = 'post_id';
 
-	protected static function _get( mixed $object ): mixed
+	protected static function _getObject( mixed $object ): mixed
 	{
 		return Post::get( $object );
 	}

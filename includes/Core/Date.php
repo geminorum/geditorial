@@ -84,11 +84,11 @@ class Date extends Base
 	 * @return false|string
 	 */
 	public static function formatByCalendar(
-		?string $format = NULL,
-		mixed $input = NULL,
-		?string $calendar_type = NULL,
+		?string $format          = NULL,
+		mixed   $input           = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
-		?string $locale = NULL,
+		?string $locale          = NULL,
 	): false|string {
 
 		$format        ??= 'm/d/Y';
@@ -96,7 +96,7 @@ class Date extends Base
 
 		if ( 'gregorian' === $calendar_type ) {
 
-			if ( is_a( $input, 'DateTimeInterface' ) )
+			if ( is_a( $input, 'DateTimeInterface', TRUE ) )
 				$datetime = $input;
 			else
 				$datetime = date_create(
@@ -212,8 +212,8 @@ class Date extends Base
 	 * @return bool
 	 */
 	public static function check(
-		string $datetime_string,
-		string $target_format = 'Y-m-d',
+		string  $datetime_string,
+		string  $target_format   = 'Y-m-d',
 		?string $timezone_string = NULL,
 	): bool {
 
@@ -240,10 +240,10 @@ class Date extends Base
 	 * @return bool
 	 */
 	public static function isInFormat(
-		string $datetime_string,
-		string $target_format = 'Y-m-d',
+		string  $datetime_string,
+		string  $target_format   = 'Y-m-d',
 		?string $timezone_string = NULL,
-	) {
+	): bool {
 		if ( self::empty( $datetime_string ) )
 			return FALSE;
 
@@ -258,7 +258,7 @@ class Date extends Base
 	}
 
 	// @REF: https://stackoverflow.com/a/19680778
-	public static function secondsToTimeString( int $seconds )
+	public static function secondsToTimeString( int $seconds ): string
 	{
 		$from = new \DateTime( '@0' );
 		$to   = new \DateTime( "@$seconds" );
@@ -273,22 +273,22 @@ class Date extends Base
 	 * @example `Date::nextOccurrence( '08-05-2018', '3', 'months', 'third wednesday' )`
 	 *
 	 * @param mixed $date
-	 * @param int $x
+	 * @param int $times
 	 * @param string $interval
 	 * @param string $preference
 	 * @param string $format
 	 * @return string
 	 */
 	public static function nextOccurrence(
-		mixed $date,
-		int $x,
-		string $interval,
-		string $preference = 'none',
-		?string $format = NULL,
-	)
-	{
+		mixed   $date,
+		int     $times,
+		string  $interval,
+		string  $preference = 'none',
+		?string $format     = NULL,
+	): string {
+
 		$datetime = new \DateTime( $date );
-		$datetime->modify( '+ '.$x.' '.$interval );
+		$datetime->modify( '+ '.$times.' '.$interval );
 
 		if ( $preference <> 'none' ) {
 			$datetime->format( 'm' );
@@ -301,10 +301,10 @@ class Date extends Base
 	public static function monthFirstAndLast(
 		int|string $year,
 		int|string $month,
-		?string $format = NULL,
+		?string $format        = NULL,
 		?string $calendar_type = NULL,
-	)
-	{
+	): array {
+
 		$start = new \DateTime( $year.'-'.$month.'-01 00:00:00' );
 		$end   = $start->modify( '+1 month -1 day -1 minute' );
 
@@ -314,8 +314,12 @@ class Date extends Base
 		];
 	}
 
-	public static function daysInMonth( int|string $month, int|string $year, ?string $calendar_type = NULL ): int
-	{
+	public static function daysInMonth(
+		int|string $month,
+		int|string $year,
+		?string $calendar_type = NULL,
+	): int {
+
 		// @source: https://www.php.net/manual/en/function.cal-days-in-month.php#38666
 		// return $month == 2 ? ( $year % 4 ? 28 : ( $year % 100 ? 29 : ( $year % 400 ? 28 : 29 ) ) ) : ( ( $month - 1 ) % 7 % 2 ? 30 : 31 );
 
@@ -341,8 +345,13 @@ class Date extends Base
 	 * @param string $calendar_type
 	 * @return array
 	 */
-	public static function weekFirstAndLast( $year, $week, $format = NULL, $calendar_type = NULL )
-	{
+	public static function weekFirstAndLast(
+		int     $year,
+		int     $week,
+		?string $format        = NULL,
+		?string $calendar_type = NULL,
+	): array {
+
 		// We need to specify 'today' otherwise `datetime`
 		// constructor uses 'now' which includes current time.
 		$today = new \DateTime( 'today' );
@@ -403,7 +412,7 @@ class Date extends Base
 			(int) $parts['day'],
 			(int) $parts['year'],
 			$parts['calendar'],
-			$parts['timezone']
+			$parts['timezone'],
 		);
 
 		return $timestamp
@@ -542,7 +551,7 @@ class Date extends Base
 		if ( ! $datetime && ! is_null( $datetime ) )
 			return $fallback;
 
-		if ( is_a( $datetime, 'DateTimeInterface' ) )
+		if ( is_a( $datetime, 'DateTimeInterface', TRUE ) )
 			return $datetime->format( 'U' );
 
 		if ( self::isTimestamp( $datetime ) )
@@ -590,12 +599,16 @@ class Date extends Base
 	 * @param string $fallback
 	 * @return string
 	 */
-	public static function getISO8601( $datetime = NULL, $timezone_string = NULL, $fallback = '' )
-	{
+	public static function getISO8601(
+		mixed   $datetime        = NULL,
+		?string $timezone_string = NULL,
+		string  $fallback        = '',
+	): string {
+
 		if ( ! $datetime && ! is_null( $datetime ) )
 			return $fallback;
 
-		if ( is_a( $datetime, 'DateTimeInterface' ) )
+		if ( is_a( $datetime, 'DateTimeInterface', TRUE ) )
 			return $datetime->format( \DateTime::ATOM );
 
 		if ( self::isTimestamp( $datetime ) )
@@ -616,6 +629,61 @@ class Date extends Base
 		}
 
 		return $object->format( \DateTime::ATOM );
+	}
+
+	/**
+	 * Converts UNIX timestamp to ISO 8601 compliant date string.
+	 * @source `contributte/nusoap`/`timestamp_to_iso8601()`
+	 * @link https://github.com/contributte/nusoap/pull/155
+	 *
+	 * @param int $timestamp Unix time stamp
+	 * @param bool $utc Whether the timestamp is UTC or local
+	 * @return false|string ISO 8601 date string or false
+	 */
+	public static function timestampToISO8601( int $timestamp, bool $utc = TRUE ): false|string
+	{
+		if ( $utc )
+			// NOTE: the offset cannot just be replaced by `Z`, the time has to be converted!
+			return gmdate( 'Y-m-d\TH:i:s\Z', $timestamp );
+
+		$datestring = date( 'Y-m-d\TH:i:sO', $timestamp );
+
+		if ( FALSE === ( $pos = strrpos( $datestring, '+' ) ) )
+			$pos = strrpos( $datestring, '-' );
+
+		if ( FALSE !== $pos && strlen( $datestring ) == $pos + 5 )
+			$datestring = substr( $datestring, 0, $pos + 3 ).':'.substr( $datestring, -2 );
+
+		return $datestring;
+	}
+
+	public static function parseISO8601( string $datestring ): false|array
+	{
+		$pattern = '/'.
+			'([0-9]{4})-'                  .  // centuries & years `CCYY-`
+			'([0-9]{2})-'                  .  // months `MM-`
+			'([0-9]{2})'                   .  // days `DD`
+			'T'                            .  // separator `T`
+			'([0-9]{2}):'                  .  // hours `hh:`
+			'([0-9]{2}):'                  .  // minutes `mm:`
+			'([0-9]{2})(\.[0-9]*)?'        .  // seconds `ss.ss...`
+			'(Z|[+\-][0-9]{2}:?[0-9]{2})?' .  // Z to indicate UTC, `-/+HH:MM:SS.SS...` for local timezones
+		'/';
+
+		if ( preg_match( $pattern, $datestring, $matches ) )
+			return [
+				'matched'     => $matches[0],
+				'year'        => $matches[1],
+				'month'       => $matches[2],
+				'day'         => $matches[3],
+				'hour'        => $matches[4],
+				'minute'      => $matches[5],
+				'second'      => $matches[6],
+				'millisecond' => trim( $matches[7], '.' ),
+				'timezone'    => $matches[8],
+			];
+
+		return FALSE;
 	}
 
 	// NOTE: Here the signature is different: not supporting the calendar-type and using WordPress core methods.
@@ -683,7 +751,7 @@ class Date extends Base
 	}
 
 	// @SOURCE: WP `human_time_diff()`
-	public static function humanTimeDiff( $datetime, $now = 0, $atts = [], $timezone_string = NULL )
+	public static function humanTimeDiff( mixed $datetime, $now = 0, $atts = [], $timezone_string = NULL ): string
 	{
 		$args = self::parsed( [
 			'now'    => 'Now',
@@ -829,7 +897,7 @@ class Date extends Base
 		}
 	}
 
-	public static function momentTest()
+	public static function momentTest(): void
 	{
 		$format = static::MYSQL_FORMAT;
 		$result = [];
@@ -862,7 +930,7 @@ class Date extends Base
 	}
 
 	// FIXME: correct last week : http://stackoverflow.com/a/7175802
-	public static function moment( mixed $datetime, int $now = 0, array $atts = [], ?string $timezone_string = NULL )
+	public static function moment( mixed $datetime, int $now = 0, array $atts = [], ?string $timezone_string = NULL ): string
 	{
 		$args = self::parsed( [
 			'now'            => 'Now',
@@ -975,7 +1043,7 @@ class Date extends Base
 		return self::get( $args['format_f_y'], $timestamp );
 	}
 
-	public static function parts( $i18n = FALSE, $gmt = FALSE )
+	public static function parts( $i18n = FALSE, $gmt = FALSE ): array
 	{
 		$now   = [];
 		$parts = [ 'year', 'month', 'day', 'hour', 'minute', 'second' ];
@@ -991,7 +1059,7 @@ class Date extends Base
 		return $now;
 	}
 
-	public static function examine()
+	public static function examine(): void
 	{
 		echo "current_time( 'mysql' ) returns local site time: ".current_time( 'mysql' ).'<br />';
 		echo "current_time( 'mysql', TRUE ) returns GMT: ".current_time( 'mysql', TRUE ).'<br />';
@@ -1008,7 +1076,7 @@ class Date extends Base
 	 * @param string $timezone_string
 	 * @return int
 	 */
-	public static function midnight( ?string $timezone_string = NULL )
+	public static function midnight( ?string $timezone_string = NULL ): int
 	{
 		try {
 
@@ -1042,7 +1110,7 @@ class Date extends Base
 	 * @param \DateTime $end
 	 * @return array
 	 */
-	public static function workDays( \DateTime $begin, \DateTime $end )
+	public static function workDays( \DateTime $begin, \DateTime $end ): array
 	{
 		$workdays = [];
 		$all_days = new \DatePeriod(
@@ -1074,25 +1142,30 @@ class Date extends Base
 	 * Compares the formatted values of the two dates.
 	 * @source https://github.com/morilog/jalali/pull/199/files
 	 *
-	 * @param object|string $from
-	 * @param object|string $to
+	 * @param string|object $from
+	 * @param string|object $to
 	 * @param string $format
 	 * @param string $timezone_string
 	 * @return bool
 	 */
-	public static function isSameAs( $from, $to = NULL, $format = NULL, $timezone_string = NULL )
-	{
+	public static function isSameAs(
+		null|string|object $from,
+		null|string|object $to              = NULL,
+		?string            $format          = NULL,
+		?string            $timezone_string = NULL,
+	): bool {
+
 		if ( is_null( $from ) && is_null( $to ) )
 			return TRUE;
 
-		$datetime_from = is_a( $from, 'DateTimeInterface' )
+		$datetime_from = is_a( $from, 'DateTimeInterface', TRUE )
 			? $from
 			: date_create(
 				$from ?? 'now',
 				new \DateTimeZone( $timezone_string ?? self::currentTimeZone() )
 			);
 
-		$datetime_to = is_a( $to, 'DateTimeInterface' )
+		$datetime_to = is_a( $to, 'DateTimeInterface', TRUE )
 			? $to
 			: date_create(
 				$to ?? 'now',
@@ -1107,12 +1180,15 @@ class Date extends Base
 	/**
 	 * Compares the date/month values of the two dates.
 	 *
-	 * @param object|string $from
-	 * @param object|string $to
+	 * @param string|object $from
+	 * @param string|object $to
 	 * @return bool
 	 */
-	public function isBirthday( $from, $to = NULL )
-	{
+	public function isBirthday(
+		null|string|object $from,
+		null|string|object $to = NULL,
+	): bool {
+
 		return self::isSameAs( $from, $to, 'md' );
 	}
 
@@ -1130,12 +1206,12 @@ class Date extends Base
 	 * @return false|string
 	 */
 	public static function formatByIntl(
-		string $format,
-		mixed $datetime_string = NULL,
-		?string $calendar_type = NULL,
+		string  $format,
+		mixed   $datetime_string = NULL,
+		?string $calendar_type   = NULL,
 		?string $timezone_string = NULL,
-		?string $locale = NULL,
-	) {
+		?string $locale          = NULL,
+	): false|string {
 
 		$locale   ??= L10n::locale( TRUE );
 		$fallback = L10n::calendar( $locale );
@@ -1157,10 +1233,10 @@ class Date extends Base
 			\IntlDateFormatter::NONE,
 			$timezone,
 			$intl,
-			$format
+			$format,
 		);
 
-		$datetime = is_a( $datetime_string, 'DateTimeInterface' )
+		$datetime = is_a( $datetime_string, 'DateTimeInterface', TRUE )
 			? $datetime_string
 			: self::getObject( $datetime_string, NULL, $timezone_string );
 
@@ -1184,12 +1260,12 @@ class Date extends Base
 		's' => 'ss',     // Seconds with leading zeros: `00` through `59`
 	];
 
-	public static function convertFormatPHPtoISO( string $pattern )
+	public static function convertFormatPHPtoISO( string $pattern ): string
 	{
 		return str_replace(
 			array_keys( static::FORMAT_PHP_TO_ISO ),
 			array_values( static::FORMAT_PHP_TO_ISO ),
-			$pattern
+			$pattern,
 		);
 	}
 
@@ -1219,9 +1295,10 @@ class Date extends Base
 	 */
 	public static function sanitizeCalendar(
 		string $calendar_type,
-		mixed $fallback = NULL,
-		array $extra = [],
-	) {
+		mixed  $fallback = NULL,
+		array  $extra    = [],
+	): string {
+
 		$fallback  ??= L10n::calendar();
 		$sanitized = $calendar_type;
 

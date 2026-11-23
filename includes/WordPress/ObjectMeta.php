@@ -11,7 +11,7 @@ class ObjectMeta extends Core\Base
 	const OBJECT_ID_PROP  = '';
 	const TABLE_ID_COLUMN = '';
 
-	protected static function _get( mixed $object ): mixed
+	protected static function _getObject( mixed $object ): mixed
 	{
 		return FALSE;
 	}
@@ -36,7 +36,7 @@ class ObjectMeta extends Core\Base
 
 	public static function get( string $key = '', mixed $object = NULL, mixed $default = NULL ): mixed
 	{
-		if ( ! $object = self::_get( $object ) )
+		if ( ! $object = self::_getObject( $object ) )
 			return FALSE;
 
 		if ( FALSE === ( $value = get_metadata( static::META_TYPE, $object->{static::OBJECT_ID_PROP}, $key, TRUE ) ) )
@@ -50,7 +50,7 @@ class ObjectMeta extends Core\Base
 		if ( ! $key )
 			return FALSE;
 
-		if ( ! $object = self::_get( $object ) )
+		if ( ! $object = self::_getObject( $object ) )
 			return FALSE;
 
 		return (bool) delete_metadata( static::META_TYPE, $object->{static::OBJECT_ID_PROP}, $key, $default, TRUE );
@@ -69,7 +69,7 @@ class ObjectMeta extends Core\Base
 		if ( ! $key )
 			return FALSE;
 
-		if ( ! $object = self::_get( $object ) )
+		if ( ! $object = self::_getObject( $object ) )
 			return FALSE;
 
 		if ( $value === $default )

@@ -79,9 +79,12 @@ class Site extends Core\Base
 	}
 
 	// OLD: `Core\WordPress::getSiteURL()`
-	public static function url( int $blog_id, bool $switch = FALSE ): false|string
+	public static function url( int $blog_id = 0, bool $switch = FALSE ): false|string
 	{
 		$url = FALSE;
+
+		if ( ! $blog_id )
+			return get_option( 'siteurl' );
 
 		// WORKING BUT DISABLED!
 		// `if ( function_exists( 'bp_blogs_get_blogmeta' ) )`
@@ -90,7 +93,7 @@ class Site extends Core\Base
 		if ( ! $url && function_exists( 'get_site_meta' ) )
 			$url = get_site_meta( $blog_id, 'siteurl', TRUE );
 
-		if ( ! $url && $blog_id == get_current_blog_id() )
+		if ( ! $url && $blog_id === get_current_blog_id() )
 			return get_option( 'siteurl' );
 
 		if ( ! $url && $switch ) {
@@ -101,6 +104,15 @@ class Site extends Core\Base
 		}
 
 		return $url;
+	}
+
+	public static function icon( ?int $size = NULL, int $blog_id = 0 ): false|string
+	{
+		return get_site_icon_url(
+			$size ?? 512,
+			FALSE,  // NOTE: must be false to avoid fallback to main site
+			$blog_id,
+		);
 	}
 
 	// OLD: `Core\WordPress::getHostName()`

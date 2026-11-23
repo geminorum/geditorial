@@ -161,19 +161,30 @@ class L10n extends Base
 		return substr( $dashed, 0, strpos( $dashed, '-' ) );
 	}
 
-	public static function getNooped( $singular, $plural )
-	{
+	public static function getNooped(
+		string  $singular,
+		string  $plural,
+		?string $context = NULL,
+		?string $domain  = NULL,
+	): array {
+
 		return [
 			'singular' => $singular,
 			'plural'   => $plural,
-			'context'  => NULL,
-			'domain'   => NULL,
+			'context'  => $context,
+			'domain'   => $domain,
 		];
 	}
 
-	public static function sprintfNooped( $nooped, $count )
+	public static function sprintfNooped( array $nooped, mixed $count ): string
 	{
-		return sprintf( translate_nooped_plural( $nooped, $count ), Number::format( $count ) );
+		if ( ! is_int( $count ) && is_countable( $count ) )
+			$count = count( $count );
+
+		return sprintf(
+			translate_nooped_plural( $nooped, (int) $count ),
+			Number::format( $count ),
+		);
 	}
 
 	/**

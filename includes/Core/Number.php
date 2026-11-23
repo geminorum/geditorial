@@ -245,19 +245,17 @@ class Number extends Base
 		return implode( ' ', $words );
 	}
 
-	public static function localize( $number )
+	public static function localize( mixed $number ): mixed
 	{
-		return apply_filters( 'number_format_i18n',
-			$number
-		);
+		return apply_filters( 'number_format_i18n', $number );
 	}
 
-	public static function format( $number, $decimals = 0, $locale = NULL )
+	public static function format( mixed $number, int $decimals = 0, ?string $locale = NULL ): string
 	{
 		return apply_filters( 'number_format_i18n',
 			number_format( $number ?? 0, absint( $decimals ) ),
 			$number,
-			$decimals
+			$decimals,
 		);
 	}
 
@@ -267,7 +265,7 @@ class Number extends Base
 	 * @param int|string $input
 	 * @return int
 	 */
-	public static function intval( $input )
+	public static function intval( int|string $input ): int
 	{
 		return (int) self::translate( Text::trim( $input ) );
 	}
@@ -278,7 +276,7 @@ class Number extends Base
 	 * @param int|float|string $input
 	 * @return float
 	 */
-	public static function floatval( $input )
+	public static function floatval( int|float|string $input ): float
 	{
 		return (float) self::translate( Text::trim( $input ) );
 	}
@@ -290,7 +288,7 @@ class Number extends Base
 	 * @param int $number
 	 * @return bool
 	 */
-	public static function isEven( $number )
+	public static function isEven( int $number ): bool
 	{
 		return self::intval( $number ) % 2 === 0;
 	}
@@ -302,7 +300,7 @@ class Number extends Base
 	 * @param mixed $number
 	 * @return int
 	 */
-	public static function notNegative( $number )
+	public static function notNegative( mixed $number ): int
 	{
 		if ( is_string( $number ) ) {
 
@@ -331,7 +329,7 @@ class Number extends Base
 	 * @param string $locale
 	 * @return string
 	 */
-	public static function zeroise( $number, $threshold, $locale = NULL )
+	public static function zeroise( int $number, int $threshold, ?string $locale = NULL ): string
 	{
 		return sprintf( '%0'.$threshold.'s', $number );
 	}
@@ -343,7 +341,7 @@ class Number extends Base
 	 * @param string $number
 	 * @return string
 	 */
-	public static function notZeroise( $number )
+	public static function notZeroise( string $number ): string
 	{
 		return preg_replace( '/^0+/', '', self::translate( $number ) );
 	}
@@ -537,9 +535,11 @@ class Number extends Base
 		$mod  = '';
 
 		do {
+
 			$a = (int) $mod.substr( $left_operand, 0, $take );
 			$left_operand = substr( $left_operand, $take );
 			$mod = $a % $modulus;
+
 		} while ( strlen( $left_operand ) );
 
 		return (int) $mod;
@@ -570,8 +570,6 @@ class Number extends Base
 
 	/**
 	 * Converts an integer into the alphabet base (A-Z).
-	 *
-	 * @author Theriault
 	 * @source https://stackoverflow.com/a/57655623
 	 *
 	 * @param int $n This is the number to convert.
@@ -591,11 +589,9 @@ class Number extends Base
 
 	/**
 	 * Converts an alphabetic string into an integer.
-	 *
-	 * @author Theriault
 	 * @source https://stackoverflow.com/a/57655623
 	 *
-	 * @param int $n This is the number to convert.
+	 * @param string $a This is the number to convert.
 	 * @return string The converted number.
 	*/
 	public static function alpha2num( $a )
@@ -649,7 +645,7 @@ class Number extends Base
 
 			// The `ValueError` class was introduced in PHP 8,
 			// so in 7.4 throw `InvalidArgumentException` instead.
-			if ( ! class_exists( 'ValueError', false ) )
+			if ( ! class_exists( 'ValueError', FALSE ) )
 				throw new \InvalidArgumentException( $message );
 
 			throw new \ValueError( $message );

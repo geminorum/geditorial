@@ -6,7 +6,6 @@ use geminorum\gEditorial\Core;
 
 class ShortCode extends Core\Base
 {
-
 	const NAME_INPUT_PATTERN = '[-a-zA-Z0-9_]{3,}';
 
 	/**
@@ -29,7 +28,7 @@ class ShortCode extends Core\Base
 		else if ( is_array( $input ) )
 			$attributes = $input;
 
-		return shortcode_atts(
+		return \shortcode_atts(
 			$attributes ?? [],
 			$defaults,
 			$shortcode,
@@ -38,13 +37,13 @@ class ShortCode extends Core\Base
 
 	public static function exists( string $tag ): bool
 	{
-		return empty( $tag ) ? FALSE : shortcode_exists( $tag );
+		return empty( $tag ) ? FALSE : \shortcode_exists( $tag );
 	}
 
 	// @SEE: https://konstantin.blog/2013/dont-do_shortcode/
 	public static function apply( string $text, bool $ignore_html = FALSE ): string
 	{
-		return empty( $text ) ? '' : (string) apply_shortcodes( $text, $ignore_html );
+		return empty( $text ) ? '' : (string) \apply_shortcodes( $text, $ignore_html );
 	}
 
 	/**
@@ -88,11 +87,11 @@ class ShortCode extends Core\Base
 
 	public static function wrap(
 		?string $html,
-		string $suffix = '',
-		array $args = [],
-		bool $block = TRUE,
-		string|array $extra = [],
-		string $base = '',
+		string  $suffix = '',
+		array   $args   = [],
+		bool    $block  = TRUE,
+		array   $extra  = [],
+		string  $base   = '',
 	): ?string {
 
 		if ( is_null( $html ) )
@@ -126,6 +125,26 @@ class ShortCode extends Core\Base
 	}
 
 	/**
+	 * Neutralize short-code brackets in values.
+	 *
+	 * Plugins like `TablePress` evaluates Short-codes in table cells when
+	 * rendering, so a value like `[table id=3 /]` would expose another
+	 * table's contents on the public site. The HTML entities still
+	 * display as brackets.
+	 * @link https://github.com/kasparsd/contact-form-7-extras/pull/56
+	 *
+	 * @param mixed $input
+	 * @return string
+	 */
+	public static function escape( mixed $input ): string
+	{
+		if ( ! $input = Core\Text::force( $input ) )
+			return '';
+
+		return str_replace( [ '[', ']' ], [ '&#91;', '&#93;' ], $input );
+	}
+
+	/**
 	 * First strip out registered and enclosing short-codes using native
 	 * WordPress `strip_shortcodes()` function. Then strip out the short-codes
 	 * with a filthy regex, because people don't properly register
@@ -142,6 +161,9 @@ class ShortCode extends Core\Base
 		if ( ! $input = Core\Text::force( $input ) )
 			return '';
 
-		return preg_replace( '`\[[^\]]+\]`s', '', \strip_shortcodes( $input ) );
+		if ( function_exists( 'strip_shortcodes' ) )
+			$input = \strip_shortcodes( $input );
+
+		return preg_replace( '`\[[^\]]+\]`s', '', $input );
 	}
 }

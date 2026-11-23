@@ -448,8 +448,11 @@ class HTML extends Base
 
 		foreach ( func_get_args() as $arg )
 
-			if ( is_array( $arg ) )
-				$list = array_merge( $list, $arg );
+			if ( ! $arg || is_object( $arg ) )
+				continue;
+
+			else if ( is_array( $arg ) )
+				$list = array_merge( $list, array_values( $arg ) );
 
 			else if ( $arg && TRUE !== $arg )
 				$list = array_merge( $list, preg_split( '#\s+#', $arg ) );
@@ -1586,7 +1589,7 @@ class HTML extends Base
 		int|string $limit,
 		int|string $paged,
 		array $extra = [],
-		bool $all = FALSE,
+		bool  $all   = FALSE,
 	): array {
 
 		$pagination = [
@@ -1621,11 +1624,11 @@ class HTML extends Base
 	}
 
 	public static function menu(
-		array|false $menu,
+		array|false    $menu,
 		callable|false $callback = FALSE,
-		string $list = 'ul',
-		false|string $children = 'children',
-		string|array $class = '-html-menu',
+		string         $list     = 'ul',
+		false|string   $children = 'children',
+		mixed          $class    = '-html-menu',
 	): void {
 
 		if ( ! $menu )
@@ -1689,7 +1692,7 @@ class HTML extends Base
 	// TODO: migrate to `wp_get_admin_notice()` @since WP 6.4.0
 	// @SEE: https://make.wordpress.org/core/2023/10/16/introducing-admin-notice-functions-in-wordpress-6-4/
 	// @REF: https://developer.wordpress.org/reference/hooks/admin_notices/
-	public static function notice( string $notice, string|array $class = '', bool $dismissible = TRUE ): string
+	public static function notice( string $notice, mixed $class = '', bool $dismissible = TRUE ): string
 	{
 		return self::tag( 'div', [
 			'class' => self::attrClass(
@@ -1701,22 +1704,22 @@ class HTML extends Base
 		], Text::autoP( $notice ) );
 	}
 
-	public static function error( string $notice, bool $dismissible = TRUE, string|array $class = '' )
+	public static function error( string $notice, bool $dismissible = TRUE, mixed $class = '' )
 	{
 		return self::notice( $notice, self::attrClass( 'notice-error', $class ), $dismissible );
 	}
 
-	public static function success( string $notice, bool $dismissible = TRUE, string|array $class = '' )
+	public static function success( string $notice, bool $dismissible = TRUE, mixed $class = '' )
 	{
 		return self::notice( $notice, self::attrClass( 'notice-success', $class ), $dismissible );
 	}
 
-	public static function warning( string $notice, bool $dismissible = TRUE, string|array $class = '' )
+	public static function warning( string $notice, bool $dismissible = TRUE, mixed $class = '' )
 	{
 		return self::notice( $notice, self::attrClass( 'notice-warning', $class ), $dismissible );
 	}
 
-	public static function info( string $notice, bool $dismissible = TRUE, string|array $class = '' )
+	public static function info( string $notice, bool $dismissible = TRUE, mixed $class = '' )
 	{
 		return self::notice( $notice, self::attrClass( 'notice-info', $class ), $dismissible );
 	}
@@ -2004,9 +2007,9 @@ class HTML extends Base
 
 	public static function inputForCopy(
 		string $text,
-		string|array $class = 'large-text',
-		bool $code = TRUE,
-		bool $readonly = TRUE,
+		mixed  $class    = 'large-text',
+		bool   $code     = TRUE,
+		bool   $readonly = TRUE,
 	): string {
 
 		return '<input type="text" value="'

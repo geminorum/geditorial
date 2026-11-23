@@ -270,8 +270,6 @@ class File extends Base
 
 	/**
 	 * Create temporary file in system temporary directory.
-	 *
-	 * @author [Nabil Kadimi](https://kadimi.com)
 	 * @source https://developer.wordpress.org/reference/functions/wp_tempnam/#comment-3082
 	 *
 	 * @param string $name
@@ -287,7 +285,7 @@ class File extends Base
 
 		register_shutdown_function(
 			static function () use ( $file ) {
-				@unlink( $file );
+				self::unlink( $file );
 			} );
 
 		return $file;
@@ -362,8 +360,8 @@ class File extends Base
 		return $path;
 	}
 
-	// ORIGINALLY BASED ON: `Secure Folder wp-content/uploads` v1.2
-	// BY: Daniel Satria : http://ruanglaba.com
+	// ORIGINALLY BASED ON: `Secure Folder wp-content/uploads` 1.2
+	// BY: `Daniel Satria` <http://ruanglaba.com>
 	// puts `index.html` on given folder and subs
 	public static function putIndexHTML( string $base, string $index ): void
 	{
@@ -654,12 +652,18 @@ class File extends Base
 		return sprintf( '%1.2f', $bytes / pow( $base, $class ) ).' '.$prefix[$class];
 	}
 
-	public static function remove( $files )
+	public static function unlink( string $file_path ): bool
+	{
+		// phpcs:ignore: WordPress.WP.AlternativeFunctions.unlink_unlink
+		return @unlink( self::normalize( $file_path ) );
+	}
+
+	public static function remove( string|array $files ): int
 	{
 		$count = 0;
 
 		foreach ( (array) $files as $file )
-			if ( @unlink( self::normalize( $file ) ) )
+			if ( self::unlink( self::normalize( $file ) ) )
 				++$count;
 
 		return $count;
@@ -691,7 +695,7 @@ class File extends Base
 				self::removeDir( $path );
 
 			else
-				@unlink( $path );
+				self::unlink( $path );
 		}
 
 		closedir( $directory );
@@ -730,7 +734,7 @@ class File extends Base
 			// @SOURCE: http://stackoverflow.com/a/4594268
 			foreach ( new \DirectoryIterator( $path ) as $file )
 				if ( ! $file->isDot() )
-					unlink( $file->getPathname() );
+					self::unlink( $file->getPathname() );
 
 		} catch ( \Exception $e ) {
 

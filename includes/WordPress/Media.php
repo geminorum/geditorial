@@ -288,7 +288,7 @@ class Media extends Core\Base
 
 		// if error storing permanently, unlink
 		if ( is_wp_error( $attachment ) ) {
-			@unlink( $file['tmp_name'] );
+			Core\File::unlink( $file['tmp_name'] );
 			return $attachment;
 		}
 
@@ -338,7 +338,7 @@ class Media extends Core\Base
 
 		// If error storing permanently, unlink.
 		if ( is_wp_error( $attachment ) ) {
-			@unlink( $file['tmp_name'] );
+			Core\File::unlink( $file['tmp_name'] );
 			return $attachment;
 		}
 

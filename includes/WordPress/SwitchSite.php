@@ -4,6 +4,7 @@ defined( 'ABSPATH' ) || die( header( 'HTTP/1.0 403 Forbidden' ) );
 
 use geminorum\gEditorial\Core;
 
+// TODO: merge into `WordPress\Site`
 class SwitchSite extends Core\Base
 {
 	/**

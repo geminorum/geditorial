@@ -187,8 +187,14 @@ class Taxonomy extends Core\Base
 	 * @param null|int $user_id
 	 * @return array
 	 */
-	public static function get( int $mod = 0, array $arguments = [], false|string|array $object = FALSE, ?string $capability = NULL, ?int $user_id = NULL )
-	{
+	public static function get(
+		int                $mod        = 0,
+		array              $arguments  = [],
+		false|string|array $object     = FALSE,
+		?string            $capability = NULL,
+		?int               $user_id    = NULL,
+	): array {
+
 		$list = [];
 
 		if ( FALSE === $object || 'any' === $object )
@@ -251,11 +257,11 @@ class Taxonomy extends Core\Base
 	/**
 	 * Retrieves taxonomy archive link.
 	 *
-	 * @param string|object $taxonomy
+	 * @param mixed $taxonomy
 	 * @param mixed $fallback
-	 * @return string
+	 * @return mixed
 	 */
-	public static function link( string|object $taxonomy, mixed $fallback = NULL )
+	public static function link( mixed $taxonomy, mixed $fallback = NULL ): mixed
 	{
 		if ( ! $object = self::object( $taxonomy ) )
 			return $fallback;
@@ -265,7 +271,7 @@ class Taxonomy extends Core\Base
 		return apply_filters( 'nucleus_taxonomy_archive_link',
 			$link,
 			$object->name,
-			$fallback
+			$fallback,
 		);
 	}
 
@@ -277,9 +283,9 @@ class Taxonomy extends Core\Base
 	 * @param array $extra
 	 * @param mixed $fallback
 	 * @param string $capability
-	 * @return string
+	 * @return mixed
 	 */
-	public static function edit( string|object $taxonomy, array $extra = [], mixed $fallback = FALSE, ?string $capability = NULL )
+	public static function edit( string|object $taxonomy, array $extra = [], mixed $fallback = FALSE, ?string $capability = NULL ): mixed
 	{
 		return self::can( $taxonomy, $capability ?? 'manage_terms' )
 			? URL::editTaxonomy( $taxonomy, $extra )
@@ -447,7 +453,7 @@ class Taxonomy extends Core\Base
 		return Term::get( $term_or_id, $taxonomy );
 	}
 
-	public static function getTheTermRows( string $taxonomy, mixed $post = NULL )
+	public static function getTheTermRows( string $taxonomy, mixed $post = NULL ): string
 	{
 		if ( ! $post = Post::get( $post ) )
 			return '';

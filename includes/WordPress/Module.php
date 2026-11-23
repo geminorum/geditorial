@@ -616,8 +616,14 @@ class Module extends Core\Base
 		return remove_query_arg( $remove, $url );
 	}
 
-	protected function get_sub_limit_option( ?string $sub = NULL, ?string $context = NULL, ?int $default = NULL, string $key = 'limit', string $option = 'per_page' ): int
-	{
+	protected function get_sub_limit_option(
+		?string $sub     = NULL,
+		?string $context = NULL,
+		?int    $default = NULL,
+		string  $key     = 'limit',
+		string  $option  = 'per_page',
+	): int {
+
 		$sub      ??= $this->key;
 		$context  ??= 'tools';
 		$per_page = (int) get_user_option( $this->hook_base( $sub, $context, $option ) );
@@ -725,20 +731,20 @@ class Module extends Core\Base
 
 	protected function hidden(
 		string $value,
-		array $data = [],
-		string|array $class = '',
-		string $id = '',
+		array  $data  = [],
+		mixed  $class = '',
+		string $id    = '',
 	): void	{
 
 		echo Core\HTML::wrap( $value, Core\HTML::attrClass( 'hidden', $class ), TRUE, $data, $id );
 	}
 
 	protected function wrap(
-		mixed $html,
-		string|array $class = '',
-		bool $block = TRUE,
-		string $id = '',
-		bool $hide = FALSE,
+		mixed  $html,
+		mixed  $class = '',
+		bool   $block = TRUE,
+		string $id    = '',
+		bool   $hide  = FALSE,
 	): string {
 
 		if ( empty( $html ) )
@@ -759,10 +765,10 @@ class Module extends Core\Base
 	}
 
 	protected function wrap_open(
-		string|array $class = '',
-		bool         $block = TRUE,
-		string       $id    = '',
-		bool         $hide  = FALSE,
+		mixed  $class = '',
+		bool   $block = TRUE,
+		string $id    = '',
+		bool   $hide  = FALSE,
 	): string {
 
 		return $block
@@ -776,10 +782,10 @@ class Module extends Core\Base
 	}
 
 	protected function wrap_open_buttons(
-		string|array $class = '',
-		bool $block = TRUE,
-		string $id = '',
-		bool $hide = FALSE,
+		mixed  $class = '',
+		bool   $block = TRUE,
+		string $id    = '',
+		bool   $hide  = FALSE,
 	): string {
 
 		return $block
@@ -793,11 +799,11 @@ class Module extends Core\Base
 	}
 
 	protected function wrap_open_row(
-		string $name = '',
-		string|array $extra = '',
-		string $id = '',
-		bool $hide = FALSE,
-		string $tag = 'li',
+		string $name  = '',
+		mixed  $class = '',
+		string $id    = '',
+		bool   $hide  = FALSE,
+		string $tag   = 'li',
 	): string {
 
 		return '<'.Core\HTML::sanitizeTag( $tag ).' class="'.Core\HTML::prepClass(
@@ -805,20 +811,21 @@ class Module extends Core\Base
 			'-wrap-row',
 			'-'.$this->key,
 			$name ? ( '-'.$name ) : '',
-			$extra
+			$class,
 		).'"'.( $id ? ' id="'.$id.'"' : '' )
 		.( $hide ? ' style="display:none"' : '' ).'>';
 	}
 
 	// `self::dump( ini_get( 'memory_limit' ) );`
 	public function raise_memory_limit(
-		int $count = 1,
-		int $per = 60,
+		int     $count   = 1,
+		int     $per     = 60,
 		?string $context = NULL,
 	): false|int|string {
 
 		$limit = $count ? ( 300 + ( $per * $count ) ) : 0;
 
+		// phpcs:ignore: Squiz.PHP.DiscouragedFunctions.Discouraged
 		@set_time_limit( $limit );
 		// `@ini_set( 'max_execution_time', $limit );` // maybe `-1`
 		// `@ini_set( 'max_input_time', $limit );` // maybe `-1`

@@ -36,7 +36,7 @@ class WooCommerce extends Core\Base
 		if ( defined( 'WOODMART_CORE_VERSION' ) )
 			return TRUE;
 
-		// fallback/unnesseary db call
+		// fallback/unnecessary db call
 		// if ( get_option( 'woodmart_is_activated' ) )
 		// 	return TRUE;
 
@@ -51,6 +51,20 @@ class WooCommerce extends Core\Base
 		$woo = WC();
 
 		return $woo instanceof \WooCommerce;
+	}
+
+	public static function isProduct( mixed $data ): bool
+	{
+		if ( empty( $data ) )
+			return FALSE;
+
+		if ( is_string( $data ) )
+			return FALSE; // Deprecated @since PHP 8.6.0
+
+		if ( ! is_a( $data, 'WC_Product', FALSE ) )
+			return FALSE;
+
+		return TRUE;
 	}
 
 	/**

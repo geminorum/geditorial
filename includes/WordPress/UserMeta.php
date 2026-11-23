@@ -12,7 +12,8 @@ class UserMeta extends ObjectMeta
 	const OBJECT_ID_PROP  = 'ID';
 	const TABLE_ID_COLUMN = 'user_id';
 
-	protected static function _get( mixed $object ): mixed
+	// NOTE: `NULL` means current user
+	protected static function _getObject( mixed $object ): mixed
 	{
 		return User::get( $object );
 	}
