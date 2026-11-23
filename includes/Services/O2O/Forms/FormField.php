@@ -17,7 +17,7 @@ abstract class FormField implements FormFieldInterface
 	 */
 	public static function create( $args )
 	{
-		if ( is_a( $args, __NAMESPACE__.'\\FormFieldInterface' ) )
+		if ( is_a( $args, __NAMESPACE__.'\\FormFieldInterface', FALSE ) )
 			return $args;
 
 		if ( empty( $args['name'] ) )

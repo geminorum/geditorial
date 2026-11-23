@@ -297,13 +297,13 @@ class API extends Core\Base
 	// `p2p_list_posts()`
 	public static function listPosts( $posts, $args = [] )
 	{
-		if ( is_a( $posts, __NAMESPACE__.'\\ListItems' ) ) {
+		if ( is_a( $posts, __NAMESPACE__.'\\ListItems', FALSE ) ) {
 
 			$list = $posts;
 
 		} else {
 
-			if ( is_a( $posts, 'WP_Query' ) )
+			if ( is_a( $posts, 'WP_Query', FALSE ) )
 				$posts = $posts->posts;
 
 			$list = new ListItems( $posts, __NAMESPACE__.'\\ItemPost' );

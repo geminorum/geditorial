@@ -969,7 +969,7 @@ class Tweaks extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		if ( ! $html = $product->get_sku() )
@@ -985,7 +985,7 @@ class Tweaks extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		printf( $before, '-product-stock' );
@@ -1019,7 +1019,7 @@ class Tweaks extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		if ( ! $html = $product->get_cogs_value_html() )

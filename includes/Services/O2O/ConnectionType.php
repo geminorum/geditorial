@@ -327,9 +327,9 @@ class ConnectionType extends Core\Base
 	// Optimized inner query, after the outer query was executed
 	// populates each of the outer query's $post objects with
 	// a 'connected' property, containing a list of connected posts
-	public function each_connected( $items, $extra_qv = [], $prop_name = 'connected' )
+	public function each_connected( mixed $items, array $extra_qv = [], string $prop_name = 'connected' )
 	{
-		if ( is_a( $items, 'WP_Query' ) )
+		if ( is_a( $items, 'WP_Query', FALSE ) )
 			$items =& $items->posts;
 
 		if ( empty( $items ) || ! is_object( $items[0] ) )

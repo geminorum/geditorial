@@ -556,7 +556,7 @@ class Listed extends gEditorial\Module
 			return $types;
 
 		if ( $field = Services\PostTypeFields::isAvailable( 'listing_code', $this->constant( 'primary_posttype' ), 'meta' ) )
-			return array_merge( $types, [
+			$types = array_merge( $types, [
 				$field['name'] => $field['title'],
 			] );
 

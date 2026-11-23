@@ -331,7 +331,7 @@ class Calendars extends gEditorial\Service
 		// NOTE: firstly check for the date for early bailing!
 		if ( $the_date ) {
 
-			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+			if ( is_a( $the_date, 'DateTimeInterface', TRUE ) ) {
 
 				$final = $the_date;
 
@@ -581,7 +581,7 @@ class Calendars extends gEditorial\Service
 		// NOTE: firstly check for the date for early bailing!
 		if ( $the_date ) {
 
-			if ( is_a( $the_date, 'DateTimeInterface' ) ) {
+			if ( is_a( $the_date, 'DateTimeInterface', TRUE ) ) {
 
 				$final = $the_date;
 

@@ -34,9 +34,9 @@ abstract class Side
 	{
 		$class = __NAMESPACE__.'\\'.$this->item_type;
 
-		if ( is_a( $arg, __NAMESPACE__.'\\Item' ) ) {
+		if ( is_a( $arg, __NAMESPACE__.'\\Item', FALSE ) ) {
 
-			if ( ! is_a( $arg, $class ) )
+			if ( ! is_a( $arg, $class, FALSE ) )
 				return FALSE;
 
 			$arg = $arg->get_object();

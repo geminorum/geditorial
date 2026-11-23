@@ -268,7 +268,7 @@ class WcConnected extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		if ( ! $this->has_content_for_product( $product, 'woocommerce' ) )
@@ -301,7 +301,7 @@ class WcConnected extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		echo gEditorial\ShortCode::listPosts( 'metadata',

@@ -47,7 +47,7 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Identifier Meta-key for %s', 'Setting Title', 'geditorial-identified' ),
-					Core\HTML::tag( 'i', $posttype_label )
+					Core\HTML::tag( 'i', $posttype_label ),
 				),
 				'description' => _x( 'Defines identifier meta-key for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -62,7 +62,7 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Identifier Type for %s', 'Setting Title', 'geditorial-identified' ),
-					Core\HTML::tag( 'i', $posttype_label )
+					Core\HTML::tag( 'i', $posttype_label ),
 				),
 				'description'  => _x( 'Defines available identifier type for the post-type.', 'Setting Description', 'geditorial-identified' ),
 				'string_empty' => _x( 'There are no identifier types available!', 'Setting', 'geditorial-identified' ),
@@ -78,7 +78,7 @@ class Identified extends gEditorial\Module
 				'description' => sprintf(
 					/* translators: `%s`: application name */
 					_x( 'Provides a link to %s mobile app for barcode scan of the queryable identifiers.', 'Setting Description', 'geditorial-identified' ),
-					Core\HTML::code( 'BinaryEye' )
+					Core\HTML::code( 'BinaryEye' ),
 				),
 			],
 			'frontend_search' => [ _x( 'Adds results by Identifier information on front-end search.', 'Setting Description', 'geditorial-identified' ), TRUE ],
@@ -101,12 +101,12 @@ class Identified extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported type label */
 					_x( 'URL Template for %s', 'Setting Title', 'geditorial-identified' ),
-					Core\HTML::tag( 'i', $types[$queryable] )
+					Core\HTML::tag( 'i', $types[$queryable] ),
 				),
 				'description' => sprintf(
 					/* translators: `%s`: token list placeholder */
 					_x( 'Defines a not-found url template for the identifier type. Available tokens are %s.', 'Setting Description', 'geditorial-identified' ),
-					WordPress\Strings::getJoined( [ Core\HTML::code( 'type' ), Core\HTML::code( 'data' ) ] )
+					WordPress\Strings::getJoined( [ Core\HTML::code( 'type' ), Core\HTML::code( 'data' ) ] ),
 				),
 				'field_class' => [ 'regular-text', 'code-text' ],
 				'after'       => gEditorial\Settings::fieldAfterText( $default_template, 'code' ),
@@ -125,7 +125,7 @@ class Identified extends gEditorial\Module
 				sprintf(
 					/* translators: `%s`: audit attribute placeholder */
 					_x( 'Appends %s audit attribute to each created item via identifier.', 'Setting Description', 'geditorial-identified' ),
-					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) )
+					Core\HTML::code( $this->constant( 'term_newpost_by_identifier' ) ),
 				),
 			],
 		];

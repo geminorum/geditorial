@@ -41,7 +41,7 @@ trait PairedImports
 				$label = sprintf(
 					/* translators: `%s`: post title */
 					_x( 'Upload into %s', 'Internal: PairedImports: Button Label', 'geditorial' ),
-					WordPress\Post::title( $post )
+					WordPress\Post::title( $post ),
 				);
 
 				$button = $this->pairedimports_get_import_buttons( $post, NULL, NULL, $label, 'page-title-action' );
@@ -104,6 +104,7 @@ trait PairedImports
 	// NOTE: on strings API: `$strings['import_types']['pairedimports']`
 	protected function pairedimports_define_import_types( false|object $linked = FALSE, ?array $posttypes = NULL ): array
 	{
+		// @hook: `pairedimports_import_types`
 		return apply_filters( $this->hook_base( 'pairedimports', 'import_types' ),
 			$this->get_strings( 'pairedimports', 'import_types', [
 				'post_title' => _x( 'Title', 'Internal: PairedImports: Import Type', 'geditorial' ),

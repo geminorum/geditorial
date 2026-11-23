@@ -787,7 +787,7 @@ class Byline extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		$post_id = $product->get_id();

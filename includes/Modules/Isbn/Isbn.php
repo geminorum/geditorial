@@ -278,7 +278,7 @@ class Isbn extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		if ( ! method_exists( $product, 'get_global_unique_id' ) )

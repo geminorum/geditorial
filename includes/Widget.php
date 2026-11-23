@@ -116,7 +116,7 @@ class Widget extends \WP_Widget
 		], $this->setup() );
 
 		if ( ! $args['name'] || ! $args['module'] )
-			return FALSE;
+			return; // TODO: log this!
 
 		if ( empty( $args['class'] ) )
 			$args['class'] = str_replace( '_', '-', $args['name'] );

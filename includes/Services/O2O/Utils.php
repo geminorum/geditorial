@@ -15,7 +15,7 @@ class Utils extends Core\Base
 
 		foreach ( $items as &$item ) {
 
-			if ( is_a( $item, __NAMESPACE__.'\\Item' ) )
+			if ( is_a( $item, __NAMESPACE__.'\\Item', FALSE ) )
 				$item = $item->get_id();
 
 			else if ( is_object( $item ) )

@@ -76,12 +76,12 @@ class DirectedConnectionType
 		return $side->get_list( $query );
 	}
 
-	protected function recognize_any( $item, $which = 'current' )
+	protected function recognize_any( mixed $item, string $which = 'current' )
 	{
 		if ( 'any' == $item )
 			return new ItemAny;
 
-		if ( is_a( $item, __NAMESPACE__.'\\ItemAny' ) )
+		if ( is_a( $item, __NAMESPACE__.'\\ItemAny', FALSE ) )
 			return $item;
 
 		return $this->recognize( $item, $which );
@@ -271,7 +271,7 @@ class DirectedConnectionType
 		$args['direction'] = $this->direction;
 
 		foreach ( [ 'from', 'to' ] as $key )
-			if ( isset( $args[$key] ) && is_a( $args[$key], __NAMESPACE__.'\\ItemAny' ) )
+			if ( isset( $args[$key] ) && is_a( $args[$key], __NAMESPACE__.'\\ItemAny', FALSE ) )
 				$args[$key] = 'any';
 
 		return call_user_func( [ __NAMESPACE__.'\\API', $method ], $this->name, $args );

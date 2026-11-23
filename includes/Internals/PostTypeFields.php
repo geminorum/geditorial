@@ -1520,7 +1520,7 @@ trait PostTypeFields
 		] );
 	}
 
-	public function pairedimports_import_types_posttypefields( $types, $linked, $posttypes, $module_key ): array
+	public function pairedimports_import_types_posttypefields( array $types, mixed $linked, ?array $posttypes, string $module_key ): array
 	{
 		foreach ( $this->posttypes() as $posttype ) {
 

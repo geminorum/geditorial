@@ -21,6 +21,7 @@ class SemiSecure extends gEditorial\Service
 	public static function generateToken(
 		string $context,
 		string $subject,
+		#[\SensitiveParameter]
 		string $fullname,
 		?int $expires = NULL,
 		bool|string $fallback = FALSE,

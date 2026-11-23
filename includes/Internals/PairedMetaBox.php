@@ -259,7 +259,13 @@ trait PairedMetaBox
 			else
 				echo Core\HTML::wrap( $this->strings_metabox_noitems_via_posttype( $screen->post_type, $context ), 'field-wrap -empty' );
 
-			$this->_render_paired_listbox_extra( $object, $box, $context, $screen );
+			$this->_render_paired_listbox_extra(
+				$object,
+				$term,
+				$box,
+				$context,
+				$screen,
+			);
 
 			echo '</div>';
 
@@ -295,9 +301,10 @@ trait PairedMetaBox
 	// TODO: support for empty paired items with JS button confirmation
 	protected function _render_paired_listbox_extra(
 		object $post,
-		false|array $box,
-		?string $context = NULL,
-		?object $screen  = NULL,
+		object $term,
+		false|array $box     = FALSE,
+		?string     $context = NULL,
+		?object     $screen  = NULL,
 	): void {
 
 		$html    = '';

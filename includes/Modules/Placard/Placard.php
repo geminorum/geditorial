@@ -543,7 +543,7 @@ class Placard extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		$context   ??= 'woocommerce';

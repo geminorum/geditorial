@@ -120,13 +120,13 @@ class WcIdentify extends gEditorial\Module
 	}
 
 	public function render_product_uniqueid(
-		mixed $product,
-		string $before = '',
-		string $after = '',
+		mixed   $product,
+		string  $before   = '',
+		string  $after    = '',
 		?string $template = NULL,
 	): void {
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		if ( ! method_exists( $product, 'get_global_unique_id' ) )

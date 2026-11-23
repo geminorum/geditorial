@@ -151,7 +151,7 @@ class DBTable extends Core\Base
 
 		// Update DB version based on the current site
 		if ( ! $this->is_global() ) {
-			$this->db_version = get_blog_option( $site_id, $this->db_version_key, false );
+			$this->db_version = get_blog_option( $site_id, $this->db_version_key, FALSE );
 		}
 
 		// Update table references based on th current site
@@ -203,10 +203,10 @@ class DBTable extends Core\Base
 		// Setup database
 		$this->db = isset( $GLOBALS['wpdb'] )
 			? $GLOBALS['wpdb']
-			: false;
+			: FALSE;
 
 		// Bail if no WordPress database interface is available
-		if ( false === $this->db ) {
+		if ( FALSE === $this->db ) {
 			return;
 		}
 
@@ -214,7 +214,7 @@ class DBTable extends Core\Base
 		$this->name = $this->sanitize_table_name( $this->name );
 
 		// Bail if database table name was garbage
-		if ( false === $this->name ) {
+		if ( FALSE === $this->name ) {
 			return;
 		}
 
@@ -282,14 +282,14 @@ class DBTable extends Core\Base
 	/**
 	* Get the table version from the database
 	*
-	* Global table version from "_sitemeta" on the main network
+	* Global table version from `_sitemeta` on the main network
 	*
 	* @since 1.1.0
 	*/
 	private function get_db_version() {
 		$this->db_version = $this->is_global()
-			? get_network_option( null, $this->db_version_key, false )
-			:         get_option(       $this->db_version_key, false );
+			? get_network_option( null, $this->db_version_key, FALSE )
+			:         get_option(       $this->db_version_key, FALSE );
 	}
 
 	/**
@@ -322,7 +322,7 @@ class DBTable extends Core\Base
 			// Tests constant is being used
 			( defined( 'WP_TESTS_DIR' ) && WP_TESTS_DIR )
 
-			// Scaffolded (https://make.wordpress.org/cli/handbook/plugin-unit-tests/)
+			// Scaffold (https://make.wordpress.org/cli/handbook/plugin-unit-tests/)
 			|| function_exists( '_manually_load_plugin' );
 	}
 
@@ -333,12 +333,12 @@ class DBTable extends Core\Base
 	*/
 	private function create() {
 
-		// Include file with dbDelta() for create/upgrade usages
+		// Include file with `dbDelta()` for create/upgrade usages
 		if ( ! function_exists( 'dbDelta' ) ) {
 			require_once ABSPATH.'wp-admin/includes/upgrade.php';
 		}
 
-		// Bail if dbDelta() moved in WordPress core
+		// Bail if `dbDelta()` moved in WordPress core
 		if ( ! function_exists( 'dbDelta' ) ) {
 			return FALSE;
 		}

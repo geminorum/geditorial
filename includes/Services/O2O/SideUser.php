@@ -115,7 +115,7 @@ class SideUser extends Side
 
 	protected function recognize( $arg )
 	{
-		if ( is_a( $arg, 'WP_User' ) )
+		if ( is_a( $arg, 'WP_User', FALSE ) )
 			return $arg;
 
 		return get_user_by( 'id', $arg );

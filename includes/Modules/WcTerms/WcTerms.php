@@ -333,11 +333,11 @@ class WcTerms extends gEditorial\Module
 		}
 	}
 
-	public function _append_taxonomy_tab( $tabs, $row )
+	public function _append_taxonomy_tab( array $tabs, array $row ): array
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		$terms = wc_get_product_terms( $product->get_id(), $row['taxonomy'], [ 'fields' => 'all' ] );

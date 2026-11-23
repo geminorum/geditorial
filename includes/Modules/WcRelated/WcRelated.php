@@ -213,7 +213,7 @@ class WcRelated extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		if ( $product->get_upsell_ids()
@@ -259,7 +259,7 @@ class WcRelated extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return;
 
 		$args = self::parsed( [

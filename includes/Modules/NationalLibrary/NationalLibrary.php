@@ -642,7 +642,7 @@ class NationalLibrary extends gEditorial\Module
 	{
 		global $product;
 
-		if ( empty( $product ) || ! is_a( $product, 'WC_Product' ) )
+		if ( ! WordPress\WooCommerce::isProduct( $product ) )
 			return $tabs;
 
 		if ( ! $data = $this->get_product_fipa( $product, FALSE, TRUE ) )
