@@ -113,7 +113,7 @@ class TermRelations extends gEditorial\Service
 		);
 	}
 
-	public static function updatePostData( mixed $post, array $data ): bool
+	public static function updatePostData( mixed $post, array $data, bool $set_object_terms = TRUE ): bool
 	{
 		if ( ! $post = WordPress\Post::get( $post ) )
 			return FALSE;
@@ -130,11 +130,18 @@ class TermRelations extends gEditorial\Service
 
 			if ( ! empty( $raw['__delete'] ) ) {
 
-				wp_remove_object_terms(
-					$post->ID,
-					$term->term_id,
-					$term->taxonomy,
-				);
+				if ( $set_object_terms ) {
+
+					$results = wp_remove_object_terms(
+						$post->ID,
+						$term->term_id,
+						$term->taxonomy,
+					);
+
+					if ( ! $results || is_wp_error( $results ) )
+						continue; // TODO: log the error/failure
+
+				}
 
 				// MAYBE: delete all meta related!
 				// TODO: clean-up process for residual data
@@ -142,15 +149,18 @@ class TermRelations extends gEditorial\Service
 				continue;
 			}
 
-			$result = wp_set_object_terms(
-				$post->ID,
-				$term->term_id,
-				$term->taxonomy,
-				TRUE,
-			);
+			if ( $set_object_terms ) {
 
-			if ( is_wp_error( $result ) )
-				continue;
+				$results = wp_set_object_terms(
+					$post->ID,
+					$term->term_id,
+					$term->taxonomy,
+					TRUE,
+				);
+
+				if ( is_wp_error( $results ) )
+					continue; // TODO: log the error
+			}
 
 			if ( empty( $supported[$term->taxonomy] ) )
 				$supported[$term->taxonomy] = self::get_supported( $term->taxonomy, 'edit', $post->post_type );
