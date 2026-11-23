@@ -436,6 +436,7 @@ class Audit extends gEditorial\Module
 	protected function rowaction_get_mainlink_for_post( mixed $post ): string
 	{
 		return $this->framepage_get_mainlink_for_post( $post, [
+			'text'         => Services\Icons::get( $this->module->icon, NULL, '-row-action-icon' ),
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
 			'maxwidth'     => '920px',

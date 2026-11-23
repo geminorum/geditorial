@@ -2370,7 +2370,7 @@ class Importer extends gEditorial\Module
 				WordPress\Post::title( $post ),
 				Services\CustomPostType::getLabel( $post, 'singular_name' ),
 			),
-			'text'         => $text,
+			'text'         => FALSE === $icon ? Services\Icons::get( $this->module->icon, NULL, '-row-action-icon' ) : $text,
 			'icon'         => $icon,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',

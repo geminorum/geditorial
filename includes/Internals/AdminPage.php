@@ -72,7 +72,7 @@ trait AdminPage
 			$slug,
 			[ $this, 'render_menu_adminpage' ],
 			Services\Icons::menu( $this->module->icon ),
-			$position
+			$position,
 		);
 
 		foreach ( $subs as $sub => $submenu )
@@ -87,7 +87,7 @@ trait AdminPage
 				$submenu,
 				$cap,
 				$slug.( $sub === $default ? '' : '&sub='.$sub ),
-				[ $this, 'render_menu_adminpage' ]
+				[ $this, 'render_menu_adminpage' ],
 			);
 
 		/** @disregard */
@@ -96,7 +96,7 @@ trait AdminPage
 				self::dsh( 'load', $this->screens[$context] ),
 				[ $this, 'load_menu_adminpage' ],
 				10,
-				0
+				0,
 			);
 
 		return $slug;
@@ -123,10 +123,11 @@ trait AdminPage
 			$GLOBALS['submenu_file'] = $this->get_adminpage_url( FALSE, [], $context ).'&sub='.$sub;
 
 		$this->register_help_tabs( NULL, $context );
+
 		$this->actions( 'load_adminpage',
 			$page,
 			$sub,
-			$context
+			$context,
 		);
 	}
 
@@ -194,7 +195,7 @@ trait AdminPage
 			$this->get_string( 'menu_title', $context, 'adminpage', '' ),
 			$cap,
 			$slug,
-			$cb
+			$cb,
 		);
 
 		add_action( 'load-'.$hook, $load, 10, 0 );
@@ -216,10 +217,11 @@ trait AdminPage
 		$sub     = self::req( 'sub', NULL );
 
 		$this->register_help_tabs( NULL, $context );
+
 		$this->actions( 'load_adminpage',
 			$page,
 			$sub,
-			$context
+			$context,
 		);
 
 		if ( self::req( 'noheader' ) )
@@ -234,10 +236,10 @@ trait AdminPage
 	// Allows for filtering the page title
 	// TODO: add compact mode to hide this on user screen setting
 	protected function render_adminpage_header_title(
-		?string $title = NULL,
-		false|array|null $links = NULL,
-		null|string|array $icon = NULL,
-		?string $context = NULL
+		?string           $title   = NULL,
+		false|array|null  $links   = NULL,
+		null|string|array $icon    = NULL,
+		?string           $context = NULL,
 	): void {
 
 		$context ??= 'mainpage';
@@ -258,9 +260,9 @@ trait AdminPage
 	}
 
 	protected function render_adminpage_header_nav(
-		string $uri = '',
-		?string $sub = NULL,
-		?array $subs = NULL,
+		string  $uri     = '',
+		?string $sub     = NULL,
+		?array  $subs    = NULL,
 		?string $context = NULL,
 	): void {
 
@@ -279,9 +281,9 @@ trait AdminPage
 	}
 
 	protected function render_adminpage_signature(
-		string $uri = '',
-		?string $sub = NULL,
-		?array $subs = NULL,
+		string  $uri     = '',
+		?string $sub     = NULL,
+		?array  $subs    = NULL,
 		?string $context = NULL,
 	): void {
 

@@ -285,7 +285,7 @@ class PostTypeFields extends gEditorial\Service
 			}
 		}
 
-		return 'admin-post';
+		return Icons::FALLBACK_ICON;
 	}
 
 	public static function getPostDateMetaKeys( array $extra = [], string $module = 'meta', bool $check = TRUE ): array
@@ -725,5 +725,16 @@ class PostTypeFields extends gEditorial\Service
 		}
 
 		return '';
+	}
+
+	public static function toTermRelation( string $name, array $data, ?string $fallback_type = NULL ): array
+	{
+		return [
+			'name'    => $name,
+			'title'   => $data['title'] ?? WordPress\Strings::makeLabel( $name ),
+			'desc'    => $data['description'] ?? '',
+			'default' => $data['default'] ?: '',
+			'type'    => $data['data_cast'] ?? $fallback_type ?? 'string',
+		];
 	}
 }

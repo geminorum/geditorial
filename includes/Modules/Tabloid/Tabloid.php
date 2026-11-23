@@ -25,7 +25,7 @@ class Tabloid extends gEditorial\Module
 			'name'     => 'tabloid',
 			'title'    => _x( 'Tabloid', 'Modules: Tabloid', 'geditorial-admin' ),
 			'desc'     => _x( 'Custom Overview of Contents', 'Modules: Tabloid', 'geditorial-admin' ),
-			'icon'     => 'analytics',
+			'icon'     => [ 'misc-16', 'tablet-fill' ],
 			'access'   => 'beta',
 			'frontend' => FALSE,
 		];
@@ -155,9 +155,9 @@ class Tabloid extends gEditorial\Module
 				/* translators: `%1$s`: current post title, `%2$s`: post-type singular name */
 				_x( 'Overview of this %2$s', 'Post Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Post::title( $post ),
-				Services\CustomPostType::getLabel( $post, 'singular_name' )
+				Services\CustomPostType::getLabel( $post, 'singular_name' ),
 			),
-			'text'         => $text,
+			'text'         => FALSE === $icon ? Services\Icons::get( $this->module->icon, NULL, '-row-action-icon' ) : $text,
 			'icon'         => $icon,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',
@@ -185,9 +185,9 @@ class Tabloid extends gEditorial\Module
 				/* translators: `%1$s`: current term name, `%2$s`: taxonomy singular name */
 				_x( 'Overview of this %2$s', 'Term Row Action Title Attr', 'geditorial-tabloid' ),
 				WordPress\Term::title( $term ),
-				Services\CustomTaxonomy::getLabel( $term, 'singular_name' )
+				Services\CustomTaxonomy::getLabel( $term, 'singular_name' ),
 			),
-			'text'         => $text,
+			'text'         => FALSE === $icon ? Services\Icons::get( $this->module->icon, NULL, '-row-action-icon' ) : $text,
 			'icon'         => $icon,
 			'context'      => 'rowaction',
 			'link_context' => 'overview',

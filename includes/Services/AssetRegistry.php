@@ -223,7 +223,7 @@ class AssetRegistry extends gEditorial\Service
 	}
 
 	// TODO: register hashed SVG icons as CSS variables
-	public static function icon( string $name, string $group, array $extra = [], bool $enqueue = TRUE ): false|string|array
+	public static function icon( string $name, string $group, string|array $extra = [], bool $enqueue = TRUE ): false|string|array
 	{
 		if ( $icon = Core\Icon::get( $name, $group, $extra ) ) {
 

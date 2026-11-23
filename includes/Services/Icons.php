@@ -8,7 +8,8 @@ use geminorum\gEditorial\WordPress;
 
 class Icons extends gEditorial\Service
 {
-	const MENUICON_PROP = 'editorial_icon';
+	const MENUICON_PROP    = 'editorial_icon';
+	const FALLBACK_ICON    = 'admin-post';
 	const LIBRARY_TEMPLATE = '/images/icon-library/%s.svg';
 
 	/**
@@ -22,12 +23,14 @@ class Icons extends gEditorial\Service
 	 * - Pass `none` to leave `div.wp-menu-image` empty so an icon can be added via CSS.
 	 *
 	 * @param mixed $icon
-	 * @param string $fallback_icon
+	 * @param null|string $fallback_icon
 	 * @param string|array $extra_class
 	 * @return string
 	 */
-	public static function get( mixed $icon, string $fallback_icon = 'admin-post', string|array $extra_class = [] ): string
+	public static function get( mixed $icon, ?string $fallback_icon = NULL, string|array $extra_class = [] ): string
 	{
+		$fallback_icon ??= static::FALLBACK_ICON;
+
 		if ( self::empty( $icon ) || 'none' === $icon )
 			return Core\HTML::getDashicon( $fallback_icon, FALSE, $extra_class );
 
@@ -103,7 +106,7 @@ class Icons extends gEditorial\Service
 	// OLD: `Visual::getPostTypeIconMarkup()`
 	public static function posttypeMarkup( string|object $posttype, ?string $fallback_icon = NULL, bool $raw = FALSE ): mixed
 	{
-		$fallback_icon = $fallback_icon ?? 'admin-post';
+		$fallback_icon ??= static::FALLBACK_ICON;
 
 		if ( ! $object = WordPress\PostType::object( $posttype ) )
 			return $raw ? $fallback_icon : Core\HTML::getDashicon( $fallback_icon );
@@ -137,10 +140,10 @@ class Icons extends gEditorial\Service
 	// OLD: `Visual::getTaxonomyIconMarkup()`
 	public static function taxonomyMarkup( string|object $taxonomy, ?string $fallback_icon = NULL, bool $raw = FALSE ): mixed
 	{
-		$fallback_icon = $fallback_icon ?? 'admin-post';
+		$fallback_icon ??= static::FALLBACK_ICON;
 
 		if ( ! $object = WordPress\Taxonomy::object( $taxonomy ) )
-			return $raw ? $fallback_icon	: Core\HTML::getDashicon( $fallback_icon );
+			return $raw ? $fallback_icon : Core\HTML::getDashicon( $fallback_icon );
 
 		if ( ! empty( $object->{static::MENUICON_PROP} ) )
 			return $raw

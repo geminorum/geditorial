@@ -211,7 +211,7 @@ class Scripts extends WordPress\Main
 			$base ?? static::URL,
 			$path,
 			$name,
-			Core\L10n::rtl() ? '-rtl' : ''
+			Core\L10n::rtl() ? '-rtl' : '',
 		);
 	}
 
@@ -233,7 +233,7 @@ class Scripts extends WordPress\Main
 			[
 				self::enqueueVendor( 'jquery-tableoverflow', [ 'jquery' ] ),
 				'jquery',
-			]
+			],
 		);
 	}
 
@@ -421,6 +421,7 @@ JS;
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, $url, [], $version, TRUE );
+
 		else
 			wp_register_script( $handle, $url, [], $version, TRUE );
 
@@ -437,6 +438,7 @@ JS;
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, $url, [], $ver, TRUE );
+
 		else
 			wp_register_script( $handle, $url, [], $ver, TRUE );
 
@@ -454,6 +456,7 @@ JS;
 
 		if ( $enqueue )
 			wp_enqueue_script( $handle, $url, [], $ver, TRUE );
+
 		else
 			wp_register_script( $handle, $url, [], $ver, TRUE );
 
@@ -521,7 +524,7 @@ JS;
 			'JsBarcode(".do-jsbarcode").init();',
 			[
 				self::pkgJSBarcode( FALSE, 'all' ),
-			]
+			],
 		);
 	}
 
@@ -621,7 +624,7 @@ JS;
 			[
 				'jquery',
 				self::pkgQRCodeSVG()
-			]
+			],
 		);
 	}
 
@@ -835,7 +838,7 @@ JS;
 			$script,
 			[
 				self::pkgChartJS( TRUE ),
-			]
+			],
 		);
 	}
 
@@ -883,7 +886,7 @@ JS;
 		return Core\HTML::linkStyleSheet(
 			GEDITORIAL_URL.'assets/packages/bootstrap/bootstrap'.$dir.$var.'.css',
 			$ver,
-			$screen
+			$screen,
 		);
 	}
 
@@ -892,7 +895,7 @@ JS;
 		return Core\HTML::linkStyleSheet(
 			GEDITORIAL_URL.'assets/packages/vazirmatn/Vazirmatn-font-face.css',
 			$ver,
-			$screen
+			$screen,
 		);
 	}
 

@@ -122,7 +122,10 @@ class TermRelations extends gEditorial\Service
 
 		foreach ( $data as $raw ) {
 
-			if ( empty( $raw['id'] ) || ! $term = WordPress\Term::get( (int) $raw['id'] ) )
+			if ( empty( $raw['id'] ) )
+				continue;
+
+			if ( ! $term = WordPress\Term::get( (int) $raw['id'] ) )
 				continue;
 
 			if ( ! WordPress\Term::can( $term, 'assign_term' ) )
@@ -169,10 +172,20 @@ class TermRelations extends gEditorial\Service
 
 				if ( array_key_exists( $field, $raw ) ) {
 
-					switch ( empty( $args['type'] ) ? 'string' : $args['type'] ) {
+					$meta = NULL;
 
+					// @SEE `Services\PostTypeFields::toTermRelation()`
+					switch ( $args['type'] ?? 'string' ) {
+
+						case 'bool':
 						case 'boolean':
 							$meta = $raw[$field] ? '1' : '';
+							break;
+
+						case 'int':
+						// case 'float':
+						case 'number':
+							$meta = Core\Number::intval( $raw[$field] ) ?: '';
 							break;
 
 						default:
