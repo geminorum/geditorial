@@ -9,6 +9,7 @@ use geminorum\gEditorial\WordPress;
 class Icons extends gEditorial\Service
 {
 	const MENUICON_PROP = 'editorial_icon';
+	const LIBRARY_TEMPLATE = '/images/icon-library/%s.svg';
 
 	/**
 	 * Retrieves mark-up for given icon.
@@ -45,11 +46,47 @@ class Icons extends gEditorial\Service
 		if ( Core\URL::isValid( $icon ) )
 			return Core\Icon::wrapURL( Core\HTML::escapeURL( $icon ), $extra_class );
 
+		if ( Core\Text::has( $icon, '/' ) )
+			return self::libraryMarkup( $icon, $extra_class, $fallback_icon );
+
 		// `icon-name:icon-set`
 		if ( Core\Text::has( $icon, ':' ) )
 			return Core\Icon::wrapBase64( Core\Icon::getBase64( ...explode( ':', $icon, 2 ) ), $extra_class ); // better to return hashed
 
 		return Core\HTML::getDashicon( $icon, FALSE, $extra_class );
+	}
+
+	public static function libraryMarkup( string $icon, string|array $extra_class = [], ?string $fallback_icon = NULL ): string
+	{
+		if ( ! WordPress\IsIt::compatWP( '7.1.0' ) ) // @since WP 7.1.0
+			return self::icon( $fallback_icon, $fallback_icon, $extra_class );
+
+		// WORKING BUT WTF?!
+		// if ( Core\Text::starts( $icon, 'core/' ) ) {
+
+		// 	$path = sprintf( static::LIBRARY_TEMPLATE,
+		// 		Core\Text::stripPrefix( $icon, 'core/' ),
+		// 	);
+
+		// 	if ( ! Core\File::exists( $path, ABSPATH.WPINC ) )
+		// 		return Core\HTML::getDashicon( $fallback_icon, FALSE, $extra_class );
+
+		// 	return Core\HTML::img(
+		// 		includes_url( $path, 'relative' ),
+		// 		Core\HTML::attrClass( '-icon', '-core', $extra_class ),
+		// 	);
+		// }
+
+		$args = [
+			// 'size' => 24, // int|null
+			// 'label' => '',
+			'class' => Core\HTML::attrClass( $extra_class ),
+		];
+
+		if ( ! $html = wp_get_icon( $icon, $args ) )
+			return self::icon( $fallback_icon, $fallback_icon, $extra_class );
+
+		return $html;
 	}
 
 	// OLD: `Visual::getMenuIcon()`
