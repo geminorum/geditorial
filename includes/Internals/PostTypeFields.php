@@ -113,6 +113,187 @@ trait PostTypeFields
 		return Core\Arraay::filter( $gEditorialPostTypeFields[$this->key][$posttype], $filter, $operator );
 	}
 
+	protected function posttypefields_prep_field_args( string $field, string $posttype, string|array $arguments = [] ): array
+	{
+		$args = is_array( $arguments ) ? $arguments : [ 'name' => $arguments ];
+
+		if ( ! array_key_exists( 'type', $args ) )
+			$args['type'] = 'text';
+
+		if ( ! array_key_exists( 'data_cast', $args ) ) {
+
+			// FIXME: finalize the naming!
+
+			/**
+			 * The PHP casting operators are:
+			 * - (string) - Converts to data type String.
+			 * - (int) - Converts to data type Integer.
+			 * - (float) - Converts to data type Float.
+			 * - (bool) - Converts to data type Boolean.
+			 * - (array) - Converts to data type Array.
+			 * - (object) - Converts to data type Object.
+			 * - (unset) - Deprecated. Converts to data type NULL.
+			 */
+
+			switch ( $args['type'] ) {
+
+				case 'day':
+				case 'hour':
+				case 'person':
+				case 'number': $args['data_cast'] = 'number'; break;
+
+				default: $args['data_cast'] = 'string'; break;
+			}
+		}
+
+		if ( ! array_key_exists( 'context', $args ) ) {
+
+			if ( in_array( $args['type'], [
+				'postbox_legacy',
+				'title_before',
+				'title_after',
+				'title_link',
+			], TRUE ) )
+				$args['context'] = 'nobox'; // OLD: 'raw'
+
+			else if ( in_array( $args['type'], [
+				'postbox_html',
+				'postbox_tiny',
+			], TRUE ) )
+				$args['context'] = 'lonebox'; // OLD: 'lone'
+		}
+
+		if ( ! array_key_exists( 'default', $args ) ) {
+
+			if ( in_array( $args['type'], [ 'array' ] ) || ! empty( $args['repeat'] ) )
+				$args['default'] = [];
+
+			else if ( in_array( $args['type'], [
+				'number',
+				'integer',
+				'float',
+				'gram',
+				'millimetre',
+				'kilogram',
+				'centimetre',
+				'metre',
+				'kilometre',
+				'hectare',
+				'km_per_hour',
+				'day',
+				'hour',
+				'member',
+				'person',
+				// 'price', // must be `string`
+			], TRUE ) )
+				$args['default'] = 0;
+
+			else
+				$args['default'] = '';
+		}
+
+		if ( ! array_key_exists( 'ltr', $args ) ) {
+
+			if ( in_array( $args['type'], [
+				'title_link',
+				'link',
+				'social',
+				'code',
+				'context',
+				'slug',
+				'hook',
+				'color',
+				'phone',
+				'mobile',
+				'contact',
+				'identity',
+				'iban',
+				'bankcard',
+				'isbn',
+				'vin',
+				'plate',
+				'year',
+				'date',
+				'datetime',
+				'distance',
+				'duration',
+				'area',
+			], TRUE ) )
+				$args['ltr'] = TRUE;
+		}
+
+		if ( ! array_key_exists( 'data_length', $args ) ) {
+
+			if ( in_array( $args['type'], [ 'date', 'identity' ], TRUE ) )
+				$args['data_length'] = 10;
+
+			else if ( in_array( $args['type'], [ 'bankcard' ], TRUE ) )
+				$args['data_length'] = 16;
+
+			else if ( in_array( $args['type'], [ 'phone', 'mobile' ], TRUE ) )
+				$args['data_length'] = 13;
+
+			else if ( in_array( $args['type'], [ 'iban' ], TRUE ) )
+				$args['data_length'] = 26;
+
+			else if ( in_array( $args['type'], [
+				'gram',
+				'millimetre',
+				'kilogram',
+				'centimetre',
+				'metre',
+				'kilometre',
+				'hectare',
+				'km_per_hour',
+				'european_shoe',
+				'international_shirt',
+				'international_pants',
+				'day',
+				'hour',
+				'member',
+				'person',
+			], TRUE ) )
+				$args['data_length'] = 4;
+		}
+
+		if ( ! array_key_exists( 'exclude', $args ) )
+			$args['exclude'] = in_array( $args['type'], [ 'parent_post' ] ) ? NULL : FALSE;
+
+		if ( ! array_key_exists( 'quickedit', $args ) )
+			$args['quickedit'] = in_array( $args['type'], [
+				'title_before',
+				'title_after',
+				'title_link',
+			], TRUE );
+
+		if ( ! array_key_exists( 'bulkedit', $args ) ) {
+
+			if ( in_array( $args['type'], [
+				'title_before',
+				'title_after',
+				'title_link',
+				'isbn',
+				'iban',
+				'bankcard',
+				'identity',
+				'postcode',
+				'email',
+				'contact',
+				'phone',
+				'mobile',
+			], TRUE ) )
+				$args['bulkedit'] = FALSE;
+		}
+
+		if ( array_key_exists( 'autocomplete', $args ) && FALSE === $args['autocomplete'] )
+			$args['autocomplete'] = 'off';
+
+		if ( ! isset( $args['icon'] ) )
+			$args['icon'] = Services\PostTypeFields::getFieldIcon( $field, $args, $posttype );
+
+		return $args;
+	}
+
 	/**
 	 * Initiates the registered fields for a post-type.
 	 * NOTE: static contexts: `nobox`, `lonebox`, `mainbox`
@@ -129,130 +310,7 @@ trait PostTypeFields
 
 		foreach ( $enabled as $i => $field ) {
 
-			$args = isset( $all[$field] ) && is_array( $all[$field] ) ? $all[$field] : [];
-
-			if ( ! array_key_exists( 'type', $args ) )
-				$args['type'] = 'text';
-
-			if ( ! array_key_exists( 'context', $args ) ) {
-
-				if ( in_array( $args['type'], [ 'postbox_legacy', 'title_before', 'title_after', 'title_link' ] ) )
-					$args['context'] = 'nobox'; // OLD: 'raw'
-
-				else if ( in_array( $args['type'], [ 'postbox_html', 'postbox_tiny' ] ) )
-					$args['context'] = 'lonebox'; // OLD: 'lone'
-			}
-
-			if ( ! array_key_exists( 'default', $args ) ) {
-
-				if ( in_array( $args['type'], [ 'array' ] ) || ! empty( $args['repeat'] ) )
-					$args['default'] = [];
-
-				else if ( in_array( $args['type'], [
-					'number',
-					'integer',
-					'float',
-					'gram',
-					'millimetre',
-					'kilogram',
-					'centimetre',
-					'metre',
-					'kilometre',
-					'hectare',
-					'km_per_hour',
-					'day',
-					'hour',
-					'member',
-					'person',
-					// 'price', // must be `string`
-				] ) )
-					$args['default'] = 0;
-
-				else
-					$args['default'] = '';
-			}
-
-			if ( ! array_key_exists( 'ltr', $args ) ) {
-
-				if ( in_array( $args['type'], [
-					'title_link',
-					'link',
-					'social',
-					'code',
-					'context',
-					'slug',
-					'hook',
-					'color',
-					'phone',
-					'mobile',
-					'contact',
-					'identity',
-					'iban',
-					'bankcard',
-					'isbn',
-					'vin',
-					'plate',
-					'year',
-					'date',
-					'datetime',
-					'distance',
-					'duration',
-					'area',
-				], TRUE ) )
-					$args['ltr'] = TRUE;
-			}
-
-			if ( ! array_key_exists( 'data_length', $args ) ) {
-
-				if ( in_array( $args['type'], [ 'date', 'identity' ], TRUE ) )
-					$args['data_length'] = 10;
-
-				else if ( in_array( $args['type'], [ 'bankcard' ], TRUE ) )
-					$args['data_length'] = 16;
-
-				else if ( in_array( $args['type'], [ 'phone', 'mobile' ], TRUE ) )
-					$args['data_length'] = 13;
-
-				else if ( in_array( $args['type'], [ 'iban' ], TRUE ) )
-					$args['data_length'] = 26;
-
-				else if ( in_array( $args['type'], [
-					'gram',
-					'millimetre',
-					'kilogram',
-					'centimetre',
-					'metre',
-					'kilometre',
-					'hectare',
-					'km_per_hour',
-					'european_shoe',
-					'international_shirt',
-					'international_pants',
-					'day',
-					'hour',
-					'member',
-					'person',
-				], TRUE ) )
-					$args['data_length'] = 4;
-			}
-
-			if ( ! array_key_exists( 'exclude', $args ) )
-				$args['exclude'] = in_array( $args['type'], [ 'parent_post' ] ) ? NULL : FALSE;
-
-			if ( ! array_key_exists( 'quickedit', $args ) )
-				$args['quickedit'] = in_array( $args['type'], [ 'title_before', 'title_after', 'title_link' ] );
-
-			if ( ! array_key_exists( 'bulkedit', $args ) ) {
-
-				if ( in_array( $args['type'], [ 'title_before', 'title_after', 'title_link', 'isbn', 'iban', 'bankcard', 'identity', 'postcode', 'email', 'contact', 'phone', 'mobile' ], TRUE ) )
-					$args['bulkedit'] = FALSE;
-			}
-
-			if ( ! isset( $args['icon'] ) )
-				$args['icon'] = Services\PostTypeFields::getFieldIcon( $field, $args, $posttype );
-
-			if ( array_key_exists( 'autocomplete', $args ) && FALSE === $args['autocomplete'] )
-				$args['autocomplete'] = 'off';
+			$args = $this->posttypefields_prep_field_args( $field, $posttype, $all[$field] ?? [] );
 
 			$fields[$field] = self::parsed( [
 				'type'        => 'text',
@@ -282,7 +340,8 @@ trait PostTypeFields
 
 				'import'         => TRUE,    // FALSE to hide on imports
 				'import_ignored' => FALSE,   // TRUE to make duplicate one that will be ignored on import
-				'export_title'   => NULL,    // the export column title
+				'export_title'   => NULL,    // The export column title
+				'data_cast'      => NULL,    // The root data type for fallbacks
 				'data_unit'      => NULL,    // The unit which in the data is stored
 				'data_length'    => NULL,    // Typical length of the data
 				'autocomplete'   => 'off',   // `NULL` to drop the attribute
