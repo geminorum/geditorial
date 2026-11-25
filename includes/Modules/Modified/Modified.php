@@ -11,6 +11,7 @@ use geminorum\gEditorial\WordPress;
 class Modified extends gEditorial\Module
 {
 	use Internals\CoreDashboard;
+	use Internals\CoreBlocks;
 	use Internals\ViewEngines;
 
 	protected $disable_no_posttypes   = TRUE;
@@ -25,6 +26,7 @@ class Modified extends gEditorial\Module
 			'icon'     => 'update',
 			'access'   => 'beta',
 			'keywords' => [
+				'has-blocks',
 				'shortcode-module',
 			],
 		];
@@ -108,6 +110,19 @@ class Modified extends gEditorial\Module
 					_x( 'Site Modified', 'Setting: Short-code Title', 'geditorial-modified' )
 				),
 			],
+		];
+	}
+
+	// TODO: must provide front-end styles for Gutenberg!
+	protected function get_module_blocktypes(): array
+	{
+		return [
+			'entry' => [
+				'category' => 'widgets',
+				'icon'     => 'clock',
+			],
+			// 'post' => [],
+			// 'site' => [],
 		];
 	}
 
@@ -278,6 +293,39 @@ class Modified extends gEditorial\Module
 		}
 
 		$this->wrap_content_insert( $html, $extra );
+	}
+
+	public function blocktype_entry_render_callback( array $attributes, string $content ): string
+	{
+		$supported = $this->posttypes();
+
+		if ( is_singular( $supported ) )
+			$args = [
+				'echo'    => FALSE,
+				'onerror' => '',
+				'context' => $attributes['context'] ?: NULL,
+			];
+
+		// NOTE: not supported post-types on front-end!
+		else if ( is_singular() )
+			return '<!-- modified block placeholder -->';
+
+		else
+			$args = [
+				'id'       => get_queried_object_id() ?: WordPress\PostType::getRandomPostID( $supported, FALSE, TRUE ),
+				'echo'     => FALSE,
+				'onerror'  => gEditorial\Plugin::wrong(),
+				'fallback' => gEditorial\Plugin::noinfo(),
+				'context'  => $attributes['context'] ?: NULL,
+			];
+
+		return $this->coreblocks__wrap_rendered(
+			$this->modified_data_summary( $args ),
+			'entry',
+			[
+				'data-context' => $attributes['context'] ?? '',
+			],
+		);
 	}
 
 	public function entry_modified_shortcode( null|string|array $atts = [], ?string $content = NULL, string $tag = '' ): mixed

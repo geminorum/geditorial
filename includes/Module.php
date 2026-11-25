@@ -432,6 +432,9 @@ class Module extends WordPress\Module
 
 		$this->features = $this->filters( 'features', $this->get_global_features(), $this->module );
 		$this->strings  = $this->filters( 'strings',  $this->get_global_strings(),  $this->module );
+
+		if ( method_exists( $this, 'coreblocks__init_blocktyps' ) )
+			$this->coreblocks__init_blocktyps();
 	}
 
 	// NOTE: ALWAYS HOOKED
