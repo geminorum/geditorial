@@ -186,7 +186,7 @@ task('dev:new:widget', function (done) {
 
 task('dev:new:module', function (done) {
   if (!('name' in args)) {
-    log.error('Error: missing required name for the module: `--name NewModule`');
+    log.error('Error: missing required name for the module: `--name ModuleName`');
     return done();
   }
 
@@ -293,7 +293,14 @@ task('i18n:module', function (done) {
     return done();
   }
 
-  return src(conf.input.module + args.name)
+  const name = capitalize(sanitizeModule(args.name));
+
+  if (!name) {
+    log.error('Error: invalid name for the module: `' + args.name + '`');
+    return done();
+  }
+
+  return src(conf.input.module + name)
     .pipe(gulpexec(function (file) {
       const module = i18nModule(file.path);
       log.info('Make pot for Module: ' + module.folder);
@@ -390,14 +397,14 @@ task('watch:styles', function () {
 // all styles / without livereload
 task('dev:styles', function () {
   return src(conf.input.sass)
-    // .pipe(sourcemaps.init())
+    // `.pipe(sourcemaps.init())`
     .pipe(sass.sync(conf.sass).on('error', sass.logError))
     .pipe(postcss([
       cssnano(conf.cssnano.dev),
       autoprefixer(conf.autoprefixer.dev)
     ]))
     .pipe(header(banner, { pkg }))
-    // .pipe(sourcemaps.write(conf.output.sourcemaps))
+    // `.pipe(sourcemaps.write(conf.output.sourcemaps))`
     .pipe(gulpdebug({ title: 'Changed' }))
     .pipe(dest(conf.output.css)).on('error', log.error)
     .pipe(postcss([rtlcss()]))
@@ -406,11 +413,63 @@ task('dev:styles', function () {
     .pipe(dest(conf.output.css)).on('error', log.error);
 });
 
+task('dev:module:styles', function (done) {
+  if (!('name' in args)) {
+    log.error('Error: missing required name for the module: `--name ModuleName`');
+    return done();
+  }
+
+  const name = capitalize(sanitizeModule(args.name));
+
+  if (!name) {
+    log.error('Error: invalid name for the module: `' + args.name + '`');
+    return done();
+  }
+
+  return src(conf.input.module + name + conf.module.sass)
+    // `.pipe(sourcemaps.init())`
+    .pipe(sass.sync(conf.sass).on('error', sass.logError))
+    .pipe(postcss([
+      cssnano(conf.cssnano.dev),
+      autoprefixer(conf.autoprefixer.dev)
+    ]))
+    .pipe(header(banner, { pkg }))
+    // `.pipe(sourcemaps.write(conf.output.sourcemaps))`
+    .pipe(gulpdebug({ title: 'Changed' }))
+    .pipe(dest(conf.input.module + name + conf.module.css)).on('error', log.error)
+    .pipe(postcss([rtlcss()]))
+    .pipe(rename({ suffix: '-rtl' }))
+    .pipe(gulpdebug({ title: 'RTLed' }))
+    .pipe(dest(conf.input.module + name + conf.module.css)).on('error', log.error);
+});
+
 task('dev:scripts', function () {
   return src(conf.input.js, { base: '.' })
     .pipe(rename({ suffix: '.min' }))
     .pipe(uglify())
     .pipe(dest('.'));
+});
+
+task('dev:module:scripts', function (done) {
+  if (!('name' in args)) {
+    log.error('Error: missing required name for the module: `--name ModuleName`');
+    return done();
+  }
+
+  const name = capitalize(sanitizeModule(args.name));
+
+  if (!name) {
+    log.error('Error: invalid name for the module: `' + args.name + '`');
+    return done();
+  }
+
+  deleteSync([conf.input.module + name + conf.module.jsmin]);
+
+  return src(conf.input.module + name + conf.module.jssrc)
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(uglify())
+    // .pipe(dest('.'));
+    .pipe(dest(conf.input.module + name + conf.module.js));
 });
 
 gulp.task('dev:banklogos', function () {

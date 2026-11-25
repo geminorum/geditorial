@@ -1,0 +1,12 @@
+{
+  "first-line-heading": {
+    "level": 1
+  },
+  "line-length": {
+    "line_length": 200
+  },
+  "blanks-around-lists": false,
+  "blanks-around-headings": {
+    "lines_below": 0
+  }
+}

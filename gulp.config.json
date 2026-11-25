@@ -2,6 +2,13 @@
   "root": {
     "changelog": "CHANGES.md"
   },
+  "module": {
+    "js": "/assets/js",
+    "jssrc": "/assets/js/*.js",
+    "jsmin": "/assets/js/*.min.js",
+    "sass": "/assets/sass/**/*.scss",
+    "css": "/assets/css"
+  },
   "input": {
     "module": "./includes/Modules/",
     "modules": [

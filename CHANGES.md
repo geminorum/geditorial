@@ -1,4 +1,8 @@
-### [3.35.1] - 2025-08-05
+# gEditorial Change Log
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## [3.35.1] - 2025-08-05
 * internal/quantum-comments: sanitize logic separated
 * internal/quantum-comments: sanitizing url/link fields
 * internal/sub-contents: additional checks on the table rows
@@ -33,11 +37,7 @@
 * module/wc-purchased: total sales on pointers
 * service/individuals: filter taxonomy target term with parser
 
-# gEditorial Change Log
-All notable changes to this project will be documented in this file.
-This project adheres to [Semantic Versioning](http://semver.org/).
-
-### [3.35.0] - 2026-08-01
+## [3.35.0] - 2026-08-01
 * internal/core-columns: 🆕 internal
 * internal/core-hooks: 🆕 internal
 * internal/module-links: check for disabled on contexts
