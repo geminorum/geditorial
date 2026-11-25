@@ -24,7 +24,7 @@ class SearchSelect extends gEditorial\Service
 		return sprintf( '%s-%s/%s',
 			static::BASE,
 			static::REST_ENDPOINT_SUFFIX,
-			static::REST_ENDPOINT_VERSION
+			static::REST_ENDPOINT_VERSION,
 		);
 	}
 
@@ -33,7 +33,7 @@ class SearchSelect extends gEditorial\Service
 		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::READABLE,
 			'callback'            => [ __CLASS__, 'main_route_callback' ],
-			'permission_callback' => '__return_true', // NOTE: later we check for access
+			'permission_callback' => '__return_true',                        // NOTE: later we check for access
 		] );
 	}
 
@@ -106,7 +106,9 @@ class SearchSelect extends gEditorial\Service
 				return RestAPI::getErrorSomethingIsWrong();
 		}
 
-		return is_wp_error( $response ) ? $response : new \WP_REST_Response( $response, 200 );
+		return is_wp_error( $response )
+			? $response
+			: new \WP_REST_Response( $response, 200 );
 	}
 
 	private static function _get_select2_posts( array $queried ): array|object
@@ -118,7 +120,7 @@ class SearchSelect extends gEditorial\Service
 			'posts_per_page' => $queried['per'],
 			'offset'         => ( $queried['page'] - 1 ) * $queried['per'],
 
-			// 'no_found_rows'          => TRUE, // needed for pagination
+			// `'no_found_rows'          => TRUE,` // needed for pagination
 			'suppress_filters'       => TRUE,
 			'ignore_sticky_posts'    => TRUE,
 			'update_post_meta_cache' => FALSE,
@@ -192,7 +194,7 @@ class SearchSelect extends gEditorial\Service
 		return [
 			'results'    => $results,
 			'pagination' => [
-				'more' => ( $found - $args['posts_per_page'] ) > 0
+				'more' => ( $found - $args['posts_per_page'] ) > 0,
 			],
 		];
 	}
@@ -200,13 +202,23 @@ class SearchSelect extends gEditorial\Service
 	// NOTE: also used by others!
 	public static function getExtraForPost( mixed $post, array $queried = [], array $default = [] ): array
 	{
-		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_post' ), $default, $post, $queried );
+		// @hook: `geditorial_searchselect_result_extra_for_post`
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_post' ),
+			$default,
+			$post,
+			$queried,
+		);
 	}
 
 	// NOTE: also used by others!
 	public static function getImageForPost( mixed $post, array $queried = [], false|string $default = '' ): false|string
 	{
-		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ), $default, $post, $queried );
+		// @hook: `geditorial_searchselect_result_image_for_post`
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_post' ),
+			$default,
+			$post,
+			$queried,
+		);
 	}
 
 	private static function _get_select2_terms( array $queried ): array|object
@@ -313,7 +325,7 @@ class SearchSelect extends gEditorial\Service
 		return [
 			'results'    => $list,
 			'pagination' => [
-				// 'more' => ( $found - $args['number'] ) > 0
+				// `'more' => ( $found - $args['number'] ) > 0`
 				'more' => $found >= $args['number']
 			],
 		];
@@ -322,13 +334,23 @@ class SearchSelect extends gEditorial\Service
 	// NOTE: also used by others!
 	public static function getExtraForTerm( mixed $term, array $queried = [], array $default = [] ): array
 	{
-		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_term' ), $default, $term, $queried );
+		// @hook: `geditorial_searchselect_result_extra_for_term`
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_extra_for_term' ),
+			$default,
+			$term,
+			$queried,
+		);
 	}
 
 	// NOTE: also used by others!
 	public static function getImageForTerm( mixed $term, array $queried = [], false|string $default = '' ): false|string
 	{
-		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_term' ), $default, $term, $queried );
+		// @hook: `geditorial_searchselect_result_image_for_term`
+		return apply_filters( self::und( static::BASE, 'searchselect', 'result_image_for_term' ),
+			$default,
+			$term,
+			$queried,
+		);
 	}
 
 	private static function _get_select2_users( array $queried ): array|object
@@ -455,7 +477,7 @@ class SearchSelect extends gEditorial\Service
 			[
 				'jquery',
 				gEditorial\Scripts::pkgSelect2( TRUE ),
-			]
+			],
 		);
 	}
 }

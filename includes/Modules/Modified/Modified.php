@@ -23,10 +23,12 @@ class Modified extends gEditorial\Module
 			'name'     => 'modified',
 			'title'    => _x( 'Modified', 'Modules: Modified', 'geditorial-admin' ),
 			'desc'     => _x( 'Last Modification of Contents', 'Modules: Modified', 'geditorial-admin' ),
-			'icon'     => 'update',
+			'icon'     => 'clock',
 			'access'   => 'beta',
 			'keywords' => [
 				'has-blocks',
+				'has-adminbar',
+				'has-shortcodes',
 				'shortcode-module',
 			],
 		];
@@ -48,7 +50,7 @@ class Modified extends gEditorial\Module
 					'description' => sprintf(
 						/* translators: `%s`: zero placeholder */
 						_x( 'Custom string before the modified time on the content. Leave blank for default or %s to disable.', 'Setting Description', 'geditorial-modified' ),
-						Core\HTML::code( '0' )
+						Core\HTML::code( '0' ),
 					),
 					'placeholder' => _x( 'Last modified on', 'Setting Default', 'geditorial-modified' ),
 				],
@@ -99,15 +101,15 @@ class Modified extends gEditorial\Module
 			'_constants' => [
 				$this->settings_shortcode_constant(
 					'entry_modified_shortcode',
-					_x( 'Entry Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+					_x( 'Entry Modified', 'Setting: Short-code Title', 'geditorial-modified' ),
 				),
 				$this->settings_shortcode_constant(
 					'post_modified_shortcode',
-					_x( 'Post Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+					_x( 'Post Modified', 'Setting: Short-code Title', 'geditorial-modified' ),
 				),
 				$this->settings_shortcode_constant(
 					'site_modified_shortcode',
-					_x( 'Site Modified', 'Setting: Short-code Title', 'geditorial-modified' )
+					_x( 'Site Modified', 'Setting: Short-code Title', 'geditorial-modified' ),
 				),
 			],
 		];
@@ -175,14 +177,14 @@ class Modified extends gEditorial\Module
 				'parent' => $parent,
 				'id'     => $node_id,
 				'title'  => $icon.$modified,
-				'href'   => FALSE, // $this->get_module_url(),
+				'href'   => FALSE, // `$this->get_module_url(),`
 				'meta'   => [
 					'class' => $this->adminbar__get_css_class( '-not-linked' ),
 					'title' => sprintf(
 						/* translators: `%1$s`: singular post-type label, `%2$s`: published date */
 						_x( 'This %1$s was published on %2$s.', 'Node: Title', 'geditorial-modified' ),
 						Services\CustomPostType::getLabel( $post, 'singular_name' ),
-						gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' )
+						gEditorial\Datetime::dateFormat( $post->post_date, 'fulltime' ),
 					),
 				],
 			];
@@ -240,10 +242,10 @@ class Modified extends gEditorial\Module
 		if ( ! $html = $this->get_post_modified( NULL, $post ) )
 			return;
 
-		printf( $before, '-modified' );
+		printf( $before, self::pdsh( $this->key ) );
 			echo self::spc(
 				$this->get_column_icon(),
-				$html
+				$html,
 			);
 		echo $after;
 	}
@@ -260,7 +262,7 @@ class Modified extends gEditorial\Module
 			], sprintf(
 				/* translators: `%s`: site modified */
 				_x( 'Last updated on %s', 'Pointer: Site', 'geditorial-modified' ),
-				$content
+				$content,
 			) );
 
 		return $items;
@@ -407,7 +409,10 @@ class Modified extends gEditorial\Module
 		if ( ! Core\Text::has( $items, '{SITE_LAST_MODIFIED}' ) )
 			return $items;
 
-		return preg_replace( '%{SITE_LAST_MODIFIED}%', $this->get_site_modified() ?: '', $items );
+		return preg_replace( '%{SITE_LAST_MODIFIED}%',
+			$this->get_site_modified() ?: '',
+			$items,
+		);
 	}
 
 	//@hook: `gnetwork_navigation_help_placeholders`
@@ -524,38 +529,39 @@ class Modified extends gEditorial\Module
 
 	// @source https://make.wordpress.org/core/handbook/tutorials/installing-wordpress-locally/
 	// @template https://codepen.io/geminorum/pen/yyJjaaP
-	public function modified_data_summary( array $atts = [], mixed $post = NULL ): bool|string
+	public function modified_data_summary( array $arguments = [], mixed $post = NULL ): bool|string
 	{
 		$args = $this->filters( 'data_summary_args', self::parsed( [
 			'id'       => $post,
 			'fields'   => NULL,
 			'context'  => NULL,
 			'template' => NULL,
-			'default'  => FALSE,
+			'default'  => FALSE,   // DEPRECATED
+			'onerror'  => FALSE,
+			'fallback' => '',
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
 			'render'   => NULL,
-		], $atts ), $post );
+		], $arguments ), $post );
 
-		if ( ! $post = WordPress\Post::get( $args['id'] ) )
-			return $args['default'];
+		if ( ! $_post = WordPress\Post::get( $args['id'] ) )
+			return self::errored( $args['onerror'], 'post_not_exists' );
 
-		if ( ! $data = $this->modified_get_data_for_post( $post, $args['context'] ?? 'summary' ) )
-			return $args['default'];
+		if ( ! $data = $this->modified_get_data_for_post( $_post, $args['context'] ?? 'summary' ) )
+			return self::errored( $args['onerror'], 'data_summary_is_empty' );
 
-		if ( ! method_exists( $this, 'viewengine__render' ) ) {
-			$this->log( 'CRITICAL', 'VIEW ENGINE NOT AVAILABLE' );
-			return $args['default'];
-		}
+		if ( ! method_exists( $this, 'viewengine__render' ) )
+			return self::errored( $args['onerror'], 'view_engine_not_available' );
 
 		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', 'post' ) )
-			return $args['default'];
+			return self::errored( $args['onerror'], 'view_template_not_available' );
 
 		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
-			return $args['default'];
+			$html = $args['fallback'];
 
-		$html = $args['before'].$html.$args['after'];
+		if ( $html )
+			$html = $args['before'].$html.$args['after'];
 
 		if ( ! $args['echo'] )
 			return $html;

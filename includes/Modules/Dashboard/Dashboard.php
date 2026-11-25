@@ -22,7 +22,7 @@ class Dashboard extends gEditorial\Module
 			'icon'     => 'dashboard',
 			'access'   => 'beta',
 			'keywords' => [
-
+				'frontend',
 			],
 		];
 	}
@@ -51,12 +51,12 @@ class Dashboard extends gEditorial\Module
 				'before_content' => sprintf(
 					/* translators: `%s`: HTML word */
 					_x( 'Adds %s before contents on dashboard homepage.', 'Setting Description', 'geditorial-dashboard' ),
-					Core\HTML::code( 'HTML' )
+					Core\HTML::code( 'HTML' ),
 				),
 				'after_content' => sprintf(
 					/* translators: `%s`: HTML word */
 					_x( 'Adds %s after contents on dashboard homepage.', 'Setting Description', 'geditorial-dashboard' ),
-					Core\HTML::code( 'HTML' )
+					Core\HTML::code( 'HTML' ),
 				),
 			],
 		];
@@ -118,7 +118,7 @@ class Dashboard extends gEditorial\Module
 			'name' => sprintf(
 				/* translators: `%s`: system string */
 				_x( '%s: Dashboard', 'Widget Area', 'geditorial-dashboard' ),
-				gEditorial\Plugin::system()
+				gEditorial\Plugin::system(),
 			),
 			'description'    => _x( 'Widgets appear on Front-end Dashboard', 'Widget Area', 'geditorial-dashboard' ),
 			'before_widget'  => '<section id="%1$s" class="widget %2$s">',
@@ -139,12 +139,12 @@ class Dashboard extends gEditorial\Module
 		$home = $this->_dahboard_is_homepage();
 
 		add_rewrite_tag( "%{$key}%", '([^&]+)' );
-		// add_rewrite_tag( "%{$key}%", '([0-9]+)' );
+		// `add_rewrite_tag( "%{$key}%", '([0-9]+)' );`
 
 		foreach ( $this->_get_pages() as $page => $title )
 			add_rewrite_rule( ( $home ? ( '^'.$page.'/?$' ) : ( '^'.$slug.'/'.$page.'/?$' ) ),
 				sprintf( 'index.php?pagename=%s&%s=%s', $slug, $key, $page ), 'top' );
-	
+
 		return TRUE;
 	}
 
@@ -302,7 +302,7 @@ class Dashboard extends gEditorial\Module
 			'fallback_cb' => '',
 			'menu'        => $nav_menu,
 			'container'   => 'nav',
-			'menu_class'  => 'nav', // BS4/BS5
+			'menu_class'  => 'nav', // `BS4/BS5`
 		], $nav_menu, $term_id ) );
 	}
 

@@ -23,7 +23,7 @@ class SemiSecure extends gEditorial\Service
 		string $subject,
 		#[\SensitiveParameter]
 		string $fullname,
-		?int $expires = NULL,
+		?int        $expires  = NULL,
 		bool|string $fallback = FALSE,
 	): string|bool {
 
@@ -44,7 +44,7 @@ class SemiSecure extends gEditorial\Service
 		$jwt = new \Ahc\Jwt\JWT(
 			$rsa,
 			$algo,
-			$age ?: Core\Date::YEAR_IN_SECONDS
+			$age ?: Core\Date::YEAR_IN_SECONDS,
 		);
 
 		return $jwt->encode( [

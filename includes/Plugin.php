@@ -118,7 +118,7 @@ class Plugin extends WordPress\Plugin
 			'GEDITORIAL_DISABLE_HELP_TABS'   => FALSE,
 			'GEDITORIAL_STRING_DELIMITERS'   => NULL,
 
-			'GEDITORIAL_WIKI_URL' => 'https://github.com/geminorum/geditorial/wiki',
+			'GEDITORIAL_WIKI_URL' => Services\SystemBranding::WIKI_URL,
 
 			'GEDITORIAL_CACHE_DIR' => sprintf( '%s/cache', WP_CONTENT_DIR ),   // FALSE to disable
 			'GEDITORIAL_CACHE_URL' => sprintf( '%s/cache', WP_CONTENT_URL ),

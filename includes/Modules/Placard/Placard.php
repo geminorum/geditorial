@@ -577,6 +577,8 @@ class Placard extends gEditorial\Module
 			'location' => NULL,
 			'template' => NULL,
 			'status'   => TRUE,                      // check for acceptable status
+			'onerror'  => '',
+			'fallback' => $content,
 			'context'  => NULL,
 			'wrap'     => TRUE,
 			'class'    => '',
@@ -590,7 +592,7 @@ class Placard extends gEditorial\Module
 		$context = $args['context'] ?? 'summary';
 
 		if ( $args['id'] && ( ! $post = WordPress\Post::get( $args['id'] ) ) )
-			return $content;
+			return self::errored( $args['onerror'], 'post_not_exists' );
 
 		if ( empty( $post ) && $args['location'] && ( ! $post = $this->get_content_banners_by_location( $args['location'], $context ) ) )
 			return $content;
@@ -610,10 +612,8 @@ class Placard extends gEditorial\Module
 		if ( ! $data = $this->_get_data_for_post( $post, $context ) )
 			return $content;
 
-		if ( ! method_exists( $this, 'viewengine__render' ) ) {
-			$this->log( 'CRITICAL', 'VIEW ENGINE NOT AVAILABLE' );
-			return $content;
-		}
+		if ( ! method_exists( $this, 'viewengine__render' ) )
+			return self::errored( $args['onerror'], 'view_engine_not_available' );
 
 		$taxonomy = $this->constant( 'type_taxonomy' );
 		$template = $args['template'] ?? $this->get_template_by_post( $post, $taxonomy, $context );

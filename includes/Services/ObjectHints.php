@@ -31,7 +31,7 @@ class ObjectHints extends gEditorial\Service
 		register_rest_route( self::namespace(), '/'.static::REST_ENDPOINT_MAIN_ROUTE, [
 			'methods'             => \WP_REST_Server::READABLE,
 			'callback'            => [ __CLASS__, 'main_route_callback' ],
-			'permission_callback' => '__return_true', // NOTE: later we check for access
+			'permission_callback' => '__return_true',                        // NOTE: later we check for access
 		] );
 	}
 
@@ -86,7 +86,7 @@ class ObjectHints extends gEditorial\Service
 			$post,
 			$queried['extend'],
 			$queried['context'],
-			$queried
+			$queried,
 		);
 
 		$data = array_map(

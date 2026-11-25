@@ -27,6 +27,7 @@ class TaxonomyFields extends gEditorial\Service
 		$suitables = [];
 
 		foreach ( $object->{static::SUITABLE_METAS_PROP} as $field => $args ) {
+
 			$args ??= [];
 
 			// `NULL`: default
@@ -50,7 +51,7 @@ class TaxonomyFields extends gEditorial\Service
 		return $data[$taxonomy] = $suitables;
 	}
 
-	public static function getDefaultCalendar( $module = 'terms', $check = TRUE )
+	public static function getDefaultCalendar( string $module = 'terms', bool $check = TRUE ): string
 	{
 		if ( $check && ! gEditorial()->enabled( $module ) )
 			return Core\L10n::calendar();
@@ -62,13 +63,13 @@ class TaxonomyFields extends gEditorial\Service
 	 * Retrieves the term meta-key for given field.
 	 * TODO: rename to `getMetaKey`
 	 *
-	 * @param string $field_key
+	 * @param mixed $field_key
 	 * @param string $taxonomy
 	 * @param string $module
 	 * @param bool $check
-	 * @return string
+	 * @return false|string
 	 */
-	public static function getTermMetaKey( $field_key, $taxonomy = NULL, $module = 'terms', $check = TRUE )
+	public static function getTermMetaKey( mixed $field_key, ?string $taxonomy = NULL, string $module = 'terms', bool $check = TRUE ): false|string
 	{
 		if ( ! $field_key )
 			return FALSE;
@@ -83,21 +84,21 @@ class TaxonomyFields extends gEditorial\Service
 		return gEditorial()->module( $module )->get_supported_metakey( $field_key, $taxonomy );
 	}
 
-	public static function getField( mixed $field_key, array $atts = [], bool $check = TRUE, string $module = 'terms' ): mixed
+	public static function getField( mixed $field_key, array $arguments = [], bool $check = TRUE, string $module = 'terms' ): mixed
 	{
 		$field = FALSE;
 		$args  = self::parsed( [
 			'id'       => NULL,
 			'fallback' => FALSE,
 			'default'  => FALSE,
-			'noaccess' => NULL,     // returns upon no access, `NULL` for `default` argument
-			'context'  => 'view',   // access checks, `FALSE` to disable checks
-			'filter'   => FALSE,    // or `__do_embed_shortcode`
-			'prefix'   => FALSE,    // prefixes the value with field prop
-			'trim'     => FALSE,    // or number of chars
+			'noaccess' => NULL,     // Returns upon no access, `NULL` for `default` argument
+			'context'  => 'view',   // Access checks, `FALSE` to disable checks
+			'filter'   => FALSE,    // Or `__do_embed_shortcode`
+			'prefix'   => FALSE,    // Prefixes the value with field prop
+			'trim'     => FALSE,    // Or number of chars
 			'before'   => '',
 			'after'    => '',
-		], $atts );
+		], $arguments );
 
 		// NOTE: may come from taxonomy field argument
 		$args['default'] = $args['default'] ?? '';
@@ -123,7 +124,7 @@ class TaxonomyFields extends gEditorial\Service
 		$meta = $raw = self::getFieldRaw( $field_key, $term->term_id, $module );
 
 		if ( FALSE === $meta && $args['fallback'] )
-			return self::getField( $args['fallback'], array_merge( $atts, [ 'fallback' => FALSE ] ), FALSE );
+			return self::getField( $args['fallback'], array_merge( $arguments, [ 'fallback' => FALSE ] ), FALSE );
 
 		// `if ( empty( $field ) ) $field = gEditorial()->module( $module )->get_taxonomy_field_args( $field_key, $post->post_type );`
 		$field = FALSE; // TODO

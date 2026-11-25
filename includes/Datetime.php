@@ -19,7 +19,7 @@ class Datetime extends WordPress\Main
 		false|string $title           = FALSE,
 		?string      $calendar_type   = NULL,
 		?string      $timezone_string = NULL,
-		?string      $locale          = NULL
+		?string      $locale          = NULL,
 	): string {
 
 		$html = self::htmlDateTime(
@@ -41,7 +41,7 @@ class Datetime extends WordPress\Main
 		false|string $title           = FALSE,
 		?string      $calendar_type   = NULL,
 		?string      $timezone_string = NULL,
-		?string      $locale          = NULL
+		?string      $locale          = NULL,
 	): string {
 
 		return Core\HTML::tag( 'time', [
@@ -527,6 +527,7 @@ class Datetime extends WordPress\Main
 
 		// NOTE: full-dates stored in Gregorian
 		else if ( Core\Date::isInFormat( $sanitized, 'Y-m-d' ) )
+			// $datetime = sprintf( '%s 23:59:59', $sanitized );
 			$datetime = sprintf( '%s 00:00:00', $sanitized );
 
 		else if ( Core\Date::isInFormat( $sanitized, $format ?? Core\Date::MYSQL_FORMAT ) )

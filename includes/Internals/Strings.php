@@ -93,12 +93,12 @@ trait Strings
 	}
 
 	protected function strings_metabox_noitems_via_posttype(
-		string $posttype,
-		?string $context = 'default',
-		?string $default = NULL,
-		mixed $post = NULL,
-		false|string $prop = 'empty',
-		false|string $group = 'metabox',
+		string       $posttype_or_constant,
+		?string      $context = 'default',
+		?string      $default = NULL,
+		mixed        $post    = NULL,
+		false|string $prop    = 'empty',
+		false|string $group   = 'metabox',
 	): string {
 
 		if ( is_null( $default ) ) {
@@ -113,20 +113,20 @@ trait Strings
 			}
 		}
 
-		$template = $this->get_string( self::und( $context, $prop ), $posttype, 'metabox', $default );
-		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
+		$template = $this->get_string( self::und( $context, $prop ), $posttype_or_constant, 'metabox', $default );
+		$singular = Services\CustomPostType::getLabel( $this->constant( $posttype_or_constant, $posttype_or_constant ), 'singular_name' );
 		$title    = WordPress\Post::title( $post, $singular );
 
 		return sprintf( $template, $title, $singular );
 	}
 
 	protected function strings_metabox_title_via_posttype(
-		string $posttype,
-		?string $context = 'default',
-		?string $default = NULL,
-		mixed $post = NULL,
-		false|string $prop = 'title',
-		false|string $group = 'metabox',
+		string       $posttype_or_constant,
+		?string      $context = 'default',
+		?string      $default = NULL,
+		mixed        $post    = NULL,
+		false|string $prop    = 'title',
+		false|string $group   = 'metabox',
 	): string {
 
 		if ( is_null( $default ) ) {
@@ -179,8 +179,8 @@ trait Strings
 			}
 		}
 
-		$template = $this->get_string( self::und( $context, $prop ), $posttype, $group, $default );
-		$singular = Services\CustomPostType::getLabel( $posttype, 'singular_name' );
+		$template = $this->get_string( self::und( $context, $prop ), $posttype_or_constant, $group, $default );
+		$singular = Services\CustomPostType::getLabel( $this->constant( $posttype_or_constant, $posttype_or_constant ), 'singular_name' );
 		$title    = WordPress\Post::title( $post );
 
 		return sprintf( $template, $title ?: gEditorial\Plugin::untitled( FALSE ), $singular );

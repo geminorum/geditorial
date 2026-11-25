@@ -299,12 +299,19 @@ class Template extends WordPress\Main
 		return $html;
 	}
 
-	public static function postImageCallback( $image, $link, $args, $status, $title, $module )
-	{
-		if ( ! $image )
+	public static function postImageCallback(
+		string $image_markup,
+		string $link,
+		array $args,
+		$status,
+		string $title,
+		?string $module = NULL,
+	): mixed {
+
+		if ( ! $image_markup )
 			return $args['fallback'];
 
-		$html = $image;
+		$html = $image_markup;
 
 		if ( $link )
 			$html = '<a title="'.Core\HTML::escape( $args['figure'] ? self::getPostField( 'title', $args['id'] ) : $title ).'"'.( $args['newtab'] ? ' target="_blank"' : ' ' ).'href="'.$link.'">'.$html.'</a>';
@@ -323,10 +330,11 @@ class Template extends WordPress\Main
 			$html = '<figure'.( WordPress\Strings::isTruthy( $args['figure'] ) ? '' : ' class="'.Core\HTML::prepClass( $args['figure'] ).'"' ).'>'.$html.'<figcaption>'.$caption.'</figcaption></figure>';
 		}
 
-		if ( ! $args['wrap'] )
-			return $html;
-
-		return '<div class="'.Core\HTML::prepClass( static::BASE.'-wrap', ( $module ? '-'.$module : '' ), '-post-image-wrap' ).'">'.$html.'</div>';
+		return $args['wrap'] ? Core\HTML::wrap( $html, [
+			self::dsh( static::BASE, 'wrap' ),
+			self::pdsh( $module ),
+			'-post-image-wrap',
+		] ) : $html;
 	}
 
 	public static function postImage( array $arguments = [], ?string $module = NULL ): bool|string

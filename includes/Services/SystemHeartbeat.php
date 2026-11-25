@@ -33,7 +33,7 @@ class SystemHeartbeat extends gEditorial\Service
 			[
 				'jquery',
 				'heartbeat',
-			]
+			],
 		);
 	}
 
@@ -43,7 +43,7 @@ class SystemHeartbeat extends gEditorial\Service
 	 * @param object $wp_admin_bar
 	 * @return void
 	 */
-	public static function admin_bar_menu( $wp_admin_bar )
+	public static function admin_bar_menu( object $wp_admin_bar ): void
 	{
 		if ( ! is_user_logged_in() )
 			return;
@@ -53,7 +53,7 @@ class SystemHeartbeat extends gEditorial\Service
 			'id'     => self::classs( static::HEARTBEAT_KEY ),
 			'title'  => Icons::adminBarMarkup( 'heart' ),
 			'href'   => '#',
-			'meta' => [
+			'meta'   => [
 				// NOTE: heartbeat intervals by default will be determined on the client side.
 				'title' => _x( 'Current System Heartbeat ❤', 'Service: System Heartbeat', 'geditorial' ),
 				'class' => self::classs( 'adminbar', 'node', 'icononly' ),
@@ -70,7 +70,7 @@ class SystemHeartbeat extends gEditorial\Service
 	 * @param array $data
 	 * @return array
 	 */
-	public static function heartbeat_received( $response, $data )
+	public static function heartbeat_received( array $response, array $data ): array
 	{
 		if ( ( $data[static::HEARTBEAT_KEY] ?? '' ) === static::HEARTBEAT_VALUE )
 			$response[static::HEARTBEAT_KEY] = $data[static::HEARTBEAT_KEY];

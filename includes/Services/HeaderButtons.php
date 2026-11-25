@@ -16,7 +16,7 @@ class HeaderButtons extends gEditorial\Service
 		add_action( 'admin_enqueue_scripts', [ __CLASS__, 'admin_enqueue_scripts' ], 9, 1 );
 	}
 
-	public static function register( string $name, array $atts = [], bool $override = FALSE ): false|string
+	public static function register( string $name, array $arguments = [], bool $override = FALSE ): false|string
 	{
 		global $gEditorialHeaderButtons;
 
@@ -44,7 +44,7 @@ class HeaderButtons extends gEditorial\Service
 			'cap_check'      => FALSE,   // bool or cap
 			'hide_in_search' => TRUE,
 			'newtab'         => FALSE,
-		], $atts );
+		], $arguments );
 
 		return $name;
 	}
@@ -90,8 +90,8 @@ class HeaderButtons extends gEditorial\Service
 					'title'  => $button['title'] ?: FALSE,
 					'target' => $button['newtab'] ? '_blank': FALSE,
 					'class'  => Core\HTML::attrClass(
-						'-header-button'   ,  // should not use `.button`!
-						'page-title-action',  // wp core class
+						'-header-button'   ,  // WTF: should not use `.button`!
+						'page-title-action',  // WP core class
 						empty( $button['icon'] ) ? '' : '-has-icon',
 						$button['class']
 					),

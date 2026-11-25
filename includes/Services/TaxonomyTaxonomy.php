@@ -11,7 +11,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 	const TARGET_TAXONOMIES_PROP = 'target_taxonomies';
 
 	// OLD: `WordPress\Taxonomy::getTargetTaxonomies()`
-	public static function getTargets( $taxonomy, $fallback = FALSE )
+	public static function getTargets( mixed $taxonomy, mixed $fallback = FALSE ): mixed
 	{
 		$targets = [];
 
@@ -33,7 +33,7 @@ class TaxonomyTaxonomy extends gEditorial\Service
 	const FIELD_NAME_TEMPLATE  = '%s-taxtax-%s';
 	const FIELD_ID_TEMPLATE    = '%s-taxtax-%s-%s';
 
-	public static function getSettingsFieldArgs( $target, $context = NULL, $term = FALSE )
+	public static function getSettingsFieldArgs( mixed $target, ?String $context = NULL, mixed $term = FALSE ): false|array
 	{
 		if ( ! $object = WordPress\Taxonomy::object( $target ) )
 			return FALSE;
@@ -67,15 +67,16 @@ class TaxonomyTaxonomy extends gEditorial\Service
 						$object->name,
 						[
 							'fields' => 'ids',
-						]
+						],
 					);
 
 				break;
 
 			case 'quickedit':
 
-				$wrap              = 'fieldset';
-				$description       = '';          // avoid display
+				$wrap        = 'fieldset';
+				$description = '';          // avoid display
+
 				$data['quickedit'] = $html_name;
 		}
 

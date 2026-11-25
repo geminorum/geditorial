@@ -59,7 +59,7 @@ class Listtable extends gEditorial\Service
 
 		return gEditorial\Helper::htmlEmpty(
 			'column-term-empty',
-			$title_attr ?? _x( 'No Term', 'Service: Listtable: No Count Term Attribute', 'geditorial' )
+			$title_attr ?? _x( 'No Term', 'Service: Listtable: No Count Term Attribute', 'geditorial' ),
 		);
 	}
 

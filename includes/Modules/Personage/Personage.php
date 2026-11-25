@@ -298,7 +298,7 @@ class Personage extends gEditorial\Module
 					'identity_number' => [
 						'title'       => _x( 'Identity Number', 'Field Title', 'geditorial-personage' ),
 						'description' => _x( 'Unique National Identity Number', 'Field Description', 'geditorial-personage' ),
-						'icon'        => [ 'misc-512', 'gorbeh-fingerprint' ],
+						'icon'        => [ 'misc-16', 'custom--fingerprint' ],
 						'type'        => 'identity',
 						'quickedit'   => TRUE,
 						'bulkedit'    => FALSE,

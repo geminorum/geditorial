@@ -1042,7 +1042,9 @@ trait SubContents
 			'fields'   => NULL,
 			'context'  => NULL,
 			'template' => NULL,
-			'default'  => FALSE,
+			'default'  => FALSE,   // DEPRECATED
+			'onerror'  => FALSE,
+			'fallback' => '',
 			'before'   => '',
 			'after'    => '',
 			'echo'     => TRUE,
@@ -1050,26 +1052,25 @@ trait SubContents
 		], $atts ), $post );
 
 		if ( ! $post = WordPress\Post::get( $args['id'] ) )
-			return $args['default'];
+			return self::errored( $args['onerror'], 'post_not_exists' );
 
 		if ( ! $data = $this->quantumcomments__get_data_all( $post, $args['context'] ?? 'summary' ) )
-			return $args['default'];
+			return self::errored( $args['onerror'], 'post_data_is_empty' );
 
 		if ( ! $data = $this->subcontent_get_prepped_data( $data, $args['context'] ?? 'summary' ) )
-			return $args['default'];
+			return self::errored( $args['onerror'], 'data_summary_is_empty' );
 
-		if ( ! method_exists( $this, 'viewengine__render' ) ) {
-			$this->log( 'CRITICAL', 'VIEW ENGINE NOT AVAILABLE' );
-			return $args['default'];
-		}
+		if ( ! method_exists( $this, 'viewengine__render' ) )
+			return self::errored( $args['onerror'], 'view_engine_not_available' );
 
 		if ( ! $view = $this->viewengine__view_by_template( $args['template'] ?? 'data-summary', 'subcontent' ) )
-			return $args['default'];
+			return self::errored( $args['onerror'], 'view_template_not_available' );
 
 		if ( ! $html = $this->viewengine__render( $view, [ 'data' => $data ], FALSE ) )
-			return $args['default'];
+			$html = $args['fallback'];
 
-		$html = $args['before'].$html.$args['after'];
+		if ( $html )
+			$html = $args['before'].$html.$args['after'];
 
 		if ( ! $args['echo'] )
 			return $html;

@@ -55,7 +55,7 @@ class WasBorn extends gEditorial\Module
 				'title' => sprintf(
 					/* translators: `%s`: supported object label */
 					_x( 'Date of Birth Meta-key for %s', 'Setting Title', 'geditorial-was-born' ),
-					Core\HTML::em( $posttypes[$posttype_name] )
+					Core\HTML::em( $posttypes[$posttype_name] ),
 				),
 				'description' => _x( 'Defines date-of-birth meta-key for the post-type.', 'Setting Description', 'geditorial-was-born' ),
 				'field_class' => [ 'regular-text', 'code-text' ],
@@ -366,41 +366,41 @@ class WasBorn extends gEditorial\Module
 		$this->add_dashboard_widget( 'dashboard-summary', NULL, 'refresh' );
 	}
 
-	protected function get_dashboard_summary_content( string $scope = 'all', ?int $user_id = NULL, $paired = NULL, string $list = 'li' ): string
+	protected function get_dashboard_summary_content( string $scope = 'all', ?int $user_id = NULL, mixed $paired_term = NULL, string $list = 'li' ): string
 	{
 		$context   ??= 'dashboard';
-		$posttypes = $this->get_setting_posttypes( 'parent' );
 		$html      = '';
+		$posttypes = $this->get_setting_posttypes( 'parent' );
 
-		foreach ( $this->_summary_age_groups( $posttypes, $paired, $context ) as $group_summary )
+		foreach ( $this->_summary_age_groups( $posttypes, $paired_term, $context ) as $group_summary )
 			$html.= Core\HTML::tag( $list, [ 'class' => '-age-group' ], $group_summary );
 
-		foreach ( $this->_summary_age_empty_dob( $posttypes, $paired, $context ) as $empty_dob )
+		foreach ( $this->_summary_age_empty_dob( $posttypes, $paired_term, $context ) as $empty_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -empty-dob' ], $empty_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_main', [], $posttypes, $scope, $user_id ) as $class => $filtered )
 			$html.= Core\HTML::tag( $list, [ 'class' => $class ], $filtered );
 
-		if ( $html && ! $paired )
+		if ( $html && ! $paired_term )
 			$html.= '</ul></div><div class="sub"><ul class="-pointers">';
 
 		// TODO: mean-age by gender
 		$gender_summary = $this->get_dashboard_term_summary( 'main_taxonomy',
-			$this->get_setting_posttypes( 'parent' ), NULL, $scope, $user_id, $paired, $list );
+			$this->get_setting_posttypes( 'parent' ), NULL, $scope, $user_id, $paired_term, $list );
 
 		if ( $gender_summary )
 			$html.= $gender_summary;
 
-		if ( ! $paired ) {
+		if ( ! $paired_term ) {
 			// NOTE: current method is not using the wp_query
 			foreach ( $this->_summary_mean_age( $posttypes, $context ) as $mean_age )
 				$html.= Core\HTML::tag( $list, [ 'class' => '-mean-age' ], $mean_age );
 		}
 
-		foreach ( $this->_summary_under_aged( $posttypes, $paired, $context ) as $under_aged )
+		foreach ( $this->_summary_under_aged( $posttypes, $paired_term, $context ) as $under_aged )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -under-aged' ], $under_aged );
 
-		foreach ( $this->_summary_age_invalid_dob( $posttypes, $paired, $context ) as $invalid_dob )
+		foreach ( $this->_summary_age_invalid_dob( $posttypes, $paired_term, $context ) as $invalid_dob )
 			$html.= Core\HTML::tag( $list, [ 'class' => 'warning -invalid-dob' ], $invalid_dob );
 
 		foreach ( $this->filters( 'dashboard_summary_sub', [], $posttypes, $scope, $user_id ) as $class => $filtered )
@@ -411,7 +411,7 @@ class WasBorn extends gEditorial\Module
 
 	// TODO: make link for restricted under aged posts
 	// @REF: https://stackoverflow.com/a/71815721
-	private function _summary_under_aged( array $posttypes, $paired = NULL, ?string $context = NULL ): array
+	private function _summary_under_aged( array $posttypes, mixed $paired_term = NULL, ?string $context = NULL ): array
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$legal     = $this->get_setting( 'age_of_majority', 18 );
@@ -448,10 +448,10 @@ class WasBorn extends gEditorial\Module
 				'lazy_load_term_meta'    => FALSE,
 			];
 
-			if ( $paired )
+			if ( $paired_term )
 				$args['tax_query'] = [ [
-					'taxonomy' => $paired->taxonomy,
-					'terms'    => [ $paired->term_id ],
+					'taxonomy' => $paired_term->taxonomy,
+					'terms'    => [ $paired_term->term_id ],
 					'field'    => 'term_id',
 				] ];
 
@@ -490,8 +490,8 @@ class WasBorn extends gEditorial\Module
 
 				$url_args = [ $query_var => $legal ];
 
-				if ( $paired_query = WordPress\Taxonomy::queryVar( $paired ?: FALSE ) )
-					$url_args[$paired_query] = $paired->slug;
+				if ( $paired_query = WordPress\Taxonomy::queryVar( $paired_term ?: FALSE ) )
+					$url_args[$paired_query] = $paired_term->slug;
 
 				$list[] = Core\HTML::tag( 'a', [
 					'href'  => WordPress\PostType::edit( $posttype, $url_args ),
@@ -508,7 +508,7 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @SEE: https://stackoverflow.com/a/35733405
-	private function _summary_age_invalid_dob( array $posttypes, $paired = NULL, ?string $context = NULL ): array
+	private function _summary_age_invalid_dob( array $posttypes, mixed $paired_term = NULL, ?string $context = NULL ): array
 	{
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
 		$query_var = 'invaliddob';
@@ -543,10 +543,10 @@ class WasBorn extends gEditorial\Module
 				'lazy_load_term_meta'    => FALSE,
 			];
 
-			if ( $paired )
+			if ( $paired_term )
 				$args['tax_query'] = [ [
-					'taxonomy' => $paired->taxonomy,
-					'terms'    => [ $paired->term_id ],
+					'taxonomy' => $paired_term->taxonomy,
+					'terms'    => [ $paired_term->term_id ],
 					'field'    => 'term_id',
 				] ];
 
@@ -653,7 +653,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_empty_dob( array $posttypes, $paired = NULL, ?string $context = NULL ): array
+	private function _summary_age_empty_dob( array $posttypes, mixed $paired_term = NULL, ?string $context = NULL ): array
 	{
 		$query_var = WordPress\Taxonomy::queryVar( $this->constant( 'group_taxonomy' ) );
 		$nooped    = WordPress\PostType::get( 3, [ 'show_ui' => TRUE ] );
@@ -693,10 +693,10 @@ class WasBorn extends gEditorial\Module
 				'lazy_load_term_meta'    => FALSE,
 			];
 
-			if ( $paired )
+			if ( $paired_term )
 				$args['tax_query'] = [ [
-					'taxonomy' => $paired->taxonomy,
-					'terms'    => [ $paired->term_id ],
+					'taxonomy' => $paired_term->taxonomy,
+					'terms'    => [ $paired_term->term_id ],
 					'field'    => 'term_id',
 				] ];
 
@@ -744,7 +744,7 @@ class WasBorn extends gEditorial\Module
 		return $list;
 	}
 
-	private function _summary_age_groups( array $posttypes, $paired = NULL, ?string $context = NULL ): array
+	private function _summary_age_groups( array $posttypes, mixed $paired_term = NULL, ?string $context = NULL ): array
 	{
 		$taxonomy = $this->constant( 'group_taxonomy' );
 		$extra    = []; // TODO: make sure the terms are in order
@@ -779,10 +779,10 @@ class WasBorn extends gEditorial\Module
 					'lazy_load_term_meta'    => FALSE,
 				];
 
-				if ( $paired )
+				if ( $paired_term )
 					$args['tax_query'] = [ [
-						'taxonomy' => $paired->taxonomy,
-						'terms'    => [ $paired->term_id ],
+						'taxonomy' => $paired_term->taxonomy,
+						'terms'    => [ $paired_term->term_id ],
 						'field'    => 'term_id',
 					] ];
 
@@ -796,7 +796,7 @@ class WasBorn extends gEditorial\Module
 					/* translators: `%1$s`: date start, `%2$s`: date end */
 					_x( 'From %1$s till %2$s', 'Age Span Exact Dates', 'geditorial-was-born' ),
 					$group['from'] ? wp_date( $format, Core\Date::getObject( $group['from'] )->getTimestamp() ) : _x( 'Begin', 'Age Span Exact Dates', 'geditorial-was-born' ),
-					$group['to']   ? wp_date( $format, Core\Date::getObject( $group['to'] )->getTimestamp() )   : _x( 'Now', 'Age Span Exact Dates', 'geditorial-was-born' )
+					$group['to']   ? wp_date( $format, Core\Date::getObject( $group['to'] )->getTimestamp() )   : _x( 'Now', 'Age Span Exact Dates', 'geditorial-was-born' ),
 				);
 
 				if ( count( $posttypes ) > 1 )
@@ -1185,12 +1185,12 @@ class WasBorn extends gEditorial\Module
 	}
 
 	// @REF: `hook_dashboardsummary_paired_post_summaries()`
-	public function paired_post_summaries( array $summaries, ?string $paired, ?string $posttype, ?string $taxonomy, array $posttypes, $post, ?string $context ): array
+	public function paired_post_summaries( array $summaries, mixed $paired_term, ?string $posttype, ?string $taxonomy, array $posttypes, $post, ?string $context ): array
 	{
 		if ( ! Core\Arraay::exists( $posttypes, $this->get_setting_posttypes( 'parent' ) ) )
 			return $summaries;
 
-		if ( ! $html = $this->get_dashboard_summary_content( 'paired', NULL, $paired, 'li' ) )
+		if ( ! $html = $this->get_dashboard_summary_content( 'paired', NULL, $paired_term, 'li' ) )
 			return $summaries;
 
 		$summaries[] = [

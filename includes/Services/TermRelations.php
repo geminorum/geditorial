@@ -141,7 +141,7 @@ class TermRelations extends gEditorial\Service
 						$term->taxonomy,
 					);
 
-					if ( ! $results || is_wp_error( $results ) )
+					if ( FALSE === $results || is_wp_error( $results ) )
 						continue; // TODO: log the error/failure
 
 				}
@@ -175,6 +175,7 @@ class TermRelations extends gEditorial\Service
 					$meta = NULL;
 
 					// @SEE `Services\PostTypeFields::toTermRelation()`
+					// TODO: support date/datetime
 					switch ( $args['type'] ?? 'string' ) {
 
 						case 'bool':
@@ -193,6 +194,7 @@ class TermRelations extends gEditorial\Service
 							$meta = Core\Text::trim( $raw[$field] );
 					}
 
+					// @hook: `geditorial_termrelations_sanitize_field_data`
 					$filtered = apply_filters( self::und( static::BASE, 'termrelations', 'sanitize_field_data' ),
 						$meta ?? FALSE,
 						$field,
@@ -227,7 +229,8 @@ class TermRelations extends gEditorial\Service
 				else
 					$result = update_term_meta( $term->term_id, $metakey, $filtered );
 
-				// `if ( is_wp_error( $result ) )`
+				if ( FALSE === $result || is_wp_error( $result ) )
+					continue; // TODO: log the error/failure
 			}
 		}
 
@@ -354,6 +357,7 @@ class TermRelations extends gEditorial\Service
 
 	public static function get_supported( string $taxonomy, ?string $context = NULL, false|string $posttype = FALSE ): array
 	{
+		// @hook: `geditorial_termrelations_supported`
 		return apply_filters( self::und( static::BASE, 'termrelations', 'supported' ), [
 			static::FIELD_ORDER     => NULL,
 			// `static::FIELD_USERID    => NULL,`

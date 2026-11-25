@@ -23,7 +23,7 @@ class SystemHelp extends gEditorial\Service
 			? GEDITORIAL_WIKI_URL
 			: sprintf( '%s/Modules-%s',
 				Core\URL::untrail( GEDITORIAL_WIKI_URL ),
-				Modulation::moduleSlug( $module->name )
+				Modulation::moduleSlug( $module->name ),
 			);
 	}
 
@@ -73,7 +73,7 @@ class SystemHelp extends gEditorial\Service
 			'title'    => sprintf(
 				/* translators: `%s`: module title */
 				_x( '%s Wiki', 'Service: System Help: System Help Content Title', 'geditorial-admin' ),
-				$module->title
+				$module->title,
 			),
 		];
 

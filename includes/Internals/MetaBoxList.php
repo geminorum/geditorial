@@ -43,7 +43,10 @@ trait MetaBoxList
 					echo $list;
 
 				else
-					echo Core\HTML::wrap( $this->strings_metabox_noitems_via_posttype( $screen->post_type, $context ), 'field-wrap -empty' );
+					echo Core\HTML::wrap(
+						$this->strings_metabox_noitems_via_posttype( $screen->post_type, $context ),
+						'field-wrap -empty',
+					);
 
 				$this->_render_children_listbox_extra( $post, $box, $context, $screen );
 
