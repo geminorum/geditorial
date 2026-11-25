@@ -1,7 +1,7 @@
 (function ($) {
   $('div[data-setting="type-object"]').each(function () {
     const instance = $(this);
-    // const field = instance.data('field');
+    // `const field = instance.data('field');`
 
     $('a[data-setting="object-addnew"]', instance).on('click', function (event) {
       event.preventDefault();

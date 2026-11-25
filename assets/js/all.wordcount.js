@@ -1,6 +1,4 @@
-/* global _ */
-
-(function ($, counter) {
+(function ($, underscore, counter) {
   function toPersian (n) {
     const p = '۰'.charCodeAt(0);
     return n.toString().replace(/\d+/g, function (m) {
@@ -47,11 +45,11 @@
     $(document).on('tinymce-editor-init', function (event, editor) {
       if (editor.id !== $content.attr('id')) return;
       contentEditor = editor;
-      editor.on('nodechange keyup', _.debounce(update, 1000));
+      editor.on('nodechange keyup', underscore.debounce(update, 1000));
     });
 
-    $content.on('input keyup', _.debounce(update, 1000));
+    $content.on('input keyup', underscore.debounce(update, 1000));
 
     update();
   });
-})(jQuery, new wp.utils.WordCounter());
+})(jQuery, _, new wp.utils.WordCounter());

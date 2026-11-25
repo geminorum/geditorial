@@ -146,6 +146,7 @@
       app.inlineText('contact', tag, event); // TODO convert to code
       app.inlineText('venue', tag, event);
       app.inlineImage(tag, event);
+      // 'icon', // TODO
       app.inlineSelect('user', tag, event);
       app.inlineSelect('author', tag, event);
       app.inlineColor('color', tag, event);
@@ -171,6 +172,8 @@
       app.inlineDate('dead', tag, event);
       app.inlineDate('establish', tag, event);
       app.inlineDate('abolish', tag, event);
+      app.inlineDate('adopted', tag, event);
+      app.inlineDate('abandoned', tag, event);
       // 'distance', // TODO
       // 'duration', // TODO
       // 'area',     // TODO

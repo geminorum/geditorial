@@ -42,7 +42,6 @@
     }
   };
 
-  // $(window).on('load', function () {
   $(function () {
     $(document).trigger('gEditorial:Module:Loaded', [
       mainkey,

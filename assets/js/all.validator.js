@@ -30,7 +30,7 @@
     // postcode: '[data-' + mainkey + '=\'postcode\']',
     // latlng: '[data-' + mainkey + '=\'latlng\']', // @see `Coordinates` Service
     // code: '[data-' + mainkey + '=\'code\']',
-    // color: '[data-' + mainkey + '=\'color\']',
+    // color: '[data-' + mainkey + '=\'color\']', // @see https://github.com/kurkle/color
     // currency: '[data-' + mainkey + '=\'currency\']',
     // address: '[data-' + mainkey + '=\'address\']',
     // people: '[data-' + mainkey + '=\'people\']',
