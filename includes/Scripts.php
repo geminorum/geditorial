@@ -855,7 +855,7 @@ JS;
 	 * @param string $version
 	 * @return string
 	 */
-	public static function pkgSelect2( bool $enqueue = FALSE, string $version = '4.1.0' ): string
+	public static function pkgSelect2( bool $enqueue = FALSE, string $version = '4.1.1' ): string
 	{
 		$handle = 'select2';
 		$dir    = Core\L10n::rtl() ? '-rtl' : '';
