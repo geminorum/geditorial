@@ -22,6 +22,7 @@ class Missioned extends gEditorial\Module
 	use Internals\PairedFront;
 	use Internals\PairedImports;
 	use Internals\PairedMetaBox;
+	use Internals\PairedMetaBoxMega;
 	use Internals\PairedRest;
 	use Internals\PairedRowActions;
 	use Internals\PairedTools;
