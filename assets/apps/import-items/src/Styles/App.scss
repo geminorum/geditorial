@@ -81,6 +81,10 @@
       vertical-align: middle;
     }
   }
+
+  input[type="checkbox"] {
+    vertical-align: text-bottom;
+  }
 }
 
 .form-extra-info {
@@ -236,6 +240,8 @@
     min-height: auto !important;
     border-radius: 0 !important;
     font-size: smaller !important;
+    /* stylelint-disable-next-line declaration-property-unit-allowed-list */
+    line-height: 1rem;
   }
 
   option {
@@ -261,6 +267,7 @@
     margin: 0;
     border-radius: 0;
     min-height: auto !important;
-    font-size: small;
+    font-size: .75rem; // small;
+    padding: 3px 6px;
   }
 }

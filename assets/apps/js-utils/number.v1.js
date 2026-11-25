@@ -1,5 +1,21 @@
 
 /**
+ * Greatest Common Divisor
+ *
+ * @source https://stackoverflow.com/a/23575406
+ * @see https://en.wikipedia.org/wiki/Greatest_common_divisor
+ * @see https://en.wikipedia.org/wiki/Euclidean_algorithm
+ *
+ * @param {Int} a
+ * @param {Int} b
+ * @returns {Int}
+ */
+const gcd = (a, b) => {
+  if (b < 0.0000001) return a;
+  return gcd(b, Math.floor(a % b));
+};
+
+/**
  * String to integer
  * `'12345'`    => `12345`
  * `'12345.67'` => `12345`
@@ -12,7 +28,7 @@ const toInt = (input) => {
 };
 
 /**
- * String to decimal
+ * Converts string to decimal.
  * `'12345.67'` => `12345.67`
  * `'12345'`    => `12345`
  *
@@ -21,6 +37,47 @@ const toInt = (input) => {
  */
 const toDecimal = (input) => {
   return Number(input);
+};
+
+const isDecimal = (input) => parseFloat(input) === parseInt(input);
+
+/**
+ * Converts numbers to fractions.
+ * - `1.25` => `1 1/4`
+ * - `2`    => `2`
+ *
+ * @source https://gist.github.com/danielbachhuber/ed56cde1eabd6677e34e23cb56f591b6
+ *
+ * @param {Int} amount
+ * @returns {String}
+ */
+const toFraction = (input) => {
+  // This is a whole number and doesn't need modification.
+  if (isDecimal(input)) return input;
+
+  const len = input.toString().length - 2;
+  let base = 0;
+  let denominator = Math.pow(10, len);
+  let numerator = input * denominator;
+
+  const divisor = gcd(numerator, denominator);
+  numerator /= divisor;
+  denominator /= divisor;
+
+  // In a scenario like 3/2, convert to 1 1/2
+  // by pulling out the base number and reducing the numerator.
+  if (numerator > denominator) {
+    base = Math.floor(numerator / denominator);
+    numerator -= base * denominator;
+  }
+
+  input = Math.floor(numerator) + '/' + Math.floor(denominator);
+
+  if (base) {
+    input = base + ' ' + input;
+  }
+
+  return input;
 };
 
 /**
@@ -169,8 +226,11 @@ const repeated = (input, times) => {
 };
 
 export {
+  gcd,
   toInt,
   toDecimal,
+  isDecimal,
+  toFraction,
   round,
   isArabic,
   parseArabic,

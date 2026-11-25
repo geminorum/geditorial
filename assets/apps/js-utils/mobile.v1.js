@@ -2,7 +2,7 @@ import {
   // isNumericString,
   // toPersian,
   toEnglish
-} from './number.v1';
+} from './number.v1.js';
 
 // https://github.com/shams-nahid/validate-phone-number-node-js
 const validatePhoneNumber = (phoneNumber) => {

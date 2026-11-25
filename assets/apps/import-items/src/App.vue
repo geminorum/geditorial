@@ -112,7 +112,7 @@ import { toSingleSpace, toMultipleLines } from '../../js-utils/text.v1';
 import { verifyDateString, flipDateString } from '../../js-utils/datetime.v1';
 import { checkMobileByLocale } from '../../js-utils/mobile.v1';
 import { getName } from '../../js-utils/file.v1';
-import { formatNumber } from '../../js-utils/number.v1';
+import { formatNumber } from '../../js-utils/number.v1.js';
 
 import XLSX from 'xlsx'; // https://docs.sheetjs.com/docs/demos/frontend/vue
 import apiFetch from '@wordpress/api-fetch'; // https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
@@ -428,7 +428,7 @@ export default {
         data.push({
           id: found.postid,
           meta: mapKeys(clone(this.lines[selected]), (value, key, object) => {
-            return has(this.columnTypes,key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
+            return has(this.columnTypes, key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
           } ),
         });
       });
@@ -441,30 +441,30 @@ export default {
       }
     },
 
-    clickAddSelected_OLD () {
-      const data = [];
+    // clickAddSelected_OLD () {
+    //   const data = [];
 
-      each(this.selectedLines, (selected) => {
+    //   each(this.selectedLines, (selected) => {
 
-        if (!has(this.discovered, selected)) return;
-        if (!this.discovered[selected].postid) return;
-        if (this.already.includes(this.discovered[selected].postid)) return;
+    //     if (!has(this.discovered, selected)) return;
+    //     if (!this.discovered[selected].postid) return;
+    //     if (this.already.includes(this.discovered[selected].postid)) return;
 
-        data.push({
-          id: this.discovered[selected].postid,
-          meta: mapKeys(clone(this.lines[selected]), (value, key, object) => {
-            return has(this.columnTypes,key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
-          } ),
-        });
-      });
+    //     data.push({
+    //       id: this.discovered[selected].postid,
+    //       meta: mapKeys(clone(this.lines[selected]), (value, key, object) => {
+    //         return has(this.columnTypes,key) && this.columnTypes[key]!=='_undefined' ? this.columnTypes[key] : key;
+    //       } ),
+    //     });
+    //   });
 
-      if(data.length) {
-        this.doAddConnection(data);
-      } else {
-        this.message = this.i18n.novalid;
-        this.state = 'wrong';
-      }
-    },
+    //   if(data.length) {
+    //     this.doAddConnection(data);
+    //   } else {
+    //     this.message = this.i18n.novalid;
+    //     this.state = 'wrong';
+    //   }
+    // },
 
     doCheckType () {
       if (this.content) {

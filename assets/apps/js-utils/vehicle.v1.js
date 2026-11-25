@@ -1,14 +1,14 @@
 import {
-  // isNumericString,
+  // `isNumericString,`
   isNumericStringNonEmpty,
-  // padWith,
-  // inRange,
+  // `padWith,`
+  // `inRange,`
   toEnglish
-} from './number.v1';
+} from './number.v1.js';
 
 const vinPattern = /[a-zA-Z0-9]{9}[a-zA-Z0-9-]{2}[0-9]{6}/; // https://www.regextester.com/100058
-// const vinPatternIndian = /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/; // https://www.geeksforgeeks.org/validating-indian-vehicle-number-plate-using-regualr-expression/
-// const vinPatternChina = /^[A-HJ-NPR-Z0-9]{17}$/; // https://www.php.cn/faq/565691.html
+// `const vinPatternIndian = /^[A-Z]{2}[ -][0-9]{1,2}(?: [A-Z])?(?: [A-Z]*)? [0-9]{4}$/;` // https://www.geeksforgeeks.org/validating-indian-vehicle-number-plate-using-regualr-expression/
+// `const vinPatternChina = /^[A-HJ-NPR-Z0-9]{17}$/;` // https://www.php.cn/faq/565691.html
 
 const verifyVinNumber = (input) => {
   if (!input) return false;
@@ -84,9 +84,10 @@ const validateVin = (vin) => {
 };
 
 /**
- * THIS FUNCTION IS USED TO DETERMINE IF THE VIN NUMBER IS VALID
- * BY CALCULATING A CORRECT CHECK DIGIT USED IN EVERY VIN (9th DIGIT FROM LEFT)
- * THIS IS ONLY VALID IN VEHICLES MADE SINCE 1980
+ * This function is used to determine if the VIN is valid
+ * by calculating a correct check digit used in every VIN (9th digit from left).
+ * This is only valid in vehicles made since 1980.
+ *
  * @author rfink
  * @since  ~01/01/2007
  * @source https://github.com/rfink/angular-vin/blob/master/vinvalidator.js
@@ -101,7 +102,7 @@ const validateVinALT = (vin, year) => {
     // LENGTH MUST BE 17 DIGITS, IF LESS, alert
     if (parseInt(year) >= 1980) {
       if (vin.length < 17) {
-      // alert('The vin you entered is not long enough.');
+      // `alert('The vin you entered is not long enough.');`
         return false;
       }
     } else {
@@ -226,7 +227,7 @@ const validateVinALT = (vin, year) => {
   // IF IT IS INCORRECT, ALERT
 
   if (checkDigit !== vinNums[8]) {
-    // alert('You have entered an incorrect vin #.  Please check and correct as necessary.  Remember that the letters 'o','q' and 'i' are not used.');
+    // `alert('You have entered an incorrect vin #.  Please check and correct as necessary.  Remember that the letters 'o','q' and 'i' are not used.');`
     return false;
   }
 

@@ -1,9 +1,9 @@
 /* eslint no-unused-vars: off */
 
-import { codemelli, verifyCardNumber, isShebaValid } from './iranian.v1';
-import { checkMobileByLocale } from './mobile.v1';
-import { verifyDateString, verifyYearString } from './datetime.v1';
-import { validateVin, verifyVinNumber } from './vehicle.v1';
+import { codemelli, verifyCardNumber, isShebaValid } from './iranian.v1.js';
+import { checkMobileByLocale } from './mobile.v1.js';
+import { verifyDateString, verifyYearString } from './datetime.v1.js';
+import { validateVin, verifyVinNumber } from './vehicle.v1.js';
 
 const currentLocale = () => {
   return document.documentElement.getAttribute('lang') || 'en';
@@ -27,7 +27,6 @@ const isValidField = (value, field, locale) => {
       // return validateVin(value);
 
     // case 'plate':
-
     case 'year':
       return verifyYearString(value);
 

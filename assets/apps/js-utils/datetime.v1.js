@@ -3,7 +3,7 @@ import {
   padWith,
   inRange,
   toEnglish
-} from './number.v1';
+} from './number.v1.js';
 
 /**
  * Replaces the year with the day on given date string.
@@ -138,7 +138,7 @@ const toDecimal = (input) => {
 };
 
 /**
- * Convert timestamp to hh:mm format
+ * Convert timestamp to `hh:mm` format
  * @source https://github.com/harvesthq/hour-parser
  *
  * toHHMM('0.5') // 0:30
@@ -148,7 +148,7 @@ const toDecimal = (input) => {
  * toHHMM('1.5+3') // 4:30
  * toHHMM('1:45+3') // 4:45
  *
- * @param {number|string} input? Timestamp to convert
+ * @param {number|string} input Timestamp to convert
  * @returns {string} A timestamp in hh:mm format
  */
 const toHHMM = (input) => {
