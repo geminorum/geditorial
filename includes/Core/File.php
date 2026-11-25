@@ -987,7 +987,7 @@ class File extends Base
 				fseek( $handle, -$bite, SEEK_CUR );
 
 			// is there a line break in the string we read?
-			if ( is_integer( $lb = strrpos( $string, "\n" ) ) ) {
+			if ( is_int( $lb = strrpos( $string, "\n" ) ) ) {
 				// set $break to true so that we break out of the loop
 				$break = TRUE;
 				// the last line in the file is right after the line break

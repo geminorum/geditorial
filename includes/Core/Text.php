@@ -14,12 +14,12 @@ class Text extends Base
 		return strlen( $input ) ? $input : '';
 	}
 
-	public static function glued( array $args, string $with = ' ' )
+	public static function glued( array $args, string $with = ' ', $prefix = '' )
 	{
 		if ( empty( $args ) )
 			return '';
 
-		$args  = array_values( $args );
+		$args  = array_values( array_filter( $args ) );
 		$parts = [];
 
 		$multi = $with === ' ' || 1 !== strlen( $with );
@@ -33,7 +33,10 @@ class Text extends Base
 			else if ( $arg && TRUE !== $arg )
 				$parts[] = trim( $arg );
 
-		return ( $start ? $with : '' ).( $multi
+		if ( empty( $parts ) )
+			return '';
+
+		return $prefix.( $start ? $with : '' ).( $multi
 			? self::trim( implode( $with, $parts ) )
 			: self::trim( implode( $with, $parts ), $with ) );
 	}
@@ -69,7 +72,7 @@ class Text extends Base
 			"\x{202B}", // `RIGHT-TO-LEFT EMBEDDING` (U+202B)
 			"\x{202C}", // `POP DIRECTIONAL FORMATTING` (U+202C)
 			"\x{202D}", // `LEFT-TO-RIGHT OVERRIDE` (U+202D)
-			"\x{202E}", // `RIGHT-TO-LEFT OVERRIDE` (RLO)
+			"\x{202E}", // `RIGHT-TO-LEFT OVERRIDE` (`RLO`)
 			"\x{202F}", // `NARROW NO-BREAK SPACE` (U+202F)
 		];
 
@@ -77,14 +80,14 @@ class Text extends Base
 			$chars = array_merge( $chars, array_map( 'preg_quote',
 				is_array( $additional )
 					? array_filter( $additional )
-					: preg_split( '//u', (string) $additional, -1, PREG_SPLIT_NO_EMPTY )
+					: preg_split( '//u', (string) $additional, -1, PREG_SPLIT_NO_EMPTY ),
 			) );
 
 		$text = preg_replace(
 			// @REF: https://www.php.net/manual/en/ref.mbstring.php#113569
 			'/^['.implode( '', $chars ).']*(?U)(.*)['.implode( '', $chars ).']*$/u',
 			'\\1',
-			trim( (string) $text )
+			trim( (string) $text ),
 		);
 
 		if ( 0 === strlen( $text ) )
@@ -200,7 +203,7 @@ class Text extends Base
 		return self::trim( preg_replace(
 			'/[\s\x{200C}\x{200E}\x{200F}\x{202E}\x{202C}]/u',
 			'',
-			$text
+			$text,
 		) );
 	}
 
@@ -286,8 +289,8 @@ class Text extends Base
 			"\xD9\xAC", // `٬` // `Arabic Thousands Separator`
 			"\xD8\x8D", // `؍` // `Arabic Date Separator`
 
-			// "\xC2\xAB",     // `«`
-			// "\xC2\xBB",     // `»`
+			// `"\xC2\xAB",` // `«`
+			// `"\xC2\xBB",` // `»`
 			"\xE2\x80\xA6", // `…` // `Horizontal Ellipsis`
 
 			'’', '‘',
@@ -1040,17 +1043,17 @@ class Text extends Base
 		if ( empty( $buffer ) )
 			return '';
 
-		$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!',                    '',              $buffer ); // remove comments.
-		$buffer = str_replace ( [ "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ], '',              $buffer ); // remove tabs, spaces, newlines, etc.
-		$buffer = preg_replace( '/\s+/',                                            ' ',             $buffer ); // normalize whitespace.
-		$buffer = preg_replace( '/;(?=\s*})/',                                      '',              $buffer ); // remove `;` before `}`.
-		$buffer = preg_replace( '/(,|:|;|\{|}|\*\/|>) /',                           '$1',            $buffer ); // remove space after `,:;{}*/>`.
-		$buffer = preg_replace( '/ (,|;|\{|}|\(|\)|>)/',                            '$1',            $buffer ); // remove space before `,;{}()>`.
-		$buffer = preg_replace( '/(:| )0\.([0-9]+)(%|em|ex|px|in|cm|mm|pt|pc)/i',   '${1}.${2}${3}', $buffer ); // strips leading 0 on decimal values (converts `0.5px` into `.5px`).
-		$buffer = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i',        '${1}0',         $buffer ); // strips units if value is `0` (converts `0px` to `0`).
-		$buffer = preg_replace( '/0 0 0 0/',                                        '0',             $buffer ); // converts all zeros value into short-hand.
-		$buffer = preg_replace( '/#([a-f0-9])\\1([a-f0-9])\\2([a-f0-9])\\3/i',      '#\1\2\3',       $buffer ); // shortern 6-character hex color codes to 3-character where possible.
-		$buffer = preg_replace( '/\x{FEFF}/u',                                      '',              $buffer ); // remove utf8 bom
+		$buffer = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!',                    '',              $buffer ); // Removes comments.
+		$buffer = str_replace ( [ "\r\n", "\r", "\n", "\t", '  ', '    ', '    ' ], '',              $buffer ); // Removes tabs, spaces, newlines, etc.
+		$buffer = preg_replace( '/\s+/',                                            ' ',             $buffer ); // Normalizes whitespace.
+		$buffer = preg_replace( '/;(?=\s*})/',                                      '',              $buffer ); // Removes `;` before `}`.
+		$buffer = preg_replace( '/(,|:|;|\{|}|\*\/|>) /',                           '$1',            $buffer ); // Removes space after `,:;{}*/>`.
+		$buffer = preg_replace( '/ (,|;|\{|}|\(|\)|>)/',                            '$1',            $buffer ); // Removes space before `,;{}()>`.
+		$buffer = preg_replace( '/(:| )0\.([0-9]+)(%|em|ex|px|in|cm|mm|pt|pc)/i',   '${1}.${2}${3}', $buffer ); // Strips leading 0 on decimal values (converts `0.5px` into `.5px`).
+		$buffer = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i',        '${1}0',         $buffer ); // Strips units if value is `0` (converts `0px` to `0`).
+		$buffer = preg_replace( '/0 0 0 0/',                                        '0',             $buffer ); // Converts all zeros value into short-hand.
+		$buffer = preg_replace( '/#([a-f0-9])\\1([a-f0-9])\\2([a-f0-9])\\3/i',      '#\1\2\3',       $buffer ); // Shortens 6-character hex color codes to 3-character where possible.
+		$buffer = preg_replace( '/\x{FEFF}/u',                                      '',              $buffer ); // Removes `UTF-8` BOM
 
 		return trim( $buffer );
 	}
@@ -1228,7 +1231,7 @@ class Text extends Base
 			return $title;
 
 		// Removes HTML, storing it for later.
-		//          HTML elements to ignore    | tags  | entities
+		//         `HTML elements to ignore    | tags  | entities`
 		$pattern = '/<(code|var)[^>]*>.*?<\/\1>|<[^>]+>|&\S+;/';
 		preg_match_all( $pattern, $title, $matches, PREG_OFFSET_CAPTURE );
 		$title = preg_replace( $pattern, '', $title );
@@ -1396,7 +1399,7 @@ class Text extends Base
 
 		/**
 		 * If even just the first character can be matched, when the `/u`
-		 * modifier is used, then it's valid UTF-8. If the UTF-8 is somehow
+		 * modifier is used, then it's valid `UTF-8`. If the `UTF-8` is somehow
 		 * invalid, nothing at all will match, even if the string contains
 		 * some valid sequences.
 		 */
@@ -1560,10 +1563,10 @@ class Text extends Base
 
 		$html = str_replace( [
 			'&zwnj;',
-			"\xE2\x80\x8C", // Zero Width Non-Joiner U+200C
-			"\xE2\x80\x8F", // Right-To-Left Mark U+200F
-			"\xE2\x80\x8E", // Right-To-Left Mark U+200E
-			"\xEF\xBB\xBF", // UTF8 Bom
+			"\xE2\x80\x8C", // Zero Width Non-Joiner `U+200C`
+			"\xE2\x80\x8F", // Right-To-Left Mark `U+200F`
+			"\xE2\x80\x8E", // Right-To-Left Mark `U+200E`
+			"\xEF\xBB\xBF", // `UTF-8` BOM
 		], '', $html );
 
 		$html = strip_shortcodes( $html );
@@ -1600,7 +1603,7 @@ class Text extends Base
 		return $text ? self::trim( strip_tags( preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $text ) ) ) : $text;
 	}
 
-	// @SEE: [wp_strip_all_tags()](https://developer.wordpress.org/reference/functions/wp_strip_all_tags/)
+	// @SEE: https://developer.wordpress.org/reference/functions/wp_strip_all_tags/
 	// TODO: move to `Core\HTML`
 	public static function stripHTMLforEmail( string $html ): string
 	{
@@ -1675,17 +1678,17 @@ class Text extends Base
 
 	// @REF: https://stackoverflow.com/a/381001/
 	// @REF: https://stackoverflow.com/a/311904/
-	// @REF: not in html tag: https://stackoverflow.com/a/16679278/
+	// @REF: not in HTML tag: https://stackoverflow.com/a/16679278/
 	public static function replaceSymbolsPattern( string $symbols, bool $skip_links = TRUE ): string
 	{
 		return $skip_links
-			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"
-			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}{$symbols}]+)\b/u"
-			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
-			// ? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|<svg[^>]*>.*?<\/svg\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
+			// `? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u"`
+			// `? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}{$symbols}]+)\b/u"`
+			// `? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"`
+			// `? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|<svg[^>]*>.*?<\/svg\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"`
 			? "/<a[^>]*>.*?<\/a\s*>(*SKIP)(*FAIL)|<svg[^>]*>.*?<\/svg\s*>(*SKIP)(*FAIL)|#(?:\d+|[xX][a-f\d]+)(*SKIP)(*FAIL)|(?![^<]*>)[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u"
-			// : "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";
-			// : "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u";
+			// `: "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}{$symbols}]+)\b/u";`
+			// `: "/[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u";`
 			: "/(?![^<]*>)[{$symbols}]+([a-zA-Z0-9-_\.\w\p{L}\p{N}\p{Pd}\x{200c}\x{064e}\x{0650}\x{064f}\x{064b}\x{064d}\x{064c}\x{0651}\x{06c0}{$symbols}]+)\b/u";
 	}
 
@@ -1726,23 +1729,23 @@ class Text extends Base
 	// TODO: move to `Core\HTML`
 	public static function closeHTMLTags( string $html ): string
 	{
-		// put all opened tags into an array
+		// Puts all opened tags into an array.
 		preg_match_all( "#<([a-z]+)( .*)?(?!/)>#iU", $html, $matches );
 		$openedtags = $matches[1];
 
-		// put all closed tags into an array
+		// Puts all closed tags into an array.
 		preg_match_all( "#</([a-z]+)>#iU", $html, $matches );
 
 		$closedtags = $matches[1];
 		$len_opened = count( $openedtags );
 
-		// all tags are closed
+		// All tags are closed.
 		if ( $len_opened == count( $closedtags ) )
 			return $html;
 
 		$openedtags = array_reverse( $openedtags );
 
-		// close tags
+		// Closes tags.
 		for ( $i = 0; $i < $len_opened; $i++ )
 			if ( ! in_array( $openedtags[$i], $closedtags ) )
 				$html.= '</'.$openedtags[$i].'>';
@@ -1781,7 +1784,7 @@ class Text extends Base
 	// @SEE: `wp_kses_no_null()`
 	public static function stripControlChars( string $text ): string
 	{
-		// Removes control chars, the first 32 ascii characters and `\x7F`
+		// Removes control chars, the first 32 ASCII characters and `\x7F`.
 		// @REF: http://stackoverflow.com/a/1497928
 		$text = preg_replace( '/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/', '', $text );
 		// `$text = preg_replace('/[\p{Cc}]/', '', $text );`
@@ -1803,17 +1806,17 @@ class Text extends Base
 	 * Replaces tokens in the input with appropriate values.
 	 * @source `bp_core_replace_tokens_in_text()`
 	 *
-	 * @param string $input
+	 * @param mixed $input
 	 * @param iterable|object $tokens
 	 * @param array $callback_arguments
-	 * @param callable $general_callback
+	 * @param null|callable $general_callback
 	 * @return string
 	 */
 	public static function replaceTokens(
-		string $input,
+		mixed           $input,
 		iterable|object $tokens,
-		array $callback_arguments = [],
-		?callable $general_callback = NULL,
+		array           $callback_arguments = [],
+		?callable       $general_callback   = NULL,
 	): string {
 
 		if ( ! $input = self::force( $input ) )
@@ -2073,8 +2076,8 @@ class Text extends Base
 		if ( function_exists( 'iconv' ) )
 			return iconv( 'ISO-8859-1', 'UTF-8', $input );
 
-		// if ( function_exists( 'utf8_encode' ) )
-		// 	return utf8_encode( $input );
+		// `if ( function_exists( 'utf8_encode' ) )`
+		// 	`return utf8_encode( $input );`
 
 		return self::iso88591toUTF8( $input );
 	}
@@ -2165,9 +2168,9 @@ class Text extends Base
 	 * TODO: move to `Core\Encoding`
 	 *
 	 * I've checked these special entities:
-	 * - double quotes (&#34;)
-	 * - single quotes (&#39; and &apos;)
-	 * - non printable chars (e.g. &#13;)
+	 * - double quotes `&#34;`
+	 * - single quotes `&#39;` and `&apos;`
+	 * - non printable chars e.g. `&#13;`
 	 * With other $flags some or all won't be decoded.
 	 *
 	 * It seems that `ENT_XML1` and `ENT_XHTML` are identical when decoding.
@@ -2282,7 +2285,7 @@ class Text extends Base
 	 * - Backslashes must be escaped first so the escape character introduced by
 	 * subsequent replacements is not itself doubled.
 	 * - A plaintext string with none of the special characters must pass through untouched.
-	 * - All escapable characters combined must be escaped together.
+	 * - All `escapable` characters combined must be escaped together.
 	 *
 	 * @source https://github.com/Automattic/edit-flow/pull/941
 	 *

@@ -121,9 +121,12 @@ class Main extends Core\Base
 		return static::factory()->module( $module )->get_module_path( $context );
 	}
 
-	public static function bailWithError( array $results, string $code, ?string $message = NULL, ?string $error_key = NULL ): array
+	public static function bailWithError( array $results, string $code, ?string $message = NULL, ?string $error_key = NULL, array $extra_data = [] ): array
 	{
-		$results[( $error_key ?? 'error' )] = new Core\Error( $code, $message ?? '' );
+		$results[( $error_key ?? 'error' )] = new Core\Error( $code, $message ?? '', array_merge( [
+			'_base'   => static::BASE,
+			'_module' => static::MODULE,
+		], $extra_data ) );
 
 		return $results;
 	}

@@ -98,10 +98,11 @@ class Date extends Base
 
 			if ( is_a( $input, 'DateTimeInterface', TRUE ) )
 				$datetime = $input;
+
 			else
 				$datetime = date_create(
 					$input ?? 'now',
-					new \DateTimeZone( $timezone_string ?? self::currentTimeZone() )
+					new \DateTimeZone( $timezone_string ?? self::currentTimeZone() ),
 				);
 
 			return $datetime ? $datetime->format( $format ) : FALSE;
@@ -139,11 +140,16 @@ class Date extends Base
 	): false|object {
 
 		$timezone = new \DateTimeZone( $timezone_string ?? self::currentTimeZone() );
-		$datetime = \date_create_immutable_from_format(
-			$format ?? static::MYSQL_FORMAT,
-			$datetime_string,
-			$timezone,
-		);
+
+		if ( is_null( $datetime_string ) || 'now' === strtolower( trim( (string) $datetime_string ) ) )
+			$datetime = new \DateTimeImmutable( 'now', $timezone );
+
+		else
+			$datetime = \date_create_immutable_from_format(
+				$format ?? static::MYSQL_FORMAT,
+				$datetime_string,
+				$timezone,
+			);
 
 		if ( FALSE === $datetime )
 			return FALSE;

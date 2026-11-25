@@ -14,6 +14,11 @@ class Base
 		return Text::glued( func_get_args(), '.' );
 	}
 
+	public static function pdot(): string
+	{
+		return Text::glued( func_get_args(), '.', '.' );
+	}
+
 	public static function com(): string
 	{
 		return Text::glued( func_get_args(), ',' );
@@ -29,9 +34,19 @@ class Base
 		return Text::glued( func_get_args(), '-' );
 	}
 
+	public static function pdsh(): string
+	{
+		return Text::glued( func_get_args(), '-', '-' );
+	}
+
 	public static function und(): string
 	{
 		return Text::glued( func_get_args(), '_' );
+	}
+
+	public static function pund(): string
+	{
+		return Text::glued( func_get_args(), '_', '_' );
 	}
 
 	public static function nbs(): string
@@ -537,6 +552,25 @@ class Base
 		return $parsed;
 	}
 
+	// `TRUE` for Error object / `FALSE` for `FALSE` / `NULL` for empty string / falls back to `$mod`
+	public static function errored( mixed $mod = NULL, ?string $code = NULL, ?string $message = NULL, array $extra_data = [] ): mixed
+	{
+		if ( is_null( $mod ) )
+			return '';
+
+		if ( FALSE === $mod )
+			return FALSE;
+
+		if ( TRUE === $mod )
+			return new Error(
+				$code ?? 'Uknown Error',
+				$message ?? '',
+				$extra_data,
+			);
+
+		return $mod;
+	}
+
 	/**
 	 * Merges user defined arguments into defaults array.
 	 * Allows for both string or array to be merged into another array.
@@ -597,7 +631,7 @@ class Base
 	public static function recursiveParseArgsALT(
 		array|object $args,
 		array|object $defaults,
-		bool $preserve_type = TRUE,
+		bool $preserve_type         = TRUE,
 		bool $preserve_integer_keys = FALSE,
 	): array {
 
@@ -607,7 +641,7 @@ class Base
 
 			foreach ( (array) $list as $key => $value ) {
 
-				if ( is_integer( $key ) && ! $preserve_integer_keys ) {
+				if ( is_int( $key ) && ! $preserve_integer_keys ) {
 
 					$output[] = $value;
 

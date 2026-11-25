@@ -476,11 +476,11 @@ class PostType extends Core\Base
 
 	// TODO: use db query
 	public static function getRandomPostID(
-		string|array $posttype,
-		bool $has_thumbnail = FALSE,
-		bool $object = FALSE,
-		null|string|array $statuses = 'publish',
-	): false|int {
+		string|array      $posttype,
+		bool              $has_thumbnail = FALSE,
+		bool              $object        = FALSE,
+		null|string|array $statuses      = 'publish',
+	): false|int|object {
 
 		$args = [
 			'post_type'      => $posttype,

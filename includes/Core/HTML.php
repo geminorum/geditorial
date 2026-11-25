@@ -2031,14 +2031,14 @@ class HTML extends Base
 	 * Cuts the HTML string given max length preserving the formatting.
 	 * @source https://gist.github.com/yanknudtskov/13f42e8efdb8bb650db4d3230dc853dd
 	 *
-	 * @param string $html
+	 * @param string $input
 	 * @param int $max_length
 	 * @return string
 	 */
-	public static function cut( mixed $html, int $max_length ): string
+	public static function cut( mixed $input, int $max_length ): string
 	{
-		if ( empty( $html ) )
-			return $html;
+		if ( empty( $input ) )
+			return $input;
 
 		$tags     = [];
 		$result   = $tag = '';
@@ -2046,7 +2046,7 @@ class HTML extends Base
 
 		$is_open = $is_close = $grab_open = $in_single_quotes = $in_double_quotes = FALSE;
 
-		$html   = (string) $html;
+		$html   = (string) $input;
 		$forced = strip_tags( $html );
 
 		while ( $i < strlen( $html ) && $stripped < strlen( $forced ) && $stripped < $max_length ) {

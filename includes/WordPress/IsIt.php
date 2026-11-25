@@ -63,7 +63,7 @@ class IsIt extends Core\Base
 	// @SEE: `WordPress\Screen::mustRegisterUI()`
 	public static function singularUI( mixed $posttypes = '' ): bool
 	{
-		if ( is_robots() || is_favicon() || is_feed() || self::sitemap() )
+		if ( is_robots() || is_favicon() || is_feed() || is_trackback() || self::sitemap() )
 			return FALSE;
 
 		// NOTE: `wp-activate.php` does not reach here!
@@ -326,7 +326,7 @@ class IsIt extends Core\Base
 	public static function xml(): bool
 	{
 		// NOTE: known conflict with caching plugins
-		// if ( function_exists( 'wp_is_xml_request' ) && wp_is_xml_request() )
+		// `if ( function_exists( 'wp_is_xml_request' ) && wp_is_xml_request() )`
 		// 	return TRUE;
 
 		if ( ! isset( $GLOBALS['wp_query'] ) )
