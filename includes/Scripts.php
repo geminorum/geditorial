@@ -878,7 +878,7 @@ JS;
 		return $handle;
 	}
 
-	public static function linkBootstrap5( string $ver = '5.3.8', string $screen = 'all' ): true
+	public static function linkBootstrap5( string $ver = '5.3.9', string $screen = 'all' ): true
 	{
 		$var = self::const( 'SCRIPT_DEBUG' ) ? '' : '.min';
 		$dir = Core\L10n::rtl() ? '.rtl' : '';
